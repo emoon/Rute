@@ -30,6 +30,7 @@ struct PlatformNativeInterface : Object {
     /// If the property does not exist, returns a default-constructed value.
     /// 
     /// Returns a window property with *name.* If the value does not exist, defaultValue is returned.
+    [org_name(windowProperty)]
     [event] window_property_2(window: *PlatformWindowType, name: String, default_value: &VariantType) -> Variant,
     /// 
     /// Sets a window property with *name* to *value.*

@@ -6,18 +6,17 @@
 /// You don't normally need to use this class; QPicture::load(),
 /// QPicture::save().
 /// 
-/// **See also:** QPicture
-/// QPixmap
-/// QFile
+/// **See also:** [`Picture`]
+/// [`Pixmap`]
+/// [`File`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct PictureIO {
     /// 
     /// Returns the picture currently set.
     /// 
-    /// **See also:** setPicture()
+    /// **See also:** [`set_picture()`]
     /// 
     /// Returns a string that specifies the picture format of the file *fileName,* or null if the file cannot be read or if the format is
     /// not recognized.
@@ -30,13 +29,13 @@ struct PictureIO {
     /// Make sure that *d* is at the right position in the device (for
     /// example, at the beginning of the file).
     /// 
-    /// **See also:** QIODevice::pos()
+    /// **See also:** [`IODevice::pos`]
     picture() -> Picture?,
     /// 
     /// Returns the picture's IO status. A non-zero value indicates an
     /// error, whereas 0 means that the IO operation was successful.
     /// 
-    /// **See also:** setStatus()
+    /// **See also:** [`set_status()`]
     status() -> i32,
     /// 
     /// Returns the picture format string or 0 if no format has been
@@ -45,45 +44,45 @@ struct PictureIO {
     /// 
     /// Returns the IO device currently set.
     /// 
-    /// **See also:** setIODevice()
+    /// **See also:** [`set_io_device()`]
     io_device() -> IODevice?,
     /// 
     /// Returns the file name currently set.
     /// 
-    /// **See also:** setFileName()
+    /// **See also:** [`set_file_name()`]
     file_name() -> String,
     /// 
     /// Returns the quality of the written picture, related to the
     /// compression ratio.
     /// 
-    /// **See also:** setQuality()
-    /// QPicture::save()
+    /// **See also:** [`set_quality()`]
+    /// [`Picture::save`]
     quality() -> i32,
     /// 
     /// Returns the picture description string.
     /// 
-    /// **See also:** setDescription()
+    /// **See also:** [`set_description()`]
     description() -> String,
     /// 
     /// Returns the picture's parameters string.
     /// 
-    /// **See also:** setParameters()
+    /// **See also:** [`set_parameters()`]
     parameters() -> char?,
     /// 
     /// Returns the gamma value at which the picture will be viewed.
     /// 
-    /// **See also:** setGamma()
+    /// **See also:** [`set_gamma()`]
     gamma() -> f32,
     /// 
     /// Sets the picture to *picture.*
     /// 
-    /// **See also:** picture()
+    /// **See also:** [`picture()`]
     set_picture(arg0: &PictureType),
     /// 
     /// Sets the picture IO status to *status.* A non-zero value indicates
     /// an error, whereas 0 means that the IO operation was successful.
     /// 
-    /// **See also:** status()
+    /// **See also:** [`status()`]
     set_status(arg0: i32),
     /// 
     /// Sets the picture format to *format* for the picture to be read or
@@ -96,9 +95,9 @@ struct PictureIO {
     /// reading it. If a format is set the picture will only be read if it
     /// has that format.
     /// 
-    /// **See also:** read()
-    /// write()
-    /// format()
+    /// **See also:** [`read()`]
+    /// [`write()`]
+    /// [`format()`]
     set_format(arg0: *char),
     /// 
     /// Sets the IO device to be used for reading or writing an picture.
@@ -109,12 +108,12 @@ struct PictureIO {
     /// If *ioDevice* is not null, this IO device will override file name
     /// settings.
     /// 
-    /// **See also:** setFileName()
+    /// **See also:** [`set_file_name()`]
     set_io_device(arg0: *IODeviceType),
     /// 
     /// Sets the name of the file to read or write an picture from to *fileName.*
     /// 
-    /// **See also:** setIODevice()
+    /// **See also:** [`set_io_device()`]
     set_file_name(arg0: String),
     /// 
     /// Sets the quality of the written picture to *q,* related to the
@@ -124,8 +123,8 @@ struct PictureIO {
     /// compressed files, 100 for large uncompressed files. (-1 signifies
     /// the default compression.)
     /// 
-    /// **See also:** quality()
-    /// QPicture::save()
+    /// **See also:** [`quality()`]
+    /// [`Picture::save`]
     set_quality(arg0: i32),
     /// 
     /// Sets the picture description string for picture handlers that support
@@ -142,7 +141,7 @@ struct PictureIO {
     /// parameters string, it may be used in future extensions or by
     /// contributions (for example, JPEG).
     /// 
-    /// **See also:** parameters()
+    /// **See also:** [`parameters()`]
     set_parameters(arg0: *char),
     /// 
     /// Sets the gamma value at which the picture will be viewed to *gamma.* If the picture format stores a gamma value for which the
@@ -152,7 +151,7 @@ struct PictureIO {
     /// 
     /// The default value is 0.0.
     /// 
-    /// **See also:** gamma()
+    /// **See also:** [`gamma()`]
     set_gamma(arg0: f32),
     /// 
     /// Reads an picture into memory and returns `true` if the picture was
@@ -170,11 +169,11 @@ struct PictureIO {
     /// 
     /// Example:
     /// 
-    /// **See also:** setIODevice()
-    /// setFileName()
-    /// setFormat()
-    /// write()
-    /// QPixmap::load()
+    /// **See also:** [`set_io_device()`]
+    /// [`set_file_name()`]
+    /// [`set_format()`]
+    /// [`write()`]
+    /// [`Pixmap::load`]
     read() -> bool,
     /// 
     /// Writes an picture to an IO device and returns `true` if the picture was
@@ -188,11 +187,11 @@ struct PictureIO {
     /// 
     /// Example:
     /// 
-    /// **See also:** setIODevice()
-    /// setFileName()
-    /// setFormat()
-    /// read()
-    /// QPixmap::save()
+    /// **See also:** [`set_io_device()`]
+    /// [`set_file_name()`]
+    /// [`set_format()`]
+    /// [`read()`]
+    /// [`Pixmap::save`]
     write() -> bool,
     /// 
     /// Returns a string that specifies the picture format of the file *fileName,* or null if the file cannot be read or if the format is
@@ -206,7 +205,7 @@ struct PictureIO {
     /// Make sure that *d* is at the right position in the device (for
     /// example, at the beginning of the file).
     /// 
-    /// **See also:** QIODevice::pos()
+    /// **See also:** [`IODevice::pos`]
     [static] picture_format(file_name: String) -> ByteArray,
     /// 
     /// Returns a string that specifies the picture format of the file *fileName,* or null if the file cannot be read or if the format is
@@ -220,7 +219,8 @@ struct PictureIO {
     /// Make sure that *d* is at the right position in the device (for
     /// example, at the beginning of the file).
     /// 
-    /// **See also:** QIODevice::pos()
+    /// **See also:** [`IODevice::pos`]
+    [org_name(pictureFormat)]
     [static] picture_format_2(arg0: *IODeviceType) -> ByteArray,
     /// 
     /// Returns a sorted list of picture formats that are supported for

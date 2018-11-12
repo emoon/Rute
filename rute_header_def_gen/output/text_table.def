@@ -45,7 +45,7 @@
 /// 
 /// * This results in the original table.
 /// 
-/// **See also:** QTextTableFormat
+/// **See also:** [`TextTableFormat`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -53,71 +53,71 @@ struct TextTable : TextFrame {
     /// 
     /// Resizes the table to contain the required number of *rows* and *columns.*
     /// 
-    /// **See also:** insertRows()
-    /// insertColumns()
-    /// removeRows()
-    /// removeColumns()
+    /// **See also:** [`insert_rows()`]
+    /// [`insert_columns()`]
+    /// [`remove_rows()`]
+    /// [`remove_columns()`]
     resize(rows: i32, cols: i32),
     /// 
     /// Inserts a number of *rows* before the row with the specified *index.*
     /// 
-    /// **See also:** resize()
-    /// insertColumns()
-    /// removeRows()
-    /// removeColumns()
-    /// appendRows()
-    /// appendColumns()
+    /// **See also:** [`resize()`]
+    /// [`insert_columns()`]
+    /// [`remove_rows()`]
+    /// [`remove_columns()`]
+    /// [`append_rows()`]
+    /// [`append_columns()`]
     insert_rows(pos: i32, num: i32),
     /// 
     /// Inserts a number of *columns* before the column with the specified *index.*
     /// 
-    /// **See also:** insertRows()
-    /// resize()
-    /// removeRows()
-    /// removeColumns()
-    /// appendRows()
-    /// appendColumns()
+    /// **See also:** [`insert_rows()`]
+    /// [`resize()`]
+    /// [`remove_rows()`]
+    /// [`remove_columns()`]
+    /// [`append_rows()`]
+    /// [`append_columns()`]
     insert_columns(pos: i32, num: i32),
     /// 
     /// Appends *count* rows at the bottom of the table.
     /// 
-    /// **See also:** insertColumns()
-    /// insertRows()
-    /// resize()
-    /// removeRows()
-    /// removeColumns()
-    /// appendColumns()
+    /// **See also:** [`insert_columns()`]
+    /// [`insert_rows()`]
+    /// [`resize()`]
+    /// [`remove_rows()`]
+    /// [`remove_columns()`]
+    /// [`append_columns()`]
     append_rows(count: i32),
     /// 
     /// Appends *count* columns at the right side of the table.
     /// 
-    /// **See also:** insertColumns()
-    /// insertRows()
-    /// resize()
-    /// removeRows()
-    /// removeColumns()
-    /// appendRows()
+    /// **See also:** [`insert_columns()`]
+    /// [`insert_rows()`]
+    /// [`resize()`]
+    /// [`remove_rows()`]
+    /// [`remove_columns()`]
+    /// [`append_rows()`]
     append_columns(count: i32),
     /// 
     /// Removes a number of *rows* starting with the row at the specified *index.*
     /// 
-    /// **See also:** insertRows()
-    /// insertColumns()
-    /// resize()
-    /// removeColumns()
-    /// appendRows()
-    /// appendColumns()
+    /// **See also:** [`insert_rows()`]
+    /// [`insert_columns()`]
+    /// [`resize()`]
+    /// [`remove_columns()`]
+    /// [`append_rows()`]
+    /// [`append_columns()`]
     remove_rows(pos: i32, num: i32),
     /// 
     /// Removes a number of *columns* starting with the column at the specified
     /// *index.*
     /// 
-    /// **See also:** insertRows()
-    /// insertColumns()
-    /// removeRows()
-    /// resize()
-    /// appendRows()
-    /// appendColumns()
+    /// **See also:** [`insert_rows()`]
+    /// [`insert_columns()`]
+    /// [`remove_rows()`]
+    /// [`resize()`]
+    /// [`append_rows()`]
+    /// [`append_columns()`]
     remove_columns(pos: i32, num: i32),
     /// 
     /// Merges the cell at the specified *row* and *column* with the adjacent cells
@@ -125,12 +125,12 @@ struct TextTable : TextFrame {
     /// This method does nothing if *numRows* or *numCols* is less than the current
     /// number of rows or columns spanned by the cell.
     /// 
-    /// **See also:** splitCell()
+    /// **See also:** [`split_cell()`]
     /// 
     /// **Overloads**
     /// Merges the cells selected by the provided *cursor.*
     /// 
-    /// **See also:** splitCell()
+    /// **See also:** [`split_cell()`]
     merge_cells(row: i32, col: i32, num_rows: i32, num_cols: i32),
     /// 
     /// Merges the cell at the specified *row* and *column* with the adjacent cells
@@ -138,12 +138,13 @@ struct TextTable : TextFrame {
     /// This method does nothing if *numRows* or *numCols* is less than the current
     /// number of rows or columns spanned by the cell.
     /// 
-    /// **See also:** splitCell()
+    /// **See also:** [`split_cell()`]
     /// 
     /// **Overloads**
     /// Merges the cells selected by the provided *cursor.*
     /// 
-    /// **See also:** splitCell()
+    /// **See also:** [`split_cell()`]
+    [org_name(mergeCells)]
     merge_cells_2(cursor: &TextCursorType),
     /// 
     /// Splits the specified cell at *row* and *column* into an array of multiple
@@ -152,23 +153,23 @@ struct TextTable : TextFrame {
     /// **Note**: It is only possible to split cells that span multiple rows or columns, such as rows
     /// that have been merged using mergeCells().
     /// 
-    /// **See also:** mergeCells()
+    /// **See also:** [`merge_cells()`]
     split_cell(row: i32, col: i32, num_rows: i32, num_cols: i32),
     /// 
     /// Returns the number of rows in the table.
     /// 
-    /// **See also:** columns()
+    /// **See also:** [`columns()`]
     rows() -> i32,
     /// 
     /// Returns the number of columns in the table.
     /// 
-    /// **See also:** rows()
+    /// **See also:** [`rows()`]
     columns() -> i32,
     /// 
     /// Returns the table cell at the given *row* and *column* in the table.
     /// 
-    /// **See also:** columns()
-    /// rows()
+    /// **See also:** [`columns()`]
+    /// [`rows()`]
     /// 
     /// **Overloads**
     /// Returns the table cell that contains the character at the given *position*
@@ -180,8 +181,8 @@ struct TextTable : TextFrame {
     /// 
     /// Returns the table cell at the given *row* and *column* in the table.
     /// 
-    /// **See also:** columns()
-    /// rows()
+    /// **See also:** [`columns()`]
+    /// [`rows()`]
     /// 
     /// **Overloads**
     /// Returns the table cell that contains the character at the given *position*
@@ -189,12 +190,13 @@ struct TextTable : TextFrame {
     /// 
     /// **Overloads**
     /// Returns the table cell containing the given *cursor.*
+    [org_name(cellAt)]
     cell_at_2(position: i32) -> TextTableCell,
     /// 
     /// Returns the table cell at the given *row* and *column* in the table.
     /// 
-    /// **See also:** columns()
-    /// rows()
+    /// **See also:** [`columns()`]
+    /// [`rows()`]
     /// 
     /// **Overloads**
     /// Returns the table cell that contains the character at the given *position*
@@ -202,28 +204,29 @@ struct TextTable : TextFrame {
     /// 
     /// **Overloads**
     /// Returns the table cell containing the given *cursor.*
+    [org_name(cellAt)]
     cell_at_3(c: &TextCursorType) -> TextTableCell,
     /// 
     /// Returns a cursor pointing to the start of the row that contains the
     /// given *cursor.*
     /// 
-    /// **See also:** rowEnd()
+    /// **See also:** [`row_end()`]
     row_start(c: &TextCursorType) -> TextCursor,
     /// 
     /// Returns a cursor pointing to the end of the row that contains the given
     /// *cursor.*
     /// 
-    /// **See also:** rowStart()
+    /// **See also:** [`row_start()`]
     row_end(c: &TextCursorType) -> TextCursor,
     /// 
     /// Sets the table's *format.*
     /// 
-    /// **See also:** format()
+    /// **See also:** [`format()`]
     set_format(format: &TextTableFormatType),
     /// 
     /// Returns the table's format.
     /// 
-    /// **See also:** setFormat()
+    /// **See also:** [`set_format()`]
     format() -> TextTableFormat,
 }
 

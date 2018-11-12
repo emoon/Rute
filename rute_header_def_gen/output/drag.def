@@ -43,9 +43,9 @@
 /// required.
 /// 
 /// **See also:** {Drag and Drop}
-/// QClipboard
-/// QMimeData
-/// QMacPasteboardMime
+/// [`Clipboard`]
+/// [`MimeData`]
+/// [`MacPasteboardMime`]
 /// {Draggable Icons Example}
 /// {Draggable Text Example}
 /// {Drop Site Example}
@@ -92,8 +92,8 @@ struct Drag : Object {
     /// This signal is emitted when the target of the drag and drop
     /// operation changes, with *newTarget* the new target.
     /// 
-    /// **See also:** target()
-    /// actionChanged()
+    /// **See also:** [`target()`]
+    /// [`action_changed()`]
     target() -> Object?,
     /// 
     /// **Note:** It is recommended to use exec() instead of this function.
@@ -106,7 +106,7 @@ struct Drag : Object {
     /// does not block the event loop. Other events are still delivered to the application
     /// while the operation is performed.
     /// 
-    /// **See also:** exec()
+    /// **See also:** [`exec()`]
     start(supported_actions: Rute::DropActions) -> Rute::DropAction,
     /// 
     /// Starts the drag and drop operation and returns a value indicating the requested
@@ -120,7 +120,7 @@ struct Drag : Object {
     /// the operation is performed. On Windows, the Qt event loop is
     /// blocked during the operation.
     /// 
-    /// **See also:** cancel()
+    /// **See also:** [`cancel()`]
     /// 
     /// Starts the drag and drop operation and returns a value indicating the requested
     /// drop action when it is completed. The drop actions that the user can choose
@@ -149,7 +149,7 @@ struct Drag : Object {
     /// the operation is performed. On Windows, the Qt event loop is
     /// blocked during the operation.
     /// 
-    /// **See also:** cancel()
+    /// **See also:** [`cancel()`]
     /// 
     /// Starts the drag and drop operation and returns a value indicating the requested
     /// drop action when it is completed. The drop actions that the user can choose
@@ -165,6 +165,7 @@ struct Drag : Object {
     /// blocked during the operation. However, QDrag::exec() on
     /// Windows causes processEvents() to be called frequently to keep the GUI responsive.
     /// If any loops or operations are called while a drag operation is active, it will block the drag operation.
+    [org_name(exec)]
     exec_2(supported_actions: Rute::DropActions, default_action: Rute::DropAction) -> Rute::DropAction,
     /// 
     /// Sets the drag *cursor* for the *action.* This allows you
@@ -182,34 +183,34 @@ struct Drag : Object {
     /// 
     /// Returns the set of possible drop actions for this drag operation.
     /// 
-    /// **See also:** exec()
-    /// defaultAction()
+    /// **See also:** [`exec()`]
+    /// [`default_action()`]
     supported_actions() -> Rute::DropActions,
     /// 
     /// Returns the default proposed drop action for this drag operation.
     /// 
-    /// **See also:** exec()
-    /// supportedActions()
+    /// **See also:** [`exec()`]
+    /// [`supported_actions()`]
     default_action() -> Rute::DropAction,
     /// 
     /// Cancels a drag operation initiated by Qt.
     /// 
     /// **Note**: This is currently implemented on Windows and X11.
     /// 
-    /// **See also:** exec()
+    /// **See also:** [`exec()`]
     [static] cancel(),
     /// 
     /// This signal is emitted when the *action* associated with the
     /// drag changes.
     /// 
-    /// **See also:** targetChanged()
+    /// **See also:** [`target_changed()`]
     [signal] action_changed(action: Rute::DropAction),
     /// 
     /// This signal is emitted when the target of the drag and drop
     /// operation changes, with *newTarget* the new target.
     /// 
-    /// **See also:** target()
-    /// actionChanged()
+    /// **See also:** [`target()`]
+    /// [`action_changed()`]
     [signal] target_changed(new_target: *ObjectType),
 }
 

@@ -7,10 +7,31 @@
 /// As a convention the QScrollerProperties are in physical units (meter,
 /// seconds) and are converted by QScroller using the current DPI.
 /// 
-/// **See also:** QScroller
+/// **See also:** [`Scroller`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct ScrollerProperties {
+    /// 
+    /// Sets the scroller properties for all new QScrollerProperties objects to *sp.*
+    /// 
+    /// Use this function to override the platform default properties returned by the default
+    /// constructor. If you only want to change the scroller properties of a single scroller, use
+    /// QScroller::setScrollerProperties()
+    /// 
+    /// **Note**: Calling this function will not change the content of already existing
+    /// QScrollerProperties objects.
+    /// 
+    /// **See also:** [`unset_default_scroller_properties()`]
+    [static] set_default_scroller_properties(sp: &ScrollerPropertiesType),
+    /// 
+    /// Sets the scroller properties returned by the default constructor back to the platform default
+    /// properties.
+    /// 
+    /// **See also:** [`set_default_scroller_properties()`]
+    [static] unset_default_scroller_properties(),
+}
+
 [org_name(QScrollerProperties)]
 enum OvershootPolicy {
     OvershootWhenScrollable,
@@ -49,28 +70,6 @@ enum ScrollMetric {
     VerticalOvershootPolicy,
     FrameRate,
     ScrollMetricCount,
-}
-
-
-struct ScrollerProperties {
-    /// 
-    /// Sets the scroller properties for all new QScrollerProperties objects to *sp.*
-    /// 
-    /// Use this function to override the platform default properties returned by the default
-    /// constructor. If you only want to change the scroller properties of a single scroller, use
-    /// QScroller::setScrollerProperties()
-    /// 
-    /// **Note**: Calling this function will not change the content of already existing
-    /// QScrollerProperties objects.
-    /// 
-    /// **See also:** unsetDefaultScrollerProperties()
-    [static] set_default_scroller_properties(sp: &ScrollerPropertiesType),
-    /// 
-    /// Sets the scroller properties returned by the default constructor back to the platform default
-    /// properties.
-    /// 
-    /// **See also:** setDefaultScrollerProperties()
-    [static] unset_default_scroller_properties(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

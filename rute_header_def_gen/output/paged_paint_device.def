@@ -4,6 +4,190 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct PagedPaintDevice : PaintDevice {
+    /// 
+    /// Starts a new page. Returns `true` on success.
+    [event] new_page() -> bool,
+    /// 
+    /// Sets the page layout to *newPageLayout.*
+    /// 
+    /// You should call this before calling QPainter::begin(), or immediately
+    /// before calling newPage() to apply the new page layout to a new page.
+    /// You should not call any painting methods between a call to setPageLayout()
+    /// and newPage() as the wrong paint metrics may be used.
+    /// 
+    /// Returns true if the page layout was successfully set to *newPageLayout.*
+    /// 
+    /// **See also:** [`page_layout()`]
+    set_page_layout(page_layout: &PageLayoutType) -> bool,
+    /// 
+    /// Sets the size of the a page to *size.*
+    /// 
+    /// **See also:** [`set_page_size_mm()`]
+    /// 
+    /// Sets the page size to *size.* *size* is specified in millimeters.
+    /// 
+    /// If the size matches a standard QPagedPaintDevice::PageSize then that page
+    /// size will be used, otherwise QPagedPaintDevice::Custom will be set.
+    /// 
+    /// Sets the page size to *pageSize.*
+    /// 
+    /// To get the current QPageSize use pageLayout().pageSize().
+    /// 
+    /// You should call this before calling QPainter::begin(), or immediately
+    /// before calling newPage() to apply the new page size to a new page.
+    /// You should not call any painting methods between a call to setPageSize()
+    /// and newPage() as the wrong paint metrics may be used.
+    /// 
+    /// Returns true if the page size was successfully set to *pageSize.*
+    /// 
+    /// **See also:** [`page_layout()`]
+    set_page_size(page_size: &PageSizeType) -> bool,
+    /// 
+    /// Sets the page *orientation.*
+    /// 
+    /// The page orientation is used to define the orientation of the
+    /// page size when obtaining the page rect.
+    /// 
+    /// You should call this before calling QPainter::begin(), or immediately
+    /// before calling newPage() to apply the new orientation to a new page.
+    /// You should not call any painting methods between a call to setPageOrientation()
+    /// and newPage() as the wrong paint metrics may be used.
+    /// 
+    /// To get the current QPageLayout::Orientation use pageLayout().pageOrientation().
+    /// 
+    /// Returns true if the page orientation was successfully set to *orientation.*
+    /// 
+    /// **See also:** [`page_layout()`]
+    set_page_orientation(orientation: PageLayout::Orientation) -> bool,
+    /// 
+    /// Set the page *margins* in the current page layout units.
+    /// 
+    /// You should call this before calling QPainter::begin(), or immediately
+    /// before calling newPage() to apply the new margins to a new page.
+    /// You should not call any painting methods between a call to setPageMargins()
+    /// and newPage() as the wrong paint metrics may be used.
+    /// 
+    /// To get the current page margins use pageLayout().pageMargins().
+    /// 
+    /// Returns true if the page margins were successfully set to *margins.*
+    /// 
+    /// **See also:** [`page_layout()`]
+    /// 
+    /// Set the page *margins* defined in the given *units.*
+    /// 
+    /// You should call this before calling QPainter::begin(), or immediately
+    /// before calling newPage() to apply the new margins to a new page.
+    /// You should not call any painting methods between a call to setPageMargins()
+    /// and newPage() as the wrong paint metrics may be used.
+    /// 
+    /// To get the current page margins use pageLayout().pageMargins().
+    /// 
+    /// Returns true if the page margins were successfully set to *margins.*
+    /// 
+    /// **See also:** [`page_layout()`]
+    set_page_margins(margins: &MarginsFType) -> bool,
+    /// 
+    /// Set the page *margins* in the current page layout units.
+    /// 
+    /// You should call this before calling QPainter::begin(), or immediately
+    /// before calling newPage() to apply the new margins to a new page.
+    /// You should not call any painting methods between a call to setPageMargins()
+    /// and newPage() as the wrong paint metrics may be used.
+    /// 
+    /// To get the current page margins use pageLayout().pageMargins().
+    /// 
+    /// Returns true if the page margins were successfully set to *margins.*
+    /// 
+    /// **See also:** [`page_layout()`]
+    /// 
+    /// Set the page *margins* defined in the given *units.*
+    /// 
+    /// You should call this before calling QPainter::begin(), or immediately
+    /// before calling newPage() to apply the new margins to a new page.
+    /// You should not call any painting methods between a call to setPageMargins()
+    /// and newPage() as the wrong paint metrics may be used.
+    /// 
+    /// To get the current page margins use pageLayout().pageMargins().
+    /// 
+    /// Returns true if the page margins were successfully set to *margins.*
+    /// 
+    /// **See also:** [`page_layout()`]
+    [org_name(setPageMargins)]
+    set_page_margins_2(margins: &MarginsFType, units: PageLayout::Unit) -> bool,
+    /// 
+    /// Returns the current page layout. Use this method to access the current
+    /// QPageSize, QPageLayout::Orientation, QMarginsF, fullRect() and paintRect().
+    /// 
+    /// Note that you cannot use the setters on the returned object, you must either
+    /// call the individual QPagedPaintDevice setters or use setPageLayout().
+    /// 
+    /// **See also:** [`set_page_layout()`]
+    /// [`set_page_size()`]
+    /// [`set_page_orientation()`]
+    /// [`set_page_margins()`]
+    page_layout() -> PageLayout,
+    /// 
+    /// Sets the size of the a page to *size.*
+    /// 
+    /// **See also:** [`set_page_size_mm()`]
+    /// 
+    /// Sets the page size to *size.* *size* is specified in millimeters.
+    /// 
+    /// If the size matches a standard QPagedPaintDevice::PageSize then that page
+    /// size will be used, otherwise QPagedPaintDevice::Custom will be set.
+    /// 
+    /// Sets the page size to *pageSize.*
+    /// 
+    /// To get the current QPageSize use pageLayout().pageSize().
+    /// 
+    /// You should call this before calling QPainter::begin(), or immediately
+    /// before calling newPage() to apply the new page size to a new page.
+    /// You should not call any painting methods between a call to setPageSize()
+    /// and newPage() as the wrong paint metrics may be used.
+    /// 
+    /// Returns true if the page size was successfully set to *pageSize.*
+    /// 
+    /// **See also:** [`page_layout()`]
+    [org_name(setPageSize)]
+    [event] set_page_size_2(size: PagedPaintDevice::PageSize),
+    /// 
+    /// Returns the currently used page size.
+    /// 
+    /// Returns the page size in millimeters.
+    page_size() -> PagedPaintDevice::PageSize,
+    /// 
+    /// Sets the page size to *size.* *size* is specified in millimeters.
+    /// 
+    /// If the size matches a standard QPagedPaintDevice::PageSize then that page
+    /// size will be used, otherwise QPagedPaintDevice::Custom will be set.
+    [event] set_page_size_mm(size: &SizeFType),
+    /// 
+    /// Returns the page size in millimeters.
+    page_size_mm() -> SizeF,
+    /// 
+    /// Sets the margins to be used to *margins.*
+    /// 
+    /// Margins are specified in millimeters.
+    /// 
+    /// The margins are purely a hint to the drawing method. They don't affect the
+    /// coordinate system or clipping.
+    /// 
+    /// **See also:** [`margins()`]
+    [event] set_margins(margins: onst QPagedPaintDevice::Margins &),
+    /// 
+    /// Returns the current margins of the paint device. The default is 0.
+    /// 
+    /// Margins are specified in millimeters.
+    /// 
+    /// **See also:** [`set_margins()`]
+    margins() -> PagedPaintDevice::Margins,
+    dd() -> PagedPaintDevicePrivate?,
+    device_page_layout() -> PageLayout,
+    [org_name(devicePageLayout)]
+    device_page_layout_2() -> PageLayout?,
+}
+
 [org_name(QPagedPaintDevice)]
 enum PageSize {
     A4,
@@ -139,187 +323,6 @@ enum PageSize {
 enum PdfVersion {
     PdfVersion_1_4,
     PdfVersion_A1b,
-}
-
-struct PagedPaintDevice : PaintDevice {
-    /// 
-    /// Starts a new page. Returns `true` on success.
-    [event] new_page() -> bool,
-    /// 
-    /// Sets the page layout to *newPageLayout.*
-    /// 
-    /// You should call this before calling QPainter::begin(), or immediately
-    /// before calling newPage() to apply the new page layout to a new page.
-    /// You should not call any painting methods between a call to setPageLayout()
-    /// and newPage() as the wrong paint metrics may be used.
-    /// 
-    /// Returns true if the page layout was successfully set to *newPageLayout.*
-    /// 
-    /// **See also:** pageLayout()
-    set_page_layout(page_layout: &PageLayoutType) -> bool,
-    /// 
-    /// Sets the size of the a page to *size.*
-    /// 
-    /// **See also:** setPageSizeMM()
-    /// 
-    /// Sets the page size to *size.* *size* is specified in millimeters.
-    /// 
-    /// If the size matches a standard QPagedPaintDevice::PageSize then that page
-    /// size will be used, otherwise QPagedPaintDevice::Custom will be set.
-    /// 
-    /// Sets the page size to *pageSize.*
-    /// 
-    /// To get the current QPageSize use pageLayout().pageSize().
-    /// 
-    /// You should call this before calling QPainter::begin(), or immediately
-    /// before calling newPage() to apply the new page size to a new page.
-    /// You should not call any painting methods between a call to setPageSize()
-    /// and newPage() as the wrong paint metrics may be used.
-    /// 
-    /// Returns true if the page size was successfully set to *pageSize.*
-    /// 
-    /// **See also:** pageLayout()
-    set_page_size(page_size: &PageSizeType) -> bool,
-    /// 
-    /// Sets the page *orientation.*
-    /// 
-    /// The page orientation is used to define the orientation of the
-    /// page size when obtaining the page rect.
-    /// 
-    /// You should call this before calling QPainter::begin(), or immediately
-    /// before calling newPage() to apply the new orientation to a new page.
-    /// You should not call any painting methods between a call to setPageOrientation()
-    /// and newPage() as the wrong paint metrics may be used.
-    /// 
-    /// To get the current QPageLayout::Orientation use pageLayout().pageOrientation().
-    /// 
-    /// Returns true if the page orientation was successfully set to *orientation.*
-    /// 
-    /// **See also:** pageLayout()
-    set_page_orientation(orientation: PageLayout::Orientation) -> bool,
-    /// 
-    /// Set the page *margins* in the current page layout units.
-    /// 
-    /// You should call this before calling QPainter::begin(), or immediately
-    /// before calling newPage() to apply the new margins to a new page.
-    /// You should not call any painting methods between a call to setPageMargins()
-    /// and newPage() as the wrong paint metrics may be used.
-    /// 
-    /// To get the current page margins use pageLayout().pageMargins().
-    /// 
-    /// Returns true if the page margins were successfully set to *margins.*
-    /// 
-    /// **See also:** pageLayout()
-    /// 
-    /// Set the page *margins* defined in the given *units.*
-    /// 
-    /// You should call this before calling QPainter::begin(), or immediately
-    /// before calling newPage() to apply the new margins to a new page.
-    /// You should not call any painting methods between a call to setPageMargins()
-    /// and newPage() as the wrong paint metrics may be used.
-    /// 
-    /// To get the current page margins use pageLayout().pageMargins().
-    /// 
-    /// Returns true if the page margins were successfully set to *margins.*
-    /// 
-    /// **See also:** pageLayout()
-    set_page_margins(margins: &MarginsFType) -> bool,
-    /// 
-    /// Set the page *margins* in the current page layout units.
-    /// 
-    /// You should call this before calling QPainter::begin(), or immediately
-    /// before calling newPage() to apply the new margins to a new page.
-    /// You should not call any painting methods between a call to setPageMargins()
-    /// and newPage() as the wrong paint metrics may be used.
-    /// 
-    /// To get the current page margins use pageLayout().pageMargins().
-    /// 
-    /// Returns true if the page margins were successfully set to *margins.*
-    /// 
-    /// **See also:** pageLayout()
-    /// 
-    /// Set the page *margins* defined in the given *units.*
-    /// 
-    /// You should call this before calling QPainter::begin(), or immediately
-    /// before calling newPage() to apply the new margins to a new page.
-    /// You should not call any painting methods between a call to setPageMargins()
-    /// and newPage() as the wrong paint metrics may be used.
-    /// 
-    /// To get the current page margins use pageLayout().pageMargins().
-    /// 
-    /// Returns true if the page margins were successfully set to *margins.*
-    /// 
-    /// **See also:** pageLayout()
-    set_page_margins_2(margins: &MarginsFType, units: PageLayout::Unit) -> bool,
-    /// 
-    /// Returns the current page layout. Use this method to access the current
-    /// QPageSize, QPageLayout::Orientation, QMarginsF, fullRect() and paintRect().
-    /// 
-    /// Note that you cannot use the setters on the returned object, you must either
-    /// call the individual QPagedPaintDevice setters or use setPageLayout().
-    /// 
-    /// **See also:** setPageLayout()
-    /// setPageSize()
-    /// setPageOrientation()
-    /// setPageMargins()
-    page_layout() -> PageLayout,
-    /// 
-    /// Sets the size of the a page to *size.*
-    /// 
-    /// **See also:** setPageSizeMM()
-    /// 
-    /// Sets the page size to *size.* *size* is specified in millimeters.
-    /// 
-    /// If the size matches a standard QPagedPaintDevice::PageSize then that page
-    /// size will be used, otherwise QPagedPaintDevice::Custom will be set.
-    /// 
-    /// Sets the page size to *pageSize.*
-    /// 
-    /// To get the current QPageSize use pageLayout().pageSize().
-    /// 
-    /// You should call this before calling QPainter::begin(), or immediately
-    /// before calling newPage() to apply the new page size to a new page.
-    /// You should not call any painting methods between a call to setPageSize()
-    /// and newPage() as the wrong paint metrics may be used.
-    /// 
-    /// Returns true if the page size was successfully set to *pageSize.*
-    /// 
-    /// **See also:** pageLayout()
-    [event] set_page_size_2(size: PagedPaintDevice::PageSize),
-    /// 
-    /// Returns the currently used page size.
-    /// 
-    /// Returns the page size in millimeters.
-    page_size() -> PagedPaintDevice::PageSize,
-    /// 
-    /// Sets the page size to *size.* *size* is specified in millimeters.
-    /// 
-    /// If the size matches a standard QPagedPaintDevice::PageSize then that page
-    /// size will be used, otherwise QPagedPaintDevice::Custom will be set.
-    [event] set_page_size_mm(size: &SizeFType),
-    /// 
-    /// Returns the page size in millimeters.
-    page_size_mm() -> SizeF,
-    /// 
-    /// Sets the margins to be used to *margins.*
-    /// 
-    /// Margins are specified in millimeters.
-    /// 
-    /// The margins are purely a hint to the drawing method. They don't affect the
-    /// coordinate system or clipping.
-    /// 
-    /// **See also:** margins()
-    [event] set_margins(margins: onst QPagedPaintDevice::Margins &),
-    /// 
-    /// Returns the current margins of the paint device. The default is 0.
-    /// 
-    /// Margins are specified in millimeters.
-    /// 
-    /// **See also:** setMargins()
-    margins() -> PagedPaintDevice::Margins,
-    dd() -> PagedPaintDevicePrivate?,
-    device_page_layout() -> PageLayout,
-    device_page_layout_2() -> PageLayout?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

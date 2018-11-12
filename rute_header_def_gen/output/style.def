@@ -213,15 +213,647 @@
 /// The drawing of item view headers is also done by the style, giving
 /// control over size of header items and row and column sizes.
 /// 
-/// **See also:** QStyleOption
-/// QStylePainter
+/// **See also:** [`StyleOption`]
+/// [`StylePainter`]
 /// {Styles Example}
 /// {Styles and Style Aware Widgets}
-/// QStyledItemDelegate
+/// [`StyledItemDelegate`]
 /// {Styling}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct Style : Object {
+    /// 
+    /// Initializes the appearance of the given *widget.*
+    /// 
+    /// This function is called for every widget at some point after it
+    /// has been fully created but just *before* it is shown for the very
+    /// first time.
+    /// 
+    /// Note that the default implementation does nothing. Reasonable
+    /// actions in this function might be to call the
+    /// QWidget::setBackgroundMode() function for the widget. Do not use
+    /// the function to set, for example, the geometry. Reimplementing
+    /// this function provides a back-door through which the appearance
+    /// of a widget can be changed, but with Qt's style engine it is
+    /// rarely necessary to implement this function; reimplement
+    /// drawItemPixmap(), drawItemText(), drawPrimitive(), etc. instead.
+    /// 
+    /// The QWidget::inherits() function may provide enough information to
+    /// allow class-specific customizations. But because new QStyle
+    /// subclasses are expected to work reasonably with all current and *future* widgets, limited use of hard-coded customization is
+    /// recommended.
+    /// 
+    /// **See also:** [`unpolish()`]
+    /// 
+    /// **Overloads**
+    /// Late initialization of the given *application* object.
+    /// 
+    /// **Overloads**
+    /// Changes the *palette* according to style specific requirements
+    /// for color palettes (if any).
+    /// 
+    /// **See also:** [`Palette`]
+    /// [`Application::set_palette`]
+    [event] polish(widget: *WidgetType),
+    /// 
+    /// Uninitialize the given *widget* 's appearance.
+    /// 
+    /// This function is the counterpart to polish(). It is called for
+    /// every polished widget whenever the style is dynamically changed;
+    /// the former style has to unpolish its settings before the new style
+    /// can polish them again.
+    /// 
+    /// Note that unpolish() will only be called if the widget is
+    /// destroyed. This can cause problems in some cases, e.g, if you
+    /// remove a widget from the UI, cache it, and then reinsert it after
+    /// the style has changed; some of Qt's classes cache their widgets.
+    /// 
+    /// **See also:** [`polish()`]
+    /// 
+    /// **Overloads**
+    /// Uninitialize the given *application.*
+    [event] unpolish(widget: *WidgetType),
+    /// 
+    /// Initializes the appearance of the given *widget.*
+    /// 
+    /// This function is called for every widget at some point after it
+    /// has been fully created but just *before* it is shown for the very
+    /// first time.
+    /// 
+    /// Note that the default implementation does nothing. Reasonable
+    /// actions in this function might be to call the
+    /// QWidget::setBackgroundMode() function for the widget. Do not use
+    /// the function to set, for example, the geometry. Reimplementing
+    /// this function provides a back-door through which the appearance
+    /// of a widget can be changed, but with Qt's style engine it is
+    /// rarely necessary to implement this function; reimplement
+    /// drawItemPixmap(), drawItemText(), drawPrimitive(), etc. instead.
+    /// 
+    /// The QWidget::inherits() function may provide enough information to
+    /// allow class-specific customizations. But because new QStyle
+    /// subclasses are expected to work reasonably with all current and *future* widgets, limited use of hard-coded customization is
+    /// recommended.
+    /// 
+    /// **See also:** [`unpolish()`]
+    /// 
+    /// **Overloads**
+    /// Late initialization of the given *application* object.
+    /// 
+    /// **Overloads**
+    /// Changes the *palette* according to style specific requirements
+    /// for color palettes (if any).
+    /// 
+    /// **See also:** [`Palette`]
+    /// [`Application::set_palette`]
+    [org_name(polish)]
+    [event] polish_2(application: *ApplicationType),
+    /// 
+    /// Uninitialize the given *widget* 's appearance.
+    /// 
+    /// This function is the counterpart to polish(). It is called for
+    /// every polished widget whenever the style is dynamically changed;
+    /// the former style has to unpolish its settings before the new style
+    /// can polish them again.
+    /// 
+    /// Note that unpolish() will only be called if the widget is
+    /// destroyed. This can cause problems in some cases, e.g, if you
+    /// remove a widget from the UI, cache it, and then reinsert it after
+    /// the style has changed; some of Qt's classes cache their widgets.
+    /// 
+    /// **See also:** [`polish()`]
+    /// 
+    /// **Overloads**
+    /// Uninitialize the given *application.*
+    [org_name(unpolish)]
+    [event] unpolish_2(application: *ApplicationType),
+    /// 
+    /// Initializes the appearance of the given *widget.*
+    /// 
+    /// This function is called for every widget at some point after it
+    /// has been fully created but just *before* it is shown for the very
+    /// first time.
+    /// 
+    /// Note that the default implementation does nothing. Reasonable
+    /// actions in this function might be to call the
+    /// QWidget::setBackgroundMode() function for the widget. Do not use
+    /// the function to set, for example, the geometry. Reimplementing
+    /// this function provides a back-door through which the appearance
+    /// of a widget can be changed, but with Qt's style engine it is
+    /// rarely necessary to implement this function; reimplement
+    /// drawItemPixmap(), drawItemText(), drawPrimitive(), etc. instead.
+    /// 
+    /// The QWidget::inherits() function may provide enough information to
+    /// allow class-specific customizations. But because new QStyle
+    /// subclasses are expected to work reasonably with all current and *future* widgets, limited use of hard-coded customization is
+    /// recommended.
+    /// 
+    /// **See also:** [`unpolish()`]
+    /// 
+    /// **Overloads**
+    /// Late initialization of the given *application* object.
+    /// 
+    /// **Overloads**
+    /// Changes the *palette* according to style specific requirements
+    /// for color palettes (if any).
+    /// 
+    /// **See also:** [`Palette`]
+    /// [`Application::set_palette`]
+    [org_name(polish)]
+    [event] polish_3(palette: &PaletteType),
+    /// 
+    /// Returns the area within the given *rectangle* in which to draw
+    /// the provided *text* according to the specified font *metrics*
+    /// and *alignment.* The *enabled* parameter indicates whether or
+    /// not the associated item is enabled.
+    /// 
+    /// If the given *rectangle* is larger than the area needed to render
+    /// the *text,* the rectangle that is returned will be offset within
+    /// *rectangle* according to the specified *alignment.* For
+    /// example, if *alignment* is Qt::AlignCenter, the returned
+    /// rectangle will be centered within *rectangle.* If the given *rectangle* is smaller than the area needed, the returned rectangle
+    /// will be the smallest rectangle large enough to render the *text.*
+    /// 
+    /// **See also:** [`t::alignment()`]
+    [event] item_text_rect(fm: &FontMetricsType, r: &RectType, flags: i32, enabled: bool, text: String) -> Rect,
+    /// 
+    /// Returns the area within the given *rectangle* in which to draw
+    /// the specified *pixmap* according to the defined *alignment.*
+    [event] item_pixmap_rect(r: &RectType, flags: i32, pixmap: &PixmapType) -> Rect,
+    /// 
+    /// Draws the given *text* in the specified *rectangle* using the
+    /// provided *painter* and *palette.*
+    /// 
+    /// The text is drawn using the painter's pen, and aligned and wrapped
+    /// according to the specified *alignment.* If an explicit *textRole* is specified, the text is drawn using the *palette's*
+    /// color for the given role. The *enabled* parameter indicates
+    /// whether or not the item is enabled; when reimplementing this
+    /// function, the *enabled* parameter should influence how the item is
+    /// drawn.
+    /// 
+    /// **See also:** [`t::alignment()`]
+    /// [`draw_item_pixmap()`]
+    [event] draw_item_text(painter: *PainterType, rect: &RectType, flags: i32, pal: &PaletteType, enabled: bool, text: String, text_role: Palette::ColorRole),
+    /// 
+    /// const QPixmap &pixmap) const
+    /// 
+    /// Draws the given *pixmap* in the specified *rectangle,* according
+    /// to the specified *alignment,* using the provided *painter.*
+    /// 
+    /// **See also:** [`draw_item_text()`]
+    [event] draw_item_pixmap(painter: *PainterType, rect: &RectType, alignment: i32, pixmap: &PixmapType),
+    /// 
+    /// Returns the style's standard palette.
+    /// 
+    /// Note that on systems that support system colors, the style's
+    /// standard palette is not used. In particular, the Windows
+    /// Vista and Mac styles do not use the standard palette, but make
+    /// use of native theme engines. With these styles, you should not set
+    /// the palette with QApplication::setPalette().
+    /// 
+    /// **See also:** [`Application::set_palette`]
+    [event] standard_palette() -> Palette,
+    /// 
+    /// Draws the given primitive *element* with the provided *painter* using the style
+    /// options specified by *option.*
+    /// 
+    /// The *widget* argument is optional and may contain a widget that may
+    /// aid in drawing the primitive element.
+    /// 
+    /// The table below is listing the primitive elements and their
+    /// associated style option subclasses. The style options contain all
+    /// the parameters required to draw the elements, including
+    /// QStyleOption::state which holds the style flags that are used when
+    /// drawing. The table also describes which flags that are set when
+    /// casting the given option to the appropriate subclass.
+    /// 
+    /// Note that if a primitive element is not listed here, it is because
+    /// it uses a plain QStyleOption object.
+    /// 
+    /// * Primitive Element
+    /// * QStyleOption Subclass
+    /// * Style Flag
+    /// * Remark
+    /// * [PE_FrameFocusRect](PE_FrameFocusRect)
+    /// 
+    /// * [QStyleOptionFocusRect](QStyleOptionFocusRect)
+    /// 
+    /// * [State_FocusAtBorder](State_FocusAtBorder)
+    /// 
+    /// * Whether the focus is is at the border or inside the widget.
+    /// * {1,2} [PE_IndicatorCheckBox](PE_IndicatorCheckBox)
+    /// 
+    /// * {1,2} [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [State_NoChange](State_NoChange)
+    /// 
+    /// * Indicates a "tri-state" checkbox.
+    /// * [State_On](State_On)
+    /// 
+    /// * Indicates the indicator is checked.
+    /// * [PE_IndicatorRadioButton](PE_IndicatorRadioButton)
+    /// 
+    /// * [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [State_On](State_On)
+    /// 
+    /// * Indicates that a radio button is selected.
+    /// * [State_NoChange](State_NoChange)
+    /// 
+    /// * Indicates a "tri-state" controller.
+    /// * [State_Enabled](State_Enabled)
+    /// 
+    /// * Indicates the controller is enabled.
+    /// * {1,4} [PE_IndicatorBranch](PE_IndicatorBranch)
+    /// 
+    /// * {1,4} [QStyleOption](QStyleOption)
+    /// 
+    /// * [State_Children](State_Children)
+    /// 
+    /// * Indicates that the control for expanding the tree to show child items, should be drawn.
+    /// * [State_Item](State_Item)
+    /// 
+    /// * Indicates that a horizontal branch (to show a child item), should be drawn.
+    /// * [State_Open](State_Open)
+    /// 
+    /// * Indicates that the tree branch is expanded.
+    /// * [State_Sibling](State_Sibling)
+    /// 
+    /// * Indicates that a vertical line (to show a sibling item), should be drawn.
+    /// * [PE_IndicatorHeaderArrow](PE_IndicatorHeaderArrow)
+    /// 
+    /// * [QStyleOptionHeader](QStyleOptionHeader)
+    /// 
+    /// * [State_UpArrow](State_UpArrow)
+    /// 
+    /// * Indicates that the arrow should be drawn up; otherwise it should be down.
+    /// * [PE_FrameGroupBox,](PE_FrameGroupBox,)
+    /// [PE_Frame,](PE_Frame,)
+    /// [PE_FrameLineEdit,](PE_FrameLineEdit,)
+    /// [PE_FrameMenu,](PE_FrameMenu,)
+    /// [PE_FrameDockWidget,](PE_FrameDockWidget,)
+    /// [PE_FrameWindow](PE_FrameWindow)
+    /// 
+    /// * [QStyleOptionFrame](QStyleOptionFrame)
+    /// 
+    /// * [State_Sunken](State_Sunken)
+    /// 
+    /// * Indicates that the Frame should be sunken.
+    /// * [PE_IndicatorToolBarHandle](PE_IndicatorToolBarHandle)
+    /// 
+    /// * [QStyleOption](QStyleOption)
+    /// 
+    /// * [State_Horizontal](State_Horizontal)
+    /// 
+    /// * Indicates that the window handle is horizontal instead of vertical.
+    /// * [PE_IndicatorSpinPlus,](PE_IndicatorSpinPlus,)
+    /// [PE_IndicatorSpinMinus,](PE_IndicatorSpinMinus,)
+    /// [PE_IndicatorSpinUp,](PE_IndicatorSpinUp,)
+    /// [PE_IndicatorSpinDown,](PE_IndicatorSpinDown,)
+    /// 
+    /// * [QStyleOptionSpinBox](QStyleOptionSpinBox)
+    /// 
+    /// * [State_Sunken](State_Sunken)
+    /// 
+    /// * Indicates that the button is pressed.
+    /// * {1,5} [PE_PanelButtonCommand](PE_PanelButtonCommand)
+    /// 
+    /// * {1,5} [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [State_Enabled](State_Enabled)
+    /// 
+    /// * Set if the button is enabled.
+    /// * [State_HasFocus](State_HasFocus)
+    /// 
+    /// * Set if the button has input focus.
+    /// * [State_Raised](State_Raised)
+    /// 
+    /// * Set if the button is not down, not on and not flat.
+    /// * [State_On](State_On)
+    /// 
+    /// * Set if the button is a toggle button and is toggled on.
+    /// * [State_Sunken](State_Sunken)
+    /// 
+    /// * Set if the button is down (i.e., the mouse button or the space bar is pressed on the button).
+    /// 
+    /// **See also:** [`draw_complex_control()`]
+    /// [`draw_control()`]
+    [event] draw_primitive(pe: Style::PrimitiveElement, opt: *StyleOptionType, p: *PainterType, w: *WidgetType),
+    /// 
+    /// Returns the sub-area for the given *element* as described in the
+    /// provided style *option.* The returned rectangle is defined in
+    /// screen coordinates.
+    /// 
+    /// The *widget* argument is optional and can be used to aid
+    /// determining the area. The QStyleOption object can be cast to the
+    /// appropriate type using the qstyleoption_cast() function. See the
+    /// table below for the appropriate *option* casts:
+    /// 
+    /// * Sub Element
+    /// * QStyleOption Subclass
+    /// * [SE_PushButtonContents](SE_PushButtonContents)
+    /// 
+    /// * [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [SE_PushButtonFocusRect](SE_PushButtonFocusRect)
+    /// 
+    /// * [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [SE_CheckBoxIndicator](SE_CheckBoxIndicator)
+    /// 
+    /// * [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [SE_CheckBoxContents](SE_CheckBoxContents)
+    /// 
+    /// * [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [SE_CheckBoxFocusRect](SE_CheckBoxFocusRect)
+    /// 
+    /// * [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [SE_RadioButtonIndicator](SE_RadioButtonIndicator)
+    /// 
+    /// * [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [SE_RadioButtonContents](SE_RadioButtonContents)
+    /// 
+    /// * [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [SE_RadioButtonFocusRect](SE_RadioButtonFocusRect)
+    /// 
+    /// * [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [SE_ComboBoxFocusRect](SE_ComboBoxFocusRect)
+    /// 
+    /// * [QStyleOptionComboBox](QStyleOptionComboBox)
+    /// 
+    /// * [SE_ProgressBarGroove](SE_ProgressBarGroove)
+    /// 
+    /// * [QStyleOptionProgressBar](QStyleOptionProgressBar)
+    /// 
+    /// * [SE_ProgressBarContents](SE_ProgressBarContents)
+    /// 
+    /// * [QStyleOptionProgressBar](QStyleOptionProgressBar)
+    /// 
+    /// * [SE_ProgressBarLabel](SE_ProgressBarLabel)
+    /// 
+    /// * [QStyleOptionProgressBar](QStyleOptionProgressBar)
+    /// 
+    [event] sub_element_rect(sub_element: Style::SubElement, option: *StyleOptionType, widget: *WidgetType) -> Rect,
+    /// 
+    /// Returns the size of the element described by the specified
+    /// *option* and *type,* based on the provided *contentsSize.*
+    /// 
+    /// The *option* argument is a pointer to a QStyleOption or one of
+    /// its subclasses. The *option* can be cast to the appropriate type
+    /// using the qstyleoption_cast() function. The *widget* is an
+    /// optional argument and can contain extra information used for
+    /// calculating the size.
+    /// 
+    /// See the table below for the appropriate *option* casts:
+    /// 
+    /// * Contents Type
+    /// * QStyleOption Subclass
+    /// * [CT_CheckBox](CT_CheckBox)
+    /// 
+    /// * [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [CT_ComboBox](CT_ComboBox)
+    /// 
+    /// * [QStyleOptionComboBox](QStyleOptionComboBox)
+    /// 
+    /// * [CT_GroupBox](CT_GroupBox)
+    /// 
+    /// * [QStyleOptionGroupBox](QStyleOptionGroupBox)
+    /// 
+    /// * [CT_HeaderSection](CT_HeaderSection)
+    /// 
+    /// * [QStyleOptionHeader](QStyleOptionHeader)
+    /// 
+    /// * [CT_ItemViewItem](CT_ItemViewItem)
+    /// 
+    /// * [QStyleOptionViewItem](QStyleOptionViewItem)
+    /// 
+    /// * [CT_LineEdit](CT_LineEdit)
+    /// 
+    /// * [QStyleOptionFrame](QStyleOptionFrame)
+    /// 
+    /// * [CT_MdiControls](CT_MdiControls)
+    /// 
+    /// * [QStyleOptionComplex](QStyleOptionComplex)
+    /// 
+    /// * [CT_Menu](CT_Menu)
+    /// 
+    /// * [QStyleOption](QStyleOption)
+    /// 
+    /// * [CT_MenuItem](CT_MenuItem)
+    /// 
+    /// * [QStyleOptionMenuItem](QStyleOptionMenuItem)
+    /// 
+    /// * [CT_MenuBar](CT_MenuBar)
+    /// 
+    /// * [QStyleOptionMenuItem](QStyleOptionMenuItem)
+    /// 
+    /// * [CT_MenuBarItem](CT_MenuBarItem)
+    /// 
+    /// * [QStyleOptionMenuItem](QStyleOptionMenuItem)
+    /// 
+    /// * [CT_ProgressBar](CT_ProgressBar)
+    /// 
+    /// * [QStyleOptionProgressBar](QStyleOptionProgressBar)
+    /// 
+    /// * [CT_PushButton](CT_PushButton)
+    /// 
+    /// * [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [CT_RadioButton](CT_RadioButton)
+    /// 
+    /// * [QStyleOptionButton](QStyleOptionButton)
+    /// 
+    /// * [CT_ScrollBar](CT_ScrollBar)
+    /// 
+    /// * [QStyleOptionSlider](QStyleOptionSlider)
+    /// 
+    /// * [CT_SizeGrip](CT_SizeGrip)
+    /// 
+    /// * [QStyleOption](QStyleOption)
+    /// 
+    /// * [CT_Slider](CT_Slider)
+    /// 
+    /// * [QStyleOptionSlider](QStyleOptionSlider)
+    /// 
+    /// * [CT_SpinBox](CT_SpinBox)
+    /// 
+    /// * [QStyleOptionSpinBox](QStyleOptionSpinBox)
+    /// 
+    /// * [CT_Splitter](CT_Splitter)
+    /// 
+    /// * [QStyleOption](QStyleOption)
+    /// 
+    /// * [CT_TabBarTab](CT_TabBarTab)
+    /// 
+    /// * [QStyleOptionTab](QStyleOptionTab)
+    /// 
+    /// * [CT_TabWidget](CT_TabWidget)
+    /// 
+    /// * [QStyleOptionTabWidgetFrame](QStyleOptionTabWidgetFrame)
+    /// 
+    /// * [CT_ToolButton](CT_ToolButton)
+    /// 
+    /// * [QStyleOptionToolButton](QStyleOptionToolButton)
+    /// 
+    /// **See also:** ContentsType
+    /// [`StyleOption`]
+    [event] size_from_contents(ct: Style::ContentsType, opt: *StyleOptionType, contents_size: &SizeType, w: *WidgetType) -> Size,
+    /// 
+    /// Returns an integer representing the specified style *hint* for
+    /// the given *widget* described by the provided style *option.*
+    /// 
+    /// *returnData* is used when the querying widget needs more detailed data than
+    /// the integer that styleHint() returns. See the QStyleHintReturn class
+    /// description for details.
+    [event] style_hint(stylehint: Style::StyleHint, opt: *StyleOptionType, widget: *WidgetType, return_data: *StyleHintReturnType) -> i32,
+    /// 
+    /// Returns a pixmap for the given *standardPixmap.*
+    /// 
+    /// A standard pixmap is a pixmap that can follow some existing GUI
+    /// style or guideline. The *option* argument can be used to pass
+    /// extra information required when defining the appropriate
+    /// pixmap. The *widget* argument is optional and can also be used to
+    /// aid the determination of the pixmap.
+    /// 
+    /// Developers calling standardPixmap() should instead call standardIcon()
+    /// Developers who re-implemented standardPixmap() should instead re-implement
+    /// standardIcon().
+    /// 
+    /// **See also:** [`standard_icon()`]
+    [event] standard_pixmap(standard_pixmap: Style::StandardPixmap, opt: *StyleOptionType, widget: *WidgetType) -> Pixmap,
+    /// 
+    /// const QWidget *widget = 0) const = 0;
+    /// 
+    /// Returns an icon for the given *standardIcon.*
+    /// 
+    /// The *standardIcon* is a standard pixmap which can follow some
+    /// existing GUI style or guideline. The *option* argument can be
+    /// used to pass extra information required when defining the
+    /// appropriate icon. The *widget* argument is optional and can also
+    /// be used to aid the determination of the icon.
+    [event] standard_icon(standard_icon: Style::StandardPixmap, option: *StyleOptionType, widget: *WidgetType) -> Icon,
+    /// 
+    /// const QPixmap &pixmap, const QStyleOption *option) const
+    /// 
+    /// Returns a copy of the given *pixmap,* styled to conform to the
+    /// specified *iconMode* and taking into account the palette
+    /// specified by *option.*
+    /// 
+    /// The *option* parameter can pass extra information, but
+    /// it must contain a palette.
+    /// 
+    /// Note that not all pixmaps will conform, in which case the returned
+    /// pixmap is a plain copy.
+    /// 
+    /// **See also:** [`Icon`]
+    [event] generated_icon_pixmap(icon_mode: Icon::Mode, pixmap: &PixmapType, opt: *StyleOptionType) -> Pixmap,
+    /// 
+    /// Returns the given *logicalRectangle* converted to screen
+    /// coordinates based on the specified *direction.* The *boundingRectangle* is used when performing the translation.
+    /// 
+    /// This function is provided to support right-to-left desktops, and
+    /// is typically used in implementations of the subControlRect()
+    /// function.
+    /// 
+    /// **See also:** [`Widget::layout_direction()`]
+    [static] visual_rect(direction: Rute::LayoutDirection, bounding_rect: &RectType, logical_rect: &RectType) -> Rect,
+    /// 
+    /// Returns the given *logicalPosition* converted to screen
+    /// coordinates based on the specified *direction.* The *boundingRectangle* is used when performing the translation.
+    /// 
+    /// **See also:** [`Widget::layout_direction()`]
+    [static] visual_pos(direction: Rute::LayoutDirection, bounding_rect: &RectType, logical_pos: &PointType) -> Point,
+    /// 
+    /// Converts the given *logicalValue* to a pixel position. The *min*
+    /// parameter maps to 0, *max* maps to *span* and other values are
+    /// distributed evenly in-between.
+    /// 
+    /// This function can handle the entire integer range without
+    /// overflow, providing that *span* is less than 4096.
+    /// 
+    /// By default, this function assumes that the maximum value is on the
+    /// right for horizontal items and on the bottom for vertical items.
+    /// Set the *upsideDown* parameter to true to reverse this behavior.
+    /// 
+    /// **See also:** [`slider_value_from_position()`]
+    [static] slider_position_from_value(min: i32, max: i32, val: i32, space: i32, upside_down: bool) -> i32,
+    /// 
+    /// Converts the given pixel *position* to a logical value. 0 maps to
+    /// the *min* parameter, *span* maps to *max* and other values are
+    /// distributed evenly in-between.
+    /// 
+    /// This function can handle the entire integer range without
+    /// overflow.
+    /// 
+    /// By default, this function assumes that the maximum value is on the
+    /// right for horizontal items and on the bottom for vertical
+    /// items. Set the *upsideDown* parameter to true to reverse this
+    /// behavior.
+    /// 
+    /// **See also:** [`slider_position_from_value()`]
+    [static] slider_value_from_position(min: i32, max: i32, pos: i32, space: i32, upside_down: bool) -> i32,
+    /// 
+    /// Transforms an *alignment* of Qt::AlignLeft or Qt::AlignRight
+    /// without Qt::AlignAbsolute into Qt::AlignLeft or Qt::AlignRight with
+    /// Qt::AlignAbsolute according to the layout *direction.* The other
+    /// alignment flags are left untouched.
+    /// 
+    /// If no horizontal alignment was specified, the function returns the
+    /// default alignment for the given layout *direction.*
+    /// 
+    /// QWidget::layoutDirection
+    [static] visual_alignment(direction: Rute::LayoutDirection, alignment: Rute::Alignment) -> Rute::Alignment,
+    /// 
+    /// Returns a new rectangle of the specified *size* that is aligned to the given *rectangle* according to the specified *alignment* and *direction.*
+    [static] aligned_rect(direction: Rute::LayoutDirection, alignment: Rute::Alignment, size: &SizeType, rectangle: &RectType) -> Rect,
+    /// 
+    /// QSizePolicy::ControlType control2, Qt::Orientation orientation,
+    /// const QStyleOption *option = 0, const QWidget *widget = 0) const
+    /// 
+    /// Returns the spacing that should be used between *control1* and
+    /// *control2* in a layout. *orientation* specifies whether the
+    /// controls are laid out side by side or stacked vertically. The *option* parameter can be used to pass extra information about the
+    /// parent widget. The *widget* parameter is optional and can also
+    /// be used if *option* is 0.
+    /// 
+    /// This function is called by the layout system. It is used only if
+    /// PM_LayoutHorizontalSpacing or PM_LayoutVerticalSpacing returns a
+    /// negative value.
+    /// 
+    /// **See also:** [`combined_layout_spacing()`]
+    [event] layout_spacing(control1: SizePolicy::ControlType, control2: SizePolicy::ControlType, orientation: Rute::Orientation, option: *StyleOptionType, widget: *WidgetType) -> i32,
+    /// 
+    /// Returns the spacing that should be used between *controls1* and
+    /// *controls2* in a layout. *orientation* specifies whether the
+    /// controls are laid out side by side or stacked vertically. The *option* parameter can be used to pass extra information about the
+    /// parent widget. The *widget* parameter is optional and can also
+    /// be used if *option* is 0.
+    /// 
+    /// *controls1* and *controls2* are OR-combination of zero or more
+    /// [control types](QSizePolicy::ControlTypes)
+    /// 
+    /// 
+    /// This function is called by the layout system. It is used only if
+    /// PM_LayoutHorizontalSpacing or PM_LayoutVerticalSpacing returns a
+    /// negative value.
+    /// 
+    /// **See also:** [`layout_spacing()`]
+    combined_layout_spacing(controls1: SizePolicy::ControlTypes, controls2: SizePolicy::ControlTypes, orientation: Rute::Orientation, option: *StyleOptionType, widget: *WidgetType) -> i32,
+    /// 
+    /// This function returns the current proxy for this style.
+    /// By default most styles will return themselves. However
+    /// when a proxy style is in use, it will allow the style to
+    /// call back into its proxy.
+    proxy() -> Style?,
+}
+
 [org_name(QStyle)]
 enum StateFlag {
     State_None,
@@ -823,635 +1455,6 @@ enum StandardPixmap {
     SP_MediaVolumeMuted,
     SP_LineEditClearButton,
     SP_CustomBase,
-}
-
-struct Style : Object {
-    /// 
-    /// Initializes the appearance of the given *widget.*
-    /// 
-    /// This function is called for every widget at some point after it
-    /// has been fully created but just *before* it is shown for the very
-    /// first time.
-    /// 
-    /// Note that the default implementation does nothing. Reasonable
-    /// actions in this function might be to call the
-    /// QWidget::setBackgroundMode() function for the widget. Do not use
-    /// the function to set, for example, the geometry. Reimplementing
-    /// this function provides a back-door through which the appearance
-    /// of a widget can be changed, but with Qt's style engine it is
-    /// rarely necessary to implement this function; reimplement
-    /// drawItemPixmap(), drawItemText(), drawPrimitive(), etc. instead.
-    /// 
-    /// The QWidget::inherits() function may provide enough information to
-    /// allow class-specific customizations. But because new QStyle
-    /// subclasses are expected to work reasonably with all current and *future* widgets, limited use of hard-coded customization is
-    /// recommended.
-    /// 
-    /// **See also:** unpolish()
-    /// 
-    /// **Overloads**
-    /// Late initialization of the given *application* object.
-    /// 
-    /// **Overloads**
-    /// Changes the *palette* according to style specific requirements
-    /// for color palettes (if any).
-    /// 
-    /// **See also:** QPalette
-    /// QApplication::setPalette()
-    [event] polish(widget: *WidgetType),
-    /// 
-    /// Uninitialize the given *widget* 's appearance.
-    /// 
-    /// This function is the counterpart to polish(). It is called for
-    /// every polished widget whenever the style is dynamically changed;
-    /// the former style has to unpolish its settings before the new style
-    /// can polish them again.
-    /// 
-    /// Note that unpolish() will only be called if the widget is
-    /// destroyed. This can cause problems in some cases, e.g, if you
-    /// remove a widget from the UI, cache it, and then reinsert it after
-    /// the style has changed; some of Qt's classes cache their widgets.
-    /// 
-    /// **See also:** polish()
-    /// 
-    /// **Overloads**
-    /// Uninitialize the given *application.*
-    [event] unpolish(widget: *WidgetType),
-    /// 
-    /// Initializes the appearance of the given *widget.*
-    /// 
-    /// This function is called for every widget at some point after it
-    /// has been fully created but just *before* it is shown for the very
-    /// first time.
-    /// 
-    /// Note that the default implementation does nothing. Reasonable
-    /// actions in this function might be to call the
-    /// QWidget::setBackgroundMode() function for the widget. Do not use
-    /// the function to set, for example, the geometry. Reimplementing
-    /// this function provides a back-door through which the appearance
-    /// of a widget can be changed, but with Qt's style engine it is
-    /// rarely necessary to implement this function; reimplement
-    /// drawItemPixmap(), drawItemText(), drawPrimitive(), etc. instead.
-    /// 
-    /// The QWidget::inherits() function may provide enough information to
-    /// allow class-specific customizations. But because new QStyle
-    /// subclasses are expected to work reasonably with all current and *future* widgets, limited use of hard-coded customization is
-    /// recommended.
-    /// 
-    /// **See also:** unpolish()
-    /// 
-    /// **Overloads**
-    /// Late initialization of the given *application* object.
-    /// 
-    /// **Overloads**
-    /// Changes the *palette* according to style specific requirements
-    /// for color palettes (if any).
-    /// 
-    /// **See also:** QPalette
-    /// QApplication::setPalette()
-    [event] polish_2(application: *ApplicationType),
-    /// 
-    /// Uninitialize the given *widget* 's appearance.
-    /// 
-    /// This function is the counterpart to polish(). It is called for
-    /// every polished widget whenever the style is dynamically changed;
-    /// the former style has to unpolish its settings before the new style
-    /// can polish them again.
-    /// 
-    /// Note that unpolish() will only be called if the widget is
-    /// destroyed. This can cause problems in some cases, e.g, if you
-    /// remove a widget from the UI, cache it, and then reinsert it after
-    /// the style has changed; some of Qt's classes cache their widgets.
-    /// 
-    /// **See also:** polish()
-    /// 
-    /// **Overloads**
-    /// Uninitialize the given *application.*
-    [event] unpolish_2(application: *ApplicationType),
-    /// 
-    /// Initializes the appearance of the given *widget.*
-    /// 
-    /// This function is called for every widget at some point after it
-    /// has been fully created but just *before* it is shown for the very
-    /// first time.
-    /// 
-    /// Note that the default implementation does nothing. Reasonable
-    /// actions in this function might be to call the
-    /// QWidget::setBackgroundMode() function for the widget. Do not use
-    /// the function to set, for example, the geometry. Reimplementing
-    /// this function provides a back-door through which the appearance
-    /// of a widget can be changed, but with Qt's style engine it is
-    /// rarely necessary to implement this function; reimplement
-    /// drawItemPixmap(), drawItemText(), drawPrimitive(), etc. instead.
-    /// 
-    /// The QWidget::inherits() function may provide enough information to
-    /// allow class-specific customizations. But because new QStyle
-    /// subclasses are expected to work reasonably with all current and *future* widgets, limited use of hard-coded customization is
-    /// recommended.
-    /// 
-    /// **See also:** unpolish()
-    /// 
-    /// **Overloads**
-    /// Late initialization of the given *application* object.
-    /// 
-    /// **Overloads**
-    /// Changes the *palette* according to style specific requirements
-    /// for color palettes (if any).
-    /// 
-    /// **See also:** QPalette
-    /// QApplication::setPalette()
-    [event] polish_3(palette: &PaletteType),
-    /// 
-    /// Returns the area within the given *rectangle* in which to draw
-    /// the provided *text* according to the specified font *metrics*
-    /// and *alignment.* The *enabled* parameter indicates whether or
-    /// not the associated item is enabled.
-    /// 
-    /// If the given *rectangle* is larger than the area needed to render
-    /// the *text,* the rectangle that is returned will be offset within
-    /// *rectangle* according to the specified *alignment.* For
-    /// example, if *alignment* is Qt::AlignCenter, the returned
-    /// rectangle will be centered within *rectangle.* If the given *rectangle* is smaller than the area needed, the returned rectangle
-    /// will be the smallest rectangle large enough to render the *text.*
-    /// 
-    /// **See also:** Qt::Alignment
-    [event] item_text_rect(fm: &FontMetricsType, r: &RectType, flags: i32, enabled: bool, text: String) -> Rect,
-    /// 
-    /// Returns the area within the given *rectangle* in which to draw
-    /// the specified *pixmap* according to the defined *alignment.*
-    [event] item_pixmap_rect(r: &RectType, flags: i32, pixmap: &PixmapType) -> Rect,
-    /// 
-    /// Draws the given *text* in the specified *rectangle* using the
-    /// provided *painter* and *palette.*
-    /// 
-    /// The text is drawn using the painter's pen, and aligned and wrapped
-    /// according to the specified *alignment.* If an explicit *textRole* is specified, the text is drawn using the *palette's*
-    /// color for the given role. The *enabled* parameter indicates
-    /// whether or not the item is enabled; when reimplementing this
-    /// function, the *enabled* parameter should influence how the item is
-    /// drawn.
-    /// 
-    /// **See also:** Qt::Alignment
-    /// drawItemPixmap()
-    [event] draw_item_text(painter: *PainterType, rect: &RectType, flags: i32, pal: &PaletteType, enabled: bool, text: String, text_role: Palette::ColorRole),
-    /// 
-    /// const QPixmap &pixmap) const
-    /// 
-    /// Draws the given *pixmap* in the specified *rectangle,* according
-    /// to the specified *alignment,* using the provided *painter.*
-    /// 
-    /// **See also:** drawItemText()
-    [event] draw_item_pixmap(painter: *PainterType, rect: &RectType, alignment: i32, pixmap: &PixmapType),
-    /// 
-    /// Returns the style's standard palette.
-    /// 
-    /// Note that on systems that support system colors, the style's
-    /// standard palette is not used. In particular, the Windows
-    /// Vista and Mac styles do not use the standard palette, but make
-    /// use of native theme engines. With these styles, you should not set
-    /// the palette with QApplication::setPalette().
-    /// 
-    /// **See also:** QApplication::setPalette()
-    [event] standard_palette() -> Palette,
-    /// 
-    /// Draws the given primitive *element* with the provided *painter* using the style
-    /// options specified by *option.*
-    /// 
-    /// The *widget* argument is optional and may contain a widget that may
-    /// aid in drawing the primitive element.
-    /// 
-    /// The table below is listing the primitive elements and their
-    /// associated style option subclasses. The style options contain all
-    /// the parameters required to draw the elements, including
-    /// QStyleOption::state which holds the style flags that are used when
-    /// drawing. The table also describes which flags that are set when
-    /// casting the given option to the appropriate subclass.
-    /// 
-    /// Note that if a primitive element is not listed here, it is because
-    /// it uses a plain QStyleOption object.
-    /// 
-    /// * Primitive Element
-    /// * QStyleOption Subclass
-    /// * Style Flag
-    /// * Remark
-    /// * [PE_FrameFocusRect](PE_FrameFocusRect)
-    /// 
-    /// * [QStyleOptionFocusRect](QStyleOptionFocusRect)
-    /// 
-    /// * [State_FocusAtBorder](State_FocusAtBorder)
-    /// 
-    /// * Whether the focus is is at the border or inside the widget.
-    /// * {1,2} [PE_IndicatorCheckBox](PE_IndicatorCheckBox)
-    /// 
-    /// * {1,2} [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [State_NoChange](State_NoChange)
-    /// 
-    /// * Indicates a "tri-state" checkbox.
-    /// * [State_On](State_On)
-    /// 
-    /// * Indicates the indicator is checked.
-    /// * [PE_IndicatorRadioButton](PE_IndicatorRadioButton)
-    /// 
-    /// * [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [State_On](State_On)
-    /// 
-    /// * Indicates that a radio button is selected.
-    /// * [State_NoChange](State_NoChange)
-    /// 
-    /// * Indicates a "tri-state" controller.
-    /// * [State_Enabled](State_Enabled)
-    /// 
-    /// * Indicates the controller is enabled.
-    /// * {1,4} [PE_IndicatorBranch](PE_IndicatorBranch)
-    /// 
-    /// * {1,4} [QStyleOption](QStyleOption)
-    /// 
-    /// * [State_Children](State_Children)
-    /// 
-    /// * Indicates that the control for expanding the tree to show child items, should be drawn.
-    /// * [State_Item](State_Item)
-    /// 
-    /// * Indicates that a horizontal branch (to show a child item), should be drawn.
-    /// * [State_Open](State_Open)
-    /// 
-    /// * Indicates that the tree branch is expanded.
-    /// * [State_Sibling](State_Sibling)
-    /// 
-    /// * Indicates that a vertical line (to show a sibling item), should be drawn.
-    /// * [PE_IndicatorHeaderArrow](PE_IndicatorHeaderArrow)
-    /// 
-    /// * [QStyleOptionHeader](QStyleOptionHeader)
-    /// 
-    /// * [State_UpArrow](State_UpArrow)
-    /// 
-    /// * Indicates that the arrow should be drawn up; otherwise it should be down.
-    /// * [PE_FrameGroupBox,](PE_FrameGroupBox,)
-    /// [PE_Frame,](PE_Frame,)
-    /// [PE_FrameLineEdit,](PE_FrameLineEdit,)
-    /// [PE_FrameMenu,](PE_FrameMenu,)
-    /// [PE_FrameDockWidget,](PE_FrameDockWidget,)
-    /// [PE_FrameWindow](PE_FrameWindow)
-    /// 
-    /// * [QStyleOptionFrame](QStyleOptionFrame)
-    /// 
-    /// * [State_Sunken](State_Sunken)
-    /// 
-    /// * Indicates that the Frame should be sunken.
-    /// * [PE_IndicatorToolBarHandle](PE_IndicatorToolBarHandle)
-    /// 
-    /// * [QStyleOption](QStyleOption)
-    /// 
-    /// * [State_Horizontal](State_Horizontal)
-    /// 
-    /// * Indicates that the window handle is horizontal instead of vertical.
-    /// * [PE_IndicatorSpinPlus,](PE_IndicatorSpinPlus,)
-    /// [PE_IndicatorSpinMinus,](PE_IndicatorSpinMinus,)
-    /// [PE_IndicatorSpinUp,](PE_IndicatorSpinUp,)
-    /// [PE_IndicatorSpinDown,](PE_IndicatorSpinDown,)
-    /// 
-    /// * [QStyleOptionSpinBox](QStyleOptionSpinBox)
-    /// 
-    /// * [State_Sunken](State_Sunken)
-    /// 
-    /// * Indicates that the button is pressed.
-    /// * {1,5} [PE_PanelButtonCommand](PE_PanelButtonCommand)
-    /// 
-    /// * {1,5} [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [State_Enabled](State_Enabled)
-    /// 
-    /// * Set if the button is enabled.
-    /// * [State_HasFocus](State_HasFocus)
-    /// 
-    /// * Set if the button has input focus.
-    /// * [State_Raised](State_Raised)
-    /// 
-    /// * Set if the button is not down, not on and not flat.
-    /// * [State_On](State_On)
-    /// 
-    /// * Set if the button is a toggle button and is toggled on.
-    /// * [State_Sunken](State_Sunken)
-    /// 
-    /// * Set if the button is down (i.e., the mouse button or the space bar is pressed on the button).
-    /// 
-    /// **See also:** drawComplexControl()
-    /// drawControl()
-    [event] draw_primitive(pe: Style::PrimitiveElement, opt: *StyleOptionType, p: *PainterType, w: *WidgetType),
-    /// 
-    /// Returns the sub-area for the given *element* as described in the
-    /// provided style *option.* The returned rectangle is defined in
-    /// screen coordinates.
-    /// 
-    /// The *widget* argument is optional and can be used to aid
-    /// determining the area. The QStyleOption object can be cast to the
-    /// appropriate type using the qstyleoption_cast() function. See the
-    /// table below for the appropriate *option* casts:
-    /// 
-    /// * Sub Element
-    /// * QStyleOption Subclass
-    /// * [SE_PushButtonContents](SE_PushButtonContents)
-    /// 
-    /// * [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [SE_PushButtonFocusRect](SE_PushButtonFocusRect)
-    /// 
-    /// * [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [SE_CheckBoxIndicator](SE_CheckBoxIndicator)
-    /// 
-    /// * [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [SE_CheckBoxContents](SE_CheckBoxContents)
-    /// 
-    /// * [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [SE_CheckBoxFocusRect](SE_CheckBoxFocusRect)
-    /// 
-    /// * [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [SE_RadioButtonIndicator](SE_RadioButtonIndicator)
-    /// 
-    /// * [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [SE_RadioButtonContents](SE_RadioButtonContents)
-    /// 
-    /// * [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [SE_RadioButtonFocusRect](SE_RadioButtonFocusRect)
-    /// 
-    /// * [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [SE_ComboBoxFocusRect](SE_ComboBoxFocusRect)
-    /// 
-    /// * [QStyleOptionComboBox](QStyleOptionComboBox)
-    /// 
-    /// * [SE_ProgressBarGroove](SE_ProgressBarGroove)
-    /// 
-    /// * [QStyleOptionProgressBar](QStyleOptionProgressBar)
-    /// 
-    /// * [SE_ProgressBarContents](SE_ProgressBarContents)
-    /// 
-    /// * [QStyleOptionProgressBar](QStyleOptionProgressBar)
-    /// 
-    /// * [SE_ProgressBarLabel](SE_ProgressBarLabel)
-    /// 
-    /// * [QStyleOptionProgressBar](QStyleOptionProgressBar)
-    /// 
-    [event] sub_element_rect(sub_element: Style::SubElement, option: *StyleOptionType, widget: *WidgetType) -> Rect,
-    /// 
-    /// Returns the size of the element described by the specified
-    /// *option* and *type,* based on the provided *contentsSize.*
-    /// 
-    /// The *option* argument is a pointer to a QStyleOption or one of
-    /// its subclasses. The *option* can be cast to the appropriate type
-    /// using the qstyleoption_cast() function. The *widget* is an
-    /// optional argument and can contain extra information used for
-    /// calculating the size.
-    /// 
-    /// See the table below for the appropriate *option* casts:
-    /// 
-    /// * Contents Type
-    /// * QStyleOption Subclass
-    /// * [CT_CheckBox](CT_CheckBox)
-    /// 
-    /// * [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [CT_ComboBox](CT_ComboBox)
-    /// 
-    /// * [QStyleOptionComboBox](QStyleOptionComboBox)
-    /// 
-    /// * [CT_GroupBox](CT_GroupBox)
-    /// 
-    /// * [QStyleOptionGroupBox](QStyleOptionGroupBox)
-    /// 
-    /// * [CT_HeaderSection](CT_HeaderSection)
-    /// 
-    /// * [QStyleOptionHeader](QStyleOptionHeader)
-    /// 
-    /// * [CT_ItemViewItem](CT_ItemViewItem)
-    /// 
-    /// * [QStyleOptionViewItem](QStyleOptionViewItem)
-    /// 
-    /// * [CT_LineEdit](CT_LineEdit)
-    /// 
-    /// * [QStyleOptionFrame](QStyleOptionFrame)
-    /// 
-    /// * [CT_MdiControls](CT_MdiControls)
-    /// 
-    /// * [QStyleOptionComplex](QStyleOptionComplex)
-    /// 
-    /// * [CT_Menu](CT_Menu)
-    /// 
-    /// * [QStyleOption](QStyleOption)
-    /// 
-    /// * [CT_MenuItem](CT_MenuItem)
-    /// 
-    /// * [QStyleOptionMenuItem](QStyleOptionMenuItem)
-    /// 
-    /// * [CT_MenuBar](CT_MenuBar)
-    /// 
-    /// * [QStyleOptionMenuItem](QStyleOptionMenuItem)
-    /// 
-    /// * [CT_MenuBarItem](CT_MenuBarItem)
-    /// 
-    /// * [QStyleOptionMenuItem](QStyleOptionMenuItem)
-    /// 
-    /// * [CT_ProgressBar](CT_ProgressBar)
-    /// 
-    /// * [QStyleOptionProgressBar](QStyleOptionProgressBar)
-    /// 
-    /// * [CT_PushButton](CT_PushButton)
-    /// 
-    /// * [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [CT_RadioButton](CT_RadioButton)
-    /// 
-    /// * [QStyleOptionButton](QStyleOptionButton)
-    /// 
-    /// * [CT_ScrollBar](CT_ScrollBar)
-    /// 
-    /// * [QStyleOptionSlider](QStyleOptionSlider)
-    /// 
-    /// * [CT_SizeGrip](CT_SizeGrip)
-    /// 
-    /// * [QStyleOption](QStyleOption)
-    /// 
-    /// * [CT_Slider](CT_Slider)
-    /// 
-    /// * [QStyleOptionSlider](QStyleOptionSlider)
-    /// 
-    /// * [CT_SpinBox](CT_SpinBox)
-    /// 
-    /// * [QStyleOptionSpinBox](QStyleOptionSpinBox)
-    /// 
-    /// * [CT_Splitter](CT_Splitter)
-    /// 
-    /// * [QStyleOption](QStyleOption)
-    /// 
-    /// * [CT_TabBarTab](CT_TabBarTab)
-    /// 
-    /// * [QStyleOptionTab](QStyleOptionTab)
-    /// 
-    /// * [CT_TabWidget](CT_TabWidget)
-    /// 
-    /// * [QStyleOptionTabWidgetFrame](QStyleOptionTabWidgetFrame)
-    /// 
-    /// * [CT_ToolButton](CT_ToolButton)
-    /// 
-    /// * [QStyleOptionToolButton](QStyleOptionToolButton)
-    /// 
-    /// **See also:** ContentsType
-    /// QStyleOption
-    [event] size_from_contents(ct: Style::ContentsType, opt: *StyleOptionType, contents_size: &SizeType, w: *WidgetType) -> Size,
-    /// 
-    /// Returns an integer representing the specified style *hint* for
-    /// the given *widget* described by the provided style *option.*
-    /// 
-    /// *returnData* is used when the querying widget needs more detailed data than
-    /// the integer that styleHint() returns. See the QStyleHintReturn class
-    /// description for details.
-    [event] style_hint(stylehint: Style::StyleHint, opt: *StyleOptionType, widget: *WidgetType, return_data: *StyleHintReturnType) -> i32,
-    /// 
-    /// Returns a pixmap for the given *standardPixmap.*
-    /// 
-    /// A standard pixmap is a pixmap that can follow some existing GUI
-    /// style or guideline. The *option* argument can be used to pass
-    /// extra information required when defining the appropriate
-    /// pixmap. The *widget* argument is optional and can also be used to
-    /// aid the determination of the pixmap.
-    /// 
-    /// Developers calling standardPixmap() should instead call standardIcon()
-    /// Developers who re-implemented standardPixmap() should instead re-implement
-    /// standardIcon().
-    /// 
-    /// **See also:** standardIcon()
-    [event] standard_pixmap(standard_pixmap: Style::StandardPixmap, opt: *StyleOptionType, widget: *WidgetType) -> Pixmap,
-    /// 
-    /// const QWidget *widget = 0) const = 0;
-    /// 
-    /// Returns an icon for the given *standardIcon.*
-    /// 
-    /// The *standardIcon* is a standard pixmap which can follow some
-    /// existing GUI style or guideline. The *option* argument can be
-    /// used to pass extra information required when defining the
-    /// appropriate icon. The *widget* argument is optional and can also
-    /// be used to aid the determination of the icon.
-    [event] standard_icon(standard_icon: Style::StandardPixmap, option: *StyleOptionType, widget: *WidgetType) -> Icon,
-    /// 
-    /// const QPixmap &pixmap, const QStyleOption *option) const
-    /// 
-    /// Returns a copy of the given *pixmap,* styled to conform to the
-    /// specified *iconMode* and taking into account the palette
-    /// specified by *option.*
-    /// 
-    /// The *option* parameter can pass extra information, but
-    /// it must contain a palette.
-    /// 
-    /// Note that not all pixmaps will conform, in which case the returned
-    /// pixmap is a plain copy.
-    /// 
-    /// **See also:** QIcon
-    [event] generated_icon_pixmap(icon_mode: Icon::Mode, pixmap: &PixmapType, opt: *StyleOptionType) -> Pixmap,
-    /// 
-    /// Returns the given *logicalRectangle* converted to screen
-    /// coordinates based on the specified *direction.* The *boundingRectangle* is used when performing the translation.
-    /// 
-    /// This function is provided to support right-to-left desktops, and
-    /// is typically used in implementations of the subControlRect()
-    /// function.
-    /// 
-    /// **See also:** QWidget::layoutDirection
-    [static] visual_rect(direction: Rute::LayoutDirection, bounding_rect: &RectType, logical_rect: &RectType) -> Rect,
-    /// 
-    /// Returns the given *logicalPosition* converted to screen
-    /// coordinates based on the specified *direction.* The *boundingRectangle* is used when performing the translation.
-    /// 
-    /// **See also:** QWidget::layoutDirection
-    [static] visual_pos(direction: Rute::LayoutDirection, bounding_rect: &RectType, logical_pos: &PointType) -> Point,
-    /// 
-    /// Converts the given *logicalValue* to a pixel position. The *min*
-    /// parameter maps to 0, *max* maps to *span* and other values are
-    /// distributed evenly in-between.
-    /// 
-    /// This function can handle the entire integer range without
-    /// overflow, providing that *span* is less than 4096.
-    /// 
-    /// By default, this function assumes that the maximum value is on the
-    /// right for horizontal items and on the bottom for vertical items.
-    /// Set the *upsideDown* parameter to true to reverse this behavior.
-    /// 
-    /// **See also:** sliderValueFromPosition()
-    [static] slider_position_from_value(min: i32, max: i32, val: i32, space: i32, upside_down: bool) -> i32,
-    /// 
-    /// Converts the given pixel *position* to a logical value. 0 maps to
-    /// the *min* parameter, *span* maps to *max* and other values are
-    /// distributed evenly in-between.
-    /// 
-    /// This function can handle the entire integer range without
-    /// overflow.
-    /// 
-    /// By default, this function assumes that the maximum value is on the
-    /// right for horizontal items and on the bottom for vertical
-    /// items. Set the *upsideDown* parameter to true to reverse this
-    /// behavior.
-    /// 
-    /// **See also:** sliderPositionFromValue()
-    [static] slider_value_from_position(min: i32, max: i32, pos: i32, space: i32, upside_down: bool) -> i32,
-    /// 
-    /// Transforms an *alignment* of Qt::AlignLeft or Qt::AlignRight
-    /// without Qt::AlignAbsolute into Qt::AlignLeft or Qt::AlignRight with
-    /// Qt::AlignAbsolute according to the layout *direction.* The other
-    /// alignment flags are left untouched.
-    /// 
-    /// If no horizontal alignment was specified, the function returns the
-    /// default alignment for the given layout *direction.*
-    /// 
-    /// QWidget::layoutDirection
-    [static] visual_alignment(direction: Rute::LayoutDirection, alignment: Rute::Alignment) -> Rute::Alignment,
-    /// 
-    /// Returns a new rectangle of the specified *size* that is aligned to the given *rectangle* according to the specified *alignment* and *direction.*
-    [static] aligned_rect(direction: Rute::LayoutDirection, alignment: Rute::Alignment, size: &SizeType, rectangle: &RectType) -> Rect,
-    /// 
-    /// QSizePolicy::ControlType control2, Qt::Orientation orientation,
-    /// const QStyleOption *option = 0, const QWidget *widget = 0) const
-    /// 
-    /// Returns the spacing that should be used between *control1* and
-    /// *control2* in a layout. *orientation* specifies whether the
-    /// controls are laid out side by side or stacked vertically. The *option* parameter can be used to pass extra information about the
-    /// parent widget. The *widget* parameter is optional and can also
-    /// be used if *option* is 0.
-    /// 
-    /// This function is called by the layout system. It is used only if
-    /// PM_LayoutHorizontalSpacing or PM_LayoutVerticalSpacing returns a
-    /// negative value.
-    /// 
-    /// **See also:** combinedLayoutSpacing()
-    [event] layout_spacing(control1: SizePolicy::ControlType, control2: SizePolicy::ControlType, orientation: Rute::Orientation, option: *StyleOptionType, widget: *WidgetType) -> i32,
-    /// 
-    /// Returns the spacing that should be used between *controls1* and
-    /// *controls2* in a layout. *orientation* specifies whether the
-    /// controls are laid out side by side or stacked vertically. The *option* parameter can be used to pass extra information about the
-    /// parent widget. The *widget* parameter is optional and can also
-    /// be used if *option* is 0.
-    /// 
-    /// *controls1* and *controls2* are OR-combination of zero or more
-    /// [control types](QSizePolicy::ControlTypes)
-    /// 
-    /// 
-    /// This function is called by the layout system. It is used only if
-    /// PM_LayoutHorizontalSpacing or PM_LayoutVerticalSpacing returns a
-    /// negative value.
-    /// 
-    /// **See also:** layoutSpacing()
-    combined_layout_spacing(controls1: SizePolicy::ControlTypes, controls2: SizePolicy::ControlTypes, orientation: Rute::Orientation, option: *StyleOptionType, widget: *WidgetType) -> i32,
-    /// 
-    /// This function returns the current proxy for this style.
-    /// By default most styles will return themselves. However
-    /// when a proxy style is in use, it will allow the style to
-    /// call back into its proxy.
-    proxy() -> Style?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

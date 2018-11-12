@@ -70,35 +70,10 @@
 /// 
 /// * A truncated tab bar shown in the Fusion widget style.
 /// 
-/// **See also:** QTabWidget
+/// **See also:** [`TabWidget`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTabBar)]
-enum Shape {
-    RoundedNorth,
-    RoundedSouth,
-    RoundedWest,
-    RoundedEast,
-    TriangularNorth,
-    TriangularSouth,
-    TriangularWest,
-    TriangularEast,
-}
-
-[org_name(QTabBar)]
-enum ButtonPosition {
-    LeftSide,
-    RightSide,
-}
-
-[org_name(QTabBar)]
-enum SelectionBehavior {
-    SelectLeftTab,
-    SelectRightTab,
-    SelectPreviousTab,
-}
-
 struct TabBar : Widget {
     /// 
     /// Possible values for this property are described by the Shape enum.
@@ -117,6 +92,7 @@ struct TabBar : Widget {
     /// 
     /// **Overloads**
     /// Adds a new tab with icon *icon* and text *text.* Returns the new tab's index.
+    [org_name(addTab)]
     add_tab_2(icon: &IconType, text: String) -> i32,
     /// 
     /// Inserts a new tab with text *text* at position *index.* If *index* is out of range, the new tab is appened. Returns the new
@@ -145,6 +121,7 @@ struct TabBar : Widget {
     /// 
     /// Inserting a new tab at an index less than or equal to the current index
     /// will increment the current index, but keep the current tab.
+    [org_name(insertTab)]
     insert_tab_2(index: i32, icon: &IconType, text: String) -> i32,
     /// 
     /// Removes the tab at position *index.*
@@ -154,8 +131,8 @@ struct TabBar : Widget {
     /// 
     /// Moves the item at index position *from* to index position *to.*
     /// 
-    /// **See also:** tabMoved()
-    /// tabLayoutChange()
+    /// **See also:** [`tab_moved()`]
+    /// [`tab_layout_change()`]
     move_tab(from: i32, to: i32),
     /// 
     /// Returns `true` if the tab at position *index* is enabled; otherwise
@@ -172,7 +149,7 @@ struct TabBar : Widget {
     /// Returns the text color of the tab with the given *index,* or a invalid
     /// color if *index* is out of range.
     /// 
-    /// **See also:** setTabTextColor()
+    /// **See also:** [`set_tab_text_color()`]
     tab_text(index: i32) -> String,
     /// 
     /// Sets the text of the tab at position *index* to *text.*
@@ -181,20 +158,20 @@ struct TabBar : Widget {
     /// 
     /// If an invalid color is specified, the tab will use the QTabBar foreground role instead.
     /// 
-    /// **See also:** tabTextColor()
+    /// **See also:** [`tab_text_color()`]
     set_tab_text(index: i32, text: String),
     /// 
     /// Returns the text color of the tab with the given *index,* or a invalid
     /// color if *index* is out of range.
     /// 
-    /// **See also:** setTabTextColor()
+    /// **See also:** [`set_tab_text_color()`]
     tab_text_color(index: i32) -> Color,
     /// 
     /// Sets the color of the text in the tab with the given *index* to the specified *color.*
     /// 
     /// If an invalid color is specified, the tab will use the QTabBar foreground role instead.
     /// 
-    /// **See also:** tabTextColor()
+    /// **See also:** [`tab_text_color()`]
     set_tab_text_color(index: i32, color: &ColorType),
     /// 
     /// Returns the icon of the tab at position *index,* or a null icon
@@ -209,9 +186,9 @@ struct TabBar : Widget {
     /// 
     /// By default the value is style dependent.
     /// 
-    /// **See also:** QTabWidget::elideMode
+    /// **See also:** [`TabWidget::elide_mode()`]
     /// usesScrollButtons
-    /// QStyle::SH_TabBar_ElideMode
+    /// [`Style::sh_tab_bar_elide_mode()`]
     elide_mode() -> Rute::TextElideMode,
     set_elide_mode(arg0: Rute::TextElideMode),
     /// 
@@ -257,15 +234,15 @@ struct TabBar : Widget {
     /// If true then QTabBar draws a base in relation to the styles overlab.
     /// Otherwise only the tabs are drawn.
     /// 
-    /// **See also:** QStyle::pixelMetric()
-    /// QStyle::PM_TabBarBaseOverlap
-    /// QStyleOptionTabBarBase
+    /// **See also:** [`Style::pixel_metric`]
+    /// [`Style::pm_tab_bar_base_overlap()`]
+    /// [`StyleOptionTabBarBase`]
     draw_base() -> bool,
     /// 
     /// The default value is style-dependent. `iconSize` is a maximum
     /// size; icons that are smaller are not scaled up.
     /// 
-    /// **See also:** QTabWidget::iconSize
+    /// **See also:** [`TabWidget::icon_size()`]
     icon_size() -> Size,
     set_icon_size(size: &SizeType),
     /// 
@@ -275,8 +252,8 @@ struct TabBar : Widget {
     /// By default the value is style dependant.
     /// 
     /// **See also:** elideMode
-    /// QTabWidget::usesScrollButtons
-    /// QStyle::SH_TabBar_PreferNoArrows
+    /// [`TabWidget::uses_scroll_buttons()`]
+    /// [`Style::sh_tab_bar_prefer_no_arrows()`]
     uses_scroll_buttons() -> bool,
     set_uses_scroll_buttons(use_buttons: bool),
     /// 
@@ -286,8 +263,8 @@ struct TabBar : Widget {
     /// 
     /// By default the value is false.
     /// 
-    /// **See also:** setTabButton()
-    /// tabRemoved()
+    /// **See also:** [`set_tab_button()`]
+    /// [`tab_removed()`]
     tabs_closable() -> bool,
     set_tabs_closable(closable: bool),
     /// 
@@ -300,7 +277,7 @@ struct TabBar : Widget {
     /// will be deleted by the tab bar when it is destroyed unless you separately
     /// reparent the widget after setting some other widget (or 0).
     /// 
-    /// **See also:** tabsClosable()
+    /// **See also:** [`tabs_closable()`]
     set_tab_button(index: i32, position: TabBar::ButtonPosition, widget: *WidgetType),
     /// 
     /// Returns the widget set a tab *index* and *position* or 0 if
@@ -309,13 +286,13 @@ struct TabBar : Widget {
     /// 
     /// By default the value is SelectRightTab.
     /// 
-    /// **See also:** removeTab()
+    /// **See also:** [`remove_tab()`]
     selection_behavior_on_remove() -> TabBar::SelectionBehavior,
     set_selection_behavior_on_remove(behavior: TabBar::SelectionBehavior),
     /// 
     /// By default the value is true.
     /// 
-    /// **See also:** QTabWidget::documentMode
+    /// **See also:** [`TabWidget::document_mode()`]
     expanding() -> bool,
     set_expanding(enabled: bool),
     is_movable() -> bool,
@@ -325,13 +302,13 @@ struct TabBar : Widget {
     /// way then they would normally look in a tab widget. On MacOS this will
     /// look similar to the tabs in Safari or Sierra's Terminal.app.
     /// 
-    /// **See also:** QTabWidget::documentMode
+    /// **See also:** [`TabWidget::document_mode()`]
     document_mode() -> bool,
     set_document_mode(set: bool),
     /// 
     /// By default, this property is false.
     /// 
-    /// **See also:** QWidget::visible
+    /// **See also:** [`Widget::visible()`]
     auto_hide() -> bool,
     set_auto_hide(hide: bool),
     /// 
@@ -358,7 +335,7 @@ struct TabBar : Widget {
     /// This signal is emitted when the close button on a tab is clicked.
     /// The *index* is the index that should be removed.
     /// 
-    /// **See also:** setTabsClosable()
+    /// **See also:** [`set_tabs_closable()`]
     [signal] tab_close_requested(index: i32),
     /// 
     /// This signal is emitted when the tab has moved the tab
@@ -367,7 +344,7 @@ struct TabBar : Widget {
     /// note: QTabWidget will automatically move the page when
     /// this signal is emitted from its tab bar.
     /// 
-    /// **See also:** moveTab()
+    /// **See also:** [`move_tab()`]
     [signal] tab_moved(from: i32, to: i32),
     /// 
     /// This signal is emitted when user clicks on a tab at an *index.*
@@ -391,18 +368,18 @@ struct TabBar : Widget {
     /// This virtual handler is called after a new tab was added or
     /// inserted at position *index.*
     /// 
-    /// **See also:** tabRemoved()
+    /// **See also:** [`tab_removed()`]
     [event] tab_inserted(index: i32),
     /// 
     /// This virtual handler is called after a tab was removed from
     /// position *index.*
     /// 
-    /// **See also:** tabInserted()
+    /// **See also:** [`tab_inserted()`]
     [event] tab_removed(index: i32),
     /// 
     /// This virtual handler is called whenever the tab layout changes.
     /// 
-    /// **See also:** tabRect()
+    /// **See also:** [`tab_rect()`]
     [event] tab_layout_change(),
     /// 
     [event] event(arg0: *EventType) -> bool,
@@ -432,9 +409,34 @@ struct TabBar : Widget {
     /// is useful for subclasses when they need a QStyleOptionTab,
     /// but don't want to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
-    /// QTabWidget::initStyleOption()
+    /// **See also:** [`StyleOption::init_from`]
+    /// [`TabWidget::init_style_option`]
     init_style_option(option: *StyleOptionTabType, tab_index: i32),
+}
+
+[org_name(QTabBar)]
+enum Shape {
+    RoundedNorth,
+    RoundedSouth,
+    RoundedWest,
+    RoundedEast,
+    TriangularNorth,
+    TriangularSouth,
+    TriangularWest,
+    TriangularEast,
+}
+
+[org_name(QTabBar)]
+enum ButtonPosition {
+    LeftSide,
+    RightSide,
+}
+
+[org_name(QTabBar)]
+enum SelectionBehavior {
+    SelectLeftTab,
+    SelectRightTab,
+    SelectPreviousTab,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

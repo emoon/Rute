@@ -16,13 +16,12 @@
 /// * QWidget::fontInfo() returns the font info for a widget's font. This is equivalent to calling QFontInfo(widget->font()). If the widget's font is changed later, the font info object is *not* updated.
 /// * QPainter::fontInfo() returns the font info for a painter's current font. If the painter's font is changed later, the font info object is *not* updated.
 /// 
-/// **See also:** QFont
-/// QFontMetrics
-/// QFontDatabase
+/// **See also:** [`Font`]
+/// [`FontMetrics`]
+/// [`FontDatabase`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct FontInfo {
     /// 
     /// Swaps this font info instance with *other.* This function is very
@@ -31,83 +30,83 @@ struct FontInfo {
     /// 
     /// Returns the family name of the matched window system font.
     /// 
-    /// **See also:** QFont::family()
+    /// **See also:** [`Font::family`]
     family() -> String,
     /// 
     /// Returns the style name of the matched window system font on
     /// systems that support it.
     /// 
-    /// **See also:** QFont::styleName()
+    /// **See also:** [`Font::style_name`]
     style_name() -> String,
     /// 
     /// Returns the pixel size of the matched window system font.
     /// 
-    /// **See also:** QFont::pointSize()
+    /// **See also:** [`Font::point_size`]
     pixel_size() -> i32,
     /// 
     /// Returns the point size of the matched window system font.
     /// 
-    /// **See also:** pointSizeF()
-    /// QFont::pointSize()
+    /// **See also:** [`point_size_f()`]
+    /// [`Font::point_size`]
     /// 
     /// Returns the point size of the matched window system font.
     /// 
-    /// **See also:** QFont::pointSizeF()
+    /// **See also:** [`Font::point_size_f`]
     point_size() -> i32,
     /// 
     /// Returns the point size of the matched window system font.
     /// 
-    /// **See also:** QFont::pointSizeF()
+    /// **See also:** [`Font::point_size_f`]
     point_size_f() -> f32,
     /// 
     /// Returns the italic value of the matched window system font.
     /// 
-    /// **See also:** QFont::italic()
+    /// **See also:** [`Font::italic`]
     italic() -> bool,
     /// 
     /// Returns the style name of the matched window system font on
     /// systems that support it.
     /// 
-    /// **See also:** QFont::styleName()
+    /// **See also:** [`Font::style_name`]
     /// 
     /// Returns the style value of the matched window system font.
     /// 
-    /// **See also:** QFont::style()
+    /// **See also:** [`Font::style`]
     /// 
     /// Returns the style of the matched window system font.
     /// 
     /// Currently only returns the style hint set in QFont.
     /// 
-    /// **See also:** QFont::styleHint()
-    /// QFont::StyleHint
+    /// **See also:** [`Font::style_hint`]
+    /// [`Font::style_hint()`]
     style() -> Font::Style,
     /// 
     /// Returns the weight of the matched window system font.
     /// 
-    /// **See also:** QFont::weight()
-    /// bold()
+    /// **See also:** [`Font::weight`]
+    /// [`bold()`]
     weight() -> i32,
     /// 
     /// Returns `true` if weight() would return a value greater than
     /// QFont::Normal; otherwise returns `false.`
     /// 
-    /// **See also:** weight()
-    /// QFont::bold()
+    /// **See also:** [`weight()`]
+    /// [`Font::bold`]
     bold() -> bool,
     underline() -> bool,
     overline() -> bool,
     /// 
     /// Returns the fixed pitch value of the matched window system font.
     /// 
-    /// **See also:** QFont::fixedPitch()
+    /// **See also:** [`Font::fixed_pitch`]
     fixed_pitch() -> bool,
     /// 
     /// Returns the style of the matched window system font.
     /// 
     /// Currently only returns the style hint set in QFont.
     /// 
-    /// **See also:** QFont::styleHint()
-    /// QFont::StyleHint
+    /// **See also:** [`Font::style_hint`]
+    /// [`Font::style_hint()`]
     style_hint() -> Font::StyleHint,
     /// 
     /// Returns `true` if the font is a raw mode font; otherwise returns
@@ -117,13 +116,13 @@ struct FontInfo {
     /// return the same values set in the QFont, regardless of the font
     /// actually used.
     /// 
-    /// **See also:** QFont::rawMode()
+    /// **See also:** [`Font::raw_mode`]
     raw_mode() -> bool,
     /// 
     /// Returns `true` if the matched window system font is exactly the same
     /// as the one specified by the font; otherwise returns `false.`
     /// 
-    /// **See also:** QFont::exactMatch()
+    /// **See also:** [`Font::exact_match`]
     exact_match() -> bool,
 }
 

@@ -81,25 +81,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTabletEvent)]
-enum TabletDevice {
-    NoDevice,
-    Puck,
-    Stylus,
-    Airbrush,
-    FourDMouse,
-    XFreeEraser,
-    RotationStylus,
-}
-
-[org_name(QTabletEvent)]
-enum PointerType {
-    UnknownPointer,
-    Pen,
-    Cursor,
-    Eraser,
-}
-
 struct TabletEvent : InputEvent {
     qt_check_for_qgadget_macro(),
     /// 
@@ -109,9 +90,9 @@ struct TabletEvent : InputEvent {
     /// If you move widgets around in response to mouse events, use
     /// globalPos() instead of this function.
     /// 
-    /// **See also:** x()
-    /// y()
-    /// globalPos()
+    /// **See also:** [`x()`]
+    /// [`y()`]
+    /// [`global_pos()`]
     /// 
     /// Returns the position of the device, relative to the widget that
     /// received the event.
@@ -119,7 +100,7 @@ struct TabletEvent : InputEvent {
     /// If you move widgets around in response to mouse events, use
     /// globalPosF() instead of this function.
     /// 
-    /// **See also:** globalPosF()
+    /// **See also:** [`global_pos_f()`]
     pos() -> Point,
     /// 
     /// Returns the global position of the device *at the time of the
@@ -128,9 +109,9 @@ struct TabletEvent : InputEvent {
     /// globalPos() can differ significantly from the current position
     /// QCursor::pos().
     /// 
-    /// **See also:** globalX()
-    /// globalY()
-    /// hiResGlobalPos()
+    /// **See also:** [`global_x()`]
+    /// [`global_y()`]
+    /// [`hi_res_global_pos()`]
     /// 
     /// Returns the global position of the device *at the time of the
     /// event* . This is important on asynchronous windows systems like X11;
@@ -138,7 +119,7 @@ struct TabletEvent : InputEvent {
     /// globalPosF() can differ significantly from the current position
     /// QCursor::pos().
     /// 
-    /// **See also:** posF()
+    /// **See also:** [`pos_f()`]
     global_pos() -> Point,
     /// 
     /// Returns the position of the device, relative to the widget that
@@ -147,7 +128,7 @@ struct TabletEvent : InputEvent {
     /// If you move widgets around in response to mouse events, use
     /// globalPosF() instead of this function.
     /// 
-    /// **See also:** globalPosF()
+    /// **See also:** [`global_pos_f()`]
     pos_f() -> PointF?,
     /// 
     /// Returns the global position of the device *at the time of the
@@ -156,7 +137,7 @@ struct TabletEvent : InputEvent {
     /// globalPosF() can differ significantly from the current position
     /// QCursor::pos().
     /// 
-    /// **See also:** posF()
+    /// **See also:** [`pos_f()`]
     global_pos_f() -> PointF?,
     /// 
     /// Returns the angle between the device (a pen, for example) and the
@@ -166,13 +147,13 @@ struct TabletEvent : InputEvent {
     /// 
     /// ![qtabletevent-tilt.png](qtabletevent-tilt.png)
     /// 
-    /// **See also:** yTilt()
+    /// **See also:** [`y_tilt()`]
     /// 
     /// Returns the x position of the device, relative to the widget that
     /// received the event.
     /// 
-    /// **See also:** y()
-    /// pos()
+    /// **See also:** [`y()`]
+    /// [`pos()`]
     x() -> i32,
     /// 
     /// Returns the angle between the device (a pen, for example) and the
@@ -180,29 +161,29 @@ struct TabletEvent : InputEvent {
     /// Positive values are towards the bottom of the tablet. The angle is
     /// within the range -60 to +60 degrees.
     /// 
-    /// **See also:** xTilt()
+    /// **See also:** [`x_tilt()`]
     /// 
     /// Returns the y position of the device, relative to the widget that
     /// received the event.
     /// 
-    /// **See also:** x()
-    /// pos()
+    /// **See also:** [`x()`]
+    /// [`pos()`]
     y() -> i32,
     /// 
     /// Returns the global x position of the mouse pointer at the time of
     /// the event.
     /// 
-    /// **See also:** globalY()
-    /// globalPos()
-    /// hiResGlobalX()
+    /// **See also:** [`global_y()`]
+    /// [`global_pos()`]
+    /// [`hi_res_global_x()`]
     global_x() -> i32,
     /// 
     /// Returns the global y position of the tablet device at the time of
     /// the event.
     /// 
-    /// **See also:** globalX()
-    /// globalPos()
-    /// hiResGlobalY()
+    /// **See also:** [`global_x()`]
+    /// [`global_pos()`]
+    /// [`hi_res_global_y()`]
     global_y() -> i32,
     /// 
     /// The high precision x position of the tablet device.
@@ -236,20 +217,20 @@ struct TabletEvent : InputEvent {
     /// of the pen. Earlier versions would report a different value when using
     /// the eraser-end versus the pen-end of the stylus on some OS's.
     /// 
-    /// **See also:** pointerType()
+    /// **See also:** [`pointer_type()`]
     unique_id() -> i64,
     /// 
     /// Returns the pressure for the device. 0.0 indicates that the stylus is not
     /// on the tablet, 1.0 indicates the maximum amount of pressure for the stylus.
     /// 
-    /// **See also:** tangentialPressure()
+    /// **See also:** [`tangential_pressure()`]
     pressure() -> f32,
     /// 
     /// Returns the z position of the device. Typically this is represented by a
     /// wheel on a 4D Mouse. If the device does not support a Z-axis, this value is
     /// always zero. This is **not** the same as pressure.
     /// 
-    /// **See also:** pressure()
+    /// **See also:** [`pressure()`]
     z() -> i32,
     /// 
     /// Returns the tangential pressure for the device. This is typically given by a finger
@@ -258,7 +239,7 @@ struct TabletEvent : InputEvent {
     /// direction from the neutrual position. If the device does not support
     /// tangential pressure, this value is always 0.0.
     /// 
-    /// **See also:** pressure()
+    /// **See also:** [`pressure()`]
     tangential_pressure() -> f32,
     /// 
     /// Returns the rotation of the current tool in degrees, where zero means the
@@ -276,7 +257,7 @@ struct TabletEvent : InputEvent {
     /// 
     /// ![qtabletevent-tilt.png](qtabletevent-tilt.png)
     /// 
-    /// **See also:** yTilt()
+    /// **See also:** [`y_tilt()`]
     x_tilt() -> i32,
     /// 
     /// Returns the angle between the device (a pen, for example) and the
@@ -284,7 +265,7 @@ struct TabletEvent : InputEvent {
     /// Positive values are towards the bottom of the tablet. The angle is
     /// within the range -60 to +60 degrees.
     /// 
-    /// **See also:** xTilt()
+    /// **See also:** [`x_tilt()`]
     y_tilt() -> i32,
     /// 
     /// Returns the button that caused the event.
@@ -295,8 +276,8 @@ struct TabletEvent : InputEvent {
     /// and [TabletLeaveProximity](TabletLeaveProximity)
     /// events.
     /// 
-    /// **See also:** buttons()
-    /// Qt::MouseButton
+    /// **See also:** [`buttons()`]
+    /// [`t::mouse_button()`]
     /// 
     /// Returns the button state when the event was generated. The button state is
     /// a combination of buttons from the [Qt::MouseButton](Qt::MouseButton)
@@ -309,8 +290,8 @@ struct TabletEvent : InputEvent {
     /// events this excludes the button that caused the
     /// event.
     /// 
-    /// **See also:** button()
-    /// Qt::MouseButton
+    /// **See also:** [`button()`]
+    /// [`t::mouse_button()`]
     button() -> Rute::MouseButton,
     /// 
     /// Returns the button state when the event was generated. The button state is
@@ -324,9 +305,28 @@ struct TabletEvent : InputEvent {
     /// events this excludes the button that caused the
     /// event.
     /// 
-    /// **See also:** button()
-    /// Qt::MouseButton
+    /// **See also:** [`button()`]
+    /// [`t::mouse_button()`]
     buttons() -> Rute::MouseButtons,
+}
+
+[org_name(QTabletEvent)]
+enum TabletDevice {
+    NoDevice,
+    Puck,
+    Stylus,
+    Airbrush,
+    FourDMouse,
+    XFreeEraser,
+    RotationStylus,
+}
+
+[org_name(QTabletEvent)]
+enum PointerType {
+    UnknownPointer,
+    Pen,
+    Cursor,
+    Eraser,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

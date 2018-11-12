@@ -86,11 +86,11 @@
 /// is to set the [uniformRowHeights](uniformRowHeights)
 /// property to true.
 /// 
-/// **See also:** QListView
-/// QTreeWidget
+/// **See also:** [`ListView`]
+/// [`TreeWidget`]
 /// {View Classes}
-/// QAbstractItemModel
-/// QAbstractItemView
+/// [`AbstractItemModel`]
+/// [`AbstractItemView`]
 /// {Dir View Example}
 /// # Licence
 ///
@@ -105,12 +105,12 @@ struct TreeView : AbstractItemView {
     /// 
     /// Returns the header for the tree view.
     /// 
-    /// **See also:** QAbstractItemModel::headerData()
+    /// **See also:** [`AbstractItemModel::header_data`]
     /// 
     /// If this property is `true,` the header is not shown otherwise it is.
     /// The default value is false.
     /// 
-    /// **See also:** header()
+    /// **See also:** [`header()`]
     header() -> HeaderView?,
     /// 
     /// Sets the header for the tree view, to the given *header.*
@@ -118,7 +118,7 @@ struct TreeView : AbstractItemView {
     /// The view takes ownership over the given *header* and deletes it
     /// when a new header is set.
     /// 
-    /// **See also:** QAbstractItemModel::headerData()
+    /// **See also:** [`AbstractItemModel::header_data`]
     set_header(header: *HeaderViewType),
     /// 
     /// This property holds the amount of time in milliseconds that the user must wait over
@@ -184,14 +184,14 @@ struct TreeView : AbstractItemView {
     /// 
     /// Returns the width of the *column.*
     /// 
-    /// **See also:** resizeColumnToContents()
-    /// setColumnWidth()
+    /// **See also:** [`resize_column_to_contents()`]
+    /// [`set_column_width()`]
     column_width(column: i32) -> i32,
     /// 
     /// Sets the width of the given *column* to the *width* specified.
     /// 
-    /// **See also:** columnWidth()
-    /// resizeColumnToContents()
+    /// **See also:** [`column_width()`]
+    /// [`resize_column_to_contents()`]
     set_column_width(column: i32, width: i32),
     /// 
     /// Returns the column in the tree view whose header covers the *x*
@@ -200,14 +200,14 @@ struct TreeView : AbstractItemView {
     /// 
     /// Returns `true` if the *column* is hidden; otherwise returns `false.`
     /// 
-    /// **See also:** hideColumn()
-    /// isRowHidden()
+    /// **See also:** [`hide_column()`]
+    /// [`is_row_hidden()`]
     is_column_hidden(column: i32) -> bool,
     /// 
     /// If *hide* is true the *column* is hidden, otherwise the *column* is shown.
     /// 
-    /// **See also:** hideColumn()
-    /// setRowHidden()
+    /// **See also:** [`hide_column()`]
+    /// [`set_row_hidden()`]
     set_column_hidden(column: i32, hide: bool),
     is_header_hidden() -> bool,
     set_header_hidden(hide: bool),
@@ -215,43 +215,43 @@ struct TreeView : AbstractItemView {
     /// Returns `true` if the item in the given *row* of the *parent* is hidden;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** setRowHidden()
-    /// isColumnHidden()
+    /// **See also:** [`set_row_hidden()`]
+    /// [`is_column_hidden()`]
     is_row_hidden(row: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// If *hide* is true the *row* with the given *parent* is hidden, otherwise the *row* is shown.
     /// 
-    /// **See also:** isRowHidden()
-    /// setColumnHidden()
+    /// **See also:** [`is_row_hidden()`]
+    /// [`set_column_hidden()`]
     set_row_hidden(row: i32, parent: &ModelIndexType, hide: bool),
     /// 
     /// Returns `true` if the item in first column in the given *row*
     /// of the *parent* is spanning all the columns; otherwise returns `false.`
     /// 
-    /// **See also:** setFirstColumnSpanned()
+    /// **See also:** [`set_first_column_spanned()`]
     is_first_column_spanned(row: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// If *span* is true the item in the first column in the *row*
     /// with the given *parent* is set to span all columns, otherwise all items
     /// on the *row* are shown.
     /// 
-    /// **See also:** isFirstColumnSpanned()
+    /// **See also:** [`is_first_column_spanned()`]
     set_first_column_spanned(row: i32, parent: &ModelIndexType, span: bool),
     /// 
     /// Returns `true` if the model item *index* is expanded; otherwise returns
     /// false.
     /// 
-    /// **See also:** expand()
-    /// expanded()
-    /// setExpanded()
+    /// **See also:** [`expand()`]
+    /// [`expanded()`]
+    /// [`set_expanded()`]
     is_expanded(index: &ModelIndexType) -> bool,
     /// 
     /// Sets the item referred to by *index* to either collapse or expanded,
     /// depending on the value of *expanded.*
     /// 
-    /// **See also:** expanded()
-    /// expand()
-    /// isExpanded()
+    /// **See also:** [`expanded()`]
+    /// [`expand()`]
+    /// [`is_expanded()`]
     set_expanded(index: &ModelIndexType, expand: bool),
     set_sorting_enabled(enable: bool),
     is_sorting_enabled() -> bool,
@@ -278,9 +278,9 @@ struct TreeView : AbstractItemView {
     /// 
     /// This specifies that the tree structure should be placed at logical index *index.*
     /// If
-    /// **See also:** treePosition()
-    /// QHeaderView::swapSections()
-    /// QHeaderView::moveSection()
+    /// **See also:** [`tree_position()`]
+    /// [`HeaderView::swap_sections`]
+    /// [`HeaderView::move_section`]
     set_tree_position(logical_index: i32),
     /// 
     [event] keyboard_search(search: String),
@@ -336,14 +336,14 @@ struct TreeView : AbstractItemView {
     /// initialized, as the view needs to know the number of columns in order to
     /// hide *column.*
     /// 
-    /// **See also:** showColumn()
-    /// setColumnHidden()
+    /// **See also:** [`show_column()`]
+    /// [`set_column_hidden()`]
     hide_column(column: i32),
     /// 
     /// Shows the given *column* in the tree view.
     /// 
-    /// **See also:** hideColumn()
-    /// setColumnHidden()
+    /// **See also:** [`hide_column()`]
+    /// [`set_column_hidden()`]
     show_column(column: i32),
     /// 
     /// This signal is emitted when the item specified by *index* is expanded.
@@ -355,47 +355,47 @@ struct TreeView : AbstractItemView {
     /// 
     /// Expands the model item specified by the *index.*
     /// 
-    /// **See also:** expanded()
+    /// **See also:** [`expanded()`]
     /// 
     /// Expands all expandable items.
     /// 
     /// Warning: if the model contains a large number of items,
     /// this function will take some time to execute.
     /// 
-    /// **See also:** collapseAll()
-    /// expand()
-    /// collapse()
-    /// setExpanded()
+    /// **See also:** [`collapse_all()`]
+    /// [`expand()`]
+    /// [`collapse()`]
+    /// [`set_expanded()`]
     /// 
     /// Expands all expandable items to the given *depth.*
     /// 
-    /// **See also:** expandAll()
-    /// collapseAll()
-    /// expand()
-    /// collapse()
-    /// setExpanded()
+    /// **See also:** [`expand_all()`]
+    /// [`collapse_all()`]
+    /// [`expand()`]
+    /// [`collapse()`]
+    /// [`set_expanded()`]
     expand(index: &ModelIndexType),
     /// 
     /// This signal is emitted when the item specified by *index* is collapsed.
     /// 
     /// Collapses the model item specified by the *index.*
     /// 
-    /// **See also:** collapsed()
+    /// **See also:** [`collapsed()`]
     /// 
     /// Collapses all expanded items.
     /// 
-    /// **See also:** expandAll()
-    /// expand()
-    /// collapse()
-    /// setExpanded()
+    /// **See also:** [`expand_all()`]
+    /// [`expand()`]
+    /// [`collapse()`]
+    /// [`set_expanded()`]
     collapse(index: &ModelIndexType),
     /// 
     /// Resizes the *column* given to the size of its contents.
     /// 
-    /// **See also:** columnWidth()
-    /// setColumnWidth()
-    /// sizeHintForColumn()
-    /// QHeaderView::resizeContentsPrecision()
+    /// **See also:** [`column_width()`]
+    /// [`set_column_width()`]
+    /// [`size_hint_for_column()`]
+    /// [`HeaderView::resize_contents_precision`]
     resize_column_to_contents(column: i32),
     /// 
     /// **Overloads**
@@ -408,6 +408,7 @@ struct TreeView : AbstractItemView {
     /// all models support this and may even crash in this case.
     /// 
     /// **See also:** sortingEnabled
+    [org_name(sortByColumn)]
     sort_by_column_2(column: i32),
     /// 
     /// Expands all expandable items.
@@ -415,34 +416,34 @@ struct TreeView : AbstractItemView {
     /// Warning: if the model contains a large number of items,
     /// this function will take some time to execute.
     /// 
-    /// **See also:** collapseAll()
-    /// expand()
-    /// collapse()
-    /// setExpanded()
+    /// **See also:** [`collapse_all()`]
+    /// [`expand()`]
+    /// [`collapse()`]
+    /// [`set_expanded()`]
     expand_all(),
     /// 
     /// Collapses all expanded items.
     /// 
-    /// **See also:** expandAll()
-    /// expand()
-    /// collapse()
-    /// setExpanded()
+    /// **See also:** [`expand_all()`]
+    /// [`expand()`]
+    /// [`collapse()`]
+    /// [`set_expanded()`]
     collapse_all(),
     /// 
     /// Expands all expandable items to the given *depth.*
     /// 
-    /// **See also:** expandAll()
-    /// collapseAll()
-    /// expand()
-    /// collapse()
-    /// setExpanded()
+    /// **See also:** [`expand_all()`]
+    /// [`collapse_all()`]
+    /// [`expand()`]
+    /// [`collapse()`]
+    /// [`set_expanded()`]
     expand_to_depth(depth: i32),
     /// 
     /// This function is called whenever *column* 's size is changed in
     /// the header. *oldSize* and *newSize* give the previous size and
     /// the new size in pixels.
     /// 
-    /// **See also:** setColumnWidth()
+    /// **See also:** [`set_column_width()`]
     column_resized(column: i32, old_size: i32, new_size: i32),
     /// 
     /// Informs the tree view that the number of columns in the tree view has
@@ -478,19 +479,19 @@ struct TreeView : AbstractItemView {
     /// Note that the tree view uses the horizontal header section
     /// positions to determine the positions of columns in the view.
     /// 
-    /// **See also:** verticalOffset()
+    /// **See also:** [`vertical_offset()`]
     [event] horizontal_offset() -> i32,
     /// 
     /// Returns the vertical offset of the items in the tree view.
     /// 
-    /// **See also:** horizontalOffset()
+    /// **See also:** [`horizontal_offset()`]
     [event] vertical_offset() -> i32,
     /// 
     /// 
     /// Applies the selection *command* to the items in or touched by the
     /// rectangle, *rect.*
     /// 
-    /// **See also:** selectionCommand()
+    /// **See also:** [`selection_command()`]
     [event] set_selection(rect: &RectType, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Returns the rectangle from the viewport of the items in the given
@@ -509,14 +510,14 @@ struct TreeView : AbstractItemView {
     /// Draws the part of the tree intersecting the given *region* using the specified
     /// *painter.*
     /// 
-    /// **See also:** paintEvent()
+    /// **See also:** [`paint_event()`]
     draw_tree(painter: *PainterType, region: &RegionType),
     /// 
     /// Draws the row in the tree view that contains the model item *index,*
     /// using the *painter* given. The *option* controls how the item is
     /// displayed.
     /// 
-    /// **See also:** setAlternatingRowColors()
+    /// **See also:** [`set_alternating_row_colors()`]
     [event] draw_row(painter: *PainterType, options: &StyleOptionViewItemType, index: &ModelIndexType),
     /// 
     /// Draws the branches in the tree view on the same row as the model item
@@ -550,19 +551,19 @@ struct TreeView : AbstractItemView {
     /// if a larger column width is required by either the view's header or
     /// the item delegate, that width will be used instead.
     /// 
-    /// **See also:** QWidget::sizeHint
-    /// header()
-    /// QHeaderView::resizeContentsPrecision()
+    /// **See also:** [`Widget::size_hint()`]
+    /// [`header()`]
+    /// [`HeaderView::resize_contents_precision`]
     [event] size_hint_for_column(column: i32) -> i32,
     /// 
     /// Returns the size hint for the row indicated by *index.*
     /// 
-    /// **See also:** sizeHintForColumn()
-    /// uniformRowHeights()
+    /// **See also:** [`size_hint_for_column()`]
+    /// [`uniform_row_heights()`]
     index_row_size_hint(index: &ModelIndexType) -> i32,
     /// 
     /// Returns the height of the row indicated by the given *index.*
-    /// **See also:** indexRowSizeHint()
+    /// **See also:** [`index_row_size_hint()`]
     row_height(index: &ModelIndexType) -> i32,
     [event] horizontal_scrollbar_action(action: i32),
     /// 

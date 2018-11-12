@@ -8,10 +8,48 @@
 /// to create and insert messages in the debug log. In order to do so, you can use
 /// the createApplicationMessage() or the createThirdPartyMessage() static functions.
 /// 
-/// **See also:** QOpenGLDebugLogger
+/// **See also:** [`OpenGLDebugLogger`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct OpenGLDebugMessage {
+    /// 
+    /// Swaps the message *debugMessage* with this message. This operation is very
+    /// fast and never fails.
+    swap(other: &OpenGLDebugMessageType),
+    /// 
+    /// Returns the source of the debug message.
+    source() -> OpenGLDebugMessage::Source,
+    /// 
+    /// Returns the type of the debug message.
+    type() -> OpenGLDebugMessage::Type,
+    /// 
+    /// Returns the severity of the debug message.
+    severity() -> OpenGLDebugMessage::Severity,
+    /// 
+    /// Returns the id of the debug message. Ids are generally vendor-specific.
+    id() -> GLuint,
+    /// 
+    /// Returns the textual message contained by this debug message.
+    message() -> String,
+    /// 
+    /// Constructs and returns a debug message with *text* as its text, *id*
+    /// as id, *severity* as severity, and *type* as type. The message source
+    /// will be set to ApplicationSource.
+    /// 
+    /// **See also:** [`OpenGLDebugLogger::log_message`]
+    /// [`create_third_party_message()`]
+    [static] create_application_message(text: String, id: GLuint, severity: OpenGLDebugMessage::Severity, type: OpenGLDebugMessage::Type) -> OpenGLDebugMessage,
+    /// 
+    /// Constructs and returns a debug message with *text* as its text, *id*
+    /// as id, *severity* as severity, and *type* as type. The message source
+    /// will be set to ThirdPartySource.
+    /// 
+    /// **See also:** [`OpenGLDebugLogger::log_message`]
+    /// [`create_application_message()`]
+    [static] create_third_party_message(text: String, id: GLuint, severity: OpenGLDebugMessage::Severity, type: OpenGLDebugMessage::Type) -> OpenGLDebugMessage,
+}
+
 [org_name(QOpenGLDebugMessage)]
 enum Source {
     InvalidSource,
@@ -50,45 +88,6 @@ enum Severity {
     NotificationSeverity,
     LastSeverity,
     AnySeverity,
-}
-
-
-struct OpenGLDebugMessage {
-    /// 
-    /// Swaps the message *debugMessage* with this message. This operation is very
-    /// fast and never fails.
-    swap(other: &OpenGLDebugMessageType),
-    /// 
-    /// Returns the source of the debug message.
-    source() -> OpenGLDebugMessage::Source,
-    /// 
-    /// Returns the type of the debug message.
-    type() -> OpenGLDebugMessage::Type,
-    /// 
-    /// Returns the severity of the debug message.
-    severity() -> OpenGLDebugMessage::Severity,
-    /// 
-    /// Returns the id of the debug message. Ids are generally vendor-specific.
-    id() -> i32,
-    /// 
-    /// Returns the textual message contained by this debug message.
-    message() -> String,
-    /// 
-    /// Constructs and returns a debug message with *text* as its text, *id*
-    /// as id, *severity* as severity, and *type* as type. The message source
-    /// will be set to ApplicationSource.
-    /// 
-    /// **See also:** QOpenGLDebugLogger::logMessage()
-    /// createThirdPartyMessage()
-    [static] create_application_message(text: String, id: i32, severity: OpenGLDebugMessage::Severity, type: OpenGLDebugMessage::Type) -> OpenGLDebugMessage,
-    /// 
-    /// Constructs and returns a debug message with *text* as its text, *id*
-    /// as id, *severity* as severity, and *type* as type. The message source
-    /// will be set to ThirdPartySource.
-    /// 
-    /// **See also:** QOpenGLDebugLogger::logMessage()
-    /// createApplicationMessage()
-    [static] create_third_party_message(text: String, id: i32, severity: OpenGLDebugMessage::Severity, type: OpenGLDebugMessage::Type) -> OpenGLDebugMessage,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

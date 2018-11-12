@@ -64,8 +64,8 @@
 /// the margin width for a top-level layout, or to the same as the
 /// parent layout.
 /// 
-/// **See also:** QBoxLayout
-/// QStackedLayout
+/// **See also:** [`BoxLayout`]
+/// [`StackedLayout`]
 /// {Layout Management}
 /// {Basic Layouts Example}
 /// # Licence
@@ -85,7 +85,7 @@ struct GridLayout : Layout {
     /// the parent widget.
     /// 
     /// **See also:** verticalSpacing
-    /// QStyle::pixelMetric()
+    /// [`Style::pixel_metric`]
     /// {QStyle::}{PM_LayoutHorizontalSpacing}
     horizontal_spacing() -> i32,
     set_vertical_spacing(spacing: i32),
@@ -95,45 +95,45 @@ struct GridLayout : Layout {
     /// the parent widget.
     /// 
     /// **See also:** horizontalSpacing
-    /// QStyle::pixelMetric()
+    /// [`Style::pixel_metric`]
     /// {QStyle::}{PM_LayoutHorizontalSpacing}
     vertical_spacing() -> i32,
     /// 
     /// This function sets both the vertical and horizontal spacing to
     /// *spacing.*
     /// 
-    /// **See also:** setVerticalSpacing()
-    /// setHorizontalSpacing()
+    /// **See also:** [`set_vertical_spacing()`]
+    /// [`set_horizontal_spacing()`]
     set_spacing(spacing: i32),
     /// 
     /// If the vertical spacing is equal to the horizontal spacing,
     /// this function returns that value; otherwise it return -1.
     /// 
-    /// **See also:** setSpacing()
-    /// verticalSpacing()
-    /// horizontalSpacing()
+    /// **See also:** [`set_spacing()`]
+    /// [`vertical_spacing()`]
+    /// [`horizontal_spacing()`]
     spacing() -> i32,
     /// 
     /// Sets the minimum height of row *row* to *minSize* pixels.
     /// 
-    /// **See also:** rowMinimumHeight()
-    /// setColumnMinimumWidth()
+    /// **See also:** [`row_minimum_height()`]
+    /// [`set_column_minimum_width()`]
     set_row_minimum_height(row: i32, min_size: i32),
     /// 
     /// Sets the minimum width of column *column* to *minSize* pixels.
     /// 
-    /// **See also:** columnMinimumWidth()
-    /// setRowMinimumHeight()
+    /// **See also:** [`column_minimum_width()`]
+    /// [`set_row_minimum_height()`]
     set_column_minimum_width(column: i32, min_size: i32),
     /// 
     /// Returns the minimum width set for row *row.*
     /// 
-    /// **See also:** setRowMinimumHeight()
+    /// **See also:** [`set_row_minimum_height()`]
     row_minimum_height(row: i32) -> i32,
     /// 
     /// Returns the column spacing for column *column.*
     /// 
-    /// **See also:** setColumnMinimumWidth()
+    /// **See also:** [`set_column_minimum_width()`]
     column_minimum_width(column: i32) -> i32,
     /// 
     /// Returns the number of columns in this grid.
@@ -193,6 +193,7 @@ struct GridLayout : Layout {
     /// If *rowSpan* and/or *columnSpan* is -1, then the widget will
     /// extend to the bottom and/or right edge, respectively.
     /// 
+    [org_name(addWidget)]
     add_widget_2(arg0: *WidgetType, row: i32, column: i32, arg1: Rute::Alignment),
     /// 
     /// Adds the given *widget* to the cell grid at *row,* *column.* The
@@ -210,6 +211,7 @@ struct GridLayout : Layout {
     /// If *rowSpan* and/or *columnSpan* is -1, then the widget will
     /// extend to the bottom and/or right edge, respectively.
     /// 
+    [org_name(addWidget)]
     add_widget_3(arg0: *WidgetType, row: i32, column: i32, row_span: i32, column_span: i32, arg1: Rute::Alignment),
     /// 
     /// Places the *layout* at position ( *row,* *column)* in the grid. The
@@ -248,6 +250,7 @@ struct GridLayout : Layout {
     /// 
     /// If *rowSpan* and/or *columnSpan* is -1, then the layout will extend to the bottom
     /// and/or right edge, respectively.
+    [org_name(addLayout)]
     add_layout_2(arg0: *LayoutType, row: i32, column: i32, row_span: i32, column_span: i32, arg1: Rute::Alignment),
     /// 
     /// Sets the grid's origin corner, i.e. position (0, 0), to *corner.*
@@ -261,15 +264,15 @@ struct GridLayout : Layout {
     /// Returns the layout item that occupies cell ( *row,* *column),* or 0 if
     /// the cell is empty.
     /// 
-    /// **See also:** getItemPosition()
-    /// indexOf()
+    /// **See also:** [`get_item_position()`]
+    /// [`index_of()`]
     [event] item_at(index: i32) -> LayoutItem?,
     /// 
     /// Returns the layout item that occupies cell ( *row,* *column),* or 0 if
     /// the cell is empty.
     /// 
-    /// **See also:** getItemPosition()
-    /// indexOf()
+    /// **See also:** [`get_item_position()`]
+    /// [`index_of()`]
     item_at_position(row: i32, column: i32) -> LayoutItem?,
     /// 
     [event] take_at(index: i32) -> LayoutItem?,
@@ -293,8 +296,8 @@ struct GridLayout : Layout {
     /// item in the layout, and the *rowSpan* and *columnSpan* variables are updated
     /// with the vertical and horizontal spans of the item.
     /// 
-    /// **See also:** itemAtPosition()
-    /// itemAt()
+    /// **See also:** [`item_at_position()`]
+    /// [`item_at()`]
     get_item_position(idx: i32, row: *i32, column: *i32, row_span: *i32, column_span: *i32),
     /// 
     /// 
@@ -305,6 +308,7 @@ struct GridLayout : Layout {
     /// 
     /// **Warning**: Do not use this function to add child layouts or child
     /// widget items. Use addLayout() or addWidget() instead.
+    [org_name(addItem)]
     [event] add_item_2(arg0: *LayoutItemType),
 }
 

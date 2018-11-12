@@ -99,9 +99,9 @@
 /// application examples](Main%20Window%20Examples)
 /// also provide menus using these classes.
 /// 
-/// **See also:** QMenu
-/// QShortcut
-/// QAction
+/// **See also:** [`Menu`]
+/// [`Shortcut`]
+/// [`Action`]
 /// {http://developer.apple.com/documentation/UserExperience/Conceptual/AppleHIGuidelines/XHIGIntro/XHIGIntro.html}{Introduction to Apple Human Interface Guidelines}
 /// {fowler}{GUI Design Handbook: Menu Bar}
 /// {Menus Example}
@@ -115,15 +115,15 @@ struct MenuBar : Widget {
     /// The function adds the newly created action to the menu's
     /// list of actions, and returns it.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QWidget::actions()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Widget::actions`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the given *text.* The action's triggered() signal is connected to the *receiver's* *member* slot. The function adds the newly created
     /// action to the menu's list of actions and returns it.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QWidget::actions()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Widget::actions`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the given *text.* The action's triggered() signal is connected to the
@@ -132,8 +132,8 @@ struct MenuBar : Widget {
     /// 
     /// QMenuBar takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QWidget::actions()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Widget::actions`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the given *text.* The action's triggered() signal is connected to the
@@ -142,8 +142,8 @@ struct MenuBar : Widget {
     /// 
     /// QMenuBar takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QWidget::actions()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Widget::actions`]
     add_action(text: String) -> Action?,
     /// 
     /// **Overloads**
@@ -151,15 +151,15 @@ struct MenuBar : Widget {
     /// The function adds the newly created action to the menu's
     /// list of actions, and returns it.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QWidget::actions()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Widget::actions`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the given *text.* The action's triggered() signal is connected to the *receiver's* *member* slot. The function adds the newly created
     /// action to the menu's list of actions and returns it.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QWidget::actions()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Widget::actions`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the given *text.* The action's triggered() signal is connected to the
@@ -168,8 +168,8 @@ struct MenuBar : Widget {
     /// 
     /// QMenuBar takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QWidget::actions()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Widget::actions`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the given *text.* The action's triggered() signal is connected to the
@@ -178,51 +178,75 @@ struct MenuBar : Widget {
     /// 
     /// QMenuBar takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QWidget::actions()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Widget::actions`]
+    [org_name(addAction)]
     add_action_2(text: String, receiver: *ObjectType, member: *char) -> Action?,
     /// 
     /// Appends a new QMenu with *title* to the menu bar. The menu bar
     /// takes ownership of the menu. Returns the new menu.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QMenu::menuAction()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
     /// 
     /// Appends a new QMenu with *icon* and *title* to the menu bar. The menu bar
     /// takes ownership of the menu. Returns the new menu.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QMenu::menuAction()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
     /// 
     /// Appends *menu* to the menu bar. Returns the menu's menuAction().
     /// 
     /// **Note**: The returned QAction object can be used to hide the corresponding
     /// menu.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QMenu::menuAction()
-    add_menu(title: String) -> Menu?,
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
+    add_menu(menu: *MenuType) -> Action?,
     /// 
     /// Appends a new QMenu with *title* to the menu bar. The menu bar
     /// takes ownership of the menu. Returns the new menu.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QMenu::menuAction()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
     /// 
     /// Appends a new QMenu with *icon* and *title* to the menu bar. The menu bar
     /// takes ownership of the menu. Returns the new menu.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QMenu::menuAction()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
     /// 
     /// Appends *menu* to the menu bar. Returns the menu's menuAction().
     /// 
     /// **Note**: The returned QAction object can be used to hide the corresponding
     /// menu.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QMenu::menuAction()
-    add_menu_2(icon: &IconType, title: String) -> Menu?,
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
+    [org_name(addMenu)]
+    add_menu_2(title: String) -> Menu?,
+    /// 
+    /// Appends a new QMenu with *title* to the menu bar. The menu bar
+    /// takes ownership of the menu. Returns the new menu.
+    /// 
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
+    /// 
+    /// Appends a new QMenu with *icon* and *title* to the menu bar. The menu bar
+    /// takes ownership of the menu. Returns the new menu.
+    /// 
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
+    /// 
+    /// Appends *menu* to the menu bar. Returns the menu's menuAction().
+    /// 
+    /// **Note**: The returned QAction object can be used to hide the corresponding
+    /// menu.
+    /// 
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
+    [org_name(addMenu)]
+    add_menu_3(icon: &IconType, title: String) -> Menu?,
     /// 
     /// Appends a separator to the menu.
     add_separator() -> Action?,
@@ -232,15 +256,15 @@ struct MenuBar : Widget {
     /// the newly created action into this menu bar's list of actions before
     /// action *before* and returns it.
     /// 
-    /// **See also:** QWidget::insertAction()
-    /// addSeparator()
+    /// **See also:** [`Widget::insert_action`]
+    /// [`add_separator()`]
     insert_separator(before: *ActionType) -> Action?,
     /// 
     /// This convenience function inserts *menu* before action *before*
     /// and returns the menus menuAction().
     /// 
-    /// **See also:** QWidget::insertAction()
-    /// addMenu()
+    /// **See also:** [`Widget::insert_action`]
+    /// [`add_menu()`]
     insert_menu(before: *ActionType, menu: *MenuType) -> Action?,
     /// 
     /// Removes all the actions from the menu bar.
@@ -253,7 +277,7 @@ struct MenuBar : Widget {
     /// you know ahead of time which menu items get merged and which do
     /// not. Then decide what to recreate or remove yourself.
     /// 
-    /// **See also:** removeAction()
+    /// **See also:** [`remove_action()`]
     clear(),
     /// 
     /// Returns the QAction that is currently highlighted. A null pointer
@@ -274,8 +298,8 @@ struct MenuBar : Widget {
     /// Returns the QAction at *pt.* Returns 0 if there is no action at *pt* or if
     /// the location has a separator.
     /// 
-    /// **See also:** addAction()
-    /// addSeparator()
+    /// **See also:** [`add_action()`]
+    /// [`add_separator()`]
     action_at(arg0: &PointType) -> Action?,
     /// 
     /// This sets the given *widget* to be shown directly on the left of the first
@@ -306,8 +330,8 @@ struct MenuBar : Widget {
     /// 
     /// Often this is used to update status information.
     /// 
-    /// **See also:** triggered()
-    /// QAction::hovered()
+    /// **See also:** [`triggered()`]
+    /// [`Action::hovered`]
     [signal] hovered(action: *ActionType),
     /// 
     [event] change_event(arg0: *EventType),
@@ -343,8 +367,8 @@ struct MenuBar : Widget {
     /// is useful for subclasses when they need a QStyleOptionMenuItem, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
-    /// QMenu::initStyleOption()
+    /// **See also:** [`StyleOption::init_from`]
+    /// [`Menu::init_style_option`]
     init_style_option(option: *StyleOptionMenuItemType, action: *ActionType),
 }
 

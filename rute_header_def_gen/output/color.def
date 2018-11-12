@@ -180,27 +180,11 @@
 /// alpha-channel to feature [alpha-blended drawing](QColor%23Alpha-Blended%0A%20%20%20%20Drawing)
 /// 
 /// 
-/// **See also:** QPalette
-/// QBrush
+/// **See also:** [`Palette`]
+/// [`Brush`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QColor)]
-enum Spec {
-    Invalid,
-    Rgb,
-    Hsv,
-    Cmyk,
-    Hsl,
-}
-
-[org_name(QColor)]
-enum NameFormat {
-    HexRgb,
-    HexArgb,
-}
-
-
 struct Color {
     /// 
     /// Returns `true` if the color is valid; otherwise returns `false.`
@@ -211,7 +195,7 @@ struct Color {
     /// 
     /// It uses the same algorithm used in setNamedColor().
     /// 
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     /// 
     /// **Overloads**
     /// 
@@ -221,23 +205,24 @@ struct Color {
     /// Returns the name of the color in the format ; i.e. a
     /// character followed by three two-digit hexadecimal numbers.
     /// 
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     /// 
     /// Returns the name of the color in the specified *format.*
     /// 
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     /// NameFormat
     name() -> String,
     /// 
     /// Returns the name of the color in the format ; i.e. a
     /// character followed by three two-digit hexadecimal numbers.
     /// 
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     /// 
     /// Returns the name of the color in the specified *format.*
     /// 
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     /// NameFormat
+    [org_name(name)]
     name_2(format: Color::NameFormat) -> String,
     /// 
     /// Sets the RGB value of this QColor to *name,* which may be in one
@@ -254,9 +239,9 @@ struct Color {
     /// 
     /// The color is invalid if *name* cannot be parsed.
     /// 
-    /// **See also:** QColor()
-    /// name()
-    /// isValid()
+    /// **See also:** [`q_color()`]
+    /// [`name()`]
+    /// [`is_valid()`]
     /// 
     /// **Overloads**
     /// 
@@ -277,13 +262,14 @@ struct Color {
     /// 
     /// The color is invalid if *name* cannot be parsed.
     /// 
-    /// **See also:** QColor()
-    /// name()
-    /// isValid()
+    /// **See also:** [`q_color()`]
+    /// [`name()`]
+    /// [`is_valid()`]
     /// 
     /// **Overloads**
     /// 
     /// **Overloads**
+    [org_name(setNamedColor)]
     set_named_color_2(name: StringViewType),
     /// 
     /// Sets the RGB value of this QColor to *name,* which may be in one
@@ -300,13 +286,14 @@ struct Color {
     /// 
     /// The color is invalid if *name* cannot be parsed.
     /// 
-    /// **See also:** QColor()
-    /// name()
-    /// isValid()
+    /// **See also:** [`q_color()`]
+    /// [`name()`]
+    /// [`is_valid()`]
     /// 
     /// **Overloads**
     /// 
     /// **Overloads**
+    [org_name(setNamedColor)]
     set_named_color_3(name: Latin1StringType),
     /// 
     /// Returns a QStringList containing the color names Qt knows about.
@@ -317,181 +304,181 @@ struct Color {
     /// Returns how the color was specified.
     /// 
     /// **See also:** Spec
-    /// convertTo()
+    /// [`convert_to()`]
     spec() -> Color::Spec,
     /// 
     /// Returns the alpha color component of this color.
     /// 
-    /// **See also:** setAlpha()
-    /// alphaF()
+    /// **See also:** [`set_alpha()`]
+    /// [`alpha_f()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     /// 
     /// Returns the alpha color component of this color.
     /// 
-    /// **See also:** setAlphaF()
-    /// alpha()
+    /// **See also:** [`set_alpha_f()`]
+    /// [`alpha()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     alpha() -> i32,
     /// 
     /// Sets the alpha of this color to *alpha.* Integer alpha is specified in the
     /// range 0-255.
     /// 
-    /// **See also:** alpha()
-    /// alphaF()
+    /// **See also:** [`alpha()`]
+    /// [`alpha_f()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     /// 
     /// Sets the alpha of this color to *alpha.* qreal alpha is specified in the
     /// range 0.0-1.0.
     /// 
-    /// **See also:** alphaF()
-    /// alpha()
+    /// **See also:** [`alpha_f()`]
+    /// [`alpha()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     /// 
     set_alpha(alpha: i32),
     /// 
     /// Returns the alpha color component of this color.
     /// 
-    /// **See also:** setAlphaF()
-    /// alpha()
+    /// **See also:** [`set_alpha_f()`]
+    /// [`alpha()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     alpha_f() -> f32,
     /// 
     /// Sets the alpha of this color to *alpha.* qreal alpha is specified in the
     /// range 0.0-1.0.
     /// 
-    /// **See also:** alphaF()
-    /// alpha()
+    /// **See also:** [`alpha_f()`]
+    /// [`alpha()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     /// 
     set_alpha_f(alpha: f32),
     /// 
     /// Returns the red color component of this color.
     /// 
-    /// **See also:** setRed()
-    /// redF()
-    /// getRgb()
+    /// **See also:** [`set_red()`]
+    /// [`red_f()`]
+    /// [`get_rgb()`]
     /// 
     /// Returns the red color component of this color.
     /// 
-    /// **See also:** setRedF()
-    /// red()
-    /// getRgbF()
+    /// **See also:** [`set_red_f()`]
+    /// [`red()`]
+    /// [`get_rgb_f()`]
     red() -> i32,
     /// 
     /// Returns the green color component of this color.
     /// 
-    /// **See also:** setGreen()
-    /// greenF()
-    /// getRgb()
+    /// **See also:** [`set_green()`]
+    /// [`green_f()`]
+    /// [`get_rgb()`]
     /// 
     /// Returns the green color component of this color.
     /// 
-    /// **See also:** setGreenF()
-    /// green()
-    /// getRgbF()
+    /// **See also:** [`set_green_f()`]
+    /// [`green()`]
+    /// [`get_rgb_f()`]
     green() -> i32,
     /// 
     /// Returns the blue color component of this color.
     /// 
-    /// **See also:** setBlue()
-    /// blueF()
-    /// getRgb()
+    /// **See also:** [`set_blue()`]
+    /// [`blue_f()`]
+    /// [`get_rgb()`]
     /// 
     /// Returns the blue color component of this color.
     /// 
-    /// **See also:** setBlueF()
-    /// blue()
-    /// getRgbF()
+    /// **See also:** [`set_blue_f()`]
+    /// [`blue()`]
+    /// [`get_rgb_f()`]
     blue() -> i32,
     /// 
     /// Sets the red color component of this color to *red.* Integer components
     /// are specified in the range 0-255.
     /// 
-    /// **See also:** red()
-    /// redF()
-    /// setRgb()
+    /// **See also:** [`red()`]
+    /// [`red_f()`]
+    /// [`set_rgb()`]
     /// 
     /// Sets the red color component of this color to *red.* Float components
     /// are specified in the range 0.0-1.0.
     /// 
-    /// **See also:** redF()
-    /// red()
-    /// setRgbF()
+    /// **See also:** [`red_f()`]
+    /// [`red()`]
+    /// [`set_rgb_f()`]
     set_red(red: i32),
     /// 
     /// Sets the green color component of this color to *green.* Integer
     /// components are specified in the range 0-255.
     /// 
-    /// **See also:** green()
-    /// greenF()
-    /// setRgb()
+    /// **See also:** [`green()`]
+    /// [`green_f()`]
+    /// [`set_rgb()`]
     /// 
     /// Sets the green color component of this color to *green.* Float components
     /// are specified in the range 0.0-1.0.
     /// 
-    /// **See also:** greenF()
-    /// green()
-    /// setRgbF()
+    /// **See also:** [`green_f()`]
+    /// [`green()`]
+    /// [`set_rgb_f()`]
     set_green(green: i32),
     /// 
     /// Sets the blue color component of this color to *blue.* Integer components
     /// are specified in the range 0-255.
     /// 
-    /// **See also:** blue()
-    /// blueF()
-    /// setRgb()
+    /// **See also:** [`blue()`]
+    /// [`blue_f()`]
+    /// [`set_rgb()`]
     /// 
     /// Sets the blue color component of this color to *blue.* Float components
     /// are specified in the range 0.0-1.0.
     /// 
-    /// **See also:** blueF()
-    /// blue()
-    /// setRgbF()
+    /// **See also:** [`blue_f()`]
+    /// [`blue()`]
+    /// [`set_rgb_f()`]
     set_blue(blue: i32),
     /// 
     /// Returns the red color component of this color.
     /// 
-    /// **See also:** setRedF()
-    /// red()
-    /// getRgbF()
+    /// **See also:** [`set_red_f()`]
+    /// [`red()`]
+    /// [`get_rgb_f()`]
     red_f() -> f32,
     /// 
     /// Returns the green color component of this color.
     /// 
-    /// **See also:** setGreenF()
-    /// green()
-    /// getRgbF()
+    /// **See also:** [`set_green_f()`]
+    /// [`green()`]
+    /// [`get_rgb_f()`]
     green_f() -> f32,
     /// 
     /// Returns the blue color component of this color.
     /// 
-    /// **See also:** setBlueF()
-    /// blue()
-    /// getRgbF()
+    /// **See also:** [`set_blue_f()`]
+    /// [`blue()`]
+    /// [`get_rgb_f()`]
     blue_f() -> f32,
     /// 
     /// Sets the red color component of this color to *red.* Float components
     /// are specified in the range 0.0-1.0.
     /// 
-    /// **See also:** redF()
-    /// red()
-    /// setRgbF()
+    /// **See also:** [`red_f()`]
+    /// [`red()`]
+    /// [`set_rgb_f()`]
     set_red_f(red: f32),
     /// 
     /// Sets the green color component of this color to *green.* Float components
     /// are specified in the range 0.0-1.0.
     /// 
-    /// **See also:** greenF()
-    /// green()
-    /// setRgbF()
+    /// **See also:** [`green_f()`]
+    /// [`green()`]
+    /// [`set_rgb_f()`]
     set_green_f(green: f32),
     /// 
     /// Sets the blue color component of this color to *blue.* Float components
     /// are specified in the range 0.0-1.0.
     /// 
-    /// **See also:** blueF()
-    /// blue()
-    /// setRgbF()
+    /// **See also:** [`blue_f()`]
+    /// [`blue()`]
+    /// [`set_rgb_f()`]
     set_blue_f(blue: f32),
     /// 
     /// Sets the contents pointed to by *r,* *g,* *b,* and *a,* to the red,
@@ -501,8 +488,8 @@ struct Color {
     /// These components can be retrieved individually using the redF(), greenF(),
     /// blueF() and alphaF() functions.
     /// 
-    /// **See also:** rgb()
-    /// setRgb()
+    /// **See also:** [`rgb()`]
+    /// [`set_rgb()`]
     /// 
     /// Sets the contents pointed to by *r,* *g,* *b,* and *a,* to the red,
     /// green, blue, and alpha-channel (transparency) components of the color's
@@ -511,8 +498,8 @@ struct Color {
     /// These components can be retrieved individually using the red(), green(),
     /// blue() and alpha() functions.
     /// 
-    /// **See also:** rgb()
-    /// setRgb()
+    /// **See also:** [`rgb()`]
+    /// [`set_rgb()`]
     get_rgb(r: *i32, g: *i32, b: *i32, a: *i32),
     /// 
     /// Sets the color channels of this color to *r* (red), *g* (green),
@@ -520,28 +507,28 @@ struct Color {
     /// 
     /// All values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** rgb()
-    /// getRgbF()
-    /// setRgb()
+    /// **See also:** [`rgb()`]
+    /// [`get_rgb_f()`]
+    /// [`set_rgb()`]
     /// 
     /// Sets the RGB value to *r,* *g,* *b* and the alpha value to *a.*
     /// 
     /// All the values must be in the range 0-255.
     /// 
-    /// **See also:** rgb()
-    /// getRgb()
-    /// setRgbF()
+    /// **See also:** [`rgb()`]
+    /// [`get_rgb()`]
+    /// [`set_rgb_f()`]
     /// 
     /// Sets the RGB value to *rgba,* including its alpha.
     /// 
-    /// **See also:** rgba()
-    /// rgb()
-    /// setRgba64()
+    /// **See also:** [`rgba()`]
+    /// [`rgb()`]
+    /// [`set_rgba64()`]
     /// 
     /// Sets the RGB64 value to *rgba,* including its alpha.
     /// 
-    /// **See also:** \setRgba()
-    /// rgba64()
+    /// **See also:** [`set_rgba()`]
+    /// [`rgba64()`]
     /// 
     /// **Overloads**
     /// Sets the RGB value to *rgb.* The alpha value is set to opaque.
@@ -554,8 +541,8 @@ struct Color {
     /// These components can be retrieved individually using the redF(), greenF(),
     /// blueF() and alphaF() functions.
     /// 
-    /// **See also:** rgb()
-    /// setRgb()
+    /// **See also:** [`rgb()`]
+    /// [`set_rgb()`]
     get_rgb_f(r: *f32, g: *f32, b: *f32, a: *f32),
     /// 
     /// Sets the color channels of this color to *r* (red), *g* (green),
@@ -563,75 +550,75 @@ struct Color {
     /// 
     /// All values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** rgb()
-    /// getRgbF()
-    /// setRgb()
+    /// **See also:** [`rgb()`]
+    /// [`get_rgb_f()`]
+    /// [`set_rgb()`]
     set_rgb_f(r: f32, g: f32, b: f32, a: f32),
     /// 
     /// Returns the RGB64 value of the color, including its alpha.
     /// 
     /// For an invalid color, the alpha value of the returned color is unspecified.
     /// 
-    /// **See also:** setRgba64()
-    /// rgba()
-    /// rgb()
+    /// **See also:** [`set_rgba64()`]
+    /// [`rgba()`]
+    /// [`rgb()`]
     rgba64() -> Rgba64,
     /// 
     /// Sets the RGB64 value to *rgba,* including its alpha.
     /// 
-    /// **See also:** \setRgba()
-    /// rgba64()
+    /// **See also:** [`set_rgba()`]
+    /// [`rgba64()`]
     set_rgba64(rgba: Rgba64Type),
     /// 
     /// Returns the RGB value of the color, including its alpha.
     /// 
     /// For an invalid color, the alpha value of the returned color is unspecified.
     /// 
-    /// **See also:** setRgba()
-    /// rgb()
-    /// rgba64()
+    /// **See also:** [`set_rgba()`]
+    /// [`rgb()`]
+    /// [`rgba64()`]
     /// 
     /// Returns the RGB64 value of the color, including its alpha.
     /// 
     /// For an invalid color, the alpha value of the returned color is unspecified.
     /// 
-    /// **See also:** setRgba64()
-    /// rgba()
-    /// rgb()
+    /// **See also:** [`set_rgba64()`]
+    /// [`rgba()`]
+    /// [`rgb()`]
     rgba() -> Rgb,
     /// 
     /// Sets the RGB value to *rgba,* including its alpha.
     /// 
-    /// **See also:** rgba()
-    /// rgb()
-    /// setRgba64()
+    /// **See also:** [`rgba()`]
+    /// [`rgb()`]
+    /// [`set_rgba64()`]
     /// 
     /// Sets the RGB64 value to *rgba,* including its alpha.
     /// 
-    /// **See also:** \setRgba()
-    /// rgba64()
+    /// **See also:** [`set_rgba()`]
+    /// [`rgba64()`]
     set_rgba(rgba: RgbType),
     /// 
     /// Returns the RGB value of the color, including its alpha.
     /// 
     /// For an invalid color, the alpha value of the returned color is unspecified.
     /// 
-    /// **See also:** setRgba()
-    /// rgb()
-    /// rgba64()
+    /// **See also:** [`set_rgba()`]
+    /// [`rgb()`]
+    /// [`rgba64()`]
     /// 
     /// Returns the RGB64 value of the color, including its alpha.
     /// 
     /// For an invalid color, the alpha value of the returned color is unspecified.
     /// 
-    /// **See also:** setRgba64()
-    /// rgba()
-    /// rgb()
+    /// **See also:** [`set_rgba64()`]
+    /// [`rgba()`]
+    /// [`rgb()`]
     /// 
     /// Returns the RGB value of the color. The alpha value is opaque.
     /// 
-    /// **See also:** getRgb()
-    /// rgba()
+    /// **See also:** [`get_rgb()`]
+    /// [`rgba()`]
     rgb() -> Rgb,
     /// 
     /// Sets the color channels of this color to *r* (red), *g* (green),
@@ -639,49 +626,50 @@ struct Color {
     /// 
     /// All values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** rgb()
-    /// getRgbF()
-    /// setRgb()
+    /// **See also:** [`rgb()`]
+    /// [`get_rgb_f()`]
+    /// [`set_rgb()`]
     /// 
     /// Sets the RGB value to *r,* *g,* *b* and the alpha value to *a.*
     /// 
     /// All the values must be in the range 0-255.
     /// 
-    /// **See also:** rgb()
-    /// getRgb()
-    /// setRgbF()
+    /// **See also:** [`rgb()`]
+    /// [`get_rgb()`]
+    /// [`set_rgb_f()`]
     /// 
     /// Sets the RGB value to *rgba,* including its alpha.
     /// 
-    /// **See also:** rgba()
-    /// rgb()
-    /// setRgba64()
+    /// **See also:** [`rgba()`]
+    /// [`rgb()`]
+    /// [`set_rgba64()`]
     /// 
     /// Sets the RGB64 value to *rgba,* including its alpha.
     /// 
-    /// **See also:** \setRgba()
-    /// rgba64()
+    /// **See also:** [`set_rgba()`]
+    /// [`rgba64()`]
     /// 
     /// **Overloads**
     /// Sets the RGB value to *rgb.* The alpha value is set to opaque.
+    [org_name(setRgb)]
     set_rgb_2(rgb: RgbType),
     /// 
     /// Returns the hue color component of this color.
     /// 
     /// The color is implicitly converted to HSV.
     /// 
-    /// **See also:** hsvHue()
-    /// hueF()
-    /// getHsv()
+    /// **See also:** [`hsv_hue()`]
+    /// [`hue_f()`]
+    /// [`get_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     /// 
     /// Returns the hue color component of this color.
     /// 
     /// The color is implicitly converted to HSV.
     /// 
-    /// **See also:** hsvHueF()
-    /// hue()
-    /// getHsvF()
+    /// **See also:** [`hsv_hue_f()`]
+    /// [`hue()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     hue() -> i32,
     /// 
@@ -689,9 +677,9 @@ struct Color {
     /// 
     /// The color is implicitly converted to HSV.
     /// 
-    /// **See also:** hsvSaturation()
-    /// saturationF()
-    /// getHsv()
+    /// **See also:** [`hsv_saturation()`]
+    /// [`saturation_f()`]
+    /// [`get_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
     /// 
@@ -699,50 +687,50 @@ struct Color {
     /// 
     /// The color is implicitly converted to HSV.
     /// 
-    /// **See also:** hsvSaturationF()
-    /// saturation()
-    /// getHsvF()
+    /// **See also:** [`hsv_saturation_f()`]
+    /// [`saturation()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
     saturation() -> i32,
     /// 
     /// Returns the hue color component of this color.
     /// 
-    /// **See also:** hueF()
-    /// getHsv()
+    /// **See also:** [`hue_f()`]
+    /// [`get_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     /// 
     /// Returns the hue color component of this color.
     /// 
-    /// **See also:** hue()
-    /// getHsvF()
+    /// **See also:** [`hue()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
     hsv_hue() -> i32,
     /// 
     /// Returns the saturation color component of this color.
     /// 
-    /// **See also:** saturationF()
-    /// getHsv()
+    /// **See also:** [`saturation_f()`]
+    /// [`get_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     /// 
     /// Returns the saturation color component of this color.
     /// 
-    /// **See also:** saturation()
-    /// getHsvF()
+    /// **See also:** [`saturation()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     hsv_saturation() -> i32,
     /// 
     /// Returns the value color component of this color.
     /// 
-    /// **See also:** valueF()
-    /// getHsv()
+    /// **See also:** [`value_f()`]
+    /// [`get_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     /// 
     /// Returns the value color component of this color.
     /// 
-    /// **See also:** value()
-    /// getHsvF()
+    /// **See also:** [`value()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     value() -> i32,
     /// 
@@ -750,9 +738,9 @@ struct Color {
     /// 
     /// The color is implicitly converted to HSV.
     /// 
-    /// **See also:** hsvHueF()
-    /// hue()
-    /// getHsvF()
+    /// **See also:** [`hsv_hue_f()`]
+    /// [`hue()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     hue_f() -> f32,
     /// 
@@ -760,32 +748,32 @@ struct Color {
     /// 
     /// The color is implicitly converted to HSV.
     /// 
-    /// **See also:** hsvSaturationF()
-    /// saturation()
-    /// getHsvF()
+    /// **See also:** [`hsv_saturation_f()`]
+    /// [`saturation()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
     saturation_f() -> f32,
     /// 
     /// Returns the hue color component of this color.
     /// 
-    /// **See also:** hue()
-    /// getHsvF()
+    /// **See also:** [`hue()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
     hsv_hue_f() -> f32,
     /// 
     /// Returns the saturation color component of this color.
     /// 
-    /// **See also:** saturation()
-    /// getHsvF()
+    /// **See also:** [`saturation()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     hsv_saturation_f() -> f32,
     /// 
     /// Returns the value color component of this color.
     /// 
-    /// **See also:** value()
-    /// getHsvF()
+    /// **See also:** [`value()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     value_f() -> f32,
     /// 
@@ -796,7 +784,7 @@ struct Color {
     /// These components can be retrieved individually using the hueF(),
     /// saturationF(), valueF() and alphaF() functions.
     /// 
-    /// **See also:** setHsv()
+    /// **See also:** [`set_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     /// 
     /// Sets the contents pointed to by *h,* *s,* *v,* and *a,* to the hue,
@@ -806,7 +794,7 @@ struct Color {
     /// These components can be retrieved individually using the hue(),
     /// saturation(), value() and alpha() functions.
     /// 
-    /// **See also:** setHsv()
+    /// **See also:** [`set_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     get_hsv(h: *i32, s: *i32, v: *i32, a: *i32),
     /// 
@@ -815,8 +803,8 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** getHsvF()
-    /// setHsv()
+    /// **See also:** [`get_hsv_f()`]
+    /// [`set_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     /// 
     /// Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is
@@ -825,8 +813,8 @@ struct Color {
     /// The saturation, value and alpha-channel values must be in the range 0-255,
     /// and the hue value must be greater than -1.
     /// 
-    /// **See also:** getHsv()
-    /// setHsvF()
+    /// **See also:** [`get_hsv()`]
+    /// [`set_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     set_hsv(h: i32, s: i32, v: i32, a: i32),
     /// 
@@ -837,7 +825,7 @@ struct Color {
     /// These components can be retrieved individually using the hueF(),
     /// saturationF(), valueF() and alphaF() functions.
     /// 
-    /// **See also:** setHsv()
+    /// **See also:** [`set_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     get_hsv_f(h: *f32, s: *f32, v: *f32, a: *f32),
     /// 
@@ -846,89 +834,89 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** getHsvF()
-    /// setHsv()
+    /// **See also:** [`get_hsv_f()`]
+    /// [`set_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     set_hsv_f(h: f32, s: f32, v: f32, a: f32),
     /// 
     /// Returns the cyan color component of this color.
     /// 
-    /// **See also:** cyanF()
-    /// getCmyk()
+    /// **See also:** [`cyan_f()`]
+    /// [`get_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     /// 
     /// Returns the cyan color component of this color.
     /// 
-    /// **See also:** cyan()
-    /// getCmykF()
+    /// **See also:** [`cyan()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     cyan() -> i32,
     /// 
     /// Returns the magenta color component of this color.
     /// 
-    /// **See also:** magentaF()
-    /// getCmyk()
+    /// **See also:** [`magenta_f()`]
+    /// [`get_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     /// 
     /// Returns the magenta color component of this color.
     /// 
-    /// **See also:** magenta()
-    /// getCmykF()
+    /// **See also:** [`magenta()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     magenta() -> i32,
     /// 
     /// Returns the yellow color component of this color.
     /// 
-    /// **See also:** yellowF()
-    /// getCmyk()
+    /// **See also:** [`yellow_f()`]
+    /// [`get_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     /// 
     /// Returns the yellow color component of this color.
     /// 
-    /// **See also:** yellow()
-    /// getCmykF()
+    /// **See also:** [`yellow()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     yellow() -> i32,
     /// 
     /// Returns the black color component of this color.
     /// 
-    /// **See also:** blackF()
-    /// getCmyk()
+    /// **See also:** [`black_f()`]
+    /// [`get_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     /// 
     /// 
     /// Returns the black color component of this color.
     /// 
-    /// **See also:** black()
-    /// getCmykF()
+    /// **See also:** [`black()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     black() -> i32,
     /// 
     /// Returns the cyan color component of this color.
     /// 
-    /// **See also:** cyan()
-    /// getCmykF()
+    /// **See also:** [`cyan()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     cyan_f() -> f32,
     /// 
     /// Returns the magenta color component of this color.
     /// 
-    /// **See also:** magenta()
-    /// getCmykF()
+    /// **See also:** [`magenta()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     magenta_f() -> f32,
     /// 
     /// Returns the yellow color component of this color.
     /// 
-    /// **See also:** yellow()
-    /// getCmykF()
+    /// **See also:** [`yellow()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     yellow_f() -> f32,
     /// 
     /// Returns the black color component of this color.
     /// 
-    /// **See also:** black()
-    /// getCmykF()
+    /// **See also:** [`black()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     black_f() -> f32,
     /// 
@@ -939,7 +927,7 @@ struct Color {
     /// These components can be retrieved individually using the cyan(), magenta(),
     /// yellow(), black() and alpha() functions.
     /// 
-    /// **See also:** setCmyk()
+    /// **See also:** [`set_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     /// 
     /// Sets the contents pointed to by *c,* *m,* *y,* *k,* and *a,* to the
@@ -949,7 +937,7 @@ struct Color {
     /// These components can be retrieved individually using the cyanF(),
     /// magentaF(), yellowF(), blackF() and alphaF() functions.
     /// 
-    /// **See also:** setCmykF()
+    /// **See also:** [`set_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     get_cmyk(c: *i32, m: *i32, y: *i32, k: *i32, a: *i32),
     /// 
@@ -958,8 +946,8 @@ struct Color {
     /// 
     /// All the values must be in the range 0-255.
     /// 
-    /// **See also:** getCmyk()
-    /// setCmykF()
+    /// **See also:** [`get_cmyk()`]
+    /// [`set_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     /// 
     /// **Overloads**
@@ -968,8 +956,8 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** getCmykF()
-    /// setCmyk()
+    /// **See also:** [`get_cmyk_f()`]
+    /// [`set_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     set_cmyk(c: i32, m: i32, y: i32, k: i32, a: i32),
     /// 
@@ -980,7 +968,7 @@ struct Color {
     /// These components can be retrieved individually using the cyanF(),
     /// magentaF(), yellowF(), blackF() and alphaF() functions.
     /// 
-    /// **See also:** setCmykF()
+    /// **See also:** [`set_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     get_cmyk_f(c: *f32, m: *f32, y: *f32, k: *f32, a: *f32),
     /// 
@@ -990,61 +978,61 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** getCmykF()
-    /// setCmyk()
+    /// **See also:** [`get_cmyk_f()`]
+    /// [`set_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     set_cmyk_f(c: f32, m: f32, y: f32, k: f32, a: f32),
     /// 
     /// Returns the hue color component of this color.
     /// 
-    /// **See also:** getHslF()
-    /// getHsl()
+    /// **See also:** [`get_hsl_f()`]
+    /// [`get_hsl()`]
     /// 
     /// Returns the hue color component of this color.
     /// 
-    /// **See also:** hue()
-    /// getHslF()
+    /// **See also:** [`hue()`]
+    /// [`get_hsl_f()`]
     hsl_hue() -> i32,
     /// 
     /// Returns the saturation color component of this color.
     /// 
-    /// **See also:** saturationF()
-    /// getHsv()
+    /// **See also:** [`saturation_f()`]
+    /// [`get_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     /// 
     /// Returns the saturation color component of this color.
     /// 
-    /// **See also:** saturationF()
-    /// getHslF()
+    /// **See also:** [`saturation_f()`]
+    /// [`get_hsl_f()`]
     hsl_saturation() -> i32,
     /// 
     /// Returns the lightness color component of this color.
     /// 
-    /// **See also:** lightnessF()
-    /// getHsl()
+    /// **See also:** [`lightness_f()`]
+    /// [`get_hsl()`]
     /// 
     /// Returns the lightness color component of this color.
     /// 
-    /// **See also:** value()
-    /// getHslF()
+    /// **See also:** [`value()`]
+    /// [`get_hsl_f()`]
     lightness() -> i32,
     /// 
     /// Returns the hue color component of this color.
     /// 
-    /// **See also:** hue()
-    /// getHslF()
+    /// **See also:** [`hue()`]
+    /// [`get_hsl_f()`]
     hsl_hue_f() -> f32,
     /// 
     /// Returns the saturation color component of this color.
     /// 
-    /// **See also:** saturationF()
-    /// getHslF()
+    /// **See also:** [`saturation_f()`]
+    /// [`get_hsl_f()`]
     hsl_saturation_f() -> f32,
     /// 
     /// Returns the lightness color component of this color.
     /// 
-    /// **See also:** value()
-    /// getHslF()
+    /// **See also:** [`value()`]
+    /// [`get_hsl_f()`]
     lightness_f() -> f32,
     /// 
     /// Sets the contents pointed to by *h,* *s,* *l,* and *a,* to the hue,
@@ -1054,7 +1042,7 @@ struct Color {
     /// These components can be retrieved individually using the hslHueF(),
     /// hslSaturationF(), lightnessF() and alphaF() functions.
     /// 
-    /// **See also:** setHsl()
+    /// **See also:** [`set_hsl()`]
     /// 
     /// Sets the contents pointed to by *h,* *s,* *l,* and *a,* to the hue,
     /// saturation, lightness, and alpha-channel (transparency) components of the
@@ -1063,7 +1051,7 @@ struct Color {
     /// These components can be retrieved individually using the hslHue(),
     /// hslSaturation(), lightness() and alpha() functions.
     /// 
-    /// **See also:** setHsl()
+    /// **See also:** [`set_hsl()`]
     get_hsl(h: *i32, s: *i32, l: *i32, a: *i32),
     /// 
     /// Sets a HSL color lightness; *h* is the hue, *s* is the saturation, *l* is
@@ -1071,8 +1059,8 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** getHslF()
-    /// setHsl()
+    /// **See also:** [`get_hsl_f()`]
+    /// [`set_hsl()`]
     /// 
     /// Sets a HSL color value; *h* is the hue, *s* is the saturation, *l* is
     /// the lightness and *a* is the alpha component of the HSL color.
@@ -1080,8 +1068,8 @@ struct Color {
     /// The saturation, value and alpha-channel values must be in the range 0-255,
     /// and the hue value must be greater than -1.
     /// 
-    /// **See also:** getHsl()
-    /// setHslF()
+    /// **See also:** [`get_hsl()`]
+    /// [`set_hsl_f()`]
     set_hsl(h: i32, s: i32, l: i32, a: i32),
     /// 
     /// Sets the contents pointed to by *h,* *s,* *l,* and *a,* to the hue,
@@ -1091,7 +1079,7 @@ struct Color {
     /// These components can be retrieved individually using the hslHueF(),
     /// hslSaturationF(), lightnessF() and alphaF() functions.
     /// 
-    /// **See also:** setHsl()
+    /// **See also:** [`set_hsl()`]
     get_hsl_f(h: *f32, s: *f32, l: *f32, a: *f32),
     /// 
     /// Sets a HSL color lightness; *h* is the hue, *s* is the saturation, *l* is
@@ -1099,47 +1087,47 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** getHslF()
-    /// setHsl()
+    /// **See also:** [`get_hsl_f()`]
+    /// [`set_hsl()`]
     set_hsl_f(h: f32, s: f32, l: f32, a: f32),
     /// 
     /// Create and returns an RGB QColor based on this color.
     /// 
-    /// **See also:** fromRgb()
-    /// convertTo()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`convert_to()`]
+    /// [`is_valid()`]
     to_rgb() -> Color,
     /// 
     /// Creates and returns an HSV QColor based on this color.
     /// 
-    /// **See also:** fromHsv()
-    /// convertTo()
-    /// isValid()
+    /// **See also:** [`from_hsv()`]
+    /// [`convert_to()`]
+    /// [`is_valid()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     to_hsv() -> Color,
     /// 
     /// Creates and returns a CMYK QColor based on this color.
     /// 
-    /// **See also:** fromCmyk()
-    /// convertTo()
-    /// isValid()
+    /// **See also:** [`from_cmyk()`]
+    /// [`convert_to()`]
+    /// [`is_valid()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     to_cmyk() -> Color,
     /// 
     /// Creates and returns an HSL QColor based on this color.
     /// 
-    /// **See also:** fromHsl()
-    /// convertTo()
-    /// isValid()
+    /// **See also:** [`from_hsl()`]
+    /// [`convert_to()`]
+    /// [`is_valid()`]
     to_hsl() -> Color,
     /// 
     /// Creates a copy of *this* color in the format specified by *colorSpec.*
     /// 
-    /// **See also:** spec()
-    /// toCmyk()
-    /// toHsv()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`spec()`]
+    /// [`to_cmyk()`]
+    /// [`to_hsv()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     convert_to(color_spec: Color::Spec) -> Color,
     /// 
     /// Static convenience function that returns a QColor constructed from the
@@ -1149,10 +1137,10 @@ struct Color {
     /// 255), use the fromRgba() function to include the alpha-channel specified by
     /// the given QRgb value.
     /// 
-    /// **See also:** fromRgba()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgba()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the
     /// given QRgb value *rgba.*
@@ -1160,9 +1148,9 @@ struct Color {
     /// Unlike the fromRgb() function, the alpha-channel specified by the given
     /// QRgb value is included.
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgba64()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the RGB
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
@@ -1170,10 +1158,10 @@ struct Color {
     /// 
     /// All the values must be in the range 0-255.
     /// 
-    /// **See also:** toRgb()
-    /// fromRgba64()
-    /// fromRgbF()
-    /// isValid()
+    /// **See also:** [`to_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`from_rgb_f()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the RGB
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
@@ -1181,27 +1169,27 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgba64()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the RGBA64
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
     /// (alpha-channel, i.e. transparency).
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the
     /// given QRgba64 value *rgba64.*
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     [static] from_rgb(rgb: RgbType) -> Color,
     /// 
     /// Static convenience function that returns a QColor constructed from the
@@ -1210,26 +1198,26 @@ struct Color {
     /// Unlike the fromRgb() function, the alpha-channel specified by the given
     /// QRgb value is included.
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgba64()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the RGBA64
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
     /// (alpha-channel, i.e. transparency).
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the
     /// given QRgba64 value *rgba64.*
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     [static] from_rgba(rgba: RgbType) -> Color,
     /// 
     /// Static convenience function that returns a QColor constructed from the
@@ -1239,10 +1227,10 @@ struct Color {
     /// 255), use the fromRgba() function to include the alpha-channel specified by
     /// the given QRgb value.
     /// 
-    /// **See also:** fromRgba()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgba()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the
     /// given QRgb value *rgba.*
@@ -1250,9 +1238,9 @@ struct Color {
     /// Unlike the fromRgb() function, the alpha-channel specified by the given
     /// QRgb value is included.
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgba64()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the RGB
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
@@ -1260,10 +1248,10 @@ struct Color {
     /// 
     /// All the values must be in the range 0-255.
     /// 
-    /// **See also:** toRgb()
-    /// fromRgba64()
-    /// fromRgbF()
-    /// isValid()
+    /// **See also:** [`to_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`from_rgb_f()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the RGB
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
@@ -1271,27 +1259,28 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgba64()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the RGBA64
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
     /// (alpha-channel, i.e. transparency).
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the
     /// given QRgba64 value *rgba64.*
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
+    [org_name(fromRgb)]
     [static] from_rgb_2(r: i32, g: i32, b: i32, a: i32) -> Color,
     /// 
     /// Static convenience function that returns a QColor constructed from the RGB
@@ -1300,46 +1289,47 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgba64()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     [static] from_rgb_f(r: f32, g: f32, b: f32, a: f32) -> Color,
     /// 
     /// Static convenience function that returns a QColor constructed from the RGBA64
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
     /// (alpha-channel, i.e. transparency).
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the
     /// given QRgba64 value *rgba64.*
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     [static] from_rgba64(r: ushort, g: ushort, b: ushort, a: ushort) -> Color,
     /// 
     /// Static convenience function that returns a QColor constructed from the RGBA64
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
     /// (alpha-channel, i.e. transparency).
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     /// 
     /// Static convenience function that returns a QColor constructed from the
     /// given QRgba64 value *rgba64.*
     /// 
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
+    [org_name(fromRgba64)]
     [static] from_rgba64_2(rgba: Rgba64Type) -> Color,
     /// 
     /// Static convenience function that returns a QColor constructed from the HSV
@@ -1349,9 +1339,9 @@ struct Color {
     /// The value of *s,* *v,* and *a* must all be in the range 0-255; the value
     /// of *h* must be in the range 0-359.
     /// 
-    /// **See also:** toHsv()
-    /// fromHsvF()
-    /// isValid()
+    /// **See also:** [`to_hsv()`]
+    /// [`from_hsv_f()`]
+    /// [`is_valid()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     /// 
     /// **Overloads**
@@ -1361,9 +1351,9 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** toHsv()
-    /// fromHsv()
-    /// isValid()
+    /// **See also:** [`to_hsv()`]
+    /// [`from_hsv()`]
+    /// [`is_valid()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     [static] from_hsv(h: i32, s: i32, v: i32, a: i32) -> Color,
     /// 
@@ -1374,9 +1364,9 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** toHsv()
-    /// fromHsv()
-    /// isValid()
+    /// **See also:** [`to_hsv()`]
+    /// [`from_hsv()`]
+    /// [`is_valid()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     [static] from_hsv_f(h: f32, s: f32, v: f32, a: f32) -> Color,
     /// 
@@ -1386,9 +1376,9 @@ struct Color {
     /// 
     /// All the values must be in the range 0-255.
     /// 
-    /// **See also:** toCmyk()
-    /// fromCmykF()
-    /// isValid()
+    /// **See also:** [`to_cmyk()`]
+    /// [`from_cmyk_f()`]
+    /// [`is_valid()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     /// 
     /// **Overloads**
@@ -1398,9 +1388,9 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** toCmyk()
-    /// fromCmyk()
-    /// isValid()
+    /// **See also:** [`to_cmyk()`]
+    /// [`from_cmyk()`]
+    /// [`is_valid()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     [static] from_cmyk(c: i32, m: i32, y: i32, k: i32, a: i32) -> Color,
     /// 
@@ -1411,9 +1401,9 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** toCmyk()
-    /// fromCmyk()
-    /// isValid()
+    /// **See also:** [`to_cmyk()`]
+    /// [`from_cmyk()`]
+    /// [`is_valid()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     [static] from_cmyk_f(c: f32, m: f32, y: f32, k: f32, a: f32) -> Color,
     /// 
@@ -1424,9 +1414,9 @@ struct Color {
     /// The value of *s,* *l,* and *a* must all be in the range 0-255; the value
     /// of *h* must be in the range 0-359.
     /// 
-    /// **See also:** toHsl()
-    /// fromHslF()
-    /// isValid()
+    /// **See also:** [`to_hsl()`]
+    /// [`from_hsl_f()`]
+    /// [`is_valid()`]
     /// 
     /// **Overloads**
     /// Static convenience function that returns a QColor constructed from the HSV
@@ -1435,9 +1425,9 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** toHsl()
-    /// fromHsl()
-    /// isValid()
+    /// **See also:** [`to_hsl()`]
+    /// [`from_hsl()`]
+    /// [`is_valid()`]
     [static] from_hsl(h: i32, s: i32, l: i32, a: i32) -> Color,
     /// 
     /// **Overloads**
@@ -1447,20 +1437,20 @@ struct Color {
     /// 
     /// All the values must be in the range 0.0-1.0.
     /// 
-    /// **See also:** toHsl()
-    /// fromHsl()
-    /// isValid()
+    /// **See also:** [`to_hsl()`]
+    /// [`from_hsl()`]
+    /// [`is_valid()`]
     [static] from_hsl_f(h: f32, s: f32, l: f32, a: f32) -> Color,
     /// 
     /// Returns the lightness color component of this color.
     /// 
-    /// **See also:** lightnessF()
-    /// getHsl()
+    /// **See also:** [`lightness_f()`]
+    /// [`get_hsl()`]
     /// 
     /// Returns the lightness color component of this color.
     /// 
-    /// **See also:** value()
-    /// getHslF()
+    /// **See also:** [`value()`]
+    /// [`get_hsl_f()`]
     /// 
     /// Returns a lighter (or darker) color, but does not change this object.
     /// 
@@ -1473,8 +1463,8 @@ struct Color {
     /// The function converts the current RGB color to HSV, multiplies the value
     /// (V) component by *factor* and converts the color back to RGB.
     /// 
-    /// **See also:** darker()
-    /// isValid()
+    /// **See also:** [`darker()`]
+    /// [`is_valid()`]
     /// 
     /// Use lighter( *factor)* instead.
     light(f: i32) -> Color,
@@ -1490,8 +1480,8 @@ struct Color {
     /// The function converts the current RGB color to HSV, multiplies the value
     /// (V) component by *factor* and converts the color back to RGB.
     /// 
-    /// **See also:** darker()
-    /// isValid()
+    /// **See also:** [`darker()`]
+    /// [`is_valid()`]
     lighter(f: i32) -> Color,
     /// 
     /// Returns a darker (or lighter) color, but does not change this object.
@@ -1505,8 +1495,8 @@ struct Color {
     /// The function converts the current RGB color to HSV, divides the value (V)
     /// component by *factor* and converts the color back to RGB.
     /// 
-    /// **See also:** lighter()
-    /// isValid()
+    /// **See also:** [`lighter()`]
+    /// [`is_valid()`]
     /// 
     /// Use darker( *factor)* instead.
     dark(f: i32) -> Color,
@@ -1522,8 +1512,8 @@ struct Color {
     /// The function converts the current RGB color to HSV, divides the value (V)
     /// component by *factor* and converts the color back to RGB.
     /// 
-    /// **See also:** lighter()
-    /// isValid()
+    /// **See also:** [`lighter()`]
+    /// [`is_valid()`]
     darker(f: i32) -> Color,
     /// 
     /// Returns `true` if the *name* is a valid color name and can
@@ -1532,7 +1522,7 @@ struct Color {
     /// 
     /// It uses the same algorithm used in setNamedColor().
     /// 
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     /// 
     /// **Overloads**
     /// 
@@ -1545,11 +1535,12 @@ struct Color {
     /// 
     /// It uses the same algorithm used in setNamedColor().
     /// 
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     /// 
     /// **Overloads**
     /// 
     /// **Overloads**
+    [org_name(isValidColor)]
     [static] is_valid_color_2(arg0: StringViewType) -> bool,
     /// 
     /// Returns `true` if the *name* is a valid color name and can
@@ -1558,12 +1549,28 @@ struct Color {
     /// 
     /// It uses the same algorithm used in setNamedColor().
     /// 
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     /// 
     /// **Overloads**
     /// 
     /// **Overloads**
+    [org_name(isValidColor)]
     [static] is_valid_color_3(arg0: Latin1StringType) -> bool,
+}
+
+[org_name(QColor)]
+enum Spec {
+    Invalid,
+    Rgb,
+    Hsv,
+    Cmyk,
+    Hsl,
+}
+
+[org_name(QColor)]
+enum NameFormat {
+    HexRgb,
+    HexArgb,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

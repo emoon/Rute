@@ -40,7 +40,7 @@
 /// some later time using isResultAvailable() and waitForResult(). Qt provides the
 /// convenience class QOpenGLTimeMonitor that helps with using multiple query objects.
 /// 
-/// **See also:** QOpenGLTimeMonitor
+/// **See also:** [`OpenGLTimeMonitor`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -58,17 +58,17 @@ struct OpenGLTimerQuery : Object {
     is_created() -> bool,
     /// 
     /// Returns the id of the underlying OpenGL query object.
-    object_id() -> i32,
+    object_id() -> GLuint,
     /// 
     /// Marks the start point in the OpenGL command queue for a sequence of commands to
     /// be timed by this query object.
     /// 
     /// This is useful for simple use-cases. Usually it is better to use recordTimestamp().
     /// 
-    /// **See also:** end()
-    /// isResultAvailable()
-    /// waitForResult()
-    /// recordTimestamp()
+    /// **See also:** [`end()`]
+    /// [`is_result_available()`]
+    /// [`wait_for_result()`]
+    /// [`record_timestamp()`]
     begin(),
     /// 
     /// Marks the end point in the OpenGL command queue for a sequence of commands to
@@ -76,10 +76,10 @@ struct OpenGLTimerQuery : Object {
     /// 
     /// This is useful for simple use-cases. Usually it is better to use recordTimestamp().
     /// 
-    /// **See also:** begin()
-    /// isResultAvailable()
-    /// waitForResult()
-    /// recordTimestamp()
+    /// **See also:** [`begin()`]
+    /// [`is_result_available()`]
+    /// [`wait_for_result()`]
+    /// [`record_timestamp()`]
     end(),
     /// 
     /// Returns the current timestamp of the GPU when all previously issued OpenGL
@@ -87,7 +87,7 @@ struct OpenGLTimerQuery : Object {
     /// 
     /// This function blocks until the result is returned.
     /// 
-    /// **See also:** recordTimestamp()
+    /// **See also:** [`record_timestamp()`]
     wait_for_timestamp() -> GLuint64,
     /// 
     /// Places a marker in the OpenGL command queue for the GPU to record the timestamp
@@ -98,10 +98,10 @@ struct OpenGLTimerQuery : Object {
     /// can be fetched with waitForResult() which will block if the result is not yet
     /// available.
     /// 
-    /// **See also:** waitForResult()
-    /// isResultAvailable()
-    /// begin()
-    /// end()
+    /// **See also:** [`wait_for_result()`]
+    /// [`is_result_available()`]
+    /// [`begin()`]
+    /// [`end()`]
     record_timestamp(),
     /// 
     /// Returns `true` if the OpenGL timer query result is available.
@@ -109,7 +109,7 @@ struct OpenGLTimerQuery : Object {
     /// This function is non-blocking and ideally should be used to check for the
     /// availability of the query result before calling waitForResult().
     /// 
-    /// **See also:** waitForResult()
+    /// **See also:** [`wait_for_result()`]
     is_result_available() -> bool,
     /// 
     /// Returns the result of the OpenGL timer query.
@@ -118,7 +118,7 @@ struct OpenGLTimerQuery : Object {
     /// recommended to call isResultAvailable() to ensure that the result is available
     /// to avoid unnecessary blocking and stalling.
     /// 
-    /// **See also:** isResultAvailable()
+    /// **See also:** [`is_result_available()`]
     wait_for_result() -> GLuint64,
 }
 

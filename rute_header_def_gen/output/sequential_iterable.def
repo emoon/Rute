@@ -5,23 +5,22 @@
 /// 
 /// The container itself is not copied before iterating over it.
 /// 
-/// **See also:** QVariant
+/// **See also:** [`Variant`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct SequentialIterable {
     /// 
     /// Returns a QSequentialIterable::const_iterator for the beginning of the container. This
     /// can be used in stl-style iteration.
     /// 
-    /// **See also:** end()
+    /// **See also:** [`end()`]
     begin() -> SequentialIterable::const_iterator,
     /// 
     /// Returns a QSequentialIterable::const_iterator for the end of the container. This
     /// can be used in stl-style iteration.
     /// 
-    /// **See also:** begin()
+    /// **See also:** [`begin()`]
     end() -> SequentialIterable::const_iterator,
     /// 
     /// Returns the element at position *idx* in the container.

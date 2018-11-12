@@ -1,0 +1,25 @@
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct FontEngineBox : FontEngine {
+    glyph_index(ucs4: uint) -> i32,
+    [event] recalc_advances(arg0: *GlyphLayoutType, arg1: FontEngine::ShaperFlags),
+    draw(p: *i32, x: f32, y: f32, si: &i32),
+    [event] add_outline_to_path(x: f32, y: f32, glyphs: &GlyphLayoutType, path: *PainterPathType, flags: i32),
+    bounding_box(glyphs: &GlyphLayoutType) -> i32,
+    [org_name(boundingBox)]
+    bounding_box_2(glyph: i32) -> i32,
+    [event] clone_with_size(pixel_size: f32) -> FontEngine?,
+    ascent() -> i32,
+    cap_height() -> i32,
+    descent() -> i32,
+    leading() -> i32,
+    [event] max_char_width() -> f32,
+    [event] min_left_bearing() -> f32,
+    [event] min_right_bearing() -> f32,
+    [event] alpha_map_for_glyph(arg0: i32) -> Image,
+    [event] can_render(string: *CharType, len: i32) -> bool,
+    size() -> i32,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -23,21 +23,12 @@
 /// formats, in addition to any image format plugins that support
 /// writing.
 /// 
-/// **See also:** QImageReader
-/// QImageIOHandler
-/// QImageIOPlugin
+/// **See also:** [`ImageReader`]
+/// [`ImageIOHandler`]
+/// [`ImageIOPlugin`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QImageWriter)]
-enum ImageWriterError {
-    UnknownError,
-    DeviceError,
-    UnsupportedFormatError,
-    InvalidImageError,
-}
-
-
 struct ImageWriter {
     /// 
     /// Sets the format QImageWriter will use when writing images, to *format.* *format* is a case insensitive text string. Example:
@@ -45,12 +36,12 @@ struct ImageWriter {
     /// You can call supportedImageFormats() for the full list of formats
     /// QImageWriter supports.
     /// 
-    /// **See also:** format()
+    /// **See also:** [`format()`]
     set_format(format: &ByteArrayType),
     /// 
     /// Returns the format QImageWriter uses for writing images.
     /// 
-    /// **See also:** setFormat()
+    /// **See also:** [`set_format()`]
     format() -> ByteArray,
     /// 
     /// Sets QImageWriter's device to *device.* If a device has already
@@ -64,8 +55,8 @@ struct ImageWriter {
     /// QProcess, QTcpSocket and QUdpSocket, where more logic is required
     /// to open the device.
     /// 
-    /// **See also:** device()
-    /// setFileName()
+    /// **See also:** [`device()`]
+    /// [`set_file_name()`]
     set_device(device: *IODeviceType),
     /// 
     /// Returns the device currently assigned to QImageWriter, or 0 if no
@@ -76,8 +67,8 @@ struct ImageWriter {
     /// QImageWriter will create a QFile and open it in [QIODevice::WriteOnly](QIODevice::WriteOnly)
     /// mode, and use this file when writing images.
     /// 
-    /// **See also:** fileName()
-    /// setDevice()
+    /// **See also:** [`file_name()`]
+    /// [`set_device()`]
     set_file_name(file_name: String),
     /// 
     /// If the currently assigned device is a QFile, or if setFileName()
@@ -86,8 +77,8 @@ struct ImageWriter {
     /// assigned or the device is not a QFile), an empty QString is
     /// returned.
     /// 
-    /// **See also:** setFileName()
-    /// setDevice()
+    /// **See also:** [`set_file_name()`]
+    /// [`set_device()`]
     file_name() -> String,
     /// 
     /// Sets the quality setting of the image format to *quality.*
@@ -101,12 +92,12 @@ struct ImageWriter {
     /// the format supports a quality range from 0 (low visual quality, high
     /// compression) to 100 (high visual quality, low compression).
     /// 
-    /// **See also:** quality()
+    /// **See also:** [`quality()`]
     set_quality(quality: i32),
     /// 
     /// Returns the quality setting of the image format.
     /// 
-    /// **See also:** setQuality()
+    /// **See also:** [`set_quality()`]
     quality() -> i32,
     /// 
     /// This is an image format specific function that set the compression
@@ -117,12 +108,12 @@ struct ImageWriter {
     /// example, the format supports two values, 0(no compression) and
     /// 1(LZW-compression).
     /// 
-    /// **See also:** compression()
+    /// **See also:** [`compression()`]
     set_compression(compression: i32),
     /// 
     /// Returns the compression of the image.
     /// 
-    /// **See also:** setCompression()
+    /// **See also:** [`set_compression()`]
     compression() -> i32,
     /// 
     /// This is an image format specific function that sets the gamma
@@ -132,12 +123,12 @@ struct ImageWriter {
     /// The value range of *gamma* depends on the image format. For
     /// example, the format supports a gamma range from 0.0 to 1.0.
     /// 
-    /// **See also:** quality()
+    /// **See also:** [`quality()`]
     set_gamma(gamma: f32),
     /// 
     /// Returns the gamma level of the image.
     /// 
-    /// **See also:** setGamma()
+    /// **See also:** [`set_gamma()`]
     gamma() -> f32,
     /// 
     /// This is an image format specific function that sets the
@@ -151,7 +142,7 @@ struct ImageWriter {
     /// 
     /// Returns the subtype of the image.
     /// 
-    /// **See also:** setSubType()
+    /// **See also:** [`set_sub_type()`]
     sub_type() -> ByteArray,
     /// 
     /// Returns the list of subtypes supported by an image.
@@ -163,12 +154,12 @@ struct ImageWriter {
     /// 
     /// The default is false.
     /// 
-    /// **See also:** optimizedWrite()
+    /// **See also:** [`optimized_write()`]
     set_optimized_write(optimize: bool),
     /// 
     /// Returns whether optimization has been turned on for writing the image.
     /// 
-    /// **See also:** setOptimizedWrite()
+    /// **See also:** [`set_optimized_write()`]
     optimized_write() -> bool,
     /// 
     /// This is an image format-specific function which turns on *progressive* scanning
@@ -177,12 +168,12 @@ struct ImageWriter {
     /// 
     /// The default is false.
     /// 
-    /// **See also:** progressiveScanWrite()
+    /// **See also:** [`progressive_scan_write()`]
     set_progressive_scan_write(progressive: bool),
     /// 
     /// Returns whether the image should be written as a progressive image.
     /// 
-    /// **See also:** setProgressiveScanWrite()
+    /// **See also:** [`set_progressive_scan_write()`]
     progressive_scan_write() -> bool,
     /// 
     /// Sets the image transformations metadata including orientation to *transform.*
@@ -190,8 +181,8 @@ struct ImageWriter {
     /// If transformation metadata is not supported by the image format,
     /// the transform is applied before writing.
     /// 
-    /// **See also:** transformation()
-    /// write()
+    /// **See also:** [`transformation()`]
+    /// [`write()`]
     set_transformation(orientation: ImageIOHandler::Transformations),
     /// 
     /// Use setText() instead.
@@ -202,14 +193,14 @@ struct ImageWriter {
     /// 
     /// The contents of *description* depends on the image format.
     /// 
-    /// **See also:** description()
+    /// **See also:** [`description()`]
     set_description(description: String),
     /// 
     /// Use QImageReader::text() instead.
     /// 
     /// Returns the description of the image.
     /// 
-    /// **See also:** setDescription()
+    /// **See also:** [`set_description()`]
     description() -> String,
     /// 
     /// Sets the image text associated with the key *key* to
@@ -226,16 +217,16 @@ struct ImageWriter {
     /// Support for this option is implemented through
     /// QImageIOHandler::Description.
     /// 
-    /// **See also:** QImage::setText()
-    /// QImageReader::text()
+    /// **See also:** [`Image::set_text`]
+    /// [`ImageReader::text`]
     set_text(key: String, text: String),
     /// 
     /// Returns `true` if QImageWriter can write the image; i.e., the image
     /// format is supported and the assigned device is open for reading.
     /// 
-    /// **See also:** write()
-    /// setDevice()
-    /// setFormat()
+    /// **See also:** [`write()`]
+    /// [`set_device()`]
+    /// [`set_format()`]
     can_write() -> bool,
     /// 
     /// Writes the image *image* to the assigned device or file
@@ -244,19 +235,19 @@ struct ImageWriter {
     /// that occurred, or errorString() to get a human readable
     /// description of the error.
     /// 
-    /// **See also:** canWrite()
-    /// error()
-    /// errorString()
+    /// **See also:** [`can_write()`]
+    /// [`error()`]
+    /// [`error_string()`]
     write(image: &ImageType) -> bool,
     /// 
     /// Returns the type of error that last occurred.
     /// 
     /// **See also:** ImageWriterError
-    /// errorString()
+    /// [`error_string()`]
     /// 
     /// Returns a human readable description of the last error that occurred.
     /// 
-    /// **See also:** error()
+    /// **See also:** [`error()`]
     error() -> ImageWriter::ImageWriterError,
     /// 
     /// Returns `true` if the writer supports *option;* otherwise returns
@@ -269,8 +260,8 @@ struct ImageWriter {
     /// 
     /// Options can be tested after the writer has been associated with a format.
     /// 
-    /// **See also:** QImageReader::supportsOption()
-    /// setFormat()
+    /// **See also:** [`ImageReader::supports_option`]
+    /// [`set_format()`]
     supports_option(option: ImageIOHandler::ImageOption) -> bool,
     /// 
     /// Returns the list of image formats supported by QImageWriter.
@@ -313,9 +304,9 @@ struct ImageWriter {
     /// Note that the QApplication instance must be created before this function is
     /// called.
     /// 
-    /// **See also:** setFormat()
-    /// QImageReader::supportedImageFormats()
-    /// QImageIOPlugin
+    /// **See also:** [`set_format()`]
+    /// [`ImageReader::supported_image_formats`]
+    /// [`ImageIOPlugin`]
     [static] supported_image_formats() -> [ByteArray],
     /// 
     /// Returns the list of MIME types supported by QImageWriter.
@@ -323,9 +314,17 @@ struct ImageWriter {
     /// Note that the QApplication instance must be created before this function is
     /// called.
     /// 
-    /// **See also:** supportedImageFormats()
-    /// QImageReader::supportedMimeTypes()
+    /// **See also:** [`supported_image_formats()`]
+    /// [`ImageReader::supported_mime_types`]
     [static] supported_mime_types() -> [ByteArray],
+}
+
+[org_name(QImageWriter)]
+enum ImageWriterError {
+    UnknownError,
+    DeviceError,
+    UnsupportedFormatError,
+    InvalidImageError,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

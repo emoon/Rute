@@ -11,7 +11,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct TextDocumentFragment {
     /// 
     /// Returns `true` if the fragment is empty; otherwise returns `false.`
@@ -20,15 +19,15 @@ struct TextDocumentFragment {
     /// Returns the document fragment's text as plain text (i.e. with no
     /// formatting information).
     /// 
-    /// **See also:** toHtml()
+    /// **See also:** [`to_html()`]
     to_plain_text() -> String,
     /// 
     /// Returns the contents of the document fragment as HTML,
     /// using the specified *encoding* (e.g., , ).
     /// 
-    /// **See also:** toPlainText()
-    /// QTextDocument::toHtml()
-    /// QTextCodec
+    /// **See also:** [`to_plain_text()`]
+    /// [`TextDocument::to_html`]
+    /// [`TextCodec`]
     to_html(encoding: &ByteArrayType) -> String,
     /// 
     /// Returns a document fragment that contains the given *plainText.*
@@ -63,6 +62,7 @@ struct TextDocumentFragment {
     /// 
     /// If the provided HTML contains references to external resources such as imported style sheets, then
     /// they will be loaded through the *resourceProvider.*
+    [org_name(fromHtml)]
     [static] from_html_2(html: String, resource_provider: *TextDocumentType) -> TextDocumentFragment,
 }
 

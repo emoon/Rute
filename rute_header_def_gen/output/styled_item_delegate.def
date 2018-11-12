@@ -131,9 +131,9 @@
 /// documentation for details.
 /// 
 /// **See also:** {Delegate Classes}
-/// QItemDelegate
-/// QAbstractItemDelegate
-/// QStyle
+/// [`ItemDelegate`]
+/// [`AbstractItemDelegate`]
+/// [`Style`]
 /// {Spin Box Delegate Example}
 /// {Star Delegate Example}
 /// {Color
@@ -164,9 +164,9 @@ struct StyledItemDelegate : AbstractItemDelegate {
     /// For example, it may be useful to call QPainter::save() before
     /// painting and QPainter::restore() afterwards.
     /// 
-    /// **See also:** QItemDelegate::paint()
-    /// QStyle::drawControl()
-    /// QStyle::CE_ItemViewItem
+    /// **See also:** [`ItemDelegate::paint`]
+    /// [`Style::draw_control`]
+    /// [`Style::ce_item_view_item()`]
     [event] paint(painter: *PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
     /// 
     /// Returns the size needed by the delegate to display the item
@@ -176,15 +176,15 @@ struct StyledItemDelegate : AbstractItemDelegate {
     /// This function uses the view's QStyle to determine the size of the
     /// item.
     /// 
-    /// **See also:** QStyle::sizeFromContents()
-    /// QStyle::CT_ItemViewItem
+    /// **See also:** [`Style::size_from_contents`]
+    /// [`Style::ct_item_view_item()`]
     [event] size_hint(option: &StyleOptionViewItemType, index: &ModelIndexType) -> Size,
     /// 
     /// Returns the widget used to edit the item specified by *index*
     /// for editing. The *parent* widget and style *option* are used to
     /// control how the editor widget appears.
     /// 
-    /// **See also:** QAbstractItemDelegate::createEditor()
+    /// **See also:** [`AbstractItemDelegate::create_editor`]
     [event] create_editor(parent: *WidgetType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> Widget?,
     /// 
     /// Sets the data to be displayed and edited by the *editor* from the
@@ -194,7 +194,7 @@ struct StyledItemDelegate : AbstractItemDelegate {
     /// widget's [user property](Qt's%20Property%20System)
     /// 
     /// 
-    /// **See also:** QMetaProperty::isUser()
+    /// **See also:** [`MetaProperty::is_user`]
     [event] set_editor_data(editor: *WidgetType, index: &ModelIndexType),
     /// 
     /// Gets data from the *editor* widget and stores it in the specified
@@ -205,20 +205,20 @@ struct StyledItemDelegate : AbstractItemDelegate {
     /// property](Qt's%20Property%20System)
     /// 
     /// 
-    /// **See also:** QMetaProperty::isUser()
+    /// **See also:** [`MetaProperty::is_user`]
     [event] set_model_data(editor: *WidgetType, model: *AbstractItemModelType, index: &ModelIndexType),
     /// 
     /// Returns the editor factory used by the item delegate.
     /// If no editor factory is set, the function will return null.
     /// 
-    /// **See also:** setItemEditorFactory()
+    /// **See also:** [`set_item_editor_factory()`]
     item_editor_factory() -> ItemEditorFactory?,
     /// 
     /// Sets the editor factory to be used by the item delegate to be the *factory*
     /// specified. If no editor factory is set, the item delegate will use the
     /// default editor factory.
     /// 
-    /// **See also:** itemEditorFactory()
+    /// **See also:** [`item_editor_factory()`]
     set_item_editor_factory(factory: *ItemEditorFactoryType),
     /// 
     /// This function returns the string that the delegate will use to display the
@@ -231,14 +231,14 @@ struct StyledItemDelegate : AbstractItemDelegate {
     /// This function is not called for empty model indices, i.e., indices for which
     /// the model returns an invalid QVariant.
     /// 
-    /// **See also:** QAbstractItemModel::data()
+    /// **See also:** [`AbstractItemModel::data`]
     [event] display_text(value: &VariantType, locale: &LocaleType) -> String,
     /// 
     /// Initialize *option* with the values using the index *index.* This method
     /// is useful for subclasses when they need a QStyleOptionViewItem, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     [event] init_style_option(option: *StyleOptionViewItemType, index: &ModelIndexType),
     /// 
     /// Returns `true` if the given *editor* is a valid QWidget and the
@@ -264,8 +264,8 @@ struct StyledItemDelegate : AbstractItemDelegate {
     /// If the event is a **Esc** key press event, the *editor* is
     /// closed *without* committing its data.
     /// 
-    /// **See also:** commitData()
-    /// closeEditor()
+    /// **See also:** [`commit_data()`]
+    /// [`close_editor()`]
     [event] event_filter(object: *ObjectType, event: *EventType) -> bool,
     /// 
     [event] editor_event(event: *EventType, model: *AbstractItemModelType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,

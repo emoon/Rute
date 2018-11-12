@@ -53,31 +53,30 @@
 /// because QList is a very inefficient container for QStringViews (it would heap-allocate
 /// every element). Use QVector (or std::vector) to hold QStringViews instead.
 /// 
-/// **See also:** QString
-/// QStringRef
+/// **See also:** [`String`]
+/// [`StringRef`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct StringView {
     /// 
     /// Returns the size of this string view, in UTF-16 code points (that is,
     /// surrogate pairs count as two for the purposes of this function, the same
     /// as in QString and QStringRef).
     /// 
-    /// **See also:** empty()
-    /// isEmpty()
-    /// isNull()
-    /// length()
-    size() -> i32,
+    /// **See also:** [`empty()`]
+    /// [`is_empty()`]
+    /// [`is_null()`]
+    /// [`length()`]
+    size() -> qsizetype,
     /// 
     /// Returns a const pointer to the first character in the string.
     /// 
     /// **Note**: The character array represented by the return value is *not* null-terminated.
     /// 
-    /// **See also:** begin()
-    /// end()
-    /// utf16()
+    /// **See also:** [`begin()`]
+    /// [`end()`]
+    /// [`utf16()`]
     data() -> StringView::const_pointer,
     /// 
     /// Returns a const pointer to the first character in the string.
@@ -86,18 +85,18 @@ struct StringView {
     /// 
     /// **Note**: The character array represented by the return value is *not* null-terminated.
     /// 
-    /// **See also:** begin()
-    /// end()
-    /// data()
+    /// **See also:** [`begin()`]
+    /// [`end()`]
+    /// [`data()`]
     utf16() -> onst QStringView::storage_type *,
     /// 
     /// Returns a Latin-1 representation of the string as a QByteArray.
     /// 
     /// The behavior is undefined if the string contains non-Latin1 characters.
     /// 
-    /// **See also:** toUtf8()
-    /// toLocal8Bit()
-    /// QTextCodec
+    /// **See also:** [`to_utf8()`]
+    /// [`to_local8_bit()`]
+    /// [`TextCodec`]
     to_latin1() -> ByteArray,
     /// 
     /// Returns a UTF-8 representation of the string as a QByteArray.
@@ -105,9 +104,9 @@ struct StringView {
     /// UTF-8 is a Unicode codec and can represent all characters in a Unicode
     /// string like QString.
     /// 
-    /// **See also:** toLatin1()
-    /// toLocal8Bit()
-    /// QTextCodec
+    /// **See also:** [`to_latin1()`]
+    /// [`to_local8_bit()`]
+    /// [`TextCodec`]
     to_utf8() -> ByteArray,
     /// 
     /// Returns a local 8-bit representation of the string as a QByteArray.
@@ -119,9 +118,9 @@ struct StringView {
     /// The behavior is undefined if the string contains characters not
     /// supported by the locale's 8-bit encoding.
     /// 
-    /// **See also:** toLatin1()
-    /// toUtf8()
-    /// QTextCodec
+    /// **See also:** [`to_latin1()`]
+    /// [`to_utf8()`]
+    /// [`TextCodec`]
     to_local8_bit() -> ByteArray,
     /// 
     /// Returns a UCS-4/UTF-32 representation of the string as a QVector<uint>.
@@ -133,31 +132,31 @@ struct StringView {
     /// 
     /// The returned vector is not 0-terminated.
     /// 
-    /// **See also:** toUtf8()
-    /// toLatin1()
-    /// toLocal8Bit()
-    /// QTextCodec
+    /// **See also:** [`to_utf8()`]
+    /// [`to_latin1()`]
+    /// [`to_local8_bit()`]
+    /// [`TextCodec`]
     to_ucs4() -> [uint],
     /// 
     /// Returns the character at position *n* in this string view.
     /// 
     /// The behavior is undefined if *n* is negative or not less than size().
     /// 
-    /// **See also:** operator[]()
-    /// front()
-    /// back()
-    at(n: i32) -> Char,
+    /// **See also:** [`operator()`]
+    /// [`front()`]
+    /// [`back()`]
+    at(n: qsizetype) -> Char,
     /// 
     /// Returns the substring starting at position *start* in this object,
     /// and extending to the end of the string.
     /// 
     /// **Note**: The behavior is undefined when *start* < 0 or *start* > size().
     /// 
-    /// **See also:** left()
-    /// right()
-    /// chopped()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`left()`]
+    /// [`right()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     /// 
     /// **Overloads**
     /// Returns the substring of length *length* starting at position
@@ -166,23 +165,23 @@ struct StringView {
     /// **Note**: The behavior is undefined when *start* < 0, *length* < 0,
     /// or *start* + *length* > size().
     /// 
-    /// **See also:** left()
-    /// right()
-    /// chopped()
-    /// chop()
-    /// truncate()
-    mid(pos: i32) -> StringView,
+    /// **See also:** [`left()`]
+    /// [`right()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
+    mid(pos: qsizetype) -> StringView,
     /// 
     /// Returns the substring starting at position *start* in this object,
     /// and extending to the end of the string.
     /// 
     /// **Note**: The behavior is undefined when *start* < 0 or *start* > size().
     /// 
-    /// **See also:** left()
-    /// right()
-    /// chopped()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`left()`]
+    /// [`right()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     /// 
     /// **Overloads**
     /// Returns the substring of length *length* starting at position
@@ -191,36 +190,37 @@ struct StringView {
     /// **Note**: The behavior is undefined when *start* < 0, *length* < 0,
     /// or *start* + *length* > size().
     /// 
-    /// **See also:** left()
-    /// right()
-    /// chopped()
-    /// chop()
-    /// truncate()
-    mid_2(pos: i32, n: i32) -> StringView,
+    /// **See also:** [`left()`]
+    /// [`right()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
+    [org_name(mid)]
+    mid_2(pos: qsizetype, n: qsizetype) -> StringView,
     /// 
     /// Returns the substring of length *length* starting at position
     /// 0 in this object.
     /// 
     /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
     /// 
-    /// **See also:** mid()
-    /// right()
-    /// chopped()
-    /// chop()
-    /// truncate()
-    left(n: i32) -> StringView,
+    /// **See also:** [`mid()`]
+    /// [`right()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
+    left(n: qsizetype) -> StringView,
     /// 
     /// Returns the substring of length *length* starting at position
     /// size() - *length* in this object.
     /// 
     /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
     /// 
-    /// **See also:** mid()
-    /// left()
-    /// chopped()
-    /// chop()
-    /// truncate()
-    right(n: i32) -> StringView,
+    /// **See also:** [`mid()`]
+    /// [`left()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
+    right(n: qsizetype) -> StringView,
     /// 
     /// Returns the substring of length size() - *length* starting at the
     /// beginning of this object.
@@ -229,12 +229,12 @@ struct StringView {
     /// 
     /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
     /// 
-    /// **See also:** mid()
-    /// left()
-    /// right()
-    /// chop()
-    /// truncate()
-    chopped(n: i32) -> StringView,
+    /// **See also:** [`mid()`]
+    /// [`left()`]
+    /// [`right()`]
+    /// [`chop()`]
+    /// [`truncate()`]
+    chopped(n: qsizetype) -> StringView,
     /// 
     /// Returns the substring of length size() - *length* starting at the
     /// beginning of this object.
@@ -243,11 +243,11 @@ struct StringView {
     /// 
     /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
     /// 
-    /// **See also:** mid()
-    /// left()
-    /// right()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`mid()`]
+    /// [`left()`]
+    /// [`right()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     /// 
     /// Truncates this string view by *length* characters.
     /// 
@@ -255,12 +255,12 @@ struct StringView {
     /// 
     /// **Note**: The behavior is undefined when *length* < 0 or *length* > size().
     /// 
-    /// **See also:** mid()
-    /// left()
-    /// right()
-    /// chopped()
-    /// truncate()
-    chop(n: i32),
+    /// **See also:** [`mid()`]
+    /// [`left()`]
+    /// [`right()`]
+    /// [`chopped()`]
+    /// [`truncate()`]
+    chop(n: qsizetype),
     /// 
     /// Returns `true` if this string-view starts with string-view *str,*
     /// Latin-1 string *l1,* or character *ch,* respectively;
@@ -269,7 +269,7 @@ struct StringView {
     /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
     /// otherwise the search is case-insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
     starts_with(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string-view starts with string-view *str,*
@@ -279,7 +279,8 @@ struct StringView {
     /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
     /// otherwise the search is case-insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
+    [org_name(startsWith)]
     starts_with_2(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string-view starts with string-view *str,*
@@ -289,7 +290,8 @@ struct StringView {
     /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
     /// otherwise the search is case-insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
+    [org_name(startsWith)]
     starts_with_3(c: CharType) -> bool,
     /// 
     /// Returns `true` if this string-view starts with string-view *str,*
@@ -299,7 +301,8 @@ struct StringView {
     /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
     /// otherwise the search is case-insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
+    [org_name(startsWith)]
     starts_with_4(c: CharType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string-view ends with string-view *str,*
@@ -309,7 +312,7 @@ struct StringView {
     /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
     /// otherwise the search is case-insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     ends_with(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string-view ends with string-view *str,*
@@ -319,7 +322,8 @@ struct StringView {
     /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
     /// otherwise the search is case-insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
+    [org_name(endsWith)]
     ends_with_2(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string-view ends with string-view *str,*
@@ -329,7 +333,8 @@ struct StringView {
     /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
     /// otherwise the search is case-insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
+    [org_name(endsWith)]
     ends_with_3(c: CharType) -> bool,
     /// 
     /// Returns `true` if this string-view ends with string-view *str,*
@@ -339,12 +344,13 @@ struct StringView {
     /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
     /// otherwise the search is case-insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
+    [org_name(endsWith)]
     ends_with_4(c: CharType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string is read right to left.
     /// 
-    /// **See also:** QString::isRightToLeft()
+    /// **See also:** [`String::is_right_to_left`]
     is_right_to_left() -> bool,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
@@ -353,10 +359,10 @@ struct StringView {
     /// 
     /// This function is provided for STL compatibility.
     /// 
-    /// **See also:** end()
-    /// cbegin()
-    /// rbegin()
-    /// data()
+    /// **See also:** [`end()`]
+    /// [`cbegin()`]
+    /// [`rbegin()`]
+    /// [`data()`]
     begin() -> StringView::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
@@ -365,9 +371,9 @@ struct StringView {
     /// 
     /// This function is provided for STL compatibility.
     /// 
-    /// **See also:** begin()
-    /// cend()
-    /// rend()
+    /// **See also:** [`begin()`]
+    /// [`cend()`]
+    /// [`rend()`]
     /// 
     /// Returns `true` if this string-view ends with string-view *str,*
     /// Latin-1 string *l1,* or character *ch,* respectively;
@@ -376,26 +382,26 @@ struct StringView {
     /// If *cs* is Qt::CaseSensitive (the default), the search is case-sensitive;
     /// otherwise the search is case-insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     end() -> StringView::const_iterator,
     /// 
     /// Same as begin().
     /// 
     /// This function is provided for STL compatibility.
     /// 
-    /// **See also:** cend()
-    /// begin()
-    /// crbegin()
-    /// data()
+    /// **See also:** [`cend()`]
+    /// [`begin()`]
+    /// [`crbegin()`]
+    /// [`data()`]
     cbegin() -> StringView::const_iterator,
     /// 
     /// Same as end().
     /// 
     /// This function is provided for STL compatibility.
     /// 
-    /// **See also:** cbegin()
-    /// end()
-    /// crend()
+    /// **See also:** [`cbegin()`]
+    /// [`end()`]
+    /// [`crend()`]
     cend() -> StringView::const_iterator,
     /// 
     /// Returns a const [STL-style](STL-style%20iterators)
@@ -404,9 +410,9 @@ struct StringView {
     /// 
     /// This function is provided for STL compatibility.
     /// 
-    /// **See also:** rend()
-    /// crbegin()
-    /// begin()
+    /// **See also:** [`rend()`]
+    /// [`crbegin()`]
+    /// [`begin()`]
     rbegin() -> StringView::const_reverse_iterator,
     /// 
     /// Returns a [STL-style](STL-style%20iterators)
@@ -415,37 +421,37 @@ struct StringView {
     /// 
     /// This function is provided for STL compatibility.
     /// 
-    /// **See also:** rbegin()
-    /// crend()
-    /// end()
+    /// **See also:** [`rbegin()`]
+    /// [`crend()`]
+    /// [`end()`]
     rend() -> StringView::const_reverse_iterator,
     /// 
     /// Same as rbegin().
     /// 
     /// This function is provided for STL compatibility.
     /// 
-    /// **See also:** crend()
-    /// rbegin()
-    /// cbegin()
+    /// **See also:** [`crend()`]
+    /// [`rbegin()`]
+    /// [`cbegin()`]
     crbegin() -> StringView::const_reverse_iterator,
     /// 
     /// Same as rend().
     /// 
     /// This function is provided for STL compatibility.
     /// 
-    /// **See also:** crbegin()
-    /// rend()
-    /// cend()
+    /// **See also:** [`crbegin()`]
+    /// [`rend()`]
+    /// [`cend()`]
     crend() -> StringView::const_reverse_iterator,
     /// 
     /// Returns whether this string view is empty - that is, whether `size() == 0` .
     /// 
     /// This function is provided for STL compatibility.
     /// 
-    /// **See also:** isEmpty()
-    /// isNull()
-    /// size()
-    /// length()
+    /// **See also:** [`is_empty()`]
+    /// [`is_null()`]
+    /// [`size()`]
+    /// [`length()`]
     empty() -> bool,
     /// 
     /// Returns the first character in the string. Same as first().
@@ -455,9 +461,9 @@ struct StringView {
     /// **Warning**: Calling this function on an empty string view constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** back()
-    /// first()
-    /// last()
+    /// **See also:** [`back()`]
+    /// [`first()`]
+    /// [`last()`]
     front() -> Char,
     /// 
     /// Returns the last character in the string. Same as last().
@@ -467,29 +473,29 @@ struct StringView {
     /// **Warning**: Calling this function on an empty string view constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** front()
-    /// first()
-    /// last()
+    /// **See also:** [`front()`]
+    /// [`first()`]
+    /// [`last()`]
     back() -> Char,
     /// 
     /// Returns whether this string view is null - that is, whether `data() == nullptr` .
     /// 
     /// This functions is provided for compatibility with other Qt containers.
     /// 
-    /// **See also:** empty()
-    /// isEmpty()
-    /// size()
-    /// length()
+    /// **See also:** [`empty()`]
+    /// [`is_empty()`]
+    /// [`size()`]
+    /// [`length()`]
     is_null() -> bool,
     /// 
     /// Returns whether this string view is empty - that is, whether `size() == 0` .
     /// 
     /// This function is provided for compatibility with other Qt containers.
     /// 
-    /// **See also:** empty()
-    /// isNull()
-    /// size()
-    /// length()
+    /// **See also:** [`empty()`]
+    /// [`is_null()`]
+    /// [`size()`]
+    /// [`length()`]
     is_empty() -> bool,
     /// 
     /// Same as size(), except returns the result as an `int.`
@@ -500,10 +506,10 @@ struct StringView {
     /// Calling this function on a string view for which size() returns a value greater
     /// than `INT_MAX` constitutes undefined behavior.
     /// 
-    /// **See also:** empty()
-    /// isEmpty()
-    /// isNull()
-    /// size()
+    /// **See also:** [`empty()`]
+    /// [`is_empty()`]
+    /// [`is_null()`]
+    /// [`size()`]
     length() -> i32,
     /// 
     /// Returns the first character in the string. Same as front().
@@ -513,9 +519,9 @@ struct StringView {
     /// **Warning**: Calling this function on an empty string view constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** front()
-    /// back()
-    /// last()
+    /// **See also:** [`front()`]
+    /// [`back()`]
+    /// [`last()`]
     first() -> Char,
     /// 
     /// Returns the last character in the string. Same as back().
@@ -525,9 +531,9 @@ struct StringView {
     /// **Warning**: Calling this function on an empty string view constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** back()
-    /// front()
-    /// first()
+    /// **See also:** [`back()`]
+    /// [`front()`]
+    /// [`first()`]
     last() -> Char,
 }
 

@@ -14,7 +14,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct AccessibleTextInterface {
     /// 
     /// Returns the number of selections in this text.
@@ -44,8 +43,8 @@ struct AccessibleTextInterface {
     /// 
     /// Set the selection *selectionIndex* to the range from *startOffset* to *endOffset.*
     /// 
-    /// **See also:** addSelection()
-    /// removeSelection()
+    /// **See also:** [`add_selection()`]
+    /// [`remove_selection()`]
     [event] set_selection(selection_index: i32, start_offset: i32, end_offset: i32),
     /// 
     /// Returns the current cursor position.

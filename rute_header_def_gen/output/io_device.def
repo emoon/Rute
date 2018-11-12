@@ -89,26 +89,12 @@
 /// QIODevice also provides additional signals to handle asynchronous
 /// communication on a per-channel basis.
 /// 
-/// **See also:** QBuffer
-/// QFile
-/// QTcpSocket
+/// **See also:** [`Buffer`]
+/// [`File`]
+/// [`TcpSocket`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QIODevice)]
-enum OpenModeFlag {
-    NotOpen,
-    ReadOnly,
-    WriteOnly,
-    ReadWrite,
-    Append,
-    Truncate,
-    Text,
-    Unbuffered,
-    NewOnly,
-    ExistingOnly,
-}
-
 struct IODevice : Object {
     /// 
     /// Returns the mode in which the device has been opened;
@@ -125,14 +111,14 @@ struct IODevice : Object {
     /// 
     /// The IO device should be opened before calling this function.
     /// 
-    /// **See also:** open()
-    /// setOpenMode()
+    /// **See also:** [`open()`]
+    /// [`set_open_mode()`]
     set_text_mode_enabled(enabled: bool),
     /// 
     /// Returns `true` if the [Text](Text)
     /// flag is enabled; otherwise returns `false.`
     /// 
-    /// **See also:** setTextModeEnabled()
+    /// **See also:** [`set_text_mode_enabled()`]
     is_text_mode_enabled() -> bool,
     /// 
     /// Returns `true` if the device is open; otherwise returns `false.` A
@@ -140,7 +126,7 @@ struct IODevice : Object {
     /// default, this function returns `false` if openMode() returns
     /// `NotOpen.`
     /// 
-    /// **See also:** openMode()
+    /// **See also:** [`open_mode()`]
     /// OpenMode
     is_open() -> bool,
     /// 
@@ -150,7 +136,7 @@ struct IODevice : Object {
     /// This is a convenience function which checks if the OpenMode of the
     /// device contains the ReadOnly flag.
     /// 
-    /// **See also:** openMode()
+    /// **See also:** [`open_mode()`]
     /// OpenMode
     is_readable() -> bool,
     /// 
@@ -160,7 +146,7 @@ struct IODevice : Object {
     /// This is a convenience function which checks if the OpenMode of the
     /// device contains the WriteOnly flag.
     /// 
-    /// **See also:** openMode()
+    /// **See also:** [`open_mode()`]
     /// OpenMode
     is_writable() -> bool,
     /// 
@@ -179,50 +165,50 @@ struct IODevice : Object {
     /// seeking backwards and forwards in the data stream. Regular files
     /// are non-sequential.
     /// 
-    /// **See also:** bytesAvailable()
+    /// **See also:** [`bytes_available()`]
     [event] is_sequential() -> bool,
     /// 
     /// Returns the number of available read channels if the device is open;
     /// otherwise returns 0.
     /// 
-    /// **See also:** writeChannelCount()
-    /// QProcess
+    /// **See also:** [`write_channel_count()`]
+    /// [`Process`]
     read_channel_count() -> i32,
     /// 
     /// Returns the number of available write channels if the device is open;
     /// otherwise returns 0.
     /// 
-    /// **See also:** readChannelCount()
+    /// **See also:** [`read_channel_count()`]
     write_channel_count() -> i32,
     /// 
     /// Returns the index of the current read channel.
     /// 
-    /// **See also:** setCurrentReadChannel()
-    /// readChannelCount()
-    /// QProcess
+    /// **See also:** [`set_current_read_channel()`]
+    /// [`read_channel_count()`]
+    /// [`Process`]
     current_read_channel() -> i32,
     /// 
     /// Sets the current read channel of the QIODevice to the given *channel.* The current input channel is used by the functions
     /// read(), readAll(), readLine(), and getChar(). It also determines
     /// which channel triggers QIODevice to emit readyRead().
     /// 
-    /// **See also:** currentReadChannel()
-    /// readChannelCount()
-    /// QProcess
+    /// **See also:** [`current_read_channel()`]
+    /// [`read_channel_count()`]
+    /// [`Process`]
     set_current_read_channel(channel: i32),
     /// 
     /// Returns the the index of the current write channel.
     /// 
-    /// **See also:** setCurrentWriteChannel()
-    /// writeChannelCount()
+    /// **See also:** [`set_current_write_channel()`]
+    /// [`write_channel_count()`]
     current_write_channel() -> i32,
     /// 
     /// Sets the current write channel of the QIODevice to the given *channel.* The current output channel is used by the functions
     /// write(), putChar(). It also determines which channel triggers
     /// QIODevice to emit bytesWritten().
     /// 
-    /// **See also:** currentWriteChannel()
-    /// writeChannelCount()
+    /// **See also:** [`current_write_channel()`]
+    /// [`write_channel_count()`]
     set_current_write_channel(channel: i32),
     /// 
     /// Returns the mode in which the device has been opened;
@@ -234,14 +220,14 @@ struct IODevice : Object {
     /// otherwise returns `false.` This function should be called from any
     /// reimplementations of open() or other functions that open the device.
     /// 
-    /// **See also:** openMode()
+    /// **See also:** [`open_mode()`]
     /// OpenMode
     [event] open(mode: IODevice::OpenMode) -> bool,
     /// 
     /// First emits aboutToClose(), then closes the device and sets its
     /// OpenMode to NotOpen. The error string is also reset.
     /// 
-    /// **See also:** setOpenMode()
+    /// **See also:** [`set_open_mode()`]
     /// OpenMode
     [event] close(),
     /// 
@@ -255,8 +241,8 @@ struct IODevice : Object {
     /// subclassing QIODevice, use QIODevice::seek() to notify QIODevice about
     /// changes in the device position.
     /// 
-    /// **See also:** isSequential()
-    /// seek()
+    /// **See also:** [`is_sequential()`]
+    /// [`seek()`]
     [event] pos() -> i64,
     /// 
     /// For open random-access devices, this function returns the size of the
@@ -265,8 +251,8 @@ struct IODevice : Object {
     /// If the device is closed, the size returned will not reflect the actual
     /// size of the device.
     /// 
-    /// **See also:** isSequential()
-    /// pos()
+    /// **See also:** [`is_sequential()`]
+    /// [`pos()`]
     [event] size() -> i64,
     /// 
     /// For random-access devices, this function sets the current position
@@ -278,8 +264,8 @@ struct IODevice : Object {
     /// start of your function to ensure integrity with QIODevice's
     /// built-in buffer.
     /// 
-    /// **See also:** pos()
-    /// isSequential()
+    /// **See also:** [`pos()`]
+    /// [`is_sequential()`]
     [event] seek(pos: i64) -> bool,
     /// 
     /// Returns `true` if the current read and write position is at the end
@@ -291,9 +277,9 @@ struct IODevice : Object {
     /// direct response to you calling read() (e.g., `/dev` or `/proc` files on
     /// Unix and MacOS , or console input / `stdin` on all platforms).
     /// 
-    /// **See also:** bytesAvailable()
-    /// read()
-    /// isSequential()
+    /// **See also:** [`bytes_available()`]
+    /// [`read()`]
+    /// [`is_sequential()`]
     [event] at_end() -> bool,
     /// 
     /// Seeks to the start of input for random-access devices. Returns
@@ -304,7 +290,7 @@ struct IODevice : Object {
     /// the QFile will not have the expected result because QTextStream
     /// buffers the file. Use the QTextStream::seek() function instead.
     /// 
-    /// **See also:** seek()
+    /// **See also:** [`seek()`]
     [event] reset() -> bool,
     /// 
     /// Returns the number of bytes that are available for reading. This
@@ -314,9 +300,9 @@ struct IODevice : Object {
     /// Subclasses that reimplement this function must call the base
     /// implementation in order to include the size of the buffer of QIODevice. Example:
     /// 
-    /// **See also:** bytesToWrite()
-    /// readyRead()
-    /// isSequential()
+    /// **See also:** [`bytes_to_write()`]
+    /// [`ready_read()`]
+    /// [`is_sequential()`]
     [event] bytes_available() -> i64,
     /// For buffered devices, this function returns the number of bytes
     /// waiting to be written. For devices with no buffer, this function
@@ -325,9 +311,9 @@ struct IODevice : Object {
     /// Subclasses that reimplement this function must call the base
     /// implementation in order to include the size of the buffer of QIODevice.
     /// 
-    /// **See also:** bytesAvailable()
-    /// bytesWritten()
-    /// isSequential()
+    /// **See also:** [`bytes_available()`]
+    /// [`bytes_written()`]
+    /// [`is_sequential()`]
     [event] bytes_to_write() -> i64,
     /// 
     /// This signal is emitted once every time new data is available for
@@ -346,21 +332,21 @@ struct IODevice : Object {
     /// emit it only because there's data still to be read in your
     /// buffers). Do not emit readyRead() in other conditions.
     /// 
-    /// **See also:** bytesWritten()
+    /// **See also:** [`bytes_written()`]
     /// 
     /// This signal is emitted when the input (reading) stream is closed
     /// in this device. It is emitted as soon as the closing is detected,
     /// which means that there might still be data available for reading
     /// with read().
     /// 
-    /// **See also:** atEnd()
-    /// read()
+    /// **See also:** [`at_end()`]
+    /// [`read()`]
     /// 
     /// Returns the number of available read channels if the device is open;
     /// otherwise returns 0.
     /// 
-    /// **See also:** writeChannelCount()
-    /// QProcess
+    /// **See also:** [`write_channel_count()`]
+    /// [`Process`]
     /// 
     /// Reads at most *maxSize* bytes from the device into *data,* and
     /// returns the number of bytes read. If an error occurs, such as when
@@ -372,9 +358,9 @@ struct IODevice : Object {
     /// function returns -1 in those cases (that is, reading on a closed
     /// socket or after a process has died).
     /// 
-    /// **See also:** readData()
-    /// readLine()
-    /// write()
+    /// **See also:** [`read_data()`]
+    /// [`read_line()`]
+    /// [`write()`]
     /// 
     /// **Overloads**
     /// Reads at most *maxSize* bytes from the device, and returns the
@@ -418,9 +404,9 @@ struct IODevice : Object {
     /// implementation by reimplementing readLineData() in your own
     /// subclass.
     /// 
-    /// **See also:** getChar()
-    /// read()
-    /// write()
+    /// **See also:** [`get_char()`]
+    /// [`read()`]
+    /// [`write()`]
     /// 
     /// **Overloads**
     /// Reads a line from the device, but no more than *maxSize* characters,
@@ -465,9 +451,9 @@ struct IODevice : Object {
     /// This function might be called with a maxSize of 0, which can be used to
     /// perform post-reading operations.
     /// 
-    /// **See also:** read()
-    /// readLine()
-    /// writeData()
+    /// **See also:** [`read()`]
+    /// [`read_line()`]
+    /// [`write_data()`]
     read(data: *char, maxlen: i64) -> i64,
     /// 
     /// This signal is emitted once every time new data is available for
@@ -486,21 +472,21 @@ struct IODevice : Object {
     /// emit it only because there's data still to be read in your
     /// buffers). Do not emit readyRead() in other conditions.
     /// 
-    /// **See also:** bytesWritten()
+    /// **See also:** [`bytes_written()`]
     /// 
     /// This signal is emitted when the input (reading) stream is closed
     /// in this device. It is emitted as soon as the closing is detected,
     /// which means that there might still be data available for reading
     /// with read().
     /// 
-    /// **See also:** atEnd()
-    /// read()
+    /// **See also:** [`at_end()`]
+    /// [`read()`]
     /// 
     /// Returns the number of available read channels if the device is open;
     /// otherwise returns 0.
     /// 
-    /// **See also:** writeChannelCount()
-    /// QProcess
+    /// **See also:** [`write_channel_count()`]
+    /// [`Process`]
     /// 
     /// Reads at most *maxSize* bytes from the device into *data,* and
     /// returns the number of bytes read. If an error occurs, such as when
@@ -512,9 +498,9 @@ struct IODevice : Object {
     /// function returns -1 in those cases (that is, reading on a closed
     /// socket or after a process has died).
     /// 
-    /// **See also:** readData()
-    /// readLine()
-    /// write()
+    /// **See also:** [`read_data()`]
+    /// [`read_line()`]
+    /// [`write()`]
     /// 
     /// **Overloads**
     /// Reads at most *maxSize* bytes from the device, and returns the
@@ -558,9 +544,9 @@ struct IODevice : Object {
     /// implementation by reimplementing readLineData() in your own
     /// subclass.
     /// 
-    /// **See also:** getChar()
-    /// read()
-    /// write()
+    /// **See also:** [`get_char()`]
+    /// [`read()`]
+    /// [`write()`]
     /// 
     /// **Overloads**
     /// Reads a line from the device, but no more than *maxSize* characters,
@@ -605,9 +591,10 @@ struct IODevice : Object {
     /// This function might be called with a maxSize of 0, which can be used to
     /// perform post-reading operations.
     /// 
-    /// **See also:** read()
-    /// readLine()
-    /// writeData()
+    /// **See also:** [`read()`]
+    /// [`read_line()`]
+    /// [`write_data()`]
+    [org_name(read)]
     read_2(maxlen: i64) -> ByteArray,
     /// 
     /// Reads all remaining data from the device, and returns it as a
@@ -645,9 +632,9 @@ struct IODevice : Object {
     /// implementation by reimplementing readLineData() in your own
     /// subclass.
     /// 
-    /// **See also:** getChar()
-    /// read()
-    /// write()
+    /// **See also:** [`get_char()`]
+    /// [`read()`]
+    /// [`write()`]
     /// 
     /// **Overloads**
     /// Reads a line from the device, but no more than *maxSize* characters,
@@ -701,9 +688,9 @@ struct IODevice : Object {
     /// implementation by reimplementing readLineData() in your own
     /// subclass.
     /// 
-    /// **See also:** getChar()
-    /// read()
-    /// write()
+    /// **See also:** [`get_char()`]
+    /// [`read()`]
+    /// [`write()`]
     /// 
     /// **Overloads**
     /// Reads a line from the device, but no more than *maxSize* characters,
@@ -728,6 +715,7 @@ struct IODevice : Object {
     /// including the terminating newline, or 0 if there is no line to be
     /// read at this point. If an error occurs, it should return -1 if and
     /// only if no bytes were read. Reading past EOF is considered an error.
+    [org_name(readLine)]
     read_line_2(maxlen: i64) -> ByteArray,
     /// 
     /// Returns `true` if a complete line of data can be read from the device;
@@ -742,8 +730,8 @@ struct IODevice : Object {
     /// Subclasses that reimplement this function must call the base
     /// implementation in order to include the contents of the QIODevice's buffer. Example:
     /// 
-    /// **See also:** readyRead()
-    /// readLine()
+    /// **See also:** [`ready_read()`]
+    /// [`read_line()`]
     [event] can_read_line() -> bool,
     /// 
     /// Starts a new read transaction on the device.
@@ -756,8 +744,8 @@ struct IODevice : Object {
     /// 
     /// **Note**: Nesting transactions is not supported.
     /// 
-    /// **See also:** commitTransaction()
-    /// rollbackTransaction()
+    /// **See also:** [`commit_transaction()`]
+    /// [`rollback_transaction()`]
     start_transaction(),
     /// 
     /// Completes a read transaction.
@@ -765,8 +753,8 @@ struct IODevice : Object {
     /// For sequential devices, all data recorded in the internal buffer during
     /// the transaction will be discarded.
     /// 
-    /// **See also:** startTransaction()
-    /// rollbackTransaction()
+    /// **See also:** [`start_transaction()`]
+    /// [`rollback_transaction()`]
     commit_transaction(),
     /// 
     /// Rolls back a read transaction.
@@ -775,27 +763,27 @@ struct IODevice : Object {
     /// This function is commonly used to rollback the transaction when an
     /// incomplete read was detected prior to committing the transaction.
     /// 
-    /// **See also:** startTransaction()
-    /// commitTransaction()
+    /// **See also:** [`start_transaction()`]
+    /// [`commit_transaction()`]
     rollback_transaction(),
     /// 
     /// Returns `true` if a transaction is in progress on the device, otherwise
     /// `false.`
     /// 
-    /// **See also:** startTransaction()
+    /// **See also:** [`start_transaction()`]
     is_transaction_started() -> bool,
     /// 
     /// Returns the number of available write channels if the device is open;
     /// otherwise returns 0.
     /// 
-    /// **See also:** readChannelCount()
+    /// **See also:** [`read_channel_count()`]
     /// 
     /// Writes at most *maxSize* bytes of data from *data* to the
     /// device. Returns the number of bytes that were actually written, or
     /// -1 if an error occurred.
     /// 
-    /// **See also:** read()
-    /// writeData()
+    /// **See also:** [`read()`]
+    /// [`write_data()`]
     /// 
     /// **Overloads**
     /// Writes data from a zero-terminated string of 8-bit characters to the
@@ -807,15 +795,15 @@ struct IODevice : Object {
     /// ...
     /// ```
     /// 
-    /// **See also:** read()
-    /// writeData()
+    /// **See also:** [`read()`]
+    /// [`write_data()`]
     /// 
     /// **Overloads**
     /// Writes the content of *byteArray* to the device. Returns the number of
     /// bytes that were actually written, or -1 if an error occurred.
     /// 
-    /// **See also:** read()
-    /// writeData()
+    /// **See also:** [`read()`]
+    /// [`write_data()`]
     /// 
     /// Writes up to *maxSize* bytes from *data* to the device. Returns
     /// the number of bytes written, or -1 if an error occurred.
@@ -829,21 +817,21 @@ struct IODevice : Object {
     /// all the information was written and therefore does not retry writing if
     /// there was a problem.
     /// 
-    /// **See also:** read()
-    /// write()
+    /// **See also:** [`read()`]
+    /// [`write()`]
     write(data: *char, len: i64) -> i64,
     /// 
     /// Returns the number of available write channels if the device is open;
     /// otherwise returns 0.
     /// 
-    /// **See also:** readChannelCount()
+    /// **See also:** [`read_channel_count()`]
     /// 
     /// Writes at most *maxSize* bytes of data from *data* to the
     /// device. Returns the number of bytes that were actually written, or
     /// -1 if an error occurred.
     /// 
-    /// **See also:** read()
-    /// writeData()
+    /// **See also:** [`read()`]
+    /// [`write_data()`]
     /// 
     /// **Overloads**
     /// Writes data from a zero-terminated string of 8-bit characters to the
@@ -855,15 +843,15 @@ struct IODevice : Object {
     /// ...
     /// ```
     /// 
-    /// **See also:** read()
-    /// writeData()
+    /// **See also:** [`read()`]
+    /// [`write_data()`]
     /// 
     /// **Overloads**
     /// Writes the content of *byteArray* to the device. Returns the number of
     /// bytes that were actually written, or -1 if an error occurred.
     /// 
-    /// **See also:** read()
-    /// writeData()
+    /// **See also:** [`read()`]
+    /// [`write_data()`]
     /// 
     /// Writes up to *maxSize* bytes from *data* to the device. Returns
     /// the number of bytes written, or -1 if an error occurred.
@@ -877,21 +865,22 @@ struct IODevice : Object {
     /// all the information was written and therefore does not retry writing if
     /// there was a problem.
     /// 
-    /// **See also:** read()
-    /// write()
+    /// **See also:** [`read()`]
+    /// [`write()`]
+    [org_name(write)]
     write_2(data: *char) -> i64,
     /// 
     /// Returns the number of available write channels if the device is open;
     /// otherwise returns 0.
     /// 
-    /// **See also:** readChannelCount()
+    /// **See also:** [`read_channel_count()`]
     /// 
     /// Writes at most *maxSize* bytes of data from *data* to the
     /// device. Returns the number of bytes that were actually written, or
     /// -1 if an error occurred.
     /// 
-    /// **See also:** read()
-    /// writeData()
+    /// **See also:** [`read()`]
+    /// [`write_data()`]
     /// 
     /// **Overloads**
     /// Writes data from a zero-terminated string of 8-bit characters to the
@@ -903,15 +892,15 @@ struct IODevice : Object {
     /// ...
     /// ```
     /// 
-    /// **See also:** read()
-    /// writeData()
+    /// **See also:** [`read()`]
+    /// [`write_data()`]
     /// 
     /// **Overloads**
     /// Writes the content of *byteArray* to the device. Returns the number of
     /// bytes that were actually written, or -1 if an error occurred.
     /// 
-    /// **See also:** read()
-    /// writeData()
+    /// **See also:** [`read()`]
+    /// [`write_data()`]
     /// 
     /// Writes up to *maxSize* bytes from *data* to the device. Returns
     /// the number of bytes written, or -1 if an error occurred.
@@ -925,8 +914,9 @@ struct IODevice : Object {
     /// all the information was written and therefore does not retry writing if
     /// there was a problem.
     /// 
-    /// **See also:** read()
-    /// write()
+    /// **See also:** [`read()`]
+    /// [`write()`]
+    [org_name(write)]
     write_3(data: &ByteArrayType) -> i64,
     /// 
     /// Reads at most *maxSize* bytes from the device into *data,* without side
@@ -939,7 +929,7 @@ struct IODevice : Object {
     /// 
     /// Example:
     /// 
-    /// **See also:** read()
+    /// **See also:** [`read()`]
     /// 
     /// **Overloads**
     /// Peeks at most *maxSize* bytes from the device, returning the data peeked
@@ -951,7 +941,7 @@ struct IODevice : Object {
     /// QByteArray can mean either that no data was currently available
     /// for peeking, or that an error occurred.
     /// 
-    /// **See also:** read()
+    /// **See also:** [`read()`]
     peek(data: *char, maxlen: i64) -> i64,
     /// 
     /// Reads at most *maxSize* bytes from the device into *data,* without side
@@ -964,7 +954,7 @@ struct IODevice : Object {
     /// 
     /// Example:
     /// 
-    /// **See also:** read()
+    /// **See also:** [`read()`]
     /// 
     /// **Overloads**
     /// Peeks at most *maxSize* bytes from the device, returning the data peeked
@@ -976,7 +966,8 @@ struct IODevice : Object {
     /// QByteArray can mean either that no data was currently available
     /// for peeking, or that an error occurred.
     /// 
-    /// **See also:** read()
+    /// **See also:** [`read()`]
+    [org_name(peek)]
     peek_2(maxlen: i64) -> ByteArray,
     /// 
     /// Skips up to *maxSize* bytes from the device. Returns the number of bytes
@@ -995,9 +986,9 @@ struct IODevice : Object {
     /// For random-access devices, skip() can be used to seek forward from the
     /// current position. Negative *maxSize* values are not allowed.
     /// 
-    /// **See also:** peek()
-    /// seek()
-    /// read()
+    /// **See also:** [`peek()`]
+    /// [`seek()`]
+    /// [`read()`]
     skip(max_size: i64) -> i64,
     /// 
     /// Blocks until new data is available for reading and the readyRead()
@@ -1020,7 +1011,7 @@ struct IODevice : Object {
     /// **Warning**: Calling this function from the main (GUI) thread
     /// might cause your user interface to freeze.
     /// 
-    /// **See also:** waitForBytesWritten()
+    /// **See also:** [`wait_for_bytes_written()`]
     [event] wait_for_ready_read(msecs: i32) -> bool,
     /// 
     /// For buffered devices, this function waits until a payload of
@@ -1046,7 +1037,7 @@ struct IODevice : Object {
     /// **Warning**: Calling this function from the main (GUI) thread
     /// might cause your user interface to freeze.
     /// 
-    /// **See also:** waitForReadyRead()
+    /// **See also:** [`wait_for_ready_read()`]
     [event] wait_for_bytes_written(msecs: i32) -> bool,
     /// 
     /// Puts the character *c* back into the device, and decrements the
@@ -1063,18 +1054,18 @@ struct IODevice : Object {
     /// Writes the character *c* to the device. Returns `true` on success;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** write()
-    /// getChar()
-    /// ungetChar()
+    /// **See also:** [`write()`]
+    /// [`get_char()`]
+    /// [`unget_char()`]
     put_char(c: char) -> bool,
     /// 
     /// Reads one character from the device and stores it in *c.* If *c*
     /// is 0, the character is discarded. Returns `true` on success;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** read()
-    /// putChar()
-    /// ungetChar()
+    /// **See also:** [`read()`]
+    /// [`put_char()`]
+    /// [`unget_char()`]
     get_char(c: *char) -> bool,
     /// 
     /// This signal is emitted once every time new data is available for
@@ -1093,7 +1084,7 @@ struct IODevice : Object {
     /// emit it only because there's data still to be read in your
     /// buffers). Do not emit readyRead() in other conditions.
     /// 
-    /// **See also:** bytesWritten()
+    /// **See also:** [`bytes_written()`]
     [signal] ready_read(),
     /// 
     /// This signal is emitted when new data is available for reading from the
@@ -1104,8 +1095,8 @@ struct IODevice : Object {
     /// 
     /// channelReadyRead() can be emitted recursively - even for the same channel.
     /// 
-    /// **See also:** readyRead()
-    /// channelBytesWritten()
+    /// **See also:** [`ready_read()`]
+    /// [`channel_bytes_written()`]
     [signal] channel_ready_read(channel: i32),
     /// 
     /// This signal is emitted every time a payload of data has been
@@ -1117,7 +1108,7 @@ struct IODevice : Object {
     /// bytesWritten() signal, the signal will not be reemitted (although
     /// waitForBytesWritten() may still return true).
     /// 
-    /// **See also:** readyRead()
+    /// **See also:** [`ready_read()`]
     [signal] bytes_written(bytes: i64),
     /// 
     /// This signal is emitted every time a payload of data has been written to
@@ -1130,8 +1121,8 @@ struct IODevice : Object {
     /// channelBytesWritten() can be emitted recursively - even for the same
     /// channel.
     /// 
-    /// **See also:** bytesWritten()
-    /// channelReadyRead()
+    /// **See also:** [`bytes_written()`]
+    /// [`channel_ready_read()`]
     [signal] channel_bytes_written(channel: i32, bytes: i64),
     /// 
     /// This signal is emitted when the device is about to close. Connect
@@ -1145,8 +1136,8 @@ struct IODevice : Object {
     /// which means that there might still be data available for reading
     /// with read().
     /// 
-    /// **See also:** atEnd()
-    /// read()
+    /// **See also:** [`at_end()`]
+    /// [`read()`]
     [signal] read_channel_finished(),
     /// 
     /// Reads up to *maxSize* bytes from the device into *data,* and
@@ -1168,9 +1159,9 @@ struct IODevice : Object {
     /// This function might be called with a maxSize of 0, which can be used to
     /// perform post-reading operations.
     /// 
-    /// **See also:** read()
-    /// readLine()
-    /// writeData()
+    /// **See also:** [`read()`]
+    /// [`read_line()`]
+    /// [`write_data()`]
     [event] read_data(data: *char, maxlen: i64) -> i64,
     /// 
     /// Reads up to *maxSize* characters into *data* and returns the
@@ -1202,17 +1193,31 @@ struct IODevice : Object {
     /// all the information was written and therefore does not retry writing if
     /// there was a problem.
     /// 
-    /// **See also:** read()
-    /// write()
+    /// **See also:** [`read()`]
+    /// [`write()`]
     [event] write_data(data: *char, len: i64) -> i64,
     /// 
     /// Sets the OpenMode of the device to *openMode.* Call this
     /// function to set the open mode if the flags change after the device
     /// has been opened.
     /// 
-    /// **See also:** openMode()
+    /// **See also:** [`open_mode()`]
     /// OpenMode
     set_open_mode(open_mode: IODevice::OpenMode),
+}
+
+[org_name(QIODevice)]
+enum OpenModeFlag {
+    NotOpen,
+    ReadOnly,
+    WriteOnly,
+    ReadWrite,
+    Append,
+    Truncate,
+    Text,
+    Unbuffered,
+    NewOnly,
+    ExistingOnly,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

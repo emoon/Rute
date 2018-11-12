@@ -30,6 +30,1631 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct OpenGLTexture {
+    qt_check_for_qgadget_macro(),
+    /// 
+    /// Returns the binding target of this texture.
+    /// 
+    target() -> OpenGLTexture::Target,
+    /// 
+    /// Creates the underlying OpenGL texture object. This requires a current valid
+    /// OpenGL context. If the texture object already exists, this function does
+    /// nothing.
+    /// 
+    /// Once the texture object is created you can obtain the object
+    /// name from the textureId() function. This may be useful if you wish to make
+    /// some raw OpenGL calls related to this texture.
+    /// 
+    /// Normally it should not be necessary to call this function directly as all
+    /// functions that set properties of the texture object implicitly call create()
+    /// on your behalf.
+    /// 
+    /// Returns `true` if the creation succeeded, otherwise returns `false.`
+    /// 
+    /// **See also:** [`destroy()`]
+    /// [`is_created()`]
+    /// [`texture_id()`]
+    /// 
+    /// Attempts to create a texture view onto this texture. A texture
+    /// view is somewhat analogous to a view in SQL in that it presents
+    /// a restricted or reinterpreted view of the original data. Texture
+    /// views do not allocate any more server-side storage, insted relying
+    /// on the storage buffer of the source texture.
+    /// 
+    /// Texture views are only available when using immutable storage. For
+    /// more information on texture views see
+    /// http://www.opengl.org/wiki/Texture_Storage#Texture_views.
+    /// 
+    /// The *target* argument specifies the target to use for the view.
+    /// Only some targets can be used depending upon the target of the original
+    /// target. For e.g. a view onto a Target1DArray texture can specify
+    /// either Target1DArray or Target1D but for the latter the number of
+    /// array layers specified with *minimumLayer* and *maximumLayer* must
+    /// be exactly 1.
+    /// 
+    /// Simpliar constraints apply for the *viewFormat.* See the above link
+    /// and the specification for more details.
+    /// 
+    /// The *minimumMipmapLevel,* *maximumMipmapLevel,* *minimumLayer,*
+    /// and *maximumLayer* arguments serve to restrict the parts of the
+    /// texture accessible by the texture view.
+    /// 
+    /// If creation of the texture view fails this function will return
+    /// 0. If the function succeeds it will return a pointer to a new
+    /// QOpenGLTexture object that will return `true` from its isTextureView()
+    /// function.
+    /// 
+    /// **See also:** [`is_texture_view()`]
+    create() -> bool,
+    /// 
+    /// Returns `true` if the underlying OpenGL texture object has been created.
+    /// 
+    /// **See also:** [`create()`]
+    /// [`destroy()`]
+    /// [`texture_id()`]
+    is_created() -> bool,
+    /// 
+    /// Returns the name of the underlying OpenGL texture object or 0 if it has
+    /// not yet been created.
+    /// 
+    /// **See also:** [`create()`]
+    /// [`destroy()`]
+    /// [`is_created()`]
+    texture_id() -> GLuint,
+    /// 
+    /// Binds this texture to the currently active texture unit ready for
+    /// rendering. Note that you do not need to bind QOpenGLTexture objects
+    /// in order to modify them as the implementation makes use of the
+    /// EXT_direct_state_access extension where available and simulates it
+    /// where it is not.
+    /// 
+    /// **See also:** [`release()`]
+    /// 
+    /// Binds this texture to texture unit *unit* ready for
+    /// rendering. Note that you do not need to bind QOpenGLTexture objects
+    /// in order to modify them as the implementation makes use of the
+    /// EXT_direct_state_access extension where available and simulates it
+    /// where it is not.
+    /// 
+    /// If parameter *reset* is `true` then this function will restore
+    /// the active unit to the texture unit that was active upon entry.
+    /// 
+    /// **See also:** [`release()`]
+    bind(),
+    /// 
+    /// Binds this texture to the currently active texture unit ready for
+    /// rendering. Note that you do not need to bind QOpenGLTexture objects
+    /// in order to modify them as the implementation makes use of the
+    /// EXT_direct_state_access extension where available and simulates it
+    /// where it is not.
+    /// 
+    /// **See also:** [`release()`]
+    /// 
+    /// Binds this texture to texture unit *unit* ready for
+    /// rendering. Note that you do not need to bind QOpenGLTexture objects
+    /// in order to modify them as the implementation makes use of the
+    /// EXT_direct_state_access extension where available and simulates it
+    /// where it is not.
+    /// 
+    /// If parameter *reset* is `true` then this function will restore
+    /// the active unit to the texture unit that was active upon entry.
+    /// 
+    /// **See also:** [`release()`]
+    [org_name(bind)]
+    bind_2(unit: uint, reset: OpenGLTexture::TextureUnitReset),
+    /// 
+    /// Unbinds this texture from the currently active texture unit.
+    /// 
+    /// **See also:** [`bind()`]
+    /// 
+    /// Unbinds this texture from texture unit *unit.*
+    /// 
+    /// If parameter *reset* is `true` then this function
+    /// will restore the active unit to the texture unit that was active
+    /// upon entry.
+    release(),
+    /// 
+    /// Unbinds this texture from the currently active texture unit.
+    /// 
+    /// **See also:** [`bind()`]
+    /// 
+    /// Unbinds this texture from texture unit *unit.*
+    /// 
+    /// If parameter *reset* is `true` then this function
+    /// will restore the active unit to the texture unit that was active
+    /// upon entry.
+    [org_name(release)]
+    release_2(unit: uint, reset: OpenGLTexture::TextureUnitReset),
+    /// 
+    /// Returns `true` if this texture is bound to the corresponding target
+    /// of the currently active texture unit.
+    /// 
+    /// **See also:** [`bind()`]
+    /// [`release()`]
+    /// 
+    /// Returns `true` if this texture is bound to the corresponding target
+    /// of texture unit *unit.*
+    /// 
+    /// **See also:** [`bind()`]
+    /// [`release()`]
+    is_bound() -> bool,
+    /// 
+    /// Returns `true` if this texture is bound to the corresponding target
+    /// of the currently active texture unit.
+    /// 
+    /// **See also:** [`bind()`]
+    /// [`release()`]
+    /// 
+    /// Returns `true` if this texture is bound to the corresponding target
+    /// of texture unit *unit.*
+    /// 
+    /// **See also:** [`bind()`]
+    /// [`release()`]
+    [org_name(isBound)]
+    is_bound_2(unit: uint) -> bool,
+    /// 
+    /// Returns the textureId of the texture that is bound to the *target*
+    /// of the currently active texture unit.
+    /// 
+    /// Returns the textureId of the texture that is bound to the *target*
+    /// of the texture unit *unit.*
+    [static] bound_texture_id(target: OpenGLTexture::BindingTarget) -> GLuint,
+    /// 
+    /// Returns the textureId of the texture that is bound to the *target*
+    /// of the currently active texture unit.
+    /// 
+    /// Returns the textureId of the texture that is bound to the *target*
+    /// of the texture unit *unit.*
+    [org_name(boundTextureId)]
+    [static] bound_texture_id_2(unit: uint, target: OpenGLTexture::BindingTarget) -> GLuint,
+    /// 
+    /// Sets the format of this texture object to *format.* This function
+    /// must be called before texture storage is allocated.
+    /// 
+    /// Note that all formats may not be supported. The exact set of supported
+    /// formats is dependent upon your OpenGL implementation and version.
+    /// 
+    /// **See also:** [`format()`]
+    /// [`allocate_storage()`]
+    set_format(format: OpenGLTexture::TextureFormat),
+    /// 
+    /// Returns the format of this texture object.
+    /// 
+    /// **See also:** [`set_format()`]
+    format() -> OpenGLTexture::TextureFormat,
+    /// 
+    /// Sets the dimensions of this texture object to *width,*
+    /// *height,* and *depth.* The default for each dimension is 1.
+    /// The maximum allowable texture size is dependent upon your OpenGL
+    /// implementation. Allocating storage for a texture less than the
+    /// maximum size can still fail if your system is low on resources.
+    /// 
+    /// If a non-power-of-two *width,* *height* or *depth* is provided and your
+    /// OpenGL implementation doesn't have support for repeating non-power-of-two
+    /// textures, then the wrap mode is automatically set to ClampToEdge.
+    /// 
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`depth()`]
+    set_size(width: i32, height: i32, depth: i32),
+    /// 
+    /// Returns the width of a 1D, 2D or 3D texture.
+    /// 
+    /// **See also:** [`height()`]
+    /// [`depth()`]
+    /// [`set_size()`]
+    width() -> i32,
+    /// 
+    /// Returns the height of a 2D or 3D texture.
+    /// 
+    /// **See also:** [`width()`]
+    /// [`depth()`]
+    /// [`set_size()`]
+    height() -> i32,
+    /// 
+    /// Returns the depth of a 3D texture.
+    /// 
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`set_size()`]
+    /// 
+    /// Returns the depth stencil mode for textures using a combined depth/stencil format.
+    /// 
+    /// **See also:** [`set_depth_stencil_mode()`]
+    depth() -> i32,
+    /// 
+    /// For texture targets that support mipmaps, this function
+    /// sets the requested number of mipmap *levels* to allocate storage
+    /// for. This function should be called before storage is allocated
+    /// for the texture.
+    /// 
+    /// If the texture target does not support mipmaps this function
+    /// has no effect.
+    /// 
+    /// **See also:** [`mip_levels()`]
+    /// [`maximum_mip_levels()`]
+    /// [`is_storage_allocated()`]
+    set_mip_levels(levels: i32),
+    /// 
+    /// Returns the number of mipmap levels for this texture. If storage
+    /// has not yet been allocated for this texture it returns the
+    /// requested number of mipmap levels.
+    /// 
+    /// **See also:** [`set_mip_levels()`]
+    /// [`maximum_mip_levels()`]
+    /// [`is_storage_allocated()`]
+    mip_levels() -> i32,
+    /// 
+    /// Returns the maximum number of mipmap levels that this texture
+    /// can have given the current dimensions.
+    /// 
+    /// **See also:** [`set_mip_levels()`]
+    /// [`mip_levels()`]
+    /// [`set_size()`]
+    maximum_mip_levels() -> i32,
+    /// 
+    /// Sets the number of array *layers* to allocate storage for. This
+    /// function should be called before storage is allocated for the texture.
+    /// 
+    /// For targets that do not support array layers this function has
+    /// no effect.
+    /// 
+    /// **See also:** [`layers()`]
+    /// [`is_storage_allocated()`]
+    set_layers(layers: i32),
+    /// 
+    /// Returns the number of array layers for this texture. If
+    /// storage has not yet been allocated for this texture then
+    /// this function returns the requested number of array layers.
+    /// 
+    /// For texture targets that do not support array layers this
+    /// will return 1.
+    /// 
+    /// **See also:** [`set_layers()`]
+    /// [`is_storage_allocated()`]
+    layers() -> i32,
+    /// 
+    /// Returns the number of faces for this texture. For cubemap
+    /// and cubemap array type targets this will be 6.
+    /// 
+    /// For non-cubemap type targets this will return 1.
+    faces() -> i32,
+    /// 
+    /// Sets the number of *samples* to allocate storage for when rendering to
+    /// a multisample capable texture target. This function should
+    /// be called before storage is allocated for the texture.
+    /// 
+    /// For targets that do not support multisampling this function has
+    /// no effect.
+    /// 
+    /// **See also:** [`samples()`]
+    /// [`is_storage_allocated()`]
+    set_samples(samples: i32),
+    /// 
+    /// Returns the number of multisample sample points for this texture.
+    /// If storage has not yet been allocated for this texture then
+    /// this function returns the requested number of samples.
+    /// 
+    /// For texture targets that do not support multisampling this
+    /// will return 0.
+    /// 
+    /// **See also:** [`set_samples()`]
+    /// [`is_storage_allocated()`]
+    samples() -> i32,
+    /// 
+    /// Sets whether the sample positions and number of samples used with
+    /// a multisample capable texture target to *fixed.* If set to `true`
+    /// the sample positions and number of samples used are the same for
+    /// all texels in the image and will not depend upon the image size or
+    /// internal format. This function should be called before storage is allocated
+    /// for the texture.
+    /// 
+    /// For targets that do not support multisampling this function has
+    /// no effect.
+    /// 
+    /// The default value is `true.`
+    /// 
+    /// **See also:** [`is_fixed_sample_positions()`]
+    /// [`is_storage_allocated()`]
+    set_fixed_sample_positions(fixed: bool),
+    /// 
+    /// Returns whether this texture uses a fixed pattern of multisample
+    /// samples. If storage has not yet been allocated for this texture then
+    /// this function returns the requested fixed sample position setting.
+    /// 
+    /// For texture targets that do not support multisampling this
+    /// will return `true.`
+    /// 
+    /// **See also:** [`set_fixed_sample_positions()`]
+    /// [`is_storage_allocated()`]
+    is_fixed_sample_positions() -> bool,
+    /// 
+    /// Allocates server-side storage for this texture object taking
+    /// into account, the format, dimensions, mipmap levels, array
+    /// layers and cubemap faces.
+    /// 
+    /// Once storage has been allocated it is no longer possible to change
+    /// these properties.
+    /// 
+    /// If supported QOpenGLTexture makes use of immutable texture
+    /// storage.
+    /// 
+    /// Once storage has been allocated for the texture then pixel data
+    /// can be uploaded via one of the setData() overloads.
+    /// 
+    /// **Note**: If immutable texture storage is not available,
+    /// then a default pixel format and pixel type will be used to
+    /// create the mutable storage. You can use the other
+    /// allocateStorage() overload to specify exactly the pixel format
+    /// and the pixel type to use when allocating mutable storage;
+    /// this is particulary useful under certain OpenGL ES implementations
+    /// (notably, OpenGL ES 2), where the pixel format and the pixel type
+    /// used at allocation time must perfectly match the format
+    /// and the type passed to any subsequent setData() call.
+    /// 
+    /// **See also:** [`is_storage_allocated()`]
+    /// [`set_data()`]
+    /// 
+    /// Allocates server-side storage for this texture object taking
+    /// into account, the format, dimensions, mipmap levels, array
+    /// layers and cubemap faces.
+    /// 
+    /// Once storage has been allocated it is no longer possible to change
+    /// these properties.
+    /// 
+    /// If supported QOpenGLTexture makes use of immutable texture
+    /// storage. However, if immutable texture storage is not available,
+    /// then the specified *pixelFormat* and *pixelType* will be used
+    /// to allocate mutable storage; note that in certain OpenGL implementations
+    /// (notably, OpenGL ES 2) they must perfectly match the format
+    /// and the type passed to any subsequent setData() call.
+    /// 
+    /// Once storage has been allocated for the texture then pixel data
+    /// can be uploaded via one of the setData() overloads.
+    /// 
+    /// **See also:** [`is_storage_allocated()`]
+    /// [`set_data()`]
+    allocate_storage(),
+    /// 
+    /// Allocates server-side storage for this texture object taking
+    /// into account, the format, dimensions, mipmap levels, array
+    /// layers and cubemap faces.
+    /// 
+    /// Once storage has been allocated it is no longer possible to change
+    /// these properties.
+    /// 
+    /// If supported QOpenGLTexture makes use of immutable texture
+    /// storage.
+    /// 
+    /// Once storage has been allocated for the texture then pixel data
+    /// can be uploaded via one of the setData() overloads.
+    /// 
+    /// **Note**: If immutable texture storage is not available,
+    /// then a default pixel format and pixel type will be used to
+    /// create the mutable storage. You can use the other
+    /// allocateStorage() overload to specify exactly the pixel format
+    /// and the pixel type to use when allocating mutable storage;
+    /// this is particulary useful under certain OpenGL ES implementations
+    /// (notably, OpenGL ES 2), where the pixel format and the pixel type
+    /// used at allocation time must perfectly match the format
+    /// and the type passed to any subsequent setData() call.
+    /// 
+    /// **See also:** [`is_storage_allocated()`]
+    /// [`set_data()`]
+    /// 
+    /// Allocates server-side storage for this texture object taking
+    /// into account, the format, dimensions, mipmap levels, array
+    /// layers and cubemap faces.
+    /// 
+    /// Once storage has been allocated it is no longer possible to change
+    /// these properties.
+    /// 
+    /// If supported QOpenGLTexture makes use of immutable texture
+    /// storage. However, if immutable texture storage is not available,
+    /// then the specified *pixelFormat* and *pixelType* will be used
+    /// to allocate mutable storage; note that in certain OpenGL implementations
+    /// (notably, OpenGL ES 2) they must perfectly match the format
+    /// and the type passed to any subsequent setData() call.
+    /// 
+    /// Once storage has been allocated for the texture then pixel data
+    /// can be uploaded via one of the setData() overloads.
+    /// 
+    /// **See also:** [`is_storage_allocated()`]
+    /// [`set_data()`]
+    [org_name(allocateStorage)]
+    allocate_storage_2(pixel_format: OpenGLTexture::PixelFormat, pixel_type: OpenGLTexture::PixelType),
+    /// 
+    /// Returns `true` if server-side storage for this texture as been
+    /// allocated.
+    /// 
+    /// The texture format, dimensions, mipmap levels and array layers
+    /// cannot be altered once storage ihas been allocated.
+    /// 
+    /// **See also:** [`allocate_storage()`]
+    /// [`set_size()`]
+    /// [`set_mip_levels()`]
+    /// [`set_layers()`]
+    /// [`set_format()`]
+    is_storage_allocated() -> bool,
+    /// 
+    /// Attempts to create a texture view onto this texture. A texture
+    /// view is somewhat analogous to a view in SQL in that it presents
+    /// a restricted or reinterpreted view of the original data. Texture
+    /// views do not allocate any more server-side storage, insted relying
+    /// on the storage buffer of the source texture.
+    /// 
+    /// Texture views are only available when using immutable storage. For
+    /// more information on texture views see
+    /// http://www.opengl.org/wiki/Texture_Storage#Texture_views.
+    /// 
+    /// The *target* argument specifies the target to use for the view.
+    /// Only some targets can be used depending upon the target of the original
+    /// target. For e.g. a view onto a Target1DArray texture can specify
+    /// either Target1DArray or Target1D but for the latter the number of
+    /// array layers specified with *minimumLayer* and *maximumLayer* must
+    /// be exactly 1.
+    /// 
+    /// Simpliar constraints apply for the *viewFormat.* See the above link
+    /// and the specification for more details.
+    /// 
+    /// The *minimumMipmapLevel,* *maximumMipmapLevel,* *minimumLayer,*
+    /// and *maximumLayer* arguments serve to restrict the parts of the
+    /// texture accessible by the texture view.
+    /// 
+    /// If creation of the texture view fails this function will return
+    /// 0. If the function succeeds it will return a pointer to a new
+    /// QOpenGLTexture object that will return `true` from its isTextureView()
+    /// function.
+    /// 
+    /// **See also:** [`is_texture_view()`]
+    create_texture_view(target: OpenGLTexture::Target, view_format: OpenGLTexture::TextureFormat, minimum_mipmap_level: i32, maximum_mipmap_level: i32, minimum_layer: i32, maximum_layer: i32) -> OpenGLTexture?,
+    /// 
+    /// Returns `true` if this texture object is actually a view onto another
+    /// texture object.
+    /// 
+    /// **See also:** [`create_texture_view()`]
+    is_texture_view() -> bool,
+    /// 
+    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
+    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
+    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
+    /// for you if they have enough information to do so. This will be noted in the function
+    /// documentation.
+    /// 
+    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
+    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
+    /// 
+    /// If using a compressed format() then you should use setCompressedData() instead of this
+    /// function.
+    /// 
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// This overload of setData() will allocate storage for you.
+    /// The pixel data is contained in *image.* Mipmaps are generated by default.
+    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
+    /// to turn off mipmap generation.
+    /// 
+    /// **Overloads**
+    set_data(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
+    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
+    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
+    /// for you if they have enough information to do so. This will be noted in the function
+    /// documentation.
+    /// 
+    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
+    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
+    /// 
+    /// If using a compressed format() then you should use setCompressedData() instead of this
+    /// function.
+    /// 
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// This overload of setData() will allocate storage for you.
+    /// The pixel data is contained in *image.* Mipmaps are generated by default.
+    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
+    /// to turn off mipmap generation.
+    /// 
+    /// **Overloads**
+    [org_name(setData)]
+    set_data_2(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
+    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
+    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
+    /// for you if they have enough information to do so. This will be noted in the function
+    /// documentation.
+    /// 
+    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
+    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
+    /// 
+    /// If using a compressed format() then you should use setCompressedData() instead of this
+    /// function.
+    /// 
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// This overload of setData() will allocate storage for you.
+    /// The pixel data is contained in *image.* Mipmaps are generated by default.
+    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
+    /// to turn off mipmap generation.
+    /// 
+    /// **Overloads**
+    [org_name(setData)]
+    set_data_3(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
+    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
+    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
+    /// for you if they have enough information to do so. This will be noted in the function
+    /// documentation.
+    /// 
+    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
+    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
+    /// 
+    /// If using a compressed format() then you should use setCompressedData() instead of this
+    /// function.
+    /// 
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// This overload of setData() will allocate storage for you.
+    /// The pixel data is contained in *image.* Mipmaps are generated by default.
+    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
+    /// to turn off mipmap generation.
+    /// 
+    /// **Overloads**
+    [org_name(setData)]
+    set_data_4(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
+    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
+    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
+    /// for you if they have enough information to do so. This will be noted in the function
+    /// documentation.
+    /// 
+    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
+    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
+    /// 
+    /// If using a compressed format() then you should use setCompressedData() instead of this
+    /// function.
+    /// 
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// This overload of setData() will allocate storage for you.
+    /// The pixel data is contained in *image.* Mipmaps are generated by default.
+    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
+    /// to turn off mipmap generation.
+    /// 
+    /// **Overloads**
+    [org_name(setData)]
+    set_data_5(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
+    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
+    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
+    /// for you if they have enough information to do so. This will be noted in the function
+    /// documentation.
+    /// 
+    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
+    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
+    /// 
+    /// If using a compressed format() then you should use setCompressedData() instead of this
+    /// function.
+    /// 
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// This overload of setData() will allocate storage for you.
+    /// The pixel data is contained in *image.* Mipmaps are generated by default.
+    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
+    /// to turn off mipmap generation.
+    /// 
+    /// **Overloads**
+    [org_name(setData)]
+    set_data_6(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
+    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
+    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
+    /// for you if they have enough information to do so. This will be noted in the function
+    /// documentation.
+    /// 
+    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
+    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
+    /// 
+    /// If using a compressed format() then you should use setCompressedData() instead of this
+    /// function.
+    /// 
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// This overload of setData() will allocate storage for you.
+    /// The pixel data is contained in *image.* Mipmaps are generated by default.
+    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
+    /// to turn off mipmap generation.
+    /// 
+    /// **Overloads**
+    [org_name(setData)]
+    set_data_7(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
+    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
+    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
+    /// for you if they have enough information to do so. This will be noted in the function
+    /// documentation.
+    /// 
+    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
+    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
+    /// 
+    /// If using a compressed format() then you should use setCompressedData() instead of this
+    /// function.
+    /// 
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// This overload of setData() will allocate storage for you.
+    /// The pixel data is contained in *image.* Mipmaps are generated by default.
+    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
+    /// to turn off mipmap generation.
+    /// 
+    /// **Overloads**
+    [org_name(setData)]
+    set_data_8(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
+    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
+    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
+    /// for you if they have enough information to do so. This will be noted in the function
+    /// documentation.
+    /// 
+    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
+    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
+    /// 
+    /// If using a compressed format() then you should use setCompressedData() instead of this
+    /// function.
+    /// 
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// This overload of setData() will allocate storage for you.
+    /// The pixel data is contained in *image.* Mipmaps are generated by default.
+    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
+    /// to turn off mipmap generation.
+    /// 
+    /// **Overloads**
+    [org_name(setData)]
+    set_data_9(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
+    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
+    /// argument should specify the size of the data pointed to by *data.*
+    /// 
+    /// If not using a compressed format() then you should use setData() instead of this
+    /// function.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    set_compressed_data(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
+    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
+    /// argument should specify the size of the data pointed to by *data.*
+    /// 
+    /// If not using a compressed format() then you should use setData() instead of this
+    /// function.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    [org_name(setCompressedData)]
+    set_compressed_data_2(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
+    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
+    /// argument should specify the size of the data pointed to by *data.*
+    /// 
+    /// If not using a compressed format() then you should use setData() instead of this
+    /// function.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    [org_name(setCompressedData)]
+    set_compressed_data_3(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
+    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
+    /// argument should specify the size of the data pointed to by *data.*
+    /// 
+    /// If not using a compressed format() then you should use setData() instead of this
+    /// function.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    [org_name(setCompressedData)]
+    set_compressed_data_4(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
+    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
+    /// argument should specify the size of the data pointed to by *data.*
+    /// 
+    /// If not using a compressed format() then you should use setData() instead of this
+    /// function.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    [org_name(setCompressedData)]
+    set_compressed_data_5(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
+    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
+    /// argument should specify the size of the data pointed to by *data.*
+    /// 
+    /// If not using a compressed format() then you should use setData() instead of this
+    /// function.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    [org_name(setCompressedData)]
+    set_compressed_data_6(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
+    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
+    /// argument should specify the size of the data pointed to by *data.*
+    /// 
+    /// If not using a compressed format() then you should use setData() instead of this
+    /// function.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    [org_name(setCompressedData)]
+    set_compressed_data_7(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
+    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
+    /// argument should specify the size of the data pointed to by *data.*
+    /// 
+    /// If not using a compressed format() then you should use setData() instead of this
+    /// function.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    [org_name(setCompressedData)]
+    set_compressed_data_8(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
+    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
+    /// argument should specify the size of the data pointed to by *data.*
+    /// 
+    /// If not using a compressed format() then you should use setData() instead of this
+    /// function.
+    /// 
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    [org_name(setCompressedData)]
+    set_compressed_data_9(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    /// 
+    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
+    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
+    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
+    /// for you if they have enough information to do so. This will be noted in the function
+    /// documentation.
+    /// 
+    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
+    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
+    /// 
+    /// If using a compressed format() then you should use setCompressedData() instead of this
+    /// function.
+    /// 
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// Parameter *layerCount* is the number of layers in a texture array
+    /// that are being uploaded/populated by this call.
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// **See also:** [`set_compressed_data()`]
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// **Overloads**
+    /// 
+    /// This overload of setData() will allocate storage for you.
+    /// The pixel data is contained in *image.* Mipmaps are generated by default.
+    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
+    /// to turn off mipmap generation.
+    /// 
+    /// **Overloads**
+    [org_name(setData)]
+    set_data_10(image: &ImageType, gen_mip_maps: OpenGLTexture::MipMapGeneration),
+    /// 
+    /// Returns `true` if your OpenGL implementation and version supports the texture
+    /// feature *feature.*
+    [static] has_feature(feature: OpenGLTexture::Feature) -> bool,
+    /// 
+    /// Sets the base mipmap level used for all texture lookups with this texture to *baseLevel.*
+    /// 
+    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
+    /// **See also:** [`mip_base_level()`]
+    /// [`set_mip_max_level()`]
+    /// [`set_mip_level_range()`]
+    set_mip_base_level(base_level: i32),
+    /// 
+    /// Returns the mipmap base level used for all texture lookups with this texture.
+    /// The default is 0.
+    /// 
+    /// **See also:** [`set_mip_base_level()`]
+    /// [`mip_max_level()`]
+    /// [`mip_level_range()`]
+    mip_base_level() -> i32,
+    /// 
+    /// Sets the maximum mipmap level used for all texture lookups with this texture to *maxLevel.*
+    /// 
+    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
+    /// **See also:** [`mip_max_level()`]
+    /// [`set_mip_base_level()`]
+    /// [`set_mip_level_range()`]
+    set_mip_max_level(max_level: i32),
+    /// 
+    /// Returns the mipmap maximum level used for all texture lookups with this texture.
+    /// 
+    /// **See also:** [`set_mip_max_level()`]
+    /// [`mip_base_level()`]
+    /// [`mip_level_range()`]
+    mip_max_level() -> i32,
+    /// 
+    /// Sets the range of mipmap levels that can be used for texture lookups with this texture
+    /// to range from *baseLevel* to *maxLevel.*
+    /// 
+    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
+    /// **See also:** [`set_mip_base_level()`]
+    /// [`set_mip_max_level()`]
+    /// [`mip_level_range()`]
+    set_mip_level_range(base_level: i32, max_level: i32),
+    /// 
+    /// Returns the range of mipmap levels that can be used for texture lookups with this texture.
+    /// 
+    /// **See also:** [`mip_base_level()`]
+    /// [`mip_max_level()`]
+    mip_level_range() -> Pair<int,,
+    /// 
+    /// If *enabled* is `true,` enables automatic mipmap generation for this texture object
+    /// to occur whenever the level 0 mipmap data is set via setData().
+    /// 
+    /// The automatic mipmap generation is enabled by default.
+    /// 
+    /// **Note**: Mipmap generation is not supported for compressed textures with OpenGL ES 2.0.
+    /// 
+    /// **See also:** [`is_auto_mip_map_generation_enabled()`]
+    /// [`generate_mip_maps()`]
+    set_auto_mip_map_generation_enabled(enabled: bool),
+    /// 
+    /// Returns whether auto mipmap generation is enabled for this texture object.
+    /// 
+    /// **See also:** [`set_auto_mip_map_generation_enabled()`]
+    /// [`generate_mip_maps()`]
+    is_auto_mip_map_generation_enabled() -> bool,
+    /// 
+    /// Generates mipmaps for this texture object from mipmap level 0. If you are
+    /// using a texture target and filtering option that requires mipmaps and you
+    /// have disabled automatic mipmap generation then you need to call this function
+    /// or the overload to create the mipmap chain.
+    /// 
+    /// **Note**: Mipmap generation is not supported for compressed textures with OpenGL
+    /// ES 2.0.
+    /// 
+    /// **See also:** [`set_auto_mip_map_generation_enabled()`]
+    /// [`set_mip_levels()`]
+    /// [`mip_levels()`]
+    /// 
+    /// Generates mipmaps for this texture object from mipmap level *baseLevel.* If you are
+    /// using a texture target and filtering option that requires mipmaps and you
+    /// have disabled automatic mipmap generation then you need to call this function
+    /// or the overload to create the mipmap chain.
+    /// 
+    /// The generation of mipmaps to above *baseLevel* is achieved by setting the mipmap
+    /// base level to *baseLevel* and then generating the mipmap chain. If *resetBaseLevel*
+    /// is `true,` then the baseLevel of the texture will be reset to its previous value.
+    /// 
+    /// **See also:** [`set_auto_mip_map_generation_enabled()`]
+    /// [`set_mip_levels()`]
+    /// [`mip_levels()`]
+    generate_mip_maps(),
+    /// 
+    /// Generates mipmaps for this texture object from mipmap level 0. If you are
+    /// using a texture target and filtering option that requires mipmaps and you
+    /// have disabled automatic mipmap generation then you need to call this function
+    /// or the overload to create the mipmap chain.
+    /// 
+    /// **Note**: Mipmap generation is not supported for compressed textures with OpenGL
+    /// ES 2.0.
+    /// 
+    /// **See also:** [`set_auto_mip_map_generation_enabled()`]
+    /// [`set_mip_levels()`]
+    /// [`mip_levels()`]
+    /// 
+    /// Generates mipmaps for this texture object from mipmap level *baseLevel.* If you are
+    /// using a texture target and filtering option that requires mipmaps and you
+    /// have disabled automatic mipmap generation then you need to call this function
+    /// or the overload to create the mipmap chain.
+    /// 
+    /// The generation of mipmaps to above *baseLevel* is achieved by setting the mipmap
+    /// base level to *baseLevel* and then generating the mipmap chain. If *resetBaseLevel*
+    /// is `true,` then the baseLevel of the texture will be reset to its previous value.
+    /// 
+    /// **See also:** [`set_auto_mip_map_generation_enabled()`]
+    /// [`set_mip_levels()`]
+    /// [`mip_levels()`]
+    [org_name(generateMipMaps)]
+    generate_mip_maps_2(base_level: i32, reset_base_level: bool),
+    /// 
+    /// GLSL shaders are able to reorder the components of the vec4 returned by texture
+    /// functions. It is also desirable to be able to control this reordering from CPU
+    /// side code. This is made possible by swizzle masks since OpenGL 3.3.
+    /// 
+    /// Each component of the texture can be mapped to one of the SwizzleValue options.
+    /// 
+    /// This function maps *component* to the output *value.*
+    /// 
+    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
+    /// **See also:** [`swizzle_mask()`]
+    /// 
+    /// Parameters *r* , *g* , *b* , and *a* are values used for setting
+    /// the colors red, green, blue, and the alpha value.
+    /// **Overloads**
+    set_swizzle_mask(component: OpenGLTexture::SwizzleComponent, value: OpenGLTexture::SwizzleValue),
+    /// 
+    /// GLSL shaders are able to reorder the components of the vec4 returned by texture
+    /// functions. It is also desirable to be able to control this reordering from CPU
+    /// side code. This is made possible by swizzle masks since OpenGL 3.3.
+    /// 
+    /// Each component of the texture can be mapped to one of the SwizzleValue options.
+    /// 
+    /// This function maps *component* to the output *value.*
+    /// 
+    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
+    /// **See also:** [`swizzle_mask()`]
+    /// 
+    /// Parameters *r* , *g* , *b* , and *a* are values used for setting
+    /// the colors red, green, blue, and the alpha value.
+    /// **Overloads**
+    [org_name(setSwizzleMask)]
+    set_swizzle_mask_2(r: OpenGLTexture::SwizzleValue, g: OpenGLTexture::SwizzleValue, b: OpenGLTexture::SwizzleValue, a: OpenGLTexture::SwizzleValue),
+    /// 
+    /// Returns the swizzle mask for texture *component.*
+    swizzle_mask(component: OpenGLTexture::SwizzleComponent) -> OpenGLTexture::SwizzleValue,
+    /// 
+    /// If using a texture that has a combined depth/stencil format this function sets
+    /// which component of the texture is accessed to *mode.*
+    /// 
+    /// When the parameter is set to DepthMode, then accessing it from the
+    /// shader will access the depth component as a single float, as normal. But when
+    /// the parameter is set to StencilMode, the shader will access the stencil component.
+    /// 
+    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
+    /// **See also:** [`depth_stencil_mode()`]
+    set_depth_stencil_mode(mode: OpenGLTexture::DepthStencilMode),
+    /// 
+    /// Returns the depth stencil mode for textures using a combined depth/stencil format.
+    /// 
+    /// **See also:** [`set_depth_stencil_mode()`]
+    depth_stencil_mode() -> OpenGLTexture::DepthStencilMode,
+    set_comparison_function(function: OpenGLTexture::ComparisonFunction),
+    /// 
+    /// Returns the texture comparison operator set on this texture. By default, a
+    /// texture has a CompareLessEqual comparison function.
+    /// 
+    /// **See also:** [`set_comparison_function()`]
+    comparison_function() -> OpenGLTexture::ComparisonFunction,
+    /// 
+    /// Sets the texture comparison mode on this texture to *mode.* The texture
+    /// comparison mode is used by shadow samplers when sampling a depth texture.
+    /// 
+    /// **See also:** [`comparison_mode()`]
+    set_comparison_mode(mode: OpenGLTexture::ComparisonMode),
+    /// 
+    /// Returns the texture comparison mode set on this texture. By default, a
+    /// texture has a CompareNone comparison mode (i.e. comparisons are disabled).
+    /// 
+    /// **See also:** [`set_comparison_mode()`]
+    comparison_mode() -> OpenGLTexture::ComparisonMode,
+    /// 
+    /// Sets the filter used for minification to *filter.*
+    /// 
+    /// **See also:** [`minification_filter()`]
+    /// [`set_magnification_filter()`]
+    /// [`set_min_mag_filters()`]
+    set_minification_filter(filter: OpenGLTexture::Filter),
+    /// 
+    /// Returns the minification filter.
+    /// 
+    /// **See also:** [`set_minification_filter()`]
+    minification_filter() -> OpenGLTexture::Filter,
+    /// 
+    /// Sets the magnification filter to *filter.*
+    /// 
+    /// **See also:** [`magnification_filter()`]
+    /// [`set_minification_filter()`]
+    /// [`set_min_mag_filters()`]
+    set_magnification_filter(filter: OpenGLTexture::Filter),
+    /// 
+    /// Returns the magnification filter.
+    /// 
+    /// **See also:** [`set_magnification_filter()`]
+    magnification_filter() -> OpenGLTexture::Filter,
+    /// 
+    /// Sets the minification filter to *minificationFilter* and the magnification filter
+    /// to *magnificationFilter.*
+    /// 
+    /// **See also:** [`min_mag_filters()`]
+    /// [`set_minification_filter()`]
+    /// [`set_magnification_filter()`]
+    set_min_mag_filters(minification_filter: OpenGLTexture::Filter, magnification_filter: OpenGLTexture::Filter),
+    /// 
+    /// Returns the current minification and magnification filters.
+    /// 
+    /// **See also:** [`set_min_mag_filters()`]
+    min_mag_filters() -> Pair<QOpenGLTexture::Filter, QOpenGLTexture::Filter>,
+    /// 
+    /// Sets the wrap (or repeat mode) for all texture dimentions to *mode.*
+    /// 
+    /// **See also:** [`wrap_mode()`]
+    /// 
+    /// Holds the texture dimension *direction.*
+    /// **Overloads**
+    set_wrap_mode(mode: OpenGLTexture::WrapMode),
+    /// 
+    /// Sets the wrap (or repeat mode) for all texture dimentions to *mode.*
+    /// 
+    /// **See also:** [`wrap_mode()`]
+    /// 
+    /// Holds the texture dimension *direction.*
+    /// **Overloads**
+    [org_name(setWrapMode)]
+    set_wrap_mode_2(direction: OpenGLTexture::CoordinateDirection, mode: OpenGLTexture::WrapMode),
+    /// 
+    /// Returns the wrap mode for the texture dimension *direction.*
+    /// 
+    /// **See also:** [`set_wrap_mode()`]
+    wrap_mode(direction: OpenGLTexture::CoordinateDirection) -> OpenGLTexture::WrapMode,
+    /// 
+    /// Sets the border color of the texture to *color.*
+    /// 
+    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
+    /// **See also:** [`border_color()`]
+    /// 
+    /// Sets the color red to *r* , green to *g* , blue to *b* , and *a* to the
+    /// alpha value.
+    /// **Overloads**
+    /// 
+    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
+    /// value to *a* .
+    /// **Overloads**
+    /// 
+    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
+    /// value to *a* .
+    /// **Overloads**
+    set_border_color(color: ColorType),
+    /// 
+    /// Sets the border color of the texture to *color.*
+    /// 
+    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
+    /// **See also:** [`border_color()`]
+    /// 
+    /// Sets the color red to *r* , green to *g* , blue to *b* , and *a* to the
+    /// alpha value.
+    /// **Overloads**
+    /// 
+    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
+    /// value to *a* .
+    /// **Overloads**
+    /// 
+    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
+    /// value to *a* .
+    /// **Overloads**
+    [org_name(setBorderColor)]
+    set_border_color_2(r: f32, g: f32, b: f32, a: f32),
+    /// 
+    /// Sets the border color of the texture to *color.*
+    /// 
+    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
+    /// **See also:** [`border_color()`]
+    /// 
+    /// Sets the color red to *r* , green to *g* , blue to *b* , and *a* to the
+    /// alpha value.
+    /// **Overloads**
+    /// 
+    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
+    /// value to *a* .
+    /// **Overloads**
+    /// 
+    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
+    /// value to *a* .
+    /// **Overloads**
+    [org_name(setBorderColor)]
+    set_border_color_3(r: i32, g: i32, b: i32, a: i32),
+    /// 
+    /// Sets the border color of the texture to *color.*
+    /// 
+    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
+    /// **See also:** [`border_color()`]
+    /// 
+    /// Sets the color red to *r* , green to *g* , blue to *b* , and *a* to the
+    /// alpha value.
+    /// **Overloads**
+    /// 
+    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
+    /// value to *a* .
+    /// **Overloads**
+    /// 
+    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
+    /// value to *a* .
+    /// **Overloads**
+    [org_name(setBorderColor)]
+    set_border_color_4(r: uint, g: uint, b: uint, a: uint),
+    /// 
+    /// Returns the borderColor of this texture.
+    /// 
+    /// **See also:** [`set_border_color()`]
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **See also:** [`set_border_color()`]
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **Overloads**
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **Overloads**
+    border_color() -> Color,
+    /// 
+    /// Returns the borderColor of this texture.
+    /// 
+    /// **See also:** [`set_border_color()`]
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **See also:** [`set_border_color()`]
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **Overloads**
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **Overloads**
+    [org_name(borderColor)]
+    border_color_2(border: *f32),
+    /// 
+    /// Returns the borderColor of this texture.
+    /// 
+    /// **See also:** [`set_border_color()`]
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **See also:** [`set_border_color()`]
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **Overloads**
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **Overloads**
+    [org_name(borderColor)]
+    border_color_3(border: *i32),
+    /// 
+    /// Returns the borderColor of this texture.
+    /// 
+    /// **See also:** [`set_border_color()`]
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **See also:** [`set_border_color()`]
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **Overloads**
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **Overloads**
+    [org_name(borderColor)]
+    border_color_4(border: *unsigned),
+    /// 
+    /// Sets the minimum level of detail to *value.* This limits the selection of highest
+    /// resolution mipmap (lowest mipmap level). The default value is -1000.
+    /// 
+    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
+    /// **See also:** [`minimum_level_of_detail()`]
+    /// [`set_maximum_level_of_detail()`]
+    /// [`set_level_of_detail_range()`]
+    set_minimum_level_of_detail(value: f32),
+    /// 
+    /// Returns the minimum level of detail parameter.
+    /// 
+    /// **See also:** [`set_minimum_level_of_detail()`]
+    /// [`maximum_level_of_detail()`]
+    /// [`level_of_detail_range()`]
+    minimum_level_of_detail() -> f32,
+    /// 
+    /// Sets the maximum level of detail to *value.* This limits the selection of lowest
+    /// resolution mipmap (highest mipmap level). The default value is 1000.
+    /// 
+    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
+    /// **See also:** [`maximum_level_of_detail()`]
+    /// [`set_minimum_level_of_detail()`]
+    /// [`set_level_of_detail_range()`]
+    set_maximum_level_of_detail(value: f32),
+    /// 
+    /// Returns the maximum level of detail parameter.
+    /// 
+    /// **See also:** [`set_maximum_level_of_detail()`]
+    /// [`minimum_level_of_detail()`]
+    /// [`level_of_detail_range()`]
+    maximum_level_of_detail() -> f32,
+    /// 
+    /// Sets the minimum level of detail parameters to *min* and the maximum level
+    /// to *max.*
+    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
+    /// **See also:** [`level_of_detail_range()`]
+    /// [`set_minimum_level_of_detail()`]
+    /// [`set_maximum_level_of_detail()`]
+    set_level_of_detail_range(min: f32, max: f32),
+    /// 
+    /// Returns the minimum and maximum level of detail parameters.
+    /// 
+    /// **See also:** [`set_level_of_detail_range()`]
+    /// [`minimum_level_of_detail()`]
+    /// [`maximum_level_of_detail()`]
+    level_of_detail_range() -> Pair<float,,
+    /// 
+    /// Sets the level of detail bias to *bias.*
+    /// Level of detail bias affects the point at which mipmapping levels change.
+    /// Increasing values for level of detail bias makes the overall images blurrier
+    /// or smoother. Decreasing values make the overall images sharper.
+    /// 
+    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
+    /// **See also:** [`levelof_detail_bias()`]
+    set_levelof_detail_bias(bias: f32),
+    /// 
+    /// Returns the level of detail bias parameter.
+    /// 
+    /// **See also:** [`set_levelof_detail_bias()`]
+    levelof_detail_bias() -> f32,
+}
+
 [org_name(QOpenGLTexture)]
 enum Target {
     Target1D,
@@ -373,1601 +1998,6 @@ enum Filter {
     NearestMipMapLinear,
     LinearMipMapNearest,
     LinearMipMapLinear,
-}
-
-
-struct OpenGLTexture {
-    qt_check_for_qgadget_macro(),
-    /// 
-    /// Returns the binding target of this texture.
-    /// 
-    target() -> OpenGLTexture::Target,
-    /// 
-    /// Creates the underlying OpenGL texture object. This requires a current valid
-    /// OpenGL context. If the texture object already exists, this function does
-    /// nothing.
-    /// 
-    /// Once the texture object is created you can obtain the object
-    /// name from the textureId() function. This may be useful if you wish to make
-    /// some raw OpenGL calls related to this texture.
-    /// 
-    /// Normally it should not be necessary to call this function directly as all
-    /// functions that set properties of the texture object implicitly call create()
-    /// on your behalf.
-    /// 
-    /// Returns `true` if the creation succeeded, otherwise returns `false.`
-    /// 
-    /// **See also:** destroy()
-    /// isCreated()
-    /// textureId()
-    /// 
-    /// Attempts to create a texture view onto this texture. A texture
-    /// view is somewhat analogous to a view in SQL in that it presents
-    /// a restricted or reinterpreted view of the original data. Texture
-    /// views do not allocate any more server-side storage, insted relying
-    /// on the storage buffer of the source texture.
-    /// 
-    /// Texture views are only available when using immutable storage. For
-    /// more information on texture views see
-    /// http://www.opengl.org/wiki/Texture_Storage#Texture_views.
-    /// 
-    /// The *target* argument specifies the target to use for the view.
-    /// Only some targets can be used depending upon the target of the original
-    /// target. For e.g. a view onto a Target1DArray texture can specify
-    /// either Target1DArray or Target1D but for the latter the number of
-    /// array layers specified with *minimumLayer* and *maximumLayer* must
-    /// be exactly 1.
-    /// 
-    /// Simpliar constraints apply for the *viewFormat.* See the above link
-    /// and the specification for more details.
-    /// 
-    /// The *minimumMipmapLevel,* *maximumMipmapLevel,* *minimumLayer,*
-    /// and *maximumLayer* arguments serve to restrict the parts of the
-    /// texture accessible by the texture view.
-    /// 
-    /// If creation of the texture view fails this function will return
-    /// 0. If the function succeeds it will return a pointer to a new
-    /// QOpenGLTexture object that will return `true` from its isTextureView()
-    /// function.
-    /// 
-    /// **See also:** isTextureView()
-    create() -> bool,
-    /// 
-    /// Returns `true` if the underlying OpenGL texture object has been created.
-    /// 
-    /// **See also:** create()
-    /// destroy()
-    /// textureId()
-    is_created() -> bool,
-    /// 
-    /// Returns the name of the underlying OpenGL texture object or 0 if it has
-    /// not yet been created.
-    /// 
-    /// **See also:** create()
-    /// destroy()
-    /// isCreated()
-    texture_id() -> i32,
-    /// 
-    /// Binds this texture to the currently active texture unit ready for
-    /// rendering. Note that you do not need to bind QOpenGLTexture objects
-    /// in order to modify them as the implementation makes use of the
-    /// EXT_direct_state_access extension where available and simulates it
-    /// where it is not.
-    /// 
-    /// **See also:** release()
-    /// 
-    /// Binds this texture to texture unit *unit* ready for
-    /// rendering. Note that you do not need to bind QOpenGLTexture objects
-    /// in order to modify them as the implementation makes use of the
-    /// EXT_direct_state_access extension where available and simulates it
-    /// where it is not.
-    /// 
-    /// If parameter *reset* is `true` then this function will restore
-    /// the active unit to the texture unit that was active upon entry.
-    /// 
-    /// **See also:** release()
-    bind(),
-    /// 
-    /// Binds this texture to the currently active texture unit ready for
-    /// rendering. Note that you do not need to bind QOpenGLTexture objects
-    /// in order to modify them as the implementation makes use of the
-    /// EXT_direct_state_access extension where available and simulates it
-    /// where it is not.
-    /// 
-    /// **See also:** release()
-    /// 
-    /// Binds this texture to texture unit *unit* ready for
-    /// rendering. Note that you do not need to bind QOpenGLTexture objects
-    /// in order to modify them as the implementation makes use of the
-    /// EXT_direct_state_access extension where available and simulates it
-    /// where it is not.
-    /// 
-    /// If parameter *reset* is `true` then this function will restore
-    /// the active unit to the texture unit that was active upon entry.
-    /// 
-    /// **See also:** release()
-    bind_2(unit: uint, reset: OpenGLTexture::TextureUnitReset),
-    /// 
-    /// Unbinds this texture from the currently active texture unit.
-    /// 
-    /// **See also:** bind()
-    /// 
-    /// Unbinds this texture from texture unit *unit.*
-    /// 
-    /// If parameter *reset* is `true` then this function
-    /// will restore the active unit to the texture unit that was active
-    /// upon entry.
-    release(),
-    /// 
-    /// Unbinds this texture from the currently active texture unit.
-    /// 
-    /// **See also:** bind()
-    /// 
-    /// Unbinds this texture from texture unit *unit.*
-    /// 
-    /// If parameter *reset* is `true` then this function
-    /// will restore the active unit to the texture unit that was active
-    /// upon entry.
-    release_2(unit: uint, reset: OpenGLTexture::TextureUnitReset),
-    /// 
-    /// Returns `true` if this texture is bound to the corresponding target
-    /// of the currently active texture unit.
-    /// 
-    /// **See also:** bind()
-    /// release()
-    /// 
-    /// Returns `true` if this texture is bound to the corresponding target
-    /// of texture unit *unit.*
-    /// 
-    /// **See also:** bind()
-    /// release()
-    is_bound() -> bool,
-    /// 
-    /// Returns `true` if this texture is bound to the corresponding target
-    /// of the currently active texture unit.
-    /// 
-    /// **See also:** bind()
-    /// release()
-    /// 
-    /// Returns `true` if this texture is bound to the corresponding target
-    /// of texture unit *unit.*
-    /// 
-    /// **See also:** bind()
-    /// release()
-    is_bound_2(unit: uint) -> bool,
-    /// 
-    /// Returns the textureId of the texture that is bound to the *target*
-    /// of the currently active texture unit.
-    /// 
-    /// Returns the textureId of the texture that is bound to the *target*
-    /// of the texture unit *unit.*
-    [static] bound_texture_id(target: OpenGLTexture::BindingTarget) -> i32,
-    /// 
-    /// Returns the textureId of the texture that is bound to the *target*
-    /// of the currently active texture unit.
-    /// 
-    /// Returns the textureId of the texture that is bound to the *target*
-    /// of the texture unit *unit.*
-    [static] bound_texture_id_2(unit: uint, target: OpenGLTexture::BindingTarget) -> i32,
-    /// 
-    /// Sets the format of this texture object to *format.* This function
-    /// must be called before texture storage is allocated.
-    /// 
-    /// Note that all formats may not be supported. The exact set of supported
-    /// formats is dependent upon your OpenGL implementation and version.
-    /// 
-    /// **See also:** format()
-    /// allocateStorage()
-    set_format(format: OpenGLTexture::TextureFormat),
-    /// 
-    /// Returns the format of this texture object.
-    /// 
-    /// **See also:** setFormat()
-    format() -> OpenGLTexture::TextureFormat,
-    /// 
-    /// Sets the dimensions of this texture object to *width,*
-    /// *height,* and *depth.* The default for each dimension is 1.
-    /// The maximum allowable texture size is dependent upon your OpenGL
-    /// implementation. Allocating storage for a texture less than the
-    /// maximum size can still fail if your system is low on resources.
-    /// 
-    /// If a non-power-of-two *width,* *height* or *depth* is provided and your
-    /// OpenGL implementation doesn't have support for repeating non-power-of-two
-    /// textures, then the wrap mode is automatically set to ClampToEdge.
-    /// 
-    /// **See also:** width()
-    /// height()
-    /// depth()
-    set_size(width: i32, height: i32, depth: i32),
-    /// 
-    /// Returns the width of a 1D, 2D or 3D texture.
-    /// 
-    /// **See also:** height()
-    /// depth()
-    /// setSize()
-    width() -> i32,
-    /// 
-    /// Returns the height of a 2D or 3D texture.
-    /// 
-    /// **See also:** width()
-    /// depth()
-    /// setSize()
-    height() -> i32,
-    /// 
-    /// Returns the depth of a 3D texture.
-    /// 
-    /// **See also:** width()
-    /// height()
-    /// setSize()
-    /// 
-    /// Returns the depth stencil mode for textures using a combined depth/stencil format.
-    /// 
-    /// **See also:** setDepthStencilMode()
-    depth() -> i32,
-    /// 
-    /// For texture targets that support mipmaps, this function
-    /// sets the requested number of mipmap *levels* to allocate storage
-    /// for. This function should be called before storage is allocated
-    /// for the texture.
-    /// 
-    /// If the texture target does not support mipmaps this function
-    /// has no effect.
-    /// 
-    /// **See also:** mipLevels()
-    /// maximumMipLevels()
-    /// isStorageAllocated()
-    set_mip_levels(levels: i32),
-    /// 
-    /// Returns the number of mipmap levels for this texture. If storage
-    /// has not yet been allocated for this texture it returns the
-    /// requested number of mipmap levels.
-    /// 
-    /// **See also:** setMipLevels()
-    /// maximumMipLevels()
-    /// isStorageAllocated()
-    mip_levels() -> i32,
-    /// 
-    /// Returns the maximum number of mipmap levels that this texture
-    /// can have given the current dimensions.
-    /// 
-    /// **See also:** setMipLevels()
-    /// mipLevels()
-    /// setSize()
-    maximum_mip_levels() -> i32,
-    /// 
-    /// Sets the number of array *layers* to allocate storage for. This
-    /// function should be called before storage is allocated for the texture.
-    /// 
-    /// For targets that do not support array layers this function has
-    /// no effect.
-    /// 
-    /// **See also:** layers()
-    /// isStorageAllocated()
-    set_layers(layers: i32),
-    /// 
-    /// Returns the number of array layers for this texture. If
-    /// storage has not yet been allocated for this texture then
-    /// this function returns the requested number of array layers.
-    /// 
-    /// For texture targets that do not support array layers this
-    /// will return 1.
-    /// 
-    /// **See also:** setLayers()
-    /// isStorageAllocated()
-    layers() -> i32,
-    /// 
-    /// Returns the number of faces for this texture. For cubemap
-    /// and cubemap array type targets this will be 6.
-    /// 
-    /// For non-cubemap type targets this will return 1.
-    faces() -> i32,
-    /// 
-    /// Sets the number of *samples* to allocate storage for when rendering to
-    /// a multisample capable texture target. This function should
-    /// be called before storage is allocated for the texture.
-    /// 
-    /// For targets that do not support multisampling this function has
-    /// no effect.
-    /// 
-    /// **See also:** samples()
-    /// isStorageAllocated()
-    set_samples(samples: i32),
-    /// 
-    /// Returns the number of multisample sample points for this texture.
-    /// If storage has not yet been allocated for this texture then
-    /// this function returns the requested number of samples.
-    /// 
-    /// For texture targets that do not support multisampling this
-    /// will return 0.
-    /// 
-    /// **See also:** setSamples()
-    /// isStorageAllocated()
-    samples() -> i32,
-    /// 
-    /// Sets whether the sample positions and number of samples used with
-    /// a multisample capable texture target to *fixed.* If set to `true`
-    /// the sample positions and number of samples used are the same for
-    /// all texels in the image and will not depend upon the image size or
-    /// internal format. This function should be called before storage is allocated
-    /// for the texture.
-    /// 
-    /// For targets that do not support multisampling this function has
-    /// no effect.
-    /// 
-    /// The default value is `true.`
-    /// 
-    /// **See also:** isFixedSamplePositions()
-    /// isStorageAllocated()
-    set_fixed_sample_positions(fixed: bool),
-    /// 
-    /// Returns whether this texture uses a fixed pattern of multisample
-    /// samples. If storage has not yet been allocated for this texture then
-    /// this function returns the requested fixed sample position setting.
-    /// 
-    /// For texture targets that do not support multisampling this
-    /// will return `true.`
-    /// 
-    /// **See also:** setFixedSamplePositions()
-    /// isStorageAllocated()
-    is_fixed_sample_positions() -> bool,
-    /// 
-    /// Allocates server-side storage for this texture object taking
-    /// into account, the format, dimensions, mipmap levels, array
-    /// layers and cubemap faces.
-    /// 
-    /// Once storage has been allocated it is no longer possible to change
-    /// these properties.
-    /// 
-    /// If supported QOpenGLTexture makes use of immutable texture
-    /// storage.
-    /// 
-    /// Once storage has been allocated for the texture then pixel data
-    /// can be uploaded via one of the setData() overloads.
-    /// 
-    /// **Note**: If immutable texture storage is not available,
-    /// then a default pixel format and pixel type will be used to
-    /// create the mutable storage. You can use the other
-    /// allocateStorage() overload to specify exactly the pixel format
-    /// and the pixel type to use when allocating mutable storage;
-    /// this is particulary useful under certain OpenGL ES implementations
-    /// (notably, OpenGL ES 2), where the pixel format and the pixel type
-    /// used at allocation time must perfectly match the format
-    /// and the type passed to any subsequent setData() call.
-    /// 
-    /// **See also:** isStorageAllocated()
-    /// setData()
-    /// 
-    /// Allocates server-side storage for this texture object taking
-    /// into account, the format, dimensions, mipmap levels, array
-    /// layers and cubemap faces.
-    /// 
-    /// Once storage has been allocated it is no longer possible to change
-    /// these properties.
-    /// 
-    /// If supported QOpenGLTexture makes use of immutable texture
-    /// storage. However, if immutable texture storage is not available,
-    /// then the specified *pixelFormat* and *pixelType* will be used
-    /// to allocate mutable storage; note that in certain OpenGL implementations
-    /// (notably, OpenGL ES 2) they must perfectly match the format
-    /// and the type passed to any subsequent setData() call.
-    /// 
-    /// Once storage has been allocated for the texture then pixel data
-    /// can be uploaded via one of the setData() overloads.
-    /// 
-    /// **See also:** isStorageAllocated()
-    /// setData()
-    allocate_storage(),
-    /// 
-    /// Allocates server-side storage for this texture object taking
-    /// into account, the format, dimensions, mipmap levels, array
-    /// layers and cubemap faces.
-    /// 
-    /// Once storage has been allocated it is no longer possible to change
-    /// these properties.
-    /// 
-    /// If supported QOpenGLTexture makes use of immutable texture
-    /// storage.
-    /// 
-    /// Once storage has been allocated for the texture then pixel data
-    /// can be uploaded via one of the setData() overloads.
-    /// 
-    /// **Note**: If immutable texture storage is not available,
-    /// then a default pixel format and pixel type will be used to
-    /// create the mutable storage. You can use the other
-    /// allocateStorage() overload to specify exactly the pixel format
-    /// and the pixel type to use when allocating mutable storage;
-    /// this is particulary useful under certain OpenGL ES implementations
-    /// (notably, OpenGL ES 2), where the pixel format and the pixel type
-    /// used at allocation time must perfectly match the format
-    /// and the type passed to any subsequent setData() call.
-    /// 
-    /// **See also:** isStorageAllocated()
-    /// setData()
-    /// 
-    /// Allocates server-side storage for this texture object taking
-    /// into account, the format, dimensions, mipmap levels, array
-    /// layers and cubemap faces.
-    /// 
-    /// Once storage has been allocated it is no longer possible to change
-    /// these properties.
-    /// 
-    /// If supported QOpenGLTexture makes use of immutable texture
-    /// storage. However, if immutable texture storage is not available,
-    /// then the specified *pixelFormat* and *pixelType* will be used
-    /// to allocate mutable storage; note that in certain OpenGL implementations
-    /// (notably, OpenGL ES 2) they must perfectly match the format
-    /// and the type passed to any subsequent setData() call.
-    /// 
-    /// Once storage has been allocated for the texture then pixel data
-    /// can be uploaded via one of the setData() overloads.
-    /// 
-    /// **See also:** isStorageAllocated()
-    /// setData()
-    allocate_storage_2(pixel_format: OpenGLTexture::PixelFormat, pixel_type: OpenGLTexture::PixelType),
-    /// 
-    /// Returns `true` if server-side storage for this texture as been
-    /// allocated.
-    /// 
-    /// The texture format, dimensions, mipmap levels and array layers
-    /// cannot be altered once storage ihas been allocated.
-    /// 
-    /// **See also:** allocateStorage()
-    /// setSize()
-    /// setMipLevels()
-    /// setLayers()
-    /// setFormat()
-    is_storage_allocated() -> bool,
-    /// 
-    /// Attempts to create a texture view onto this texture. A texture
-    /// view is somewhat analogous to a view in SQL in that it presents
-    /// a restricted or reinterpreted view of the original data. Texture
-    /// views do not allocate any more server-side storage, insted relying
-    /// on the storage buffer of the source texture.
-    /// 
-    /// Texture views are only available when using immutable storage. For
-    /// more information on texture views see
-    /// http://www.opengl.org/wiki/Texture_Storage#Texture_views.
-    /// 
-    /// The *target* argument specifies the target to use for the view.
-    /// Only some targets can be used depending upon the target of the original
-    /// target. For e.g. a view onto a Target1DArray texture can specify
-    /// either Target1DArray or Target1D but for the latter the number of
-    /// array layers specified with *minimumLayer* and *maximumLayer* must
-    /// be exactly 1.
-    /// 
-    /// Simpliar constraints apply for the *viewFormat.* See the above link
-    /// and the specification for more details.
-    /// 
-    /// The *minimumMipmapLevel,* *maximumMipmapLevel,* *minimumLayer,*
-    /// and *maximumLayer* arguments serve to restrict the parts of the
-    /// texture accessible by the texture view.
-    /// 
-    /// If creation of the texture view fails this function will return
-    /// 0. If the function succeeds it will return a pointer to a new
-    /// QOpenGLTexture object that will return `true` from its isTextureView()
-    /// function.
-    /// 
-    /// **See also:** isTextureView()
-    create_texture_view(target: OpenGLTexture::Target, view_format: OpenGLTexture::TextureFormat, minimum_mipmap_level: i32, maximum_mipmap_level: i32, minimum_layer: i32, maximum_layer: i32) -> OpenGLTexture?,
-    /// 
-    /// Returns `true` if this texture object is actually a view onto another
-    /// texture object.
-    /// 
-    /// **See also:** createTextureView()
-    is_texture_view() -> bool,
-    /// 
-    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
-    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
-    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
-    /// for you if they have enough information to do so. This will be noted in the function
-    /// documentation.
-    /// 
-    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
-    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
-    /// 
-    /// If using a compressed format() then you should use setCompressedData() instead of this
-    /// function.
-    /// 
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// This overload of setData() will allocate storage for you.
-    /// The pixel data is contained in *image.* Mipmaps are generated by default.
-    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
-    /// to turn off mipmap generation.
-    /// 
-    /// **Overloads**
-    set_data(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
-    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
-    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
-    /// for you if they have enough information to do so. This will be noted in the function
-    /// documentation.
-    /// 
-    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
-    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
-    /// 
-    /// If using a compressed format() then you should use setCompressedData() instead of this
-    /// function.
-    /// 
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// This overload of setData() will allocate storage for you.
-    /// The pixel data is contained in *image.* Mipmaps are generated by default.
-    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
-    /// to turn off mipmap generation.
-    /// 
-    /// **Overloads**
-    set_data_2(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
-    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
-    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
-    /// for you if they have enough information to do so. This will be noted in the function
-    /// documentation.
-    /// 
-    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
-    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
-    /// 
-    /// If using a compressed format() then you should use setCompressedData() instead of this
-    /// function.
-    /// 
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// This overload of setData() will allocate storage for you.
-    /// The pixel data is contained in *image.* Mipmaps are generated by default.
-    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
-    /// to turn off mipmap generation.
-    /// 
-    /// **Overloads**
-    set_data_3(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
-    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
-    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
-    /// for you if they have enough information to do so. This will be noted in the function
-    /// documentation.
-    /// 
-    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
-    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
-    /// 
-    /// If using a compressed format() then you should use setCompressedData() instead of this
-    /// function.
-    /// 
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// This overload of setData() will allocate storage for you.
-    /// The pixel data is contained in *image.* Mipmaps are generated by default.
-    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
-    /// to turn off mipmap generation.
-    /// 
-    /// **Overloads**
-    set_data_4(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
-    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
-    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
-    /// for you if they have enough information to do so. This will be noted in the function
-    /// documentation.
-    /// 
-    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
-    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
-    /// 
-    /// If using a compressed format() then you should use setCompressedData() instead of this
-    /// function.
-    /// 
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// This overload of setData() will allocate storage for you.
-    /// The pixel data is contained in *image.* Mipmaps are generated by default.
-    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
-    /// to turn off mipmap generation.
-    /// 
-    /// **Overloads**
-    set_data_5(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
-    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
-    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
-    /// for you if they have enough information to do so. This will be noted in the function
-    /// documentation.
-    /// 
-    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
-    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
-    /// 
-    /// If using a compressed format() then you should use setCompressedData() instead of this
-    /// function.
-    /// 
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// This overload of setData() will allocate storage for you.
-    /// The pixel data is contained in *image.* Mipmaps are generated by default.
-    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
-    /// to turn off mipmap generation.
-    /// 
-    /// **Overloads**
-    set_data_6(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
-    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
-    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
-    /// for you if they have enough information to do so. This will be noted in the function
-    /// documentation.
-    /// 
-    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
-    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
-    /// 
-    /// If using a compressed format() then you should use setCompressedData() instead of this
-    /// function.
-    /// 
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// This overload of setData() will allocate storage for you.
-    /// The pixel data is contained in *image.* Mipmaps are generated by default.
-    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
-    /// to turn off mipmap generation.
-    /// 
-    /// **Overloads**
-    set_data_7(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
-    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
-    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
-    /// for you if they have enough information to do so. This will be noted in the function
-    /// documentation.
-    /// 
-    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
-    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
-    /// 
-    /// If using a compressed format() then you should use setCompressedData() instead of this
-    /// function.
-    /// 
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// This overload of setData() will allocate storage for you.
-    /// The pixel data is contained in *image.* Mipmaps are generated by default.
-    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
-    /// to turn off mipmap generation.
-    /// 
-    /// **Overloads**
-    set_data_8(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
-    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
-    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
-    /// for you if they have enough information to do so. This will be noted in the function
-    /// documentation.
-    /// 
-    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
-    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
-    /// 
-    /// If using a compressed format() then you should use setCompressedData() instead of this
-    /// function.
-    /// 
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// This overload of setData() will allocate storage for you.
-    /// The pixel data is contained in *image.* Mipmaps are generated by default.
-    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
-    /// to turn off mipmap generation.
-    /// 
-    /// **Overloads**
-    set_data_9(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
-    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
-    /// argument should specify the size of the data pointed to by *data.*
-    /// 
-    /// If not using a compressed format() then you should use setData() instead of this
-    /// function.
-    /// 
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    set_compressed_data(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
-    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
-    /// argument should specify the size of the data pointed to by *data.*
-    /// 
-    /// If not using a compressed format() then you should use setData() instead of this
-    /// function.
-    /// 
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    set_compressed_data_2(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
-    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
-    /// argument should specify the size of the data pointed to by *data.*
-    /// 
-    /// If not using a compressed format() then you should use setData() instead of this
-    /// function.
-    /// 
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    set_compressed_data_3(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
-    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
-    /// argument should specify the size of the data pointed to by *data.*
-    /// 
-    /// If not using a compressed format() then you should use setData() instead of this
-    /// function.
-    /// 
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    set_compressed_data_4(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
-    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
-    /// argument should specify the size of the data pointed to by *data.*
-    /// 
-    /// If not using a compressed format() then you should use setData() instead of this
-    /// function.
-    /// 
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    set_compressed_data_5(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
-    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
-    /// argument should specify the size of the data pointed to by *data.*
-    /// 
-    /// If not using a compressed format() then you should use setData() instead of this
-    /// function.
-    /// 
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    set_compressed_data_6(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
-    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
-    /// argument should specify the size of the data pointed to by *data.*
-    /// 
-    /// If not using a compressed format() then you should use setData() instead of this
-    /// function.
-    /// 
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    set_compressed_data_7(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
-    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
-    /// argument should specify the size of the data pointed to by *data.*
-    /// 
-    /// If not using a compressed format() then you should use setData() instead of this
-    /// function.
-    /// 
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    set_compressed_data_8(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
-    /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
-    /// argument should specify the size of the data pointed to by *data.*
-    /// 
-    /// If not using a compressed format() then you should use setData() instead of this
-    /// function.
-    /// 
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    set_compressed_data_9(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
-    /// 
-    /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
-    /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
-    /// will set appropriate dimensions, mipmap levels, and array layers and then allocate storage
-    /// for you if they have enough information to do so. This will be noted in the function
-    /// documentation.
-    /// 
-    /// The structure of the pixel data pointed to by *data* is specified by *sourceFormat*
-    /// and *sourceType.* The pixel data upload can optionally be controlled by *options.*
-    /// 
-    /// If using a compressed format() then you should use setCompressedData() instead of this
-    /// function.
-    /// 
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// Parameter *layerCount* is the number of layers in a texture array
-    /// that are being uploaded/populated by this call.
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// **See also:** setCompressedData()
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// **Overloads**
-    /// 
-    /// This overload of setData() will allocate storage for you.
-    /// The pixel data is contained in *image.* Mipmaps are generated by default.
-    /// Set *genMipMaps* to [DontGenerateMipMaps](DontGenerateMipMaps)
-    /// to turn off mipmap generation.
-    /// 
-    /// **Overloads**
-    set_data_10(image: &ImageType, gen_mip_maps: OpenGLTexture::MipMapGeneration),
-    /// 
-    /// Returns `true` if your OpenGL implementation and version supports the texture
-    /// feature *feature.*
-    [static] has_feature(feature: OpenGLTexture::Feature) -> bool,
-    /// 
-    /// Sets the base mipmap level used for all texture lookups with this texture to *baseLevel.*
-    /// 
-    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** mipBaseLevel()
-    /// setMipMaxLevel()
-    /// setMipLevelRange()
-    set_mip_base_level(base_level: i32),
-    /// 
-    /// Returns the mipmap base level used for all texture lookups with this texture.
-    /// The default is 0.
-    /// 
-    /// **See also:** setMipBaseLevel()
-    /// mipMaxLevel()
-    /// mipLevelRange()
-    mip_base_level() -> i32,
-    /// 
-    /// Sets the maximum mipmap level used for all texture lookups with this texture to *maxLevel.*
-    /// 
-    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** mipMaxLevel()
-    /// setMipBaseLevel()
-    /// setMipLevelRange()
-    set_mip_max_level(max_level: i32),
-    /// 
-    /// Returns the mipmap maximum level used for all texture lookups with this texture.
-    /// 
-    /// **See also:** setMipMaxLevel()
-    /// mipBaseLevel()
-    /// mipLevelRange()
-    mip_max_level() -> i32,
-    /// 
-    /// Sets the range of mipmap levels that can be used for texture lookups with this texture
-    /// to range from *baseLevel* to *maxLevel.*
-    /// 
-    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** setMipBaseLevel()
-    /// setMipMaxLevel()
-    /// mipLevelRange()
-    set_mip_level_range(base_level: i32, max_level: i32),
-    /// 
-    /// Returns the range of mipmap levels that can be used for texture lookups with this texture.
-    /// 
-    /// **See also:** mipBaseLevel()
-    /// mipMaxLevel()
-    mip_level_range() -> Pair<int,,
-    /// 
-    /// If *enabled* is `true,` enables automatic mipmap generation for this texture object
-    /// to occur whenever the level 0 mipmap data is set via setData().
-    /// 
-    /// The automatic mipmap generation is enabled by default.
-    /// 
-    /// **Note**: Mipmap generation is not supported for compressed textures with OpenGL ES 2.0.
-    /// 
-    /// **See also:** isAutoMipMapGenerationEnabled()
-    /// generateMipMaps()
-    set_auto_mip_map_generation_enabled(enabled: bool),
-    /// 
-    /// Returns whether auto mipmap generation is enabled for this texture object.
-    /// 
-    /// **See also:** setAutoMipMapGenerationEnabled()
-    /// generateMipMaps()
-    is_auto_mip_map_generation_enabled() -> bool,
-    /// 
-    /// Generates mipmaps for this texture object from mipmap level 0. If you are
-    /// using a texture target and filtering option that requires mipmaps and you
-    /// have disabled automatic mipmap generation then you need to call this function
-    /// or the overload to create the mipmap chain.
-    /// 
-    /// **Note**: Mipmap generation is not supported for compressed textures with OpenGL
-    /// ES 2.0.
-    /// 
-    /// **See also:** setAutoMipMapGenerationEnabled()
-    /// setMipLevels()
-    /// mipLevels()
-    /// 
-    /// Generates mipmaps for this texture object from mipmap level *baseLevel.* If you are
-    /// using a texture target and filtering option that requires mipmaps and you
-    /// have disabled automatic mipmap generation then you need to call this function
-    /// or the overload to create the mipmap chain.
-    /// 
-    /// The generation of mipmaps to above *baseLevel* is achieved by setting the mipmap
-    /// base level to *baseLevel* and then generating the mipmap chain. If *resetBaseLevel*
-    /// is `true,` then the baseLevel of the texture will be reset to its previous value.
-    /// 
-    /// **See also:** setAutoMipMapGenerationEnabled()
-    /// setMipLevels()
-    /// mipLevels()
-    generate_mip_maps(),
-    /// 
-    /// Generates mipmaps for this texture object from mipmap level 0. If you are
-    /// using a texture target and filtering option that requires mipmaps and you
-    /// have disabled automatic mipmap generation then you need to call this function
-    /// or the overload to create the mipmap chain.
-    /// 
-    /// **Note**: Mipmap generation is not supported for compressed textures with OpenGL
-    /// ES 2.0.
-    /// 
-    /// **See also:** setAutoMipMapGenerationEnabled()
-    /// setMipLevels()
-    /// mipLevels()
-    /// 
-    /// Generates mipmaps for this texture object from mipmap level *baseLevel.* If you are
-    /// using a texture target and filtering option that requires mipmaps and you
-    /// have disabled automatic mipmap generation then you need to call this function
-    /// or the overload to create the mipmap chain.
-    /// 
-    /// The generation of mipmaps to above *baseLevel* is achieved by setting the mipmap
-    /// base level to *baseLevel* and then generating the mipmap chain. If *resetBaseLevel*
-    /// is `true,` then the baseLevel of the texture will be reset to its previous value.
-    /// 
-    /// **See also:** setAutoMipMapGenerationEnabled()
-    /// setMipLevels()
-    /// mipLevels()
-    generate_mip_maps_2(base_level: i32, reset_base_level: bool),
-    /// 
-    /// GLSL shaders are able to reorder the components of the vec4 returned by texture
-    /// functions. It is also desirable to be able to control this reordering from CPU
-    /// side code. This is made possible by swizzle masks since OpenGL 3.3.
-    /// 
-    /// Each component of the texture can be mapped to one of the SwizzleValue options.
-    /// 
-    /// This function maps *component* to the output *value.*
-    /// 
-    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** swizzleMask()
-    /// 
-    /// Parameters *r* , *g* , *b* , and *a* are values used for setting
-    /// the colors red, green, blue, and the alpha value.
-    /// **Overloads**
-    set_swizzle_mask(component: OpenGLTexture::SwizzleComponent, value: OpenGLTexture::SwizzleValue),
-    /// 
-    /// GLSL shaders are able to reorder the components of the vec4 returned by texture
-    /// functions. It is also desirable to be able to control this reordering from CPU
-    /// side code. This is made possible by swizzle masks since OpenGL 3.3.
-    /// 
-    /// Each component of the texture can be mapped to one of the SwizzleValue options.
-    /// 
-    /// This function maps *component* to the output *value.*
-    /// 
-    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** swizzleMask()
-    /// 
-    /// Parameters *r* , *g* , *b* , and *a* are values used for setting
-    /// the colors red, green, blue, and the alpha value.
-    /// **Overloads**
-    set_swizzle_mask_2(r: OpenGLTexture::SwizzleValue, g: OpenGLTexture::SwizzleValue, b: OpenGLTexture::SwizzleValue, a: OpenGLTexture::SwizzleValue),
-    /// 
-    /// Returns the swizzle mask for texture *component.*
-    swizzle_mask(component: OpenGLTexture::SwizzleComponent) -> OpenGLTexture::SwizzleValue,
-    /// 
-    /// If using a texture that has a combined depth/stencil format this function sets
-    /// which component of the texture is accessed to *mode.*
-    /// 
-    /// When the parameter is set to DepthMode, then accessing it from the
-    /// shader will access the depth component as a single float, as normal. But when
-    /// the parameter is set to StencilMode, the shader will access the stencil component.
-    /// 
-    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** depthStencilMode()
-    set_depth_stencil_mode(mode: OpenGLTexture::DepthStencilMode),
-    /// 
-    /// Returns the depth stencil mode for textures using a combined depth/stencil format.
-    /// 
-    /// **See also:** setDepthStencilMode()
-    depth_stencil_mode() -> OpenGLTexture::DepthStencilMode,
-    set_comparison_function(function: OpenGLTexture::ComparisonFunction),
-    /// 
-    /// Returns the texture comparison operator set on this texture. By default, a
-    /// texture has a CompareLessEqual comparison function.
-    /// 
-    /// **See also:** setComparisonFunction()
-    comparison_function() -> OpenGLTexture::ComparisonFunction,
-    /// 
-    /// Sets the texture comparison mode on this texture to *mode.* The texture
-    /// comparison mode is used by shadow samplers when sampling a depth texture.
-    /// 
-    /// **See also:** comparisonMode()
-    set_comparison_mode(mode: OpenGLTexture::ComparisonMode),
-    /// 
-    /// Returns the texture comparison mode set on this texture. By default, a
-    /// texture has a CompareNone comparison mode (i.e. comparisons are disabled).
-    /// 
-    /// **See also:** setComparisonMode()
-    comparison_mode() -> OpenGLTexture::ComparisonMode,
-    /// 
-    /// Sets the filter used for minification to *filter.*
-    /// 
-    /// **See also:** minificationFilter()
-    /// setMagnificationFilter()
-    /// setMinMagFilters()
-    set_minification_filter(filter: OpenGLTexture::Filter),
-    /// 
-    /// Returns the minification filter.
-    /// 
-    /// **See also:** setMinificationFilter()
-    minification_filter() -> OpenGLTexture::Filter,
-    /// 
-    /// Sets the magnification filter to *filter.*
-    /// 
-    /// **See also:** magnificationFilter()
-    /// setMinificationFilter()
-    /// setMinMagFilters()
-    set_magnification_filter(filter: OpenGLTexture::Filter),
-    /// 
-    /// Returns the magnification filter.
-    /// 
-    /// **See also:** setMagnificationFilter()
-    magnification_filter() -> OpenGLTexture::Filter,
-    /// 
-    /// Sets the minification filter to *minificationFilter* and the magnification filter
-    /// to *magnificationFilter.*
-    /// 
-    /// **See also:** minMagFilters()
-    /// setMinificationFilter()
-    /// setMagnificationFilter()
-    set_min_mag_filters(minification_filter: OpenGLTexture::Filter, magnification_filter: OpenGLTexture::Filter),
-    /// 
-    /// Returns the current minification and magnification filters.
-    /// 
-    /// **See also:** setMinMagFilters()
-    min_mag_filters() -> Pair<QOpenGLTexture::Filter, QOpenGLTexture::Filter>,
-    /// 
-    /// Sets the wrap (or repeat mode) for all texture dimentions to *mode.*
-    /// 
-    /// **See also:** wrapMode()
-    /// 
-    /// Holds the texture dimension *direction.*
-    /// **Overloads**
-    set_wrap_mode(mode: OpenGLTexture::WrapMode),
-    /// 
-    /// Sets the wrap (or repeat mode) for all texture dimentions to *mode.*
-    /// 
-    /// **See also:** wrapMode()
-    /// 
-    /// Holds the texture dimension *direction.*
-    /// **Overloads**
-    set_wrap_mode_2(direction: OpenGLTexture::CoordinateDirection, mode: OpenGLTexture::WrapMode),
-    /// 
-    /// Returns the wrap mode for the texture dimension *direction.*
-    /// 
-    /// **See also:** setWrapMode()
-    wrap_mode(direction: OpenGLTexture::CoordinateDirection) -> OpenGLTexture::WrapMode,
-    /// 
-    /// Sets the border color of the texture to *color.*
-    /// 
-    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** borderColor()
-    /// 
-    /// Sets the color red to *r* , green to *g* , blue to *b* , and *a* to the
-    /// alpha value.
-    /// **Overloads**
-    /// 
-    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
-    /// value to *a* .
-    /// **Overloads**
-    /// 
-    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
-    /// value to *a* .
-    /// **Overloads**
-    set_border_color(color: ColorType),
-    /// 
-    /// Sets the border color of the texture to *color.*
-    /// 
-    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** borderColor()
-    /// 
-    /// Sets the color red to *r* , green to *g* , blue to *b* , and *a* to the
-    /// alpha value.
-    /// **Overloads**
-    /// 
-    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
-    /// value to *a* .
-    /// **Overloads**
-    /// 
-    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
-    /// value to *a* .
-    /// **Overloads**
-    set_border_color_2(r: f32, g: f32, b: f32, a: f32),
-    /// 
-    /// Sets the border color of the texture to *color.*
-    /// 
-    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** borderColor()
-    /// 
-    /// Sets the color red to *r* , green to *g* , blue to *b* , and *a* to the
-    /// alpha value.
-    /// **Overloads**
-    /// 
-    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
-    /// value to *a* .
-    /// **Overloads**
-    /// 
-    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
-    /// value to *a* .
-    /// **Overloads**
-    set_border_color_3(r: i32, g: i32, b: i32, a: i32),
-    /// 
-    /// Sets the border color of the texture to *color.*
-    /// 
-    /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** borderColor()
-    /// 
-    /// Sets the color red to *r* , green to *g* , blue to *b* , and *a* to the
-    /// alpha value.
-    /// **Overloads**
-    /// 
-    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
-    /// value to *a* .
-    /// **Overloads**
-    /// 
-    /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
-    /// value to *a* .
-    /// **Overloads**
-    set_border_color_4(r: uint, g: uint, b: uint, a: uint),
-    /// 
-    /// Returns the borderColor of this texture.
-    /// 
-    /// **See also:** setBorderColor()
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **See also:** setBorderColor()
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **Overloads**
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **Overloads**
-    border_color() -> Color,
-    /// 
-    /// Returns the borderColor of this texture.
-    /// 
-    /// **See also:** setBorderColor()
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **See also:** setBorderColor()
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **Overloads**
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **Overloads**
-    border_color_2(border: *f32),
-    /// 
-    /// Returns the borderColor of this texture.
-    /// 
-    /// **See also:** setBorderColor()
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **See also:** setBorderColor()
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **Overloads**
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **Overloads**
-    border_color_3(border: *i32),
-    /// 
-    /// Returns the borderColor of this texture.
-    /// 
-    /// **See also:** setBorderColor()
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **See also:** setBorderColor()
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **Overloads**
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **Overloads**
-    border_color_4(border: *unsigned),
-    /// 
-    /// Sets the minimum level of detail to *value.* This limits the selection of highest
-    /// resolution mipmap (lowest mipmap level). The default value is -1000.
-    /// 
-    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** minimumLevelOfDetail()
-    /// setMaximumLevelOfDetail()
-    /// setLevelOfDetailRange()
-    set_minimum_level_of_detail(value: f32),
-    /// 
-    /// Returns the minimum level of detail parameter.
-    /// 
-    /// **See also:** setMinimumLevelOfDetail()
-    /// maximumLevelOfDetail()
-    /// levelOfDetailRange()
-    minimum_level_of_detail() -> f32,
-    /// 
-    /// Sets the maximum level of detail to *value.* This limits the selection of lowest
-    /// resolution mipmap (highest mipmap level). The default value is 1000.
-    /// 
-    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** maximumLevelOfDetail()
-    /// setMinimumLevelOfDetail()
-    /// setLevelOfDetailRange()
-    set_maximum_level_of_detail(value: f32),
-    /// 
-    /// Returns the maximum level of detail parameter.
-    /// 
-    /// **See also:** setMaximumLevelOfDetail()
-    /// minimumLevelOfDetail()
-    /// levelOfDetailRange()
-    maximum_level_of_detail() -> f32,
-    /// 
-    /// Sets the minimum level of detail parameters to *min* and the maximum level
-    /// to *max.*
-    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** levelOfDetailRange()
-    /// setMinimumLevelOfDetail()
-    /// setMaximumLevelOfDetail()
-    set_level_of_detail_range(min: f32, max: f32),
-    /// 
-    /// Returns the minimum and maximum level of detail parameters.
-    /// 
-    /// **See also:** setLevelOfDetailRange()
-    /// minimumLevelOfDetail()
-    /// maximumLevelOfDetail()
-    level_of_detail_range() -> Pair<float,,
-    /// 
-    /// Sets the level of detail bias to *bias.*
-    /// Level of detail bias affects the point at which mipmapping levels change.
-    /// Increasing values for level of detail bias makes the overall images blurrier
-    /// or smoother. Decreasing values make the overall images sharper.
-    /// 
-    /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** levelofDetailBias()
-    set_levelof_detail_bias(bias: f32),
-    /// 
-    /// Returns the level of detail bias parameter.
-    /// 
-    /// **See also:** setLevelofDetailBias()
-    levelof_detail_bias() -> f32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -6,10 +6,10 @@
 /// setRightPadding(), setTopPadding(), and setBottomPadding(). All the paddings
 /// can be set at once using setPadding().
 /// 
-/// **See also:** QTextFormat
-/// QTextBlockFormat
-/// QTextTableFormat
-/// QTextCharFormat
+/// **See also:** [`TextFormat`]
+/// [`TextBlockFormat`]
+/// [`TextTableFormat`]
+/// [`TextCharFormat`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -20,74 +20,74 @@ struct TextTableCellFormat : TextCharFormat {
     /// 
     /// Sets the top *padding* of the table cell.
     /// 
-    /// **See also:** topPadding()
-    /// setLeftPadding()
-    /// setRightPadding()
-    /// setBottomPadding()
+    /// **See also:** [`top_padding()`]
+    /// [`set_left_padding()`]
+    /// [`set_right_padding()`]
+    /// [`set_bottom_padding()`]
     set_top_padding(padding: f32),
     /// 
     /// Gets the top padding of the table cell.
     /// 
-    /// **See also:** setTopPadding()
-    /// leftPadding()
-    /// rightPadding()
-    /// bottomPadding()
+    /// **See also:** [`set_top_padding()`]
+    /// [`left_padding()`]
+    /// [`right_padding()`]
+    /// [`bottom_padding()`]
     top_padding() -> f32,
     /// 
     /// Sets the bottom *padding* of the table cell.
     /// 
-    /// **See also:** bottomPadding()
-    /// setLeftPadding()
-    /// setRightPadding()
-    /// setTopPadding()
+    /// **See also:** [`bottom_padding()`]
+    /// [`set_left_padding()`]
+    /// [`set_right_padding()`]
+    /// [`set_top_padding()`]
     set_bottom_padding(padding: f32),
     /// 
     /// Gets the bottom padding of the table cell.
     /// 
-    /// **See also:** setBottomPadding()
-    /// leftPadding()
-    /// rightPadding()
-    /// topPadding()
+    /// **See also:** [`set_bottom_padding()`]
+    /// [`left_padding()`]
+    /// [`right_padding()`]
+    /// [`top_padding()`]
     bottom_padding() -> f32,
     /// 
     /// Sets the left *padding* of the table cell.
     /// 
-    /// **See also:** leftPadding()
-    /// setRightPadding()
-    /// setTopPadding()
-    /// setBottomPadding()
+    /// **See also:** [`left_padding()`]
+    /// [`set_right_padding()`]
+    /// [`set_top_padding()`]
+    /// [`set_bottom_padding()`]
     set_left_padding(padding: f32),
     /// 
     /// Gets the left padding of the table cell.
     /// 
-    /// **See also:** setLeftPadding()
-    /// rightPadding()
-    /// topPadding()
-    /// bottomPadding()
+    /// **See also:** [`set_left_padding()`]
+    /// [`right_padding()`]
+    /// [`top_padding()`]
+    /// [`bottom_padding()`]
     left_padding() -> f32,
     /// 
     /// Sets the right *padding* of the table cell.
     /// 
-    /// **See also:** rightPadding()
-    /// setLeftPadding()
-    /// setTopPadding()
-    /// setBottomPadding()
+    /// **See also:** [`right_padding()`]
+    /// [`set_left_padding()`]
+    /// [`set_top_padding()`]
+    /// [`set_bottom_padding()`]
     set_right_padding(padding: f32),
     /// 
     /// Gets the right padding of the table cell.
     /// 
-    /// **See also:** setRightPadding()
-    /// leftPadding()
-    /// topPadding()
-    /// bottomPadding()
+    /// **See also:** [`set_right_padding()`]
+    /// [`left_padding()`]
+    /// [`top_padding()`]
+    /// [`bottom_padding()`]
     right_padding() -> f32,
     /// 
     /// Sets the left, right, top, and bottom *padding* of the table cell.
     /// 
-    /// **See also:** setLeftPadding()
-    /// setRightPadding()
-    /// setTopPadding()
-    /// setBottomPadding()
+    /// **See also:** [`set_left_padding()`]
+    /// [`set_right_padding()`]
+    /// [`set_top_padding()`]
+    /// [`set_bottom_padding()`]
     set_padding(padding: f32),
 }
 

@@ -63,11 +63,811 @@
 /// 
 /// 
 /// **See also:** Unicode
-/// QString
-/// QLatin1Char
+/// [`String`]
+/// [`Latin1Char`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct Char {
+    /// 
+    /// Returns the character's category.
+    /// 
+    /// **Overloads**  Returns the category of the UCS-4-encoded character specified by *ucs4.*
+    category() -> Char::Category,
+    /// 
+    /// Returns the character's direction.
+    /// 
+    /// **Overloads**  Returns the direction of the UCS-4-encoded character specified by *ucs4.*
+    direction() -> Char::Direction,
+    /// 
+    /// Returns information about the joining type attributes of the character
+    /// (needed for certain languages such as Arabic or Syriac).
+    /// 
+    /// **Overloads**
+    /// Returns information about the joining type attributes of the UCS-4-encoded
+    /// character specified by *ucs4*
+    /// (needed for certain languages such as Arabic or Syriac).
+    joining_type() -> Char::JoiningType,
+    /// 
+    /// Returns information about the joining type attributes of the character
+    /// (needed for certain languages such as Arabic or Syriac).
+    /// 
+    /// **Overloads**
+    /// Returns information about the joining type attributes of the UCS-4-encoded
+    /// character specified by *ucs4*
+    /// (needed for certain languages such as Arabic or Syriac).
+    /// 
+    /// Returns information about the joining properties of the character
+    /// (needed for certain languages such as Arabic).
+    /// 
+    /// **Overloads**
+    /// Returns information about the joining properties of the UCS-4-encoded
+    /// character specified by *ucs4* (needed for certain languages such as Arabic).
+    joining() -> Char::Joining,
+    /// 
+    /// Returns the combining class for the character as defined in the
+    /// Unicode standard. This is mainly useful as a positioning hint for
+    /// marks attached to a base character.
+    /// 
+    /// The Qt text rendering engine uses this information to correctly
+    /// position non-spacing marks around a base character.
+    /// 
+    /// **Overloads**  Returns the combining class for the UCS-4-encoded character specified by
+    /// *ucs4,* as defined in the Unicode standard.
+    combining_class() -> unsigned,
+    /// 
+    /// Returns the mirrored character if this character is a mirrored
+    /// character; otherwise returns the character itself.
+    /// 
+    /// **See also:** [`has_mirrored()`]
+    /// 
+    /// **Overloads**  Returns the mirrored character if the UCS-4-encoded character specified
+    /// by *ucs4* is a mirrored character; otherwise returns the character itself.
+    /// 
+    /// **See also:** [`has_mirrored()`]
+    mirrored_char() -> Char,
+    /// 
+    /// Returns `true` if the character should be reversed if the text
+    /// direction is reversed; otherwise returns `false.`
+    /// 
+    /// A bit faster equivalent of (ch.mirroredChar() != ch).
+    /// 
+    /// **See also:** [`mirrored_char()`]
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// should be reversed if the text direction is reversed; otherwise returns `false.`
+    /// 
+    /// A bit faster equivalent of (QChar::mirroredChar(ucs4) != ucs4).
+    /// 
+    /// **See also:** [`mirrored_char()`]
+    has_mirrored() -> bool,
+    /// 
+    /// Decomposes a character into it's constituent parts. Returns an empty string
+    /// if no decomposition exists.
+    /// 
+    /// **Overloads**  Decomposes the UCS-4-encoded character specified by *ucs4* into it's
+    /// constituent parts. Returns an empty string if no decomposition exists.
+    /// 
+    /// Returns the tag defining the composition of the character. Returns
+    /// QChar::NoDecomposition if no decomposition exists.
+    /// 
+    /// **Overloads**  Returns the tag defining the composition of the UCS-4-encoded character
+    /// specified by *ucs4.* Returns QChar::NoDecomposition if no decomposition exists.
+    decomposition() -> String,
+    /// 
+    /// Returns the tag defining the composition of the character. Returns
+    /// QChar::NoDecomposition if no decomposition exists.
+    /// 
+    /// **Overloads**  Returns the tag defining the composition of the UCS-4-encoded character
+    /// specified by *ucs4.* Returns QChar::NoDecomposition if no decomposition exists.
+    decomposition_tag() -> Char::Decomposition,
+    /// 
+    /// Returns the numeric value of the digit, or -1 if the character is not a digit.
+    /// 
+    /// **Overloads**  Returns the numeric value of the digit specified by the UCS-4-encoded
+    /// character, *ucs4,* or -1 if the character is not a digit.
+    digit_value() -> i32,
+    /// 
+    /// Returns the lowercase equivalent if the character is uppercase or titlecase;
+    /// otherwise returns the character itself.
+    /// 
+    /// **Overloads**  Returns the lowercase equivalent of the UCS-4-encoded character specified
+    /// by *ucs4* if the character is uppercase or titlecase; otherwise returns
+    /// the character itself.
+    to_lower() -> Char,
+    /// 
+    /// Returns the uppercase equivalent if the character is lowercase or titlecase;
+    /// otherwise returns the character itself.
+    /// 
+    /// **Overloads**  Returns the uppercase equivalent of the UCS-4-encoded character specified
+    /// by *ucs4* if the character is lowercase or titlecase; otherwise returns
+    /// the character itself.
+    to_upper() -> Char,
+    /// 
+    /// Returns the title case equivalent if the character is lowercase or uppercase;
+    /// otherwise returns the character itself.
+    /// 
+    /// **Overloads**  Returns the title case equivalent of the UCS-4-encoded character specified
+    /// by *ucs4* if the character is lowercase or uppercase; otherwise returns
+    /// the character itself.
+    to_title_case() -> Char,
+    /// 
+    /// Returns the case folded equivalent of the character.
+    /// For most Unicode characters this is the same as toLower().
+    /// 
+    /// **Overloads**  Returns the case folded equivalent of the UCS-4-encoded character specified
+    /// by *ucs4.* For most Unicode characters this is the same as toLower().
+    to_case_folded() -> Char,
+    /// 
+    /// Returns the Unicode script property value for this character.
+    /// 
+    /// **Overloads**
+    /// Returns the Unicode script property value for the character specified in
+    /// its UCS-4-encoded form as *ucs4.*
+    script() -> Char::Script,
+    /// 
+    /// Returns the Unicode version that introduced this character.
+    /// 
+    /// **Overloads**  Returns the Unicode version that introduced the character specified in
+    /// its UCS-4-encoded form as *ucs4.*
+    unicode_version() -> Char::UnicodeVersion,
+    /// 
+    /// Returns the Latin-1 character equivalent to the QChar, or 0. This
+    /// is mainly useful for non-internationalized software.
+    /// 
+    /// **Note**: It is not possible to distinguish a non-Latin-1 character from a Latin-1 0
+    /// (NUL) character. Prefer to use unicode(), which does not have this ambiguity.
+    /// 
+    /// **See also:** [`unicode()`]
+    to_latin1() -> char,
+    /// 
+    /// Returns the Unicode version that introduced this character.
+    /// 
+    /// **Overloads**  Returns the Unicode version that introduced the character specified in
+    /// its UCS-4-encoded form as *ucs4.*
+    /// 
+    /// Returns a reference to the numeric Unicode value of the QChar.
+    /// 
+    /// Returns the numeric Unicode value of the QChar.
+    unicode() -> ushort,
+    /// 
+    /// Returns the Unicode version that introduced this character.
+    /// 
+    /// **Overloads**  Returns the Unicode version that introduced the character specified in
+    /// its UCS-4-encoded form as *ucs4.*
+    /// 
+    /// Returns a reference to the numeric Unicode value of the QChar.
+    /// 
+    /// Returns the numeric Unicode value of the QChar.
+    [org_name(unicode)]
+    unicode_2() -> ushort?,
+    /// 
+    /// Converts the Latin-1 character *c* to its equivalent QChar. This
+    /// is mainly useful for non-internationalized software.
+    /// 
+    /// An alternative is to use QLatin1Char.
+    /// 
+    /// **See also:** [`to_latin1()`]
+    /// [`unicode()`]
+    [static] from_latin1(c: char) -> Char,
+    /// 
+    /// Returns `true` if the character is the Unicode character 0x0000
+    /// ('\\0'); otherwise returns `false.`
+    is_null() -> bool,
+    /// 
+    /// Returns `true` if the character is a printable character; otherwise
+    /// returns `false.` This is any character not of category Other_*.
+    /// 
+    /// Note that this gives no indication of whether the character is
+    /// available in a particular font.
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a printable character; otherwise returns `false.`
+    /// This is any character not of category Other_*.
+    /// 
+    /// Note that this gives no indication of whether the character is
+    /// available in a particular font.
+    is_print() -> bool,
+    /// 
+    /// Returns `true` if the character is a separator character
+    /// (Separator_* categories or certain code points from Other_Control category);
+    /// otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a separator character (Separator_* categories or certain code points
+    /// from Other_Control category); otherwise returns `false.`
+    is_space() -> bool,
+    /// 
+    /// Returns `true` if the character is a mark (Mark_* categories);
+    /// otherwise returns `false.`
+    /// 
+    /// See QChar::Category for more information regarding marks.
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a mark (Mark_* categories); otherwise returns `false.`
+    is_mark() -> bool,
+    /// 
+    /// Returns `true` if the character is a punctuation mark (Punctuation_*
+    /// categories); otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a punctuation mark (Punctuation_* categories); otherwise returns `false.`
+    is_punct() -> bool,
+    /// 
+    /// Returns `true` if the character is a symbol (Symbol_* categories);
+    /// otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a symbol (Symbol_* categories); otherwise returns `false.`
+    is_symbol() -> bool,
+    /// 
+    /// Returns `true` if the character is a letter (Letter_* categories);
+    /// otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a letter (Letter_* categories); otherwise returns `false.`
+    /// 
+    /// Returns `true` if the character is a letter or number (Letter_* or
+    /// Number_* categories); otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a letter or number (Letter_* or Number_* categories); otherwise returns `false.`
+    is_letter() -> bool,
+    /// 
+    /// Returns `true` if the character is a number (Number_* categories,
+    /// not just 0-9); otherwise returns `false.`
+    /// 
+    /// **See also:** [`is_digit()`]
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a number (Number_* categories, not just 0-9); otherwise returns `false.`
+    /// 
+    /// **See also:** [`is_digit()`]
+    is_number() -> bool,
+    /// 
+    /// Returns `true` if the character is a letter or number (Letter_* or
+    /// Number_* categories); otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a letter or number (Letter_* or Number_* categories); otherwise returns `false.`
+    is_letter_or_number() -> bool,
+    /// 
+    /// Returns `true` if the character is a decimal digit
+    /// (Number_DecimalDigit); otherwise returns `false.`
+    /// 
+    /// **See also:** [`is_number()`]
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a decimal digit (Number_DecimalDigit); otherwise returns `false.`
+    /// 
+    /// **See also:** [`is_number()`]
+    is_digit() -> bool,
+    /// 
+    /// Returns `true` if the character is a lowercase letter, for example
+    /// category() is Letter_Lowercase.
+    /// 
+    /// **See also:** [`is_upper()`]
+    /// [`to_lower()`]
+    /// [`to_upper()`]
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// is a lowercase letter, for example category() is Letter_Lowercase.
+    /// 
+    /// **See also:** [`is_upper()`]
+    /// [`to_lower()`]
+    /// [`to_upper()`]
+    is_lower() -> bool,
+    /// 
+    /// Returns `true` if the character is an uppercase letter, for example
+    /// category() is Letter_Uppercase.
+    /// 
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// is an uppercase letter, for example category() is Letter_Uppercase.
+    /// 
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    is_upper() -> bool,
+    /// 
+    /// Returns `true` if the character is a titlecase letter, for example
+    /// category() is Letter_Titlecase.
+    /// 
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    /// [`to_title_case()`]
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// is a titlecase letter, for example category() is Letter_Titlecase.
+    /// 
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    /// [`to_title_case()`]
+    is_title_case() -> bool,
+    /// 
+    /// Returns `true` if the QChar is a non-character; false otherwise.
+    /// 
+    /// Unicode has a certain number of code points that are classified
+    /// as that is, they can be used for internal purposes
+    /// in applications but cannot be used for text interchange.
+    /// Those are the last two entries each Unicode Plane ([0xfffe..0xffff],
+    /// [0x1fffe..0x1ffff], etc.) as well as the entries in range [0xfdd0..0xfdef].
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// is a non-character; false otherwise.
+    /// 
+    /// Unicode has a certain number of code points that are classified
+    /// as that is, they can be used for internal purposes
+    /// in applications but cannot be used for text interchange.
+    /// Those are the last two entries each Unicode Plane ([0xfffe..0xffff],
+    /// [0x1fffe..0x1ffff], etc.) as well as the entries in range [0xfdd0..0xfdef].
+    is_non_character() -> bool,
+    /// 
+    /// Returns `true` if the QChar is the high part of a UTF16 surrogate
+    /// (for example if its code point is in range [0xd800..0xdbff]); false otherwise.
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// is the high part of a UTF16 surrogate
+    /// (for example if its code point is in range [0xd800..0xdbff]); false otherwise.
+    is_high_surrogate() -> bool,
+    /// 
+    /// Returns `true` if the QChar is the low part of a UTF16 surrogate
+    /// (for example if its code point is in range [0xdc00..0xdfff]); false otherwise.
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// is the low part of a UTF16 surrogate
+    /// (for example if its code point is in range [0xdc00..0xdfff]); false otherwise.
+    is_low_surrogate() -> bool,
+    /// 
+    /// Returns `true` if the QChar contains a code point that is in either
+    /// the high or the low part of the UTF-16 surrogate range
+    /// (for example if its code point is in range [0xd800..0xdfff]); false otherwise.
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// contains a code point that is in either the high or the low part of the
+    /// UTF-16 surrogate range (for example if its code point is in range [0xd800..0xdfff]);
+    /// false otherwise.
+    is_surrogate() -> bool,
+    /// 
+    /// Returns the cell (least significant byte) of the Unicode character.
+    /// 
+    /// **See also:** [`row()`]
+    cell() -> uchar,
+    /// 
+    /// Returns the row (most significant byte) of the Unicode character.
+    /// 
+    /// **See also:** [`cell()`]
+    row() -> uchar,
+    set_cell(acell: uchar),
+    set_row(arow: uchar),
+    /// 
+    /// Returns `true` if the QChar is a non-character; false otherwise.
+    /// 
+    /// Unicode has a certain number of code points that are classified
+    /// as that is, they can be used for internal purposes
+    /// in applications but cannot be used for text interchange.
+    /// Those are the last two entries each Unicode Plane ([0xfffe..0xffff],
+    /// [0x1fffe..0x1ffff], etc.) as well as the entries in range [0xfdd0..0xfdef].
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// is a non-character; false otherwise.
+    /// 
+    /// Unicode has a certain number of code points that are classified
+    /// as that is, they can be used for internal purposes
+    /// in applications but cannot be used for text interchange.
+    /// Those are the last two entries each Unicode Plane ([0xfffe..0xffff],
+    /// [0x1fffe..0x1ffff], etc.) as well as the entries in range [0xfdd0..0xfdef].
+    [org_name(isNonCharacter)]
+    [static] is_non_character_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the QChar is the high part of a UTF16 surrogate
+    /// (for example if its code point is in range [0xd800..0xdbff]); false otherwise.
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// is the high part of a UTF16 surrogate
+    /// (for example if its code point is in range [0xd800..0xdbff]); false otherwise.
+    [org_name(isHighSurrogate)]
+    [static] is_high_surrogate_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the QChar is the low part of a UTF16 surrogate
+    /// (for example if its code point is in range [0xdc00..0xdfff]); false otherwise.
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// is the low part of a UTF16 surrogate
+    /// (for example if its code point is in range [0xdc00..0xdfff]); false otherwise.
+    [org_name(isLowSurrogate)]
+    [static] is_low_surrogate_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the QChar contains a code point that is in either
+    /// the high or the low part of the UTF-16 surrogate range
+    /// (for example if its code point is in range [0xd800..0xdfff]); false otherwise.
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// contains a code point that is in either the high or the low part of the
+    /// UTF-16 surrogate range (for example if its code point is in range [0xd800..0xdfff]);
+    /// false otherwise.
+    [org_name(isSurrogate)]
+    [static] is_surrogate_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// can be split into the high and low parts of a UTF16 surrogate
+    /// (for example if its code point is greater than or equals to 0x10000);
+    /// false otherwise.
+    [static] requires_surrogates(ucs4: uint) -> bool,
+    /// 
+    /// Converts a UTF16 surrogate pair with the given *high* and *low* values
+    /// to it's UCS-4-encoded code point.
+    /// 
+    /// **Overloads**
+    /// Converts a UTF16 surrogate pair ( *high,* *low)* to it's UCS-4-encoded code point.
+    [static] surrogate_to_ucs4(high: ushort, low: ushort) -> uint,
+    /// 
+    /// Converts a UTF16 surrogate pair with the given *high* and *low* values
+    /// to it's UCS-4-encoded code point.
+    /// 
+    /// **Overloads**
+    /// Converts a UTF16 surrogate pair ( *high,* *low)* to it's UCS-4-encoded code point.
+    [org_name(surrogateToUcs4)]
+    [static] surrogate_to_ucs4_2(high: CharType, low: CharType) -> uint,
+    /// 
+    /// Returns the high surrogate part of a UCS-4-encoded code point.
+    /// The returned result is undefined if *ucs4* is smaller than 0x10000.
+    [static] high_surrogate(ucs4: uint) -> ushort,
+    /// 
+    /// Returns the low surrogate part of a UCS-4-encoded code point.
+    /// The returned result is undefined if *ucs4* is smaller than 0x10000.
+    [static] low_surrogate(ucs4: uint) -> ushort,
+    /// 
+    /// Returns the character's category.
+    /// 
+    /// **Overloads**  Returns the category of the UCS-4-encoded character specified by *ucs4.*
+    [org_name(category)]
+    [static] category_2(ucs4: uint) -> Char::Category,
+    /// 
+    /// Returns the character's direction.
+    /// 
+    /// **Overloads**  Returns the direction of the UCS-4-encoded character specified by *ucs4.*
+    [org_name(direction)]
+    [static] direction_2(ucs4: uint) -> Char::Direction,
+    /// 
+    /// Returns information about the joining type attributes of the character
+    /// (needed for certain languages such as Arabic or Syriac).
+    /// 
+    /// **Overloads**
+    /// Returns information about the joining type attributes of the UCS-4-encoded
+    /// character specified by *ucs4*
+    /// (needed for certain languages such as Arabic or Syriac).
+    [org_name(joiningType)]
+    [static] joining_type_2(ucs4: uint) -> Char::JoiningType,
+    /// 
+    /// Returns information about the joining type attributes of the character
+    /// (needed for certain languages such as Arabic or Syriac).
+    /// 
+    /// **Overloads**
+    /// Returns information about the joining type attributes of the UCS-4-encoded
+    /// character specified by *ucs4*
+    /// (needed for certain languages such as Arabic or Syriac).
+    /// 
+    /// Returns information about the joining properties of the character
+    /// (needed for certain languages such as Arabic).
+    /// 
+    /// **Overloads**
+    /// Returns information about the joining properties of the UCS-4-encoded
+    /// character specified by *ucs4* (needed for certain languages such as Arabic).
+    [org_name(joining)]
+    [static] joining_2(ucs4: uint) -> Char::Joining,
+    /// 
+    /// Returns the combining class for the character as defined in the
+    /// Unicode standard. This is mainly useful as a positioning hint for
+    /// marks attached to a base character.
+    /// 
+    /// The Qt text rendering engine uses this information to correctly
+    /// position non-spacing marks around a base character.
+    /// 
+    /// **Overloads**  Returns the combining class for the UCS-4-encoded character specified by
+    /// *ucs4,* as defined in the Unicode standard.
+    [org_name(combiningClass)]
+    [static] combining_class_2(ucs4: uint) -> unsigned,
+    /// 
+    /// Returns the mirrored character if this character is a mirrored
+    /// character; otherwise returns the character itself.
+    /// 
+    /// **See also:** [`has_mirrored()`]
+    /// 
+    /// **Overloads**  Returns the mirrored character if the UCS-4-encoded character specified
+    /// by *ucs4* is a mirrored character; otherwise returns the character itself.
+    /// 
+    /// **See also:** [`has_mirrored()`]
+    [org_name(mirroredChar)]
+    [static] mirrored_char_2(ucs4: uint) -> uint,
+    /// 
+    /// Returns `true` if the character should be reversed if the text
+    /// direction is reversed; otherwise returns `false.`
+    /// 
+    /// A bit faster equivalent of (ch.mirroredChar() != ch).
+    /// 
+    /// **See also:** [`mirrored_char()`]
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// should be reversed if the text direction is reversed; otherwise returns `false.`
+    /// 
+    /// A bit faster equivalent of (QChar::mirroredChar(ucs4) != ucs4).
+    /// 
+    /// **See also:** [`mirrored_char()`]
+    [org_name(hasMirrored)]
+    [static] has_mirrored_2(ucs4: uint) -> bool,
+    /// 
+    /// Decomposes a character into it's constituent parts. Returns an empty string
+    /// if no decomposition exists.
+    /// 
+    /// **Overloads**  Decomposes the UCS-4-encoded character specified by *ucs4* into it's
+    /// constituent parts. Returns an empty string if no decomposition exists.
+    /// 
+    /// Returns the tag defining the composition of the character. Returns
+    /// QChar::NoDecomposition if no decomposition exists.
+    /// 
+    /// **Overloads**  Returns the tag defining the composition of the UCS-4-encoded character
+    /// specified by *ucs4.* Returns QChar::NoDecomposition if no decomposition exists.
+    [org_name(decomposition)]
+    [static] decomposition_2(ucs4: uint) -> String,
+    /// 
+    /// Returns the tag defining the composition of the character. Returns
+    /// QChar::NoDecomposition if no decomposition exists.
+    /// 
+    /// **Overloads**  Returns the tag defining the composition of the UCS-4-encoded character
+    /// specified by *ucs4.* Returns QChar::NoDecomposition if no decomposition exists.
+    [org_name(decompositionTag)]
+    [static] decomposition_tag_2(ucs4: uint) -> Char::Decomposition,
+    /// 
+    /// Returns the numeric value of the digit, or -1 if the character is not a digit.
+    /// 
+    /// **Overloads**  Returns the numeric value of the digit specified by the UCS-4-encoded
+    /// character, *ucs4,* or -1 if the character is not a digit.
+    [org_name(digitValue)]
+    [static] digit_value_2(ucs4: uint) -> i32,
+    /// 
+    /// Returns the lowercase equivalent if the character is uppercase or titlecase;
+    /// otherwise returns the character itself.
+    /// 
+    /// **Overloads**  Returns the lowercase equivalent of the UCS-4-encoded character specified
+    /// by *ucs4* if the character is uppercase or titlecase; otherwise returns
+    /// the character itself.
+    [org_name(toLower)]
+    [static] to_lower_2(ucs4: uint) -> uint,
+    /// 
+    /// Returns the uppercase equivalent if the character is lowercase or titlecase;
+    /// otherwise returns the character itself.
+    /// 
+    /// **Overloads**  Returns the uppercase equivalent of the UCS-4-encoded character specified
+    /// by *ucs4* if the character is lowercase or titlecase; otherwise returns
+    /// the character itself.
+    [org_name(toUpper)]
+    [static] to_upper_2(ucs4: uint) -> uint,
+    /// 
+    /// Returns the title case equivalent if the character is lowercase or uppercase;
+    /// otherwise returns the character itself.
+    /// 
+    /// **Overloads**  Returns the title case equivalent of the UCS-4-encoded character specified
+    /// by *ucs4* if the character is lowercase or uppercase; otherwise returns
+    /// the character itself.
+    [org_name(toTitleCase)]
+    [static] to_title_case_2(ucs4: uint) -> uint,
+    /// 
+    /// Returns the case folded equivalent of the character.
+    /// For most Unicode characters this is the same as toLower().
+    /// 
+    /// **Overloads**  Returns the case folded equivalent of the UCS-4-encoded character specified
+    /// by *ucs4.* For most Unicode characters this is the same as toLower().
+    [org_name(toCaseFolded)]
+    [static] to_case_folded_2(ucs4: uint) -> uint,
+    /// 
+    /// Returns the Unicode script property value for this character.
+    /// 
+    /// **Overloads**
+    /// Returns the Unicode script property value for the character specified in
+    /// its UCS-4-encoded form as *ucs4.*
+    [org_name(script)]
+    [static] script_2(ucs4: uint) -> Char::Script,
+    /// 
+    /// Returns the Unicode version that introduced this character.
+    /// 
+    /// **Overloads**  Returns the Unicode version that introduced the character specified in
+    /// its UCS-4-encoded form as *ucs4.*
+    [org_name(unicodeVersion)]
+    [static] unicode_version_2(ucs4: uint) -> Char::UnicodeVersion,
+    /// 
+    /// Returns the most recent supported Unicode version.
+    [static] current_unicode_version() -> Char::UnicodeVersion,
+    /// 
+    /// Returns `true` if the character is a printable character; otherwise
+    /// returns `false.` This is any character not of category Other_*.
+    /// 
+    /// Note that this gives no indication of whether the character is
+    /// available in a particular font.
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a printable character; otherwise returns `false.`
+    /// This is any character not of category Other_*.
+    /// 
+    /// Note that this gives no indication of whether the character is
+    /// available in a particular font.
+    [org_name(isPrint)]
+    [static] is_print_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the character is a separator character
+    /// (Separator_* categories or certain code points from Other_Control category);
+    /// otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a separator character (Separator_* categories or certain code points
+    /// from Other_Control category); otherwise returns `false.`
+    [org_name(isSpace)]
+    [static] is_space_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the character is a mark (Mark_* categories);
+    /// otherwise returns `false.`
+    /// 
+    /// See QChar::Category for more information regarding marks.
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a mark (Mark_* categories); otherwise returns `false.`
+    [org_name(isMark)]
+    [static] is_mark_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the character is a punctuation mark (Punctuation_*
+    /// categories); otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a punctuation mark (Punctuation_* categories); otherwise returns `false.`
+    [org_name(isPunct)]
+    [static] is_punct_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the character is a symbol (Symbol_* categories);
+    /// otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a symbol (Symbol_* categories); otherwise returns `false.`
+    [org_name(isSymbol)]
+    [static] is_symbol_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the character is a letter (Letter_* categories);
+    /// otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a letter (Letter_* categories); otherwise returns `false.`
+    /// 
+    /// Returns `true` if the character is a letter or number (Letter_* or
+    /// Number_* categories); otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a letter or number (Letter_* or Number_* categories); otherwise returns `false.`
+    [org_name(isLetter)]
+    [static] is_letter_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the character is a number (Number_* categories,
+    /// not just 0-9); otherwise returns `false.`
+    /// 
+    /// **See also:** [`is_digit()`]
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a number (Number_* categories, not just 0-9); otherwise returns `false.`
+    /// 
+    /// **See also:** [`is_digit()`]
+    [org_name(isNumber)]
+    [static] is_number_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the character is a letter or number (Letter_* or
+    /// Number_* categories); otherwise returns `false.`
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a letter or number (Letter_* or Number_* categories); otherwise returns `false.`
+    [org_name(isLetterOrNumber)]
+    [static] is_letter_or_number_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the character is a decimal digit
+    /// (Number_DecimalDigit); otherwise returns `false.`
+    /// 
+    /// **See also:** [`is_number()`]
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
+    /// a decimal digit (Number_DecimalDigit); otherwise returns `false.`
+    /// 
+    /// **See also:** [`is_number()`]
+    [org_name(isDigit)]
+    [static] is_digit_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the character is a lowercase letter, for example
+    /// category() is Letter_Lowercase.
+    /// 
+    /// **See also:** [`is_upper()`]
+    /// [`to_lower()`]
+    /// [`to_upper()`]
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// is a lowercase letter, for example category() is Letter_Lowercase.
+    /// 
+    /// **See also:** [`is_upper()`]
+    /// [`to_lower()`]
+    /// [`to_upper()`]
+    [org_name(isLower)]
+    [static] is_lower_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the character is an uppercase letter, for example
+    /// category() is Letter_Uppercase.
+    /// 
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// is an uppercase letter, for example category() is Letter_Uppercase.
+    /// 
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    [org_name(isUpper)]
+    [static] is_upper_2(ucs4: uint) -> bool,
+    /// 
+    /// Returns `true` if the character is a titlecase letter, for example
+    /// category() is Letter_Titlecase.
+    /// 
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    /// [`to_title_case()`]
+    /// 
+    /// **Overloads**
+    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
+    /// is a titlecase letter, for example category() is Letter_Titlecase.
+    /// 
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    /// [`to_title_case()`]
+    [org_name(isTitleCase)]
+    [static] is_title_case_2(ucs4: uint) -> bool,
+}
+
 [org_name(QChar)]
 enum SpecialCharacter {
     Null,
@@ -379,773 +1179,6 @@ enum UnicodeVersion {
     Unicode_8_0,
     Unicode_9_0,
     Unicode_10_0,
-}
-
-
-struct Char {
-    /// 
-    /// Returns the character's category.
-    /// 
-    /// **Overloads**  Returns the category of the UCS-4-encoded character specified by *ucs4.*
-    category() -> Char::Category,
-    /// 
-    /// Returns the character's direction.
-    /// 
-    /// **Overloads**  Returns the direction of the UCS-4-encoded character specified by *ucs4.*
-    direction() -> Char::Direction,
-    /// 
-    /// Returns information about the joining type attributes of the character
-    /// (needed for certain languages such as Arabic or Syriac).
-    /// 
-    /// **Overloads**
-    /// Returns information about the joining type attributes of the UCS-4-encoded
-    /// character specified by *ucs4*
-    /// (needed for certain languages such as Arabic or Syriac).
-    joining_type() -> Char::JoiningType,
-    /// 
-    /// Returns information about the joining type attributes of the character
-    /// (needed for certain languages such as Arabic or Syriac).
-    /// 
-    /// **Overloads**
-    /// Returns information about the joining type attributes of the UCS-4-encoded
-    /// character specified by *ucs4*
-    /// (needed for certain languages such as Arabic or Syriac).
-    /// 
-    /// Returns information about the joining properties of the character
-    /// (needed for certain languages such as Arabic).
-    /// 
-    /// **Overloads**
-    /// Returns information about the joining properties of the UCS-4-encoded
-    /// character specified by *ucs4* (needed for certain languages such as Arabic).
-    joining() -> Char::Joining,
-    /// 
-    /// Returns the combining class for the character as defined in the
-    /// Unicode standard. This is mainly useful as a positioning hint for
-    /// marks attached to a base character.
-    /// 
-    /// The Qt text rendering engine uses this information to correctly
-    /// position non-spacing marks around a base character.
-    /// 
-    /// **Overloads**  Returns the combining class for the UCS-4-encoded character specified by
-    /// *ucs4,* as defined in the Unicode standard.
-    combining_class() -> unsigned,
-    /// 
-    /// Returns the mirrored character if this character is a mirrored
-    /// character; otherwise returns the character itself.
-    /// 
-    /// **See also:** hasMirrored()
-    /// 
-    /// **Overloads**  Returns the mirrored character if the UCS-4-encoded character specified
-    /// by *ucs4* is a mirrored character; otherwise returns the character itself.
-    /// 
-    /// **See also:** hasMirrored()
-    mirrored_char() -> Char,
-    /// 
-    /// Returns `true` if the character should be reversed if the text
-    /// direction is reversed; otherwise returns `false.`
-    /// 
-    /// A bit faster equivalent of (ch.mirroredChar() != ch).
-    /// 
-    /// **See also:** mirroredChar()
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// should be reversed if the text direction is reversed; otherwise returns `false.`
-    /// 
-    /// A bit faster equivalent of (QChar::mirroredChar(ucs4) != ucs4).
-    /// 
-    /// **See also:** mirroredChar()
-    has_mirrored() -> bool,
-    /// 
-    /// Decomposes a character into it's constituent parts. Returns an empty string
-    /// if no decomposition exists.
-    /// 
-    /// **Overloads**  Decomposes the UCS-4-encoded character specified by *ucs4* into it's
-    /// constituent parts. Returns an empty string if no decomposition exists.
-    /// 
-    /// Returns the tag defining the composition of the character. Returns
-    /// QChar::NoDecomposition if no decomposition exists.
-    /// 
-    /// **Overloads**  Returns the tag defining the composition of the UCS-4-encoded character
-    /// specified by *ucs4.* Returns QChar::NoDecomposition if no decomposition exists.
-    decomposition() -> String,
-    /// 
-    /// Returns the tag defining the composition of the character. Returns
-    /// QChar::NoDecomposition if no decomposition exists.
-    /// 
-    /// **Overloads**  Returns the tag defining the composition of the UCS-4-encoded character
-    /// specified by *ucs4.* Returns QChar::NoDecomposition if no decomposition exists.
-    decomposition_tag() -> Char::Decomposition,
-    /// 
-    /// Returns the numeric value of the digit, or -1 if the character is not a digit.
-    /// 
-    /// **Overloads**  Returns the numeric value of the digit specified by the UCS-4-encoded
-    /// character, *ucs4,* or -1 if the character is not a digit.
-    digit_value() -> i32,
-    /// 
-    /// Returns the lowercase equivalent if the character is uppercase or titlecase;
-    /// otherwise returns the character itself.
-    /// 
-    /// **Overloads**  Returns the lowercase equivalent of the UCS-4-encoded character specified
-    /// by *ucs4* if the character is uppercase or titlecase; otherwise returns
-    /// the character itself.
-    to_lower() -> Char,
-    /// 
-    /// Returns the uppercase equivalent if the character is lowercase or titlecase;
-    /// otherwise returns the character itself.
-    /// 
-    /// **Overloads**  Returns the uppercase equivalent of the UCS-4-encoded character specified
-    /// by *ucs4* if the character is lowercase or titlecase; otherwise returns
-    /// the character itself.
-    to_upper() -> Char,
-    /// 
-    /// Returns the title case equivalent if the character is lowercase or uppercase;
-    /// otherwise returns the character itself.
-    /// 
-    /// **Overloads**  Returns the title case equivalent of the UCS-4-encoded character specified
-    /// by *ucs4* if the character is lowercase or uppercase; otherwise returns
-    /// the character itself.
-    to_title_case() -> Char,
-    /// 
-    /// Returns the case folded equivalent of the character.
-    /// For most Unicode characters this is the same as toLower().
-    /// 
-    /// **Overloads**  Returns the case folded equivalent of the UCS-4-encoded character specified
-    /// by *ucs4.* For most Unicode characters this is the same as toLower().
-    to_case_folded() -> Char,
-    /// 
-    /// Returns the Unicode script property value for this character.
-    /// 
-    /// **Overloads**
-    /// Returns the Unicode script property value for the character specified in
-    /// its UCS-4-encoded form as *ucs4.*
-    script() -> Char::Script,
-    /// 
-    /// Returns the Unicode version that introduced this character.
-    /// 
-    /// **Overloads**  Returns the Unicode version that introduced the character specified in
-    /// its UCS-4-encoded form as *ucs4.*
-    unicode_version() -> Char::UnicodeVersion,
-    /// 
-    /// Returns the Latin-1 character equivalent to the QChar, or 0. This
-    /// is mainly useful for non-internationalized software.
-    /// 
-    /// **Note**: It is not possible to distinguish a non-Latin-1 character from a Latin-1 0
-    /// (NUL) character. Prefer to use unicode(), which does not have this ambiguity.
-    /// 
-    /// **See also:** unicode()
-    to_latin1() -> char,
-    /// 
-    /// Returns the Unicode version that introduced this character.
-    /// 
-    /// **Overloads**  Returns the Unicode version that introduced the character specified in
-    /// its UCS-4-encoded form as *ucs4.*
-    /// 
-    /// Returns a reference to the numeric Unicode value of the QChar.
-    /// 
-    /// Returns the numeric Unicode value of the QChar.
-    unicode() -> ushort,
-    /// 
-    /// Returns the Unicode version that introduced this character.
-    /// 
-    /// **Overloads**  Returns the Unicode version that introduced the character specified in
-    /// its UCS-4-encoded form as *ucs4.*
-    /// 
-    /// Returns a reference to the numeric Unicode value of the QChar.
-    /// 
-    /// Returns the numeric Unicode value of the QChar.
-    unicode_2() -> ushort?,
-    /// 
-    /// Converts the Latin-1 character *c* to its equivalent QChar. This
-    /// is mainly useful for non-internationalized software.
-    /// 
-    /// An alternative is to use QLatin1Char.
-    /// 
-    /// **See also:** toLatin1()
-    /// unicode()
-    [static] from_latin1(c: char) -> Char,
-    /// 
-    /// Returns `true` if the character is the Unicode character 0x0000
-    /// ('\\0'); otherwise returns `false.`
-    is_null() -> bool,
-    /// 
-    /// Returns `true` if the character is a printable character; otherwise
-    /// returns `false.` This is any character not of category Other_*.
-    /// 
-    /// Note that this gives no indication of whether the character is
-    /// available in a particular font.
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a printable character; otherwise returns `false.`
-    /// This is any character not of category Other_*.
-    /// 
-    /// Note that this gives no indication of whether the character is
-    /// available in a particular font.
-    is_print() -> bool,
-    /// 
-    /// Returns `true` if the character is a separator character
-    /// (Separator_* categories or certain code points from Other_Control category);
-    /// otherwise returns `false.`
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a separator character (Separator_* categories or certain code points
-    /// from Other_Control category); otherwise returns `false.`
-    is_space() -> bool,
-    /// 
-    /// Returns `true` if the character is a mark (Mark_* categories);
-    /// otherwise returns `false.`
-    /// 
-    /// See QChar::Category for more information regarding marks.
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a mark (Mark_* categories); otherwise returns `false.`
-    is_mark() -> bool,
-    /// 
-    /// Returns `true` if the character is a punctuation mark (Punctuation_*
-    /// categories); otherwise returns `false.`
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a punctuation mark (Punctuation_* categories); otherwise returns `false.`
-    is_punct() -> bool,
-    /// 
-    /// Returns `true` if the character is a symbol (Symbol_* categories);
-    /// otherwise returns `false.`
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a symbol (Symbol_* categories); otherwise returns `false.`
-    is_symbol() -> bool,
-    /// 
-    /// Returns `true` if the character is a letter (Letter_* categories);
-    /// otherwise returns `false.`
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a letter (Letter_* categories); otherwise returns `false.`
-    /// 
-    /// Returns `true` if the character is a letter or number (Letter_* or
-    /// Number_* categories); otherwise returns `false.`
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a letter or number (Letter_* or Number_* categories); otherwise returns `false.`
-    is_letter() -> bool,
-    /// 
-    /// Returns `true` if the character is a number (Number_* categories,
-    /// not just 0-9); otherwise returns `false.`
-    /// 
-    /// **See also:** isDigit()
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a number (Number_* categories, not just 0-9); otherwise returns `false.`
-    /// 
-    /// **See also:** isDigit()
-    is_number() -> bool,
-    /// 
-    /// Returns `true` if the character is a letter or number (Letter_* or
-    /// Number_* categories); otherwise returns `false.`
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a letter or number (Letter_* or Number_* categories); otherwise returns `false.`
-    is_letter_or_number() -> bool,
-    /// 
-    /// Returns `true` if the character is a decimal digit
-    /// (Number_DecimalDigit); otherwise returns `false.`
-    /// 
-    /// **See also:** isNumber()
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a decimal digit (Number_DecimalDigit); otherwise returns `false.`
-    /// 
-    /// **See also:** isNumber()
-    is_digit() -> bool,
-    /// 
-    /// Returns `true` if the character is a lowercase letter, for example
-    /// category() is Letter_Lowercase.
-    /// 
-    /// **See also:** isUpper()
-    /// toLower()
-    /// toUpper()
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// is a lowercase letter, for example category() is Letter_Lowercase.
-    /// 
-    /// **See also:** isUpper()
-    /// toLower()
-    /// toUpper()
-    is_lower() -> bool,
-    /// 
-    /// Returns `true` if the character is an uppercase letter, for example
-    /// category() is Letter_Uppercase.
-    /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// is an uppercase letter, for example category() is Letter_Uppercase.
-    /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    is_upper() -> bool,
-    /// 
-    /// Returns `true` if the character is a titlecase letter, for example
-    /// category() is Letter_Titlecase.
-    /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    /// toTitleCase()
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// is a titlecase letter, for example category() is Letter_Titlecase.
-    /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    /// toTitleCase()
-    is_title_case() -> bool,
-    /// 
-    /// Returns `true` if the QChar is a non-character; false otherwise.
-    /// 
-    /// Unicode has a certain number of code points that are classified
-    /// as that is, they can be used for internal purposes
-    /// in applications but cannot be used for text interchange.
-    /// Those are the last two entries each Unicode Plane ([0xfffe..0xffff],
-    /// [0x1fffe..0x1ffff], etc.) as well as the entries in range [0xfdd0..0xfdef].
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// is a non-character; false otherwise.
-    /// 
-    /// Unicode has a certain number of code points that are classified
-    /// as that is, they can be used for internal purposes
-    /// in applications but cannot be used for text interchange.
-    /// Those are the last two entries each Unicode Plane ([0xfffe..0xffff],
-    /// [0x1fffe..0x1ffff], etc.) as well as the entries in range [0xfdd0..0xfdef].
-    is_non_character() -> bool,
-    /// 
-    /// Returns `true` if the QChar is the high part of a UTF16 surrogate
-    /// (for example if its code point is in range [0xd800..0xdbff]); false otherwise.
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// is the high part of a UTF16 surrogate
-    /// (for example if its code point is in range [0xd800..0xdbff]); false otherwise.
-    is_high_surrogate() -> bool,
-    /// 
-    /// Returns `true` if the QChar is the low part of a UTF16 surrogate
-    /// (for example if its code point is in range [0xdc00..0xdfff]); false otherwise.
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// is the low part of a UTF16 surrogate
-    /// (for example if its code point is in range [0xdc00..0xdfff]); false otherwise.
-    is_low_surrogate() -> bool,
-    /// 
-    /// Returns `true` if the QChar contains a code point that is in either
-    /// the high or the low part of the UTF-16 surrogate range
-    /// (for example if its code point is in range [0xd800..0xdfff]); false otherwise.
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// contains a code point that is in either the high or the low part of the
-    /// UTF-16 surrogate range (for example if its code point is in range [0xd800..0xdfff]);
-    /// false otherwise.
-    is_surrogate() -> bool,
-    /// 
-    /// Returns the cell (least significant byte) of the Unicode character.
-    /// 
-    /// **See also:** row()
-    cell() -> uchar,
-    /// 
-    /// Returns the row (most significant byte) of the Unicode character.
-    /// 
-    /// **See also:** cell()
-    row() -> uchar,
-    set_cell(acell: uchar),
-    set_row(arow: uchar),
-    /// 
-    /// Returns `true` if the QChar is a non-character; false otherwise.
-    /// 
-    /// Unicode has a certain number of code points that are classified
-    /// as that is, they can be used for internal purposes
-    /// in applications but cannot be used for text interchange.
-    /// Those are the last two entries each Unicode Plane ([0xfffe..0xffff],
-    /// [0x1fffe..0x1ffff], etc.) as well as the entries in range [0xfdd0..0xfdef].
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// is a non-character; false otherwise.
-    /// 
-    /// Unicode has a certain number of code points that are classified
-    /// as that is, they can be used for internal purposes
-    /// in applications but cannot be used for text interchange.
-    /// Those are the last two entries each Unicode Plane ([0xfffe..0xffff],
-    /// [0x1fffe..0x1ffff], etc.) as well as the entries in range [0xfdd0..0xfdef].
-    [static] is_non_character_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the QChar is the high part of a UTF16 surrogate
-    /// (for example if its code point is in range [0xd800..0xdbff]); false otherwise.
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// is the high part of a UTF16 surrogate
-    /// (for example if its code point is in range [0xd800..0xdbff]); false otherwise.
-    [static] is_high_surrogate_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the QChar is the low part of a UTF16 surrogate
-    /// (for example if its code point is in range [0xdc00..0xdfff]); false otherwise.
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// is the low part of a UTF16 surrogate
-    /// (for example if its code point is in range [0xdc00..0xdfff]); false otherwise.
-    [static] is_low_surrogate_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the QChar contains a code point that is in either
-    /// the high or the low part of the UTF-16 surrogate range
-    /// (for example if its code point is in range [0xd800..0xdfff]); false otherwise.
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// contains a code point that is in either the high or the low part of the
-    /// UTF-16 surrogate range (for example if its code point is in range [0xd800..0xdfff]);
-    /// false otherwise.
-    [static] is_surrogate_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// can be split into the high and low parts of a UTF16 surrogate
-    /// (for example if its code point is greater than or equals to 0x10000);
-    /// false otherwise.
-    [static] requires_surrogates(ucs4: uint) -> bool,
-    /// 
-    /// Converts a UTF16 surrogate pair with the given *high* and *low* values
-    /// to it's UCS-4-encoded code point.
-    /// 
-    /// **Overloads**
-    /// Converts a UTF16 surrogate pair ( *high,* *low)* to it's UCS-4-encoded code point.
-    [static] surrogate_to_ucs4(high: ushort, low: ushort) -> uint,
-    /// 
-    /// Converts a UTF16 surrogate pair with the given *high* and *low* values
-    /// to it's UCS-4-encoded code point.
-    /// 
-    /// **Overloads**
-    /// Converts a UTF16 surrogate pair ( *high,* *low)* to it's UCS-4-encoded code point.
-    [static] surrogate_to_ucs4_2(high: CharType, low: CharType) -> uint,
-    /// 
-    /// Returns the high surrogate part of a UCS-4-encoded code point.
-    /// The returned result is undefined if *ucs4* is smaller than 0x10000.
-    [static] high_surrogate(ucs4: uint) -> ushort,
-    /// 
-    /// Returns the low surrogate part of a UCS-4-encoded code point.
-    /// The returned result is undefined if *ucs4* is smaller than 0x10000.
-    [static] low_surrogate(ucs4: uint) -> ushort,
-    /// 
-    /// Returns the character's category.
-    /// 
-    /// **Overloads**  Returns the category of the UCS-4-encoded character specified by *ucs4.*
-    [static] category_2(ucs4: uint) -> Char::Category,
-    /// 
-    /// Returns the character's direction.
-    /// 
-    /// **Overloads**  Returns the direction of the UCS-4-encoded character specified by *ucs4.*
-    [static] direction_2(ucs4: uint) -> Char::Direction,
-    /// 
-    /// Returns information about the joining type attributes of the character
-    /// (needed for certain languages such as Arabic or Syriac).
-    /// 
-    /// **Overloads**
-    /// Returns information about the joining type attributes of the UCS-4-encoded
-    /// character specified by *ucs4*
-    /// (needed for certain languages such as Arabic or Syriac).
-    [static] joining_type_2(ucs4: uint) -> Char::JoiningType,
-    /// 
-    /// Returns information about the joining type attributes of the character
-    /// (needed for certain languages such as Arabic or Syriac).
-    /// 
-    /// **Overloads**
-    /// Returns information about the joining type attributes of the UCS-4-encoded
-    /// character specified by *ucs4*
-    /// (needed for certain languages such as Arabic or Syriac).
-    /// 
-    /// Returns information about the joining properties of the character
-    /// (needed for certain languages such as Arabic).
-    /// 
-    /// **Overloads**
-    /// Returns information about the joining properties of the UCS-4-encoded
-    /// character specified by *ucs4* (needed for certain languages such as Arabic).
-    [static] joining_2(ucs4: uint) -> Char::Joining,
-    /// 
-    /// Returns the combining class for the character as defined in the
-    /// Unicode standard. This is mainly useful as a positioning hint for
-    /// marks attached to a base character.
-    /// 
-    /// The Qt text rendering engine uses this information to correctly
-    /// position non-spacing marks around a base character.
-    /// 
-    /// **Overloads**  Returns the combining class for the UCS-4-encoded character specified by
-    /// *ucs4,* as defined in the Unicode standard.
-    [static] combining_class_2(ucs4: uint) -> unsigned,
-    /// 
-    /// Returns the mirrored character if this character is a mirrored
-    /// character; otherwise returns the character itself.
-    /// 
-    /// **See also:** hasMirrored()
-    /// 
-    /// **Overloads**  Returns the mirrored character if the UCS-4-encoded character specified
-    /// by *ucs4* is a mirrored character; otherwise returns the character itself.
-    /// 
-    /// **See also:** hasMirrored()
-    [static] mirrored_char_2(ucs4: uint) -> uint,
-    /// 
-    /// Returns `true` if the character should be reversed if the text
-    /// direction is reversed; otherwise returns `false.`
-    /// 
-    /// A bit faster equivalent of (ch.mirroredChar() != ch).
-    /// 
-    /// **See also:** mirroredChar()
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// should be reversed if the text direction is reversed; otherwise returns `false.`
-    /// 
-    /// A bit faster equivalent of (QChar::mirroredChar(ucs4) != ucs4).
-    /// 
-    /// **See also:** mirroredChar()
-    [static] has_mirrored_2(ucs4: uint) -> bool,
-    /// 
-    /// Decomposes a character into it's constituent parts. Returns an empty string
-    /// if no decomposition exists.
-    /// 
-    /// **Overloads**  Decomposes the UCS-4-encoded character specified by *ucs4* into it's
-    /// constituent parts. Returns an empty string if no decomposition exists.
-    /// 
-    /// Returns the tag defining the composition of the character. Returns
-    /// QChar::NoDecomposition if no decomposition exists.
-    /// 
-    /// **Overloads**  Returns the tag defining the composition of the UCS-4-encoded character
-    /// specified by *ucs4.* Returns QChar::NoDecomposition if no decomposition exists.
-    [static] decomposition_2(ucs4: uint) -> String,
-    /// 
-    /// Returns the tag defining the composition of the character. Returns
-    /// QChar::NoDecomposition if no decomposition exists.
-    /// 
-    /// **Overloads**  Returns the tag defining the composition of the UCS-4-encoded character
-    /// specified by *ucs4.* Returns QChar::NoDecomposition if no decomposition exists.
-    [static] decomposition_tag_2(ucs4: uint) -> Char::Decomposition,
-    /// 
-    /// Returns the numeric value of the digit, or -1 if the character is not a digit.
-    /// 
-    /// **Overloads**  Returns the numeric value of the digit specified by the UCS-4-encoded
-    /// character, *ucs4,* or -1 if the character is not a digit.
-    [static] digit_value_2(ucs4: uint) -> i32,
-    /// 
-    /// Returns the lowercase equivalent if the character is uppercase or titlecase;
-    /// otherwise returns the character itself.
-    /// 
-    /// **Overloads**  Returns the lowercase equivalent of the UCS-4-encoded character specified
-    /// by *ucs4* if the character is uppercase or titlecase; otherwise returns
-    /// the character itself.
-    [static] to_lower_2(ucs4: uint) -> uint,
-    /// 
-    /// Returns the uppercase equivalent if the character is lowercase or titlecase;
-    /// otherwise returns the character itself.
-    /// 
-    /// **Overloads**  Returns the uppercase equivalent of the UCS-4-encoded character specified
-    /// by *ucs4* if the character is lowercase or titlecase; otherwise returns
-    /// the character itself.
-    [static] to_upper_2(ucs4: uint) -> uint,
-    /// 
-    /// Returns the title case equivalent if the character is lowercase or uppercase;
-    /// otherwise returns the character itself.
-    /// 
-    /// **Overloads**  Returns the title case equivalent of the UCS-4-encoded character specified
-    /// by *ucs4* if the character is lowercase or uppercase; otherwise returns
-    /// the character itself.
-    [static] to_title_case_2(ucs4: uint) -> uint,
-    /// 
-    /// Returns the case folded equivalent of the character.
-    /// For most Unicode characters this is the same as toLower().
-    /// 
-    /// **Overloads**  Returns the case folded equivalent of the UCS-4-encoded character specified
-    /// by *ucs4.* For most Unicode characters this is the same as toLower().
-    [static] to_case_folded_2(ucs4: uint) -> uint,
-    /// 
-    /// Returns the Unicode script property value for this character.
-    /// 
-    /// **Overloads**
-    /// Returns the Unicode script property value for the character specified in
-    /// its UCS-4-encoded form as *ucs4.*
-    [static] script_2(ucs4: uint) -> Char::Script,
-    /// 
-    /// Returns the Unicode version that introduced this character.
-    /// 
-    /// **Overloads**  Returns the Unicode version that introduced the character specified in
-    /// its UCS-4-encoded form as *ucs4.*
-    [static] unicode_version_2(ucs4: uint) -> Char::UnicodeVersion,
-    /// 
-    /// Returns the most recent supported Unicode version.
-    [static] current_unicode_version() -> Char::UnicodeVersion,
-    /// 
-    /// Returns `true` if the character is a printable character; otherwise
-    /// returns `false.` This is any character not of category Other_*.
-    /// 
-    /// Note that this gives no indication of whether the character is
-    /// available in a particular font.
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a printable character; otherwise returns `false.`
-    /// This is any character not of category Other_*.
-    /// 
-    /// Note that this gives no indication of whether the character is
-    /// available in a particular font.
-    [static] is_print_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the character is a separator character
-    /// (Separator_* categories or certain code points from Other_Control category);
-    /// otherwise returns `false.`
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a separator character (Separator_* categories or certain code points
-    /// from Other_Control category); otherwise returns `false.`
-    [static] is_space_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the character is a mark (Mark_* categories);
-    /// otherwise returns `false.`
-    /// 
-    /// See QChar::Category for more information regarding marks.
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a mark (Mark_* categories); otherwise returns `false.`
-    [static] is_mark_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the character is a punctuation mark (Punctuation_*
-    /// categories); otherwise returns `false.`
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a punctuation mark (Punctuation_* categories); otherwise returns `false.`
-    [static] is_punct_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the character is a symbol (Symbol_* categories);
-    /// otherwise returns `false.`
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a symbol (Symbol_* categories); otherwise returns `false.`
-    [static] is_symbol_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the character is a letter (Letter_* categories);
-    /// otherwise returns `false.`
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a letter (Letter_* categories); otherwise returns `false.`
-    /// 
-    /// Returns `true` if the character is a letter or number (Letter_* or
-    /// Number_* categories); otherwise returns `false.`
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a letter or number (Letter_* or Number_* categories); otherwise returns `false.`
-    [static] is_letter_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the character is a number (Number_* categories,
-    /// not just 0-9); otherwise returns `false.`
-    /// 
-    /// **See also:** isDigit()
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a number (Number_* categories, not just 0-9); otherwise returns `false.`
-    /// 
-    /// **See also:** isDigit()
-    [static] is_number_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the character is a letter or number (Letter_* or
-    /// Number_* categories); otherwise returns `false.`
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a letter or number (Letter_* or Number_* categories); otherwise returns `false.`
-    [static] is_letter_or_number_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the character is a decimal digit
-    /// (Number_DecimalDigit); otherwise returns `false.`
-    /// 
-    /// **See also:** isNumber()
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
-    /// a decimal digit (Number_DecimalDigit); otherwise returns `false.`
-    /// 
-    /// **See also:** isNumber()
-    [static] is_digit_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the character is a lowercase letter, for example
-    /// category() is Letter_Lowercase.
-    /// 
-    /// **See also:** isUpper()
-    /// toLower()
-    /// toUpper()
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// is a lowercase letter, for example category() is Letter_Lowercase.
-    /// 
-    /// **See also:** isUpper()
-    /// toLower()
-    /// toUpper()
-    [static] is_lower_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the character is an uppercase letter, for example
-    /// category() is Letter_Uppercase.
-    /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// is an uppercase letter, for example category() is Letter_Uppercase.
-    /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    [static] is_upper_2(ucs4: uint) -> bool,
-    /// 
-    /// Returns `true` if the character is a titlecase letter, for example
-    /// category() is Letter_Titlecase.
-    /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    /// toTitleCase()
-    /// 
-    /// **Overloads**
-    /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
-    /// is a titlecase letter, for example category() is Letter_Titlecase.
-    /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    /// toTitleCase()
-    [static] is_title_case_2(ucs4: uint) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

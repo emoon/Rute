@@ -253,68 +253,12 @@
 /// To test whether a page has been visited or not, call
 /// hasVisitedPage(). For example:
 /// 
-/// **See also:** QWizardPage
+/// **See also:** [`WizardPage`]
 /// {Class Wizard Example}
 /// {License Wizard Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QWizard)]
-enum WizardButton {
-    BackButton,
-    NextButton,
-    CommitButton,
-    FinishButton,
-    CancelButton,
-    HelpButton,
-    CustomButton1,
-    CustomButton2,
-    CustomButton3,
-    Stretch,
-    NoButton,
-    NStandardButtons,
-    NButtons,
-}
-
-[org_name(QWizard)]
-enum WizardPixmap {
-    WatermarkPixmap,
-    LogoPixmap,
-    BannerPixmap,
-    BackgroundPixmap,
-    NPixmaps,
-}
-
-[org_name(QWizard)]
-enum WizardStyle {
-    ClassicStyle,
-    ModernStyle,
-    MacStyle,
-    AeroStyle,
-    NStyles,
-}
-
-[org_name(QWizard)]
-enum WizardOption {
-    IndependentPages,
-    IgnoreSubTitles,
-    ExtendedWatermarkPixmap,
-    NoDefaultButton,
-    NoBackButtonOnStartPage,
-    NoBackButtonOnLastPage,
-    DisabledBackButtonOnLastPage,
-    HaveNextButtonOnLastPage,
-    HaveFinishButtonOnEarlyPages,
-    NoCancelButton,
-    CancelButtonOnLeft,
-    HaveHelpButton,
-    HelpButtonOnRight,
-    HaveCustomButton1,
-    HaveCustomButton2,
-    HaveCustomButton3,
-    NoCancelButtonOnLastPage,
-}
-
 struct Wizard : Dialog {
     /// 
     /// Adds the given *page* to the wizard, and returns the page's ID.
@@ -322,9 +266,9 @@ struct Wizard : Dialog {
     /// The ID is guaranteed to be larger than any other ID in the
     /// QWizard so far.
     /// 
-    /// **See also:** setPage()
-    /// page()
-    /// pageAdded()
+    /// **See also:** [`set_page()`]
+    /// [`page()`]
+    /// [`page_added()`]
     add_page(page: *WizardPageType) -> i32,
     /// 
     /// Adds the given *page* to the wizard with the given *id.*
@@ -332,41 +276,41 @@ struct Wizard : Dialog {
     /// **Note**: Adding a page may influence the value of the startId property
     /// in case it was not set explicitly.
     /// 
-    /// **See also:** addPage()
-    /// page()
-    /// pageAdded()
+    /// **See also:** [`add_page()`]
+    /// [`page()`]
+    /// [`page_added()`]
     set_page(id: i32, page: *WizardPageType),
     /// 
     /// Removes the page with the given *id.* cleanupPage() will be called if necessary.
     /// 
     /// **Note**: Removing a page may influence the value of the startId property.
     /// 
-    /// **See also:** addPage()
-    /// setPage()
-    /// pageRemoved()
-    /// startId()
+    /// **See also:** [`add_page()`]
+    /// [`set_page()`]
+    /// [`page_removed()`]
+    /// [`start_id()`]
     remove_page(id: i32),
     /// 
     /// Returns the page with the given *id,* or 0 if there is no such
     /// page.
     /// 
-    /// **See also:** addPage()
-    /// setPage()
+    /// **See also:** [`add_page()`]
+    /// [`set_page()`]
     /// 
     /// Returns the list of page IDs.
     /// 
     /// This signal is emitted whenever a page is added to the
     /// wizard. The page's *id* is passed as parameter.
     /// 
-    /// **See also:** addPage()
-    /// setPage()
-    /// startId()
+    /// **See also:** [`add_page()`]
+    /// [`set_page()`]
+    /// [`start_id()`]
     /// 
     /// This signal is emitted whenever a page is removed from the
     /// wizard. The page's *id* is passed as parameter.
     /// 
-    /// **See also:** removePage()
-    /// startId()
+    /// **See also:** [`remove_page()`]
+    /// [`start_id()`]
     page(id: i32) -> WizardPage?,
     /// 
     /// Returns `true` if the page history contains page *id;* otherwise,
@@ -374,7 +318,7 @@ struct Wizard : Dialog {
     /// 
     /// Pressing **Back** marks the current page as again.
     /// 
-    /// **See also:** visitedPages()
+    /// **See also:** [`visited_pages()`]
     has_visited_page(id: i32) -> bool,
     /// 
     /// Returns the list of IDs of visited pages, in the order in which the pages
@@ -382,7 +326,7 @@ struct Wizard : Dialog {
     /// 
     /// Pressing **Back** marks the current page as again.
     /// 
-    /// **See also:** hasVisitedPage()
+    /// **See also:** [`has_visited_page()`]
     visited_pages() -> [i32],
     /// 
     /// Returns the list of page IDs.
@@ -393,8 +337,8 @@ struct Wizard : Dialog {
     /// the lowest page ID in this wizard, or -1 if no page has been
     /// inserted yet.
     /// 
-    /// **See also:** restart()
-    /// nextId()
+    /// **See also:** [`restart()`]
+    /// [`next_id()`]
     start_id() -> i32,
     /// 
     /// Returns a pointer to the current page, or 0 if there is no current
@@ -402,9 +346,9 @@ struct Wizard : Dialog {
     /// 
     /// This is equivalent to calling page(currentId()).
     /// 
-    /// **See also:** page()
-    /// currentId()
-    /// restart()
+    /// **See also:** [`page()`]
+    /// [`current_id()`]
+    /// [`restart()`]
     current_page() -> WizardPage?,
     /// 
     /// This property cannot be set directly. To change the current page,
@@ -413,13 +357,13 @@ struct Wizard : Dialog {
     /// By default, this property has a value of -1, indicating that no page is
     /// currently shown.
     /// 
-    /// **See also:** currentPage()
+    /// **See also:** [`current_page()`]
     /// 
     /// This signal is emitted when the current page changes, with the new
     /// current *id.*
     /// 
-    /// **See also:** currentId()
-    /// currentPage()
+    /// **See also:** [`current_id()`]
+    /// [`current_page()`]
     current_id() -> i32,
     /// 
     /// This virtual function is called by QWizard when the user clicks
@@ -435,8 +379,8 @@ struct Wizard : Dialog {
     /// by reimplementing QWizardPage::isComplete()) than to reimplement
     /// validateCurrentPage().
     /// 
-    /// **See also:** QWizardPage::validatePage()
-    /// currentPage()
+    /// **See also:** [`WizardPage::validate_page`]
+    /// [`current_page()`]
     [event] validate_current_page() -> bool,
     /// 
     /// This virtual function is called by QWizard to find out which page
@@ -450,26 +394,26 @@ struct Wizard : Dialog {
     /// By reimplementing this function, you can specify a dynamic page
     /// order.
     /// 
-    /// **See also:** QWizardPage::nextId()
-    /// currentPage()
+    /// **See also:** [`WizardPage::next_id`]
+    /// [`current_page()`]
     [event] next_id() -> i32,
     /// 
     /// Sets the value of the field called *name* to *value.*
     /// 
     /// This function can be used to set fields on any page of the wizard.
     /// 
-    /// **See also:** QWizardPage::registerField()
-    /// QWizardPage::setField()
-    /// field()
+    /// **See also:** [`WizardPage::register_field`]
+    /// [`WizardPage::set_field`]
+    /// [`field()`]
     set_field(name: String, value: &VariantType),
     /// 
     /// Returns the value of the field called *name.*
     /// 
     /// This function can be used to access fields on any page of the wizard.
     /// 
-    /// **See also:** QWizardPage::registerField()
-    /// QWizardPage::field()
-    /// setField()
+    /// **See also:** [`WizardPage::register_field`]
+    /// [`WizardPage::field`]
+    /// [`set_field()`]
     field(name: String) -> Variant,
     set_wizard_style(style: Wizard::WizardStyle),
     /// 
@@ -487,16 +431,16 @@ struct Wizard : Dialog {
     /// otherwise, clears the given *option.*
     /// 
     /// **See also:** options
-    /// testOption()
-    /// setWizardStyle()
+    /// [`test_option()`]
+    /// [`set_wizard_style()`]
     set_option(option: Wizard::WizardOption, on: bool),
     /// 
     /// Returns `true` if the given *option* is enabled; otherwise, returns
     /// false.
     /// 
     /// **See also:** options
-    /// setOption()
-    /// setWizardStyle()
+    /// [`set_option()`]
+    /// [`set_wizard_style()`]
     test_option(option: Wizard::WizardOption) -> bool,
     set_options(options: Wizard::WizardOptions),
     /// 
@@ -522,11 +466,11 @@ struct Wizard : Dialog {
     /// 
     /// Button texts may also be set on a per-page basis using QWizardPage::setButtonText().
     /// 
-    /// **See also:** setButton()
-    /// button()
-    /// setButtonLayout()
-    /// setOptions()
-    /// QWizardPage::setButtonText()
+    /// **See also:** [`set_button()`]
+    /// [`button()`]
+    /// [`set_button_layout()`]
+    /// [`set_options()`]
+    /// [`WizardPage::set_button_text`]
     set_button_text(which: Wizard::WizardButton, text: String),
     /// 
     /// Returns the text on button *which.*
@@ -536,11 +480,11 @@ struct Wizard : Dialog {
     /// By default, the text on buttons depends on the wizardStyle. For
     /// example, on MacOS , the **Next** button is called **Continue.**
     /// 
-    /// **See also:** button()
-    /// setButton()
-    /// setButtonText()
-    /// QWizardPage::buttonText()
-    /// QWizardPage::setButtonText()
+    /// **See also:** [`button()`]
+    /// [`set_button()`]
+    /// [`set_button_text()`]
+    /// [`WizardPage::button_text`]
+    /// [`WizardPage::set_button_text`]
     button_text(which: Wizard::WizardButton) -> String,
     /// 
     /// Sets the order in which buttons are displayed to *layout,* where
@@ -556,9 +500,9 @@ struct Wizard : Dialog {
     /// 
     /// Example:
     /// 
-    /// **See also:** setButton()
-    /// setButtonText()
-    /// setOptions()
+    /// **See also:** [`set_button()`]
+    /// [`set_button_text()`]
+    /// [`set_options()`]
     set_button_layout(layout: onst QList<QWizard::WizardButton> &),
     /// 
     /// Sets the text on button *which* to be *text.*
@@ -574,11 +518,11 @@ struct Wizard : Dialog {
     /// 
     /// Button texts may also be set on a per-page basis using QWizardPage::setButtonText().
     /// 
-    /// **See also:** setButton()
-    /// button()
-    /// setButtonLayout()
-    /// setOptions()
-    /// QWizardPage::setButtonText()
+    /// **See also:** [`set_button()`]
+    /// [`button()`]
+    /// [`set_button_layout()`]
+    /// [`set_options()`]
+    /// [`WizardPage::set_button_text`]
     /// 
     /// Sets the order in which buttons are displayed to *layout,* where
     /// *layout* is a list of [WizardButton](WizardButton)
@@ -593,9 +537,9 @@ struct Wizard : Dialog {
     /// 
     /// Example:
     /// 
-    /// **See also:** setButton()
-    /// setButtonText()
-    /// setOptions()
+    /// **See also:** [`set_button()`]
+    /// [`set_button_text()`]
+    /// [`set_options()`]
     /// 
     /// Sets the button corresponding to role *which* to *button.*
     /// 
@@ -604,8 +548,8 @@ struct Wizard : Dialog {
     /// CustomButton3, and make the buttons visible using the
     /// HaveCustomButton1 to HaveCustomButton3 options.
     /// 
-    /// **See also:** setButtonText()
-    /// setButtonLayout()
+    /// **See also:** [`set_button_text()`]
+    /// [`set_button_layout()`]
     /// options
     set_button(which: Wizard::WizardButton, button: *AbstractButtonType),
     /// 
@@ -616,29 +560,29 @@ struct Wizard : Dialog {
     /// By default, the text on buttons depends on the wizardStyle. For
     /// example, on MacOS , the **Next** button is called **Continue.**
     /// 
-    /// **See also:** button()
-    /// setButton()
-    /// setButtonText()
-    /// QWizardPage::buttonText()
-    /// QWizardPage::setButtonText()
+    /// **See also:** [`button()`]
+    /// [`set_button()`]
+    /// [`set_button_text()`]
+    /// [`WizardPage::button_text`]
+    /// [`WizardPage::set_button_text`]
     /// 
     /// Returns the button corresponding to role *which.*
     /// 
-    /// **See also:** setButton()
-    /// setButtonText()
+    /// **See also:** [`set_button()`]
+    /// [`set_button_text()`]
     button(which: Wizard::WizardButton) -> AbstractButton?,
     set_title_format(format: Rute::TextFormat),
     /// 
     /// The default format is Qt::AutoText.
     /// 
-    /// **See also:** QWizardPage::title
+    /// **See also:** [`WizardPage::title()`]
     /// subTitleFormat
     title_format() -> Rute::TextFormat,
     set_sub_title_format(format: Rute::TextFormat),
     /// 
     /// The default format is Qt::AutoText.
     /// 
-    /// **See also:** QWizardPage::title
+    /// **See also:** [`WizardPage::title()`]
     /// titleFormat
     sub_title_format() -> Rute::TextFormat,
     /// 
@@ -651,7 +595,7 @@ struct Wizard : Dialog {
     /// Pixmaps can also be set for a specific page using
     /// QWizardPage::setPixmap().
     /// 
-    /// **See also:** QWizardPage::setPixmap()
+    /// **See also:** [`WizardPage::set_pixmap`]
     /// {Elements of a Wizard Page}
     set_pixmap(which: Wizard::WizardPixmap, pixmap: &PixmapType),
     /// 
@@ -660,7 +604,7 @@ struct Wizard : Dialog {
     /// By default, the only pixmap that is set is the BackgroundPixmap on
     /// MacOS .
     /// 
-    /// **See also:** QWizardPage::pixmap()
+    /// **See also:** [`WizardPage::pixmap`]
     /// {Elements of a Wizard Page}
     pixmap(which: Wizard::WizardPixmap) -> Pixmap,
     /// 
@@ -739,7 +683,7 @@ struct Wizard : Dialog {
     /// 
     /// * [valueChanged()](QSpinBox::)
     /// 
-    /// **See also:** QWizardPage::registerField()
+    /// **See also:** [`WizardPage::register_field`]
     set_default_property(class_name: *char, property: *char, changed_signal: *char),
     /// 
     [event] set_visible(visible: bool),
@@ -749,8 +693,8 @@ struct Wizard : Dialog {
     /// This signal is emitted when the current page changes, with the new
     /// current *id.*
     /// 
-    /// **See also:** currentId()
-    /// currentPage()
+    /// **See also:** [`current_id()`]
+    /// [`current_page()`]
     [signal] current_id_changed(id: i32),
     /// 
     /// This signal is emitted when the user clicks the **Help** button.
@@ -762,7 +706,7 @@ struct Wizard : Dialog {
     /// 
     /// ...
     /// 
-    /// **See also:** customButtonClicked()
+    /// **See also:** [`custom_button_clicked()`]
     [signal] help_requested(),
     /// 
     /// This signal is emitted when the user clicks a custom button. *which* can be CustomButton1, CustomButton2, or CustomButton3.
@@ -771,43 +715,43 @@ struct Wizard : Dialog {
     /// HaveCustomButton1, HaveCustomButton2, or HaveCustomButton3 to have
     /// one, and use setButtonText() or setButton() to configure it.
     /// 
-    /// **See also:** helpRequested()
+    /// **See also:** [`help_requested()`]
     [signal] custom_button_clicked(which: i32),
     /// 
     /// This signal is emitted whenever a page is added to the
     /// wizard. The page's *id* is passed as parameter.
     /// 
-    /// **See also:** addPage()
-    /// setPage()
-    /// startId()
+    /// **See also:** [`add_page()`]
+    /// [`set_page()`]
+    /// [`start_id()`]
     [signal] page_added(id: i32),
     /// 
     /// This signal is emitted whenever a page is removed from the
     /// wizard. The page's *id* is passed as parameter.
     /// 
-    /// **See also:** removePage()
-    /// startId()
+    /// **See also:** [`remove_page()`]
+    /// [`start_id()`]
     [signal] page_removed(id: i32),
     /// 
     /// Goes back to the previous page.
     /// 
     /// This is equivalent to pressing the **Back** button.
     /// 
-    /// **See also:** next()
-    /// accept()
-    /// reject()
-    /// restart()
+    /// **See also:** [`next()`]
+    /// [`accept()`]
+    /// [`reject()`]
+    /// [`restart()`]
     back(),
     /// 
     /// Advances to the next page.
     /// 
     /// This is equivalent to pressing the **Next** or **Commit** button.
     /// 
-    /// **See also:** nextId()
-    /// back()
-    /// accept()
-    /// reject()
-    /// restart()
+    /// **See also:** [`next_id()`]
+    /// [`back()`]
+    /// [`accept()`]
+    /// [`reject()`]
+    /// [`restart()`]
     /// 
     /// This virtual function is called by QWizard to find out which page
     /// to show when the user clicks the **Next** button.
@@ -820,14 +764,14 @@ struct Wizard : Dialog {
     /// By reimplementing this function, you can specify a dynamic page
     /// order.
     /// 
-    /// **See also:** QWizardPage::nextId()
-    /// currentPage()
+    /// **See also:** [`WizardPage::next_id`]
+    /// [`current_page()`]
     next(),
     /// 
     /// Restarts the wizard at the start page. This function is called automatically when the
     /// wizard is shown.
     /// 
-    /// **See also:** startId()
+    /// **See also:** [`start_id()`]
     restart(),
     /// 
     [event] event(event: *EventType) -> bool,
@@ -851,8 +795,8 @@ struct Wizard : Dialog {
     /// The default implementation calls QWizardPage::initializePage() on
     /// page( *id).*
     /// 
-    /// **See also:** QWizardPage::initializePage()
-    /// cleanupPage()
+    /// **See also:** [`WizardPage::initialize_page`]
+    /// [`cleanup_page()`]
     [event] initialize_page(id: i32),
     /// 
     /// This virtual function is called by QWizard to clean up page *id* just before the
@@ -862,9 +806,65 @@ struct Wizard : Dialog {
     /// The default implementation calls QWizardPage::cleanupPage() on
     /// page( *id).*
     /// 
-    /// **See also:** QWizardPage::cleanupPage()
-    /// initializePage()
+    /// **See also:** [`WizardPage::cleanup_page`]
+    /// [`initialize_page()`]
     [event] cleanup_page(id: i32),
+}
+
+[org_name(QWizard)]
+enum WizardButton {
+    BackButton,
+    NextButton,
+    CommitButton,
+    FinishButton,
+    CancelButton,
+    HelpButton,
+    CustomButton1,
+    CustomButton2,
+    CustomButton3,
+    Stretch,
+    NoButton,
+    NStandardButtons,
+    NButtons,
+}
+
+[org_name(QWizard)]
+enum WizardPixmap {
+    WatermarkPixmap,
+    LogoPixmap,
+    BannerPixmap,
+    BackgroundPixmap,
+    NPixmaps,
+}
+
+[org_name(QWizard)]
+enum WizardStyle {
+    ClassicStyle,
+    ModernStyle,
+    MacStyle,
+    AeroStyle,
+    NStyles,
+}
+
+[org_name(QWizard)]
+enum WizardOption {
+    IndependentPages,
+    IgnoreSubTitles,
+    ExtendedWatermarkPixmap,
+    NoDefaultButton,
+    NoBackButtonOnStartPage,
+    NoBackButtonOnLastPage,
+    DisabledBackButtonOnLastPage,
+    HaveNextButtonOnLastPage,
+    HaveFinishButtonOnEarlyPages,
+    NoCancelButton,
+    CancelButtonOnLeft,
+    HaveHelpButton,
+    HelpButtonOnRight,
+    HaveCustomButton1,
+    HaveCustomButton2,
+    HaveCustomButton3,
+    NoCancelButtonOnLastPage,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

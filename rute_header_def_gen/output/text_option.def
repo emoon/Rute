@@ -4,12 +4,131 @@
 /// word wrapping, and other standard properties associated with text rendering
 /// and layout.
 /// 
-/// **See also:** QTextEdit
-/// QTextDocument
-/// QTextCursor
+/// **See also:** [`TextEdit`]
+/// [`TextDocument`]
+/// [`TextCursor`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct TextOption {
+    /// 
+    /// Sets the option's text alignment to the specified *alignment.*
+    /// 
+    /// **See also:** [`alignment()`]
+    set_alignment(alignment: Rute::Alignment),
+    /// 
+    /// Returns the text alignment defined by the option.
+    /// 
+    /// **See also:** [`set_alignment()`]
+    alignment() -> Rute::Alignment,
+    /// 
+    /// Sets the direction of the text layout defined by the option to the
+    /// given *direction.*
+    /// 
+    /// **See also:** [`text_direction()`]
+    set_text_direction(a_direction: Rute::LayoutDirection),
+    /// 
+    /// Returns the direction of the text layout defined by the option.
+    /// 
+    /// **See also:** [`set_text_direction()`]
+    text_direction() -> Rute::LayoutDirection,
+    /// 
+    /// Sets the option's text wrap mode to the given *mode.*
+    set_wrap_mode(wrap: TextOption::WrapMode),
+    /// 
+    /// Returns the text wrap mode defined by the option.
+    /// 
+    /// **See also:** [`set_wrap_mode()`]
+    wrap_mode() -> TextOption::WrapMode,
+    /// 
+    /// Sets the flags associated with the option to the given *flags.*
+    /// 
+    /// **See also:** [`flags()`]
+    set_flags(flags: TextOption::Flags),
+    /// 
+    /// Returns the flags associated with the option.
+    /// 
+    /// **See also:** [`set_flags()`]
+    flags() -> TextOption::Flags,
+    /// 
+    /// Sets the default distance in device units between tab stops to the value specified
+    /// by *tabStop.*
+    /// 
+    /// **See also:** [`tab_stop_distance()`]
+    /// [`set_tab_array()`]
+    /// [`set_tabs()`]
+    /// [`tabs()`]
+    /// 
+    /// Sets the default distance in device units between tab stops to the value specified
+    /// by *tabStopDistance.*
+    /// 
+    /// **See also:** [`tab_stop_distance()`]
+    /// [`set_tab_array()`]
+    /// [`set_tabs()`]
+    /// [`tabs()`]
+    set_tab_stop(tab_stop: f32),
+    /// 
+    /// Returns the distance in device units between tab stops.
+    /// Convenient function for the above method
+    /// 
+    /// **See also:** [`set_tab_stop_distance()`]
+    /// [`tab_array()`]
+    /// [`set_tabs()`]
+    /// [`tabs()`]
+    /// 
+    /// Returns the distance in device units between tab stops.
+    /// 
+    /// **See also:** [`set_tab_stop_distance()`]
+    /// [`tab_array()`]
+    /// [`set_tabs()`]
+    /// [`tabs()`]
+    tab_stop() -> f32,
+    /// 
+    /// Sets the default distance in device units between tab stops to the value specified
+    /// by *tabStopDistance.*
+    /// 
+    /// **See also:** [`tab_stop_distance()`]
+    /// [`set_tab_array()`]
+    /// [`set_tabs()`]
+    /// [`tabs()`]
+    set_tab_stop_distance(tab_stop_distance: f32),
+    /// 
+    /// Returns the distance in device units between tab stops.
+    /// 
+    /// **See also:** [`set_tab_stop_distance()`]
+    /// [`tab_array()`]
+    /// [`set_tabs()`]
+    /// [`tabs()`]
+    tab_stop_distance() -> f32,
+    /// 
+    /// Sets the tab positions for the text layout to those specified by
+    /// *tabStops.*
+    /// 
+    /// **See also:** [`tab_array()`]
+    /// [`set_tab_stop_distance()`]
+    /// [`set_tabs()`]
+    set_tab_array(tab_stops: [f32]),
+    /// 
+    /// Returns a list of tab positions defined for the text layout.
+    /// 
+    /// **See also:** [`set_tab_array()`]
+    /// [`tab_stop()`]
+    tab_array() -> [f32],
+    /// 
+    /// Sets the tab positions for the text layout to those specified by
+    /// *tabStops.*
+    /// 
+    /// **See also:** [`tab_stop()`]
+    set_tabs(tab_stops: onst QList<QTextOption::Tab> &),
+    /// 
+    /// Returns a list of tab positions defined for the text layout.
+    /// 
+    /// **See also:** [`tab_stop_distance()`]
+    /// [`set_tabs()`]
+    /// [`set_tab_stop()`]
+    tabs() -> List<QTextOption::Tab>,
+}
+
 [org_name(QTextOption)]
 enum TabType {
     LeftTab,
@@ -35,126 +154,6 @@ enum Flag {
     SuppressColors,
     ShowDocumentTerminator,
     IncludeTrailingSpaces,
-}
-
-
-struct TextOption {
-    /// 
-    /// Sets the option's text alignment to the specified *alignment.*
-    /// 
-    /// **See also:** alignment()
-    set_alignment(alignment: Rute::Alignment),
-    /// 
-    /// Returns the text alignment defined by the option.
-    /// 
-    /// **See also:** setAlignment()
-    alignment() -> Rute::Alignment,
-    /// 
-    /// Sets the direction of the text layout defined by the option to the
-    /// given *direction.*
-    /// 
-    /// **See also:** textDirection()
-    set_text_direction(a_direction: Rute::LayoutDirection),
-    /// 
-    /// Returns the direction of the text layout defined by the option.
-    /// 
-    /// **See also:** setTextDirection()
-    text_direction() -> Rute::LayoutDirection,
-    /// 
-    /// Sets the option's text wrap mode to the given *mode.*
-    set_wrap_mode(wrap: TextOption::WrapMode),
-    /// 
-    /// Returns the text wrap mode defined by the option.
-    /// 
-    /// **See also:** setWrapMode()
-    wrap_mode() -> TextOption::WrapMode,
-    /// 
-    /// Sets the flags associated with the option to the given *flags.*
-    /// 
-    /// **See also:** flags()
-    set_flags(flags: TextOption::Flags),
-    /// 
-    /// Returns the flags associated with the option.
-    /// 
-    /// **See also:** setFlags()
-    flags() -> TextOption::Flags,
-    /// 
-    /// Sets the default distance in device units between tab stops to the value specified
-    /// by *tabStop.*
-    /// 
-    /// **See also:** tabStopDistance()
-    /// setTabArray()
-    /// setTabs()
-    /// tabs()
-    /// 
-    /// Sets the default distance in device units between tab stops to the value specified
-    /// by *tabStopDistance.*
-    /// 
-    /// **See also:** tabStopDistance()
-    /// setTabArray()
-    /// setTabs()
-    /// tabs()
-    set_tab_stop(tab_stop: f32),
-    /// 
-    /// Returns the distance in device units between tab stops.
-    /// Convenient function for the above method
-    /// 
-    /// **See also:** setTabStopDistance()
-    /// tabArray()
-    /// setTabs()
-    /// tabs()
-    /// 
-    /// Returns the distance in device units between tab stops.
-    /// 
-    /// **See also:** setTabStopDistance()
-    /// tabArray()
-    /// setTabs()
-    /// tabs()
-    tab_stop() -> f32,
-    /// 
-    /// Sets the default distance in device units between tab stops to the value specified
-    /// by *tabStopDistance.*
-    /// 
-    /// **See also:** tabStopDistance()
-    /// setTabArray()
-    /// setTabs()
-    /// tabs()
-    set_tab_stop_distance(tab_stop_distance: f32),
-    /// 
-    /// Returns the distance in device units between tab stops.
-    /// 
-    /// **See also:** setTabStopDistance()
-    /// tabArray()
-    /// setTabs()
-    /// tabs()
-    tab_stop_distance() -> f32,
-    /// 
-    /// Sets the tab positions for the text layout to those specified by
-    /// *tabStops.*
-    /// 
-    /// **See also:** tabArray()
-    /// setTabStopDistance()
-    /// setTabs()
-    set_tab_array(tab_stops: [f32]),
-    /// 
-    /// Returns a list of tab positions defined for the text layout.
-    /// 
-    /// **See also:** setTabArray()
-    /// tabStop()
-    tab_array() -> [f32],
-    /// 
-    /// Sets the tab positions for the text layout to those specified by
-    /// *tabStops.*
-    /// 
-    /// **See also:** tabStop()
-    set_tabs(tab_stops: onst QList<QTextOption::Tab> &),
-    /// 
-    /// Returns a list of tab positions defined for the text layout.
-    /// 
-    /// **See also:** tabStopDistance()
-    /// setTabs()
-    /// setTabStop()
-    tabs() -> List<QTextOption::Tab>,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

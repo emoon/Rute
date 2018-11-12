@@ -65,34 +65,15 @@
 /// [setSelectionMode()](QAbstractItemView::)
 /// 
 /// 
-/// **See also:** QLineEdit
-/// QSpinBox
-/// QRadioButton
-/// QButtonGroup
+/// **See also:** [`LineEdit`]
+/// [`SpinBox`]
+/// [`RadioButton`]
+/// [`ButtonGroup`]
 /// {fowler}{GUI Design Handbook: Combo Box
 /// Drop-Down List Box}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QComboBox)]
-enum InsertPolicy {
-    NoInsert,
-    InsertAtTop,
-    InsertAtCurrent,
-    InsertAtBottom,
-    InsertAfterCurrent,
-    InsertBeforeCurrent,
-    InsertAlphabetically,
-}
-
-[org_name(QComboBox)]
-enum SizeAdjustPolicy {
-    AdjustToContents,
-    AdjustToContentsOnFirstShow,
-    AdjustToMinimumContentsLength,
-    AdjustToMinimumContentsLengthWithIcon,
-}
-
 struct ComboBox : Widget {
     /// 
     /// By default, this property has a value of 10.
@@ -244,7 +225,7 @@ struct ComboBox : Widget {
     /// 
     /// Returns the item delegate used by the popup list view.
     /// 
-    /// **See also:** setItemDelegate()
+    /// **See also:** [`set_item_delegate()`]
     item_delegate() -> AbstractItemDelegate?,
     /// 
     /// Sets the item *delegate* for the popup list view.
@@ -257,7 +238,7 @@ struct ComboBox : Widget {
     /// signal, and attempt to access, modify or
     /// close an editor that has already been closed.
     /// 
-    /// **See also:** itemDelegate()
+    /// **See also:** [`item_delegate()`]
     set_item_delegate(delegate: *AbstractItemDelegateType),
     /// 
     /// Returns the model used by the combobox.
@@ -272,17 +253,17 @@ struct ComboBox : Widget {
     /// Sets the model to be *model.* *model* must not be 0.
     /// If you want to clear the contents of a model, call clear().
     /// 
-    /// **See also:** clear()
+    /// **See also:** [`clear()`]
     set_model(model: *AbstractItemModelType),
     /// 
     /// Returns the root model item index for the items in the combobox.
     /// 
-    /// **See also:** setRootModelIndex()
+    /// **See also:** [`set_root_model_index()`]
     root_model_index() -> ModelIndex,
     /// 
     /// Sets the root model item *index* for the items in the combobox.
     /// 
-    /// **See also:** rootModelIndex()
+    /// **See also:** [`root_model_index()`]
     set_root_model_index(index: &ModelIndexType),
     /// 
     /// If set prior to populating the combo box, the pop-up view will
@@ -320,7 +301,7 @@ struct ComboBox : Widget {
     /// corresponding index.
     /// 
     /// **See also:** editable
-    /// setEditText()
+    /// [`set_edit_text()`]
     current_text() -> String,
     /// 
     /// By default, for an empty combo box or a combo box in which no current
@@ -363,6 +344,7 @@ struct ComboBox : Widget {
     /// 
     /// Adds each of the strings in the given *texts* to the combobox. Each item
     /// is appended to the list of existing items in turn.
+    [org_name(addItem)]
     add_item_2(icon: &IconType, text: String, user_data: &VariantType),
     /// 
     /// Adds each of the strings in the given *texts* to the combobox. Each item
@@ -377,7 +359,7 @@ struct ComboBox : Widget {
     /// index is zero or negative, the new item is prepended to the list
     /// of existing items.
     /// 
-    /// **See also:** insertItems()
+    /// **See also:** [`insert_items()`]
     /// 
     /// Inserts the *icon,* *text* and *userData* (stored in the
     /// Qt::UserRole) into the combobox at the given *index.*
@@ -387,7 +369,7 @@ struct ComboBox : Widget {
     /// index is zero or negative, the new item is prepended to the list
     /// of existing items.
     /// 
-    /// **See also:** insertItems()
+    /// **See also:** [`insert_items()`]
     /// 
     /// Inserts the strings from the *list* into the combobox as separate items,
     /// starting at the *index* specified.
@@ -396,7 +378,7 @@ struct ComboBox : Widget {
     /// are appended to the list of existing items. If the index is zero or negative, the
     /// new items are prepended to the list of existing items.
     /// 
-    /// **See also:** insertItem()
+    /// **See also:** [`insert_item()`]
     insert_item(index: i32, text: String, user_data: &VariantType),
     /// 
     /// Inserts the *text* and *userData* (stored in the Qt::UserRole)
@@ -407,7 +389,7 @@ struct ComboBox : Widget {
     /// index is zero or negative, the new item is prepended to the list
     /// of existing items.
     /// 
-    /// **See also:** insertItems()
+    /// **See also:** [`insert_items()`]
     /// 
     /// Inserts the *icon,* *text* and *userData* (stored in the
     /// Qt::UserRole) into the combobox at the given *index.*
@@ -417,7 +399,7 @@ struct ComboBox : Widget {
     /// index is zero or negative, the new item is prepended to the list
     /// of existing items.
     /// 
-    /// **See also:** insertItems()
+    /// **See also:** [`insert_items()`]
     /// 
     /// Inserts the strings from the *list* into the combobox as separate items,
     /// starting at the *index* specified.
@@ -426,7 +408,8 @@ struct ComboBox : Widget {
     /// are appended to the list of existing items. If the index is zero or negative, the
     /// new items are prepended to the list of existing items.
     /// 
-    /// **See also:** insertItem()
+    /// **See also:** [`insert_item()`]
+    [org_name(insertItem)]
     insert_item_2(index: i32, icon: &IconType, text: String, user_data: &VariantType),
     /// 
     /// Inserts the strings from the *list* into the combobox as separate items,
@@ -436,7 +419,7 @@ struct ComboBox : Widget {
     /// are appended to the list of existing items. If the index is zero or negative, the
     /// new items are prepended to the list of existing items.
     /// 
-    /// **See also:** insertItem()
+    /// **See also:** [`insert_item()`]
     insert_items(index: i32, texts: &[String]),
     /// 
     /// Inserts a separator item into the combobox at the given *index.*
@@ -445,7 +428,7 @@ struct ComboBox : Widget {
     /// is appended to the list of existing items. If the index is zero or negative, the
     /// new item is prepended to the list of existing items.
     /// 
-    /// **See also:** insertItem()
+    /// **See also:** [`insert_item()`]
     insert_separator(index: i32),
     /// 
     /// Removes the item at the given *index* from the combobox.
@@ -489,7 +472,7 @@ struct ComboBox : Widget {
     /// If you reimplement this function to show a custom pop-up, make
     /// sure you call hidePopup() to reset the internal state.
     /// 
-    /// **See also:** hidePopup()
+    /// **See also:** [`hide_popup()`]
     [event] show_popup(),
     /// 
     /// Hides the list of items in the combobox if it is currently visible
@@ -499,13 +482,14 @@ struct ComboBox : Widget {
     /// and call the base class implementation to reset the internal state
     /// whenever your custom pop-up widget is hidden.
     /// 
-    /// **See also:** showPopup()
+    /// **See also:** [`show_popup()`]
     [event] hide_popup(),
     /// 
     [event] event(event: *EventType) -> bool,
     /// 
     [event] input_method_query(arg0: Rute::InputMethodQuery) -> Variant,
     /// 
+    [org_name(inputMethodQuery)]
     input_method_query_2(query: Rute::InputMethodQuery, argument: &VariantType) -> Variant,
     /// 
     /// Clears the combobox, removing all items.
@@ -552,6 +536,7 @@ struct ComboBox : Widget {
     /// when the choice is not changed. If you need to know when the
     /// choice actually changes, use signal currentIndexChanged().
     /// 
+    [org_name(activated)]
     [signal] activated_2(arg0: String),
     /// 
     /// This signal is sent when an item in the combobox popup list is
@@ -566,6 +551,7 @@ struct ComboBox : Widget {
     /// 
     /// This signal is sent when an item in the combobox popup list is
     /// highlighted by the user. The item's *text* is passed.
+    [org_name(highlighted)]
     [signal] highlighted_2(arg0: String),
     /// 
     /// This signal is sent whenever the currentIndex in the combobox
@@ -586,6 +572,7 @@ struct ComboBox : Widget {
     /// This signal is sent whenever the currentIndex in the combobox
     /// changes either through user interaction or programmatically. The
     /// item's *text* is passed.
+    [org_name(currentIndexChanged)]
     [signal] current_index_changed_2(arg0: String),
     /// 
     /// This signal is sent whenever currentText changes. The new value
@@ -623,8 +610,27 @@ struct ComboBox : Widget {
     /// is useful for subclasses when they need a QStyleOptionComboBox, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionComboBoxType),
+}
+
+[org_name(QComboBox)]
+enum InsertPolicy {
+    NoInsert,
+    InsertAtTop,
+    InsertAtCurrent,
+    InsertAtBottom,
+    InsertAfterCurrent,
+    InsertBeforeCurrent,
+    InsertAlphabetically,
+}
+
+[org_name(QComboBox)]
+enum SizeAdjustPolicy {
+    AdjustToContents,
+    AdjustToContentsOnFirstShow,
+    AdjustToMinimumContentsLength,
+    AdjustToMinimumContentsLengthWithIcon,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

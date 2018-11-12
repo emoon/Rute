@@ -50,27 +50,13 @@
 /// (at the top, providing the tabs) and a QStackedWidget (most of the
 /// area, organizing the individual pages).
 /// 
-/// **See also:** QTabBar
-/// QStackedWidget
-/// QToolBox
+/// **See also:** [`TabBar`]
+/// [`StackedWidget`]
+/// [`ToolBox`]
 /// {Tab Dialog Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTabWidget)]
-enum TabPosition {
-    North,
-    South,
-    West,
-    East,
-}
-
-[org_name(QTabWidget)]
-enum TabShape {
-    Rounded,
-    Triangular,
-}
-
 struct TabWidget : Widget {
     /// 
     /// Adds a tab with the given *page* and *label* to the tab widget,
@@ -89,7 +75,7 @@ struct TabWidget : Widget {
     /// to true when the changes are done, making the widget receive paint
     /// events again.
     /// 
-    /// **See also:** insertTab()
+    /// **See also:** [`insert_tab()`]
     /// 
     /// **Overloads**
     /// Adds a tab with the given *page,* *icon,* and *label* to the tab
@@ -115,7 +101,7 @@ struct TabWidget : Widget {
     /// to true when the changes are done, making the widget receive paint
     /// events again.
     /// 
-    /// **See also:** insertTab()
+    /// **See also:** [`insert_tab()`]
     /// 
     /// **Overloads**
     /// Adds a tab with the given *page,* *icon,* and *label* to the tab
@@ -123,6 +109,7 @@ struct TabWidget : Widget {
     /// of *page* is passed on to the QTabWidget.
     /// 
     /// This function is the same as addTab(), but with an additional *icon.*
+    [org_name(addTab)]
     add_tab_2(widget: *WidgetType, icon: &IconType, label: String) -> i32,
     /// 
     /// Inserts a tab with the given *label* and *page* into the tab
@@ -153,7 +140,7 @@ struct TabWidget : Widget {
     /// to true when the changes are done, making the widget receive paint
     /// events again.
     /// 
-    /// **See also:** addTab()
+    /// **See also:** [`add_tab()`]
     /// 
     /// **Overloads**
     /// Inserts a tab with the given *label,* *page,* and *icon* into
@@ -193,7 +180,7 @@ struct TabWidget : Widget {
     /// to true when the changes are done, making the widget receive paint
     /// events again.
     /// 
-    /// **See also:** addTab()
+    /// **See also:** [`add_tab()`]
     /// 
     /// **Overloads**
     /// Inserts a tab with the given *label,* *page,* and *icon* into
@@ -203,19 +190,20 @@ struct TabWidget : Widget {
     /// 
     /// This function is the same as insertTab(), but with an additional
     /// *icon.*
+    [org_name(insertTab)]
     insert_tab_2(index: i32, widget: *WidgetType, icon: &IconType, label: String) -> i32,
     /// 
     /// Removes the tab at position *index* from this stack of widgets.
     /// The page widget itself is not deleted.
     /// 
-    /// **See also:** addTab()
-    /// insertTab()
+    /// **See also:** [`add_tab()`]
+    /// [`insert_tab()`]
     remove_tab(index: i32),
     /// 
     /// Returns `true` if the page at position *index* is enabled; otherwise returns `false.`
     /// 
-    /// **See also:** setTabEnabled()
-    /// QWidget::isEnabled()
+    /// **See also:** [`set_tab_enabled()`]
+    /// [`Widget::is_enabled`]
     is_tab_enabled(index: i32) -> bool,
     /// 
     /// If *enable* is true, the page at position *index* is enabled; otherwise the page at position *index* is
@@ -228,8 +216,8 @@ struct TabWidget : Widget {
     /// visible already, QTabWidget will not hide it; if all the pages are
     /// disabled, QTabWidget will show one of them.
     /// 
-    /// **See also:** isTabEnabled()
-    /// QWidget::setEnabled()
+    /// **See also:** [`is_tab_enabled()`]
+    /// [`Widget::set_enabled`]
     set_tab_enabled(index: i32, arg0: bool),
     /// 
     /// Returns the label text for the tab on the page at position *index.*
@@ -257,13 +245,13 @@ struct TabWidget : Widget {
     /// 
     /// Sets the tab tool tip for the page at position *index* to *tip.*
     /// 
-    /// **See also:** tabToolTip()
+    /// **See also:** [`tab_tool_tip()`]
     set_tab_tool_tip(index: i32, tip: String),
     /// 
     /// Returns the tab tool tip for the page at position *index* or
     /// an empty string if no tool tip has been set.
     /// 
-    /// **See also:** setTabToolTip()
+    /// **See also:** [`set_tab_tool_tip()`]
     tab_tool_tip(index: i32) -> String,
     /// 
     /// Sets the What's This help text for the page at position *index*
@@ -284,8 +272,8 @@ struct TabWidget : Widget {
     /// dialog. The tab dialog does its best to make sure that this value
     /// is never 0 (but if you try hard enough, it can be).
     /// 
-    /// **See also:** currentIndex()
-    /// setCurrentWidget()
+    /// **See also:** [`current_index()`]
+    /// [`set_current_widget()`]
     current_widget() -> Widget?,
     /// 
     /// Returns the tab page at index position *index* or 0 if the *index* is out of range.
@@ -306,7 +294,7 @@ struct TabWidget : Widget {
     tab_position() -> TabWidget::TabPosition,
     set_tab_position(arg0: TabWidget::TabPosition),
     /// 
-    /// **See also:** QTabBar::tabsClosable()
+    /// **See also:** [`TabBar::tabs_closable`]
     tabs_closable() -> bool,
     set_tabs_closable(closeable: bool),
     is_movable() -> bool,
@@ -347,8 +335,8 @@ struct TabWidget : Widget {
     /// tab positions;
     /// other orientations are known to not work properly.
     /// 
-    /// **See also:** cornerWidget()
-    /// setTabPosition()
+    /// **See also:** [`corner_widget()`]
+    /// [`set_tab_position()`]
     set_corner_widget(w: *WidgetType, corner: Rute::Corner),
     /// 
     /// Returns the widget shown in the *corner* of the tab widget or 0.
@@ -359,9 +347,9 @@ struct TabWidget : Widget {
     /// 
     /// By default the value is style dependant.
     /// 
-    /// **See also:** QTabBar::elideMode
+    /// **See also:** [`TabBar::elide_mode()`]
     /// usesScrollButtons
-    /// QStyle::SH_TabBar_ElideMode
+    /// [`Style::sh_tab_bar_elide_mode()`]
     elide_mode() -> Rute::TextElideMode,
     set_elide_mode(arg0: Rute::TextElideMode),
     /// 
@@ -369,7 +357,7 @@ struct TabWidget : Widget {
     /// that the icons will have. Icons are not scaled up if they are of
     /// smaller size.
     /// 
-    /// **See also:** QTabBar::iconSize
+    /// **See also:** [`TabBar::icon_size()`]
     icon_size() -> Size,
     set_icon_size(size: &SizeType),
     /// 
@@ -379,8 +367,8 @@ struct TabWidget : Widget {
     /// By default the value is style dependant.
     /// 
     /// **See also:** elideMode
-    /// QTabBar::usesScrollButtons
-    /// QStyle::SH_TabBar_PreferNoArrows
+    /// [`TabBar::uses_scroll_buttons()`]
+    /// [`Style::sh_tab_bar_prefer_no_arrows()`]
     uses_scroll_buttons() -> bool,
     set_uses_scroll_buttons(use_buttons: bool),
     /// 
@@ -391,15 +379,15 @@ struct TabWidget : Widget {
     /// area.
     /// 
     /// **See also:** elideMode
-    /// QTabBar::documentMode
-    /// QTabBar::usesScrollButtons
-    /// QStyle::SH_TabBar_PreferNoArrows
+    /// [`TabBar::document_mode()`]
+    /// [`TabBar::uses_scroll_buttons()`]
+    /// [`Style::sh_tab_bar_prefer_no_arrows()`]
     document_mode() -> bool,
     set_document_mode(set: bool),
     /// 
     /// By default, this property is false.
     /// 
-    /// **See also:** QWidget::visible
+    /// **See also:** [`Widget::visible()`]
     tab_bar_auto_hide() -> bool,
     set_tab_bar_auto_hide(enabled: bool),
     /// 
@@ -419,20 +407,20 @@ struct TabWidget : Widget {
     /// 
     /// Returns the current QTabBar.
     /// 
-    /// **See also:** setTabBar()
+    /// **See also:** [`set_tab_bar()`]
     /// 
     /// By default, this property is false.
     /// 
-    /// **See also:** QWidget::visible
+    /// **See also:** [`Widget::visible()`]
     tab_bar() -> TabBar?,
     set_current_index(index: i32),
     /// 
     /// Makes *widget* the current widget. The *widget* used must be a page in
     /// this tab widget.
     /// 
-    /// **See also:** addTab()
-    /// setCurrentIndex()
-    /// currentWidget()
+    /// **See also:** [`add_tab()`]
+    /// [`set_current_index()`]
+    /// [`current_widget()`]
     set_current_widget(widget: *WidgetType),
     /// 
     /// This signal is emitted whenever the current page index changes.
@@ -440,14 +428,14 @@ struct TabWidget : Widget {
     /// if there isn't a new one (for example, if there are no widgets
     /// in the QTabWidget)
     /// 
-    /// **See also:** currentWidget()
+    /// **See also:** [`current_widget()`]
     /// currentIndex
     [signal] current_changed(index: i32),
     /// 
     /// This signal is emitted when the close button on a tab is clicked.
     /// The *index* is the index that should be removed.
     /// 
-    /// **See also:** setTabsClosable()
+    /// **See also:** [`set_tabs_closable()`]
     [signal] tab_close_requested(index: i32),
     /// 
     /// This signal is emitted when user clicks on a tab at an *index.*
@@ -465,13 +453,13 @@ struct TabWidget : Widget {
     /// This virtual handler is called after a new tab was added or
     /// inserted at position *index.*
     /// 
-    /// **See also:** tabRemoved()
+    /// **See also:** [`tab_removed()`]
     [event] tab_inserted(index: i32),
     /// 
     /// This virtual handler is called after a tab was removed from
     /// position *index.*
     /// 
-    /// **See also:** tabInserted()
+    /// **See also:** [`tab_inserted()`]
     [event] tab_removed(index: i32),
     /// 
     [event] show_event(arg0: *ShowEventType),
@@ -487,7 +475,7 @@ struct TabWidget : Widget {
     /// that this must be called *before* any tabs have been added, or
     /// the behavior is undefined.
     /// 
-    /// **See also:** tabBar()
+    /// **See also:** [`tab_bar()`]
     set_tab_bar(arg0: *TabBarType),
     /// 
     [event] change_event(arg0: *EventType),
@@ -498,9 +486,23 @@ struct TabWidget : Widget {
     /// for subclasses when they need a QStyleOptionTabWidgetFrame, but don't want to fill
     /// in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
-    /// QTabBar::initStyleOption()
+    /// **See also:** [`StyleOption::init_from`]
+    /// [`TabBar::init_style_option`]
     init_style_option(option: *StyleOptionTabWidgetFrameType),
+}
+
+[org_name(QTabWidget)]
+enum TabPosition {
+    North,
+    South,
+    West,
+    East,
+}
+
+[org_name(QTabWidget)]
+enum TabShape {
+    Rounded,
+    Triangular,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

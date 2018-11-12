@@ -21,10 +21,10 @@
 /// Below we present some examples of validators. In practice they would
 /// normally be associated with a widget as in the example above.
 /// 
-/// **See also:** QRegularExpression
-/// QIntValidator
-/// QDoubleValidator
-/// QRegExpValidator
+/// **See also:** [`RegularExpression`]
+/// [`IntValidator`]
+/// [`DoubleValidator`]
+/// [`RegExpValidator`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -47,7 +47,7 @@ struct RegularExpressionValidator : Validator {
     /// and
     /// is [Invalid.](Invalid.)
     /// 
-    /// **See also:** QRegularExpression::match()
+    /// **See also:** [`RegularExpression::match`]
     [event] validate(input: String, pos: &i32) -> Validator::State,
     /// 
     /// By default, this property contains a regular expression with an empty

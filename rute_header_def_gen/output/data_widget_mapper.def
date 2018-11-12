@@ -58,28 +58,22 @@
 /// of the model are updated in another module of the application, the widgets are
 /// updated as well.
 /// 
-/// **See also:** QAbstractItemModel
-/// QAbstractItemDelegate
+/// **See also:** [`AbstractItemModel`]
+/// [`AbstractItemDelegate`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QDataWidgetMapper)]
-enum SubmitPolicy {
-    AutoSubmit,
-    ManualSubmit,
-}
-
 struct DataWidgetMapper : Object {
     /// 
     /// Sets the current model to *model.* If another model was set,
     /// all mappings to that old model are cleared.
     /// 
-    /// **See also:** model()
+    /// **See also:** [`model()`]
     set_model(model: *AbstractItemModelType),
     /// 
     /// Returns the current model.
     /// 
-    /// **See also:** setModel()
+    /// **See also:** [`set_model()`]
     model() -> AbstractItemModel?,
     /// 
     /// Sets the item delegate to *delegate.* The delegate will be used to write
@@ -103,12 +97,12 @@ struct DataWidgetMapper : Object {
     /// a branch of a tree. Pass an invalid model index to display
     /// the top-most branch.
     /// 
-    /// **See also:** rootIndex()
+    /// **See also:** [`root_index()`]
     set_root_index(index: &ModelIndexType),
     /// 
     /// Returns the current root index.
     /// 
-    /// **See also:** setRootIndex()
+    /// **See also:** [`set_root_index()`]
     root_index() -> ModelIndex,
     set_orientation(a_orientation: Rute::Orientation),
     /// 
@@ -180,14 +174,14 @@ struct DataWidgetMapper : Object {
     /// * If the *widget* is already mapped to a section, the old mapping will be replaced by the new one.
     /// * Only one-to-one mappings between sections and widgets are allowed. It is not possible to map a single section to multiple widgets, or to map a single widget to multiple sections.
     /// 
-    /// **See also:** removeMapping()
-    /// mappedSection()
-    /// clearMapping()
+    /// **See also:** [`remove_mapping()`]
+    /// [`mapped_section()`]
+    /// [`clear_mapping()`]
     /// 
     /// Essentially the same as addMapping(), but adds the possibility to specify
     /// the property to use specifying *propertyName.*
     /// 
-    /// **See also:** addMapping()
+    /// **See also:** [`add_mapping()`]
     add_mapping(widget: *WidgetType, section: i32),
     /// 
     /// Adds a mapping between a *widget* and a *section* from the model.
@@ -204,73 +198,74 @@ struct DataWidgetMapper : Object {
     /// * If the *widget* is already mapped to a section, the old mapping will be replaced by the new one.
     /// * Only one-to-one mappings between sections and widgets are allowed. It is not possible to map a single section to multiple widgets, or to map a single widget to multiple sections.
     /// 
-    /// **See also:** removeMapping()
-    /// mappedSection()
-    /// clearMapping()
+    /// **See also:** [`remove_mapping()`]
+    /// [`mapped_section()`]
+    /// [`clear_mapping()`]
     /// 
     /// Essentially the same as addMapping(), but adds the possibility to specify
     /// the property to use specifying *propertyName.*
     /// 
-    /// **See also:** addMapping()
+    /// **See also:** [`add_mapping()`]
+    [org_name(addMapping)]
     add_mapping_2(widget: *WidgetType, section: i32, property_name: &ByteArrayType),
     /// 
     /// Removes the mapping for the given *widget.*
     /// 
-    /// **See also:** addMapping()
-    /// clearMapping()
+    /// **See also:** [`add_mapping()`]
+    /// [`clear_mapping()`]
     remove_mapping(widget: *WidgetType),
     /// 
     /// Returns the section the *widget* is mapped to or -1
     /// if the widget is not mapped.
     /// 
-    /// **See also:** addMapping()
-    /// removeMapping()
+    /// **See also:** [`add_mapping()`]
+    /// [`remove_mapping()`]
     mapped_section(widget: *WidgetType) -> i32,
     /// 
     /// Returns the name of the property that is used when mapping
     /// data to the given *widget.*
     /// 
-    /// **See also:** mappedSection()
-    /// addMapping()
-    /// removeMapping()
+    /// **See also:** [`mapped_section()`]
+    /// [`add_mapping()`]
+    /// [`remove_mapping()`]
     mapped_property_name(widget: *WidgetType) -> ByteArray,
     /// 
     /// Returns the widget that is mapped at *section,* or
     /// 0 if no widget is mapped at that section.
     /// 
-    /// **See also:** addMapping()
-    /// removeMapping()
+    /// **See also:** [`add_mapping()`]
+    /// [`remove_mapping()`]
     mapped_widget_at(section: i32) -> Widget?,
     /// 
     /// Clears all mappings.
     /// 
-    /// **See also:** addMapping()
-    /// removeMapping()
+    /// **See also:** [`add_mapping()`]
+    /// [`remove_mapping()`]
     clear_mapping(),
     /// 
     /// This signal is emitted after the current index has changed and
     /// all widgets were populated with new data. *index* is the new
     /// current index.
     /// 
-    /// **See also:** currentIndex()
-    /// setCurrentIndex()
+    /// **See also:** [`current_index()`]
+    /// [`set_current_index()`]
     /// 
     /// The widgets are populated with with data from the row at *index*
     /// if the orientation is horizontal (the default), otherwise with
     /// data from the column at *index.*
     /// 
-    /// **See also:** setCurrentModelIndex()
-    /// toFirst()
-    /// toNext()
-    /// toPrevious()
-    /// toLast()
+    /// **See also:** [`set_current_model_index()`]
+    /// [`to_first()`]
+    /// [`to_next()`]
+    /// [`to_previous()`]
+    /// [`to_last()`]
     current_index() -> i32,
     /// 
     /// Repopulates all widgets with the current data of the model.
     /// All unsubmitted changes will be lost.
     /// 
-    /// **See also:** submit()
-    /// setSubmitPolicy()
+    /// **See also:** [`submit()`]
+    /// [`set_submit_policy()`]
     revert(),
     /// 
     /// Submits all changes from the mapped widgets to the model.
@@ -285,8 +280,8 @@ struct DataWidgetMapper : Object {
     /// Note: For database models, QSqlQueryModel::lastError() can be
     /// used to retrieve the last error.
     /// 
-    /// **See also:** revert()
-    /// setSubmitPolicy()
+    /// **See also:** [`revert()`]
+    /// [`set_submit_policy()`]
     /// 
     /// Changing the current submit policy will revert all widgets
     /// to the current data from the model.
@@ -298,8 +293,8 @@ struct DataWidgetMapper : Object {
     /// 
     /// This is equivalent to calling `setCurrentIndex(0).`
     /// 
-    /// **See also:** toLast()
-    /// setCurrentIndex()
+    /// **See also:** [`to_last()`]
+    /// [`set_current_index()`]
     to_first(),
     /// 
     /// Populates the widgets with data from the last row of the model
@@ -308,8 +303,8 @@ struct DataWidgetMapper : Object {
     /// 
     /// Calls setCurrentIndex() internally.
     /// 
-    /// **See also:** toFirst()
-    /// setCurrentIndex()
+    /// **See also:** [`to_first()`]
+    /// [`set_current_index()`]
     to_last(),
     /// 
     /// Populates the widgets with data from the next row of the model
@@ -319,8 +314,8 @@ struct DataWidgetMapper : Object {
     /// Calls setCurrentIndex() internally. Does nothing if there is
     /// no next row in the model.
     /// 
-    /// **See also:** toPrevious()
-    /// setCurrentIndex()
+    /// **See also:** [`to_previous()`]
+    /// [`set_current_index()`]
     to_next(),
     /// 
     /// Populates the widgets with data from the previous row of the model
@@ -330,8 +325,8 @@ struct DataWidgetMapper : Object {
     /// Calls setCurrentIndex() internally. Does nothing if there is
     /// no previous row in the model.
     /// 
-    /// **See also:** toNext()
-    /// setCurrentIndex()
+    /// **See also:** [`to_next()`]
+    /// [`set_current_index()`]
     to_previous(),
     [event] set_current_index(index: i32),
     /// 
@@ -350,16 +345,22 @@ struct DataWidgetMapper : Object {
     /// with new data whenever the selection of a QTableView named
     /// `myTableView` changes:
     /// 
-    /// **See also:** currentIndex()
+    /// **See also:** [`current_index()`]
     set_current_model_index(index: &ModelIndexType),
     /// 
     /// This signal is emitted after the current index has changed and
     /// all widgets were populated with new data. *index* is the new
     /// current index.
     /// 
-    /// **See also:** currentIndex()
-    /// setCurrentIndex()
+    /// **See also:** [`current_index()`]
+    /// [`set_current_index()`]
     [signal] current_index_changed(index: i32),
+}
+
+[org_name(QDataWidgetMapper)]
+enum SubmitPolicy {
+    AutoSubmit,
+    ManualSubmit,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

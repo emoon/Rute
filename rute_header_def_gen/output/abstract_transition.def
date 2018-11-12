@@ -26,12 +26,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QAbstractTransition)]
-enum TransitionType {
-    ExternalTransition,
-    InternalTransition,
-}
-
 struct AbstractTransition : Object {
     /// 
     /// 
@@ -54,11 +48,11 @@ struct AbstractTransition : Object {
     /// 
     /// This signal is emitted when the targetState property is changed.
     /// 
-    /// **See also:** QAbstractTransition::targetState
+    /// **See also:** [`AbstractTransition::target_state()`]
     /// 
     /// This signal is emitted when the targetStates property is changed.
     /// 
-    /// **See also:** QAbstractTransition::targetStates
+    /// **See also:** [`AbstractTransition::target_states()`]
     target_state() -> AbstractState?,
     /// 
     /// Sets the *target* state of this transition.
@@ -74,7 +68,7 @@ struct AbstractTransition : Object {
     /// 
     /// This signal is emitted when the targetStates property is changed.
     /// 
-    /// **See also:** QAbstractTransition::targetStates
+    /// **See also:** [`AbstractTransition::target_states()`]
     target_states() -> [AbstractState?],
     /// 
     /// Sets the target states of this transition to be the given *targets.*
@@ -90,29 +84,29 @@ struct AbstractTransition : Object {
     /// Adds the given *animation* to this transition.
     /// The transition does not take ownership of the animation.
     /// 
-    /// **See also:** removeAnimation()
-    /// animations()
+    /// **See also:** [`remove_animation()`]
+    /// [`animations()`]
     add_animation(animation: *AbstractAnimationType),
     /// 
     /// Removes the given *animation* from this transition.
     /// 
-    /// **See also:** addAnimation()
+    /// **See also:** [`add_animation()`]
     remove_animation(animation: *AbstractAnimationType),
     /// 
     /// Returns the list of animations associated with this transition, or an empty
     /// list if it has no animations.
     /// 
-    /// **See also:** addAnimation()
+    /// **See also:** [`add_animation()`]
     animations() -> [AbstractAnimation?],
     /// 
     /// This signal is emitted when the targetState property is changed.
     /// 
-    /// **See also:** QAbstractTransition::targetState
+    /// **See also:** [`AbstractTransition::target_state()`]
     [signal] target_state_changed(arg0: AbstractTransition::QPrivateSignal),
     /// 
     /// This signal is emitted when the targetStates property is changed.
     /// 
-    /// **See also:** QAbstractTransition::targetStates
+    /// **See also:** [`AbstractTransition::target_states()`]
     [signal] target_states_changed(arg0: AbstractTransition::QPrivateSignal),
     /// 
     /// This function is called to determine whether the given *event* should cause
@@ -130,6 +124,12 @@ struct AbstractTransition : Object {
     /// event should trigger the transition, otherwise return false.
     /// 
     [event] event(e: *EventType) -> bool,
+}
+
+[org_name(QAbstractTransition)]
+enum TransitionType {
+    ExternalTransition,
+    InternalTransition,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

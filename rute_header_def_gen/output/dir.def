@@ -158,55 +158,14 @@
 /// A program that lists all the files in the current directory
 /// (excluding symbolic links), sorted by size, smallest first:
 /// 
-/// **See also:** QFileInfo
-/// QFile
-/// QFileDialog
-/// QCoreApplication::applicationDirPath()
+/// **See also:** [`FileInfo`]
+/// [`File`]
+/// [`FileDialog`]
+/// [`CoreApplication::application_dir_path`]
 /// {Find Files Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QDir)]
-enum Filter {
-    Dirs,
-    Files,
-    Drives,
-    NoSymLinks,
-    AllEntries,
-    TypeMask,
-    Readable,
-    Writable,
-    Executable,
-    PermissionMask,
-    Modified,
-    Hidden,
-    System,
-    AccessMask,
-    AllDirs,
-    CaseSensitive,
-    NoDot,
-    NoDotDot,
-    NoDotAndDotDot,
-    NoFilter,
-}
-
-[org_name(QDir)]
-enum SortFlag {
-    Name,
-    Time,
-    Size,
-    Unsorted,
-    SortByMask,
-    DirsFirst,
-    Reversed,
-    IgnoreCase,
-    DirsLast,
-    LocaleAware,
-    Type,
-    NoSort,
-}
-
-
 struct Dir {
     /// 
     /// Swaps this QDir instance with *other.* This function is very fast
@@ -225,14 +184,14 @@ struct Dir {
     /// current directory. An example of an absolute path is the string
     /// , a relative path might look like .
     /// 
-    /// **See also:** path()
-    /// absolutePath()
-    /// exists()
-    /// cleanPath()
-    /// dirName()
-    /// absoluteFilePath()
-    /// isRelative()
-    /// makeAbsolute()
+    /// **See also:** [`path()`]
+    /// [`absolute_path()`]
+    /// [`exists()`]
+    /// [`clean_path()`]
+    /// [`dir_name()`]
+    /// [`absolute_file_path()`]
+    /// [`is_relative()`]
+    /// [`make_absolute()`]
     set_path(path: String),
     /// 
     /// Returns the path. This may contain symbolic links, but never
@@ -241,26 +200,26 @@ struct Dir {
     /// The returned path can be either absolute or relative (see
     /// setPath()).
     /// 
-    /// **See also:** setPath()
-    /// absolutePath()
-    /// exists()
-    /// cleanPath()
-    /// dirName()
-    /// absoluteFilePath()
-    /// toNativeSeparators()
-    /// makeAbsolute()
+    /// **See also:** [`set_path()`]
+    /// [`absolute_path()`]
+    /// [`exists()`]
+    /// [`clean_path()`]
+    /// [`dir_name()`]
+    /// [`absolute_file_path()`]
+    /// [`to_native_separators()`]
+    /// [`make_absolute()`]
     path() -> String,
     /// 
     /// Returns the absolute path (a path that starts with or with a
     /// drive specification), which may contain symbolic links, but never
     /// contains redundant , or multiple separators.
     /// 
-    /// **See also:** setPath()
-    /// canonicalPath()
-    /// exists()
-    /// cleanPath()
-    /// dirName()
-    /// absoluteFilePath()
+    /// **See also:** [`set_path()`]
+    /// [`canonical_path()`]
+    /// [`exists()`]
+    /// [`clean_path()`]
+    /// [`dir_name()`]
+    /// [`absolute_file_path()`]
     absolute_path() -> String,
     /// 
     /// Returns the canonical path, i.e. a path without symbolic links or
@@ -273,12 +232,12 @@ struct Dir {
     /// 
     /// Example:
     /// 
-    /// **See also:** path()
-    /// absolutePath()
-    /// exists()
-    /// cleanPath()
-    /// dirName()
-    /// absoluteFilePath()
+    /// **See also:** [`path()`]
+    /// [`absolute_path()`]
+    /// [`exists()`]
+    /// [`clean_path()`]
+    /// [`dir_name()`]
+    /// [`absolute_file_path()`]
     canonical_path() -> String,
     /// 
     /// Use QDir::addSearchPath() with a prefix instead.
@@ -309,13 +268,13 @@ struct Dir {
     /// 
     /// Adds *path* to the search path for *prefix.*
     /// 
-    /// **See also:** setSearchPaths()
+    /// **See also:** [`set_search_paths()`]
     [static] add_search_path(prefix: String, path: String),
     /// 
     /// Returns the search paths for *prefix.*
     /// 
-    /// **See also:** setSearchPaths()
-    /// addSearchPath()
+    /// **See also:** [`set_search_paths()`]
+    /// [`add_search_path()`]
     [static] search_paths(prefix: String) -> [String],
     /// 
     /// Returns the name of the directory; this is *not* the same as the
@@ -326,10 +285,10 @@ struct Dir {
     /// No check is made to ensure that a directory with this name
     /// actually exists; but see exists().
     /// 
-    /// **See also:** path()
-    /// filePath()
-    /// absolutePath()
-    /// absoluteFilePath()
+    /// **See also:** [`path()`]
+    /// [`file_path()`]
+    /// [`absolute_path()`]
+    /// [`absolute_file_path()`]
     dir_name() -> String,
     /// 
     /// Returns the path name of a file in the directory. Does *not*
@@ -338,26 +297,26 @@ struct Dir {
     /// be relative. Redundant multiple separators or and
     /// directories in *fileName* are not removed (see cleanPath()).
     /// 
-    /// **See also:** dirName()
-    /// absoluteFilePath()
-    /// isRelative()
-    /// canonicalPath()
+    /// **See also:** [`dir_name()`]
+    /// [`absolute_file_path()`]
+    /// [`is_relative()`]
+    /// [`canonical_path()`]
     file_path(file_name: String) -> String,
     /// 
     /// Returns the absolute path name of a file in the directory. Does *not* check if the file actually exists in the directory; but see
     /// exists(). Redundant multiple separators or and
     /// directories in *fileName* are not removed (see cleanPath()).
     /// 
-    /// **See also:** relativeFilePath()
-    /// filePath()
-    /// canonicalPath()
+    /// **See also:** [`relative_file_path()`]
+    /// [`file_path()`]
+    /// [`canonical_path()`]
     absolute_file_path(file_name: String) -> String,
     /// 
     /// Returns the path to *fileName* relative to the directory.
     /// 
-    /// **See also:** absoluteFilePath()
-    /// filePath()
-    /// canonicalPath()
+    /// **See also:** [`absolute_file_path()`]
+    /// [`file_path()`]
+    /// [`canonical_path()`]
     relative_file_path(file_name: String) -> String,
     /// 
     /// Returns *pathName* with the '/' separators converted to
@@ -370,8 +329,8 @@ struct Dir {
     /// The returned string may be the same as the argument on some
     /// operating systems, for example on Unix.
     /// 
-    /// **See also:** fromNativeSeparators()
-    /// separator()
+    /// **See also:** [`from_native_separators()`]
+    /// [`separator()`]
     [static] to_native_separators(path_name: String) -> String,
     /// 
     /// Returns *pathName* using '/' as file separator. On Windows,
@@ -380,8 +339,8 @@ struct Dir {
     /// The returned string may be the same as the argument on some
     /// operating systems, for example on Unix.
     /// 
-    /// **See also:** toNativeSeparators()
-    /// separator()
+    /// **See also:** [`to_native_separators()`]
+    /// [`separator()`]
     [static] from_native_separators(path_name: String) -> String,
     /// 
     /// Changes the QDir's directory to *dirName.*
@@ -392,10 +351,10 @@ struct Dir {
     /// 
     /// Calling cd("..") is equivalent to calling cdUp().
     /// 
-    /// **See also:** cdUp()
-    /// isReadable()
-    /// exists()
-    /// path()
+    /// **See also:** [`cd_up()`]
+    /// [`is_readable()`]
+    /// [`exists()`]
+    /// [`path()`]
     /// 
     /// Changes directory by moving one directory up from the QDir's
     /// current directory.
@@ -404,10 +363,10 @@ struct Dir {
     /// otherwise returns `false.` Note that the logical cdUp() operation is
     /// not performed if the new directory does not exist.
     /// 
-    /// **See also:** cd()
-    /// isReadable()
-    /// exists()
-    /// path()
+    /// **See also:** [`cd()`]
+    /// [`is_readable()`]
+    /// [`exists()`]
+    /// [`path()`]
     cd(dir_name: String) -> bool,
     /// 
     /// Changes directory by moving one directory up from the QDir's
@@ -417,10 +376,10 @@ struct Dir {
     /// otherwise returns `false.` Note that the logical cdUp() operation is
     /// not performed if the new directory does not exist.
     /// 
-    /// **See also:** cd()
-    /// isReadable()
-    /// exists()
-    /// path()
+    /// **See also:** [`cd()`]
+    /// [`is_readable()`]
+    /// [`exists()`]
+    /// [`path()`]
     cd_up() -> bool,
     /// 
     /// Returns the string list set by setNameFilters()
@@ -437,8 +396,8 @@ struct Dir {
     /// to ensure that only files with extensions typically used for C++
     /// source files are listed:
     /// 
-    /// **See also:** nameFilters()
-    /// setFilter()
+    /// **See also:** [`name_filters()`]
+    /// [`set_filter()`]
     set_name_filters(name_filters: &[String]),
     /// 
     /// Returns the value set by setFilter()
@@ -449,13 +408,13 @@ struct Dir {
     /// [QDir::Filter](QDir::Filter)
     /// 
     /// 
-    /// **See also:** filter()
-    /// setNameFilters()
+    /// **See also:** [`filter()`]
+    /// [`set_name_filters()`]
     set_filter(filter: Dir::Filters),
     /// 
     /// Returns the value set by setSorting()
     /// 
-    /// **See also:** setSorting()
+    /// **See also:** [`set_sorting()`]
     /// SortFlag
     sorting() -> Dir::SortFlags,
     /// 
@@ -465,7 +424,7 @@ struct Dir {
     /// [QDir::SortFlag](QDir::SortFlag)
     /// 
     /// 
-    /// **See also:** sorting()
+    /// **See also:** [`sorting()`]
     /// SortFlag
     set_sorting(sort: Dir::SortFlags),
     /// 
@@ -473,8 +432,8 @@ struct Dir {
     /// 
     /// Equivalent to entryList().count().
     /// 
-    /// **See also:** operator[]()
-    /// entryList()
+    /// **See also:** [`operator()`]
+    /// [`entry_list()`]
     count() -> uint,
     /// 
     /// Returns whether the directory is empty.
@@ -486,9 +445,9 @@ struct Dir {
     /// **Note**: Unless you set the *filters* flags to include `QDir::NoDotAndDotDot`
     /// (as the default value does), no directory is empty.
     /// 
-    /// **See also:** count()
-    /// entryList()
-    /// setFilter()
+    /// **See also:** [`count()`]
+    /// [`entry_list()`]
+    /// [`set_filter()`]
     is_empty(filters: Dir::Filters) -> bool,
     /// 
     /// Creates a sub-directory called *dirName.*
@@ -497,7 +456,7 @@ struct Dir {
     /// 
     /// If the directory already exists when this function is called, it will return false.
     /// 
-    /// **See also:** rmdir()
+    /// **See also:** [`rmdir()`]
     mkdir(dir_name: String) -> bool,
     /// 
     /// Removes the directory specified by *dirName.*
@@ -506,7 +465,7 @@ struct Dir {
     /// 
     /// Returns `true` if successful; otherwise returns `false.`
     /// 
-    /// **See also:** mkdir()
+    /// **See also:** [`mkdir()`]
     rmdir(dir_name: String) -> bool,
     /// 
     /// Creates the directory path *dirPath.*
@@ -518,7 +477,7 @@ struct Dir {
     /// 
     /// If the path already exists when this function is called, it will return true.
     /// 
-    /// **See also:** rmpath()
+    /// **See also:** [`rmpath()`]
     mkpath(dir_path: String) -> bool,
     /// 
     /// Removes the directory path *dirPath.*
@@ -529,7 +488,7 @@ struct Dir {
     /// 
     /// Returns `true` if successful; otherwise returns `false.`
     /// 
-    /// **See also:** mkpath()
+    /// **See also:** [`mkpath()`]
     rmpath(dir_path: String) -> bool,
     /// 
     /// Removes the directory, including all its contents.
@@ -557,7 +516,7 @@ struct Dir {
     /// **Warning**: A false value from this function is not a guarantee that
     /// files in the directory are not accessible.
     /// 
-    /// **See also:** QFileInfo::isReadable()
+    /// **See also:** [`FileInfo::is_readable`]
     is_readable() -> bool,
     /// 
     /// **Overloads**
@@ -567,8 +526,8 @@ struct Dir {
     /// The overload of this function that accepts an argument is used to test
     /// for the presence of files and directories within a directory.
     /// 
-    /// **See also:** QFileInfo::exists()
-    /// QFile::exists()
+    /// **See also:** [`FileInfo::exists`]
+    /// [`File::exists`]
     /// 
     /// Returns `true` if the file called *name* exists; otherwise returns
     /// false.
@@ -577,8 +536,8 @@ struct Dir {
     /// to be relative to the directory itself, so this function is typically used
     /// to check for the presence of files within a directory.
     /// 
-    /// **See also:** QFileInfo::exists()
-    /// QFile::exists()
+    /// **See also:** [`FileInfo::exists`]
+    /// [`File::exists`]
     exists() -> bool,
     /// 
     /// Returns `true` if the directory is the root directory; otherwise
@@ -588,68 +547,68 @@ struct Dir {
     /// this function returns `false.` If you want to test for this use
     /// canonicalPath(), e.g.
     /// 
-    /// **See also:** root()
-    /// rootPath()
+    /// **See also:** [`root()`]
+    /// [`root_path()`]
     is_root() -> bool,
     /// 
     /// Returns `true` if *path* is relative; returns `false` if it is
     /// absolute.
     /// 
-    /// **See also:** isRelative()
-    /// isAbsolutePath()
-    /// makeAbsolute()
+    /// **See also:** [`is_relative()`]
+    /// [`is_absolute_path()`]
+    /// [`make_absolute()`]
     [static] is_relative_path(path: String) -> bool,
     /// 
     /// Returns `true` if *path* is absolute; returns `false` if it is
     /// relative.
     /// 
-    /// **See also:** isAbsolute()
-    /// isRelativePath()
-    /// makeAbsolute()
-    /// cleanPath()
+    /// **See also:** [`is_absolute()`]
+    /// [`is_relative_path()`]
+    /// [`make_absolute()`]
+    /// [`clean_path()`]
     [static] is_absolute_path(path: String) -> bool,
     /// 
     /// Returns `true` if the directory path is relative; otherwise returns
     /// false. (Under Unix a path is relative if it does not start with a
     /// ).
     /// 
-    /// **See also:** makeAbsolute()
-    /// isAbsolute()
-    /// isAbsolutePath()
-    /// cleanPath()
+    /// **See also:** [`make_absolute()`]
+    /// [`is_absolute()`]
+    /// [`is_absolute_path()`]
+    /// [`clean_path()`]
     /// 
     /// Returns `true` if *path* is relative; returns `false` if it is
     /// absolute.
     /// 
-    /// **See also:** isRelative()
-    /// isAbsolutePath()
-    /// makeAbsolute()
+    /// **See also:** [`is_relative()`]
+    /// [`is_absolute_path()`]
+    /// [`make_absolute()`]
     is_relative() -> bool,
     /// 
     /// Returns `true` if the directory's path is absolute; otherwise
     /// returns `false.` See isAbsolutePath().
     /// 
-    /// **See also:** isRelative()
-    /// makeAbsolute()
-    /// cleanPath()
+    /// **See also:** [`is_relative()`]
+    /// [`make_absolute()`]
+    /// [`clean_path()`]
     /// 
     /// Returns `true` if *path* is absolute; returns `false` if it is
     /// relative.
     /// 
-    /// **See also:** isAbsolute()
-    /// isRelativePath()
-    /// makeAbsolute()
-    /// cleanPath()
+    /// **See also:** [`is_absolute()`]
+    /// [`is_relative_path()`]
+    /// [`make_absolute()`]
+    /// [`clean_path()`]
     is_absolute() -> bool,
     /// 
     /// Converts the directory path to an absolute path. If it is already
     /// absolute nothing happens. Returns `true` if the conversion
     /// succeeded; otherwise returns `false.`
     /// 
-    /// **See also:** isAbsolute()
-    /// isAbsolutePath()
-    /// isRelative()
-    /// cleanPath()
+    /// **See also:** [`is_absolute()`]
+    /// [`is_absolute_path()`]
+    /// [`is_relative()`]
+    /// [`clean_path()`]
     make_absolute() -> bool,
     /// 
     /// Removes the directory, including all its contents.
@@ -689,7 +648,7 @@ struct Dir {
     /// right away, Qt will try to copy *oldName* to *newName* and remove
     /// *oldName.*
     /// 
-    /// **See also:** QFile::rename()
+    /// **See also:** [`File::rename`]
     rename(old_name: String, new_name: String) -> bool,
     /// 
     /// **Overloads**
@@ -699,8 +658,8 @@ struct Dir {
     /// The overload of this function that accepts an argument is used to test
     /// for the presence of files and directories within a directory.
     /// 
-    /// **See also:** QFileInfo::exists()
-    /// QFile::exists()
+    /// **See also:** [`FileInfo::exists`]
+    /// [`File::exists`]
     /// 
     /// Returns `true` if the file called *name* exists; otherwise returns
     /// false.
@@ -709,8 +668,9 @@ struct Dir {
     /// to be relative to the directory itself, so this function is typically used
     /// to check for the presence of files within a directory.
     /// 
-    /// **See also:** QFileInfo::exists()
-    /// QFile::exists()
+    /// **See also:** [`FileInfo::exists`]
+    /// [`File::exists`]
+    [org_name(exists)]
     exists_2(name: String) -> bool,
     /// 
     /// Returns a list of the root directories on this system.
@@ -719,14 +679,14 @@ struct Dir {
     /// , etc. On other operating systems, it returns a list containing
     /// just one root directory (i.e. ).
     /// 
-    /// **See also:** root()
-    /// rootPath()
+    /// **See also:** [`root()`]
+    /// [`root_path()`]
     [static] drives() -> FileInfoList,
     /// 
     /// Returns the native path list separator: ':' under Unix
     /// and ';' under Windows.
     /// 
-    /// **See also:** separator()
+    /// **See also:** [`separator()`]
     [static] list_separator() -> Char,
     /// 
     /// Returns the native directory separator: under Unix
@@ -738,18 +698,18 @@ struct Dir {
     /// user using their operating system's separator use
     /// toNativeSeparators().
     /// 
-    /// **See also:** listSeparator()
+    /// **See also:** [`list_separator()`]
     [static] separator() -> Char,
     /// 
     /// Sets the application's current working directory to *path.*
     /// Returns `true` if the directory was successfully changed; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** current()
-    /// currentPath()
-    /// home()
-    /// root()
-    /// temp()
+    /// **See also:** [`current()`]
+    /// [`current_path()`]
+    /// [`home()`]
+    /// [`root()`]
+    /// [`temp()`]
     [static] set_current(path: String) -> bool,
     /// 
     /// Returns the application's current directory.
@@ -757,23 +717,23 @@ struct Dir {
     /// The directory is constructed using the absolute path of the current directory,
     /// ensuring that its path() will be the same as its absolutePath().
     /// 
-    /// **See also:** currentPath()
-    /// setCurrent()
-    /// home()
-    /// root()
-    /// temp()
+    /// **See also:** [`current_path()`]
+    /// [`set_current()`]
+    /// [`home()`]
+    /// [`root()`]
+    /// [`temp()`]
     /// 
     /// Returns the absolute path of the application's current directory. The
     /// current directory is the last directory set with QDir::setCurrent() or, if
     /// that was never called, the directory at which this application was started
     /// at by the parent process.
     /// 
-    /// **See also:** current()
-    /// setCurrent()
-    /// homePath()
-    /// rootPath()
-    /// tempPath()
-    /// QCoreApplication::applicationDirPath()
+    /// **See also:** [`current()`]
+    /// [`set_current()`]
+    /// [`home_path()`]
+    /// [`root_path()`]
+    /// [`temp_path()`]
+    /// [`CoreApplication::application_dir_path`]
     [static] current() -> Dir,
     /// 
     /// Returns the absolute path of the application's current directory. The
@@ -781,12 +741,12 @@ struct Dir {
     /// that was never called, the directory at which this application was started
     /// at by the parent process.
     /// 
-    /// **See also:** current()
-    /// setCurrent()
-    /// homePath()
-    /// rootPath()
-    /// tempPath()
-    /// QCoreApplication::applicationDirPath()
+    /// **See also:** [`current()`]
+    /// [`set_current()`]
+    /// [`home_path()`]
+    /// [`root_path()`]
+    /// [`temp_path()`]
+    /// [`CoreApplication::application_dir_path`]
     [static] current_path() -> String,
     /// 
     /// Returns the user's home directory.
@@ -796,10 +756,10 @@ struct Dir {
     /// 
     /// See homePath() for details.
     /// 
-    /// **See also:** drives()
-    /// current()
-    /// root()
-    /// temp()
+    /// **See also:** [`drives()`]
+    /// [`current()`]
+    /// [`root()`]
+    /// [`temp()`]
     /// 
     /// Returns the absolute path of the user's home directory.
     /// 
@@ -823,10 +783,10 @@ struct Dir {
     /// variable is used if it exists, otherwise the path returned by the
     /// rootPath().
     /// 
-    /// **See also:** home()
-    /// currentPath()
-    /// rootPath()
-    /// tempPath()
+    /// **See also:** [`home()`]
+    /// [`current_path()`]
+    /// [`root_path()`]
+    /// [`temp_path()`]
     [static] home() -> Dir,
     /// 
     /// Returns the absolute path of the user's home directory.
@@ -851,10 +811,10 @@ struct Dir {
     /// variable is used if it exists, otherwise the path returned by the
     /// rootPath().
     /// 
-    /// **See also:** home()
-    /// currentPath()
-    /// rootPath()
-    /// tempPath()
+    /// **See also:** [`home()`]
+    /// [`current_path()`]
+    /// [`root_path()`]
+    /// [`temp_path()`]
     [static] home_path() -> String,
     /// 
     /// Returns the root directory.
@@ -864,21 +824,21 @@ struct Dir {
     /// 
     /// See rootPath() for details.
     /// 
-    /// **See also:** drives()
-    /// current()
-    /// home()
-    /// temp()
+    /// **See also:** [`drives()`]
+    /// [`current()`]
+    /// [`home()`]
+    /// [`temp()`]
     /// 
     /// Returns the absolute path of the root directory.
     /// 
     /// For Unix operating systems this returns . For Windows file
     /// systems this normally returns .
     /// 
-    /// **See also:** root()
-    /// drives()
-    /// currentPath()
-    /// homePath()
-    /// tempPath()
+    /// **See also:** [`root()`]
+    /// [`drives()`]
+    /// [`current_path()`]
+    /// [`home_path()`]
+    /// [`temp_path()`]
     [static] root() -> Dir,
     /// 
     /// Returns the absolute path of the root directory.
@@ -886,11 +846,11 @@ struct Dir {
     /// For Unix operating systems this returns . For Windows file
     /// systems this normally returns .
     /// 
-    /// **See also:** root()
-    /// drives()
-    /// currentPath()
-    /// homePath()
-    /// tempPath()
+    /// **See also:** [`root()`]
+    /// [`drives()`]
+    /// [`current_path()`]
+    /// [`home_path()`]
+    /// [`temp_path()`]
     [static] root_path() -> String,
     /// 
     /// Returns the system's temporary directory.
@@ -900,10 +860,10 @@ struct Dir {
     /// 
     /// See tempPath() for details.
     /// 
-    /// **See also:** drives()
-    /// current()
-    /// home()
-    /// root()
+    /// **See also:** [`drives()`]
+    /// [`current()`]
+    /// [`home()`]
+    /// [`root()`]
     /// 
     /// Returns the absolute path of the system's temporary directory.
     /// 
@@ -914,10 +874,10 @@ struct Dir {
     /// The path returned by this method doesn't end with a directory separator
     /// unless it is the root directory (of a drive).
     /// 
-    /// **See also:** temp()
-    /// currentPath()
-    /// homePath()
-    /// rootPath()
+    /// **See also:** [`temp()`]
+    /// [`current_path()`]
+    /// [`home_path()`]
+    /// [`root_path()`]
     [static] temp() -> Dir,
     /// 
     /// Returns the absolute path of the system's temporary directory.
@@ -929,10 +889,10 @@ struct Dir {
     /// The path returned by this method doesn't end with a directory separator
     /// unless it is the root directory (of a drive).
     /// 
-    /// **See also:** temp()
-    /// currentPath()
-    /// homePath()
-    /// rootPath()
+    /// **See also:** [`temp()`]
+    /// [`current_path()`]
+    /// [`home_path()`]
+    /// [`root_path()`]
     [static] temp_path() -> String,
     /// 
     /// **Overloads**
@@ -941,9 +901,9 @@ struct Dir {
     /// matching is case insensitive.
     /// 
     /// **See also:** {QRegExp wildcard matching}
-    /// QRegExp::exactMatch()
-    /// entryList()
-    /// entryInfoList()
+    /// [`RegExp::exact_match`]
+    /// [`entry_list()`]
+    /// [`entry_info_list()`]
     /// 
     /// Returns `true` if the *fileName* matches the wildcard (glob)
     /// pattern *filter;* otherwise returns `false.` The *filter* may
@@ -951,9 +911,9 @@ struct Dir {
     /// The matching is case insensitive.
     /// 
     /// **See also:** {QRegExp wildcard matching}
-    /// QRegExp::exactMatch()
-    /// entryList()
-    /// entryInfoList()
+    /// [`RegExp::exact_match`]
+    /// [`entry_list()`]
+    /// [`entry_info_list()`]
     [static] match(filters: &[String], file_name: String) -> bool,
     /// 
     /// **Overloads**
@@ -962,9 +922,9 @@ struct Dir {
     /// matching is case insensitive.
     /// 
     /// **See also:** {QRegExp wildcard matching}
-    /// QRegExp::exactMatch()
-    /// entryList()
-    /// entryInfoList()
+    /// [`RegExp::exact_match`]
+    /// [`entry_list()`]
+    /// [`entry_info_list()`]
     /// 
     /// Returns `true` if the *fileName* matches the wildcard (glob)
     /// pattern *filter;* otherwise returns `false.` The *filter* may
@@ -972,9 +932,10 @@ struct Dir {
     /// The matching is case insensitive.
     /// 
     /// **See also:** {QRegExp wildcard matching}
-    /// QRegExp::exactMatch()
-    /// entryList()
-    /// entryInfoList()
+    /// [`RegExp::exact_match`]
+    /// [`entry_list()`]
+    /// [`entry_info_list()`]
+    [org_name(match)]
     [static] match_2(filter: String, file_name: String) -> bool,
     /// 
     /// Returns *path* with directory separators normalized (converted to ) and
@@ -985,12 +946,52 @@ struct Dir {
     /// For example, becomes , becomes
     /// and becomes .
     /// 
-    /// **See also:** absolutePath()
-    /// canonicalPath()
+    /// **See also:** [`absolute_path()`]
+    /// [`canonical_path()`]
     [static] clean_path(path: String) -> String,
     /// 
     /// Refreshes the directory information.
     refresh(),
+}
+
+[org_name(QDir)]
+enum Filter {
+    Dirs,
+    Files,
+    Drives,
+    NoSymLinks,
+    AllEntries,
+    TypeMask,
+    Readable,
+    Writable,
+    Executable,
+    PermissionMask,
+    Modified,
+    Hidden,
+    System,
+    AccessMask,
+    AllDirs,
+    CaseSensitive,
+    NoDot,
+    NoDotDot,
+    NoDotAndDotDot,
+    NoFilter,
+}
+
+[org_name(QDir)]
+enum SortFlag {
+    Name,
+    Time,
+    Size,
+    Unsorted,
+    SortByMask,
+    DirsFirst,
+    Reversed,
+    IgnoreCase,
+    DirsLast,
+    LocaleAware,
+    Type,
+    NoSort,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -22,9 +22,9 @@
 /// addWidget(). Please use widget actions created by inheriting QWidgetAction
 /// and implementing QWidgetAction::createWidget() instead.
 /// 
-/// **See also:** QToolButton
-/// QMenu
-/// QAction
+/// **See also:** [`ToolButton`]
+/// [`Menu`]
+/// [`Action`]
 /// {Application Example}
 /// # Licence
 ///
@@ -68,7 +68,7 @@ struct ToolBar : Widget {
     /// 
     /// Removes all actions from the toolbar.
     /// 
-    /// **See also:** removeAction()
+    /// **See also:** [`remove_action()`]
     clear(),
     /// 
     /// **Overloads**
@@ -203,6 +203,7 @@ struct ToolBar : Widget {
     /// *functor.*
     /// 
     /// If *context* is destroyed, the functor will not be called.
+    [org_name(addAction)]
     add_action_2(icon: &IconType, text: String) -> Action?,
     /// 
     /// **Overloads**
@@ -270,6 +271,7 @@ struct ToolBar : Widget {
     /// *functor.*
     /// 
     /// If *context* is destroyed, the functor will not be called.
+    [org_name(addAction)]
     add_action_3(text: String, receiver: *ObjectType, member: *char) -> Action?,
     /// 
     /// **Overloads**
@@ -337,12 +339,18 @@ struct ToolBar : Widget {
     /// *functor.*
     /// 
     /// If *context* is destroyed, the functor will not be called.
+    [org_name(addAction)]
     add_action_4(icon: &IconType, text: String, receiver: *ObjectType, member: *char) -> Action?,
+    /// 
+    /// Adds a separator to the end of the toolbar.
+    /// 
+    /// **See also:** [`insert_separator()`]
+    add_separator() -> Action?,
     /// 
     /// Inserts a separator into the toolbar in front of the toolbar
     /// item associated with the *before* action.
     /// 
-    /// **See also:** addSeparator()
+    /// **See also:** [`add_separator()`]
     insert_separator(before: *ActionType) -> Action?,
     /// 
     /// Adds the given *widget* to the toolbar as the toolbar's last
@@ -357,7 +365,7 @@ struct ToolBar : Widget {
     /// visibility of the widget. Using QWidget::setVisible(),
     /// QWidget::show() and QWidget::hide() does not work.
     /// 
-    /// **See also:** insertWidget()
+    /// **See also:** [`insert_widget()`]
     add_widget(widget: *WidgetType) -> Action?,
     /// 
     /// Inserts the given *widget* in front of the toolbar item
@@ -367,13 +375,13 @@ struct ToolBar : Widget {
     /// visibility of the widget. Using QWidget::setVisible(),
     /// QWidget::show() and QWidget::hide() does not work.
     /// 
-    /// **See also:** addWidget()
+    /// **See also:** [`add_widget()`]
     insert_widget(before: *ActionType, widget: *WidgetType) -> Action?,
     /// 
     /// Returns the action at point *p.* This function returns zero if no
     /// action was found.
     /// 
-    /// **See also:** QWidget::childAt()
+    /// **See also:** [`Widget::child_at`]
     /// **Overloads**
     /// Returns the action at the point *x,* *y.* This function returns
     /// zero if no action was found.
@@ -382,10 +390,11 @@ struct ToolBar : Widget {
     /// Returns the action at point *p.* This function returns zero if no
     /// action was found.
     /// 
-    /// **See also:** QWidget::childAt()
+    /// **See also:** [`Widget::child_at`]
     /// **Overloads**
     /// Returns the action at the point *x,* *y.* This function returns
     /// zero if no action was found.
+    [org_name(actionAt)]
     action_at_2(x: i32, y: i32) -> Action?,
     /// 
     /// Returns a checkable action that can be used to show or hide this
@@ -393,14 +402,14 @@ struct ToolBar : Widget {
     /// 
     /// The action's text is set to the toolbar's window title.
     /// 
-    /// **See also:** QAction::text
-    /// QWidget::windowTitle
+    /// **See also:** [`Action::text()`]
+    /// [`Widget::window_title()`]
     toggle_view_action() -> Action?,
     /// 
     /// This signal is emitted when the icon size is changed. The *iconSize* parameter holds the toolbar's new icon size.
     /// 
     /// **See also:** iconSize
-    /// QMainWindow::iconSize
+    /// [`MainWindow::icon_size()`]
     /// 
     /// The default size is determined by the application's style and is
     /// derived from the QStyle::PM_ToolBarIconSize pixel metric. It is
@@ -413,7 +422,7 @@ struct ToolBar : Widget {
     /// style.
     /// 
     /// **See also:** toolButtonStyle
-    /// QMainWindow::toolButtonStyle
+    /// [`MainWindow::tool_button_style()`]
     /// 
     /// This property defines the style of all tool buttons that are added
     /// as [QAction](QAction)
@@ -429,7 +438,7 @@ struct ToolBar : Widget {
     /// 
     /// Returns the widget associated with the specified *action.*
     /// 
-    /// **See also:** addWidget()
+    /// **See also:** [`add_widget()`]
     widget_for_action(action: *ActionType) -> Widget?,
     is_floatable() -> bool,
     set_floatable(floatable: bool),
@@ -466,7 +475,7 @@ struct ToolBar : Widget {
     /// This signal is emitted when the icon size is changed. The *iconSize* parameter holds the toolbar's new icon size.
     /// 
     /// **See also:** iconSize
-    /// QMainWindow::iconSize
+    /// [`MainWindow::icon_size()`]
     [signal] icon_size_changed(icon_size: &SizeType),
     /// 
     /// This signal is emitted when the tool button style is changed. The
@@ -474,7 +483,7 @@ struct ToolBar : Widget {
     /// style.
     /// 
     /// **See also:** toolButtonStyle
-    /// QMainWindow::toolButtonStyle
+    /// [`MainWindow::tool_button_style()`]
     [signal] tool_button_style_changed(tool_button_style: Rute::ToolButtonStyle),
     /// 
     /// This signal is emitted when the [floating](floating)
@@ -482,7 +491,7 @@ struct ToolBar : Widget {
     /// The *topLevel* parameter is true if the toolbar is now floating;
     /// otherwise it is false.
     /// 
-    /// **See also:** isWindow()
+    /// **See also:** [`is_window()`]
     [signal] top_level_changed(top_level: bool),
     /// 
     /// This signal is emitted when the toolbar becomes *visible* (or

@@ -43,33 +43,12 @@
 /// appearance of QMacStyle on all platforms, but with left-aligned
 /// labels, you could write:
 /// 
-/// **See also:** QGridLayout
-/// QBoxLayout
-/// QStackedLayout
+/// **See also:** [`GridLayout`]
+/// [`BoxLayout`]
+/// [`StackedLayout`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QFormLayout)]
-enum FieldGrowthPolicy {
-    FieldsStayAtSizeHint,
-    ExpandingFieldsGrow,
-    AllNonFixedFieldsGrow,
-}
-
-[org_name(QFormLayout)]
-enum RowWrapPolicy {
-    DontWrapRows,
-    WrapLongRows,
-    WrapAllRows,
-}
-
-[org_name(QFormLayout)]
-enum ItemRole {
-    LabelRole,
-    FieldRole,
-    SpanningRole,
-}
-
 struct FormLayout : Layout {
     set_field_growth_policy(policy: FormLayout::FieldGrowthPolicy),
     /// 
@@ -123,7 +102,7 @@ struct FormLayout : Layout {
     /// for the parent widget.
     /// 
     /// **See also:** verticalSpacing
-    /// QStyle::pixelMetric()
+    /// [`Style::pixel_metric`]
     /// {QStyle::}{PM_LayoutHorizontalSpacing}
     horizontal_spacing() -> i32,
     set_vertical_spacing(spacing: i32),
@@ -133,29 +112,29 @@ struct FormLayout : Layout {
     /// widget.
     /// 
     /// **See also:** horizontalSpacing
-    /// QStyle::pixelMetric()
+    /// [`Style::pixel_metric`]
     /// {QStyle::}{PM_LayoutHorizontalSpacing}
     vertical_spacing() -> i32,
     /// 
     /// If the vertical spacing is equal to the horizontal spacing,
     /// this function returns that value; otherwise it returns -1.
     /// 
-    /// **See also:** setSpacing()
-    /// verticalSpacing()
-    /// horizontalSpacing()
+    /// **See also:** [`set_spacing()`]
+    /// [`vertical_spacing()`]
+    /// [`horizontal_spacing()`]
     spacing() -> i32,
     /// 
     /// This function sets both the vertical and horizontal spacing to
     /// *spacing.*
     /// 
-    /// **See also:** setVerticalSpacing()
-    /// setHorizontalSpacing()
+    /// **See also:** [`set_vertical_spacing()`]
+    /// [`set_horizontal_spacing()`]
     set_spacing(arg0: i32),
     /// 
     /// Adds a new row to the bottom of this form layout, with the given
     /// *label* and *field.*
     /// 
-    /// **See also:** insertRow()
+    /// **See also:** [`insert_row()`]
     /// 
     /// **Overloads**
     /// 
@@ -181,7 +160,7 @@ struct FormLayout : Layout {
     /// Adds a new row to the bottom of this form layout, with the given
     /// *label* and *field.*
     /// 
-    /// **See also:** insertRow()
+    /// **See also:** [`insert_row()`]
     /// 
     /// **Overloads**
     /// 
@@ -202,12 +181,13 @@ struct FormLayout : Layout {
     /// **Overloads**
     /// Adds the specified *layout* at the end of this form layout. The
     /// *layout* spans both columns.
+    [org_name(addRow)]
     add_row_2(label: *WidgetType, field: *LayoutType),
     /// 
     /// Adds a new row to the bottom of this form layout, with the given
     /// *label* and *field.*
     /// 
-    /// **See also:** insertRow()
+    /// **See also:** [`insert_row()`]
     /// 
     /// **Overloads**
     /// 
@@ -228,12 +208,13 @@ struct FormLayout : Layout {
     /// **Overloads**
     /// Adds the specified *layout* at the end of this form layout. The
     /// *layout* spans both columns.
+    [org_name(addRow)]
     add_row_3(label_text: String, field: *WidgetType),
     /// 
     /// Adds a new row to the bottom of this form layout, with the given
     /// *label* and *field.*
     /// 
-    /// **See also:** insertRow()
+    /// **See also:** [`insert_row()`]
     /// 
     /// **Overloads**
     /// 
@@ -254,12 +235,13 @@ struct FormLayout : Layout {
     /// **Overloads**
     /// Adds the specified *layout* at the end of this form layout. The
     /// *layout* spans both columns.
+    [org_name(addRow)]
     add_row_4(label_text: String, field: *LayoutType),
     /// 
     /// Adds a new row to the bottom of this form layout, with the given
     /// *label* and *field.*
     /// 
-    /// **See also:** insertRow()
+    /// **See also:** [`insert_row()`]
     /// 
     /// **Overloads**
     /// 
@@ -280,12 +262,13 @@ struct FormLayout : Layout {
     /// **Overloads**
     /// Adds the specified *layout* at the end of this form layout. The
     /// *layout* spans both columns.
+    [org_name(addRow)]
     add_row_5(widget: *WidgetType),
     /// 
     /// Adds a new row to the bottom of this form layout, with the given
     /// *label* and *field.*
     /// 
-    /// **See also:** insertRow()
+    /// **See also:** [`insert_row()`]
     /// 
     /// **Overloads**
     /// 
@@ -306,13 +289,14 @@ struct FormLayout : Layout {
     /// **Overloads**
     /// Adds the specified *layout* at the end of this form layout. The
     /// *layout* spans both columns.
+    [org_name(addRow)]
     add_row_6(layout: *LayoutType),
     /// 
     /// Inserts a new row at position *row* in this form layout, with
     /// the given *label* and *field.* If *row* is out of bounds, the
     /// new row is added at the end.
     /// 
-    /// **See also:** addRow()
+    /// **See also:** [`add_row()`]
     /// 
     /// **Overloads**
     /// 
@@ -341,7 +325,7 @@ struct FormLayout : Layout {
     /// the given *label* and *field.* If *row* is out of bounds, the
     /// new row is added at the end.
     /// 
-    /// **See also:** addRow()
+    /// **See also:** [`add_row()`]
     /// 
     /// **Overloads**
     /// 
@@ -364,13 +348,14 @@ struct FormLayout : Layout {
     /// Inserts the specified *layout* at position *row* in this form
     /// layout. The *layout* spans both columns. If *row* is out of
     /// bounds, the widget is added at the end.
+    [org_name(insertRow)]
     insert_row_2(row: i32, label: *WidgetType, field: *LayoutType),
     /// 
     /// Inserts a new row at position *row* in this form layout, with
     /// the given *label* and *field.* If *row* is out of bounds, the
     /// new row is added at the end.
     /// 
-    /// **See also:** addRow()
+    /// **See also:** [`add_row()`]
     /// 
     /// **Overloads**
     /// 
@@ -393,13 +378,14 @@ struct FormLayout : Layout {
     /// Inserts the specified *layout* at position *row* in this form
     /// layout. The *layout* spans both columns. If *row* is out of
     /// bounds, the widget is added at the end.
+    [org_name(insertRow)]
     insert_row_3(row: i32, label_text: String, field: *WidgetType),
     /// 
     /// Inserts a new row at position *row* in this form layout, with
     /// the given *label* and *field.* If *row* is out of bounds, the
     /// new row is added at the end.
     /// 
-    /// **See also:** addRow()
+    /// **See also:** [`add_row()`]
     /// 
     /// **Overloads**
     /// 
@@ -422,13 +408,14 @@ struct FormLayout : Layout {
     /// Inserts the specified *layout* at position *row* in this form
     /// layout. The *layout* spans both columns. If *row* is out of
     /// bounds, the widget is added at the end.
+    [org_name(insertRow)]
     insert_row_4(row: i32, label_text: String, field: *LayoutType),
     /// 
     /// Inserts a new row at position *row* in this form layout, with
     /// the given *label* and *field.* If *row* is out of bounds, the
     /// new row is added at the end.
     /// 
-    /// **See also:** addRow()
+    /// **See also:** [`add_row()`]
     /// 
     /// **Overloads**
     /// 
@@ -451,13 +438,14 @@ struct FormLayout : Layout {
     /// Inserts the specified *layout* at position *row* in this form
     /// layout. The *layout* spans both columns. If *row* is out of
     /// bounds, the widget is added at the end.
+    [org_name(insertRow)]
     insert_row_5(row: i32, widget: *WidgetType),
     /// 
     /// Inserts a new row at position *row* in this form layout, with
     /// the given *label* and *field.* If *row* is out of bounds, the
     /// new row is added at the end.
     /// 
-    /// **See also:** addRow()
+    /// **See also:** [`add_row()`]
     /// 
     /// **Overloads**
     /// 
@@ -480,6 +468,7 @@ struct FormLayout : Layout {
     /// Inserts the specified *layout* at position *row* in this form
     /// layout. The *layout* spans both columns. If *row* is out of
     /// bounds, the widget is added at the end.
+    [org_name(insertRow)]
     insert_row_6(row: i32, layout: *LayoutType),
     /// 
     /// Deletes row *row* from this form layout.
@@ -502,7 +491,7 @@ struct FormLayout : Layout {
     /// 
     /// If you want to remove the row from the layout without deleting the widgets, use takeRow() instead.
     /// 
-    /// **See also:** takeRow()
+    /// **See also:** [`take_row()`]
     /// 
     /// **Overloads**
     /// Deletes the row corresponding to *widget* from this form layout.
@@ -523,7 +512,7 @@ struct FormLayout : Layout {
     /// 
     /// If you want to remove the row from the layout without deleting the widgets, use takeRow() instead.
     /// 
-    /// **See also:** takeRow()
+    /// **See also:** [`take_row()`]
     /// 
     /// **Overloads**
     /// Deletes the row corresponding to *layout* from this form layout.
@@ -545,7 +534,7 @@ struct FormLayout : Layout {
     /// If you want to remove the row from the form layout without deleting the inserted layout,
     /// use takeRow() instead.
     /// 
-    /// **See also:** takeRow()
+    /// **See also:** [`take_row()`]
     remove_row(row: i32),
     /// 
     /// Deletes row *row* from this form layout.
@@ -568,7 +557,7 @@ struct FormLayout : Layout {
     /// 
     /// If you want to remove the row from the layout without deleting the widgets, use takeRow() instead.
     /// 
-    /// **See also:** takeRow()
+    /// **See also:** [`take_row()`]
     /// 
     /// **Overloads**
     /// Deletes the row corresponding to *widget* from this form layout.
@@ -589,7 +578,7 @@ struct FormLayout : Layout {
     /// 
     /// If you want to remove the row from the layout without deleting the widgets, use takeRow() instead.
     /// 
-    /// **See also:** takeRow()
+    /// **See also:** [`take_row()`]
     /// 
     /// **Overloads**
     /// Deletes the row corresponding to *layout* from this form layout.
@@ -611,7 +600,8 @@ struct FormLayout : Layout {
     /// If you want to remove the row from the form layout without deleting the inserted layout,
     /// use takeRow() instead.
     /// 
-    /// **See also:** takeRow()
+    /// **See also:** [`take_row()`]
+    [org_name(removeRow)]
     remove_row_2(widget: *WidgetType),
     /// 
     /// Deletes row *row* from this form layout.
@@ -634,7 +624,7 @@ struct FormLayout : Layout {
     /// 
     /// If you want to remove the row from the layout without deleting the widgets, use takeRow() instead.
     /// 
-    /// **See also:** takeRow()
+    /// **See also:** [`take_row()`]
     /// 
     /// **Overloads**
     /// Deletes the row corresponding to *widget* from this form layout.
@@ -655,7 +645,7 @@ struct FormLayout : Layout {
     /// 
     /// If you want to remove the row from the layout without deleting the widgets, use takeRow() instead.
     /// 
-    /// **See also:** takeRow()
+    /// **See also:** [`take_row()`]
     /// 
     /// **Overloads**
     /// Deletes the row corresponding to *layout* from this form layout.
@@ -677,7 +667,8 @@ struct FormLayout : Layout {
     /// If you want to remove the row from the form layout without deleting the inserted layout,
     /// use takeRow() instead.
     /// 
-    /// **See also:** takeRow()
+    /// **See also:** [`take_row()`]
+    [org_name(removeRow)]
     remove_row_3(layout: *LayoutType),
     /// 
     /// Removes the specified *row* from this form layout.
@@ -703,7 +694,7 @@ struct FormLayout : Layout {
     /// **Returns** A structure containing both the widget and
     /// corresponding label layout items
     /// 
-    /// **See also:** removeRow()
+    /// **See also:** [`remove_row()`]
     /// 
     /// **Overloads**
     /// Removes the specified *widget* from this form layout.
@@ -726,7 +717,7 @@ struct FormLayout : Layout {
     /// **Returns** A structure containing both the widget and
     /// corresponding label layout items
     /// 
-    /// **See also:** removeRow()
+    /// **See also:** [`remove_row()`]
     /// 
     /// **Overloads**
     /// Removes the specified *layout* from this form layout.
@@ -750,7 +741,7 @@ struct FormLayout : Layout {
     /// **Returns** A structure containing both the widget and
     /// corresponding label layout items
     /// 
-    /// **See also:** removeRow()
+    /// **See also:** [`remove_row()`]
     take_row(row: i32) -> FormLayout::TakeRowResult,
     /// 
     /// Removes the specified *row* from this form layout.
@@ -776,7 +767,7 @@ struct FormLayout : Layout {
     /// **Returns** A structure containing both the widget and
     /// corresponding label layout items
     /// 
-    /// **See also:** removeRow()
+    /// **See also:** [`remove_row()`]
     /// 
     /// **Overloads**
     /// Removes the specified *widget* from this form layout.
@@ -799,7 +790,7 @@ struct FormLayout : Layout {
     /// **Returns** A structure containing both the widget and
     /// corresponding label layout items
     /// 
-    /// **See also:** removeRow()
+    /// **See also:** [`remove_row()`]
     /// 
     /// **Overloads**
     /// Removes the specified *layout* from this form layout.
@@ -823,7 +814,8 @@ struct FormLayout : Layout {
     /// **Returns** A structure containing both the widget and
     /// corresponding label layout items
     /// 
-    /// **See also:** removeRow()
+    /// **See also:** [`remove_row()`]
+    [org_name(takeRow)]
     take_row_2(widget: *WidgetType) -> FormLayout::TakeRowResult,
     /// 
     /// Removes the specified *row* from this form layout.
@@ -849,7 +841,7 @@ struct FormLayout : Layout {
     /// **Returns** A structure containing both the widget and
     /// corresponding label layout items
     /// 
-    /// **See also:** removeRow()
+    /// **See also:** [`remove_row()`]
     /// 
     /// **Overloads**
     /// Removes the specified *widget* from this form layout.
@@ -872,7 +864,7 @@ struct FormLayout : Layout {
     /// **Returns** A structure containing both the widget and
     /// corresponding label layout items
     /// 
-    /// **See also:** removeRow()
+    /// **See also:** [`remove_row()`]
     /// 
     /// **Overloads**
     /// Removes the specified *layout* from this form layout.
@@ -896,7 +888,8 @@ struct FormLayout : Layout {
     /// **Returns** A structure containing both the widget and
     /// corresponding label layout items
     /// 
-    /// **See also:** removeRow()
+    /// **See also:** [`remove_row()`]
+    [org_name(takeRow)]
     take_row_3(layout: *LayoutType) -> FormLayout::TakeRowResult,
     /// 
     /// Sets the item in the given *row* for the given *role* to *item,* extending the
@@ -909,7 +902,7 @@ struct FormLayout : Layout {
     /// **Warning**: Do not use this function to add child layouts or child
     /// widget items. Use setLayout() or setWidget() instead.
     /// 
-    /// **See also:** setLayout()
+    /// **See also:** [`set_layout()`]
     set_item(row: i32, role: FormLayout::ItemRole, item: *LayoutItemType),
     /// 
     /// Sets the widget in the given *row* for the given *role* to *widget,* extending the
@@ -920,7 +913,7 @@ struct FormLayout : Layout {
     /// 
     /// **Note:** For most applications, addRow() or insertRow() should be used instead of setWidget().
     /// 
-    /// **See also:** setLayout()
+    /// **See also:** [`set_layout()`]
     set_widget(row: i32, role: FormLayout::ItemRole, widget: *WidgetType),
     /// 
     /// Sets the sub-layout in the given *row* for the given *role* to *layout,* extending the
@@ -931,14 +924,14 @@ struct FormLayout : Layout {
     /// 
     /// **Note:** For most applications, addRow() or insertRow() should be used instead of setLayout().
     /// 
-    /// **See also:** setWidget()
+    /// **See also:** [`set_widget()`]
     set_layout(row: i32, role: FormLayout::ItemRole, layout: *LayoutType),
     /// 
     /// 
     /// Returns the layout item in the given *row* with the specified *role* (column). Returns 0 if there is no such item.
     /// 
-    /// **See also:** QLayout::itemAt()
-    /// setItem()
+    /// **See also:** [`Layout::item_at`]
+    /// [`set_item()`]
     item_at(row: i32, role: FormLayout::ItemRole) -> LayoutItem?,
     /// 
     /// Retrieves the row and role (column) of the item at the specified
@@ -946,10 +939,10 @@ struct FormLayout : Layout {
     /// otherwise the row is stored in * *rowPtr* and the role is stored
     /// in * *rolePtr.*
     /// 
-    /// **See also:** itemAt()
-    /// count()
-    /// getLayoutPosition()
-    /// getWidgetPosition()
+    /// **See also:** [`item_at()`]
+    /// [`count()`]
+    /// [`get_layout_position()`]
+    /// [`get_widget_position()`]
     get_item_position(index: i32, row_ptr: *i32, role_ptr: FormLayout::ItemRole *),
     /// 
     /// Retrieves the row and role (column) of the specified *widget* in
@@ -957,8 +950,8 @@ struct FormLayout : Layout {
     /// to -1; otherwise the row is stored in * *rowPtr* and the role is stored
     /// in * *rolePtr.*
     /// 
-    /// **See also:** getItemPosition()
-    /// itemAt()
+    /// **See also:** [`get_item_position()`]
+    /// [`item_at()`]
     get_widget_position(widget: *WidgetType, row_ptr: *i32, role_ptr: FormLayout::ItemRole *),
     /// 
     /// Retrieves the row and role (column) of the specified child *layout.* If *layout* is not in the form layout, * *rowPtr* is set
@@ -968,16 +961,17 @@ struct FormLayout : Layout {
     /// 
     /// Returns the label associated with the given *field.*
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// 
     /// **Overloads**
     label_for_field(field: *WidgetType) -> Widget?,
     /// 
     /// Returns the label associated with the given *field.*
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// 
     /// **Overloads**
+    [org_name(labelForField)]
     label_for_field_2(field: *LayoutType) -> Widget?,
     /// 
     [event] add_item(item: *LayoutItemType),
@@ -985,8 +979,9 @@ struct FormLayout : Layout {
     /// 
     /// Returns the layout item in the given *row* with the specified *role* (column). Returns 0 if there is no such item.
     /// 
-    /// **See also:** QLayout::itemAt()
-    /// setItem()
+    /// **See also:** [`Layout::item_at`]
+    /// [`set_item()`]
+    [org_name(itemAt)]
     [event] item_at_2(index: i32) -> LayoutItem?,
     /// 
     [event] take_at(index: i32) -> LayoutItem?,
@@ -1007,8 +1002,29 @@ struct FormLayout : Layout {
     /// 
     /// Returns the number of rows in the form.
     /// 
-    /// **See also:** QLayout::count()
+    /// **See also:** [`Layout::count`]
     row_count() -> i32,
+}
+
+[org_name(QFormLayout)]
+enum FieldGrowthPolicy {
+    FieldsStayAtSizeHint,
+    ExpandingFieldsGrow,
+    AllNonFixedFieldsGrow,
+}
+
+[org_name(QFormLayout)]
+enum RowWrapPolicy {
+    DontWrapRows,
+    WrapLongRows,
+    WrapAllRows,
+}
+
+[org_name(QFormLayout)]
+enum ItemRole {
+    LabelRole,
+    FieldRole,
+    SpanningRole,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

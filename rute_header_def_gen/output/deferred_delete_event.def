@@ -6,7 +6,7 @@ struct DeferredDeleteEvent : Event {
     /// Returns the loop-level in which the event was posted. The
     /// loop-level is set by QCoreApplication::postEvent().
     /// 
-    /// **See also:** QObject::deleteLater()
+    /// **See also:** [`Object::delete_later`]
     loop_level() -> i32,
 }
 

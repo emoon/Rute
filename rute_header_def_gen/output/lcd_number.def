@@ -31,28 +31,13 @@
 /// its roots back to a BASIC program on the [Sinclair Spectrum](Sinclair%20Spectrum)
 /// 
 /// 
-/// **See also:** QLabel
-/// QFrame
+/// **See also:** [`Label`]
+/// [`Frame`]
 /// {Digital Clock Example}
 /// {Tetrix Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QLCDNumber)]
-enum Mode {
-    Hex,
-    Dec,
-    Oct,
-    Bin,
-}
-
-[org_name(QLCDNumber)]
-enum SegmentStyle {
-    Outline,
-    Filled,
-    Flat,
-}
-
 struct LCDNumber : Frame {
     /// 
     /// If true the decimal point is drawn between two digit positions.
@@ -84,32 +69,33 @@ struct LCDNumber : Frame {
     /// Returns `true` if *num* is too big to be displayed in its entirety;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** display()
-    /// digitCount()
-    /// smallDecimalPoint()
+    /// **See also:** [`display()`]
+    /// [`digit_count()`]
+    /// [`small_decimal_point()`]
     /// 
     /// Returns `true` if *num* is too big to be displayed in its entirety;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** display()
-    /// digitCount()
-    /// smallDecimalPoint()
+    /// **See also:** [`display()`]
+    /// [`digit_count()`]
+    /// [`small_decimal_point()`]
     check_overflow(num: double) -> bool,
     /// 
     /// **Overloads**
     /// Returns `true` if *num* is too big to be displayed in its entirety;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** display()
-    /// digitCount()
-    /// smallDecimalPoint()
+    /// **See also:** [`display()`]
+    /// [`digit_count()`]
+    /// [`small_decimal_point()`]
     /// 
     /// Returns `true` if *num* is too big to be displayed in its entirety;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** display()
-    /// digitCount()
-    /// smallDecimalPoint()
+    /// **See also:** [`display()`]
+    /// [`digit_count()`]
+    /// [`small_decimal_point()`]
+    [org_name(checkOverflow)]
     check_overflow_2(num: i32) -> bool,
     /// 
     /// Corresponds to the current display mode, which is one of `Bin,`
@@ -117,11 +103,11 @@ struct LCDNumber : Frame {
     /// floating point values, the other modes display the integer
     /// equivalent.
     /// 
-    /// **See also:** smallDecimalPoint()
-    /// setHexMode()
-    /// setDecMode()
-    /// setOctMode()
-    /// setBinMode()
+    /// **See also:** [`small_decimal_point()`]
+    /// [`set_hex_mode()`]
+    /// [`set_dec_mode()`]
+    /// [`set_oct_mode()`]
+    /// [`set_bin_mode()`]
     mode() -> LCDNumber::Mode,
     set_mode(arg0: LCDNumber::Mode),
     /// 
@@ -194,6 +180,7 @@ struct LCDNumber : Frame {
     /// P, r, u, U, Y, colon, degree sign (which is specified as single
     /// quote in the string) and space. QLCDNumber substitutes spaces for
     /// illegal characters.
+    [org_name(display)]
     display_2(num: i32),
     /// 
     /// **Overloads**
@@ -212,46 +199,47 @@ struct LCDNumber : Frame {
     /// P, r, u, U, Y, colon, degree sign (which is specified as single
     /// quote in the string) and space. QLCDNumber substitutes spaces for
     /// illegal characters.
+    [org_name(display)]
     display_3(num: double),
     /// 
     /// Calls setMode(Hex). Provided for convenience (e.g. for
     /// connecting buttons to it).
     /// 
-    /// **See also:** setMode()
-    /// setDecMode()
-    /// setOctMode()
-    /// setBinMode()
-    /// mode()
+    /// **See also:** [`set_mode()`]
+    /// [`set_dec_mode()`]
+    /// [`set_oct_mode()`]
+    /// [`set_bin_mode()`]
+    /// [`mode()`]
     set_hex_mode(),
     /// 
     /// Calls setMode(Dec). Provided for convenience (e.g. for
     /// connecting buttons to it).
     /// 
-    /// **See also:** setMode()
-    /// setHexMode()
-    /// setOctMode()
-    /// setBinMode()
-    /// mode()
+    /// **See also:** [`set_mode()`]
+    /// [`set_hex_mode()`]
+    /// [`set_oct_mode()`]
+    /// [`set_bin_mode()`]
+    /// [`mode()`]
     set_dec_mode(),
     /// 
     /// Calls setMode(Oct). Provided for convenience (e.g. for
     /// connecting buttons to it).
     /// 
-    /// **See also:** setMode()
-    /// setHexMode()
-    /// setDecMode()
-    /// setBinMode()
-    /// mode()
+    /// **See also:** [`set_mode()`]
+    /// [`set_hex_mode()`]
+    /// [`set_dec_mode()`]
+    /// [`set_bin_mode()`]
+    /// [`mode()`]
     set_oct_mode(),
     /// 
     /// Calls setMode(Bin). Provided for convenience (e.g. for
     /// connecting buttons to it).
     /// 
-    /// **See also:** setMode()
-    /// setHexMode()
-    /// setDecMode()
-    /// setOctMode()
-    /// mode()
+    /// **See also:** [`set_mode()`]
+    /// [`set_hex_mode()`]
+    /// [`set_dec_mode()`]
+    /// [`set_oct_mode()`]
+    /// [`mode()`]
     set_bin_mode(),
     set_small_decimal_point(arg0: bool),
     /// 
@@ -264,6 +252,21 @@ struct LCDNumber : Frame {
     [event] event(e: *EventType) -> bool,
     /// 
     [event] paint_event(arg0: *PaintEventType),
+}
+
+[org_name(QLCDNumber)]
+enum Mode {
+    Hex,
+    Dec,
+    Oct,
+    Bin,
+}
+
+[org_name(QLCDNumber)]
+enum SegmentStyle {
+    Outline,
+    Filled,
+    Flat,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

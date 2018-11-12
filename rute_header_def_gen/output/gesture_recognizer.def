@@ -50,23 +50,10 @@
 /// Similarly, you may need to reimplement the reset() function if your custom gesture
 /// objects need to be specially handled when a gesture is canceled.
 /// 
-/// **See also:** QGesture
+/// **See also:** [`Gesture`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGestureRecognizer)]
-enum ResultFlag {
-    Ignore,
-    MayBeGesture,
-    TriggerGesture,
-    FinishGesture,
-    CancelGesture,
-    ResultState_Mask,
-    ConsumeEventHint,
-    ResultHint_Mask,
-}
-
-
 struct GestureRecognizer {
     /// 
     /// This function is called by Qt to create a new QGesture object for the
@@ -87,7 +74,7 @@ struct GestureRecognizer {
     /// The result reflects how much of the gesture has been recognized. The state of the
     /// *gesture* object is set depending on the result.
     /// 
-    /// **See also:** QGestureRecognizer::Result
+    /// **See also:** [`GestureRecognizer::result()`]
     [event] recognize(state: *GestureType, watched: *ObjectType, event: *EventType) -> GestureRecognizer::Result,
     /// 
     /// This function is called by the framework to reset a given *gesture.*
@@ -106,15 +93,27 @@ struct GestureRecognizer {
     /// function) the return value is a generated gesture ID with the Qt::CustomGesture
     /// flag set.
     /// 
-    /// **See also:** unregisterRecognizer()
-    /// QGestureRecognizer::create()
-    /// QGesture
+    /// **See also:** [`unregister_recognizer()`]
+    /// [`GestureRecognizer::create`]
+    /// [`Gesture`]
     [static] register_recognizer(recognizer: *GestureRecognizerType) -> Rute::GestureType,
     /// 
     /// Unregisters all gesture recognizers of the specified *type.*
     /// 
-    /// **See also:** registerRecognizer()
+    /// **See also:** [`register_recognizer()`]
     [static] unregister_recognizer(type: Rute::GestureType),
+}
+
+[org_name(QGestureRecognizer)]
+enum ResultFlag {
+    Ignore,
+    MayBeGesture,
+    TriggerGesture,
+    FinishGesture,
+    CancelGesture,
+    ResultState_Mask,
+    ConsumeEventHint,
+    ResultHint_Mask,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

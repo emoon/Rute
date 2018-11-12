@@ -17,10 +17,71 @@
 /// can be used to customize the numbers used in an ordered list so that they
 /// appear as (1), (2), (3), etc.:
 /// 
-/// **See also:** QTextList
+/// **See also:** [`TextList`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct TextListFormat : TextFormat {
+    /// 
+    /// Returns `true` if this list format is valid; otherwise
+    /// returns `false.`
+    is_valid() -> bool,
+    /// 
+    /// Sets the list format's *style.*
+    /// 
+    /// **See also:** [`style()`]
+    /// Style
+    set_style(style: TextListFormat::Style),
+    /// 
+    /// Returns the list format's style.
+    /// 
+    /// **See also:** [`set_style()`]
+    /// Style
+    style() -> TextListFormat::Style,
+    /// 
+    /// Sets the list format's *indentation.*
+    /// The indentation is multiplied by the QTextDocument::indentWidth
+    /// property to get the effective indent in pixels.
+    /// 
+    /// **See also:** [`indent()`]
+    set_indent(indent: i32),
+    /// 
+    /// Returns the list format's indentation.
+    /// The indentation is multiplied by the QTextDocument::indentWidth
+    /// property to get the effective indent in pixels.
+    /// 
+    /// **See also:** [`set_indent()`]
+    indent() -> i32,
+    /// 
+    /// Sets the list format's number prefix to the string specified by
+    /// *numberPrefix.* This can be used with all sorted list types. It does not
+    /// have any effect on unsorted list types.
+    /// 
+    /// The default prefix is an empty string.
+    /// 
+    /// **See also:** [`number_prefix()`]
+    set_number_prefix(number_prefix: String),
+    /// 
+    /// Returns the list format's number prefix.
+    /// 
+    /// **See also:** [`set_number_prefix()`]
+    number_prefix() -> String,
+    /// 
+    /// Sets the list format's number suffix to the string specified by
+    /// *numberSuffix.* This can be used with all sorted list types. It does not
+    /// have any effect on unsorted list types.
+    /// 
+    /// The default suffix is .
+    /// 
+    /// **See also:** [`number_suffix()`]
+    set_number_suffix(number_suffix: String),
+    /// 
+    /// Returns the list format's number suffix.
+    /// 
+    /// **See also:** [`set_number_suffix()`]
+    number_suffix() -> String,
+}
+
 [org_name(QTextListFormat)]
 enum Style {
     ListDisc,
@@ -32,67 +93,6 @@ enum Style {
     ListLowerRoman,
     ListUpperRoman,
     ListStyleUndefined,
-}
-
-struct TextListFormat : TextFormat {
-    /// 
-    /// Returns `true` if this list format is valid; otherwise
-    /// returns `false.`
-    is_valid() -> bool,
-    /// 
-    /// Sets the list format's *style.*
-    /// 
-    /// **See also:** style()
-    /// Style
-    set_style(style: TextListFormat::Style),
-    /// 
-    /// Returns the list format's style.
-    /// 
-    /// **See also:** setStyle()
-    /// Style
-    style() -> TextListFormat::Style,
-    /// 
-    /// Sets the list format's *indentation.*
-    /// The indentation is multiplied by the QTextDocument::indentWidth
-    /// property to get the effective indent in pixels.
-    /// 
-    /// **See also:** indent()
-    set_indent(indent: i32),
-    /// 
-    /// Returns the list format's indentation.
-    /// The indentation is multiplied by the QTextDocument::indentWidth
-    /// property to get the effective indent in pixels.
-    /// 
-    /// **See also:** setIndent()
-    indent() -> i32,
-    /// 
-    /// Sets the list format's number prefix to the string specified by
-    /// *numberPrefix.* This can be used with all sorted list types. It does not
-    /// have any effect on unsorted list types.
-    /// 
-    /// The default prefix is an empty string.
-    /// 
-    /// **See also:** numberPrefix()
-    set_number_prefix(number_prefix: String),
-    /// 
-    /// Returns the list format's number prefix.
-    /// 
-    /// **See also:** setNumberPrefix()
-    number_prefix() -> String,
-    /// 
-    /// Sets the list format's number suffix to the string specified by
-    /// *numberSuffix.* This can be used with all sorted list types. It does not
-    /// have any effect on unsorted list types.
-    /// 
-    /// The default suffix is .
-    /// 
-    /// **See also:** numberSuffix()
-    set_number_suffix(number_suffix: String),
-    /// 
-    /// Returns the list format's number suffix.
-    /// 
-    /// **See also:** setNumberSuffix()
-    number_suffix() -> String,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

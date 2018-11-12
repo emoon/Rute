@@ -34,11 +34,398 @@
 /// The class also provides convenience methods for converting page size IDs to and from
 /// various unit sizes.
 /// 
-/// **See also:** QPagedPaintDevice
-/// QPdfWriter
+/// **See also:** [`PagedPaintDevice`]
+/// [`PdfWriter`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct PageSize {
+    /// 
+    /// Swaps this QPageSize with *other.* This function is very fast and
+    /// never fails.
+    swap(other: &PageSizeType),
+    /// 
+    /// Returns `true` if this page is equivalent to the *other* page, i.e. if the
+    /// page has the same size regardless of other attributes like name.
+    is_equivalent_to(other: &PageSizeType) -> bool,
+    /// 
+    /// Returns `true` if this page size is valid.
+    /// 
+    /// The page size may be invalid if created with an invalid PageSizeId, or a
+    /// negative or invalid QSize or QSizeF, or the null constructor.
+    is_valid() -> bool,
+    /// 
+    /// Returns the unique key of the page size.
+    /// 
+    /// By default this is the PPD standard mediaOption keyword for the page size,
+    /// or the PPD custom format key. If the QPageSize instance was obtained from
+    /// a print device then this will be the key provided by the print device and
+    /// may differ from the standard key.
+    /// 
+    /// If the QPageSize is invalid then the key will be an empty string.
+    /// 
+    /// This key should never be shown to end users, it is an internal key only.
+    /// For a human-readable name use name().
+    /// 
+    /// **See also:** [`name()`]
+    /// 
+    /// Returns the PPD mediaOption keyword of the standard *pageSizeId.*
+    /// 
+    /// If the QPageSize is invalid then the key will be empty.
+    key() -> String,
+    /// 
+    /// Returns a localized human-readable name for the page size.
+    /// 
+    /// If the QPageSize instance was obtained from a print device then the name
+    /// used is that provided by the print device. Note that a print device may
+    /// not support the current default locale language.
+    /// 
+    /// If the QPageSize is invalid then the name will be an empty string.
+    /// 
+    /// Returns the localized name of the standard *pageSizeId.*
+    /// 
+    /// If the QPageSize is invalid then the name will be empty.
+    name() -> String,
+    /// 
+    /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
+    /// 
+    /// If the QPageSize is invalid then the ID will be QPageSize::Custom.
+    /// 
+    /// Returns the standard QPageSize::PageSizeId of the given *pointSize* in
+    /// points using the given *matchPolicy.*
+    /// 
+    /// If using FuzzyMatch then the point size of the PageSizeId returned may not
+    /// exactly match the *pointSize* you passed in. You should call
+    /// QPageSize::sizePoints() using the returned PageSizeId to find out the actual
+    /// point size of the PageSizeId before using it in any calculations.
+    /// 
+    /// Returns the standard QPageSize::PageSizeId of the given *size* in *units*
+    /// using the given *matchPolicy.*
+    /// 
+    /// If using FuzzyMatch then the unit size of the PageSizeId returned may not
+    /// exactly match the *size* you passed in. You should call
+    /// QPageSize::size() using the returned PageSizeId to find out the actual
+    /// unit size of the PageSizeId before using it in any calculations.
+    /// 
+    /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
+    /// 
+    /// If there is no matching PageSizeId then QPageSize::Custom is returned.
+    id() -> PageSize::PageSizeId,
+    /// 
+    /// Returns the Windows DMPAPER enum value for the page size.
+    /// 
+    /// Not all valid PPD page sizes have a Windows equivalent, in which case 0
+    /// will be returned.
+    /// 
+    /// If the QPageSize is invalid then the Windows ID will be 0.
+    /// 
+    /// **See also:** [`id()`]
+    /// 
+    /// Returns the Windows DMPAPER enum value of the standard *pageSizeId.*
+    /// 
+    /// Not all valid PPD page sizes have a Windows equivalent, in which case 0
+    /// will be returned.
+    windows_id() -> i32,
+    /// 
+    /// Returns the definition size of the page size.
+    /// 
+    /// For a standard page size this will be the size as defined in the relevant
+    /// standard, i.e. ISO A4 will be defined in millimeters while ANSI Letter will
+    /// be defined in inches.
+    /// 
+    /// For a custom page size this will be the original size used to create the
+    /// page size object.
+    /// 
+    /// If the QPageSize is invalid then the QSizeF will be invalid.
+    /// 
+    /// **See also:** [`definition_units()`]
+    /// 
+    /// Returns the definition size of the standard *pageSizeId.*
+    /// 
+    /// To obtain the definition units, call QPageSize::definitionUnits().
+    definition_size() -> SizeF,
+    /// 
+    /// Returns the definition units of the page size.
+    /// 
+    /// For a standard page size this will be the units as defined in the relevant
+    /// standard, i.e. ISO A4 will be defined in millimeters while ANSI Letter will
+    /// be defined in inches.
+    /// 
+    /// For a custom page size this will be the original units used to create the
+    /// page size object.
+    /// 
+    /// If the QPageSize is invalid then the QPageSize::Unit will be invalid.
+    /// 
+    /// **See also:** [`definition_size()`]
+    /// 
+    /// Returns the definition units of the standard *pageSizeId.*
+    /// 
+    /// To obtain the definition size, call QPageSize::definitionSize().
+    definition_units() -> PageSize::Unit,
+    /// 
+    /// Returns the size of the page in the required *units.*
+    /// 
+    /// If the QPageSize is invalid then the QSizeF will be invalid.
+    /// 
+    /// Returns the size of the page in Postscript Points (1/72 of an inch).
+    /// 
+    /// If the QPageSize is invalid then the QSize will be invalid.
+    /// 
+    /// Returns the size of the page in Device Pixels at the given *resolution.*
+    /// 
+    /// If the QPageSize is invalid then the QSize will be invalid.
+    /// 
+    /// Returns the size of the standard *pageSizeId* in the requested *units.*
+    /// 
+    /// Returns the size of the standard *pageSizeId* in Points.
+    /// 
+    /// Returns the size of the standard *pageSizeId* in Device Pixels
+    /// for the given *resolution.*
+    size(units: PageSize::Unit) -> SizeF,
+    /// 
+    /// Returns the size of the page in Postscript Points (1/72 of an inch).
+    /// 
+    /// If the QPageSize is invalid then the QSize will be invalid.
+    /// 
+    /// Returns the size of the standard *pageSizeId* in Points.
+    size_points() -> Size,
+    /// 
+    /// Returns the size of the page in Device Pixels at the given *resolution.*
+    /// 
+    /// If the QPageSize is invalid then the QSize will be invalid.
+    /// 
+    /// Returns the size of the standard *pageSizeId* in Device Pixels
+    /// for the given *resolution.*
+    size_pixels(resolution: i32) -> Size,
+    /// 
+    /// Returns the page rectangle in the required *units.*
+    /// 
+    /// If the QPageSize is invalid then the QRect will be invalid.
+    /// 
+    /// Returns the page rectangle in Postscript Points (1/72 of an inch).
+    /// 
+    /// If the QPageSize is invalid then the QRect will be invalid.
+    /// 
+    /// Returns the page rectangle in Device Pixels at the given *resolution.*
+    /// 
+    /// If the QPageSize is invalid then the QRect will be invalid.
+    rect(units: PageSize::Unit) -> RectF,
+    /// 
+    /// Returns the page rectangle in Postscript Points (1/72 of an inch).
+    /// 
+    /// If the QPageSize is invalid then the QRect will be invalid.
+    rect_points() -> Rect,
+    /// 
+    /// Returns the page rectangle in Device Pixels at the given *resolution.*
+    /// 
+    /// If the QPageSize is invalid then the QRect will be invalid.
+    rect_pixels(resolution: i32) -> Rect,
+    /// 
+    /// Returns the unique key of the page size.
+    /// 
+    /// By default this is the PPD standard mediaOption keyword for the page size,
+    /// or the PPD custom format key. If the QPageSize instance was obtained from
+    /// a print device then this will be the key provided by the print device and
+    /// may differ from the standard key.
+    /// 
+    /// If the QPageSize is invalid then the key will be an empty string.
+    /// 
+    /// This key should never be shown to end users, it is an internal key only.
+    /// For a human-readable name use name().
+    /// 
+    /// **See also:** [`name()`]
+    /// 
+    /// Returns the PPD mediaOption keyword of the standard *pageSizeId.*
+    /// 
+    /// If the QPageSize is invalid then the key will be empty.
+    [org_name(key)]
+    [static] key_2(page_size_id: PageSize::PageSizeId) -> String,
+    /// 
+    /// Returns a localized human-readable name for the page size.
+    /// 
+    /// If the QPageSize instance was obtained from a print device then the name
+    /// used is that provided by the print device. Note that a print device may
+    /// not support the current default locale language.
+    /// 
+    /// If the QPageSize is invalid then the name will be an empty string.
+    /// 
+    /// Returns the localized name of the standard *pageSizeId.*
+    /// 
+    /// If the QPageSize is invalid then the name will be empty.
+    [org_name(name)]
+    [static] name_2(page_size_id: PageSize::PageSizeId) -> String,
+    /// 
+    /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
+    /// 
+    /// If the QPageSize is invalid then the ID will be QPageSize::Custom.
+    /// 
+    /// Returns the standard QPageSize::PageSizeId of the given *pointSize* in
+    /// points using the given *matchPolicy.*
+    /// 
+    /// If using FuzzyMatch then the point size of the PageSizeId returned may not
+    /// exactly match the *pointSize* you passed in. You should call
+    /// QPageSize::sizePoints() using the returned PageSizeId to find out the actual
+    /// point size of the PageSizeId before using it in any calculations.
+    /// 
+    /// Returns the standard QPageSize::PageSizeId of the given *size* in *units*
+    /// using the given *matchPolicy.*
+    /// 
+    /// If using FuzzyMatch then the unit size of the PageSizeId returned may not
+    /// exactly match the *size* you passed in. You should call
+    /// QPageSize::size() using the returned PageSizeId to find out the actual
+    /// unit size of the PageSizeId before using it in any calculations.
+    /// 
+    /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
+    /// 
+    /// If there is no matching PageSizeId then QPageSize::Custom is returned.
+    [org_name(id)]
+    [static] id_2(point_size: &SizeType, match_policy: PageSize::SizeMatchPolicy) -> PageSize::PageSizeId,
+    /// 
+    /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
+    /// 
+    /// If the QPageSize is invalid then the ID will be QPageSize::Custom.
+    /// 
+    /// Returns the standard QPageSize::PageSizeId of the given *pointSize* in
+    /// points using the given *matchPolicy.*
+    /// 
+    /// If using FuzzyMatch then the point size of the PageSizeId returned may not
+    /// exactly match the *pointSize* you passed in. You should call
+    /// QPageSize::sizePoints() using the returned PageSizeId to find out the actual
+    /// point size of the PageSizeId before using it in any calculations.
+    /// 
+    /// Returns the standard QPageSize::PageSizeId of the given *size* in *units*
+    /// using the given *matchPolicy.*
+    /// 
+    /// If using FuzzyMatch then the unit size of the PageSizeId returned may not
+    /// exactly match the *size* you passed in. You should call
+    /// QPageSize::size() using the returned PageSizeId to find out the actual
+    /// unit size of the PageSizeId before using it in any calculations.
+    /// 
+    /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
+    /// 
+    /// If there is no matching PageSizeId then QPageSize::Custom is returned.
+    [org_name(id)]
+    [static] id_3(size: &SizeFType, units: PageSize::Unit, match_policy: PageSize::SizeMatchPolicy) -> PageSize::PageSizeId,
+    /// 
+    /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
+    /// 
+    /// If the QPageSize is invalid then the ID will be QPageSize::Custom.
+    /// 
+    /// Returns the standard QPageSize::PageSizeId of the given *pointSize* in
+    /// points using the given *matchPolicy.*
+    /// 
+    /// If using FuzzyMatch then the point size of the PageSizeId returned may not
+    /// exactly match the *pointSize* you passed in. You should call
+    /// QPageSize::sizePoints() using the returned PageSizeId to find out the actual
+    /// point size of the PageSizeId before using it in any calculations.
+    /// 
+    /// Returns the standard QPageSize::PageSizeId of the given *size* in *units*
+    /// using the given *matchPolicy.*
+    /// 
+    /// If using FuzzyMatch then the unit size of the PageSizeId returned may not
+    /// exactly match the *size* you passed in. You should call
+    /// QPageSize::size() using the returned PageSizeId to find out the actual
+    /// unit size of the PageSizeId before using it in any calculations.
+    /// 
+    /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
+    /// 
+    /// If there is no matching PageSizeId then QPageSize::Custom is returned.
+    [org_name(id)]
+    [static] id_4(windows_id: i32) -> PageSize::PageSizeId,
+    /// 
+    /// Returns the Windows DMPAPER enum value for the page size.
+    /// 
+    /// Not all valid PPD page sizes have a Windows equivalent, in which case 0
+    /// will be returned.
+    /// 
+    /// If the QPageSize is invalid then the Windows ID will be 0.
+    /// 
+    /// **See also:** [`id()`]
+    /// 
+    /// Returns the Windows DMPAPER enum value of the standard *pageSizeId.*
+    /// 
+    /// Not all valid PPD page sizes have a Windows equivalent, in which case 0
+    /// will be returned.
+    [org_name(windowsId)]
+    [static] windows_id_2(page_size_id: PageSize::PageSizeId) -> i32,
+    /// 
+    /// Returns the definition size of the page size.
+    /// 
+    /// For a standard page size this will be the size as defined in the relevant
+    /// standard, i.e. ISO A4 will be defined in millimeters while ANSI Letter will
+    /// be defined in inches.
+    /// 
+    /// For a custom page size this will be the original size used to create the
+    /// page size object.
+    /// 
+    /// If the QPageSize is invalid then the QSizeF will be invalid.
+    /// 
+    /// **See also:** [`definition_units()`]
+    /// 
+    /// Returns the definition size of the standard *pageSizeId.*
+    /// 
+    /// To obtain the definition units, call QPageSize::definitionUnits().
+    [org_name(definitionSize)]
+    [static] definition_size_2(page_size_id: PageSize::PageSizeId) -> SizeF,
+    /// 
+    /// Returns the definition units of the page size.
+    /// 
+    /// For a standard page size this will be the units as defined in the relevant
+    /// standard, i.e. ISO A4 will be defined in millimeters while ANSI Letter will
+    /// be defined in inches.
+    /// 
+    /// For a custom page size this will be the original units used to create the
+    /// page size object.
+    /// 
+    /// If the QPageSize is invalid then the QPageSize::Unit will be invalid.
+    /// 
+    /// **See also:** [`definition_size()`]
+    /// 
+    /// Returns the definition units of the standard *pageSizeId.*
+    /// 
+    /// To obtain the definition size, call QPageSize::definitionSize().
+    [org_name(definitionUnits)]
+    [static] definition_units_2(page_size_id: PageSize::PageSizeId) -> PageSize::Unit,
+    /// 
+    /// Returns the size of the page in the required *units.*
+    /// 
+    /// If the QPageSize is invalid then the QSizeF will be invalid.
+    /// 
+    /// Returns the size of the page in Postscript Points (1/72 of an inch).
+    /// 
+    /// If the QPageSize is invalid then the QSize will be invalid.
+    /// 
+    /// Returns the size of the page in Device Pixels at the given *resolution.*
+    /// 
+    /// If the QPageSize is invalid then the QSize will be invalid.
+    /// 
+    /// Returns the size of the standard *pageSizeId* in the requested *units.*
+    /// 
+    /// Returns the size of the standard *pageSizeId* in Points.
+    /// 
+    /// Returns the size of the standard *pageSizeId* in Device Pixels
+    /// for the given *resolution.*
+    [org_name(size)]
+    [static] size_2(page_size_id: PageSize::PageSizeId, units: PageSize::Unit) -> SizeF,
+    /// 
+    /// Returns the size of the page in Postscript Points (1/72 of an inch).
+    /// 
+    /// If the QPageSize is invalid then the QSize will be invalid.
+    /// 
+    /// Returns the size of the standard *pageSizeId* in Points.
+    [org_name(sizePoints)]
+    [static] size_points_2(page_size_id: PageSize::PageSizeId) -> Size,
+    /// 
+    /// Returns the size of the page in Device Pixels at the given *resolution.*
+    /// 
+    /// If the QPageSize is invalid then the QSize will be invalid.
+    /// 
+    /// Returns the size of the standard *pageSizeId* in Device Pixels
+    /// for the given *resolution.*
+    [org_name(sizePixels)]
+    [static] size_pixels_2(page_size_id: PageSize::PageSizeId, resolution: i32) -> Size,
+}
+
 [org_name(QPageSize)]
 enum PageSizeId {
     A4,
@@ -185,383 +572,6 @@ enum SizeMatchPolicy {
     FuzzyMatch,
     FuzzyOrientationMatch,
     ExactMatch,
-}
-
-
-struct PageSize {
-    /// 
-    /// Swaps this QPageSize with *other.* This function is very fast and
-    /// never fails.
-    swap(other: &PageSizeType),
-    /// 
-    /// Returns `true` if this page is equivalent to the *other* page, i.e. if the
-    /// page has the same size regardless of other attributes like name.
-    is_equivalent_to(other: &PageSizeType) -> bool,
-    /// 
-    /// Returns `true` if this page size is valid.
-    /// 
-    /// The page size may be invalid if created with an invalid PageSizeId, or a
-    /// negative or invalid QSize or QSizeF, or the null constructor.
-    is_valid() -> bool,
-    /// 
-    /// Returns the unique key of the page size.
-    /// 
-    /// By default this is the PPD standard mediaOption keyword for the page size,
-    /// or the PPD custom format key. If the QPageSize instance was obtained from
-    /// a print device then this will be the key provided by the print device and
-    /// may differ from the standard key.
-    /// 
-    /// If the QPageSize is invalid then the key will be an empty string.
-    /// 
-    /// This key should never be shown to end users, it is an internal key only.
-    /// For a human-readable name use name().
-    /// 
-    /// **See also:** name()
-    /// 
-    /// Returns the PPD mediaOption keyword of the standard *pageSizeId.*
-    /// 
-    /// If the QPageSize is invalid then the key will be empty.
-    key() -> String,
-    /// 
-    /// Returns a localized human-readable name for the page size.
-    /// 
-    /// If the QPageSize instance was obtained from a print device then the name
-    /// used is that provided by the print device. Note that a print device may
-    /// not support the current default locale language.
-    /// 
-    /// If the QPageSize is invalid then the name will be an empty string.
-    /// 
-    /// Returns the localized name of the standard *pageSizeId.*
-    /// 
-    /// If the QPageSize is invalid then the name will be empty.
-    name() -> String,
-    /// 
-    /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
-    /// 
-    /// If the QPageSize is invalid then the ID will be QPageSize::Custom.
-    /// 
-    /// Returns the standard QPageSize::PageSizeId of the given *pointSize* in
-    /// points using the given *matchPolicy.*
-    /// 
-    /// If using FuzzyMatch then the point size of the PageSizeId returned may not
-    /// exactly match the *pointSize* you passed in. You should call
-    /// QPageSize::sizePoints() using the returned PageSizeId to find out the actual
-    /// point size of the PageSizeId before using it in any calculations.
-    /// 
-    /// Returns the standard QPageSize::PageSizeId of the given *size* in *units*
-    /// using the given *matchPolicy.*
-    /// 
-    /// If using FuzzyMatch then the unit size of the PageSizeId returned may not
-    /// exactly match the *size* you passed in. You should call
-    /// QPageSize::size() using the returned PageSizeId to find out the actual
-    /// unit size of the PageSizeId before using it in any calculations.
-    /// 
-    /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
-    /// 
-    /// If there is no matching PageSizeId then QPageSize::Custom is returned.
-    id() -> PageSize::PageSizeId,
-    /// 
-    /// Returns the Windows DMPAPER enum value for the page size.
-    /// 
-    /// Not all valid PPD page sizes have a Windows equivalent, in which case 0
-    /// will be returned.
-    /// 
-    /// If the QPageSize is invalid then the Windows ID will be 0.
-    /// 
-    /// **See also:** id()
-    /// 
-    /// Returns the Windows DMPAPER enum value of the standard *pageSizeId.*
-    /// 
-    /// Not all valid PPD page sizes have a Windows equivalent, in which case 0
-    /// will be returned.
-    windows_id() -> i32,
-    /// 
-    /// Returns the definition size of the page size.
-    /// 
-    /// For a standard page size this will be the size as defined in the relevant
-    /// standard, i.e. ISO A4 will be defined in millimeters while ANSI Letter will
-    /// be defined in inches.
-    /// 
-    /// For a custom page size this will be the original size used to create the
-    /// page size object.
-    /// 
-    /// If the QPageSize is invalid then the QSizeF will be invalid.
-    /// 
-    /// **See also:** definitionUnits()
-    /// 
-    /// Returns the definition size of the standard *pageSizeId.*
-    /// 
-    /// To obtain the definition units, call QPageSize::definitionUnits().
-    definition_size() -> SizeF,
-    /// 
-    /// Returns the definition units of the page size.
-    /// 
-    /// For a standard page size this will be the units as defined in the relevant
-    /// standard, i.e. ISO A4 will be defined in millimeters while ANSI Letter will
-    /// be defined in inches.
-    /// 
-    /// For a custom page size this will be the original units used to create the
-    /// page size object.
-    /// 
-    /// If the QPageSize is invalid then the QPageSize::Unit will be invalid.
-    /// 
-    /// **See also:** definitionSize()
-    /// 
-    /// Returns the definition units of the standard *pageSizeId.*
-    /// 
-    /// To obtain the definition size, call QPageSize::definitionSize().
-    definition_units() -> PageSize::Unit,
-    /// 
-    /// Returns the size of the page in the required *units.*
-    /// 
-    /// If the QPageSize is invalid then the QSizeF will be invalid.
-    /// 
-    /// Returns the size of the page in Postscript Points (1/72 of an inch).
-    /// 
-    /// If the QPageSize is invalid then the QSize will be invalid.
-    /// 
-    /// Returns the size of the page in Device Pixels at the given *resolution.*
-    /// 
-    /// If the QPageSize is invalid then the QSize will be invalid.
-    /// 
-    /// Returns the size of the standard *pageSizeId* in the requested *units.*
-    /// 
-    /// Returns the size of the standard *pageSizeId* in Points.
-    /// 
-    /// Returns the size of the standard *pageSizeId* in Device Pixels
-    /// for the given *resolution.*
-    size(units: PageSize::Unit) -> SizeF,
-    /// 
-    /// Returns the size of the page in Postscript Points (1/72 of an inch).
-    /// 
-    /// If the QPageSize is invalid then the QSize will be invalid.
-    /// 
-    /// Returns the size of the standard *pageSizeId* in Points.
-    size_points() -> Size,
-    /// 
-    /// Returns the size of the page in Device Pixels at the given *resolution.*
-    /// 
-    /// If the QPageSize is invalid then the QSize will be invalid.
-    /// 
-    /// Returns the size of the standard *pageSizeId* in Device Pixels
-    /// for the given *resolution.*
-    size_pixels(resolution: i32) -> Size,
-    /// 
-    /// Returns the page rectangle in the required *units.*
-    /// 
-    /// If the QPageSize is invalid then the QRect will be invalid.
-    /// 
-    /// Returns the page rectangle in Postscript Points (1/72 of an inch).
-    /// 
-    /// If the QPageSize is invalid then the QRect will be invalid.
-    /// 
-    /// Returns the page rectangle in Device Pixels at the given *resolution.*
-    /// 
-    /// If the QPageSize is invalid then the QRect will be invalid.
-    rect(units: PageSize::Unit) -> RectF,
-    /// 
-    /// Returns the page rectangle in Postscript Points (1/72 of an inch).
-    /// 
-    /// If the QPageSize is invalid then the QRect will be invalid.
-    rect_points() -> Rect,
-    /// 
-    /// Returns the page rectangle in Device Pixels at the given *resolution.*
-    /// 
-    /// If the QPageSize is invalid then the QRect will be invalid.
-    rect_pixels(resolution: i32) -> Rect,
-    /// 
-    /// Returns the unique key of the page size.
-    /// 
-    /// By default this is the PPD standard mediaOption keyword for the page size,
-    /// or the PPD custom format key. If the QPageSize instance was obtained from
-    /// a print device then this will be the key provided by the print device and
-    /// may differ from the standard key.
-    /// 
-    /// If the QPageSize is invalid then the key will be an empty string.
-    /// 
-    /// This key should never be shown to end users, it is an internal key only.
-    /// For a human-readable name use name().
-    /// 
-    /// **See also:** name()
-    /// 
-    /// Returns the PPD mediaOption keyword of the standard *pageSizeId.*
-    /// 
-    /// If the QPageSize is invalid then the key will be empty.
-    [static] key_2(page_size_id: PageSize::PageSizeId) -> String,
-    /// 
-    /// Returns a localized human-readable name for the page size.
-    /// 
-    /// If the QPageSize instance was obtained from a print device then the name
-    /// used is that provided by the print device. Note that a print device may
-    /// not support the current default locale language.
-    /// 
-    /// If the QPageSize is invalid then the name will be an empty string.
-    /// 
-    /// Returns the localized name of the standard *pageSizeId.*
-    /// 
-    /// If the QPageSize is invalid then the name will be empty.
-    [static] name_2(page_size_id: PageSize::PageSizeId) -> String,
-    /// 
-    /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
-    /// 
-    /// If the QPageSize is invalid then the ID will be QPageSize::Custom.
-    /// 
-    /// Returns the standard QPageSize::PageSizeId of the given *pointSize* in
-    /// points using the given *matchPolicy.*
-    /// 
-    /// If using FuzzyMatch then the point size of the PageSizeId returned may not
-    /// exactly match the *pointSize* you passed in. You should call
-    /// QPageSize::sizePoints() using the returned PageSizeId to find out the actual
-    /// point size of the PageSizeId before using it in any calculations.
-    /// 
-    /// Returns the standard QPageSize::PageSizeId of the given *size* in *units*
-    /// using the given *matchPolicy.*
-    /// 
-    /// If using FuzzyMatch then the unit size of the PageSizeId returned may not
-    /// exactly match the *size* you passed in. You should call
-    /// QPageSize::size() using the returned PageSizeId to find out the actual
-    /// unit size of the PageSizeId before using it in any calculations.
-    /// 
-    /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
-    /// 
-    /// If there is no matching PageSizeId then QPageSize::Custom is returned.
-    [static] id_2(point_size: &SizeType, match_policy: PageSize::SizeMatchPolicy) -> PageSize::PageSizeId,
-    /// 
-    /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
-    /// 
-    /// If the QPageSize is invalid then the ID will be QPageSize::Custom.
-    /// 
-    /// Returns the standard QPageSize::PageSizeId of the given *pointSize* in
-    /// points using the given *matchPolicy.*
-    /// 
-    /// If using FuzzyMatch then the point size of the PageSizeId returned may not
-    /// exactly match the *pointSize* you passed in. You should call
-    /// QPageSize::sizePoints() using the returned PageSizeId to find out the actual
-    /// point size of the PageSizeId before using it in any calculations.
-    /// 
-    /// Returns the standard QPageSize::PageSizeId of the given *size* in *units*
-    /// using the given *matchPolicy.*
-    /// 
-    /// If using FuzzyMatch then the unit size of the PageSizeId returned may not
-    /// exactly match the *size* you passed in. You should call
-    /// QPageSize::size() using the returned PageSizeId to find out the actual
-    /// unit size of the PageSizeId before using it in any calculations.
-    /// 
-    /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
-    /// 
-    /// If there is no matching PageSizeId then QPageSize::Custom is returned.
-    [static] id_3(size: &SizeFType, units: PageSize::Unit, match_policy: PageSize::SizeMatchPolicy) -> PageSize::PageSizeId,
-    /// 
-    /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
-    /// 
-    /// If the QPageSize is invalid then the ID will be QPageSize::Custom.
-    /// 
-    /// Returns the standard QPageSize::PageSizeId of the given *pointSize* in
-    /// points using the given *matchPolicy.*
-    /// 
-    /// If using FuzzyMatch then the point size of the PageSizeId returned may not
-    /// exactly match the *pointSize* you passed in. You should call
-    /// QPageSize::sizePoints() using the returned PageSizeId to find out the actual
-    /// point size of the PageSizeId before using it in any calculations.
-    /// 
-    /// Returns the standard QPageSize::PageSizeId of the given *size* in *units*
-    /// using the given *matchPolicy.*
-    /// 
-    /// If using FuzzyMatch then the unit size of the PageSizeId returned may not
-    /// exactly match the *size* you passed in. You should call
-    /// QPageSize::size() using the returned PageSizeId to find out the actual
-    /// unit size of the PageSizeId before using it in any calculations.
-    /// 
-    /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
-    /// 
-    /// If there is no matching PageSizeId then QPageSize::Custom is returned.
-    [static] id_4(windows_id: i32) -> PageSize::PageSizeId,
-    /// 
-    /// Returns the Windows DMPAPER enum value for the page size.
-    /// 
-    /// Not all valid PPD page sizes have a Windows equivalent, in which case 0
-    /// will be returned.
-    /// 
-    /// If the QPageSize is invalid then the Windows ID will be 0.
-    /// 
-    /// **See also:** id()
-    /// 
-    /// Returns the Windows DMPAPER enum value of the standard *pageSizeId.*
-    /// 
-    /// Not all valid PPD page sizes have a Windows equivalent, in which case 0
-    /// will be returned.
-    [static] windows_id_2(page_size_id: PageSize::PageSizeId) -> i32,
-    /// 
-    /// Returns the definition size of the page size.
-    /// 
-    /// For a standard page size this will be the size as defined in the relevant
-    /// standard, i.e. ISO A4 will be defined in millimeters while ANSI Letter will
-    /// be defined in inches.
-    /// 
-    /// For a custom page size this will be the original size used to create the
-    /// page size object.
-    /// 
-    /// If the QPageSize is invalid then the QSizeF will be invalid.
-    /// 
-    /// **See also:** definitionUnits()
-    /// 
-    /// Returns the definition size of the standard *pageSizeId.*
-    /// 
-    /// To obtain the definition units, call QPageSize::definitionUnits().
-    [static] definition_size_2(page_size_id: PageSize::PageSizeId) -> SizeF,
-    /// 
-    /// Returns the definition units of the page size.
-    /// 
-    /// For a standard page size this will be the units as defined in the relevant
-    /// standard, i.e. ISO A4 will be defined in millimeters while ANSI Letter will
-    /// be defined in inches.
-    /// 
-    /// For a custom page size this will be the original units used to create the
-    /// page size object.
-    /// 
-    /// If the QPageSize is invalid then the QPageSize::Unit will be invalid.
-    /// 
-    /// **See also:** definitionSize()
-    /// 
-    /// Returns the definition units of the standard *pageSizeId.*
-    /// 
-    /// To obtain the definition size, call QPageSize::definitionSize().
-    [static] definition_units_2(page_size_id: PageSize::PageSizeId) -> PageSize::Unit,
-    /// 
-    /// Returns the size of the page in the required *units.*
-    /// 
-    /// If the QPageSize is invalid then the QSizeF will be invalid.
-    /// 
-    /// Returns the size of the page in Postscript Points (1/72 of an inch).
-    /// 
-    /// If the QPageSize is invalid then the QSize will be invalid.
-    /// 
-    /// Returns the size of the page in Device Pixels at the given *resolution.*
-    /// 
-    /// If the QPageSize is invalid then the QSize will be invalid.
-    /// 
-    /// Returns the size of the standard *pageSizeId* in the requested *units.*
-    /// 
-    /// Returns the size of the standard *pageSizeId* in Points.
-    /// 
-    /// Returns the size of the standard *pageSizeId* in Device Pixels
-    /// for the given *resolution.*
-    [static] size_2(page_size_id: PageSize::PageSizeId, units: PageSize::Unit) -> SizeF,
-    /// 
-    /// Returns the size of the page in Postscript Points (1/72 of an inch).
-    /// 
-    /// If the QPageSize is invalid then the QSize will be invalid.
-    /// 
-    /// Returns the size of the standard *pageSizeId* in Points.
-    [static] size_points_2(page_size_id: PageSize::PageSizeId) -> Size,
-    /// 
-    /// Returns the size of the page in Device Pixels at the given *resolution.*
-    /// 
-    /// If the QPageSize is invalid then the QSize will be invalid.
-    /// 
-    /// Returns the size of the standard *pageSizeId* in Device Pixels
-    /// for the given *resolution.*
-    [static] size_pixels_2(page_size_id: PageSize::PageSizeId, resolution: i32) -> Size,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -19,10 +19,10 @@
 /// a newly-constructed QPainter will not reflect the clip region that is
 /// used by the paint system.
 /// 
-/// **See also:** QPainter
-/// QWidget::update()
-/// QWidget::repaint()
-/// QWidget::paintEvent()
+/// **See also:** [`Painter`]
+/// [`Widget::update`]
+/// [`Widget::repaint`]
+/// [`Widget::paint_event`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -30,14 +30,14 @@ struct PaintEvent : Event {
     /// 
     /// Returns the rectangle that needs to be updated.
     /// 
-    /// **See also:** region()
-    /// QPainter::setClipRect()
+    /// **See also:** [`region()`]
+    /// [`Painter::set_clip_rect`]
     rect() -> Rect?,
     /// 
     /// Returns the region that needs to be updated.
     /// 
-    /// **See also:** rect()
-    /// QPainter::setClipRegion()
+    /// **See also:** [`rect()`]
+    /// [`Painter::set_clip_region`]
     region() -> Region?,
 }
 

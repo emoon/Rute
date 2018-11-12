@@ -35,14 +35,13 @@
 /// 
 /// Example:
 /// 
-/// **See also:** QFont
-/// QFontInfo
-/// QFontDatabase
+/// **See also:** [`Font`]
+/// [`FontInfo`]
+/// [`FontDatabase`]
 /// {Character Map Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct FontMetrics {
     /// 
     /// Swaps this font metrics instance with *other.* This function is
@@ -58,7 +57,7 @@ struct FontMetrics {
     /// an exotic language, so it is possible (though rare) that this
     /// value will be too small.
     /// 
-    /// **See also:** descent()
+    /// **See also:** [`descent()`]
     ascent() -> i32,
     /// 
     /// Returns the cap height of the font.
@@ -68,7 +67,7 @@ struct FontMetrics {
     /// that are flat - such as H or I - as opposed to round letters such
     /// as O, or pointed letters like A, both of which may display overshoot.
     /// 
-    /// **See also:** ascent()
+    /// **See also:** [`ascent()`]
     cap_height() -> i32,
     /// 
     /// Returns the descent of the font.
@@ -78,31 +77,31 @@ struct FontMetrics {
     /// e.g. to accommodate an unusual character in an exotic language, so
     /// it is possible (though rare) that this value will be too small.
     /// 
-    /// **See also:** ascent()
+    /// **See also:** [`ascent()`]
     descent() -> i32,
     /// 
     /// Returns the height of the font.
     /// 
     /// This is always equal to ascent()+descent().
     /// 
-    /// **See also:** leading()
-    /// lineSpacing()
+    /// **See also:** [`leading()`]
+    /// [`line_spacing()`]
     height() -> i32,
     /// 
     /// Returns the leading of the font.
     /// 
     /// This is the natural inter-line spacing.
     /// 
-    /// **See also:** height()
-    /// lineSpacing()
+    /// **See also:** [`height()`]
+    /// [`line_spacing()`]
     leading() -> i32,
     /// 
     /// Returns the distance from one base line to the next.
     /// 
     /// This value is always equal to leading()+height().
     /// 
-    /// **See also:** height()
-    /// leading()
+    /// **See also:** [`height()`]
+    /// [`leading()`]
     line_spacing() -> i32,
     /// 
     /// Returns the minimum left bearing of the font.
@@ -112,8 +111,8 @@ struct FontMetrics {
     /// 
     /// Note that this function can be very slow if the font is large.
     /// 
-    /// **See also:** minRightBearing()
-    /// leftBearing()
+    /// **See also:** [`min_right_bearing()`]
+    /// [`left_bearing()`]
     min_left_bearing() -> i32,
     /// 
     /// Returns the minimum right bearing of the font.
@@ -123,8 +122,8 @@ struct FontMetrics {
     /// 
     /// Note that this function can be very slow if the font is large.
     /// 
-    /// **See also:** minLeftBearing()
-    /// rightBearing()
+    /// **See also:** [`min_left_bearing()`]
+    /// [`right_bearing()`]
     min_right_bearing() -> i32,
     /// 
     /// Returns the width of the widest character in the font.
@@ -157,9 +156,9 @@ struct FontMetrics {
     /// 
     /// See width() for a graphical description of this metric.
     /// 
-    /// **See also:** rightBearing()
-    /// minLeftBearing()
-    /// width()
+    /// **See also:** [`right_bearing()`]
+    /// [`min_left_bearing()`]
+    /// [`width()`]
     left_bearing(arg0: CharType) -> i32,
     /// 
     /// Returns the right bearing of character *ch* in the font.
@@ -171,9 +170,9 @@ struct FontMetrics {
     /// 
     /// See width() for a graphical description of this metric.
     /// 
-    /// **See also:** leftBearing()
-    /// minRightBearing()
-    /// width()
+    /// **See also:** [`left_bearing()`]
+    /// [`min_right_bearing()`]
+    /// [`width()`]
     right_bearing(arg0: CharType) -> i32,
     /// 
     /// Returns the width in pixels of the first *len* characters of *text.* If *len* is negative (the default), the entire string is
@@ -184,7 +183,7 @@ struct FontMetrics {
     /// string will cover whereas width() returns the distance to where
     /// the next string should be drawn.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     /// 
     /// **Overloads**
     /// ![Bearings](bearings.png)
@@ -205,7 +204,7 @@ struct FontMetrics {
     /// processing strings cannot be taken into account. When implementing
     /// an interactive text control, use QTextLayout instead.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     width(arg0: String, len: i32) -> i32,
     /// 
     /// Returns the width in pixels of the first *len* characters of *text.* If *len* is negative (the default), the entire string is
@@ -216,7 +215,7 @@ struct FontMetrics {
     /// string will cover whereas width() returns the distance to where
     /// the next string should be drawn.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     /// 
     /// **Overloads**
     /// ![Bearings](bearings.png)
@@ -237,7 +236,8 @@ struct FontMetrics {
     /// processing strings cannot be taken into account. When implementing
     /// an interactive text control, use QTextLayout instead.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
+    [org_name(width)]
     width_2(arg0: String, len: i32, flags: i32) -> i32,
     /// 
     /// Returns the width in pixels of the first *len* characters of *text.* If *len* is negative (the default), the entire string is
@@ -248,7 +248,7 @@ struct FontMetrics {
     /// string will cover whereas width() returns the distance to where
     /// the next string should be drawn.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     /// 
     /// **Overloads**
     /// ![Bearings](bearings.png)
@@ -269,7 +269,8 @@ struct FontMetrics {
     /// processing strings cannot be taken into account. When implementing
     /// an interactive text control, use QTextLayout instead.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
+    [org_name(width)]
     width_3(arg0: CharType) -> i32,
     /// 
     /// Returns the horizontal advance in pixels of the first *len* characters of *text.* If *len* is negative (the default), the entire string is
@@ -278,7 +279,7 @@ struct FontMetrics {
     /// This is the distance appropriate for drawing a subsequent character
     /// after *text.*
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     /// 
     /// **Overloads**
     /// ![Bearings](bearings.png)
@@ -299,7 +300,7 @@ struct FontMetrics {
     /// processing strings cannot be taken into account. When implementing
     /// an interactive text control, use QTextLayout instead.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     horizontal_advance(arg0: String, len: i32) -> i32,
     /// 
     /// Returns the horizontal advance in pixels of the first *len* characters of *text.* If *len* is negative (the default), the entire string is
@@ -308,7 +309,7 @@ struct FontMetrics {
     /// This is the distance appropriate for drawing a subsequent character
     /// after *text.*
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     /// 
     /// **Overloads**
     /// ![Bearings](bearings.png)
@@ -329,7 +330,8 @@ struct FontMetrics {
     /// processing strings cannot be taken into account. When implementing
     /// an interactive text control, use QTextLayout instead.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
+    [org_name(horizontalAdvance)]
     horizontal_advance_2(arg0: CharType) -> i32,
     /// 
     /// Returns the width of the character at position *pos* in the
@@ -371,10 +373,10 @@ struct FontMetrics {
     /// The height of the bounding rectangle is at least as large as the
     /// value returned by height().
     /// 
-    /// **See also:** width()
-    /// height()
-    /// QPainter::boundingRect()
-    /// tightBoundingRect()
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`Painter::bounding_rect`]
+    /// [`tight_bounding_rect()`]
     /// 
     /// Returns the rectangle that is covered by ink if character *ch*
     /// were to be drawn at the origin of the coordinate system.
@@ -389,7 +391,7 @@ struct FontMetrics {
     /// **Warning**: The width of the returned rectangle is not the advance width
     /// of the character. Use boundingRect(const QString &) or horizontalAdvance() instead.
     /// 
-    /// **See also:** width()
+    /// **See also:** [`width()`]
     /// 
     /// **Overloads**
     /// Returns the bounding rectangle of the characters in the string
@@ -440,9 +442,9 @@ struct FontMetrics {
     /// fontHeight() and lineSpacing() are used to calculate the height,
     /// rather than individual character heights.
     /// 
-    /// **See also:** width()
-    /// QPainter::boundingRect()
-    /// Qt::Alignment
+    /// **See also:** [`width()`]
+    /// [`Painter::bounding_rect`]
+    /// [`t::alignment()`]
     bounding_rect(arg0: CharType) -> Rect,
     /// 
     /// int flags, const QString &text, int tabStops, int *tabArray) const
@@ -473,10 +475,10 @@ struct FontMetrics {
     /// The height of the bounding rectangle is at least as large as the
     /// value returned by height().
     /// 
-    /// **See also:** width()
-    /// height()
-    /// QPainter::boundingRect()
-    /// tightBoundingRect()
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`Painter::bounding_rect`]
+    /// [`tight_bounding_rect()`]
     /// 
     /// Returns the rectangle that is covered by ink if character *ch*
     /// were to be drawn at the origin of the coordinate system.
@@ -491,7 +493,7 @@ struct FontMetrics {
     /// **Warning**: The width of the returned rectangle is not the advance width
     /// of the character. Use boundingRect(const QString &) or horizontalAdvance() instead.
     /// 
-    /// **See also:** width()
+    /// **See also:** [`width()`]
     /// 
     /// **Overloads**
     /// Returns the bounding rectangle of the characters in the string
@@ -542,9 +544,10 @@ struct FontMetrics {
     /// fontHeight() and lineSpacing() are used to calculate the height,
     /// rather than individual character heights.
     /// 
-    /// **See also:** width()
-    /// QPainter::boundingRect()
-    /// Qt::Alignment
+    /// **See also:** [`width()`]
+    /// [`Painter::bounding_rect`]
+    /// [`t::alignment()`]
+    [org_name(boundingRect)]
     bounding_rect_2(text: String) -> Rect,
     /// 
     /// int flags, const QString &text, int tabStops, int *tabArray) const
@@ -575,10 +578,10 @@ struct FontMetrics {
     /// The height of the bounding rectangle is at least as large as the
     /// value returned by height().
     /// 
-    /// **See also:** width()
-    /// height()
-    /// QPainter::boundingRect()
-    /// tightBoundingRect()
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`Painter::bounding_rect`]
+    /// [`tight_bounding_rect()`]
     /// 
     /// Returns the rectangle that is covered by ink if character *ch*
     /// were to be drawn at the origin of the coordinate system.
@@ -593,7 +596,7 @@ struct FontMetrics {
     /// **Warning**: The width of the returned rectangle is not the advance width
     /// of the character. Use boundingRect(const QString &) or horizontalAdvance() instead.
     /// 
-    /// **See also:** width()
+    /// **See also:** [`width()`]
     /// 
     /// **Overloads**
     /// Returns the bounding rectangle of the characters in the string
@@ -644,9 +647,10 @@ struct FontMetrics {
     /// fontHeight() and lineSpacing() are used to calculate the height,
     /// rather than individual character heights.
     /// 
-    /// **See also:** width()
-    /// QPainter::boundingRect()
-    /// Qt::Alignment
+    /// **See also:** [`width()`]
+    /// [`Painter::bounding_rect`]
+    /// [`t::alignment()`]
+    [org_name(boundingRect)]
     bounding_rect_3(r: &RectType, flags: i32, text: String, tabstops: i32, tabarray: *i32) -> Rect,
     /// 
     /// int flags, const QString &text, int tabStops, int *tabArray) const
@@ -677,10 +681,10 @@ struct FontMetrics {
     /// The height of the bounding rectangle is at least as large as the
     /// value returned by height().
     /// 
-    /// **See also:** width()
-    /// height()
-    /// QPainter::boundingRect()
-    /// tightBoundingRect()
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`Painter::bounding_rect`]
+    /// [`tight_bounding_rect()`]
     /// 
     /// Returns the rectangle that is covered by ink if character *ch*
     /// were to be drawn at the origin of the coordinate system.
@@ -695,7 +699,7 @@ struct FontMetrics {
     /// **Warning**: The width of the returned rectangle is not the advance width
     /// of the character. Use boundingRect(const QString &) or horizontalAdvance() instead.
     /// 
-    /// **See also:** width()
+    /// **See also:** [`width()`]
     /// 
     /// **Overloads**
     /// Returns the bounding rectangle of the characters in the string
@@ -746,9 +750,10 @@ struct FontMetrics {
     /// fontHeight() and lineSpacing() are used to calculate the height,
     /// rather than individual character heights.
     /// 
-    /// **See also:** width()
-    /// QPainter::boundingRect()
-    /// Qt::Alignment
+    /// **See also:** [`width()`]
+    /// [`Painter::bounding_rect`]
+    /// [`t::alignment()`]
+    [org_name(boundingRect)]
     bounding_rect_4(x: i32, y: i32, w: i32, h: i32, flags: i32, text: String, tabstops: i32, tabarray: *i32) -> Rect,
     /// 
     /// Returns the size in pixels of *text.*
@@ -769,7 +774,7 @@ struct FontMetrics {
     /// Despite the different actual character heights, the heights of the
     /// bounding rectangles of and are the same.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     size(flags: i32, str: String, tabstops: i32, tabarray: *i32) -> Size,
     /// 
     /// Returns a tight bounding rectangle around the characters in the
@@ -789,9 +794,9 @@ struct FontMetrics {
     /// 
     /// **Warning**: Calling this method is very slow on Windows.
     /// 
-    /// **See also:** width()
-    /// height()
-    /// boundingRect()
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`bounding_rect()`]
     tight_bounding_rect(text: String) -> Rect,
     /// 
     /// If the string *text* is wider than *width,* returns an elided
@@ -818,25 +823,25 @@ struct FontMetrics {
     /// Returns the distance from the base line to where an underscore
     /// should be drawn.
     /// 
-    /// **See also:** overlinePos()
-    /// strikeOutPos()
-    /// lineWidth()
+    /// **See also:** [`overline_pos()`]
+    /// [`strike_out_pos()`]
+    /// [`line_width()`]
     underline_pos() -> i32,
     /// 
     /// Returns the distance from the base line to where an overline
     /// should be drawn.
     /// 
-    /// **See also:** underlinePos()
-    /// strikeOutPos()
-    /// lineWidth()
+    /// **See also:** [`underline_pos()`]
+    /// [`strike_out_pos()`]
+    /// [`line_width()`]
     overline_pos() -> i32,
     /// 
     /// Returns the width of the underline and strikeout lines, adjusted
     /// for the point size of the font.
     /// 
-    /// **See also:** underlinePos()
-    /// overlinePos()
-    /// strikeOutPos()
+    /// **See also:** [`underline_pos()`]
+    /// [`overline_pos()`]
+    /// [`strike_out_pos()`]
     line_width() -> i32,
 }
 

@@ -1,7 +1,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct PlatformSessionManager {
     [event] session_id() -> String,
     [event] session_key() -> String,
@@ -16,6 +15,7 @@ struct PlatformSessionManager {
     [event] set_discard_command(command: &[String]),
     [event] discard_command() -> [String],
     [event] set_manager_property(name: String, value: String),
+    [org_name(setManagerProperty)]
     [event] set_manager_property_2(name: String, value: &[String]),
     [event] is_phase2() -> bool,
     [event] request_phase2(),

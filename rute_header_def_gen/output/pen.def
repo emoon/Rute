@@ -148,14 +148,13 @@
 /// 
 /// * **\l {painting/pathstroke** {The Path Stroking Example}} The Path Stroking example shows Qt's built-in dash patterns and shows how custom patterns can be used to extend the range of available patterns.
 /// 
-/// **See also:** QPainter
-/// QBrush
+/// **See also:** [`Painter`]
+/// [`Brush`]
 /// {painting/pathstroke}{Path Stroking Example}
 /// {Scribble Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct Pen {
     /// 
     /// Swaps pen *other* with this pen. This operation is very
@@ -164,7 +163,7 @@ struct Pen {
     /// 
     /// Returns the pen style.
     /// 
-    /// **See also:** setStyle()
+    /// **See also:** [`set_style()`]
     /// {QPen#Pen Style}{Pen Style}
     style() -> Rute::PenStyle,
     /// 
@@ -178,14 +177,14 @@ struct Pen {
     /// 
     /// **Note**: This function resets the dash offset to zero.
     /// 
-    /// **See also:** style()
+    /// **See also:** [`style()`]
     /// {QPen#Pen Style}{Pen Style}
     set_style(arg0: Rute::PenStyle),
     /// 
     /// Returns the dash pattern of this pen.
     /// 
-    /// **See also:** style()
-    /// isSolid()
+    /// **See also:** [`style()`]
+    /// [`is_solid()`]
     dash_pattern() -> [f32],
     /// 
     /// Sets the dash pattern for this pen to the given *pattern.* This
@@ -212,15 +211,15 @@ struct Pen {
     /// square line end covers the end point and extends beyond it by half
     /// the line width.
     /// 
-    /// **See also:** setStyle()
-    /// dashPattern()
-    /// setCapStyle()
-    /// setCosmetic()
+    /// **See also:** [`set_style()`]
+    /// [`dash_pattern()`]
+    /// [`set_cap_style()`]
+    /// [`set_cosmetic()`]
     set_dash_pattern(pattern: [f32]),
     /// 
     /// Returns the dash offset for the pen.
     /// 
-    /// **See also:** setDashOffset()
+    /// **See also:** [`set_dash_offset()`]
     dash_offset() -> f32,
     /// 
     /// Sets the dash offset (the starting point on the dash pattern) for this pen
@@ -237,7 +236,7 @@ struct Pen {
     /// Returns the miter limit of the pen. The miter limit is only
     /// relevant when the join style is set to Qt::MiterJoin.
     /// 
-    /// **See also:** setMiterLimit()
+    /// **See also:** [`set_miter_limit()`]
     /// {QPen#Join Style}{Join Style}
     miter_limit() -> f32,
     /// 
@@ -254,15 +253,15 @@ struct Pen {
     /// e.g. a miter limit of 5 in width 10 is 50 pixels long. The default
     /// miter limit is 2, i.e. twice the pen width in pixels.
     /// 
-    /// **See also:** miterLimit()
-    /// setJoinStyle()
+    /// **See also:** [`miter_limit()`]
+    /// [`set_join_style()`]
     /// {QPen#Join Style}{Join Style}
     set_miter_limit(limit: f32),
     /// 
     /// Returns the pen width with floating point precision.
     /// 
-    /// **See also:** setWidthF()
-    /// width()
+    /// **See also:** [`set_width_f()`]
+    /// [`width()`]
     width_f() -> f32,
     /// 
     /// Sets the pen width to the given *width* in pixels with floating point
@@ -275,19 +274,19 @@ struct Pen {
     /// 
     /// Setting a pen width with a negative value is not supported.
     /// 
-    /// **See also:** setWidth()
-    /// widthF()
+    /// **See also:** [`set_width()`]
+    /// [`width_f()`]
     set_width_f(width: f32),
     /// 
     /// Returns the pen width with integer precision.
     /// 
-    /// **See also:** setWidth()
-    /// widthF()
+    /// **See also:** [`set_width()`]
+    /// [`width_f()`]
     /// 
     /// Returns the pen width with floating point precision.
     /// 
-    /// **See also:** setWidthF()
-    /// width()
+    /// **See also:** [`set_width_f()`]
+    /// [`width()`]
     width() -> i32,
     /// 
     /// Sets the pen width to the given *width* in pixels with integer
@@ -300,8 +299,8 @@ struct Pen {
     /// 
     /// Setting a pen width with a negative value is not supported.
     /// 
-    /// **See also:** setWidthF()
-    /// width()
+    /// **See also:** [`set_width_f()`]
+    /// [`width()`]
     /// 
     /// Sets the pen width to the given *width* in pixels with floating point
     /// precision.
@@ -313,20 +312,20 @@ struct Pen {
     /// 
     /// Setting a pen width with a negative value is not supported.
     /// 
-    /// **See also:** setWidth()
-    /// widthF()
+    /// **See also:** [`set_width()`]
+    /// [`width_f()`]
     set_width(width: i32),
     /// 
     /// Returns the color of this pen's brush.
     /// 
-    /// **See also:** brush()
-    /// setColor()
+    /// **See also:** [`brush()`]
+    /// [`set_color()`]
     color() -> Color,
     /// 
     /// Sets the color of this pen's brush to the given *color.*
     /// 
-    /// **See also:** setBrush()
-    /// color()
+    /// **See also:** [`set_brush()`]
+    /// [`color()`]
     set_color(color: &ColorType),
     /// 
     /// Returns the brush used to fill strokes generated with this pen.
@@ -335,39 +334,39 @@ struct Pen {
     /// Sets the brush used to fill strokes generated with this pen to the given
     /// *brush.*
     /// 
-    /// **See also:** brush()
-    /// setColor()
+    /// **See also:** [`brush()`]
+    /// [`set_color()`]
     set_brush(brush: &BrushType),
     /// 
     /// Returns `true` if the pen has a solid fill, otherwise false.
     /// 
-    /// **See also:** style()
-    /// dashPattern()
+    /// **See also:** [`style()`]
+    /// [`dash_pattern()`]
     is_solid() -> bool,
     /// 
     /// Returns the pen's cap style.
     /// 
-    /// **See also:** setCapStyle()
+    /// **See also:** [`set_cap_style()`]
     /// {QPen#Cap Style}{Cap Style}
     cap_style() -> Rute::PenCapStyle,
     /// 
     /// Sets the pen's cap style to the given *style.* The default value
     /// is Qt::SquareCap.
     /// 
-    /// **See also:** capStyle()
+    /// **See also:** [`cap_style()`]
     /// {QPen#Cap Style}{Cap Style}
     set_cap_style(pcs: Rute::PenCapStyle),
     /// 
     /// Returns the pen's join style.
     /// 
-    /// **See also:** setJoinStyle()
+    /// **See also:** [`set_join_style()`]
     /// {QPen#Join Style}{Join Style}
     join_style() -> Rute::PenJoinStyle,
     /// 
     /// Sets the pen's join style to the given *style.* The default value
     /// is Qt::BevelJoin.
     /// 
-    /// **See also:** joinStyle()
+    /// **See also:** [`join_style()`]
     /// {QPen#Join Style}{Join Style}
     set_join_style(pcs: Rute::PenJoinStyle),
     /// 
@@ -380,14 +379,14 @@ struct Pen {
     /// 
     /// A zero width pen is cosmetic by default.
     /// 
-    /// **See also:** setCosmetic()
-    /// widthF()
+    /// **See also:** [`set_cosmetic()`]
+    /// [`width_f()`]
     is_cosmetic() -> bool,
     /// 
     /// Sets this pen to cosmetic or non-cosmetic, depending on the value of
     /// *cosmetic.*
     /// 
-    /// **See also:** isCosmetic()
+    /// **See also:** [`is_cosmetic()`]
     set_cosmetic(cosmetic: bool),
     is_detached() -> bool,
 }

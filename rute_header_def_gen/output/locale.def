@@ -1,6 +1,1401 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct Locale {
+    qt_check_for_qgadget_macro(),
+    /// 
+    /// Swaps locale *other* with this locale. This operation is very fast and
+    /// never fails.
+    swap(other: &LocaleType),
+    /// 
+    /// Returns the language of this locale.
+    /// 
+    /// **See also:** [`script()`]
+    /// [`country()`]
+    /// [`language_to_string()`]
+    /// [`bcp47_name()`]
+    /// 
+    /// Returns a QString containing the name of *language.*
+    /// 
+    /// **See also:** [`country_to_string()`]
+    /// [`script_to_string()`]
+    /// [`bcp47_name()`]
+    language() -> Locale::Language,
+    /// 
+    /// Returns the script of this locale.
+    /// 
+    /// **See also:** [`language()`]
+    /// [`country()`]
+    /// [`language_to_string()`]
+    /// [`script_to_string()`]
+    /// [`bcp47_name()`]
+    /// 
+    /// Returns a QString containing the name of *script.*
+    /// 
+    /// **See also:** [`language_to_string()`]
+    /// [`country_to_string()`]
+    /// [`script()`]
+    /// [`bcp47_name()`]
+    script() -> Locale::Script,
+    /// 
+    /// Returns the language and country of this locale as a
+    /// string of the form , where
+    /// language is a lowercase, two-letter ISO 639 language code,
+    /// and country is an uppercase, two- or three-letter ISO 3166 country code.
+    /// 
+    /// Note that even if QLocale object was constructed with an explicit script,
+    /// name() will not contain it for compatibility reasons. Use bcp47Name() instead
+    /// if you need a full locale name.
+    /// 
+    /// **See also:** [`q_locale()`]
+    /// [`language()`]
+    /// [`script()`]
+    /// [`country()`]
+    /// [`bcp47_name()`]
+    name() -> String,
+    /// 
+    /// Returns the dash-separated language, script and country (and possibly other BCP47 fields)
+    /// of this locale as a string.
+    /// 
+    /// Unlike the uiLanguages() the returned value of the bcp47Name() represents
+    /// the locale name of the QLocale data but not the language the user-interface
+    /// should be in.
+    /// 
+    /// This function tries to conform the locale name to BCP47.
+    /// 
+    /// **See also:** [`language()`]
+    /// [`country()`]
+    /// [`script()`]
+    /// [`ui_languages()`]
+    bcp47_name() -> String,
+    /// 
+    /// Returns a native name of the language for the locale. For example
+    /// for Swiss-German locale.
+    /// 
+    /// **See also:** [`native_country_name()`]
+    /// [`language_to_string()`]
+    native_language_name() -> String,
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_short()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_short()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_short()`]
+    /// [`to_string()`]
+    /// 
+    to_short(s: String, ok: *bool) -> short,
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_short()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_short()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_short()`]
+    /// [`to_string()`]
+    /// 
+    to_u_short(s: String, ok: *bool) -> ushort,
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_int()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_int()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_int()`]
+    /// [`to_string()`]
+    /// 
+    to_int(s: String, ok: *bool) -> i32,
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    to_u_int(s: String, ok: *bool) -> uint,
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_u_long_long()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_u_long_long()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_u_long_long()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    to_long_long(s: String, ok: *bool) -> i64,
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_long_long()`]
+    /// [`to_int()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_long_long()`]
+    /// [`to_int()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_long_long()`]
+    /// [`to_int()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    to_u_long_long(s: String, ok: *bool) -> qulonglong,
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_double()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_double()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_double()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    to_float(s: String, ok: *bool) -> f32,
+    /// 
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_float()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_float()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// Unlike QString::toDouble(), this function does not fall back to
+    /// the locale if the string cannot be interpreted in this
+    /// locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_float()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    to_double(s: String, ok: *bool) -> double,
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_short()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_short()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_short()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toShort)]
+    to_short_2(s: &StringRefType, ok: *bool) -> short,
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_short()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_short()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_short()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toUShort)]
+    to_u_short_2(s: &StringRefType, ok: *bool) -> ushort,
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_int()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_int()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_int()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toInt)]
+    to_int_2(s: &StringRefType, ok: *bool) -> i32,
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toUInt)]
+    to_u_int_2(s: &StringRefType, ok: *bool) -> uint,
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_u_long_long()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_u_long_long()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_u_long_long()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toLongLong)]
+    to_long_long_2(s: &StringRefType, ok: *bool) -> i64,
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_long_long()`]
+    /// [`to_int()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_long_long()`]
+    /// [`to_int()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_long_long()`]
+    /// [`to_int()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toULongLong)]
+    to_u_long_long_2(s: &StringRefType, ok: *bool) -> qulonglong,
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_double()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_double()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_double()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toFloat)]
+    to_float_2(s: &StringRefType, ok: *bool) -> f32,
+    /// 
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_float()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_float()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// Unlike QString::toDouble(), this function does not fall back to
+    /// the locale if the string cannot be interpreted in this
+    /// locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_float()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toDouble)]
+    to_double_2(s: &StringRefType, ok: *bool) -> double,
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_short()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_short()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_short()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toShort)]
+    to_short_3(s: StringViewType, ok: *bool) -> short,
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_short()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_short()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the unsigned short int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_short()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toUShort)]
+    to_u_short_3(s: StringViewType, ok: *bool) -> ushort,
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_int()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_int()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_u_int()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toInt)]
+    to_int_3(s: StringViewType, ok: *bool) -> i32,
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the unsigned int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toUInt)]
+    to_u_int_3(s: StringViewType, ok: *bool) -> uint,
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_u_long_long()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_u_long_long()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the long long int represented by the localized string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_int()`]
+    /// [`to_u_long_long()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toLongLong)]
+    to_long_long_3(s: StringViewType, ok: *bool) -> i64,
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_long_long()`]
+    /// [`to_int()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_long_long()`]
+    /// [`to_int()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the unsigned long long int represented by the localized
+    /// string *s.*
+    /// 
+    /// If the conversion fails, the function returns 0.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_long_long()`]
+    /// [`to_int()`]
+    /// [`to_double()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toULongLong)]
+    to_u_long_long_3(s: StringViewType, ok: *bool) -> qulonglong,
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_double()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_double()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the float represented by the localized string *s,* or 0.0
+    /// if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_double()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toFloat)]
+    to_float_3(s: StringViewType, ok: *bool) -> f32,
+    /// 
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_float()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// This function does not fall back to the 'C' locale if the string
+    /// cannot be interpreted in this locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_float()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    /// 
+    /// Returns the double represented by the localized string *s,* or
+    /// 0.0 if the conversion failed.
+    /// 
+    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
+    /// to `false,` and success by setting * *ok* to `true.`
+    /// 
+    /// Unlike QString::toDouble(), this function does not fall back to
+    /// the locale if the string cannot be interpreted in this
+    /// locale.
+    /// 
+    /// Notice that the last conversion returns 1234.0, because '.' is the
+    /// thousands group separator in the German locale.
+    /// 
+    /// This function ignores leading and trailing whitespace.
+    /// 
+    /// **See also:** [`to_float()`]
+    /// [`to_int()`]
+    /// [`to_string()`]
+    /// 
+    [org_name(toDouble)]
+    to_double_3(s: StringViewType, ok: *bool) -> double,
+    /// 
+    /// Returns the date format used for the current locale.
+    /// 
+    /// If *format* is LongFormat the format will be a long version.
+    /// Otherwise it uses a shorter version.
+    /// 
+    /// **See also:** [`Date::to_string`]
+    /// [`Date::from_string`]
+    date_format(format: Locale::FormatType) -> String,
+    /// 
+    /// Returns the time format used for the current locale.
+    /// 
+    /// If *format* is LongFormat the format will be a long version.
+    /// Otherwise it uses a shorter version.
+    /// 
+    /// **See also:** [`Time::to_string`]
+    /// [`Time::from_string`]
+    time_format(format: Locale::FormatType) -> String,
+    /// 
+    /// Returns the date time format used for the current locale.
+    /// 
+    /// If *format* is ShortFormat the format will be a short version.
+    /// Otherwise it uses a longer version.
+    /// 
+    /// **See also:** [`DateTime::to_string`]
+    /// [`DateTime::from_string`]
+    date_time_format(format: Locale::FormatType) -> String,
+    to_date(string: String, arg0: Locale::FormatType) -> Date,
+    to_time(string: String, arg0: Locale::FormatType) -> Time,
+    to_date_time(string: String, format: Locale::FormatType) -> DateTime,
+    [org_name(toDate)]
+    to_date_2(string: String, format: String) -> Date,
+    [org_name(toTime)]
+    to_time_2(string: String, format: String) -> Time,
+    [org_name(toDateTime)]
+    to_date_time_2(string: String, format: String) -> DateTime,
+    /// 
+    /// Returns the decimal point character of this locale.
+    decimal_point() -> Char,
+    /// 
+    /// Returns the group separator character of this locale.
+    group_separator() -> Char,
+    /// 
+    /// Returns the percent character of this locale.
+    percent() -> Char,
+    /// 
+    /// Returns the zero digit character of this locale.
+    zero_digit() -> Char,
+    /// 
+    /// Returns the negative sign character of this locale.
+    negative_sign() -> Char,
+    /// 
+    /// Returns the positive sign character of this locale.
+    positive_sign() -> Char,
+    /// 
+    /// Returns the exponential character of this locale.
+    exponential() -> Char,
+    /// 
+    /// Returns the localized name of *month,* in the format specified
+    /// by *type.*
+    /// 
+    /// **See also:** [`day_name()`]
+    /// [`standalone_month_name()`]
+    month_name(arg0: i32, format: Locale::FormatType) -> String,
+    /// 
+    /// Returns the localized name of *month* that is used as a
+    /// standalone text, in the format specified by *type.*
+    /// 
+    /// If the locale information doesn't specify the standalone month
+    /// name then return value is the same as in monthName().
+    /// 
+    /// **See also:** [`month_name()`]
+    /// [`standalone_day_name()`]
+    standalone_month_name(arg0: i32, format: Locale::FormatType) -> String,
+    /// 
+    /// Returns the localized name of the *day* (where 1 represents
+    /// Monday, 2 represents Tuesday and so on), in the format specified
+    /// by *type.*
+    /// 
+    /// **See also:** [`month_name()`]
+    /// [`standalone_day_name()`]
+    day_name(arg0: i32, format: Locale::FormatType) -> String,
+    /// 
+    /// Returns the localized name of the *day* (where 1 represents
+    /// Monday, 2 represents Tuesday and so on) that is used as a
+    /// standalone text, in the format specified by *type.*
+    /// 
+    /// If the locale information does not specify the standalone day
+    /// name then return value is the same as in dayName().
+    /// 
+    /// **See also:** [`day_name()`]
+    /// [`standalone_month_name()`]
+    standalone_day_name(arg0: i32, format: Locale::FormatType) -> String,
+    /// 
+    /// Returns the first day of the week according to the current locale.
+    first_day_of_week() -> Rute::DayOfWeek,
+    /// 
+    /// Returns a list of days that are considered weekdays according to the current locale.
+    weekdays() -> List<Qt::DayOfWeek>,
+    /// 
+    /// Returns the localized name of the suffix for times specified using
+    /// the conventions of the 12-hour clock.
+    /// 
+    /// **See also:** [`pm_text()`]
+    am_text() -> String,
+    /// 
+    /// Returns the localized name of the suffix for times specified using
+    /// the conventions of the 12-hour clock.
+    /// 
+    /// **See also:** [`am_text()`]
+    pm_text() -> String,
+    /// 
+    /// Returns the measurement system for the locale.
+    measurement_system() -> Locale::MeasurementSystem,
+    /// 
+    /// Returns the text direction of the language.
+    text_direction() -> Rute::LayoutDirection,
+    /// 
+    /// Returns an uppercase copy of *str.*
+    /// 
+    /// If Qt Core is using the ICU libraries, they will be used to perform
+    /// the transformation according to the rules of the current locale.
+    /// Otherwise the conversion may be done in a platform-dependent manner,
+    /// with QString::toUpper() as a generic fallback.
+    /// 
+    /// **See also:** [`String::to_upper`]
+    to_upper(str: String) -> String,
+    /// 
+    /// Returns a lowercase copy of *str.*
+    /// 
+    /// If Qt Core is using the ICU libraries, they will be used to perform
+    /// the transformation according to the rules of the current locale.
+    /// Otherwise the conversion may be done in a platform-dependent manner,
+    /// with QString::toLower() as a generic fallback.
+    /// 
+    /// **See also:** [`String::to_lower`]
+    to_lower(str: String) -> String,
+    /// 
+    /// Returns a currency symbol according to the *format.*
+    currency_symbol(arg0: Locale::CurrencySymbolFormat) -> String,
+    /// 
+    /// Converts a size in bytes to a human-readable localized string, comprising a
+    /// number and a quantified unit. The quantifier is chosen such that the number
+    /// is at least one, and as small as possible. For example if *bytes* is
+    /// 16384, *precision* is 2, and *format* is [DataSizeIecFormat](DataSizeIecFormat)
+    /// (the
+    /// default), this function returns ; for 1330409069609 bytes it
+    /// returns ; and so on. If *format* is [DataSizeIecFormat](DataSizeIecFormat)
+    /// or
+    /// [DataSizeTraditionalFormat,](DataSizeTraditionalFormat,)
+    /// the given number of bytes is divided by a
+    /// power of 1024, with result less than 1024; for [DataSizeSIFormat,](DataSizeSIFormat,)
+    /// it is
+    /// divided by a power of 1000, with result less than 1000.
+    /// `DataSizeIecFormat` uses the new IEC standard quantifiers Ki, Mi and so on,
+    /// whereas `DataSizeSIFormat` uses the older SI quantifiers k, M, etc., and
+    /// `DataSizeTraditionalFormat` abuses them.
+    formatted_data_size(bytes: i64, precision: i32, format: Locale::DataSizeFormats) -> String,
+    /// 
+    /// Returns an ordered list of locale names for translation purposes in
+    /// preference order (like , , ).
+    /// 
+    /// The return value represents locale names that the user expects to see the
+    /// UI translation in.
+    /// 
+    /// Most like you do not need to use this function directly, but just pass the
+    /// QLocale object to the QTranslator::load() function.
+    /// 
+    /// The first item in the list is the most preferred one.
+    /// 
+    /// **See also:** [`Translator`]
+    /// [`bcp47_name()`]
+    ui_languages() -> [String],
+    /// 
+    /// Sets the global default locale to *locale.* These
+    /// values are used when a QLocale object is constructed with
+    /// no arguments. If this function is not called, the system's
+    /// locale is used.
+    /// 
+    /// **Warning**: In a multithreaded application, the default locale
+    /// should be set at application startup, before any non-GUI threads
+    /// are created.
+    /// 
+    /// **See also:** [`system()`]
+    /// [`c()`]
+    [static] set_default(locale: &LocaleType),
+    /// 
+    /// Returns a string that represents a join of a given *list* of strings with
+    /// a separator defined by the locale.
+    /// 
+    /// Returns the country of this locale.
+    /// 
+    /// **See also:** [`language()`]
+    /// [`script()`]
+    /// [`country_to_string()`]
+    /// [`bcp47_name()`]
+    /// 
+    /// Returns a QString containing the name of *country.*
+    /// 
+    /// **See also:** [`language_to_string()`]
+    /// [`script_to_string()`]
+    /// [`country()`]
+    /// [`bcp47_name()`]
+    /// 
+    /// Returns a QLocale object initialized to the locale.
+    /// 
+    /// **See also:** [`system()`]
+    /// 
+    /// Returns the list of countries that have entries for *language* in Qt's locale
+    /// database. If the result is an empty list, then *language* is not represented in
+    /// Qt's locale database.
+    /// 
+    /// **See also:** [`matching_locales()`]
+    /// 
+    /// Returns a currency symbol according to the *format.*
+    [static] c() -> Locale,
+    /// 
+    /// Returns a QLocale object initialized to the system locale.
+    /// 
+    /// On Windows and Mac, this locale will use the decimal/grouping characters and date/time
+    /// formats specified in the system configuration panel.
+    /// 
+    /// **See also:** [`c()`]
+    [static] system() -> Locale,
+    /// 
+    /// Returns a list of valid locale objects that match the given *language,* *script* and *country.*
+    /// 
+    /// Getting a list of all locales:
+    /// QList<QLocale> allLocales = QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry);
+    /// 
+    /// Getting a list of locales suitable for Russia:
+    /// QList<QLocale> locales = QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::Russia);
+    [static] matching_locales(language: Locale::Language, script: Locale::Script, country: Locale::Country) -> [Locale],
+    /// 
+    /// Sets the *options* related to number conversions for this
+    /// QLocale instance.
+    set_number_options(options: Locale::NumberOptions),
+    /// 
+    /// Returns the options related to number conversions for this
+    /// QLocale instance.
+    /// 
+    /// By default, no options are set for the standard locales.
+    number_options() -> Locale::NumberOptions,
+    /// 
+    /// Returns a string that represents a join of a given *list* of strings with
+    /// a separator defined by the locale.
+    create_separated_list(strl: &[String]) -> String,
+}
+
 [org_name(QLocale)]
 enum Language {
     AnyLanguage,
@@ -853,1383 +2248,6 @@ enum DataSizeFormat {
 enum QuotationStyle {
     StandardQuotation,
     AlternateQuotation,
-}
-
-
-struct Locale {
-    qt_check_for_qgadget_macro(),
-    /// 
-    /// Swaps locale *other* with this locale. This operation is very fast and
-    /// never fails.
-    swap(other: &LocaleType),
-    /// 
-    /// Returns the language of this locale.
-    /// 
-    /// **See also:** script()
-    /// country()
-    /// languageToString()
-    /// bcp47Name()
-    /// 
-    /// Returns a QString containing the name of *language.*
-    /// 
-    /// **See also:** countryToString()
-    /// scriptToString()
-    /// bcp47Name()
-    language() -> Locale::Language,
-    /// 
-    /// Returns the script of this locale.
-    /// 
-    /// **See also:** language()
-    /// country()
-    /// languageToString()
-    /// scriptToString()
-    /// bcp47Name()
-    /// 
-    /// Returns a QString containing the name of *script.*
-    /// 
-    /// **See also:** languageToString()
-    /// countryToString()
-    /// script()
-    /// bcp47Name()
-    script() -> Locale::Script,
-    /// 
-    /// Returns the language and country of this locale as a
-    /// string of the form , where
-    /// language is a lowercase, two-letter ISO 639 language code,
-    /// and country is an uppercase, two- or three-letter ISO 3166 country code.
-    /// 
-    /// Note that even if QLocale object was constructed with an explicit script,
-    /// name() will not contain it for compatibility reasons. Use bcp47Name() instead
-    /// if you need a full locale name.
-    /// 
-    /// **See also:** QLocale()
-    /// language()
-    /// script()
-    /// country()
-    /// bcp47Name()
-    name() -> String,
-    /// 
-    /// Returns the dash-separated language, script and country (and possibly other BCP47 fields)
-    /// of this locale as a string.
-    /// 
-    /// Unlike the uiLanguages() the returned value of the bcp47Name() represents
-    /// the locale name of the QLocale data but not the language the user-interface
-    /// should be in.
-    /// 
-    /// This function tries to conform the locale name to BCP47.
-    /// 
-    /// **See also:** language()
-    /// country()
-    /// script()
-    /// uiLanguages()
-    bcp47_name() -> String,
-    /// 
-    /// Returns a native name of the language for the locale. For example
-    /// for Swiss-German locale.
-    /// 
-    /// **See also:** nativeCountryName()
-    /// languageToString()
-    native_language_name() -> String,
-    /// 
-    /// Returns the short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUShort()
-    /// toString()
-    /// 
-    /// Returns the short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUShort()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUShort()
-    /// toString()
-    /// 
-    to_short(s: String, ok: *bool) -> short,
-    /// 
-    /// Returns the unsigned short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toShort()
-    /// toString()
-    /// 
-    /// Returns the unsigned short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toShort()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the unsigned short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toShort()
-    /// toString()
-    /// 
-    to_u_short(s: String, ok: *bool) -> ushort,
-    /// 
-    /// Returns the int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUInt()
-    /// toString()
-    /// 
-    /// Returns the int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUInt()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUInt()
-    /// toString()
-    /// 
-    to_int(s: String, ok: *bool) -> i32,
-    /// 
-    /// Returns the unsigned int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toString()
-    /// 
-    /// Returns the unsigned int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the unsigned int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toString()
-    /// 
-    to_u_int(s: String, ok: *bool) -> uint,
-    /// 
-    /// Returns the long long int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toULongLong()
-    /// toDouble()
-    /// toString()
-    /// 
-    /// Returns the long long int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toULongLong()
-    /// toDouble()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the long long int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toULongLong()
-    /// toDouble()
-    /// toString()
-    /// 
-    to_long_long(s: String, ok: *bool) -> i64,
-    /// 
-    /// Returns the unsigned long long int represented by the localized
-    /// string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toLongLong()
-    /// toInt()
-    /// toDouble()
-    /// toString()
-    /// 
-    /// Returns the unsigned long long int represented by the localized
-    /// string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toLongLong()
-    /// toInt()
-    /// toDouble()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the unsigned long long int represented by the localized
-    /// string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toLongLong()
-    /// toInt()
-    /// toDouble()
-    /// toString()
-    /// 
-    to_u_long_long(s: String, ok: *bool) -> qulonglong,
-    /// 
-    /// Returns the float represented by the localized string *s,* or 0.0
-    /// if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function does not fall back to the 'C' locale if the string
-    /// cannot be interpreted in this locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toDouble()
-    /// toInt()
-    /// toString()
-    /// 
-    /// Returns the float represented by the localized string *s,* or 0.0
-    /// if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function does not fall back to the 'C' locale if the string
-    /// cannot be interpreted in this locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toDouble()
-    /// toInt()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the float represented by the localized string *s,* or 0.0
-    /// if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toDouble()
-    /// toInt()
-    /// toString()
-    /// 
-    to_float(s: String, ok: *bool) -> f32,
-    /// 
-    /// Returns the double represented by the localized string *s,* or
-    /// 0.0 if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function does not fall back to the 'C' locale if the string
-    /// cannot be interpreted in this locale.
-    /// 
-    /// Notice that the last conversion returns 1234.0, because '.' is the
-    /// thousands group separator in the German locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toFloat()
-    /// toInt()
-    /// toString()
-    /// 
-    /// Returns the double represented by the localized string *s,* or
-    /// 0.0 if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function does not fall back to the 'C' locale if the string
-    /// cannot be interpreted in this locale.
-    /// 
-    /// Notice that the last conversion returns 1234.0, because '.' is the
-    /// thousands group separator in the German locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toFloat()
-    /// toInt()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the double represented by the localized string *s,* or
-    /// 0.0 if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// Unlike QString::toDouble(), this function does not fall back to
-    /// the locale if the string cannot be interpreted in this
-    /// locale.
-    /// 
-    /// Notice that the last conversion returns 1234.0, because '.' is the
-    /// thousands group separator in the German locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toFloat()
-    /// toInt()
-    /// toString()
-    /// 
-    to_double(s: String, ok: *bool) -> double,
-    /// 
-    /// Returns the short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUShort()
-    /// toString()
-    /// 
-    /// Returns the short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUShort()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUShort()
-    /// toString()
-    /// 
-    to_short_2(s: &StringRefType, ok: *bool) -> short,
-    /// 
-    /// Returns the unsigned short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toShort()
-    /// toString()
-    /// 
-    /// Returns the unsigned short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toShort()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the unsigned short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toShort()
-    /// toString()
-    /// 
-    to_u_short_2(s: &StringRefType, ok: *bool) -> ushort,
-    /// 
-    /// Returns the int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUInt()
-    /// toString()
-    /// 
-    /// Returns the int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUInt()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUInt()
-    /// toString()
-    /// 
-    to_int_2(s: &StringRefType, ok: *bool) -> i32,
-    /// 
-    /// Returns the unsigned int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toString()
-    /// 
-    /// Returns the unsigned int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the unsigned int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toString()
-    /// 
-    to_u_int_2(s: &StringRefType, ok: *bool) -> uint,
-    /// 
-    /// Returns the long long int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toULongLong()
-    /// toDouble()
-    /// toString()
-    /// 
-    /// Returns the long long int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toULongLong()
-    /// toDouble()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the long long int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toULongLong()
-    /// toDouble()
-    /// toString()
-    /// 
-    to_long_long_2(s: &StringRefType, ok: *bool) -> i64,
-    /// 
-    /// Returns the unsigned long long int represented by the localized
-    /// string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toLongLong()
-    /// toInt()
-    /// toDouble()
-    /// toString()
-    /// 
-    /// Returns the unsigned long long int represented by the localized
-    /// string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toLongLong()
-    /// toInt()
-    /// toDouble()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the unsigned long long int represented by the localized
-    /// string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toLongLong()
-    /// toInt()
-    /// toDouble()
-    /// toString()
-    /// 
-    to_u_long_long_2(s: &StringRefType, ok: *bool) -> qulonglong,
-    /// 
-    /// Returns the float represented by the localized string *s,* or 0.0
-    /// if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function does not fall back to the 'C' locale if the string
-    /// cannot be interpreted in this locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toDouble()
-    /// toInt()
-    /// toString()
-    /// 
-    /// Returns the float represented by the localized string *s,* or 0.0
-    /// if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function does not fall back to the 'C' locale if the string
-    /// cannot be interpreted in this locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toDouble()
-    /// toInt()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the float represented by the localized string *s,* or 0.0
-    /// if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toDouble()
-    /// toInt()
-    /// toString()
-    /// 
-    to_float_2(s: &StringRefType, ok: *bool) -> f32,
-    /// 
-    /// Returns the double represented by the localized string *s,* or
-    /// 0.0 if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function does not fall back to the 'C' locale if the string
-    /// cannot be interpreted in this locale.
-    /// 
-    /// Notice that the last conversion returns 1234.0, because '.' is the
-    /// thousands group separator in the German locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toFloat()
-    /// toInt()
-    /// toString()
-    /// 
-    /// Returns the double represented by the localized string *s,* or
-    /// 0.0 if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function does not fall back to the 'C' locale if the string
-    /// cannot be interpreted in this locale.
-    /// 
-    /// Notice that the last conversion returns 1234.0, because '.' is the
-    /// thousands group separator in the German locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toFloat()
-    /// toInt()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the double represented by the localized string *s,* or
-    /// 0.0 if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// Unlike QString::toDouble(), this function does not fall back to
-    /// the locale if the string cannot be interpreted in this
-    /// locale.
-    /// 
-    /// Notice that the last conversion returns 1234.0, because '.' is the
-    /// thousands group separator in the German locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toFloat()
-    /// toInt()
-    /// toString()
-    /// 
-    to_double_2(s: &StringRefType, ok: *bool) -> double,
-    /// 
-    /// Returns the short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUShort()
-    /// toString()
-    /// 
-    /// Returns the short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUShort()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUShort()
-    /// toString()
-    /// 
-    to_short_3(s: StringViewType, ok: *bool) -> short,
-    /// 
-    /// Returns the unsigned short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toShort()
-    /// toString()
-    /// 
-    /// Returns the unsigned short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toShort()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the unsigned short int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toShort()
-    /// toString()
-    /// 
-    to_u_short_3(s: StringViewType, ok: *bool) -> ushort,
-    /// 
-    /// Returns the int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUInt()
-    /// toString()
-    /// 
-    /// Returns the int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUInt()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toUInt()
-    /// toString()
-    /// 
-    to_int_3(s: StringViewType, ok: *bool) -> i32,
-    /// 
-    /// Returns the unsigned int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toString()
-    /// 
-    /// Returns the unsigned int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the unsigned int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toString()
-    /// 
-    to_u_int_3(s: StringViewType, ok: *bool) -> uint,
-    /// 
-    /// Returns the long long int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toULongLong()
-    /// toDouble()
-    /// toString()
-    /// 
-    /// Returns the long long int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toULongLong()
-    /// toDouble()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the long long int represented by the localized string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toInt()
-    /// toULongLong()
-    /// toDouble()
-    /// toString()
-    /// 
-    to_long_long_3(s: StringViewType, ok: *bool) -> i64,
-    /// 
-    /// Returns the unsigned long long int represented by the localized
-    /// string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toLongLong()
-    /// toInt()
-    /// toDouble()
-    /// toString()
-    /// 
-    /// Returns the unsigned long long int represented by the localized
-    /// string *s.*
-    /// 
-    /// If the conversion fails the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toLongLong()
-    /// toInt()
-    /// toDouble()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the unsigned long long int represented by the localized
-    /// string *s.*
-    /// 
-    /// If the conversion fails, the function returns 0.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toLongLong()
-    /// toInt()
-    /// toDouble()
-    /// toString()
-    /// 
-    to_u_long_long_3(s: StringViewType, ok: *bool) -> qulonglong,
-    /// 
-    /// Returns the float represented by the localized string *s,* or 0.0
-    /// if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function does not fall back to the 'C' locale if the string
-    /// cannot be interpreted in this locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toDouble()
-    /// toInt()
-    /// toString()
-    /// 
-    /// Returns the float represented by the localized string *s,* or 0.0
-    /// if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function does not fall back to the 'C' locale if the string
-    /// cannot be interpreted in this locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toDouble()
-    /// toInt()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the float represented by the localized string *s,* or 0.0
-    /// if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toDouble()
-    /// toInt()
-    /// toString()
-    /// 
-    to_float_3(s: StringViewType, ok: *bool) -> f32,
-    /// 
-    /// Returns the double represented by the localized string *s,* or
-    /// 0.0 if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function does not fall back to the 'C' locale if the string
-    /// cannot be interpreted in this locale.
-    /// 
-    /// Notice that the last conversion returns 1234.0, because '.' is the
-    /// thousands group separator in the German locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toFloat()
-    /// toInt()
-    /// toString()
-    /// 
-    /// Returns the double represented by the localized string *s,* or
-    /// 0.0 if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// This function does not fall back to the 'C' locale if the string
-    /// cannot be interpreted in this locale.
-    /// 
-    /// Notice that the last conversion returns 1234.0, because '.' is the
-    /// thousands group separator in the German locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toFloat()
-    /// toInt()
-    /// toString()
-    /// 
-    /// 
-    /// Returns the double represented by the localized string *s,* or
-    /// 0.0 if the conversion failed.
-    /// 
-    /// If *ok* is not `nullptr,` failure is reported by setting * *ok*
-    /// to `false,` and success by setting * *ok* to `true.`
-    /// 
-    /// Unlike QString::toDouble(), this function does not fall back to
-    /// the locale if the string cannot be interpreted in this
-    /// locale.
-    /// 
-    /// Notice that the last conversion returns 1234.0, because '.' is the
-    /// thousands group separator in the German locale.
-    /// 
-    /// This function ignores leading and trailing whitespace.
-    /// 
-    /// **See also:** toFloat()
-    /// toInt()
-    /// toString()
-    /// 
-    to_double_3(s: StringViewType, ok: *bool) -> double,
-    /// 
-    /// Returns the date format used for the current locale.
-    /// 
-    /// If *format* is LongFormat the format will be a long version.
-    /// Otherwise it uses a shorter version.
-    /// 
-    /// **See also:** QDate::toString()
-    /// QDate::fromString()
-    date_format(format: Locale::FormatType) -> String,
-    /// 
-    /// Returns the time format used for the current locale.
-    /// 
-    /// If *format* is LongFormat the format will be a long version.
-    /// Otherwise it uses a shorter version.
-    /// 
-    /// **See also:** QTime::toString()
-    /// QTime::fromString()
-    time_format(format: Locale::FormatType) -> String,
-    /// 
-    /// Returns the date time format used for the current locale.
-    /// 
-    /// If *format* is ShortFormat the format will be a short version.
-    /// Otherwise it uses a longer version.
-    /// 
-    /// **See also:** QDateTime::toString()
-    /// QDateTime::fromString()
-    date_time_format(format: Locale::FormatType) -> String,
-    to_date(string: String, arg0: Locale::FormatType) -> Date,
-    to_time(string: String, arg0: Locale::FormatType) -> Time,
-    to_date_time(string: String, format: Locale::FormatType) -> DateTime,
-    to_date_2(string: String, format: String) -> Date,
-    to_time_2(string: String, format: String) -> Time,
-    to_date_time_2(string: String, format: String) -> DateTime,
-    /// 
-    /// Returns the decimal point character of this locale.
-    decimal_point() -> Char,
-    /// 
-    /// Returns the group separator character of this locale.
-    group_separator() -> Char,
-    /// 
-    /// Returns the percent character of this locale.
-    percent() -> Char,
-    /// 
-    /// Returns the zero digit character of this locale.
-    zero_digit() -> Char,
-    /// 
-    /// Returns the negative sign character of this locale.
-    negative_sign() -> Char,
-    /// 
-    /// Returns the positive sign character of this locale.
-    positive_sign() -> Char,
-    /// 
-    /// Returns the exponential character of this locale.
-    exponential() -> Char,
-    /// 
-    /// Returns the localized name of *month,* in the format specified
-    /// by *type.*
-    /// 
-    /// **See also:** dayName()
-    /// standaloneMonthName()
-    month_name(arg0: i32, format: Locale::FormatType) -> String,
-    /// 
-    /// Returns the localized name of *month* that is used as a
-    /// standalone text, in the format specified by *type.*
-    /// 
-    /// If the locale information doesn't specify the standalone month
-    /// name then return value is the same as in monthName().
-    /// 
-    /// **See also:** monthName()
-    /// standaloneDayName()
-    standalone_month_name(arg0: i32, format: Locale::FormatType) -> String,
-    /// 
-    /// Returns the localized name of the *day* (where 1 represents
-    /// Monday, 2 represents Tuesday and so on), in the format specified
-    /// by *type.*
-    /// 
-    /// **See also:** monthName()
-    /// standaloneDayName()
-    day_name(arg0: i32, format: Locale::FormatType) -> String,
-    /// 
-    /// Returns the localized name of the *day* (where 1 represents
-    /// Monday, 2 represents Tuesday and so on) that is used as a
-    /// standalone text, in the format specified by *type.*
-    /// 
-    /// If the locale information does not specify the standalone day
-    /// name then return value is the same as in dayName().
-    /// 
-    /// **See also:** dayName()
-    /// standaloneMonthName()
-    standalone_day_name(arg0: i32, format: Locale::FormatType) -> String,
-    /// 
-    /// Returns the first day of the week according to the current locale.
-    first_day_of_week() -> Rute::DayOfWeek,
-    /// 
-    /// Returns a list of days that are considered weekdays according to the current locale.
-    weekdays() -> List<Qt::DayOfWeek>,
-    /// 
-    /// Returns the localized name of the suffix for times specified using
-    /// the conventions of the 12-hour clock.
-    /// 
-    /// **See also:** pmText()
-    am_text() -> String,
-    /// 
-    /// Returns the localized name of the suffix for times specified using
-    /// the conventions of the 12-hour clock.
-    /// 
-    /// **See also:** amText()
-    pm_text() -> String,
-    /// 
-    /// Returns the measurement system for the locale.
-    measurement_system() -> Locale::MeasurementSystem,
-    /// 
-    /// Returns the text direction of the language.
-    text_direction() -> Rute::LayoutDirection,
-    /// 
-    /// Returns an uppercase copy of *str.*
-    /// 
-    /// If Qt Core is using the ICU libraries, they will be used to perform
-    /// the transformation according to the rules of the current locale.
-    /// Otherwise the conversion may be done in a platform-dependent manner,
-    /// with QString::toUpper() as a generic fallback.
-    /// 
-    /// **See also:** QString::toUpper()
-    to_upper(str: String) -> String,
-    /// 
-    /// Returns a lowercase copy of *str.*
-    /// 
-    /// If Qt Core is using the ICU libraries, they will be used to perform
-    /// the transformation according to the rules of the current locale.
-    /// Otherwise the conversion may be done in a platform-dependent manner,
-    /// with QString::toLower() as a generic fallback.
-    /// 
-    /// **See also:** QString::toLower()
-    to_lower(str: String) -> String,
-    /// 
-    /// Returns a currency symbol according to the *format.*
-    currency_symbol(arg0: Locale::CurrencySymbolFormat) -> String,
-    /// 
-    /// Converts a size in bytes to a human-readable localized string, comprising a
-    /// number and a quantified unit. The quantifier is chosen such that the number
-    /// is at least one, and as small as possible. For example if *bytes* is
-    /// 16384, *precision* is 2, and *format* is [DataSizeIecFormat](DataSizeIecFormat)
-    /// (the
-    /// default), this function returns ; for 1330409069609 bytes it
-    /// returns ; and so on. If *format* is [DataSizeIecFormat](DataSizeIecFormat)
-    /// or
-    /// [DataSizeTraditionalFormat,](DataSizeTraditionalFormat,)
-    /// the given number of bytes is divided by a
-    /// power of 1024, with result less than 1024; for [DataSizeSIFormat,](DataSizeSIFormat,)
-    /// it is
-    /// divided by a power of 1000, with result less than 1000.
-    /// `DataSizeIecFormat` uses the new IEC standard quantifiers Ki, Mi and so on,
-    /// whereas `DataSizeSIFormat` uses the older SI quantifiers k, M, etc., and
-    /// `DataSizeTraditionalFormat` abuses them.
-    formatted_data_size(bytes: i64, precision: i32, format: Locale::DataSizeFormats) -> String,
-    /// 
-    /// Returns an ordered list of locale names for translation purposes in
-    /// preference order (like , , ).
-    /// 
-    /// The return value represents locale names that the user expects to see the
-    /// UI translation in.
-    /// 
-    /// Most like you do not need to use this function directly, but just pass the
-    /// QLocale object to the QTranslator::load() function.
-    /// 
-    /// The first item in the list is the most preferred one.
-    /// 
-    /// **See also:** QTranslator
-    /// bcp47Name()
-    ui_languages() -> [String],
-    /// 
-    /// Sets the global default locale to *locale.* These
-    /// values are used when a QLocale object is constructed with
-    /// no arguments. If this function is not called, the system's
-    /// locale is used.
-    /// 
-    /// **Warning**: In a multithreaded application, the default locale
-    /// should be set at application startup, before any non-GUI threads
-    /// are created.
-    /// 
-    /// **See also:** system()
-    /// c()
-    [static] set_default(locale: &LocaleType),
-    /// 
-    /// Returns a string that represents a join of a given *list* of strings with
-    /// a separator defined by the locale.
-    /// 
-    /// Returns the country of this locale.
-    /// 
-    /// **See also:** language()
-    /// script()
-    /// countryToString()
-    /// bcp47Name()
-    /// 
-    /// Returns a QString containing the name of *country.*
-    /// 
-    /// **See also:** languageToString()
-    /// scriptToString()
-    /// country()
-    /// bcp47Name()
-    /// 
-    /// Returns a QLocale object initialized to the locale.
-    /// 
-    /// **See also:** system()
-    /// 
-    /// Returns the list of countries that have entries for *language* in Qt's locale
-    /// database. If the result is an empty list, then *language* is not represented in
-    /// Qt's locale database.
-    /// 
-    /// **See also:** matchingLocales()
-    /// 
-    /// Returns a currency symbol according to the *format.*
-    [static] c() -> Locale,
-    /// 
-    /// Returns a QLocale object initialized to the system locale.
-    /// 
-    /// On Windows and Mac, this locale will use the decimal/grouping characters and date/time
-    /// formats specified in the system configuration panel.
-    /// 
-    /// **See also:** c()
-    [static] system() -> Locale,
-    /// 
-    /// Returns a list of valid locale objects that match the given *language,* *script* and *country.*
-    /// 
-    /// Getting a list of all locales:
-    /// QList<QLocale> allLocales = QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::AnyCountry);
-    /// 
-    /// Getting a list of locales suitable for Russia:
-    /// QList<QLocale> locales = QLocale::matchingLocales(QLocale::AnyLanguage, QLocale::AnyScript, QLocale::Russia);
-    [static] matching_locales(language: Locale::Language, script: Locale::Script, country: Locale::Country) -> [Locale],
-    /// 
-    /// Sets the *options* related to number conversions for this
-    /// QLocale instance.
-    set_number_options(options: Locale::NumberOptions),
-    /// 
-    /// Returns the options related to number conversions for this
-    /// QLocale instance.
-    /// 
-    /// By default, no options are set for the standard locales.
-    number_options() -> Locale::NumberOptions,
-    /// 
-    /// Returns a string that represents a join of a given *list* of strings with
-    /// a separator defined by the locale.
-    create_separated_list(strl: &[String]) -> String,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -35,29 +35,17 @@
 /// on whether it is docked; a docked QDockWidget has no frame and a smaller title
 /// bar.
 /// 
-/// **See also:** QMainWindow
+/// **See also:** [`MainWindow`]
 /// {Dock Widgets Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QDockWidget)]
-enum DockWidgetFeature {
-    DockWidgetClosable,
-    DockWidgetMovable,
-    DockWidgetFloatable,
-    DockWidgetVerticalTitleBar,
-    DockWidgetFeatureMask,
-    AllDockWidgetFeatures,
-    NoDockWidgetFeatures,
-    Reserved,
-}
-
 struct DockWidget : Widget {
     /// 
     /// Returns the widget for the dock widget. This function returns zero
     /// if the widget has not been set.
     /// 
-    /// **See also:** setWidget()
+    /// **See also:** [`set_widget()`]
     widget() -> Widget?,
     /// 
     /// Sets the widget for the dock widget to *widget.*
@@ -69,7 +57,7 @@ struct DockWidget : Widget {
     /// Note that you must add the layout of the *widget* before you call
     /// this function; if not, the *widget* will not be visible.
     /// 
-    /// **See also:** widget()
+    /// **See also:** [`widget()`]
     set_widget(widget: *WidgetType),
     set_features(features: DockWidget::DockWidgetFeatures),
     /// 
@@ -88,7 +76,7 @@ struct DockWidget : Widget {
     /// 
     /// The default is Qt::AllDockWidgetAreas.
     /// 
-    /// **See also:** Qt::DockWidgetArea
+    /// **See also:** [`t::dock_widget_area()`]
     /// 
     /// This signal is emitted when the [allowedAreas](allowedAreas)
     /// property changes. The
@@ -114,14 +102,14 @@ struct DockWidget : Widget {
     /// to its parent QDockWidget. Hence it can perform such operations as docking
     /// and hiding in response to user actions.
     /// 
-    /// **See also:** titleBarWidget()
+    /// **See also:** [`title_bar_widget()`]
     /// DockWidgetVerticalTitleBar
     set_title_bar_widget(widget: *WidgetType),
     /// 
     /// Returns the custom title bar widget set on the QDockWidget, or 0 if no
     /// custom title bar has been set.
     /// 
-    /// **See also:** setTitleBarWidget()
+    /// **See also:** [`set_title_bar_widget()`]
     title_bar_widget() -> Widget?,
     /// 
     /// Returns `true` if this dock widget can be placed in the given *area;*
@@ -133,8 +121,8 @@ struct DockWidget : Widget {
     /// 
     /// The action's text is set to the dock widget's window title.
     /// 
-    /// **See also:** QAction::text
-    /// QWidget::windowTitle
+    /// **See also:** [`Action::text()`]
+    /// [`Widget::window_title()`]
     toggle_view_action() -> Action?,
     /// 
     /// This signal is emitted when the [features](features)
@@ -147,7 +135,7 @@ struct DockWidget : Widget {
     /// The *topLevel* parameter is true if the dock widget is now floating;
     /// otherwise it is false.
     /// 
-    /// **See also:** isWindow()
+    /// **See also:** [`is_window()`]
     [signal] top_level_changed(top_level: bool),
     /// 
     /// This signal is emitted when the [allowedAreas](allowedAreas)
@@ -179,8 +167,20 @@ struct DockWidget : Widget {
     /// is useful for subclasses when they need a QStyleOptionDockWidget, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionDockWidgetType),
+}
+
+[org_name(QDockWidget)]
+enum DockWidgetFeature {
+    DockWidgetClosable,
+    DockWidgetMovable,
+    DockWidgetFloatable,
+    DockWidgetVerticalTitleBar,
+    DockWidgetFeatureMask,
+    AllDockWidgetFeatures,
+    NoDockWidgetFeatures,
+    Reserved,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

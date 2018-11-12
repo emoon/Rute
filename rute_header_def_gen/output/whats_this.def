@@ -57,11 +57,10 @@
 /// true), the help window remains visible. Call
 /// QWhatsThis::hideText() to hide it explicitly.
 /// 
-/// **See also:** QToolTip
+/// **See also:** [`ToolTip`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct WhatsThis {
     /// 
     /// This function switches the user interface into
@@ -72,14 +71,14 @@ struct WhatsThis {
     /// When entering mode, a QEvent of type
     /// Qt::EnterWhatsThisMode is sent to all toplevel widgets.
     /// 
-    /// **See also:** inWhatsThisMode()
-    /// leaveWhatsThisMode()
+    /// **See also:** [`in_whats_this_mode()`]
+    /// [`leave_whats_this_mode()`]
     [static] enter_whats_this_mode(),
     /// 
     /// Returns `true` if the user interface is in mode;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** enterWhatsThisMode()
+    /// **See also:** [`enter_whats_this_mode()`]
     [static] in_whats_this_mode() -> bool,
     /// 
     /// If the user interface is in mode, this function
@@ -88,19 +87,19 @@ struct WhatsThis {
     /// When leaving mode, a QEvent of type
     /// Qt::LeaveWhatsThisMode is sent to all toplevel widgets.
     /// 
-    /// **See also:** enterWhatsThisMode()
-    /// inWhatsThisMode()
+    /// **See also:** [`enter_whats_this_mode()`]
+    /// [`in_whats_this_mode()`]
     [static] leave_whats_this_mode(),
     /// 
     /// Shows *text* as a window, at global position *pos.* The optional widget argument, *w,* is used to determine the
     /// appropriate screen on multi-head systems.
     /// 
-    /// **See also:** hideText()
+    /// **See also:** [`hide_text()`]
     [static] show_text(pos: &PointType, text: String, w: *WidgetType),
     /// 
     /// If a window is showing, this destroys it.
     /// 
-    /// **See also:** showText()
+    /// **See also:** [`show_text()`]
     [static] hide_text(),
     /// 
     /// Returns a ready-made QAction, used to invoke context

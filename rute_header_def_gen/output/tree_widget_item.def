@@ -46,28 +46,14 @@
 /// call the base class constructor with a new type value equal to or greater
 /// than [UserType.](UserType.)
 /// 
-/// **See also:** QTreeWidget
-/// QTreeWidgetItemIterator
+/// **See also:** [`TreeWidget`]
+/// [`TreeWidgetItemIterator`]
 /// {Model/View Programming}
-/// QListWidgetItem
-/// QTableWidgetItem
+/// [`ListWidgetItem`]
+/// [`TableWidgetItem`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTreeWidgetItem)]
-enum ItemType {
-    Type,
-    UserType,
-}
-
-[org_name(QTreeWidgetItem)]
-enum ChildIndicatorPolicy {
-    ShowIndicator,
-    DontShowIndicator,
-    DontShowIndicatorWhenChildless,
-}
-
-
 struct TreeWidgetItem {
     /// 
     /// Creates a deep copy of the item and of its children.
@@ -75,13 +61,13 @@ struct TreeWidgetItem {
     /// 
     /// Sets the selected state of the item to *select.*
     /// 
-    /// **See also:** isSelected()
+    /// **See also:** [`is_selected()`]
     /// 
     set_selected(select: bool),
     /// 
     /// Returns `true` if the item is selected, otherwise returns `false.`
     /// 
-    /// **See also:** setSelected()
+    /// **See also:** [`set_selected()`]
     is_selected() -> bool,
     /// 
     /// Hides the item if *hide* is true, otherwise shows the item.
@@ -89,57 +75,57 @@ struct TreeWidgetItem {
     /// calling `setHidden(true)` on an item and only then adding it to a view will result in
     /// a visible item.
     /// 
-    /// **See also:** isHidden()
+    /// **See also:** [`is_hidden()`]
     set_hidden(hide: bool),
     /// 
     /// Returns `true` if the item is hidden, otherwise returns `false.`
     /// 
-    /// **See also:** setHidden()
+    /// **See also:** [`set_hidden()`]
     is_hidden() -> bool,
     /// 
     /// Expands the item if *expand* is true, otherwise collapses the item.
     /// **Warning**: The QTreeWidgetItem must be added to the QTreeWidget before calling this function.
     /// 
-    /// **See also:** isExpanded()
+    /// **See also:** [`is_expanded()`]
     set_expanded(expand: bool),
     /// 
     /// Returns `true` if the item is expanded, otherwise returns `false.`
     /// 
-    /// **See also:** setExpanded()
+    /// **See also:** [`set_expanded()`]
     is_expanded() -> bool,
     /// 
     /// Sets the first section to span all columns if *span* is true;
     /// otherwise all item sections are shown.
     /// 
-    /// **See also:** isFirstColumnSpanned()
+    /// **See also:** [`is_first_column_spanned()`]
     set_first_column_spanned(span: bool),
     /// 
     /// Returns `true` if the item is spanning all the columns in a row; otherwise returns `false.`
     /// 
-    /// **See also:** setFirstColumnSpanned()
+    /// **See also:** [`set_first_column_spanned()`]
     is_first_column_spanned() -> bool,
     /// 
     /// Disables the item if *disabled* is true; otherwise enables the item.
     /// 
-    /// **See also:** setFlags()
+    /// **See also:** [`set_flags()`]
     set_disabled(disabled: bool),
     /// 
     /// Returns `true` if the item is disabled; otherwise returns `false.`
     /// 
-    /// **See also:** setFlags()
+    /// **See also:** [`set_flags()`]
     is_disabled() -> bool,
     /// 
     /// Sets the item indicator *policy.* This policy decides when the
     /// tree branch expand/collapse indicator is shown.
     /// The default value is ShowForChildren.
     /// 
-    /// **See also:** childIndicatorPolicy()
+    /// **See also:** [`child_indicator_policy()`]
     set_child_indicator_policy(policy: TreeWidgetItem::ChildIndicatorPolicy),
     /// 
     /// Returns the item indicator policy. This policy decides when the
     /// tree branch expand/collapse indicator is shown.
     /// 
-    /// **See also:** setChildIndicatorPolicy()
+    /// **See also:** [`set_child_indicator_policy()`]
     child_indicator_policy() -> TreeWidgetItem::ChildIndicatorPolicy,
     /// 
     /// Returns the flags used to describe the item. These determine whether
@@ -149,18 +135,18 @@ struct TreeWidgetItem {
     /// Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled |
     /// Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled.
     /// 
-    /// **See also:** setFlags()
+    /// **See also:** [`set_flags()`]
     flags() -> Rute::ItemFlags,
     /// 
     /// Sets the flags for the item to the given *flags.* These determine whether
     /// the item can be selected or modified. This is often used to disable an item.
     /// 
-    /// **See also:** flags()
+    /// **See also:** [`flags()`]
     set_flags(flags: Rute::ItemFlags),
     /// 
     /// Returns the text in the specified *column.*
     /// 
-    /// **See also:** setText()
+    /// **See also:** [`set_text()`]
     /// 
     /// This function is deprecated. Use foreground() instead.
     /// 
@@ -171,9 +157,9 @@ struct TreeWidgetItem {
     /// 
     /// Sets the text to be displayed in the given *column* to the given *text.*
     /// 
-    /// **See also:** text()
-    /// setFont()
-    /// setForeground()
+    /// **See also:** [`text()`]
+    /// [`set_font()`]
+    /// [`set_foreground()`]
     /// 
     /// This function is deprecated. Use setForeground() instead.
     /// 
@@ -184,65 +170,65 @@ struct TreeWidgetItem {
     /// 
     /// Returns the icon that is displayed in the specified *column.*
     /// 
-    /// **See also:** setIcon()
+    /// **See also:** [`set_icon()`]
     /// {QAbstractItemView::iconSize}{iconSize}
     icon(column: i32) -> Icon,
     /// 
     /// Sets the icon to be displayed in the given *column* to *icon.*
     /// 
-    /// **See also:** icon()
-    /// setText()
+    /// **See also:** [`icon()`]
+    /// [`set_text()`]
     /// {QAbstractItemView::iconSize}{iconSize}
     set_icon(column: i32, icon: &IconType),
     /// 
     /// Returns the status tip for the contents of the given *column.*
     /// 
-    /// **See also:** setStatusTip()
+    /// **See also:** [`set_status_tip()`]
     status_tip(column: i32) -> String,
     /// 
     /// Sets the status tip for the given *column* to the given *statusTip.*
     /// QTreeWidget mouse tracking needs to be enabled for this feature to work.
     /// 
-    /// **See also:** statusTip()
-    /// setToolTip()
-    /// setWhatsThis()
+    /// **See also:** [`status_tip()`]
+    /// [`set_tool_tip()`]
+    /// [`set_whats_this()`]
     set_status_tip(column: i32, status_tip: String),
     /// 
     /// Returns the tool tip for the given *column.*
     /// 
-    /// **See also:** setToolTip()
+    /// **See also:** [`set_tool_tip()`]
     tool_tip(column: i32) -> String,
     /// 
     /// Sets the tooltip for the given *column* to *toolTip.*
     /// 
-    /// **See also:** toolTip()
-    /// setStatusTip()
-    /// setWhatsThis()
+    /// **See also:** [`tool_tip()`]
+    /// [`set_status_tip()`]
+    /// [`set_whats_this()`]
     set_tool_tip(column: i32, tool_tip: String),
     /// 
     /// Returns the help for the contents of the given *column.*
     /// 
-    /// **See also:** setWhatsThis()
+    /// **See also:** [`set_whats_this()`]
     whats_this(column: i32) -> String,
     /// 
     /// Sets the help for the given *column* to *whatsThis.*
     /// 
-    /// **See also:** whatsThis()
-    /// setStatusTip()
-    /// setToolTip()
+    /// **See also:** [`whats_this()`]
+    /// [`set_status_tip()`]
+    /// [`set_tool_tip()`]
     set_whats_this(column: i32, whats_this: String),
     /// 
     /// Returns the font used to render the text in the specified *column.*
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     font(column: i32) -> Font,
     /// 
     /// Sets the font used to display the text in the given *column* to the given
     /// *font.*
     /// 
-    /// **See also:** font()
-    /// setText()
-    /// setForeground()
+    /// **See also:** [`font()`]
+    /// [`set_text()`]
+    /// [`set_foreground()`]
     set_font(column: i32, font: &FontType),
     /// 
     /// Returns the text alignment for the label in the given *column*
@@ -265,7 +251,7 @@ struct TreeWidgetItem {
     /// 
     /// Returns the brush used to render the background of the specified *column.*
     /// 
-    /// **See also:** foreground()
+    /// **See also:** [`foreground()`]
     background(column: i32) -> Brush,
     /// 
     /// This function is deprecated. Use setBackground() instead.
@@ -273,7 +259,7 @@ struct TreeWidgetItem {
     /// Sets the background brush of the label in the given *column* to the
     /// specified *brush.*
     /// 
-    /// **See also:** setForeground()
+    /// **See also:** [`set_foreground()`]
     set_background(column: i32, brush: &BrushType),
     /// 
     /// This function is deprecated. Use foreground() instead.
@@ -285,23 +271,23 @@ struct TreeWidgetItem {
     /// Returns the brush used to render the foreground (e.g. text) of the
     /// specified *column.*
     /// 
-    /// **See also:** background()
+    /// **See also:** [`background()`]
     foreground(column: i32) -> Brush,
     /// 
     /// Sets the foreground brush of the label in the given *column* to the
     /// specified *brush.*
     /// 
-    /// **See also:** setBackground()
+    /// **See also:** [`set_background()`]
     set_foreground(column: i32, brush: &BrushType),
     /// 
     /// Returns the check state of the label in the given *column.*
     /// 
-    /// **See also:** Qt::CheckState
+    /// **See also:** [`t::check_state()`]
     check_state(column: i32) -> Rute::CheckState,
     /// 
     /// Sets the item in the given *column* check state to be *state.*
     /// 
-    /// **See also:** checkState()
+    /// **See also:** [`check_state()`]
     set_check_state(column: i32, state: Rute::CheckState),
     /// 
     /// Returns the size hint set for the tree item in the given
@@ -329,29 +315,29 @@ struct TreeWidgetItem {
     /// 
     /// Reads the item from stream *in.* This only reads data into a single item.
     /// 
-    /// **See also:** write()
+    /// **See also:** [`write()`]
     [event] read(in: &DataStreamType),
     /// 
     /// Writes the item to stream *out.* This only writes data from one single item.
     /// 
-    /// **See also:** read()
+    /// **See also:** [`read()`]
     [event] write(out: &DataStreamType),
     /// 
     /// Returns the item's parent.
     /// 
-    /// **See also:** child()
+    /// **See also:** [`child()`]
     parent() -> TreeWidgetItem?,
     /// 
     /// Returns the item at the given *index* in the list of the item's children.
     /// 
-    /// **See also:** parent()
+    /// **See also:** [`parent()`]
     /// 
     /// Returns the number of child items.
     /// 
     /// Returns the item indicator policy. This policy decides when the
     /// tree branch expand/collapse indicator is shown.
     /// 
-    /// **See also:** setChildIndicatorPolicy()
+    /// **See also:** [`set_child_indicator_policy()`]
     child(index: i32) -> TreeWidgetItem?,
     /// 
     /// Returns the number of child items.
@@ -365,13 +351,13 @@ struct TreeWidgetItem {
     /// 
     /// Appends the *child* item to the list of children.
     /// 
-    /// **See also:** insertChild()
-    /// takeChild()
+    /// **See also:** [`insert_child()`]
+    /// [`take_child()`]
     /// 
     /// Appends the given list of *children* to the item.
     /// 
-    /// **See also:** insertChildren()
-    /// takeChildren()
+    /// **See also:** [`insert_children()`]
+    /// [`take_children()`]
     add_child(child: *TreeWidgetItemType),
     /// 
     /// Inserts the *child* item at *index* in the list of children.
@@ -394,8 +380,8 @@ struct TreeWidgetItem {
     /// 
     /// Appends the given list of *children* to the item.
     /// 
-    /// **See also:** insertChildren()
-    /// takeChildren()
+    /// **See also:** [`insert_children()`]
+    /// [`take_children()`]
     add_children(children: [*TreeWidgetItemType]),
     /// 
     /// Inserts the given list of *children* into the list of the item children at *index* .
@@ -424,8 +410,21 @@ struct TreeWidgetItem {
     /// You normally only need to call this function if you have subclassed
     /// QTreeWidgetItem and reimplemented data() and/or setData().
     /// 
-    /// **See also:** setData()
+    /// **See also:** [`set_data()`]
     emit_data_changed(),
+}
+
+[org_name(QTreeWidgetItem)]
+enum ItemType {
+    Type,
+    UserType,
+}
+
+[org_name(QTreeWidgetItem)]
+enum ChildIndicatorPolicy {
+    ShowIndicator,
+    DontShowIndicator,
+    DontShowIndicatorWhenChildless,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

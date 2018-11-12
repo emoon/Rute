@@ -1,16 +1,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QPlatformSharedGraphicsCache)]
-enum PixelFormat {
-    Alpha8,
-}
-
-[org_name(QPlatformSharedGraphicsCache)]
-enum BufferType {
-    OpenGLTexture,
-}
-
 struct PlatformSharedGraphicsCache : Object {
     /// 
     /// This is a hint to the cache that a burst of requests is pending. In some implementations, this
@@ -25,8 +15,8 @@ struct PlatformSharedGraphicsCache : Object {
     /// beginRequestBatch() twice in a row has no effect, and the single existing batch will be ended
     /// by the earliest call to endRequestBatch().
     /// 
-    /// **See also:** endRequestBatch()
-    /// requestBatchStarted()
+    /// **See also:** [`end_request_batch()`]
+    /// [`request_batch_started()`]
     [event] begin_request_batch(),
     /// 
     /// Initializes a cache named *cacheId* if it has not yet been initialized. The *bufferType* and
@@ -69,47 +59,47 @@ struct PlatformSharedGraphicsCache : Object {
     /// Signals to the cache that the request sequence which has previously been commenced using
     /// beginRequestBatch() has now finished.
     /// 
-    /// **See also:** beginRequestBatch()
-    /// requestBatchStarted()
+    /// **See also:** [`begin_request_batch()`]
+    /// [`request_batch_started()`]
     [event] end_request_batch(),
     /// 
     /// Returns `true` if a request batch has previously been started using beginRequestBatch()
     /// and not yet stopped using endRequestBatch().
     /// 
-    /// **See also:** beginRequestBatch()
-    /// endRequestBatch()
+    /// **See also:** [`begin_request_batch()`]
+    /// [`end_request_batch()`]
     [event] request_batch_started() -> bool,
     /// 
     /// Returns an OpenGL texture ID corresponding to the buffer *bufferId,* which has previously
     /// been passed through signals itemsAvailable() or itemsUpdated(). The relevant OpenGL context
     /// should be current when calling this function.
     /// 
-    /// **See also:** eglImageForBuffer()
-    /// sizeOfBuffer()
+    /// **See also:** [`egl_image_for_buffer()`]
+    /// [`size_of_buffer()`]
     [event] texture_id_for_buffer(buffer_id: *void) -> uint,
     /// 
     /// Registers a reference to the buffer *bufferId.*
     /// 
-    /// **See also:** dereferenceBuffer()
+    /// **See also:** [`dereference_buffer()`]
     [event] reference_buffer(buffer_id: *void),
     /// 
     /// Removed a previously registered reference to the buffer *bufferId.* Returns `true` if there
     /// are still more references to the buffer in question, or false if this was the last reference
     /// (in which case the buffer may have been deleted in the cache.)
     /// 
-    /// **See also:** dereferenceBuffer()
+    /// **See also:** [`dereference_buffer()`]
     [event] dereference_buffer(buffer_id: *void) -> bool,
     /// 
     /// Returns the size of the buffer *bufferId.*
     /// 
-    /// **See also:** textureIdForBuffer()
-    /// eglImageForBuffer()
+    /// **See also:** [`texture_id_for_buffer()`]
+    /// [`egl_image_for_buffer()`]
     [event] size_of_buffer(buffer_id: *void) -> Size,
     /// 
     /// Returns an EGLImageKHR image corresponding to the buffer *bufferId.*
     /// 
-    /// **See also:** textureIdForBuffer()
-    /// sizeOfBuffer()
+    /// **See also:** [`texture_id_for_buffer()`]
+    /// [`size_of_buffer()`]
     [event] egl_image_for_buffer(buffer_id: *void),
     /// 
     /// This signal is emitted when requestItems() has been called for one or more items in the
@@ -119,9 +109,9 @@ struct PlatformSharedGraphicsCache : Object {
     /// 
     /// The vector *itemIds* contains the IDs of the items that need to be inserted into the cache.
     /// 
-    /// **See also:** itemsAvailable()
-    /// insertItems()
-    /// requestItems()
+    /// **See also:** [`items_available()`]
+    /// [`insert_items()`]
+    /// [`request_items()`]
     [signal] items_missing(cache_id: &ByteArrayType, item_ids: [u32]),
     /// 
     /// This signal can be emitted at any time when either requestItems() or insertItems() has been
@@ -144,9 +134,9 @@ struct PlatformSharedGraphicsCache : Object {
     /// itemsInvalidated() signal has been emitted for the items, or until releaseItems() is called
     /// for the items.
     /// 
-    /// **See also:** itemsMissing()
-    /// requestItems()
-    /// bufferType()
+    /// **See also:** [`items_missing()`]
+    /// [`request_items()`]
+    /// [`buffer_type()`]
     [signal] items_available(cache_id: &ByteArrayType, buffer_id: *void, item_ids: [u32], positions_in_buffer: [PointType]),
     /// 
     /// This signal is emitted when the items given by *itemIds* in the cache named *cacheId* have
@@ -173,10 +163,20 @@ struct PlatformSharedGraphicsCache : Object {
     /// cache, it should call releaseItems() for these items, at which point it will no longer receive
     /// any itemsUpdated() signal for these items.
     /// 
-    /// **See also:** requestItems()
-    /// insertItems()
-    /// itemsAvailable()
+    /// **See also:** [`request_items()`]
+    /// [`insert_items()`]
+    /// [`items_available()`]
     [signal] items_updated(cache_id: &ByteArrayType, buffer_id: *void, item_ids: [u32], positions_in_buffer: [PointType]),
+}
+
+[org_name(QPlatformSharedGraphicsCache)]
+enum PixelFormat {
+    Alpha8,
+}
+
+[org_name(QPlatformSharedGraphicsCache)]
+enum BufferType {
+    OpenGLTexture,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

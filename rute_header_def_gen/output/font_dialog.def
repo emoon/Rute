@@ -10,36 +10,26 @@
 /// 
 /// ![A font dialog in the Fusion widget style.](fusion-fontdialog.png)
 /// 
-/// **See also:** QFont
-/// QFontInfo
-/// QFontMetrics
-/// QColorDialog
-/// QFileDialog
+/// **See also:** [`Font`]
+/// [`FontInfo`]
+/// [`FontMetrics`]
+/// [`ColorDialog`]
+/// [`FileDialog`]
 /// {Standard Dialogs Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QFontDialog)]
-enum FontDialogOption {
-    NoButtons,
-    DontUseNativeDialog,
-    ScalableFonts,
-    NonScalableFonts,
-    MonospacedFonts,
-    ProportionalFonts,
-}
-
 struct FontDialog : Dialog {
     /// 
     /// Sets the font highlighted in the QFontDialog to the given *font.*
     /// 
-    /// **See also:** selectedFont()
+    /// **See also:** [`selected_font()`]
     set_current_font(font: &FontType),
     /// 
     /// 
     /// Returns the current font.
     /// 
-    /// **See also:** selectedFont()
+    /// **See also:** [`selected_font()`]
     /// 
     /// This signal is emitted when the current font is changed. The new font is
     /// specified in *font.*
@@ -48,8 +38,8 @@ struct FontDialog : Dialog {
     /// chosen font may differ from the font currently selected.
     /// 
     /// **See also:** currentFont
-    /// fontSelected()
-    /// selectedFont()
+    /// [`font_selected()`]
+    /// [`selected_font()`]
     current_font() -> Font,
     /// 
     /// Returns the font that the user selected by clicking the **{OK}**
@@ -65,14 +55,14 @@ struct FontDialog : Dialog {
     /// otherwise, clears the given *option.*
     /// 
     /// **See also:** options
-    /// testOption()
+    /// [`test_option()`]
     set_option(option: FontDialog::FontDialogOption, on: bool),
     /// 
     /// Returns `true` if the given *option* is enabled; otherwise, returns
     /// false.
     /// 
     /// **See also:** options
-    /// setOption()
+    /// [`set_option()`]
     test_option(option: FontDialog::FontDialogOption) -> bool,
     set_options(options: FontDialog::FontDialogOptions),
     /// 
@@ -82,8 +72,8 @@ struct FontDialog : Dialog {
     /// dialog is visible is not guaranteed to have an immediate effect on the
     /// dialog (depending on the option and on the platform).
     /// 
-    /// **See also:** setOption()
-    /// testOption()
+    /// **See also:** [`set_option()`]
+    /// [`test_option()`]
     options() -> FontDialog::FontDialogOptions,
     /// 
     /// **Overloads**
@@ -169,6 +159,7 @@ struct FontDialog : Dialog {
     /// **Warning**: Do not delete *parent* during the execution of the dialog.
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QFontDialog constructors.
+    [org_name(getFont)]
     [static] get_font_2(ok: *bool, initial: &FontType, parent: *WidgetType, title: String, options: FontDialog::FontDialogOptions) -> Font,
     /// 
     /// This signal is emitted when the current font is changed. The new font is
@@ -178,8 +169,8 @@ struct FontDialog : Dialog {
     /// chosen font may differ from the font currently selected.
     /// 
     /// **See also:** currentFont
-    /// fontSelected()
-    /// selectedFont()
+    /// [`font_selected()`]
+    /// [`selected_font()`]
     [signal] current_font_changed(font: &FontType),
     /// 
     /// This signal is emitted when a font has been selected. The selected font is
@@ -189,8 +180,8 @@ struct FontDialog : Dialog {
     /// used. It is not emitted while the user is changing the current font in the
     /// font dialog.
     /// 
-    /// **See also:** selectedFont()
-    /// currentFontChanged()
+    /// **See also:** [`selected_font()`]
+    /// [`current_font_changed()`]
     /// currentFont
     [signal] font_selected(font: &FontType),
     /// 
@@ -200,9 +191,19 @@ struct FontDialog : Dialog {
     /// is shown with exec(), done() causes the local event loop to finish,
     /// and exec() to return *result.*
     /// 
-    /// **See also:** QDialog::done()
+    /// **See also:** [`Dialog::done`]
     [event] done(result: i32),
     [event] event_filter(object: *ObjectType, event: *EventType) -> bool,
+}
+
+[org_name(QFontDialog)]
+enum FontDialogOption {
+    NoButtons,
+    DontUseNativeDialog,
+    ScalableFonts,
+    NonScalableFonts,
+    MonospacedFonts,
+    ProportionalFonts,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

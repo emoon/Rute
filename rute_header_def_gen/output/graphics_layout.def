@@ -98,7 +98,7 @@ struct GraphicsLayout : GraphicsLayoutItem {
     /// 
     /// Changing the contents margins automatically invalidates the layout.
     /// 
-    /// **See also:** invalidate()
+    /// **See also:** [`invalidate()`]
     set_contents_margins(left: f32, top: f32, right: f32, bottom: f32),
     /// 
     [event] get_contents_margins(left: *f32, top: *f32, right: *f32, bottom: *f32),
@@ -116,7 +116,7 @@ struct GraphicsLayout : GraphicsLayoutItem {
     /// process. To forcefully invalidate any such cache, you can call
     /// invalidate() before calling activate().
     /// 
-    /// **See also:** invalidate()
+    /// **See also:** [`invalidate()`]
     activate(),
     /// 
     /// Returns `true` if the layout is currently being activated; otherwise,
@@ -124,8 +124,8 @@ struct GraphicsLayout : GraphicsLayoutItem {
     /// currently in the process of rearranging its items (i.e., the activate()
     /// function has been called, and has not yet returned).
     /// 
-    /// **See also:** activate()
-    /// invalidate()
+    /// **See also:** [`activate()`]
+    /// [`invalidate()`]
     is_activated() -> bool,
     /// 
     /// Clears any cached geometry and size hint information in the layout, and
@@ -133,8 +133,8 @@ struct GraphicsLayout : GraphicsLayoutItem {
     /// event to the managed
     /// parent QGraphicsLayoutItem.
     /// 
-    /// **See also:** activate()
-    /// setGeometry()
+    /// **See also:** [`activate()`]
+    /// [`set_geometry()`]
     [event] invalidate(),
     /// 
     /// This virtual event handler receives all events for the managed
@@ -147,8 +147,8 @@ struct GraphicsLayout : GraphicsLayoutItem {
     /// You can reimplement this event handler to track similar events for your
     /// own custom layout.
     /// 
-    /// **See also:** QGraphicsWidget::event()
-    /// QGraphicsItem::sceneEvent()
+    /// **See also:** [`GraphicsWidget::event`]
+    /// [`GraphicsItem::scene_event`]
     [event] widget_event(e: *EventType),
     /// 
     /// This pure virtual function must be reimplemented in a subclass of
@@ -156,8 +156,8 @@ struct GraphicsLayout : GraphicsLayoutItem {
     /// 
     /// The subclass is free to decide how to store the items.
     /// 
-    /// **See also:** itemAt()
-    /// removeAt()
+    /// **See also:** [`item_at()`]
+    /// [`remove_at()`]
     [event] count() -> i32,
     /// 
     /// This pure virtual function must be reimplemented in a subclass of
@@ -169,8 +169,8 @@ struct GraphicsLayout : GraphicsLayoutItem {
     /// The subclass is free to decide how to store the items, and the visual arrangement
     /// does not have to be reflected through this function.
     /// 
-    /// **See also:** count()
-    /// removeAt()
+    /// **See also:** [`count()`]
+    /// [`remove_at()`]
     [event] item_at(i: i32) -> GraphicsLayoutItem?,
     /// 
     /// This pure virtual function must be reimplemented in a subclass of
@@ -188,8 +188,8 @@ struct GraphicsLayout : GraphicsLayoutItem {
     /// 
     /// The subclass is free to decide how to store the items.
     /// 
-    /// **See also:** itemAt()
-    /// count()
+    /// **See also:** [`item_at()`]
+    /// [`count()`]
     [event] remove_at(index: i32),
     [static] set_instant_invalidate_propagation(enable: bool),
     [static] instant_invalidate_propagation() -> bool,
@@ -203,7 +203,7 @@ struct GraphicsLayout : GraphicsLayoutItem {
     /// If custom layouts want special behaviour they can ignore to use this function, and implement
     /// their own behaviour.
     /// 
-    /// **See also:** graphicsItem()
+    /// **See also:** [`graphics_item()`]
     add_child_layout_item(layout_item: *GraphicsLayoutItemType),
 }
 

@@ -12,9 +12,9 @@
 /// 
 /// ![graphicseffect-drop-shadow.png](graphicseffect-drop-shadow.png)
 /// 
-/// **See also:** QGraphicsBlurEffect
-/// QGraphicsColorizeEffect
-/// QGraphicsOpacityEffect
+/// **See also:** [`GraphicsBlurEffect`]
+/// [`GraphicsColorizeEffect`]
+/// [`GraphicsOpacityEffect`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -27,10 +27,10 @@ struct GraphicsDropShadowEffect : GraphicsEffect {
     /// The offset is given in device coordinates, which means it is
     /// unaffected by scale.
     /// 
-    /// **See also:** xOffset()
-    /// yOffset()
-    /// blurRadius()
-    /// color()
+    /// **See also:** [`x_offset()`]
+    /// [`y_offset()`]
+    /// [`blur_radius()`]
+    /// [`color()`]
     /// 
     /// This signal is emitted whenever the effect's shadow offset changes.
     /// The *offset* parameter holds the effect's new shadow offset.
@@ -38,14 +38,14 @@ struct GraphicsDropShadowEffect : GraphicsEffect {
     /// 
     /// By default, the horizontal shadow offset is 8 pixels.
     /// 
-    /// **See also:** yOffset()
-    /// offset()
+    /// **See also:** [`y_offset()`]
+    /// [`offset()`]
     x_offset() -> f32,
     /// 
     /// By default, the vertical shadow offset is 8 pixels.
     /// 
-    /// **See also:** xOffset()
-    /// offset()
+    /// **See also:** [`x_offset()`]
+    /// [`offset()`]
     y_offset() -> f32,
     /// 
     /// Using a smaller radius results in a sharper shadow, whereas using a bigger
@@ -53,8 +53,8 @@ struct GraphicsDropShadowEffect : GraphicsEffect {
     /// 
     /// By default, the blur radius is 1 pixel.
     /// 
-    /// **See also:** color()
-    /// offset()
+    /// **See also:** [`color()`]
+    /// [`offset()`]
     /// 
     /// This signal is emitted whenever the effect's blur radius changes.
     /// The *blurRadius* parameter holds the effect's new blur radius.
@@ -63,14 +63,16 @@ struct GraphicsDropShadowEffect : GraphicsEffect {
     /// By default, the drop color is a semi-transparent dark gray
     /// (QColor(63, 63, 63, 180)).
     /// 
-    /// **See also:** offset()
-    /// blurRadius()
+    /// **See also:** [`offset()`]
+    /// [`blur_radius()`]
     /// 
     /// This signal is emitted whenever the effect's color changes.
     /// The *color* parameter holds the effect's new color.
     color() -> Color,
     set_offset(ofs: &PointFType),
+    [org_name(setOffset)]
     set_offset_2(dx: f32, dy: f32),
+    [org_name(setOffset)]
     set_offset_3(d: f32),
     set_x_offset(dx: f32),
     set_y_offset(dy: f32),

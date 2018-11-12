@@ -55,13 +55,12 @@
 /// System](Paint%0A%20%20%20%20System)
 /// 
 /// 
-/// **See also:** Qt::BrushStyle
-/// QPainter
-/// QColor
+/// **See also:** [`t::brush_style()`]
+/// [`Painter`]
+/// [`Color`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct Brush {
     /// 
     /// Swaps brush *other* with this brush. This operation is very
@@ -70,25 +69,25 @@ struct Brush {
     /// 
     /// Returns the brush style.
     /// 
-    /// **See also:** setStyle()
+    /// **See also:** [`set_style()`]
     style() -> Rute::BrushStyle,
     /// 
     /// Sets the brush style to *style.*
     /// 
-    /// **See also:** style()
+    /// **See also:** [`style()`]
     set_style(arg0: Rute::BrushStyle),
     /// 
     /// Sets *matrix* as an explicit transformation matrix on the
     /// current brush. The brush transformation matrix is merged with
     /// QPainter transformation matrix to produce the final result.
     /// 
-    /// **See also:** transform()
+    /// **See also:** [`transform()`]
     set_transform(arg0: &TransformType),
     /// 
     /// Returns the custom brush pattern, or a null pixmap if no custom brush pattern
     /// has been set.
     /// 
-    /// **See also:** setTexture()
+    /// **See also:** [`set_texture()`]
     /// 
     /// Returns the custom brush pattern, or a null image if no custom
     /// brush pattern has been set.
@@ -96,7 +95,7 @@ struct Brush {
     /// If the texture was set as a QPixmap it will be converted to a
     /// QImage.
     /// 
-    /// **See also:** setTextureImage()
+    /// **See also:** [`set_texture_image()`]
     texture() -> Pixmap,
     /// 
     /// Sets the brush pixmap to *pixmap.* The style is set to
@@ -106,7 +105,7 @@ struct Brush {
     /// pixmaps, i.e. for QPixmap::depth() == 1 ( [QBitmaps](QBitmap)
     /// ).
     /// 
-    /// **See also:** texture()
+    /// **See also:** [`texture()`]
     /// 
     /// Sets the brush image to *image.* The style is set to
     /// Qt::TexturePattern.
@@ -117,8 +116,8 @@ struct Brush {
     /// brushes, either convert the image to QBitmap with `QBitmap::fromImage()` and set the resulting QBitmap as a texture,
     /// or change the entries in the color table for the image.
     /// 
-    /// **See also:** textureImage()
-    /// setTexture()
+    /// **See also:** [`texture_image()`]
+    /// [`set_texture()`]
     set_texture(pixmap: &PixmapType),
     /// 
     /// Returns the custom brush pattern, or a null image if no custom
@@ -127,7 +126,7 @@ struct Brush {
     /// If the texture was set as a QPixmap it will be converted to a
     /// QImage.
     /// 
-    /// **See also:** setTextureImage()
+    /// **See also:** [`set_texture_image()`]
     texture_image() -> Image,
     /// 
     /// Sets the brush image to *image.* The style is set to
@@ -139,13 +138,13 @@ struct Brush {
     /// brushes, either convert the image to QBitmap with `QBitmap::fromImage()` and set the resulting QBitmap as a texture,
     /// or change the entries in the color table for the image.
     /// 
-    /// **See also:** textureImage()
-    /// setTexture()
+    /// **See also:** [`texture_image()`]
+    /// [`set_texture()`]
     set_texture_image(image: &ImageType),
     /// 
     /// Returns the brush color.
     /// 
-    /// **See also:** setColor()
+    /// **See also:** [`set_color()`]
     color() -> Color?,
     /// 
     /// Sets the brush color to the given *color.*
@@ -154,7 +153,7 @@ struct Brush {
     /// style is a gradient. The same is the case if the style is
     /// Qt::TexturePattern style unless the current texture is a QBitmap.
     /// 
-    /// **See also:** color()
+    /// **See also:** [`color()`]
     /// 
     /// **Overloads**
     /// Sets the brush color to the given *color.*
@@ -166,10 +165,11 @@ struct Brush {
     /// style is a gradient. The same is the case if the style is
     /// Qt::TexturePattern style unless the current texture is a QBitmap.
     /// 
-    /// **See also:** color()
+    /// **See also:** [`color()`]
     /// 
     /// **Overloads**
     /// Sets the brush color to the given *color.*
+    [org_name(setColor)]
     set_color_2(color: Rute::GlobalColor),
     /// 
     /// Returns the gradient describing this brush.

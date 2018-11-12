@@ -47,21 +47,14 @@
 /// 
 /// * Qt Assistant's toolbar contains tool buttons that are associated with actions used in other parts of the main window.
 /// 
-/// **See also:** QPushButton
-/// QToolBar
-/// QMainWindow
-/// QAction
+/// **See also:** [`PushButton`]
+/// [`ToolBar`]
+/// [`MainWindow`]
+/// [`Action`]
 /// {fowler}{GUI Design Handbook: Push Button}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QToolButton)]
-enum ToolButtonPopupMode {
-    DelayedPopup,
-    MenuButtonPopup,
-    InstantPopup,
-}
-
 struct ToolButton : AbstractButton {
     /// 
     [event] size_hint() -> Size,
@@ -90,12 +83,12 @@ struct ToolButton : AbstractButton {
     /// 
     /// Ownership of the menu is not transferred to the tool button.
     /// 
-    /// **See also:** menu()
+    /// **See also:** [`menu()`]
     set_menu(menu: *MenuType),
     /// 
     /// Returns the associated menu, or 0 if no menu has been defined.
     /// 
-    /// **See also:** setMenu()
+    /// **See also:** [`set_menu()`]
     menu() -> Menu?,
     set_popup_mode(mode: ToolButton::ToolButtonPopupMode),
     /// 
@@ -105,7 +98,7 @@ struct ToolButton : AbstractButton {
     /// 
     /// Returns the default action.
     /// 
-    /// **See also:** setDefaultAction()
+    /// **See also:** [`set_default_action()`]
     default_action() -> Action?,
     set_auto_raise(enable: bool),
     /// 
@@ -153,8 +146,15 @@ struct ToolButton : AbstractButton {
     /// is useful for subclasses when they need a QStyleOptionToolButton, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionToolButtonType),
+}
+
+[org_name(QToolButton)]
+enum ToolButtonPopupMode {
+    DelayedPopup,
+    MenuButtonPopup,
+    InstantPopup,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

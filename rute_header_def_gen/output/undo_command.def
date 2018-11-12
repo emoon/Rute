@@ -37,11 +37,10 @@
 /// Another way to create macros is to use the convenience functions
 /// QUndoStack::beginMacro() and QUndoStack::endMacro().
 /// 
-/// **See also:** QUndoStack
+/// **See also:** [`UndoStack`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct UndoCommand {
     /// 
     /// Reverts a change to the document. After undo() is called, the state of
@@ -52,7 +51,7 @@ struct UndoCommand {
     /// 
     /// The default implementation calls undo() on all child commands in reverse order.
     /// 
-    /// **See also:** redo()
+    /// **See also:** [`redo()`]
     [event] undo(),
     /// 
     /// Applies a change to the document. This function must be implemented in
@@ -62,7 +61,7 @@ struct UndoCommand {
     /// 
     /// The default implementation calls redo() on all child commands.
     /// 
-    /// **See also:** undo()
+    /// **See also:** [`undo()`]
     [event] redo(),
     /// 
     /// Returns a short text string describing what this command does; for example,
@@ -70,10 +69,10 @@ struct UndoCommand {
     /// 
     /// The text is used for names of items in QUndoView.
     /// 
-    /// **See also:** actionText()
-    /// setText()
-    /// QUndoStack::createUndoAction()
-    /// QUndoStack::createRedoAction()
+    /// **See also:** [`action_text()`]
+    /// [`set_text()`]
+    /// [`UndoStack::create_undo_action`]
+    /// [`UndoStack::create_redo_action`]
     text() -> String,
     /// 
     /// Returns a short text string describing what this command does; for example,
@@ -82,10 +81,10 @@ struct UndoCommand {
     /// The text is used when the text properties of the stack's undo and redo
     /// actions are updated.
     /// 
-    /// **See also:** text()
-    /// setText()
-    /// QUndoStack::createUndoAction()
-    /// QUndoStack::createRedoAction()
+    /// **See also:** [`text()`]
+    /// [`set_text()`]
+    /// [`UndoStack::create_undo_action`]
+    /// [`UndoStack::create_redo_action`]
     action_text() -> String,
     /// 
     /// Sets the command's text to be the *text* specified.
@@ -99,10 +98,10 @@ struct UndoCommand {
     /// different strings in order to match specific languages' needs.
     /// The described feature and the function actionText() are available since Qt 4.8.
     /// 
-    /// **See also:** text()
-    /// actionText()
-    /// QUndoStack::createUndoAction()
-    /// QUndoStack::createRedoAction()
+    /// **See also:** [`text()`]
+    /// [`action_text()`]
+    /// [`UndoStack::create_undo_action`]
+    /// [`UndoStack::create_redo_action`]
     set_text(text: String),
     /// 
     /// Returns whether the command is obsolete.
@@ -111,20 +110,20 @@ struct UndoCommand {
     /// stack anymore. The isObsolete function is checked in the functions QUndoStack::push(),
     /// QUndoStack::undo(), QUndoStack::redo(), and QUndoStack::setIndex().
     /// 
-    /// **See also:** setObsolete()
-    /// mergeWith()
-    /// QUndoStack::push()
-    /// QUndoStack::undo()
-    /// QUndoStack::redo()
+    /// **See also:** [`set_obsolete()`]
+    /// [`merge_with()`]
+    /// [`UndoStack::push`]
+    /// [`UndoStack::undo`]
+    /// [`UndoStack::redo`]
     is_obsolete() -> bool,
     /// 
     /// Sets whether the command is obsolete to *obsolete.*
     /// 
-    /// **See also:** isObsolete()
-    /// mergeWith()
-    /// QUndoStack::push()
-    /// QUndoStack::undo()
-    /// QUndoStack::redo()
+    /// **See also:** [`is_obsolete()`]
+    /// [`merge_with()`]
+    /// [`UndoStack::push`]
+    /// [`UndoStack::undo`]
+    /// [`UndoStack::redo`]
     set_obsolete(obsolete: bool),
     /// 
     /// Returns the ID of this command.
@@ -138,8 +137,8 @@ struct UndoCommand {
     /// QUndoStack::push() will only try to merge two commands if they have the
     /// same ID, and the ID is not -1.
     /// 
-    /// **See also:** mergeWith()
-    /// QUndoStack::push()
+    /// **See also:** [`merge_with()`]
+    /// [`UndoStack::push`]
     [event] id() -> i32,
     /// 
     /// Attempts to merge this command with *command.* Returns `true` on
@@ -155,23 +154,23 @@ struct UndoCommand {
     /// 
     /// The default implementation returns `false.`
     /// 
-    /// **See also:** id()
-    /// QUndoStack::push()
+    /// **See also:** [`id()`]
+    /// [`UndoStack::push`]
     [event] merge_with(other: *UndoCommandType) -> bool,
     /// 
     /// Returns the number of child commands in this command.
     /// 
-    /// **See also:** child()
+    /// **See also:** [`child()`]
     child_count() -> i32,
     /// 
     /// Returns the number of child commands in this command.
     /// 
-    /// **See also:** child()
+    /// **See also:** [`child()`]
     /// 
     /// Returns the child command at *index.*
     /// 
-    /// **See also:** childCount()
-    /// QUndoStack::command()
+    /// **See also:** [`child_count()`]
+    /// [`UndoStack::command`]
     child(index: i32) -> UndoCommand?,
 }
 

@@ -53,10 +53,117 @@
 /// base classes when wrapping your custom QObject or QWidget
 /// subclasses.
 /// 
-/// **See also:** QAccessibleInterface
+/// **See also:** [`AccessibleInterface`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct Accessible {
+    qt_check_for_qgadget_macro(),
+    /// 
+    /// Installs the InterfaceFactory *factory.* The last factory added
+    /// is the first one used by queryAccessibleInterface().
+    [static] install_factory(arg0: Accessible::InterfaceFactory),
+    /// 
+    /// Removes *factory* from the list of installed InterfaceFactories.
+    [static] remove_factory(arg0: Accessible::InterfaceFactory),
+    [static] install_update_handler(arg0: Accessible::UpdateHandler) -> Accessible::UpdateHandler,
+    [static] install_root_object_handler(arg0: Accessible::RootObjectHandler) -> Accessible::RootObjectHandler,
+    [static] install_activation_observer(arg0: Accessible::ActivationObserver *),
+    [static] remove_activation_observer(arg0: Accessible::ActivationObserver *),
+    /// 
+    /// If a QAccessibleInterface implementation exists for the given *object,*
+    /// this function returns a pointer to the implementation; otherwise it
+    /// returns 0.
+    /// 
+    /// The function calls all installed factory functions (from most
+    /// recently installed to least recently installed) until one is found
+    /// that provides an interface for the class of *object.* If no
+    /// factory can provide an accessibility implementation for the class
+    /// the function loads installed accessibility plugins, and tests if
+    /// any of the plugins can provide the implementation.
+    /// 
+    /// If no implementation for the object's class is available, the
+    /// function tries to find an implementation for the object's parent
+    /// class, using the above strategy.
+    /// 
+    /// All interfaces are managed by an internal cache and should not be deleted.
+    [static] query_accessible_interface(arg0: *ObjectType) -> AccessibleInterface?,
+    /// 
+    /// Returns the unique ID for the QAccessibleInterface *iface.*
+    [static] unique_id(iface: *AccessibleInterfaceType) -> Accessible::Id,
+    /// 
+    /// Returns the QAccessibleInterface belonging to the *id.*
+    /// 
+    /// Returns 0 if the id is invalid.
+    [static] accessible_interface(unique_id: Accessible::Id) -> AccessibleInterface?,
+    /// 
+    /// Must only be called exactly once per interface *iface.*
+    /// This is implicitly called when calling queryAccessibleInterface,
+    /// calling this function is only required when QAccessibleInterfaces
+    /// are instantiated with the operator. This is not recommended,
+    /// whenever possible use the default functions and let [queryAccessibleInterface()](queryAccessibleInterface())
+    /// 
+    /// take care of this.
+    /// 
+    /// When it is necessary to reimplement the QAccessibleInterface::child() function
+    /// and returning the child after constructing it, this function needs to be called.
+    [static] register_accessible_interface(iface: *AccessibleInterfaceType) -> Accessible::Id,
+    /// 
+    /// Removes the interface belonging to this *id* from the cache and
+    /// deletes it. The id becomes invalid an may be re-used by the
+    /// cache.
+    [static] delete_accessible_interface(unique_id: Accessible::Id),
+    /// 
+    /// Notifies about a change that might be relevant for accessibility clients.
+    /// 
+    /// *event* provides details about the change. These include the source
+    /// of the change and the nature of the change. The *event* should
+    /// contain enough information give meaningful notifications.
+    /// 
+    /// For example, the type `ValueChange` indicates that the position of
+    /// a slider has been changed.
+    /// 
+    /// Call this function whenever the state of your accessible object or
+    /// one of its sub-elements has been changed either programmatically
+    /// (e.g. by calling QLabel::setText()) or by user interaction.
+    /// 
+    /// If there are no accessibility tools listening to this event, the
+    /// performance penalty for calling this function is small, but if
+    /// determining the parameters of the call is expensive you can test
+    /// QAccessible::isActive() to avoid unnecessary computation.
+    /// 
+    [static] update_accessibility(event: *AccessibleEventType),
+    /// 
+    /// Returns `true` if the platform requested accessibility information.
+    /// 
+    /// This function will return false until a tool such as a screen reader
+    /// accessed the accessibility framework. It is still possible to use
+    /// [QAccessible::queryAccessibleInterface()](QAccessible::queryAccessibleInterface())
+    /// even if accessibility is not
+    /// active. But there will be no notifications sent to the platform.
+    /// 
+    /// It is recommended to use this function to prevent expensive notifications
+    /// via updateAccessibility() when they are not needed.
+    [static] is_active() -> bool,
+    [static] set_active(active: bool),
+    /// 
+    /// Sets the root object of the accessible objects of this application
+    /// to *object.* All other accessible objects are reachable using object
+    /// navigation from the root object.
+    /// 
+    /// Normally, it isn't necessary to call this function, because Qt sets
+    /// the QApplication object as the root object immediately before the
+    /// event loop is entered in QApplication::exec().
+    /// 
+    /// Use QAccessible::installRootObjectHandler() to redirect the function
+    /// call to a customized handler function.
+    /// 
+    /// **See also:** [`query_accessible_interface()`]
+    [static] set_root_object(object: *ObjectType),
+    [static] cleanup(),
+    [static] q_accessible_text_boundary_helper(cursor: &TextCursorType, boundary_type: Accessible::TextBoundaryType) -> Pair<int,,
+}
+
 [org_name(QAccessible)]
 enum Event {
     SoundPlayed,
@@ -249,114 +356,6 @@ enum TextBoundaryType {
     ParagraphBoundary,
     LineBoundary,
     NoBoundary,
-}
-
-
-struct Accessible {
-    qt_check_for_qgadget_macro(),
-    /// 
-    /// Installs the InterfaceFactory *factory.* The last factory added
-    /// is the first one used by queryAccessibleInterface().
-    [static] install_factory(arg0: Accessible::InterfaceFactory),
-    /// 
-    /// Removes *factory* from the list of installed InterfaceFactories.
-    [static] remove_factory(arg0: Accessible::InterfaceFactory),
-    [static] install_update_handler(arg0: Accessible::UpdateHandler) -> Accessible::UpdateHandler,
-    [static] install_root_object_handler(arg0: Accessible::RootObjectHandler) -> Accessible::RootObjectHandler,
-    [static] install_activation_observer(arg0: Accessible::ActivationObserver *),
-    [static] remove_activation_observer(arg0: Accessible::ActivationObserver *),
-    /// 
-    /// If a QAccessibleInterface implementation exists for the given *object,*
-    /// this function returns a pointer to the implementation; otherwise it
-    /// returns 0.
-    /// 
-    /// The function calls all installed factory functions (from most
-    /// recently installed to least recently installed) until one is found
-    /// that provides an interface for the class of *object.* If no
-    /// factory can provide an accessibility implementation for the class
-    /// the function loads installed accessibility plugins, and tests if
-    /// any of the plugins can provide the implementation.
-    /// 
-    /// If no implementation for the object's class is available, the
-    /// function tries to find an implementation for the object's parent
-    /// class, using the above strategy.
-    /// 
-    /// All interfaces are managed by an internal cache and should not be deleted.
-    [static] query_accessible_interface(arg0: *ObjectType) -> AccessibleInterface?,
-    /// 
-    /// Returns the unique ID for the QAccessibleInterface *iface.*
-    [static] unique_id(iface: *AccessibleInterfaceType) -> Accessible::Id,
-    /// 
-    /// Returns the QAccessibleInterface belonging to the *id.*
-    /// 
-    /// Returns 0 if the id is invalid.
-    [static] accessible_interface(unique_id: Accessible::Id) -> AccessibleInterface?,
-    /// 
-    /// Must only be called exactly once per interface *iface.*
-    /// This is implicitly called when calling queryAccessibleInterface,
-    /// calling this function is only required when QAccessibleInterfaces
-    /// are instantiated with the operator. This is not recommended,
-    /// whenever possible use the default functions and let [queryAccessibleInterface()](queryAccessibleInterface())
-    /// 
-    /// take care of this.
-    /// 
-    /// When it is necessary to reimplement the QAccessibleInterface::child() function
-    /// and returning the child after constructing it, this function needs to be called.
-    [static] register_accessible_interface(iface: *AccessibleInterfaceType) -> Accessible::Id,
-    /// 
-    /// Removes the interface belonging to this *id* from the cache and
-    /// deletes it. The id becomes invalid an may be re-used by the
-    /// cache.
-    [static] delete_accessible_interface(unique_id: Accessible::Id),
-    /// 
-    /// Notifies about a change that might be relevant for accessibility clients.
-    /// 
-    /// *event* provides details about the change. These include the source
-    /// of the change and the nature of the change. The *event* should
-    /// contain enough information give meaningful notifications.
-    /// 
-    /// For example, the type `ValueChange` indicates that the position of
-    /// a slider has been changed.
-    /// 
-    /// Call this function whenever the state of your accessible object or
-    /// one of its sub-elements has been changed either programmatically
-    /// (e.g. by calling QLabel::setText()) or by user interaction.
-    /// 
-    /// If there are no accessibility tools listening to this event, the
-    /// performance penalty for calling this function is small, but if
-    /// determining the parameters of the call is expensive you can test
-    /// QAccessible::isActive() to avoid unnecessary computation.
-    /// 
-    [static] update_accessibility(event: *AccessibleEventType),
-    /// 
-    /// Returns `true` if the platform requested accessibility information.
-    /// 
-    /// This function will return false until a tool such as a screen reader
-    /// accessed the accessibility framework. It is still possible to use
-    /// [QAccessible::queryAccessibleInterface()](QAccessible::queryAccessibleInterface())
-    /// even if accessibility is not
-    /// active. But there will be no notifications sent to the platform.
-    /// 
-    /// It is recommended to use this function to prevent expensive notifications
-    /// via updateAccessibility() when they are not needed.
-    [static] is_active() -> bool,
-    [static] set_active(active: bool),
-    /// 
-    /// Sets the root object of the accessible objects of this application
-    /// to *object.* All other accessible objects are reachable using object
-    /// navigation from the root object.
-    /// 
-    /// Normally, it isn't necessary to call this function, because Qt sets
-    /// the QApplication object as the root object immediately before the
-    /// event loop is entered in QApplication::exec().
-    /// 
-    /// Use QAccessible::installRootObjectHandler() to redirect the function
-    /// call to a customized handler function.
-    /// 
-    /// **See also:** queryAccessibleInterface()
-    [static] set_root_object(object: *ObjectType),
-    [static] cleanup(),
-    [static] q_accessible_text_boundary_helper(cursor: &TextCursorType, boundary_type: Accessible::TextBoundaryType) -> Pair<int,,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

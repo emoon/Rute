@@ -6,13 +6,12 @@
 /// The QVector3D class can also be used to represent vertices in 3D space.
 /// We therefore do not need to provide a separate vertex class.
 /// 
-/// **See also:** QVector2D
-/// QVector4D
-/// QQuaternion
+/// **See also:** [`Vector2D`]
+/// [`Vector4D`]
+/// [`Quaternion`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct Vector3D {
     /// 
     /// Returns `true` if the x, y, and z coordinates are set to 0.0,
@@ -21,63 +20,63 @@ struct Vector3D {
     /// 
     /// Returns the x coordinate of this point.
     /// 
-    /// **See also:** setX()
-    /// y()
-    /// z()
+    /// **See also:** [`set_x()`]
+    /// [`y()`]
+    /// [`z()`]
     x() -> f32,
     /// 
     /// Returns the y coordinate of this point.
     /// 
-    /// **See also:** setY()
-    /// x()
-    /// z()
+    /// **See also:** [`set_y()`]
+    /// [`x()`]
+    /// [`z()`]
     y() -> f32,
     /// 
     /// Returns the z coordinate of this point.
     /// 
-    /// **See also:** setZ()
-    /// x()
-    /// y()
+    /// **See also:** [`set_z()`]
+    /// [`x()`]
+    /// [`y()`]
     z() -> f32,
     /// 
     /// Sets the x coordinate of this point to the given *x* coordinate.
     /// 
-    /// **See also:** x()
-    /// setY()
-    /// setZ()
+    /// **See also:** [`x()`]
+    /// [`set_y()`]
+    /// [`set_z()`]
     set_x(x: f32),
     /// 
     /// Sets the y coordinate of this point to the given *y* coordinate.
     /// 
-    /// **See also:** y()
-    /// setX()
-    /// setZ()
+    /// **See also:** [`y()`]
+    /// [`set_x()`]
+    /// [`set_z()`]
     set_y(y: f32),
     /// 
     /// Sets the z coordinate of this point to the given *z* coordinate.
     /// 
-    /// **See also:** z()
-    /// setX()
-    /// setY()
+    /// **See also:** [`z()`]
+    /// [`set_x()`]
+    /// [`set_y()`]
     set_z(z: f32),
     /// 
     /// Returns the length of the vector from the origin.
     /// 
-    /// **See also:** lengthSquared()
-    /// normalized()
+    /// **See also:** [`length_squared()`]
+    /// [`normalized()`]
     /// 
     /// Returns the squared length of the vector from the origin.
     /// This is equivalent to the dot product of the vector with itself.
     /// 
-    /// **See also:** length()
-    /// dotProduct()
+    /// **See also:** [`length()`]
+    /// [`dot_product()`]
     length() -> f32,
     /// 
     /// Returns the squared length of the vector from the origin.
     /// This is equivalent to the dot product of the vector with itself.
     /// 
-    /// **See also:** length()
-    /// dotProduct()
+    /// **See also:** [`length()`]
+    /// [`dot_product()`]
     length_squared() -> f32,
     /// 
     /// Returns the normalized unit vector form of this vector.
@@ -86,8 +85,8 @@ struct Vector3D {
     /// of the vector is very close to 1, then the vector will be returned as-is.
     /// Otherwise the normalized form of the vector of length 1 will be returned.
     /// 
-    /// **See also:** length()
-    /// normalize()
+    /// **See also:** [`length()`]
+    /// [`normalize()`]
     normalized() -> Vector3D,
     /// 
     /// Returns the normalized unit vector form of this vector.
@@ -96,14 +95,14 @@ struct Vector3D {
     /// of the vector is very close to 1, then the vector will be returned as-is.
     /// Otherwise the normalized form of the vector of length 1 will be returned.
     /// 
-    /// **See also:** length()
-    /// normalize()
+    /// **See also:** [`length()`]
+    /// [`normalize()`]
     /// 
     /// Normalizes the currect vector in place. Nothing happens if this
     /// vector is a null vector or the length of the vector is very close to 1.
     /// 
-    /// **See also:** length()
-    /// normalized()
+    /// **See also:** [`length()`]
+    /// [`normalized()`]
     normalize(),
     /// 
     /// Returns the dot product of *v1* and *v2.*
@@ -112,7 +111,7 @@ struct Vector3D {
     /// Returns the cross-product of vectors *v1* and *v2,* which corresponds
     /// to the normal vector of a plane defined by *v1* and *v2.*
     /// 
-    /// **See also:** normal()
+    /// **See also:** [`normal()`]
     [static] cross_product(v1: &Vector3DType, v2: &Vector3DType) -> Vector3D,
     /// 
     /// Returns the normalized unit vector form of this vector.
@@ -121,14 +120,14 @@ struct Vector3D {
     /// of the vector is very close to 1, then the vector will be returned as-is.
     /// Otherwise the normalized form of the vector of length 1 will be returned.
     /// 
-    /// **See also:** length()
-    /// normalize()
+    /// **See also:** [`length()`]
+    /// [`normalize()`]
     /// 
     /// Normalizes the currect vector in place. Nothing happens if this
     /// vector is a null vector or the length of the vector is very close to 1.
     /// 
-    /// **See also:** length()
-    /// normalized()
+    /// **See also:** [`length()`]
+    /// [`normalized()`]
     /// 
     /// Returns the normal vector of a plane defined by vectors *v1* and *v2,*
     /// normalized to be a unit vector.
@@ -136,8 +135,8 @@ struct Vector3D {
     /// Use crossProduct() to compute the cross-product of *v1* and *v2* if you
     /// do not need the result to be normalized to a unit vector.
     /// 
-    /// **See also:** crossProduct()
-    /// distanceToPlane()
+    /// **See also:** [`cross_product()`]
+    /// [`distance_to_plane()`]
     /// 
     /// **Overloads**
     /// Returns the normal vector of a plane defined by vectors
@@ -147,8 +146,8 @@ struct Vector3D {
     /// *v3* - *v1* if you do not need the result to be normalized to a
     /// unit vector.
     /// 
-    /// **See also:** crossProduct()
-    /// distanceToPlane()
+    /// **See also:** [`cross_product()`]
+    /// [`distance_to_plane()`]
     [static] normal(v1: &Vector3DType, v2: &Vector3DType) -> Vector3D,
     /// 
     /// Returns the normalized unit vector form of this vector.
@@ -157,14 +156,14 @@ struct Vector3D {
     /// of the vector is very close to 1, then the vector will be returned as-is.
     /// Otherwise the normalized form of the vector of length 1 will be returned.
     /// 
-    /// **See also:** length()
-    /// normalize()
+    /// **See also:** [`length()`]
+    /// [`normalize()`]
     /// 
     /// Normalizes the currect vector in place. Nothing happens if this
     /// vector is a null vector or the length of the vector is very close to 1.
     /// 
-    /// **See also:** length()
-    /// normalized()
+    /// **See also:** [`length()`]
+    /// [`normalized()`]
     /// 
     /// Returns the normal vector of a plane defined by vectors *v1* and *v2,*
     /// normalized to be a unit vector.
@@ -172,8 +171,8 @@ struct Vector3D {
     /// Use crossProduct() to compute the cross-product of *v1* and *v2* if you
     /// do not need the result to be normalized to a unit vector.
     /// 
-    /// **See also:** crossProduct()
-    /// distanceToPlane()
+    /// **See also:** [`cross_product()`]
+    /// [`distance_to_plane()`]
     /// 
     /// **Overloads**
     /// Returns the normal vector of a plane defined by vectors
@@ -183,8 +182,9 @@ struct Vector3D {
     /// *v3* - *v1* if you do not need the result to be normalized to a
     /// unit vector.
     /// 
-    /// **See also:** crossProduct()
-    /// distanceToPlane()
+    /// **See also:** [`cross_product()`]
+    /// [`distance_to_plane()`]
+    [org_name(normal)]
     [static] normal_2(v1: &Vector3DType, v2: &Vector3DType, v3: &Vector3DType) -> Vector3D,
     /// 
     /// Returns the window coordinates of this vector initially in object/model
@@ -198,7 +198,7 @@ struct Vector3D {
     /// **Note**: the returned y coordinates are in OpenGL orientation. OpenGL expects
     /// the bottom to be 0 whereas for Qt top is 0.
     /// 
-    /// **See also:** unproject()
+    /// **See also:** [`unproject()`]
     project(model_view: &Matrix4x4Type, projection: &Matrix4x4Type, viewport: &RectType) -> Vector3D,
     /// 
     /// Returns the object/model coordinates of this vector initially in window
@@ -212,14 +212,14 @@ struct Vector3D {
     /// **Note**: y coordinates in *viewport* should use OpenGL orientation. OpenGL
     /// expects the bottom to be 0 whereas for Qt top is 0.
     /// 
-    /// **See also:** project()
+    /// **See also:** [`project()`]
     unproject(model_view: &Matrix4x4Type, projection: &Matrix4x4Type, viewport: &RectType) -> Vector3D,
     /// 
     /// Returns the distance from this vertex to a point defined by
     /// the vertex *point.*
     /// 
-    /// **See also:** distanceToPlane()
-    /// distanceToLine()
+    /// **See also:** [`distance_to_plane()`]
+    /// [`distance_to_line()`]
     distance_to_point(point: &Vector3DType) -> f32,
     /// 
     /// Returns the distance from this vertex to a plane defined by
@@ -229,8 +229,8 @@ struct Vector3D {
     /// The return value will be negative if the vertex is below the plane,
     /// or zero if it is on the plane.
     /// 
-    /// **See also:** normal()
-    /// distanceToLine()
+    /// **See also:** [`normal()`]
+    /// [`distance_to_line()`]
     /// 
     /// **Overloads**
     /// Returns the distance from this vertex a plane defined by
@@ -242,8 +242,8 @@ struct Vector3D {
     /// The two vectors that define the plane are *plane2* - *plane1*
     /// and *plane3* - *plane1.*
     /// 
-    /// **See also:** normal()
-    /// distanceToLine()
+    /// **See also:** [`normal()`]
+    /// [`distance_to_line()`]
     distance_to_plane(plane: &Vector3DType, normal: &Vector3DType) -> f32,
     /// 
     /// Returns the distance from this vertex to a plane defined by
@@ -253,8 +253,8 @@ struct Vector3D {
     /// The return value will be negative if the vertex is below the plane,
     /// or zero if it is on the plane.
     /// 
-    /// **See also:** normal()
-    /// distanceToLine()
+    /// **See also:** [`normal()`]
+    /// [`distance_to_line()`]
     /// 
     /// **Overloads**
     /// Returns the distance from this vertex a plane defined by
@@ -266,8 +266,9 @@ struct Vector3D {
     /// The two vectors that define the plane are *plane2* - *plane1*
     /// and *plane3* - *plane1.*
     /// 
-    /// **See also:** normal()
-    /// distanceToLine()
+    /// **See also:** [`normal()`]
+    /// [`distance_to_line()`]
+    [org_name(distanceToPlane)]
     distance_to_plane_2(plane1: &Vector3DType, plane2: &Vector3DType, plane3: &Vector3DType) -> f32,
     /// 
     /// Returns the distance that this vertex is from a line defined
@@ -276,39 +277,39 @@ struct Vector3D {
     /// If *direction* is a null vector, then it does not define a line.
     /// In that case, the distance from *point* to this vertex is returned.
     /// 
-    /// **See also:** distanceToPlane()
+    /// **See also:** [`distance_to_plane()`]
     distance_to_line(point: &Vector3DType, direction: &Vector3DType) -> f32,
     /// 
     /// Returns the 2D vector form of this 3D vector, dropping the z coordinate.
     /// 
-    /// **See also:** toVector4D()
-    /// toPoint()
+    /// **See also:** [`to_vector4_d()`]
+    /// [`to_point()`]
     to_vector2_d() -> Vector2D,
     /// 
     /// Returns the 4D form of this 3D vector, with the w coordinate set to zero.
     /// 
-    /// **See also:** toVector2D()
-    /// toPoint()
+    /// **See also:** [`to_vector2_d()`]
+    /// [`to_point()`]
     to_vector4_d() -> Vector4D,
     /// 
     /// Returns the QPoint form of this 3D vector. The z coordinate
     /// is dropped.
     /// 
-    /// **See also:** toPointF()
-    /// toVector2D()
+    /// **See also:** [`to_point_f()`]
+    /// [`to_vector2_d()`]
     /// 
     /// Returns the QPointF form of this 3D vector. The z coordinate
     /// is dropped.
     /// 
-    /// **See also:** toPoint()
-    /// toVector2D()
+    /// **See also:** [`to_point()`]
+    /// [`to_vector2_d()`]
     to_point() -> Point,
     /// 
     /// Returns the QPointF form of this 3D vector. The z coordinate
     /// is dropped.
     /// 
-    /// **See also:** toPoint()
-    /// toVector2D()
+    /// **See also:** [`to_point()`]
+    /// [`to_vector2_d()`]
     to_point_f() -> PointF,
 }
 

@@ -43,13 +43,12 @@
 /// **Note**: Since Qt 5, storageLocation() and displayName() are replaced by functionality
 /// provided by the QStandardPaths class.
 /// 
-/// **See also:** QSystemTrayIcon
-/// QProcess
-/// QStandardPaths
+/// **See also:** [`SystemTrayIcon`]
+/// [`Process`]
+/// [`StandardPaths`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct DesktopServices {
     /// 
     /// Opens the given *url* in the appropriate Web browser for the user's desktop
@@ -91,7 +90,7 @@ struct DesktopServices {
     /// </array>
     /// ```
     /// 
-    /// **See also:** setUrlHandler()
+    /// **See also:** [`set_url_handler()`]
     [static] open_url(url: &UrlType) -> bool,
     /// 
     /// Sets the handler for the given *scheme* to be the handler *method* provided by
@@ -113,13 +112,13 @@ struct DesktopServices {
     /// Note that the handler will always be called from within the same thread that
     /// calls QDesktopServices::openUrl().
     /// 
-    /// **See also:** openUrl()
-    /// unsetUrlHandler()
+    /// **See also:** [`open_url()`]
+    /// [`unset_url_handler()`]
     [static] set_url_handler(scheme: String, receiver: *ObjectType, method: *char),
     /// 
     /// Removes a previously set URL handler for the specified *scheme.*
     /// 
-    /// **See also:** setUrlHandler()
+    /// **See also:** [`set_url_handler()`]
     [static] unset_url_handler(scheme: String),
 }
 

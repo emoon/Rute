@@ -41,13 +41,12 @@
 /// **Note**: Tool tips use the inactive color group of QPalette, because tool
 /// tips are not active windows.
 /// 
-/// **See also:** QWidget::toolTip
-/// QAction::toolTip
+/// **See also:** [`Widget::tool_tip()`]
+/// [`Action::tool_tip()`]
 /// {Tool Tips Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct ToolTip {
     /// 
     /// Shows *text* as a tool tip, with the global position *pos* as
@@ -96,6 +95,7 @@ struct ToolTip {
     /// 
     /// **Overloads**
     /// This is analogous to calling QToolTip::showText( *pos,* *text,* *w,* QRect())
+    [org_name(showText)]
     [static] show_text_2(pos: &PointType, text: String, w: *WidgetType, rect: &RectType),
     /// 
     /// Shows *text* as a tool tip, with the global position *pos* as
@@ -120,17 +120,18 @@ struct ToolTip {
     /// 
     /// **Overloads**
     /// This is analogous to calling QToolTip::showText( *pos,* *text,* *w,* QRect())
+    [org_name(showText)]
     [static] show_text_3(pos: &PointType, text: String, w: *WidgetType, rect: &RectType, msec_show_time: i32),
     /// 
     /// Hides the tool tip. This is the same as calling showText() with an
     /// empty string.
     /// 
-    /// **See also:** showText()
+    /// **See also:** [`show_text()`]
     [static] hide_text(),
     /// 
     /// Returns `true` if this tooltip is currently shown.
     /// 
-    /// **See also:** showText()
+    /// **See also:** [`show_text()`]
     [static] is_visible() -> bool,
     /// 
     /// Returns the tooltip text, if a tooltip is visible, or an

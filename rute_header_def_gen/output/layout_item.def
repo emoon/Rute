@@ -21,11 +21,10 @@
 /// Height for Width](http://doc.qt.io/archives/qq/qq04-height-for-width.html)
 /// 
 /// 
-/// **See also:** QLayout
+/// **See also:** [`Layout`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct LayoutItem {
     /// 
     /// Implemented in subclasses to return the preferred size of this item.
@@ -54,8 +53,8 @@ struct LayoutItem {
     /// Reimplement this function in layout managers that support height
     /// for width.
     /// 
-    /// **See also:** heightForWidth()
-    /// QWidget::heightForWidth()
+    /// **See also:** [`height_for_width()`]
+    /// [`Widget::height_for_width`]
     [event] has_height_for_width() -> bool,
     /// 
     /// Returns the preferred height for this layout item, given the
@@ -72,7 +71,7 @@ struct LayoutItem {
     /// Caching is strongly recommended; without it layout will take
     /// exponential time.
     /// 
-    /// **See also:** hasHeightForWidth()
+    /// **See also:** [`has_height_for_width()`]
     [event] height_for_width(arg0: i32) -> i32,
     /// 
     /// Returns the minimum height this widget needs for the given width,
@@ -89,22 +88,22 @@ struct LayoutItem {
     /// function returns another object: QLayout and QSpacerItem inherit QLayoutItem,
     /// while QWidget does not.
     /// 
-    /// **See also:** layout()
-    /// spacerItem()
+    /// **See also:** [`layout()`]
+    /// [`spacer_item()`]
     [event] widget() -> Widget?,
     /// 
     /// If this item is a QLayout, it is returned as a QLayout; otherwise
     /// 0 is returned. This function provides type-safe casting.
     /// 
-    /// **See also:** spacerItem()
-    /// widget()
+    /// **See also:** [`spacer_item()`]
+    /// [`widget()`]
     [event] layout() -> Layout?,
     /// 
     /// If this item is a QSpacerItem, it is returned as a QSpacerItem;
     /// otherwise 0 is returned. This function provides type-safe casting.
     /// 
-    /// **See also:** layout()
-    /// widget()
+    /// **See also:** [`layout()`]
+    /// [`widget()`]
     [event] spacer_item() -> SpacerItem?,
     /// 
     /// Returns the alignment of this item.

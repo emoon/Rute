@@ -22,16 +22,11 @@
 /// 
 /// The event handler QWidget::wheelEvent() receives wheel events.
 /// 
-/// **See also:** QMouseEvent
-/// QWidget::grabMouse()
+/// **See also:** [`MouseEvent`]
+/// [`Widget::grab_mouse`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QWheelEvent)]
-enum WheelEventFixMeEnums {
-    DefaultDeltasPerStep,
-}
-
 struct WheelEvent : InputEvent {
     /// 
     /// Returns the scrolling distance in pixels on screen. This value is
@@ -84,9 +79,9 @@ struct WheelEvent : InputEvent {
     /// If you move your widgets around in response to mouse events,
     /// use globalPos() instead of this function.
     /// 
-    /// **See also:** x()
-    /// y()
-    /// globalPos()
+    /// **See also:** [`x()`]
+    /// [`y()`]
+    /// [`global_pos()`]
     /// 
     /// Returns the position of the mouse cursor relative to the widget
     /// that received the event.
@@ -94,7 +89,7 @@ struct WheelEvent : InputEvent {
     /// If you move your widgets around in response to mouse events,
     /// use globalPosF() instead of this function.
     /// 
-    /// **See also:** globalPosF()
+    /// **See also:** [`global_pos_f()`]
     pos() -> Point,
     /// 
     /// Returns the global position of the mouse pointer *at the time
@@ -103,8 +98,8 @@ struct WheelEvent : InputEvent {
     /// mouse events, globalPos() can differ a lot from the current
     /// cursor position returned by QCursor::pos().
     /// 
-    /// **See also:** globalX()
-    /// globalY()
+    /// **See also:** [`global_x()`]
+    /// [`global_y()`]
     /// 
     /// Returns the global position of the mouse pointer *at the time
     /// of the event* . This is important on asynchronous window systems
@@ -112,35 +107,35 @@ struct WheelEvent : InputEvent {
     /// mouse events, globalPosF() can differ a lot from the current
     /// cursor position returned by QCursor::pos().
     /// 
-    /// **See also:** posF()
+    /// **See also:** [`pos_f()`]
     global_pos() -> Point,
     /// 
     /// Returns the x position of the mouse cursor, relative to the
     /// widget that received the event.
     /// 
-    /// **See also:** y()
-    /// pos()
+    /// **See also:** [`y()`]
+    /// [`pos()`]
     x() -> i32,
     /// 
     /// Returns the y position of the mouse cursor, relative to the
     /// widget that received the event.
     /// 
-    /// **See also:** x()
-    /// pos()
+    /// **See also:** [`x()`]
+    /// [`pos()`]
     y() -> i32,
     /// 
     /// Returns the global x position of the mouse cursor at the time of
     /// the event.
     /// 
-    /// **See also:** globalY()
-    /// globalPos()
+    /// **See also:** [`global_y()`]
+    /// [`global_pos()`]
     global_x() -> i32,
     /// 
     /// Returns the global y position of the mouse cursor at the time of
     /// the event.
     /// 
-    /// **See also:** globalX()
-    /// globalPos()
+    /// **See also:** [`global_x()`]
+    /// [`global_pos()`]
     global_y() -> i32,
     /// 
     /// Returns the position of the mouse cursor relative to the widget
@@ -149,7 +144,7 @@ struct WheelEvent : InputEvent {
     /// If you move your widgets around in response to mouse events,
     /// use globalPosF() instead of this function.
     /// 
-    /// **See also:** globalPosF()
+    /// **See also:** [`global_pos_f()`]
     pos_f() -> PointF?,
     /// 
     /// Returns the global position of the mouse pointer *at the time
@@ -158,7 +153,7 @@ struct WheelEvent : InputEvent {
     /// mouse events, globalPosF() can differ a lot from the current
     /// cursor position returned by QCursor::pos().
     /// 
-    /// **See also:** posF()
+    /// **See also:** [`pos_f()`]
     global_pos_f() -> PointF?,
     /// 
     /// Returns the mouse state when the event occurred.
@@ -202,8 +197,13 @@ struct WheelEvent : InputEvent {
     /// [Qt::MouseEventNotSynthesized](Qt::MouseEventNotSynthesized)
     /// is returned always.
     /// 
-    /// **See also:** Qt::MouseEventSource
+    /// **See also:** [`t::mouse_event_source()`]
     source() -> Rute::MouseEventSource,
+}
+
+[org_name(QWheelEvent)]
+enum WheelEventFixMeEnums {
+    DefaultDeltasPerStep,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

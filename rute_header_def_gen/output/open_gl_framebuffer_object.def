@@ -39,21 +39,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QOpenGLFramebufferObject)]
-enum Attachment {
-    NoAttachment,
-    CombinedDepthStencil,
-    Depth,
-}
-
-[org_name(QOpenGLFramebufferObject)]
-enum FramebufferRestorePolicy {
-    DontRestoreFramebufferBinding,
-    RestoreFramebufferBindingToDefault,
-    RestoreFrameBufferBinding,
-}
-
-
 struct OpenGLFramebufferObject {
     /// 
     /// Creates and attaches an additional texture or renderbuffer of *size* width
@@ -88,7 +73,7 @@ struct OpenGLFramebufferObject {
     /// When *internalFormat* is not `0,` it specifies the internal format of the texture or
     /// renderbuffer. Otherwise a default of GL_RGBA or GL_RGBA8 is used.
     /// 
-    add_color_attachment(size: &SizeType, internal_format: i32),
+    add_color_attachment(size: &SizeType, internal_format: GLenum),
     /// 
     /// Creates and attaches an additional texture or renderbuffer of *size* width
     /// and height.
@@ -122,7 +107,8 @@ struct OpenGLFramebufferObject {
     /// When *internalFormat* is not `0,` it specifies the internal format of the texture or
     /// renderbuffer. Otherwise a default of GL_RGBA or GL_RGBA8 is used.
     /// 
-    add_color_attachment_2(width: i32, height: i32, internal_format: i32),
+    [org_name(addColorAttachment)]
+    add_color_attachment_2(width: i32, height: i32, internal_format: GLenum),
     /// 
     /// Returns the format of this framebuffer object.
     format() -> OpenGLFramebufferObjectFormat,
@@ -155,21 +141,21 @@ struct OpenGLFramebufferObject {
     /// with the framebuffer object. This is potentially expensive and changes the
     /// context state (the currently bound texture).
     /// 
-    /// **See also:** release()
+    /// **See also:** [`release()`]
     /// 
     /// Switches rendering back to the default, windowing system provided
     /// framebuffer.
     /// Returns `true` upon success, false otherwise.
     /// 
-    /// **See also:** bind()
-    /// release()
+    /// **See also:** [`bind()`]
+    /// [`release()`]
     bind() -> bool,
     /// 
     /// Switches rendering back to the default, windowing system provided
     /// framebuffer.
     /// Returns `true` upon success, false otherwise.
     /// 
-    /// **See also:** bind()
+    /// **See also:** [`bind()`]
     release() -> bool,
     /// 
     /// Returns the width of the framebuffer object attachments.
@@ -188,24 +174,24 @@ struct OpenGLFramebufferObject {
     /// When multiple textures are attached, the return value is the ID of
     /// the first one.
     /// 
-    /// **See also:** takeTexture()
-    /// textures()
+    /// **See also:** [`take_texture()`]
+    /// [`textures()`]
     /// 
     /// Returns the texture id for all attached textures.
     /// 
     /// If a multisample framebuffer object is used, then an empty vector is returned.
     /// 
-    /// **See also:** takeTexture()
-    /// texture()
-    texture() -> i32,
+    /// **See also:** [`take_texture()`]
+    /// [`texture()`]
+    texture() -> GLuint,
     /// 
     /// Returns the texture id for all attached textures.
     /// 
     /// If a multisample framebuffer object is used, then an empty vector is returned.
     /// 
-    /// **See also:** takeTexture()
-    /// texture()
-    textures() -> i32,
+    /// **See also:** [`take_texture()`]
+    /// [`texture()`]
+    textures() -> [GLuint],
     /// 
     /// Returns the texture id for the texture attached to this framebuffer
     /// object. The ownership of the texture is transferred to the caller.
@@ -218,9 +204,9 @@ struct OpenGLFramebufferObject {
     /// texture and the return value from this function will be invalid.
     /// Similarly, incomplete framebuffer objects will also return 0.
     /// 
-    /// **See also:** texture()
-    /// bind()
-    /// release()
+    /// **See also:** [`texture()`]
+    /// [`bind()`]
+    /// [`release()`]
     /// **Overloads**
     /// Returns the texture id for the texture attached to the color attachment of
     /// index *colorAttachmentIndex* of this framebuffer object. The ownership of
@@ -237,7 +223,7 @@ struct OpenGLFramebufferObject {
     /// texture and the return value from this function will be invalid.
     /// Similarly, incomplete framebuffer objects will also return 0.
     /// 
-    take_texture() -> i32,
+    take_texture() -> GLuint,
     /// 
     /// Returns the texture id for the texture attached to this framebuffer
     /// object. The ownership of the texture is transferred to the caller.
@@ -250,9 +236,9 @@ struct OpenGLFramebufferObject {
     /// texture and the return value from this function will be invalid.
     /// Similarly, incomplete framebuffer objects will also return 0.
     /// 
-    /// **See also:** texture()
-    /// bind()
-    /// release()
+    /// **See also:** [`texture()`]
+    /// [`bind()`]
+    /// [`release()`]
     /// **Overloads**
     /// Returns the texture id for the texture attached to the color attachment of
     /// index *colorAttachmentIndex* of this framebuffer object. The ownership of
@@ -269,7 +255,8 @@ struct OpenGLFramebufferObject {
     /// texture and the return value from this function will be invalid.
     /// Similarly, incomplete framebuffer objects will also return 0.
     /// 
-    take_texture_2(color_attachment_index: i32) -> i32,
+    [org_name(takeTexture)]
+    take_texture_2(color_attachment_index: i32) -> GLuint,
     /// 
     /// **Returns** the size of the color and depth/stencil attachments attached to
     /// this framebuffer object.
@@ -315,7 +302,7 @@ struct OpenGLFramebufferObject {
     /// a potentially expensive and inefficient operation. Therefore it is recommended that
     /// this function is used as seldom as possible.
     /// 
-    /// **See also:** QOpenGLPaintDevice::paintFlipped()
+    /// **See also:** [`OpenGLPaintDevice::paint_flipped`]
     /// 
     /// **Overloads**
     /// Returns the contents of this framebuffer object as a QImage. This method flips
@@ -361,7 +348,7 @@ struct OpenGLFramebufferObject {
     /// a potentially expensive and inefficient operation. Therefore it is recommended that
     /// this function is used as seldom as possible.
     /// 
-    /// **See also:** QOpenGLPaintDevice::paintFlipped()
+    /// **See also:** [`OpenGLPaintDevice::paint_flipped`]
     /// 
     /// **Overloads**
     /// Returns the contents of this framebuffer object as a QImage. This method flips
@@ -374,6 +361,7 @@ struct OpenGLFramebufferObject {
     /// supported by the OpenGL implementation. When that is not the case, only one
     /// color attachment will be set up.
     /// 
+    [org_name(toImage)]
     to_image_2(flipped: bool) -> Image,
     /// 
     /// Returns the contents of this framebuffer object as a QImage.
@@ -407,7 +395,7 @@ struct OpenGLFramebufferObject {
     /// a potentially expensive and inefficient operation. Therefore it is recommended that
     /// this function is used as seldom as possible.
     /// 
-    /// **See also:** QOpenGLPaintDevice::paintFlipped()
+    /// **See also:** [`OpenGLPaintDevice::paint_flipped`]
     /// 
     /// **Overloads**
     /// Returns the contents of this framebuffer object as a QImage. This method flips
@@ -420,6 +408,7 @@ struct OpenGLFramebufferObject {
     /// supported by the OpenGL implementation. When that is not the case, only one
     /// color attachment will be set up.
     /// 
+    [org_name(toImage)]
     to_image_3(flipped: bool, color_attachment_index: i32) -> Image,
     /// 
     /// Returns the status of the depth and stencil buffers attached to
@@ -439,14 +428,14 @@ struct OpenGLFramebufferObject {
     /// handle can be used to attach new images or buffers to the
     /// framebuffer. The user is responsible for cleaning up and
     /// destroying these objects.
-    handle() -> i32,
+    handle() -> GLuint,
     /// 
     /// Switches rendering back to the default, windowing system provided
     /// framebuffer.
     /// Returns `true` upon success, false otherwise.
     /// 
-    /// **See also:** bind()
-    /// release()
+    /// **See also:** [`bind()`]
+    /// [`release()`]
     [static] bind_default() -> bool,
     /// 
     /// Returns `true` if the OpenGL `GL_EXT_framebuffer_object` extension
@@ -456,7 +445,7 @@ struct OpenGLFramebufferObject {
     /// Returns `true` if the OpenGL `GL_EXT_framebuffer_blit` extension
     /// is present on this system; otherwise returns `false.`
     /// 
-    /// **See also:** blitFramebuffer()
+    /// **See also:** [`blit_framebuffer()`]
     [static] has_open_gl_framebuffer_blit() -> bool,
     /// 
     /// **Overloads**
@@ -501,7 +490,7 @@ struct OpenGLFramebufferObject {
     /// framebuffer can be relatively expensive due to the call to `glGetIntegerv`
     /// which on some OpenGL drivers may imply a pipeline stall.
     /// 
-    /// **See also:** hasOpenGLFramebufferBlit()
+    /// **See also:** [`has_open_gl_framebuffer_blit()`]
     /// 
     /// **Overloads**
     /// Convenience overload to blit between two framebuffer objects and
@@ -509,7 +498,7 @@ struct OpenGLFramebufferObject {
     /// blitFramebuffer(target, targetRect, source, sourceRect, buffers, filter,
     /// readColorAttachmentIndex, drawColorAttachmentIndex,
     /// RestoreFrameBufferBinding).
-    [static] blit_framebuffer(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: i32, filter: i32, read_color_attachment_index: i32, draw_color_attachment_index: i32, restore_policy: OpenGLFramebufferObject::FramebufferRestorePolicy),
+    [static] blit_framebuffer(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: GLbitfield, filter: GLenum, read_color_attachment_index: i32, draw_color_attachment_index: i32, restore_policy: OpenGLFramebufferObject::FramebufferRestorePolicy),
     /// 
     /// **Overloads**
     /// Convenience overload to blit between two framebuffer objects.
@@ -553,7 +542,7 @@ struct OpenGLFramebufferObject {
     /// framebuffer can be relatively expensive due to the call to `glGetIntegerv`
     /// which on some OpenGL drivers may imply a pipeline stall.
     /// 
-    /// **See also:** hasOpenGLFramebufferBlit()
+    /// **See also:** [`has_open_gl_framebuffer_blit()`]
     /// 
     /// **Overloads**
     /// Convenience overload to blit between two framebuffer objects and
@@ -561,7 +550,8 @@ struct OpenGLFramebufferObject {
     /// blitFramebuffer(target, targetRect, source, sourceRect, buffers, filter,
     /// readColorAttachmentIndex, drawColorAttachmentIndex,
     /// RestoreFrameBufferBinding).
-    [static] blit_framebuffer_2(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: i32, filter: i32, read_color_attachment_index: i32, draw_color_attachment_index: i32),
+    [org_name(blitFramebuffer)]
+    [static] blit_framebuffer_2(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: GLbitfield, filter: GLenum, read_color_attachment_index: i32, draw_color_attachment_index: i32),
     /// 
     /// **Overloads**
     /// Convenience overload to blit between two framebuffer objects.
@@ -605,7 +595,7 @@ struct OpenGLFramebufferObject {
     /// framebuffer can be relatively expensive due to the call to `glGetIntegerv`
     /// which on some OpenGL drivers may imply a pipeline stall.
     /// 
-    /// **See also:** hasOpenGLFramebufferBlit()
+    /// **See also:** [`has_open_gl_framebuffer_blit()`]
     /// 
     /// **Overloads**
     /// Convenience overload to blit between two framebuffer objects and
@@ -613,7 +603,8 @@ struct OpenGLFramebufferObject {
     /// blitFramebuffer(target, targetRect, source, sourceRect, buffers, filter,
     /// readColorAttachmentIndex, drawColorAttachmentIndex,
     /// RestoreFrameBufferBinding).
-    [static] blit_framebuffer_3(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: i32, filter: i32),
+    [org_name(blitFramebuffer)]
+    [static] blit_framebuffer_3(target: *OpenGLFramebufferObjectType, target_rect: &RectType, source: *OpenGLFramebufferObjectType, source_rect: &RectType, buffers: GLbitfield, filter: GLenum),
     /// 
     /// **Overloads**
     /// Convenience overload to blit between two framebuffer objects.
@@ -657,7 +648,7 @@ struct OpenGLFramebufferObject {
     /// framebuffer can be relatively expensive due to the call to `glGetIntegerv`
     /// which on some OpenGL drivers may imply a pipeline stall.
     /// 
-    /// **See also:** hasOpenGLFramebufferBlit()
+    /// **See also:** [`has_open_gl_framebuffer_blit()`]
     /// 
     /// **Overloads**
     /// Convenience overload to blit between two framebuffer objects and
@@ -665,7 +656,22 @@ struct OpenGLFramebufferObject {
     /// blitFramebuffer(target, targetRect, source, sourceRect, buffers, filter,
     /// readColorAttachmentIndex, drawColorAttachmentIndex,
     /// RestoreFrameBufferBinding).
-    [static] blit_framebuffer_4(target: *OpenGLFramebufferObjectType, source: *OpenGLFramebufferObjectType, buffers: i32, filter: i32),
+    [org_name(blitFramebuffer)]
+    [static] blit_framebuffer_4(target: *OpenGLFramebufferObjectType, source: *OpenGLFramebufferObjectType, buffers: GLbitfield, filter: GLenum),
+}
+
+[org_name(QOpenGLFramebufferObject)]
+enum Attachment {
+    NoAttachment,
+    CombinedDepthStencil,
+    Depth,
+}
+
+[org_name(QOpenGLFramebufferObject)]
+enum FramebufferRestorePolicy {
+    DontRestoreFramebufferBinding,
+    RestoreFramebufferBindingToDefault,
+    RestoreFrameBufferBinding,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

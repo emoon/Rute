@@ -5,7 +5,7 @@
 /// are initialized to their default values. The properties can then be further changed, and they
 /// will be picked up the next time the layout is activated.
 /// 
-/// **See also:** QGraphicsAnchorLayout::anchor()
+/// **See also:** [`GraphicsAnchorLayout::anchor`]
 /// 
 /// # Licence
 ///
@@ -17,7 +17,7 @@ struct GraphicsAnchor : Object {
     /// Depending on the anchor type, the default spacing is either
     /// 0 or a value returned from the style.
     /// 
-    /// **See also:** QGraphicsAnchorLayout::addAnchor()
+    /// **See also:** [`GraphicsAnchorLayout::add_anchor`]
     spacing() -> f32,
     set_size_policy(policy: SizePolicy::Policy),
     /// 
@@ -29,7 +29,7 @@ struct GraphicsAnchor : Object {
     /// is the spacing. QSizePolicy::Fixed is the default size policy.
     /// QGraphicsAnchor always has a minimum spacing of 0 and a very large maximum spacing.
     /// 
-    /// **See also:** QGraphicsAnchor::spacing
+    /// **See also:** [`GraphicsAnchor::spacing()`]
     size_policy() -> SizePolicy::Policy,
 }
 

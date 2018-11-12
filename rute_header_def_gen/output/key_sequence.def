@@ -373,10 +373,54 @@
 /// **Warning**: A QApplication instance must have been constructed before a
 /// QKeySequence is created; otherwise, your application may crash.
 /// 
-/// **See also:** QShortcut
+/// **See also:** [`Shortcut`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct KeySequence {
+    qt_check_for_qgadget_macro(),
+    /// 
+    /// Returns the number of keys in the key sequence.
+    /// The maximum is 4.
+    count() -> i32,
+    /// 
+    /// Returns `true` if the key sequence is empty; otherwise returns
+    /// false.
+    is_empty() -> bool,
+    /// 
+    /// Matches the sequence with *seq.* Returns ExactMatch if
+    /// successful, PartialMatch if *seq* matches incompletely,
+    /// and NoMatch if the sequences have nothing in common.
+    /// Returns NoMatch if *seq* is shorter.
+    matches(seq: &KeySequenceType) -> KeySequence::SequenceMatch,
+    /// 
+    /// Returns the shortcut key sequence for the mnemonic in *text,*
+    /// or an empty key sequence if no mnemonics are found.
+    /// 
+    /// For example, mnemonic("E&xit") returns `Qt::ALT+Qt::Key_X` ,
+    /// mnemonic("&Quit") returns `ALT+Key_Q` , and mnemonic("Quit")
+    /// returns an empty QKeySequence.
+    /// 
+    /// We provide a [list of common mnemonics](accelerators.html)
+    /// 
+    /// in English. At the time of writing, Microsoft and Open Group do
+    /// not appear to have issued equivalent recommendations for other
+    /// languages.
+    [static] mnemonic(text: String) -> KeySequence,
+    /// 
+    /// Returns a list of key bindings for the given *key.*
+    /// The result of calling this function will vary based on the target platform.
+    /// The first element of the list indicates the primary shortcut for the given platform.
+    /// If the result contains more than one result, these can
+    /// be considered alternative shortcuts on the same platform for the given *key.*
+    [static] key_bindings(key: KeySequence::StandardKey) -> [KeySequence],
+    /// 
+    /// Swaps key sequence *other* with this key sequence. This operation is very
+    /// fast and never fails.
+    swap(other: &KeySequenceType),
+    is_detached() -> bool,
+}
+
 [org_name(QKeySequence)]
 enum StandardKey {
     UnknownKey,
@@ -463,51 +507,6 @@ enum SequenceMatch {
     NoMatch,
     PartialMatch,
     ExactMatch,
-}
-
-
-struct KeySequence {
-    qt_check_for_qgadget_macro(),
-    /// 
-    /// Returns the number of keys in the key sequence.
-    /// The maximum is 4.
-    count() -> i32,
-    /// 
-    /// Returns `true` if the key sequence is empty; otherwise returns
-    /// false.
-    is_empty() -> bool,
-    /// 
-    /// Matches the sequence with *seq.* Returns ExactMatch if
-    /// successful, PartialMatch if *seq* matches incompletely,
-    /// and NoMatch if the sequences have nothing in common.
-    /// Returns NoMatch if *seq* is shorter.
-    matches(seq: &KeySequenceType) -> KeySequence::SequenceMatch,
-    /// 
-    /// Returns the shortcut key sequence for the mnemonic in *text,*
-    /// or an empty key sequence if no mnemonics are found.
-    /// 
-    /// For example, mnemonic("E&xit") returns `Qt::ALT+Qt::Key_X` ,
-    /// mnemonic("&Quit") returns `ALT+Key_Q` , and mnemonic("Quit")
-    /// returns an empty QKeySequence.
-    /// 
-    /// We provide a [list of common mnemonics](accelerators.html)
-    /// 
-    /// in English. At the time of writing, Microsoft and Open Group do
-    /// not appear to have issued equivalent recommendations for other
-    /// languages.
-    [static] mnemonic(text: String) -> KeySequence,
-    /// 
-    /// Returns a list of key bindings for the given *key.*
-    /// The result of calling this function will vary based on the target platform.
-    /// The first element of the list indicates the primary shortcut for the given platform.
-    /// If the result contains more than one result, these can
-    /// be considered alternative shortcuts on the same platform for the given *key.*
-    [static] key_bindings(key: KeySequence::StandardKey) -> [KeySequence],
-    /// 
-    /// Swaps key sequence *other* with this key sequence. This operation is very
-    /// fast and never fails.
-    swap(other: &KeySequenceType),
-    is_detached() -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

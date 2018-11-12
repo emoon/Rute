@@ -7,7 +7,7 @@
 /// **Note**: This class cannot directly be used in applications. It rather serves
 /// as a base for subclasses like QOpenGLWindow.
 /// 
-/// **See also:** QOpenGLWindow
+/// **See also:** [`OpenGLWindow`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -61,6 +61,7 @@ struct PaintDeviceWindow : Window, PaintDevice {
     /// 
     /// **Note**: For non-exposed windows the update is deferred until the
     /// window becomes exposed again.
+    [org_name(update)]
     update_2(region: &RegionType),
     /// 
     /// Marks the entire window as dirty and schedules a repaint.
@@ -86,6 +87,7 @@ struct PaintDeviceWindow : Window, PaintDevice {
     /// 
     /// **Note**: For non-exposed windows the update is deferred until the
     /// window becomes exposed again.
+    [org_name(update)]
     update_3(),
     /// 
     /// Handles paint events passed in the *event* parameter.

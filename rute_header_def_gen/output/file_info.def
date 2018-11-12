@@ -75,12 +75,11 @@
 /// off a QFileInfo's caching and force it to access the file system
 /// every time you request information from it call setCaching(false).
 /// 
-/// **See also:** QDir
-/// QFile
+/// **See also:** [`Dir`]
+/// [`File`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct FileInfo {
     /// 
     /// Swaps this file info with *other.* This function is very fast and
@@ -97,9 +96,9 @@ struct FileInfo {
     /// 
     /// Example:
     /// 
-    /// **See also:** isRelative()
-    /// QDir::setCurrent()
-    /// QDir::isRelativePath()
+    /// **See also:** [`is_relative()`]
+    /// [`Dir::set_current`]
+    /// [`Dir::is_relative_path`]
     /// 
     /// **Overloads**
     /// Sets the file that the QFileInfo provides information about to *file.*
@@ -107,7 +106,7 @@ struct FileInfo {
     /// If *file* includes a relative path, the QFileInfo will also have
     /// a relative path.
     /// 
-    /// **See also:** isRelative()
+    /// **See also:** [`is_relative()`]
     /// 
     /// **Overloads**
     /// Sets the file that the QFileInfo provides information about to *file* in directory *dir.*
@@ -115,7 +114,7 @@ struct FileInfo {
     /// If *file* includes a relative path, the QFileInfo will also
     /// have a relative path.
     /// 
-    /// **See also:** isRelative()
+    /// **See also:** [`is_relative()`]
     set_file(file: String),
     /// 
     /// Sets the file that the QFileInfo provides information about to *file.*
@@ -128,9 +127,9 @@ struct FileInfo {
     /// 
     /// Example:
     /// 
-    /// **See also:** isRelative()
-    /// QDir::setCurrent()
-    /// QDir::isRelativePath()
+    /// **See also:** [`is_relative()`]
+    /// [`Dir::set_current`]
+    /// [`Dir::is_relative_path`]
     /// 
     /// **Overloads**
     /// Sets the file that the QFileInfo provides information about to *file.*
@@ -138,7 +137,7 @@ struct FileInfo {
     /// If *file* includes a relative path, the QFileInfo will also have
     /// a relative path.
     /// 
-    /// **See also:** isRelative()
+    /// **See also:** [`is_relative()`]
     /// 
     /// **Overloads**
     /// Sets the file that the QFileInfo provides information about to *file* in directory *dir.*
@@ -146,7 +145,8 @@ struct FileInfo {
     /// If *file* includes a relative path, the QFileInfo will also
     /// have a relative path.
     /// 
-    /// **See also:** isRelative()
+    /// **See also:** [`is_relative()`]
+    [org_name(setFile)]
     set_file_2(file: &FileType),
     /// 
     /// Sets the file that the QFileInfo provides information about to *file.*
@@ -159,9 +159,9 @@ struct FileInfo {
     /// 
     /// Example:
     /// 
-    /// **See also:** isRelative()
-    /// QDir::setCurrent()
-    /// QDir::isRelativePath()
+    /// **See also:** [`is_relative()`]
+    /// [`Dir::set_current`]
+    /// [`Dir::is_relative_path`]
     /// 
     /// **Overloads**
     /// Sets the file that the QFileInfo provides information about to *file.*
@@ -169,7 +169,7 @@ struct FileInfo {
     /// If *file* includes a relative path, the QFileInfo will also have
     /// a relative path.
     /// 
-    /// **See also:** isRelative()
+    /// **See also:** [`is_relative()`]
     /// 
     /// **Overloads**
     /// Sets the file that the QFileInfo provides information about to *file* in directory *dir.*
@@ -177,7 +177,8 @@ struct FileInfo {
     /// If *file* includes a relative path, the QFileInfo will also
     /// have a relative path.
     /// 
-    /// **See also:** isRelative()
+    /// **See also:** [`is_relative()`]
+    [org_name(setFile)]
     set_file_3(dir: &DirType, file: String),
     /// 
     /// Returns `true` if the file exists; otherwise returns `false.`
@@ -206,6 +207,7 @@ struct FileInfo {
     /// 
     /// **Note**: Using this function is faster than using
     /// `QFileInfo(file).exists()` for file system access.
+    [org_name(exists)]
     [static] exists_2(file: String) -> bool,
     /// 
     /// Refreshes the information about the file, i.e. reads in information
@@ -215,9 +217,9 @@ struct FileInfo {
     /// Returns the file name, including the path (which may be absolute
     /// or relative).
     /// 
-    /// **See also:** absoluteFilePath()
-    /// canonicalFilePath()
-    /// isRelative()
+    /// **See also:** [`absolute_file_path()`]
+    /// [`canonical_file_path()`]
+    /// [`is_relative()`]
     file_path() -> String,
     /// 
     /// Returns an absolute path including the file name.
@@ -237,9 +239,9 @@ struct FileInfo {
     /// **Warning**: If filePath() is empty the behavior of this function
     /// is undefined.
     /// 
-    /// **See also:** filePath()
-    /// canonicalFilePath()
-    /// isRelative()
+    /// **See also:** [`file_path()`]
+    /// [`canonical_file_path()`]
+    /// [`is_relative()`]
     absolute_file_path() -> String,
     /// 
     /// Returns the canonical path including the file name, i.e. an absolute
@@ -248,9 +250,9 @@ struct FileInfo {
     /// If the file does not exist, canonicalFilePath() returns an empty
     /// string.
     /// 
-    /// **See also:** filePath()
-    /// absoluteFilePath()
-    /// dir()
+    /// **See also:** [`file_path()`]
+    /// [`absolute_file_path()`]
+    /// [`dir()`]
     canonical_file_path() -> String,
     /// 
     /// Returns the name of the file, excluding the path.
@@ -260,10 +262,10 @@ struct FileInfo {
     /// Note that, if this QFileInfo object is given a path ending in a
     /// slash, the name of the file is considered empty.
     /// 
-    /// **See also:** isRelative()
-    /// filePath()
-    /// baseName()
-    /// suffix()
+    /// **See also:** [`is_relative()`]
+    /// [`file_path()`]
+    /// [`base_name()`]
+    /// [`suffix()`]
     file_name() -> String,
     /// 
     /// Returns the base name of the file without the path.
@@ -277,10 +279,10 @@ struct FileInfo {
     /// of file naming conventions (e.g., on Unix has an empty base
     /// name, and the suffix is ).
     /// 
-    /// **See also:** fileName()
-    /// suffix()
-    /// completeSuffix()
-    /// completeBaseName()
+    /// **See also:** [`file_name()`]
+    /// [`suffix()`]
+    /// [`complete_suffix()`]
+    /// [`complete_base_name()`]
     base_name() -> String,
     /// 
     /// Returns the complete base name of the file without the path.
@@ -290,10 +292,10 @@ struct FileInfo {
     /// 
     /// Example:
     /// 
-    /// **See also:** fileName()
-    /// suffix()
-    /// completeSuffix()
-    /// baseName()
+    /// **See also:** [`file_name()`]
+    /// [`suffix()`]
+    /// [`complete_suffix()`]
+    /// [`base_name()`]
     complete_base_name() -> String,
     /// 
     /// Returns the suffix (extension) of the file.
@@ -307,10 +309,10 @@ struct FileInfo {
     /// file naming conventions (e.g., on Unix has an empty base name,
     /// and the suffix is ).
     /// 
-    /// **See also:** fileName()
-    /// completeSuffix()
-    /// baseName()
-    /// completeBaseName()
+    /// **See also:** [`file_name()`]
+    /// [`complete_suffix()`]
+    /// [`base_name()`]
+    /// [`complete_base_name()`]
     suffix() -> String,
     /// 
     /// Returns the name of the bundle.
@@ -320,10 +322,10 @@ struct FileInfo {
     /// 
     /// Example:
     /// 
-    /// **See also:** isBundle()
-    /// filePath()
-    /// baseName()
-    /// suffix()
+    /// **See also:** [`is_bundle()`]
+    /// [`file_path()`]
+    /// [`base_name()`]
+    /// [`suffix()`]
     bundle_name() -> String,
     /// 
     /// Returns the complete suffix (extension) of the file.
@@ -333,10 +335,10 @@ struct FileInfo {
     /// 
     /// Example:
     /// 
-    /// **See also:** fileName()
-    /// suffix()
-    /// baseName()
-    /// completeBaseName()
+    /// **See also:** [`file_name()`]
+    /// [`suffix()`]
+    /// [`base_name()`]
+    /// [`complete_base_name()`]
     complete_suffix() -> String,
     /// 
     /// Returns the file's path. This doesn't include the file name.
@@ -345,12 +347,12 @@ struct FileInfo {
     /// slash, the name of the file is considered empty and this function
     /// will return the entire path.
     /// 
-    /// **See also:** filePath()
-    /// absolutePath()
-    /// canonicalPath()
-    /// dir()
-    /// fileName()
-    /// isRelative()
+    /// **See also:** [`file_path()`]
+    /// [`absolute_path()`]
+    /// [`canonical_path()`]
+    /// [`dir()`]
+    /// [`file_name()`]
+    /// [`is_relative()`]
     path() -> String,
     /// 
     /// Returns a file's path absolute path. This doesn't include the
@@ -367,11 +369,11 @@ struct FileInfo {
     /// **Warning**: If filePath() is empty the behavior of this function
     /// is undefined.
     /// 
-    /// **See also:** absoluteFilePath()
-    /// path()
-    /// canonicalPath()
-    /// fileName()
-    /// isRelative()
+    /// **See also:** [`absolute_file_path()`]
+    /// [`path()`]
+    /// [`canonical_path()`]
+    /// [`file_name()`]
+    /// [`is_relative()`]
     absolute_path() -> String,
     /// 
     /// Returns the file's path canonical path (excluding the file name),
@@ -379,8 +381,8 @@ struct FileInfo {
     /// 
     /// If the file does not exist, canonicalPath() returns an empty string.
     /// 
-    /// **See also:** path()
-    /// absolutePath()
+    /// **See also:** [`path()`]
+    /// [`absolute_path()`]
     canonical_path() -> String,
     /// 
     /// Returns the path of the object's parent directory as a QDir object.
@@ -394,19 +396,19 @@ struct FileInfo {
     /// For each of the following, dir() returns the QDir
     /// `"."` .
     /// 
-    /// **See also:** absolutePath()
-    /// filePath()
-    /// fileName()
-    /// isRelative()
-    /// absoluteDir()
+    /// **See also:** [`absolute_path()`]
+    /// [`file_path()`]
+    /// [`file_name()`]
+    /// [`is_relative()`]
+    /// [`absolute_dir()`]
     dir() -> Dir,
     /// 
     /// Returns the file's absolute path as a QDir object.
     /// 
-    /// **See also:** dir()
-    /// filePath()
-    /// fileName()
-    /// isRelative()
+    /// **See also:** [`dir()`]
+    /// [`file_path()`]
+    /// [`file_name()`]
+    /// [`is_relative()`]
     absolute_dir() -> Dir,
     /// 
     /// Returns `true` if the user can read the file; otherwise returns `false.`
@@ -415,9 +417,9 @@ struct FileInfo {
     /// check has not been enabled, the result
     /// on Windows will merely reflect whether the file exists.
     /// 
-    /// **See also:** isWritable()
-    /// isExecutable()
-    /// permission()
+    /// **See also:** [`is_writable()`]
+    /// [`is_executable()`]
+    /// [`permission()`]
     is_readable() -> bool,
     /// 
     /// Returns `true` if the user can write to the file; otherwise returns `false.`
@@ -426,16 +428,16 @@ struct FileInfo {
     /// check has not been enabled, the result on
     /// Windows will merely reflect whether the file is marked as Read Only.
     /// 
-    /// **See also:** isReadable()
-    /// isExecutable()
-    /// permission()
+    /// **See also:** [`is_readable()`]
+    /// [`is_executable()`]
+    /// [`permission()`]
     is_writable() -> bool,
     /// 
     /// Returns `true` if the file is executable; otherwise returns `false.`
     /// 
-    /// **See also:** isReadable()
-    /// isWritable()
-    /// permission()
+    /// **See also:** [`is_readable()`]
+    /// [`is_writable()`]
+    /// [`permission()`]
     is_executable() -> bool,
     /// 
     /// Returns `true` if this is a `hidden' file; otherwise returns `false.`
@@ -453,49 +455,49 @@ struct FileInfo {
     /// and character encoding, depending on platform and input requirements of the
     /// native API.
     /// 
-    /// **See also:** QDir::toNativeSeparators()
-    /// QFile::encodeName()
-    /// filePath()
-    /// absoluteFilePath()
-    /// canonicalFilePath()
+    /// **See also:** [`Dir::to_native_separators`]
+    /// [`File::encode_name`]
+    /// [`file_path()`]
+    /// [`absolute_file_path()`]
+    /// [`canonical_file_path()`]
     is_native_path() -> bool,
     /// 
     /// Returns `true` if the file path name is relative, otherwise returns
     /// false if the path is absolute (e.g. under Unix a path is absolute
     /// if it begins with a ).
     /// 
-    /// **See also:** isAbsolute()
+    /// **See also:** [`is_absolute()`]
     is_relative() -> bool,
     /// 
     /// Returns `true` if the file path name is absolute, otherwise returns
     /// false if the path is relative.
     /// 
-    /// **See also:** isRelative()
+    /// **See also:** [`is_relative()`]
     is_absolute() -> bool,
     /// 
     /// Converts the file's path to an absolute path if it is not already in that form.
     /// Returns `true` to indicate that the path was converted; otherwise returns `false`
     /// to indicate that the path was already absolute.
     /// 
-    /// **See also:** filePath()
-    /// isRelative()
+    /// **See also:** [`file_path()`]
+    /// [`is_relative()`]
     make_absolute() -> bool,
     /// 
     /// Returns `true` if this object points to a file or to a symbolic
     /// link to a file. Returns `false` if the
     /// object points to something which isn't a file, such as a directory.
     /// 
-    /// **See also:** isDir()
-    /// isSymLink()
-    /// isBundle()
+    /// **See also:** [`is_dir()`]
+    /// [`is_sym_link()`]
+    /// [`is_bundle()`]
     is_file() -> bool,
     /// 
     /// Returns `true` if this object points to a directory or to a symbolic
     /// link to a directory; otherwise returns `false.`
     /// 
-    /// **See also:** isFile()
-    /// isSymLink()
-    /// isBundle()
+    /// **See also:** [`is_file()`]
+    /// [`is_sym_link()`]
+    /// [`is_bundle()`]
     is_dir() -> bool,
     /// 
     /// Returns `true` if this object points to a symbolic link;
@@ -515,9 +517,9 @@ struct FileInfo {
     /// **Note**: If the symlink points to a non existing file, exists() returns
     /// false.
     /// 
-    /// **See also:** isFile()
-    /// isDir()
-    /// symLinkTarget()
+    /// **See also:** [`is_file()`]
+    /// [`is_dir()`]
+    /// [`sym_link_target()`]
     is_sym_link() -> bool,
     /// 
     /// Returns `true` if the object points to a directory or to a symbolic
@@ -528,9 +530,9 @@ struct FileInfo {
     /// Returns `true` if this object points to a bundle or to a symbolic
     /// link to a bundle on MacOS and iOS; otherwise returns `false.`
     /// 
-    /// **See also:** isDir()
-    /// isSymLink()
-    /// isFile()
+    /// **See also:** [`is_dir()`]
+    /// [`is_sym_link()`]
+    /// [`is_file()`]
     is_bundle() -> bool,
     /// 
     /// Use symLinkTarget() instead.
@@ -544,10 +546,10 @@ struct FileInfo {
     /// QFileInfo::exists() returns `true` if the symlink points to an
     /// existing file.
     /// 
-    /// **See also:** exists()
-    /// isSymLink()
-    /// isDir()
-    /// isFile()
+    /// **See also:** [`exists()`]
+    /// [`is_sym_link()`]
+    /// [`is_dir()`]
+    /// [`is_file()`]
     sym_link_target() -> String,
     /// 
     /// Returns the owner of the file. On systems where files
@@ -559,18 +561,18 @@ struct FileInfo {
     /// the [NTFS permissions](NTFS%20permissions)
     /// check has been enabled.
     /// 
-    /// **See also:** ownerId()
-    /// group()
-    /// groupId()
+    /// **See also:** [`owner_id()`]
+    /// [`group()`]
+    /// [`group_id()`]
     /// 
     /// Returns the id of the owner of the file.
     /// 
     /// On Windows and on systems where files do not have owners this
     /// function returns ((uint) -2).
     /// 
-    /// **See also:** owner()
-    /// group()
-    /// groupId()
+    /// **See also:** [`owner()`]
+    /// [`group()`]
+    /// [`group_id()`]
     owner() -> String,
     /// 
     /// Returns the id of the owner of the file.
@@ -578,9 +580,9 @@ struct FileInfo {
     /// On Windows and on systems where files do not have owners this
     /// function returns ((uint) -2).
     /// 
-    /// **See also:** owner()
-    /// group()
-    /// groupId()
+    /// **See also:** [`owner()`]
+    /// [`group()`]
+    /// [`group_id()`]
     owner_id() -> uint,
     /// 
     /// Returns the group of the file. On Windows, on systems where files
@@ -590,18 +592,18 @@ struct FileInfo {
     /// This function can be time consuming under Unix (in the order of
     /// milliseconds).
     /// 
-    /// **See also:** groupId()
-    /// owner()
-    /// ownerId()
+    /// **See also:** [`group_id()`]
+    /// [`owner()`]
+    /// [`owner_id()`]
     /// 
     /// Returns the id of the group the file belongs to.
     /// 
     /// On Windows and on systems where files do not have groups this
     /// function always returns (uint) -2.
     /// 
-    /// **See also:** group()
-    /// owner()
-    /// ownerId()
+    /// **See also:** [`group()`]
+    /// [`owner()`]
+    /// [`owner_id()`]
     group() -> String,
     /// 
     /// Returns the id of the group the file belongs to.
@@ -609,9 +611,9 @@ struct FileInfo {
     /// On Windows and on systems where files do not have groups this
     /// function always returns (uint) -2.
     /// 
-    /// **See also:** group()
-    /// owner()
-    /// ownerId()
+    /// **See also:** [`group()`]
+    /// [`owner()`]
+    /// [`owner_id()`]
     group_id() -> uint,
     /// 
     /// Tests for file permissions. The *permissions* argument can be
@@ -627,9 +629,9 @@ struct FileInfo {
     /// 
     /// Example:
     /// 
-    /// **See also:** isReadable()
-    /// isWritable()
-    /// isExecutable()
+    /// **See also:** [`is_readable()`]
+    /// [`is_writable()`]
+    /// [`is_executable()`]
     /// 
     /// Returns the complete OR-ed together combination of
     /// QFile::Permissions for the file.
@@ -650,7 +652,7 @@ struct FileInfo {
     /// Returns the file size in bytes. If the file does not exist or cannot be
     /// fetched, 0 is returned.
     /// 
-    /// **See also:** exists()
+    /// **See also:** [`exists()`]
     size() -> i64,
     /// 
     /// Returns the date and time when the file was created, the time its metadata
@@ -661,10 +663,10 @@ struct FileInfo {
     /// the time the file was created, metadataChangeTime() to get the time its
     /// metadata was last changed, or lastModified() to get the time it was last modified.
     /// 
-    /// **See also:** birthTime()
-    /// metadataChangeTime()
-    /// lastModified()
-    /// lastRead()
+    /// **See also:** [`birth_time()`]
+    /// [`metadata_change_time()`]
+    /// [`last_modified()`]
+    /// [`last_read()`]
     created() -> DateTime,
     /// 
     /// Returns the date and time when the file was created / born.
@@ -672,9 +674,9 @@ struct FileInfo {
     /// If the file birth time is not available, this function returns an invalid
     /// QDateTime.
     /// 
-    /// **See also:** lastModified()
-    /// lastRead()
-    /// metadataChangeTime()
+    /// **See also:** [`last_modified()`]
+    /// [`last_read()`]
+    /// [`metadata_change_time()`]
     birth_time() -> DateTime,
     /// 
     /// Returns the date and time when the file metadata was changed. A metadata
@@ -682,16 +684,16 @@ struct FileInfo {
     /// user writes or sets inode information (for example, changing the file
     /// permissions).
     /// 
-    /// **See also:** lastModified()
-    /// lastRead()
+    /// **See also:** [`last_modified()`]
+    /// [`last_read()`]
     metadata_change_time() -> DateTime,
     /// 
     /// Returns the date and local time when the file was last modified.
     /// 
-    /// **See also:** birthTime()
-    /// lastRead()
-    /// metadataChangeTime()
-    /// fileTime()
+    /// **See also:** [`birth_time()`]
+    /// [`last_read()`]
+    /// [`metadata_change_time()`]
+    /// [`file_time()`]
     last_modified() -> DateTime,
     /// 
     /// Returns the date and local time when the file was last read (accessed).
@@ -699,23 +701,23 @@ struct FileInfo {
     /// On platforms where this information is not available, returns the
     /// same as lastModified().
     /// 
-    /// **See also:** birthTime()
-    /// lastModified()
-    /// metadataChangeTime()
-    /// fileTime()
+    /// **See also:** [`birth_time()`]
+    /// [`last_modified()`]
+    /// [`metadata_change_time()`]
+    /// [`file_time()`]
     last_read() -> DateTime,
     /// 
     /// Returns the file time specified by *time.* If the time cannot be
     /// determined, an invalid date time is returned.
     /// 
-    /// **See also:** QFile::FileTime
-    /// QDateTime::isValid()
+    /// **See also:** [`File::file_time()`]
+    /// [`DateTime::is_valid`]
     file_time(time: File::FileTime) -> DateTime,
     /// 
     /// Returns `true` if caching is enabled; otherwise returns `false.`
     /// 
-    /// **See also:** setCaching()
-    /// refresh()
+    /// **See also:** [`set_caching()`]
+    /// [`refresh()`]
     caching() -> bool,
     /// 
     /// If *enable* is true, enables caching of file information. If *enable* is false caching is disabled.
@@ -726,8 +728,8 @@ struct FileInfo {
     /// 
     /// Caching is enabled by default.
     /// 
-    /// **See also:** refresh()
-    /// caching()
+    /// **See also:** [`refresh()`]
+    /// [`caching()`]
     set_caching(on: bool),
 }
 

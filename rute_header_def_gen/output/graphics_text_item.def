@@ -25,59 +25,54 @@
 /// by default. You can change this with [setAcceptHoverEvents()](QGraphicsItem::)
 /// 
 /// 
-/// **See also:** QGraphicsSimpleTextItem
-/// QGraphicsPathItem
-/// QGraphicsRectItem
-/// QGraphicsEllipseItem
-/// QGraphicsPixmapItem
-/// QGraphicsPolygonItem
-/// QGraphicsLineItem
+/// **See also:** [`GraphicsSimpleTextItem`]
+/// [`GraphicsPathItem`]
+/// [`GraphicsRectItem`]
+/// [`GraphicsEllipseItem`]
+/// [`GraphicsPixmapItem`]
+/// [`GraphicsPolygonItem`]
+/// [`GraphicsLineItem`]
 /// {Graphics View Framework}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsTextItem)]
-enum GraphicsTextItemFixMeEnums {
-    Type,
-}
-
 struct GraphicsTextItem : GraphicsObject {
     /// 
     /// Returns the item's text converted to HTML, or an empty QString if no text has been set.
     /// 
-    /// **See also:** setHtml()
+    /// **See also:** [`set_html()`]
     to_html() -> String,
     /// 
     /// Sets the item's text to *text,* assuming that text is HTML formatted. If
     /// the item has keyboard input focus, this function will also call
     /// ensureVisible() to ensure that the text is visible in all viewports.
     /// 
-    /// **See also:** toHtml()
-    /// hasFocus()
-    /// QGraphicsSimpleTextItem
+    /// **See also:** [`to_html()`]
+    /// [`has_focus()`]
+    /// [`GraphicsSimpleTextItem`]
     set_html(html: String),
     /// 
     /// Returns the item's text converted to plain text, or an empty QString if no text has been set.
     /// 
-    /// **See also:** setPlainText()
+    /// **See also:** [`set_plain_text()`]
     to_plain_text() -> String,
     /// 
     /// Sets the item's text to *text.* If the item has keyboard input focus,
     /// this function will also call ensureVisible() to ensure that the text is
     /// visible in all viewports.
     /// 
-    /// **See also:** toHtml()
-    /// hasFocus()
+    /// **See also:** [`to_html()`]
+    /// [`has_focus()`]
     set_plain_text(text: String),
     /// 
     /// Returns the item's font, which is used to render the text.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     font() -> Font,
     /// 
     /// Sets the font used to render the text item to *font.*
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     set_font(font: &FontType),
     /// 
     /// Sets the color for unformatted text to *col.*
@@ -113,8 +108,8 @@ struct GraphicsTextItem : GraphicsObject {
     /// Note that QGraphicsTextItem keeps a QTextDocument internally,
     /// which is used to calculate the text width.
     /// 
-    /// **See also:** textWidth()
-    /// QTextDocument::setTextWidth()
+    /// **See also:** [`text_width()`]
+    /// [`TextDocument::set_text_width`]
     set_text_width(width: f32),
     /// 
     /// Returns the text width.
@@ -122,8 +117,8 @@ struct GraphicsTextItem : GraphicsObject {
     /// The width is calculated with the QTextDocument that
     /// QGraphicsTextItem keeps internally.
     /// 
-    /// **See also:** setTextWidth()
-    /// QTextDocument::textWidth()
+    /// **See also:** [`set_text_width()`]
+    /// [`TextDocument::text_width`]
     text_width() -> f32,
     /// 
     /// Adjusts the text item to a reasonable size.
@@ -148,7 +143,7 @@ struct GraphicsTextItem : GraphicsObject {
     /// 
     /// Returns the current text interaction flags.
     /// 
-    /// **See also:** setTextInteractionFlags()
+    /// **See also:** [`set_text_interaction_flags()`]
     text_interaction_flags() -> Rute::TextInteractionFlags,
     /// 
     /// If *b* is true, the **Tab** key will cause the widget to change focus;
@@ -158,9 +153,9 @@ struct GraphicsTextItem : GraphicsObject {
     /// or change indentation using the **Tab** key, as this breaks the focus
     /// chain. The default is false.
     /// 
-    /// **See also:** tabChangesFocus()
+    /// **See also:** [`tab_changes_focus()`]
     /// ItemIsFocusable
-    /// textInteractionFlags()
+    /// [`text_interaction_flags()`]
     set_tab_changes_focus(b: bool),
     /// 
     /// Returns `true` if the **Tab** key will cause the widget to change focus;
@@ -168,7 +163,7 @@ struct GraphicsTextItem : GraphicsObject {
     /// 
     /// By default, this behavior is disabled, and this function will return false.
     /// 
-    /// **See also:** setTabChangesFocus()
+    /// **See also:** [`set_tab_changes_focus()`]
     tab_changes_focus() -> bool,
     set_open_external_links(open: bool),
     /// 
@@ -192,14 +187,14 @@ struct GraphicsTextItem : GraphicsObject {
     /// that enables Qt::LinksAccessibleByMouse or Qt::LinksAccessibleByKeyboard.
     /// *link* is the link that was clicked.
     /// 
-    /// **See also:** setTextInteractionFlags()
+    /// **See also:** [`set_text_interaction_flags()`]
     [signal] link_activated(arg0: String),
     /// 
     /// This signal is emitted when the user hovers over a link on a text item
     /// that enables Qt::LinksAccessibleByMouse. *link* is
     /// the link that was hovered over.
     /// 
-    /// **See also:** setTextInteractionFlags()
+    /// **See also:** [`set_text_interaction_flags()`]
     [signal] link_hovered(arg0: String),
     /// 
     [event] scene_event(event: *EventType) -> bool,
@@ -242,6 +237,11 @@ struct GraphicsTextItem : GraphicsObject {
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
     [event] extension(variant: &VariantType) -> Variant,
+}
+
+[org_name(QGraphicsTextItem)]
+enum GraphicsTextItemFixMeEnums {
+    Type,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

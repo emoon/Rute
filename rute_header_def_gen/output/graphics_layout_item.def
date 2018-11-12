@@ -59,14 +59,13 @@
 /// , but in the future its use may spread
 /// throughout Qt itself.
 /// 
-/// **See also:** QGraphicsWidget
-/// QGraphicsLayout
-/// QGraphicsLinearLayout
-/// QGraphicsGridLayout
+/// **See also:** [`GraphicsWidget`]
+/// [`GraphicsLayout`]
+/// [`GraphicsLinearLayout`]
+/// [`GraphicsGridLayout`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct GraphicsLayoutItem {
     /// 
     /// Sets the size policy to *policy.* The size policy describes how the item
@@ -78,15 +77,15 @@ struct GraphicsLayoutItem {
     /// to (QSizePolicy::Preferred, QSizePolicy::Preferred,
     /// QSizePolicy::DefaultType).
     /// 
-    /// **See also:** sizePolicy()
-    /// QWidget::sizePolicy()
+    /// **See also:** [`size_policy()`]
+    /// [`Widget::size_policy`]
     /// 
     /// **Overloads**
     /// This function is equivalent to calling
     /// setSizePolicy(QSizePolicy( *hPolicy,* *vPolicy,* *controlType)).*
     /// 
-    /// **See also:** sizePolicy()
-    /// QWidget::sizePolicy()
+    /// **See also:** [`size_policy()`]
+    /// [`Widget::size_policy`]
     set_size_policy(policy: &SizePolicyType),
     /// 
     /// Sets the size policy to *policy.* The size policy describes how the item
@@ -98,21 +97,22 @@ struct GraphicsLayoutItem {
     /// to (QSizePolicy::Preferred, QSizePolicy::Preferred,
     /// QSizePolicy::DefaultType).
     /// 
-    /// **See also:** sizePolicy()
-    /// QWidget::sizePolicy()
+    /// **See also:** [`size_policy()`]
+    /// [`Widget::size_policy`]
     /// 
     /// **Overloads**
     /// This function is equivalent to calling
     /// setSizePolicy(QSizePolicy( *hPolicy,* *vPolicy,* *controlType)).*
     /// 
-    /// **See also:** sizePolicy()
-    /// QWidget::sizePolicy()
+    /// **See also:** [`size_policy()`]
+    /// [`Widget::size_policy`]
+    [org_name(setSizePolicy)]
     set_size_policy_2(h_policy: SizePolicy::Policy, v_policy: SizePolicy::Policy, control_type: SizePolicy::ControlType),
     /// 
     /// Returns the current size policy.
     /// 
-    /// **See also:** setSizePolicy()
-    /// QWidget::sizePolicy()
+    /// **See also:** [`set_size_policy()`]
+    /// [`Widget::size_policy`]
     size_policy() -> SizePolicy,
     /// 
     /// Sets the minimum size to *size.* This property overrides sizeHint() for
@@ -120,21 +120,21 @@ struct GraphicsLayoutItem {
     /// a size smaller than *size.* In order to unset the minimum size, use an
     /// invalid size.
     /// 
-    /// **See also:** minimumSize()
-    /// maximumSize()
-    /// preferredSize()
-    /// Qt::MinimumSize
-    /// sizeHint()
-    /// setMinimumWidth()
-    /// setMinimumHeight()
+    /// **See also:** [`minimum_size()`]
+    /// [`maximum_size()`]
+    /// [`preferred_size()`]
+    /// [`t::minimum_size()`]
+    /// [`size_hint()`]
+    /// [`set_minimum_width()`]
+    /// [`set_minimum_height()`]
     /// 
     /// This convenience function is equivalent to calling
     /// setMinimumSize(QSizeF( *w,* *h)).*
     /// 
-    /// **See also:** minimumSize()
-    /// setMaximumSize()
-    /// setPreferredSize()
-    /// sizeHint()
+    /// **See also:** [`minimum_size()`]
+    /// [`set_maximum_size()`]
+    /// [`set_preferred_size()`]
+    /// [`size_hint()`]
     set_minimum_size(size: &SizeFType),
     /// 
     /// Sets the minimum size to *size.* This property overrides sizeHint() for
@@ -142,133 +142,135 @@ struct GraphicsLayoutItem {
     /// a size smaller than *size.* In order to unset the minimum size, use an
     /// invalid size.
     /// 
-    /// **See also:** minimumSize()
-    /// maximumSize()
-    /// preferredSize()
-    /// Qt::MinimumSize
-    /// sizeHint()
-    /// setMinimumWidth()
-    /// setMinimumHeight()
+    /// **See also:** [`minimum_size()`]
+    /// [`maximum_size()`]
+    /// [`preferred_size()`]
+    /// [`t::minimum_size()`]
+    /// [`size_hint()`]
+    /// [`set_minimum_width()`]
+    /// [`set_minimum_height()`]
     /// 
     /// This convenience function is equivalent to calling
     /// setMinimumSize(QSizeF( *w,* *h)).*
     /// 
-    /// **See also:** minimumSize()
-    /// setMaximumSize()
-    /// setPreferredSize()
-    /// sizeHint()
+    /// **See also:** [`minimum_size()`]
+    /// [`set_maximum_size()`]
+    /// [`set_preferred_size()`]
+    /// [`size_hint()`]
+    [org_name(setMinimumSize)]
     set_minimum_size_2(w: f32, h: f32),
     /// 
     /// Returns the minimum size.
     /// 
-    /// **See also:** setMinimumSize()
-    /// preferredSize()
-    /// maximumSize()
-    /// Qt::MinimumSize
-    /// sizeHint()
+    /// **See also:** [`set_minimum_size()`]
+    /// [`preferred_size()`]
+    /// [`maximum_size()`]
+    /// [`t::minimum_size()`]
+    /// [`size_hint()`]
     minimum_size() -> SizeF,
     /// 
     /// Sets the minimum width to *width.*
     /// 
-    /// **See also:** minimumWidth()
-    /// setMinimumSize()
-    /// minimumSize()
+    /// **See also:** [`minimum_width()`]
+    /// [`set_minimum_size()`]
+    /// [`minimum_size()`]
     set_minimum_width(width: f32),
     /// 
     /// Returns the minimum width.
     /// 
-    /// **See also:** setMinimumWidth()
-    /// setMinimumSize()
-    /// minimumSize()
+    /// **See also:** [`set_minimum_width()`]
+    /// [`set_minimum_size()`]
+    /// [`minimum_size()`]
     minimum_width() -> f32,
     /// 
     /// Sets the minimum height to *height.*
     /// 
-    /// **See also:** minimumHeight()
-    /// setMinimumSize()
-    /// minimumSize()
+    /// **See also:** [`minimum_height()`]
+    /// [`set_minimum_size()`]
+    /// [`minimum_size()`]
     set_minimum_height(height: f32),
     /// 
     /// Returns the minimum height.
     /// 
-    /// **See also:** setMinimumHeight()
-    /// setMinimumSize()
-    /// minimumSize()
+    /// **See also:** [`set_minimum_height()`]
+    /// [`set_minimum_size()`]
+    /// [`minimum_size()`]
     minimum_height() -> f32,
     /// 
     /// Sets the preferred size to *size.* This property overrides sizeHint() for
     /// Qt::PreferredSize and provides the default value for effectiveSizeHint().
     /// In order to unset the preferred size, use an invalid size.
     /// 
-    /// **See also:** preferredSize()
-    /// minimumSize()
-    /// maximumSize()
-    /// Qt::PreferredSize
-    /// sizeHint()
+    /// **See also:** [`preferred_size()`]
+    /// [`minimum_size()`]
+    /// [`maximum_size()`]
+    /// [`t::preferred_size()`]
+    /// [`size_hint()`]
     /// 
     /// This convenience function is equivalent to calling
     /// setPreferredSize(QSizeF( *w,* *h)).*
     /// 
-    /// **See also:** preferredSize()
-    /// setMaximumSize()
-    /// setMinimumSize()
-    /// sizeHint()
+    /// **See also:** [`preferred_size()`]
+    /// [`set_maximum_size()`]
+    /// [`set_minimum_size()`]
+    /// [`size_hint()`]
     set_preferred_size(size: &SizeFType),
     /// 
     /// Sets the preferred size to *size.* This property overrides sizeHint() for
     /// Qt::PreferredSize and provides the default value for effectiveSizeHint().
     /// In order to unset the preferred size, use an invalid size.
     /// 
-    /// **See also:** preferredSize()
-    /// minimumSize()
-    /// maximumSize()
-    /// Qt::PreferredSize
-    /// sizeHint()
+    /// **See also:** [`preferred_size()`]
+    /// [`minimum_size()`]
+    /// [`maximum_size()`]
+    /// [`t::preferred_size()`]
+    /// [`size_hint()`]
     /// 
     /// This convenience function is equivalent to calling
     /// setPreferredSize(QSizeF( *w,* *h)).*
     /// 
-    /// **See also:** preferredSize()
-    /// setMaximumSize()
-    /// setMinimumSize()
-    /// sizeHint()
+    /// **See also:** [`preferred_size()`]
+    /// [`set_maximum_size()`]
+    /// [`set_minimum_size()`]
+    /// [`size_hint()`]
+    [org_name(setPreferredSize)]
     set_preferred_size_2(w: f32, h: f32),
     /// 
     /// Returns the preferred size.
     /// 
-    /// **See also:** setPreferredSize()
-    /// minimumSize()
-    /// maximumSize()
-    /// Qt::PreferredSize
-    /// sizeHint()
+    /// **See also:** [`set_preferred_size()`]
+    /// [`minimum_size()`]
+    /// [`maximum_size()`]
+    /// [`t::preferred_size()`]
+    /// [`size_hint()`]
     preferred_size() -> SizeF,
     /// 
     /// Sets the preferred width to *width.*
     /// 
-    /// **See also:** preferredHeight()
-    /// setPreferredSize()
-    /// preferredSize()
+    /// **See also:** [`preferred_height()`]
+    /// [`set_preferred_size()`]
+    /// [`preferred_size()`]
     set_preferred_width(width: f32),
     /// 
     /// Returns the preferred width.
     /// 
-    /// **See also:** setPreferredWidth()
-    /// setPreferredSize()
-    /// preferredSize()
+    /// **See also:** [`set_preferred_width()`]
+    /// [`set_preferred_size()`]
+    /// [`preferred_size()`]
     preferred_width() -> f32,
     /// 
     /// Sets the preferred height to *height.*
     /// 
-    /// **See also:** preferredWidth()
-    /// setPreferredSize()
-    /// preferredSize()
+    /// **See also:** [`preferred_width()`]
+    /// [`set_preferred_size()`]
+    /// [`preferred_size()`]
     set_preferred_height(height: f32),
     /// 
     /// Returns the preferred height.
     /// 
-    /// **See also:** setPreferredHeight()
-    /// setPreferredSize()
-    /// preferredSize()
+    /// **See also:** [`set_preferred_height()`]
+    /// [`set_preferred_size()`]
+    /// [`preferred_size()`]
     preferred_height() -> f32,
     /// 
     /// Sets the maximum size to *size.* This property overrides sizeHint() for
@@ -276,19 +278,19 @@ struct GraphicsLayoutItem {
     /// size larger than *size.* In order to unset the maximum size, use an
     /// invalid size.
     /// 
-    /// **See also:** maximumSize()
-    /// minimumSize()
-    /// preferredSize()
-    /// Qt::MaximumSize
-    /// sizeHint()
+    /// **See also:** [`maximum_size()`]
+    /// [`minimum_size()`]
+    /// [`preferred_size()`]
+    /// [`t::maximum_size()`]
+    /// [`size_hint()`]
     /// 
     /// This convenience function is equivalent to calling
     /// setMaximumSize(QSizeF( *w,* *h)).*
     /// 
-    /// **See also:** maximumSize()
-    /// setMinimumSize()
-    /// setPreferredSize()
-    /// sizeHint()
+    /// **See also:** [`maximum_size()`]
+    /// [`set_minimum_size()`]
+    /// [`set_preferred_size()`]
+    /// [`size_hint()`]
     set_maximum_size(size: &SizeFType),
     /// 
     /// Sets the maximum size to *size.* This property overrides sizeHint() for
@@ -296,56 +298,57 @@ struct GraphicsLayoutItem {
     /// size larger than *size.* In order to unset the maximum size, use an
     /// invalid size.
     /// 
-    /// **See also:** maximumSize()
-    /// minimumSize()
-    /// preferredSize()
-    /// Qt::MaximumSize
-    /// sizeHint()
+    /// **See also:** [`maximum_size()`]
+    /// [`minimum_size()`]
+    /// [`preferred_size()`]
+    /// [`t::maximum_size()`]
+    /// [`size_hint()`]
     /// 
     /// This convenience function is equivalent to calling
     /// setMaximumSize(QSizeF( *w,* *h)).*
     /// 
-    /// **See also:** maximumSize()
-    /// setMinimumSize()
-    /// setPreferredSize()
-    /// sizeHint()
+    /// **See also:** [`maximum_size()`]
+    /// [`set_minimum_size()`]
+    /// [`set_preferred_size()`]
+    /// [`size_hint()`]
+    [org_name(setMaximumSize)]
     set_maximum_size_2(w: f32, h: f32),
     /// 
     /// Returns the maximum size.
     /// 
-    /// **See also:** setMaximumSize()
-    /// minimumSize()
-    /// preferredSize()
-    /// Qt::MaximumSize
-    /// sizeHint()
+    /// **See also:** [`set_maximum_size()`]
+    /// [`minimum_size()`]
+    /// [`preferred_size()`]
+    /// [`t::maximum_size()`]
+    /// [`size_hint()`]
     maximum_size() -> SizeF,
     /// 
     /// Sets the maximum width to *width.*
     /// 
-    /// **See also:** maximumWidth()
-    /// setMaximumSize()
-    /// maximumSize()
+    /// **See also:** [`maximum_width()`]
+    /// [`set_maximum_size()`]
+    /// [`maximum_size()`]
     set_maximum_width(width: f32),
     /// 
     /// Returns the maximum width.
     /// 
-    /// **See also:** setMaximumWidth()
-    /// setMaximumSize()
-    /// maximumSize()
+    /// **See also:** [`set_maximum_width()`]
+    /// [`set_maximum_size()`]
+    /// [`maximum_size()`]
     maximum_width() -> f32,
     /// 
     /// Sets the maximum height to *height.*
     /// 
-    /// **See also:** maximumHeight()
-    /// setMaximumSize()
-    /// maximumSize()
+    /// **See also:** [`maximum_height()`]
+    /// [`set_maximum_size()`]
+    /// [`maximum_size()`]
     set_maximum_height(height: f32),
     /// 
     /// Returns the maximum height.
     /// 
-    /// **See also:** setMaximumHeight()
-    /// setMaximumSize()
-    /// maximumSize()
+    /// **See also:** [`set_maximum_height()`]
+    /// [`set_maximum_size()`]
+    /// [`maximum_size()`]
     maximum_height() -> f32,
     /// 
     /// This virtual function provides the *left,* *top,* *right* and *bottom*
@@ -353,7 +356,7 @@ struct GraphicsLayoutItem {
     /// assumes all contents margins are 0. The parameters point to values stored
     /// in qreals. If any of the pointers is 0, that value will not be updated.
     /// 
-    /// **See also:** QGraphicsWidget::setContentsMargins()
+    /// **See also:** [`GraphicsWidget::set_contents_margins`]
     [event] get_contents_margins(left: *f32, top: *f32, right: *f32, bottom: *f32),
     /// 
     /// Returns the contents rect in local coordinates.
@@ -364,8 +367,8 @@ struct GraphicsLayoutItem {
     /// getContentsMargins() is a virtual function that you can reimplement to
     /// return the item's contents margins.
     /// 
-    /// **See also:** getContentsMargins()
-    /// geometry()
+    /// **See also:** [`get_contents_margins()`]
+    /// [`geometry()`]
     contents_rect() -> RectF,
     /// 
     /// Returns the effective size hint for this QGraphicsLayoutItem.
@@ -393,7 +396,7 @@ struct GraphicsLayoutItem {
     /// sizeHint() will be called only once for each value of *which* - unless
     /// *constraint* is not specified and updateGeometry() has been called.
     /// 
-    /// **See also:** sizeHint()
+    /// **See also:** [`size_hint()`]
     effective_size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeF,
     /// 
     /// Returns the parent of this QGraphicsLayoutItem, or 0 if there is no parent,
@@ -401,26 +404,26 @@ struct GraphicsLayoutItem {
     /// (QGraphicsLayoutItem is often used through multiple inheritance with
     /// QObject-derived classes).
     /// 
-    /// **See also:** setParentLayoutItem()
+    /// **See also:** [`set_parent_layout_item()`]
     parent_layout_item() -> GraphicsLayoutItem?,
     /// 
     /// Sets the parent of this QGraphicsLayoutItem to *parent.*
     /// 
-    /// **See also:** parentLayoutItem()
+    /// **See also:** [`parent_layout_item()`]
     set_parent_layout_item(parent: *GraphicsLayoutItemType),
     /// 
     /// Returns `true` if this QGraphicsLayoutItem is a layout (e.g., is inherited
     /// by an object that arranges other QGraphicsLayoutItem objects); otherwise
     /// returns `false.`
     /// 
-    /// **See also:** QGraphicsLayout
+    /// **See also:** [`GraphicsLayout`]
     is_layout() -> bool,
     /// 
     /// * Returns the QGraphicsItem that this layout item represents.
     /// * For QGraphicsWidget it will return itself. For custom items it can return an
     /// * aggregated value.
     /// 
-    /// * **See also:** setGraphicsItem()
+    /// * **See also:** [`set_graphics_item()`]
     graphics_item() -> GraphicsItem?,
     /// 
     /// Returns whether a layout should delete this item in its destructor.
@@ -442,7 +445,7 @@ struct GraphicsLayoutItem {
     /// Subclasses might override this default behaviour by calling
     /// setOwnedByLayout(true).
     /// 
-    /// **See also:** setOwnedByLayout()
+    /// **See also:** [`set_owned_by_layout()`]
     owned_by_layout() -> bool,
     /// 
     /// * If the QGraphicsLayoutItem represents a QGraphicsItem, and it wants to take
@@ -452,12 +455,12 @@ struct GraphicsLayoutItem {
     /// * responsible of calling setGraphicsItem(0) in order to avoid having a
     /// * dangling pointer.
     /// 
-    /// * **See also:** graphicsItem()
+    /// * **See also:** [`graphics_item()`]
     set_graphics_item(item: *GraphicsItemType),
     /// 
     /// Sets whether a layout should delete this item in its destructor or not.
     /// *ownership* must be true to in order for the layout to delete it.
-    /// **See also:** ownedByLayout()
+    /// **See also:** [`owned_by_layout()`]
     set_owned_by_layout(owned_by_layout: bool),
     /// 
     /// This pure virtual function returns the size hint for *which* of the
@@ -467,7 +470,7 @@ struct GraphicsLayoutItem {
     /// Reimplement this function in a subclass of QGraphicsLayoutItem to
     /// provide the necessary size hints for your items.
     /// 
-    /// **See also:** effectiveSizeHint()
+    /// **See also:** [`effective_size_hint()`]
     [event] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeF,
 }
 

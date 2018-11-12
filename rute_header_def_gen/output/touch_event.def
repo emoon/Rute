@@ -92,10 +92,10 @@
 /// or an [active pop-up widget](QApplication::activePopupWidget())
 /// . The behavior of QTouchEvents is undefined when opening a pop-up or grabbing the mouse while there are more than one active touch points.
 /// 
-/// **See also:** QTouchEvent::TouchPoint
-/// Qt::TouchPointState
-/// Qt::WA_AcceptTouchEvents
-/// QGraphicsItem::acceptTouchEvents()
+/// **See also:** [`TouchEvent::touch_point()`]
+/// [`t::touch_point_state()`]
+/// [`t::wa_accept_touch_events()`]
+/// [`GraphicsItem::accept_touch_events`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -122,8 +122,8 @@ struct TouchEvent : InputEvent {
     /// 
     /// This function has been deprecated. Use QTouchDevice::type() instead.
     /// 
-    /// **See also:** QTouchDevice::type()
-    /// QTouchEvent::device()
+    /// **See also:** [`TouchDevice::type`]
+    /// [`TouchEvent::device`]
     /// 
     /// Returns the touch device from which this touch event originates.
     device() -> TouchDevice?,

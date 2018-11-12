@@ -27,9 +27,9 @@
 /// Below we present some examples of validators. In practice they would
 /// normally be associated with a widget as in the example above.
 /// 
-/// **See also:** QRegExp
-/// QIntValidator
-/// QDoubleValidator
+/// **See also:** [`RegExp`]
+/// [`IntValidator`]
+/// [`DoubleValidator`]
 /// {Settings Editor Example}
 /// # Licence
 ///
@@ -53,7 +53,7 @@ struct RegExpValidator : Validator {
     /// is [Intermediate,](Intermediate,)
     /// and is [Invalid.](Invalid.)
     /// 
-    /// **See also:** QRegExp::exactMatch()
+    /// **See also:** [`RegExp::exact_match`]
     [event] validate(input: String, pos: &i32) -> Validator::State,
     set_reg_exp(rx: &RegExpType),
     /// 

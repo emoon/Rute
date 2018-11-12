@@ -1,6 +1,57 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct PlatformTheme {
+    [event] create_platform_menu_item() -> PlatformMenuItem?,
+    [event] create_platform_menu() -> PlatformMenu?,
+    [event] create_platform_menu_bar() -> PlatformMenuBar?,
+    [event] show_platform_menu_bar(),
+    [event] use_platform_native_dialog(type: PlatformTheme::DialogType) -> bool,
+    [event] create_platform_dialog_helper(type: PlatformTheme::DialogType) -> PlatformDialogHelper?,
+    /// 
+    /// Factory function for QSystemTrayIcon. This function will return 0 if the platform
+    /// integration does not support creating any system tray icon.
+    [event] create_platform_system_tray_icon() -> PlatformSystemTrayIcon?,
+    [event] palette(type: PlatformTheme::Palette) -> Palette?,
+    [event] font(type: PlatformTheme::Font) -> Font?,
+    [event] theme_hint(hint: PlatformTheme::ThemeHint) -> Variant,
+    [event] standard_pixmap(sp: PlatformTheme::StandardPixmap, size: &SizeFType) -> Pixmap,
+    /// 
+    /// *fileInfo,* observing *iconOptions.*
+    /// 
+    /// This function is queried by QFileIconProvider and similar classes to obtain
+    /// an icon for a file. If it does not return a non-null icon, fileIconPixmap()
+    /// is queried for a specific size.
+    /// 
+    [event] file_icon(file_info: &FileInfoType, icon_options: PlatformTheme::IconOptions) -> Icon,
+    /// 
+    /// Factory function for the QIconEngine used by QIcon::fromTheme(). By default this
+    /// function returns a QIconLoaderEngine, but subclasses can reimplement it to
+    /// provide their own.
+    /// 
+    /// It is especially useful to benefit from some platform specific facilities or
+    /// optimizations like an inter-process cache in systems mostly built with Qt.
+    /// 
+    [event] create_icon_engine(icon_name: String) -> IconEngine?,
+    /// 
+    /// Returns the key sequence that should be used for a standard action.
+    /// 
+    [event] key_bindings(key: KeySequence::StandardKey) -> [KeySequence],
+    /// 
+    /// Returns the text of a standard *button.*
+    /// 
+    /// **See also:** [`PlatformDialogHelper::standard_button()`]
+    [event] standard_button_text(button: i32) -> String,
+    /// 
+    /// Returns the mnemonic that should be used for a standard *button.*
+    /// 
+    /// **See also:** [`PlatformDialogHelper::standard_button()`]
+    [event] standard_button_shortcut(button: i32) -> KeySequence,
+    [static] default_theme_hint(hint: PlatformTheme::ThemeHint) -> Variant,
+    [static] default_standard_button_text(button: i32) -> String,
+    [static] remove_mnemonics(original: String) -> String,
+}
+
 [org_name(QPlatformTheme)]
 enum ThemeHint {
     CursorFlashTime,
@@ -207,58 +258,6 @@ enum UiEffect {
 [org_name(QPlatformTheme)]
 enum IconOption {
     DontUseCustomDirectoryIcons,
-}
-
-
-struct PlatformTheme {
-    [event] create_platform_menu_item() -> PlatformMenuItem?,
-    [event] create_platform_menu() -> PlatformMenu?,
-    [event] create_platform_menu_bar() -> PlatformMenuBar?,
-    [event] show_platform_menu_bar(),
-    [event] use_platform_native_dialog(type: PlatformTheme::DialogType) -> bool,
-    [event] create_platform_dialog_helper(type: PlatformTheme::DialogType) -> PlatformDialogHelper?,
-    /// 
-    /// Factory function for QSystemTrayIcon. This function will return 0 if the platform
-    /// integration does not support creating any system tray icon.
-    [event] create_platform_system_tray_icon() -> PlatformSystemTrayIcon?,
-    [event] palette(type: PlatformTheme::Palette) -> Palette?,
-    [event] font(type: PlatformTheme::Font) -> Font?,
-    [event] theme_hint(hint: PlatformTheme::ThemeHint) -> Variant,
-    [event] standard_pixmap(sp: PlatformTheme::StandardPixmap, size: &SizeFType) -> Pixmap,
-    /// 
-    /// *fileInfo,* observing *iconOptions.*
-    /// 
-    /// This function is queried by QFileIconProvider and similar classes to obtain
-    /// an icon for a file. If it does not return a non-null icon, fileIconPixmap()
-    /// is queried for a specific size.
-    /// 
-    [event] file_icon(file_info: &FileInfoType, icon_options: PlatformTheme::IconOptions) -> Icon,
-    /// 
-    /// Factory function for the QIconEngine used by QIcon::fromTheme(). By default this
-    /// function returns a QIconLoaderEngine, but subclasses can reimplement it to
-    /// provide their own.
-    /// 
-    /// It is especially useful to benefit from some platform specific facilities or
-    /// optimizations like an inter-process cache in systems mostly built with Qt.
-    /// 
-    [event] create_icon_engine(icon_name: String) -> IconEngine?,
-    /// 
-    /// Returns the key sequence that should be used for a standard action.
-    /// 
-    [event] key_bindings(key: KeySequence::StandardKey) -> [KeySequence],
-    /// 
-    /// Returns the text of a standard *button.*
-    /// 
-    /// **See also:** QPlatformDialogHelper::StandardButton
-    [event] standard_button_text(button: i32) -> String,
-    /// 
-    /// Returns the mnemonic that should be used for a standard *button.*
-    /// 
-    /// **See also:** QPlatformDialogHelper::StandardButton
-    [event] standard_button_shortcut(button: i32) -> KeySequence,
-    [static] default_theme_hint(hint: PlatformTheme::ThemeHint) -> Variant,
-    [static] default_standard_button_text(button: i32) -> String,
-    [static] remove_mnemonics(original: String) -> String,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

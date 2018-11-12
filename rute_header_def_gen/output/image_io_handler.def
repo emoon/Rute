@@ -24,49 +24,12 @@
 /// QImageReader and QImageWriter will then automatically load the
 /// plugin, and start using it.
 /// 
-/// **See also:** QImageIOPlugin
-/// QImageReader
-/// QImageWriter
+/// **See also:** [`ImageIOPlugin`]
+/// [`ImageReader`]
+/// [`ImageWriter`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QImageIOHandler)]
-enum ImageOption {
-    Size,
-    ClipRect,
-    Description,
-    ScaledClipRect,
-    ScaledSize,
-    CompressionRatio,
-    Gamma,
-    Quality,
-    Name,
-    SubType,
-    IncrementalReading,
-    Endianness,
-    Animation,
-    BackgroundColor,
-    ImageFormat,
-    SupportedSubTypes,
-    OptimizedWrite,
-    ProgressiveScanWrite,
-    ImageTransformation,
-    TransformedByDefault,
-}
-
-[org_name(QImageIOHandler)]
-enum Transformation {
-    TransformationNone,
-    TransformationMirror,
-    TransformationFlip,
-    TransformationRotate180,
-    TransformationRotate90,
-    TransformationMirrorAndRotate90,
-    TransformationFlipAndRotate90,
-    TransformationRotate270,
-}
-
-
 struct ImageIOHandler {
     /// 
     /// Sets the device of the QImageIOHandler to *device.* The image
@@ -77,7 +40,7 @@ struct ImageIOHandler {
     /// files, construct multiple instances of the appropriate
     /// QImageIOHandler subclass.
     /// 
-    /// **See also:** device()
+    /// **See also:** [`device()`]
     set_device(device: *IODeviceType),
     /// 
     /// Returns the device currently assigned to the QImageIOHandler. If
@@ -87,34 +50,35 @@ struct ImageIOHandler {
     /// Sets the format of the QImageIOHandler to *format.* The format is
     /// most useful for handlers that support multiple image formats.
     /// 
-    /// **See also:** format()
+    /// **See also:** [`format()`]
     /// 
     /// Sets the format of the QImageIOHandler to *format.* The format is
     /// most useful for handlers that support multiple image formats.
     /// 
     /// This function is declared const so that it can be called from canRead().
     /// 
-    /// **See also:** format()
+    /// **See also:** [`format()`]
     set_format(format: &ByteArrayType),
     /// 
     /// Sets the format of the QImageIOHandler to *format.* The format is
     /// most useful for handlers that support multiple image formats.
     /// 
-    /// **See also:** format()
+    /// **See also:** [`format()`]
     /// 
     /// Sets the format of the QImageIOHandler to *format.* The format is
     /// most useful for handlers that support multiple image formats.
     /// 
     /// This function is declared const so that it can be called from canRead().
     /// 
-    /// **See also:** format()
+    /// **See also:** [`format()`]
+    [org_name(setFormat)]
     set_format_2(format: &ByteArrayType),
     /// 
     /// Returns the format that is currently assigned to
     /// QImageIOHandler. If no format has been assigned, an empty string
     /// is returned.
     /// 
-    /// **See also:** setFormat()
+    /// **See also:** [`set_format()`]
     format() -> ByteArray,
     /// 
     /// Use format() instead.
@@ -129,8 +93,8 @@ struct ImageIOHandler {
     /// (device()) is left in its original state (e.g., by using peek()
     /// rather than read()).
     /// 
-    /// **See also:** read()
-    /// QIODevice::peek()
+    /// **See also:** [`read()`]
+    /// [`IODevice::peek`]
     [event] can_read() -> bool,
     /// 
     /// Read an image from the device, and stores it in *image.*
@@ -141,7 +105,7 @@ struct ImageIOHandler {
     /// formats, the image handler can assume that *image* points to the
     /// previous frame.
     /// 
-    /// **See also:** canRead()
+    /// **See also:** [`can_read()`]
     [event] read(image: *ImageType) -> bool,
     /// 
     /// Writes the image *image* to the assigned device. Returns `true` on
@@ -154,13 +118,13 @@ struct ImageIOHandler {
     /// the value depends on the option. For example, option(Size) returns
     /// a QSize variant.
     /// 
-    /// **See also:** setOption()
-    /// supportsOption()
+    /// **See also:** [`set_option()`]
+    /// [`supports_option()`]
     [event] option(option: ImageIOHandler::ImageOption) -> Variant,
     /// 
     /// Sets the option *option* with the value *value.*
     /// 
-    /// **See also:** option()
+    /// **See also:** [`option()`]
     /// ImageOption
     [event] set_option(option: ImageIOHandler::ImageOption, value: &VariantType),
     /// 
@@ -170,8 +134,8 @@ struct ImageIOHandler {
     /// option, supportsOption(Size) must return
     /// true.
     /// 
-    /// **See also:** setOption()
-    /// option()
+    /// **See also:** [`set_option()`]
+    /// [`option()`]
     [event] supports_option(option: ImageIOHandler::ImageOption) -> bool,
     /// 
     /// For image formats that support animation, this function jumps to the
@@ -214,7 +178,7 @@ struct ImageIOHandler {
     /// 
     /// If the image format does not support animation, 0 is returned.
     /// 
-    /// **See also:** read()
+    /// **See also:** [`read()`]
     [event] current_image_number() -> i32,
     /// 
     /// Returns the rect of the current image. If no rect is defined for the
@@ -223,6 +187,42 @@ struct ImageIOHandler {
     /// This function is useful for animations, where only parts of the frame
     /// may be updated at a time.
     [event] current_image_rect() -> Rect,
+}
+
+[org_name(QImageIOHandler)]
+enum ImageOption {
+    Size,
+    ClipRect,
+    Description,
+    ScaledClipRect,
+    ScaledSize,
+    CompressionRatio,
+    Gamma,
+    Quality,
+    Name,
+    SubType,
+    IncrementalReading,
+    Endianness,
+    Animation,
+    BackgroundColor,
+    ImageFormat,
+    SupportedSubTypes,
+    OptimizedWrite,
+    ProgressiveScanWrite,
+    ImageTransformation,
+    TransformedByDefault,
+}
+
+[org_name(QImageIOHandler)]
+enum Transformation {
+    TransformationNone,
+    TransformationMirror,
+    TransformationFlip,
+    TransformationRotate180,
+    TransformationRotate90,
+    TransformationMirrorAndRotate90,
+    TransformationFlipAndRotate90,
+    TransformationRotate270,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

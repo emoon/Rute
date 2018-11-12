@@ -26,14 +26,69 @@
 /// Subclasses of QEvent contain additional parameters that describe
 /// the particular event.
 /// 
-/// **See also:** QObject::event()
-/// QObject::installEventFilter()
-/// QCoreApplication::sendEvent()
-/// QCoreApplication::postEvent()
-/// QCoreApplication::processEvents()
+/// **See also:** [`Object::event`]
+/// [`Object::install_event_filter`]
+/// [`CoreApplication::send_event`]
+/// [`CoreApplication::post_event`]
+/// [`CoreApplication::process_events`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct Event {
+    qt_check_for_qgadget_macro(),
+    /// 
+    /// Returns the event type.
+    type() -> Event::Type,
+    /// 
+    /// Returns `true` if the event originated outside the application (a
+    /// system event); otherwise returns `false.`
+    /// 
+    /// The return value of this function is not defined for paint events.
+    spontaneous() -> bool,
+    set_accepted(accepted: bool),
+    is_accepted() -> bool,
+    /// 
+    /// the accept flag of the event object
+    /// 
+    /// Setting the accept parameter indicates that the event receiver
+    /// wants the event. Unwanted events might be propagated to the parent
+    /// widget. By default, isAccepted() is set to true, but don't rely on
+    /// this as subclasses may choose to clear it in their constructor.
+    /// 
+    /// For convenience, the accept flag can also be set with accept(),
+    /// and cleared with ignore().
+    /// 
+    /// Sets the accept flag of the event object, the equivalent of
+    /// calling setAccepted(true).
+    /// 
+    /// Setting the accept parameter indicates that the event receiver
+    /// wants the event. Unwanted events might be propagated to the parent
+    /// widget.
+    /// 
+    /// **See also:** [`ignore()`]
+    accept(),
+    /// 
+    /// Clears the accept flag parameter of the event object, the
+    /// equivalent of calling setAccepted(false).
+    /// 
+    /// Clearing the accept parameter indicates that the event receiver
+    /// does not want the event. Unwanted events might be propagated to the
+    /// parent widget.
+    /// 
+    /// **See also:** [`accept()`]
+    ignore(),
+    /// 
+    /// Registers and returns a custom event type. The *hint* provided
+    /// will be used if it is available, otherwise it will return a value
+    /// between QEvent::User and QEvent::MaxUser that has not yet been
+    /// registered. The *hint* is ignored if its value is not between
+    /// QEvent::User and QEvent::MaxUser.
+    /// 
+    /// Returns -1 if all available values are already taken or the
+    /// program is shutting down.
+    [static] register_event_type(hint: i32) -> i32,
+}
+
 [org_name(QEvent)]
 enum Type {
     None,
@@ -208,62 +263,6 @@ enum Type {
     TabletTrackingChange,
     User,
     MaxUser,
-}
-
-
-struct Event {
-    qt_check_for_qgadget_macro(),
-    /// 
-    /// Returns the event type.
-    type() -> Event::Type,
-    /// 
-    /// Returns `true` if the event originated outside the application (a
-    /// system event); otherwise returns `false.`
-    /// 
-    /// The return value of this function is not defined for paint events.
-    spontaneous() -> bool,
-    set_accepted(accepted: bool),
-    is_accepted() -> bool,
-    /// 
-    /// the accept flag of the event object
-    /// 
-    /// Setting the accept parameter indicates that the event receiver
-    /// wants the event. Unwanted events might be propagated to the parent
-    /// widget. By default, isAccepted() is set to true, but don't rely on
-    /// this as subclasses may choose to clear it in their constructor.
-    /// 
-    /// For convenience, the accept flag can also be set with accept(),
-    /// and cleared with ignore().
-    /// 
-    /// Sets the accept flag of the event object, the equivalent of
-    /// calling setAccepted(true).
-    /// 
-    /// Setting the accept parameter indicates that the event receiver
-    /// wants the event. Unwanted events might be propagated to the parent
-    /// widget.
-    /// 
-    /// **See also:** ignore()
-    accept(),
-    /// 
-    /// Clears the accept flag parameter of the event object, the
-    /// equivalent of calling setAccepted(false).
-    /// 
-    /// Clearing the accept parameter indicates that the event receiver
-    /// does not want the event. Unwanted events might be propagated to the
-    /// parent widget.
-    /// 
-    /// **See also:** accept()
-    ignore(),
-    /// 
-    /// Registers and returns a custom event type. The *hint* provided
-    /// will be used if it is available, otherwise it will return a value
-    /// between QEvent::User and QEvent::MaxUser that has not yet been
-    /// registered. The *hint* is ignored if its value is not between
-    /// QEvent::User and QEvent::MaxUser.
-    /// 
-    /// Returns -1 if all available values are already taken or the
-    /// program is shutting down.
-    [static] register_event_type(hint: i32) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

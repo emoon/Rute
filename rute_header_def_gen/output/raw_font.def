@@ -41,20 +41,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QRawFont)]
-enum AntialiasingType {
-    PixelAntialiasing,
-    SubPixelAntialiasing,
-}
-
-[org_name(QRawFont)]
-enum LayoutFlag {
-    SeparateAdvances,
-    KernedAdvances,
-    UseDesignMetrics,
-}
-
-
 struct RawFont {
     /// 
     /// Swaps this raw font with *other.* This function is very fast and
@@ -69,21 +55,21 @@ struct RawFont {
     /// 
     /// Returns the style name of this QRawFont.
     /// 
-    /// **See also:** QFont::styleName()
+    /// **See also:** [`Font::style_name`]
     style_name() -> String,
     /// 
     /// Returns the style name of this QRawFont.
     /// 
-    /// **See also:** QFont::styleName()
+    /// **See also:** [`Font::style_name`]
     /// 
     /// Returns the style of this QRawFont.
     /// 
-    /// **See also:** QFont::style()
+    /// **See also:** [`Font::style`]
     style() -> Font::Style,
     /// 
     /// Returns the weight of this QRawFont.
     /// 
-    /// **See also:** QFont::weight()
+    /// **See also:** [`Font::weight`]
     weight() -> i32,
     /// 
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
@@ -91,8 +77,8 @@ struct RawFont {
     /// to make it appear as if the two glyphs are unspaced. How the advances are calculated is
     /// controlled by *layoutFlags.*
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     /// 
     /// **Overloads**
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
@@ -100,8 +86,8 @@ struct RawFont {
     /// to make it appear as if the two glyphs are unspaced. The advance of each glyph is calculated
     /// separately.
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     /// 
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
     /// give the distance from the position of a given glyph to where the next glyph should be drawn
@@ -109,8 +95,8 @@ struct RawFont {
     /// array *glyphIndexes* while the results are returned through *advances,* both of them must
     /// have *numGlyphs* elements. How the advances are calculated is controlled by *layoutFlags.*
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     /// 
     /// **Overloads**
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
@@ -119,8 +105,8 @@ struct RawFont {
     /// array *glyphIndexes* while the results are returned through *advances,* both of them must
     /// have *numGlyphs* elements. The advance of each glyph is calculated separately
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     advances_for_glyph_indexes(glyph_indexes: [u32]) -> [PointF],
     /// 
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
@@ -128,8 +114,8 @@ struct RawFont {
     /// to make it appear as if the two glyphs are unspaced. How the advances are calculated is
     /// controlled by *layoutFlags.*
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     /// 
     /// **Overloads**
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
@@ -137,8 +123,8 @@ struct RawFont {
     /// to make it appear as if the two glyphs are unspaced. The advance of each glyph is calculated
     /// separately.
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     /// 
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
     /// give the distance from the position of a given glyph to where the next glyph should be drawn
@@ -146,8 +132,8 @@ struct RawFont {
     /// array *glyphIndexes* while the results are returned through *advances,* both of them must
     /// have *numGlyphs* elements. How the advances are calculated is controlled by *layoutFlags.*
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     /// 
     /// **Overloads**
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
@@ -156,8 +142,9 @@ struct RawFont {
     /// array *glyphIndexes* while the results are returned through *advances,* both of them must
     /// have *numGlyphs* elements. The advance of each glyph is calculated separately
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
+    [org_name(advancesForGlyphIndexes)]
     advances_for_glyph_indexes_2(glyph_indexes: [u32], layout_flags: RawFont::LayoutFlags) -> [PointF],
     /// 
     /// Converts a string of unicode points to glyph indexes using the CMAP table in the
@@ -167,11 +154,11 @@ struct RawFont {
     /// must be at least *numChars,* if that's still not enough, this function will return
     /// false, then you can resize *glyphIndexes* from the size returned in *numGlyphs.*
     /// 
-    /// **See also:** glyphIndexesForString()
-    /// advancesForGlyphIndexes()
-    /// QGlyphRun
-    /// QTextLayout::glyphRuns()
-    /// QTextFragment::glyphRuns()
+    /// **See also:** [`glyph_indexes_for_string()`]
+    /// [`advances_for_glyph_indexes()`]
+    /// [`GlyphRun`]
+    /// [`TextLayout::glyph_runs`]
+    /// [`TextFragment::glyph_runs`]
     glyph_indexes_for_chars(chars: *CharType, num_chars: i32, glyph_indexes: *u32, num_glyphs: *i32) -> bool,
     /// 
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
@@ -179,8 +166,8 @@ struct RawFont {
     /// to make it appear as if the two glyphs are unspaced. How the advances are calculated is
     /// controlled by *layoutFlags.*
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     /// 
     /// **Overloads**
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
@@ -188,8 +175,8 @@ struct RawFont {
     /// to make it appear as if the two glyphs are unspaced. The advance of each glyph is calculated
     /// separately.
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     /// 
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
     /// give the distance from the position of a given glyph to where the next glyph should be drawn
@@ -197,8 +184,8 @@ struct RawFont {
     /// array *glyphIndexes* while the results are returned through *advances,* both of them must
     /// have *numGlyphs* elements. How the advances are calculated is controlled by *layoutFlags.*
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     /// 
     /// **Overloads**
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
@@ -207,8 +194,9 @@ struct RawFont {
     /// array *glyphIndexes* while the results are returned through *advances,* both of them must
     /// have *numGlyphs* elements. The advance of each glyph is calculated separately
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
+    [org_name(advancesForGlyphIndexes)]
     advances_for_glyph_indexes_3(glyph_indexes: *u32, advances: *PointFType, num_glyphs: i32) -> bool,
     /// 
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
@@ -216,8 +204,8 @@ struct RawFont {
     /// to make it appear as if the two glyphs are unspaced. How the advances are calculated is
     /// controlled by *layoutFlags.*
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     /// 
     /// **Overloads**
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
@@ -225,8 +213,8 @@ struct RawFont {
     /// to make it appear as if the two glyphs are unspaced. The advance of each glyph is calculated
     /// separately.
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     /// 
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
     /// give the distance from the position of a given glyph to where the next glyph should be drawn
@@ -234,8 +222,8 @@ struct RawFont {
     /// array *glyphIndexes* while the results are returned through *advances,* both of them must
     /// have *numGlyphs* elements. How the advances are calculated is controlled by *layoutFlags.*
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
     /// 
     /// **Overloads**
     /// Returns the QRawFont's advances for each of the *glyphIndexes* in pixel units. The advances
@@ -244,8 +232,9 @@ struct RawFont {
     /// array *glyphIndexes* while the results are returned through *advances,* both of them must
     /// have *numGlyphs* elements. The advance of each glyph is calculated separately
     /// 
-    /// **See also:** QTextLine::horizontalAdvance()
-    /// QFontMetricsF::width()
+    /// **See also:** [`TextLine::horizontal_advance`]
+    /// [`FontMetricsF::width`]
+    [org_name(advancesForGlyphIndexes)]
     advances_for_glyph_indexes_4(glyph_indexes: *u32, advances: *PointFType, num_glyphs: i32, layout_flags: RawFont::LayoutFlags) -> bool,
     /// 
     /// This function returns a rasterized image of the glyph at the given
@@ -262,8 +251,8 @@ struct RawFont {
     /// QImage::Format_Indexed8 and each pixel will contain the opacity of the pixel in the
     /// rasterization.
     /// 
-    /// **See also:** pathForGlyph()
-    /// QPainter::drawGlyphRun()
+    /// **See also:** [`path_for_glyph()`]
+    /// [`Painter::draw_glyph_run`]
     alpha_map_for_glyph(glyph_index: u32, antialiasing_type: RawFont::AntialiasingType, transform: &TransformType) -> Image,
     /// 
     /// This function returns the shape of the glyph at a given *glyphIndex* in the underlying font
@@ -271,8 +260,8 @@ struct RawFont {
     /// 
     /// The returned glyph will always be unhinted.
     /// 
-    /// **See also:** alphaMapForGlyph()
-    /// QPainterPath::addText()
+    /// **See also:** [`alpha_map_for_glyph()`]
+    /// [`PainterPath::add_text`]
     path_for_glyph(glyph_index: u32) -> PainterPath,
     /// 
     /// Returns the smallest rectangle containing the glyph with the given *glyphIndex.*
@@ -286,12 +275,12 @@ struct RawFont {
     /// rasterized, the size of glyphs returned by pathForGlyph(), and is used to convert
     /// internal metrics from design units to logical pixel units.
     /// 
-    /// **See also:** setPixelSize()
+    /// **See also:** [`set_pixel_size()`]
     pixel_size() -> f32,
     /// 
     /// Returns the hinting preference used to construct this QRawFont.
     /// 
-    /// **See also:** QFont::hintingPreference()
+    /// **See also:** [`Font::hinting_preference`]
     hinting_preference() -> Font::HintingPreference,
     /// 
     /// Returns the ascent of this QRawFont in pixel units.
@@ -303,7 +292,7 @@ struct RawFont {
     /// an exotic language, so it is possible (though rare) that this
     /// value will be too small.
     /// 
-    /// **See also:** QFontMetricsF::ascent()
+    /// **See also:** [`FontMetricsF::ascent`]
     ascent() -> f32,
     /// 
     /// Returns the cap height of this QRawFont in pixel units.
@@ -313,7 +302,7 @@ struct RawFont {
     /// that are flat - such as H or I - as opposed to round letters such
     /// as O, or pointed letters like A, both of which may display overshoot.
     /// 
-    /// **See also:** QFontMetricsF::capHeight()
+    /// **See also:** [`FontMetricsF::cap_height`]
     cap_height() -> f32,
     /// 
     /// Returns the descent of this QRawFont in pixel units.
@@ -323,31 +312,31 @@ struct RawFont {
     /// e.g. to accommodate an unusual character in an exotic language, so
     /// it is possible (though rare) that this value will be too small.
     /// 
-    /// **See also:** QFontMetricsF::descent()
+    /// **See also:** [`FontMetricsF::descent`]
     descent() -> f32,
     /// 
     /// Returns the leading of this QRawFont in pixel units.
     /// 
     /// This is the natural inter-line spacing.
     /// 
-    /// **See also:** QFontMetricsF::leading()
+    /// **See also:** [`FontMetricsF::leading`]
     leading() -> f32,
     /// 
     /// Returns the xHeight of this QRawFont in pixel units.
     /// 
     /// This is often but not always the same as the height of the character 'x'.
     /// 
-    /// **See also:** QFontMetricsF::xHeight()
+    /// **See also:** [`FontMetricsF::x_height`]
     x_height() -> f32,
     /// 
     /// Returns the average character width of this QRawFont in pixel units.
     /// 
-    /// **See also:** QFontMetricsF::averageCharWidth()
+    /// **See also:** [`FontMetricsF::average_char_width`]
     average_char_width() -> f32,
     /// 
     /// Returns the width of the widest character in the font.
     /// 
-    /// **See also:** QFontMetricsF::maxWidth()
+    /// **See also:** [`FontMetricsF::max_width`]
     max_char_width() -> f32,
     /// 
     /// Returns the thickness for drawing lines (underline, overline, etc.)
@@ -363,8 +352,8 @@ struct RawFont {
     /// to pixel units, as the internal metrics are specified in design units and the pixel size gives
     /// the size of 1 em in pixels.
     /// 
-    /// **See also:** pixelSize()
-    /// setPixelSize()
+    /// **See also:** [`pixel_size()`]
+    /// [`set_pixel_size()`]
     units_per_em() -> f32,
     /// 
     /// Replaces the current QRawFont with the contents of the file referenced
@@ -373,7 +362,7 @@ struct RawFont {
     /// 
     /// The file must reference a TrueType or OpenType font.
     /// 
-    /// **See also:** loadFromData()
+    /// **See also:** [`load_from_data()`]
     load_from_file(file_name: String, pixel_size: f32, hinting_preference: Font::HintingPreference),
     /// 
     /// Replaces the current QRawFont with the font contained in the supplied
@@ -382,27 +371,28 @@ struct RawFont {
     /// 
     /// The *fontData* must contain a TrueType or OpenType font.
     /// 
-    /// **See also:** loadFromFile()
+    /// **See also:** [`load_from_file()`]
     load_from_data(font_data: &ByteArrayType, pixel_size: f32, hinting_preference: Font::HintingPreference),
     /// 
     /// Returns `true` if the font has a glyph that corresponds to the given *character.*
     /// 
-    /// **See also:** supportedWritingSystems()
+    /// **See also:** [`supported_writing_systems()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the font has a glyph that corresponds to the UCS-4 encoded character *ucs4.*
     /// 
-    /// **See also:** supportedWritingSystems()
+    /// **See also:** [`supported_writing_systems()`]
     supports_character(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the font has a glyph that corresponds to the given *character.*
     /// 
-    /// **See also:** supportedWritingSystems()
+    /// **See also:** [`supported_writing_systems()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the font has a glyph that corresponds to the UCS-4 encoded character *ucs4.*
     /// 
-    /// **See also:** supportedWritingSystems()
+    /// **See also:** [`supported_writing_systems()`]
+    [org_name(supportsCharacter)]
     supports_character_2(character: CharType) -> bool,
     /// 
     /// Returns a list of writing systems supported by the font according to designer supplied
@@ -413,7 +403,7 @@ struct RawFont {
     /// **Note**: The list is determined based on the unicode ranges and codepage ranges set in the font's
     /// OS/2 table and requires such a table to be present in the underlying font file.
     /// 
-    /// **See also:** supportsCharacter()
+    /// **See also:** [`supports_character()`]
     supported_writing_systems() -> List<QFontDatabase::WritingSystem>,
     /// 
     /// Retrieves the sfnt table named *tagName* from the underlying physical font, or an empty
@@ -428,6 +418,19 @@ struct RawFont {
     /// **Warning**: This function is potentially expensive and should not be called in performance
     /// sensitive code.
     [static] from_font(font: &FontType, writing_system: FontDatabase::WritingSystem) -> RawFont,
+}
+
+[org_name(QRawFont)]
+enum AntialiasingType {
+    PixelAntialiasing,
+    SubPixelAntialiasing,
+}
+
+[org_name(QRawFont)]
+enum LayoutFlag {
+    SeparateAdvances,
+    KernedAdvances,
+    UseDesignMetrics,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

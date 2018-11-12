@@ -54,12 +54,12 @@ struct OpenGLPaintDevice : PaintDevice {
     /// 
     /// Returns the pixel size of the paint device.
     /// 
-    /// **See also:** setSize()
+    /// **See also:** [`set_size()`]
     size() -> Size,
     /// 
     /// Sets the pixel size of the paint device to *size.*
     /// 
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     set_size(size: &SizeType),
     /// 
     /// Sets the device pixel ratio for the paint device to *devicePixelRatio.*
@@ -67,32 +67,32 @@ struct OpenGLPaintDevice : PaintDevice {
     /// 
     /// Returns the number of pixels per meter horizontally.
     /// 
-    /// **See also:** setDotsPerMeterX()
+    /// **See also:** [`set_dots_per_meter_x()`]
     dots_per_meter_x() -> f32,
     /// 
     /// Returns the number of pixels per meter vertically.
     /// 
-    /// **See also:** setDotsPerMeterY()
+    /// **See also:** [`set_dots_per_meter_y()`]
     dots_per_meter_y() -> f32,
     /// 
     /// Sets the number of pixels per meter horizontally to *dpmx.*
     /// 
-    /// **See also:** dotsPerMeterX()
+    /// **See also:** [`dots_per_meter_x()`]
     set_dots_per_meter_x(arg0: f32),
     /// 
     /// Sets the number of pixels per meter vertically to *dpmy.*
     /// 
-    /// **See also:** dotsPerMeterY()
+    /// **See also:** [`dots_per_meter_y()`]
     set_dots_per_meter_y(arg0: f32),
     /// 
     /// Sets whether painting should be flipped around the Y-axis or not to *flipped.*
     /// 
-    /// **See also:** paintFlipped()
+    /// **See also:** [`paint_flipped()`]
     set_paint_flipped(flipped: bool),
     /// 
     /// Returns `true` if painting is flipped around the Y-axis.
     /// 
-    /// **See also:** setPaintFlipped()
+    /// **See also:** [`set_paint_flipped()`]
     paint_flipped() -> bool,
     /// 
     /// This virtual method is provided as a callback to allow re-binding a target

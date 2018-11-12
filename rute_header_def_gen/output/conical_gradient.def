@@ -23,8 +23,8 @@
 /// gradient can be specified through its radius or final stop points,
 /// respectively.
 /// 
-/// **See also:** QLinearGradient
-/// QRadialGradient
+/// **See also:** [`LinearGradient`]
+/// [`RadialGradient`]
 /// {painting/gradients}{The
 /// Gradients Example}
 /// # Licence
@@ -35,43 +35,44 @@ struct ConicalGradient : Gradient {
     /// Returns the center of the conical gradient in logical
     /// coordinates.
     /// 
-    /// **See also:** stops()
+    /// **See also:** [`stops()`]
     center() -> PointF,
     /// 
     /// **Overloads**
     /// Sets the center of this conical gradient in logical coordinates to
     /// ( *x,* *y).*
     /// 
-    /// **See also:** center()
+    /// **See also:** [`center()`]
     /// 
     /// Sets the center of this conical gradient in logical coordinates to
     /// *center.*
     /// 
-    /// **See also:** center()
+    /// **See also:** [`center()`]
     set_center(center: &PointFType),
     /// 
     /// **Overloads**
     /// Sets the center of this conical gradient in logical coordinates to
     /// ( *x,* *y).*
     /// 
-    /// **See also:** center()
+    /// **See also:** [`center()`]
     /// 
     /// Sets the center of this conical gradient in logical coordinates to
     /// *center.*
     /// 
-    /// **See also:** center()
+    /// **See also:** [`center()`]
+    [org_name(setCenter)]
     set_center_2(x: f32, y: f32),
     /// 
     /// Returns the start angle of the conical gradient in logical
     /// coordinates.
     /// 
-    /// **See also:** stops()
+    /// **See also:** [`stops()`]
     angle() -> f32,
     /// 
     /// Sets *angle* to be the start angle for this conical gradient in
     /// logical coordinates.
     /// 
-    /// **See also:** angle()
+    /// **See also:** [`angle()`]
     set_angle(angle: f32),
 }
 

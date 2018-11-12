@@ -8,7 +8,7 @@
 /// Access to these parameters are useful when implementing custom user interface components, in that
 /// they allow the components to exhibit the same behaviour and feel as other components.
 /// 
-/// **See also:** QGuiApplication::styleHints()
+/// **See also:** [`GuiApplication::style_hints`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -31,7 +31,7 @@ struct StyleHints : Object {
     /// you can find out if a drag should be started with code like this:
     /// 
     /// **See also:** startDragTime
-    /// QPoint::manhattanLength()
+    /// [`Point::manhattan_length`]
     /// {Drag and Drop}
     start_drag_distance() -> i32,
     set_start_drag_time(start_drag_time: i32),
@@ -65,8 +65,8 @@ struct StyleHints : Object {
     /// **Note**: The platform may still choose to show certain windows non-fullscreen,
     /// such as popups or dialogs. This property only reports the default behavior.
     /// 
-    /// **See also:** QWindow::show()
-    /// showIsMaximized()
+    /// **See also:** [`Window::show`]
+    /// [`show_is_maximized()`]
     show_is_full_screen() -> bool,
     /// 
     /// This property is `true` if the platform defaults to windows being maximized,
@@ -75,8 +75,8 @@ struct StyleHints : Object {
     /// **Note**: The platform may still choose to show certain windows non-maximized,
     /// such as popups or dialogs. This property only reports the default behavior.
     /// 
-    /// **See also:** QWindow::show()
-    /// showIsFullScreen()
+    /// **See also:** [`Window::show`]
+    /// [`show_is_full_screen()`]
     show_is_maximized() -> bool,
     /// 
     /// `true` if the platform normally shows shortcut key sequences in

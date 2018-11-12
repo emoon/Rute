@@ -5,7 +5,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct Quaternion {
     /// 
     /// Returns `true` if the x, y, z, and scalar components of this
@@ -19,120 +18,121 @@ struct Quaternion {
     /// 
     /// Returns the vector component of this quaternion.
     /// 
-    /// **See also:** setVector()
-    /// scalar()
+    /// **See also:** [`set_vector()`]
+    /// [`scalar()`]
     vector() -> Vector3D,
     /// 
     /// Sets the vector component of this quaternion to *vector.*
     /// 
-    /// **See also:** vector()
-    /// setScalar()
+    /// **See also:** [`vector()`]
+    /// [`set_scalar()`]
     /// 
     /// Sets the vector component of this quaternion to ( *x,* *y,* *z).*
     /// 
-    /// **See also:** vector()
-    /// setScalar()
+    /// **See also:** [`vector()`]
+    /// [`set_scalar()`]
     set_vector(vector: &Vector3DType),
     /// 
     /// Sets the vector component of this quaternion to *vector.*
     /// 
-    /// **See also:** vector()
-    /// setScalar()
+    /// **See also:** [`vector()`]
+    /// [`set_scalar()`]
     /// 
     /// Sets the vector component of this quaternion to ( *x,* *y,* *z).*
     /// 
-    /// **See also:** vector()
-    /// setScalar()
+    /// **See also:** [`vector()`]
+    /// [`set_scalar()`]
+    [org_name(setVector)]
     set_vector_2(x: f32, y: f32, z: f32),
     /// 
     /// Returns the x coordinate of this quaternion's vector.
     /// 
-    /// **See also:** setX()
-    /// y()
-    /// z()
-    /// scalar()
+    /// **See also:** [`set_x()`]
+    /// [`y()`]
+    /// [`z()`]
+    /// [`scalar()`]
     x() -> f32,
     /// 
     /// Returns the y coordinate of this quaternion's vector.
     /// 
-    /// **See also:** setY()
-    /// x()
-    /// z()
-    /// scalar()
+    /// **See also:** [`set_y()`]
+    /// [`x()`]
+    /// [`z()`]
+    /// [`scalar()`]
     y() -> f32,
     /// 
     /// Returns the z coordinate of this quaternion's vector.
     /// 
-    /// **See also:** setZ()
-    /// x()
-    /// y()
-    /// scalar()
+    /// **See also:** [`set_z()`]
+    /// [`x()`]
+    /// [`y()`]
+    /// [`scalar()`]
     z() -> f32,
     /// 
     /// Returns the scalar component of this quaternion.
     /// 
-    /// **See also:** setScalar()
-    /// x()
-    /// y()
-    /// z()
+    /// **See also:** [`set_scalar()`]
+    /// [`x()`]
+    /// [`y()`]
+    /// [`z()`]
     scalar() -> f32,
     /// 
     /// Sets the x coordinate of this quaternion's vector to the given
     /// *x* coordinate.
     /// 
-    /// **See also:** x()
-    /// setY()
-    /// setZ()
-    /// setScalar()
+    /// **See also:** [`x()`]
+    /// [`set_y()`]
+    /// [`set_z()`]
+    /// [`set_scalar()`]
     set_x(x: f32),
     /// 
     /// Sets the y coordinate of this quaternion's vector to the given
     /// *y* coordinate.
     /// 
-    /// **See also:** y()
-    /// setX()
-    /// setZ()
-    /// setScalar()
+    /// **See also:** [`y()`]
+    /// [`set_x()`]
+    /// [`set_z()`]
+    /// [`set_scalar()`]
     set_y(y: f32),
     /// 
     /// Sets the z coordinate of this quaternion's vector to the given
     /// *z* coordinate.
     /// 
-    /// **See also:** z()
-    /// setX()
-    /// setY()
-    /// setScalar()
+    /// **See also:** [`z()`]
+    /// [`set_x()`]
+    /// [`set_y()`]
+    /// [`set_scalar()`]
     set_z(z: f32),
     /// 
     /// Sets the scalar component of this quaternion to *scalar.*
     /// 
-    /// **See also:** scalar()
-    /// setX()
-    /// setY()
-    /// setZ()
+    /// **See also:** [`scalar()`]
+    /// [`set_x()`]
+    /// [`set_y()`]
+    /// [`set_z()`]
     set_scalar(scalar: f32),
     /// 
     /// Returns the dot product of *q1* and *q2.*
     /// 
-    /// **See also:** length()
+    /// **See also:** [`length()`]
     [static] dot_product(q1: &QuaternionType, q2: &QuaternionType) -> f32,
     /// 
     /// Returns the length of the quaternion. This is also called the .
     /// 
-    /// **See also:** lengthSquared()
-    /// normalized()
-    /// dotProduct()
+    /// **See also:** [`length_squared()`]
+    /// [`normalized()`]
+    /// [`dot_product()`]
     /// 
     /// Returns the squared length of the quaternion.
     /// 
-    /// **See also:** length()
-    /// dotProduct()
+    /// **See also:** [`length()`]
+    /// [`dot_product()`]
     length() -> f32,
     /// 
     /// Returns the squared length of the quaternion.
     /// 
-    /// **See also:** length()
-    /// dotProduct()
+    /// **See also:** [`length()`]
+    /// [`dot_product()`]
     length_squared() -> f32,
     /// 
     /// Returns the normalized unit form of this quaternion.
@@ -142,9 +142,9 @@ struct Quaternion {
     /// will be returned as-is. Otherwise the normalized form of the
     /// quaternion of length 1 will be returned.
     /// 
-    /// **See also:** normalize()
-    /// length()
-    /// dotProduct()
+    /// **See also:** [`normalize()`]
+    /// [`length()`]
+    /// [`dot_product()`]
     normalized() -> Quaternion,
     /// 
     /// Returns the normalized unit form of this quaternion.
@@ -154,22 +154,22 @@ struct Quaternion {
     /// will be returned as-is. Otherwise the normalized form of the
     /// quaternion of length 1 will be returned.
     /// 
-    /// **See also:** normalize()
-    /// length()
-    /// dotProduct()
+    /// **See also:** [`normalize()`]
+    /// [`length()`]
+    /// [`dot_product()`]
     /// 
     /// Normalizes the current quaternion in place. Nothing happens if this
     /// is a null quaternion or the length of the quaternion is very close to 1.
     /// 
-    /// **See also:** length()
-    /// normalized()
+    /// **See also:** [`length()`]
+    /// [`normalized()`]
     normalize(),
     /// 
     /// Returns the inverse of this quaternion.
     /// If this quaternion is null, then a null quaternion is returned.
     /// 
-    /// **See also:** isNull()
-    /// length()
+    /// **See also:** [`is_null()`]
+    /// [`length()`]
     inverted() -> Quaternion,
     /// 
     /// Returns the conjugate of this quaternion, which is
@@ -204,53 +204,55 @@ struct Quaternion {
     /// Extracts a 3D axis *axis* and a rotating angle *angle* (in degrees)
     /// that corresponds to this quaternion.
     /// 
-    /// **See also:** fromAxisAndAngle()
+    /// **See also:** [`from_axis_and_angle()`]
     /// 
     /// Extracts a 3D axis ( *x,* *y,* *z)* and a rotating angle *angle* (in degrees)
     /// that corresponds to this quaternion.
     /// 
-    /// **See also:** fromAxisAndAngle()
+    /// **See also:** [`from_axis_and_angle()`]
     get_axis_and_angle(axis: *Vector3DType, angle: *f32),
     /// 
     /// Creates a normalized quaternion that corresponds to rotating through
     /// *angle* degrees about the specified 3D *axis.*
     /// 
-    /// **See also:** getAxisAndAngle()
+    /// **See also:** [`get_axis_and_angle()`]
     /// 
     /// Creates a normalized quaternion that corresponds to rotating through
     /// *angle* degrees about the 3D axis ( *x,* *y,* *z).*
     /// 
-    /// **See also:** getAxisAndAngle()
+    /// **See also:** [`get_axis_and_angle()`]
     [static] from_axis_and_angle(axis: &Vector3DType, angle: f32) -> Quaternion,
     /// 
     /// **Overloads**
     /// Extracts a 3D axis *axis* and a rotating angle *angle* (in degrees)
     /// that corresponds to this quaternion.
     /// 
-    /// **See also:** fromAxisAndAngle()
+    /// **See also:** [`from_axis_and_angle()`]
     /// 
     /// Extracts a 3D axis ( *x,* *y,* *z)* and a rotating angle *angle* (in degrees)
     /// that corresponds to this quaternion.
     /// 
-    /// **See also:** fromAxisAndAngle()
+    /// **See also:** [`from_axis_and_angle()`]
+    [org_name(getAxisAndAngle)]
     get_axis_and_angle_2(x: *f32, y: *f32, z: *f32, angle: *f32),
     /// 
     /// Creates a normalized quaternion that corresponds to rotating through
     /// *angle* degrees about the specified 3D *axis.*
     /// 
-    /// **See also:** getAxisAndAngle()
+    /// **See also:** [`get_axis_and_angle()`]
     /// 
     /// Creates a normalized quaternion that corresponds to rotating through
     /// *angle* degrees about the 3D axis ( *x,* *y,* *z).*
     /// 
-    /// **See also:** getAxisAndAngle()
+    /// **See also:** [`get_axis_and_angle()`]
+    [org_name(fromAxisAndAngle)]
     [static] from_axis_and_angle_2(x: f32, y: f32, z: f32, angle: f32) -> Quaternion,
     /// 
     /// **Overloads**
     /// Calculates roll, pitch, and yaw Euler angles (in degrees)
     /// that corresponds to this quaternion.
     /// 
-    /// **See also:** fromEulerAngles()
+    /// **See also:** [`from_euler_angles()`]
     to_euler_angles() -> Vector3D,
     /// 
     /// **Overloads**
@@ -258,19 +260,19 @@ struct Quaternion {
     /// eulerAngles.z() degrees around the z axis, eulerAngles.x() degrees around the x axis,
     /// and eulerAngles.y() degrees around the y axis (in that order).
     /// 
-    /// **See also:** toEulerAngles()
+    /// **See also:** [`to_euler_angles()`]
     /// 
     /// Creates a quaternion that corresponds to a rotation of
     /// *roll* degrees around the z axis, *pitch* degrees around the x axis,
     /// and *yaw* degrees around the y axis (in that order).
     /// 
-    /// **See also:** getEulerAngles()
+    /// **See also:** [`get_euler_angles()`]
     [static] from_euler_angles(euler_angles: &Vector3DType) -> Quaternion,
     /// 
     /// Calculates *roll,* *pitch,* and *yaw* Euler angles (in degrees)
     /// that corresponds to this quaternion.
     /// 
-    /// **See also:** fromEulerAngles()
+    /// **See also:** [`from_euler_angles()`]
     get_euler_angles(pitch: *f32, yaw: *f32, roll: *f32),
     /// 
     /// **Overloads**
@@ -278,27 +280,28 @@ struct Quaternion {
     /// eulerAngles.z() degrees around the z axis, eulerAngles.x() degrees around the x axis,
     /// and eulerAngles.y() degrees around the y axis (in that order).
     /// 
-    /// **See also:** toEulerAngles()
+    /// **See also:** [`to_euler_angles()`]
     /// 
     /// Creates a quaternion that corresponds to a rotation of
     /// *roll* degrees around the z axis, *pitch* degrees around the x axis,
     /// and *yaw* degrees around the y axis (in that order).
     /// 
-    /// **See also:** getEulerAngles()
+    /// **See also:** [`get_euler_angles()`]
+    [org_name(fromEulerAngles)]
     [static] from_euler_angles_2(pitch: f32, yaw: f32, roll: f32) -> Quaternion,
     /// 
     /// Returns the 3 orthonormal axes ( *xAxis,* *yAxis,* *zAxis)* defining the quaternion.
     /// 
-    /// **See also:** fromAxes()
-    /// toRotationMatrix()
+    /// **See also:** [`from_axes()`]
+    /// [`to_rotation_matrix()`]
     get_axes(x_axis: *Vector3DType, y_axis: *Vector3DType, z_axis: *Vector3DType),
     /// 
     /// Constructs the quaternion using 3 axes ( *xAxis,* *yAxis,* *zAxis).*
     /// 
     /// **Note**: The axes are assumed to be orthonormal.
     /// 
-    /// **See also:** getAxes()
-    /// fromRotationMatrix()
+    /// **See also:** [`get_axes()`]
+    /// [`from_rotation_matrix()`]
     [static] from_axes(x_axis: &Vector3DType, y_axis: &Vector3DType, z_axis: &Vector3DType) -> Quaternion,
     /// 
     /// Constructs the quaternion using specified forward direction *direction*
@@ -306,14 +309,14 @@ struct Quaternion {
     /// If the upward direction was not specified or the forward and upward
     /// vectors are collinear, a new orthonormal upward direction will be generated.
     /// 
-    /// **See also:** fromAxes()
-    /// rotationTo()
+    /// **See also:** [`from_axes()`]
+    /// [`rotation_to()`]
     [static] from_direction(direction: &Vector3DType, up: &Vector3DType) -> Quaternion,
     /// 
     /// Returns the shortest arc quaternion to rotate from the direction described by the vector *from*
     /// to the direction described by the vector *to.*
     /// 
-    /// **See also:** fromDirection()
+    /// **See also:** [`from_direction()`]
     [static] rotation_to(from: &Vector3DType, to: &Vector3DType) -> Quaternion,
     /// 
     /// Interpolates along the shortest spherical path between the
@@ -324,7 +327,7 @@ struct Quaternion {
     /// If *t* is less than or equal to 0, then *q1* will be returned.
     /// If *t* is greater than or equal to 1, then *q2* will be returned.
     /// 
-    /// **See also:** nlerp()
+    /// **See also:** [`nlerp()`]
     [static] slerp(q1: &QuaternionType, q2: &QuaternionType, t: f32) -> Quaternion,
     /// 
     /// Interpolates along the shortest linear path between the rotational
@@ -339,7 +342,7 @@ struct Quaternion {
     /// give approximate results to spherical interpolation that are
     /// good enough for some applications.
     /// 
-    /// **See also:** slerp()
+    /// **See also:** [`slerp()`]
     [static] nlerp(q1: &QuaternionType, q2: &QuaternionType, t: f32) -> Quaternion,
 }
 

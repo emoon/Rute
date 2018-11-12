@@ -1,17 +1,9 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QRgba64)]
-enum Shifts {
-    RedShift,
-    GreenShift,
-    BlueShift,
-    AlphaShift,
-}
-
-
 struct Rgba64 {
     [static] from_rgba64(c: quint64) -> Rgba64,
+    [org_name(fromRgba64)]
     [static] from_rgba64_2(red: u16, green: u16, blue: u16, alpha: u16) -> Rgba64,
     [static] from_rgba(red: u8, green: u8, blue: u8, alpha: u8) -> Rgba64,
     [static] from_argb32(rgb: uint) -> Rgba64,
@@ -33,6 +25,14 @@ struct Rgba64 {
     to_rgb16() -> ushort,
     premultiplied() -> Rgba64,
     unpremultiplied() -> Rgba64,
+}
+
+[org_name(QRgba64)]
+enum Shifts {
+    RedShift,
+    GreenShift,
+    BlueShift,
+    AlphaShift,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

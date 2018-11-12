@@ -146,15 +146,14 @@
 /// [Writing Source Code for Translation](Writing%20Source%20Code%20for%20Translation)
 /// document.
 /// 
-/// **See also:** QMetaObject
-/// QPointer
-/// QObjectCleanupHandler
-/// Q_DISABLE_COPY()
+/// **See also:** [`MetaObject`]
+/// [`Pointer`]
+/// [`ObjectCleanupHandler`]
+/// [`q_disable_copy()`]
 /// **See also:** {Object Trees & Ownership}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct Object {
     /// 
     /// This virtual function receives events to an object and should
@@ -168,10 +167,10 @@ struct Object {
     /// 
     /// Example:
     /// 
-    /// **See also:** installEventFilter()
-    /// timerEvent()
-    /// QCoreApplication::sendEvent()
-    /// QCoreApplication::postEvent()
+    /// **See also:** [`install_event_filter()`]
+    /// [`timer_event()`]
+    /// [`CoreApplication::send_event`]
+    /// [`CoreApplication::post_event`]
     /// 
     /// Filters events if this object has been installed as an event
     /// filter for the *watched* object.
@@ -191,7 +190,7 @@ struct Object {
     /// sure to return true. Otherwise, Qt will forward the event to the
     /// deleted object and the program might crash.
     /// 
-    /// **See also:** installEventFilter()
+    /// **See also:** [`install_event_filter()`]
     [event] event(event: *EventType) -> bool,
     /// 
     /// Filters events if this object has been installed as an event
@@ -212,7 +211,7 @@ struct Object {
     /// sure to return true. Otherwise, Qt will forward the event to the
     /// deleted object and the program might crash.
     /// 
-    /// **See also:** installEventFilter()
+    /// **See also:** [`install_event_filter()`]
     [event] event_filter(watched: *ObjectType, event: *EventType) -> bool,
     /// 
     /// You can find an object by name (and type) using findChild().
@@ -220,12 +219,12 @@ struct Object {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** metaObject()
-    /// QMetaObject::className()
+    /// **See also:** [`meta_object()`]
+    /// [`MetaObject::class_name`]
     /// 
     /// This signal is emitted after the object's name has been changed. The new object name is passed as *objectName.*
     /// 
-    /// **See also:** QObject::objectName
+    /// **See also:** [`Object::object_name()`]
     object_name() -> String,
     set_object_name(name: String),
     /// 
@@ -245,8 +244,8 @@ struct Object {
     /// 
     /// Signals are not blocked by default.
     /// 
-    /// **See also:** blockSignals()
-    /// QSignalBlocker
+    /// **See also:** [`block_signals()`]
+    /// [`SignalBlocker`]
     signals_blocked() -> bool,
     /// 
     /// If *block* is true, signals emitted by this object are blocked
@@ -260,13 +259,13 @@ struct Object {
     /// 
     /// Signals emitted while being blocked are not buffered.
     /// 
-    /// **See also:** signalsBlocked()
-    /// QSignalBlocker
+    /// **See also:** [`signals_blocked()`]
+    /// [`SignalBlocker`]
     block_signals(b: bool) -> bool,
     /// 
     /// Returns the thread in which the object lives.
     /// 
-    /// **See also:** moveToThread()
+    /// **See also:** [`move_to_thread()`]
     thread() -> Thread?,
     /// 
     /// Changes the thread affinity for this object and its children. The
@@ -298,7 +297,7 @@ struct Object {
     /// another thread, it cannot an object from any arbitrary
     /// thread to the current thread.
     /// 
-    /// **See also:** thread()
+    /// **See also:** [`thread()`]
     move_to_thread(thread: *ThreadType),
     /// 
     /// Starts a timer and returns a timer identifier, or returns zero if
@@ -330,9 +329,9 @@ struct Object {
     /// also a QBasicTimer class that is more lightweight than QTimer and
     /// less clumsy than using timer IDs directly.
     /// 
-    /// **See also:** timerEvent()
-    /// killTimer()
-    /// QTimer::singleShot()
+    /// **See also:** [`timer_event()`]
+    /// [`kill_timer()`]
+    /// [`Timer::single_shot`]
     /// 
     /// **Overloads**
     /// Starts a timer and returns a timer identifier, or returns zero if
@@ -364,18 +363,87 @@ struct Object {
     /// also a QBasicTimer class that is more lightweight than QTimer and
     /// less clumsy than using timer IDs directly.
     /// 
-    /// **See also:** timerEvent()
-    /// killTimer()
-    /// QTimer::singleShot()
+    /// **See also:** [`timer_event()`]
+    /// [`kill_timer()`]
+    /// [`Timer::single_shot`]
     start_timer(interval: i32, timer_type: Rute::TimerType) -> i32,
+    /// 
+    /// Starts a timer and returns a timer identifier, or returns zero if
+    /// it could not start a timer.
+    /// 
+    /// A timer event will occur every *interval* milliseconds until
+    /// killTimer() is called. If *interval* is 0, then the timer event
+    /// occurs once every time there are no more window system events to
+    /// process.
+    /// 
+    /// The virtual timerEvent() function is called with the QTimerEvent
+    /// event parameter class when a timer event occurs. Reimplement this
+    /// function to get timer events.
+    /// 
+    /// If multiple timers are running, the QTimerEvent::timerId() can be
+    /// used to find out which timer was activated.
+    /// 
+    /// Example:
+    /// 
+    /// Note that QTimer's accuracy depends on the underlying operating system and
+    /// hardware. The *timerType* argument allows you to customize the accuracy of
+    /// the timer. See Qt::TimerType for information on the different timer types.
+    /// Most platforms support an accuracy of 20 milliseconds; some provide more.
+    /// If Qt is unable to deliver the requested number of timer events, it will
+    /// silently discard some.
+    /// 
+    /// The QTimer class provides a high-level programming interface with
+    /// single-shot timers and timer signals instead of events. There is
+    /// also a QBasicTimer class that is more lightweight than QTimer and
+    /// less clumsy than using timer IDs directly.
+    /// 
+    /// **See also:** [`timer_event()`]
+    /// [`kill_timer()`]
+    /// [`Timer::single_shot`]
+    /// 
+    /// **Overloads**
+    /// Starts a timer and returns a timer identifier, or returns zero if
+    /// it could not start a timer.
+    /// 
+    /// A timer event will occur every *time* interval until killTimer()
+    /// is called. If *time* is equal to `std::chrono::duration::zero()` ,
+    /// then the timer event occurs once every time there are no more window
+    /// system events to process.
+    /// 
+    /// The virtual timerEvent() function is called with the QTimerEvent
+    /// event parameter class when a timer event occurs. Reimplement this
+    /// function to get timer events.
+    /// 
+    /// If multiple timers are running, the QTimerEvent::timerId() can be
+    /// used to find out which timer was activated.
+    /// 
+    /// Example:
+    /// 
+    /// Note that QTimer's accuracy depends on the underlying operating system and
+    /// hardware. The *timerType* argument allows you to customize the accuracy of
+    /// the timer. See Qt::TimerType for information on the different timer types.
+    /// Most platforms support an accuracy of 20 milliseconds; some provide more.
+    /// If Qt is unable to deliver the requested number of timer events, it will
+    /// silently discard some.
+    /// 
+    /// The QTimer class provides a high-level programming interface with
+    /// single-shot timers and timer signals instead of events. There is
+    /// also a QBasicTimer class that is more lightweight than QTimer and
+    /// less clumsy than using timer IDs directly.
+    /// 
+    /// **See also:** [`timer_event()`]
+    /// [`kill_timer()`]
+    /// [`Timer::single_shot`]
+    [org_name(startTimer)]
+    start_timer_2(time: td::chrono::milliseconds, timer_type: Rute::TimerType) -> i32,
     /// 
     /// Kills the timer with timer identifier, *id.*
     /// 
     /// The timer identifier is returned by startTimer() when a timer
     /// event is started.
     /// 
-    /// **See also:** timerEvent()
-    /// startTimer()
+    /// **See also:** [`timer_event()`]
+    /// [`start_timer()`]
     kill_timer(id: i32),
     /// 
     /// Returns a list of child objects.
@@ -395,16 +463,16 @@ struct Object {
     /// widget that is raised becomes the last object in the list, and a
     /// widget that is lowered becomes the first object in the list.
     /// 
-    /// **See also:** findChild()
-    /// findChildren()
-    /// parent()
-    /// setParent()
+    /// **See also:** [`find_child()`]
+    /// [`find_children()`]
+    /// [`parent()`]
+    /// [`set_parent()`]
     children() -> ObjectList?,
     /// 
     /// Makes the object a child of *parent.*
     /// 
-    /// **See also:** parent()
-    /// children()
+    /// **See also:** [`parent()`]
+    /// [`children()`]
     set_parent(parent: *ObjectType),
     /// 
     /// Installs an event filter *filterObj* on this object. For example:
@@ -438,9 +506,9 @@ struct Object {
     /// called until both objects have the same thread affinity again (it
     /// is *not* removed).
     /// 
-    /// **See also:** removeEventFilter()
-    /// eventFilter()
-    /// event()
+    /// **See also:** [`remove_event_filter()`]
+    /// [`event_filter()`]
+    /// [`event()`]
     install_event_filter(filter_obj: *ObjectType),
     /// 
     /// Removes an event filter object *obj* from this object. The
@@ -452,9 +520,9 @@ struct Object {
     /// It is always safe to remove an event filter, even during event
     /// filter activation (i.e. from the eventFilter() function).
     /// 
-    /// **See also:** installEventFilter()
-    /// eventFilter()
-    /// event()
+    /// **See also:** [`install_event_filter()`]
+    /// [`event_filter()`]
+    /// [`event()`]
     remove_event_filter(obj: *ObjectType),
     /// 
     /// Creates a connection of the given *type* from the *signal* in
@@ -514,10 +582,10 @@ struct Object {
     /// call qRegisterMetaType() to register the data type before you
     /// establish the connection.
     /// 
-    /// **See also:** disconnect()
-    /// sender()
-    /// qRegisterMetaType()
-    /// Q_DECLARE_METATYPE()
+    /// **See also:** [`disconnect()`]
+    /// [`sender()`]
+    /// [`q_register_meta_type()`]
+    /// [`q_declare_metatype()`]
     /// {Differences between String-Based and Functor-Based Connections}
     /// 
     /// Creates a connection of the given *type* from the *signal* in
@@ -539,7 +607,7 @@ struct Object {
     /// const char *signal
     /// const QObject *receiver
     /// const char *method
-    /// Qt::ConnectionType type)
+    /// [`t::connection_type_type()`]
     /// 
     /// **Overloads** connect()
     /// Connects *signal* from the *sender* object to this object's *method.*
@@ -549,7 +617,7 @@ struct Object {
     /// Every connection you make emits a signal, so duplicate connections emit
     /// two signals. You can break a connection using disconnect().
     /// 
-    /// **See also:** disconnect()
+    /// **See also:** [`disconnect()`]
     /// 
     /// This virtual function is called when something has been connected
     /// to *signal* in this object.
@@ -566,8 +634,8 @@ struct Object {
     /// connection, which may be a different thread from the thread in
     /// which this object lives.
     /// 
-    /// **See also:** connect()
-    /// disconnectNotify()
+    /// **See also:** [`connect()`]
+    /// [`disconnect_notify()`]
     /// 
     /// **Overloads** connect()
     /// Creates a connection of the given *type* from the *signal* in
@@ -736,10 +804,10 @@ struct Object {
     /// call qRegisterMetaType() to register the data type before you
     /// establish the connection.
     /// 
-    /// **See also:** disconnect()
-    /// sender()
-    /// qRegisterMetaType()
-    /// Q_DECLARE_METATYPE()
+    /// **See also:** [`disconnect()`]
+    /// [`sender()`]
+    /// [`q_register_meta_type()`]
+    /// [`q_declare_metatype()`]
     /// {Differences between String-Based and Functor-Based Connections}
     /// 
     /// Creates a connection of the given *type* from the *signal* in
@@ -761,7 +829,7 @@ struct Object {
     /// const char *signal
     /// const QObject *receiver
     /// const char *method
-    /// Qt::ConnectionType type)
+    /// [`t::connection_type_type()`]
     /// 
     /// **Overloads** connect()
     /// Connects *signal* from the *sender* object to this object's *method.*
@@ -771,7 +839,7 @@ struct Object {
     /// Every connection you make emits a signal, so duplicate connections emit
     /// two signals. You can break a connection using disconnect().
     /// 
-    /// **See also:** disconnect()
+    /// **See also:** [`disconnect()`]
     /// 
     /// This virtual function is called when something has been connected
     /// to *signal* in this object.
@@ -788,8 +856,8 @@ struct Object {
     /// connection, which may be a different thread from the thread in
     /// which this object lives.
     /// 
-    /// **See also:** connect()
-    /// disconnectNotify()
+    /// **See also:** [`connect()`]
+    /// [`disconnect_notify()`]
     /// 
     /// **Overloads** connect()
     /// Creates a connection of the given *type* from the *signal* in
@@ -899,6 +967,7 @@ struct Object {
     /// 
     /// Overloaded functions can be resolved with help of [qOverload.](qOverload.)
     /// 
+    [org_name(connect)]
     [static] connect_2(sender: *ObjectType, signal: &MetaMethodType, receiver: *ObjectType, method: &MetaMethodType, type: Rute::ConnectionType) -> MetaObject::Connection,
     /// 
     /// Creates a connection of the given *type* from the *signal* in
@@ -958,10 +1027,10 @@ struct Object {
     /// call qRegisterMetaType() to register the data type before you
     /// establish the connection.
     /// 
-    /// **See also:** disconnect()
-    /// sender()
-    /// qRegisterMetaType()
-    /// Q_DECLARE_METATYPE()
+    /// **See also:** [`disconnect()`]
+    /// [`sender()`]
+    /// [`q_register_meta_type()`]
+    /// [`q_declare_metatype()`]
     /// {Differences between String-Based and Functor-Based Connections}
     /// 
     /// Creates a connection of the given *type* from the *signal* in
@@ -983,7 +1052,7 @@ struct Object {
     /// const char *signal
     /// const QObject *receiver
     /// const char *method
-    /// Qt::ConnectionType type)
+    /// [`t::connection_type_type()`]
     /// 
     /// **Overloads** connect()
     /// Connects *signal* from the *sender* object to this object's *method.*
@@ -993,7 +1062,7 @@ struct Object {
     /// Every connection you make emits a signal, so duplicate connections emit
     /// two signals. You can break a connection using disconnect().
     /// 
-    /// **See also:** disconnect()
+    /// **See also:** [`disconnect()`]
     /// 
     /// This virtual function is called when something has been connected
     /// to *signal* in this object.
@@ -1010,8 +1079,8 @@ struct Object {
     /// connection, which may be a different thread from the thread in
     /// which this object lives.
     /// 
-    /// **See also:** connect()
-    /// disconnectNotify()
+    /// **See also:** [`connect()`]
+    /// [`disconnect_notify()`]
     /// 
     /// **Overloads** connect()
     /// Creates a connection of the given *type* from the *signal* in
@@ -1121,6 +1190,7 @@ struct Object {
     /// 
     /// Overloaded functions can be resolved with help of [qOverload.](qOverload.)
     /// 
+    [org_name(connect)]
     connect_3(sender: *ObjectType, signal: *char, member: *char, type: Rute::ConnectionType) -> MetaObject::Connection,
     /// 
     /// Disconnects *signal* in object *sender* from *method* in object
@@ -1151,7 +1221,7 @@ struct Object {
     /// and all other slots are left alone. The *method* must be 0 if *receiver* is left out, so you cannot disconnect a
     /// specifically-named slot on all objects.
     /// 
-    /// **See also:** connect()
+    /// **See also:** [`connect()`]
     /// 
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1213,15 +1283,15 @@ struct Object {
     /// functions with that mutex held in other places or it will result in
     /// a deadlock.
     /// 
-    /// **See also:** disconnect()
-    /// connectNotify()
+    /// **See also:** [`disconnect()`]
+    /// [`connect_notify()`]
     /// 
     /// Disconnect a connection.
     /// 
     /// If the *connection* is invalid or has already been disconnected, do nothing
     /// and return false.
     /// 
-    /// **See also:** connect()
+    /// **See also:** [`connect()`]
     /// **Overloads** diconnect()
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1257,8 +1327,8 @@ struct Object {
     /// possible to compare them. Instead, use the overload that takes a
     /// QMetaObject::Connection
     /// 
-    /// **See also:** connect()
-    [static] disconnect(sender: *ObjectType, signal: &MetaMethodType, receiver: *ObjectType, member: &MetaMethodType) -> bool,
+    /// **See also:** [`connect()`]
+    [static] disconnect(sender: *ObjectType, signal: *char, receiver: *ObjectType, member: *char) -> bool,
     /// 
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1288,7 +1358,7 @@ struct Object {
     /// and all other slots are left alone. The *method* must be 0 if *receiver* is left out, so you cannot disconnect a
     /// specifically-named slot on all objects.
     /// 
-    /// **See also:** connect()
+    /// **See also:** [`connect()`]
     /// 
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1350,15 +1420,15 @@ struct Object {
     /// functions with that mutex held in other places or it will result in
     /// a deadlock.
     /// 
-    /// **See also:** disconnect()
-    /// connectNotify()
+    /// **See also:** [`disconnect()`]
+    /// [`connect_notify()`]
     /// 
     /// Disconnect a connection.
     /// 
     /// If the *connection* is invalid or has already been disconnected, do nothing
     /// and return false.
     /// 
-    /// **See also:** connect()
+    /// **See also:** [`connect()`]
     /// **Overloads** diconnect()
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1394,8 +1464,9 @@ struct Object {
     /// possible to compare them. Instead, use the overload that takes a
     /// QMetaObject::Connection
     /// 
-    /// **See also:** connect()
-    disconnect_2(signal: *char, receiver: *ObjectType, member: *char) -> bool,
+    /// **See also:** [`connect()`]
+    [org_name(disconnect)]
+    [static] disconnect_2(sender: *ObjectType, signal: &MetaMethodType, receiver: *ObjectType, member: &MetaMethodType) -> bool,
     /// 
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1425,7 +1496,7 @@ struct Object {
     /// and all other slots are left alone. The *method* must be 0 if *receiver* is left out, so you cannot disconnect a
     /// specifically-named slot on all objects.
     /// 
-    /// **See also:** connect()
+    /// **See also:** [`connect()`]
     /// 
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1487,15 +1558,15 @@ struct Object {
     /// functions with that mutex held in other places or it will result in
     /// a deadlock.
     /// 
-    /// **See also:** disconnect()
-    /// connectNotify()
+    /// **See also:** [`disconnect()`]
+    /// [`connect_notify()`]
     /// 
     /// Disconnect a connection.
     /// 
     /// If the *connection* is invalid or has already been disconnected, do nothing
     /// and return false.
     /// 
-    /// **See also:** connect()
+    /// **See also:** [`connect()`]
     /// **Overloads** diconnect()
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1531,8 +1602,9 @@ struct Object {
     /// possible to compare them. Instead, use the overload that takes a
     /// QMetaObject::Connection
     /// 
-    /// **See also:** connect()
-    disconnect_3(receiver: *ObjectType, member: *char) -> bool,
+    /// **See also:** [`connect()`]
+    [org_name(disconnect)]
+    disconnect_3(signal: *char, receiver: *ObjectType, member: *char) -> bool,
     /// 
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1562,7 +1634,7 @@ struct Object {
     /// and all other slots are left alone. The *method* must be 0 if *receiver* is left out, so you cannot disconnect a
     /// specifically-named slot on all objects.
     /// 
-    /// **See also:** connect()
+    /// **See also:** [`connect()`]
     /// 
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1624,15 +1696,15 @@ struct Object {
     /// functions with that mutex held in other places or it will result in
     /// a deadlock.
     /// 
-    /// **See also:** disconnect()
-    /// connectNotify()
+    /// **See also:** [`disconnect()`]
+    /// [`connect_notify()`]
     /// 
     /// Disconnect a connection.
     /// 
     /// If the *connection* is invalid or has already been disconnected, do nothing
     /// and return false.
     /// 
-    /// **See also:** connect()
+    /// **See also:** [`connect()`]
     /// **Overloads** diconnect()
     /// Disconnects *signal* in object *sender* from *method* in object
     /// *receiver.* Returns `true` if the connection is successfully broken;
@@ -1668,59 +1740,200 @@ struct Object {
     /// possible to compare them. Instead, use the overload that takes a
     /// QMetaObject::Connection
     /// 
-    /// **See also:** connect()
-    [static] disconnect_4(arg0: onst QMetaObject::Connection &) -> bool,
+    /// **See also:** [`connect()`]
+    [org_name(disconnect)]
+    disconnect_4(receiver: *ObjectType, member: *char) -> bool,
+    /// 
+    /// Disconnects *signal* in object *sender* from *method* in object
+    /// *receiver.* Returns `true` if the connection is successfully broken;
+    /// otherwise returns `false.`
+    /// 
+    /// A signal-slot connection is removed when either of the objects
+    /// involved are destroyed.
+    /// 
+    /// disconnect() is typically used in three ways, as the following
+    /// examples demonstrate.
+    /// * Disconnect everything connected to an object's signals: equivalent to the non-static overloaded function
+    /// * Disconnect everything connected to a specific signal: equivalent to the non-static overloaded function
+    /// * Disconnect a specific receiver: equivalent to the non-static overloaded function
+    /// 
+    /// 0 may be used as a wildcard, meaning , , or , respectively.
+    /// 
+    /// The *sender* may never be 0. (You cannot disconnect signals from
+    /// more than one object in a single call.)
+    /// 
+    /// If *signal* is 0, it disconnects *receiver* and *method* from
+    /// any signal. If not, only the specified signal is disconnected.
+    /// 
+    /// If *receiver* is 0, it disconnects anything connected to *signal.* If not, slots in objects other than *receiver* are not
+    /// disconnected.
+    /// 
+    /// If *method* is 0, it disconnects anything that is connected to *receiver.* If not, only slots named *method* will be disconnected,
+    /// and all other slots are left alone. The *method* must be 0 if *receiver* is left out, so you cannot disconnect a
+    /// specifically-named slot on all objects.
+    /// 
+    /// **See also:** [`connect()`]
+    /// 
+    /// Disconnects *signal* in object *sender* from *method* in object
+    /// *receiver.* Returns `true` if the connection is successfully broken;
+    /// otherwise returns `false.`
+    /// 
+    /// This function provides the same possibilities like
+    /// `disconnect(const QObject *sender, const char *signal, const QObject *receiver, const char *method)`
+    /// but uses QMetaMethod to represent the signal and the method to be disconnected.
+    /// 
+    /// Additionally this function returnsfalse and no signals and slots disconnected
+    /// if:
+    /// 
+    /// * *signal* is not a member of sender class or one of its parent classes.
+    /// * *method* is not a member of receiver class or one of its parent classes.
+    /// * *signal* instance represents not a signal.
+    /// 
+    /// QMetaMethod() may be used as wildcard in the meaning or .
+    /// In the same way 0 can be used for *receiver* in the meaning . In this case
+    /// method should also be QMetaMethod(). *sender* parameter should be never 0.
+    /// 
+    /// **See also:** disconnect(const QObject *sender
+    /// const char *signal
+    /// const QObject *receiver
+    /// const char *method)
+    /// 
+    /// **Overloads** disconnect()
+    /// Disconnects *signal* from *method* of *receiver.*
+    /// 
+    /// A signal-slot connection is removed when either of the objects
+    /// involved are destroyed.
+    /// 
+    /// **Overloads** disconnect()
+    /// Disconnects all signals in this object from *receiver's* *method.*
+    /// 
+    /// A signal-slot connection is removed when either of the objects
+    /// involved are destroyed.
+    /// 
+    /// This virtual function is called when something has been
+    /// disconnected from *signal* in this object.
+    /// 
+    /// See connectNotify() for an example of how to compare
+    /// *signal* with a specific signal.
+    /// 
+    /// If all signals were disconnected from this object (e.g., the
+    /// signal argument to disconnect() was 0), disconnectNotify()
+    /// is only called once, and the *signal* will be an invalid
+    /// QMetaMethod (QMetaMethod::isValid() returns `false).`
+    /// 
+    /// **Warning**: This function violates the object-oriented principle of
+    /// modularity. However, it might be useful for optimizing access to
+    /// expensive resources.
+    /// 
+    /// **Warning**: This function is called from the thread which performs the
+    /// disconnection, which may be a different thread from the thread in
+    /// which this object lives. This function may also be called with a QObject
+    /// internal mutex locked. It is therefore not allowed to re-enter any
+    /// of any QObject functions from your reimplementation and if you lock
+    /// a mutex in your reimplementation, make sure that you don't call QObject
+    /// functions with that mutex held in other places or it will result in
+    /// a deadlock.
+    /// 
+    /// **See also:** [`disconnect()`]
+    /// [`connect_notify()`]
+    /// 
+    /// Disconnect a connection.
+    /// 
+    /// If the *connection* is invalid or has already been disconnected, do nothing
+    /// and return false.
+    /// 
+    /// **See also:** [`connect()`]
+    /// **Overloads** diconnect()
+    /// Disconnects *signal* in object *sender* from *method* in object
+    /// *receiver.* Returns `true` if the connection is successfully broken;
+    /// otherwise returns `false.`
+    /// 
+    /// A signal-slot connection is removed when either of the objects
+    /// involved are destroyed.
+    /// 
+    /// disconnect() is typically used in three ways, as the following
+    /// examples demonstrate.
+    /// * Disconnect everything connected to an object's signals:
+    /// * Disconnect everything connected to a specific signal:
+    /// * Disconnect a specific receiver:
+    /// * Disconnect a connection from one specific signal to a specific slot:
+    /// 
+    /// 0 may be used as a wildcard, meaning , , or , respectively.
+    /// 
+    /// The *sender* may never be 0. (You cannot disconnect signals from
+    /// more than one object in a single call.)
+    /// 
+    /// If *signal* is 0, it disconnects *receiver* and *method* from
+    /// any signal. If not, only the specified signal is disconnected.
+    /// 
+    /// If *receiver* is 0, it disconnects anything connected to *signal.* If not, slots in objects other than *receiver* are not
+    /// disconnected.
+    /// 
+    /// If *method* is 0, it disconnects anything that is connected to *receiver.* If not, only slots named *method* will be disconnected,
+    /// and all other slots are left alone. The *method* must be 0 if *receiver* is left out, so you cannot disconnect a
+    /// specifically-named slot on all objects.
+    /// 
+    /// **Note**: It is not possible to use this overload to diconnect signals
+    /// connected to functors or lambda expressions. That is because it is not
+    /// possible to compare them. Instead, use the overload that takes a
+    /// QMetaObject::Connection
+    /// 
+    /// **See also:** [`connect()`]
+    [org_name(disconnect)]
+    [static] disconnect_5(arg0: onst QMetaObject::Connection &) -> bool,
     /// 
     /// **Overloads**
     /// Dumps a tree of children to the debug output.
     /// 
-    /// **See also:** dumpObjectInfo()
+    /// **See also:** [`dump_object_info()`]
     /// 
     /// Dumps a tree of children to the debug output.
     /// 
     /// **Note**: before Qt 5.9, this function was not const.
     /// 
-    /// **See also:** dumpObjectInfo()
+    /// **See also:** [`dump_object_info()`]
     dump_object_tree(),
     /// 
     /// **Overloads**
     /// Dumps information about signal connections, etc. for this object
     /// to the debug output.
     /// 
-    /// **See also:** dumpObjectTree()
+    /// **See also:** [`dump_object_tree()`]
     /// 
     /// Dumps information about signal connections, etc. for this object
     /// to the debug output.
     /// 
     /// **Note**: before Qt 5.9, this function was not const.
     /// 
-    /// **See also:** dumpObjectTree()
+    /// **See also:** [`dump_object_tree()`]
     dump_object_info(),
     /// 
     /// **Overloads**
     /// Dumps a tree of children to the debug output.
     /// 
-    /// **See also:** dumpObjectInfo()
+    /// **See also:** [`dump_object_info()`]
     /// 
     /// Dumps a tree of children to the debug output.
     /// 
     /// **Note**: before Qt 5.9, this function was not const.
     /// 
-    /// **See also:** dumpObjectInfo()
+    /// **See also:** [`dump_object_info()`]
+    [org_name(dumpObjectTree)]
     dump_object_tree_2(),
     /// 
     /// **Overloads**
     /// Dumps information about signal connections, etc. for this object
     /// to the debug output.
     /// 
-    /// **See also:** dumpObjectTree()
+    /// **See also:** [`dump_object_tree()`]
     /// 
     /// Dumps information about signal connections, etc. for this object
     /// to the debug output.
     /// 
     /// **Note**: before Qt 5.9, this function was not const.
     /// 
-    /// **See also:** dumpObjectTree()
+    /// **See also:** [`dump_object_tree()`]
+    [org_name(dumpObjectInfo)]
     dump_object_info_2(),
     /// 
     /// Sets the value of the object's *name* property to *value.*
@@ -1741,10 +1954,10 @@ struct Object {
     /// **Note:** Dynamic properties starting with are reserved for internal
     /// purposes.
     /// 
-    /// **See also:** property()
-    /// metaObject()
-    /// dynamicPropertyNames()
-    /// QMetaProperty::write()
+    /// **See also:** [`property()`]
+    /// [`meta_object()`]
+    /// [`dynamic_property_names()`]
+    /// [`MetaProperty::write`]
     set_property(name: *char, value: &VariantType) -> bool,
     /// 
     /// Returns the value of the object's *name* property.
@@ -1754,10 +1967,10 @@ struct Object {
     /// Information about all available properties is provided through the
     /// metaObject() and dynamicPropertyNames().
     /// 
-    /// **See also:** setProperty()
-    /// QVariant::isValid()
-    /// metaObject()
-    /// dynamicPropertyNames()
+    /// **See also:** [`set_property()`]
+    /// [`Variant::is_valid`]
+    /// [`meta_object()`]
+    /// [`dynamic_property_names()`]
     property(name: *char) -> Variant,
     /// 
     /// Returns the names of all properties that were dynamically added to
@@ -1769,12 +1982,12 @@ struct Object {
     /// 
     /// This signal is emitted after the object's name has been changed. The new object name is passed as *objectName.*
     /// 
-    /// **See also:** QObject::objectName
+    /// **See also:** [`Object::object_name()`]
     [signal] object_name_changed(object_name: String, arg0: Object::QPrivateSignal),
     /// 
     /// Returns a pointer to the parent object.
     /// 
-    /// **See also:** children()
+    /// **See also:** [`children()`]
     parent() -> Object?,
     /// 
     /// Returns `true` if this object is an instance of a class that
@@ -1788,8 +2001,8 @@ struct Object {
     /// class for the purpose of casting it, consider using qobject_cast<Type *>(object)
     /// instead.
     /// 
-    /// **See also:** metaObject()
-    /// qobject_cast()
+    /// **See also:** [`meta_object()`]
+    /// [`qobject_cast()`]
     inherits(classname: *char) -> bool,
     /// 
     /// Schedules this object for deletion.
@@ -1813,8 +2026,8 @@ struct Object {
     /// first deferred deletion event is delivered, any pending events for the
     /// object are removed from the event queue.
     /// 
-    /// **See also:** destroyed()
-    /// QPointer
+    /// **See also:** [`destroyed()`]
+    /// [`Pointer`]
     delete_later(),
     /// 
     /// Returns a pointer to the object that sent the signal, if called in
@@ -1835,7 +2048,7 @@ struct Object {
     /// a thread different from this object's thread. Do not use this
     /// function in this type of scenario.
     /// 
-    /// **See also:** senderSignalIndex()
+    /// **See also:** [`sender_signal_index()`]
     /// 
     /// Returns the meta-method index of the signal that called the currently
     /// executing slot, which is a member of the class returned by sender().
@@ -1856,9 +2069,9 @@ struct Object {
     /// is called via a Qt::DirectConnection from a thread different from this
     /// object's thread. Do not use this function in this type of scenario.
     /// 
-    /// **See also:** sender()
-    /// QMetaObject::indexOfSignal()
-    /// QMetaObject::method()
+    /// **See also:** [`sender()`]
+    /// [`MetaObject::index_of_signal`]
+    /// [`MetaObject::method`]
     sender() -> Object?,
     /// 
     /// Returns the meta-method index of the signal that called the currently
@@ -1880,9 +2093,9 @@ struct Object {
     /// is called via a Qt::DirectConnection from a thread different from this
     /// object's thread. Do not use this function in this type of scenario.
     /// 
-    /// **See also:** sender()
-    /// QMetaObject::indexOfSignal()
-    /// QMetaObject::method()
+    /// **See also:** [`sender()`]
+    /// [`MetaObject::index_of_signal`]
+    /// [`MetaObject::method`]
     sender_signal_index() -> i32,
     /// 
     /// Returns the number of receivers connected to the *signal.*
@@ -1900,7 +2113,7 @@ struct Object {
     /// expensive initialization only if something is connected to a
     /// signal.
     /// 
-    /// **See also:** isSignalConnected()
+    /// **See also:** [`is_signal_connected()`]
     receivers(signal: *char) -> i32,
     /// 
     /// Returns `true` if the *signal* is connected to at least one receiver,
@@ -1925,9 +2138,9 @@ struct Object {
     /// functionality, and also more general information about timers. The
     /// timer event is passed in the *event* parameter.
     /// 
-    /// **See also:** startTimer()
-    /// killTimer()
-    /// event()
+    /// **See also:** [`start_timer()`]
+    /// [`kill_timer()`]
+    /// [`event()`]
     [event] timer_event(event: *TimerEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
@@ -1965,7 +2178,7 @@ struct Object {
     /// may receive several child polished events for the same child,
     /// each time with a different virtual table.
     /// 
-    /// **See also:** event()
+    /// **See also:** [`event()`]
     [event] child_event(event: *ChildEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
@@ -1974,8 +2187,8 @@ struct Object {
     /// QEvent::Type enum, and is typically a QEvent subclass. The event
     /// is passed in the *event* parameter.
     /// 
-    /// **See also:** event()
-    /// QEvent
+    /// **See also:** [`event()`]
+    /// [`Event`]
     [event] custom_event(event: *EventType),
     /// 
     /// This virtual function is called when something has been connected
@@ -1993,8 +2206,8 @@ struct Object {
     /// connection, which may be a different thread from the thread in
     /// which this object lives.
     /// 
-    /// **See also:** connect()
-    /// disconnectNotify()
+    /// **See also:** [`connect()`]
+    /// [`disconnect_notify()`]
     [event] connect_notify(signal: &MetaMethodType),
     /// 
     /// This virtual function is called when something has been
@@ -2021,8 +2234,8 @@ struct Object {
     /// functions with that mutex held in other places or it will result in
     /// a deadlock.
     /// 
-    /// **See also:** disconnect()
-    /// connectNotify()
+    /// **See also:** [`disconnect()`]
+    /// [`connect_notify()`]
     [event] disconnect_notify(signal: &MetaMethodType),
 }
 

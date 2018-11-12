@@ -45,7 +45,7 @@ struct HoverEvent : InputEvent {
     /// On QEvent::HoverLeave events, this position will always be
     /// QPoint(-1, -1).
     /// 
-    /// **See also:** oldPos()
+    /// **See also:** [`old_pos()`]
     /// 
     /// Returns the position of the mouse cursor, relative to the widget
     /// that received the event.
@@ -53,7 +53,7 @@ struct HoverEvent : InputEvent {
     /// On QEvent::HoverLeave events, this position will always be
     /// QPointF(-1, -1).
     /// 
-    /// **See also:** oldPosF()
+    /// **See also:** [`old_pos_f()`]
     pos() -> Point,
     /// 
     /// Returns the previous position of the mouse cursor, relative to the widget
@@ -63,7 +63,7 @@ struct HoverEvent : InputEvent {
     /// On QEvent::HoverEnter events, this position will always be
     /// QPoint(-1, -1).
     /// 
-    /// **See also:** pos()
+    /// **See also:** [`pos()`]
     /// 
     /// Returns the previous position of the mouse cursor, relative to the widget
     /// that received the event. If there is no previous position, oldPosF() will
@@ -72,7 +72,7 @@ struct HoverEvent : InputEvent {
     /// On QEvent::HoverEnter events, this position will always be
     /// QPointF(-1, -1).
     /// 
-    /// **See also:** posF()
+    /// **See also:** [`pos_f()`]
     old_pos() -> Point,
     /// 
     /// Returns the position of the mouse cursor, relative to the widget
@@ -81,7 +81,7 @@ struct HoverEvent : InputEvent {
     /// On QEvent::HoverLeave events, this position will always be
     /// QPointF(-1, -1).
     /// 
-    /// **See also:** oldPosF()
+    /// **See also:** [`old_pos_f()`]
     pos_f() -> PointF?,
     /// 
     /// Returns the previous position of the mouse cursor, relative to the widget
@@ -91,7 +91,7 @@ struct HoverEvent : InputEvent {
     /// On QEvent::HoverEnter events, this position will always be
     /// QPointF(-1, -1).
     /// 
-    /// **See also:** posF()
+    /// **See also:** [`pos_f()`]
     old_pos_f() -> PointF?,
 }
 

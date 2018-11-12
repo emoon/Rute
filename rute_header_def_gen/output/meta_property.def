@@ -25,48 +25,47 @@
 /// QMetaProperty objects can be copied by value. However, each copy will
 /// refer to the same underlying property meta-data.
 /// 
-/// **See also:** QMetaObject
-/// QMetaEnum
-/// QMetaMethod
+/// **See also:** [`MetaObject`]
+/// [`MetaEnum`]
+/// [`MetaMethod`]
 /// {Qt's Property System}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct MetaProperty {
     /// 
     /// Returns this property's name.
     /// 
-    /// **See also:** type()
-    /// typeName()
+    /// **See also:** [`type()`]
+    /// [`type_name()`]
     name() -> char?,
     /// 
     /// Returns the name of this property's type.
     /// 
-    /// **See also:** type()
-    /// name()
+    /// **See also:** [`type()`]
+    /// [`name()`]
     type_name() -> char?,
     /// 
     /// Returns the name of this property's type.
     /// 
-    /// **See also:** type()
-    /// name()
+    /// **See also:** [`type()`]
+    /// [`name()`]
     /// 
     /// Returns this property's type. The return value is one
     /// of the values of the QVariant::Type enumeration.
     /// 
-    /// **See also:** userType()
-    /// typeName()
-    /// name()
+    /// **See also:** [`user_type()`]
+    /// [`type_name()`]
+    /// [`name()`]
     type() -> Variant::Type,
     /// 
     /// Returns this property's user type. The return value is one
     /// of the values that are registered with QMetaType, or QMetaType::UnknownType if
     /// the type is not registered.
     /// 
-    /// **See also:** type()
-    /// QMetaType
-    /// typeName()
+    /// **See also:** [`type()`]
+    /// [`MetaType`]
+    /// [`type_name()`]
     user_type() -> i32,
     /// 
     /// Returns this property's index.
@@ -74,22 +73,22 @@ struct MetaProperty {
     /// 
     /// Returns `true` if this property is readable; otherwise returns `false.`
     /// 
-    /// **See also:** isWritable()
-    /// read()
-    /// isValid()
+    /// **See also:** [`is_writable()`]
+    /// [`read()`]
+    /// [`is_valid()`]
     is_readable() -> bool,
     /// 
     /// Returns `true` if this property is writable; otherwise returns
     /// false.
     /// 
-    /// **See also:** isReadable()
-    /// write()
+    /// **See also:** [`is_readable()`]
+    /// [`write()`]
     is_writable() -> bool,
     /// 
     /// Returns `true` if this property can be reset to a default value; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** reset()
+    /// **See also:** [`reset()`]
     is_resettable() -> bool,
     /// 
     /// Returns `true` if this property is designable for the given *object;*
@@ -99,8 +98,8 @@ struct MetaProperty {
     /// `Q_PROPERTY()` 's `DESIGNABLE` attribute is false; otherwise
     /// returns `true` (if the attribute is true or is a function or expression).
     /// 
-    /// **See also:** isScriptable()
-    /// isStored()
+    /// **See also:** [`is_scriptable()`]
+    /// [`is_stored()`]
     is_designable(obj: *ObjectType) -> bool,
     /// 
     /// Returns `true` if the property is scriptable for the given *object;*
@@ -110,8 +109,8 @@ struct MetaProperty {
     /// `Q_PROPERTY()` 's `SCRIPTABLE` attribute is false; otherwise returns
     /// true (if the attribute is true or is a function or expression).
     /// 
-    /// **See also:** isDesignable()
-    /// isStored()
+    /// **See also:** [`is_designable()`]
+    /// [`is_stored()`]
     is_scriptable(obj: *ObjectType) -> bool,
     /// 
     /// Returns `true` if the property is stored for *object;* otherwise returns
@@ -121,8 +120,8 @@ struct MetaProperty {
     /// `Q_PROPERTY()` 's `STORED` attribute is false; otherwise returns
     /// true (if the attribute is true or is a function or expression).
     /// 
-    /// **See also:** isDesignable()
-    /// isScriptable()
+    /// **See also:** [`is_designable()`]
+    /// [`is_scriptable()`]
     is_stored(obj: *ObjectType) -> bool,
     /// 
     /// Returns `true` if the property is editable for the given *object;*
@@ -132,9 +131,9 @@ struct MetaProperty {
     /// `Q_PROPERTY()` 's `EDITABLE` attribute is false; otherwise returns
     /// true (if the attribute is true or is a function or expression).
     /// 
-    /// **See also:** isDesignable()
-    /// isScriptable()
-    /// isStored()
+    /// **See also:** [`is_designable()`]
+    /// [`is_scriptable()`]
+    /// [`is_stored()`]
     is_editable(obj: *ObjectType) -> bool,
     /// 
     /// Returns `true` if this property is designated as the `USER`
@@ -146,9 +145,9 @@ struct MetaProperty {
     /// If *object* is null, the function returns `false` if the `Q_PROPERTY()` 's `USER` attribute is false. Otherwise it returns
     /// true.
     /// 
-    /// **See also:** QMetaObject::userProperty()
-    /// isDesignable()
-    /// isScriptable()
+    /// **See also:** [`MetaObject::user_property`]
+    /// [`is_designable()`]
+    /// [`is_scriptable()`]
     is_user(obj: *ObjectType) -> bool,
     /// 
     /// Returns `true` if the property is constant; otherwise returns `false.`
@@ -169,46 +168,46 @@ struct MetaProperty {
     /// Flags can be combined using the OR operator. A flag type is
     /// implicitly also an enum type.
     /// 
-    /// **See also:** isEnumType()
-    /// enumerator()
-    /// QMetaEnum::isFlag()
+    /// **See also:** [`is_enum_type()`]
+    /// [`enumerator()`]
+    /// [`MetaEnum::is_flag`]
     is_flag_type() -> bool,
     /// 
     /// Returns `true` if the property's type is an enumeration value;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** enumerator()
-    /// isFlagType()
+    /// **See also:** [`enumerator()`]
+    /// [`is_flag_type()`]
     is_enum_type() -> bool,
     /// 
     /// Returns the enumerator if this property's type is an enumerator
     /// type; otherwise the returned value is undefined.
     /// 
-    /// **See also:** isEnumType()
-    /// isFlagType()
+    /// **See also:** [`is_enum_type()`]
+    /// [`is_flag_type()`]
     enumerator() -> MetaEnum,
     /// 
     /// Returns `true` if this property has a corresponding change notify signal;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** notifySignal()
+    /// **See also:** [`notify_signal()`]
     has_notify_signal() -> bool,
     /// 
     /// Returns the QMetaMethod instance of the property change notifying signal if
     /// one was specified, otherwise returns an invalid QMetaMethod.
     /// 
-    /// **See also:** hasNotifySignal()
+    /// **See also:** [`has_notify_signal()`]
     /// 
     /// Returns the index of the property change notifying signal if one was
     /// specified, otherwise returns -1.
     /// 
-    /// **See also:** hasNotifySignal()
+    /// **See also:** [`has_notify_signal()`]
     notify_signal() -> MetaMethod,
     /// 
     /// Returns the index of the property change notifying signal if one was
     /// specified, otherwise returns -1.
     /// 
-    /// **See also:** hasNotifySignal()
+    /// **See also:** [`has_notify_signal()`]
     notify_signal_index() -> i32,
     /// 
     /// Returns the property revision if one was
@@ -218,9 +217,9 @@ struct MetaProperty {
     /// Reads the property's value from the given *object.* Returns the value
     /// if it was able to read it; otherwise returns an invalid variant.
     /// 
-    /// **See also:** write()
-    /// reset()
-    /// isReadable()
+    /// **See also:** [`write()`]
+    /// [`reset()`]
+    /// [`is_readable()`]
     /// 
     /// Reads the property's value from the given *gadget.* Returns the value
     /// if it was able to read it; otherwise returns an invalid variant.
@@ -236,9 +235,9 @@ struct MetaProperty {
     /// if this property is resetable, or setting a default-constructed object
     /// otherwise.
     /// 
-    /// **See also:** read()
-    /// reset()
-    /// isWritable()
+    /// **See also:** [`read()`]
+    /// [`reset()`]
+    /// [`is_writable()`]
     /// 
     /// Writes *value* as the property's value to the given *gadget.* Returns
     /// true if the write succeeded; otherwise returns `false.`
@@ -251,8 +250,8 @@ struct MetaProperty {
     /// 
     /// Reset methods are optional; only a few properties support them.
     /// 
-    /// **See also:** read()
-    /// write()
+    /// **See also:** [`read()`]
+    /// [`write()`]
     /// 
     /// Resets the property for the given *gadget* with a reset method.
     /// Returns `true` if the reset worked; otherwise returns `false.`
@@ -286,7 +285,7 @@ struct MetaProperty {
     /// Returns `true` if this property is valid (readable); otherwise
     /// returns `false.`
     /// 
-    /// **See also:** isReadable()
+    /// **See also:** [`is_readable()`]
     is_valid() -> bool,
     enclosing_meta_object() -> MetaObject?,
 }

@@ -22,17 +22,11 @@
 /// example, when using QNetworkAccessManager to download items when
 /// they are unable to determine the size of the item being downloaded.
 /// 
-/// **See also:** QProgressDialog
+/// **See also:** [`ProgressDialog`]
 /// {fowler}{GUI Design Handbook: Progress Indicator}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QProgressBar)]
-enum Direction {
-    TopToBottom,
-    BottomToTop,
-}
-
 struct ProgressBar : Widget {
     /// 
     /// When setting this property, the [maximum](maximum)
@@ -126,7 +120,7 @@ struct ProgressBar : Widget {
     /// 
     /// The default value is .
     /// 
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     format() -> String,
     /// 
     /// Reset the progress bar. The progress bar and shows no
@@ -164,8 +158,14 @@ struct ProgressBar : Widget {
     /// for subclasses when they need a QStyleOptionProgressBar,
     /// but don't want to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionProgressBarType),
+}
+
+[org_name(QProgressBar)]
+enum Direction {
+    TopToBottom,
+    BottomToTop,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

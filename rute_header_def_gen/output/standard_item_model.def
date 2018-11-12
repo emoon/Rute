@@ -60,9 +60,9 @@
 /// instead rely entirely on the QAbstractItemModel interface when working with
 /// the model, or use a combination of the two as appropriate.
 /// 
-/// **See also:** QStandardItem
+/// **See also:** [`StandardItem`]
 /// {Model/View Programming}
-/// QAbstractItemModel
+/// [`AbstractItemModel`]
 /// {itemviews/simpletreemodel}{Simple Tree Model example}
 /// {Item View Convenience Classes}
 /// # Licence
@@ -80,8 +80,8 @@ struct StandardItemModel : AbstractItemModel {
     /// QAbstractItemView::scrollTo(). QStandardItem::index() is provided as
     /// convenience; it is equivalent to calling this function.
     /// 
-    /// **See also:** itemFromIndex()
-    /// QStandardItem::index()
+    /// **See also:** [`item_from_index()`]
+    /// [`StandardItem::index`]
     /// 
     [event] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndex,
     /// 
@@ -123,14 +123,14 @@ struct StandardItemModel : AbstractItemModel {
     /// Removes all items (including header items) from the model and sets the
     /// number of rows and columns to zero.
     /// 
-    /// **See also:** removeColumns()
-    /// removeRows()
+    /// **See also:** [`remove_columns()`]
+    /// [`remove_rows()`]
     clear(),
     /// 
     /// The default value is Qt::DisplayRole.
     /// 
-    /// **See also:** sort()
-    /// QStandardItem::sortChildren()
+    /// **See also:** [`sort()`]
+    /// [`StandardItem::sort_children`]
     /// 
     [event] sort(column: i32, order: Rute::SortOrder),
     /// 
@@ -148,7 +148,7 @@ struct StandardItemModel : AbstractItemModel {
     /// 
     /// If *index* is an invalid index, this function returns 0.
     /// 
-    /// **See also:** indexFromItem()
+    /// **See also:** [`index_from_item()`]
     item_from_index(index: &ModelIndexType) -> StandardItem?,
     /// 
     /// Returns the QModelIndex associated with the given *item.*
@@ -158,8 +158,8 @@ struct StandardItemModel : AbstractItemModel {
     /// QAbstractItemView::scrollTo(). QStandardItem::index() is provided as
     /// convenience; it is equivalent to calling this function.
     /// 
-    /// **See also:** itemFromIndex()
-    /// QStandardItem::index()
+    /// **See also:** [`item_from_index()`]
+    /// [`StandardItem::index`]
     index_from_item(item: *StandardItemType) -> ModelIndex,
     /// 
     /// This signal is emitted whenever the data of *item* has changed.
@@ -178,20 +178,20 @@ struct StandardItemModel : AbstractItemModel {
     /// 
     /// If *index* is an invalid index, this function returns 0.
     /// 
-    /// **See also:** indexFromItem()
+    /// **See also:** [`index_from_item()`]
     /// 
     /// Returns the item for the given *row* and *column* if one has been set;
     /// otherwise returns 0.
     /// 
-    /// **See also:** setItem()
-    /// takeItem()
-    /// itemFromIndex()
+    /// **See also:** [`set_item()`]
+    /// [`take_item()`]
+    /// [`item_from_index()`]
     /// 
     /// Returns the item prototype used by the model. The model uses the item
     /// prototype as an item factory when it needs to construct new items on
     /// demand (for instance, when a view or item delegate calls setData()).
     /// 
-    /// **See also:** setItemPrototype()
+    /// **See also:** [`set_item_prototype()`]
     /// 
     item(row: i32, column: i32) -> StandardItem?,
     /// 
@@ -202,7 +202,7 @@ struct StandardItemModel : AbstractItemModel {
     /// are increased to fit the item. The previous item at the given location (if
     /// there was one) is deleted.
     /// 
-    /// **See also:** item()
+    /// **See also:** [`item()`]
     /// 
     /// **Overloads**
     /// 
@@ -216,8 +216,8 @@ struct StandardItemModel : AbstractItemModel {
     /// create an item on demand (for instance, when a view or item delegate calls
     /// setData())), the new items will be instances of your custom class.
     /// 
-    /// **See also:** itemPrototype()
-    /// QStandardItem::clone()
+    /// **See also:** [`item_prototype()`]
+    /// [`StandardItem::clone`]
     /// 
     set_item(row: i32, column: i32, item: *StandardItemType),
     /// 
@@ -228,7 +228,7 @@ struct StandardItemModel : AbstractItemModel {
     /// are increased to fit the item. The previous item at the given location (if
     /// there was one) is deleted.
     /// 
-    /// **See also:** item()
+    /// **See also:** [`item()`]
     /// 
     /// **Overloads**
     /// 
@@ -242,9 +242,10 @@ struct StandardItemModel : AbstractItemModel {
     /// create an item on demand (for instance, when a view or item delegate calls
     /// setData())), the new items will be instances of your custom class.
     /// 
-    /// **See also:** itemPrototype()
-    /// QStandardItem::clone()
+    /// **See also:** [`item_prototype()`]
+    /// [`StandardItem::clone`]
     /// 
+    [org_name(setItem)]
     set_item_2(row: i32, item: *StandardItemType),
     /// 
     /// Returns the model's invisible root item.
@@ -262,66 +263,66 @@ struct StandardItemModel : AbstractItemModel {
     /// Returns the horizontal header item for *column* if one has been set;
     /// otherwise returns 0.
     /// 
-    /// **See also:** setHorizontalHeaderItem()
-    /// verticalHeaderItem()
+    /// **See also:** [`set_horizontal_header_item()`]
+    /// [`vertical_header_item()`]
     horizontal_header_item(column: i32) -> StandardItem?,
     /// 
     /// Sets the horizontal header item for *column* to *item.* The model takes
     /// ownership of the item. If necessary, the column count is increased to fit
     /// the item. The previous header item (if there was one) is deleted.
     /// 
-    /// **See also:** horizontalHeaderItem()
-    /// setHorizontalHeaderLabels()
-    /// setVerticalHeaderItem()
+    /// **See also:** [`horizontal_header_item()`]
+    /// [`set_horizontal_header_labels()`]
+    /// [`set_vertical_header_item()`]
     set_horizontal_header_item(column: i32, item: *StandardItemType),
     /// 
     /// Returns the vertical header item for row *row* if one has been set;
     /// otherwise returns 0.
     /// 
-    /// **See also:** setVerticalHeaderItem()
-    /// horizontalHeaderItem()
+    /// **See also:** [`set_vertical_header_item()`]
+    /// [`horizontal_header_item()`]
     vertical_header_item(row: i32) -> StandardItem?,
     /// 
     /// Sets the vertical header item for *row* to *item.* The model takes
     /// ownership of the item. If necessary, the row count is increased to fit the
     /// item. The previous header item (if there was one) is deleted.
     /// 
-    /// **See also:** verticalHeaderItem()
-    /// setVerticalHeaderLabels()
-    /// setHorizontalHeaderItem()
+    /// **See also:** [`vertical_header_item()`]
+    /// [`set_vertical_header_labels()`]
+    /// [`set_horizontal_header_item()`]
     set_vertical_header_item(row: i32, item: *StandardItemType),
     /// 
     /// Sets the horizontal header labels using *labels.* If necessary, the
     /// column count is increased to the size of *labels.*
     /// 
-    /// **See also:** setHorizontalHeaderItem()
+    /// **See also:** [`set_horizontal_header_item()`]
     set_horizontal_header_labels(labels: &[String]),
     /// 
     /// Sets the vertical header labels using *labels.* If necessary, the row
     /// count is increased to the size of *labels.*
     /// 
-    /// **See also:** setVerticalHeaderItem()
+    /// **See also:** [`set_vertical_header_item()`]
     set_vertical_header_labels(labels: &[String]),
     /// 
     /// Sets the number of rows in this model to *rows.* If
     /// this is less than rowCount(), the data in the unwanted rows
     /// is discarded.
     /// 
-    /// **See also:** setColumnCount()
+    /// **See also:** [`set_column_count()`]
     set_row_count(rows: i32),
     /// 
     /// Sets the number of columns in this model to *columns.* If
     /// this is less than columnCount(), the data in the unwanted columns
     /// is discarded.
     /// 
-    /// **See also:** setRowCount()
+    /// **See also:** [`set_row_count()`]
     set_column_count(columns: i32),
     /// 
     /// Appends a row containing *items.* If necessary, the column count is
     /// increased to the size of *items.*
     /// 
-    /// **See also:** insertRow()
-    /// appendColumn()
+    /// **See also:** [`insert_row()`]
+    /// [`append_column()`]
     /// 
     /// **Overloads**
     /// When building a list or a tree that has only one column, this function
@@ -331,35 +332,36 @@ struct StandardItemModel : AbstractItemModel {
     /// Appends a column containing *items.* If necessary, the row count is
     /// increased to the size of *items.*
     /// 
-    /// **See also:** insertColumn()
-    /// appendRow()
+    /// **See also:** [`insert_column()`]
+    /// [`append_row()`]
     append_column(items: [*StandardItemType]),
     /// 
     /// Appends a row containing *items.* If necessary, the column count is
     /// increased to the size of *items.*
     /// 
-    /// **See also:** insertRow()
-    /// appendColumn()
+    /// **See also:** [`insert_row()`]
+    /// [`append_column()`]
     /// 
     /// **Overloads**
     /// When building a list or a tree that has only one column, this function
     /// provides a convenient way to append a single new *item.*
+    [org_name(appendRow)]
     append_row_2(item: *StandardItemType),
     /// 
     /// Inserts a single row before the given *row* in the child items of the
     /// *parent* specified. Returns `true` if the row is inserted; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** insertRows()
-    /// insertColumn()
-    /// removeRow()
+    /// **See also:** [`insert_rows()`]
+    /// [`insert_column()`]
+    /// [`remove_row()`]
     /// 
     /// Inserts a row at *row* containing *items.* If necessary, the column
     /// count is increased to the size of *items.*
     /// 
-    /// **See also:** takeRow()
-    /// appendRow()
-    /// insertColumn()
+    /// **See also:** [`take_row()`]
+    /// [`append_row()`]
+    /// [`insert_column()`]
     /// 
     /// **Overloads**
     /// Inserts a row at *row* containing *item.*
@@ -373,16 +375,16 @@ struct StandardItemModel : AbstractItemModel {
     /// the *parent* specified. Returns `true` if the column is inserted; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** insertColumns()
-    /// insertRow()
-    /// removeColumn()
+    /// **See also:** [`insert_columns()`]
+    /// [`insert_row()`]
+    /// [`remove_column()`]
     /// 
     /// Inserts a column at *column* containing *items.* If necessary, the row
     /// count is increased to the size of *items.*
     /// 
-    /// **See also:** takeColumn()
-    /// appendColumn()
-    /// insertRow()
+    /// **See also:** [`take_column()`]
+    /// [`append_column()`]
+    /// [`insert_row()`]
     /// 
     insert_column(column: i32, items: [*StandardItemType]),
     /// 
@@ -390,16 +392,16 @@ struct StandardItemModel : AbstractItemModel {
     /// *parent* specified. Returns `true` if the row is inserted; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** insertRows()
-    /// insertColumn()
-    /// removeRow()
+    /// **See also:** [`insert_rows()`]
+    /// [`insert_column()`]
+    /// [`remove_row()`]
     /// 
     /// Inserts a row at *row* containing *items.* If necessary, the column
     /// count is increased to the size of *items.*
     /// 
-    /// **See also:** takeRow()
-    /// appendRow()
-    /// insertColumn()
+    /// **See also:** [`take_row()`]
+    /// [`append_row()`]
+    /// [`insert_column()`]
     /// 
     /// **Overloads**
     /// Inserts a row at *row* containing *item.*
@@ -407,22 +409,23 @@ struct StandardItemModel : AbstractItemModel {
     /// When building a list or a tree that has only one column, this function
     /// provides a convenient way to append a single new item.
     /// 
+    [org_name(insertRow)]
     insert_row_2(row: i32, item: *StandardItemType),
     /// 
     /// Inserts a single row before the given *row* in the child items of the
     /// *parent* specified. Returns `true` if the row is inserted; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** insertRows()
-    /// insertColumn()
-    /// removeRow()
+    /// **See also:** [`insert_rows()`]
+    /// [`insert_column()`]
+    /// [`remove_row()`]
     /// 
     /// Inserts a row at *row* containing *items.* If necessary, the column
     /// count is increased to the size of *items.*
     /// 
-    /// **See also:** takeRow()
-    /// appendRow()
-    /// insertColumn()
+    /// **See also:** [`take_row()`]
+    /// [`append_row()`]
+    /// [`insert_column()`]
     /// 
     /// **Overloads**
     /// Inserts a row at *row* containing *item.*
@@ -430,31 +433,33 @@ struct StandardItemModel : AbstractItemModel {
     /// When building a list or a tree that has only one column, this function
     /// provides a convenient way to append a single new item.
     /// 
+    [org_name(insertRow)]
     insert_row_3(row: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// Inserts a single column before the given *column* in the child items of
     /// the *parent* specified. Returns `true` if the column is inserted; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** insertColumns()
-    /// insertRow()
-    /// removeColumn()
+    /// **See also:** [`insert_columns()`]
+    /// [`insert_row()`]
+    /// [`remove_column()`]
     /// 
     /// Inserts a column at *column* containing *items.* If necessary, the row
     /// count is increased to the size of *items.*
     /// 
-    /// **See also:** takeColumn()
-    /// appendColumn()
-    /// insertRow()
+    /// **See also:** [`take_column()`]
+    /// [`append_column()`]
+    /// [`insert_row()`]
     /// 
+    [org_name(insertColumn)]
     insert_column_2(column: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// Removes the item at ( *row,* *column)* without deleting it. The model
     /// releases ownership of the item.
     /// 
-    /// **See also:** item()
-    /// takeRow()
-    /// takeColumn()
+    /// **See also:** [`item()`]
+    /// [`take_row()`]
+    /// [`take_column()`]
     take_item(row: i32, column: i32) -> StandardItem?,
     /// 
     /// Removes the given *row* without deleting the row items, and returns a
@@ -462,7 +467,7 @@ struct StandardItemModel : AbstractItemModel {
     /// items. For items in the row that have not been set, the corresponding
     /// pointers in the list will be 0.
     /// 
-    /// **See also:** takeColumn()
+    /// **See also:** [`take_column()`]
     take_row(row: i32) -> [StandardItem?],
     /// 
     /// Removes the given *column* without deleting the column items, and returns
@@ -470,30 +475,30 @@ struct StandardItemModel : AbstractItemModel {
     /// the items. For items in the column that have not been set, the
     /// corresponding pointers in the list will be 0.
     /// 
-    /// **See also:** takeRow()
+    /// **See also:** [`take_row()`]
     take_column(column: i32) -> [StandardItem?],
     /// 
     /// Removes the horizontal header item at *column* from the header without
     /// deleting it, and returns a pointer to the item. The model releases
     /// ownership of the item.
     /// 
-    /// **See also:** horizontalHeaderItem()
-    /// takeVerticalHeaderItem()
+    /// **See also:** [`horizontal_header_item()`]
+    /// [`take_vertical_header_item()`]
     take_horizontal_header_item(column: i32) -> StandardItem?,
     /// 
     /// Removes the vertical header item at *row* from the header without
     /// deleting it, and returns a pointer to the item. The model releases
     /// ownership of the item.
     /// 
-    /// **See also:** verticalHeaderItem()
-    /// takeHorizontalHeaderItem()
+    /// **See also:** [`vertical_header_item()`]
+    /// [`take_horizontal_header_item()`]
     take_vertical_header_item(row: i32) -> StandardItem?,
     /// 
     /// Returns the item prototype used by the model. The model uses the item
     /// prototype as an item factory when it needs to construct new items on
     /// demand (for instance, when a view or item delegate calls setData()).
     /// 
-    /// **See also:** setItemPrototype()
+    /// **See also:** [`set_item_prototype()`]
     item_prototype() -> StandardItem?,
     /// 
     /// Sets the item prototype for the model to the specified *item.* The model
@@ -506,8 +511,8 @@ struct StandardItemModel : AbstractItemModel {
     /// create an item on demand (for instance, when a view or item delegate calls
     /// setData())), the new items will be instances of your custom class.
     /// 
-    /// **See also:** itemPrototype()
-    /// QStandardItem::clone()
+    /// **See also:** [`item_prototype()`]
+    /// [`StandardItem::clone`]
     set_item_prototype(item: *StandardItemType),
     /// 
     /// Returns a list of items that match the given *text,* using the given *flags,* in the given *column.*
@@ -515,8 +520,8 @@ struct StandardItemModel : AbstractItemModel {
     /// 
     /// The default value is Qt::DisplayRole.
     /// 
-    /// **See also:** sort()
-    /// QStandardItem::sortChildren()
+    /// **See also:** [`sort()`]
+    /// [`StandardItem::sort_children`]
     sort_role() -> i32,
     set_sort_role(role: i32),
     /// 

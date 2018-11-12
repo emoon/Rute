@@ -39,20 +39,13 @@
 /// [UserType,](UserType,)
 /// within *your* constructor.
 /// 
-/// **See also:** QListWidget
+/// **See also:** [`ListWidget`]
 /// {Model/View Programming}
-/// QTreeWidgetItem
-/// QTableWidgetItem
+/// [`TreeWidgetItem`]
+/// [`TableWidgetItem`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QListWidgetItem)]
-enum ItemType {
-    Type,
-    UserType,
-}
-
-
 struct ListWidgetItem {
     /// 
     /// Creates an exact copy of the item.
@@ -63,22 +56,22 @@ struct ListWidgetItem {
     /// 
     /// Sets the selected state of the item to *select.*
     /// 
-    /// **See also:** isSelected()
+    /// **See also:** [`is_selected()`]
     set_selected(select: bool),
     /// 
     /// Returns `true` if the item is selected; otherwise returns `false.`
     /// 
-    /// **See also:** setSelected()
+    /// **See also:** [`set_selected()`]
     is_selected() -> bool,
     /// 
     /// Hides the item if *hide* is true; otherwise shows the item.
     /// 
-    /// **See also:** isHidden()
+    /// **See also:** [`is_hidden()`]
     set_hidden(hide: bool),
     /// 
     /// Returns `true` if the item is hidden; otherwise returns `false.`
     /// 
-    /// **See also:** setHidden()
+    /// **See also:** [`set_hidden()`]
     is_hidden() -> bool,
     /// 
     /// Returns the item flags for this item (see [Qt::ItemFlags](Qt::ItemFlags)
@@ -87,16 +80,16 @@ struct ListWidgetItem {
     /// 
     /// Sets the item flags for the list item to *flags.*
     /// 
-    /// **See also:** Qt::ItemFlags
+    /// **See also:** [`t::item_flags()`]
     set_flags(flags: Rute::ItemFlags),
     /// 
     /// Returns the list item's text.
     /// 
-    /// **See also:** setText()
+    /// **See also:** [`set_text()`]
     /// 
     /// Returns the text alignment for the list item.
     /// 
-    /// **See also:** Qt::AlignmentFlag
+    /// **See also:** [`t::alignment_flag()`]
     /// 
     /// Returns the color used to display the list item's text.
     /// 
@@ -105,70 +98,70 @@ struct ListWidgetItem {
     /// 
     /// Sets the text for the list widget item's to the given *text.*
     /// 
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     /// 
     /// Sets the list item's text alignment to *alignment.*
     /// 
-    /// **See also:** Qt::AlignmentFlag
+    /// **See also:** [`t::alignment_flag()`]
     /// 
     /// This function is deprecated. Use setForeground() instead.
     set_text(text: String),
     /// 
     /// Returns the list item's icon.
     /// 
-    /// **See also:** setIcon()
+    /// **See also:** [`set_icon()`]
     /// {QAbstractItemView::iconSize}{iconSize}
     icon() -> Icon,
     /// 
     /// Sets the icon for the list item to the given *icon.*
     /// 
-    /// **See also:** icon()
-    /// text()
+    /// **See also:** [`icon()`]
+    /// [`text()`]
     /// {QAbstractItemView::iconSize}{iconSize}
     set_icon(icon: &IconType),
     /// 
     /// Returns the list item's status tip.
     /// 
-    /// **See also:** setStatusTip()
+    /// **See also:** [`set_status_tip()`]
     status_tip() -> String,
     /// 
     /// Sets the status tip for the list item to the text specified by
     /// *statusTip.* QListWidget mouseTracking needs to be enabled for this
     /// feature to work.
     /// 
-    /// **See also:** statusTip()
-    /// setToolTip()
-    /// setWhatsThis()
-    /// QWidget::setMouseTracking()
+    /// **See also:** [`status_tip()`]
+    /// [`set_tool_tip()`]
+    /// [`set_whats_this()`]
+    /// [`Widget::set_mouse_tracking`]
     set_status_tip(status_tip: String),
     /// 
     /// Returns the list item's tooltip.
     /// 
-    /// **See also:** setToolTip()
-    /// statusTip()
-    /// whatsThis()
+    /// **See also:** [`set_tool_tip()`]
+    /// [`status_tip()`]
+    /// [`whats_this()`]
     tool_tip() -> String,
     /// 
     /// Sets the tooltip for the list item to the text specified by *toolTip.*
     /// 
-    /// **See also:** toolTip()
-    /// setStatusTip()
-    /// setWhatsThis()
+    /// **See also:** [`tool_tip()`]
+    /// [`set_status_tip()`]
+    /// [`set_whats_this()`]
     set_tool_tip(tool_tip: String),
     /// 
     /// Returns the list item's help text.
     /// 
-    /// **See also:** setWhatsThis()
-    /// statusTip()
-    /// toolTip()
+    /// **See also:** [`set_whats_this()`]
+    /// [`status_tip()`]
+    /// [`tool_tip()`]
     whats_this() -> String,
     /// 
     /// Sets the help for the list item to the text specified by
     /// *whatsThis.*
     /// 
-    /// **See also:** whatsThis()
-    /// setStatusTip()
-    /// setToolTip()
+    /// **See also:** [`whats_this()`]
+    /// [`set_status_tip()`]
+    /// [`set_tool_tip()`]
     set_whats_this(whats_this: String),
     /// 
     /// Returns the font used to display this list item's text.
@@ -179,12 +172,12 @@ struct ListWidgetItem {
     /// 
     /// Returns the text alignment for the list item.
     /// 
-    /// **See also:** Qt::AlignmentFlag
+    /// **See also:** [`t::alignment_flag()`]
     text_alignment() -> i32,
     /// 
     /// Sets the list item's text alignment to *alignment.*
     /// 
-    /// **See also:** Qt::AlignmentFlag
+    /// **See also:** [`t::alignment_flag()`]
     set_text_alignment(alignment: i32),
     /// 
     /// This function is deprecated. Use background() instead.
@@ -197,16 +190,16 @@ struct ListWidgetItem {
     /// 
     /// Returns the brush used to display the list item's background.
     /// 
-    /// **See also:** setBackground()
-    /// foreground()
+    /// **See also:** [`set_background()`]
+    /// [`foreground()`]
     background() -> Brush,
     /// 
     /// This function is deprecated. Use setBackground() instead.
     /// 
     /// Sets the background brush of the list item to the given *brush.*
     /// 
-    /// **See also:** background()
-    /// setForeground()
+    /// **See also:** [`background()`]
+    /// [`set_foreground()`]
     set_background(brush: &BrushType),
     /// 
     /// Returns the color used to display the list item's text.
@@ -219,25 +212,25 @@ struct ListWidgetItem {
     /// 
     /// Returns the brush used to display the list item's foreground (e.g. text).
     /// 
-    /// **See also:** setForeground()
-    /// background()
+    /// **See also:** [`set_foreground()`]
+    /// [`background()`]
     foreground() -> Brush,
     /// 
     /// Sets the foreground brush of the list item to the given *brush.*
     /// 
-    /// **See also:** foreground()
-    /// setBackground()
+    /// **See also:** [`foreground()`]
+    /// [`set_background()`]
     set_foreground(brush: &BrushType),
     /// 
     /// Returns the checked state of the list item (see [Qt::CheckState](Qt::CheckState)
     /// ).
     /// 
-    /// **See also:** flags()
+    /// **See also:** [`flags()`]
     check_state() -> Rute::CheckState,
     /// 
     /// Sets the check state of the list item to *state.*
     /// 
-    /// **See also:** checkState()
+    /// **See also:** [`check_state()`]
     set_check_state(state: Rute::CheckState),
     /// 
     /// Returns the size hint set for the list item.
@@ -250,8 +243,8 @@ struct ListWidgetItem {
     /// Returns the item's data for a given *role.* Reimplement this function if
     /// you need extra roles or special behavior for certain roles.
     /// 
-    /// **See also:** Qt::ItemDataRole
-    /// setData()
+    /// **See also:** [`t::item_data_role()`]
+    /// [`set_data()`]
     [event] data(role: i32) -> Variant,
     /// 
     /// Sets the data for a given *role* to the given *value.* Reimplement this
@@ -260,22 +253,28 @@ struct ListWidgetItem {
     /// **Note**: The default implementation treats Qt::EditRole and Qt::DisplayRole as
     /// referring to the same data.
     /// 
-    /// **See also:** Qt::ItemDataRole
-    /// data()
+    /// **See also:** [`t::item_data_role()`]
+    /// [`data()`]
     [event] set_data(role: i32, value: &VariantType),
     /// 
     /// Reads the item from stream *in.*
     /// 
-    /// **See also:** write()
+    /// **See also:** [`write()`]
     [event] read(in: &DataStreamType),
     /// 
     /// Writes the item to stream *out.*
     /// 
-    /// **See also:** read()
+    /// **See also:** [`read()`]
     [event] write(out: &DataStreamType),
     /// 
     /// Returns the type passed to the QListWidgetItem constructor.
     type() -> i32,
+}
+
+[org_name(QListWidgetItem)]
+enum ItemType {
+    Type,
+    UserType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

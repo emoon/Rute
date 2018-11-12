@@ -1,7 +1,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct PlatformFontDatabase {
     /// 
     /// This function is called once at startup by Qt's internal font database.
@@ -69,6 +68,7 @@ struct PlatformFontDatabase {
     /// 
     /// Returns the font engine that can be used to render the font described by
     /// the font definition, *fontDef,* in the specified *script.*
+    [org_name(fontEngine)]
     [event] font_engine_2(font_data: &ByteArrayType, pixel_size: f32, hinting_preference: Font::HintingPreference) -> FontEngine?,
     /// 
     /// Returns the directory containing the fonts used by the database.
@@ -76,7 +76,7 @@ struct PlatformFontDatabase {
     /// 
     /// Returns the default system font.
     /// 
-    /// **See also:** QGuiApplication::font()
+    /// **See also:** [`GuiApplication::font`]
     [event] default_font() -> Font,
     /// 
     /// Resolve alias to actual font family names.
@@ -105,7 +105,7 @@ struct PlatformFontDatabase {
     /// 
     /// Registers the pre-rendered QPF2 font contained in the given *dataArray.*
     /// 
-    /// **See also:** registerFont()
+    /// **See also:** [`register_font()`]
     [static] register_qpf2_font(data_array: &ByteArrayType, handle: *void),
     /// 
     /// Registers a font with the given set of attributes describing the font's
@@ -126,23 +126,23 @@ struct PlatformFontDatabase {
     /// The writing systems supported by the font are specified by the
     /// *writingSystems* argument.
     /// 
-    /// **See also:** registerQPF2Font()
-    /// registerFontFamily()
+    /// **See also:** [`register_qpf2_font()`]
+    /// [`register_font_family()`]
     /// 
     /// Registers a font family with the font database. The font will be
     /// lazily populated by a callback to populateFamily() when the font
     /// database determines that the family needs population.
     /// 
-    /// **See also:** populateFamily()
-    /// registerFont()
+    /// **See also:** [`populate_family()`]
+    /// [`register_font()`]
     [static] register_font(familyname: String, stylename: String, foundryname: String, weight: Font::Weight, style: Font::Style, stretch: Font::Stretch, antialiased: bool, scalable: bool, pixel_size: i32, fixed_pitch: bool, writing_systems: &SupportedWritingSystemsType, handle: *void),
     /// 
     /// Registers a font family with the font database. The font will be
     /// lazily populated by a callback to populateFamily() when the font
     /// database determines that the family needs population.
     /// 
-    /// **See also:** populateFamily()
-    /// registerFont()
+    /// **See also:** [`populate_family()`]
+    /// [`register_font()`]
     [static] register_font_family(family_name: String),
     /// 
     /// Helper function that register the *alias* for the *familyName.*

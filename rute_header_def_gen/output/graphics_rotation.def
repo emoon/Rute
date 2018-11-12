@@ -24,9 +24,9 @@
 /// are performed in succession, they will not behave as expected unless
 /// they were all around the Z axis.
 /// 
-/// **See also:** QGraphicsTransform
-/// QGraphicsItem::setRotation()
-/// QTransform::rotate()
+/// **See also:** [`GraphicsTransform`]
+/// [`GraphicsItem::set_rotation`]
+/// [`Transform::rotate`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -39,7 +39,7 @@ struct GraphicsRotation : GraphicsTransform {
     /// 
     /// This signal is emitted whenever the origin has changed.
     /// 
-    /// **See also:** QGraphicsRotation::origin
+    /// **See also:** [`GraphicsRotation::origin()`]
     origin() -> Vector3D,
     set_origin(point: &Vector3DType),
     /// 
@@ -54,7 +54,7 @@ struct GraphicsRotation : GraphicsTransform {
     /// 
     /// This signal is emitted whenever the angle has changed.
     /// 
-    /// **See also:** QGraphicsRotation::angle
+    /// **See also:** [`GraphicsRotation::angle()`]
     angle() -> f32,
     set_angle(arg0: f32),
     /// 
@@ -64,12 +64,12 @@ struct GraphicsRotation : GraphicsTransform {
     /// around this axis. For example, if you would like to rotate an item
     /// around its X axis, you could pass (1, 0, 0) as the axis.
     /// 
-    /// **See also:** QTransform
-    /// QGraphicsRotation::angle
+    /// **See also:** [`Transform`]
+    /// [`GraphicsRotation::angle()`]
     /// 
     /// This signal is emitted whenever the axis of the object changes.
     /// 
-    /// **See also:** QGraphicsRotation::axis
+    /// **See also:** [`GraphicsRotation::axis()`]
     axis() -> Vector3D,
     /// 
     /// Convenience function to set the axis to *axis.*
@@ -106,23 +106,24 @@ struct GraphicsRotation : GraphicsTransform {
     /// r.setAngle(-45);
     /// ```
     /// 
+    [org_name(setAxis)]
     set_axis_2(axis: Rute::Axis),
     /// 
     [event] apply_to(matrix: *Matrix4x4Type),
     /// 
     /// This signal is emitted whenever the origin has changed.
     /// 
-    /// **See also:** QGraphicsRotation::origin
+    /// **See also:** [`GraphicsRotation::origin()`]
     [signal] origin_changed(),
     /// 
     /// This signal is emitted whenever the angle has changed.
     /// 
-    /// **See also:** QGraphicsRotation::angle
+    /// **See also:** [`GraphicsRotation::angle()`]
     [signal] angle_changed(),
     /// 
     /// This signal is emitted whenever the axis of the object changes.
     /// 
-    /// **See also:** QGraphicsRotation::axis
+    /// **See also:** [`GraphicsRotation::axis()`]
     [signal] axis_changed(),
 }
 

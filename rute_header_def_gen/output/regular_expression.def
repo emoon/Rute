@@ -426,11 +426,232 @@
 /// `QT_ENABLE_REGEXP_JIT` environment variable to a non-zero or zero value
 /// respectively.
 /// 
-/// **See also:** QRegularExpressionMatch
-/// QRegularExpressionMatchIterator
+/// **See also:** [`RegularExpressionMatch`]
+/// [`RegularExpressionMatchIterator`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct RegularExpression {
+    /// 
+    /// Returns the pattern options for the regular expression.
+    /// 
+    /// **See also:** [`set_pattern_options()`]
+    /// [`pattern()`]
+    pattern_options() -> RegularExpression::PatternOptions,
+    /// 
+    /// Sets the given *options* as the pattern options of the regular expression.
+    /// The pattern string is left unchanged.
+    /// 
+    /// **See also:** [`pattern_options()`]
+    /// [`set_pattern()`]
+    set_pattern_options(options: RegularExpression::PatternOptions),
+    /// 
+    /// Swaps the regular expression *other* with this regular expression. This
+    /// operation is very fast and never fails.
+    swap(other: &RegularExpressionType),
+    /// 
+    /// Returns the pattern string of the regular expression.
+    /// 
+    /// **See also:** [`set_pattern()`]
+    /// [`pattern_options()`]
+    /// 
+    /// Returns the pattern options for the regular expression.
+    /// 
+    /// **See also:** [`set_pattern_options()`]
+    /// [`pattern()`]
+    /// 
+    /// Returns the offset, inside the pattern string, at which an error was found
+    /// when checking the validity of the regular expression. If no error was
+    /// found, then -1 is returned.
+    /// 
+    /// **See also:** [`pattern()`]
+    /// [`is_valid()`]
+    /// [`error_string()`]
+    pattern() -> String,
+    /// 
+    /// Sets the pattern string of the regular expression to *pattern.* The
+    /// pattern options are left unchanged.
+    /// 
+    /// **See also:** [`pattern()`]
+    /// [`set_pattern_options()`]
+    /// 
+    /// Sets the given *options* as the pattern options of the regular expression.
+    /// The pattern string is left unchanged.
+    /// 
+    /// **See also:** [`pattern_options()`]
+    /// [`set_pattern()`]
+    set_pattern(pattern: String),
+    /// 
+    /// Returns `true` if the regular expression is a valid regular expression (that
+    /// is, it contains no syntax errors, etc.), or false otherwise. Use
+    /// errorString() to obtain a textual description of the error.
+    /// 
+    /// **See also:** [`error_string()`]
+    /// [`pattern_error_offset()`]
+    is_valid() -> bool,
+    /// 
+    /// Returns the offset, inside the pattern string, at which an error was found
+    /// when checking the validity of the regular expression. If no error was
+    /// found, then -1 is returned.
+    /// 
+    /// **See also:** [`pattern()`]
+    /// [`is_valid()`]
+    /// [`error_string()`]
+    pattern_error_offset() -> i32,
+    /// 
+    /// Returns the number of capturing groups inside the pattern string,
+    /// or -1 if the regular expression is not valid.
+    /// 
+    /// **Note**: The implicit capturing group 0 is *not* included in the returned number.
+    /// 
+    /// **See also:** [`is_valid()`]
+    capture_count() -> i32,
+    /// 
+    /// Returns a list of captureCount() + 1 elements, containing the names of the
+    /// named capturing groups in the pattern string. The list is sorted such that
+    /// the element of the list at position `i` is the name of the `i` -th
+    /// capturing group, if it has a name, or an empty string if that capturing
+    /// group is unnamed.
+    /// 
+    /// For instance, given the regular expression
+    /// 
+    /// ```
+    /// (?<day>\d\d)-(?<month>\d\d)-(?<year>\d\d\d\d) (\w+) (?<name>\w+)
+    /// ```
+    /// 
+    /// namedCaptureGroups() will return the following list:
+    /// 
+    /// ```
+    /// ("", "day", "month", "year", "", "name")
+    /// ```
+    /// 
+    /// which corresponds to the fact that the capturing group #0 (corresponding to
+    /// the whole match) has no name, the capturing group #1 has name , the
+    /// capturing group #2 has name , etc.
+    /// 
+    /// If the regular expression is not valid, returns an empty list.
+    /// 
+    /// **See also:** [`is_valid()`]
+    /// [`RegularExpressionMatch::captured`]
+    /// [`String::is_empty`]
+    named_capture_groups() -> [String],
+    /// 
+    /// Attempts to match the regular expression against the given *subject*
+    /// string, starting at the position *offset* inside the subject, using a
+    /// match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatch object contains the results of the
+    /// match.
+    /// 
+    /// **See also:** [`RegularExpressionMatch`]
+    /// {normal matching}
+    /// 
+    /// **Overloads**
+    /// Attempts to match the regular expression against the given *subjectRef*
+    /// string reference, starting at the position *offset* inside the subject, using a
+    /// match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatch object contains the results of the
+    /// match.
+    /// 
+    /// **See also:** [`RegularExpressionMatch`]
+    /// {normal matching}
+    match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatch,
+    /// 
+    /// Attempts to match the regular expression against the given *subject*
+    /// string, starting at the position *offset* inside the subject, using a
+    /// match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatch object contains the results of the
+    /// match.
+    /// 
+    /// **See also:** [`RegularExpressionMatch`]
+    /// {normal matching}
+    /// 
+    /// **Overloads**
+    /// Attempts to match the regular expression against the given *subjectRef*
+    /// string reference, starting at the position *offset* inside the subject, using a
+    /// match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatch object contains the results of the
+    /// match.
+    /// 
+    /// **See also:** [`RegularExpressionMatch`]
+    /// {normal matching}
+    [org_name(match)]
+    match_2(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatch,
+    /// 
+    /// Attempts to perform a global match of the regular expression against the
+    /// given *subject* string, starting at the position *offset* inside the
+    /// subject, using a match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatchIterator is positioned before the
+    /// first match result (if any).
+    /// 
+    /// **See also:** [`RegularExpressionMatchIterator`]
+    /// {global matching}
+    /// 
+    /// **Overloads**
+    /// Attempts to perform a global match of the regular expression against the
+    /// given *subjectRef* string reference, starting at the position *offset* inside the
+    /// subject, using a match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatchIterator is positioned before the
+    /// first match result (if any).
+    /// 
+    /// **See also:** [`RegularExpressionMatchIterator`]
+    /// {global matching}
+    global_match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatchIterator,
+    /// 
+    /// Attempts to perform a global match of the regular expression against the
+    /// given *subject* string, starting at the position *offset* inside the
+    /// subject, using a match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatchIterator is positioned before the
+    /// first match result (if any).
+    /// 
+    /// **See also:** [`RegularExpressionMatchIterator`]
+    /// {global matching}
+    /// 
+    /// **Overloads**
+    /// Attempts to perform a global match of the regular expression against the
+    /// given *subjectRef* string reference, starting at the position *offset* inside the
+    /// subject, using a match of type *matchType* and honoring the given *matchOptions.*
+    /// 
+    /// The returned QRegularExpressionMatchIterator is positioned before the
+    /// first match result (if any).
+    /// 
+    /// **See also:** [`RegularExpressionMatchIterator`]
+    /// {global matching}
+    [org_name(globalMatch)]
+    global_match_2(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatchIterator,
+    /// 
+    /// Forces an immediate optimization of the pattern, including
+    /// JIT-compiling it (if the JIT compiler is enabled).
+    /// 
+    /// Patterns are normally optimized only after a certain number of usages.
+    /// If you can predict that this QRegularExpression object is going to be
+    /// used for several matches, it may be convenient to optimize it in
+    /// advance by calling this function.
+    /// 
+    /// **See also:** [`RegularExpression::optimize_on_first_usage_option()`]
+    optimize(),
+    /// 
+    /// Escapes all characters of *str* so that they no longer have any special
+    /// meaning when used as a regular expression pattern string, and returns
+    /// the escaped string. For instance:
+    /// 
+    /// This is very convenient in order to build patterns from arbitrary strings:
+    /// 
+    /// **Note**: This function implements Perl's quotemeta algorithm and escapes with
+    /// a backslash all characters in *str,* except for the characters in the
+    /// `[A-Z]` , `[a-z]` and `[0-9]` ranges, as well as the underscore
+    /// ( `_` ) character. The only difference with Perl is that a literal NUL
+    /// inside *str* is escaped with the sequence `"\\0"` (backslash +
+    /// `'0'` ), instead of `"\\\0"` (backslash + `NUL` ).
+    [static] escape(str: String) -> String,
+}
+
 [org_name(QRegularExpression)]
 enum PatternOption {
     NoPatternOption,
@@ -458,226 +679,6 @@ enum MatchOption {
     NoMatchOption,
     AnchoredMatchOption,
     DontCheckSubjectStringMatchOption,
-}
-
-
-struct RegularExpression {
-    /// 
-    /// Returns the pattern options for the regular expression.
-    /// 
-    /// **See also:** setPatternOptions()
-    /// pattern()
-    pattern_options() -> RegularExpression::PatternOptions,
-    /// 
-    /// Sets the given *options* as the pattern options of the regular expression.
-    /// The pattern string is left unchanged.
-    /// 
-    /// **See also:** patternOptions()
-    /// setPattern()
-    set_pattern_options(options: RegularExpression::PatternOptions),
-    /// 
-    /// Swaps the regular expression *other* with this regular expression. This
-    /// operation is very fast and never fails.
-    swap(other: &RegularExpressionType),
-    /// 
-    /// Returns the pattern string of the regular expression.
-    /// 
-    /// **See also:** setPattern()
-    /// patternOptions()
-    /// 
-    /// Returns the pattern options for the regular expression.
-    /// 
-    /// **See also:** setPatternOptions()
-    /// pattern()
-    /// 
-    /// Returns the offset, inside the pattern string, at which an error was found
-    /// when checking the validity of the regular expression. If no error was
-    /// found, then -1 is returned.
-    /// 
-    /// **See also:** pattern()
-    /// isValid()
-    /// errorString()
-    pattern() -> String,
-    /// 
-    /// Sets the pattern string of the regular expression to *pattern.* The
-    /// pattern options are left unchanged.
-    /// 
-    /// **See also:** pattern()
-    /// setPatternOptions()
-    /// 
-    /// Sets the given *options* as the pattern options of the regular expression.
-    /// The pattern string is left unchanged.
-    /// 
-    /// **See also:** patternOptions()
-    /// setPattern()
-    set_pattern(pattern: String),
-    /// 
-    /// Returns `true` if the regular expression is a valid regular expression (that
-    /// is, it contains no syntax errors, etc.), or false otherwise. Use
-    /// errorString() to obtain a textual description of the error.
-    /// 
-    /// **See also:** errorString()
-    /// patternErrorOffset()
-    is_valid() -> bool,
-    /// 
-    /// Returns the offset, inside the pattern string, at which an error was found
-    /// when checking the validity of the regular expression. If no error was
-    /// found, then -1 is returned.
-    /// 
-    /// **See also:** pattern()
-    /// isValid()
-    /// errorString()
-    pattern_error_offset() -> i32,
-    /// 
-    /// Returns the number of capturing groups inside the pattern string,
-    /// or -1 if the regular expression is not valid.
-    /// 
-    /// **Note**: The implicit capturing group 0 is *not* included in the returned number.
-    /// 
-    /// **See also:** isValid()
-    capture_count() -> i32,
-    /// 
-    /// Returns a list of captureCount() + 1 elements, containing the names of the
-    /// named capturing groups in the pattern string. The list is sorted such that
-    /// the element of the list at position `i` is the name of the `i` -th
-    /// capturing group, if it has a name, or an empty string if that capturing
-    /// group is unnamed.
-    /// 
-    /// For instance, given the regular expression
-    /// 
-    /// ```
-    /// (?<day>\d\d)-(?<month>\d\d)-(?<year>\d\d\d\d) (\w+) (?<name>\w+)
-    /// ```
-    /// 
-    /// namedCaptureGroups() will return the following list:
-    /// 
-    /// ```
-    /// ("", "day", "month", "year", "", "name")
-    /// ```
-    /// 
-    /// which corresponds to the fact that the capturing group #0 (corresponding to
-    /// the whole match) has no name, the capturing group #1 has name , the
-    /// capturing group #2 has name , etc.
-    /// 
-    /// If the regular expression is not valid, returns an empty list.
-    /// 
-    /// **See also:** isValid()
-    /// QRegularExpressionMatch::captured()
-    /// QString::isEmpty()
-    named_capture_groups() -> [String],
-    /// 
-    /// Attempts to match the regular expression against the given *subject*
-    /// string, starting at the position *offset* inside the subject, using a
-    /// match of type *matchType* and honoring the given *matchOptions.*
-    /// 
-    /// The returned QRegularExpressionMatch object contains the results of the
-    /// match.
-    /// 
-    /// **See also:** QRegularExpressionMatch
-    /// {normal matching}
-    /// 
-    /// **Overloads**
-    /// Attempts to match the regular expression against the given *subjectRef*
-    /// string reference, starting at the position *offset* inside the subject, using a
-    /// match of type *matchType* and honoring the given *matchOptions.*
-    /// 
-    /// The returned QRegularExpressionMatch object contains the results of the
-    /// match.
-    /// 
-    /// **See also:** QRegularExpressionMatch
-    /// {normal matching}
-    match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatch,
-    /// 
-    /// Attempts to match the regular expression against the given *subject*
-    /// string, starting at the position *offset* inside the subject, using a
-    /// match of type *matchType* and honoring the given *matchOptions.*
-    /// 
-    /// The returned QRegularExpressionMatch object contains the results of the
-    /// match.
-    /// 
-    /// **See also:** QRegularExpressionMatch
-    /// {normal matching}
-    /// 
-    /// **Overloads**
-    /// Attempts to match the regular expression against the given *subjectRef*
-    /// string reference, starting at the position *offset* inside the subject, using a
-    /// match of type *matchType* and honoring the given *matchOptions.*
-    /// 
-    /// The returned QRegularExpressionMatch object contains the results of the
-    /// match.
-    /// 
-    /// **See also:** QRegularExpressionMatch
-    /// {normal matching}
-    match_2(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatch,
-    /// 
-    /// Attempts to perform a global match of the regular expression against the
-    /// given *subject* string, starting at the position *offset* inside the
-    /// subject, using a match of type *matchType* and honoring the given *matchOptions.*
-    /// 
-    /// The returned QRegularExpressionMatchIterator is positioned before the
-    /// first match result (if any).
-    /// 
-    /// **See also:** QRegularExpressionMatchIterator
-    /// {global matching}
-    /// 
-    /// **Overloads**
-    /// Attempts to perform a global match of the regular expression against the
-    /// given *subjectRef* string reference, starting at the position *offset* inside the
-    /// subject, using a match of type *matchType* and honoring the given *matchOptions.*
-    /// 
-    /// The returned QRegularExpressionMatchIterator is positioned before the
-    /// first match result (if any).
-    /// 
-    /// **See also:** QRegularExpressionMatchIterator
-    /// {global matching}
-    global_match(subject: String, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatchIterator,
-    /// 
-    /// Attempts to perform a global match of the regular expression against the
-    /// given *subject* string, starting at the position *offset* inside the
-    /// subject, using a match of type *matchType* and honoring the given *matchOptions.*
-    /// 
-    /// The returned QRegularExpressionMatchIterator is positioned before the
-    /// first match result (if any).
-    /// 
-    /// **See also:** QRegularExpressionMatchIterator
-    /// {global matching}
-    /// 
-    /// **Overloads**
-    /// Attempts to perform a global match of the regular expression against the
-    /// given *subjectRef* string reference, starting at the position *offset* inside the
-    /// subject, using a match of type *matchType* and honoring the given *matchOptions.*
-    /// 
-    /// The returned QRegularExpressionMatchIterator is positioned before the
-    /// first match result (if any).
-    /// 
-    /// **See also:** QRegularExpressionMatchIterator
-    /// {global matching}
-    global_match_2(subject_ref: &StringRefType, offset: i32, match_type: RegularExpression::MatchType, match_options: RegularExpression::MatchOptions) -> RegularExpressionMatchIterator,
-    /// 
-    /// Forces an immediate optimization of the pattern, including
-    /// JIT-compiling it (if the JIT compiler is enabled).
-    /// 
-    /// Patterns are normally optimized only after a certain number of usages.
-    /// If you can predict that this QRegularExpression object is going to be
-    /// used for several matches, it may be convenient to optimize it in
-    /// advance by calling this function.
-    /// 
-    /// **See also:** QRegularExpression::OptimizeOnFirstUsageOption
-    optimize(),
-    /// 
-    /// Escapes all characters of *str* so that they no longer have any special
-    /// meaning when used as a regular expression pattern string, and returns
-    /// the escaped string. For instance:
-    /// 
-    /// This is very convenient in order to build patterns from arbitrary strings:
-    /// 
-    /// **Note**: This function implements Perl's quotemeta algorithm and escapes with
-    /// a backslash all characters in *str,* except for the characters in the
-    /// `[A-Z]` , `[a-z]` and `[0-9]` ranges, as well as the underscore
-    /// ( `_` ) character. The only difference with Perl is that a literal NUL
-    /// inside *str* is escaped with the sequence `"\\0"` (backslash +
-    /// `'0'` ), instead of `"\\\0"` (backslash + `NUL` ).
-    [static] escape(str: String) -> String,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

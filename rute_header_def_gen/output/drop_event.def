@@ -25,8 +25,8 @@
 /// object. This contains information about the MIME type of the data in addition to
 /// the data itself.
 /// 
-/// **See also:** QMimeData
-/// QDrag
+/// **See also:** [`MimeData`]
+/// [`Drag`]
 /// {Drag and Drop}
 /// # Licence
 ///
@@ -39,7 +39,7 @@ struct DropEvent : Event {
     /// 
     /// Returns an OR-combination of possible drop actions.
     /// 
-    /// **See also:** dropAction()
+    /// **See also:** [`drop_action()`]
     pos() -> Point,
     /// 
     /// Returns the position where the drop was made.
@@ -53,18 +53,18 @@ struct DropEvent : Event {
     /// 
     /// Returns an OR-combination of possible drop actions.
     /// 
-    /// **See also:** dropAction()
+    /// **See also:** [`drop_action()`]
     possible_actions() -> Rute::DropActions,
     /// 
     /// Returns the proposed drop action.
     /// 
-    /// **See also:** dropAction()
+    /// **See also:** [`drop_action()`]
     proposed_action() -> Rute::DropAction,
     /// 
     /// Sets the drop action to be the proposed action.
     /// 
-    /// **See also:** setDropAction()
-    /// proposedAction()
+    /// **See also:** [`set_drop_action()`]
+    /// [`proposed_action()`]
     /// {QEvent::accept()}{accept()}
     accept_proposed_action(),
     /// 
@@ -72,7 +72,7 @@ struct DropEvent : Event {
     /// different from the action supplied in proposedAction() if you have called
     /// setDropAction() to explicitly choose a drop action.
     /// 
-    /// **See also:** setDropAction()
+    /// **See also:** [`set_drop_action()`]
     drop_action() -> Rute::DropAction,
     /// 
     /// Sets the *action* to be performed on the data by the target.
@@ -87,7 +87,7 @@ struct DropEvent : Event {
     /// Once you have supplied a replacement drop action, call accept()
     /// instead of acceptProposedAction().
     /// 
-    /// **See also:** dropAction()
+    /// **See also:** [`drop_action()`]
     set_drop_action(action: Rute::DropAction),
     /// 
     /// If the source of the drag operation is a widget in this
@@ -98,7 +98,7 @@ struct DropEvent : Event {
     /// This is useful if your widget needs special behavior when dragging
     /// to itself.
     /// 
-    /// **See also:** QDrag::QDrag()
+    /// **See also:** [`Drag::q_drag`]
     source() -> Object?,
     /// 
     /// Returns the data that was dropped on the widget and its associated MIME

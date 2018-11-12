@@ -22,33 +22,10 @@
 /// current margins can be set to any values regardless of the minimum margins
 /// and page size.
 /// 
-/// **See also:** QPageSize
+/// **See also:** [`PageSize`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QPageLayout)]
-enum Unit {
-    Millimeter,
-    Point,
-    Inch,
-    Pica,
-    Didot,
-    Cicero,
-}
-
-[org_name(QPageLayout)]
-enum Orientation {
-    Portrait,
-    Landscape,
-}
-
-[org_name(QPageLayout)]
-enum Mode {
-    StandardMode,
-    FullPageMode,
-}
-
-
 struct PageLayout {
     /// 
     /// Swaps this page layout with *other.* This function is very fast and
@@ -113,8 +90,8 @@ struct PageLayout {
     /// 
     /// If in FullPageMode then any margin values will be accepted.
     /// 
-    /// **See also:** margins()
-    /// units()
+    /// **See also:** [`margins()`]
+    /// [`units()`]
     set_margins(margins: &MarginsFType) -> bool,
     /// 
     /// Sets the left page margin of the page layout to *leftMargin.*
@@ -129,8 +106,8 @@ struct PageLayout {
     /// 
     /// If in FullPageMode then any margin values will be accepted.
     /// 
-    /// **See also:** setMargins()
-    /// margins()
+    /// **See also:** [`set_margins()`]
+    /// [`margins()`]
     set_left_margin(left_margin: f32) -> bool,
     /// 
     /// Sets the right page margin of the page layout to *rightMargin.*
@@ -145,8 +122,8 @@ struct PageLayout {
     /// 
     /// If in FullPageMode then any margin values will be accepted.
     /// 
-    /// **See also:** setMargins()
-    /// margins()
+    /// **See also:** [`set_margins()`]
+    /// [`margins()`]
     set_right_margin(right_margin: f32) -> bool,
     /// 
     /// Sets the top page margin of the page layout to *topMargin.*
@@ -161,8 +138,8 @@ struct PageLayout {
     /// 
     /// If in FullPageMode then any margin values will be accepted.
     /// 
-    /// **See also:** setMargins()
-    /// margins()
+    /// **See also:** [`set_margins()`]
+    /// [`margins()`]
     set_top_margin(top_margin: f32) -> bool,
     /// 
     /// Sets the bottom page margin of the page layout to *bottomMargin.*
@@ -177,59 +154,60 @@ struct PageLayout {
     /// 
     /// If in FullPageMode then any margin values will be accepted.
     /// 
-    /// **See also:** setMargins()
-    /// margins()
+    /// **See also:** [`set_margins()`]
+    /// [`margins()`]
     set_bottom_margin(bottom_margin: f32) -> bool,
     /// 
     /// Returns the margins of the page layout using the currently set units.
     /// 
-    /// **See also:** setMargins()
-    /// units()
+    /// **See also:** [`set_margins()`]
+    /// [`units()`]
     /// 
     /// Returns the margins of the page layout using the requested *units.*
     /// 
-    /// **See also:** setMargins()
-    /// margins()
+    /// **See also:** [`set_margins()`]
+    /// [`margins()`]
     /// 
     /// Returns the margins of the page layout in Postscript Points (1/72 of an inch).
     /// 
-    /// **See also:** setMargins()
-    /// margins()
+    /// **See also:** [`set_margins()`]
+    /// [`margins()`]
     /// 
     /// Returns the margins of the page layout in device pixels for the given *resolution.*
     /// 
-    /// **See also:** setMargins()
+    /// **See also:** [`set_margins()`]
     margins() -> MarginsF,
     /// 
     /// Returns the margins of the page layout using the currently set units.
     /// 
-    /// **See also:** setMargins()
-    /// units()
+    /// **See also:** [`set_margins()`]
+    /// [`units()`]
     /// 
     /// Returns the margins of the page layout using the requested *units.*
     /// 
-    /// **See also:** setMargins()
-    /// margins()
+    /// **See also:** [`set_margins()`]
+    /// [`margins()`]
     /// 
     /// Returns the margins of the page layout in Postscript Points (1/72 of an inch).
     /// 
-    /// **See also:** setMargins()
-    /// margins()
+    /// **See also:** [`set_margins()`]
+    /// [`margins()`]
     /// 
     /// Returns the margins of the page layout in device pixels for the given *resolution.*
     /// 
-    /// **See also:** setMargins()
+    /// **See also:** [`set_margins()`]
+    [org_name(margins)]
     margins_2(units: PageLayout::Unit) -> MarginsF,
     /// 
     /// Returns the margins of the page layout in Postscript Points (1/72 of an inch).
     /// 
-    /// **See also:** setMargins()
-    /// margins()
+    /// **See also:** [`set_margins()`]
+    /// [`margins()`]
     margins_points() -> Margins,
     /// 
     /// Returns the margins of the page layout in device pixels for the given *resolution.*
     /// 
-    /// **See also:** setMargins()
+    /// **See also:** [`set_margins()`]
     margins_pixels(resolution: i32) -> Margins,
     /// 
     /// Sets the minimum page margins of the page layout to *minMargins.*
@@ -241,14 +219,14 @@ struct PageLayout {
     /// to the new *minMargins* and the maximum allowed by the page size. If the
     /// FullPageMode is set then the existing margins will be unchanged.
     /// 
-    /// **See also:** minimumMargins()
-    /// setMargins()
+    /// **See also:** [`minimum_margins()`]
+    /// [`set_margins()`]
     set_minimum_margins(min_margins: &MarginsFType),
     /// 
     /// Returns the minimum margins of the page layout.
     /// 
-    /// **See also:** setMinimumMargins()
-    /// maximumMargins()
+    /// **See also:** [`set_minimum_margins()`]
+    /// [`maximum_margins()`]
     minimum_margins() -> MarginsF,
     /// 
     /// Returns the maximum margins that would be applied if the page layout was
@@ -259,8 +237,8 @@ struct PageLayout {
     /// and the minimum right margin is 10 points, then the maximum left margin
     /// will be 90 points.
     /// 
-    /// **See also:** setMinimumMargins()
-    /// minimumMargins()
+    /// **See also:** [`set_minimum_margins()`]
+    /// [`minimum_margins()`]
     maximum_margins() -> MarginsF,
     /// 
     /// Returns the full page rectangle in the current layout units.
@@ -268,29 +246,29 @@ struct PageLayout {
     /// The page rectangle takes into account the page size and page orientation,
     /// but not the page margins.
     /// 
-    /// **See also:** paintRect()
-    /// units()
+    /// **See also:** [`paint_rect()`]
+    /// [`units()`]
     /// 
     /// Returns the full page rectangle in the required *units.*
     /// 
     /// The page rectangle takes into account the page size and page orientation,
     /// but not the page margins.
     /// 
-    /// **See also:** paintRect()
+    /// **See also:** [`paint_rect()`]
     /// 
     /// Returns the full page rectangle in Postscript Points (1/72 of an inch).
     /// 
     /// The page rectangle takes into account the page size and page orientation,
     /// but not the page margins.
     /// 
-    /// **See also:** paintRect()
+    /// **See also:** [`paint_rect()`]
     /// 
     /// Returns the full page rectangle in device pixels for the given *resolution.*
     /// 
     /// The page rectangle takes into account the page size and page orientation,
     /// but not the page margins.
     /// 
-    /// **See also:** paintRect()
+    /// **See also:** [`paint_rect()`]
     full_rect() -> RectF,
     /// 
     /// Returns the full page rectangle in the current layout units.
@@ -298,29 +276,30 @@ struct PageLayout {
     /// The page rectangle takes into account the page size and page orientation,
     /// but not the page margins.
     /// 
-    /// **See also:** paintRect()
-    /// units()
+    /// **See also:** [`paint_rect()`]
+    /// [`units()`]
     /// 
     /// Returns the full page rectangle in the required *units.*
     /// 
     /// The page rectangle takes into account the page size and page orientation,
     /// but not the page margins.
     /// 
-    /// **See also:** paintRect()
+    /// **See also:** [`paint_rect()`]
     /// 
     /// Returns the full page rectangle in Postscript Points (1/72 of an inch).
     /// 
     /// The page rectangle takes into account the page size and page orientation,
     /// but not the page margins.
     /// 
-    /// **See also:** paintRect()
+    /// **See also:** [`paint_rect()`]
     /// 
     /// Returns the full page rectangle in device pixels for the given *resolution.*
     /// 
     /// The page rectangle takes into account the page size and page orientation,
     /// but not the page margins.
     /// 
-    /// **See also:** paintRect()
+    /// **See also:** [`paint_rect()`]
+    [org_name(fullRect)]
     full_rect_2(units: PageLayout::Unit) -> RectF,
     /// 
     /// Returns the full page rectangle in Postscript Points (1/72 of an inch).
@@ -328,7 +307,7 @@ struct PageLayout {
     /// The page rectangle takes into account the page size and page orientation,
     /// but not the page margins.
     /// 
-    /// **See also:** paintRect()
+    /// **See also:** [`paint_rect()`]
     full_rect_points() -> Rect,
     /// 
     /// Returns the full page rectangle in device pixels for the given *resolution.*
@@ -336,7 +315,7 @@ struct PageLayout {
     /// The page rectangle takes into account the page size and page orientation,
     /// but not the page margins.
     /// 
-    /// **See also:** paintRect()
+    /// **See also:** [`paint_rect()`]
     full_rect_pixels(resolution: i32) -> Rect,
     /// 
     /// Returns the page rectangle in the current layout units.
@@ -403,6 +382,7 @@ struct PageLayout {
     /// 
     /// If the FullPageMode mode is set then the fullRect() is returned and
     /// the margins must be manually managed.
+    [org_name(paintRect)]
     paint_rect_2(units: PageLayout::Unit) -> RectF,
     /// 
     /// Returns the paintable rectangle in rounded Postscript Points (1/72 of an inch).
@@ -422,6 +402,28 @@ struct PageLayout {
     /// If the FullPageMode mode is set then the fullRect() is returned and
     /// the margins must be manually managed.
     paint_rect_pixels(resolution: i32) -> Rect,
+}
+
+[org_name(QPageLayout)]
+enum Unit {
+    Millimeter,
+    Point,
+    Inch,
+    Pica,
+    Didot,
+    Cicero,
+}
+
+[org_name(QPageLayout)]
+enum Orientation {
+    Portrait,
+    Landscape,
+}
+
+[org_name(QPageLayout)]
+enum Mode {
+    StandardMode,
+    FullPageMode,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

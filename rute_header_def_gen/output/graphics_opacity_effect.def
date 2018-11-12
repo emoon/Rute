@@ -7,9 +7,9 @@
 /// 
 /// ![graphicseffect-opacity.png](graphicseffect-opacity.png)
 /// 
-/// **See also:** QGraphicsDropShadowEffect
-/// QGraphicsBlurEffect
-/// QGraphicsColorizeEffect
+/// **See also:** [`GraphicsDropShadowEffect`]
+/// [`GraphicsBlurEffect`]
+/// [`GraphicsColorizeEffect`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -20,7 +20,7 @@ struct GraphicsOpacityEffect : GraphicsEffect {
     /// 
     /// By default, the opacity is 0.7.
     /// 
-    /// **See also:** setOpacityMask()
+    /// **See also:** [`set_opacity_mask()`]
     /// 
     /// This signal is emitted whenever the effect's opacity changes.
     /// The *opacity* parameter holds the effect's new opacity.
@@ -31,7 +31,7 @@ struct GraphicsOpacityEffect : GraphicsEffect {
     /// 
     /// There is no opacity mask by default.
     /// 
-    /// **See also:** setOpacity()
+    /// **See also:** [`set_opacity()`]
     /// 
     /// This signal is emitted whenever the effect's opacity mask changes.
     /// The *mask* parameter holds the effect's new opacity mask.
@@ -43,7 +43,7 @@ struct GraphicsOpacityEffect : GraphicsEffect {
     /// 
     /// There is no opacity mask by default.
     /// 
-    /// **See also:** setOpacity()
+    /// **See also:** [`set_opacity()`]
     /// 
     /// This signal is emitted whenever the effect's opacity mask changes.
     /// The *mask* parameter holds the effect's new opacity mask.

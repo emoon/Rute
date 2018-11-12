@@ -122,26 +122,16 @@
 /// is the position and size (relative to the size of the main window)
 /// of the toolbars and dock widgets that are stored.
 /// 
-/// **See also:** QMenuBar
-/// QToolBar
-/// QStatusBar
-/// QDockWidget
+/// **See also:** [`MenuBar`]
+/// [`ToolBar`]
+/// [`StatusBar`]
+/// [`DockWidget`]
 /// {Application
 /// Example}, {Dock Widgets Example}, {MDI Example}, {SDI Example},
 /// {Menus Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QMainWindow)]
-enum DockOption {
-    AnimatedDocks,
-    AllowNestedDocks,
-    AllowTabbedDocks,
-    ForceTabbedDocks,
-    VerticalTabs,
-    GroupedDragging,
-}
-
 struct MainWindow : Widget {
     /// 
     /// This signal is emitted when the size of the icons used in the
@@ -150,7 +140,7 @@ struct MainWindow : Widget {
     /// You can connect this signal to other components to help maintain
     /// a consistent appearance for your application.
     /// 
-    /// **See also:** setIconSize()
+    /// **See also:** [`set_icon_size()`]
     /// 
     /// The default is the default tool bar icon size of the GUI style.
     /// Note that the icons used must be at least of this size as the
@@ -164,7 +154,7 @@ struct MainWindow : Widget {
     /// You can connect this signal to other components to help maintain
     /// a consistent appearance for your application.
     /// 
-    /// **See also:** setToolButtonStyle()
+    /// **See also:** [`set_tool_button_style()`]
     /// 
     /// To have the style of toolbuttons follow the system settings, set this property to Qt::ToolButtonFollowStyle.
     /// On Unix, the user settings from the desktop environment will be used.
@@ -178,13 +168,13 @@ struct MainWindow : Widget {
     /// 
     /// The default is false.
     /// 
-    /// **See also:** QTabBar::documentMode
+    /// **See also:** [`TabBar::document_mode()`]
     document_mode() -> bool,
     set_document_mode(enabled: bool),
     /// 
     /// The default is [QTabWidget::Rounded.](QTabWidget::Rounded.)
     /// 
-    /// **See also:** setTabPosition()
+    /// **See also:** [`set_tab_position()`]
     tab_shape() -> TabWidget::TabShape,
     set_tab_shape(tab_shape: TabWidget::TabShape),
     /// 
@@ -194,8 +184,8 @@ struct MainWindow : Widget {
     /// dock option overrides the tab positions returned
     /// by this function.
     /// 
-    /// **See also:** setTabPosition()
-    /// tabShape()
+    /// **See also:** [`set_tab_position()`]
+    /// [`tab_shape()`]
     tab_position(area: Rute::DockWidgetArea) -> TabWidget::TabPosition,
     /// 
     /// Sets the tab position for the given dock widget *areas* to the specified
@@ -205,8 +195,8 @@ struct MainWindow : Widget {
     /// dock option overrides the tab positions set by
     /// this method.
     /// 
-    /// **See also:** tabPosition()
-    /// setTabShape()
+    /// **See also:** [`tab_position()`]
+    /// [`set_tab_shape()`]
     set_tab_position(areas: Rute::DockWidgetAreas, tab_position: TabWidget::TabPosition),
     set_dock_options(options: MainWindow::DockOptions),
     /// 
@@ -224,7 +214,7 @@ struct MainWindow : Widget {
     /// can then share among all the Mac windows. Create a parent-less
     /// menu bar this way:
     /// 
-    /// **See also:** setMenuBar()
+    /// **See also:** [`set_menu_bar()`]
     menu_bar() -> MenuBar?,
     /// 
     /// Sets the menu bar for the main window to *menuBar.*
@@ -232,7 +222,7 @@ struct MainWindow : Widget {
     /// Note: QMainWindow takes ownership of the *menuBar* pointer and
     /// deletes it at the appropriate time.
     /// 
-    /// **See also:** menuBar()
+    /// **See also:** [`menu_bar()`]
     set_menu_bar(menubar: *MenuBarType),
     /// 
     /// Returns the menu bar for the main window. This function returns
@@ -248,7 +238,7 @@ struct MainWindow : Widget {
     /// Returns the status bar for the main window. This function creates
     /// and returns an empty status bar if the status bar does not exist.
     /// 
-    /// **See also:** setStatusBar()
+    /// **See also:** [`set_status_bar()`]
     status_bar() -> StatusBar?,
     /// 
     /// Sets the status bar for the main window to *statusbar.*
@@ -257,17 +247,17 @@ struct MainWindow : Widget {
     /// Note that QMainWindow takes ownership of the *statusbar* pointer
     /// and deletes it at the appropriate time.
     /// 
-    /// **See also:** statusBar()
+    /// **See also:** [`status_bar()`]
     set_status_bar(statusbar: *StatusBarType),
     /// 
     /// Sets the given dock widget *area* to occupy the specified *corner.*
     /// 
-    /// **See also:** corner()
+    /// **See also:** [`corner()`]
     set_corner(corner: Rute::Corner, area: Rute::DockWidgetArea),
     /// 
     /// Returns the dock widget area that occupies the specified *corner.*
     /// 
-    /// **See also:** setCorner()
+    /// **See also:** [`set_corner()`]
     corner(corner: Rute::Corner) -> Rute::DockWidgetArea,
     /// 
     /// Adds a toolbar break to the given *area* after all the other
@@ -285,16 +275,16 @@ struct MainWindow : Widget {
     /// bar block (i.e. line). If the main window already manages *toolbar*
     /// then it will only move the toolbar to *area.*
     /// 
-    /// **See also:** insertToolBar()
-    /// addToolBarBreak()
-    /// insertToolBarBreak()
+    /// **See also:** [`insert_tool_bar()`]
+    /// [`add_tool_bar_break()`]
+    /// [`insert_tool_bar_break()`]
     /// **Overloads**  Equivalent of calling addToolBar(Qt::TopToolBarArea, *toolbar)*
     /// 
     /// **Overloads**
     /// Creates a QToolBar object, setting its window title to *title,*
     /// and inserts it into the top toolbar area.
     /// 
-    /// **See also:** setWindowTitle()
+    /// **See also:** [`set_window_title()`]
     add_tool_bar(area: Rute::ToolBarArea, toolbar: *ToolBarType),
     /// 
     /// Adds a toolbar break to the given *area* after all the other
@@ -305,16 +295,17 @@ struct MainWindow : Widget {
     /// bar block (i.e. line). If the main window already manages *toolbar*
     /// then it will only move the toolbar to *area.*
     /// 
-    /// **See also:** insertToolBar()
-    /// addToolBarBreak()
-    /// insertToolBarBreak()
+    /// **See also:** [`insert_tool_bar()`]
+    /// [`add_tool_bar_break()`]
+    /// [`insert_tool_bar_break()`]
     /// **Overloads**  Equivalent of calling addToolBar(Qt::TopToolBarArea, *toolbar)*
     /// 
     /// **Overloads**
     /// Creates a QToolBar object, setting its window title to *title,*
     /// and inserts it into the top toolbar area.
     /// 
-    /// **See also:** setWindowTitle()
+    /// **See also:** [`set_window_title()`]
+    [org_name(addToolBar)]
     add_tool_bar_2(toolbar: *ToolBarType),
     /// 
     /// Adds a toolbar break to the given *area* after all the other
@@ -325,16 +316,17 @@ struct MainWindow : Widget {
     /// bar block (i.e. line). If the main window already manages *toolbar*
     /// then it will only move the toolbar to *area.*
     /// 
-    /// **See also:** insertToolBar()
-    /// addToolBarBreak()
-    /// insertToolBarBreak()
+    /// **See also:** [`insert_tool_bar()`]
+    /// [`add_tool_bar_break()`]
+    /// [`insert_tool_bar_break()`]
     /// **Overloads**  Equivalent of calling addToolBar(Qt::TopToolBarArea, *toolbar)*
     /// 
     /// **Overloads**
     /// Creates a QToolBar object, setting its window title to *title,*
     /// and inserts it into the top toolbar area.
     /// 
-    /// **See also:** setWindowTitle()
+    /// **See also:** [`set_window_title()`]
+    [org_name(addToolBar)]
     add_tool_bar_3(title: String) -> ToolBar?,
     /// 
     /// Inserts a toolbar break before the toolbar specified by *before.*
@@ -344,9 +336,9 @@ struct MainWindow : Widget {
     /// layout operation, this means that *toolbar* will appear to the left
     /// of the toolbar specified by *before* in a horizontal toolbar area.
     /// 
-    /// **See also:** insertToolBarBreak()
-    /// addToolBar()
-    /// addToolBarBreak()
+    /// **See also:** [`insert_tool_bar_break()`]
+    /// [`add_tool_bar()`]
+    /// [`add_tool_bar_break()`]
     insert_tool_bar(before: *ToolBarType, toolbar: *ToolBarType),
     /// 
     /// Removes a toolbar break previously inserted before the toolbar specified by *before.*
@@ -369,16 +361,16 @@ struct MainWindow : Widget {
     /// Returns the Qt::ToolBarArea for *toolbar.* If *toolbar* has not
     /// been added to the main window, this function returns `Qt::NoToolBarArea.`
     /// 
-    /// **See also:** addToolBar()
-    /// addToolBarBreak()
-    /// Qt::ToolBarArea
+    /// **See also:** [`add_tool_bar()`]
+    /// [`add_tool_bar_break()`]
+    /// [`t::tool_bar_area()`]
     tool_bar_area(toolbar: *ToolBarType) -> Rute::ToolBarArea,
     /// 
     /// Returns whether there is a toolbar
     /// break before the *toolbar.*
     /// 
-    /// **See also:** addToolBarBreak()
-    /// insertToolBarBreak()
+    /// **See also:** [`add_tool_bar_break()`]
+    /// [`insert_tool_bar_break()`]
     tool_bar_break(toolbar: *ToolBarType) -> bool,
     /// 
     /// Adds the given *dockwidget* to the specified *area.*
@@ -391,6 +383,7 @@ struct MainWindow : Widget {
     /// 
     /// Adds *dockwidget* into the given *area* in the direction
     /// specified by the *orientation.*
+    [org_name(addDockWidget)]
     add_dock_widget_2(area: Rute::DockWidgetArea, dockwidget: *DockWidgetType, orientation: Rute::Orientation),
     /// 
     /// Splits the space covered by the *first* dock widget into two parts,
@@ -409,20 +402,20 @@ struct MainWindow : Widget {
     /// in the two parts of the divided area. When right-to-left layout direction
     /// is enabled, the placing of the dock widgets will be reversed.
     /// 
-    /// **See also:** tabifyDockWidget()
-    /// addDockWidget()
-    /// removeDockWidget()
+    /// **See also:** [`tabify_dock_widget()`]
+    /// [`add_dock_widget()`]
+    /// [`remove_dock_widget()`]
     split_dock_widget(after: *DockWidgetType, dockwidget: *DockWidgetType, orientation: Rute::Orientation),
     /// 
     /// Moves *second* dock widget on top of *first* dock widget, creating a tabbed
     /// docked area in the main window.
     /// 
-    /// **See also:** tabifiedDockWidgets()
+    /// **See also:** [`tabified_dock_widgets()`]
     tabify_dock_widget(first: *DockWidgetType, second: *DockWidgetType),
     /// 
     /// Returns the dock widgets that are tabified together with *dockwidget.*
     /// 
-    /// **See also:** tabifyDockWidget()
+    /// **See also:** [`tabify_dock_widget()`]
     tabified_dock_widgets(dockwidget: *DockWidgetType) -> [DockWidget?],
     /// 
     /// Removes the *dockwidget* from the main window layout and hides
@@ -433,16 +426,16 @@ struct MainWindow : Widget {
     /// to restoreState(). Returns `true` if the state was restored; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** restoreState()
-    /// saveState()
+    /// **See also:** [`restore_state()`]
+    /// [`save_state()`]
     restore_dock_widget(dockwidget: *DockWidgetType) -> bool,
     /// 
     /// Returns the Qt::DockWidgetArea for *dockwidget.* If *dockwidget*
     /// has not been added to the main window, this function returns `Qt::NoDockWidgetArea.`
     /// 
-    /// **See also:** addDockWidget()
-    /// splitDockWidget()
-    /// Qt::DockWidgetArea
+    /// **See also:** [`add_dock_widget()`]
+    /// [`split_dock_widget()`]
+    /// [`t::dock_widget_area()`]
     dock_widget_area(dockwidget: *DockWidgetType) -> Rute::DockWidgetArea,
     /// 
     /// Resizes the dock widgets in the list *docks* to the corresponding size in
@@ -482,9 +475,9 @@ struct MainWindow : Widget {
     /// To save the geometry when the window closes, you can
     /// implement a close event like this:
     /// 
-    /// **See also:** restoreState()
-    /// QWidget::saveGeometry()
-    /// QWidget::restoreGeometry()
+    /// **See also:** [`restore_state()`]
+    /// [`Widget::save_geometry`]
+    /// [`Widget::restore_geometry`]
     save_state(version: i32) -> ByteArray,
     /// 
     /// Restores the *state* of this mainwindow's toolbars and
@@ -497,10 +490,10 @@ struct MainWindow : Widget {
     /// To restore geometry saved using QSettings, you can use code like
     /// this:
     /// 
-    /// **See also:** saveState()
-    /// QWidget::saveGeometry()
-    /// QWidget::restoreGeometry()
-    /// restoreDockWidget()
+    /// **See also:** [`save_state()`]
+    /// [`Widget::save_geometry`]
+    /// [`Widget::restore_geometry`]
+    /// [`restore_dock_widget()`]
     restore_state(state: &ByteArrayType, version: i32) -> bool,
     /// 
     /// Returns a popup menu containing checkable entries for the toolbars and
@@ -515,9 +508,9 @@ struct MainWindow : Widget {
     /// return a newly-created popup menu. Ownership of the popup menu is transferred
     /// to the caller.
     /// 
-    /// **See also:** addDockWidget()
-    /// addToolBar()
-    /// menuBar()
+    /// **See also:** [`add_dock_widget()`]
+    /// [`add_tool_bar()`]
+    /// [`menu_bar()`]
     [event] create_popup_menu() -> Menu?,
     set_animated(enabled: bool),
     set_dock_nesting_enabled(enabled: bool),
@@ -529,7 +522,7 @@ struct MainWindow : Widget {
     /// You can connect this signal to other components to help maintain
     /// a consistent appearance for your application.
     /// 
-    /// **See also:** setIconSize()
+    /// **See also:** [`set_icon_size()`]
     [signal] icon_size_changed(icon_size: &SizeType),
     /// 
     /// This signal is emitted when the style used for tool buttons in the
@@ -538,19 +531,29 @@ struct MainWindow : Widget {
     /// You can connect this signal to other components to help maintain
     /// a consistent appearance for your application.
     /// 
-    /// **See also:** setToolButtonStyle()
+    /// **See also:** [`set_tool_button_style()`]
     [signal] tool_button_style_changed(tool_button_style: Rute::ToolButtonStyle),
     /// 
     /// This signal is emitted when the tabified dock widget is activated by
     /// selecting the tab. The activated dock widget is passed in *dockWidget.*
     /// 
-    /// **See also:** tabifyDockWidget()
-    /// tabifiedDockWidgets()
+    /// **See also:** [`tabify_dock_widget()`]
+    /// [`tabified_dock_widgets()`]
     [signal] tabified_dock_widget_activated(dock_widget: *DockWidgetType),
     /// 
     [event] context_menu_event(event: *ContextMenuEventType),
     /// 
     [event] event(event: *EventType) -> bool,
+}
+
+[org_name(QMainWindow)]
+enum DockOption {
+    AnimatedDocks,
+    AllowNestedDocks,
+    AllowTabbedDocks,
+    ForceTabbedDocks,
+    VerticalTabs,
+    GroupedDragging,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

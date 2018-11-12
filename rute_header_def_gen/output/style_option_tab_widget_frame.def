@@ -11,11 +11,14 @@
 /// the [Styles](widgets/styles)
 /// example.
 /// 
-/// **See also:** QStyleOption
-/// QTabWidget
+/// **See also:** [`StyleOption`]
+/// [`TabWidget`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct StyleOptionTabWidgetFrame : StyleOption {
+}
+
 [org_name(QStyleOptionTabWidgetFrame)]
 enum StyleOptionType {
     Type,
@@ -26,3 +29,4 @@ enum StyleOptionVersion {
     Version,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

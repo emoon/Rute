@@ -67,7 +67,7 @@
 /// buttons), you will also have to reimplement checkStateSet() and
 /// nextCheckState().
 /// 
-/// **See also:** QButtonGroup
+/// **See also:** [`ButtonGroup`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -164,7 +164,7 @@ struct AbstractButton : Widget {
     /// 
     /// autoExclusive is off by default, except for radio buttons.
     /// 
-    /// **See also:** QRadioButton
+    /// **See also:** [`RadioButton`]
     auto_exclusive() -> bool,
     /// 
     /// Returns the group that this button belongs to.
@@ -172,7 +172,7 @@ struct AbstractButton : Widget {
     /// If the button is not a member of any QButtonGroup, this function
     /// returns 0.
     /// 
-    /// **See also:** QButtonGroup
+    /// **See also:** [`ButtonGroup`]
     group() -> ButtonGroup?,
     set_icon_size(size: &SizeType),
     /// 
@@ -186,7 +186,7 @@ struct AbstractButton : Widget {
     /// 
     /// This function does nothing if the button is [disabled.](setEnabled())
     /// 
-    /// **See also:** click()
+    /// **See also:** [`click()`]
     animate_click(msec: i32),
     /// 
     /// Performs a click.
@@ -197,7 +197,7 @@ struct AbstractButton : Widget {
     /// 
     /// This function does nothing if the button is [disabled.](setEnabled())
     /// 
-    /// **See also:** animateClick()
+    /// **See also:** [`animate_click()`]
     /// 
     /// This signal is emitted when the button is activated (i.e., pressed down
     /// then released while the mouse cursor is inside the button), when the
@@ -208,9 +208,9 @@ struct AbstractButton : Widget {
     /// If the button is checkable, *checked* is true if the button is
     /// checked, or false if the button is unchecked.
     /// 
-    /// **See also:** pressed()
-    /// released()
-    /// toggled()
+    /// **See also:** [`pressed()`]
+    /// [`released()`]
+    /// [`toggled()`]
     click(),
     /// 
     /// Toggles the state of a checkable button.
@@ -239,21 +239,21 @@ struct AbstractButton : Widget {
     /// signal.
     /// 
     /// **See also:** checked
-    /// clicked()
+    /// [`clicked()`]
     toggle(),
     set_checked(arg0: bool),
     /// 
     /// This signal is emitted when the button is pressed down.
     /// 
-    /// **See also:** released()
-    /// clicked()
+    /// **See also:** [`released()`]
+    /// [`clicked()`]
     [signal] pressed(),
     /// 
     /// This signal is emitted when the button is released.
     /// 
-    /// **See also:** pressed()
-    /// clicked()
-    /// toggled()
+    /// **See also:** [`pressed()`]
+    /// [`clicked()`]
+    /// [`toggled()`]
     [signal] released(),
     /// 
     /// This signal is emitted when the button is activated (i.e., pressed down
@@ -265,9 +265,9 @@ struct AbstractButton : Widget {
     /// If the button is checkable, *checked* is true if the button is
     /// checked, or false if the button is unchecked.
     /// 
-    /// **See also:** pressed()
-    /// released()
-    /// toggled()
+    /// **See also:** [`pressed()`]
+    /// [`released()`]
+    /// [`toggled()`]
     [signal] clicked(checked: bool),
     /// 
     /// This signal is emitted whenever a checkable button changes its state.
@@ -292,7 +292,7 @@ struct AbstractButton : Widget {
     /// signal.
     /// 
     /// **See also:** checked
-    /// clicked()
+    /// [`clicked()`]
     [signal] toggled(checked: bool),
     /// 
     [event] paint_event(e: *PaintEventType),
@@ -308,14 +308,14 @@ struct AbstractButton : Widget {
     /// unless it is called from within nextCheckState(). It allows
     /// subclasses to reset their intermediate button states.
     /// 
-    /// **See also:** nextCheckState()
+    /// **See also:** [`next_check_state()`]
     [event] check_state_set(),
     /// This virtual handler is called when a button is clicked. The
     /// default implementation calls setChecked(!isChecked()) if the button
     /// isCheckable(). It allows subclasses to implement intermediate button
     /// states.
     /// 
-    /// **See also:** checkStateSet()
+    /// **See also:** [`check_state_set()`]
     [event] next_check_state(),
     /// 
     [event] event(e: *EventType) -> bool,

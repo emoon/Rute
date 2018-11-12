@@ -25,12 +25,11 @@
 /// Please refer to the QRegularExpression documentation for more information
 /// about the Qt regular expression classes.
 /// 
-/// **See also:** QRegularExpression
-/// QRegularExpressionMatch
+/// **See also:** [`RegularExpression`]
+/// [`RegularExpressionMatch`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct RegularExpressionMatchIterator {
     /// 
     /// Swaps the iterator *other* with this iterator object. This operation is
@@ -42,14 +41,14 @@ struct RegularExpressionMatchIterator {
     /// QRegularExpression object; returns `false` if the QRegularExpression was
     /// invalid.
     /// 
-    /// **See also:** QRegularExpression::globalMatch()
-    /// QRegularExpression::isValid()
+    /// **See also:** [`RegularExpression::global_match`]
+    /// [`RegularExpression::is_valid`]
     is_valid() -> bool,
     /// 
     /// Returns `true` if there is at least one match result ahead of the iterator;
     /// otherwise it returns `false.`
     /// 
-    /// **See also:** next()
+    /// **See also:** [`next()`]
     has_next() -> bool,
     /// 
     /// Returns the next match result and advances the iterator by one position.
@@ -67,27 +66,27 @@ struct RegularExpressionMatchIterator {
     /// Returns the QRegularExpression object whose globalMatch() function returned
     /// this object.
     /// 
-    /// **See also:** QRegularExpression::globalMatch()
-    /// matchType()
-    /// matchOptions()
+    /// **See also:** [`RegularExpression::global_match`]
+    /// [`match_type()`]
+    /// [`match_options()`]
     regular_expression() -> RegularExpression,
     /// 
     /// Returns the match type that was used to get this
     /// QRegularExpressionMatchIterator object, that is, the match type that was
     /// passed to QRegularExpression::globalMatch().
     /// 
-    /// **See also:** QRegularExpression::globalMatch()
-    /// regularExpression()
-    /// matchOptions()
+    /// **See also:** [`RegularExpression::global_match`]
+    /// [`regular_expression()`]
+    /// [`match_options()`]
     match_type() -> RegularExpression::MatchType,
     /// 
     /// Returns the match options that were used to get this
     /// QRegularExpressionMatchIterator object, that is, the match options that
     /// were passed to QRegularExpression::globalMatch().
     /// 
-    /// **See also:** QRegularExpression::globalMatch()
-    /// regularExpression()
-    /// matchType()
+    /// **See also:** [`RegularExpression::global_match`]
+    /// [`regular_expression()`]
+    /// [`match_type()`]
     match_options() -> RegularExpression::MatchOptions,
 }
 

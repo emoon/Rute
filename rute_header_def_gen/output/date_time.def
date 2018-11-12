@@ -112,14 +112,13 @@
 /// applied depend on the platform support. See the QTimeZone documentation
 /// for more details.
 /// 
-/// **See also:** QDate
-/// QTime
-/// QDateTimeEdit
-/// QTimeZone
+/// **See also:** [`Date`]
+/// [`Time`]
+/// [`DateTimeEdit`]
+/// [`TimeZone`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct DateTime {
     /// 
     /// Swaps this datetime with *other.* This operation is very fast
@@ -129,9 +128,9 @@ struct DateTime {
     /// Returns `true` if both the date and the time are null; otherwise
     /// returns `false.` A null datetime is invalid.
     /// 
-    /// **See also:** QDate::isNull()
-    /// QTime::isNull()
-    /// isValid()
+    /// **See also:** [`Date::is_null`]
+    /// [`Time::is_null`]
+    /// [`is_valid()`]
     is_null() -> bool,
     /// 
     /// Returns `true` if both the date and the time are valid and they are valid in
@@ -142,29 +141,29 @@ struct DateTime {
     /// hour, i.e. if the transition is at 2am and the clock goes forward to 3am
     /// then the time from 02:00:00 to 02:59:59.999 is considered to be invalid.
     /// 
-    /// **See also:** QDate::isValid()
-    /// QTime::isValid()
+    /// **See also:** [`Date::is_valid`]
+    /// [`Time::is_valid`]
     is_valid() -> bool,
     /// 
     /// Returns the date part of the datetime.
     /// 
-    /// **See also:** setDate()
-    /// time()
-    /// timeSpec()
+    /// **See also:** [`set_date()`]
+    /// [`time()`]
+    /// [`time_spec()`]
     date() -> Date,
     /// 
     /// Returns the time part of the datetime.
     /// 
-    /// **See also:** setTime()
-    /// date()
-    /// timeSpec()
+    /// **See also:** [`set_time()`]
+    /// [`date()`]
+    /// [`time_spec()`]
     /// 
     /// Returns the time specification of the datetime.
     /// 
-    /// **See also:** setTimeSpec()
-    /// date()
-    /// time()
-    /// Qt::TimeSpec
+    /// **See also:** [`set_time_spec()`]
+    /// [`date()`]
+    /// [`time()`]
+    /// [`t::time_spec()`]
     /// 
     /// Returns the time zone of the datetime.
     /// 
@@ -172,8 +171,8 @@ struct DateTime {
     /// time zone will be returned. Note however that if you copy this time zone
     /// the instance will not remain in sync if the system time zone changes.
     /// 
-    /// **See also:** setTimeZone()
-    /// Qt::TimeSpec
+    /// **See also:** [`set_time_zone()`]
+    /// [`t::time_spec()`]
     /// 
     /// Returns the Time Zone Abbreviation for the datetime.
     /// 
@@ -190,15 +189,15 @@ struct DateTime {
     /// Note too that the abbreviation is not guaranteed to be a unique value,
     /// i.e. different time zones may have the same abbreviation.
     /// 
-    /// **See also:** timeSpec()
+    /// **See also:** [`time_spec()`]
     time() -> Time,
     /// 
     /// Returns the time specification of the datetime.
     /// 
-    /// **See also:** setTimeSpec()
-    /// date()
-    /// time()
-    /// Qt::TimeSpec
+    /// **See also:** [`set_time_spec()`]
+    /// [`date()`]
+    /// [`time()`]
+    /// [`t::time_spec()`]
     time_spec() -> Rute::TimeSpec,
     /// 
     /// Returns the current Offset From UTC in seconds.
@@ -213,7 +212,7 @@ struct DateTime {
     /// 
     /// If the timeSpec() is Qt::UTC this will be 0.
     /// 
-    /// **See also:** setOffsetFromUtc()
+    /// **See also:** [`set_offset_from_utc()`]
     offset_from_utc() -> i32,
     /// 
     /// Returns the time zone of the datetime.
@@ -222,8 +221,8 @@ struct DateTime {
     /// time zone will be returned. Note however that if you copy this time zone
     /// the instance will not remain in sync if the system time zone changes.
     /// 
-    /// **See also:** setTimeZone()
-    /// Qt::TimeSpec
+    /// **See also:** [`set_time_zone()`]
+    /// [`t::time_spec()`]
     /// 
     /// Returns the Time Zone Abbreviation for the datetime.
     /// 
@@ -240,7 +239,7 @@ struct DateTime {
     /// Note too that the abbreviation is not guaranteed to be a unique value,
     /// i.e. different time zones may have the same abbreviation.
     /// 
-    /// **See also:** timeSpec()
+    /// **See also:** [`time_spec()`]
     time_zone() -> TimeZone,
     /// 
     /// Returns the Time Zone Abbreviation for the datetime.
@@ -258,7 +257,7 @@ struct DateTime {
     /// Note too that the abbreviation is not guaranteed to be a unique value,
     /// i.e. different time zones may have the same abbreviation.
     /// 
-    /// **See also:** timeSpec()
+    /// **See also:** [`time_spec()`]
     time_zone_abbreviation() -> String,
     /// 
     /// Returns if this datetime falls in Daylight-Saving Time.
@@ -266,7 +265,7 @@ struct DateTime {
     /// If the Qt::TimeSpec is not Qt::LocalTime or Qt::TimeZone then will always
     /// return false.
     /// 
-    /// **See also:** timeSpec()
+    /// **See also:** [`time_spec()`]
     is_daylight_time() -> bool,
     /// 
     /// Returns the datetime as the number of milliseconds that have passed
@@ -279,8 +278,8 @@ struct DateTime {
     /// this object is not valid. However, for all valid dates, this function
     /// returns a unique value.
     /// 
-    /// **See also:** toSecsSinceEpoch()
-    /// setMSecsSinceEpoch()
+    /// **See also:** [`to_secs_since_epoch()`]
+    /// [`set_m_secs_since_epoch()`]
     to_m_secs_since_epoch() -> i64,
     /// 
     /// Returns the datetime as the number of seconds that have passed since
@@ -293,16 +292,16 @@ struct DateTime {
     /// this object is not valid. However, for all valid dates, this function
     /// returns a unique value.
     /// 
-    /// **See also:** toMSecsSinceEpoch()
-    /// setSecsSinceEpoch()
+    /// **See also:** [`to_m_secs_since_epoch()`]
+    /// [`set_secs_since_epoch()`]
     to_secs_since_epoch() -> i64,
     /// 
     /// Sets the date part of this datetime to *date.* If no time is set yet, it
     /// is set to midnight. If *date* is invalid, this QDateTime becomes invalid.
     /// 
-    /// **See also:** date()
-    /// setTime()
-    /// setTimeSpec()
+    /// **See also:** [`date()`]
+    /// [`set_time()`]
+    /// [`set_time_spec()`]
     set_date(date: &DateType),
     /// 
     /// Sets the time part of this datetime to *time.* If *time* is not valid,
@@ -314,9 +313,9 @@ struct DateTime {
     /// dt.setTime(QTime());
     /// ```
     /// 
-    /// **See also:** time()
-    /// setDate()
-    /// setTimeSpec()
+    /// **See also:** [`time()`]
+    /// [`set_date()`]
+    /// [`set_time_spec()`]
     /// 
     /// Sets the time specification used in this datetime to *spec.*
     /// The datetime will refer to a different point in time.
@@ -329,19 +328,19 @@ struct DateTime {
     /// 
     /// Example:
     /// 
-    /// **See also:** timeSpec()
-    /// setDate()
-    /// setTime()
-    /// setTimeZone()
-    /// Qt::TimeSpec
+    /// **See also:** [`time_spec()`]
+    /// [`set_date()`]
+    /// [`set_time()`]
+    /// [`set_time_zone()`]
+    /// [`t::time_spec()`]
     /// 
     /// Sets the time zone used in this datetime to *toZone.*
     /// The datetime will refer to a different point in time.
     /// 
     /// If *toZone* is invalid then the datetime will be invalid.
     /// 
-    /// **See also:** timeZone()
-    /// Qt::TimeSpec
+    /// **See also:** [`time_zone()`]
+    /// [`t::time_spec()`]
     /// 
     /// Sets the date and time given the number of *seconds* that have
     /// passed since 1970-01-01T00:00:00, Coordinated Universal Time
@@ -350,7 +349,7 @@ struct DateTime {
     /// 
     /// **Note**: This function is deprecated. For new code, use setSecsSinceEpoch().
     /// 
-    /// **See also:** toTime_t()
+    /// **See also:** [`to_time_t()`]
     set_time(time: &TimeType),
     /// 
     /// Sets the time specification used in this datetime to *spec.*
@@ -364,11 +363,11 @@ struct DateTime {
     /// 
     /// Example:
     /// 
-    /// **See also:** timeSpec()
-    /// setDate()
-    /// setTime()
-    /// setTimeZone()
-    /// Qt::TimeSpec
+    /// **See also:** [`time_spec()`]
+    /// [`set_date()`]
+    /// [`set_time()`]
+    /// [`set_time_zone()`]
+    /// [`t::time_spec()`]
     set_time_spec(spec: Rute::TimeSpec),
     /// 
     /// Sets the timeSpec() to Qt::OffsetFromUTC and the offset to *offsetSeconds.*
@@ -380,8 +379,8 @@ struct DateTime {
     /// 
     /// If *offsetSeconds* is 0 then the timeSpec() will be set to Qt::UTC.
     /// 
-    /// **See also:** isValid()
-    /// offsetFromUtc()
+    /// **See also:** [`is_valid()`]
+    /// [`offset_from_utc()`]
     set_offset_from_utc(offset_seconds: i32),
     /// 
     /// Sets the time zone used in this datetime to *toZone.*
@@ -389,8 +388,8 @@ struct DateTime {
     /// 
     /// If *toZone* is invalid then the datetime will be invalid.
     /// 
-    /// **See also:** timeZone()
-    /// Qt::TimeSpec
+    /// **See also:** [`time_zone()`]
+    /// [`t::time_spec()`]
     set_time_zone(to_zone: &TimeZoneType),
     /// 
     /// Sets the date and time given the number of milliseconds *msecs* that have
@@ -402,8 +401,8 @@ struct DateTime {
     /// ( `std::numeric_limits<qint64>::min()` ) to *msecs* will result in
     /// undefined behavior.
     /// 
-    /// **See also:** toMSecsSinceEpoch()
-    /// setSecsSinceEpoch()
+    /// **See also:** [`to_m_secs_since_epoch()`]
+    /// [`set_secs_since_epoch()`]
     set_m_secs_since_epoch(msecs: i64),
     /// 
     /// Sets the date and time given the number of seconds *secs* that have
@@ -411,8 +410,8 @@ struct DateTime {
     /// (Qt::UTC). On systems that do not support time zones this function
     /// will behave as if local time were Qt::UTC.
     /// 
-    /// **See also:** toSecsSinceEpoch()
-    /// setMSecsSinceEpoch()
+    /// **See also:** [`to_secs_since_epoch()`]
+    /// [`set_m_secs_since_epoch()`]
     set_secs_since_epoch(secs: i64),
     /// 
     /// Returns a QDateTime object containing a datetime *ndays* days
@@ -425,10 +424,10 @@ struct DateTime {
     /// is at 2am and the clock goes forward to 3am and the result falls between
     /// 2am and 3am then the result will be adjusted to fall after 3am.
     /// 
-    /// **See also:** daysTo()
-    /// addMonths()
-    /// addYears()
-    /// addSecs()
+    /// **See also:** [`days_to()`]
+    /// [`add_months()`]
+    /// [`add_years()`]
+    /// [`add_secs()`]
     add_days(days: i64) -> DateTime,
     /// 
     /// Returns a QDateTime object containing a datetime *nmonths* months
@@ -441,10 +440,10 @@ struct DateTime {
     /// is at 2am and the clock goes forward to 3am and the result falls between
     /// 2am and 3am then the result will be adjusted to fall after 3am.
     /// 
-    /// **See also:** daysTo()
-    /// addDays()
-    /// addYears()
-    /// addSecs()
+    /// **See also:** [`days_to()`]
+    /// [`add_days()`]
+    /// [`add_years()`]
+    /// [`add_secs()`]
     add_months(months: i32) -> DateTime,
     /// 
     /// Returns a QDateTime object containing a datetime *nyears* years
@@ -457,10 +456,10 @@ struct DateTime {
     /// is at 2am and the clock goes forward to 3am and the result falls between
     /// 2am and 3am then the result will be adjusted to fall after 3am.
     /// 
-    /// **See also:** daysTo()
-    /// addDays()
-    /// addMonths()
-    /// addSecs()
+    /// **See also:** [`days_to()`]
+    /// [`add_days()`]
+    /// [`add_months()`]
+    /// [`add_secs()`]
     add_years(years: i32) -> DateTime,
     /// 
     /// Returns a QDateTime object containing a datetime *s* seconds
@@ -469,11 +468,11 @@ struct DateTime {
     /// 
     /// If this datetime is invalid, an invalid datetime will be returned.
     /// 
-    /// **See also:** addMSecs()
-    /// secsTo()
-    /// addDays()
-    /// addMonths()
-    /// addYears()
+    /// **See also:** [`add_m_secs()`]
+    /// [`secs_to()`]
+    /// [`add_days()`]
+    /// [`add_months()`]
+    /// [`add_years()`]
     add_secs(secs: i64) -> DateTime,
     /// 
     /// Returns a QDateTime object containing a datetime *msecs* miliseconds
@@ -482,11 +481,11 @@ struct DateTime {
     /// 
     /// If this datetime is invalid, an invalid datetime will be returned.
     /// 
-    /// **See also:** addSecs()
-    /// msecsTo()
-    /// addDays()
-    /// addMonths()
-    /// addYears()
+    /// **See also:** [`add_secs()`]
+    /// [`msecs_to()`]
+    /// [`add_days()`]
+    /// [`add_months()`]
+    /// [`add_years()`]
     add_m_secs(msecs: i64) -> DateTime,
     /// 
     /// Returns a copy of this datetime converted to the given time
@@ -500,10 +499,10 @@ struct DateTime {
     /// 
     /// Example:
     /// 
-    /// **See also:** timeSpec()
-    /// toTimeZone()
-    /// toUTC()
-    /// toLocalTime()
+    /// **See also:** [`time_spec()`]
+    /// [`to_time_zone()`]
+    /// [`to_utc()`]
+    /// [`to_local_time()`]
     to_time_spec(spec: Rute::TimeSpec) -> DateTime,
     /// 
     /// Returns a datetime containing the date and time information in
@@ -511,7 +510,7 @@ struct DateTime {
     /// 
     /// Example:
     /// 
-    /// **See also:** toTimeSpec()
+    /// **See also:** [`to_time_spec()`]
     to_local_time() -> DateTime,
     /// 
     /// Returns a datetime containing the date and time information in
@@ -519,7 +518,7 @@ struct DateTime {
     /// 
     /// Example:
     /// 
-    /// **See also:** toTimeSpec()
+    /// **See also:** [`to_time_spec()`]
     to_utc() -> DateTime,
     /// 
     /// Returns a copy of this datetime converted to a spec of Qt::OffsetFromUTC
@@ -527,15 +526,15 @@ struct DateTime {
     /// 
     /// If the *offsetSeconds* equals 0 then a UTC datetime will be returned
     /// 
-    /// **See also:** setOffsetFromUtc()
-    /// offsetFromUtc()
-    /// toTimeSpec()
+    /// **See also:** [`set_offset_from_utc()`]
+    /// [`offset_from_utc()`]
+    /// [`to_time_spec()`]
     to_offset_from_utc(offset_seconds: i32) -> DateTime,
     /// 
     /// Returns a copy of this datetime converted to the given *timeZone*
     /// 
-    /// **See also:** timeZone()
-    /// toTimeSpec()
+    /// **See also:** [`time_zone()`]
+    /// [`to_time_spec()`]
     to_time_zone(to_zone: &TimeZoneType) -> DateTime,
     /// 
     /// Returns the number of days from this datetime to the *other*
@@ -549,9 +548,9 @@ struct DateTime {
     /// 
     /// Example:
     /// 
-    /// **See also:** addDays()
-    /// secsTo()
-    /// msecsTo()
+    /// **See also:** [`add_days()`]
+    /// [`secs_to()`]
+    /// [`msecs_to()`]
     days_to(arg0: &DateTimeType) -> i64,
     /// 
     /// Returns the number of seconds from this datetime to the *other*
@@ -566,9 +565,9 @@ struct DateTime {
     /// 
     /// Example:
     /// 
-    /// **See also:** addSecs()
-    /// daysTo()
-    /// QTime::secsTo()
+    /// **See also:** [`add_secs()`]
+    /// [`days_to()`]
+    /// [`Time::secs_to`]
     secs_to(arg0: &DateTimeType) -> i64,
     /// 
     /// Returns the number of milliseconds from this datetime to the *other*
@@ -581,9 +580,9 @@ struct DateTime {
     /// 
     /// Returns 0 if either datetime is invalid.
     /// 
-    /// **See also:** addMSecs()
-    /// daysTo()
-    /// QTime::msecsTo()
+    /// **See also:** [`add_m_secs()`]
+    /// [`days_to()`]
+    /// [`Time::msecs_to`]
     msecs_to(arg0: &DateTimeType) -> i64,
     set_utc_offset(seconds: i32),
     utc_offset() -> i32,
@@ -591,27 +590,27 @@ struct DateTime {
     /// Returns the current datetime, as reported by the system clock, in
     /// the local time zone.
     /// 
-    /// **See also:** currentDateTimeUtc()
-    /// QDate::currentDate()
-    /// QTime::currentTime()
-    /// toTimeSpec()
+    /// **See also:** [`current_date_time_utc()`]
+    /// [`Date::current_date`]
+    /// [`Time::current_time`]
+    /// [`to_time_spec()`]
     /// 
     /// Returns the current datetime, as reported by the system clock, in
     /// UTC.
     /// 
-    /// **See also:** currentDateTime()
-    /// QDate::currentDate()
-    /// QTime::currentTime()
-    /// toTimeSpec()
+    /// **See also:** [`current_date_time()`]
+    /// [`Date::current_date`]
+    /// [`Time::current_time`]
+    /// [`to_time_spec()`]
     [static] current_date_time() -> DateTime,
     /// 
     /// Returns the current datetime, as reported by the system clock, in
     /// UTC.
     /// 
-    /// **See also:** currentDateTime()
-    /// QDate::currentDate()
-    /// QTime::currentTime()
-    /// toTimeSpec()
+    /// **See also:** [`current_date_time()`]
+    /// [`Date::current_date`]
+    /// [`Time::current_time`]
+    /// [`to_time_spec()`]
     [static] current_date_time_utc() -> DateTime,
     /// 
     /// Returns the datetime as the number of seconds that have passed
@@ -628,9 +627,9 @@ struct DateTime {
     /// 
     /// To get an extended range, use toMSecsSinceEpoch() or toSecsSinceEpoch().
     /// 
-    /// **See also:** toSecsSinceEpoch()
-    /// toMSecsSinceEpoch()
-    /// setTime_t()
+    /// **See also:** [`to_secs_since_epoch()`]
+    /// [`to_m_secs_since_epoch()`]
+    /// [`set_time_t()`]
     to_time_t() -> uint,
     /// 
     /// Sets the date and time given the number of *seconds* that have
@@ -640,7 +639,7 @@ struct DateTime {
     /// 
     /// **Note**: This function is deprecated. For new code, use setSecsSinceEpoch().
     /// 
-    /// **See also:** toTime_t()
+    /// **See also:** [`to_time_t()`]
     set_time_t(secs_since1_jan1970_utc: uint),
     /// 
     /// Returns a datetime whose date and time are the number of *seconds*
@@ -651,8 +650,8 @@ struct DateTime {
     /// **Note**: This function is deprecated. Please use fromSecsSinceEpoch() in new
     /// code.
     /// 
-    /// **See also:** toTime_t()
-    /// setTime_t()
+    /// **See also:** [`to_time_t()`]
+    /// [`set_time_t()`]
     /// 
     /// Returns a datetime whose date and time are the number of *seconds*
     /// that have passed since 1970-01-01T00:00:00, Coordinated Universal
@@ -665,8 +664,8 @@ struct DateTime {
     /// **Note**: This function is deprecated. Please use fromSecsSinceEpoch() in new
     /// code.
     /// 
-    /// **See also:** toTime_t()
-    /// setTime_t()
+    /// **See also:** [`to_time_t()`]
+    /// [`set_time_t()`]
     /// 
     /// Returns a datetime whose date and time are the number of *seconds*
     /// that have passed since 1970-01-01T00:00:00, Coordinated Universal
@@ -675,8 +674,8 @@ struct DateTime {
     /// **Note**: This function is deprecated. Please use fromSecsSinceEpoch() in new
     /// code.
     /// 
-    /// **See also:** toTime_t()
-    /// setTime_t()
+    /// **See also:** [`to_time_t()`]
+    /// [`set_time_t()`]
     [static] from_time_t(secs_since1_jan1970_utc: uint) -> DateTime,
     /// 
     /// Returns a datetime whose date and time are the number of *seconds*
@@ -687,8 +686,8 @@ struct DateTime {
     /// **Note**: This function is deprecated. Please use fromSecsSinceEpoch() in new
     /// code.
     /// 
-    /// **See also:** toTime_t()
-    /// setTime_t()
+    /// **See also:** [`to_time_t()`]
+    /// [`set_time_t()`]
     /// 
     /// Returns a datetime whose date and time are the number of *seconds*
     /// that have passed since 1970-01-01T00:00:00, Coordinated Universal
@@ -701,8 +700,8 @@ struct DateTime {
     /// **Note**: This function is deprecated. Please use fromSecsSinceEpoch() in new
     /// code.
     /// 
-    /// **See also:** toTime_t()
-    /// setTime_t()
+    /// **See also:** [`to_time_t()`]
+    /// [`set_time_t()`]
     /// 
     /// Returns a datetime whose date and time are the number of *seconds*
     /// that have passed since 1970-01-01T00:00:00, Coordinated Universal
@@ -711,8 +710,9 @@ struct DateTime {
     /// **Note**: This function is deprecated. Please use fromSecsSinceEpoch() in new
     /// code.
     /// 
-    /// **See also:** toTime_t()
-    /// setTime_t()
+    /// **See also:** [`to_time_t()`]
+    /// [`set_time_t()`]
+    [org_name(fromTime_t)]
     [static] from_time_t_2(secs_since1_jan1970_utc: uint, spec: Rute::TimeSpec, offset_from_utc: i32) -> DateTime,
     /// 
     /// Returns a datetime whose date and time are the number of *seconds*
@@ -723,8 +723,8 @@ struct DateTime {
     /// **Note**: This function is deprecated. Please use fromSecsSinceEpoch() in new
     /// code.
     /// 
-    /// **See also:** toTime_t()
-    /// setTime_t()
+    /// **See also:** [`to_time_t()`]
+    /// [`set_time_t()`]
     /// 
     /// Returns a datetime whose date and time are the number of *seconds*
     /// that have passed since 1970-01-01T00:00:00, Coordinated Universal
@@ -737,8 +737,8 @@ struct DateTime {
     /// **Note**: This function is deprecated. Please use fromSecsSinceEpoch() in new
     /// code.
     /// 
-    /// **See also:** toTime_t()
-    /// setTime_t()
+    /// **See also:** [`to_time_t()`]
+    /// [`set_time_t()`]
     /// 
     /// Returns a datetime whose date and time are the number of *seconds*
     /// that have passed since 1970-01-01T00:00:00, Coordinated Universal
@@ -747,8 +747,9 @@ struct DateTime {
     /// **Note**: This function is deprecated. Please use fromSecsSinceEpoch() in new
     /// code.
     /// 
-    /// **See also:** toTime_t()
-    /// setTime_t()
+    /// **See also:** [`to_time_t()`]
+    /// [`set_time_t()`]
+    [org_name(fromTime_t)]
     [static] from_time_t_3(secs_since1_jan1970_utc: uint, time_zone: &TimeZoneType) -> DateTime,
     /// 
     /// Returns a datetime whose date and time are the number of milliseconds, *msecs,*
@@ -760,8 +761,8 @@ struct DateTime {
     /// range of QDateTime, both negative and positive. The behavior of this
     /// function is undefined for those values.
     /// 
-    /// **See also:** toMSecsSinceEpoch()
-    /// setMSecsSinceEpoch()
+    /// **See also:** [`to_m_secs_since_epoch()`]
+    /// [`set_m_secs_since_epoch()`]
     /// 
     /// Returns a datetime whose date and time are the number of milliseconds *msecs*
     /// that have passed since 1970-01-01T00:00:00.000, Coordinated Universal
@@ -778,14 +779,14 @@ struct DateTime {
     /// If *spec* is Qt::TimeZone then the spec will be set to Qt::LocalTime,
     /// i.e. the current system time zone.
     /// 
-    /// **See also:** toMSecsSinceEpoch()
-    /// setMSecsSinceEpoch()
+    /// **See also:** [`to_m_secs_since_epoch()`]
+    /// [`set_m_secs_since_epoch()`]
     /// 
     /// Returns a datetime whose date and time are the number of milliseconds *msecs*
     /// that have passed since 1970-01-01T00:00:00.000, Coordinated Universal
     /// Time (Qt::UTC) and with the given *timeZone.*
     /// 
-    /// **See also:** fromSecsSinceEpoch()
+    /// **See also:** [`from_secs_since_epoch()`]
     [static] from_m_secs_since_epoch(msecs: i64) -> DateTime,
     /// 
     /// Returns a datetime whose date and time are the number of milliseconds, *msecs,*
@@ -797,8 +798,8 @@ struct DateTime {
     /// range of QDateTime, both negative and positive. The behavior of this
     /// function is undefined for those values.
     /// 
-    /// **See also:** toMSecsSinceEpoch()
-    /// setMSecsSinceEpoch()
+    /// **See also:** [`to_m_secs_since_epoch()`]
+    /// [`set_m_secs_since_epoch()`]
     /// 
     /// Returns a datetime whose date and time are the number of milliseconds *msecs*
     /// that have passed since 1970-01-01T00:00:00.000, Coordinated Universal
@@ -815,14 +816,15 @@ struct DateTime {
     /// If *spec* is Qt::TimeZone then the spec will be set to Qt::LocalTime,
     /// i.e. the current system time zone.
     /// 
-    /// **See also:** toMSecsSinceEpoch()
-    /// setMSecsSinceEpoch()
+    /// **See also:** [`to_m_secs_since_epoch()`]
+    /// [`set_m_secs_since_epoch()`]
     /// 
     /// Returns a datetime whose date and time are the number of milliseconds *msecs*
     /// that have passed since 1970-01-01T00:00:00.000, Coordinated Universal
     /// Time (Qt::UTC) and with the given *timeZone.*
     /// 
-    /// **See also:** fromSecsSinceEpoch()
+    /// **See also:** [`from_secs_since_epoch()`]
+    [org_name(fromMSecsSinceEpoch)]
     [static] from_m_secs_since_epoch_2(msecs: i64, spec: Rute::TimeSpec, offset_from_utc: i32) -> DateTime,
     /// 
     /// Returns a datetime whose date and time are the number of seconds *secs*
@@ -840,14 +842,14 @@ struct DateTime {
     /// If *spec* is Qt::TimeZone then the spec will be set to Qt::LocalTime,
     /// i.e. the current system time zone.
     /// 
-    /// **See also:** toSecsSinceEpoch()
-    /// setSecsSinceEpoch()
+    /// **See also:** [`to_secs_since_epoch()`]
+    /// [`set_secs_since_epoch()`]
     /// 
     /// Returns a datetime whose date and time are the number of seconds *secs*
     /// that have passed since 1970-01-01T00:00:00.000, Coordinated Universal
     /// Time (Qt::UTC) and with the given *timeZone.*
     /// 
-    /// **See also:** fromMSecsSinceEpoch()
+    /// **See also:** [`from_m_secs_since_epoch()`]
     [static] from_secs_since_epoch(secs: i64, spe: Rute::TimeSpec, offset_from_utc: i32) -> DateTime,
     /// 
     /// Returns a datetime whose date and time are the number of milliseconds, *msecs,*
@@ -859,8 +861,8 @@ struct DateTime {
     /// range of QDateTime, both negative and positive. The behavior of this
     /// function is undefined for those values.
     /// 
-    /// **See also:** toMSecsSinceEpoch()
-    /// setMSecsSinceEpoch()
+    /// **See also:** [`to_m_secs_since_epoch()`]
+    /// [`set_m_secs_since_epoch()`]
     /// 
     /// Returns a datetime whose date and time are the number of milliseconds *msecs*
     /// that have passed since 1970-01-01T00:00:00.000, Coordinated Universal
@@ -877,14 +879,15 @@ struct DateTime {
     /// If *spec* is Qt::TimeZone then the spec will be set to Qt::LocalTime,
     /// i.e. the current system time zone.
     /// 
-    /// **See also:** toMSecsSinceEpoch()
-    /// setMSecsSinceEpoch()
+    /// **See also:** [`to_m_secs_since_epoch()`]
+    /// [`set_m_secs_since_epoch()`]
     /// 
     /// Returns a datetime whose date and time are the number of milliseconds *msecs*
     /// that have passed since 1970-01-01T00:00:00.000, Coordinated Universal
     /// Time (Qt::UTC) and with the given *timeZone.*
     /// 
-    /// **See also:** fromSecsSinceEpoch()
+    /// **See also:** [`from_secs_since_epoch()`]
+    [org_name(fromMSecsSinceEpoch)]
     [static] from_m_secs_since_epoch_3(msecs: i64, time_zone: &TimeZoneType) -> DateTime,
     /// 
     /// Returns a datetime whose date and time are the number of seconds *secs*
@@ -902,30 +905,31 @@ struct DateTime {
     /// If *spec* is Qt::TimeZone then the spec will be set to Qt::LocalTime,
     /// i.e. the current system time zone.
     /// 
-    /// **See also:** toSecsSinceEpoch()
-    /// setSecsSinceEpoch()
+    /// **See also:** [`to_secs_since_epoch()`]
+    /// [`set_secs_since_epoch()`]
     /// 
     /// Returns a datetime whose date and time are the number of seconds *secs*
     /// that have passed since 1970-01-01T00:00:00.000, Coordinated Universal
     /// Time (Qt::UTC) and with the given *timeZone.*
     /// 
-    /// **See also:** fromMSecsSinceEpoch()
+    /// **See also:** [`from_m_secs_since_epoch()`]
+    [org_name(fromSecsSinceEpoch)]
     [static] from_secs_since_epoch_2(secs: i64, time_zone: &TimeZoneType) -> DateTime,
     /// 
     /// Returns the number of milliseconds since 1970-01-01T00:00:00 Universal
     /// Coordinated Time. This number is like the POSIX time_t variable, but
     /// expressed in milliseconds instead.
     /// 
-    /// **See also:** currentDateTime()
-    /// currentDateTimeUtc()
-    /// toTime_t()
-    /// toTimeSpec()
+    /// **See also:** [`current_date_time()`]
+    /// [`current_date_time_utc()`]
+    /// [`to_time_t()`]
+    /// [`to_time_spec()`]
     [static] current_m_secs_since_epoch() -> i64,
     /// 
     /// Returns the number of seconds since 1970-01-01T00:00:00 Universal
     /// Coordinated Time.
     /// 
-    /// **See also:** currentMSecsSinceEpoch()
+    /// **See also:** [`current_m_secs_since_epoch()`]
     [static] current_secs_since_epoch() -> i64,
 }
 

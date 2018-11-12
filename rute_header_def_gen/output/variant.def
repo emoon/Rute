@@ -64,77 +64,10 @@
 /// Hence, it is important to have both functions return true for a
 /// successful conversion.
 /// 
-/// **See also:** QMetaType
+/// **See also:** [`MetaType`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QVariant)]
-enum Type {
-    Invalid,
-    Bool,
-    Int,
-    UInt,
-    LongLong,
-    ULongLong,
-    Double,
-    Char,
-    Map,
-    List,
-    String,
-    StringList,
-    ByteArray,
-    BitArray,
-    Date,
-    Time,
-    DateTime,
-    Url,
-    Locale,
-    Rect,
-    RectF,
-    Size,
-    SizeF,
-    Line,
-    LineF,
-    Point,
-    PointF,
-    RegExp,
-    RegularExpression,
-    Hash,
-    EasingCurve,
-    Uuid,
-    ModelIndex,
-    PersistentModelIndex,
-    LastCoreType,
-    Font,
-    Pixmap,
-    Brush,
-    Color,
-    Palette,
-    Image,
-    Polygon,
-    Region,
-    Bitmap,
-    Cursor,
-    KeySequence,
-    Pen,
-    TextLength,
-    TextFormat,
-    Matrix,
-    Transform,
-    Matrix4x4,
-    Vector2D,
-    Vector3D,
-    Vector4D,
-    Quaternion,
-    PolygonF,
-    Icon,
-    LastGuiType,
-    SizePolicy,
-    UserType,
-    LastType,
-}
-
-
 struct Variant {
     /// 
     /// Swaps variant *other* with this variant. This operation is very
@@ -184,7 +117,7 @@ struct Variant {
     /// Returns the storage type of the value stored in the variant. For
     /// non-user types, this is the same as type().
     /// 
-    /// **See also:** type()
+    /// **See also:** [`type()`]
     user_type() -> i32,
     /// 
     /// Returns the name of the type stored in the variant. The returned
@@ -360,11 +293,11 @@ struct Variant {
     /// function the *targetTypeId* is QVariantHash or QVariantMap. It is possible to iterate over
     /// the contents of the container without extracting it as a (copied) QVariantHash or QVariantMap:
     /// 
-    /// **See also:** convert()
-    /// QSequentialIterable
-    /// Q_DECLARE_SEQUENTIAL_CONTAINER_METATYPE()
-    /// QAssociativeIterable
-    /// Q_DECLARE_ASSOCIATIVE_CONTAINER_METATYPE()
+    /// **See also:** [`convert()`]
+    /// [`SequentialIterable`]
+    /// [`q_declare_sequential_container_metatype()`]
+    /// [`AssociativeIterable`]
+    /// [`q_declare_associative_container_metatype()`]
     /// 
     /// Returns `true` if the variant can be converted to the template type `T` ,
     /// otherwise false.
@@ -375,7 +308,7 @@ struct Variant {
     /// function if a qobject_cast to the template type `T` would succeed. Note that this only works
     /// for QObject subclasses which use the Q_OBJECT macro.
     /// 
-    /// **See also:** convert()
+    /// **See also:** [`convert()`]
     can_convert(target_type_id: i32) -> bool,
     /// 
     /// Casts the variant to the requested type, *targetTypeId.* If the cast cannot be
@@ -395,7 +328,7 @@ struct Variant {
     /// and returning `false.`
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// clear()
+    /// [`clear()`]
     convert(target_type_id: i32) -> bool,
     /// 
     /// Returns `true` if the storage type of this variant is not
@@ -445,7 +378,7 @@ struct Variant {
     /// QString::toInt().
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_int(ok: *bool) -> i32,
     /// 
     /// Returns the variant as an unsigned int if the variant has userType()
@@ -473,7 +406,7 @@ struct Variant {
     /// QString::toUInt().
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_u_int(ok: *bool) -> uint,
     /// 
     /// Returns the variant as a long long int if the variant has userType()
@@ -495,7 +428,7 @@ struct Variant {
     /// converted to an int; otherwise `*` `ok` is set to false.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_long_long(ok: *bool) -> i64,
     /// 
     /// Returns the variant as an unsigned long long int if the
@@ -517,7 +450,7 @@ struct Variant {
     /// converted to an int; otherwise `*` *ok* is set to false.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_u_long_long(ok: *bool) -> qulonglong,
     /// 
     /// Returns the variant as a bool if the variant has userType() Bool.
@@ -539,7 +472,7 @@ struct Variant {
     /// following: empty, or ; otherwise returns `false.`
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_bool() -> bool,
     /// 
     /// Returns the variant as a double if the variant has userType()
@@ -561,7 +494,7 @@ struct Variant {
     /// converted to a double; otherwise `*` *ok* is set to false.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_double(ok: *bool) -> double,
     /// 
     /// Returns the variant as a float if the variant has userType()
@@ -583,7 +516,7 @@ struct Variant {
     /// converted to a double; otherwise `*` *ok* is set to false.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_float(ok: *bool) -> f32,
     /// 
     /// Returns the variant as a qreal if the variant has userType()
@@ -605,7 +538,7 @@ struct Variant {
     /// converted to a double; otherwise `*` *ok* is set to false.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_real(ok: *bool) -> f32,
     /// 
     /// Returns the variant as a QByteArray if the variant has userType()
@@ -615,7 +548,7 @@ struct Variant {
     /// QString::fromUtf8()); otherwise returns an empty byte array.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_byte_array() -> ByteArray,
     /// 
     /// Returns the variant as a QBitArray if the variant has userType()
@@ -623,7 +556,7 @@ struct Variant {
     /// otherwise returns an empty bit array.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_bit_array() -> BitArray,
     /// 
     /// Returns the variant as a QChar if the variant has userType()
@@ -634,7 +567,7 @@ struct Variant {
     /// returns an invalid QChar.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_char() -> Char,
     /// 
     /// Returns the variant as a QDate if the variant has userType()
@@ -649,7 +582,7 @@ struct Variant {
     /// the string cannot be parsed as a Qt::ISODate format date.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     /// 
     /// Returns the variant as a QDateTime if the variant has userType()
     /// [QMetaType::QDateTime,](QMetaType::QDateTime,)
@@ -663,7 +596,7 @@ struct Variant {
     /// returned if the string cannot be parsed as a Qt::ISODate format date/time.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_date() -> Date,
     /// 
     /// Returns the variant as a QTime if the variant has userType()
@@ -678,7 +611,7 @@ struct Variant {
     /// the string cannot be parsed as a Qt::ISODate format time.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_time() -> Time,
     /// 
     /// Returns the variant as a QDateTime if the variant has userType()
@@ -693,7 +626,7 @@ struct Variant {
     /// returned if the string cannot be parsed as a Qt::ISODate format date/time.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_date_time() -> DateTime,
     /// 
     /// Returns the variant as a QVariantList if the variant has userType()
@@ -703,7 +636,7 @@ struct Variant {
     /// an empty list.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_list() -> [Variant],
     /// 
     /// Returns the variant as a QMap<QString, QVariant> if the variant
@@ -711,7 +644,7 @@ struct Variant {
     /// otherwise returns an empty map.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_map() -> Map<QString,,
     /// 
     /// Returns the variant as a QHash<QString, QVariant> if the variant
@@ -719,7 +652,7 @@ struct Variant {
     /// otherwise returns an empty map.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_hash() -> Hash<QString,,
     /// 
     /// Returns the variant as a QPoint if the variant has userType()
@@ -729,7 +662,7 @@ struct Variant {
     /// QPoint.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     /// 
     /// Returns the variant as a QPointF if the variant has userType() [QMetaType::QPoint](QMetaType::QPoint)
     /// or [QMetaType::QPointF;](QMetaType::QPointF;)
@@ -737,7 +670,7 @@ struct Variant {
     /// QPointF.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_point() -> Point,
     /// 
     /// Returns the variant as a QPointF if the variant has userType() [QMetaType::QPoint](QMetaType::QPoint)
@@ -746,7 +679,7 @@ struct Variant {
     /// QPointF.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_point_f() -> PointF,
     /// 
     /// Returns the variant as a QRect if the variant has userType()
@@ -754,7 +687,7 @@ struct Variant {
     /// otherwise returns an invalid QRect.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     /// 
     /// Returns the variant as a QRectF if the variant has userType()
     /// [QMetaType::QRect](QMetaType::QRect)
@@ -763,7 +696,7 @@ struct Variant {
     /// QRectF.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_rect() -> Rect,
     /// 
     /// Returns the variant as a QSize if the variant has userType()
@@ -771,20 +704,20 @@ struct Variant {
     /// otherwise returns an invalid QSize.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     /// 
     /// Returns the variant as a QSizeF if the variant has userType() [QMetaType::QSizeF;](QMetaType::QSizeF;)
     /// otherwise returns an invalid QSizeF.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_size() -> Size,
     /// 
     /// Returns the variant as a QSizeF if the variant has userType() [QMetaType::QSizeF;](QMetaType::QSizeF;)
     /// otherwise returns an invalid QSizeF.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_size_f() -> SizeF,
     /// 
     /// Returns the variant as a QLineF if the variant has userType()
@@ -792,14 +725,14 @@ struct Variant {
     /// otherwise returns an invalid QLineF.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     /// 
     /// Returns the variant as a QLine if the variant has userType()
     /// [QMetaType::QLine;](QMetaType::QLine;)
     /// otherwise returns an invalid QLine.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_line() -> Line,
     /// 
     /// Returns the variant as a QLineF if the variant has userType()
@@ -807,7 +740,7 @@ struct Variant {
     /// otherwise returns an invalid QLineF.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_line_f() -> LineF,
     /// 
     /// Returns the variant as a QRectF if the variant has userType()
@@ -817,7 +750,7 @@ struct Variant {
     /// QRectF.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_rect_f() -> RectF,
     /// 
     /// Returns the variant as a QLocale if the variant has userType()
@@ -825,7 +758,7 @@ struct Variant {
     /// otherwise returns an invalid QLocale.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_locale() -> Locale,
     /// 
     /// Returns the variant as a QRegExp if the variant has userType()
@@ -833,14 +766,14 @@ struct Variant {
     /// otherwise returns an empty QRegExp.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_reg_exp() -> RegExp,
     /// 
     /// Returns the variant as a QRegularExpression if the variant has userType() [QRegularExpression;](QRegularExpression;)
     /// otherwise returns an empty QRegularExpression.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_regular_expression() -> RegularExpression,
     /// 
     /// Returns the variant as a QUrl if the variant has userType()
@@ -848,7 +781,7 @@ struct Variant {
     /// otherwise returns an invalid QUrl.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_url() -> Url,
     /// 
     /// Returns the variant as a QEasingCurve if the variant has userType()
@@ -856,7 +789,7 @@ struct Variant {
     /// otherwise returns a default easing curve.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_easing_curve() -> EasingCurve,
     /// 
     /// Returns the variant as a QUuid if the variant has type()
@@ -867,51 +800,51 @@ struct Variant {
     /// otherwise returns a default-constructed QUuid.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_uuid() -> Uuid,
     /// 
     /// Returns the variant as a QJsonValue if the variant has userType() [QJsonValue;](QJsonValue;)
     /// otherwise returns a default constructed QJsonValue.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_json_value() -> JsonValue,
     /// 
     /// Returns the variant as a QJsonObject if the variant has userType() [QJsonObject;](QJsonObject;)
     /// otherwise returns a default constructed QJsonObject.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_json_object() -> JsonObject,
     /// 
     /// Returns the variant as a QJsonArray if the variant has userType() [QJsonArray;](QJsonArray;)
     /// otherwise returns a default constructed QJsonArray.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_json_array() -> JsonArray,
     /// 
     /// Returns the variant as a QJsonDocument if the variant has userType() [QJsonDocument;](QJsonDocument;)
     /// otherwise returns a default constructed QJsonDocument.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
+    /// [`convert()`]
     to_json_document() -> JsonDocument,
     /// 
     /// Returns the variant as a QModelIndex if the variant has userType() [QModelIndex;](QModelIndex;)
     /// otherwise returns a default constructed QModelIndex.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
-    /// toPersistentModelIndex()
+    /// [`convert()`]
+    /// [`to_persistent_model_index()`]
     to_model_index() -> ModelIndex,
     /// 
     /// Returns the variant as a QPersistentModelIndex if the variant has userType() [QPersistentModelIndex;](QPersistentModelIndex;)
     /// otherwise returns a default constructed QPersistentModelIndex.
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// convert()
-    /// toModelIndex()
+    /// [`convert()`]
+    /// [`to_model_index()`]
     to_persistent_model_index() -> PersistentModelIndex,
     load(ds: &DataStreamType),
     save(ds: &DataStreamType),
@@ -929,6 +862,7 @@ struct Variant {
     [static] name_to_type(name: *char) -> Variant::Type,
     data(),
     const_data(),
+    [org_name(data)]
     data_2(),
     create(type: i32, copy: *void),
     cmp(other: &VariantType) -> bool,
@@ -951,8 +885,75 @@ struct Variant {
     /// and returning `false.`
     /// 
     /// **See also:** canConvert(int targetTypeId)
-    /// clear()
+    /// [`clear()`]
+    [org_name(convert)]
     convert_2(t: i32, ptr: *void) -> bool,
+}
+
+[org_name(QVariant)]
+enum Type {
+    Invalid,
+    Bool,
+    Int,
+    UInt,
+    LongLong,
+    ULongLong,
+    Double,
+    Char,
+    Map,
+    List,
+    String,
+    StringList,
+    ByteArray,
+    BitArray,
+    Date,
+    Time,
+    DateTime,
+    Url,
+    Locale,
+    Rect,
+    RectF,
+    Size,
+    SizeF,
+    Line,
+    LineF,
+    Point,
+    PointF,
+    RegExp,
+    RegularExpression,
+    Hash,
+    EasingCurve,
+    Uuid,
+    ModelIndex,
+    PersistentModelIndex,
+    LastCoreType,
+    Font,
+    Pixmap,
+    Brush,
+    Color,
+    Palette,
+    Image,
+    Polygon,
+    Region,
+    Bitmap,
+    Cursor,
+    KeySequence,
+    Pen,
+    TextLength,
+    TextFormat,
+    Matrix,
+    Transform,
+    Matrix4x4,
+    Vector2D,
+    Vector3D,
+    Vector4D,
+    Quaternion,
+    PolygonF,
+    Icon,
+    LastGuiType,
+    SizePolicy,
+    UserType,
+    LastType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -34,13 +34,12 @@
 /// 
 /// ![qtextblock-sequence.png](qtextblock-sequence.png)
 /// 
-/// **See also:** QTextBlockFormat
-/// QTextCharFormat
-/// QTextFragment
+/// **See also:** [`TextBlockFormat`]
+/// [`TextCharFormat`]
+/// [`TextFragment`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct TextBlock {
     /// 
     /// Returns `true` if this text block is valid; otherwise returns `false.`
@@ -54,9 +53,9 @@ struct TextBlock {
     /// **Note**: The length returned includes all formatting characters,
     /// for example, newline.
     /// 
-    /// **See also:** text()
-    /// charFormat()
-    /// blockFormat()
+    /// **See also:** [`text()`]
+    /// [`char_format()`]
+    /// [`block_format()`]
     length() -> i32,
     /// 
     /// Returns `true` if the given *position* is located within the text
@@ -70,47 +69,47 @@ struct TextBlock {
     /// documentChanged implementation of a QAbstractTextDocumentLayout subclass.
     /// Any changes applied from the outside cause undefined behavior.
     /// 
-    /// **See also:** clearLayout()
+    /// **See also:** [`clear_layout()`]
     layout() -> TextLayout?,
     /// 
     /// Clears the QTextLayout that is used to lay out and display the
     /// block's contents.
     /// 
-    /// **See also:** layout()
+    /// **See also:** [`layout()`]
     clear_layout(),
     /// 
     /// Returns the QTextBlockFormat that describes block-specific properties.
     /// 
-    /// **See also:** charFormat()
+    /// **See also:** [`char_format()`]
     /// 
     /// Returns an index into the document's internal list of block formats
     /// for the text block's format.
     /// 
-    /// **See also:** QTextDocument::allFormats()
+    /// **See also:** [`TextDocument::all_formats`]
     block_format() -> TextBlockFormat,
     /// 
     /// Returns an index into the document's internal list of block formats
     /// for the text block's format.
     /// 
-    /// **See also:** QTextDocument::allFormats()
+    /// **See also:** [`TextDocument::all_formats`]
     block_format_index() -> i32,
     /// 
     /// Returns the QTextCharFormat that describes the block's character
     /// format. The block's character format is used when inserting text into
     /// an empty block.
     /// 
-    /// **See also:** blockFormat()
+    /// **See also:** [`block_format()`]
     /// 
     /// Returns an index into the document's internal list of character formats
     /// for the text block's character format.
     /// 
-    /// **See also:** QTextDocument::allFormats()
+    /// **See also:** [`TextDocument::all_formats`]
     char_format() -> TextCharFormat,
     /// 
     /// Returns an index into the document's internal list of character formats
     /// for the text block's character format.
     /// 
-    /// **See also:** QTextDocument::allFormats()
+    /// **See also:** [`TextDocument::all_formats`]
     char_format_index() -> i32,
     /// 
     /// Returns the resolved text direction.
@@ -119,9 +118,9 @@ struct TextBlock {
     /// direction from the blocks content. Returns either Qt::LeftToRight
     /// or Qt::RightToLeft.
     /// 
-    /// **See also:** QTextFormat::layoutDirection()
-    /// QString::isRightToLeft()
-    /// Qt::LayoutDirection
+    /// **See also:** [`TextFormat::layout_direction`]
+    /// [`String::is_right_to_left`]
+    /// [`t::layout_direction()`]
     text_direction() -> Rute::LayoutDirection,
     /// 
     /// Returns the resolved text direction.
@@ -130,22 +129,22 @@ struct TextBlock {
     /// direction from the blocks content. Returns either Qt::LeftToRight
     /// or Qt::RightToLeft.
     /// 
-    /// **See also:** QTextFormat::layoutDirection()
-    /// QString::isRightToLeft()
-    /// Qt::LayoutDirection
+    /// **See also:** [`TextFormat::layout_direction`]
+    /// [`String::is_right_to_left`]
+    /// [`t::layout_direction()`]
     /// 
     /// Returns the block's contents as plain text.
     /// 
-    /// **See also:** length()
-    /// charFormat()
-    /// blockFormat()
+    /// **See also:** [`length()`]
+    /// [`char_format()`]
+    /// [`block_format()`]
     /// 
     /// Returns the block's text format options as a list of continuous ranges
     /// of QTextCharFormat. The range's character format is used when inserting text
     /// within the range boundaries.
     /// 
-    /// **See also:** charFormat()
-    /// blockFormat()
+    /// **See also:** [`char_format()`]
+    /// [`block_format()`]
     /// 
     /// If the block represents a list item, returns the list that the item belongs
     /// to; otherwise returns 0.
@@ -155,8 +154,8 @@ struct TextBlock {
     /// of QTextCharFormat. The range's character format is used when inserting text
     /// within the range boundaries.
     /// 
-    /// **See also:** charFormat()
-    /// blockFormat()
+    /// **See also:** [`char_format()`]
+    /// [`block_format()`]
     text_formats() -> Vector<QTextLayout::FormatRange>,
     /// 
     /// Returns the text document this text block belongs to, or 0 if the
@@ -203,61 +202,61 @@ struct TextBlock {
     /// 
     /// Returns the blocks revision.
     /// 
-    /// **See also:** setRevision()
-    /// QTextDocument::revision()
+    /// **See also:** [`set_revision()`]
+    /// [`TextDocument::revision`]
     revision() -> i32,
     /// 
     /// Sets a blocks revision to *rev.*
     /// 
-    /// **See also:** revision()
-    /// QTextDocument::revision()
+    /// **See also:** [`revision()`]
+    /// [`TextDocument::revision`]
     set_revision(rev: i32),
     /// 
     /// Returns `true` if the block is visible; otherwise returns `false.`
     /// 
-    /// **See also:** setVisible()
+    /// **See also:** [`set_visible()`]
     is_visible() -> bool,
     /// 
     /// Sets the block's visibility to *visible.*
     /// 
-    /// **See also:** isVisible()
+    /// **See also:** [`is_visible()`]
     set_visible(visible: bool),
     /// 
     /// Returns the number of this block, or -1 if the block is invalid.
     /// 
-    /// **See also:** QTextCursor::blockNumber()
+    /// **See also:** [`TextCursor::block_number`]
     /// 
     block_number() -> i32,
     /// 
     /// Returns the first line number of this block, or -1 if the block is invalid.
     /// Unless the layout supports it, the line number is identical to the block number.
     /// 
-    /// **See also:** QTextBlock::blockNumber()
+    /// **See also:** [`TextBlock::block_number`]
     /// 
     first_line_number() -> i32,
     /// 
     /// Sets the line count to *count.*
     /// 
-    /// **See also:** lineCount()
+    /// **See also:** [`line_count()`]
     set_line_count(count: i32),
     /// 
     /// Returns the line count. Not all document layouts support this feature.
     /// 
-    /// **See also:** setLineCount()
+    /// **See also:** [`set_line_count()`]
     line_count() -> i32,
     /// 
     /// Returns a text block iterator pointing to the beginning of the
     /// text block.
     /// 
-    /// **See also:** end()
+    /// **See also:** [`end()`]
     begin() -> TextBlock::iterator,
     /// 
     /// Returns a text block iterator pointing to the end of the text
     /// block.
     /// 
-    /// **See also:** begin()
-    /// next()
-    /// previous()
+    /// **See also:** [`begin()`]
+    /// [`next()`]
+    /// [`previous()`]
     end() -> TextBlock::iterator,
     /// 
     /// Returns the text block in the document after this block, or an empty
@@ -265,9 +264,9 @@ struct TextBlock {
     /// 
     /// Note that the next block may be in a different frame or table to this block.
     /// 
-    /// **See also:** previous()
-    /// begin()
-    /// end()
+    /// **See also:** [`previous()`]
+    /// [`begin()`]
+    /// [`end()`]
     next() -> TextBlock,
     /// 
     /// Returns the text block in the document before this block, or an empty text
@@ -275,9 +274,9 @@ struct TextBlock {
     /// 
     /// Note that the previous block may be in a different frame or table to this block.
     /// 
-    /// **See also:** next()
-    /// begin()
-    /// end()
+    /// **See also:** [`next()`]
+    /// [`begin()`]
+    /// [`end()`]
     previous() -> TextBlock,
     doc_handle() -> TextDocumentPrivate?,
     fragment_index() -> i32,

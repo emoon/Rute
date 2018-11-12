@@ -18,13 +18,248 @@
 /// the custom type must provide `operator<<()` and `operator>>()`
 /// operators.
 /// 
-/// **See also:** Q_DECLARE_METATYPE()
-/// QVariant::setValue()
-/// QVariant::value()
-/// QVariant::fromValue()
+/// **See also:** [`q_declare_metatype()`]
+/// [`Variant::set_value`]
+/// [`Variant::value`]
+/// [`Variant::from_value`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct MetaType {
+    [static] register_type(type_name: *char, deleter: MetaType::Deleter, creator: MetaType::Creator) -> i32,
+    [org_name(registerType)]
+    [static] register_type_2(type_name: *char, deleter: MetaType::Deleter, creator: MetaType::Creator, destructor: MetaType::Destructor, constructor: MetaType::Constructor, size: i32, flags: MetaType::TypeFlags, meta_object: *MetaObjectType) -> i32,
+    [static] unregister_type(type: i32) -> bool,
+    [static] register_normalized_type(normalized_type_name: onst ::QByteArray &, deleter: MetaType::Deleter, creator: MetaType::Creator, destructor: MetaType::Destructor, constructor: MetaType::Constructor, size: i32, flags: MetaType::TypeFlags, meta_object: *MetaObjectType) -> i32,
+    [org_name(registerNormalizedType)]
+    [static] register_normalized_type_2(normalized_type_name: onst ::QByteArray &, destructor: MetaType::Destructor, constructor: MetaType::Constructor, size: i32, flags: MetaType::TypeFlags, meta_object: *MetaObjectType) -> i32,
+    [static] register_typedef(type_name: *char, alias_id: i32) -> i32,
+    [static] register_normalized_typedef(normalized_type_name: onst ::QByteArray &, alias_id: i32) -> i32,
+    /// 
+    /// Returns the type name associated with the given *typeId,* or a null
+    /// pointer if no matching type was found. The returned pointer must not be
+    /// deleted.
+    /// 
+    /// **See also:** [`type()`]
+    /// [`is_registered()`]
+    /// Type
+    /// 
+    /// Returns a handle to the type called *typeName,* or QMetaType::UnknownType if there is
+    /// no such type.
+    /// 
+    /// **See also:** [`is_registered()`]
+    /// [`type_name()`]
+    /// Type
+    /// 
+    /// **Overloads**
+    /// Returns a handle to the type called *typeName,* or 0 if there is
+    /// no such type.
+    /// 
+    /// **See also:** [`is_registered()`]
+    /// [`type_name()`]
+    /// 
+    /// Returns flags of the given *type.*
+    /// 
+    /// **See also:** [`MetaType::type_flags()`]
+    [static] type(type_name: *char) -> i32,
+    /// 
+    /// Returns the type name associated with the given *typeId,* or a null
+    /// pointer if no matching type was found. The returned pointer must not be
+    /// deleted.
+    /// 
+    /// **See also:** [`type()`]
+    /// [`is_registered()`]
+    /// Type
+    /// 
+    /// Returns a handle to the type called *typeName,* or QMetaType::UnknownType if there is
+    /// no such type.
+    /// 
+    /// **See also:** [`is_registered()`]
+    /// [`type_name()`]
+    /// Type
+    /// 
+    /// **Overloads**
+    /// Returns a handle to the type called *typeName,* or 0 if there is
+    /// no such type.
+    /// 
+    /// **See also:** [`is_registered()`]
+    /// [`type_name()`]
+    /// 
+    /// Returns flags of the given *type.*
+    /// 
+    /// **See also:** [`MetaType::type_flags()`]
+    [org_name(type)]
+    [static] type_2(type_name: onst ::QByteArray &) -> i32,
+    /// 
+    /// Returns the type name associated with the given *typeId,* or a null
+    /// pointer if no matching type was found. The returned pointer must not be
+    /// deleted.
+    /// 
+    /// **See also:** [`type()`]
+    /// [`is_registered()`]
+    /// Type
+    [static] type_name(type: i32) -> char?,
+    /// 
+    /// Returns the size of the type in bytes (i.e. sizeof(T),
+    /// where T is the actual type for which this QMetaType instance
+    /// was constructed for).
+    /// 
+    /// This function is typically used together with construct()
+    /// to perform low-level management of the memory used by a type.
+    /// 
+    /// **See also:** [`MetaType::construct`]
+    /// [`MetaType::size_of`]
+    /// 
+    /// Returns the size of the given *type* in bytes (i.e. sizeof(T),
+    /// where T is the actual type identified by the *type* argument).
+    /// 
+    /// This function is typically used together with construct()
+    /// to perform low-level management of the memory used by a type.
+    /// 
+    /// **See also:** [`construct()`]
+    [static] size_of(type: i32) -> i32,
+    /// 
+    /// Returns flags of the given *type.*
+    /// 
+    /// **See also:** [`MetaType::type_flags()`]
+    [static] type_flags(type: i32) -> MetaType::TypeFlags,
+    /// 
+    /// Returns `true` if this QMetaType object contains valid
+    /// information about a type, false otherwise.
+    /// 
+    /// Returns `true` if the datatype with ID *type* is registered;
+    /// otherwise returns `false.`
+    /// 
+    /// **See also:** [`type()`]
+    /// [`type_name()`]
+    /// Type
+    [static] is_registered(type: i32) -> bool,
+    /// 
+    /// Returns a copy of *copy,* assuming it is of the type that this
+    /// QMetaType instance was created for. If *copy* is null, creates
+    /// a default constructed instance.
+    /// 
+    /// **See also:** [`MetaType::destroy`]
+    /// 
+    /// Returns a copy of *copy,* assuming it is of type *type.* If *copy* is zero, creates a default constructed instance.
+    /// 
+    /// **See also:** [`destroy()`]
+    /// [`is_registered()`]
+    /// Type
+    [static] create(type: i32, copy: *void),
+    /// 
+    /// Writes the object pointed to by *data* with the ID *type* to
+    /// the given *stream.* Returns `true` if the object is saved
+    /// successfully; otherwise returns `false.`
+    /// 
+    /// The type must have been registered with qRegisterMetaType() and
+    /// qRegisterMetaTypeStreamOperators() beforehand.
+    /// 
+    /// Normally, you should not need to call this function directly.
+    /// Instead, use QVariant's `operator<<(),` which relies on save()
+    /// to stream custom types.
+    /// 
+    /// **See also:** [`load()`]
+    /// [`q_register_meta_type_stream_operators()`]
+    [static] save(stream: &DataStreamType, type: i32, data: *void) -> bool,
+    /// 
+    /// Reads the object of the specified *type* from the given *stream* into *data.* Returns `true` if the object is loaded
+    /// successfully; otherwise returns `false.`
+    /// 
+    /// The type must have been registered with qRegisterMetaType() and
+    /// qRegisterMetaTypeStreamOperators() beforehand.
+    /// 
+    /// Normally, you should not need to call this function directly.
+    /// Instead, use QVariant's `operator>>(),` which relies on load()
+    /// to stream custom types.
+    /// 
+    /// **See also:** [`save()`]
+    /// [`q_register_meta_type_stream_operators()`]
+    [static] load(stream: &DataStreamType, type: i32, data: *void) -> bool,
+    /// 
+    /// Returns `true` if this QMetaType object contains valid
+    /// information about a type, false otherwise.
+    is_valid() -> bool,
+    /// 
+    /// Returns `true` if this QMetaType object contains valid
+    /// information about a type, false otherwise.
+    /// 
+    /// Returns `true` if the datatype with ID *type* is registered;
+    /// otherwise returns `false.`
+    /// 
+    /// **See also:** [`type()`]
+    /// [`type_name()`]
+    /// Type
+    [org_name(isRegistered)]
+    is_registered_2() -> bool,
+    /// 
+    /// Returns the size of the type in bytes (i.e. sizeof(T),
+    /// where T is the actual type for which this QMetaType instance
+    /// was constructed for).
+    /// 
+    /// This function is typically used together with construct()
+    /// to perform low-level management of the memory used by a type.
+    /// 
+    /// **See also:** [`MetaType::construct`]
+    /// [`MetaType::size_of`]
+    /// 
+    /// Returns the size of the given *type* in bytes (i.e. sizeof(T),
+    /// where T is the actual type identified by the *type* argument).
+    /// 
+    /// This function is typically used together with construct()
+    /// to perform low-level management of the memory used by a type.
+    /// 
+    /// **See also:** [`construct()`]
+    [org_name(sizeOf)]
+    size_of_2() -> i32,
+    /// 
+    /// Returns flags of the type for which this QMetaType instance was constructed.
+    /// 
+    /// **See also:** [`MetaType::type_flags()`]
+    /// [`MetaType::type_flags`]
+    flags() -> MetaType::TypeFlags,
+    /// 
+    /// Returns a copy of *copy,* assuming it is of the type that this
+    /// QMetaType instance was created for. If *copy* is null, creates
+    /// a default constructed instance.
+    /// 
+    /// **See also:** [`MetaType::destroy`]
+    /// 
+    /// Returns a copy of *copy,* assuming it is of type *type.* If *copy* is zero, creates a default constructed instance.
+    /// 
+    /// **See also:** [`destroy()`]
+    /// [`is_registered()`]
+    /// Type
+    [org_name(create)]
+    create_2(copy: *void),
+    /// 
+    /// Returns `true,` if the meta type system has registered comparators for type T.
+    /// 
+    /// Returns `true,` if the meta type system has registered comparators for type id *typeId.*
+    [static] has_registered_comparators(type_id: i32) -> bool,
+    /// 
+    /// Converts the object at *from* from *fromTypeId* to the preallocated space at *to*
+    /// typed *toTypeId.* Returns `true,` if the conversion succeeded, otherwise false.
+    [static] convert(from: *void, from_type_id: i32, to: *void, to_type_id: i32) -> bool,
+    /// 
+    /// Compares the objects at *lhs* and *rhs.* Both objects need to be of type *typeId.*
+    /// *result* is set to less than, equal to or greater than zero, if *lhs* is less than, equal to
+    /// or greater than *rhs.* Returns `true,` if the comparison succeeded, otherwise `false.`
+    [static] compare(lhs: *void, rhs: *void, type_id: i32, result: *i32) -> bool,
+    /// 
+    /// Compares the objects at *lhs* and *rhs.* Both objects need to be of type *typeId.*
+    /// *result* is set to zero, if *lhs* equals to rhs. Returns `true,` if the comparison
+    /// succeeded, otherwise `false.`
+    [static] equals(lhs: *void, rhs: *void, type_id: i32, result: *i32) -> bool,
+    /// 
+    /// Returns `true,` if the meta type system has a registered conversion from type From to type To.
+    /// **Overloads**
+    /// 
+    /// Returns `true,` if the meta type system has a registered conversion from meta type id *fromTypeId*
+    /// to *toTypeId*
+    [static] has_registered_converter_function(from_type_id: i32, to_type_id: i32) -> bool,
+}
+
 [org_name(QMetaType)]
 enum ExtensionFlag {
     NoExtensionFlags,
@@ -142,236 +377,6 @@ enum TypeFlag {
     WasDeclaredAsMetaType,
     IsGadget,
     PointerToGadget,
-}
-
-
-struct MetaType {
-    [static] register_type(type_name: *char, deleter: MetaType::Deleter, creator: MetaType::Creator) -> i32,
-    [static] register_type_2(type_name: *char, deleter: MetaType::Deleter, creator: MetaType::Creator, destructor: MetaType::Destructor, constructor: MetaType::Constructor, size: i32, flags: MetaType::TypeFlags, meta_object: *MetaObjectType) -> i32,
-    [static] unregister_type(type: i32) -> bool,
-    [static] register_normalized_type(normalized_type_name: onst ::QByteArray &, deleter: MetaType::Deleter, creator: MetaType::Creator, destructor: MetaType::Destructor, constructor: MetaType::Constructor, size: i32, flags: MetaType::TypeFlags, meta_object: *MetaObjectType) -> i32,
-    [static] register_normalized_type_2(normalized_type_name: onst ::QByteArray &, destructor: MetaType::Destructor, constructor: MetaType::Constructor, size: i32, flags: MetaType::TypeFlags, meta_object: *MetaObjectType) -> i32,
-    [static] register_typedef(type_name: *char, alias_id: i32) -> i32,
-    [static] register_normalized_typedef(normalized_type_name: onst ::QByteArray &, alias_id: i32) -> i32,
-    /// 
-    /// Returns the type name associated with the given *typeId,* or a null
-    /// pointer if no matching type was found. The returned pointer must not be
-    /// deleted.
-    /// 
-    /// **See also:** type()
-    /// isRegistered()
-    /// Type
-    /// 
-    /// Returns a handle to the type called *typeName,* or QMetaType::UnknownType if there is
-    /// no such type.
-    /// 
-    /// **See also:** isRegistered()
-    /// typeName()
-    /// Type
-    /// 
-    /// **Overloads**
-    /// Returns a handle to the type called *typeName,* or 0 if there is
-    /// no such type.
-    /// 
-    /// **See also:** isRegistered()
-    /// typeName()
-    /// 
-    /// Returns flags of the given *type.*
-    /// 
-    /// **See also:** QMetaType::TypeFlags
-    [static] type(type_name: *char) -> i32,
-    /// 
-    /// Returns the type name associated with the given *typeId,* or a null
-    /// pointer if no matching type was found. The returned pointer must not be
-    /// deleted.
-    /// 
-    /// **See also:** type()
-    /// isRegistered()
-    /// Type
-    /// 
-    /// Returns a handle to the type called *typeName,* or QMetaType::UnknownType if there is
-    /// no such type.
-    /// 
-    /// **See also:** isRegistered()
-    /// typeName()
-    /// Type
-    /// 
-    /// **Overloads**
-    /// Returns a handle to the type called *typeName,* or 0 if there is
-    /// no such type.
-    /// 
-    /// **See also:** isRegistered()
-    /// typeName()
-    /// 
-    /// Returns flags of the given *type.*
-    /// 
-    /// **See also:** QMetaType::TypeFlags
-    [static] type_2(type_name: onst ::QByteArray &) -> i32,
-    /// 
-    /// Returns the type name associated with the given *typeId,* or a null
-    /// pointer if no matching type was found. The returned pointer must not be
-    /// deleted.
-    /// 
-    /// **See also:** type()
-    /// isRegistered()
-    /// Type
-    [static] type_name(type: i32) -> char?,
-    /// 
-    /// Returns the size of the type in bytes (i.e. sizeof(T),
-    /// where T is the actual type for which this QMetaType instance
-    /// was constructed for).
-    /// 
-    /// This function is typically used together with construct()
-    /// to perform low-level management of the memory used by a type.
-    /// 
-    /// **See also:** QMetaType::construct()
-    /// QMetaType::sizeOf()
-    /// 
-    /// Returns the size of the given *type* in bytes (i.e. sizeof(T),
-    /// where T is the actual type identified by the *type* argument).
-    /// 
-    /// This function is typically used together with construct()
-    /// to perform low-level management of the memory used by a type.
-    /// 
-    /// **See also:** construct()
-    [static] size_of(type: i32) -> i32,
-    /// 
-    /// Returns flags of the given *type.*
-    /// 
-    /// **See also:** QMetaType::TypeFlags
-    [static] type_flags(type: i32) -> MetaType::TypeFlags,
-    /// 
-    /// Returns `true` if this QMetaType object contains valid
-    /// information about a type, false otherwise.
-    /// 
-    /// Returns `true` if the datatype with ID *type* is registered;
-    /// otherwise returns `false.`
-    /// 
-    /// **See also:** type()
-    /// typeName()
-    /// Type
-    [static] is_registered(type: i32) -> bool,
-    /// 
-    /// Returns a copy of *copy,* assuming it is of the type that this
-    /// QMetaType instance was created for. If *copy* is null, creates
-    /// a default constructed instance.
-    /// 
-    /// **See also:** QMetaType::destroy()
-    /// 
-    /// Returns a copy of *copy,* assuming it is of type *type.* If *copy* is zero, creates a default constructed instance.
-    /// 
-    /// **See also:** destroy()
-    /// isRegistered()
-    /// Type
-    [static] create(type: i32, copy: *void),
-    /// 
-    /// Writes the object pointed to by *data* with the ID *type* to
-    /// the given *stream.* Returns `true` if the object is saved
-    /// successfully; otherwise returns `false.`
-    /// 
-    /// The type must have been registered with qRegisterMetaType() and
-    /// qRegisterMetaTypeStreamOperators() beforehand.
-    /// 
-    /// Normally, you should not need to call this function directly.
-    /// Instead, use QVariant's `operator<<(),` which relies on save()
-    /// to stream custom types.
-    /// 
-    /// **See also:** load()
-    /// qRegisterMetaTypeStreamOperators()
-    [static] save(stream: &DataStreamType, type: i32, data: *void) -> bool,
-    /// 
-    /// Reads the object of the specified *type* from the given *stream* into *data.* Returns `true` if the object is loaded
-    /// successfully; otherwise returns `false.`
-    /// 
-    /// The type must have been registered with qRegisterMetaType() and
-    /// qRegisterMetaTypeStreamOperators() beforehand.
-    /// 
-    /// Normally, you should not need to call this function directly.
-    /// Instead, use QVariant's `operator>>(),` which relies on load()
-    /// to stream custom types.
-    /// 
-    /// **See also:** save()
-    /// qRegisterMetaTypeStreamOperators()
-    [static] load(stream: &DataStreamType, type: i32, data: *void) -> bool,
-    /// 
-    /// Returns `true` if this QMetaType object contains valid
-    /// information about a type, false otherwise.
-    is_valid() -> bool,
-    /// 
-    /// Returns `true` if this QMetaType object contains valid
-    /// information about a type, false otherwise.
-    /// 
-    /// Returns `true` if the datatype with ID *type* is registered;
-    /// otherwise returns `false.`
-    /// 
-    /// **See also:** type()
-    /// typeName()
-    /// Type
-    is_registered_2() -> bool,
-    /// 
-    /// Returns the size of the type in bytes (i.e. sizeof(T),
-    /// where T is the actual type for which this QMetaType instance
-    /// was constructed for).
-    /// 
-    /// This function is typically used together with construct()
-    /// to perform low-level management of the memory used by a type.
-    /// 
-    /// **See also:** QMetaType::construct()
-    /// QMetaType::sizeOf()
-    /// 
-    /// Returns the size of the given *type* in bytes (i.e. sizeof(T),
-    /// where T is the actual type identified by the *type* argument).
-    /// 
-    /// This function is typically used together with construct()
-    /// to perform low-level management of the memory used by a type.
-    /// 
-    /// **See also:** construct()
-    size_of_2() -> i32,
-    /// 
-    /// Returns flags of the type for which this QMetaType instance was constructed.
-    /// 
-    /// **See also:** QMetaType::TypeFlags
-    /// QMetaType::typeFlags()
-    flags() -> MetaType::TypeFlags,
-    /// 
-    /// Returns a copy of *copy,* assuming it is of the type that this
-    /// QMetaType instance was created for. If *copy* is null, creates
-    /// a default constructed instance.
-    /// 
-    /// **See also:** QMetaType::destroy()
-    /// 
-    /// Returns a copy of *copy,* assuming it is of type *type.* If *copy* is zero, creates a default constructed instance.
-    /// 
-    /// **See also:** destroy()
-    /// isRegistered()
-    /// Type
-    create_2(copy: *void),
-    /// 
-    /// Returns `true,` if the meta type system has registered comparators for type T.
-    /// 
-    /// Returns `true,` if the meta type system has registered comparators for type id *typeId.*
-    [static] has_registered_comparators(type_id: i32) -> bool,
-    /// 
-    /// Converts the object at *from* from *fromTypeId* to the preallocated space at *to*
-    /// typed *toTypeId.* Returns `true,` if the conversion succeeded, otherwise false.
-    [static] convert(from: *void, from_type_id: i32, to: *void, to_type_id: i32) -> bool,
-    /// 
-    /// Compares the objects at *lhs* and *rhs.* Both objects need to be of type *typeId.*
-    /// *result* is set to less than, equal to or greater than zero, if *lhs* is less than, equal to
-    /// or greater than *rhs.* Returns `true,` if the comparison succeeded, otherwise `false.`
-    [static] compare(lhs: *void, rhs: *void, type_id: i32, result: *i32) -> bool,
-    /// 
-    /// Compares the objects at *lhs* and *rhs.* Both objects need to be of type *typeId.*
-    /// *result* is set to zero, if *lhs* equals to rhs. Returns `true,` if the comparison
-    /// succeeded, otherwise `false.`
-    [static] equals(lhs: *void, rhs: *void, type_id: i32, result: *i32) -> bool,
-    /// 
-    /// Returns `true,` if the meta type system has a registered conversion from type From to type To.
-    /// **Overloads**
-    /// 
-    /// Returns `true,` if the meta type system has a registered conversion from meta type id *fromTypeId*
-    /// to *toTypeId*
-    [static] has_registered_converter_function(from_type_id: i32, to_type_id: i32) -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

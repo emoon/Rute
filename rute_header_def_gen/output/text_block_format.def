@@ -30,20 +30,11 @@
 /// If a text block is part of a list, it can also have a list format that
 /// is accessible with the listFormat() function.
 /// 
-/// **See also:** QTextBlock
-/// QTextCharFormat
+/// **See also:** [`TextBlock`]
+/// [`TextCharFormat`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTextBlockFormat)]
-enum LineHeightTypes {
-    SingleHeight,
-    ProportionalHeight,
-    FixedHeight,
-    MinimumHeight,
-    LineDistanceHeight,
-}
-
 struct TextBlockFormat : TextFormat {
     /// 
     /// Returns `true` if this block format is valid; otherwise returns
@@ -52,86 +43,86 @@ struct TextBlockFormat : TextFormat {
     /// 
     /// Sets the paragraph's *alignment.*
     /// 
-    /// **See also:** alignment()
+    /// **See also:** [`alignment()`]
     set_alignment(alignment: Rute::Alignment),
     /// 
     /// Returns the paragraph's alignment.
     /// 
-    /// **See also:** setAlignment()
+    /// **See also:** [`set_alignment()`]
     alignment() -> Rute::Alignment,
     /// 
     /// Sets the paragraph's top *margin.*
     /// 
-    /// **See also:** topMargin()
-    /// setBottomMargin()
-    /// setLeftMargin()
-    /// setRightMargin()
+    /// **See also:** [`top_margin()`]
+    /// [`set_bottom_margin()`]
+    /// [`set_left_margin()`]
+    /// [`set_right_margin()`]
     set_top_margin(margin: f32),
     /// 
     /// Returns the paragraph's top margin.
     /// 
-    /// **See also:** setTopMargin()
-    /// bottomMargin()
+    /// **See also:** [`set_top_margin()`]
+    /// [`bottom_margin()`]
     top_margin() -> f32,
     /// 
     /// Sets the paragraph's bottom *margin.*
     /// 
-    /// **See also:** bottomMargin()
-    /// setTopMargin()
-    /// setLeftMargin()
-    /// setRightMargin()
+    /// **See also:** [`bottom_margin()`]
+    /// [`set_top_margin()`]
+    /// [`set_left_margin()`]
+    /// [`set_right_margin()`]
     set_bottom_margin(margin: f32),
     /// 
     /// Returns the paragraph's bottom margin.
     /// 
-    /// **See also:** setBottomMargin()
-    /// topMargin()
+    /// **See also:** [`set_bottom_margin()`]
+    /// [`top_margin()`]
     bottom_margin() -> f32,
     /// 
     /// Sets the paragraph's left *margin.* Indentation can be applied separately
     /// with setIndent().
     /// 
-    /// **See also:** leftMargin()
-    /// setRightMargin()
-    /// setTopMargin()
-    /// setBottomMargin()
+    /// **See also:** [`left_margin()`]
+    /// [`set_right_margin()`]
+    /// [`set_top_margin()`]
+    /// [`set_bottom_margin()`]
     set_left_margin(margin: f32),
     /// 
     /// Returns the paragraph's left margin.
     /// 
-    /// **See also:** setLeftMargin()
-    /// rightMargin()
-    /// indent()
+    /// **See also:** [`set_left_margin()`]
+    /// [`right_margin()`]
+    /// [`indent()`]
     left_margin() -> f32,
     /// 
     /// Sets the paragraph's right *margin.*
     /// 
-    /// **See also:** rightMargin()
-    /// setLeftMargin()
-    /// setTopMargin()
-    /// setBottomMargin()
+    /// **See also:** [`right_margin()`]
+    /// [`set_left_margin()`]
+    /// [`set_top_margin()`]
+    /// [`set_bottom_margin()`]
     set_right_margin(margin: f32),
     /// 
     /// Returns the paragraph's right margin.
     /// 
-    /// **See also:** setRightMargin()
-    /// leftMargin()
+    /// **See also:** [`set_right_margin()`]
+    /// [`left_margin()`]
     right_margin() -> f32,
     /// 
     /// Sets the *indent* for the first line in the block. This allows the first
     /// line of a paragraph to be indented differently to the other lines,
     /// enhancing the readability of the text.
     /// 
-    /// **See also:** textIndent()
-    /// setLeftMargin()
-    /// setRightMargin()
-    /// setTopMargin()
-    /// setBottomMargin()
+    /// **See also:** [`text_indent()`]
+    /// [`set_left_margin()`]
+    /// [`set_right_margin()`]
+    /// [`set_top_margin()`]
+    /// [`set_bottom_margin()`]
     set_text_indent(aindent: f32),
     /// 
     /// Returns the paragraph's text indent.
     /// 
-    /// **See also:** setTextIndent()
+    /// **See also:** [`set_text_indent()`]
     text_indent() -> f32,
     /// 
     /// Sets the paragraph's *indentation.* Margins are set independently of
@@ -139,13 +130,13 @@ struct TextBlockFormat : TextFormat {
     /// The *indentation* is an integer that is multiplied with the document-wide
     /// standard indent, resulting in the actual indent of the paragraph.
     /// 
-    /// **See also:** indent()
-    /// QTextDocument::indentWidth()
+    /// **See also:** [`indent()`]
+    /// [`TextDocument::indent_width`]
     set_indent(indent: i32),
     /// 
     /// Returns the paragraph's indent.
     /// 
-    /// **See also:** setIndent()
+    /// **See also:** [`set_indent()`]
     indent() -> i32,
     /// 
     /// Sets the line height for the paragraph to the value given by *height*
@@ -153,8 +144,8 @@ struct TextBlockFormat : TextFormat {
     /// LineHeightTypes enum.
     /// 
     /// **See also:** LineHeightTypes
-    /// lineHeight()
-    /// lineHeightType()
+    /// [`line_height()`]
+    /// [`line_height_type()`]
     set_line_height(height: f32, height_type: i32),
     /// 
     /// Returns the height of the lines in the paragraph based on the height of the
@@ -169,20 +160,20 @@ struct TextBlockFormat : TextFormat {
     /// scale them appropriately for printing.
     /// 
     /// **See also:** LineHeightTypes
-    /// setLineHeight()
-    /// lineHeightType()
+    /// [`set_line_height()`]
+    /// [`line_height_type()`]
     /// 
     /// This returns the LineHeight property for the paragraph.
     /// 
     /// **See also:** LineHeightTypes
-    /// setLineHeight()
-    /// lineHeightType()
+    /// [`set_line_height()`]
+    /// [`line_height_type()`]
     /// 
     /// This returns the LineHeightType property of the paragraph.
     /// 
     /// **See also:** LineHeightTypes
-    /// setLineHeight()
-    /// lineHeight()
+    /// [`set_line_height()`]
+    /// [`line_height()`]
     line_height(script_line_height: f32, scaling: f32) -> f32,
     /// 
     /// Returns the height of the lines in the paragraph based on the height of the
@@ -197,62 +188,72 @@ struct TextBlockFormat : TextFormat {
     /// scale them appropriately for printing.
     /// 
     /// **See also:** LineHeightTypes
-    /// setLineHeight()
-    /// lineHeightType()
+    /// [`set_line_height()`]
+    /// [`line_height_type()`]
     /// 
     /// This returns the LineHeight property for the paragraph.
     /// 
     /// **See also:** LineHeightTypes
-    /// setLineHeight()
-    /// lineHeightType()
+    /// [`set_line_height()`]
+    /// [`line_height_type()`]
     /// 
     /// This returns the LineHeightType property of the paragraph.
     /// 
     /// **See also:** LineHeightTypes
-    /// setLineHeight()
-    /// lineHeight()
+    /// [`set_line_height()`]
+    /// [`line_height()`]
+    [org_name(lineHeight)]
     line_height_2() -> f32,
     /// 
     /// This returns the LineHeightType property of the paragraph.
     /// 
     /// **See also:** LineHeightTypes
-    /// setLineHeight()
-    /// lineHeight()
+    /// [`set_line_height()`]
+    /// [`line_height()`]
     line_height_type() -> i32,
     /// 
     /// If *b* is true, the lines in the paragraph are treated as
     /// non-breakable; otherwise they are breakable.
     /// 
-    /// **See also:** nonBreakableLines()
+    /// **See also:** [`non_breakable_lines()`]
     set_non_breakable_lines(b: bool),
     /// 
     /// Returns `true` if the lines in the paragraph are non-breakable;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** setNonBreakableLines()
+    /// **See also:** [`set_non_breakable_lines()`]
     non_breakable_lines() -> bool,
     /// 
     /// Sets the page break policy for the paragraph to *policy.*
     /// 
-    /// **See also:** pageBreakPolicy()
+    /// **See also:** [`page_break_policy()`]
     set_page_break_policy(flags: TextFormat::PageBreakFlags),
     /// 
     /// Returns the currently set page break policy for the paragraph. The default is
     /// QTextFormat::PageBreak_Auto.
     /// 
-    /// **See also:** setPageBreakPolicy()
+    /// **See also:** [`set_page_break_policy()`]
     page_break_policy() -> TextFormat::PageBreakFlags,
     /// 
     /// Sets the tab positions for the text block to those specified by
     /// *tabs.*
     /// 
-    /// **See also:** tabPositions()
+    /// **See also:** [`tab_positions()`]
     set_tab_positions(tabs: onst QList<QTextOption::Tab> &),
     /// 
     /// Returns a list of tab positions defined for the text block.
     /// 
-    /// **See also:** setTabPositions()
+    /// **See also:** [`set_tab_positions()`]
     tab_positions() -> List<QTextOption::Tab>,
+}
+
+[org_name(QTextBlockFormat)]
+enum LineHeightTypes {
+    SingleHeight,
+    ProportionalHeight,
+    FixedHeight,
+    MinimumHeight,
+    LineDistanceHeight,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

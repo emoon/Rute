@@ -33,26 +33,11 @@
 /// are meta-object properties.
 /// 
 /// **See also:** {Model/View Programming}
-/// QAbstractItemModel
+/// [`AbstractItemModel`]
 /// {Chart Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QItemSelectionModel)]
-enum SelectionFlag {
-    NoUpdate,
-    Clear,
-    Select,
-    Deselect,
-    Toggle,
-    Current,
-    Rows,
-    Columns,
-    SelectCurrent,
-    ToggleCurrent,
-    ClearAndSelect,
-}
-
 struct ItemSelectionModel : Object {
     /// 
     /// Returns the model item index for the current item, or an invalid index
@@ -97,14 +82,14 @@ struct ItemSelectionModel : Object {
     /// 
     /// Returns the indexes in the given *column* for the rows where all columns are selected.
     /// 
-    /// **See also:** selectedIndexes()
-    /// selectedColumns()
+    /// **See also:** [`selected_indexes()`]
+    /// [`selected_columns()`]
     selected_rows(column: i32) -> [ModelIndex],
     /// 
     /// Returns the indexes in the given *row* for columns where all rows are selected.
     /// 
-    /// **See also:** selectedIndexes()
-    /// selectedRows()
+    /// **See also:** [`selected_indexes()`]
+    /// [`selected_rows()`]
     selected_columns(row: i32) -> [ModelIndex],
     /// 
     /// This signal is emitted whenever the selection changes. The change in the
@@ -114,16 +99,16 @@ struct ItemSelectionModel : Object {
     /// Note the that the current index changes independently from the selection.
     /// Also note that this signal will not be emitted when the item model is reset.
     /// 
-    /// **See also:** select()
-    /// currentChanged()
+    /// **See also:** [`select()`]
+    /// [`current_changed()`]
     /// 
     /// Returns the selection ranges stored in the selection model.
     selection() -> ItemSelection,
     /// 
     /// This signal is emitted when the *model* is successfully set with setModel().
     /// 
-    /// **See also:** model()
-    /// setModel()
+    /// **See also:** [`model()`]
+    /// [`set_model()`]
     /// 
     /// Returns the item model operated on by the selection model.
     /// 
@@ -132,18 +117,19 @@ struct ItemSelectionModel : Object {
     /// 
     /// This signal is emitted when the *model* is successfully set with setModel().
     /// 
-    /// **See also:** model()
-    /// setModel()
+    /// **See also:** [`model()`]
+    /// [`set_model()`]
     /// 
     /// Returns the item model operated on by the selection model.
     /// 
     /// Returns the item model operated on by the selection model.
+    [org_name(model)]
     model_2() -> AbstractItemModel?,
     /// 
     /// Sets the model to *model.* The modelChanged() signal will be emitted.
     /// 
-    /// **See also:** model()
-    /// modelChanged()
+    /// **See also:** [`model()`]
+    /// [`model_changed()`]
     set_model(model: *AbstractItemModelType),
     /// 
     /// Sets the model item *index* to be the current item, and emits
@@ -153,13 +139,13 @@ struct ItemSelectionModel : Object {
     /// 
     /// Depending on the specified *command,* the *index* can also become part
     /// of the current selection.
-    /// **See also:** select()
+    /// **See also:** [`select()`]
     [event] set_current_index(index: &ModelIndexType, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Selects the model item *index* using the specified *command,* and emits
     /// selectionChanged().
     /// 
-    /// **See also:** QItemSelectionModel::SelectionFlags
+    /// **See also:** [`ItemSelectionModel::selection_flags()`]
     /// 
     /// This signal is emitted whenever the selection changes. The change in the
     /// selection is represented as an item selection of *deselected* items and
@@ -168,26 +154,26 @@ struct ItemSelectionModel : Object {
     /// Note the that the current index changes independently from the selection.
     /// Also note that this signal will not be emitted when the item model is reset.
     /// 
-    /// **See also:** select()
-    /// currentChanged()
+    /// **See also:** [`select()`]
+    /// [`current_changed()`]
     /// 
     /// Selects the item *selection* using the specified *command,* and emits
     /// selectionChanged().
     /// 
-    /// **See also:** QItemSelectionModel::SelectionFlag
+    /// **See also:** [`ItemSelectionModel::selection_flag()`]
     /// 
     /// Returns a list of all selected model item indexes. The list contains no
     /// duplicates, and is not sorted.
     /// 
     /// Returns the indexes in the given *column* for the rows where all columns are selected.
     /// 
-    /// **See also:** selectedIndexes()
-    /// selectedColumns()
+    /// **See also:** [`selected_indexes()`]
+    /// [`selected_columns()`]
     /// 
     /// Returns the indexes in the given *row* for columns where all rows are selected.
     /// 
-    /// **See also:** selectedIndexes()
-    /// selectedRows()
+    /// **See also:** [`selected_indexes()`]
+    /// [`selected_rows()`]
     /// 
     /// Returns the selection ranges stored in the selection model.
     /// 
@@ -196,7 +182,7 @@ struct ItemSelectionModel : Object {
     /// Selects the model item *index* using the specified *command,* and emits
     /// selectionChanged().
     /// 
-    /// **See also:** QItemSelectionModel::SelectionFlags
+    /// **See also:** [`ItemSelectionModel::selection_flags()`]
     /// 
     /// This signal is emitted whenever the selection changes. The change in the
     /// selection is represented as an item selection of *deselected* items and
@@ -205,29 +191,30 @@ struct ItemSelectionModel : Object {
     /// Note the that the current index changes independently from the selection.
     /// Also note that this signal will not be emitted when the item model is reset.
     /// 
-    /// **See also:** select()
-    /// currentChanged()
+    /// **See also:** [`select()`]
+    /// [`current_changed()`]
     /// 
     /// Selects the item *selection* using the specified *command,* and emits
     /// selectionChanged().
     /// 
-    /// **See also:** QItemSelectionModel::SelectionFlag
+    /// **See also:** [`ItemSelectionModel::selection_flag()`]
     /// 
     /// Returns a list of all selected model item indexes. The list contains no
     /// duplicates, and is not sorted.
     /// 
     /// Returns the indexes in the given *column* for the rows where all columns are selected.
     /// 
-    /// **See also:** selectedIndexes()
-    /// selectedColumns()
+    /// **See also:** [`selected_indexes()`]
+    /// [`selected_columns()`]
     /// 
     /// Returns the indexes in the given *row* for columns where all rows are selected.
     /// 
-    /// **See also:** selectedIndexes()
-    /// selectedRows()
+    /// **See also:** [`selected_indexes()`]
+    /// [`selected_rows()`]
     /// 
     /// Returns the selection ranges stored in the selection model.
     /// 
+    [org_name(select)]
     [event] select_2(selection: &ItemSelectionType, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Clears the selection model. Emits selectionChanged() and currentChanged().
@@ -253,8 +240,8 @@ struct ItemSelectionModel : Object {
     /// Note the that the current index changes independently from the selection.
     /// Also note that this signal will not be emitted when the item model is reset.
     /// 
-    /// **See also:** select()
-    /// currentChanged()
+    /// **See also:** [`select()`]
+    /// [`current_changed()`]
     [signal] selection_changed(selected: &ItemSelectionType, deselected: &ItemSelectionType),
     /// 
     /// This signal is emitted whenever the current item changes. The *previous*
@@ -263,9 +250,9 @@ struct ItemSelectionModel : Object {
     /// 
     /// Note that this signal will not be emitted when the item model is reset.
     /// 
-    /// **See also:** currentIndex()
-    /// setCurrentIndex()
-    /// selectionChanged()
+    /// **See also:** [`current_index()`]
+    /// [`set_current_index()`]
+    /// [`selection_changed()`]
     [signal] current_changed(current: &ModelIndexType, previous: &ModelIndexType),
     /// 
     /// This signal is emitted if the *current* item changes and its row is
@@ -273,10 +260,10 @@ struct ItemSelectionModel : Object {
     /// 
     /// Note that this signal will not be emitted when the item model is reset.
     /// 
-    /// **See also:** currentChanged()
-    /// currentColumnChanged()
-    /// currentIndex()
-    /// setCurrentIndex()
+    /// **See also:** [`current_changed()`]
+    /// [`current_column_changed()`]
+    /// [`current_index()`]
+    /// [`set_current_index()`]
     [signal] current_row_changed(current: &ModelIndexType, previous: &ModelIndexType),
     /// 
     /// This signal is emitted if the *current* item changes and its column is
@@ -284,21 +271,36 @@ struct ItemSelectionModel : Object {
     /// 
     /// Note that this signal will not be emitted when the item model is reset.
     /// 
-    /// **See also:** currentChanged()
-    /// currentRowChanged()
-    /// currentIndex()
-    /// setCurrentIndex()
+    /// **See also:** [`current_changed()`]
+    /// [`current_row_changed()`]
+    /// [`current_index()`]
+    /// [`set_current_index()`]
     [signal] current_column_changed(current: &ModelIndexType, previous: &ModelIndexType),
     /// 
     /// This signal is emitted when the *model* is successfully set with setModel().
     /// 
-    /// **See also:** model()
-    /// setModel()
+    /// **See also:** [`model()`]
+    /// [`set_model()`]
     [signal] model_changed(model: *AbstractItemModelType),
     /// 
     /// Compares the two selections *newSelection* and *oldSelection*
     /// and emits selectionChanged() with the deselected and selected items.
     emit_selection_changed(new_selection: &ItemSelectionType, old_selection: &ItemSelectionType),
+}
+
+[org_name(QItemSelectionModel)]
+enum SelectionFlag {
+    NoUpdate,
+    Clear,
+    Select,
+    Deselect,
+    Toggle,
+    Current,
+    Rows,
+    Columns,
+    SelectCurrent,
+    ToggleCurrent,
+    ClearAndSelect,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

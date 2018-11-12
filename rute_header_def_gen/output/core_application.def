@@ -65,19 +65,14 @@
 /// right after initializing QApplication, QGuiApplication or QCoreApplication
 /// to reset the locale that is used for number formatting to -locale.
 /// 
-/// **See also:** QGuiApplication
-/// QAbstractEventDispatcher
-/// QEventLoop
+/// **See also:** [`GuiApplication`]
+/// [`AbstractEventDispatcher`]
+/// [`EventLoop`]
 /// {Semaphores Example}
 /// {Wait Conditions Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QCoreApplication)]
-enum CoreApplicationFixMeEnums {
-    ApplicationFlags,
-}
-
 struct CoreApplication : Object {
     /// 
     /// Returns the list of command-line arguments.
@@ -106,8 +101,8 @@ struct CoreApplication : Object {
     /// As a result of this, the string given by arguments().at(0) might not be
     /// the program name on Windows, depending on how the application was started.
     /// 
-    /// **See also:** applicationFilePath()
-    /// QCommandLineParser
+    /// **See also:** [`application_file_path()`]
+    /// [`CommandLineParser`]
     [static] arguments() -> [String],
     [static] set_organization_domain(org_domain: String),
     /// 
@@ -150,7 +145,7 @@ struct CoreApplication : Object {
     /// **See also:** organizationName
     /// organizationDomain
     /// applicationVersion
-    /// applicationFilePath()
+    /// [`application_file_path()`]
     [static] application_name() -> String,
     [static] set_application_version(version: String),
     /// 
@@ -200,7 +195,7 @@ struct CoreApplication : Object {
     /// Returns true if the application is allowed to run setuid on UNIX
     /// platforms.
     /// 
-    /// **See also:** QCoreApplication::setSetuidAllowed()
+    /// **See also:** [`CoreApplication::set_setuid_allowed`]
     [static] is_setuid_allowed() -> bool,
     /// 
     /// Returns a pointer to the application's QCoreApplication (or
@@ -233,10 +228,10 @@ struct CoreApplication : Object {
     /// the end of the `main()` function after the exec()
     /// call.
     /// 
-    /// **See also:** quit()
-    /// exit()
-    /// processEvents()
-    /// QApplication::exec()
+    /// **See also:** [`quit()`]
+    /// [`exit()`]
+    /// [`process_events()`]
+    /// [`Application::exec`]
     [static] exec() -> i32,
     /// 
     /// Processes all pending events for the calling thread according to
@@ -259,11 +254,11 @@ struct CoreApplication : Object {
     /// 
     /// Calling this function processes events only for the calling thread.
     /// 
-    /// **See also:** exec()
-    /// QTimer
-    /// QEventLoop::processEvents()
-    /// flush()
-    /// sendPostedEvents()
+    /// **See also:** [`exec()`]
+    /// [`Timer`]
+    /// [`EventLoop::process_events`]
+    /// [`flush()`]
+    /// [`send_posted_events()`]
     /// 
     /// **Overloads** processEvents()
     /// Processes pending events for the calling thread for *maxtime*
@@ -275,9 +270,9 @@ struct CoreApplication : Object {
     /// 
     /// Calling this function processes events only for the calling thread.
     /// 
-    /// **See also:** exec()
-    /// QTimer
-    /// QEventLoop::processEvents()
+    /// **See also:** [`exec()`]
+    /// [`Timer`]
+    /// [`EventLoop::process_events`]
     [static] process_events(flags: EventLoop::ProcessEventsFlags),
     /// 
     /// Processes all pending events for the calling thread according to
@@ -300,11 +295,11 @@ struct CoreApplication : Object {
     /// 
     /// Calling this function processes events only for the calling thread.
     /// 
-    /// **See also:** exec()
-    /// QTimer
-    /// QEventLoop::processEvents()
-    /// flush()
-    /// sendPostedEvents()
+    /// **See also:** [`exec()`]
+    /// [`Timer`]
+    /// [`EventLoop::process_events`]
+    /// [`flush()`]
+    /// [`send_posted_events()`]
     /// 
     /// **Overloads** processEvents()
     /// Processes pending events for the calling thread for *maxtime*
@@ -316,9 +311,10 @@ struct CoreApplication : Object {
     /// 
     /// Calling this function processes events only for the calling thread.
     /// 
-    /// **See also:** exec()
-    /// QTimer
-    /// QEventLoop::processEvents()
+    /// **See also:** [`exec()`]
+    /// [`Timer`]
+    /// [`EventLoop::process_events`]
+    [org_name(processEvents)]
     [static] process_events_2(flags: EventLoop::ProcessEventsFlags, maxtime: i32),
     /// 
     /// Tells the application to exit with a return code.
@@ -344,8 +340,8 @@ struct CoreApplication : Object {
     /// function *does* return to the caller -- it is event processing that
     /// stops.
     /// 
-    /// **See also:** quit()
-    /// exec()
+    /// **See also:** [`quit()`]
+    /// [`exec()`]
     [static] exit(retcode: i32),
     /// 
     /// Sends event *event* directly to receiver *receiver,* using the
@@ -355,8 +351,8 @@ struct CoreApplication : Object {
     /// The event is *not* deleted when the event has been sent. The normal
     /// approach is to create the event on the stack, for example:
     /// 
-    /// **See also:** postEvent()
-    /// notify()
+    /// **See also:** [`post_event()`]
+    /// [`notify()`]
     [static] send_event(receiver: *ObjectType, event: *EventType) -> bool,
     /// 
     /// Adds the event *event,* with the object *receiver* as the
@@ -376,10 +372,10 @@ struct CoreApplication : Object {
     /// details. Events with equal *priority* will be processed in the
     /// order posted.
     /// 
-    /// **See also:** sendEvent()
-    /// notify()
-    /// sendPostedEvents()
-    /// Qt::EventPriority
+    /// **See also:** [`send_event()`]
+    /// [`notify()`]
+    /// [`send_posted_events()`]
+    /// [`t::event_priority()`]
     [static] post_event(receiver: *ObjectType, event: *EventType, priority: i32),
     /// 
     /// Immediately dispatches all events which have been previously queued
@@ -395,8 +391,8 @@ struct CoreApplication : Object {
     /// **Note**: This method must be called from the thread in which its QObject
     /// parameter, *receiver,* lives.
     /// 
-    /// **See also:** flush()
-    /// postEvent()
+    /// **See also:** [`flush()`]
+    /// [`post_event()`]
     [static] send_posted_events(receiver: *ObjectType, event_type: i32),
     /// 
     /// Removes all events of the given *eventType* that were posted
@@ -459,21 +455,21 @@ struct CoreApplication : Object {
     /// destruction. This includes threads started by other libraries that you may be
     /// using, but does not apply to Qt's own threads.
     /// 
-    /// **See also:** QObject::event()
-    /// installNativeEventFilter()
+    /// **See also:** [`Object::event`]
+    /// [`install_native_event_filter()`]
     [event] notify(arg0: *ObjectType, arg1: *EventType) -> bool,
     /// 
     /// Returns `true` if an application object has not been created yet;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** closingDown()
+    /// **See also:** [`closing_down()`]
     [static] starting_up() -> bool,
-    /// X11
     /// 
     /// Returns `true` if the application objects are being destroyed;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** startingUp()
+    /// **See also:** [`starting_up()`]
+    /// X11
     [static] closing_down() -> bool,
     /// 
     /// Returns the directory that contains the application executable.
@@ -491,7 +487,7 @@ struct CoreApplication : Object {
     /// function also assumes that the current directory has not been
     /// changed by the application.
     /// 
-    /// **See also:** applicationFilePath()
+    /// **See also:** [`application_file_path()`]
     [static] application_dir_path() -> String,
     /// 
     /// Returns the file path of the application executable.
@@ -505,7 +501,7 @@ struct CoreApplication : Object {
     /// function also assumes that the current directory has not been
     /// changed by the application.
     /// 
-    /// **See also:** applicationDirPath()
+    /// **See also:** [`application_dir_path()`]
     [static] application_file_path() -> String,
     /// 
     /// Returns the current process ID for the application.
@@ -518,10 +514,10 @@ struct CoreApplication : Object {
     /// The library paths are reset to the default when an instance of
     /// QCoreApplication is destructed.
     /// 
-    /// **See also:** libraryPaths()
-    /// addLibraryPath()
-    /// removeLibraryPath()
-    /// QLibrary
+    /// **See also:** [`library_paths()`]
+    /// [`add_library_path()`]
+    /// [`remove_library_path()`]
+    /// [`Library`]
     [static] set_library_paths(arg0: &[String]),
     /// 
     /// Returns a list of paths that the application will search when
@@ -553,10 +549,10 @@ struct CoreApplication : Object {
     /// 
     /// pseudo-keyword:
     /// 
-    /// **See also:** setLibraryPaths()
-    /// addLibraryPath()
-    /// removeLibraryPath()
-    /// QLibrary
+    /// **See also:** [`set_library_paths()`]
+    /// [`add_library_path()`]
+    /// [`remove_library_path()`]
+    /// [`Library`]
     /// {How to Create Qt Plugins}
     [static] library_paths() -> [String],
     /// 
@@ -572,9 +568,9 @@ struct CoreApplication : Object {
     /// The library paths are reset to the default when an instance of
     /// QCoreApplication is destructed.
     /// 
-    /// **See also:** removeLibraryPath()
-    /// libraryPaths()
-    /// setLibraryPaths()
+    /// **See also:** [`remove_library_path()`]
+    /// [`library_paths()`]
+    /// [`set_library_paths()`]
     [static] add_library_path(arg0: String),
     /// 
     /// Removes *path* from the library path list. If *path* is empty or not
@@ -583,9 +579,9 @@ struct CoreApplication : Object {
     /// The library paths are reset to the default when an instance of
     /// QCoreApplication is destructed.
     /// 
-    /// **See also:** addLibraryPath()
-    /// libraryPaths()
-    /// setLibraryPaths()
+    /// **See also:** [`add_library_path()`]
+    /// [`library_paths()`]
+    /// [`set_library_paths()`]
     [static] remove_library_path(arg0: String),
     /// 
     /// Adds the translation file *translationFile* to the list of
@@ -610,9 +606,9 @@ struct CoreApplication : Object {
     /// 
     /// The function returns `true` on success and false on failure.
     /// 
-    /// **See also:** removeTranslator()
-    /// translate()
-    /// QTranslator::load()
+    /// **See also:** [`remove_translator()`]
+    /// [`translate()`]
+    /// [`Translator::load`]
     /// {Dynamic Translation}
     [static] install_translator(message_file: *TranslatorType) -> bool,
     /// 
@@ -622,9 +618,9 @@ struct CoreApplication : Object {
     /// 
     /// The function returns `true` on success and false on failure.
     /// 
-    /// **See also:** installTranslator()
-    /// translate()
-    /// QObject::tr()
+    /// **See also:** [`install_translator()`]
+    /// [`translate()`]
+    /// [`Object::tr`]
     [static] remove_translator(message_file: *TranslatorType) -> bool,
     [static] flush(),
     /// 
@@ -654,7 +650,7 @@ struct CoreApplication : Object {
     /// For maximum portability, you should always try to use QEvent
     /// and QObject::installEventFilter() whenever possible.
     /// 
-    /// **See also:** QObject::installEventFilter()
+    /// **See also:** [`Object::install_event_filter`]
     /// 
     install_native_event_filter(filter_obj: *AbstractNativeEventFilterType),
     /// 
@@ -667,14 +663,14 @@ struct CoreApplication : Object {
     /// It is always safe to remove an event filter, even during event
     /// filter activation (i.e. from the nativeEventFilter() function).
     /// 
-    /// **See also:** installNativeEventFilter()
+    /// **See also:** [`install_native_event_filter()`]
     remove_native_event_filter(filter_obj: *AbstractNativeEventFilterType),
     [static] is_quit_lock_enabled() -> bool,
     [static] set_quit_lock_enabled(enabled: bool),
     /// 
     /// The default is `true.`
     /// 
-    /// **See also:** QEventLoopLocker
+    /// **See also:** [`EventLoopLocker`]
     /// 
     /// Tells the application to exit with return code 0 (success).
     /// Equivalent to calling QCoreApplication::exit(0).
@@ -694,9 +690,9 @@ struct CoreApplication : Object {
     /// 
     /// Example:
     /// 
-    /// **See also:** exit()
-    /// aboutToQuit()
-    /// QGuiApplication::lastWindowClosed()
+    /// **See also:** [`exit()`]
+    /// [`about_to_quit()`]
+    /// [`GuiApplication::last_window_closed`]
     [static] quit(),
     /// 
     /// This signal is emitted when the application is about to quit the
@@ -708,7 +704,7 @@ struct CoreApplication : Object {
     /// last-second cleanup. Note that no user interaction is possible in
     /// this state.
     /// 
-    /// **See also:** quit()
+    /// **See also:** [`quit()`]
     [signal] about_to_quit(arg0: CoreApplication::QPrivateSignal),
     [signal] organization_name_changed(),
     [signal] organization_domain_changed(),
@@ -720,6 +716,11 @@ struct CoreApplication : Object {
     /// event dispatcher exists for the thread, this function returns 0.
     [event] event(arg0: *EventType) -> bool,
     [event] compress_event(arg0: *EventType, receiver: *ObjectType, arg1: *PostEventListType) -> bool,
+}
+
+[org_name(QCoreApplication)]
+enum CoreApplicationFixMeEnums {
+    ApplicationFlags,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

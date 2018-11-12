@@ -4,55 +4,32 @@
 /// tag(), and an access() specifier. You can use invoke() to invoke
 /// the method on an arbitrary QObject.
 /// 
-/// **See also:** QMetaObject
-/// QMetaEnum
-/// QMetaProperty
+/// **See also:** [`MetaObject`]
+/// [`MetaEnum`]
+/// [`MetaProperty`]
 /// {Qt's Property System}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QMetaMethod)]
-enum Access {
-    Private,
-    Protected,
-    Public,
-}
-
-[org_name(QMetaMethod)]
-enum MethodType {
-    Method,
-    Signal,
-    Slot,
-    Constructor,
-}
-
-[org_name(QMetaMethod)]
-enum Attributes {
-    Compatibility,
-    Cloned,
-    Scriptable,
-}
-
-
 struct MetaMethod {
     /// 
     /// Returns the signature of this method (e.g.,
     /// `setValue(double)` ).
     /// 
-    /// **See also:** parameterTypes()
-    /// parameterNames()
+    /// **See also:** [`parameter_types()`]
+    /// [`parameter_names()`]
     method_signature() -> ByteArray,
     /// 
     /// Returns the name of this method.
     /// 
-    /// **See also:** methodSignature()
-    /// parameterCount()
+    /// **See also:** [`method_signature()`]
+    /// [`parameter_count()`]
     name() -> ByteArray,
     /// 
     /// Returns the return type name of this method.
     /// 
-    /// **See also:** returnType()
-    /// QMetaType::type()
+    /// **See also:** [`return_type()`]
+    /// [`MetaType::type`]
     type_name() -> char?,
     /// 
     /// Returns the return type of this method.
@@ -60,15 +37,15 @@ struct MetaMethod {
     /// The return value is one of the types that are registered
     /// with QMetaType, or QMetaType::UnknownType if the type is not registered.
     /// 
-    /// **See also:** parameterType()
-    /// QMetaType
-    /// typeName()
+    /// **See also:** [`parameter_type()`]
+    /// [`MetaType`]
+    /// [`type_name()`]
     return_type() -> i32,
     /// 
     /// Returns the number of parameters of this method.
     /// 
-    /// **See also:** parameterType()
-    /// parameterNames()
+    /// **See also:** [`parameter_type()`]
+    /// [`parameter_names()`]
     parameter_count() -> i32,
     /// 
     /// Returns the type of the parameter at the given *index.*
@@ -76,27 +53,27 @@ struct MetaMethod {
     /// The return value is one of the types that are registered
     /// with QMetaType, or QMetaType::UnknownType if the type is not registered.
     /// 
-    /// **See also:** parameterCount()
-    /// returnType()
-    /// QMetaType
+    /// **See also:** [`parameter_count()`]
+    /// [`return_type()`]
+    /// [`MetaType`]
     /// 
     /// Returns a list of parameter types.
     /// 
-    /// **See also:** parameterNames()
-    /// methodSignature()
+    /// **See also:** [`parameter_names()`]
+    /// [`method_signature()`]
     parameter_type(index: i32) -> i32,
     get_parameter_types(types: *i32),
     /// 
     /// Returns a list of parameter types.
     /// 
-    /// **See also:** parameterNames()
-    /// methodSignature()
+    /// **See also:** [`parameter_names()`]
+    /// [`method_signature()`]
     parameter_types() -> [ByteArray],
     /// 
     /// Returns a list of parameter names.
     /// 
-    /// **See also:** parameterTypes()
-    /// methodSignature()
+    /// **See also:** [`parameter_types()`]
+    /// [`method_signature()`]
     parameter_names() -> [ByteArray],
     /// 
     /// Returns the tag associated with this method.
@@ -147,12 +124,12 @@ struct MetaMethod {
     /// implementation detail. It is almost always a bad idea to emit a signal from
     /// outside its class.
     /// 
-    /// **See also:** methodType()
+    /// **See also:** [`method_type()`]
     access() -> MetaMethod::Access,
     /// 
     /// Returns the type of this method (signal, slot, or method).
     /// 
-    /// **See also:** access()
+    /// **See also:** [`access()`]
     method_type() -> MetaMethod::MethodType,
     /// 
     /// Returns this method's index.
@@ -214,10 +191,10 @@ struct MetaMethod {
     /// has been constructed with. The arguments must have the same type as the ones
     /// expected by the method, else, the behaviour is undefined.
     /// 
-    /// **See also:** Q_ARG()
-    /// Q_RETURN_ARG()
-    /// qRegisterMetaType()
-    /// QMetaObject::invokeMethod()
+    /// **See also:** [`q_arg()`]
+    /// [`q_return_arg()`]
+    /// [`q_register_meta_type()`]
+    /// [`MetaObject::invoke_method`]
     /// QGenericReturnArgument returnValue,
     /// QGenericArgument val0 = QGenericArgument(0),
     /// QGenericArgument val1 = QGenericArgument(),
@@ -277,10 +254,10 @@ struct MetaMethod {
     /// has been constructed with. The arguments must have the same type as the ones
     /// expected by the method, else, the behavior is undefined.
     /// 
-    /// **See also:** Q_ARG()
-    /// Q_RETURN_ARG()
-    /// qRegisterMetaType()
-    /// QMetaObject::invokeMethod()
+    /// **See also:** [`q_arg()`]
+    /// [`q_return_arg()`]
+    /// [`q_register_meta_type()`]
+    /// [`MetaObject::invoke_method`]
     /// 
     /// QGenericArgument val0 = QGenericArgument(0),
     /// QGenericArgument val1 = QGenericArgument(),
@@ -348,10 +325,10 @@ struct MetaMethod {
     /// has been constructed with. The arguments must have the same type as the ones
     /// expected by the method, else, the behaviour is undefined.
     /// 
-    /// **See also:** Q_ARG()
-    /// Q_RETURN_ARG()
-    /// qRegisterMetaType()
-    /// QMetaObject::invokeMethod()
+    /// **See also:** [`q_arg()`]
+    /// [`q_return_arg()`]
+    /// [`q_register_meta_type()`]
+    /// [`MetaObject::invoke_method`]
     /// QGenericReturnArgument returnValue,
     /// QGenericArgument val0 = QGenericArgument(0),
     /// QGenericArgument val1 = QGenericArgument(),
@@ -411,10 +388,10 @@ struct MetaMethod {
     /// has been constructed with. The arguments must have the same type as the ones
     /// expected by the method, else, the behavior is undefined.
     /// 
-    /// **See also:** Q_ARG()
-    /// Q_RETURN_ARG()
-    /// qRegisterMetaType()
-    /// QMetaObject::invokeMethod()
+    /// **See also:** [`q_arg()`]
+    /// [`q_return_arg()`]
+    /// [`q_register_meta_type()`]
+    /// [`MetaObject::invoke_method`]
     /// 
     /// QGenericArgument val0 = QGenericArgument(0),
     /// QGenericArgument val1 = QGenericArgument(),
@@ -429,6 +406,7 @@ struct MetaMethod {
     /// 
     /// **Overloads**
     /// This overload invokes this method for a *gadget* and ignores return values.
+    [org_name(invoke)]
     invoke_2(object: *ObjectType, return_value: GenericReturnArgumentType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
     /// 
     /// Invokes this method on the object *object.* Returns `true` if the member could be invoked.
@@ -482,10 +460,10 @@ struct MetaMethod {
     /// has been constructed with. The arguments must have the same type as the ones
     /// expected by the method, else, the behaviour is undefined.
     /// 
-    /// **See also:** Q_ARG()
-    /// Q_RETURN_ARG()
-    /// qRegisterMetaType()
-    /// QMetaObject::invokeMethod()
+    /// **See also:** [`q_arg()`]
+    /// [`q_return_arg()`]
+    /// [`q_register_meta_type()`]
+    /// [`MetaObject::invoke_method`]
     /// QGenericReturnArgument returnValue,
     /// QGenericArgument val0 = QGenericArgument(0),
     /// QGenericArgument val1 = QGenericArgument(),
@@ -545,10 +523,10 @@ struct MetaMethod {
     /// has been constructed with. The arguments must have the same type as the ones
     /// expected by the method, else, the behavior is undefined.
     /// 
-    /// **See also:** Q_ARG()
-    /// Q_RETURN_ARG()
-    /// qRegisterMetaType()
-    /// QMetaObject::invokeMethod()
+    /// **See also:** [`q_arg()`]
+    /// [`q_return_arg()`]
+    /// [`q_register_meta_type()`]
+    /// [`MetaObject::invoke_method`]
     /// 
     /// QGenericArgument val0 = QGenericArgument(0),
     /// QGenericArgument val1 = QGenericArgument(),
@@ -563,6 +541,7 @@ struct MetaMethod {
     /// 
     /// **Overloads**
     /// This overload invokes this method for a *gadget* and ignores return values.
+    [org_name(invoke)]
     invoke_3(object: *ObjectType, connection_type: Rute::ConnectionType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
     /// 
     /// Invokes this method on the object *object.* Returns `true` if the member could be invoked.
@@ -616,10 +595,10 @@ struct MetaMethod {
     /// has been constructed with. The arguments must have the same type as the ones
     /// expected by the method, else, the behaviour is undefined.
     /// 
-    /// **See also:** Q_ARG()
-    /// Q_RETURN_ARG()
-    /// qRegisterMetaType()
-    /// QMetaObject::invokeMethod()
+    /// **See also:** [`q_arg()`]
+    /// [`q_return_arg()`]
+    /// [`q_register_meta_type()`]
+    /// [`MetaObject::invoke_method`]
     /// QGenericReturnArgument returnValue,
     /// QGenericArgument val0 = QGenericArgument(0),
     /// QGenericArgument val1 = QGenericArgument(),
@@ -679,10 +658,10 @@ struct MetaMethod {
     /// has been constructed with. The arguments must have the same type as the ones
     /// expected by the method, else, the behavior is undefined.
     /// 
-    /// **See also:** Q_ARG()
-    /// Q_RETURN_ARG()
-    /// qRegisterMetaType()
-    /// QMetaObject::invokeMethod()
+    /// **See also:** [`q_arg()`]
+    /// [`q_return_arg()`]
+    /// [`q_register_meta_type()`]
+    /// [`MetaObject::invoke_method`]
     /// 
     /// QGenericArgument val0 = QGenericArgument(0),
     /// QGenericArgument val1 = QGenericArgument(),
@@ -697,6 +676,7 @@ struct MetaMethod {
     /// 
     /// **Overloads**
     /// This overload invokes this method for a *gadget* and ignores return values.
+    [org_name(invoke)]
     invoke_4(object: *ObjectType, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
     /// 
     /// Invokes this method on a Q_GADGET. Returns `true` if the member could be invoked.
@@ -715,10 +695,10 @@ struct MetaMethod {
     /// has been constructed with. The arguments must have the same type as the ones
     /// expected by the method, else, the behavior is undefined.
     /// 
-    /// **See also:** Q_ARG()
-    /// Q_RETURN_ARG()
-    /// qRegisterMetaType()
-    /// QMetaObject::invokeMethod()
+    /// **See also:** [`q_arg()`]
+    /// [`q_return_arg()`]
+    /// [`q_register_meta_type()`]
+    /// [`MetaObject::invoke_method`]
     /// 
     /// QGenericArgument val0 = QGenericArgument(0),
     /// QGenericArgument val1 = QGenericArgument(),
@@ -751,10 +731,10 @@ struct MetaMethod {
     /// has been constructed with. The arguments must have the same type as the ones
     /// expected by the method, else, the behavior is undefined.
     /// 
-    /// **See also:** Q_ARG()
-    /// Q_RETURN_ARG()
-    /// qRegisterMetaType()
-    /// QMetaObject::invokeMethod()
+    /// **See also:** [`q_arg()`]
+    /// [`q_return_arg()`]
+    /// [`q_register_meta_type()`]
+    /// [`MetaObject::invoke_method`]
     /// 
     /// QGenericArgument val0 = QGenericArgument(0),
     /// QGenericArgument val1 = QGenericArgument(),
@@ -769,11 +749,34 @@ struct MetaMethod {
     /// 
     /// **Overloads**
     /// This overload invokes this method for a *gadget* and ignores return values.
+    [org_name(invokeOnGadget)]
     invoke_on_gadget_2(gadget: *void, val0: GenericArgumentType, val1: GenericArgumentType, val2: GenericArgumentType, val3: GenericArgumentType, val4: GenericArgumentType, val5: GenericArgumentType, val6: GenericArgumentType, val7: GenericArgumentType, val8: GenericArgumentType, val9: GenericArgumentType) -> bool,
     /// 
     /// Returns `true` if this method is valid (can be introspected and
     /// invoked), otherwise returns `false.`
     is_valid() -> bool,
+}
+
+[org_name(QMetaMethod)]
+enum Access {
+    Private,
+    Protected,
+    Public,
+}
+
+[org_name(QMetaMethod)]
+enum MethodType {
+    Method,
+    Signal,
+    Slot,
+    Constructor,
+}
+
+[org_name(QMetaMethod)]
+enum Attributes {
+    Compatibility,
+    Cloned,
+    Scriptable,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

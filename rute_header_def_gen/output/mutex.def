@@ -31,19 +31,13 @@
 /// It is constructed and destroyed with almost no overhead,
 /// which means it is fine to have many mutexes as part of other classes.
 /// 
-/// **See also:** QMutexLocker
-/// QReadWriteLock
-/// QSemaphore
-/// QWaitCondition
+/// **See also:** [`MutexLocker`]
+/// [`ReadWriteLock`]
+/// [`Semaphore`]
+/// [`WaitCondition`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QMutex)]
-enum RecursionMode {
-    NonRecursive,
-    Recursive,
-}
-
 struct Mutex : BasicMutex {
     /// Locks the mutex. If another thread has locked the mutex then this
     /// call will block until that thread has unlocked it.
@@ -56,17 +50,23 @@ struct Mutex : BasicMutex {
     /// , this function will
     /// *dead-lock* when the mutex is locked recursively.
     /// 
-    /// **See also:** unlock()
+    /// **See also:** [`unlock()`]
     lock(),
     /// Unlocks the mutex. Attempting to unlock a mutex in a different
     /// thread to the one that locked it results in an error. Unlocking a
     /// mutex that is not locked results in undefined behavior.
     /// 
-    /// **See also:** lock()
+    /// **See also:** [`lock()`]
     unlock(),
     /// 
     /// Returns `true` if the mutex is recursive.
     is_recursive() -> bool,
+}
+
+[org_name(QMutex)]
+enum RecursionMode {
+    NonRecursive,
+    Recursive,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

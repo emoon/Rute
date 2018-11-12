@@ -53,9 +53,9 @@
 /// * QSizePolicy::ExpandFlag is not respected.
 /// * Height for width is not respected.
 /// 
-/// **See also:** QGraphicsLinearLayout
-/// QGraphicsGridLayout
-/// QGraphicsLayout
+/// **See also:** [`GraphicsLinearLayout`]
+/// [`GraphicsGridLayout`]
+/// [`GraphicsLayout`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -80,8 +80,8 @@ struct GraphicsAnchorLayout : GraphicsLayout {
     /// Calling this function where *firstItem* or *secondItem* are ancestors of the layout have
     /// undefined behaviour.
     /// 
-    /// **See also:** addAnchors()
-    /// addCornerAnchors()
+    /// **See also:** [`add_anchors()`]
+    /// [`add_corner_anchors()`]
     /// 
     /// Anchors two or four edges of *firstItem* with the corresponding
     /// edges of *secondItem,* so that *firstItem* has the same size as
@@ -92,8 +92,8 @@ struct GraphicsAnchorLayout : GraphicsLayout {
     /// 
     /// This can also be achieved using the following line of code:
     /// 
-    /// **See also:** addAnchor()
-    /// addCornerAnchors()
+    /// **See also:** [`add_anchor()`]
+    /// [`add_corner_anchors()`]
     add_anchor(first_item: *GraphicsLayoutItemType, first_edge: Rute::AnchorPoint, second_item: *GraphicsLayoutItemType, second_edge: Rute::AnchorPoint) -> GraphicsAnchor?,
     /// 
     /// Returns the anchor between the anchor points defined by *firstItem* and *firstEdge* and
@@ -115,8 +115,8 @@ struct GraphicsAnchorLayout : GraphicsLayout {
     /// *firstItem* and *secondItem* are automatically added to the layout if they are not part of the
     /// layout. This means that count() can increase by up to 2.
     /// 
-    /// **See also:** addAnchor()
-    /// addAnchors()
+    /// **See also:** [`add_anchor()`]
+    /// [`add_anchors()`]
     add_corner_anchors(first_item: *GraphicsLayoutItemType, first_corner: Rute::Corner, second_item: *GraphicsLayoutItemType, second_corner: Rute::Corner),
     /// 
     /// Anchors two or four edges of *firstItem* with the corresponding
@@ -128,22 +128,22 @@ struct GraphicsAnchorLayout : GraphicsLayout {
     /// 
     /// This can also be achieved using the following line of code:
     /// 
-    /// **See also:** addAnchor()
-    /// addCornerAnchors()
+    /// **See also:** [`add_anchor()`]
+    /// [`add_corner_anchors()`]
     add_anchors(first_item: *GraphicsLayoutItemType, second_item: *GraphicsLayoutItemType, orientations: Rute::Orientations),
     /// 
     /// Sets the default horizontal spacing for the anchor layout to *spacing.*
     /// 
-    /// **See also:** horizontalSpacing()
-    /// setVerticalSpacing()
-    /// setSpacing()
+    /// **See also:** [`horizontal_spacing()`]
+    /// [`set_vertical_spacing()`]
+    /// [`set_spacing()`]
     set_horizontal_spacing(spacing: f32),
     /// 
     /// Sets the default vertical spacing for the anchor layout to *spacing.*
     /// 
-    /// **See also:** verticalSpacing()
-    /// setHorizontalSpacing()
-    /// setSpacing()
+    /// **See also:** [`vertical_spacing()`]
+    /// [`set_horizontal_spacing()`]
+    /// [`set_spacing()`]
     set_vertical_spacing(spacing: f32),
     /// 
     /// Sets the default horizontal and the default vertical spacing for the anchor layout to *spacing.*
@@ -154,20 +154,20 @@ struct GraphicsAnchorLayout : GraphicsLayout {
     /// QGraphicsAnchorLayout does not support negative spacings. Setting a negative value will unset the
     /// previous spacing and make the layout use the spacing provided by the current widget style.
     /// 
-    /// **See also:** setHorizontalSpacing()
-    /// setVerticalSpacing()
+    /// **See also:** [`set_horizontal_spacing()`]
+    /// [`set_vertical_spacing()`]
     set_spacing(spacing: f32),
     /// 
     /// Returns the default horizontal spacing for the anchor layout.
     /// 
-    /// **See also:** verticalSpacing()
-    /// setHorizontalSpacing()
+    /// **See also:** [`vertical_spacing()`]
+    /// [`set_horizontal_spacing()`]
     horizontal_spacing() -> f32,
     /// 
     /// Returns the default vertical spacing for the anchor layout.
     /// 
-    /// **See also:** horizontalSpacing()
-    /// setVerticalSpacing()
+    /// **See also:** [`horizontal_spacing()`]
+    /// [`set_vertical_spacing()`]
     vertical_spacing() -> f32,
     /// 
     /// Removes the layout item at *index* without destroying it. Ownership of
@@ -175,8 +175,8 @@ struct GraphicsAnchorLayout : GraphicsLayout {
     /// 
     /// Removing an item will also remove any of the anchors associated with it.
     /// 
-    /// **See also:** itemAt()
-    /// count()
+    /// **See also:** [`item_at()`]
+    /// [`count()`]
     [event] remove_at(index: i32),
     /// 
     [event] count() -> i32,

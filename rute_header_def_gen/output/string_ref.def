@@ -31,28 +31,27 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct StringRef {
     /// 
     /// Returns the starting position in the referenced string that is referred to
     /// by the string reference.
     /// 
-    /// **See also:** size()
-    /// string()
+    /// **See also:** [`size()`]
+    /// [`string()`]
     position() -> i32,
     /// 
     /// Returns the number of characters referred to by the string reference.
     /// Equivalent to length() and count().
     /// 
-    /// **See also:** position()
-    /// string()
+    /// **See also:** [`position()`]
+    /// [`string()`]
     size() -> i32,
     /// 
     /// Returns the number of characters referred to by the string reference.
     /// Equivalent to size() and length().
     /// 
-    /// **See also:** position()
-    /// string()
+    /// **See also:** [`position()`]
+    /// [`string()`]
     /// 
     /// Returns the number of (potentially overlapping) occurrences of
     /// the string *str* in this string reference.
@@ -60,9 +59,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::count()
-    /// contains()
-    /// indexOf()
+    /// **See also:** [`String::count`]
+    /// [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of occurrences of the character *ch* in the
@@ -71,9 +70,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::count()
-    /// contains()
-    /// indexOf()
+    /// **See also:** [`String::count`]
+    /// [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of (potentially overlapping) occurrences of the
@@ -82,16 +81,16 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::count()
-    /// contains()
-    /// indexOf()
+    /// **See also:** [`String::count`]
+    /// [`contains()`]
+    /// [`index_of()`]
     count() -> i32,
     /// 
     /// Returns the number of characters referred to by the string reference.
     /// Equivalent to size() and count().
     /// 
-    /// **See also:** position()
-    /// string()
+    /// **See also:** [`position()`]
+    /// [`string()`]
     length() -> i32,
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
@@ -103,20 +102,20 @@ struct StringRef {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the
     /// character *ch* in the string reference, searching forward from
     /// index position *from.* Returns -1 if *ch* could not be found.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
     /// *from.* Returns -1 if *str* is not found.
@@ -127,10 +126,10 @@ struct StringRef {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the string
@@ -140,10 +139,10 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     index_of(str: String, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
@@ -155,20 +154,20 @@ struct StringRef {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the
     /// character *ch* in the string reference, searching forward from
     /// index position *from.* Returns -1 if *ch* could not be found.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
     /// *from.* Returns -1 if *str* is not found.
@@ -179,10 +178,10 @@ struct StringRef {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the string
@@ -192,10 +191,11 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
+    [org_name(indexOf)]
     index_of_2(ch: CharType, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
@@ -207,20 +207,20 @@ struct StringRef {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the
     /// character *ch* in the string reference, searching forward from
     /// index position *from.* Returns -1 if *ch* could not be found.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
     /// *from.* Returns -1 if *str* is not found.
@@ -231,10 +231,10 @@ struct StringRef {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the string
@@ -244,10 +244,11 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
+    [org_name(indexOf)]
     index_of_3(str: Latin1StringType, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
@@ -259,20 +260,20 @@ struct StringRef {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the
     /// character *ch* in the string reference, searching forward from
     /// index position *from.* Returns -1 if *ch* could not be found.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string reference, searching forward from index position
     /// *from.* Returns -1 if *str* is not found.
@@ -283,10 +284,10 @@ struct StringRef {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the string
@@ -296,10 +297,11 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::indexOf()
-    /// lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::index_of`]
+    /// [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
+    [org_name(indexOf)]
     index_of_4(str: &StringRefType, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
@@ -310,19 +312,19 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the character
     /// *ch,* searching backward from position *from.*
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
@@ -333,10 +335,10 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string
@@ -348,10 +350,10 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     last_index_of(str: String, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
@@ -362,19 +364,19 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the character
     /// *ch,* searching backward from position *from.*
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
@@ -385,10 +387,10 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string
@@ -400,10 +402,11 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
+    [org_name(lastIndexOf)]
     last_index_of_2(ch: CharType, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
@@ -414,19 +417,19 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the character
     /// *ch,* searching backward from position *from.*
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
@@ -437,10 +440,10 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string
@@ -452,10 +455,11 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
+    [org_name(lastIndexOf)]
     last_index_of_3(str: Latin1StringType, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
@@ -466,19 +470,19 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the character
     /// *ch,* searching backward from position *from.*
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string *str* in this string reference, searching backward from index position
@@ -489,10 +493,10 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string
@@ -504,10 +508,11 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::lastIndexOf()
-    /// indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`String::last_index_of`]
+    /// [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
+    [org_name(lastIndexOf)]
     last_index_of_4(str: &StringRefType, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns `true` if this string reference contains an occurrence of
@@ -516,8 +521,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if this string contains an occurrence of the
@@ -533,8 +538,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// **Overloads** contains()
     /// Returns `true` if this string reference contains an occurrence of
     /// the string *str;* otherwise returns `false.`
@@ -542,8 +547,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     contains(str: String, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string reference contains an occurrence of
@@ -552,8 +557,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if this string contains an occurrence of the
@@ -569,8 +574,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// **Overloads** contains()
     /// Returns `true` if this string reference contains an occurrence of
     /// the string *str;* otherwise returns `false.`
@@ -578,8 +583,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
+    [org_name(contains)]
     contains_2(ch: CharType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string reference contains an occurrence of
@@ -588,8 +594,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if this string contains an occurrence of the
@@ -605,8 +611,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// **Overloads** contains()
     /// Returns `true` if this string reference contains an occurrence of
     /// the string *str;* otherwise returns `false.`
@@ -614,8 +620,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
+    [org_name(contains)]
     contains_3(str: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string reference contains an occurrence of
@@ -624,8 +631,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if this string contains an occurrence of the
@@ -641,8 +648,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// **Overloads** contains()
     /// Returns `true` if this string reference contains an occurrence of
     /// the string *str;* otherwise returns `false.`
@@ -650,15 +657,16 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
+    [org_name(contains)]
     contains_4(str: &StringRefType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns the number of characters referred to by the string reference.
     /// Equivalent to size() and length().
     /// 
-    /// **See also:** position()
-    /// string()
+    /// **See also:** [`position()`]
+    /// [`string()`]
     /// 
     /// Returns the number of (potentially overlapping) occurrences of
     /// the string *str* in this string reference.
@@ -666,9 +674,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::count()
-    /// contains()
-    /// indexOf()
+    /// **See also:** [`String::count`]
+    /// [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of occurrences of the character *ch* in the
@@ -677,9 +685,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::count()
-    /// contains()
-    /// indexOf()
+    /// **See also:** [`String::count`]
+    /// [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of (potentially overlapping) occurrences of the
@@ -688,16 +696,17 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::count()
-    /// contains()
-    /// indexOf()
+    /// **See also:** [`String::count`]
+    /// [`contains()`]
+    /// [`index_of()`]
+    [org_name(count)]
     count_2(s: String, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the number of characters referred to by the string reference.
     /// Equivalent to size() and length().
     /// 
-    /// **See also:** position()
-    /// string()
+    /// **See also:** [`position()`]
+    /// [`string()`]
     /// 
     /// Returns the number of (potentially overlapping) occurrences of
     /// the string *str* in this string reference.
@@ -705,9 +714,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::count()
-    /// contains()
-    /// indexOf()
+    /// **See also:** [`String::count`]
+    /// [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of occurrences of the character *ch* in the
@@ -716,9 +725,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::count()
-    /// contains()
-    /// indexOf()
+    /// **See also:** [`String::count`]
+    /// [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of (potentially overlapping) occurrences of the
@@ -727,16 +736,17 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::count()
-    /// contains()
-    /// indexOf()
+    /// **See also:** [`String::count`]
+    /// [`contains()`]
+    /// [`index_of()`]
+    [org_name(count)]
     count_3(c: CharType, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the number of characters referred to by the string reference.
     /// Equivalent to size() and length().
     /// 
-    /// **See also:** position()
-    /// string()
+    /// **See also:** [`position()`]
+    /// [`string()`]
     /// 
     /// Returns the number of (potentially overlapping) occurrences of
     /// the string *str* in this string reference.
@@ -744,9 +754,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::count()
-    /// contains()
-    /// indexOf()
+    /// **See also:** [`String::count`]
+    /// [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of occurrences of the character *ch* in the
@@ -755,9 +765,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::count()
-    /// contains()
-    /// indexOf()
+    /// **See also:** [`String::count`]
+    /// [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of (potentially overlapping) occurrences of the
@@ -766,9 +776,10 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::count()
-    /// contains()
-    /// indexOf()
+    /// **See also:** [`String::count`]
+    /// [`contains()`]
+    /// [`index_of()`]
+    [org_name(count)]
     count_4(s: &StringRefType, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Splits the string into substrings references wherever *sep* occurs, and
@@ -795,6 +806,7 @@ struct StringRef {
     /// 
     /// 
     /// **Overloads**
+    [org_name(split)]
     split_2(sep: CharType, behavior: String::SplitBehavior, cs: Rute::CaseSensitivity) -> [StringRef],
     /// 
     /// Returns a substring reference to the *n* leftmost characters
@@ -803,12 +815,12 @@ struct StringRef {
     /// If *n* is greater than or equal to size(), or less than zero,
     /// a reference to the entire string is returned.
     /// 
-    /// **See also:** right()
-    /// mid()
-    /// startsWith()
-    /// chopped()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`right()`]
+    /// [`mid()`]
+    /// [`starts_with()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     left(n: i32) -> StringRef,
     /// 
     /// Returns a substring reference to the *n* rightmost characters
@@ -817,12 +829,12 @@ struct StringRef {
     /// If *n* is greater than or equal to size(), or less than zero,
     /// a reference to the entire string is returned.
     /// 
-    /// **See also:** left()
-    /// mid()
-    /// endsWith()
-    /// chopped()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`left()`]
+    /// [`mid()`]
+    /// [`ends_with()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     right(n: i32) -> StringRef,
     /// 
     /// Returns a substring reference to *n* characters of this string,
@@ -836,11 +848,11 @@ struct StringRef {
     /// function returns all characters from the specified *position*
     /// onwards.
     /// 
-    /// **See also:** left()
-    /// right()
-    /// chopped()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`left()`]
+    /// [`right()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     mid(pos: i32, n: i32) -> StringRef,
     /// 
     /// Returns a substring reference to the size() - *len* leftmost characters
@@ -848,12 +860,12 @@ struct StringRef {
     /// 
     /// **Note**: The behavior is undefined if *len* is negative or greater than size().
     /// 
-    /// **See also:** endsWith()
-    /// left()
-    /// right()
-    /// mid()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`ends_with()`]
+    /// [`left()`]
+    /// [`right()`]
+    /// [`mid()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     chopped(n: i32) -> StringRef,
     /// 
     /// Returns a substring reference to the size() - *len* leftmost characters
@@ -861,25 +873,25 @@ struct StringRef {
     /// 
     /// **Note**: The behavior is undefined if *len* is negative or greater than size().
     /// 
-    /// **See also:** endsWith()
-    /// left()
-    /// right()
-    /// mid()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`ends_with()`]
+    /// [`left()`]
+    /// [`right()`]
+    /// [`mid()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     /// 
     /// Removes *n* characters from the end of the string.
     /// 
     /// If *n* is greater than or equal to size(), the result is an
     /// empty string; if *n* is negative, it is equivalent to passing zero.
     /// 
-    /// **See also:** QString::chop()
-    /// truncate()
+    /// **See also:** [`String::chop`]
+    /// [`truncate()`]
     chop(n: i32),
     /// 
     /// Returns `true` if the string is read right to left.
     /// 
-    /// **See also:** QString::isRightToLeft()
+    /// **See also:** [`String::is_right_to_left`]
     is_right_to_left() -> bool,
     /// 
     /// Returns `true` if the string reference starts with *str;* otherwise
@@ -888,17 +900,17 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::startsWith()
-    /// endsWith()
+    /// **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
     /// **Overloads** startsWith()
     /// Returns `true` if the string reference starts with *ch;* otherwise
@@ -907,8 +919,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::startsWith()
-    /// endsWith()
+    /// **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     starts_with(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string reference starts with *str;* otherwise
@@ -917,17 +929,17 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::startsWith()
-    /// endsWith()
+    /// **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
     /// **Overloads** startsWith()
     /// Returns `true` if the string reference starts with *ch;* otherwise
@@ -936,8 +948,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::startsWith()
-    /// endsWith()
+    /// **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
+    [org_name(startsWith)]
     starts_with_2(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string reference starts with *str;* otherwise
@@ -946,17 +959,17 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::startsWith()
-    /// endsWith()
+    /// **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
     /// **Overloads** startsWith()
     /// Returns `true` if the string reference starts with *ch;* otherwise
@@ -965,8 +978,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::startsWith()
-    /// endsWith()
+    /// **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
+    [org_name(startsWith)]
     starts_with_3(c: CharType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string reference starts with *str;* otherwise
@@ -975,17 +989,17 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::startsWith()
-    /// endsWith()
+    /// **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
     /// **Overloads** startsWith()
     /// Returns `true` if the string reference starts with *ch;* otherwise
@@ -994,8 +1008,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::startsWith()
-    /// endsWith()
+    /// **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
+    [org_name(startsWith)]
     starts_with_4(s: String, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string reference starts with *str;* otherwise
@@ -1004,17 +1019,17 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::startsWith()
-    /// endsWith()
+    /// **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** startsWith() **See also:** QString::startsWith()
-    /// endsWith()
+    /// **Overloads** startsWith() **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
     /// 
     /// **Overloads** startsWith()
     /// Returns `true` if the string reference starts with *ch;* otherwise
@@ -1023,8 +1038,9 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::startsWith()
-    /// endsWith()
+    /// **See also:** [`String::starts_with`]
+    /// [`ends_with()`]
+    [org_name(startsWith)]
     starts_with_5(c: &StringRefType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string reference ends with *str;* otherwise
@@ -1033,8 +1049,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::endsWith()
-    /// startsWith()
+    /// **See also:** [`String::ends_with`]
+    /// [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// Returns `true` if the string reference ends with *ch;* otherwise
@@ -1043,17 +1059,17 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::endsWith()
-    /// endsWith()
+    /// **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// endsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// startsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`starts_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// endsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     ends_with(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string reference ends with *str;* otherwise
@@ -1062,8 +1078,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::endsWith()
-    /// startsWith()
+    /// **See also:** [`String::ends_with`]
+    /// [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// Returns `true` if the string reference ends with *ch;* otherwise
@@ -1072,17 +1088,18 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::endsWith()
-    /// endsWith()
+    /// **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// endsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// startsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`starts_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// endsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
+    [org_name(endsWith)]
     ends_with_2(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string reference ends with *str;* otherwise
@@ -1091,8 +1108,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::endsWith()
-    /// startsWith()
+    /// **See also:** [`String::ends_with`]
+    /// [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// Returns `true` if the string reference ends with *ch;* otherwise
@@ -1101,17 +1118,18 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::endsWith()
-    /// endsWith()
+    /// **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// endsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// startsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`starts_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// endsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
+    [org_name(endsWith)]
     ends_with_3(c: CharType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string reference ends with *str;* otherwise
@@ -1120,8 +1138,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::endsWith()
-    /// startsWith()
+    /// **See also:** [`String::ends_with`]
+    /// [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// Returns `true` if the string reference ends with *ch;* otherwise
@@ -1130,17 +1148,18 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::endsWith()
-    /// endsWith()
+    /// **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// endsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// startsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`starts_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// endsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
+    [org_name(endsWith)]
     ends_with_4(s: String, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string reference ends with *str;* otherwise
@@ -1149,8 +1168,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::endsWith()
-    /// startsWith()
+    /// **See also:** [`String::ends_with`]
+    /// [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// Returns `true` if the string reference ends with *ch;* otherwise
@@ -1159,17 +1178,18 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::endsWith()
-    /// endsWith()
+    /// **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// endsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// startsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`starts_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// endsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
+    [org_name(endsWith)]
     ends_with_5(c: &StringRefType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns a Unicode representation of the string reference. Since
@@ -1177,7 +1197,7 @@ struct StringRef {
     /// null-terminated unless the string reference includes the string's
     /// null terminator.
     /// 
-    /// **See also:** string()
+    /// **See also:** [`string()`]
     unicode() -> Char?,
     /// 
     /// Same as unicode().
@@ -1190,43 +1210,43 @@ struct StringRef {
     /// pointing to the first character in
     /// the string.
     /// 
-    /// **See also:** cbegin()
-    /// constBegin()
-    /// end()
-    /// constEnd()
-    /// rbegin()
-    /// rend()
+    /// **See also:** [`cbegin()`]
+    /// [`const_begin()`]
+    /// [`end()`]
+    /// [`const_end()`]
+    /// [`rbegin()`]
+    /// [`rend()`]
     begin() -> StringRef::const_iterator,
     /// 
     /// Same as begin().
     /// 
-    /// **See also:** begin()
-    /// constBegin()
-    /// cend()
-    /// constEnd()
-    /// rbegin()
-    /// rend()
+    /// **See also:** [`begin()`]
+    /// [`const_begin()`]
+    /// [`cend()`]
+    /// [`const_end()`]
+    /// [`rbegin()`]
+    /// [`rend()`]
     cbegin() -> StringRef::const_iterator,
     /// 
     /// Same as begin().
     /// 
-    /// **See also:** begin()
-    /// cend()
-    /// constEnd()
-    /// rbegin()
-    /// rend()
+    /// **See also:** [`begin()`]
+    /// [`cend()`]
+    /// [`const_end()`]
+    /// [`rbegin()`]
+    /// [`rend()`]
     const_begin() -> StringRef::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the imaginary
     /// character after the last character in the list.
     /// 
-    /// **See also:** cbegin()
-    /// constBegin()
-    /// end()
-    /// constEnd()
-    /// rbegin()
-    /// rend()
+    /// **See also:** [`cbegin()`]
+    /// [`const_begin()`]
+    /// [`end()`]
+    /// [`const_end()`]
+    /// [`rbegin()`]
+    /// [`rend()`]
     /// 
     /// Returns `true` if the string reference ends with *str;* otherwise
     /// returns `false.`
@@ -1234,8 +1254,8 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::endsWith()
-    /// startsWith()
+    /// **See also:** [`String::ends_with`]
+    /// [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// Returns `true` if the string reference ends with *ch;* otherwise
@@ -1244,69 +1264,69 @@ struct StringRef {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** QString::endsWith()
-    /// endsWith()
+    /// **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// endsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// startsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`starts_with()`]
     /// 
-    /// **Overloads** endsWith() **See also:** QString::endsWith()
-    /// endsWith()
+    /// **Overloads** endsWith() **See also:** [`String::ends_with`]
+    /// [`ends_with()`]
     end() -> StringRef::const_iterator,
     /// 
     /// Same as end().
     /// 
-    /// **See also:** end()
-    /// constEnd()
-    /// cbegin()
-    /// constBegin()
-    /// rbegin()
-    /// rend()
+    /// **See also:** [`end()`]
+    /// [`const_end()`]
+    /// [`cbegin()`]
+    /// [`const_begin()`]
+    /// [`rbegin()`]
+    /// [`rend()`]
     cend() -> StringRef::const_iterator,
     /// 
     /// Same as end().
     /// 
-    /// **See also:** end()
-    /// cend()
-    /// cbegin()
-    /// constBegin()
-    /// rbegin()
-    /// rend()
+    /// **See also:** [`end()`]
+    /// [`cend()`]
+    /// [`cbegin()`]
+    /// [`const_begin()`]
+    /// [`rbegin()`]
+    /// [`rend()`]
     const_end() -> StringRef::const_iterator,
     /// 
     /// Returns a const [STL-style](STL-style%20iterators)
     /// reverse iterator pointing to the first
     /// character in the string, in reverse order.
     /// 
-    /// **See also:** begin()
-    /// crbegin()
-    /// rend()
+    /// **See also:** [`begin()`]
+    /// [`crbegin()`]
+    /// [`rend()`]
     rbegin() -> StringRef::const_reverse_iterator,
     /// 
     /// Same as rbegin().
     /// 
-    /// **See also:** begin()
-    /// rbegin()
-    /// rend()
+    /// **See also:** [`begin()`]
+    /// [`rbegin()`]
+    /// [`rend()`]
     crbegin() -> StringRef::const_reverse_iterator,
     /// 
     /// Returns a [STL-style](STL-style%20iterators)
     /// reverse iterator pointing to one past
     /// the last character in the string, in reverse order.
     /// 
-    /// **See also:** end()
-    /// crend()
-    /// rbegin()
+    /// **See also:** [`end()`]
+    /// [`crend()`]
+    /// [`rbegin()`]
     rend() -> StringRef::const_reverse_iterator,
     /// 
     /// Same as rend().
     /// 
-    /// **See also:** end()
-    /// rend()
-    /// rbegin()
+    /// **See also:** [`end()`]
+    /// [`rend()`]
+    /// [`rbegin()`]
     crend() -> StringRef::const_reverse_iterator,
     /// 
     /// Returns a Latin-1 representation of the string as a QByteArray.
@@ -1315,9 +1335,9 @@ struct StringRef {
     /// characters. Those characters may be suppressed or replaced with a
     /// question mark.
     /// 
-    /// **See also:** toUtf8()
-    /// toLocal8Bit()
-    /// QTextCodec
+    /// **See also:** [`to_utf8()`]
+    /// [`to_local8_bit()`]
+    /// [`TextCodec`]
     to_latin1() -> ByteArray,
     /// 
     /// Returns a UTF-8 representation of the string as a QByteArray.
@@ -1325,9 +1345,9 @@ struct StringRef {
     /// UTF-8 is a Unicode codec and can represent all characters in a Unicode
     /// string like QString.
     /// 
-    /// **See also:** toLatin1()
-    /// toLocal8Bit()
-    /// QTextCodec
+    /// **See also:** [`to_latin1()`]
+    /// [`to_local8_bit()`]
+    /// [`TextCodec`]
     to_utf8() -> ByteArray,
     /// 
     /// Returns the local 8-bit representation of the string as a
@@ -1342,9 +1362,9 @@ struct StringRef {
     /// locale, the returned byte array is undefined. Those characters may be
     /// suppressed or replaced by another.
     /// 
-    /// **See also:** toLatin1()
-    /// toUtf8()
-    /// QTextCodec
+    /// **See also:** [`to_latin1()`]
+    /// [`to_utf8()`]
+    /// [`TextCodec`]
     to_local8_bit() -> ByteArray,
     /// 
     /// Returns a UCS-4/UTF-32 representation of the string as a QVector<uint>.
@@ -1356,16 +1376,16 @@ struct StringRef {
     /// 
     /// The returned vector is not NUL terminated.
     /// 
-    /// **See also:** toUtf8()
-    /// toLatin1()
-    /// toLocal8Bit()
-    /// QTextCodec
+    /// **See also:** [`to_utf8()`]
+    /// [`to_latin1()`]
+    /// [`to_local8_bit()`]
+    /// [`TextCodec`]
     to_ucs4() -> [uint],
     /// 
     /// Clears the contents of the string reference by making it null and empty.
     /// 
-    /// **See also:** isEmpty()
-    /// isNull()
+    /// **See also:** [`is_empty()`]
+    /// [`is_null()`]
     clear(),
     /// 
     /// Returns `true` if the string reference has no characters; otherwise returns
@@ -1373,13 +1393,13 @@ struct StringRef {
     /// 
     /// A string reference is empty if its size is zero.
     /// 
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     is_empty() -> bool,
     /// 
     /// Returns `true` if string() returns a null pointer or a pointer to a
     /// null string; otherwise returns `true.`
     /// 
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     is_null() -> bool,
     /// Appends the string reference to *string,* and returns a new
     /// reference to the combined string data.
@@ -1400,9 +1420,9 @@ struct StringRef {
     /// **Warning**: Calling this function on an empty string constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** back()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`back()`]
+    /// [`at()`]
+    /// [`operator()`]
     front() -> Char,
     /// 
     /// Returns the last character in the string.
@@ -1413,9 +1433,9 @@ struct StringRef {
     /// **Warning**: Calling this function on an empty string constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** front()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`front()`]
+    /// [`at()`]
+    /// [`operator()`]
     back() -> Char,
     /// 
     /// Compares the string *s1* with the string *s2* and returns an
@@ -1546,6 +1566,7 @@ struct StringRef {
     /// otherwise the comparison is case insensitive.
     /// 
     /// Equivalent to `compare(*this, other, cs)` .
+    [org_name(compare)]
     compare_2(s: &StringRefType, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Compares the string *s1* with the string *s2* and returns an
@@ -1611,6 +1632,7 @@ struct StringRef {
     /// otherwise the comparison is case insensitive.
     /// 
     /// Equivalent to `compare(*this, other, cs)` .
+    [org_name(compare)]
     compare_3(s: Latin1StringType, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Compares the string *s1* with the string *s2* and returns an
@@ -1676,6 +1698,7 @@ struct StringRef {
     /// otherwise the comparison is case insensitive.
     /// 
     /// Equivalent to `compare(*this, other, cs)` .
+    [org_name(compare)]
     compare_4(s: &ByteArrayType, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Compares the string *s1* with the string *s2* and returns an
@@ -1741,6 +1764,7 @@ struct StringRef {
     /// otherwise the comparison is case insensitive.
     /// 
     /// Equivalent to `compare(*this, other, cs)` .
+    [org_name(compare)]
     [static] compare_5(s1: &StringRefType, s2: String, arg0: Rute::CaseSensitivity) -> i32,
     /// 
     /// Compares the string *s1* with the string *s2* and returns an
@@ -1806,6 +1830,7 @@ struct StringRef {
     /// otherwise the comparison is case insensitive.
     /// 
     /// Equivalent to `compare(*this, other, cs)` .
+    [org_name(compare)]
     [static] compare_6(s1: &StringRefType, s2: &StringRefType, arg0: Rute::CaseSensitivity) -> i32,
     /// 
     /// Compares the string *s1* with the string *s2* and returns an
@@ -1871,6 +1896,7 @@ struct StringRef {
     /// otherwise the comparison is case insensitive.
     /// 
     /// Equivalent to `compare(*this, other, cs)` .
+    [org_name(compare)]
     [static] compare_7(s1: &StringRefType, s2: Latin1StringType, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -1884,8 +1910,8 @@ struct StringRef {
     /// On MacOS and iOS, this function compares according the
     /// setting in the International prefereces panel.
     /// 
-    /// **See also:** compare()
-    /// QLocale
+    /// **See also:** [`compare()`]
+    /// [`Locale`]
     /// 
     /// **Overloads**
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -1927,8 +1953,8 @@ struct StringRef {
     /// On MacOS and iOS, this function compares according the
     /// setting in the International prefereces panel.
     /// 
-    /// **See also:** compare()
-    /// QLocale
+    /// **See also:** [`compare()`]
+    /// [`Locale`]
     /// 
     /// **Overloads**
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -1957,6 +1983,7 @@ struct StringRef {
     /// The comparison is performed in a locale- and also
     /// platform-dependent manner. Use this function to present sorted
     /// lists of strings to the user.
+    [org_name(localeAwareCompare)]
     locale_aware_compare_2(s: &StringRefType) -> i32,
     /// 
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -1970,8 +1997,8 @@ struct StringRef {
     /// On MacOS and iOS, this function compares according the
     /// setting in the International prefereces panel.
     /// 
-    /// **See also:** compare()
-    /// QLocale
+    /// **See also:** [`compare()`]
+    /// [`Locale`]
     /// 
     /// **Overloads**
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -2000,6 +2027,7 @@ struct StringRef {
     /// The comparison is performed in a locale- and also
     /// platform-dependent manner. Use this function to present sorted
     /// lists of strings to the user.
+    [org_name(localeAwareCompare)]
     [static] locale_aware_compare_3(s1: &StringRefType, s2: String) -> i32,
     /// 
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -2013,8 +2041,8 @@ struct StringRef {
     /// On MacOS and iOS, this function compares according the
     /// setting in the International prefereces panel.
     /// 
-    /// **See also:** compare()
-    /// QLocale
+    /// **See also:** [`compare()`]
+    /// [`Locale`]
     /// 
     /// **Overloads**
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -2043,6 +2071,7 @@ struct StringRef {
     /// The comparison is performed in a locale- and also
     /// platform-dependent manner. Use this function to present sorted
     /// lists of strings to the user.
+    [org_name(localeAwareCompare)]
     [static] locale_aware_compare_4(s1: &StringRefType, s2: &StringRefType) -> i32,
     /// 
     /// Returns the string converted to a `short` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -2058,7 +2087,7 @@ struct StringRef {
     /// The string conversion will always happen in the 'C' locale. For locale
     /// dependent conversion use QLocale::toShort()
     /// 
-    /// **See also:** QString::toShort()
+    /// **See also:** [`String::to_short`]
     /// 
     to_short(ok: *bool, base: i32) -> short,
     /// 
@@ -2075,7 +2104,7 @@ struct StringRef {
     /// The string conversion will always happen in the 'C' locale. For locale
     /// dependent conversion use QLocale::toUShort()
     /// 
-    /// **See also:** QString::toUShort()
+    /// **See also:** [`String::to_u_short`]
     /// 
     to_u_short(ok: *bool, base: i32) -> ushort,
     /// 
@@ -2092,7 +2121,7 @@ struct StringRef {
     /// The string conversion will always happen in the 'C' locale. For locale
     /// dependent conversion use QLocale::toInt()
     /// 
-    /// **See also:** QString::toInt()
+    /// **See also:** [`String::to_int`]
     /// 
     to_int(ok: *bool, base: i32) -> i32,
     /// 
@@ -2109,7 +2138,7 @@ struct StringRef {
     /// The string conversion will always happen in the 'C' locale. For locale
     /// dependent conversion use QLocale::toUInt()
     /// 
-    /// **See also:** QString::toUInt()
+    /// **See also:** [`String::to_u_int`]
     /// 
     to_u_int(ok: *bool, base: i32) -> uint,
     /// 
@@ -2126,7 +2155,7 @@ struct StringRef {
     /// The string conversion will always happen in the 'C' locale. For locale
     /// dependent conversion use QLocale::toLongLong()
     /// 
-    /// **See also:** QString::toLongLong()
+    /// **See also:** [`String::to_long_long`]
     /// 
     /// 
     /// Returns the string converted to a `long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -2142,7 +2171,7 @@ struct StringRef {
     /// The string conversion will always happen in the 'C' locale. For locale
     /// dependent conversion use QLocale::toLong()
     /// 
-    /// **See also:** QString::toLong()
+    /// **See also:** [`String::to_long`]
     /// 
     to_long(ok: *bool, base: i32) -> long,
     /// 
@@ -2159,7 +2188,7 @@ struct StringRef {
     /// The string conversion will always happen in the 'C' locale. For locale
     /// dependent conversion use QLocale::toULongLong()
     /// 
-    /// **See also:** QString::toULongLong()
+    /// **See also:** [`String::to_u_long_long`]
     /// 
     /// 
     /// Returns the string converted to an `unsigned long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -2175,7 +2204,7 @@ struct StringRef {
     /// The string conversion will always happen in the 'C' locale. For locale
     /// dependent conversion use QLocale::toULongLong()
     /// 
-    /// **See also:** QString::toULong()
+    /// **See also:** [`String::to_u_long`]
     /// 
     to_u_long(ok: *bool, base: i32) -> ulong,
     /// 
@@ -2192,7 +2221,7 @@ struct StringRef {
     /// The string conversion will always happen in the 'C' locale. For locale
     /// dependent conversion use QLocale::toLongLong()
     /// 
-    /// **See also:** QString::toLongLong()
+    /// **See also:** [`String::to_long_long`]
     /// 
     to_long_long(ok: *bool, base: i32) -> i64,
     /// 
@@ -2209,7 +2238,7 @@ struct StringRef {
     /// The string conversion will always happen in the 'C' locale. For locale
     /// dependent conversion use QLocale::toULongLong()
     /// 
-    /// **See also:** QString::toULongLong()
+    /// **See also:** [`String::to_u_long_long`]
     /// 
     to_u_long_long(ok: *bool, base: i32) -> qulonglong,
     /// 
@@ -2223,7 +2252,7 @@ struct StringRef {
     /// The string conversion will always happen in the 'C' locale. For locale
     /// dependent conversion use QLocale::toFloat()
     /// 
-    /// **See also:** QString::toFloat()
+    /// **See also:** [`String::to_float`]
     /// 
     to_float(ok: *bool) -> f32,
     /// 
@@ -2241,7 +2270,7 @@ struct StringRef {
     /// thousands group separators. If you need to convert such numbers,
     /// use QLocale::toDouble().
     /// 
-    /// **See also:** QString::toDouble()
+    /// **See also:** [`String::to_double`]
     /// 
     to_double(ok: *bool) -> double,
 }

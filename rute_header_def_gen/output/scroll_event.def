@@ -5,18 +5,11 @@
 /// Some care should be taken that no conflicting QScrollEvents are sent from two
 /// sources. Using QScroller::scrollTo is save however.
 /// 
-/// **See also:** QScrollPrepareEvent
-/// QScroller
+/// **See also:** [`ScrollPrepareEvent`]
+/// [`Scroller`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QScrollEvent)]
-enum ScrollState {
-    ScrollStarted,
-    ScrollUpdated,
-    ScrollFinished,
-}
-
 struct ScrollEvent : Event {
     /// 
     /// Returns the new scroll position.
@@ -25,7 +18,7 @@ struct ScrollEvent : Event {
     /// Returns the new overshoot distance.
     /// See QScroller for an explanation of the term overshoot.
     /// 
-    /// **See also:** QScroller
+    /// **See also:** [`Scroller`]
     overshoot_distance() -> PointF,
     /// 
     /// Returns the current scroll state as a combination of ScrollStateFlag values.
@@ -35,6 +28,13 @@ struct ScrollEvent : Event {
     /// 
     /// A widget could for example revert selections when scrolling is started and stopped.
     scroll_state() -> ScrollEvent::ScrollState,
+}
+
+[org_name(QScrollEvent)]
+enum ScrollState {
+    ScrollStarted,
+    ScrollUpdated,
+    ScrollFinished,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

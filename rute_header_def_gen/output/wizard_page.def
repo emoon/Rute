@@ -49,7 +49,7 @@
 /// using registerField() and can be accessed at any time using
 /// field() and setField().
 /// 
-/// **See also:** QWizard
+/// **See also:** [`Wizard`]
 /// {Class Wizard Example}
 /// {License Wizard Example}
 /// # Licence
@@ -90,7 +90,7 @@ struct WizardPage : Widget {
     /// By default, this property contains an empty string.
     /// 
     /// **See also:** title
-    /// QWizard::IgnoreSubTitles
+    /// [`Wizard::ignore_sub_titles()`]
     /// {Elements of a Wizard Page}
     sub_title() -> String,
     /// 
@@ -104,7 +104,7 @@ struct WizardPage : Widget {
     /// QWizard::setPixmap(), in which case they apply for all pages that
     /// don't specify a pixmap.
     /// 
-    /// **See also:** QWizard::setPixmap()
+    /// **See also:** [`Wizard::set_pixmap`]
     /// {Elements of a Wizard Page}
     set_pixmap(which: Wizard::WizardPixmap, pixmap: &PixmapType),
     /// 
@@ -114,7 +114,7 @@ struct WizardPage : Widget {
     /// QWizard::setPixmap(), in which case they apply for all pages that
     /// don't specify a pixmap.
     /// 
-    /// **See also:** QWizard::pixmap()
+    /// **See also:** [`Wizard::pixmap`]
     /// {Elements of a Wizard Page}
     pixmap(which: Wizard::WizardPixmap) -> Pixmap,
     /// 
@@ -126,8 +126,8 @@ struct WizardPage : Widget {
     /// After calling setFinalPage(false), isFinalPage() returns `true` if
     /// nextId() returns -1; otherwise, it returns `false.`
     /// 
-    /// **See also:** isComplete()
-    /// QWizard::HaveFinishButtonOnEarlyPages
+    /// **See also:** [`is_complete()`]
+    /// [`Wizard::have_finish_button_on_early_pages()`]
     set_final_page(final_page: bool),
     /// 
     /// This function is called by QWizard to determine whether the **Finish** button should be shown for this page or not.
@@ -138,8 +138,8 @@ struct WizardPage : Widget {
     /// By explicitly calling setFinalPage(true), you can let the user perform an
     /// 
     /// 
-    /// **See also:** isComplete()
-    /// QWizard::HaveFinishButtonOnEarlyPages
+    /// **See also:** [`is_complete()`]
+    /// [`Wizard::have_finish_button_on_early_pages()`]
     is_final_page() -> bool,
     /// 
     /// Sets this page to be a commit page if *commitPage* is true; otherwise,
@@ -153,12 +153,12 @@ struct WizardPage : Widget {
     /// 
     /// A page entered directly from a commit page has its **Back** button disabled.
     /// 
-    /// **See also:** isCommitPage()
+    /// **See also:** [`is_commit_page()`]
     set_commit_page(commit_page: bool),
     /// 
     /// Returns `true` if this page is a commit page; otherwise returns `false.`
     /// 
-    /// **See also:** setCommitPage()
+    /// **See also:** [`set_commit_page()`]
     is_commit_page() -> bool,
     /// 
     /// Sets the text on button *which* to be *text* on this page.
@@ -166,9 +166,9 @@ struct WizardPage : Widget {
     /// By default, the text on buttons depends on the QWizard::wizardStyle,
     /// but may be redefined for the wizard as a whole using QWizard::setButtonText().
     /// 
-    /// **See also:** buttonText()
-    /// QWizard::setButtonText()
-    /// QWizard::buttonText()
+    /// **See also:** [`button_text()`]
+    /// [`Wizard::set_button_text`]
+    /// [`Wizard::button_text`]
     set_button_text(which: Wizard::WizardButton, text: String),
     /// 
     /// Returns the text on button *which* on this page.
@@ -180,9 +180,9 @@ struct WizardPage : Widget {
     /// By default, the text on buttons depends on the QWizard::wizardStyle.
     /// For example, on MacOS , the **Next** button is called **Continue.**
     /// 
-    /// **See also:** setButtonText()
-    /// QWizard::buttonText()
-    /// QWizard::setButtonText()
+    /// **See also:** [`set_button_text()`]
+    /// [`Wizard::button_text`]
+    /// [`Wizard::set_button_text`]
     button_text(which: Wizard::WizardButton) -> String,
     /// 
     /// This virtual function is called by QWizard::initializePage() to
@@ -198,9 +198,9 @@ struct WizardPage : Widget {
     /// 
     /// The default implementation does nothing.
     /// 
-    /// **See also:** QWizard::initializePage()
-    /// cleanupPage()
-    /// QWizard::IndependentPages
+    /// **See also:** [`Wizard::initialize_page`]
+    /// [`cleanup_page()`]
+    /// [`Wizard::independent_pages()`]
     [event] initialize_page(),
     /// 
     /// This virtual function is called by QWizard::cleanupPage() when
@@ -212,9 +212,9 @@ struct WizardPage : Widget {
     /// original values (the values they had before initializePage() was
     /// called).
     /// 
-    /// **See also:** QWizard::cleanupPage()
-    /// initializePage()
-    /// QWizard::IndependentPages
+    /// **See also:** [`Wizard::cleanup_page`]
+    /// [`initialize_page()`]
+    /// [`Wizard::independent_pages()`]
     [event] cleanup_page(),
     /// 
     /// This virtual function is called by QWizard::validateCurrentPage()
@@ -228,8 +228,8 @@ struct WizardPage : Widget {
     /// or
     /// reimplementing isComplete()) than to reimplement validatePage().
     /// 
-    /// **See also:** QWizard::validateCurrentPage()
-    /// isComplete()
+    /// **See also:** [`Wizard::validate_current_page`]
+    /// [`is_complete()`]
     [event] validate_page() -> bool,
     /// 
     /// This virtual function is called by QWizard to determine whether
@@ -247,8 +247,8 @@ struct WizardPage : Widget {
     /// available [here](http://doc.qt.io/archives/qq/qq22-qwizard.html%23validatebeforeitstoolate)
     /// 
     /// 
-    /// **See also:** completeChanged()
-    /// isFinalPage()
+    /// **See also:** [`complete_changed()`]
+    /// [`is_final_page()`]
     [event] is_complete() -> bool,
     /// 
     /// This virtual function is called by QWizard::nextId() to find
@@ -262,7 +262,7 @@ struct WizardPage : Widget {
     /// By reimplementing this function, you can specify a dynamic page
     /// order. For example:
     /// 
-    /// **See also:** QWizard::nextId()
+    /// **See also:** [`Wizard::next_id`]
     [event] next_id() -> i32,
     /// 
     /// This signal is emitted whenever the complete state of the page
@@ -273,7 +273,7 @@ struct WizardPage : Widget {
     /// ensure that QWizard updates the enabled or disabled state of its
     /// buttons.
     /// 
-    /// **See also:** isComplete()
+    /// **See also:** [`is_complete()`]
     [signal] complete_changed(),
     /// 
     /// Sets the value of the field called *name* to *value.*
@@ -283,9 +283,9 @@ struct WizardPage : Widget {
     /// wizard()-> [setField(\a name, \a value)](QWizard::setField())
     /// 
     /// 
-    /// **See also:** QWizard::setField()
-    /// field()
-    /// registerField()
+    /// **See also:** [`Wizard::set_field`]
+    /// [`field()`]
+    /// [`register_field()`]
     set_field(name: String, value: &VariantType),
     /// 
     /// Returns the value of the field called *name.*
@@ -297,9 +297,9 @@ struct WizardPage : Widget {
     /// 
     /// Example:
     /// 
-    /// **See also:** QWizard::field()
-    /// setField()
-    /// registerField()
+    /// **See also:** [`Wizard::field`]
+    /// [`set_field()`]
+    /// [`register_field()`]
     field(name: String) -> Variant,
     /// 
     /// Creates a field called *name* associated with the given *property* of the given *widget.* From then on, that property
@@ -371,16 +371,16 @@ struct WizardPage : Widget {
     /// QWizard's mandatory field mechanism is provided for convenience.
     /// It can be bypassed by reimplementing QWizardPage::isComplete().
     /// 
-    /// **See also:** field()
-    /// setField()
-    /// QWizard::setDefaultProperty()
+    /// **See also:** [`field()`]
+    /// [`set_field()`]
+    /// [`Wizard::set_default_property`]
     register_field(name: String, widget: *WidgetType, property: *char, changed_signal: *char),
     /// 
     /// Returns the wizard associated with this page, or 0 if this page
     /// hasn't been inserted into a QWizard yet.
     /// 
-    /// **See also:** QWizard::addPage()
-    /// QWizard::setPage()
+    /// **See also:** [`Wizard::add_page`]
+    /// [`Wizard::set_page`]
     wizard() -> Wizard?,
 }
 

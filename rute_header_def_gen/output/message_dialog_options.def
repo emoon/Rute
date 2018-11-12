@@ -1,16 +1,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QMessageDialogOptions)]
-enum Icon {
-    NoIcon,
-    Information,
-    Warning,
-    Critical,
-    Question,
-}
-
-
 struct MessageDialogOptions {
     qt_check_for_qgadget_macro(),
     [static] create() -> SharedPointer<QMessageDialogOptions>,
@@ -27,6 +17,15 @@ struct MessageDialogOptions {
     detailed_text() -> String,
     set_standard_buttons(buttons: PlatformDialogHelper::StandardButtons),
     standard_buttons() -> PlatformDialogHelper::StandardButtons,
+}
+
+[org_name(QMessageDialogOptions)]
+enum Icon {
+    NoIcon,
+    Information,
+    Warning,
+    Critical,
+    Question,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

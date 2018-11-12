@@ -16,28 +16,23 @@
 /// paint() function draws the ellipse using the item's associated pen and
 /// brush, which you can set by calling setPen() and setBrush().
 /// 
-/// **See also:** QGraphicsPathItem
-/// QGraphicsRectItem
-/// QGraphicsPolygonItem
-/// QGraphicsTextItem
-/// QGraphicsLineItem
-/// QGraphicsPixmapItem
+/// **See also:** [`GraphicsPathItem`]
+/// [`GraphicsRectItem`]
+/// [`GraphicsPolygonItem`]
+/// [`GraphicsTextItem`]
+/// [`GraphicsLineItem`]
+/// [`GraphicsPixmapItem`]
 /// {Graphics
 /// View Framework}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsEllipseItem)]
-enum GraphicsEllipseItemFixMeEnums {
-    Type,
-}
-
 struct GraphicsEllipseItem : AbstractGraphicsShapeItem {
     /// 
     /// Returns the item's ellipse geometry as a QRectF.
     /// 
-    /// **See also:** setRect()
-    /// QPainter::drawEllipse()
+    /// **See also:** [`set_rect()`]
+    /// [`Painter::draw_ellipse`]
     rect() -> RectF,
     /// 
     /// Sets the item's rectangle to the rectangle defined by ( *x,* *y)*
@@ -45,15 +40,15 @@ struct GraphicsEllipseItem : AbstractGraphicsShapeItem {
     /// 
     /// This convenience function is equivalent to calling `setRect(QRectF(x, y, width, height))`
     /// 
-    /// **See also:** rect()
+    /// **See also:** [`rect()`]
     /// 
     /// Sets the item's ellipse geometry to *rect.* The rectangle's left edge
     /// defines the left edge of the ellipse, and the rectangle's top edge
     /// describes the top of the ellipse. The height and width of the rectangle
     /// describe the height and width of the ellipse.
     /// 
-    /// **See also:** rect()
-    /// QPainter::drawEllipse()
+    /// **See also:** [`rect()`]
+    /// [`Painter::draw_ellipse`]
     set_rect(rect: &RectFType),
     /// 
     /// Sets the item's rectangle to the rectangle defined by ( *x,* *y)*
@@ -61,32 +56,33 @@ struct GraphicsEllipseItem : AbstractGraphicsShapeItem {
     /// 
     /// This convenience function is equivalent to calling `setRect(QRectF(x, y, width, height))`
     /// 
-    /// **See also:** rect()
+    /// **See also:** [`rect()`]
     /// 
     /// Sets the item's ellipse geometry to *rect.* The rectangle's left edge
     /// defines the left edge of the ellipse, and the rectangle's top edge
     /// describes the top of the ellipse. The height and width of the rectangle
     /// describe the height and width of the ellipse.
     /// 
-    /// **See also:** rect()
-    /// QPainter::drawEllipse()
+    /// **See also:** [`rect()`]
+    /// [`Painter::draw_ellipse`]
+    [org_name(setRect)]
     set_rect_2(x: f32, y: f32, w: f32, h: f32),
     /// 
     /// Returns the start angle for an ellipse segment in 16ths of a degree. This
     /// angle is used together with spanAngle() for representing an ellipse
     /// segment (a pie). By default, the start angle is 0.
     /// 
-    /// **See also:** setStartAngle()
-    /// spanAngle()
+    /// **See also:** [`set_start_angle()`]
+    /// [`span_angle()`]
     start_angle() -> i32,
     /// 
     /// Sets the start angle for an ellipse segment to *angle,* which is in 16ths
     /// of a degree. This angle is used together with spanAngle() for representing
     /// an ellipse segment (a pie). By default, the start angle is 0.
     /// 
-    /// **See also:** startAngle()
-    /// setSpanAngle()
-    /// QPainter::drawPie()
+    /// **See also:** [`start_angle()`]
+    /// [`set_span_angle()`]
+    /// [`Painter::draw_pie`]
     set_start_angle(angle: i32),
     /// 
     /// Returns the span angle of an ellipse segment in 16ths of a degree. This
@@ -94,8 +90,8 @@ struct GraphicsEllipseItem : AbstractGraphicsShapeItem {
     /// segment (a pie). By default, this function returns 5760 (360 * 16, a full
     /// ellipse).
     /// 
-    /// **See also:** setSpanAngle()
-    /// startAngle()
+    /// **See also:** [`set_span_angle()`]
+    /// [`start_angle()`]
     span_angle() -> i32,
     /// 
     /// Sets the span angle for an ellipse segment to *angle,* which is in 16ths
@@ -103,9 +99,9 @@ struct GraphicsEllipseItem : AbstractGraphicsShapeItem {
     /// ellipse segment (a pie). By default, the span angle is 5760 (360 * 16, a
     /// full ellipse).
     /// 
-    /// **See also:** spanAngle()
-    /// setStartAngle()
-    /// QPainter::drawPie()
+    /// **See also:** [`span_angle()`]
+    /// [`set_start_angle()`]
+    /// [`Painter::draw_pie`]
     set_span_angle(angle: i32),
     /// 
     [event] bounding_rect() -> RectF,
@@ -124,6 +120,11 @@ struct GraphicsEllipseItem : AbstractGraphicsShapeItem {
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
     [event] extension(variant: &VariantType) -> Variant,
+}
+
+[org_name(QGraphicsEllipseItem)]
+enum GraphicsEllipseItemFixMeEnums {
+    Type,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

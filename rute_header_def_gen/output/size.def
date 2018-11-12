@@ -20,60 +20,59 @@
 /// 
 /// QSize objects can be streamed as well as compared.
 /// 
-/// **See also:** QSizeF
-/// QPoint
-/// QRect
+/// **See also:** [`SizeF`]
+/// [`Point`]
+/// [`Rect`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct Size {
     /// 
     /// Returns `true` if both the width and height is 0; otherwise returns
     /// false.
     /// 
-    /// **See also:** isValid()
-    /// isEmpty()
+    /// **See also:** [`is_valid()`]
+    /// [`is_empty()`]
     is_null() -> bool,
     /// 
     /// Returns `true` if either of the width and height is less than or
     /// equal to 0; otherwise returns `false.`
     /// 
-    /// **See also:** isNull()
-    /// isValid()
+    /// **See also:** [`is_null()`]
+    /// [`is_valid()`]
     is_empty() -> bool,
     /// 
     /// Returns `true` if both the width and height is equal to or greater
     /// than 0; otherwise returns `false.`
     /// 
-    /// **See also:** isNull()
-    /// isEmpty()
+    /// **See also:** [`is_null()`]
+    /// [`is_empty()`]
     is_valid() -> bool,
     /// 
     /// Returns the width.
     /// 
-    /// **See also:** height()
-    /// setWidth()
+    /// **See also:** [`height()`]
+    /// [`set_width()`]
     width() -> i32,
     /// 
     /// Returns the height.
     /// 
-    /// **See also:** width()
-    /// setHeight()
+    /// **See also:** [`width()`]
+    /// [`set_height()`]
     height() -> i32,
     /// 
     /// Sets the width to the given *width.*
     /// 
-    /// **See also:** rwidth()
-    /// width()
-    /// setHeight()
+    /// **See also:** [`rwidth()`]
+    /// [`width()`]
+    /// [`set_height()`]
     set_width(w: i32),
     /// 
     /// Sets the height to the given *height.*
     /// 
-    /// **See also:** rheight()
-    /// height()
-    /// setWidth()
+    /// **See also:** [`rheight()`]
+    /// [`height()`]
+    /// [`set_width()`]
     set_height(h: i32),
     /// 
     /// Scales the size to a rectangle with the given *width* and *height,* according to the specified *mode:*
@@ -84,9 +83,9 @@ struct Size {
     /// 
     /// Example:
     /// 
-    /// **See also:** setWidth()
-    /// setHeight()
-    /// scaled()
+    /// **See also:** [`set_width()`]
+    /// [`set_height()`]
+    /// [`scaled()`]
     /// 
     /// **Overloads**
     /// Scales the size to a rectangle with the given *size,* according to
@@ -94,7 +93,7 @@ struct Size {
     /// 
     /// Return a size scaled to a rectangle with the given *width* and *height,* according to the specified *mode.*
     /// 
-    /// **See also:** scale()
+    /// **See also:** [`scale()`]
     /// 
     /// **Overloads**
     /// Return a size scaled to a rectangle with the given size *s,*
@@ -109,9 +108,9 @@ struct Size {
     /// 
     /// Example:
     /// 
-    /// **See also:** setWidth()
-    /// setHeight()
-    /// scaled()
+    /// **See also:** [`set_width()`]
+    /// [`set_height()`]
+    /// [`scaled()`]
     /// 
     /// **Overloads**
     /// Scales the size to a rectangle with the given *size,* according to
@@ -119,16 +118,17 @@ struct Size {
     /// 
     /// Return a size scaled to a rectangle with the given *width* and *height,* according to the specified *mode.*
     /// 
-    /// **See also:** scale()
+    /// **See also:** [`scale()`]
     /// 
     /// **Overloads**
     /// Return a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
+    [org_name(scale)]
     scale_2(s: &SizeType, mode: Rute::AspectRatioMode),
     /// 
     /// Return a size scaled to a rectangle with the given *width* and *height,* according to the specified *mode.*
     /// 
-    /// **See also:** scale()
+    /// **See also:** [`scale()`]
     /// 
     /// **Overloads**
     /// Return a size scaled to a rectangle with the given size *s,*
@@ -137,25 +137,26 @@ struct Size {
     /// 
     /// Return a size scaled to a rectangle with the given *width* and *height,* according to the specified *mode.*
     /// 
-    /// **See also:** scale()
+    /// **See also:** [`scale()`]
     /// 
     /// **Overloads**
     /// Return a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
+    [org_name(scaled)]
     scaled_2(s: &SizeType, mode: Rute::AspectRatioMode) -> Size,
     /// 
     /// Returns a size holding the maximum width and height of this size
     /// and the given *otherSize.*
     /// 
-    /// **See also:** boundedTo()
-    /// scale()
+    /// **See also:** [`bounded_to()`]
+    /// [`scale()`]
     expanded_to(arg0: &SizeType) -> Size,
     /// 
     /// Returns a size holding the minimum width and height of this size
     /// and the given *otherSize.*
     /// 
-    /// **See also:** expandedTo()
-    /// scale()
+    /// **See also:** [`expanded_to()`]
+    /// [`scale()`]
     bounded_to(arg0: &SizeType) -> Size,
     /// 
     /// Returns a reference to the width.
@@ -163,8 +164,8 @@ struct Size {
     /// Using a reference makes it possible to manipulate the width
     /// directly. For example:
     /// 
-    /// **See also:** rheight()
-    /// setWidth()
+    /// **See also:** [`rheight()`]
+    /// [`set_width()`]
     rwidth() -> i32?,
     /// 
     /// Returns a reference to the height.
@@ -172,8 +173,8 @@ struct Size {
     /// Using a reference makes it possible to manipulate the height
     /// directly. For example:
     /// 
-    /// **See also:** rwidth()
-    /// setHeight()
+    /// **See also:** [`rwidth()`]
+    /// [`set_height()`]
     rheight() -> i32?,
 }
 

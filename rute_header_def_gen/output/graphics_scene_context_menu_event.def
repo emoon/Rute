@@ -4,42 +4,35 @@
 /// QContextMenuEvent::globalPos() is translated into item, scene, and
 /// screen coordinates (pos(), scenePos(), and screenPos()).
 /// 
-/// **See also:** QGraphicsSceneMouseEvent
-/// QGraphicsSceneWheelEvent
-/// QContextMenuEvent
+/// **See also:** [`GraphicsSceneMouseEvent`]
+/// [`GraphicsSceneWheelEvent`]
+/// [`ContextMenuEvent`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsSceneContextMenuEvent)]
-enum Reason {
-    Mouse,
-    Keyboard,
-    Other,
-}
-
 struct GraphicsSceneContextMenuEvent : GraphicsSceneEvent {
     /// 
     /// Returns the position of the mouse cursor in item coordinates at the moment
     /// the context menu was requested.
     /// 
-    /// **See also:** scenePos()
-    /// screenPos()
+    /// **See also:** [`scene_pos()`]
+    /// [`screen_pos()`]
     pos() -> PointF,
     set_pos(pos: &PointFType),
     /// 
     /// Returns the position of the mouse cursor in scene coordinates at the moment the
     /// context menu was requested.
     /// 
-    /// **See also:** pos()
-    /// screenPos()
+    /// **See also:** [`pos()`]
+    /// [`screen_pos()`]
     scene_pos() -> PointF,
     set_scene_pos(pos: &PointFType),
     /// 
     /// Returns the position of the mouse cursor in screen coordinates at the moment the
     /// context menu was requested.
     /// 
-    /// **See also:** pos()
-    /// scenePos()
+    /// **See also:** [`pos()`]
+    /// [`scene_pos()`]
     screen_pos() -> Point,
     set_screen_pos(pos: &PointType),
     /// 
@@ -49,9 +42,16 @@ struct GraphicsSceneContextMenuEvent : GraphicsSceneEvent {
     /// 
     /// Returns the reason for the context menu event.
     /// 
-    /// **See also:** QGraphicsSceneContextMenuEvent::Reason
+    /// **See also:** [`GraphicsSceneContextMenuEvent::reason()`]
     reason() -> GraphicsSceneContextMenuEvent::Reason,
     set_reason(reason: GraphicsSceneContextMenuEvent::Reason),
+}
+
+[org_name(QGraphicsSceneContextMenuEvent)]
+enum Reason {
+    Mouse,
+    Keyboard,
+    Other,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -10,8 +10,8 @@
 /// QWidget::focusOutEvent(), QGraphicsItem::focusInEvent and
 /// QGraphicsItem::focusOutEvent() receive focus events.
 /// 
-/// **See also:** QWidget::setFocus()
-/// QWidget::setFocusPolicy()
+/// **See also:** [`Widget::set_focus`]
+/// [`Widget::set_focus_policy`]
 /// {Keyboard Focus in Widgets}
 /// # Licence
 ///

@@ -128,8 +128,8 @@
 /// the style for drawing.
 /// 
 /// **See also:** {Delegate Classes}
-/// QStyledItemDelegate
-/// QAbstractItemDelegate
+/// [`StyledItemDelegate`]
+/// [`AbstractItemDelegate`]
 /// {Spin Box Delegate Example}
 /// {Settings Editor Example}
 /// {Icons Example}
@@ -160,7 +160,7 @@ struct ItemDelegate : AbstractItemDelegate {
     /// it may be useful to call QPainter::save() before painting and
     /// QPainter::restore() afterwards.
     /// 
-    /// **See also:** QStyle::State
+    /// **See also:** [`Style::state()`]
     [event] paint(painter: *PainterType, option: &StyleOptionViewItemType, index: &ModelIndexType),
     /// 
     /// Returns the size needed by the delegate to display the item
@@ -176,7 +176,7 @@ struct ItemDelegate : AbstractItemDelegate {
     /// for editing. The *parent* widget and style *option* are used to
     /// control how the editor widget appears.
     /// 
-    /// **See also:** QAbstractItemDelegate::createEditor()
+    /// **See also:** [`AbstractItemDelegate::create_editor`]
     [event] create_editor(parent: *WidgetType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> Widget?,
     /// 
     /// Sets the data to be displayed and edited by the *editor* from the
@@ -186,7 +186,7 @@ struct ItemDelegate : AbstractItemDelegate {
     /// widget's [user property](Qt's%20Property%20System)
     /// 
     /// 
-    /// **See also:** QMetaProperty::isUser()
+    /// **See also:** [`MetaProperty::is_user`]
     [event] set_editor_data(editor: *WidgetType, index: &ModelIndexType),
     /// 
     /// Gets data from the *editor* widget and stores it in the specified
@@ -197,20 +197,20 @@ struct ItemDelegate : AbstractItemDelegate {
     /// property](Qt's%20Property%20System)
     /// 
     /// 
-    /// **See also:** QMetaProperty::isUser()
+    /// **See also:** [`MetaProperty::is_user`]
     [event] set_model_data(editor: *WidgetType, model: *AbstractItemModelType, index: &ModelIndexType),
     /// 
     /// Returns the editor factory used by the item delegate.
     /// If no editor factory is set, the function will return null.
     /// 
-    /// **See also:** setItemEditorFactory()
+    /// **See also:** [`set_item_editor_factory()`]
     item_editor_factory() -> ItemEditorFactory?,
     /// 
     /// Sets the editor factory to be used by the item delegate to be the *factory*
     /// specified. If no editor factory is set, the item delegate will use the
     /// default editor factory.
     /// 
-    /// **See also:** itemEditorFactory()
+    /// **See also:** [`item_editor_factory()`]
     set_item_editor_factory(factory: *ItemEditorFactoryType),
     /// 
     /// Renders the item view *text* within the rectangle specified by *rect*
@@ -255,8 +255,8 @@ struct ItemDelegate : AbstractItemDelegate {
     /// If the event is a **Esc** key press event, the *editor* is
     /// closed *without* committing its data.
     /// 
-    /// **See also:** commitData()
-    /// closeEditor()
+    /// **See also:** [`commit_data()`]
+    /// [`close_editor()`]
     [event] event_filter(object: *ObjectType, event: *EventType) -> bool,
     /// 
     [event] editor_event(event: *EventType, model: *AbstractItemModelType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,

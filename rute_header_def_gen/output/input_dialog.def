@@ -15,25 +15,11 @@
 /// example shows how to use
 /// QInputDialog as well as other built-in Qt dialogs.
 /// 
-/// **See also:** QMessageBox
+/// **See also:** [`MessageBox`]
 /// {Standard Dialogs Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QInputDialog)]
-enum InputDialogOption {
-    NoButtons,
-    UseListViewForComboBoxItems,
-    UsePlainTextEditForTextInput,
-}
-
-[org_name(QInputDialog)]
-enum InputMode {
-    TextInput,
-    IntInput,
-    DoubleInput,
-}
-
 struct InputDialog : Dialog {
     set_input_mode(mode: InputDialog::InputMode),
     /// 
@@ -48,21 +34,21 @@ struct InputDialog : Dialog {
     /// otherwise, clears the given *option.*
     /// 
     /// **See also:** options
-    /// testOption()
+    /// [`test_option()`]
     set_option(option: InputDialog::InputDialogOption, on: bool),
     /// 
     /// Returns `true` if the given *option* is enabled; otherwise, returns
     /// false.
     /// 
     /// **See also:** options
-    /// setOption()
+    /// [`set_option()`]
     test_option(option: InputDialog::InputDialogOption) -> bool,
     set_options(options: InputDialog::InputDialogOptions),
     /// 
     /// By default, all options are disabled.
     /// 
-    /// **See also:** setOption()
-    /// testOption()
+    /// **See also:** [`set_option()`]
+    /// [`test_option()`]
     options() -> InputDialog::InputDialogOptions,
     set_text_value(text: String),
     /// 
@@ -165,7 +151,7 @@ struct InputDialog : Dialog {
     set_double_range(min: double, max: double),
     set_double_decimals(decimals: i32),
     /// 
-    /// **See also:** QDoubleSpinBox::setDecimals()
+    /// **See also:** [`DoubleSpinBox::set_decimals`]
     double_decimals() -> i32,
     set_ok_button_text(text: String),
     /// 
@@ -213,10 +199,10 @@ struct InputDialog : Dialog {
     /// 
     /// Use this static function like this:
     /// 
-    /// **See also:** getInt()
-    /// getDouble()
-    /// getItem()
-    /// getMultiLineText()
+    /// **See also:** [`get_int()`]
+    /// [`get_double()`]
+    /// [`get_item()`]
+    /// [`get_multi_line_text()`]
     [static] get_text(parent: *WidgetType, title: String, label: String, echo: LineEdit::EchoMode, text: String, ok: *bool, flags: Rute::WindowFlags, input_method_hints: Rute::InputMethodHints) -> String,
     /// 
     /// Static convenience function to get a multiline string from the user.
@@ -238,10 +224,10 @@ struct InputDialog : Dialog {
     /// 
     /// Use this static function like this:
     /// 
-    /// **See also:** getInt()
-    /// getDouble()
-    /// getItem()
-    /// getText()
+    /// **See also:** [`get_int()`]
+    /// [`get_double()`]
+    /// [`get_item()`]
+    /// [`get_text()`]
     [static] get_multi_line_text(parent: *WidgetType, title: String, label: String, text: String, ok: *bool, flags: Rute::WindowFlags, input_method_hints: Rute::InputMethodHints) -> String,
     /// 
     /// Static convenience function to let the user select an item from a string
@@ -267,10 +253,10 @@ struct InputDialog : Dialog {
     /// 
     /// Use this static function like this:
     /// 
-    /// **See also:** getText()
-    /// getInt()
-    /// getDouble()
-    /// getMultiLineText()
+    /// **See also:** [`get_text()`]
+    /// [`get_int()`]
+    /// [`get_double()`]
+    /// [`get_multi_line_text()`]
     [static] get_item(parent: *WidgetType, title: String, label: String, items: &[String], current: i32, editable: bool, ok: *bool, flags: Rute::WindowFlags, input_method_hints: Rute::InputMethodHints) -> String,
     /// 
     /// Static convenience function to get an integer input from the user.
@@ -292,10 +278,10 @@ struct InputDialog : Dialog {
     /// 
     /// Use this static function like this:
     /// 
-    /// **See also:** getText()
-    /// getDouble()
-    /// getItem()
-    /// getMultiLineText()
+    /// **See also:** [`get_text()`]
+    /// [`get_double()`]
+    /// [`get_item()`]
+    /// [`get_multi_line_text()`]
     /// 
     /// Static convenience function to get an integer input from the user.
     /// 
@@ -316,10 +302,10 @@ struct InputDialog : Dialog {
     /// 
     /// Use this static function like this:
     /// 
-    /// **See also:** getText()
-    /// getDouble()
-    /// getItem()
-    /// getMultiLineText()
+    /// **See also:** [`get_text()`]
+    /// [`get_double()`]
+    /// [`get_item()`]
+    /// [`get_multi_line_text()`]
     [static] get_int(parent: *WidgetType, title: String, label: String, value: i32, min_value: i32, max_value: i32, step: i32, ok: *bool, flags: Rute::WindowFlags) -> i32,
     /// 
     /// Static convenience function to get a floating point number from the user.
@@ -341,10 +327,10 @@ struct InputDialog : Dialog {
     /// 
     /// Use this static function like this:
     /// 
-    /// **See also:** getText()
-    /// getInt()
-    /// getItem()
-    /// getMultiLineText()
+    /// **See also:** [`get_text()`]
+    /// [`get_int()`]
+    /// [`get_item()`]
+    /// [`get_multi_line_text()`]
     /// 
     /// **Overloads**  Static convenience function to get a floating point number from the user.
     /// 
@@ -367,10 +353,10 @@ struct InputDialog : Dialog {
     /// 
     /// Use this static function like this:
     /// 
-    /// **See also:** getText()
-    /// getInt()
-    /// getItem()
-    /// getMultiLineText()
+    /// **See also:** [`get_text()`]
+    /// [`get_int()`]
+    /// [`get_item()`]
+    /// [`get_multi_line_text()`]
     [static] get_double(parent: *WidgetType, title: String, label: String, value: double, min_value: double, max_value: double, decimals: i32, ok: *bool, flags: Rute::WindowFlags) -> double,
     /// 
     /// Static convenience function to get a floating point number from the user.
@@ -392,10 +378,10 @@ struct InputDialog : Dialog {
     /// 
     /// Use this static function like this:
     /// 
-    /// **See also:** getText()
-    /// getInt()
-    /// getItem()
-    /// getMultiLineText()
+    /// **See also:** [`get_text()`]
+    /// [`get_int()`]
+    /// [`get_item()`]
+    /// [`get_multi_line_text()`]
     /// 
     /// **Overloads**  Static convenience function to get a floating point number from the user.
     /// 
@@ -418,10 +404,11 @@ struct InputDialog : Dialog {
     /// 
     /// Use this static function like this:
     /// 
-    /// **See also:** getText()
-    /// getInt()
-    /// getItem()
-    /// getMultiLineText()
+    /// **See also:** [`get_text()`]
+    /// [`get_int()`]
+    /// [`get_item()`]
+    /// [`get_multi_line_text()`]
+    [org_name(getDouble)]
     [static] get_double_2(parent: *WidgetType, title: String, label: String, value: double, min_value: double, max_value: double, decimals: i32, ok: *bool, flags: Rute::WindowFlags, step: double) -> double,
     set_double_step(step: double),
     /// 
@@ -478,8 +465,22 @@ struct InputDialog : Dialog {
     /// is shown with exec(), done() causes the local event loop to finish,
     /// and exec() to return *result.*
     /// 
-    /// **See also:** QDialog::done()
+    /// **See also:** [`Dialog::done`]
     [event] done(result: i32),
+}
+
+[org_name(QInputDialog)]
+enum InputDialogOption {
+    NoButtons,
+    UseListViewForComboBoxItems,
+    UsePlainTextEditForTextInput,
+}
+
+[org_name(QInputDialog)]
+enum InputMode {
+    TextInput,
+    IntInput,
+    DoubleInput,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -37,8 +37,8 @@
 /// radius() functions returning the gradient's center, focal point
 /// and radius respectively.
 /// 
-/// **See also:** QLinearGradient
-/// QConicalGradient
+/// **See also:** [`LinearGradient`]
+/// [`ConicalGradient`]
 /// {painting/gradients}{The
 /// Gradients Example}
 /// # Licence
@@ -48,24 +48,24 @@ struct RadialGradient : Gradient {
     /// 
     /// Returns the center of this radial gradient in logical coordinates.
     /// 
-    /// **See also:** QGradient::stops()
+    /// **See also:** [`Gradient::stops`]
     /// 
     /// Returns the center radius of this radial gradient in logical
     /// coordinates.
     /// 
-    /// **See also:** QGradient::stops()
+    /// **See also:** [`Gradient::stops`]
     center() -> PointF,
     /// 
     /// **Overloads**
     /// Sets the center of this radial gradient in logical coordinates
     /// to ( *x,* *y).*
     /// 
-    /// **See also:** center()
+    /// **See also:** [`center()`]
     /// 
     /// Sets the center of this radial gradient in logical coordinates
     /// to *center.*
     /// 
-    /// **See also:** center()
+    /// **See also:** [`center()`]
     /// 
     /// Sets the center radius of this radial gradient in logical coordinates
     /// to *radius*
@@ -75,52 +75,54 @@ struct RadialGradient : Gradient {
     /// Sets the center of this radial gradient in logical coordinates
     /// to ( *x,* *y).*
     /// 
-    /// **See also:** center()
+    /// **See also:** [`center()`]
     /// 
     /// Sets the center of this radial gradient in logical coordinates
     /// to *center.*
     /// 
-    /// **See also:** center()
+    /// **See also:** [`center()`]
     /// 
     /// Sets the center radius of this radial gradient in logical coordinates
     /// to *radius*
+    [org_name(setCenter)]
     set_center_2(x: f32, y: f32),
     /// 
     /// Returns the focal point of this radial gradient in logical
     /// coordinates.
     /// 
-    /// **See also:** QGradient::stops()
+    /// **See also:** [`Gradient::stops`]
     focal_point() -> PointF,
     /// 
     /// **Overloads**
     /// Sets the focal point of this radial gradient in logical
     /// coordinates to ( *x,* *y).*
     /// 
-    /// **See also:** focalPoint()
+    /// **See also:** [`focal_point()`]
     /// 
     /// Sets the focal point of this radial gradient in logical
     /// coordinates to *focalPoint.*
     /// 
-    /// **See also:** focalPoint()
+    /// **See also:** [`focal_point()`]
     set_focal_point(focal_point: &PointFType),
     /// 
     /// **Overloads**
     /// Sets the focal point of this radial gradient in logical
     /// coordinates to ( *x,* *y).*
     /// 
-    /// **See also:** focalPoint()
+    /// **See also:** [`focal_point()`]
     /// 
     /// Sets the focal point of this radial gradient in logical
     /// coordinates to *focalPoint.*
     /// 
-    /// **See also:** focalPoint()
+    /// **See also:** [`focal_point()`]
+    [org_name(setFocalPoint)]
     set_focal_point_2(x: f32, y: f32),
     /// 
     /// Returns the radius of this radial gradient in logical coordinates.
     /// 
     /// Equivalent to centerRadius()
     /// 
-    /// **See also:** QGradient::stops()
+    /// **See also:** [`Gradient::stops`]
     radius() -> f32,
     /// 
     /// Sets the radius of this radial gradient in logical coordinates
@@ -132,7 +134,7 @@ struct RadialGradient : Gradient {
     /// Returns the center radius of this radial gradient in logical
     /// coordinates.
     /// 
-    /// **See also:** QGradient::stops()
+    /// **See also:** [`Gradient::stops`]
     center_radius() -> f32,
     /// 
     /// Sets the center radius of this radial gradient in logical coordinates
@@ -142,7 +144,7 @@ struct RadialGradient : Gradient {
     /// Returns the focal radius of this radial gradient in logical
     /// coordinates.
     /// 
-    /// **See also:** QGradient::stops()
+    /// **See also:** [`Gradient::stops`]
     focal_radius() -> f32,
     /// 
     /// Sets the focal radius of this radial gradient in logical coordinates

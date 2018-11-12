@@ -29,7 +29,7 @@
 /// so scheduling several transformations of the same kind (e.g.,
 /// rotations) at the same step is not recommended.
 /// 
-/// **See also:** QTimeLine
+/// **See also:** [`TimeLine`]
 /// {Graphics View Framework}
 /// # Licence
 ///
@@ -38,121 +38,121 @@ struct GraphicsItemAnimation : Object {
     /// 
     /// Returns the item on which the animation object operates.
     /// 
-    /// **See also:** setItem()
+    /// **See also:** [`set_item()`]
     item() -> GraphicsItem?,
     /// 
     /// Sets the specified *item* to be used in the animation.
     /// 
-    /// **See also:** item()
+    /// **See also:** [`item()`]
     set_item(item: *GraphicsItemType),
     /// 
     /// Returns the timeline object used to control the rate at which the animation
     /// occurs.
     /// 
-    /// **See also:** setTimeLine()
+    /// **See also:** [`set_time_line()`]
     time_line() -> TimeLine?,
     /// 
     /// Sets the timeline object used to control the rate of animation to the *timeLine*
     /// specified.
     /// 
-    /// **See also:** timeLine()
+    /// **See also:** [`time_line()`]
     set_time_line(time_line: *TimeLineType),
     /// 
     /// Returns the position of the item at the given *step* value.
     /// 
-    /// **See also:** setPosAt()
+    /// **See also:** [`set_pos_at()`]
     pos_at(step: f32) -> PointF,
     /// 
     /// Returns all explicitly inserted positions.
     /// 
-    /// **See also:** posAt()
-    /// setPosAt()
+    /// **See also:** [`pos_at()`]
+    /// [`set_pos_at()`]
     pos_list() -> [Pair<qreal,],
     /// 
     /// Sets the position of the item at the given *step* value to the *point* specified.
     /// 
-    /// **See also:** posAt()
+    /// **See also:** [`pos_at()`]
     set_pos_at(step: f32, pos: &PointFType),
     /// 
     /// Returns the angle at which the item is rotated at the specified *step* value.
     /// 
-    /// **See also:** setRotationAt()
+    /// **See also:** [`set_rotation_at()`]
     rotation_at(step: f32) -> f32,
     /// 
     /// Returns all explicitly inserted rotations.
     /// 
-    /// **See also:** rotationAt()
-    /// setRotationAt()
+    /// **See also:** [`rotation_at()`]
+    /// [`set_rotation_at()`]
     rotation_list() -> [Pair<qreal,],
     /// 
     /// Sets the rotation of the item at the given *step* value to the *angle* specified.
     /// 
-    /// **See also:** rotationAt()
+    /// **See also:** [`rotation_at()`]
     set_rotation_at(step: f32, angle: f32),
     /// 
     /// Returns the horizontal translation of the item at the specified *step* value.
     /// 
-    /// **See also:** setTranslationAt()
+    /// **See also:** [`set_translation_at()`]
     x_translation_at(step: f32) -> f32,
     /// 
     /// Returns the vertical translation of the item at the specified *step* value.
     /// 
-    /// **See also:** setTranslationAt()
+    /// **See also:** [`set_translation_at()`]
     y_translation_at(step: f32) -> f32,
     /// 
     /// Sets the translation of the item at the given *step* value using the horizontal
     /// and vertical coordinates specified by *dx* and *dy.*
     /// 
-    /// **See also:** xTranslationAt()
-    /// yTranslationAt()
+    /// **See also:** [`x_translation_at()`]
+    /// [`y_translation_at()`]
     set_translation_at(step: f32, dx: f32, dy: f32),
     /// 
     /// Returns the vertical scale for the item at the specified *step* value.
     /// 
-    /// **See also:** setScaleAt()
+    /// **See also:** [`set_scale_at()`]
     vertical_scale_at(step: f32) -> f32,
     /// 
     /// Returns the horizontal scale for the item at the specified *step* value.
     /// 
-    /// **See also:** setScaleAt()
+    /// **See also:** [`set_scale_at()`]
     horizontal_scale_at(step: f32) -> f32,
     /// 
     /// Returns all explicitly inserted scales.
     /// 
-    /// **See also:** verticalScaleAt()
-    /// horizontalScaleAt()
-    /// setScaleAt()
+    /// **See also:** [`vertical_scale_at()`]
+    /// [`horizontal_scale_at()`]
+    /// [`set_scale_at()`]
     scale_list() -> [Pair<qreal,],
     /// 
     /// Sets the scale of the item at the given *step* value using the horizontal and
     /// vertical scale factors specified by *sx* and *sy.*
     /// 
-    /// **See also:** verticalScaleAt()
-    /// horizontalScaleAt()
+    /// **See also:** [`vertical_scale_at()`]
+    /// [`horizontal_scale_at()`]
     set_scale_at(step: f32, sx: f32, sy: f32),
     /// 
     /// Returns the vertical shear for the item at the specified *step* value.
     /// 
-    /// **See also:** setShearAt()
+    /// **See also:** [`set_shear_at()`]
     vertical_shear_at(step: f32) -> f32,
     /// 
     /// Returns the horizontal shear for the item at the specified *step* value.
     /// 
-    /// **See also:** setShearAt()
+    /// **See also:** [`set_shear_at()`]
     horizontal_shear_at(step: f32) -> f32,
     /// 
     /// Returns all explicitly inserted shears.
     /// 
-    /// **See also:** verticalShearAt()
-    /// horizontalShearAt()
-    /// setShearAt()
+    /// **See also:** [`vertical_shear_at()`]
+    /// [`horizontal_shear_at()`]
+    /// [`set_shear_at()`]
     shear_list() -> [Pair<qreal,],
     /// 
     /// Sets the shear of the item at the given *step* value using the horizontal and
     /// vertical shear factors specified by *sh* and *sv.*
     /// 
-    /// **See also:** verticalShearAt()
-    /// horizontalShearAt()
+    /// **See also:** [`vertical_shear_at()`]
+    /// [`horizontal_shear_at()`]
     set_shear_at(step: f32, sh: f32, sv: f32),
     /// 
     /// Clears the scheduled transformations used for the animation, but

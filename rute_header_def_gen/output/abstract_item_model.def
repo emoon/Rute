@@ -133,8 +133,8 @@
 /// 
 /// **See also:** {Model Classes}
 /// {Model Subclassing Reference}
-/// QModelIndex
-/// QAbstractItemView
+/// [`ModelIndex`]
+/// [`AbstractItemView`]
 /// {Using drag and drop with item views}
 /// {Simple DOM Model Example}
 /// {Simple Tree Model Example}
@@ -143,21 +143,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QAbstractItemModel)]
-enum LayoutChangeHint {
-    NoLayoutChangeHint,
-    VerticalSortHint,
-    HorizontalSortHint,
-}
-
-[org_name(QAbstractItemModel)]
-enum CheckIndexOption {
-    NoOption,
-    IndexIsValid,
-    DoNotUseParent,
-    ParentIsInvalid,
-}
-
 struct AbstractItemModel : Object {
     /// 
     /// Returns `true` if the model returns a valid QModelIndex for *row* and
@@ -171,7 +156,7 @@ struct AbstractItemModel : Object {
     /// generate model indexes that other components can use to refer to items in
     /// your model.
     /// 
-    /// **See also:** createIndex()
+    /// **See also:** [`create_index()`]
     [event] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndex,
     /// 
     /// Returns the parent of the model item with the given *index.* If the item
@@ -187,7 +172,7 @@ struct AbstractItemModel : Object {
     /// indexes belonging to your model will simply call your implementation,
     /// leading to infinite recursion.
     /// 
-    /// **See also:** createIndex()
+    /// **See also:** [`create_index()`]
     [event] parent(child: &ModelIndexType) -> ModelIndex,
     /// 
     /// Returns the sibling at *row* and *column* for the item at *index,* or an
@@ -199,9 +184,9 @@ struct AbstractItemModel : Object {
     /// 
     /// This method can optionally be overridden for implementation-specific optimization.
     /// 
-    /// **See also:** index()
-    /// QModelIndex::row()
-    /// QModelIndex::column()
+    /// **See also:** [`index()`]
+    /// [`ModelIndex::row`]
+    /// [`ModelIndex::column`]
     [event] sibling(row: i32, column: i32, idx: &ModelIndexType) -> ModelIndex,
     /// 
     /// Returns the number of rows under the given *parent.* When the parent is
@@ -210,7 +195,7 @@ struct AbstractItemModel : Object {
     /// **Note**: When implementing a table based model, rowCount() should return 0
     /// when the parent is valid.
     /// 
-    /// **See also:** columnCount()
+    /// **See also:** [`column_count()`]
     [event] row_count(parent: &ModelIndexType) -> i32,
     /// 
     /// Returns the number of columns for the children of the given *parent.*
@@ -222,7 +207,7 @@ struct AbstractItemModel : Object {
     /// **Note**: When implementing a table based model, columnCount() should return 0
     /// when the parent is valid.
     /// 
-    /// **See also:** rowCount()
+    /// **See also:** [`row_count()`]
     [event] column_count(parent: &ModelIndexType) -> i32,
     /// 
     /// Returns `true` if *parent* has any children; otherwise returns `false` .
@@ -232,8 +217,8 @@ struct AbstractItemModel : Object {
     /// Note that it is undefined behavior to report that a particular index hasChildren
     /// with this method if the same index has the flag Qt::ItemNeverHasChildren set.
     /// 
-    /// **See also:** parent()
-    /// index()
+    /// **See also:** [`parent()`]
+    /// [`index()`]
     [event] has_children(parent: &ModelIndexType) -> bool,
     /// 
     /// This signal is emitted whenever the data in an existing item changes.
@@ -250,9 +235,9 @@ struct AbstractItemModel : Object {
     /// considered modified. The order of elements in the roles argument does not have any
     /// relevance.
     /// 
-    /// **See also:** headerDataChanged()
-    /// setData()
-    /// layoutChanged()
+    /// **See also:** [`header_data_changed()`]
+    /// [`set_data()`]
+    /// [`layout_changed()`]
     /// 
     /// Returns the data stored under the given *role* for the item referred to
     /// by the *index.*
@@ -260,9 +245,9 @@ struct AbstractItemModel : Object {
     /// **Note**: If you do not have a value to return, return an **invalid**
     /// QVariant instead of returning 0.
     /// 
-    /// **See also:** Qt::ItemDataRole
-    /// setData()
-    /// headerData()
+    /// **See also:** [`t::item_data_role()`]
+    /// [`set_data()`]
+    /// [`header_data()`]
     [event] data(index: &ModelIndexType, role: i32) -> Variant,
     /// 
     /// Sets the *role* data for the item at *index* to *value.*
@@ -275,9 +260,9 @@ struct AbstractItemModel : Object {
     /// The base class implementation returns `false` . This function and data() must
     /// be reimplemented for editable models.
     /// 
-    /// **See also:** Qt::ItemDataRole
-    /// data()
-    /// itemData()
+    /// **See also:** [`t::item_data_role()`]
+    /// [`data()`]
+    /// [`item_data()`]
     [event] set_data(index: &ModelIndexType, value: &VariantType, role: i32) -> bool,
     /// 
     /// This signal is emitted whenever a header is changed. The *orientation*
@@ -291,9 +276,9 @@ struct AbstractItemModel : Object {
     /// this signal, but use the begin/end functions (refer to the section on
     /// subclassing in the QAbstractItemModel class description for details).
     /// 
-    /// **See also:** headerData()
-    /// setHeaderData()
-    /// dataChanged()
+    /// **See also:** [`header_data()`]
+    /// [`set_header_data()`]
+    /// [`data_changed()`]
     /// 
     /// Returns the data for the given *role* and *section* in the header with
     /// the specified *orientation.*
@@ -302,9 +287,9 @@ struct AbstractItemModel : Object {
     /// number. Similarly, for vertical headers, the section number corresponds to
     /// the row number.
     /// 
-    /// **See also:** Qt::ItemDataRole
-    /// setHeaderData()
-    /// QHeaderView
+    /// **See also:** [`t::item_data_role()`]
+    /// [`set_header_data()`]
+    /// [`HeaderView`]
     [event] header_data(section: i32, orientation: Rute::Orientation, role: i32) -> Variant,
     /// 
     /// Sets the data for the given *role* and *section* in the header with the
@@ -315,8 +300,8 @@ struct AbstractItemModel : Object {
     /// When reimplementing this function, the headerDataChanged() signal must be
     /// emitted explicitly.
     /// 
-    /// **See also:** Qt::ItemDataRole
-    /// headerData()
+    /// **See also:** [`t::item_data_role()`]
+    /// [`header_data()`]
     [event] set_header_data(section: i32, orientation: Rute::Orientation, value: &VariantType, role: i32) -> bool,
     /// 
     /// Returns a map with values for all predefined roles in the model for the
@@ -325,8 +310,8 @@ struct AbstractItemModel : Object {
     /// Reimplement this function if you want to extend the default behavior of
     /// this function to include custom roles in the map.
     /// 
-    /// **See also:** Qt::ItemDataRole
-    /// data()
+    /// **See also:** [`t::item_data_role()`]
+    /// [`data()`]
     [event] item_data(index: &ModelIndexType) -> Map<int,,
     /// 
     /// Sets the role data for the item at *index* to the associated value in
@@ -336,9 +321,9 @@ struct AbstractItemModel : Object {
     /// 
     /// Roles that are not in *roles* will not be modified.
     /// 
-    /// **See also:** setData()
-    /// data()
-    /// itemData()
+    /// **See also:** [`set_data()`]
+    /// [`data()`]
+    /// [`item_data()`]
     [event] set_item_data(index: &ModelIndexType, roles: &Map<int,Type) -> bool,
     /// 
     /// Returns the list of allowed MIME types. By default, the built-in
@@ -353,8 +338,8 @@ struct AbstractItemModel : Object {
     /// also reimplement the member functions that call it: mimeData() and
     /// dropMimeData().
     /// 
-    /// **See also:** mimeData()
-    /// dropMimeData()
+    /// **See also:** [`mime_data()`]
+    /// [`drop_mime_data()`]
     [event] mime_types() -> [String],
     /// 
     /// Returns an object that contains serialized items of data corresponding to
@@ -367,8 +352,8 @@ struct AbstractItemModel : Object {
     /// If the list of *indexes* is empty, or there are no supported MIME types, 0
     /// is returned rather than a serialized empty list.
     /// 
-    /// **See also:** mimeTypes()
-    /// dropMimeData()
+    /// **See also:** [`mime_types()`]
+    /// [`drop_mime_data()`]
     [event] mime_data(indexes: &[ModelIndex]) -> MimeData?,
     /// 
     /// Returns `true` if a model can accept a drop of the *data.* This
@@ -381,7 +366,7 @@ struct AbstractItemModel : Object {
     /// *parent* with *action.* If you don't need that test, it is not
     /// necessary to reimplement this function.
     /// 
-    /// **See also:** dropMimeData()
+    /// **See also:** [`drop_mime_data()`]
     /// {Using drag and drop with item views}
     [event] can_drop_mime_data(data: *MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
     /// 
@@ -411,8 +396,8 @@ struct AbstractItemModel : Object {
     /// your custom model to return multiple MIME types, you must reimplement this
     /// function to make use of them.
     /// 
-    /// **See also:** supportedDropActions()
-    /// canDropMimeData()
+    /// **See also:** [`supported_drop_actions()`]
+    /// [`can_drop_mime_data()`]
     /// {Using drag and drop with item views}
     [event] drop_mime_data(data: *MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
     /// 
@@ -423,8 +408,8 @@ struct AbstractItemModel : Object {
     /// reimplement the dropMimeData() function to handle the additional
     /// operations.
     /// 
-    /// **See also:** dropMimeData()
-    /// Qt::DropActions
+    /// **See also:** [`drop_mime_data()`]
+    /// [`t::drop_actions()`]
     /// {Using drag and drop with item
     /// views}
     [event] supported_drop_actions() -> Rute::DropActions,
@@ -437,7 +422,7 @@ struct AbstractItemModel : Object {
     /// supportedDragActions() is used by QAbstractItemView::startDrag() as the
     /// default values when a drag occurs.
     /// 
-    /// **See also:** Qt::DropActions
+    /// **See also:** [`t::drop_actions()`]
     /// {Using drag and drop with item views}
     [event] supported_drag_actions() -> Rute::DropActions,
     /// 
@@ -465,10 +450,10 @@ struct AbstractItemModel : Object {
     /// beginInsertRows() and endInsertRows() to notify other components that the
     /// model has changed.
     /// 
-    /// **See also:** insertColumns()
-    /// removeRows()
-    /// beginInsertRows()
-    /// endInsertRows()
+    /// **See also:** [`insert_columns()`]
+    /// [`remove_rows()`]
+    /// [`begin_insert_rows()`]
+    /// [`end_insert_rows()`]
     [event] insert_rows(row: i32, count: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// On models that support this, inserts *count* new columns into the model
@@ -492,10 +477,10 @@ struct AbstractItemModel : Object {
     /// want to support insertions. Alternatively, you can provide your own API for
     /// altering the data.
     /// 
-    /// **See also:** insertRows()
-    /// removeColumns()
-    /// beginInsertColumns()
-    /// endInsertColumns()
+    /// **See also:** [`insert_rows()`]
+    /// [`remove_columns()`]
+    /// [`begin_insert_columns()`]
+    /// [`end_insert_columns()`]
     [event] insert_columns(column: i32, count: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// On models that support this, removes *count* rows starting with the given
@@ -510,11 +495,11 @@ struct AbstractItemModel : Object {
     /// want to support removing. Alternatively, you can provide your own API for
     /// altering the data.
     /// 
-    /// **See also:** removeRow()
-    /// removeColumns()
-    /// insertColumns()
-    /// beginRemoveRows()
-    /// endRemoveRows()
+    /// **See also:** [`remove_row()`]
+    /// [`remove_columns()`]
+    /// [`insert_columns()`]
+    /// [`begin_remove_rows()`]
+    /// [`end_remove_rows()`]
     [event] remove_rows(row: i32, count: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// On models that support this, removes *count* columns starting with the
@@ -529,11 +514,11 @@ struct AbstractItemModel : Object {
     /// want to support removing. Alternatively, you can provide your own API for
     /// altering the data.
     /// 
-    /// **See also:** removeColumn()
-    /// removeRows()
-    /// insertColumns()
-    /// beginRemoveColumns()
-    /// endRemoveColumns()
+    /// **See also:** [`remove_column()`]
+    /// [`remove_rows()`]
+    /// [`insert_columns()`]
+    /// [`begin_remove_columns()`]
+    /// [`end_remove_columns()`]
     [event] remove_columns(column: i32, count: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// On models that support this, moves *count* rows starting with the given
@@ -549,8 +534,8 @@ struct AbstractItemModel : Object {
     /// want to support moving. Alternatively, you can provide your own API for
     /// altering the data.
     /// 
-    /// **See also:** beginMoveRows()
-    /// endMoveRows()
+    /// **See also:** [`begin_move_rows()`]
+    /// [`end_move_rows()`]
     [event] move_rows(source_parent: &ModelIndexType, source_row: i32, count: i32, destination_parent: &ModelIndexType, destination_child: i32) -> bool,
     /// 
     /// On models that support this, moves *count* columns starting with the given
@@ -566,8 +551,8 @@ struct AbstractItemModel : Object {
     /// want to support moving. Alternatively, you can provide your own API for
     /// altering the data.
     /// 
-    /// **See also:** beginMoveColumns()
-    /// endMoveColumns()
+    /// **See also:** [`begin_move_columns()`]
+    /// [`end_move_columns()`]
     [event] move_columns(source_parent: &ModelIndexType, source_column: i32, count: i32, destination_parent: &ModelIndexType, destination_child: i32) -> bool,
     /// 
     /// Inserts a single row before the given *row* in the child items of the
@@ -577,9 +562,9 @@ struct AbstractItemModel : Object {
     /// 
     /// Returns `true` if the row is inserted; otherwise returns `false` .
     /// 
-    /// **See also:** insertRows()
-    /// insertColumn()
-    /// removeRow()
+    /// **See also:** [`insert_rows()`]
+    /// [`insert_column()`]
+    /// [`remove_row()`]
     /// 
     /// **Note**: The base class implementation of this function does nothing and
     /// returns `false` .
@@ -605,10 +590,10 @@ struct AbstractItemModel : Object {
     /// beginInsertRows() and endInsertRows() to notify other components that the
     /// model has changed.
     /// 
-    /// **See also:** insertColumns()
-    /// removeRows()
-    /// beginInsertRows()
-    /// endInsertRows()
+    /// **See also:** [`insert_columns()`]
+    /// [`remove_rows()`]
+    /// [`begin_insert_rows()`]
+    /// [`end_insert_rows()`]
     insert_row(row: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// Inserts a single column before the given *column* in the child items of
@@ -616,9 +601,9 @@ struct AbstractItemModel : Object {
     /// 
     /// Returns `true` if the column is inserted; otherwise returns `false` .
     /// 
-    /// **See also:** insertColumns()
-    /// insertRow()
-    /// removeColumn()
+    /// **See also:** [`insert_columns()`]
+    /// [`insert_row()`]
+    /// [`remove_column()`]
     /// 
     /// On models that support this, inserts *count* new columns into the model
     /// before the given *column.* The items in each new column will be children
@@ -641,10 +626,10 @@ struct AbstractItemModel : Object {
     /// want to support insertions. Alternatively, you can provide your own API for
     /// altering the data.
     /// 
-    /// **See also:** insertRows()
-    /// removeColumns()
-    /// beginInsertColumns()
-    /// endInsertColumns()
+    /// **See also:** [`insert_rows()`]
+    /// [`remove_columns()`]
+    /// [`begin_insert_columns()`]
+    /// [`end_insert_columns()`]
     insert_column(column: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// Removes the given *row* from the child items of the *parent* specified.
@@ -654,9 +639,9 @@ struct AbstractItemModel : Object {
     /// This is a convenience function that calls removeRows(). The
     /// QAbstractItemModel implementation of removeRows() does nothing.
     /// 
-    /// **See also:** removeRows()
-    /// removeColumn()
-    /// insertRow()
+    /// **See also:** [`remove_rows()`]
+    /// [`remove_column()`]
+    /// [`insert_row()`]
     /// 
     /// On models that support this, removes *count* rows starting with the given
     /// *row* under parent *parent* from the model.
@@ -670,11 +655,11 @@ struct AbstractItemModel : Object {
     /// want to support removing. Alternatively, you can provide your own API for
     /// altering the data.
     /// 
-    /// **See also:** removeRow()
-    /// removeColumns()
-    /// insertColumns()
-    /// beginRemoveRows()
-    /// endRemoveRows()
+    /// **See also:** [`remove_row()`]
+    /// [`remove_columns()`]
+    /// [`insert_columns()`]
+    /// [`begin_remove_rows()`]
+    /// [`end_remove_rows()`]
     remove_row(row: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// Removes the given *column* from the child items of the *parent*
@@ -682,9 +667,9 @@ struct AbstractItemModel : Object {
     /// 
     /// Returns `true` if the column is removed; otherwise returns `false` .
     /// 
-    /// **See also:** removeColumns()
-    /// removeRow()
-    /// insertColumn()
+    /// **See also:** [`remove_columns()`]
+    /// [`remove_row()`]
+    /// [`insert_column()`]
     /// 
     /// On models that support this, removes *count* columns starting with the
     /// given *column* under parent *parent* from the model.
@@ -698,11 +683,11 @@ struct AbstractItemModel : Object {
     /// want to support removing. Alternatively, you can provide your own API for
     /// altering the data.
     /// 
-    /// **See also:** removeColumn()
-    /// removeRows()
-    /// insertColumns()
-    /// beginRemoveColumns()
-    /// endRemoveColumns()
+    /// **See also:** [`remove_column()`]
+    /// [`remove_rows()`]
+    /// [`insert_columns()`]
+    /// [`begin_remove_columns()`]
+    /// [`end_remove_columns()`]
     remove_column(column: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// On models that support this, moves *sourceRow* from *sourceParent* to *destinationChild* under
@@ -711,8 +696,8 @@ struct AbstractItemModel : Object {
     /// Returns `true` if the rows were successfully moved; otherwise returns
     /// `false` .
     /// 
-    /// **See also:** moveRows()
-    /// moveColumn()
+    /// **See also:** [`move_rows()`]
+    /// [`move_column()`]
     /// 
     /// On models that support this, moves *count* rows starting with the given
     /// *sourceRow* under parent *sourceParent* to row *destinationChild* under
@@ -727,8 +712,8 @@ struct AbstractItemModel : Object {
     /// want to support moving. Alternatively, you can provide your own API for
     /// altering the data.
     /// 
-    /// **See also:** beginMoveRows()
-    /// endMoveRows()
+    /// **See also:** [`begin_move_rows()`]
+    /// [`end_move_rows()`]
     move_row(source_parent: &ModelIndexType, source_row: i32, destination_parent: &ModelIndexType, destination_child: i32) -> bool,
     /// 
     /// On models that support this, moves *sourceColumn* from *sourceParent* to *destinationChild* under
@@ -737,8 +722,8 @@ struct AbstractItemModel : Object {
     /// Returns `true` if the columns were successfully moved; otherwise returns
     /// `false` .
     /// 
-    /// **See also:** moveColumns()
-    /// moveRow()
+    /// **See also:** [`move_columns()`]
+    /// [`move_row()`]
     /// 
     /// On models that support this, moves *count* columns starting with the given
     /// *sourceColumn* under parent *sourceParent* to column *destinationChild* under
@@ -753,8 +738,8 @@ struct AbstractItemModel : Object {
     /// want to support moving. Alternatively, you can provide your own API for
     /// altering the data.
     /// 
-    /// **See also:** beginMoveColumns()
-    /// endMoveColumns()
+    /// **See also:** [`begin_move_columns()`]
+    /// [`end_move_columns()`]
     move_column(source_parent: &ModelIndexType, source_column: i32, destination_parent: &ModelIndexType, destination_child: i32) -> bool,
     /// 
     /// Fetches any available data for the items with the parent specified by the
@@ -764,7 +749,7 @@ struct AbstractItemModel : Object {
     /// 
     /// The default implementation does nothing.
     /// 
-    /// **See also:** canFetchMore()
+    /// **See also:** [`can_fetch_more()`]
     [event] fetch_more(parent: &ModelIndexType),
     /// 
     /// Returns `true` if there is more data available for *parent;* otherwise
@@ -775,7 +760,7 @@ struct AbstractItemModel : Object {
     /// If canFetchMore() returns `true,` the fetchMore() function should
     /// be called. This is the behavior of QAbstractItemView, for example.
     /// 
-    /// **See also:** fetchMore()
+    /// **See also:** [`fetch_more()`]
     [event] can_fetch_more(parent: &ModelIndexType) -> bool,
     /// 
     /// Returns the item flags for the given *index.*
@@ -784,7 +769,7 @@ struct AbstractItemModel : Object {
     /// the item ( `ItemIsEnabled)` and allows it to be selected
     /// ( `ItemIsSelectable).`
     /// 
-    /// **See also:** Qt::ItemFlags
+    /// **See also:** [`t::item_flags()`]
     [event] flags(index: &ModelIndexType) -> Rute::ItemFlags,
     /// 
     /// Sorts the model by *column* in the given *order.*
@@ -901,7 +886,7 @@ struct AbstractItemModel : Object {
     /// programming that item models could employ to handle illegal
     /// indexes gracefully.
     /// 
-    /// **See also:** QModelIndex
+    /// **See also:** [`ModelIndex`]
     check_index(index: &ModelIndexType, options: AbstractItemModel::CheckIndexOptions) -> bool,
     /// 
     /// This signal is emitted whenever the data in an existing item changes.
@@ -918,9 +903,9 @@ struct AbstractItemModel : Object {
     /// considered modified. The order of elements in the roles argument does not have any
     /// relevance.
     /// 
-    /// **See also:** headerDataChanged()
-    /// setData()
-    /// layoutChanged()
+    /// **See also:** [`header_data_changed()`]
+    /// [`set_data()`]
+    /// [`layout_changed()`]
     [signal] data_changed(top_left: &ModelIndexType, bottom_right: &ModelIndexType, roles: [i32]),
     /// 
     /// This signal is emitted whenever a header is changed. The *orientation*
@@ -934,9 +919,9 @@ struct AbstractItemModel : Object {
     /// this signal, but use the begin/end functions (refer to the section on
     /// subclassing in the QAbstractItemModel class description for details).
     /// 
-    /// **See also:** headerData()
-    /// setHeaderData()
-    /// dataChanged()
+    /// **See also:** [`header_data()`]
+    /// [`set_header_data()`]
+    /// [`data_changed()`]
     [signal] header_data_changed(orientation: Rute::Orientation, first: i32, last: i32),
     /// 
     /// This signal is emitted whenever the layout of items exposed by the model
@@ -963,11 +948,11 @@ struct AbstractItemModel : Object {
     /// * Call changePersistentIndex()
     /// * emit layoutChanged
     /// 
-    /// **See also:** layoutAboutToBeChanged()
-    /// dataChanged()
-    /// headerDataChanged()
-    /// modelReset()
-    /// changePersistentIndex()
+    /// **See also:** [`layout_about_to_be_changed()`]
+    /// [`data_changed()`]
+    /// [`header_data_changed()`]
+    /// [`model_reset()`]
+    /// [`change_persistent_index()`]
     [signal] layout_changed(parents: [PersistentModelIndexType], hint: AbstractItemModel::LayoutChangeHint),
     /// 
     /// This signal is emitted just before the layout of a model is changed.
@@ -982,8 +967,8 @@ struct AbstractItemModel : Object {
     /// a change to the layout of the entire model. The order of elements in the *parents* list is not significant. The optional *hint* parameter is used
     /// to give a hint about what is happening while the model is relayouting.
     /// 
-    /// **See also:** layoutChanged()
-    /// changePersistentIndex()
+    /// **See also:** [`layout_changed()`]
+    /// [`change_persistent_index()`]
     [signal] layout_about_to_be_changed(parents: [PersistentModelIndexType], hint: AbstractItemModel::LayoutChangeHint),
     /// 
     /// This signal is emitted just before rows are inserted into the model. The
@@ -994,8 +979,8 @@ struct AbstractItemModel : Object {
     /// in the model's dimensions. It can only be emitted by the QAbstractItemModel
     /// implementation, and cannot be explicitly emitted in subclass code.
     /// 
-    /// **See also:** insertRows()
-    /// beginInsertRows()
+    /// **See also:** [`insert_rows()`]
+    /// [`begin_insert_rows()`]
     [signal] rows_about_to_be_inserted(parent: &ModelIndexType, first: i32, last: i32, arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted after rows have been inserted into the
@@ -1006,8 +991,8 @@ struct AbstractItemModel : Object {
     /// model's dimensions. It can only be emitted by the QAbstractItemModel
     /// implementation, and cannot be explicitly emitted in subclass code.
     /// 
-    /// **See also:** insertRows()
-    /// beginInsertRows()
+    /// **See also:** [`insert_rows()`]
+    /// [`begin_insert_rows()`]
     [signal] rows_inserted(parent: &ModelIndexType, first: i32, last: i32, arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted just before rows are removed from the model. The
@@ -1018,8 +1003,8 @@ struct AbstractItemModel : Object {
     /// in the model's dimensions. It can only be emitted by the QAbstractItemModel
     /// implementation, and cannot be explicitly emitted in subclass code.
     /// 
-    /// **See also:** removeRows()
-    /// beginRemoveRows()
+    /// **See also:** [`remove_rows()`]
+    /// [`begin_remove_rows()`]
     [signal] rows_about_to_be_removed(parent: &ModelIndexType, first: i32, last: i32, arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted after rows have been removed from the model. The
@@ -1030,8 +1015,8 @@ struct AbstractItemModel : Object {
     /// in the model's dimensions. It can only be emitted by the QAbstractItemModel
     /// implementation, and cannot be explicitly emitted in subclass code.
     /// 
-    /// **See also:** removeRows()
-    /// beginRemoveRows()
+    /// **See also:** [`remove_rows()`]
+    /// [`begin_remove_rows()`]
     [signal] rows_removed(parent: &ModelIndexType, first: i32, last: i32, arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted just before columns are inserted into the model. The
@@ -1042,8 +1027,8 @@ struct AbstractItemModel : Object {
     /// model's dimensions. It can only be emitted by the QAbstractItemModel
     /// implementation, and cannot be explicitly emitted in subclass code.
     /// 
-    /// **See also:** insertColumns()
-    /// beginInsertColumns()
+    /// **See also:** [`insert_columns()`]
+    /// [`begin_insert_columns()`]
     [signal] columns_about_to_be_inserted(parent: &ModelIndexType, first: i32, last: i32, arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted after columns have been inserted into the model. The
@@ -1054,8 +1039,8 @@ struct AbstractItemModel : Object {
     /// model's dimensions. It can only be emitted by the QAbstractItemModel
     /// implementation, and cannot be explicitly emitted in subclass code.
     /// 
-    /// **See also:** insertColumns()
-    /// beginInsertColumns()
+    /// **See also:** [`insert_columns()`]
+    /// [`begin_insert_columns()`]
     [signal] columns_inserted(parent: &ModelIndexType, first: i32, last: i32, arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted just before columns are removed from the model. The
@@ -1066,8 +1051,8 @@ struct AbstractItemModel : Object {
     /// model's dimensions. It can only be emitted by the QAbstractItemModel
     /// implementation, and cannot be explicitly emitted in subclass code.
     /// 
-    /// **See also:** removeColumns()
-    /// beginRemoveColumns()
+    /// **See also:** [`remove_columns()`]
+    /// [`begin_remove_columns()`]
     [signal] columns_about_to_be_removed(parent: &ModelIndexType, first: i32, last: i32, arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted after columns have been removed from the model.
@@ -1078,15 +1063,15 @@ struct AbstractItemModel : Object {
     /// the model's dimensions. It can only be emitted by the QAbstractItemModel
     /// implementation, and cannot be explicitly emitted in subclass code.
     /// 
-    /// **See also:** removeColumns()
-    /// beginRemoveColumns()
+    /// **See also:** [`remove_columns()`]
+    /// [`begin_remove_columns()`]
     [signal] columns_removed(parent: &ModelIndexType, first: i32, last: i32, arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted when beginResetModel() is called, before the model's internal
     /// state (e.g. persistent model indexes) has been invalidated.
     /// 
-    /// **See also:** beginResetModel()
-    /// modelReset()
+    /// **See also:** [`begin_reset_model()`]
+    /// [`model_reset()`]
     [signal] model_about_to_be_reset(arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted when endResetModel() is called, after the
@@ -1097,8 +1082,8 @@ struct AbstractItemModel : Object {
     /// to the rowCount() and columnCount(), flags(), data retrieved through data(),
     /// and roleNames().
     /// 
-    /// **See also:** endResetModel()
-    /// modelAboutToBeReset()
+    /// **See also:** [`end_reset_model()`]
+    /// [`model_about_to_be_reset()`]
     [signal] model_reset(arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted just before rows are moved within the
@@ -1110,7 +1095,7 @@ struct AbstractItemModel : Object {
     /// in the model's dimensions. It can only be emitted by the QAbstractItemModel
     /// implementation, and cannot be explicitly emitted in subclass code.
     /// 
-    /// **See also:** beginMoveRows()
+    /// **See also:** [`begin_move_rows()`]
     [signal] rows_about_to_be_moved(source_parent: &ModelIndexType, source_start: i32, source_end: i32, destination_parent: &ModelIndexType, destination_row: i32, arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted after rows have been moved within the
@@ -1122,7 +1107,7 @@ struct AbstractItemModel : Object {
     /// in the model's dimensions. It can only be emitted by the QAbstractItemModel
     /// implementation, and cannot be explicitly emitted in subclass code.
     /// 
-    /// **See also:** beginMoveRows()
+    /// **See also:** [`begin_move_rows()`]
     [signal] rows_moved(parent: &ModelIndexType, start: i32, end: i32, destination: &ModelIndexType, row: i32, arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted just before columns are moved within the
@@ -1134,7 +1119,7 @@ struct AbstractItemModel : Object {
     /// in the model's dimensions. It can only be emitted by the QAbstractItemModel
     /// implementation, and cannot be explicitly emitted in subclass code.
     /// 
-    /// **See also:** beginMoveRows()
+    /// **See also:** [`begin_move_rows()`]
     [signal] columns_about_to_be_moved(source_parent: &ModelIndexType, source_start: i32, source_end: i32, destination_parent: &ModelIndexType, destination_column: i32, arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// This signal is emitted after columns have been moved within the
@@ -1146,7 +1131,7 @@ struct AbstractItemModel : Object {
     /// in the model's dimensions. It can only be emitted by the QAbstractItemModel
     /// implementation, and cannot be explicitly emitted in subclass code.
     /// 
-    /// **See also:** beginMoveRows()
+    /// **See also:** [`begin_move_rows()`]
     [signal] columns_moved(parent: &ModelIndexType, start: i32, end: i32, destination: &ModelIndexType, column: i32, arg0: AbstractItemModel::QPrivateSignal),
     /// 
     /// Lets the model know that it should submit cached information to permanent
@@ -1154,13 +1139,13 @@ struct AbstractItemModel : Object {
     /// 
     /// Returns `true` if there is no error; otherwise returns `false` .
     /// 
-    /// **See also:** revert()
+    /// **See also:** [`revert()`]
     [event] submit() -> bool,
     /// 
     /// Lets the model know that it should discard cached information. This
     /// function is typically used for row editing.
     /// 
-    /// **See also:** submit()
+    /// **See also:** [`submit()`]
     [event] revert(),
     /// 
     /// This slot is called just after the internal data of a model is cleared
@@ -1172,8 +1157,8 @@ struct AbstractItemModel : Object {
     /// 
     /// **Note**: Due to a mistake, this slot is missing in Qt 5.0.
     /// 
-    /// **See also:** modelAboutToBeReset()
-    /// modelReset()
+    /// **See also:** [`model_about_to_be_reset()`]
+    /// [`model_reset()`]
     reset_internal_data(),
     /// 
     /// Creates a model index for the given *row* and *column* with the internal
@@ -1192,7 +1177,7 @@ struct AbstractItemModel : Object {
     /// This function provides a consistent interface that model subclasses must
     /// use to create model indexes.
     /// 
-    /// **See also:** QModelIndex::internalId()
+    /// **See also:** [`ModelIndex::internal_id`]
     create_index(row: i32, column: i32, data: *void) -> ModelIndex,
     /// 
     /// Creates a model index for the given *row* and *column* with the internal
@@ -1211,7 +1196,8 @@ struct AbstractItemModel : Object {
     /// This function provides a consistent interface that model subclasses must
     /// use to create model indexes.
     /// 
-    /// **See also:** QModelIndex::internalId()
+    /// **See also:** [`ModelIndex::internal_id`]
+    [org_name(createIndex)]
     create_index_2(row: i32, column: i32, id: quintptr) -> ModelIndex,
     encode_data(indexes: &[ModelIndex], stream: &DataStreamType),
     decode_data(row: i32, column: i32, parent: &ModelIndexType, stream: &DataStreamType) -> bool,
@@ -1236,7 +1222,7 @@ struct AbstractItemModel : Object {
     /// **Note**: This function emits the rowsAboutToBeInserted() signal which
     /// connected views (or proxies) must handle before the data is inserted.
     /// Otherwise, the views may end up in an invalid state.
-    /// **See also:** endInsertRows()
+    /// **See also:** [`end_insert_rows()`]
     begin_insert_rows(parent: &ModelIndexType, first: i32, last: i32),
     /// 
     /// Ends a row insertion operation.
@@ -1244,7 +1230,7 @@ struct AbstractItemModel : Object {
     /// When reimplementing insertRows() in a subclass, you must call this function
     /// *after* inserting data into the model's underlying data store.
     /// 
-    /// **See also:** beginInsertRows()
+    /// **See also:** [`begin_insert_rows()`]
     end_insert_rows(),
     /// 
     /// Begins a row removal operation.
@@ -1264,7 +1250,7 @@ struct AbstractItemModel : Object {
     /// views (or proxies) must handle before the data is removed. Otherwise, the
     /// views may end up in an invalid state.
     /// 
-    /// **See also:** endRemoveRows()
+    /// **See also:** [`end_remove_rows()`]
     begin_remove_rows(parent: &ModelIndexType, first: i32, last: i32),
     /// 
     /// Ends a row removal operation.
@@ -1272,7 +1258,7 @@ struct AbstractItemModel : Object {
     /// When reimplementing removeRows() in a subclass, you must call this function
     /// *after* removing data from the model's underlying data store.
     /// 
-    /// **See also:** beginRemoveRows()
+    /// **See also:** [`begin_remove_rows()`]
     end_remove_rows(),
     /// 
     /// Begins a row move operation.
@@ -1323,7 +1309,7 @@ struct AbstractItemModel : Object {
     /// 
     /// * To move rows within the same parent, specify the row to move them to. For example, as shown in the diagram, we move one item from row 2 to row 4, so *sourceFirst* and *sourceLast* are 2 and *destinationChild* is 4. Note that other rows may be displaced accordingly.
     /// 
-    /// **See also:** endMoveRows()
+    /// **See also:** [`end_move_rows()`]
     begin_move_rows(source_parent: &ModelIndexType, source_first: i32, source_last: i32, destination_parent: &ModelIndexType, destination_row: i32) -> bool,
     /// 
     /// Ends a row move operation.
@@ -1332,7 +1318,7 @@ struct AbstractItemModel : Object {
     /// function *after* moving data within the model's underlying data
     /// store.
     /// 
-    /// **See also:** beginMoveRows()
+    /// **See also:** [`begin_move_rows()`]
     /// 
     end_move_rows(),
     /// 
@@ -1357,7 +1343,7 @@ struct AbstractItemModel : Object {
     /// connected views (or proxies) must handle before the data is inserted.
     /// Otherwise, the views may end up in an invalid state.
     /// 
-    /// **See also:** endInsertColumns()
+    /// **See also:** [`end_insert_columns()`]
     begin_insert_columns(parent: &ModelIndexType, first: i32, last: i32),
     /// 
     /// Ends a column insertion operation.
@@ -1366,7 +1352,7 @@ struct AbstractItemModel : Object {
     /// function *after* inserting data into the model's underlying data
     /// store.
     /// 
-    /// **See also:** beginInsertColumns()
+    /// **See also:** [`begin_insert_columns()`]
     end_insert_columns(),
     /// 
     /// Begins a column removal operation.
@@ -1386,7 +1372,7 @@ struct AbstractItemModel : Object {
     /// connected views (or proxies) must handle before the data is removed.
     /// Otherwise, the views may end up in an invalid state.
     /// 
-    /// **See also:** endRemoveColumns()
+    /// **See also:** [`end_remove_columns()`]
     begin_remove_columns(parent: &ModelIndexType, first: i32, last: i32),
     /// 
     /// Ends a column removal operation.
@@ -1394,7 +1380,7 @@ struct AbstractItemModel : Object {
     /// When reimplementing removeColumns() in a subclass, you must call this
     /// function *after* removing data from the model's underlying data store.
     /// 
-    /// **See also:** beginRemoveColumns()
+    /// **See also:** [`begin_remove_columns()`]
     end_remove_columns(),
     /// 
     /// Begins a column move operation.
@@ -1429,7 +1415,7 @@ struct AbstractItemModel : Object {
     /// This method returns `false` if either condition is true, in which case you
     /// should abort your move operation.
     /// 
-    /// **See also:** endMoveColumns()
+    /// **See also:** [`end_move_columns()`]
     /// 
     begin_move_columns(source_parent: &ModelIndexType, source_first: i32, source_last: i32, destination_parent: &ModelIndexType, destination_column: i32) -> bool,
     /// 
@@ -1439,7 +1425,7 @@ struct AbstractItemModel : Object {
     /// function *after* moving data within the model's underlying data
     /// store.
     /// 
-    /// **See also:** beginMoveColumns()
+    /// **See also:** [`begin_move_columns()`]
     /// 
     end_move_columns(),
     /// 
@@ -1462,9 +1448,9 @@ struct AbstractItemModel : Object {
     /// 
     /// This function emits the signal modelAboutToBeReset().
     /// 
-    /// **See also:** modelAboutToBeReset()
-    /// modelReset()
-    /// endResetModel()
+    /// **See also:** [`model_about_to_be_reset()`]
+    /// [`model_reset()`]
+    /// [`end_reset_model()`]
     begin_reset_model(),
     /// 
     /// Completes a model reset operation.
@@ -1474,7 +1460,7 @@ struct AbstractItemModel : Object {
     /// 
     /// This function emits the signal modelReset().
     /// 
-    /// **See also:** beginResetModel()
+    /// **See also:** [`begin_reset_model()`]
     end_reset_model(),
     /// 
     /// Changes the QPersistentModelIndex that is equal to the given *from* model
@@ -1483,8 +1469,8 @@ struct AbstractItemModel : Object {
     /// If no persistent model index equal to the given *from* model index was
     /// found, nothing is changed.
     /// 
-    /// **See also:** persistentIndexList()
-    /// changePersistentIndexList()
+    /// **See also:** [`persistent_index_list()`]
+    /// [`change_persistent_index_list()`]
     /// 
     /// Changes the {QPersistentModelIndex}es that are equal to the indexes in the
     /// given *from* model index list to the given *to* model index list.
@@ -1492,8 +1478,8 @@ struct AbstractItemModel : Object {
     /// If no persistent model indexes equal to the indexes in the given *from*
     /// model index list are found, nothing is changed.
     /// 
-    /// **See also:** persistentIndexList()
-    /// changePersistentIndex()
+    /// **See also:** [`persistent_index_list()`]
+    /// [`change_persistent_index()`]
     change_persistent_index(from: &ModelIndexType, to: &ModelIndexType),
     /// 
     /// Changes the {QPersistentModelIndex}es that are equal to the indexes in the
@@ -1502,12 +1488,27 @@ struct AbstractItemModel : Object {
     /// If no persistent model indexes equal to the indexes in the given *from*
     /// model index list are found, nothing is changed.
     /// 
-    /// **See also:** persistentIndexList()
-    /// changePersistentIndex()
+    /// **See also:** [`persistent_index_list()`]
+    /// [`change_persistent_index()`]
     change_persistent_index_list(from: &[ModelIndex], to: &[ModelIndex]),
     /// 
     /// Returns the list of indexes stored as persistent indexes in the model.
     persistent_index_list() -> [ModelIndex],
+}
+
+[org_name(QAbstractItemModel)]
+enum LayoutChangeHint {
+    NoLayoutChangeHint,
+    VerticalSortHint,
+    HorizontalSortHint,
+}
+
+[org_name(QAbstractItemModel)]
+enum CheckIndexOption {
+    NoOption,
+    IndexIsValid,
+    DoNotUseParent,
+    ParentIsInvalid,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

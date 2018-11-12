@@ -125,13 +125,619 @@
 /// [Roman Czyborra's](Roman%20Czyborra's)
 /// page.
 /// 
-/// **See also:** QFontMetrics
-/// QFontInfo
-/// QFontDatabase
+/// **See also:** [`FontMetrics`]
+/// [`FontInfo`]
+/// [`FontDatabase`]
 /// {Character Map Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct Font {
+    qt_check_for_qgadget_macro(),
+    /// 
+    /// Swaps this font instance with *other.* This function is very fast
+    /// and never fails.
+    swap(other: &FontType),
+    /// 
+    /// Returns the requested font family name, i.e. the name set in the
+    /// constructor or the last setFont() call.
+    /// 
+    /// **See also:** [`set_family()`]
+    /// [`substitutes()`]
+    /// [`substitute()`]
+    family() -> String,
+    /// 
+    /// Sets the family name of the font. The name is case insensitive and
+    /// may include a foundry name.
+    /// 
+    /// The *family* name may optionally also include a foundry name,
+    /// e.g. . If the *family* is
+    /// available from more than one foundry and the foundry isn't
+    /// specified, an arbitrary foundry is chosen. If the family isn't
+    /// available a family will be set using the [font matching](QFont)
+    /// 
+    /// algorithm.
+    /// 
+    /// **See also:** [`family()`]
+    /// [`set_style_hint()`]
+    /// [`FontInfo`]
+    set_family(arg0: String),
+    /// 
+    /// Returns the requested font style name. This can be used to match the
+    /// font with irregular styles (that can't be normalized in other style
+    /// properties).
+    /// 
+    /// **See also:** [`set_family()`]
+    /// [`set_style()`]
+    style_name() -> String,
+    /// 
+    /// Sets the style name of the font to *styleName.* When set, other style properties
+    /// like [style()](style())
+    /// and [weight()](weight())
+    /// will be ignored for font matching, though they may be
+    /// simulated afterwards if supported by the platform's font engine.
+    /// 
+    /// Due to the lower quality of artificially simulated styles, and the lack of full cross
+    /// platform support, it is not recommended to use matching by style name together with
+    /// matching by style properties
+    /// 
+    /// **See also:** [`style_name()`]
+    set_style_name(arg0: String),
+    /// 
+    /// Returns the point size of the font. Returns -1 if the font size
+    /// was specified in pixels.
+    /// 
+    /// **See also:** [`set_point_size()`]
+    /// [`point_size_f()`]
+    /// 
+    /// Returns the point size of the font. Returns -1 if the font size was
+    /// specified in pixels.
+    /// 
+    /// **See also:** [`point_size()`]
+    /// [`set_point_size_f()`]
+    /// [`pixel_size()`]
+    /// [`FontInfo::point_size`]
+    /// [`FontInfo::pixel_size`]
+    point_size() -> i32,
+    /// 
+    /// Sets the point size to *pointSize.* The point size must be
+    /// greater than zero.
+    /// 
+    /// **See also:** [`point_size()`]
+    /// [`set_point_size_f()`]
+    /// 
+    /// Sets the point size to *pointSize.* The point size must be
+    /// greater than zero. The requested precision may not be achieved on
+    /// all platforms.
+    /// 
+    /// **See also:** [`point_size_f()`]
+    /// [`set_point_size()`]
+    /// [`set_pixel_size()`]
+    set_point_size(arg0: i32),
+    /// 
+    /// Returns the point size of the font. Returns -1 if the font size was
+    /// specified in pixels.
+    /// 
+    /// **See also:** [`point_size()`]
+    /// [`set_point_size_f()`]
+    /// [`pixel_size()`]
+    /// [`FontInfo::point_size`]
+    /// [`FontInfo::pixel_size`]
+    point_size_f() -> f32,
+    /// 
+    /// Sets the point size to *pointSize.* The point size must be
+    /// greater than zero. The requested precision may not be achieved on
+    /// all platforms.
+    /// 
+    /// **See also:** [`point_size_f()`]
+    /// [`set_point_size()`]
+    /// [`set_pixel_size()`]
+    set_point_size_f(arg0: f32),
+    /// 
+    /// Returns the pixel size of the font if it was set with
+    /// setPixelSize(). Returns -1 if the size was set with setPointSize()
+    /// or setPointSizeF().
+    /// 
+    /// **See also:** [`set_pixel_size()`]
+    /// [`point_size()`]
+    /// [`FontInfo::point_size`]
+    /// [`FontInfo::pixel_size`]
+    pixel_size() -> i32,
+    /// 
+    /// Sets the font size to *pixelSize* pixels.
+    /// 
+    /// Using this function makes the font device dependent. Use
+    /// setPointSize() or setPointSizeF() to set the size of the font
+    /// in a device independent manner.
+    /// 
+    /// **See also:** [`pixel_size()`]
+    set_pixel_size(arg0: i32),
+    /// 
+    /// Returns the weight of the font, using the same scale as the
+    /// [QFont::Weight](QFont::Weight)
+    /// enumeration.
+    /// 
+    /// **See also:** [`set_weight()`]
+    /// Weight
+    /// [`FontInfo`]
+    weight() -> i32,
+    /// 
+    /// Sets the weight of the font to *weight,* using the scale defined by
+    /// [QFont::Weight](QFont::Weight)
+    /// enumeration.
+    /// 
+    /// **Note**: If styleName() is set, this value may be ignored for font selection.
+    /// 
+    /// **See also:** [`weight()`]
+    /// [`FontInfo`]
+    set_weight(arg0: i32),
+    /// 
+    /// Returns `true` if weight() is a value greater than
+    /// [QFont::Medium](Weight)
+    /// ; otherwise returns `false.`
+    /// 
+    /// **See also:** [`weight()`]
+    /// [`set_bold()`]
+    /// [`FontInfo::bold`]
+    bold() -> bool,
+    /// 
+    /// If *enable* is true sets the font's weight to
+    /// [QFont::Bold](Weight)
+    /// 
+    /// otherwise sets the weight to [QFont::Normal](Weight)
+    /// 
+    /// 
+    /// For finer boldness control use setWeight().
+    /// 
+    /// **Note**: If styleName() is set, this value may be ignored, or if supported
+    /// on the platform, the font artificially embolded.
+    /// 
+    /// **See also:** [`bold()`]
+    /// [`set_weight()`]
+    set_bold(arg0: bool),
+    /// 
+    /// Sets the style name of the font to *styleName.* When set, other style properties
+    /// like [style()](style())
+    /// and [weight()](weight())
+    /// will be ignored for font matching, though they may be
+    /// simulated afterwards if supported by the platform's font engine.
+    /// 
+    /// Due to the lower quality of artificially simulated styles, and the lack of full cross
+    /// platform support, it is not recommended to use matching by style name together with
+    /// matching by style properties
+    /// 
+    /// **See also:** [`style_name()`]
+    /// 
+    /// Sets the style of the font to *style.*
+    /// 
+    /// **See also:** [`italic()`]
+    /// [`FontInfo`]
+    /// 
+    /// Sets the style hint and strategy to *hint* and *strategy,*
+    /// respectively.
+    /// 
+    /// If these aren't set explicitly the style hint will default to
+    /// `AnyStyle` and the style strategy to `PreferDefault.`
+    /// 
+    /// Qt does not support style hints on X11 since this information
+    /// is not provided by the window system.
+    /// 
+    /// **See also:** StyleHint
+    /// [`style_hint()`]
+    /// StyleStrategy
+    /// [`style_strategy()`]
+    /// [`FontInfo`]
+    /// 
+    /// Sets the style strategy for the font to *s.*
+    /// 
+    /// **See also:** [`Font::style_strategy()`]
+    set_style(style: Font::Style),
+    /// 
+    /// Returns the requested font style name. This can be used to match the
+    /// font with irregular styles (that can't be normalized in other style
+    /// properties).
+    /// 
+    /// **See also:** [`set_family()`]
+    /// [`set_style()`]
+    /// 
+    /// Returns the style of the font.
+    /// 
+    /// **See also:** [`set_style()`]
+    /// 
+    /// Returns the StyleStrategy.
+    /// 
+    /// The style strategy affects the [font matching](QFont)
+    /// algorithm.
+    /// See [QFont::StyleStrategy](QFont::StyleStrategy)
+    /// for the list of available strategies.
+    /// 
+    /// **See also:** [`set_style_hint()`]
+    /// [`Font::style_hint()`]
+    /// 
+    /// Returns the StyleHint.
+    /// 
+    /// The style hint affects the [font matching algorithm](%23fontmatching)
+    /// 
+    /// See [QFont::StyleHint](QFont::StyleHint)
+    /// for the list of available hints.
+    /// 
+    /// **See also:** [`set_style_hint()`]
+    /// [`Font::style_strategy()`]
+    /// [`FontInfo::style_hint`]
+    style() -> Font::Style,
+    /// 
+    /// Returns `true` if the style() of the font is not QFont::StyleNormal
+    /// 
+    /// **See also:** [`set_italic()`]
+    /// [`style()`]
+    italic() -> bool,
+    /// 
+    /// Sets the style() of the font to QFont::StyleItalic if *enable* is true;
+    /// otherwise the style is set to QFont::StyleNormal.
+    /// 
+    /// **Note**: If styleName() is set, this value may be ignored, or if supported
+    /// on the platform, the font may be rendered tilted instead of picking a
+    /// designed italic font-variant.
+    /// 
+    /// **See also:** [`italic()`]
+    /// [`FontInfo`]
+    set_italic(b: bool),
+    /// 
+    /// Returns `true` if underline has been set; otherwise returns `false.`
+    /// 
+    /// **See also:** [`set_underline()`]
+    underline() -> bool,
+    /// 
+    /// If *enable* is true, sets underline on; otherwise sets underline
+    /// off.
+    /// 
+    /// **See also:** [`underline()`]
+    /// [`FontInfo`]
+    set_underline(arg0: bool),
+    /// 
+    /// Returns `true` if overline has been set; otherwise returns `false.`
+    /// 
+    /// **See also:** [`set_overline()`]
+    overline() -> bool,
+    /// 
+    /// If *enable* is true, sets overline on; otherwise sets overline off.
+    /// 
+    /// **See also:** [`overline()`]
+    /// [`FontInfo`]
+    set_overline(arg0: bool),
+    /// 
+    /// Returns `true` if fixed pitch has been set; otherwise returns `false.`
+    /// 
+    /// **See also:** [`set_fixed_pitch()`]
+    /// [`FontInfo::fixed_pitch`]
+    fixed_pitch() -> bool,
+    /// 
+    /// If *enable* is true, sets fixed pitch on; otherwise sets fixed
+    /// pitch off.
+    /// 
+    /// **See also:** [`fixed_pitch()`]
+    /// [`FontInfo`]
+    set_fixed_pitch(arg0: bool),
+    /// 
+    /// Returns `true` if kerning should be used when drawing text with this font.
+    /// 
+    /// **See also:** [`set_kerning()`]
+    kerning() -> bool,
+    /// 
+    /// Enables kerning for this font if *enable* is true; otherwise
+    /// disables it. By default, kerning is enabled.
+    /// 
+    /// When kerning is enabled, glyph metrics do not add up anymore,
+    /// even for Latin text. In other words, the assumption that
+    /// width('a') + width('b') is equal to width("ab") is not
+    /// necessarily true.
+    /// 
+    /// **See also:** [`kerning()`]
+    /// [`FontMetrics`]
+    set_kerning(arg0: bool),
+    /// 
+    /// Returns the StyleHint.
+    /// 
+    /// The style hint affects the [font matching algorithm](%23fontmatching)
+    /// 
+    /// See [QFont::StyleHint](QFont::StyleHint)
+    /// for the list of available hints.
+    /// 
+    /// **See also:** [`set_style_hint()`]
+    /// [`Font::style_strategy()`]
+    /// [`FontInfo::style_hint`]
+    style_hint() -> Font::StyleHint,
+    /// 
+    /// Sets the style hint and strategy to *hint* and *strategy,*
+    /// respectively.
+    /// 
+    /// If these aren't set explicitly the style hint will default to
+    /// `AnyStyle` and the style strategy to `PreferDefault.`
+    /// 
+    /// Qt does not support style hints on X11 since this information
+    /// is not provided by the window system.
+    /// 
+    /// **See also:** StyleHint
+    /// [`style_hint()`]
+    /// StyleStrategy
+    /// [`style_strategy()`]
+    /// [`FontInfo`]
+    set_style_hint(arg0: Font::StyleHint, arg1: Font::StyleStrategy),
+    /// 
+    /// Returns the letter spacing for the font.
+    /// 
+    /// **See also:** [`set_letter_spacing()`]
+    /// [`letter_spacing_type()`]
+    /// [`set_word_spacing()`]
+    /// 
+    /// Returns the spacing type used for letter spacing.
+    /// 
+    /// **See also:** [`letter_spacing()`]
+    /// [`set_letter_spacing()`]
+    /// [`set_word_spacing()`]
+    letter_spacing() -> f32,
+    /// 
+    /// Returns the spacing type used for letter spacing.
+    /// 
+    /// **See also:** [`letter_spacing()`]
+    /// [`set_letter_spacing()`]
+    /// [`set_word_spacing()`]
+    letter_spacing_type() -> Font::SpacingType,
+    /// 
+    /// Sets the letter spacing for the font to *spacing* and the type
+    /// of spacing to *type.*
+    /// 
+    /// Letter spacing changes the default spacing between individual
+    /// letters in the font. The spacing between the letters can be
+    /// made smaller as well as larger either in percentage of the
+    /// character width or in pixels, depending on the selected spacing type.
+    /// 
+    /// **See also:** [`letter_spacing()`]
+    /// [`letter_spacing_type()`]
+    /// [`set_word_spacing()`]
+    set_letter_spacing(type: Font::SpacingType, spacing: f32),
+    /// 
+    /// Returns the word spacing for the font.
+    /// 
+    /// **See also:** [`set_word_spacing()`]
+    /// [`set_letter_spacing()`]
+    word_spacing() -> f32,
+    /// 
+    /// Sets the word spacing for the font to *spacing.*
+    /// 
+    /// Word spacing changes the default spacing between individual
+    /// words. A positive value increases the word spacing
+    /// by a corresponding amount of pixels, while a negative value
+    /// decreases the inter-word spacing accordingly.
+    /// 
+    /// Word spacing will not apply to writing systems, where indiviaul
+    /// words are not separated by white space.
+    /// 
+    /// **See also:** [`word_spacing()`]
+    /// [`set_letter_spacing()`]
+    set_word_spacing(spacing: f32),
+    /// 
+    /// Sets the capitalization of the text in this font to *caps.*
+    /// 
+    /// A font's capitalization makes the text appear in the selected capitalization mode.
+    /// 
+    /// **See also:** [`capitalization()`]
+    set_capitalization(arg0: Font::Capitalization),
+    /// 
+    /// Returns the current capitalization type of the font.
+    /// 
+    /// **See also:** [`set_capitalization()`]
+    capitalization() -> Font::Capitalization,
+    /// 
+    /// Set the preference for the hinting level of the glyphs to *hintingPreference.* This is a hint
+    /// to the underlying font rendering system to use a certain level of hinting, and has varying
+    /// support across platforms. See the table in the documentation for QFont::HintingPreference for
+    /// more details.
+    /// 
+    /// The default hinting preference is QFont::PreferDefaultHinting.
+    set_hinting_preference(hinting_preference: Font::HintingPreference),
+    /// 
+    /// Returns the currently preferred hinting level for glyphs rendered with this font.
+    hinting_preference() -> Font::HintingPreference,
+    /// 
+    /// Returns `true` if raw mode is used for font name matching; otherwise
+    /// returns `false.`
+    /// 
+    /// **See also:** [`set_raw_mode()`]
+    raw_mode() -> bool,
+    /// 
+    /// If *enable* is true, turns raw mode on; otherwise turns raw mode
+    /// off. This function only has an effect under X11.
+    /// 
+    /// If raw mode is enabled, Qt will search for an X font with a
+    /// complete font name matching the family name, ignoring all other
+    /// values set for the QFont. If the font name matches several fonts,
+    /// Qt will use the first font returned by X. QFontInfo *cannot* be
+    /// used to fetch information about a QFont using raw mode (it will
+    /// return the values set in the QFont for all parameters, including
+    /// the family name).
+    /// 
+    /// **Warning**: Enabling raw mode has no effect since Qt 5.0.
+    /// 
+    /// **See also:** [`raw_mode()`]
+    set_raw_mode(arg0: bool),
+    /// 
+    /// Returns `true` if a window system font exactly matching the settings
+    /// of this font is available.
+    /// 
+    /// **See also:** [`FontInfo`]
+    exact_match() -> bool,
+    /// 
+    /// Returns `true` if this font and *f* are copies of each other, i.e.
+    /// one of them was created as a copy of the other and neither has
+    /// been modified since. This is much stricter than equality.
+    /// 
+    /// **See also:** [`operator()`]
+    /// [`operator()`]
+    is_copy_of(arg0: &FontType) -> bool,
+    /// 
+    /// Sets a font by its system specific name.
+    /// 
+    /// A font set with setRawName() is still a full-featured QFont. It can
+    /// be queried (for example with italic()) or modified (for example with
+    /// setItalic()) and is therefore also suitable for rendering rich text.
+    /// 
+    /// If Qt's internal font database cannot resolve the raw name, the
+    /// font becomes a raw font with *name* as its family.
+    /// 
+    /// **See also:** [`raw_name()`]
+    /// [`set_family()`]
+    set_raw_name(arg0: String),
+    /// 
+    /// Returns the name of the font within the underlying window system.
+    /// 
+    /// On X11, this function will return an empty string.
+    /// 
+    /// Using the return value of this function is usually *not* *portable.*
+    /// 
+    /// **See also:** [`set_raw_name()`]
+    raw_name() -> String,
+    /// 
+    /// Returns the font's key, a textual representation of a font. It is
+    /// typically used as the key for a cache or dictionary of fonts.
+    /// 
+    /// **See also:** [`Map`]
+    key() -> String,
+    /// 
+    /// Returns the first family name to be used whenever *familyName* is
+    /// specified. The lookup is case insensitive.
+    /// 
+    /// If there is no substitution for *familyName,* *familyName* is
+    /// returned.
+    /// 
+    /// To obtain a list of substitutions use substitutes().
+    /// 
+    /// **See also:** [`set_family()`]
+    /// [`insert_substitutions()`]
+    /// [`insert_substitution()`]
+    /// [`remove_substitutions()`]
+    /// 
+    /// Returns a list of family names to be used whenever *familyName*
+    /// is specified. The lookup is case insensitive.
+    /// 
+    /// If there is no substitution for *familyName,* an empty list is
+    /// returned.
+    /// 
+    /// **See also:** [`substitute()`]
+    /// [`insert_substitutions()`]
+    /// [`insert_substitution()`]
+    /// [`remove_substitutions()`]
+    [static] substitute(arg0: String) -> String,
+    /// 
+    /// Returns a list of family names to be used whenever *familyName*
+    /// is specified. The lookup is case insensitive.
+    /// 
+    /// If there is no substitution for *familyName,* an empty list is
+    /// returned.
+    /// 
+    /// **See also:** [`substitute()`]
+    /// [`insert_substitutions()`]
+    /// [`insert_substitution()`]
+    /// [`remove_substitutions()`]
+    [static] substitutes(arg0: String) -> [String],
+    /// 
+    /// Returns a sorted list of substituted family names.
+    /// 
+    /// **See also:** [`insert_substitution()`]
+    /// [`remove_substitution()`]
+    /// [`substitute()`]
+    [static] substitutions() -> [String],
+    /// 
+    /// Inserts *substituteName* into the substitution
+    /// table for the family *familyName.*
+    /// 
+    /// **See also:** [`insert_substitutions()`]
+    /// [`remove_substitutions()`]
+    /// [`substitutions()`]
+    /// [`substitute()`]
+    /// [`substitutes()`]
+    /// 
+    /// Inserts the list of families *substituteNames* into the
+    /// substitution list for *familyName.*
+    /// 
+    /// **See also:** [`insert_substitution()`]
+    /// [`remove_substitutions()`]
+    /// [`substitutions()`]
+    /// [`substitute()`]
+    [static] insert_substitution(arg0: String, arg1: String),
+    /// 
+    /// Inserts the list of families *substituteNames* into the
+    /// substitution list for *familyName.*
+    /// 
+    /// **See also:** [`insert_substitution()`]
+    /// [`remove_substitutions()`]
+    /// [`substitutions()`]
+    /// [`substitute()`]
+    [static] insert_substitutions(arg0: String, arg1: &[String]),
+    /// 
+    /// Removes all the substitutions for *familyName.*
+    /// 
+    /// **See also:** [`insert_substitutions()`]
+    /// [`insert_substitution()`]
+    /// [`substitutions()`]
+    /// [`substitute()`]
+    [static] remove_substitutions(arg0: String),
+    [static] initialize(),
+    [static] cleanup(),
+    [static] cache_statistics(),
+    /// 
+    /// Returns the family name that corresponds to the current style
+    /// hint.
+    /// 
+    /// **See also:** StyleHint
+    /// [`style_hint()`]
+    /// [`set_style_hint()`]
+    default_family() -> String,
+    /// 
+    /// Returns the font family name.
+    /// 
+    /// The current implementation tries a wide variety of common fonts,
+    /// returning the first one it finds. Is is possible that no family is
+    /// found in which case an empty string is returned.
+    /// 
+    /// **See also:** [`last_resort_font()`]
+    last_resort_family() -> String,
+    /// 
+    /// Returns a font name for the font matching algorithm.
+    /// This is used if the last resort family is not available. It will
+    /// always return a name, if necessary returning something like
+    /// or .
+    /// 
+    /// The current implementation tries a wide variety of common fonts,
+    /// returning the first one it finds. The implementation may change
+    /// at any time, but this function will always return a string
+    /// containing something.
+    /// 
+    /// It is theoretically possible that there really isn't a
+    /// lastResortFont() in which case Qt will abort with an error
+    /// message. We have not been able to identify a case where this
+    /// happens. Please [report it as a bug](bughowto.html)
+    /// if
+    /// it does, preferably with a list of the fonts you have installed.
+    /// 
+    /// **See also:** [`last_resort_family()`]
+    last_resort_font() -> String,
+    /// 
+    /// Returns a new QFont that has attributes copied from *other* that
+    /// have not been previously set on this font.
+    resolve(arg0: &FontType) -> Font,
+    /// 
+    /// Returns a new QFont that has attributes copied from *other* that
+    /// have not been previously set on this font.
+    [org_name(resolve)]
+    resolve_2() -> uint,
+    /// 
+    /// Returns a new QFont that has attributes copied from *other* that
+    /// have not been previously set on this font.
+    [org_name(resolve)]
+    resolve_3(mask: uint),
+}
+
 [org_name(QFont)]
 enum StyleHint {
     Helvetica,
@@ -244,611 +850,6 @@ enum ResolveProperties {
     HintingPreferenceResolved,
     StyleNameResolved,
     AllPropertiesResolved,
-}
-
-
-struct Font {
-    qt_check_for_qgadget_macro(),
-    /// 
-    /// Swaps this font instance with *other.* This function is very fast
-    /// and never fails.
-    swap(other: &FontType),
-    /// 
-    /// Returns the requested font family name, i.e. the name set in the
-    /// constructor or the last setFont() call.
-    /// 
-    /// **See also:** setFamily()
-    /// substitutes()
-    /// substitute()
-    family() -> String,
-    /// 
-    /// Sets the family name of the font. The name is case insensitive and
-    /// may include a foundry name.
-    /// 
-    /// The *family* name may optionally also include a foundry name,
-    /// e.g. . If the *family* is
-    /// available from more than one foundry and the foundry isn't
-    /// specified, an arbitrary foundry is chosen. If the family isn't
-    /// available a family will be set using the [font matching](QFont)
-    /// 
-    /// algorithm.
-    /// 
-    /// **See also:** family()
-    /// setStyleHint()
-    /// QFontInfo
-    set_family(arg0: String),
-    /// 
-    /// Returns the requested font style name. This can be used to match the
-    /// font with irregular styles (that can't be normalized in other style
-    /// properties).
-    /// 
-    /// **See also:** setFamily()
-    /// setStyle()
-    style_name() -> String,
-    /// 
-    /// Sets the style name of the font to *styleName.* When set, other style properties
-    /// like [style()](style())
-    /// and [weight()](weight())
-    /// will be ignored for font matching, though they may be
-    /// simulated afterwards if supported by the platform's font engine.
-    /// 
-    /// Due to the lower quality of artificially simulated styles, and the lack of full cross
-    /// platform support, it is not recommended to use matching by style name together with
-    /// matching by style properties
-    /// 
-    /// **See also:** styleName()
-    set_style_name(arg0: String),
-    /// 
-    /// Returns the point size of the font. Returns -1 if the font size
-    /// was specified in pixels.
-    /// 
-    /// **See also:** setPointSize()
-    /// pointSizeF()
-    /// 
-    /// Returns the point size of the font. Returns -1 if the font size was
-    /// specified in pixels.
-    /// 
-    /// **See also:** pointSize()
-    /// setPointSizeF()
-    /// pixelSize()
-    /// QFontInfo::pointSize()
-    /// QFontInfo::pixelSize()
-    point_size() -> i32,
-    /// 
-    /// Sets the point size to *pointSize.* The point size must be
-    /// greater than zero.
-    /// 
-    /// **See also:** pointSize()
-    /// setPointSizeF()
-    /// 
-    /// Sets the point size to *pointSize.* The point size must be
-    /// greater than zero. The requested precision may not be achieved on
-    /// all platforms.
-    /// 
-    /// **See also:** pointSizeF()
-    /// setPointSize()
-    /// setPixelSize()
-    set_point_size(arg0: i32),
-    /// 
-    /// Returns the point size of the font. Returns -1 if the font size was
-    /// specified in pixels.
-    /// 
-    /// **See also:** pointSize()
-    /// setPointSizeF()
-    /// pixelSize()
-    /// QFontInfo::pointSize()
-    /// QFontInfo::pixelSize()
-    point_size_f() -> f32,
-    /// 
-    /// Sets the point size to *pointSize.* The point size must be
-    /// greater than zero. The requested precision may not be achieved on
-    /// all platforms.
-    /// 
-    /// **See also:** pointSizeF()
-    /// setPointSize()
-    /// setPixelSize()
-    set_point_size_f(arg0: f32),
-    /// 
-    /// Returns the pixel size of the font if it was set with
-    /// setPixelSize(). Returns -1 if the size was set with setPointSize()
-    /// or setPointSizeF().
-    /// 
-    /// **See also:** setPixelSize()
-    /// pointSize()
-    /// QFontInfo::pointSize()
-    /// QFontInfo::pixelSize()
-    pixel_size() -> i32,
-    /// 
-    /// Sets the font size to *pixelSize* pixels.
-    /// 
-    /// Using this function makes the font device dependent. Use
-    /// setPointSize() or setPointSizeF() to set the size of the font
-    /// in a device independent manner.
-    /// 
-    /// **See also:** pixelSize()
-    set_pixel_size(arg0: i32),
-    /// 
-    /// Returns the weight of the font, using the same scale as the
-    /// [QFont::Weight](QFont::Weight)
-    /// enumeration.
-    /// 
-    /// **See also:** setWeight()
-    /// Weight
-    /// QFontInfo
-    weight() -> i32,
-    /// 
-    /// Sets the weight of the font to *weight,* using the scale defined by
-    /// [QFont::Weight](QFont::Weight)
-    /// enumeration.
-    /// 
-    /// **Note**: If styleName() is set, this value may be ignored for font selection.
-    /// 
-    /// **See also:** weight()
-    /// QFontInfo
-    set_weight(arg0: i32),
-    /// 
-    /// Returns `true` if weight() is a value greater than
-    /// [QFont::Medium](Weight)
-    /// ; otherwise returns `false.`
-    /// 
-    /// **See also:** weight()
-    /// setBold()
-    /// QFontInfo::bold()
-    bold() -> bool,
-    /// 
-    /// If *enable* is true sets the font's weight to
-    /// [QFont::Bold](Weight)
-    /// 
-    /// otherwise sets the weight to [QFont::Normal](Weight)
-    /// 
-    /// 
-    /// For finer boldness control use setWeight().
-    /// 
-    /// **Note**: If styleName() is set, this value may be ignored, or if supported
-    /// on the platform, the font artificially embolded.
-    /// 
-    /// **See also:** bold()
-    /// setWeight()
-    set_bold(arg0: bool),
-    /// 
-    /// Sets the style name of the font to *styleName.* When set, other style properties
-    /// like [style()](style())
-    /// and [weight()](weight())
-    /// will be ignored for font matching, though they may be
-    /// simulated afterwards if supported by the platform's font engine.
-    /// 
-    /// Due to the lower quality of artificially simulated styles, and the lack of full cross
-    /// platform support, it is not recommended to use matching by style name together with
-    /// matching by style properties
-    /// 
-    /// **See also:** styleName()
-    /// 
-    /// Sets the style of the font to *style.*
-    /// 
-    /// **See also:** italic()
-    /// QFontInfo
-    /// 
-    /// Sets the style hint and strategy to *hint* and *strategy,*
-    /// respectively.
-    /// 
-    /// If these aren't set explicitly the style hint will default to
-    /// `AnyStyle` and the style strategy to `PreferDefault.`
-    /// 
-    /// Qt does not support style hints on X11 since this information
-    /// is not provided by the window system.
-    /// 
-    /// **See also:** StyleHint
-    /// styleHint()
-    /// StyleStrategy
-    /// styleStrategy()
-    /// QFontInfo
-    /// 
-    /// Sets the style strategy for the font to *s.*
-    /// 
-    /// **See also:** QFont::StyleStrategy
-    set_style(style: Font::Style),
-    /// 
-    /// Returns the requested font style name. This can be used to match the
-    /// font with irregular styles (that can't be normalized in other style
-    /// properties).
-    /// 
-    /// **See also:** setFamily()
-    /// setStyle()
-    /// 
-    /// Returns the style of the font.
-    /// 
-    /// **See also:** setStyle()
-    /// 
-    /// Returns the StyleStrategy.
-    /// 
-    /// The style strategy affects the [font matching](QFont)
-    /// algorithm.
-    /// See [QFont::StyleStrategy](QFont::StyleStrategy)
-    /// for the list of available strategies.
-    /// 
-    /// **See also:** setStyleHint()
-    /// QFont::StyleHint
-    /// 
-    /// Returns the StyleHint.
-    /// 
-    /// The style hint affects the [font matching algorithm](%23fontmatching)
-    /// 
-    /// See [QFont::StyleHint](QFont::StyleHint)
-    /// for the list of available hints.
-    /// 
-    /// **See also:** setStyleHint()
-    /// QFont::StyleStrategy
-    /// QFontInfo::styleHint()
-    style() -> Font::Style,
-    /// 
-    /// Returns `true` if the style() of the font is not QFont::StyleNormal
-    /// 
-    /// **See also:** setItalic()
-    /// style()
-    italic() -> bool,
-    /// 
-    /// Sets the style() of the font to QFont::StyleItalic if *enable* is true;
-    /// otherwise the style is set to QFont::StyleNormal.
-    /// 
-    /// **Note**: If styleName() is set, this value may be ignored, or if supported
-    /// on the platform, the font may be rendered tilted instead of picking a
-    /// designed italic font-variant.
-    /// 
-    /// **See also:** italic()
-    /// QFontInfo
-    set_italic(b: bool),
-    /// 
-    /// Returns `true` if underline has been set; otherwise returns `false.`
-    /// 
-    /// **See also:** setUnderline()
-    underline() -> bool,
-    /// 
-    /// If *enable* is true, sets underline on; otherwise sets underline
-    /// off.
-    /// 
-    /// **See also:** underline()
-    /// QFontInfo
-    set_underline(arg0: bool),
-    /// 
-    /// Returns `true` if overline has been set; otherwise returns `false.`
-    /// 
-    /// **See also:** setOverline()
-    overline() -> bool,
-    /// 
-    /// If *enable* is true, sets overline on; otherwise sets overline off.
-    /// 
-    /// **See also:** overline()
-    /// QFontInfo
-    set_overline(arg0: bool),
-    /// 
-    /// Returns `true` if fixed pitch has been set; otherwise returns `false.`
-    /// 
-    /// **See also:** setFixedPitch()
-    /// QFontInfo::fixedPitch()
-    fixed_pitch() -> bool,
-    /// 
-    /// If *enable* is true, sets fixed pitch on; otherwise sets fixed
-    /// pitch off.
-    /// 
-    /// **See also:** fixedPitch()
-    /// QFontInfo
-    set_fixed_pitch(arg0: bool),
-    /// 
-    /// Returns `true` if kerning should be used when drawing text with this font.
-    /// 
-    /// **See also:** setKerning()
-    kerning() -> bool,
-    /// 
-    /// Enables kerning for this font if *enable* is true; otherwise
-    /// disables it. By default, kerning is enabled.
-    /// 
-    /// When kerning is enabled, glyph metrics do not add up anymore,
-    /// even for Latin text. In other words, the assumption that
-    /// width('a') + width('b') is equal to width("ab") is not
-    /// necessarily true.
-    /// 
-    /// **See also:** kerning()
-    /// QFontMetrics
-    set_kerning(arg0: bool),
-    /// 
-    /// Returns the StyleHint.
-    /// 
-    /// The style hint affects the [font matching algorithm](%23fontmatching)
-    /// 
-    /// See [QFont::StyleHint](QFont::StyleHint)
-    /// for the list of available hints.
-    /// 
-    /// **See also:** setStyleHint()
-    /// QFont::StyleStrategy
-    /// QFontInfo::styleHint()
-    style_hint() -> Font::StyleHint,
-    /// 
-    /// Sets the style hint and strategy to *hint* and *strategy,*
-    /// respectively.
-    /// 
-    /// If these aren't set explicitly the style hint will default to
-    /// `AnyStyle` and the style strategy to `PreferDefault.`
-    /// 
-    /// Qt does not support style hints on X11 since this information
-    /// is not provided by the window system.
-    /// 
-    /// **See also:** StyleHint
-    /// styleHint()
-    /// StyleStrategy
-    /// styleStrategy()
-    /// QFontInfo
-    set_style_hint(arg0: Font::StyleHint, arg1: Font::StyleStrategy),
-    /// 
-    /// Returns the letter spacing for the font.
-    /// 
-    /// **See also:** setLetterSpacing()
-    /// letterSpacingType()
-    /// setWordSpacing()
-    /// 
-    /// Returns the spacing type used for letter spacing.
-    /// 
-    /// **See also:** letterSpacing()
-    /// setLetterSpacing()
-    /// setWordSpacing()
-    letter_spacing() -> f32,
-    /// 
-    /// Returns the spacing type used for letter spacing.
-    /// 
-    /// **See also:** letterSpacing()
-    /// setLetterSpacing()
-    /// setWordSpacing()
-    letter_spacing_type() -> Font::SpacingType,
-    /// 
-    /// Sets the letter spacing for the font to *spacing* and the type
-    /// of spacing to *type.*
-    /// 
-    /// Letter spacing changes the default spacing between individual
-    /// letters in the font. The spacing between the letters can be
-    /// made smaller as well as larger either in percentage of the
-    /// character width or in pixels, depending on the selected spacing type.
-    /// 
-    /// **See also:** letterSpacing()
-    /// letterSpacingType()
-    /// setWordSpacing()
-    set_letter_spacing(type: Font::SpacingType, spacing: f32),
-    /// 
-    /// Returns the word spacing for the font.
-    /// 
-    /// **See also:** setWordSpacing()
-    /// setLetterSpacing()
-    word_spacing() -> f32,
-    /// 
-    /// Sets the word spacing for the font to *spacing.*
-    /// 
-    /// Word spacing changes the default spacing between individual
-    /// words. A positive value increases the word spacing
-    /// by a corresponding amount of pixels, while a negative value
-    /// decreases the inter-word spacing accordingly.
-    /// 
-    /// Word spacing will not apply to writing systems, where indiviaul
-    /// words are not separated by white space.
-    /// 
-    /// **See also:** wordSpacing()
-    /// setLetterSpacing()
-    set_word_spacing(spacing: f32),
-    /// 
-    /// Sets the capitalization of the text in this font to *caps.*
-    /// 
-    /// A font's capitalization makes the text appear in the selected capitalization mode.
-    /// 
-    /// **See also:** capitalization()
-    set_capitalization(arg0: Font::Capitalization),
-    /// 
-    /// Returns the current capitalization type of the font.
-    /// 
-    /// **See also:** setCapitalization()
-    capitalization() -> Font::Capitalization,
-    /// 
-    /// Set the preference for the hinting level of the glyphs to *hintingPreference.* This is a hint
-    /// to the underlying font rendering system to use a certain level of hinting, and has varying
-    /// support across platforms. See the table in the documentation for QFont::HintingPreference for
-    /// more details.
-    /// 
-    /// The default hinting preference is QFont::PreferDefaultHinting.
-    set_hinting_preference(hinting_preference: Font::HintingPreference),
-    /// 
-    /// Returns the currently preferred hinting level for glyphs rendered with this font.
-    hinting_preference() -> Font::HintingPreference,
-    /// 
-    /// Returns `true` if raw mode is used for font name matching; otherwise
-    /// returns `false.`
-    /// 
-    /// **See also:** setRawMode()
-    raw_mode() -> bool,
-    /// 
-    /// If *enable* is true, turns raw mode on; otherwise turns raw mode
-    /// off. This function only has an effect under X11.
-    /// 
-    /// If raw mode is enabled, Qt will search for an X font with a
-    /// complete font name matching the family name, ignoring all other
-    /// values set for the QFont. If the font name matches several fonts,
-    /// Qt will use the first font returned by X. QFontInfo *cannot* be
-    /// used to fetch information about a QFont using raw mode (it will
-    /// return the values set in the QFont for all parameters, including
-    /// the family name).
-    /// 
-    /// **Warning**: Enabling raw mode has no effect since Qt 5.0.
-    /// 
-    /// **See also:** rawMode()
-    set_raw_mode(arg0: bool),
-    /// 
-    /// Returns `true` if a window system font exactly matching the settings
-    /// of this font is available.
-    /// 
-    /// **See also:** QFontInfo
-    exact_match() -> bool,
-    /// 
-    /// Returns `true` if this font and *f* are copies of each other, i.e.
-    /// one of them was created as a copy of the other and neither has
-    /// been modified since. This is much stricter than equality.
-    /// 
-    /// **See also:** operator=()
-    /// operator==()
-    is_copy_of(arg0: &FontType) -> bool,
-    /// 
-    /// Sets a font by its system specific name.
-    /// 
-    /// A font set with setRawName() is still a full-featured QFont. It can
-    /// be queried (for example with italic()) or modified (for example with
-    /// setItalic()) and is therefore also suitable for rendering rich text.
-    /// 
-    /// If Qt's internal font database cannot resolve the raw name, the
-    /// font becomes a raw font with *name* as its family.
-    /// 
-    /// **See also:** rawName()
-    /// setFamily()
-    set_raw_name(arg0: String),
-    /// 
-    /// Returns the name of the font within the underlying window system.
-    /// 
-    /// On X11, this function will return an empty string.
-    /// 
-    /// Using the return value of this function is usually *not* *portable.*
-    /// 
-    /// **See also:** setRawName()
-    raw_name() -> String,
-    /// 
-    /// Returns the font's key, a textual representation of a font. It is
-    /// typically used as the key for a cache or dictionary of fonts.
-    /// 
-    /// **See also:** QMap
-    key() -> String,
-    /// 
-    /// Returns the first family name to be used whenever *familyName* is
-    /// specified. The lookup is case insensitive.
-    /// 
-    /// If there is no substitution for *familyName,* *familyName* is
-    /// returned.
-    /// 
-    /// To obtain a list of substitutions use substitutes().
-    /// 
-    /// **See also:** setFamily()
-    /// insertSubstitutions()
-    /// insertSubstitution()
-    /// removeSubstitutions()
-    /// 
-    /// Returns a list of family names to be used whenever *familyName*
-    /// is specified. The lookup is case insensitive.
-    /// 
-    /// If there is no substitution for *familyName,* an empty list is
-    /// returned.
-    /// 
-    /// **See also:** substitute()
-    /// insertSubstitutions()
-    /// insertSubstitution()
-    /// removeSubstitutions()
-    [static] substitute(arg0: String) -> String,
-    /// 
-    /// Returns a list of family names to be used whenever *familyName*
-    /// is specified. The lookup is case insensitive.
-    /// 
-    /// If there is no substitution for *familyName,* an empty list is
-    /// returned.
-    /// 
-    /// **See also:** substitute()
-    /// insertSubstitutions()
-    /// insertSubstitution()
-    /// removeSubstitutions()
-    [static] substitutes(arg0: String) -> [String],
-    /// 
-    /// Returns a sorted list of substituted family names.
-    /// 
-    /// **See also:** insertSubstitution()
-    /// removeSubstitution()
-    /// substitute()
-    [static] substitutions() -> [String],
-    /// 
-    /// Inserts *substituteName* into the substitution
-    /// table for the family *familyName.*
-    /// 
-    /// **See also:** insertSubstitutions()
-    /// removeSubstitutions()
-    /// substitutions()
-    /// substitute()
-    /// substitutes()
-    /// 
-    /// Inserts the list of families *substituteNames* into the
-    /// substitution list for *familyName.*
-    /// 
-    /// **See also:** insertSubstitution()
-    /// removeSubstitutions()
-    /// substitutions()
-    /// substitute()
-    [static] insert_substitution(arg0: String, arg1: String),
-    /// 
-    /// Inserts the list of families *substituteNames* into the
-    /// substitution list for *familyName.*
-    /// 
-    /// **See also:** insertSubstitution()
-    /// removeSubstitutions()
-    /// substitutions()
-    /// substitute()
-    [static] insert_substitutions(arg0: String, arg1: &[String]),
-    /// 
-    /// Removes all the substitutions for *familyName.*
-    /// 
-    /// **See also:** insertSubstitutions()
-    /// insertSubstitution()
-    /// substitutions()
-    /// substitute()
-    [static] remove_substitutions(arg0: String),
-    [static] initialize(),
-    [static] cleanup(),
-    [static] cache_statistics(),
-    /// 
-    /// Returns the family name that corresponds to the current style
-    /// hint.
-    /// 
-    /// **See also:** StyleHint
-    /// styleHint()
-    /// setStyleHint()
-    default_family() -> String,
-    /// 
-    /// Returns the font family name.
-    /// 
-    /// The current implementation tries a wide variety of common fonts,
-    /// returning the first one it finds. Is is possible that no family is
-    /// found in which case an empty string is returned.
-    /// 
-    /// **See also:** lastResortFont()
-    last_resort_family() -> String,
-    /// 
-    /// Returns a font name for the font matching algorithm.
-    /// This is used if the last resort family is not available. It will
-    /// always return a name, if necessary returning something like
-    /// or .
-    /// 
-    /// The current implementation tries a wide variety of common fonts,
-    /// returning the first one it finds. The implementation may change
-    /// at any time, but this function will always return a string
-    /// containing something.
-    /// 
-    /// It is theoretically possible that there really isn't a
-    /// lastResortFont() in which case Qt will abort with an error
-    /// message. We have not been able to identify a case where this
-    /// happens. Please [report it as a bug](bughowto.html)
-    /// if
-    /// it does, preferably with a list of the fonts you have installed.
-    /// 
-    /// **See also:** lastResortFamily()
-    last_resort_font() -> String,
-    /// 
-    /// Returns a new QFont that has attributes copied from *other* that
-    /// have not been previously set on this font.
-    resolve(arg0: &FontType) -> Font,
-    /// 
-    /// Returns a new QFont that has attributes copied from *other* that
-    /// have not been previously set on this font.
-    resolve_2() -> uint,
-    /// 
-    /// Returns a new QFont that has attributes copied from *other* that
-    /// have not been previously set on this font.
-    resolve_3(mask: uint),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

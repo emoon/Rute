@@ -53,14 +53,14 @@ struct OffscreenSurface : Object, Surface {
     /// 
     /// **Note**: Some platforms require this function to be called on the main (GUI) thread.
     /// 
-    /// **See also:** destroy()
+    /// **See also:** [`destroy()`]
     create(),
     /// 
     /// Returns `true` if this offscreen surface is valid; otherwise returns `false.`
     /// 
     /// The offscreen surface is valid if the platform resources have been successfuly allocated.
     /// 
-    /// **See also:** create()
+    /// **See also:** [`create()`]
     is_valid() -> bool,
     /// 
     /// Sets the offscreen surface *format.*
@@ -68,8 +68,8 @@ struct OffscreenSurface : Object, Surface {
     /// The surface format will be resolved in the create() function. Calling
     /// this function after create() will not re-resolve the surface format of the native surface.
     /// 
-    /// **See also:** create()
-    /// destroy()
+    /// **See also:** [`create()`]
+    /// [`destroy()`]
     set_format(format: &SurfaceFormatType),
     /// 
     /// Returns the actual format of this offscreen surface.
@@ -78,8 +78,8 @@ struct OffscreenSurface : Object, Surface {
     /// surface format of the surface. It might differ from the requested format if the requested
     /// format could not be fulfilled by the platform.
     /// 
-    /// **See also:** create()
-    /// requestedFormat()
+    /// **See also:** [`create()`]
+    /// [`requested_format()`]
     [event] format() -> SurfaceFormat,
     /// 
     /// Returns the requested surfaceformat of this offscreen surface.
@@ -89,8 +89,8 @@ struct OffscreenSurface : Object, Surface {
     /// 
     /// This is the value set with setFormat().
     /// 
-    /// **See also:** setFormat()
-    /// format()
+    /// **See also:** [`set_format()`]
+    /// [`format()`]
     requested_format() -> SurfaceFormat,
     /// 
     /// Returns the size of the offscreen surface.
@@ -98,7 +98,7 @@ struct OffscreenSurface : Object, Surface {
     /// 
     /// Returns the screen to which the offscreen surface is connected.
     /// 
-    /// **See also:** setScreen()
+    /// **See also:** [`set_screen()`]
     /// 
     /// This signal is emitted when an offscreen surface's *screen* changes, either
     /// by being set explicitly with setScreen(), or automatically when
@@ -109,13 +109,13 @@ struct OffscreenSurface : Object, Surface {
     /// 
     /// If the offscreen surface has been created, it will be recreated on the *newScreen.*
     /// 
-    /// **See also:** screen()
+    /// **See also:** [`screen()`]
     set_screen(screen: *ScreenType),
     handle() -> PlatformOffscreenSurface?,
     /// 
     /// Returns an optional native handle to which the offscreen surface is connected.
     /// 
-    /// **See also:** setNativeHandle()
+    /// **See also:** [`set_native_handle()`]
     native_handle(),
     /// 
     /// Sets the native handle to which the offscreen surface is connected to *handle.*
@@ -127,7 +127,7 @@ struct OffscreenSurface : Object, Surface {
     /// some platforms will support adopting native handles of offscreen surfaces
     /// and platforms that do not implement this support will ignore the handle.
     /// 
-    /// **See also:** nativeHandle()
+    /// **See also:** [`native_handle()`]
     set_native_handle(handle: *void),
     /// 
     /// This signal is emitted when an offscreen surface's *screen* changes, either

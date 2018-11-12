@@ -1,6 +1,196 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct PlatformIntegration {
+    [event] has_capability(cap: PlatformIntegration::Capability) -> bool,
+    /// 
+    /// Factory function for QPlatformPixmap. PixelType can be either PixmapType or BitmapType.
+    /// **See also:** [`PlatformPixmap`]
+    create_platform_pixmap(type: i32) -> i32?,
+    /// 
+    /// Factory function for QPlatformWindow. The *window* parameter is a pointer to the window
+    /// which the QPlatformWindow is supposed to be created for.
+    /// 
+    /// All windows have to have a QPlatformWindow, and it will be created on-demand when the
+    /// QWindow is made visible for the first time, or explicitly through calling QWindow::create().
+    /// 
+    /// In the constructor, of the QPlatformWindow, the window flags, state, title and geometry
+    /// of the *window* should be applied to the underlying window. If the resulting flags or state
+    /// differs, the resulting values should be set on the *window* using QWindow::setWindowFlags()
+    /// or QWindow::setWindowState(), respectively.
+    /// 
+    /// **See also:** [`PlatformWindow`]
+    /// [`PlatformWindowFormat`]
+    /// **See also:** [`create_platform_backing_store()`]
+    [event] create_platform_window(window: *WindowType) -> PlatformWindow?,
+    [event] create_foreign_window(arg0: *WindowType, arg1: WId) -> PlatformWindow?,
+    /// 
+    /// Factory function for QPlatformBackingStore. The QWindow parameter is a pointer to the
+    /// top level widget(tlw) the window surface is created for. A QPlatformWindow is always created
+    /// before the QPlatformBackingStore for tlw where the widget also requires a backing store.
+    /// 
+    /// **See also:** [`BackingStore`]
+    /// **See also:** [`create_platform_window()`]
+    [event] create_platform_backing_store(window: *WindowType) -> PlatformBackingStore?,
+    /// 
+    /// Factory function for QPlatformOpenGLContext. The *context* parameter is a pointer to
+    /// the context for which a platform-specific context backend needs to be
+    /// created. Configuration settings like the format, share context and screen have to be
+    /// taken from this QOpenGLContext and the resulting platform context is expected to be
+    /// backed by a native context that fulfills these criteria.
+    /// 
+    /// If the context has native handles set, no new native context is expected to be created.
+    /// Instead, the provided handles have to be used. In this case the ownership of the handle
+    /// must not be taken and the platform implementation is not allowed to destroy the native
+    /// context. Configuration parameters like the format are also to be ignored. Instead, the
+    /// platform implementation is responsible for querying the configuriation from the provided
+    /// native context.
+    /// 
+    /// Returns a pointer to a QPlatformOpenGLContext instance or `NULL` if the context could
+    /// not be created.
+    /// 
+    /// **See also:** [`OpenGLContext`]
+    [event] create_platform_open_gl_context(context: *OpenGLContextType) -> PlatformOpenGLContext?,
+    /// 
+    /// Factory function for QPlatformSharedGraphicsCache. This function will return 0 if the platform
+    /// integration does not support any shared graphics cache mechanism for the given *cacheId.*
+    [event] create_platform_shared_graphics_cache(cache_id: *char) -> PlatformSharedGraphicsCache?,
+    /// 
+    /// Factory function for QPaintEngine. This function will return 0 if the platform
+    /// integration does not support creating any paint engine the given *paintDevice.*
+    create_image_paint_engine(paint_device: *PaintDeviceType) -> i32?,
+    /// 
+    /// Factory function for the GUI event dispatcher. The platform plugin should create
+    /// and return a QAbstractEventDispatcher subclass when this function is called.
+    /// 
+    /// If the platform plugin for some reason creates the event dispatcher outside of
+    /// this function (for example in the constructor), it needs to handle the case
+    /// where this function is never called, ensuring that the event dispatcher is
+    /// still deleted at some point (typically in the destructor).
+    /// 
+    /// Note that the platform plugin should never explicitly set the event dispatcher
+    /// itself, using QCoreApplication::setEventDispatcher(), but let QCoreApplication
+    /// decide when and which event dispatcher to create.
+    /// 
+    [event] create_event_dispatcher() -> AbstractEventDispatcher?,
+    /// 
+    /// Performs initialization steps that depend on having an event dispatcher
+    /// available. Called after the event dispatcher has been created.
+    /// 
+    /// Tasks that require an event dispatcher, for example creating socket notifiers, cannot be
+    /// performed in the constructor. Instead, they should be performed here. The default
+    /// implementation does nothing.
+    [event] initialize(),
+    /// 
+    /// Accessor for the platform integration's fontdatabase.
+    /// 
+    /// Default implementation returns a default QPlatformFontDatabase.
+    /// 
+    /// **See also:** [`PlatformFontDatabase`]
+    [event] font_database() -> PlatformFontDatabase?,
+    [event] clipboard() -> PlatformClipboard?,
+    /// 
+    /// Accessor for the platform integration's drag object.
+    /// 
+    /// Default implementation returns 0, implying no drag and drop support.
+    /// 
+    [event] drag() -> PlatformDrag?,
+    /// 
+    /// Returns the platforms input context.
+    /// 
+    /// The default implementation returns 0, implying no input method support.
+    [event] input_context() -> PlatformInputContext?,
+    /// 
+    /// Returns the platforms accessibility.
+    /// 
+    /// The default implementation returns QPlatformAccessibility which
+    /// delegates handling of accessibility to accessiblebridge plugins.
+    [event] accessibility() -> PlatformAccessibility?,
+    [event] native_interface() -> PlatformNativeInterface?,
+    [event] services() -> PlatformServices?,
+    style_hint(hint: PlatformIntegration::StyleHint) -> i32,
+    [event] default_window_state(arg0: Rute::WindowFlags) -> Rute::WindowState,
+    [event] query_keyboard_modifiers() -> Rute::KeyboardModifiers,
+    /// 
+    /// Should be used to obtain a list of possible shortcuts for the given key
+    /// event. Shortcuts should be encoded as int(Qt::Key + Qt::KeyboardModifiers).
+    /// 
+    /// One example for more than one possibility is the key combination of Shift+5.
+    /// That one might trigger a shortcut which is set as as well as one
+    /// using %. These combinations depend on the currently set keyboard layout.
+    /// 
+    /// **Note**: This function should be called only from key event handlers.
+    [event] possible_keys(arg0: *KeyEventType) -> [i32],
+    theme_names() -> i32,
+    [event] create_platform_theme(name: String) -> PlatformTheme?,
+    /// 
+    /// Factory function for QOffscreenSurface. An offscreen surface will typically be implemented with a
+    /// pixel buffer (pbuffer). If the platform doesn't support offscreen surfaces, an invisible window
+    /// will be used by QOffscreenSurface instead.
+    [event] create_platform_offscreen_surface(surface: *OffscreenSurfaceType) -> PlatformOffscreenSurface?,
+    /// 
+    /// Factory function for QPlatformSessionManager. The default QPlatformSessionManager provides the same
+    /// functionality as the QSessionManager.
+    [event] create_platform_session_manager(id: String, key: String) -> PlatformSessionManager?,
+    /// 
+    /// Function to sync the platform integrations state with the window system.
+    /// 
+    /// This is often implemented as a roundtrip from the platformintegration to the window system.
+    /// 
+    /// This function should not call QWindowSystemInterface::flushWindowSystemEvents() or
+    /// QCoreApplication::processEvents()
+    [event] sync(),
+    /// 
+    /// Platform integration function for querying the OpenGL implementation type.
+    /// 
+    /// Used only when dynamic OpenGL implementation loading is enabled.
+    /// 
+    /// Subclasses should reimplement this function and return a value based on
+    /// the OpenGL implementation they have chosen to load.
+    /// 
+    /// **Note**: The return value does not indicate or limit the types of
+    /// contexts that can be created by a given implementation. For example
+    /// a desktop OpenGL implementation may be capable of creating OpenGL
+    /// ES-compatible contexts too.
+    /// 
+    /// **See also:** [`OpenGLContext::open_gl_module_type`]
+    /// [`OpenGLContext::is_open_gles`]
+    /// 
+    open_gl_module_type() -> i32,
+    /// 
+    /// Platform integration function for setting the application icon.
+    /// 
+    /// **See also:** [`GuiApplication::set_window_icon`]
+    [event] set_application_icon(icon: &i32),
+    /// 
+    /// Just removes the screen, call destroyScreen instead.
+    /// 
+    /// **See also:** [`destroy_screen()`]
+    remove_screen(screen: *i32),
+    /// 
+    /// Should sound a bell, using the default volume and sound.
+    /// 
+    /// **See also:** [`Application::beep`]
+    [event] beep(),
+    /// 
+    /// Should be called by the implementation whenever a new screen is added.
+    /// 
+    /// The first screen added will be the primary screen, used for default-created
+    /// windows, GL contexts, and other resources unless otherwise specified.
+    /// 
+    /// This adds the screen to QGuiApplication::screens(), and emits the
+    /// QGuiApplication::screenAdded() signal.
+    /// 
+    /// The screen should be deleted by calling QPlatformIntegration::destroyScreen().
+    screen_added(screen: *i32, is_primary: bool),
+    /// 
+    /// Should be called whenever the primary screen changes.
+    /// 
+    /// When the screen specified as primary changes, this method will notify
+    /// QGuiApplication and emit the QGuiApplication::primaryScreenChanged signal.
+    set_primary_screen(new_primary: *i32),
+}
+
 [org_name(QPlatformIntegration)]
 enum Capability {
     ThreadedPixmaps,
@@ -48,197 +238,6 @@ enum StyleHint {
     WheelScrollLines,
     ShowShortcutsInContextMenus,
     MouseQuickSelectionThreshold,
-}
-
-
-struct PlatformIntegration {
-    [event] has_capability(cap: PlatformIntegration::Capability) -> bool,
-    /// 
-    /// Factory function for QPlatformPixmap. PixelType can be either PixmapType or BitmapType.
-    /// **See also:** QPlatformPixmap
-    create_platform_pixmap(type: i32) -> i32?,
-    /// 
-    /// Factory function for QPlatformWindow. The *window* parameter is a pointer to the window
-    /// which the QPlatformWindow is supposed to be created for.
-    /// 
-    /// All windows have to have a QPlatformWindow, and it will be created on-demand when the
-    /// QWindow is made visible for the first time, or explicitly through calling QWindow::create().
-    /// 
-    /// In the constructor, of the QPlatformWindow, the window flags, state, title and geometry
-    /// of the *window* should be applied to the underlying window. If the resulting flags or state
-    /// differs, the resulting values should be set on the *window* using QWindow::setWindowFlags()
-    /// or QWindow::setWindowState(), respectively.
-    /// 
-    /// **See also:** QPlatformWindow
-    /// QPlatformWindowFormat
-    /// **See also:** createPlatformBackingStore()
-    [event] create_platform_window(window: *WindowType) -> PlatformWindow?,
-    [event] create_foreign_window(arg0: *WindowType, arg1: WId) -> PlatformWindow?,
-    /// 
-    /// Factory function for QPlatformBackingStore. The QWindow parameter is a pointer to the
-    /// top level widget(tlw) the window surface is created for. A QPlatformWindow is always created
-    /// before the QPlatformBackingStore for tlw where the widget also requires a backing store.
-    /// 
-    /// **See also:** QBackingStore
-    /// **See also:** createPlatformWindow()
-    [event] create_platform_backing_store(window: *WindowType) -> PlatformBackingStore?,
-    /// 
-    /// Factory function for QPlatformOpenGLContext. The *context* parameter is a pointer to
-    /// the context for which a platform-specific context backend needs to be
-    /// created. Configuration settings like the format, share context and screen have to be
-    /// taken from this QOpenGLContext and the resulting platform context is expected to be
-    /// backed by a native context that fulfills these criteria.
-    /// 
-    /// If the context has native handles set, no new native context is expected to be created.
-    /// Instead, the provided handles have to be used. In this case the ownership of the handle
-    /// must not be taken and the platform implementation is not allowed to destroy the native
-    /// context. Configuration parameters like the format are also to be ignored. Instead, the
-    /// platform implementation is responsible for querying the configuriation from the provided
-    /// native context.
-    /// 
-    /// Returns a pointer to a QPlatformOpenGLContext instance or `NULL` if the context could
-    /// not be created.
-    /// 
-    /// **See also:** QOpenGLContext
-    [event] create_platform_open_gl_context(context: *OpenGLContextType) -> PlatformOpenGLContext?,
-    /// 
-    /// Factory function for QPlatformSharedGraphicsCache. This function will return 0 if the platform
-    /// integration does not support any shared graphics cache mechanism for the given *cacheId.*
-    [event] create_platform_shared_graphics_cache(cache_id: *char) -> PlatformSharedGraphicsCache?,
-    /// 
-    /// Factory function for QPaintEngine. This function will return 0 if the platform
-    /// integration does not support creating any paint engine the given *paintDevice.*
-    create_image_paint_engine(paint_device: *PaintDeviceType) -> i32?,
-    /// 
-    /// Factory function for the GUI event dispatcher. The platform plugin should create
-    /// and return a QAbstractEventDispatcher subclass when this function is called.
-    /// 
-    /// If the platform plugin for some reason creates the event dispatcher outside of
-    /// this function (for example in the constructor), it needs to handle the case
-    /// where this function is never called, ensuring that the event dispatcher is
-    /// still deleted at some point (typically in the destructor).
-    /// 
-    /// Note that the platform plugin should never explicitly set the event dispatcher
-    /// itself, using QCoreApplication::setEventDispatcher(), but let QCoreApplication
-    /// decide when and which event dispatcher to create.
-    /// 
-    [event] create_event_dispatcher() -> AbstractEventDispatcher?,
-    /// 
-    /// Performs initialization steps that depend on having an event dispatcher
-    /// available. Called after the event dispatcher has been created.
-    /// 
-    /// Tasks that require an event dispatcher, for example creating socket notifiers, cannot be
-    /// performed in the constructor. Instead, they should be performed here. The default
-    /// implementation does nothing.
-    [event] initialize(),
-    /// 
-    /// Accessor for the platform integration's fontdatabase.
-    /// 
-    /// Default implementation returns a default QPlatformFontDatabase.
-    /// 
-    /// **See also:** QPlatformFontDatabase
-    [event] font_database() -> PlatformFontDatabase?,
-    [event] clipboard() -> PlatformClipboard?,
-    /// 
-    /// Accessor for the platform integration's drag object.
-    /// 
-    /// Default implementation returns 0, implying no drag and drop support.
-    /// 
-    [event] drag() -> PlatformDrag?,
-    /// 
-    /// Returns the platforms input context.
-    /// 
-    /// The default implementation returns 0, implying no input method support.
-    [event] input_context() -> PlatformInputContext?,
-    /// 
-    /// Returns the platforms accessibility.
-    /// 
-    /// The default implementation returns QPlatformAccessibility which
-    /// delegates handling of accessibility to accessiblebridge plugins.
-    [event] accessibility() -> PlatformAccessibility?,
-    [event] native_interface() -> PlatformNativeInterface?,
-    [event] services() -> PlatformServices?,
-    [event] style_hint(hint: PlatformIntegration::StyleHint) -> Variant,
-    [event] default_window_state(arg0: Rute::WindowFlags) -> Rute::WindowState,
-    [event] query_keyboard_modifiers() -> Rute::KeyboardModifiers,
-    /// 
-    /// Should be used to obtain a list of possible shortcuts for the given key
-    /// event. Shortcuts should be encoded as int(Qt::Key + Qt::KeyboardModifiers).
-    /// 
-    /// One example for more than one possibility is the key combination of Shift+5.
-    /// That one might trigger a shortcut which is set as as well as one
-    /// using %. These combinations depend on the currently set keyboard layout.
-    /// 
-    /// **Note**: This function should be called only from key event handlers.
-    [event] possible_keys(arg0: *KeyEventType) -> [i32],
-    [event] theme_names() -> [String],
-    [event] create_platform_theme(name: String) -> PlatformTheme?,
-    /// 
-    /// Factory function for QOffscreenSurface. An offscreen surface will typically be implemented with a
-    /// pixel buffer (pbuffer). If the platform doesn't support offscreen surfaces, an invisible window
-    /// will be used by QOffscreenSurface instead.
-    [event] create_platform_offscreen_surface(surface: *OffscreenSurfaceType) -> PlatformOffscreenSurface?,
-    /// 
-    /// Factory function for QPlatformSessionManager. The default QPlatformSessionManager provides the same
-    /// functionality as the QSessionManager.
-    [event] create_platform_session_manager(id: String, key: String) -> PlatformSessionManager?,
-    /// 
-    /// Function to sync the platform integrations state with the window system.
-    /// 
-    /// This is often implemented as a roundtrip from the platformintegration to the window system.
-    /// 
-    /// This function should not call QWindowSystemInterface::flushWindowSystemEvents() or
-    /// QCoreApplication::processEvents()
-    [event] sync(),
-    /// 
-    /// Platform integration function for querying the OpenGL implementation type.
-    /// 
-    /// Used only when dynamic OpenGL implementation loading is enabled.
-    /// 
-    /// Subclasses should reimplement this function and return a value based on
-    /// the OpenGL implementation they have chosen to load.
-    /// 
-    /// **Note**: The return value does not indicate or limit the types of
-    /// contexts that can be created by a given implementation. For example
-    /// a desktop OpenGL implementation may be capable of creating OpenGL
-    /// ES-compatible contexts too.
-    /// 
-    /// **See also:** QOpenGLContext::openGLModuleType()
-    /// QOpenGLContext::isOpenGLES()
-    /// 
-    [event] open_gl_module_type() -> OpenGLContext::OpenGLModuleType,
-    /// 
-    /// Platform integration function for setting the application icon.
-    /// 
-    /// **See also:** QGuiApplication::setWindowIcon()
-    [event] set_application_icon(icon: &IconType),
-    /// 
-    /// Just removes the screen, call destroyScreen instead.
-    /// 
-    /// **See also:** destroyScreen()
-    remove_screen(screen: *ScreenType),
-    /// 
-    /// Should sound a bell, using the default volume and sound.
-    /// 
-    /// **See also:** QApplication::beep()
-    [event] beep(),
-    /// 
-    /// Should be called by the implementation whenever a new screen is added.
-    /// 
-    /// The first screen added will be the primary screen, used for default-created
-    /// windows, GL contexts, and other resources unless otherwise specified.
-    /// 
-    /// This adds the screen to QGuiApplication::screens(), and emits the
-    /// QGuiApplication::screenAdded() signal.
-    /// 
-    /// The screen should be deleted by calling QPlatformIntegration::destroyScreen().
-    screen_added(screen: *i32, is_primary: bool),
-    /// 
-    /// Should be called whenever the primary screen changes.
-    /// 
-    /// When the screen specified as primary changes, this method will notify
-    /// QGuiApplication and emit the QGuiApplication::primaryScreenChanged signal.
-    set_primary_screen(new_primary: *i32),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

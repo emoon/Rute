@@ -8,10 +8,280 @@
 /// the preprocessor symbols Q_OS_WIN and Q_OS_MACOS to test that
 /// the application is compiled under Windows or MacOS .
 /// 
-/// **See also:** QLibraryInfo
+/// **See also:** [`LibraryInfo`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct SysInfo {
+    /// 
+    /// Returns the version of the Windows operating system on which the
+    /// application is run, or WV_None if the operating system is not
+    /// Windows.
+    [static] windows_version() -> SysInfo::WinVersion,
+    /// 
+    /// Returns the version of Darwin ( MacOS or iOS) on which the
+    /// application is run, or MV_None if the operating system
+    /// is not a version of Darwin.
+    [static] mac_version() -> SysInfo::MacVersion,
+    /// 
+    /// Returns the architecture of the CPU that Qt was compiled for, in text
+    /// format. Note that this may not match the actual CPU that the application is
+    /// running on if there's an emulation layer or if the CPU supports multiple
+    /// architectures (like x86-64 processors supporting i386 applications). To
+    /// detect that, use currentCpuArchitecture().
+    /// 
+    /// Values returned by this function are stable and will not change over time,
+    /// so applications can rely on the returned value as an identifier, except
+    /// that new CPU types may be added over time.
+    /// 
+    /// Typical returned values are (note: list not exhaustive):
+    /// * "arm"
+    /// * "arm64"
+    /// * "i386"
+    /// * "ia64"
+    /// * "mips"
+    /// * "mips64"
+    /// * "power"
+    /// * "power64"
+    /// * "sparc"
+    /// * "sparcv9"
+    /// * "x86_64"
+    /// 
+    /// **See also:** [`SysInfo::build_abi`]
+    /// [`SysInfo::current_cpu_architecture`]
+    [static] build_cpu_architecture() -> String,
+    /// 
+    /// Returns the architecture of the CPU that the application is running on, in
+    /// text format. Note that this function depends on what the OS will report and
+    /// may not detect the actual CPU architecture if the OS hides that information
+    /// or is unable to provide it. For example, a 32-bit OS running on a 64-bit
+    /// CPU is usually unable to determine the CPU is actually capable of running
+    /// 64-bit programs.
+    /// 
+    /// Values returned by this function are mostly stable: an attempt will be made
+    /// to ensure that they stay constant over time and match the values returned
+    /// by QSysInfo::builldCpuArchitecture(). However, due to the nature of the
+    /// operating system functions being used, there may be discrepancies.
+    /// 
+    /// Typical returned values are (note: list not exhaustive):
+    /// * "arm"
+    /// * "arm64"
+    /// * "i386"
+    /// * "ia64"
+    /// * "mips"
+    /// * "mips64"
+    /// * "power"
+    /// * "power64"
+    /// * "sparc"
+    /// * "sparcv9"
+    /// * "x86_64"
+    /// 
+    /// **See also:** [`SysInfo::build_abi`]
+    /// [`SysInfo::build_cpu_architecture`]
+    [static] current_cpu_architecture() -> String,
+    /// 
+    /// Returns the full architecture string that Qt was compiled for. This string
+    /// is useful for identifying different, incompatible builds. For example, it
+    /// can be used as an identifier to request an upgrade package from a server.
+    /// 
+    /// The values returned from this function are kept stable as follows: the
+    /// mandatory components of the result will not change in future versions of
+    /// Qt, but optional suffixes may be added.
+    /// 
+    /// The returned value is composed of three or more parts, separated by dashes
+    /// ("-"). They are:
+    /// 
+    /// * Component
+    /// * Value
+    /// * CPU Architecture
+    /// * The same as QSysInfo::buildCpuArchitecture(), such as "arm", "i386", "mips" or "x86_64"
+    /// * Endianness
+    /// * "little_endian" or "big_endian"
+    /// * Word size
+    /// * Whether it's a 32- or 64-bit application. Possible values are: "llp64" (Windows 64-bit), "lp64" (Unix 64-bit), "ilp32" (32-bit)
+    /// * (Optional) ABI
+    /// * Zero or more components identifying different ABIs possible in this architecture. Currently, Qt has optional ABI components for ARM and MIPS processors: one component is the main ABI (such as "eabi", "o32", "n32", "o64"); another is whether the calling convention is using hardware floating point registers ("hardfloat" is present). Additionally, if Qt was configured with `-qreal float` , the ABI option tag "qreal_float" will be present. If Qt was configured with another type as qreal, that type is present after "qreal_", with all characters other than letters and digits escaped by an underscore, followed by two hex digits. For example, `-qreal long double` becomes "qreal_long_20double".
+    /// 
+    /// **See also:** [`SysInfo::build_cpu_architecture`]
+    [static] build_abi() -> String,
+    /// 
+    /// Returns the type of the operating system kernel Qt was compiled for. It's
+    /// also the kernel the application is running on, unless the host operating
+    /// system is running a form of compatibility or virtualization layer.
+    /// 
+    /// Values returned by this function are stable and will not change over time,
+    /// so applications can rely on the returned value as an identifier, except
+    /// that new OS kernel types may be added over time.
+    /// 
+    /// On Windows, this function returns the type of Windows kernel, like .
+    /// On Unix systems, it returns the same as the output of `uname
+    /// -s` (lowercased).
+    /// 
+    /// **Note**: This function may return surprising values: it returns
+    /// for all operating systems running Linux (including Android), for all
+    /// operating systems running QNX, for
+    /// Debian/kFreeBSD, and for MacOS and iOS. For information on the type
+    /// of product the application is running on, see productType().
+    /// 
+    /// **See also:** [`FileSelector`]
+    /// [`kernel_version()`]
+    /// [`product_type()`]
+    /// [`product_version()`]
+    /// [`pretty_product_name()`]
+    [static] kernel_type() -> String,
+    /// 
+    /// Returns the release version of the operating system kernel. On Windows, it
+    /// returns the version of the NT kernel. On Unix systems, including
+    /// Android and MacOS , it returns the same as the `uname -r`
+    /// command would return.
+    /// 
+    /// If the version could not be determined, this function may return an empty
+    /// string.
+    /// 
+    /// **See also:** [`kernel_type()`]
+    /// [`product_type()`]
+    /// [`product_version()`]
+    /// [`pretty_product_name()`]
+    [static] kernel_version() -> String,
+    /// 
+    /// Returns the product name of the operating system this application is
+    /// running in. If the application is running on some sort of emulation or
+    /// virtualization layer (such as WINE on a Unix system), this function will
+    /// inspect the emulation / virtualization layer.
+    /// 
+    /// Values returned by this function are stable and will not change over time,
+    /// so applications can rely on the returned value as an identifier, except
+    /// that new OS types may be added over time.
+    /// 
+    /// **Linux and Android note** : this function returns for Linux
+    /// systems running Android userspace, notably when using the Bionic library.
+    /// For all other Linux systems, regardless of C library being used, it tries
+    /// to determine the distribution name and returns that. If determining the
+    /// distribution name failed, it returns .
+    /// 
+    /// **\macos note** : this function returns for all MacOS systems,
+    /// regardless of Apple naming convention. The returned string will be updated
+    /// for Qt 6. Note that this function erroneously returned for MacOS
+    /// 10.12 in Qt versions 5.6.2, 5.7.1, and 5.8.0.
+    /// 
+    /// **Darwin, iOS, tvOS, and watchOS note** : this function returns for
+    /// iOS systems, for tvOS systems, for watchOS systems, and
+    /// in case the system could not be determined.
+    /// 
+    /// **FreeBSD note** : this function returns for Debian/kFreeBSD and
+    /// otherwise.
+    /// 
+    /// **Windows note** : this function for WinRT builds, and
+    /// for normal desktop builds.
+    /// 
+    /// For other Unix-type systems, this function usually returns .
+    /// 
+    /// **See also:** [`FileSelector`]
+    /// [`kernel_type()`]
+    /// [`kernel_version()`]
+    /// [`product_version()`]
+    /// [`pretty_product_name()`]
+    [static] product_type() -> String,
+    /// 
+    /// Returns the product version of the operating system in string form. If the
+    /// version could not be determined, this function returns .
+    /// 
+    /// It will return the Android, iOS, MacOS , Windows full-product
+    /// versions on those systems.
+    /// 
+    /// Typical returned values are (note: list not exhaustive):
+    /// * "2016.09" (Amazon Linux AMI 2016.09)
+    /// * "7.1" (Android Nougat)
+    /// * "25" (Fedora 25)
+    /// * "10.1" (iOS 10.1)
+    /// * "10.12" (macOS Sierra)
+    /// * "10.0" (tvOS 10)
+    /// * "16.10" (Ubuntu 16.10)
+    /// * "3.1" (watchOS 3.1)
+    /// * "7 SP 1" (Windows 7 Service Pack 1)
+    /// * "8.1" (Windows 8.1)
+    /// * "10" (Windows 10)
+    /// * "Server 2016" (Windows Server 2016)
+    /// 
+    /// On Linux systems, it will try to determine the distribution version and will
+    /// return that. This is also done on Debian/kFreeBSD, so this function will
+    /// return Debian version in that case.
+    /// 
+    /// In all other Unix-type systems, this function always returns .
+    /// 
+    /// **Note**: The version string returned from this function is not guaranteed to
+    /// be orderable. On Linux, the version of
+    /// the distribution may jump unexpectedly, please refer to the distribution's
+    /// documentation for versioning practices.
+    /// 
+    /// **See also:** [`kernel_type()`]
+    /// [`kernel_version()`]
+    /// [`product_type()`]
+    /// [`pretty_product_name()`]
+    [static] product_version() -> String,
+    /// 
+    /// Returns a prettier form of productType() and productVersion(), containing
+    /// other tokens like the operating system type, codenames and other
+    /// information. The result of this function is suitable for displaying to the
+    /// user, but not for long-term storage, as the string may change with updates
+    /// to Qt.
+    /// 
+    /// If productType() is , this function will instead use the
+    /// kernelType() and kernelVersion() functions.
+    /// 
+    /// **See also:** [`kernel_type()`]
+    /// [`kernel_version()`]
+    /// [`product_type()`]
+    /// [`product_version()`]
+    [static] pretty_product_name() -> String,
+    /// 
+    /// Returns this machine's host name, if one is configured. Note that hostnames
+    /// are not guaranteed to be globally unique, especially if they were
+    /// configured automatically.
+    /// 
+    /// This function does not guarantee the returned host name is a Fully
+    /// Qualified Domain Name (FQDN). For that, use QHostInfo to resolve the
+    /// returned name to an FQDN.
+    /// 
+    /// This function returns the same as QHostInfo::localHostName().
+    /// 
+    /// **See also:** [`HostInfo::local_domain_name()`]
+    /// [`machine_unique_id()`]
+    [static] machine_host_name() -> String,
+    /// 
+    /// Returns a unique ID for this machine, if one can be determined. If no
+    /// unique ID could be determined, this function returns an empty byte array.
+    /// Unlike machineHostName(), the value returned by this function is likely
+    /// globally unique.
+    /// 
+    /// A unique ID is useful in network operations to identify this machine for an
+    /// extended period of time, when the IP address could change or if this
+    /// machine could have more than one IP address. For example, the ID could be
+    /// used when communicating with a server or when storing device-specific data
+    /// in shared network storage.
+    /// 
+    /// Note that on some systems, this value will persist across reboots and on
+    /// some it will not. Applications should not blindly depend on this fact
+    /// without verifying the OS capabilities. In particular, on Linux systems,
+    /// this ID is usually permanent and it matches the D-Bus machine ID, except
+    /// for nodes without their own storage (replicated nodes).
+    /// 
+    /// **See also:** [`machine_host_name()`]
+    /// [`boot_unique_id()`]
+    [static] machine_unique_id() -> ByteArray,
+    /// 
+    /// Returns a unique ID for this machine's boot, if one can be determined. If
+    /// no unique ID could be determined, this function returns an empty byte
+    /// array. This value is expected to change after every boot and can be
+    /// considered globally unique.
+    /// 
+    /// This function is currently only implemented for Linux and Apple operating
+    /// systems.
+    /// 
+    /// **See also:** [`machine_unique_id()`]
+    [static] boot_unique_id() -> ByteArray,
+}
+
 [org_name(QSysInfo)]
 enum Sizes {
     WordSize,
@@ -117,277 +387,6 @@ enum MacVersion {
     MV_WATCHOS_2_1,
     MV_WATCHOS_2_2,
     MV_WATCHOS_3_0,
-}
-
-
-struct SysInfo {
-    /// 
-    /// Returns the version of the Windows operating system on which the
-    /// application is run, or WV_None if the operating system is not
-    /// Windows.
-    [static] windows_version() -> SysInfo::WinVersion,
-    /// 
-    /// Returns the version of Darwin ( MacOS or iOS) on which the
-    /// application is run, or MV_None if the operating system
-    /// is not a version of Darwin.
-    [static] mac_version() -> SysInfo::MacVersion,
-    /// 
-    /// Returns the architecture of the CPU that Qt was compiled for, in text
-    /// format. Note that this may not match the actual CPU that the application is
-    /// running on if there's an emulation layer or if the CPU supports multiple
-    /// architectures (like x86-64 processors supporting i386 applications). To
-    /// detect that, use currentCpuArchitecture().
-    /// 
-    /// Values returned by this function are stable and will not change over time,
-    /// so applications can rely on the returned value as an identifier, except
-    /// that new CPU types may be added over time.
-    /// 
-    /// Typical returned values are (note: list not exhaustive):
-    /// * "arm"
-    /// * "arm64"
-    /// * "i386"
-    /// * "ia64"
-    /// * "mips"
-    /// * "mips64"
-    /// * "power"
-    /// * "power64"
-    /// * "sparc"
-    /// * "sparcv9"
-    /// * "x86_64"
-    /// 
-    /// **See also:** QSysInfo::buildAbi()
-    /// QSysInfo::currentCpuArchitecture()
-    [static] build_cpu_architecture() -> String,
-    /// 
-    /// Returns the architecture of the CPU that the application is running on, in
-    /// text format. Note that this function depends on what the OS will report and
-    /// may not detect the actual CPU architecture if the OS hides that information
-    /// or is unable to provide it. For example, a 32-bit OS running on a 64-bit
-    /// CPU is usually unable to determine the CPU is actually capable of running
-    /// 64-bit programs.
-    /// 
-    /// Values returned by this function are mostly stable: an attempt will be made
-    /// to ensure that they stay constant over time and match the values returned
-    /// by QSysInfo::builldCpuArchitecture(). However, due to the nature of the
-    /// operating system functions being used, there may be discrepancies.
-    /// 
-    /// Typical returned values are (note: list not exhaustive):
-    /// * "arm"
-    /// * "arm64"
-    /// * "i386"
-    /// * "ia64"
-    /// * "mips"
-    /// * "mips64"
-    /// * "power"
-    /// * "power64"
-    /// * "sparc"
-    /// * "sparcv9"
-    /// * "x86_64"
-    /// 
-    /// **See also:** QSysInfo::buildAbi()
-    /// QSysInfo::buildCpuArchitecture()
-    [static] current_cpu_architecture() -> String,
-    /// 
-    /// Returns the full architecture string that Qt was compiled for. This string
-    /// is useful for identifying different, incompatible builds. For example, it
-    /// can be used as an identifier to request an upgrade package from a server.
-    /// 
-    /// The values returned from this function are kept stable as follows: the
-    /// mandatory components of the result will not change in future versions of
-    /// Qt, but optional suffixes may be added.
-    /// 
-    /// The returned value is composed of three or more parts, separated by dashes
-    /// ("-"). They are:
-    /// 
-    /// * Component
-    /// * Value
-    /// * CPU Architecture
-    /// * The same as QSysInfo::buildCpuArchitecture(), such as "arm", "i386", "mips" or "x86_64"
-    /// * Endianness
-    /// * "little_endian" or "big_endian"
-    /// * Word size
-    /// * Whether it's a 32- or 64-bit application. Possible values are: "llp64" (Windows 64-bit), "lp64" (Unix 64-bit), "ilp32" (32-bit)
-    /// * (Optional) ABI
-    /// * Zero or more components identifying different ABIs possible in this architecture. Currently, Qt has optional ABI components for ARM and MIPS processors: one component is the main ABI (such as "eabi", "o32", "n32", "o64"); another is whether the calling convention is using hardware floating point registers ("hardfloat" is present). Additionally, if Qt was configured with `-qreal float` , the ABI option tag "qreal_float" will be present. If Qt was configured with another type as qreal, that type is present after "qreal_", with all characters other than letters and digits escaped by an underscore, followed by two hex digits. For example, `-qreal long double` becomes "qreal_long_20double".
-    /// 
-    /// **See also:** QSysInfo::buildCpuArchitecture()
-    [static] build_abi() -> String,
-    /// 
-    /// Returns the type of the operating system kernel Qt was compiled for. It's
-    /// also the kernel the application is running on, unless the host operating
-    /// system is running a form of compatibility or virtualization layer.
-    /// 
-    /// Values returned by this function are stable and will not change over time,
-    /// so applications can rely on the returned value as an identifier, except
-    /// that new OS kernel types may be added over time.
-    /// 
-    /// On Windows, this function returns the type of Windows kernel, like .
-    /// On Unix systems, it returns the same as the output of `uname
-    /// -s` (lowercased).
-    /// 
-    /// **Note**: This function may return surprising values: it returns
-    /// for all operating systems running Linux (including Android), for all
-    /// operating systems running QNX, for
-    /// Debian/kFreeBSD, and for MacOS and iOS. For information on the type
-    /// of product the application is running on, see productType().
-    /// 
-    /// **See also:** QFileSelector
-    /// kernelVersion()
-    /// productType()
-    /// productVersion()
-    /// prettyProductName()
-    [static] kernel_type() -> String,
-    /// 
-    /// Returns the release version of the operating system kernel. On Windows, it
-    /// returns the version of the NT kernel. On Unix systems, including
-    /// Android and MacOS , it returns the same as the `uname -r`
-    /// command would return.
-    /// 
-    /// If the version could not be determined, this function may return an empty
-    /// string.
-    /// 
-    /// **See also:** kernelType()
-    /// productType()
-    /// productVersion()
-    /// prettyProductName()
-    [static] kernel_version() -> String,
-    /// 
-    /// Returns the product name of the operating system this application is
-    /// running in. If the application is running on some sort of emulation or
-    /// virtualization layer (such as WINE on a Unix system), this function will
-    /// inspect the emulation / virtualization layer.
-    /// 
-    /// Values returned by this function are stable and will not change over time,
-    /// so applications can rely on the returned value as an identifier, except
-    /// that new OS types may be added over time.
-    /// 
-    /// **Linux and Android note** : this function returns for Linux
-    /// systems running Android userspace, notably when using the Bionic library.
-    /// For all other Linux systems, regardless of C library being used, it tries
-    /// to determine the distribution name and returns that. If determining the
-    /// distribution name failed, it returns .
-    /// 
-    /// **\macos note** : this function returns for all MacOS systems,
-    /// regardless of Apple naming convention. The returned string will be updated
-    /// for Qt 6. Note that this function erroneously returned for MacOS
-    /// 10.12 in Qt versions 5.6.2, 5.7.1, and 5.8.0.
-    /// 
-    /// **Darwin, iOS, tvOS, and watchOS note** : this function returns for
-    /// iOS systems, for tvOS systems, for watchOS systems, and
-    /// in case the system could not be determined.
-    /// 
-    /// **FreeBSD note** : this function returns for Debian/kFreeBSD and
-    /// otherwise.
-    /// 
-    /// **Windows note** : this function for WinRT builds, and
-    /// for normal desktop builds.
-    /// 
-    /// For other Unix-type systems, this function usually returns .
-    /// 
-    /// **See also:** QFileSelector
-    /// kernelType()
-    /// kernelVersion()
-    /// productVersion()
-    /// prettyProductName()
-    [static] product_type() -> String,
-    /// 
-    /// Returns the product version of the operating system in string form. If the
-    /// version could not be determined, this function returns .
-    /// 
-    /// It will return the Android, iOS, MacOS , Windows full-product
-    /// versions on those systems.
-    /// 
-    /// Typical returned values are (note: list not exhaustive):
-    /// * "2016.09" (Amazon Linux AMI 2016.09)
-    /// * "7.1" (Android Nougat)
-    /// * "25" (Fedora 25)
-    /// * "10.1" (iOS 10.1)
-    /// * "10.12" (macOS Sierra)
-    /// * "10.0" (tvOS 10)
-    /// * "16.10" (Ubuntu 16.10)
-    /// * "3.1" (watchOS 3.1)
-    /// * "7 SP 1" (Windows 7 Service Pack 1)
-    /// * "8.1" (Windows 8.1)
-    /// * "10" (Windows 10)
-    /// * "Server 2016" (Windows Server 2016)
-    /// 
-    /// On Linux systems, it will try to determine the distribution version and will
-    /// return that. This is also done on Debian/kFreeBSD, so this function will
-    /// return Debian version in that case.
-    /// 
-    /// In all other Unix-type systems, this function always returns .
-    /// 
-    /// **Note**: The version string returned from this function is not guaranteed to
-    /// be orderable. On Linux, the version of
-    /// the distribution may jump unexpectedly, please refer to the distribution's
-    /// documentation for versioning practices.
-    /// 
-    /// **See also:** kernelType()
-    /// kernelVersion()
-    /// productType()
-    /// prettyProductName()
-    [static] product_version() -> String,
-    /// 
-    /// Returns a prettier form of productType() and productVersion(), containing
-    /// other tokens like the operating system type, codenames and other
-    /// information. The result of this function is suitable for displaying to the
-    /// user, but not for long-term storage, as the string may change with updates
-    /// to Qt.
-    /// 
-    /// If productType() is , this function will instead use the
-    /// kernelType() and kernelVersion() functions.
-    /// 
-    /// **See also:** kernelType()
-    /// kernelVersion()
-    /// productType()
-    /// productVersion()
-    [static] pretty_product_name() -> String,
-    /// 
-    /// Returns this machine's host name, if one is configured. Note that hostnames
-    /// are not guaranteed to be globally unique, especially if they were
-    /// configured automatically.
-    /// 
-    /// This function does not guarantee the returned host name is a Fully
-    /// Qualified Domain Name (FQDN). For that, use QHostInfo to resolve the
-    /// returned name to an FQDN.
-    /// 
-    /// This function returns the same as QHostInfo::localHostName().
-    /// 
-    /// **See also:** QHostInfo::localDomainName
-    /// machineUniqueId()
-    [static] machine_host_name() -> String,
-    /// 
-    /// Returns a unique ID for this machine, if one can be determined. If no
-    /// unique ID could be determined, this function returns an empty byte array.
-    /// Unlike machineHostName(), the value returned by this function is likely
-    /// globally unique.
-    /// 
-    /// A unique ID is useful in network operations to identify this machine for an
-    /// extended period of time, when the IP address could change or if this
-    /// machine could have more than one IP address. For example, the ID could be
-    /// used when communicating with a server or when storing device-specific data
-    /// in shared network storage.
-    /// 
-    /// Note that on some systems, this value will persist across reboots and on
-    /// some it will not. Applications should not blindly depend on this fact
-    /// without verifying the OS capabilities. In particular, on Linux systems,
-    /// this ID is usually permanent and it matches the D-Bus machine ID, except
-    /// for nodes without their own storage (replicated nodes).
-    /// 
-    /// **See also:** machineHostName()
-    /// bootUniqueId()
-    [static] machine_unique_id() -> ByteArray,
-    /// 
-    /// Returns a unique ID for this machine's boot, if one can be determined. If
-    /// no unique ID could be determined, this function returns an empty byte
-    /// array. This value is expected to change after every boot and can be
-    /// considered globally unique.
-    /// 
-    /// This function is currently only implemented for Linux and Apple operating
-    /// systems.
-    /// 
-    /// **See also:** machineUniqueId()
-    [static] boot_unique_id() -> ByteArray,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -29,8 +29,8 @@
 /// returns the final stop point of the gradient, and the start()
 /// function returning the start point of the gradient.
 /// 
-/// **See also:** QRadialGradient
-/// QConicalGradient
+/// **See also:** [`RadialGradient`]
+/// [`ConicalGradient`]
 /// {painting/gradients}{The
 /// Gradients Example}
 /// # Licence
@@ -40,60 +40,62 @@ struct LinearGradient : Gradient {
     /// 
     /// Returns the start point of this linear gradient in logical coordinates.
     /// 
-    /// **See also:** QGradient::stops()
+    /// **See also:** [`Gradient::stops`]
     start() -> PointF,
     /// 
     /// **Overloads**
     /// Sets the start point of this linear gradient in logical
     /// coordinates to *x,* *y.*
     /// 
-    /// **See also:** start()
+    /// **See also:** [`start()`]
     /// 
     /// Sets the start point of this linear gradient in logical
     /// coordinates to *start.*
     /// 
-    /// **See also:** start()
+    /// **See also:** [`start()`]
     set_start(start: &PointFType),
     /// 
     /// **Overloads**
     /// Sets the start point of this linear gradient in logical
     /// coordinates to *x,* *y.*
     /// 
-    /// **See also:** start()
+    /// **See also:** [`start()`]
     /// 
     /// Sets the start point of this linear gradient in logical
     /// coordinates to *start.*
     /// 
-    /// **See also:** start()
+    /// **See also:** [`start()`]
+    [org_name(setStart)]
     set_start_2(x: f32, y: f32),
     /// 
     /// Returns the final stop point of this linear gradient in logical coordinates.
     /// 
-    /// **See also:** QGradient::stops()
+    /// **See also:** [`Gradient::stops`]
     final_stop() -> PointF,
     /// 
     /// **Overloads**
     /// Sets the final stop point of this linear gradient in logical
     /// coordinates to *x,* *y.*
     /// 
-    /// **See also:** start()
+    /// **See also:** [`start()`]
     /// 
     /// Sets the final stop point of this linear gradient in logical
     /// coordinates to *stop.*
     /// 
-    /// **See also:** finalStop()
+    /// **See also:** [`final_stop()`]
     set_final_stop(stop: &PointFType),
     /// 
     /// **Overloads**
     /// Sets the final stop point of this linear gradient in logical
     /// coordinates to *x,* *y.*
     /// 
-    /// **See also:** start()
+    /// **See also:** [`start()`]
     /// 
     /// Sets the final stop point of this linear gradient in logical
     /// coordinates to *stop.*
     /// 
-    /// **See also:** finalStop()
+    /// **See also:** [`final_stop()`]
+    [org_name(setFinalStop)]
     set_final_stop_2(x: f32, y: f32),
 }
 

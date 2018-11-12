@@ -69,7 +69,7 @@
 /// **Important inherited functions:** addAction(), removeAction(), clear(),
 /// addSeparator(), and addMenu().
 /// 
-/// **See also:** QMenuBar
+/// **See also:** [`MenuBar`]
 /// {fowler}{GUI Design Handbook: Menu
 /// Drop-Down and Pop-Up}
 /// {Application Example}
@@ -86,7 +86,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with an *icon*
@@ -95,7 +95,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
@@ -106,7 +106,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
@@ -179,7 +179,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     add_action(text: String) -> Action?,
     /// 
     /// **Overloads**
@@ -189,7 +189,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with an *icon*
@@ -198,7 +198,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
@@ -209,7 +209,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
@@ -282,7 +282,8 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
+    [org_name(addAction)]
     add_action_2(icon: &IconType, text: String) -> Action?,
     /// 
     /// **Overloads**
@@ -292,7 +293,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with an *icon*
@@ -301,7 +302,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
@@ -312,7 +313,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
@@ -385,7 +386,8 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
+    [org_name(addAction)]
     add_action_3(text: String, receiver: *ObjectType, member: *char, shortcut: &KeySequenceType) -> Action?,
     /// 
     /// **Overloads**
@@ -395,7 +397,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with an *icon*
@@ -404,7 +406,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
@@ -415,7 +417,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// **Overloads**
     /// This convenience function creates a new action with the text *text* and an optional shortcut *shortcut.* The action's
@@ -488,48 +490,71 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
+    [org_name(addAction)]
     add_action_4(icon: &IconType, text: String, receiver: *ObjectType, member: *char, shortcut: &KeySequenceType) -> Action?,
     /// 
     /// This convenience function adds *menu* as a submenu to this menu.
     /// It returns *menu's* menuAction(). This menu does not take
     /// ownership of *menu.*
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QMenu::menuAction()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
     /// 
     /// Appends a new QMenu with *title* to the menu. The menu
     /// takes ownership of the menu. Returns the new menu.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QMenu::menuAction()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
     /// 
     /// Appends a new QMenu with *icon* and *title* to the menu. The menu
     /// takes ownership of the menu. Returns the new menu.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QMenu::menuAction()
-    add_menu(title: String) -> Menu?,
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
+    add_menu(menu: *MenuType) -> Action?,
     /// 
     /// This convenience function adds *menu* as a submenu to this menu.
     /// It returns *menu's* menuAction(). This menu does not take
     /// ownership of *menu.*
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QMenu::menuAction()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
     /// 
     /// Appends a new QMenu with *title* to the menu. The menu
     /// takes ownership of the menu. Returns the new menu.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QMenu::menuAction()
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
     /// 
     /// Appends a new QMenu with *icon* and *title* to the menu. The menu
     /// takes ownership of the menu. Returns the new menu.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// QMenu::menuAction()
-    add_menu_2(icon: &IconType, title: String) -> Menu?,
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
+    [org_name(addMenu)]
+    add_menu_2(title: String) -> Menu?,
+    /// 
+    /// This convenience function adds *menu* as a submenu to this menu.
+    /// It returns *menu's* menuAction(). This menu does not take
+    /// ownership of *menu.*
+    /// 
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
+    /// 
+    /// Appends a new QMenu with *title* to the menu. The menu
+    /// takes ownership of the menu. Returns the new menu.
+    /// 
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
+    /// 
+    /// Appends a new QMenu with *icon* and *title* to the menu. The menu
+    /// takes ownership of the menu. Returns the new menu.
+    /// 
+    /// **See also:** [`Widget::add_action`]
+    /// [`Menu::menu_action`]
+    [org_name(addMenu)]
+    add_menu_3(icon: &IconType, title: String) -> Menu?,
     /// 
     /// This convenience function creates a new separator action, i.e. an
     /// action with QAction::isSeparator() returning true, and adds the new
@@ -538,7 +563,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     add_separator() -> Action?,
     /// 
     /// This convenience function creates a new section action, i.e. an
@@ -552,7 +577,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// This convenience function creates a new section action, i.e. an
     /// action with QAction::isSeparator() returning true but also
@@ -565,7 +590,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     add_section(text: String) -> Action?,
     /// 
     /// This convenience function creates a new section action, i.e. an
@@ -579,7 +604,7 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
     /// 
     /// This convenience function creates a new section action, i.e. an
     /// action with QAction::isSeparator() returning true but also
@@ -592,14 +617,15 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::addAction()
+    /// **See also:** [`Widget::add_action`]
+    [org_name(addSection)]
     add_section_2(icon: &IconType, text: String) -> Action?,
     /// 
     /// This convenience function inserts *menu* before action *before*
     /// and returns the menus menuAction().
     /// 
-    /// **See also:** QWidget::insertAction()
-    /// addMenu()
+    /// **See also:** [`Widget::insert_action`]
+    /// [`add_menu()`]
     insert_menu(before: *ActionType, menu: *MenuType) -> Action?,
     /// 
     /// This convenience function creates a new separator action, i.e. an
@@ -609,8 +635,8 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::insertAction()
-    /// addSeparator()
+    /// **See also:** [`Widget::insert_action`]
+    /// [`add_separator()`]
     insert_separator(before: *ActionType) -> Action?,
     /// 
     /// This convenience function creates a new title action, i.e. an
@@ -625,8 +651,8 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::insertAction()
-    /// addSection()
+    /// **See also:** [`Widget::insert_action`]
+    /// [`add_section()`]
     /// 
     /// This convenience function creates a new title action, i.e. an
     /// action with QAction::isSeparator() returning true but also having
@@ -639,8 +665,8 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::insertAction()
-    /// addSection()
+    /// **See also:** [`Widget::insert_action`]
+    /// [`add_section()`]
     insert_section(before: *ActionType, text: String) -> Action?,
     /// 
     /// This convenience function creates a new title action, i.e. an
@@ -655,8 +681,8 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::insertAction()
-    /// addSection()
+    /// **See also:** [`Widget::insert_action`]
+    /// [`add_section()`]
     /// 
     /// This convenience function creates a new title action, i.e. an
     /// action with QAction::isSeparator() returning true but also having
@@ -669,20 +695,21 @@ struct Menu : Widget {
     /// 
     /// QMenu takes ownership of the returned QAction.
     /// 
-    /// **See also:** QWidget::insertAction()
-    /// addSection()
+    /// **See also:** [`Widget::insert_action`]
+    /// [`add_section()`]
+    [org_name(insertSection)]
     insert_section_2(before: *ActionType, icon: &IconType, text: String) -> Action?,
     /// 
     /// Returns `true` if there are no visible actions inserted into the menu, false
     /// otherwise.
     /// 
-    /// **See also:** QWidget::actions()
+    /// **See also:** [`Widget::actions`]
     is_empty() -> bool,
     /// 
     /// Removes all the menu's actions. Actions owned by the menu and not
     /// shown in any other widget are deleted.
     /// 
-    /// **See also:** removeAction()
+    /// **See also:** [`remove_action()`]
     clear(),
     set_tear_off_enabled(arg0: bool),
     is_tear_off_enabled() -> bool,
@@ -691,61 +718,62 @@ struct Menu : Widget {
     /// contents in a new window. When the menu is in this mode and the menu
     /// is visible returns `true;` otherwise false.
     /// 
-    /// **See also:** showTearOffMenu()
-    /// hideTearOffMenu()
-    /// isTearOffEnabled()
+    /// **See also:** [`show_tear_off_menu()`]
+    /// [`hide_tear_off_menu()`]
+    /// [`is_tear_off_enabled()`]
     is_tear_off_menu_visible() -> bool,
     /// 
     /// This function will forcibly show the torn off menu making it
     /// appear on the user's desktop at the specified *global* position *pos.*
     /// 
-    /// **See also:** hideTearOffMenu()
-    /// isTearOffMenuVisible()
-    /// isTearOffEnabled()
+    /// **See also:** [`hide_tear_off_menu()`]
+    /// [`is_tear_off_menu_visible()`]
+    /// [`is_tear_off_enabled()`]
     /// 
     /// **Overloads**
     /// This function will forcibly show the torn off menu making it
     /// appear on the user's desktop under the mouse currsor.
     /// 
-    /// **See also:** hideTearOffMenu()
-    /// isTearOffMenuVisible()
-    /// isTearOffEnabled()
+    /// **See also:** [`hide_tear_off_menu()`]
+    /// [`is_tear_off_menu_visible()`]
+    /// [`is_tear_off_enabled()`]
     show_tear_off_menu(),
     /// 
     /// This function will forcibly show the torn off menu making it
     /// appear on the user's desktop at the specified *global* position *pos.*
     /// 
-    /// **See also:** hideTearOffMenu()
-    /// isTearOffMenuVisible()
-    /// isTearOffEnabled()
+    /// **See also:** [`hide_tear_off_menu()`]
+    /// [`is_tear_off_menu_visible()`]
+    /// [`is_tear_off_enabled()`]
     /// 
     /// **Overloads**
     /// This function will forcibly show the torn off menu making it
     /// appear on the user's desktop under the mouse currsor.
     /// 
-    /// **See also:** hideTearOffMenu()
-    /// isTearOffMenuVisible()
-    /// isTearOffEnabled()
+    /// **See also:** [`hide_tear_off_menu()`]
+    /// [`is_tear_off_menu_visible()`]
+    /// [`is_tear_off_enabled()`]
+    [org_name(showTearOffMenu)]
     show_tear_off_menu_2(pos: &PointType),
     /// 
     /// This function will forcibly hide the torn off menu making it
     /// disappear from the user's desktop.
     /// 
-    /// **See also:** showTearOffMenu()
-    /// isTearOffMenuVisible()
-    /// isTearOffEnabled()
+    /// **See also:** [`show_tear_off_menu()`]
+    /// [`is_tear_off_menu_visible()`]
+    /// [`is_tear_off_enabled()`]
     hide_tear_off_menu(),
     /// 
     /// This sets the default action to *act.* The default action may have
     /// a visual cue, depending on the current QStyle. A default action
     /// usually indicates what will happen by default when a drop occurs.
     /// 
-    /// **See also:** defaultAction()
+    /// **See also:** [`default_action()`]
     set_default_action(arg0: *ActionType),
     /// 
     /// Returns the current default action.
     /// 
-    /// **See also:** setDefaultAction()
+    /// **See also:** [`set_default_action()`]
     default_action() -> Action?,
     /// 
     /// Sets the currently highlighted action to *act.*
@@ -766,8 +794,8 @@ struct Menu : Widget {
     /// use sizeHint() which calculates the proper size depending on the
     /// menu's current contents.
     /// 
-    /// **See also:** QWidget::mapToGlobal()
-    /// exec()
+    /// **See also:** [`Widget::map_to_global`]
+    /// [`exec()`]
     popup(pos: &PointType, at: *ActionType),
     /// 
     /// Executes this menu synchronously.
@@ -811,8 +839,8 @@ struct Menu : Widget {
     /// use sizeHint() which calculates the proper size depending on the
     /// menu's current contents.
     /// 
-    /// **See also:** popup()
-    /// QWidget::mapToGlobal()
+    /// **See also:** [`popup()`]
+    /// [`Widget::map_to_global`]
     exec() -> Action?,
     /// 
     /// Executes this menu synchronously.
@@ -856,8 +884,9 @@ struct Menu : Widget {
     /// use sizeHint() which calculates the proper size depending on the
     /// menu's current contents.
     /// 
-    /// **See also:** popup()
-    /// QWidget::mapToGlobal()
+    /// **See also:** [`popup()`]
+    /// [`Widget::map_to_global`]
+    [org_name(exec)]
     exec_2(pos: &PointType, at: *ActionType) -> Action?,
     /// 
     /// Executes this menu synchronously.
@@ -901,8 +930,9 @@ struct Menu : Widget {
     /// use sizeHint() which calculates the proper size depending on the
     /// menu's current contents.
     /// 
-    /// **See also:** popup()
-    /// QWidget::mapToGlobal()
+    /// **See also:** [`popup()`]
+    /// [`Widget::map_to_global`]
+    [org_name(exec)]
     [static] exec_3(actions: [*ActionType], pos: &PointType, at: *ActionType, parent: *WidgetType) -> Action?,
     /// 
     [event] size_hint() -> Size,
@@ -945,14 +975,14 @@ struct Menu : Widget {
     /// 
     /// This signal is emitted just before the menu is shown to the user.
     /// 
-    /// **See also:** aboutToHide()
-    /// show()
+    /// **See also:** [`about_to_hide()`]
+    /// [`show()`]
     [signal] about_to_show(),
     /// 
     /// This signal is emitted just before the menu is hidden from the user.
     /// 
-    /// **See also:** aboutToShow()
-    /// hide()
+    /// **See also:** [`about_to_show()`]
+    /// [`hide()`]
     [signal] about_to_hide(),
     /// 
     /// This signal is emitted when a menu action is highlighted; *action*
@@ -960,8 +990,8 @@ struct Menu : Widget {
     /// 
     /// Often this is used to update status information.
     /// 
-    /// **See also:** triggered()
-    /// QAction::hovered()
+    /// **See also:** [`triggered()`]
+    /// [`Action::hovered`]
     [signal] hovered(action: *ActionType),
     /// 
     /// If a menu does not fit on the screen it lays itself out so that it
@@ -1003,8 +1033,8 @@ struct Menu : Widget {
     /// is useful for subclasses when they need a QStyleOptionMenuItem, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
-    /// QMenuBar::initStyleOption()
+    /// **See also:** [`StyleOption::init_from`]
+    /// [`MenuBar::init_style_option`]
     init_style_option(option: *StyleOptionMenuItemType, action: *ActionType),
 }
 

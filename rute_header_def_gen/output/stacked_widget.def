@@ -31,8 +31,8 @@
 /// widget is removed from the stacked widget, the currentChanged()
 /// and widgetRemoved() signals are emitted respectively.
 /// 
-/// **See also:** QStackedLayout
-/// QTabWidget
+/// **See also:** [`StackedLayout`]
+/// [`TabWidget`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -45,9 +45,9 @@ struct StackedWidget : Frame {
     /// If the QStackedWidget is empty before this function is called,
     /// *widget* becomes the current widget.
     /// 
-    /// **See also:** insertWidget()
-    /// removeWidget()
-    /// setCurrentWidget()
+    /// **See also:** [`insert_widget()`]
+    /// [`remove_widget()`]
+    /// [`set_current_widget()`]
     add_widget(w: *WidgetType) -> i32,
     /// 
     /// Inserts the given *widget* at the given *index* in the
@@ -62,9 +62,9 @@ struct StackedWidget : Frame {
     /// Inserting a new widget at an index less than or equal to the current index
     /// will increment the current index, but keep the current widget.
     /// 
-    /// **See also:** addWidget()
-    /// removeWidget()
-    /// setCurrentWidget()
+    /// **See also:** [`add_widget()`]
+    /// [`remove_widget()`]
+    /// [`set_current_widget()`]
     insert_widget(index: i32, w: *WidgetType) -> i32,
     /// 
     /// Removes *widget* from the QStackedWidget. i.e., *widget* is *not* deleted but simply removed from the stacked layout, causing it
@@ -74,15 +74,15 @@ struct StackedWidget : Frame {
     /// QStackedWidget. If the application wants to reuse the removed
     /// *widget,* then it is recommended to re-parent it.
     /// 
-    /// **See also:** addWidget()
-    /// insertWidget()
-    /// currentWidget()
+    /// **See also:** [`add_widget()`]
+    /// [`insert_widget()`]
+    /// [`current_widget()`]
     remove_widget(w: *WidgetType),
     /// 
     /// Returns the current widget, or 0 if there are no child widgets.
     /// 
-    /// **See also:** currentIndex()
-    /// setCurrentWidget()
+    /// **See also:** [`current_index()`]
+    /// [`set_current_widget()`]
     current_widget() -> Widget?,
     /// 
     /// The current index is -1 if there is no current widget.
@@ -90,40 +90,40 @@ struct StackedWidget : Frame {
     /// By default, this property contains a value of -1 because the stack
     /// is initially empty.
     /// 
-    /// **See also:** currentWidget()
-    /// indexOf()
+    /// **See also:** [`current_widget()`]
+    /// [`index_of()`]
     current_index() -> i32,
     /// 
     /// Returns the index of the given *widget,* or -1 if the given *widget* is not a child of the QStackedWidget.
     /// 
-    /// **See also:** currentIndex()
-    /// widget()
+    /// **See also:** [`current_index()`]
+    /// [`widget()`]
     index_of(arg0: *WidgetType) -> i32,
     /// 
     /// This signal is emitted whenever a widget is removed. The widget's
     /// *index* is passed as parameter.
     /// 
-    /// **See also:** removeWidget()
+    /// **See also:** [`remove_widget()`]
     /// 
     /// Returns the widget at the given *index,* or 0 if there is no such
     /// widget.
     /// 
-    /// **See also:** currentWidget()
-    /// indexOf()
+    /// **See also:** [`current_widget()`]
+    /// [`index_of()`]
     widget(arg0: i32) -> Widget?,
     /// 
     /// By default, this property contains a value of 0.
     /// 
-    /// **See also:** currentIndex()
-    /// widget()
+    /// **See also:** [`current_index()`]
+    /// [`widget()`]
     count() -> i32,
     set_current_index(index: i32),
     /// 
     /// Sets the current widget to be the specified *widget.* The new
     /// current widget must already be contained in this stacked widget.
     /// 
-    /// **See also:** currentWidget()
-    /// setCurrentIndex()
+    /// **See also:** [`current_widget()`]
+    /// [`set_current_index()`]
     set_current_widget(w: *WidgetType),
     /// 
     /// This signal is emitted whenever the current widget changes.
@@ -132,14 +132,14 @@ struct StackedWidget : Frame {
     /// if there isn't a new one (for example, if there are no widgets in
     /// the QStackedWidget).
     /// 
-    /// **See also:** currentWidget()
-    /// setCurrentWidget()
+    /// **See also:** [`current_widget()`]
+    /// [`set_current_widget()`]
     [signal] current_changed(arg0: i32),
     /// 
     /// This signal is emitted whenever a widget is removed. The widget's
     /// *index* is passed as parameter.
     /// 
-    /// **See also:** removeWidget()
+    /// **See also:** [`remove_widget()`]
     [signal] widget_removed(index: i32),
     /// 
     [event] event(e: *EventType) -> bool,

@@ -12,8 +12,8 @@
 /// 
 /// Example using QStylePainter:
 /// 
-/// **See also:** QStyle
-/// QStyleOption
+/// **See also:** [`Style`]
+/// [`StyleOption`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -41,11 +41,12 @@ struct StylePainter : Painter {
     /// 
     /// This is automatically called by the constructor that
     /// takes a QPaintDevice and a QWidget.
+    [org_name(begin)]
     begin_2(pd: *PaintDeviceType, w: *WidgetType) -> bool,
     /// 
     /// Use the widget's style to draw a primitive element *pe* specified by QStyleOption *option.*
     /// 
-    /// **See also:** QStyle::drawPrimitive()
+    /// **See also:** [`Style::draw_primitive`]
     draw_primitive(pe: Style::PrimitiveElement, opt: &StyleOptionType),
     /// 
     /// bool enabled, const QString &text,
@@ -58,15 +59,15 @@ struct StylePainter : Painter {
     /// indicates whether or not the item is enabled; when reimplementing
     /// this bool should influence how the item is drawn.
     /// 
-    /// **See also:** QStyle::drawItemText()
-    /// Qt::Alignment
+    /// **See also:** [`Style::draw_item_text`]
+    /// [`t::alignment()`]
     draw_item_text(r: &RectType, flags: i32, pal: &PaletteType, enabled: bool, text: String, text_role: Palette::ColorRole),
     /// 
     /// Draws the *pixmap* in rectangle *rect.*
     /// The pixmap is aligned according to *flags.*
     /// 
-    /// **See also:** QStyle::drawItemPixmap()
-    /// Qt::Alignment
+    /// **See also:** [`Style::draw_item_pixmap`]
+    /// [`t::alignment()`]
     draw_item_pixmap(r: &RectType, flags: i32, pixmap: &PixmapType),
     /// 
     /// Return the current style used by the QStylePainter.

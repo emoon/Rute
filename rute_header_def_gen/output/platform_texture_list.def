@@ -1,24 +1,24 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QPlatformTextureList)]
-enum Flag {
-    StacksOnTop,
-    TextureIsSrgb,
-}
-
 struct PlatformTextureList : Object {
     count() -> i32,
     is_empty() -> bool,
-    texture_id(index: i32) -> i32,
+    texture_id(index: i32) -> GLuint,
     clip_rect(index: i32) -> Rect,
     source(index: i32),
     flags(index: i32) -> PlatformTextureList::Flags,
     lock(on: bool),
     is_locked() -> bool,
-    append_texture(source: *void, texture_id: i32, geometry: &RectType, clip_rect: &RectType, flags: PlatformTextureList::Flags),
+    append_texture(source: *void, texture_id: GLuint, geometry: &RectType, clip_rect: &RectType, flags: PlatformTextureList::Flags),
     clear(),
     [signal] locked(arg0: bool),
+}
+
+[org_name(QPlatformTextureList)]
+enum Flag {
+    StacksOnTop,
+    TextureIsSrgb,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

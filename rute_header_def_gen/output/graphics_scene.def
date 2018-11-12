@@ -104,25 +104,11 @@
 /// pressed. You can call mouseGrabberItem() to determine what item is
 /// currently grabbing the mouse.
 /// 
-/// **See also:** QGraphicsItem
-/// QGraphicsView
+/// **See also:** [`GraphicsItem`]
+/// [`GraphicsView`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsScene)]
-enum ItemIndexMethod {
-    BspTreeIndex,
-    NoIndex,
-}
-
-[org_name(QGraphicsScene)]
-enum SceneLayer {
-    ItemLayer,
-    BackgroundLayer,
-    ForegroundLayer,
-    AllLayers,
-}
-
 struct GraphicsScene : Object {
     /// 
     /// The scene rectangle defines the extent of the scene. It is
@@ -134,26 +120,27 @@ struct GraphicsScene : Object {
     /// a rectangle that grows when items are added to or moved in the scene, but
     /// never shrinks).
     /// 
-    /// **See also:** width()
-    /// height()
-    /// QGraphicsView::sceneRect
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`GraphicsView::scene_rect()`]
     /// 
     /// This signal is emitted by QGraphicsScene whenever the scene rect changes.
     /// The *rect* parameter is the new scene rectangle.
     /// 
-    /// **See also:** QGraphicsView::updateSceneRect()
+    /// **See also:** [`GraphicsView::update_scene_rect`]
     scene_rect() -> RectF,
     /// 
     /// This convenience function is equivalent to calling sceneRect().width().
     /// 
-    /// **See also:** height()
+    /// **See also:** [`height()`]
     width() -> f32,
     /// 
     /// This convenience function is equivalent to calling `sceneRect().height().`
     /// 
-    /// **See also:** width()
+    /// **See also:** [`width()`]
     height() -> f32,
     set_scene_rect(rect: &RectFType),
+    [org_name(setSceneRect)]
     set_scene_rect_2(x: f32, y: f32, w: f32, h: f32),
     /// 
     /// Renders the *source* rect from scene into *target,* using *painter.* This
@@ -167,7 +154,7 @@ struct GraphicsScene : Object {
     /// The source rect contents will be transformed according to *aspectRatioMode* to fit into the target rect. By default, the aspect ratio
     /// is kept, and *source* is scaled to fit in *target.*
     /// 
-    /// **See also:** QGraphicsView::render()
+    /// **See also:** [`GraphicsView::render`]
     render(painter: *PainterType, target: &RectFType, source: &RectFType, aspect_ratio_mode: Rute::AspectRatioMode),
     /// 
     /// QGraphicsScene applies an indexing algorithm to the scene, to speed up
@@ -217,20 +204,20 @@ struct GraphicsScene : Object {
     /// function works by iterating over all items, and because of this, it can
     /// be slow for large scenes.
     /// 
-    /// **See also:** sceneRect()
+    /// **See also:** [`scene_rect()`]
     items_bounding_rect() -> RectF,
     /// 
     /// Calculates and returns the bounding rect of all items on the scene. This
     /// function works by iterating over all items, and because of this, it can
     /// be slow for large scenes.
     /// 
-    /// **See also:** sceneRect()
+    /// **See also:** [`scene_rect()`]
     /// 
     /// Returns an ordered list of all items on the scene. *order* decides the
     /// stacking order.
     /// 
-    /// **See also:** addItem()
-    /// removeItem()
+    /// **See also:** [`add_item()`]
+    /// [`remove_item()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -260,7 +247,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -276,7 +263,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -292,7 +279,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -308,7 +295,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     items(order: Rute::SortOrder) -> [GraphicsItem?],
     /// 
@@ -316,13 +303,13 @@ struct GraphicsScene : Object {
     /// function works by iterating over all items, and because of this, it can
     /// be slow for large scenes.
     /// 
-    /// **See also:** sceneRect()
+    /// **See also:** [`scene_rect()`]
     /// 
     /// Returns an ordered list of all items on the scene. *order* decides the
     /// stacking order.
     /// 
-    /// **See also:** addItem()
-    /// removeItem()
+    /// **See also:** [`add_item()`]
+    /// [`remove_item()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -352,7 +339,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -368,7 +355,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -384,7 +371,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -400,21 +387,22 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
+    [org_name(items)]
     items_2(pos: &PointFType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
     /// 
     /// Calculates and returns the bounding rect of all items on the scene. This
     /// function works by iterating over all items, and because of this, it can
     /// be slow for large scenes.
     /// 
-    /// **See also:** sceneRect()
+    /// **See also:** [`scene_rect()`]
     /// 
     /// Returns an ordered list of all items on the scene. *order* decides the
     /// stacking order.
     /// 
-    /// **See also:** addItem()
-    /// removeItem()
+    /// **See also:** [`add_item()`]
+    /// [`remove_item()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -444,7 +432,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -460,7 +448,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -476,7 +464,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -492,21 +480,22 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
+    [org_name(items)]
     items_3(rect: &RectFType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
     /// 
     /// Calculates and returns the bounding rect of all items on the scene. This
     /// function works by iterating over all items, and because of this, it can
     /// be slow for large scenes.
     /// 
-    /// **See also:** sceneRect()
+    /// **See also:** [`scene_rect()`]
     /// 
     /// Returns an ordered list of all items on the scene. *order* decides the
     /// stacking order.
     /// 
-    /// **See also:** addItem()
-    /// removeItem()
+    /// **See also:** [`add_item()`]
+    /// [`remove_item()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -536,7 +525,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -552,7 +541,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -568,7 +557,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -584,21 +573,22 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
+    [org_name(items)]
     items_4(polygon: &PolygonFType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
     /// 
     /// Calculates and returns the bounding rect of all items on the scene. This
     /// function works by iterating over all items, and because of this, it can
     /// be slow for large scenes.
     /// 
-    /// **See also:** sceneRect()
+    /// **See also:** [`scene_rect()`]
     /// 
     /// Returns an ordered list of all items on the scene. *order* decides the
     /// stacking order.
     /// 
-    /// **See also:** addItem()
-    /// removeItem()
+    /// **See also:** [`add_item()`]
+    /// [`remove_item()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -628,7 +618,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -644,7 +634,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -660,7 +650,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -676,8 +666,9 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
+    [org_name(items)]
     items_5(path: &PainterPathType, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
     /// 
     /// Returns a list of all items that collide with *item.* Collisions are
@@ -689,9 +680,9 @@ struct GraphicsScene : Object {
     /// in the list is the uppermost item, and the last item is the lowermost
     /// item).
     /// 
-    /// **See also:** items()
-    /// itemAt()
-    /// QGraphicsItem::collidesWithItem()
+    /// **See also:** [`items()`]
+    /// [`item_at()`]
+    /// [`GraphicsItem::collides_with_item`]
     /// {QGraphicsItem#Sorting}{Sorting}
     colliding_items(item: *GraphicsItemType, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
     /// 
@@ -705,8 +696,8 @@ struct GraphicsScene : Object {
     /// 
     /// Note: See items() for a definition of which items are considered visible by this function.
     /// 
-    /// **See also:** items()
-    /// collidingItems()
+    /// **See also:** [`items()`]
+    /// [`colliding_items()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// Returns the topmost visible item at the specified *position,* or 0
@@ -717,8 +708,8 @@ struct GraphicsScene : Object {
     /// 
     /// Note: See items() for a definition of which items are considered visible by this function.
     /// 
-    /// **See also:** items()
-    /// collidingItems()
+    /// **See also:** [`items()`]
+    /// [`colliding_items()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -747,13 +738,13 @@ struct GraphicsScene : Object {
     /// function works by iterating over all items, and because of this, it can
     /// be slow for large scenes.
     /// 
-    /// **See also:** sceneRect()
+    /// **See also:** [`scene_rect()`]
     /// 
     /// Returns an ordered list of all items on the scene. *order* decides the
     /// stacking order.
     /// 
-    /// **See also:** addItem()
-    /// removeItem()
+    /// **See also:** [`add_item()`]
+    /// [`remove_item()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -783,7 +774,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -799,7 +790,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -815,7 +806,7 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -831,8 +822,9 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     /// {QGraphicsItem#Sorting}{Sorting}
+    [org_name(items)]
     items_6(x: f32, y: f32, w: f32, h: f32, mode: Rute::ItemSelectionMode, order: Rute::SortOrder, device_transform: &TransformType) -> [GraphicsItem?],
     /// 
     /// **Overloads**
@@ -845,8 +837,8 @@ struct GraphicsScene : Object {
     /// 
     /// Note: See items() for a definition of which items are considered visible by this function.
     /// 
-    /// **See also:** items()
-    /// collidingItems()
+    /// **See also:** [`items()`]
+    /// [`colliding_items()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// Returns the topmost visible item at the specified *position,* or 0
@@ -857,8 +849,8 @@ struct GraphicsScene : Object {
     /// 
     /// Note: See items() for a definition of which items are considered visible by this function.
     /// 
-    /// **See also:** items()
-    /// collidingItems()
+    /// **See also:** [`items()`]
+    /// [`colliding_items()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -881,19 +873,20 @@ struct GraphicsScene : Object {
     /// a QTransform instead.
     /// 
     /// Note: See items() for a definition of which items are considered visible by this function.
+    [org_name(itemAt)]
     item_at_2(x: f32, y: f32, device_transform: &TransformType) -> GraphicsItem?,
     /// 
     /// Returns a list of all currently selected items. The items are
     /// returned in no particular order.
     /// 
-    /// **See also:** setSelectionArea()
+    /// **See also:** [`set_selection_area()`]
     selected_items() -> [GraphicsItem?],
     /// 
     /// Returns the selection area that was previously set with
     /// setSelectionArea(), or an empty QPainterPath if no selection area has been
     /// set.
     /// 
-    /// **See also:** setSelectionArea()
+    /// **See also:** [`set_selection_area()`]
     selection_area() -> PainterPath,
     /// 
     /// Sets the selection area to *path.* All items within this area are
@@ -906,8 +899,8 @@ struct GraphicsScene : Object {
     /// For an item to be selected, it must be marked as *selectable*
     /// (QGraphicsItem::ItemIsSelectable).
     /// 
-    /// **See also:** clearSelection()
-    /// selectionArea()
+    /// **See also:** [`clear_selection()`]
+    /// [`selection_area()`]
     /// 
     /// **Overloads**
     /// Sets the selection area to *path* using *mode* to determine if items are
@@ -916,8 +909,8 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** clearSelection()
-    /// selectionArea()
+    /// **See also:** [`clear_selection()`]
+    /// [`selection_area()`]
     /// 
     /// **Overloads**
     /// Sets the selection area to *path* using *mode* to determine if items are
@@ -928,8 +921,8 @@ struct GraphicsScene : Object {
     /// 
     /// *selectionOperation* determines what to do with the currently selected items.
     /// 
-    /// **See also:** clearSelection()
-    /// selectionArea()
+    /// **See also:** [`clear_selection()`]
+    /// [`selection_area()`]
     set_selection_area(path: &PainterPathType, device_transform: &TransformType),
     /// 
     /// Sets the selection area to *path.* All items within this area are
@@ -942,8 +935,8 @@ struct GraphicsScene : Object {
     /// For an item to be selected, it must be marked as *selectable*
     /// (QGraphicsItem::ItemIsSelectable).
     /// 
-    /// **See also:** clearSelection()
-    /// selectionArea()
+    /// **See also:** [`clear_selection()`]
+    /// [`selection_area()`]
     /// 
     /// **Overloads**
     /// Sets the selection area to *path* using *mode* to determine if items are
@@ -952,8 +945,8 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** clearSelection()
-    /// selectionArea()
+    /// **See also:** [`clear_selection()`]
+    /// [`selection_area()`]
     /// 
     /// **Overloads**
     /// Sets the selection area to *path* using *mode* to determine if items are
@@ -964,8 +957,9 @@ struct GraphicsScene : Object {
     /// 
     /// *selectionOperation* determines what to do with the currently selected items.
     /// 
-    /// **See also:** clearSelection()
-    /// selectionArea()
+    /// **See also:** [`clear_selection()`]
+    /// [`selection_area()`]
+    [org_name(setSelectionArea)]
     set_selection_area_2(path: &PainterPathType, mode: Rute::ItemSelectionMode, device_transform: &TransformType),
     /// 
     /// Sets the selection area to *path.* All items within this area are
@@ -978,8 +972,8 @@ struct GraphicsScene : Object {
     /// For an item to be selected, it must be marked as *selectable*
     /// (QGraphicsItem::ItemIsSelectable).
     /// 
-    /// **See also:** clearSelection()
-    /// selectionArea()
+    /// **See also:** [`clear_selection()`]
+    /// [`selection_area()`]
     /// 
     /// **Overloads**
     /// Sets the selection area to *path* using *mode* to determine if items are
@@ -988,8 +982,8 @@ struct GraphicsScene : Object {
     /// *deviceTransform* is the transformation that applies to the view, and needs to
     /// be provided if the scene contains items that ignore transformations.
     /// 
-    /// **See also:** clearSelection()
-    /// selectionArea()
+    /// **See also:** [`clear_selection()`]
+    /// [`selection_area()`]
     /// 
     /// **Overloads**
     /// Sets the selection area to *path* using *mode* to determine if items are
@@ -1000,8 +994,9 @@ struct GraphicsScene : Object {
     /// 
     /// *selectionOperation* determines what to do with the currently selected items.
     /// 
-    /// **See also:** clearSelection()
-    /// selectionArea()
+    /// **See also:** [`clear_selection()`]
+    /// [`selection_area()`]
+    [org_name(setSelectionArea)]
     set_selection_area_3(path: &PainterPathType, selection_operation: Rute::ItemSelectionOperation, mode: Rute::ItemSelectionMode, device_transform: &TransformType),
     /// 
     /// Groups all items in *items* into a new QGraphicsItemGroup, and returns a
@@ -1013,8 +1008,8 @@ struct GraphicsScene : Object {
     /// QGraphicsScene has ownership of the group item; you do not need to delete
     /// it. To dismantle (ungroup) a group, call destroyItemGroup().
     /// 
-    /// **See also:** destroyItemGroup()
-    /// QGraphicsItemGroup::addToGroup()
+    /// **See also:** [`destroy_item_group()`]
+    /// [`GraphicsItemGroup::add_to_group`]
     create_item_group(items: [*GraphicsItemType]) -> GraphicsItemGroup?,
     /// 
     /// Adds or moves the *item* and all its childen to this scene.
@@ -1038,14 +1033,14 @@ struct GraphicsScene : Object {
     /// If the item is a panel, the scene is active, and there is no
     /// active panel in the scene, then the item will be activated.
     /// 
-    /// **See also:** removeItem()
-    /// addEllipse()
-    /// addLine()
-    /// addPath()
-    /// addPixmap()
-    /// addRect()
-    /// addText()
-    /// addWidget()
+    /// **See also:** [`remove_item()`]
+    /// [`add_ellipse()`]
+    /// [`add_line()`]
+    /// [`add_path()`]
+    /// [`add_pixmap()`]
+    /// [`add_rect()`]
+    /// [`add_text()`]
+    /// [`add_widget()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     add_item(item: *GraphicsItemType),
     /// 
@@ -1060,13 +1055,13 @@ struct GraphicsScene : Object {
     /// QGraphicsScene will emit changed() once control goes back to the event
     /// loop.
     /// 
-    /// **See also:** addLine()
-    /// addPath()
-    /// addPixmap()
-    /// addRect()
-    /// addText()
-    /// addItem()
-    /// addWidget()
+    /// **See also:** [`add_line()`]
+    /// [`add_path()`]
+    /// [`add_pixmap()`]
+    /// [`add_rect()`]
+    /// [`add_text()`]
+    /// [`add_item()`]
+    /// [`add_widget()`]
     /// 
     /// This convenience function is equivalent to calling addEllipse(QRectF( *x,*
     /// *y,* *w,* *h),* *pen,* *brush).*
@@ -1083,13 +1078,13 @@ struct GraphicsScene : Object {
     /// QGraphicsScene will emit changed() once control goes back to the event
     /// loop.
     /// 
-    /// **See also:** addEllipse()
-    /// addPath()
-    /// addPixmap()
-    /// addRect()
-    /// addText()
-    /// addItem()
-    /// addWidget()
+    /// **See also:** [`add_ellipse()`]
+    /// [`add_path()`]
+    /// [`add_pixmap()`]
+    /// [`add_rect()`]
+    /// [`add_text()`]
+    /// [`add_item()`]
+    /// [`add_widget()`]
     /// 
     /// This convenience function is equivalent to calling addLine(QLineF( *x1,*
     /// *y1,* *x2,* *y2),* *pen).*
@@ -1106,13 +1101,13 @@ struct GraphicsScene : Object {
     /// QGraphicsScene will emit changed() once control goes back to the event
     /// loop.
     /// 
-    /// **See also:** addEllipse()
-    /// addLine()
-    /// addPixmap()
-    /// addRect()
-    /// addText()
-    /// addItem()
-    /// addWidget()
+    /// **See also:** [`add_ellipse()`]
+    /// [`add_line()`]
+    /// [`add_pixmap()`]
+    /// [`add_rect()`]
+    /// [`add_text()`]
+    /// [`add_item()`]
+    /// [`add_widget()`]
     add_path(path: &PainterPathType, pen: &PenType, brush: &BrushType) -> GraphicsPathItem?,
     /// 
     /// Creates and adds a pixmap item to the scene, and returns the item
@@ -1125,13 +1120,13 @@ struct GraphicsScene : Object {
     /// QGraphicsScene will emit changed() once control goes back to the event
     /// loop.
     /// 
-    /// **See also:** addEllipse()
-    /// addLine()
-    /// addPath()
-    /// addRect()
-    /// addText()
-    /// addItem()
-    /// addWidget()
+    /// **See also:** [`add_ellipse()`]
+    /// [`add_line()`]
+    /// [`add_path()`]
+    /// [`add_rect()`]
+    /// [`add_text()`]
+    /// [`add_item()`]
+    /// [`add_widget()`]
     add_pixmap(pixmap: &PixmapType) -> GraphicsPixmapItem?,
     /// 
     /// Creates and adds a polygon item to the scene, and returns the item
@@ -1145,13 +1140,13 @@ struct GraphicsScene : Object {
     /// QGraphicsScene will emit changed() once control goes back to the event
     /// loop.
     /// 
-    /// **See also:** addEllipse()
-    /// addLine()
-    /// addPath()
-    /// addRect()
-    /// addText()
-    /// addItem()
-    /// addWidget()
+    /// **See also:** [`add_ellipse()`]
+    /// [`add_line()`]
+    /// [`add_path()`]
+    /// [`add_rect()`]
+    /// [`add_text()`]
+    /// [`add_item()`]
+    /// [`add_widget()`]
     add_polygon(polygon: &PolygonFType, pen: &PenType, brush: &BrushType) -> GraphicsPolygonItem?,
     /// 
     /// Creates and adds a rectangle item to the scene, and returns the item
@@ -1167,12 +1162,12 @@ struct GraphicsScene : Object {
     /// QGraphicsScene will emit changed() once control goes back to the event
     /// loop.
     /// 
-    /// **See also:** addEllipse()
-    /// addLine()
-    /// addPixmap()
-    /// addText()
-    /// addItem()
-    /// addWidget()
+    /// **See also:** [`add_ellipse()`]
+    /// [`add_line()`]
+    /// [`add_pixmap()`]
+    /// [`add_text()`]
+    /// [`add_item()`]
+    /// [`add_widget()`]
     /// 
     /// This convenience function is equivalent to calling addRect(QRectF( *x,*
     /// *y,* *w,* *h),* *pen,* *brush).*
@@ -1188,12 +1183,12 @@ struct GraphicsScene : Object {
     /// QGraphicsScene will emit changed() once control goes back to the event
     /// loop.
     /// 
-    /// **See also:** addEllipse()
-    /// addLine()
-    /// addPixmap()
-    /// addRect()
-    /// addItem()
-    /// addWidget()
+    /// **See also:** [`add_ellipse()`]
+    /// [`add_line()`]
+    /// [`add_pixmap()`]
+    /// [`add_rect()`]
+    /// [`add_item()`]
+    /// [`add_widget()`]
     add_text(text: String, font: &FontType) -> GraphicsTextItem?,
     /// 
     /// Creates and adds a QGraphicsSimpleTextItem to the scene, and returns the
@@ -1206,12 +1201,12 @@ struct GraphicsScene : Object {
     /// QGraphicsScene will emit changed() once control goes back to the event
     /// loop.
     /// 
-    /// **See also:** addEllipse()
-    /// addLine()
-    /// addPixmap()
-    /// addRect()
-    /// addItem()
-    /// addWidget()
+    /// **See also:** [`add_ellipse()`]
+    /// [`add_line()`]
+    /// [`add_pixmap()`]
+    /// [`add_rect()`]
+    /// [`add_item()`]
+    /// [`add_widget()`]
     add_simple_text(text: String, font: &FontType) -> GraphicsSimpleTextItem?,
     /// 
     /// Creates a new QGraphicsProxyWidget for *widget,* adds it to the scene,
@@ -1228,13 +1223,13 @@ struct GraphicsScene : Object {
     /// set and widgets that wrap an external application or controller
     /// are not supported. Examples are QGLWidget and QAxWidget.
     /// 
-    /// **See also:** addEllipse()
-    /// addLine()
-    /// addPixmap()
-    /// addRect()
-    /// addText()
-    /// addSimpleText()
-    /// addItem()
+    /// **See also:** [`add_ellipse()`]
+    /// [`add_line()`]
+    /// [`add_pixmap()`]
+    /// [`add_rect()`]
+    /// [`add_text()`]
+    /// [`add_simple_text()`]
+    /// [`add_item()`]
     add_widget(widget: *WidgetType, w_flags: Rute::WindowFlags) -> GraphicsProxyWidget?,
     /// 
     /// Creates and adds an ellipse item to the scene, and returns the item
@@ -1248,16 +1243,17 @@ struct GraphicsScene : Object {
     /// QGraphicsScene will emit changed() once control goes back to the event
     /// loop.
     /// 
-    /// **See also:** addLine()
-    /// addPath()
-    /// addPixmap()
-    /// addRect()
-    /// addText()
-    /// addItem()
-    /// addWidget()
+    /// **See also:** [`add_line()`]
+    /// [`add_path()`]
+    /// [`add_pixmap()`]
+    /// [`add_rect()`]
+    /// [`add_text()`]
+    /// [`add_item()`]
+    /// [`add_widget()`]
     /// 
     /// This convenience function is equivalent to calling addEllipse(QRectF( *x,*
     /// *y,* *w,* *h),* *pen,* *brush).*
+    [org_name(addEllipse)]
     add_ellipse_2(x: f32, y: f32, w: f32, h: f32, pen: &PenType, brush: &BrushType) -> GraphicsEllipseItem?,
     /// 
     /// Creates and adds a line item to the scene, and returns the item
@@ -1271,16 +1267,17 @@ struct GraphicsScene : Object {
     /// QGraphicsScene will emit changed() once control goes back to the event
     /// loop.
     /// 
-    /// **See also:** addEllipse()
-    /// addPath()
-    /// addPixmap()
-    /// addRect()
-    /// addText()
-    /// addItem()
-    /// addWidget()
+    /// **See also:** [`add_ellipse()`]
+    /// [`add_path()`]
+    /// [`add_pixmap()`]
+    /// [`add_rect()`]
+    /// [`add_text()`]
+    /// [`add_item()`]
+    /// [`add_widget()`]
     /// 
     /// This convenience function is equivalent to calling addLine(QLineF( *x1,*
     /// *y1,* *x2,* *y2),* *pen).*
+    [org_name(addLine)]
     add_line_2(x1: f32, y1: f32, x2: f32, y2: f32, pen: &PenType) -> GraphicsLineItem?,
     /// 
     /// Creates and adds a rectangle item to the scene, and returns the item
@@ -1296,22 +1293,23 @@ struct GraphicsScene : Object {
     /// QGraphicsScene will emit changed() once control goes back to the event
     /// loop.
     /// 
-    /// **See also:** addEllipse()
-    /// addLine()
-    /// addPixmap()
-    /// addText()
-    /// addItem()
-    /// addWidget()
+    /// **See also:** [`add_ellipse()`]
+    /// [`add_line()`]
+    /// [`add_pixmap()`]
+    /// [`add_text()`]
+    /// [`add_item()`]
+    /// [`add_widget()`]
     /// 
     /// This convenience function is equivalent to calling addRect(QRectF( *x,*
     /// *y,* *w,* *h),* *pen,* *brush).*
+    [org_name(addRect)]
     add_rect_2(x: f32, y: f32, w: f32, h: f32, pen: &PenType, brush: &BrushType) -> GraphicsRectItem?,
     /// 
     /// Removes the item *item* and all its children from the scene. The
     /// ownership of *item* is passed on to the caller (i.e.,
     /// QGraphicsScene will no longer delete *item* when destroyed).
     /// 
-    /// **See also:** addItem()
+    /// **See also:** [`add_item()`]
     remove_item(item: *GraphicsItemType),
     /// 
     /// When the scene is active, this functions returns the scene's current focus
@@ -1322,9 +1320,9 @@ struct GraphicsScene : Object {
     /// The focus item receives keyboard input when the scene receives a
     /// key event.
     /// 
-    /// **See also:** setFocusItem()
-    /// QGraphicsItem::hasFocus()
-    /// isActive()
+    /// **See also:** [`set_focus_item()`]
+    /// [`GraphicsItem::has_focus`]
+    /// [`is_active()`]
     /// 
     /// This signal is emitted by QGraphicsScene whenever focus changes in the
     /// scene (i.e., when an item gains or loses input focus, or when focus
@@ -1354,17 +1352,17 @@ struct GraphicsScene : Object {
     /// hasFocus() returns `false),` this function will call setFocus()
     /// automatically.
     /// 
-    /// **See also:** focusItem()
-    /// hasFocus()
-    /// setFocus()
+    /// **See also:** [`focus_item()`]
+    /// [`has_focus()`]
+    /// [`set_focus()`]
     set_focus_item(item: *GraphicsItemType, focus_reason: Rute::FocusReason),
     /// 
     /// Returns `true` if the scene has focus; otherwise returns `false.` If the scene
     /// has focus, it will will forward key events from QKeyEvent to any item that
     /// has focus.
     /// 
-    /// **See also:** setFocus()
-    /// setFocusItem()
+    /// **See also:** [`set_focus()`]
+    /// [`set_focus_item()`]
     has_focus() -> bool,
     /// 
     /// Sets the scene's focus item to *item,* with the focus reason *focusReason,* after removing focus from any previous item that may have had
@@ -1379,9 +1377,9 @@ struct GraphicsScene : Object {
     /// hasFocus() returns `false),` this function will call setFocus()
     /// automatically.
     /// 
-    /// **See also:** focusItem()
-    /// hasFocus()
-    /// setFocus()
+    /// **See also:** [`focus_item()`]
+    /// [`has_focus()`]
+    /// [`set_focus()`]
     /// 
     /// Sets focus on the scene by sending a QFocusEvent to the scene, passing *focusReason* as the reason. If the scene regains focus after having
     /// previously lost it while an item had focus, the last focus item will
@@ -1389,9 +1387,9 @@ struct GraphicsScene : Object {
     /// 
     /// If the scene already has focus, this function does nothing.
     /// 
-    /// **See also:** hasFocus()
-    /// clearFocus()
-    /// setFocusItem()
+    /// **See also:** [`has_focus()`]
+    /// [`clear_focus()`]
+    /// [`set_focus_item()`]
     set_focus(focus_reason: Rute::FocusReason),
     /// 
     /// Clears focus from the scene. If any item has focus when this function is
@@ -1400,9 +1398,9 @@ struct GraphicsScene : Object {
     /// 
     /// A scene that does not have focus ignores key events.
     /// 
-    /// **See also:** hasFocus()
-    /// setFocus()
-    /// setFocusItem()
+    /// **See also:** [`has_focus()`]
+    /// [`set_focus()`]
+    /// [`set_focus_item()`]
     clear_focus(),
     set_sticky_focus(enabled: bool),
     /// 
@@ -1416,8 +1414,8 @@ struct GraphicsScene : Object {
     /// mousePressEvent() in a subclass of QGraphicsScene to toggle this property
     /// based on where the user has clicked.
     /// 
-    /// **See also:** clearFocus()
-    /// setFocusItem()
+    /// **See also:** [`clear_focus()`]
+    /// [`set_focus_item()`]
     sticky_focus() -> bool,
     /// 
     /// Returns the current mouse grabber item, or 0 if no item is currently
@@ -1471,18 +1469,18 @@ struct GraphicsScene : Object {
     /// 
     /// The *query* parameter specifies which property is queried.
     /// 
-    /// **See also:** QWidget::inputMethodQuery()
+    /// **See also:** [`Widget::input_method_query`]
     [event] input_method_query(query: Rute::InputMethodQuery) -> Variant,
     /// 
     /// Returns a list of all the views that display this scene.
     /// 
-    /// **See also:** QGraphicsView::scene()
+    /// **See also:** [`GraphicsView::scene`]
     views() -> [GraphicsView?],
     /// 
     /// Schedules a redraw of the area *rect* on the scene.
     /// 
-    /// **See also:** sceneRect()
-    /// changed()
+    /// **See also:** [`scene_rect()`]
+    /// [`changed()`]
     /// 
     /// **Overloads**
     /// This function is equivalent to calling update(QRectF( *x,* *y,* *w,*
@@ -1506,7 +1504,7 @@ struct GraphicsScene : Object {
     /// QGraphicsView::CacheBackground). This function is equivalent to calling
     /// update() if any layer but BackgroundLayer is passed.
     /// 
-    /// **See also:** QGraphicsView::resetCachedContent()
+    /// **See also:** [`GraphicsView::reset_cached_content`]
     /// 
     /// **Overloads**
     /// This convenience function is equivalent to calling invalidate(QRectF( *x,* *y,* *w,* *h),* *layers);*
@@ -1515,7 +1513,7 @@ struct GraphicsScene : Object {
     /// Returns the scene's style, or the same as QApplication::style() if the
     /// scene has not been explicitly assigned a style.
     /// 
-    /// **See also:** setStyle()
+    /// **See also:** [`set_style()`]
     style() -> Style?,
     /// 
     /// Sets or replaces the style of the scene to *style,* and reparents the
@@ -1530,7 +1528,7 @@ struct GraphicsScene : Object {
     /// 
     /// If *style* is 0, QGraphicsScene will revert to QApplication::style().
     /// 
-    /// **See also:** style()
+    /// **See also:** [`style()`]
     set_style(style: *StyleType),
     /// 
     /// This property provides the scene's font. The scene font defaults to,
@@ -1551,10 +1549,10 @@ struct GraphicsScene : Object {
     /// QApplication::setFont(),) automatically schedules a redraw the entire
     /// scene.
     /// 
-    /// **See also:** QWidget::font
-    /// QApplication::setFont()
+    /// **See also:** [`Widget::font()`]
+    /// [`Application::set_font`]
     /// palette
-    /// style()
+    /// [`style()`]
     font() -> Font,
     set_font(font: &FontType),
     /// 
@@ -1576,23 +1574,23 @@ struct GraphicsScene : Object {
     /// QApplication::setPalette(),) automatically schedules a redraw the entire
     /// scene.
     /// 
-    /// **See also:** QWidget::palette
-    /// QApplication::setPalette()
+    /// **See also:** [`Widget::palette()`]
+    /// [`Application::set_palette`]
     /// font
-    /// style()
+    /// [`style()`]
     palette() -> Palette,
     set_palette(palette: &PaletteType),
     /// 
     /// Returns `true` if the scene is active (e.g., it's viewed by
     /// at least one QGraphicsView that is active); otherwise returns `false.`
     /// 
-    /// **See also:** QGraphicsItem::isActive()
-    /// QWidget::isActiveWindow()
+    /// **See also:** [`GraphicsItem::is_active`]
+    /// [`Widget::is_active_window`]
     is_active() -> bool,
     /// 
     /// Returns the current active panel, or 0 if no panel is currently active.
     /// 
-    /// **See also:** QGraphicsScene::setActivePanel()
+    /// **See also:** [`GraphicsScene::set_active_panel`]
     active_panel() -> GraphicsItem?,
     /// 
     /// Activates *item,* which must be an item in this scene. You
@@ -1602,23 +1600,23 @@ struct GraphicsScene : Object {
     /// If the scene is currently inactive, *item* remains inactive until the
     /// scene becomes active (or, ir *item* is 0, no item will be activated).
     /// 
-    /// **See also:** activePanel()
-    /// isActive()
-    /// QGraphicsItem::isActive()
+    /// **See also:** [`active_panel()`]
+    /// [`is_active()`]
+    /// [`GraphicsItem::is_active`]
     set_active_panel(item: *GraphicsItemType),
     /// 
     /// Returns the current active window, or 0 if no window is currently
     /// active.
     /// 
-    /// **See also:** QGraphicsScene::setActiveWindow()
+    /// **See also:** [`GraphicsScene::set_active_window`]
     active_window() -> GraphicsWidget?,
     /// 
     /// Activates *widget,* which must be a widget in this scene. You can also
     /// pass 0 for *widget,* in which case QGraphicsScene will deactivate any
     /// currently active window.
     /// 
-    /// **See also:** activeWindow()
-    /// QGraphicsWidget::isActiveWindow()
+    /// **See also:** [`active_window()`]
+    /// [`GraphicsWidget::is_active_window`]
     set_active_window(widget: *GraphicsWidgetType),
     /// 
     /// Sends event *event* to item *item* through possible event filters.
@@ -1628,8 +1626,8 @@ struct GraphicsScene : Object {
     /// Returns `false` if the event was filtered or if the item is disabled.
     /// Otherwise returns the value that was returned from the event handler.
     /// 
-    /// **See also:** QGraphicsItem::sceneEvent()
-    /// QGraphicsItem::sceneEventFilter()
+    /// **See also:** [`GraphicsItem::scene_event`]
+    /// [`GraphicsItem::scene_event_filter`]
     send_event(item: *GraphicsItemType, event: *EventType) -> bool,
     /// 
     /// When the scene is rendered, any item whose width or height, transformed
@@ -1656,18 +1654,19 @@ struct GraphicsScene : Object {
     /// minimumRenderSize() to a value less than or equal to 1 in order to
     /// avoid large unrendered items that are interactive.
     /// 
-    /// **See also:** QStyleOptionGraphicsItem::levelOfDetailFromTransform()
+    /// **See also:** [`StyleOptionGraphicsItem::level_of_detail_from_transform`]
     minimum_render_size() -> f32,
     set_minimum_render_size(min_size: f32),
     /// 
     /// Schedules a redraw of the area *rect* on the scene.
     /// 
-    /// **See also:** sceneRect()
-    /// changed()
+    /// **See also:** [`scene_rect()`]
+    /// [`changed()`]
     /// 
     /// **Overloads**
     /// This function is equivalent to calling update(QRectF( *x,* *y,* *w,*
     /// *h));*
+    [org_name(update)]
     update_2(rect: &RectFType),
     /// 
     /// Invalidates and schedules a redraw of the *layers* in *rect* on the
@@ -1687,10 +1686,11 @@ struct GraphicsScene : Object {
     /// QGraphicsView::CacheBackground). This function is equivalent to calling
     /// update() if any layer but BackgroundLayer is passed.
     /// 
-    /// **See also:** QGraphicsView::resetCachedContent()
+    /// **See also:** [`GraphicsView::reset_cached_content`]
     /// 
     /// **Overloads**
     /// This convenience function is equivalent to calling invalidate(QRectF( *x,* *y,* *w,* *h),* *layers);*
+    [org_name(invalidate)]
     invalidate_2(rect: &RectFType, layers: GraphicsScene::SceneLayers),
     /// 
     /// This slot *advances* the scene by one step, by calling
@@ -1704,25 +1704,25 @@ struct GraphicsScene : Object {
     /// Framework](The%20Animation%20Framework)
     /// for animations.
     /// 
-    /// **See also:** QGraphicsItem::advance()
-    /// QTimeLine
+    /// **See also:** [`GraphicsItem::advance`]
+    /// [`TimeLine`]
     advance(),
     /// 
     /// Clears the current selection.
     /// 
-    /// **See also:** setSelectionArea()
-    /// selectedItems()
+    /// **See also:** [`set_selection_area()`]
+    /// [`selected_items()`]
     clear_selection(),
     /// 
     /// Clears the current selection.
     /// 
-    /// **See also:** setSelectionArea()
-    /// selectedItems()
+    /// **See also:** [`set_selection_area()`]
+    /// [`selected_items()`]
     /// 
     /// Removes and deletes all items from the scene, but otherwise leaves the
     /// state of the scene unchanged.
     /// 
-    /// **See also:** addItem()
+    /// **See also:** [`add_item()`]
     /// 
     /// Clears focus from the scene. If any item has focus when this function is
     /// called, it will lose focus, and regain focus again once the scene regains
@@ -1730,9 +1730,9 @@ struct GraphicsScene : Object {
     /// 
     /// A scene that does not have focus ignores key events.
     /// 
-    /// **See also:** hasFocus()
-    /// setFocus()
-    /// setFocusItem()
+    /// **See also:** [`has_focus()`]
+    /// [`set_focus()`]
+    /// [`set_focus_item()`]
     clear(),
     /// 
     /// Processes the event *event,* and dispatches it to the respective
@@ -1750,15 +1750,15 @@ struct GraphicsScene : Object {
     /// . Use this
     /// function to obtain those events instead.
     /// 
-    /// **See also:** contextMenuEvent()
-    /// keyPressEvent()
-    /// keyReleaseEvent()
-    /// mousePressEvent()
-    /// mouseMoveEvent()
-    /// mouseReleaseEvent()
-    /// mouseDoubleClickEvent()
-    /// focusInEvent()
-    /// focusOutEvent()
+    /// **See also:** [`context_menu_event()`]
+    /// [`key_press_event()`]
+    /// [`key_release_event()`]
+    /// [`mouse_press_event()`]
+    /// [`mouse_move_event()`]
+    /// [`mouse_release_event()`]
+    /// [`mouse_double_click_event()`]
+    /// [`focus_in_event()`]
+    /// [`focus_out_event()`]
     /// 
     /// QGraphicsScene filters QApplication's events to detect palette and font
     /// changes.
@@ -1776,7 +1776,7 @@ struct GraphicsScene : Object {
     /// 
     /// Note: See items() for a definition of which items are considered visible by this function.
     /// 
-    /// **See also:** QGraphicsItem::contextMenuEvent()
+    /// **See also:** [`GraphicsItem::context_menu_event`]
     [event] context_menu_event(event: *GraphicsSceneContextMenuEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented in a subclass
@@ -1785,10 +1785,10 @@ struct GraphicsScene : Object {
     /// The default implementation accepts the event and prepares the scene to
     /// accept drag move events.
     /// 
-    /// **See also:** QGraphicsItem::dragEnterEvent()
-    /// dragMoveEvent()
-    /// dragLeaveEvent()
-    /// dropEvent()
+    /// **See also:** [`GraphicsItem::drag_enter_event`]
+    /// [`drag_move_event()`]
+    /// [`drag_leave_event()`]
+    /// [`drop_event()`]
     [event] drag_enter_event(event: *GraphicsSceneDragDropEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented in a subclass
@@ -1796,28 +1796,28 @@ struct GraphicsScene : Object {
     /// 
     /// Note: See items() for a definition of which items are considered visible by this function.
     /// 
-    /// **See also:** QGraphicsItem::dragMoveEvent()
-    /// dragEnterEvent()
-    /// dragLeaveEvent()
-    /// dropEvent()
+    /// **See also:** [`GraphicsItem::drag_move_event`]
+    /// [`drag_enter_event()`]
+    /// [`drag_leave_event()`]
+    /// [`drop_event()`]
     [event] drag_move_event(event: *GraphicsSceneDragDropEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented in a subclass
     /// to receive drag leave events for the scene.
     /// 
-    /// **See also:** QGraphicsItem::dragLeaveEvent()
-    /// dragEnterEvent()
-    /// dragMoveEvent()
-    /// dropEvent()
+    /// **See also:** [`GraphicsItem::drag_leave_event`]
+    /// [`drag_enter_event()`]
+    /// [`drag_move_event()`]
+    /// [`drop_event()`]
     [event] drag_leave_event(event: *GraphicsSceneDragDropEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented in a subclass
     /// to receive drop events for the scene.
     /// 
-    /// **See also:** QGraphicsItem::dropEvent()
-    /// dragEnterEvent()
-    /// dragMoveEvent()
-    /// dragLeaveEvent()
+    /// **See also:** [`GraphicsItem::drop_event`]
+    /// [`drag_enter_event()`]
+    /// [`drag_move_event()`]
+    /// [`drag_leave_event()`]
     [event] drop_event(event: *GraphicsSceneDragDropEventType),
     /// 
     /// This event handler, for event *focusEvent,* can be reimplemented in a
@@ -1826,7 +1826,7 @@ struct GraphicsScene : Object {
     /// The default implementation sets focus on the scene, and then on the last
     /// focus item.
     /// 
-    /// **See also:** QGraphicsItem::focusOutEvent()
+    /// **See also:** [`GraphicsItem::focus_out_event`]
     [event] focus_in_event(event: *FocusEventType),
     /// 
     /// This event handler, for event *focusEvent,* can be reimplemented in a
@@ -1835,7 +1835,7 @@ struct GraphicsScene : Object {
     /// The default implementation removes focus from any focus item, then removes
     /// focus from the scene.
     /// 
-    /// **See also:** QGraphicsItem::focusInEvent()
+    /// **See also:** [`GraphicsItem::focus_in_event`]
     [event] focus_out_event(event: *FocusEventType),
     /// 
     /// This event handler, for event *helpEvent,* can be
@@ -1850,24 +1850,24 @@ struct GraphicsScene : Object {
     /// 
     /// Note: See items() for a definition of which items are considered visible by this function.
     /// 
-    /// **See also:** QGraphicsItem::toolTip()
-    /// QGraphicsSceneHelpEvent
+    /// **See also:** [`GraphicsItem::tool_tip`]
+    /// [`GraphicsSceneHelpEvent`]
     [event] help_event(event: *GraphicsSceneHelpEventType),
     /// 
     /// This event handler, for event *keyEvent,* can be reimplemented in a
     /// subclass to receive keypress events. The default implementation forwards
     /// the event to current focus item.
     /// 
-    /// **See also:** QGraphicsItem::keyPressEvent()
-    /// focusItem()
+    /// **See also:** [`GraphicsItem::key_press_event`]
+    /// [`focus_item()`]
     [event] key_press_event(event: *KeyEventType),
     /// 
     /// This event handler, for event *keyEvent,* can be reimplemented in a
     /// subclass to receive key release events. The default implementation
     /// forwards the event to current focus item.
     /// 
-    /// **See also:** QGraphicsItem::keyReleaseEvent()
-    /// focusItem()
+    /// **See also:** [`GraphicsItem::key_release_event`]
+    /// [`focus_item()`]
     [event] key_release_event(event: *KeyEventType),
     /// 
     /// This event handler, for event *mouseEvent,* can be reimplemented
@@ -1885,8 +1885,8 @@ struct GraphicsScene : Object {
     /// 
     /// Note: See items() for a definition of which items are considered visible by this function.
     /// 
-    /// **See also:** QGraphicsItem::mousePressEvent()
-    /// QGraphicsItem::setAcceptedMouseButtons()
+    /// **See also:** [`GraphicsItem::mouse_press_event`]
+    /// [`GraphicsItem::set_accepted_mouse_buttons`]
     [event] mouse_press_event(event: *GraphicsSceneMouseEventType),
     /// 
     /// This event handler, for event *mouseEvent,* can be reimplemented
@@ -1897,10 +1897,10 @@ struct GraphicsScene : Object {
     /// are any items that accept hover events at the current position, the event
     /// is translated into a hover event and accepted; otherwise it's ignored.
     /// 
-    /// **See also:** QGraphicsItem::mousePressEvent()
-    /// QGraphicsItem::mouseReleaseEvent()
-    /// QGraphicsItem::mouseDoubleClickEvent()
-    /// QGraphicsItem::setAcceptedMouseButtons()
+    /// **See also:** [`GraphicsItem::mouse_press_event`]
+    /// [`GraphicsItem::mouse_release_event`]
+    /// [`GraphicsItem::mouse_double_click_event`]
+    /// [`GraphicsItem::set_accepted_mouse_buttons`]
     [event] mouse_move_event(event: *GraphicsSceneMouseEventType),
     /// 
     /// This event handler, for event *mouseEvent,* can be reimplemented
@@ -1912,10 +1912,10 @@ struct GraphicsScene : Object {
     /// grabber. If this mouse release represents the last pressed button
     /// on the mouse, the mouse grabber item then loses the mouse grab.
     /// 
-    /// **See also:** QGraphicsItem::mousePressEvent()
-    /// QGraphicsItem::mouseMoveEvent()
-    /// QGraphicsItem::mouseDoubleClickEvent()
-    /// QGraphicsItem::setAcceptedMouseButtons()
+    /// **See also:** [`GraphicsItem::mouse_press_event`]
+    /// [`GraphicsItem::mouse_move_event`]
+    /// [`GraphicsItem::mouse_double_click_event`]
+    /// [`GraphicsItem::set_accepted_mouse_buttons`]
     [event] mouse_release_event(event: *GraphicsSceneMouseEventType),
     /// 
     /// This event handler, for event *mouseEvent,* can be reimplemented
@@ -1933,10 +1933,10 @@ struct GraphicsScene : Object {
     /// 
     /// Note: See items() for a definition of which items are considered visible by this function.
     /// 
-    /// **See also:** QGraphicsItem::mousePressEvent()
-    /// QGraphicsItem::mouseMoveEvent()
-    /// QGraphicsItem::mouseReleaseEvent()
-    /// QGraphicsItem::setAcceptedMouseButtons()
+    /// **See also:** [`GraphicsItem::mouse_press_event`]
+    /// [`GraphicsItem::mouse_move_event`]
+    /// [`GraphicsItem::mouse_release_event`]
+    /// [`GraphicsItem::set_accepted_mouse_buttons`]
     [event] mouse_double_click_event(event: *GraphicsSceneMouseEventType),
     /// 
     /// This event handler, for event *wheelEvent,* can be reimplemented in a
@@ -1949,7 +1949,7 @@ struct GraphicsScene : Object {
     /// 
     /// Note: See items() for a definition of which items are considered visible by this function.
     /// 
-    /// **See also:** QGraphicsItem::wheelEvent()
+    /// **See also:** [`GraphicsItem::wheel_event`]
     [event] wheel_event(event: *GraphicsSceneWheelEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented in a
@@ -1959,7 +1959,7 @@ struct GraphicsScene : Object {
     /// If no item currently has focus or the current focus item does not
     /// accept input methods, this function does nothing.
     /// 
-    /// **See also:** QGraphicsItem::inputMethodEvent()
+    /// **See also:** [`GraphicsItem::input_method_event`]
     [event] input_method_event(event: *InputMethodEventType),
     /// 
     /// Draws the background of the scene using *painter,* before any items and
@@ -1972,8 +1972,8 @@ struct GraphicsScene : Object {
     /// If all you want is to define a color, texture, or gradient for the
     /// background, you can call setBackgroundBrush() instead.
     /// 
-    /// **See also:** drawForeground()
-    /// drawItems()
+    /// **See also:** [`draw_foreground()`]
+    /// [`draw_items()`]
     [event] draw_background(painter: *PainterType, rect: &RectFType),
     /// 
     /// Draws the foreground of the scene using *painter,* after the background
@@ -1986,8 +1986,8 @@ struct GraphicsScene : Object {
     /// If all you want is to define a color, texture or gradient for the
     /// foreground, you can call setForegroundBrush() instead.
     /// 
-    /// **See also:** drawBackground()
-    /// drawItems()
+    /// **See also:** [`draw_background()`]
+    /// [`draw_items()`]
     [event] draw_foreground(painter: *PainterType, rect: &RectFType),
     /// 
     /// Paints the given *items* using the provided *painter,* after the
@@ -2014,8 +2014,8 @@ struct GraphicsScene : Object {
     /// the QGraphicsView::IndirectPainting flag is given as an Optimization
     /// flag.
     /// 
-    /// **See also:** drawBackground()
-    /// drawForeground()
+    /// **See also:** [`draw_background()`]
+    /// [`draw_foreground()`]
     [event] draw_items(painter: *PainterType, num_items: i32, items: *GraphicsItemType, options: StyleOptionGraphicsItemType, widget: *WidgetType),
     /// 
     /// Finds a new widget to give the keyboard focus to, as appropriate for Tab
@@ -2034,13 +2034,13 @@ struct GraphicsScene : Object {
     /// contains a list of scene rectangles that indicate the area that
     /// has been changed.
     /// 
-    /// **See also:** QGraphicsView::updateScene()
+    /// **See also:** [`GraphicsView::update_scene`]
     [signal] changed(region: [RectFType]),
     /// 
     /// This signal is emitted by QGraphicsScene whenever the scene rect changes.
     /// The *rect* parameter is the new scene rectangle.
     /// 
-    /// **See also:** QGraphicsView::updateSceneRect()
+    /// **See also:** [`GraphicsView::update_scene_rect`]
     [signal] scene_rect_changed(rect: &RectFType),
     /// 
     /// This signal is emitted by QGraphicsScene whenever the selection
@@ -2057,9 +2057,9 @@ struct GraphicsScene : Object {
     /// that contains several selected items, selectionChanged() is emitted only
     /// once after the operation has completed (instead of once for each item).
     /// 
-    /// **See also:** setSelectionArea()
-    /// selectedItems()
-    /// QGraphicsItem::setSelected()
+    /// **See also:** [`set_selection_area()`]
+    /// [`selected_items()`]
+    /// [`GraphicsItem::set_selected`]
     [signal] selection_changed(),
     /// 
     /// This signal is emitted by QGraphicsScene whenever focus changes in the
@@ -2077,6 +2077,20 @@ struct GraphicsScene : Object {
     /// to the input field item, *newFocusItem* would be 0, and *reason* would be
     /// Qt::ActiveWindowFocusReason.
     [signal] focus_item_changed(new_focus: *GraphicsItemType, old_focus: *GraphicsItemType, reason: Rute::FocusReason),
+}
+
+[org_name(QGraphicsScene)]
+enum ItemIndexMethod {
+    BspTreeIndex,
+    NoIndex,
+}
+
+[org_name(QGraphicsScene)]
+enum SceneLayer {
+    ItemLayer,
+    BackgroundLayer,
+    ForegroundLayer,
+    AllLayers,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

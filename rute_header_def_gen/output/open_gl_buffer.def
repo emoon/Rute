@@ -19,6 +19,250 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct OpenGLBuffer {
+    /// 
+    /// Returns the type of buffer represented by this object.
+    type() -> OpenGLBuffer::Type,
+    /// 
+    /// Returns the usage pattern for this buffer object.
+    /// The default value is StaticDraw.
+    /// 
+    /// **See also:** [`set_usage_pattern()`]
+    usage_pattern() -> OpenGLBuffer::UsagePattern,
+    /// 
+    /// Sets the usage pattern for this buffer object to *value.*
+    /// This function must be called before allocate() or write().
+    /// 
+    /// **See also:** [`usage_pattern()`]
+    /// [`allocate()`]
+    /// [`write()`]
+    set_usage_pattern(value: OpenGLBuffer::UsagePattern),
+    /// 
+    /// Creates the buffer object in the OpenGL server. Returns `true` if
+    /// the object was created; false otherwise.
+    /// 
+    /// This function must be called with a current QOpenGLContext.
+    /// The buffer will be bound to and can only be used in
+    /// that context (or any other context that is shared with it).
+    /// 
+    /// This function will return false if the OpenGL implementation
+    /// does not support buffers, or there is no current QOpenGLContext.
+    /// 
+    /// **See also:** [`is_created()`]
+    /// [`allocate()`]
+    /// [`write()`]
+    /// [`destroy()`]
+    create() -> bool,
+    /// 
+    /// Returns `true` if this buffer has been created; false otherwise.
+    /// 
+    /// **See also:** [`create()`]
+    /// [`destroy()`]
+    is_created() -> bool,
+    /// 
+    /// Binds the buffer associated with this object to the current
+    /// OpenGL context. Returns `false` if binding was not possible, usually because
+    /// type() is not supported on this OpenGL implementation.
+    /// 
+    /// The buffer must be bound to the same QOpenGLContext current when create()
+    /// was called, or to another QOpenGLContext that is sharing with it.
+    /// Otherwise, false will be returned from this function.
+    /// 
+    /// **See also:** [`release()`]
+    /// [`create()`]
+    bind() -> bool,
+    /// 
+    /// Releases the buffer associated with this object from the
+    /// current OpenGL context.
+    /// 
+    /// This function must be called with the same QOpenGLContext current
+    /// as when bind() was called on the buffer.
+    /// 
+    /// **See also:** [`bind()`]
+    /// 
+    /// Releases the buffer associated with *type* in the current
+    /// QOpenGLContext.
+    /// 
+    /// This function is a direct call to `glBindBuffer(type, 0)`
+    /// for use when the caller does not know which QOpenGLBuffer has
+    /// been bound to the context but wants to make sure that it
+    /// is released.
+    /// 
+    /// ```
+    /// QOpenGLBuffer::release(QOpenGLBuffer::VertexBuffer);
+    /// ```
+    /// 
+    release(),
+    /// 
+    /// Releases the buffer associated with this object from the
+    /// current OpenGL context.
+    /// 
+    /// This function must be called with the same QOpenGLContext current
+    /// as when bind() was called on the buffer.
+    /// 
+    /// **See also:** [`bind()`]
+    /// 
+    /// Releases the buffer associated with *type* in the current
+    /// QOpenGLContext.
+    /// 
+    /// This function is a direct call to `glBindBuffer(type, 0)`
+    /// for use when the caller does not know which QOpenGLBuffer has
+    /// been bound to the context but wants to make sure that it
+    /// is released.
+    /// 
+    /// ```
+    /// QOpenGLBuffer::release(QOpenGLBuffer::VertexBuffer);
+    /// ```
+    /// 
+    [org_name(release)]
+    [static] release_2(type: OpenGLBuffer::Type),
+    /// 
+    /// Returns the OpenGL identifier associated with this buffer; zero if
+    /// the buffer has not been created.
+    /// 
+    /// **See also:** [`is_created()`]
+    buffer_id() -> GLuint,
+    /// 
+    /// Returns the size of the data in this buffer, for reading operations.
+    /// Returns -1 if fetching the buffer size is not supported, or the
+    /// buffer has not been created.
+    /// 
+    /// It is assumed that this buffer has been bound to the current context.
+    /// 
+    /// **See also:** [`is_created()`]
+    /// [`bind()`]
+    size() -> i32,
+    /// 
+    /// Reads the *count* bytes in this buffer starting at *offset*
+    /// into *data.* Returns `true` on success; false if reading from
+    /// the buffer is not supported. Buffer reading is not supported
+    /// under OpenGL/ES.
+    /// 
+    /// It is assumed that this buffer has been bound to the current context.
+    /// 
+    /// **See also:** [`write()`]
+    /// [`bind()`]
+    read(offset: i32, data: *void, count: i32) -> bool,
+    /// 
+    /// Replaces the *count* bytes of this buffer starting at *offset*
+    /// with the contents of *data.* Any other bytes in the buffer
+    /// will be left unmodified.
+    /// 
+    /// It is assumed that create() has been called on this buffer and that
+    /// it has been bound to the current context.
+    /// 
+    /// **See also:** [`create()`]
+    /// [`read()`]
+    /// [`allocate()`]
+    write(offset: i32, data: *void, count: i32),
+    /// 
+    /// Allocates *count* bytes of space to the buffer, initialized to
+    /// the contents of *data.* Any previous contents will be removed.
+    /// 
+    /// It is assumed that create() has been called on this buffer and that
+    /// it has been bound to the current context.
+    /// 
+    /// **See also:** [`create()`]
+    /// [`read()`]
+    /// [`write()`]
+    /// 
+    /// **Overloads**
+    /// Allocates *count* bytes of space to the buffer. Any previous
+    /// contents will be removed.
+    /// 
+    /// It is assumed that create() has been called on this buffer and that
+    /// it has been bound to the current context.
+    /// 
+    /// **See also:** [`create()`]
+    /// [`write()`]
+    allocate(data: *void, count: i32),
+    /// 
+    /// Allocates *count* bytes of space to the buffer, initialized to
+    /// the contents of *data.* Any previous contents will be removed.
+    /// 
+    /// It is assumed that create() has been called on this buffer and that
+    /// it has been bound to the current context.
+    /// 
+    /// **See also:** [`create()`]
+    /// [`read()`]
+    /// [`write()`]
+    /// 
+    /// **Overloads**
+    /// Allocates *count* bytes of space to the buffer. Any previous
+    /// contents will be removed.
+    /// 
+    /// It is assumed that create() has been called on this buffer and that
+    /// it has been bound to the current context.
+    /// 
+    /// **See also:** [`create()`]
+    /// [`write()`]
+    [org_name(allocate)]
+    allocate_2(count: i32),
+    /// 
+    /// Maps the contents of this buffer into the application's memory
+    /// space and returns a pointer to it. Returns null if memory
+    /// mapping is not possible. The *access* parameter indicates the
+    /// type of access to be performed.
+    /// 
+    /// It is assumed that create() has been called on this buffer and that
+    /// it has been bound to the current context.
+    /// 
+    /// **Note**: This function is only supported under OpenGL ES 2.0 or
+    /// earlier if the `GL_OES_mapbuffer` extension is present.
+    /// 
+    /// **Note**: On OpenGL ES 3.0 and newer, or, in case if desktop OpenGL,
+    /// if `GL_ARB_map_buffer_range` is supported, this function uses
+    /// `glMapBufferRange` instead of `glMapBuffer.`
+    /// 
+    /// **See also:** [`unmap()`]
+    /// [`create()`]
+    /// [`bind()`]
+    /// [`map_range()`]
+    /// 
+    /// Maps the range specified by *offset* and *count* of the contents
+    /// of this buffer into the application's memory space and returns a
+    /// pointer to it. Returns null if memory mapping is not possible.
+    /// The *access* parameter specifies a combination of access flags.
+    /// 
+    /// It is assumed that create() has been called on this buffer and that
+    /// it has been bound to the current context.
+    /// 
+    /// **Note**: This function is not available on OpenGL ES 2.0 and earlier.
+    /// 
+    /// **See also:** [`unmap()`]
+    /// [`create()`]
+    /// [`bind()`]
+    map(access: OpenGLBuffer::Access),
+    /// 
+    /// Maps the range specified by *offset* and *count* of the contents
+    /// of this buffer into the application's memory space and returns a
+    /// pointer to it. Returns null if memory mapping is not possible.
+    /// The *access* parameter specifies a combination of access flags.
+    /// 
+    /// It is assumed that create() has been called on this buffer and that
+    /// it has been bound to the current context.
+    /// 
+    /// **Note**: This function is not available on OpenGL ES 2.0 and earlier.
+    /// 
+    /// **See also:** [`unmap()`]
+    /// [`create()`]
+    /// [`bind()`]
+    map_range(offset: i32, count: i32, access: OpenGLBuffer::RangeAccessFlags),
+    /// 
+    /// Unmaps the buffer after it was mapped into the application's
+    /// memory space with a previous call to map(). Returns `true` if
+    /// the unmap succeeded; false otherwise.
+    /// 
+    /// It is assumed that this buffer has been bound to the current context,
+    /// and that it was previously mapped with map().
+    /// 
+    /// **Note**: This function is only supported under OpenGL ES 2.0 and
+    /// earlier if the `GL_OES_mapbuffer` extension is present.
+    /// 
+    /// **See also:** [`map()`]
+    unmap() -> bool,
+}
+
 [org_name(QOpenGLBuffer)]
 enum Type {
     VertexBuffer,
@@ -55,249 +299,6 @@ enum RangeAccessFlag {
     RangeInvalidateBuffer,
     RangeFlushExplicit,
     RangeUnsynchronized,
-}
-
-
-struct OpenGLBuffer {
-    /// 
-    /// Returns the type of buffer represented by this object.
-    type() -> OpenGLBuffer::Type,
-    /// 
-    /// Returns the usage pattern for this buffer object.
-    /// The default value is StaticDraw.
-    /// 
-    /// **See also:** setUsagePattern()
-    usage_pattern() -> OpenGLBuffer::UsagePattern,
-    /// 
-    /// Sets the usage pattern for this buffer object to *value.*
-    /// This function must be called before allocate() or write().
-    /// 
-    /// **See also:** usagePattern()
-    /// allocate()
-    /// write()
-    set_usage_pattern(value: OpenGLBuffer::UsagePattern),
-    /// 
-    /// Creates the buffer object in the OpenGL server. Returns `true` if
-    /// the object was created; false otherwise.
-    /// 
-    /// This function must be called with a current QOpenGLContext.
-    /// The buffer will be bound to and can only be used in
-    /// that context (or any other context that is shared with it).
-    /// 
-    /// This function will return false if the OpenGL implementation
-    /// does not support buffers, or there is no current QOpenGLContext.
-    /// 
-    /// **See also:** isCreated()
-    /// allocate()
-    /// write()
-    /// destroy()
-    create() -> bool,
-    /// 
-    /// Returns `true` if this buffer has been created; false otherwise.
-    /// 
-    /// **See also:** create()
-    /// destroy()
-    is_created() -> bool,
-    /// 
-    /// Binds the buffer associated with this object to the current
-    /// OpenGL context. Returns `false` if binding was not possible, usually because
-    /// type() is not supported on this OpenGL implementation.
-    /// 
-    /// The buffer must be bound to the same QOpenGLContext current when create()
-    /// was called, or to another QOpenGLContext that is sharing with it.
-    /// Otherwise, false will be returned from this function.
-    /// 
-    /// **See also:** release()
-    /// create()
-    bind() -> bool,
-    /// 
-    /// Releases the buffer associated with this object from the
-    /// current OpenGL context.
-    /// 
-    /// This function must be called with the same QOpenGLContext current
-    /// as when bind() was called on the buffer.
-    /// 
-    /// **See also:** bind()
-    /// 
-    /// Releases the buffer associated with *type* in the current
-    /// QOpenGLContext.
-    /// 
-    /// This function is a direct call to `glBindBuffer(type, 0)`
-    /// for use when the caller does not know which QOpenGLBuffer has
-    /// been bound to the context but wants to make sure that it
-    /// is released.
-    /// 
-    /// ```
-    /// QOpenGLBuffer::release(QOpenGLBuffer::VertexBuffer);
-    /// ```
-    /// 
-    release(),
-    /// 
-    /// Releases the buffer associated with this object from the
-    /// current OpenGL context.
-    /// 
-    /// This function must be called with the same QOpenGLContext current
-    /// as when bind() was called on the buffer.
-    /// 
-    /// **See also:** bind()
-    /// 
-    /// Releases the buffer associated with *type* in the current
-    /// QOpenGLContext.
-    /// 
-    /// This function is a direct call to `glBindBuffer(type, 0)`
-    /// for use when the caller does not know which QOpenGLBuffer has
-    /// been bound to the context but wants to make sure that it
-    /// is released.
-    /// 
-    /// ```
-    /// QOpenGLBuffer::release(QOpenGLBuffer::VertexBuffer);
-    /// ```
-    /// 
-    [static] release_2(type: OpenGLBuffer::Type),
-    /// 
-    /// Returns the OpenGL identifier associated with this buffer; zero if
-    /// the buffer has not been created.
-    /// 
-    /// **See also:** isCreated()
-    buffer_id() -> i32,
-    /// 
-    /// Returns the size of the data in this buffer, for reading operations.
-    /// Returns -1 if fetching the buffer size is not supported, or the
-    /// buffer has not been created.
-    /// 
-    /// It is assumed that this buffer has been bound to the current context.
-    /// 
-    /// **See also:** isCreated()
-    /// bind()
-    size() -> i32,
-    /// 
-    /// Reads the *count* bytes in this buffer starting at *offset*
-    /// into *data.* Returns `true` on success; false if reading from
-    /// the buffer is not supported. Buffer reading is not supported
-    /// under OpenGL/ES.
-    /// 
-    /// It is assumed that this buffer has been bound to the current context.
-    /// 
-    /// **See also:** write()
-    /// bind()
-    read(offset: i32, data: *void, count: i32) -> bool,
-    /// 
-    /// Replaces the *count* bytes of this buffer starting at *offset*
-    /// with the contents of *data.* Any other bytes in the buffer
-    /// will be left unmodified.
-    /// 
-    /// It is assumed that create() has been called on this buffer and that
-    /// it has been bound to the current context.
-    /// 
-    /// **See also:** create()
-    /// read()
-    /// allocate()
-    write(offset: i32, data: *void, count: i32),
-    /// 
-    /// Allocates *count* bytes of space to the buffer, initialized to
-    /// the contents of *data.* Any previous contents will be removed.
-    /// 
-    /// It is assumed that create() has been called on this buffer and that
-    /// it has been bound to the current context.
-    /// 
-    /// **See also:** create()
-    /// read()
-    /// write()
-    /// 
-    /// **Overloads**
-    /// Allocates *count* bytes of space to the buffer. Any previous
-    /// contents will be removed.
-    /// 
-    /// It is assumed that create() has been called on this buffer and that
-    /// it has been bound to the current context.
-    /// 
-    /// **See also:** create()
-    /// write()
-    allocate(data: *void, count: i32),
-    /// 
-    /// Allocates *count* bytes of space to the buffer, initialized to
-    /// the contents of *data.* Any previous contents will be removed.
-    /// 
-    /// It is assumed that create() has been called on this buffer and that
-    /// it has been bound to the current context.
-    /// 
-    /// **See also:** create()
-    /// read()
-    /// write()
-    /// 
-    /// **Overloads**
-    /// Allocates *count* bytes of space to the buffer. Any previous
-    /// contents will be removed.
-    /// 
-    /// It is assumed that create() has been called on this buffer and that
-    /// it has been bound to the current context.
-    /// 
-    /// **See also:** create()
-    /// write()
-    allocate_2(count: i32),
-    /// 
-    /// Maps the contents of this buffer into the application's memory
-    /// space and returns a pointer to it. Returns null if memory
-    /// mapping is not possible. The *access* parameter indicates the
-    /// type of access to be performed.
-    /// 
-    /// It is assumed that create() has been called on this buffer and that
-    /// it has been bound to the current context.
-    /// 
-    /// **Note**: This function is only supported under OpenGL ES 2.0 or
-    /// earlier if the `GL_OES_mapbuffer` extension is present.
-    /// 
-    /// **Note**: On OpenGL ES 3.0 and newer, or, in case if desktop OpenGL,
-    /// if `GL_ARB_map_buffer_range` is supported, this function uses
-    /// `glMapBufferRange` instead of `glMapBuffer.`
-    /// 
-    /// **See also:** unmap()
-    /// create()
-    /// bind()
-    /// mapRange()
-    /// 
-    /// Maps the range specified by *offset* and *count* of the contents
-    /// of this buffer into the application's memory space and returns a
-    /// pointer to it. Returns null if memory mapping is not possible.
-    /// The *access* parameter specifies a combination of access flags.
-    /// 
-    /// It is assumed that create() has been called on this buffer and that
-    /// it has been bound to the current context.
-    /// 
-    /// **Note**: This function is not available on OpenGL ES 2.0 and earlier.
-    /// 
-    /// **See also:** unmap()
-    /// create()
-    /// bind()
-    map(access: OpenGLBuffer::Access),
-    /// 
-    /// Maps the range specified by *offset* and *count* of the contents
-    /// of this buffer into the application's memory space and returns a
-    /// pointer to it. Returns null if memory mapping is not possible.
-    /// The *access* parameter specifies a combination of access flags.
-    /// 
-    /// It is assumed that create() has been called on this buffer and that
-    /// it has been bound to the current context.
-    /// 
-    /// **Note**: This function is not available on OpenGL ES 2.0 and earlier.
-    /// 
-    /// **See also:** unmap()
-    /// create()
-    /// bind()
-    map_range(offset: i32, count: i32, access: OpenGLBuffer::RangeAccessFlags),
-    /// 
-    /// Unmaps the buffer after it was mapped into the application's
-    /// memory space with a previous call to map(). Returns `true` if
-    /// the unmap succeeded; false otherwise.
-    /// 
-    /// It is assumed that this buffer has been bound to the current context,
-    /// and that it was previously mapped with map().
-    /// 
-    /// **Note**: This function is only supported under OpenGL ES 2.0 and
-    /// earlier if the `GL_OES_mapbuffer` extension is present.
-    /// 
-    /// **See also:** map()
-    unmap() -> bool,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

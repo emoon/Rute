@@ -6,21 +6,20 @@
 /// This mechanism is free for you to use in your Qt applications. Qt
 /// doesn't use it for any of its classes.
 /// 
-/// **See also:** QMetaObject
+/// **See also:** [`MetaObject`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct MetaClassInfo {
     /// 
     /// Returns the name of this item.
     /// 
-    /// **See also:** value()
+    /// **See also:** [`value()`]
     name() -> char?,
     /// 
     /// Returns the value of this item.
     /// 
-    /// **See also:** name()
+    /// **See also:** [`name()`]
     value() -> char?,
     enclosing_meta_object() -> MetaObject?,
 }

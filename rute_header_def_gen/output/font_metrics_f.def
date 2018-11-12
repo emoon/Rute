@@ -32,13 +32,12 @@
 /// 
 /// Example:
 /// 
-/// **See also:** QFont
-/// QFontInfo
-/// QFontDatabase
+/// **See also:** [`Font`]
+/// [`FontInfo`]
+/// [`FontDatabase`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct FontMetricsF {
     /// 
     /// Swaps this font metrics instance with *other.* This function is
@@ -54,7 +53,7 @@ struct FontMetricsF {
     /// an exotic language, so it is possible (though rare) that this
     /// value will be too small.
     /// 
-    /// **See also:** descent()
+    /// **See also:** [`descent()`]
     ascent() -> f32,
     /// 
     /// Returns the cap height of the font.
@@ -64,7 +63,7 @@ struct FontMetricsF {
     /// that are flat - such as H or I - as opposed to round letters such
     /// as O, or pointed letters like A, both of which may display overshoot.
     /// 
-    /// **See also:** ascent()
+    /// **See also:** [`ascent()`]
     cap_height() -> f32,
     /// 
     /// Returns the descent of the font.
@@ -75,31 +74,31 @@ struct FontMetricsF {
     /// e.g. to accommodate an unusual character in an exotic language, so
     /// it is possible (though rare) that this value will be too small.
     /// 
-    /// **See also:** ascent()
+    /// **See also:** [`ascent()`]
     descent() -> f32,
     /// 
     /// Returns the height of the font.
     /// 
     /// This is always equal to ascent()+descent().
     /// 
-    /// **See also:** leading()
-    /// lineSpacing()
+    /// **See also:** [`leading()`]
+    /// [`line_spacing()`]
     height() -> f32,
     /// 
     /// Returns the leading of the font.
     /// 
     /// This is the natural inter-line spacing.
     /// 
-    /// **See also:** height()
-    /// lineSpacing()
+    /// **See also:** [`height()`]
+    /// [`line_spacing()`]
     leading() -> f32,
     /// 
     /// Returns the distance from one base line to the next.
     /// 
     /// This value is always equal to leading()+height().
     /// 
-    /// **See also:** height()
-    /// leading()
+    /// **See also:** [`height()`]
+    /// [`leading()`]
     line_spacing() -> f32,
     /// 
     /// Returns the minimum left bearing of the font.
@@ -109,8 +108,8 @@ struct FontMetricsF {
     /// 
     /// Note that this function can be very slow if the font is large.
     /// 
-    /// **See also:** minRightBearing()
-    /// leftBearing()
+    /// **See also:** [`min_right_bearing()`]
+    /// [`left_bearing()`]
     min_left_bearing() -> f32,
     /// 
     /// Returns the minimum right bearing of the font.
@@ -120,8 +119,8 @@ struct FontMetricsF {
     /// 
     /// Note that this function can be very slow if the font is large.
     /// 
-    /// **See also:** minLeftBearing()
-    /// rightBearing()
+    /// **See also:** [`min_left_bearing()`]
+    /// [`right_bearing()`]
     min_right_bearing() -> f32,
     /// 
     /// Returns the width of the widest character in the font.
@@ -154,9 +153,9 @@ struct FontMetricsF {
     /// 
     /// See width() for a graphical description of this metric.
     /// 
-    /// **See also:** rightBearing()
-    /// minLeftBearing()
-    /// width()
+    /// **See also:** [`right_bearing()`]
+    /// [`min_left_bearing()`]
+    /// [`width()`]
     left_bearing(arg0: CharType) -> f32,
     /// 
     /// Returns the right bearing of character *ch* in the font.
@@ -168,9 +167,9 @@ struct FontMetricsF {
     /// 
     /// See width() for a graphical description of this metric.
     /// 
-    /// **See also:** leftBearing()
-    /// minRightBearing()
-    /// width()
+    /// **See also:** [`left_bearing()`]
+    /// [`min_right_bearing()`]
+    /// [`width()`]
     right_bearing(arg0: CharType) -> f32,
     /// 
     /// Returns the width in pixels of the characters in the given *text.*
@@ -180,7 +179,7 @@ struct FontMetricsF {
     /// describing the pixels this string will cover whereas width()
     /// returns the distance to where the next string should be drawn.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     /// 
     /// **Overloads**
     /// ![Bearings](bearings.png)
@@ -201,7 +200,7 @@ struct FontMetricsF {
     /// processing strings cannot be taken into account. When implementing
     /// an interactive text control, use QTextLayout instead.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     width(string: String) -> f32,
     /// 
     /// Returns the width in pixels of the characters in the given *text.*
@@ -211,7 +210,7 @@ struct FontMetricsF {
     /// describing the pixels this string will cover whereas width()
     /// returns the distance to where the next string should be drawn.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     /// 
     /// **Overloads**
     /// ![Bearings](bearings.png)
@@ -232,7 +231,8 @@ struct FontMetricsF {
     /// processing strings cannot be taken into account. When implementing
     /// an interactive text control, use QTextLayout instead.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
+    [org_name(width)]
     width_2(arg0: CharType) -> f32,
     /// 
     /// Returns the horizontal advance in pixels of the first *length* characters of *text.* If *length* is negative (the default), the entire string is
@@ -241,7 +241,7 @@ struct FontMetricsF {
     /// The advance is the distance appropriate for drawing a subsequent
     /// character after *text.*
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     /// 
     /// **Overloads**
     /// ![Bearings](bearings.png)
@@ -262,7 +262,7 @@ struct FontMetricsF {
     /// processing strings cannot be taken into account. When implementing
     /// an interactive text control, use QTextLayout instead.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     horizontal_advance(string: String, length: i32) -> f32,
     /// 
     /// Returns the horizontal advance in pixels of the first *length* characters of *text.* If *length* is negative (the default), the entire string is
@@ -271,7 +271,7 @@ struct FontMetricsF {
     /// The advance is the distance appropriate for drawing a subsequent
     /// character after *text.*
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     /// 
     /// **Overloads**
     /// ![Bearings](bearings.png)
@@ -292,7 +292,8 @@ struct FontMetricsF {
     /// processing strings cannot be taken into account. When implementing
     /// an interactive text control, use QTextLayout instead.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
+    [org_name(horizontalAdvance)]
     horizontal_advance_2(arg0: CharType) -> f32,
     /// 
     /// Returns the bounding rectangle of the characters in the string
@@ -312,9 +313,9 @@ struct FontMetricsF {
     /// The height of the bounding rectangle is at least as large as the
     /// value returned height().
     /// 
-    /// **See also:** width()
-    /// height()
-    /// QPainter::boundingRect()
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`Painter::bounding_rect`]
     /// 
     /// Returns the bounding rectangle of the character *ch* relative to
     /// the left-most point on the base line.
@@ -325,7 +326,7 @@ struct FontMetricsF {
     /// Note that the rectangle usually extends both above and below the
     /// base line.
     /// 
-    /// **See also:** width()
+    /// **See also:** [`width()`]
     /// 
     /// **Overloads**
     /// Returns the bounding rectangle of the characters in the given *text.*
@@ -378,9 +379,9 @@ struct FontMetricsF {
     /// fontHeight() and lineSpacing() are used to calculate the height,
     /// rather than individual character heights.
     /// 
-    /// **See also:** width()
-    /// QPainter::boundingRect()
-    /// Qt::Alignment
+    /// **See also:** [`width()`]
+    /// [`Painter::bounding_rect`]
+    /// [`t::alignment()`]
     bounding_rect(string: String) -> RectF,
     /// 
     /// Returns the bounding rectangle of the characters in the string
@@ -400,9 +401,9 @@ struct FontMetricsF {
     /// The height of the bounding rectangle is at least as large as the
     /// value returned height().
     /// 
-    /// **See also:** width()
-    /// height()
-    /// QPainter::boundingRect()
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`Painter::bounding_rect`]
     /// 
     /// Returns the bounding rectangle of the character *ch* relative to
     /// the left-most point on the base line.
@@ -413,7 +414,7 @@ struct FontMetricsF {
     /// Note that the rectangle usually extends both above and below the
     /// base line.
     /// 
-    /// **See also:** width()
+    /// **See also:** [`width()`]
     /// 
     /// **Overloads**
     /// Returns the bounding rectangle of the characters in the given *text.*
@@ -466,9 +467,10 @@ struct FontMetricsF {
     /// fontHeight() and lineSpacing() are used to calculate the height,
     /// rather than individual character heights.
     /// 
-    /// **See also:** width()
-    /// QPainter::boundingRect()
-    /// Qt::Alignment
+    /// **See also:** [`width()`]
+    /// [`Painter::bounding_rect`]
+    /// [`t::alignment()`]
+    [org_name(boundingRect)]
     bounding_rect_2(arg0: CharType) -> RectF,
     /// 
     /// Returns the bounding rectangle of the characters in the string
@@ -488,9 +490,9 @@ struct FontMetricsF {
     /// The height of the bounding rectangle is at least as large as the
     /// value returned height().
     /// 
-    /// **See also:** width()
-    /// height()
-    /// QPainter::boundingRect()
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`Painter::bounding_rect`]
     /// 
     /// Returns the bounding rectangle of the character *ch* relative to
     /// the left-most point on the base line.
@@ -501,7 +503,7 @@ struct FontMetricsF {
     /// Note that the rectangle usually extends both above and below the
     /// base line.
     /// 
-    /// **See also:** width()
+    /// **See also:** [`width()`]
     /// 
     /// **Overloads**
     /// Returns the bounding rectangle of the characters in the given *text.*
@@ -554,9 +556,10 @@ struct FontMetricsF {
     /// fontHeight() and lineSpacing() are used to calculate the height,
     /// rather than individual character heights.
     /// 
-    /// **See also:** width()
-    /// QPainter::boundingRect()
-    /// Qt::Alignment
+    /// **See also:** [`width()`]
+    /// [`Painter::bounding_rect`]
+    /// [`t::alignment()`]
+    [org_name(boundingRect)]
     bounding_rect_3(r: &RectFType, flags: i32, string: String, tabstops: i32, tabarray: *i32) -> RectF,
     /// 
     /// Returns the size in pixels of the characters in the given *text.*
@@ -580,7 +583,7 @@ struct FontMetricsF {
     /// Note: Despite the different actual character heights, the heights of the
     /// bounding rectangles of and are the same.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     size(flags: i32, str: String, tabstops: i32, tabarray: *i32) -> SizeF,
     /// 
     /// Returns a tight bounding rectangle around the characters in the
@@ -600,9 +603,9 @@ struct FontMetricsF {
     /// 
     /// **Warning**: Calling this method is very slow on Windows.
     /// 
-    /// **See also:** width()
-    /// height()
-    /// boundingRect()
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`bounding_rect()`]
     tight_bounding_rect(text: String) -> RectF,
     /// 
     /// If the string *text* is wider than *width,* returns an elided
@@ -628,25 +631,25 @@ struct FontMetricsF {
     /// Returns the distance from the base line to where an underscore
     /// should be drawn.
     /// 
-    /// **See also:** overlinePos()
-    /// strikeOutPos()
-    /// lineWidth()
+    /// **See also:** [`overline_pos()`]
+    /// [`strike_out_pos()`]
+    /// [`line_width()`]
     underline_pos() -> f32,
     /// 
     /// Returns the distance from the base line to where an overline
     /// should be drawn.
     /// 
-    /// **See also:** underlinePos()
-    /// strikeOutPos()
-    /// lineWidth()
+    /// **See also:** [`underline_pos()`]
+    /// [`strike_out_pos()`]
+    /// [`line_width()`]
     overline_pos() -> f32,
     /// 
     /// Returns the width of the underline and strikeout lines, adjusted
     /// for the point size of the font.
     /// 
-    /// **See also:** underlinePos()
-    /// overlinePos()
-    /// strikeOutPos()
+    /// **See also:** [`underline_pos()`]
+    /// [`overline_pos()`]
+    /// [`strike_out_pos()`]
     line_width() -> f32,
 }
 

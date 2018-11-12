@@ -244,10 +244,10 @@
 /// * setColorCount()
 /// * Resizes the color table. Only monochrome and 8-bit formats.
 /// 
-/// **See also:** QImageReader
-/// QImageWriter
-/// QPixmap
-/// QSvgRenderer
+/// **See also:** [`ImageReader`]
+/// [`ImageWriter`]
+/// [`Pixmap`]
+/// [`SvgRenderer`]
 /// {Image Composition Example}
 /// {Image Viewer Example}
 /// {Scribble Example}
@@ -255,42 +255,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QImage)]
-enum InvertMode {
-    InvertRgb,
-    InvertRgba,
-}
-
-[org_name(QImage)]
-enum Format {
-    Format_Invalid,
-    Format_Mono,
-    Format_MonoLSB,
-    Format_Indexed8,
-    Format_RGB32,
-    Format_ARGB32,
-    Format_ARGB32_Premultiplied,
-    Format_RGB16,
-    Format_ARGB8565_Premultiplied,
-    Format_RGB666,
-    Format_ARGB6666_Premultiplied,
-    Format_RGB555,
-    Format_ARGB8555_Premultiplied,
-    Format_RGB888,
-    Format_RGB444,
-    Format_ARGB4444_Premultiplied,
-    Format_RGBX8888,
-    Format_RGBA8888,
-    Format_RGBA8888_Premultiplied,
-    Format_BGR30,
-    Format_A2BGR30_Premultiplied,
-    Format_RGB30,
-    Format_A2RGB30_Premultiplied,
-    Format_Alpha8,
-    Format_Grayscale8,
-    NImageFormats,
-}
-
 struct Image : PaintDevice {
     /// 
     /// Swaps image *other* with this image. This operation is very
@@ -325,7 +289,7 @@ struct Image : PaintDevice {
     /// If the given *rectangle* is a null rectangle the entire image is
     /// copied.
     /// 
-    /// **See also:** QImage()
+    /// **See also:** [`q_image()`]
     copy(rect: &RectType) -> Image,
     /// 
     /// **Overloads**
@@ -348,7 +312,8 @@ struct Image : PaintDevice {
     /// If the given *rectangle* is a null rectangle the entire image is
     /// copied.
     /// 
-    /// **See also:** QImage()
+    /// **See also:** [`q_image()`]
+    [org_name(copy)]
     copy_2(x: i32, y: i32, w: i32, h: i32) -> Image,
     /// 
     /// Returns the format of the image.
@@ -386,6 +351,7 @@ struct Image : PaintDevice {
     /// Conversion from RGB formats to indexed formats is a slow operation
     /// and will use a straightforward nearest color approach, with no
     /// dithering.
+    [org_name(convertToFormat)]
     convert_to_format_2(f: Image::Format, flags: Rute::ImageConversionFlags) -> Image,
     /// 
     /// Returns a copy of the image in the given *format.*
@@ -402,6 +368,7 @@ struct Image : PaintDevice {
     /// Conversion from RGB formats to indexed formats is a slow operation
     /// and will use a straightforward nearest color approach, with no
     /// dithering.
+    [org_name(convertToFormat)]
     convert_to_format_3(f: Image::Format, color_table: [RgbType], flags: Rute::ImageConversionFlags) -> Image,
     /// 
     /// Changes the format of the image to *format* without changing the
@@ -421,8 +388,8 @@ struct Image : PaintDevice {
     /// **Warning**: If the image is not detached, this will cause the data to be
     /// copied.
     /// 
-    /// **See also:** hasAlphaChannel()
-    /// convertToFormat()
+    /// **See also:** [`has_alpha_channel()`]
+    /// [`convert_to_format()`]
     reinterpret_as_format(f: Image::Format) -> bool,
     /// 
     /// Returns the width of the image.
@@ -441,9 +408,9 @@ struct Image : PaintDevice {
     /// 
     /// Returns the image data size in bytes.
     /// 
-    /// **See also:** byteCount()
-    /// bytesPerLine()
-    /// bits()
+    /// **See also:** [`byte_count()`]
+    /// [`bytes_per_line()`]
+    /// [`bits()`]
     /// {QImage#Image Information}{Image
     /// Information}
     size() -> Size,
@@ -461,8 +428,8 @@ struct Image : PaintDevice {
     /// 
     /// The supported depths are 1, 8, 16, 24 and 32.
     /// 
-    /// **See also:** bitPlaneCount()
-    /// convertToFormat()
+    /// **See also:** [`bit_plane_count()`]
+    /// [`convert_to_format()`]
     /// {QImage#Image Formats}{Image Formats}
     /// {QImage#Image Information}{Image Information}
     /// 
@@ -474,7 +441,7 @@ struct Image : PaintDevice {
     /// images do not use color tables, but instead encode pixel values as
     /// ARGB quadruplets.
     /// 
-    /// **See also:** setColorCount()
+    /// **See also:** [`set_color_count()`]
     /// {QImage#Image Information}{Image Information}
     color_count() -> i32,
     /// 
@@ -485,8 +452,8 @@ struct Image : PaintDevice {
     /// (i.e. smaller than) the depth when the image format contains
     /// unused bits.
     /// 
-    /// **See also:** depth()
-    /// format()
+    /// **See also:** [`depth()`]
+    /// [`format()`]
     /// {QImage#Image Formats}{Image Formats}
     bit_plane_count() -> i32,
     /// 
@@ -496,15 +463,15 @@ struct Image : PaintDevice {
     /// images do not use color tables, but instead encode pixel values as
     /// ARGB quadruplets.
     /// 
-    /// **See also:** setColorCount()
+    /// **See also:** [`set_color_count()`]
     /// {QImage#Image Information}{Image Information}
     /// 
     /// Returns a list of the colors contained in the image's color table,
     /// or an empty list if the image does not have a color table
     /// 
-    /// **See also:** setColorTable()
-    /// colorCount()
-    /// color()
+    /// **See also:** [`set_color_table()`]
+    /// [`color_count()`]
+    /// [`color()`]
     /// 
     /// Returns the color in the color table at index *i.* The first
     /// color is at index 0.
@@ -513,8 +480,8 @@ struct Image : PaintDevice {
     /// quadruplets (QRgb). Use the qAlpha(), qRed(), qGreen(), and
     /// qBlue() functions to get the color value components.
     /// 
-    /// **See also:** setColor()
-    /// pixelIndex()
+    /// **See also:** [`set_color()`]
+    /// [`pixel_index()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     color(i: i32) -> Rgb,
@@ -525,9 +492,9 @@ struct Image : PaintDevice {
     /// If *index* is outside the current size of the color table, it is
     /// expanded with setColorCount().
     /// 
-    /// **See also:** color()
-    /// colorCount()
-    /// setColorTable()
+    /// **See also:** [`color()`]
+    /// [`color_count()`]
+    /// [`set_color_table()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     /// 
@@ -540,9 +507,9 @@ struct Image : PaintDevice {
     /// have entries for all the pixel/index values present in the image,
     /// otherwise the results are undefined.
     /// 
-    /// **See also:** colorCount()
-    /// colorTable()
-    /// setColor()
+    /// **See also:** [`color_count()`]
+    /// [`color_table()`]
+    /// [`set_color()`]
     /// {QImage#Image
     /// Transformations}{Image Transformations}
     set_color(i: i32, c: RgbType),
@@ -556,9 +523,9 @@ struct Image : PaintDevice {
     /// have entries for all the pixel/index values present in the image,
     /// otherwise the results are undefined.
     /// 
-    /// **See also:** colorCount()
-    /// colorTable()
-    /// setColor()
+    /// **See also:** [`color_count()`]
+    /// [`color_table()`]
+    /// [`set_color()`]
     /// {QImage#Image
     /// Transformations}{Image Transformations}
     set_color_count(arg0: i32),
@@ -569,7 +536,7 @@ struct Image : PaintDevice {
     /// 
     /// Note that this function is slow for images without color table.
     /// 
-    /// **See also:** isGrayscale()
+    /// **See also:** [`is_grayscale()`]
     all_gray() -> bool,
     /// 
     /// For 32-bit images, this function is equivalent to allGray().
@@ -578,7 +545,7 @@ struct Image : PaintDevice {
     /// color(i) is QRgb(i, i, i) for all indexes of the color table;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** allGray()
+    /// **See also:** [`all_gray()`]
     /// {QImage#Image Formats}{Image Formats}
     is_grayscale() -> bool,
     /// 
@@ -591,9 +558,9 @@ struct Image : PaintDevice {
     /// data, thus ensuring that this QImage is the only one using the
     /// current return value.
     /// 
-    /// **See also:** scanLine()
-    /// sizeInBytes()
-    /// constBits()
+    /// **See also:** [`scan_line()`]
+    /// [`size_in_bytes()`]
+    /// [`const_bits()`]
     /// 
     /// **Overloads**
     /// Note that QImage uses [implicit data
@@ -611,15 +578,16 @@ struct Image : PaintDevice {
     /// data, thus ensuring that this QImage is the only one using the
     /// current return value.
     /// 
-    /// **See also:** scanLine()
-    /// sizeInBytes()
-    /// constBits()
+    /// **See also:** [`scan_line()`]
+    /// [`size_in_bytes()`]
+    /// [`const_bits()`]
     /// 
     /// **Overloads**
     /// Note that QImage uses [implicit data
     /// sharing](Implicit%20Data%20Sharing)
     /// , but this function does *not* perform a deep copy of the
     /// shared pixel data, because the returned data is const.
+    [org_name(bits)]
     bits_2() -> uchar?,
     /// 
     /// Returns a pointer to the first pixel data.
@@ -629,8 +597,8 @@ struct Image : PaintDevice {
     /// , but this function does *not* perform a deep copy of the
     /// shared pixel data, because the returned data is const.
     /// 
-    /// **See also:** bits()
-    /// constScanLine()
+    /// **See also:** [`bits()`]
+    /// [`const_scan_line()`]
     const_bits() -> uchar?,
     /// 
     /// Returns the number of bytes occupied by the image data.
@@ -638,21 +606,21 @@ struct Image : PaintDevice {
     /// Note this method should never be called on an image larger than 2 gigabytes.
     /// Instead use sizeInBytes().
     /// 
-    /// **See also:** sizeInBytes()
-    /// bytesPerLine()
-    /// bits()
+    /// **See also:** [`size_in_bytes()`]
+    /// [`bytes_per_line()`]
+    /// [`bits()`]
     /// {QImage#Image Information}{Image
     /// Information}
     byte_count() -> i32,
     /// 
     /// Returns the image data size in bytes.
     /// 
-    /// **See also:** byteCount()
-    /// bytesPerLine()
-    /// bits()
+    /// **See also:** [`byte_count()`]
+    /// [`bytes_per_line()`]
+    /// [`bits()`]
     /// {QImage#Image Information}{Image
     /// Information}
-    size_in_bytes() -> i32,
+    size_in_bytes() -> qsizetype,
     /// 
     /// Returns a pointer to the pixel data at the scanline with index *i.* The first scanline is at index 0.
     /// 
@@ -665,8 +633,8 @@ struct Image : PaintDevice {
     /// the underlying platform. Use qRed(), qGreen(), qBlue(), and
     /// qAlpha() to access the pixels.
     /// 
-    /// **See also:** bytesPerLine()
-    /// bits()
+    /// **See also:** [`bytes_per_line()`]
+    /// [`bits()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}, constScanLine()
     /// 
@@ -684,12 +652,13 @@ struct Image : PaintDevice {
     /// the underlying platform. Use qRed(), qGreen(), qBlue(), and
     /// qAlpha() to access the pixels.
     /// 
-    /// **See also:** bytesPerLine()
-    /// bits()
+    /// **See also:** [`bytes_per_line()`]
+    /// [`bits()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}, constScanLine()
     /// 
     /// **Overloads**
+    [org_name(scanLine)]
     scan_line_2(arg0: i32) -> uchar?,
     /// 
     /// Returns a pointer to the pixel data at the scanline with index *i.* The first scanline is at index 0.
@@ -701,22 +670,22 @@ struct Image : PaintDevice {
     /// , but this function does *not* perform a deep copy of the
     /// shared pixel data, because the returned data is const.
     /// 
-    /// **See also:** scanLine()
-    /// constBits()
+    /// **See also:** [`scan_line()`]
+    /// [`const_bits()`]
     const_scan_line(arg0: i32) -> uchar?,
     /// 
     /// Returns the number of bytes per image scanline.
     /// 
     /// This is equivalent to sizeInBytes() / height() if height() is non-zero.
     /// 
-    /// **See also:** scanLine()
+    /// **See also:** [`scan_line()`]
     bytes_per_line() -> i32,
     /// 
     /// Returns `true` if *pos* is a valid coordinate pair within the
     /// image; otherwise returns `false.`
     /// 
-    /// **See also:** rect()
-    /// QRect::contains()
+    /// **See also:** [`rect()`]
+    /// [`Rect::contains`]
     /// 
     /// **Overloads**
     /// Returns `true` if QPoint( *x,* *y)* is a valid coordinate pair
@@ -726,12 +695,13 @@ struct Image : PaintDevice {
     /// Returns `true` if *pos* is a valid coordinate pair within the
     /// image; otherwise returns `false.`
     /// 
-    /// **See also:** rect()
-    /// QRect::contains()
+    /// **See also:** [`rect()`]
+    /// [`Rect::contains`]
     /// 
     /// **Overloads**
     /// Returns `true` if QPoint( *x,* *y)* is a valid coordinate pair
     /// within the image; otherwise returns `false.`
+    [org_name(valid)]
     valid_2(pt: &PointType) -> bool,
     /// 
     /// Returns the pixel index at the given *position.*
@@ -739,8 +709,8 @@ struct Image : PaintDevice {
     /// If *position* is not valid, or if the image is not a paletted
     /// image (depth() > 8), the results are undefined.
     /// 
-    /// **See also:** valid()
-    /// depth()
+    /// **See also:** [`valid()`]
+    /// [`depth()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     /// 
     /// **Overloads**
@@ -752,12 +722,13 @@ struct Image : PaintDevice {
     /// If *position* is not valid, or if the image is not a paletted
     /// image (depth() > 8), the results are undefined.
     /// 
-    /// **See also:** valid()
-    /// depth()
+    /// **See also:** [`valid()`]
+    /// [`depth()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     /// 
     /// **Overloads**
     /// Returns the pixel index at ( *x,* *y).*
+    [org_name(pixelIndex)]
     pixel_index_2(pt: &PointType) -> i32,
     /// 
     /// Returns the pixel index at the given *position.*
@@ -765,8 +736,8 @@ struct Image : PaintDevice {
     /// If *position* is not valid, or if the image is not a paletted
     /// image (depth() > 8), the results are undefined.
     /// 
-    /// **See also:** valid()
-    /// depth()
+    /// **See also:** [`valid()`]
+    /// [`depth()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     /// 
     /// **Overloads**
@@ -780,10 +751,10 @@ struct Image : PaintDevice {
     /// manipulations. Use constBits() or constScanLine() when many
     /// pixels needs to be read.
     /// 
-    /// **See also:** setPixel()
-    /// valid()
-    /// constBits()
-    /// constScanLine()
+    /// **See also:** [`set_pixel()`]
+    /// [`valid()`]
+    /// [`const_bits()`]
+    /// [`const_scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     /// 
@@ -798,10 +769,10 @@ struct Image : PaintDevice {
     /// manipulations. Use constBits() or constScanLine() when many
     /// pixels needs to be read.
     /// 
-    /// **See also:** setPixel()
-    /// valid()
-    /// constBits()
-    /// constScanLine()
+    /// **See also:** [`set_pixel()`]
+    /// [`valid()`]
+    /// [`const_bits()`]
+    /// [`const_scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     /// 
@@ -816,8 +787,8 @@ struct Image : PaintDevice {
     /// If *position* is not valid, or if the image is not a paletted
     /// image (depth() > 8), the results are undefined.
     /// 
-    /// **See also:** valid()
-    /// depth()
+    /// **See also:** [`valid()`]
+    /// [`depth()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     /// 
     /// **Overloads**
@@ -831,10 +802,10 @@ struct Image : PaintDevice {
     /// manipulations. Use constBits() or constScanLine() when many
     /// pixels needs to be read.
     /// 
-    /// **See also:** setPixel()
-    /// valid()
-    /// constBits()
-    /// constScanLine()
+    /// **See also:** [`set_pixel()`]
+    /// [`valid()`]
+    /// [`const_bits()`]
+    /// [`const_scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     /// 
@@ -849,10 +820,10 @@ struct Image : PaintDevice {
     /// manipulations. Use constBits() or constScanLine() when many
     /// pixels needs to be read.
     /// 
-    /// **See also:** setPixel()
-    /// valid()
-    /// constBits()
-    /// constScanLine()
+    /// **See also:** [`set_pixel()`]
+    /// [`valid()`]
+    /// [`const_bits()`]
+    /// [`const_scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     /// 
@@ -860,6 +831,7 @@ struct Image : PaintDevice {
     /// Returns the color of the pixel at coordinates ( *x,* *y)* as a QColor.
     /// 
     /// Returns the QImage::Format as a QPixelFormat
+    [org_name(pixel)]
     pixel_2(pt: &PointType) -> Rgb,
     /// 
     /// Sets the pixel index or color at the given *position* to *index_or_rgb.*
@@ -875,7 +847,7 @@ struct Image : PaintDevice {
     /// `detach()` function called within; if performance is a concern, we
     /// recommend the use of scanLine() or bits() to access pixel data directly.
     /// 
-    /// **See also:** pixel()
+    /// **See also:** [`pixel()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     /// 
     /// **Overloads**
@@ -890,9 +862,9 @@ struct Image : PaintDevice {
     /// `detach()` function called within; if performance is a concern, we
     /// recommend the use of scanLine() or bits() to access pixel data directly.
     /// 
-    /// **See also:** pixel()
-    /// bits()
-    /// scanLine()
+    /// **See also:** [`pixel()`]
+    /// [`bits()`]
+    /// [`scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     /// 
     /// **Overloads**
@@ -912,7 +884,7 @@ struct Image : PaintDevice {
     /// `detach()` function called within; if performance is a concern, we
     /// recommend the use of scanLine() or bits() to access pixel data directly.
     /// 
-    /// **See also:** pixel()
+    /// **See also:** [`pixel()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     /// 
     /// **Overloads**
@@ -927,13 +899,14 @@ struct Image : PaintDevice {
     /// `detach()` function called within; if performance is a concern, we
     /// recommend the use of scanLine() or bits() to access pixel data directly.
     /// 
-    /// **See also:** pixel()
-    /// bits()
-    /// scanLine()
+    /// **See also:** [`pixel()`]
+    /// [`bits()`]
+    /// [`scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     /// 
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
+    [org_name(setPixel)]
     set_pixel_2(pt: &PointType, index_or_rgb: uint),
     /// 
     /// Returns the color of the pixel at the given *position* as a QColor.
@@ -944,10 +917,10 @@ struct Image : PaintDevice {
     /// manipulations. Use constBits() or constScanLine() when many
     /// pixels needs to be read.
     /// 
-    /// **See also:** setPixel()
-    /// valid()
-    /// constBits()
-    /// constScanLine()
+    /// **See also:** [`set_pixel()`]
+    /// [`valid()`]
+    /// [`const_bits()`]
+    /// [`const_scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     /// 
@@ -963,15 +936,16 @@ struct Image : PaintDevice {
     /// manipulations. Use constBits() or constScanLine() when many
     /// pixels needs to be read.
     /// 
-    /// **See also:** setPixel()
-    /// valid()
-    /// constBits()
-    /// constScanLine()
+    /// **See also:** [`set_pixel()`]
+    /// [`valid()`]
+    /// [`const_bits()`]
+    /// [`const_scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     /// 
     /// **Overloads**
     /// Returns the color of the pixel at coordinates ( *x,* *y)* as a QColor.
+    [org_name(pixelColor)]
     pixel_color_2(pt: &PointType) -> Color,
     /// 
     /// Sets the color at the given *position* to *color.*
@@ -983,9 +957,9 @@ struct Image : PaintDevice {
     /// `detach()` function called within; if performance is a concern, we
     /// recommend the use of scanLine() or bits() to access pixel data directly.
     /// 
-    /// **See also:** pixel()
-    /// bits()
-    /// scanLine()
+    /// **See also:** [`pixel()`]
+    /// [`bits()`]
+    /// [`scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     /// 
     /// **Overloads**
@@ -1001,21 +975,22 @@ struct Image : PaintDevice {
     /// `detach()` function called within; if performance is a concern, we
     /// recommend the use of scanLine() or bits() to access pixel data directly.
     /// 
-    /// **See also:** pixel()
-    /// bits()
-    /// scanLine()
+    /// **See also:** [`pixel()`]
+    /// [`bits()`]
+    /// [`scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     /// 
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
+    [org_name(setPixelColor)]
     set_pixel_color_2(pt: &PointType, c: &ColorType),
     /// 
     /// Returns a list of the colors contained in the image's color table,
     /// or an empty list if the image does not have a color table
     /// 
-    /// **See also:** setColorTable()
-    /// colorCount()
-    /// color()
+    /// **See also:** [`set_color_table()`]
+    /// [`color_count()`]
+    /// [`color()`]
     color_table() -> [Rgb],
     set_color_table(colors: [RgbType]),
     /// 
@@ -1027,8 +1002,8 @@ struct Image : PaintDevice {
     /// 
     /// The default value is 1.0.
     /// 
-    /// **See also:** setDevicePixelRatio()
-    /// QImageReader
+    /// **See also:** [`set_device_pixel_ratio()`]
+    /// [`ImageReader`]
     device_pixel_ratio() -> f32,
     /// 
     /// Sets the device pixel ratio for the image. This is the
@@ -1050,7 +1025,7 @@ struct Image : PaintDevice {
     /// (see [Drawing High Resolution Versions of Pixmaps and Images](Drawing%20High%20Resolution%20Versions%20of%20Pixmaps%20and%20Images)
     /// ).
     /// 
-    /// **See also:** devicePixelRatio()
+    /// **See also:** [`device_pixel_ratio()`]
     set_device_pixel_ratio(scale_factor: f32),
     /// 
     /// Fills the entire image with the given *pixelValue.*
@@ -1067,7 +1042,7 @@ struct Image : PaintDevice {
     /// you will want to use QImage::pixel() to use a color from an
     /// existing image or QColor::rgb() to use a specific color.
     /// 
-    /// **See also:** depth()
+    /// **See also:** [`depth()`]
     /// {QImage#Image Transformations}{Image Transformations}
     /// 
     /// **Overloads**
@@ -1100,7 +1075,7 @@ struct Image : PaintDevice {
     /// you will want to use QImage::pixel() to use a color from an
     /// existing image or QColor::rgb() to use a specific color.
     /// 
-    /// **See also:** depth()
+    /// **See also:** [`depth()`]
     /// {QImage#Image Transformations}{Image Transformations}
     /// 
     /// **Overloads**
@@ -1117,6 +1092,7 @@ struct Image : PaintDevice {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     /// 
+    [org_name(fill)]
     fill_2(color: &ColorType),
     /// 
     /// Fills the entire image with the given *pixelValue.*
@@ -1133,7 +1109,7 @@ struct Image : PaintDevice {
     /// you will want to use QImage::pixel() to use a color from an
     /// existing image or QColor::rgb() to use a specific color.
     /// 
-    /// **See also:** depth()
+    /// **See also:** [`depth()`]
     /// {QImage#Image Transformations}{Image Transformations}
     /// 
     /// **Overloads**
@@ -1150,6 +1126,7 @@ struct Image : PaintDevice {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     /// 
+    [org_name(fill)]
     fill_3(color: Rute::GlobalColor),
     /// 
     /// Returns `true` if the image has a format that respects the alpha
@@ -1171,7 +1148,7 @@ struct Image : PaintDevice {
     /// 
     /// **Warning**: This function is expensive.
     /// 
-    /// **See also:** alphaChannel()
+    /// **See also:** [`alpha_channel()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}, {QImage#Image Formats}{Image Formats}
     set_alpha_channel(alpha_channel: &ImageType),
@@ -1194,9 +1171,9 @@ struct Image : PaintDevice {
     /// 
     /// **Warning**: This is an expensive function.
     /// 
-    /// **See also:** setAlphaChannel()
-    /// hasAlphaChannel()
-    /// convertToFormat()
+    /// **See also:** [`set_alpha_channel()`]
+    /// [`has_alpha_channel()`]
+    /// [`convert_to_format()`]
     /// {QPixmap#Pixmap Information}{Pixmap}
     /// {QImage#Image Transformations}{Image Transformations}
     alpha_channel() -> Image,
@@ -1214,7 +1191,7 @@ struct Image : PaintDevice {
     /// big-endian (QImage::Format_Mono) using the convertToFormat()
     /// function.
     /// 
-    /// **See also:** createHeuristicMask()
+    /// **See also:** [`create_heuristic_mask()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}
     create_alpha_mask(flags: Rute::ImageConversionFlags) -> Image,
@@ -1238,7 +1215,7 @@ struct Image : PaintDevice {
     /// 
     /// Note that this function disregards the alpha buffer.
     /// 
-    /// **See also:** createAlphaMask()
+    /// **See also:** [`create_alpha_mask()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}
     create_heuristic_mask(clip_tight: bool) -> Image,
@@ -1248,8 +1225,8 @@ struct Image : PaintDevice {
     /// *mode* is MaskOutColor, all pixels matching the given color will
     /// be transparent.
     /// 
-    /// **See also:** createAlphaMask()
-    /// createHeuristicMask()
+    /// **See also:** [`create_alpha_mask()`]
+    /// [`create_heuristic_mask()`]
     create_mask_from_color(color: RgbType, mode: Rute::MaskMode) -> Image,
     /// 
     /// Qt::TransformationMode transformMode) const
@@ -1274,7 +1251,7 @@ struct Image : PaintDevice {
     /// 
     /// If the given *size* is empty, this function returns a null image.
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}
     /// 
@@ -1321,7 +1298,7 @@ struct Image : PaintDevice {
     /// 
     /// If the given *size* is empty, this function returns a null image.
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}
     /// 
@@ -1344,6 +1321,7 @@ struct Image : PaintDevice {
     /// If the given *height* is 0 or negative, a null image is returned.
     /// 
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
+    [org_name(scaled)]
     scaled_2(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Image,
     /// 
     /// Returns a scaled copy of the image. The returned image is scaled
@@ -1382,6 +1360,7 @@ struct Image : PaintDevice {
     /// Note that the original image is not changed.
     /// 
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
+    [org_name(mirrored)]
     mirrored_2(horizontally: bool, vertically: bool) -> Image?,
     /// 
     /// Returns a QImage in which the values of the red and blue
@@ -1400,6 +1379,7 @@ struct Image : PaintDevice {
     /// The original QImage is not changed.
     /// 
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
+    [org_name(rgbSwapped)]
     rgb_swapped_2() -> Image?,
     /// 
     /// Inverts all pixel values in the image.
@@ -1488,6 +1468,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Loads an image from the given QByteArray *data.*
+    [org_name(load)]
     load_2(file_name: String, format: *char) -> bool,
     /// 
     /// Loads an image from the first *len* bytes of the given binary *data.* Returns `true` if the image was successfully loaded; otherwise
@@ -1514,6 +1495,7 @@ struct Image : PaintDevice {
     /// 
     /// **Overloads**
     /// Loads an image from the given QByteArray *data.*
+    [org_name(loadFromData)]
     load_from_data_2(data: &ByteArrayType, aformat: *char) -> bool,
     /// 
     /// Saves the image to the file with the given *fileName,* using the
@@ -1560,6 +1542,7 @@ struct Image : PaintDevice {
     /// This can, for example, be used to save an image directly into a
     /// QByteArray:
     /// 
+    [org_name(save)]
     save_2(device: *IODeviceType, format: *char, quality: i32) -> bool,
     /// 
     /// Constructs a QImage from the first *size* bytes of the given
@@ -1572,8 +1555,8 @@ struct Image : PaintDevice {
     /// 
     /// If the loading of the image fails, the image returned will be a null image.
     /// 
-    /// **See also:** load()
-    /// save()
+    /// **See also:** [`load()`]
+    /// [`save()`]
     /// {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
     /// 
     /// **Overloads**
@@ -1590,12 +1573,13 @@ struct Image : PaintDevice {
     /// 
     /// If the loading of the image fails, the image returned will be a null image.
     /// 
-    /// **See also:** load()
-    /// save()
+    /// **See also:** [`load()`]
+    /// [`save()`]
     /// {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
     /// 
     /// **Overloads**
     /// Loads an image from the given QByteArray *data.*
+    [org_name(fromData)]
     [static] from_data_2(data: &ByteArrayType, format: *char) -> Image,
     /// 
     /// Returns a number that identifies the contents of this QImage
@@ -1610,7 +1594,7 @@ struct Image : PaintDevice {
     /// meter. Together with dotsPerMeterY(), this number defines the
     /// intended scale and aspect ratio of the image.
     /// 
-    /// **See also:** setDotsPerMeterX()
+    /// **See also:** [`set_dots_per_meter_x()`]
     /// {QImage#Image Information}{Image
     /// Information}
     dots_per_meter_x() -> i32,
@@ -1619,7 +1603,7 @@ struct Image : PaintDevice {
     /// meter. Together with dotsPerMeterX(), this number defines the
     /// intended scale and aspect ratio of the image.
     /// 
-    /// **See also:** setDotsPerMeterY()
+    /// **See also:** [`set_dots_per_meter_y()`]
     /// {QImage#Image Information}{Image
     /// Information}
     dots_per_meter_y() -> i32,
@@ -1633,7 +1617,7 @@ struct Image : PaintDevice {
     /// change the scale or aspect ratio of the image when it is rendered
     /// on other paint devices.
     /// 
-    /// **See also:** dotsPerMeterX()
+    /// **See also:** [`dots_per_meter_x()`]
     /// {QImage#Image Information}{Image Information}
     set_dots_per_meter_x(arg0: i32),
     /// 
@@ -1646,21 +1630,21 @@ struct Image : PaintDevice {
     /// change the scale or aspect ratio of the image when it is rendered
     /// on other paint devices.
     /// 
-    /// **See also:** dotsPerMeterY()
+    /// **See also:** [`dots_per_meter_y()`]
     /// {QImage#Image Information}{Image Information}
     set_dots_per_meter_y(arg0: i32),
     /// 
     /// Returns the number of pixels by which the image is intended to be
     /// offset by when positioning relative to other images.
     /// 
-    /// **See also:** setOffset()
+    /// **See also:** [`set_offset()`]
     /// {QImage#Image Information}{Image Information}
     offset() -> Point,
     /// 
     /// Sets the number of pixels by which the image is intended to be
     /// offset by when positioning relative to other images, to *offset.*
     /// 
-    /// **See also:** offset()
+    /// **See also:** [`offset()`]
     /// {QImage#Image Information}{Image Information}
     set_offset(arg0: &PointType),
     /// 
@@ -1669,7 +1653,7 @@ struct Image : PaintDevice {
     /// You can use these keys with text() to list the image text for a
     /// certain key.
     /// 
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     text_keys() -> [String],
     /// 
     /// Returns the text keys for this image.
@@ -1677,14 +1661,14 @@ struct Image : PaintDevice {
     /// You can use these keys with text() to list the image text for a
     /// certain key.
     /// 
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     /// 
     /// Returns the image text associated with the given *key.* If the
     /// specified *key* is an empty string, the whole image text is
     /// returned, with each key-text pair separated by a newline.
     /// 
-    /// **See also:** setText()
-    /// textKeys()
+    /// **See also:** [`set_text()`]
+    /// [`text_keys()`]
     /// 
     /// Returns the text recorded for the given *key* in the given *language,* or in a default language if *language* is 0.
     /// 
@@ -1707,7 +1691,7 @@ struct Image : PaintDevice {
     /// The language the text is recorded in is no longer relevant since the text is
     /// always set using QString and UTF-8 representation.
     /// 
-    /// **See also:** textKeys()
+    /// **See also:** [`text_keys()`]
     /// 
     /// Returns a list of QImageTextKeyLang objects that enumerate all the texts
     /// key/language pairs set for this image.
@@ -1715,7 +1699,7 @@ struct Image : PaintDevice {
     /// The language the text is recorded in is no longer relevant since the text
     /// is always set using QString and UTF-8 representation.
     /// 
-    /// **See also:** textKeys()
+    /// **See also:** [`text_keys()`]
     text(key: String) -> String,
     /// 
     /// Sets the image text to the given *text* and associate it with the
@@ -1735,8 +1719,8 @@ struct Image : PaintDevice {
     /// You can use QImageWriter::supportedImageFormats() to find out
     /// which image formats are available to you.
     /// 
-    /// **See also:** text()
-    /// textKeys()
+    /// **See also:** [`text()`]
+    /// [`text_keys()`]
     /// 
     /// Sets the image text to the given *text* and associate it with the
     /// given *key.* The text is recorded in the specified *language,*
@@ -1767,6 +1751,42 @@ struct Image : PaintDevice {
     /// Returns a smoothly scaled copy of the image. The returned image has a size
     /// of width *w* by height *h* pixels.
     smooth_scaled(w: i32, h: i32) -> Image,
+}
+
+[org_name(QImage)]
+enum InvertMode {
+    InvertRgb,
+    InvertRgba,
+}
+
+[org_name(QImage)]
+enum Format {
+    Format_Invalid,
+    Format_Mono,
+    Format_MonoLSB,
+    Format_Indexed8,
+    Format_RGB32,
+    Format_ARGB32,
+    Format_ARGB32_Premultiplied,
+    Format_RGB16,
+    Format_ARGB8565_Premultiplied,
+    Format_RGB666,
+    Format_ARGB6666_Premultiplied,
+    Format_RGB555,
+    Format_ARGB8555_Premultiplied,
+    Format_RGB888,
+    Format_RGB444,
+    Format_ARGB4444_Premultiplied,
+    Format_RGBX8888,
+    Format_RGBA8888,
+    Format_RGBA8888_Premultiplied,
+    Format_BGR30,
+    Format_A2BGR30_Premultiplied,
+    Format_RGB30,
+    Format_A2RGB30_Premultiplied,
+    Format_Alpha8,
+    Format_Grayscale8,
+    NImageFormats,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

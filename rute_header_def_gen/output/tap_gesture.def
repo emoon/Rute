@@ -3,8 +3,8 @@
 /// in your applications, see the [Gestures in Widgets and Graphics View](Gestures%20in%20Widgets%20and%20Graphics%20View)
 /// document.
 /// 
-/// **See also:** QPanGesture
-/// QPinchGesture
+/// **See also:** [`PanGesture`]
+/// [`PinchGesture`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.

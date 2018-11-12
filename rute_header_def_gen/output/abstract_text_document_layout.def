@@ -15,7 +15,7 @@
 /// You can insert custom objects into a QTextDocument; see the
 /// QTextObjectInterface class description for details.
 /// 
-/// **See also:** QTextObjectInterface
+/// **See also:** [`TextObjectInterface`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -33,7 +33,7 @@ struct AbstractTextDocumentLayout : Object {
     /// function is called only within Qt. Subclasses can reimplement this function
     /// to customize the drawing of inline objects.
     /// 
-    /// **See also:** draw()
+    /// **See also:** [`draw()`]
     [event] draw(painter: *PainterType, context: onst QAbstractTextDocumentLayout::PaintContext &),
     /// 
     /// Returns the cursor position for the given *point* with the specified
@@ -58,11 +58,11 @@ struct AbstractTextDocumentLayout : Object {
     /// the number of pages in the layout has changed. Changes to the page count
     /// are caused by changes to the layout or the document content itself.
     /// 
-    /// **See also:** pageCount()
+    /// **See also:** [`page_count()`]
     /// 
     /// Returns the number of pages contained in the layout.
     /// 
-    /// **See also:** pageCountChanged()
+    /// **See also:** [`page_count_changed()`]
     [event] page_count() -> i32,
     /// 
     /// This signal is emitted when the size of the document layout changes to
@@ -73,15 +73,15 @@ struct AbstractTextDocumentLayout : Object {
     /// that display text documents since it enables them to update their scroll
     /// bars correctly.
     /// 
-    /// **See also:** documentSize()
+    /// **See also:** [`document_size()`]
     /// 
     /// Returns the total size of the document's layout.
     /// 
     /// This information can be used by display widgets to update their scroll bars
     /// correctly.
     /// 
-    /// **See also:** documentSizeChanged()
-    /// QTextDocument::pageSize
+    /// **See also:** [`document_size_changed()`]
+    /// [`TextDocument::page_size()`]
     [event] document_size() -> SizeF,
     /// 
     /// Returns the bounding rectangle of *frame.*
@@ -93,12 +93,12 @@ struct AbstractTextDocumentLayout : Object {
     /// Sets the paint device used for rendering the document's layout to the given
     /// *device.*
     /// 
-    /// **See also:** paintDevice()
+    /// **See also:** [`paint_device()`]
     set_paint_device(device: *PaintDeviceType),
     /// 
     /// Returns the paint device used to render the document's layout.
     /// 
-    /// **See also:** setPaintDevice()
+    /// **See also:** [`set_paint_device()`]
     paint_device() -> PaintDevice?,
     /// 
     /// This signal is emitted when the size of the document layout changes to
@@ -109,15 +109,15 @@ struct AbstractTextDocumentLayout : Object {
     /// that display text documents since it enables them to update their scroll
     /// bars correctly.
     /// 
-    /// **See also:** documentSize()
+    /// **See also:** [`document_size()`]
     /// 
     /// Returns the total size of the document's layout.
     /// 
     /// This information can be used by display widgets to update their scroll bars
     /// correctly.
     /// 
-    /// **See also:** documentSizeChanged()
-    /// QTextDocument::pageSize
+    /// **See also:** [`document_size_changed()`]
+    /// [`TextDocument::page_size()`]
     /// 
     /// This function is called whenever the contents of the document change. A
     /// change occurs when text is inserted, removed, or a combination of these
@@ -149,7 +149,7 @@ struct AbstractTextDocumentLayout : Object {
     /// * If the total size changed, the documentSizeChanged() signal should be emitted.
     /// * The update() signal should be emitted to schedule a repaint of areas in the layout that require repainting.
     /// 
-    /// **See also:** QTextLayout
+    /// **See also:** [`TextLayout`]
     /// 
     /// Returns the text document that this layout is operating on.
     document() -> TextDocument?,
@@ -195,7 +195,7 @@ struct AbstractTextDocumentLayout : Object {
     /// that display text documents since it enables them to update their scroll
     /// bars correctly.
     /// 
-    /// **See also:** documentSize()
+    /// **See also:** [`document_size()`]
     [signal] document_size_changed(new_size: &SizeFType),
     /// 
     /// This signal is emitted when the number of pages in the layout changes;
@@ -205,7 +205,7 @@ struct AbstractTextDocumentLayout : Object {
     /// the number of pages in the layout has changed. Changes to the page count
     /// are caused by changes to the layout or the document content itself.
     /// 
-    /// **See also:** pageCount()
+    /// **See also:** [`page_count()`]
     [signal] page_count_changed(new_pages: i32),
     /// 
     /// This function is called whenever the contents of the document change. A
@@ -238,7 +238,7 @@ struct AbstractTextDocumentLayout : Object {
     /// * If the total size changed, the documentSizeChanged() signal should be emitted.
     /// * The update() signal should be emitted to schedule a repaint of areas in the layout that require repainting.
     /// 
-    /// **See also:** QTextLayout
+    /// **See also:** [`TextLayout`]
     [event] document_changed(from: i32, chars_removed: i32, chars_added: i32),
     /// 
     /// Sets the size of the inline object *item* corresponding to the text
@@ -260,7 +260,7 @@ struct AbstractTextDocumentLayout : Object {
     /// within Qt. Subclasses can reimplement this function to customize the
     /// position of inline objects.
     /// 
-    /// **See also:** drawInlineObject()
+    /// **See also:** [`draw_inline_object()`]
     [event] position_inline_object(item: TextInlineObjectType, pos_in_document: i32, format: &TextFormatType),
     /// 
     /// This function is called to draw the inline object, *object,* with the
@@ -273,7 +273,7 @@ struct AbstractTextDocumentLayout : Object {
     /// function is called only within Qt. Subclasses can reimplement this function
     /// to customize the drawing of inline objects.
     /// 
-    /// **See also:** draw()
+    /// **See also:** [`draw()`]
     [event] draw_inline_object(painter: *PainterType, rect: &RectFType, object: TextInlineObjectType, pos_in_document: i32, format: &TextFormatType),
     format_index(pos: i32) -> i32,
     /// 

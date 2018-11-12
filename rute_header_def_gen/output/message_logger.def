@@ -7,768 +7,788 @@
 /// 
 /// One example of direct use is to forward errors that stem from a scripting language, e.g. QML:
 /// 
-/// **See also:** QMessageLogContext
-/// qDebug()
-/// qInfo()
-/// qWarning()
-/// qCritical()
-/// qFatal()
+/// **See also:** [`MessageLogContext`]
+/// [`q_debug()`]
+/// [`q_info()`]
+/// [`q_warning()`]
+/// [`q_critical()`]
+/// [`q_fatal()`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct MessageLogger {
     /// 
     /// Logs a debug message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qDebug()
+    /// **See also:** [`q_debug()`]
     /// 
     /// Logs a debug message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCDebug()
+    /// **See also:** [`q_c_debug()`]
     /// 
     /// Logs a debug message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCDebug()
+    /// **See also:** [`q_c_debug()`]
     /// 
     /// Logs a debug message using a QDebug stream
     /// 
-    /// **See also:** qDebug()
-    /// QDebug
+    /// **See also:** [`q_debug()`]
+    /// [`Debug`]
     /// 
     /// Logs a debug message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCDebug()
-    /// QDebug
+    /// **See also:** [`q_c_debug()`]
+    /// [`Debug`]
     /// 
     /// Logs a debug message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCDebug()
-    /// QDebug
+    /// **See also:** [`q_c_debug()`]
+    /// [`Debug`]
     debug(msg: *char),
     no_debug(arg0: *char),
     /// 
     /// Logs an informational message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qInfo()
+    /// **See also:** [`q_info()`]
     /// 
     /// Logs an informational message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCInfo()
+    /// **See also:** [`q_c_info()`]
     /// 
     /// Logs an informational message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCInfo()
+    /// **See also:** [`q_c_info()`]
     /// 
     /// Logs an informational message using a QDebug stream.
     /// 
-    /// **See also:** qInfo()
-    /// QDebug
+    /// **See also:** [`q_info()`]
+    /// [`Debug`]
     /// 
     /// Logs an informational message into the category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCInfo()
-    /// QDebug
+    /// **See also:** [`q_c_info()`]
+    /// [`Debug`]
     /// 
     /// Logs an informational message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCInfo()
-    /// QDebug
+    /// **See also:** [`q_c_info()`]
+    /// [`Debug`]
     info(msg: *char),
     /// 
     /// Logs a warning message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qWarning()
+    /// **See also:** [`q_warning()`]
     /// 
     /// Logs a warning message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCWarning()
+    /// **See also:** [`q_c_warning()`]
     /// 
     /// Logs a warning message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCWarning()
+    /// **See also:** [`q_c_warning()`]
     /// 
     /// Logs a warning message using a QDebug stream
     /// 
-    /// **See also:** qWarning()
-    /// QDebug
+    /// **See also:** [`q_warning()`]
+    /// [`Debug`]
     /// 
     /// Logs a warning message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCWarning()
-    /// QDebug
+    /// **See also:** [`q_c_warning()`]
+    /// [`Debug`]
     /// 
     /// Logs a warning message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCWarning()
-    /// QDebug
+    /// **See also:** [`q_c_warning()`]
+    /// [`Debug`]
     warning(msg: *char),
     /// 
     /// Logs a critical message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCritical()
+    /// **See also:** [`q_critical()`]
     /// 
     /// Logs a critical message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCCritical()
+    /// **See also:** [`q_c_critical()`]
     /// 
     /// Logs a critical message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCCritical()
+    /// **See also:** [`q_c_critical()`]
     /// 
     /// Logs a critical message using a QDebug stream
     /// 
-    /// **See also:** qCritical()
-    /// QDebug
+    /// **See also:** [`q_critical()`]
+    /// [`Debug`]
     /// 
     /// Logs a critical message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCCritical()
-    /// QDebug
+    /// **See also:** [`q_c_critical()`]
+    /// [`Debug`]
     /// 
     /// Logs a critical message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCCritical()
-    /// QDebug
+    /// **See also:** [`q_c_critical()`]
+    /// [`Debug`]
     critical(msg: *char),
     /// 
     /// Logs a debug message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qDebug()
+    /// **See also:** [`q_debug()`]
     /// 
     /// Logs a debug message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCDebug()
+    /// **See also:** [`q_c_debug()`]
     /// 
     /// Logs a debug message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCDebug()
+    /// **See also:** [`q_c_debug()`]
     /// 
     /// Logs a debug message using a QDebug stream
     /// 
-    /// **See also:** qDebug()
-    /// QDebug
+    /// **See also:** [`q_debug()`]
+    /// [`Debug`]
     /// 
     /// Logs a debug message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCDebug()
-    /// QDebug
+    /// **See also:** [`q_c_debug()`]
+    /// [`Debug`]
     /// 
     /// Logs a debug message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCDebug()
-    /// QDebug
+    /// **See also:** [`q_c_debug()`]
+    /// [`Debug`]
+    [org_name(debug)]
     debug_2(cat: &LoggingCategoryType, msg: *char),
     /// 
     /// Logs a debug message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qDebug()
+    /// **See also:** [`q_debug()`]
     /// 
     /// Logs a debug message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCDebug()
+    /// **See also:** [`q_c_debug()`]
     /// 
     /// Logs a debug message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCDebug()
+    /// **See also:** [`q_c_debug()`]
     /// 
     /// Logs a debug message using a QDebug stream
     /// 
-    /// **See also:** qDebug()
-    /// QDebug
+    /// **See also:** [`q_debug()`]
+    /// [`Debug`]
     /// 
     /// Logs a debug message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCDebug()
-    /// QDebug
+    /// **See also:** [`q_c_debug()`]
+    /// [`Debug`]
     /// 
     /// Logs a debug message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCDebug()
-    /// QDebug
+    /// **See also:** [`q_c_debug()`]
+    /// [`Debug`]
+    [org_name(debug)]
     debug_3(cat_func: MessageLogger::CategoryFunction, msg: *char),
     /// 
     /// Logs an informational message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qInfo()
+    /// **See also:** [`q_info()`]
     /// 
     /// Logs an informational message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCInfo()
+    /// **See also:** [`q_c_info()`]
     /// 
     /// Logs an informational message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCInfo()
+    /// **See also:** [`q_c_info()`]
     /// 
     /// Logs an informational message using a QDebug stream.
     /// 
-    /// **See also:** qInfo()
-    /// QDebug
+    /// **See also:** [`q_info()`]
+    /// [`Debug`]
     /// 
     /// Logs an informational message into the category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCInfo()
-    /// QDebug
+    /// **See also:** [`q_c_info()`]
+    /// [`Debug`]
     /// 
     /// Logs an informational message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCInfo()
-    /// QDebug
+    /// **See also:** [`q_c_info()`]
+    /// [`Debug`]
+    [org_name(info)]
     info_2(cat: &LoggingCategoryType, msg: *char),
     /// 
     /// Logs an informational message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qInfo()
+    /// **See also:** [`q_info()`]
     /// 
     /// Logs an informational message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCInfo()
+    /// **See also:** [`q_c_info()`]
     /// 
     /// Logs an informational message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCInfo()
+    /// **See also:** [`q_c_info()`]
     /// 
     /// Logs an informational message using a QDebug stream.
     /// 
-    /// **See also:** qInfo()
-    /// QDebug
+    /// **See also:** [`q_info()`]
+    /// [`Debug`]
     /// 
     /// Logs an informational message into the category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCInfo()
-    /// QDebug
+    /// **See also:** [`q_c_info()`]
+    /// [`Debug`]
     /// 
     /// Logs an informational message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCInfo()
-    /// QDebug
+    /// **See also:** [`q_c_info()`]
+    /// [`Debug`]
+    [org_name(info)]
     info_3(cat_func: MessageLogger::CategoryFunction, msg: *char),
     /// 
     /// Logs a warning message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qWarning()
+    /// **See also:** [`q_warning()`]
     /// 
     /// Logs a warning message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCWarning()
+    /// **See also:** [`q_c_warning()`]
     /// 
     /// Logs a warning message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCWarning()
+    /// **See also:** [`q_c_warning()`]
     /// 
     /// Logs a warning message using a QDebug stream
     /// 
-    /// **See also:** qWarning()
-    /// QDebug
+    /// **See also:** [`q_warning()`]
+    /// [`Debug`]
     /// 
     /// Logs a warning message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCWarning()
-    /// QDebug
+    /// **See also:** [`q_c_warning()`]
+    /// [`Debug`]
     /// 
     /// Logs a warning message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCWarning()
-    /// QDebug
+    /// **See also:** [`q_c_warning()`]
+    /// [`Debug`]
+    [org_name(warning)]
     warning_2(cat: &LoggingCategoryType, msg: *char),
     /// 
     /// Logs a warning message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qWarning()
+    /// **See also:** [`q_warning()`]
     /// 
     /// Logs a warning message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCWarning()
+    /// **See also:** [`q_c_warning()`]
     /// 
     /// Logs a warning message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCWarning()
+    /// **See also:** [`q_c_warning()`]
     /// 
     /// Logs a warning message using a QDebug stream
     /// 
-    /// **See also:** qWarning()
-    /// QDebug
+    /// **See also:** [`q_warning()`]
+    /// [`Debug`]
     /// 
     /// Logs a warning message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCWarning()
-    /// QDebug
+    /// **See also:** [`q_c_warning()`]
+    /// [`Debug`]
     /// 
     /// Logs a warning message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCWarning()
-    /// QDebug
+    /// **See also:** [`q_c_warning()`]
+    /// [`Debug`]
+    [org_name(warning)]
     warning_3(cat_func: MessageLogger::CategoryFunction, msg: *char),
     /// 
     /// Logs a critical message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCritical()
+    /// **See also:** [`q_critical()`]
     /// 
     /// Logs a critical message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCCritical()
+    /// **See also:** [`q_c_critical()`]
     /// 
     /// Logs a critical message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCCritical()
+    /// **See also:** [`q_c_critical()`]
     /// 
     /// Logs a critical message using a QDebug stream
     /// 
-    /// **See also:** qCritical()
-    /// QDebug
+    /// **See also:** [`q_critical()`]
+    /// [`Debug`]
     /// 
     /// Logs a critical message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCCritical()
-    /// QDebug
+    /// **See also:** [`q_c_critical()`]
+    /// [`Debug`]
     /// 
     /// Logs a critical message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCCritical()
-    /// QDebug
+    /// **See also:** [`q_c_critical()`]
+    /// [`Debug`]
+    [org_name(critical)]
     critical_2(cat: &LoggingCategoryType, msg: *char),
     /// 
     /// Logs a critical message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCritical()
+    /// **See also:** [`q_critical()`]
     /// 
     /// Logs a critical message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCCritical()
+    /// **See also:** [`q_c_critical()`]
     /// 
     /// Logs a critical message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCCritical()
+    /// **See also:** [`q_c_critical()`]
     /// 
     /// Logs a critical message using a QDebug stream
     /// 
-    /// **See also:** qCritical()
-    /// QDebug
+    /// **See also:** [`q_critical()`]
+    /// [`Debug`]
     /// 
     /// Logs a critical message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCCritical()
-    /// QDebug
+    /// **See also:** [`q_c_critical()`]
+    /// [`Debug`]
     /// 
     /// Logs a critical message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCCritical()
-    /// QDebug
+    /// **See also:** [`q_c_critical()`]
+    /// [`Debug`]
+    [org_name(critical)]
     critical_3(cat_func: MessageLogger::CategoryFunction, msg: *char),
     /// 
     /// Logs a fatal message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qFatal()
+    /// **See also:** [`q_fatal()`]
     fatal(msg: *char),
     /// 
     /// Logs a debug message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qDebug()
+    /// **See also:** [`q_debug()`]
     /// 
     /// Logs a debug message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCDebug()
+    /// **See also:** [`q_c_debug()`]
     /// 
     /// Logs a debug message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCDebug()
+    /// **See also:** [`q_c_debug()`]
     /// 
     /// Logs a debug message using a QDebug stream
     /// 
-    /// **See also:** qDebug()
-    /// QDebug
+    /// **See also:** [`q_debug()`]
+    /// [`Debug`]
     /// 
     /// Logs a debug message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCDebug()
-    /// QDebug
+    /// **See also:** [`q_c_debug()`]
+    /// [`Debug`]
     /// 
     /// Logs a debug message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCDebug()
-    /// QDebug
+    /// **See also:** [`q_c_debug()`]
+    /// [`Debug`]
+    [org_name(debug)]
     debug_4() -> Debug,
     /// 
     /// Logs a debug message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qDebug()
+    /// **See also:** [`q_debug()`]
     /// 
     /// Logs a debug message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCDebug()
+    /// **See also:** [`q_c_debug()`]
     /// 
     /// Logs a debug message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCDebug()
+    /// **See also:** [`q_c_debug()`]
     /// 
     /// Logs a debug message using a QDebug stream
     /// 
-    /// **See also:** qDebug()
-    /// QDebug
+    /// **See also:** [`q_debug()`]
+    /// [`Debug`]
     /// 
     /// Logs a debug message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCDebug()
-    /// QDebug
+    /// **See also:** [`q_c_debug()`]
+    /// [`Debug`]
     /// 
     /// Logs a debug message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCDebug()
-    /// QDebug
+    /// **See also:** [`q_c_debug()`]
+    /// [`Debug`]
+    [org_name(debug)]
     debug_5(cat: &LoggingCategoryType) -> Debug,
     /// 
     /// Logs a debug message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qDebug()
+    /// **See also:** [`q_debug()`]
     /// 
     /// Logs a debug message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCDebug()
+    /// **See also:** [`q_c_debug()`]
     /// 
     /// Logs a debug message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCDebug()
+    /// **See also:** [`q_c_debug()`]
     /// 
     /// Logs a debug message using a QDebug stream
     /// 
-    /// **See also:** qDebug()
-    /// QDebug
+    /// **See also:** [`q_debug()`]
+    /// [`Debug`]
     /// 
     /// Logs a debug message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCDebug()
-    /// QDebug
+    /// **See also:** [`q_c_debug()`]
+    /// [`Debug`]
     /// 
     /// Logs a debug message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCDebug()
-    /// QDebug
+    /// **See also:** [`q_c_debug()`]
+    /// [`Debug`]
+    [org_name(debug)]
     debug_6(cat_func: MessageLogger::CategoryFunction) -> Debug,
     /// 
     /// Logs an informational message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qInfo()
+    /// **See also:** [`q_info()`]
     /// 
     /// Logs an informational message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCInfo()
+    /// **See also:** [`q_c_info()`]
     /// 
     /// Logs an informational message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCInfo()
+    /// **See also:** [`q_c_info()`]
     /// 
     /// Logs an informational message using a QDebug stream.
     /// 
-    /// **See also:** qInfo()
-    /// QDebug
+    /// **See also:** [`q_info()`]
+    /// [`Debug`]
     /// 
     /// Logs an informational message into the category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCInfo()
-    /// QDebug
+    /// **See also:** [`q_c_info()`]
+    /// [`Debug`]
     /// 
     /// Logs an informational message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCInfo()
-    /// QDebug
+    /// **See also:** [`q_c_info()`]
+    /// [`Debug`]
+    [org_name(info)]
     info_4() -> Debug,
     /// 
     /// Logs an informational message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qInfo()
+    /// **See also:** [`q_info()`]
     /// 
     /// Logs an informational message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCInfo()
+    /// **See also:** [`q_c_info()`]
     /// 
     /// Logs an informational message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCInfo()
+    /// **See also:** [`q_c_info()`]
     /// 
     /// Logs an informational message using a QDebug stream.
     /// 
-    /// **See also:** qInfo()
-    /// QDebug
+    /// **See also:** [`q_info()`]
+    /// [`Debug`]
     /// 
     /// Logs an informational message into the category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCInfo()
-    /// QDebug
+    /// **See also:** [`q_c_info()`]
+    /// [`Debug`]
     /// 
     /// Logs an informational message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCInfo()
-    /// QDebug
+    /// **See also:** [`q_c_info()`]
+    /// [`Debug`]
+    [org_name(info)]
     info_5(cat: &LoggingCategoryType) -> Debug,
     /// 
     /// Logs an informational message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qInfo()
+    /// **See also:** [`q_info()`]
     /// 
     /// Logs an informational message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCInfo()
+    /// **See also:** [`q_c_info()`]
     /// 
     /// Logs an informational message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCInfo()
+    /// **See also:** [`q_c_info()`]
     /// 
     /// Logs an informational message using a QDebug stream.
     /// 
-    /// **See also:** qInfo()
-    /// QDebug
+    /// **See also:** [`q_info()`]
+    /// [`Debug`]
     /// 
     /// Logs an informational message into the category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCInfo()
-    /// QDebug
+    /// **See also:** [`q_c_info()`]
+    /// [`Debug`]
     /// 
     /// Logs an informational message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCInfo()
-    /// QDebug
+    /// **See also:** [`q_c_info()`]
+    /// [`Debug`]
+    [org_name(info)]
     info_6(cat_func: MessageLogger::CategoryFunction) -> Debug,
     /// 
     /// Logs a warning message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qWarning()
+    /// **See also:** [`q_warning()`]
     /// 
     /// Logs a warning message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCWarning()
+    /// **See also:** [`q_c_warning()`]
     /// 
     /// Logs a warning message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCWarning()
+    /// **See also:** [`q_c_warning()`]
     /// 
     /// Logs a warning message using a QDebug stream
     /// 
-    /// **See also:** qWarning()
-    /// QDebug
+    /// **See also:** [`q_warning()`]
+    /// [`Debug`]
     /// 
     /// Logs a warning message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCWarning()
-    /// QDebug
+    /// **See also:** [`q_c_warning()`]
+    /// [`Debug`]
     /// 
     /// Logs a warning message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCWarning()
-    /// QDebug
+    /// **See also:** [`q_c_warning()`]
+    /// [`Debug`]
+    [org_name(warning)]
     warning_4() -> Debug,
     /// 
     /// Logs a warning message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qWarning()
+    /// **See also:** [`q_warning()`]
     /// 
     /// Logs a warning message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCWarning()
+    /// **See also:** [`q_c_warning()`]
     /// 
     /// Logs a warning message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCWarning()
+    /// **See also:** [`q_c_warning()`]
     /// 
     /// Logs a warning message using a QDebug stream
     /// 
-    /// **See also:** qWarning()
-    /// QDebug
+    /// **See also:** [`q_warning()`]
+    /// [`Debug`]
     /// 
     /// Logs a warning message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCWarning()
-    /// QDebug
+    /// **See also:** [`q_c_warning()`]
+    /// [`Debug`]
     /// 
     /// Logs a warning message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCWarning()
-    /// QDebug
+    /// **See also:** [`q_c_warning()`]
+    /// [`Debug`]
+    [org_name(warning)]
     warning_5(cat: &LoggingCategoryType) -> Debug,
     /// 
     /// Logs a warning message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qWarning()
+    /// **See also:** [`q_warning()`]
     /// 
     /// Logs a warning message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCWarning()
+    /// **See also:** [`q_c_warning()`]
     /// 
     /// Logs a warning message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCWarning()
+    /// **See also:** [`q_c_warning()`]
     /// 
     /// Logs a warning message using a QDebug stream
     /// 
-    /// **See also:** qWarning()
-    /// QDebug
+    /// **See also:** [`q_warning()`]
+    /// [`Debug`]
     /// 
     /// Logs a warning message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCWarning()
-    /// QDebug
+    /// **See also:** [`q_c_warning()`]
+    /// [`Debug`]
     /// 
     /// Logs a warning message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCWarning()
-    /// QDebug
+    /// **See also:** [`q_c_warning()`]
+    /// [`Debug`]
+    [org_name(warning)]
     warning_6(cat_func: MessageLogger::CategoryFunction) -> Debug,
     /// 
     /// Logs a critical message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCritical()
+    /// **See also:** [`q_critical()`]
     /// 
     /// Logs a critical message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCCritical()
+    /// **See also:** [`q_c_critical()`]
     /// 
     /// Logs a critical message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCCritical()
+    /// **See also:** [`q_c_critical()`]
     /// 
     /// Logs a critical message using a QDebug stream
     /// 
-    /// **See also:** qCritical()
-    /// QDebug
+    /// **See also:** [`q_critical()`]
+    /// [`Debug`]
     /// 
     /// Logs a critical message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCCritical()
-    /// QDebug
+    /// **See also:** [`q_c_critical()`]
+    /// [`Debug`]
     /// 
     /// Logs a critical message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCCritical()
-    /// QDebug
+    /// **See also:** [`q_c_critical()`]
+    /// [`Debug`]
+    [org_name(critical)]
     critical_4() -> Debug,
     /// 
     /// Logs a critical message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCritical()
+    /// **See also:** [`q_critical()`]
     /// 
     /// Logs a critical message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCCritical()
+    /// **See also:** [`q_c_critical()`]
     /// 
     /// Logs a critical message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCCritical()
+    /// **See also:** [`q_c_critical()`]
     /// 
     /// Logs a critical message using a QDebug stream
     /// 
-    /// **See also:** qCritical()
-    /// QDebug
+    /// **See also:** [`q_critical()`]
+    /// [`Debug`]
     /// 
     /// Logs a critical message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCCritical()
-    /// QDebug
+    /// **See also:** [`q_c_critical()`]
+    /// [`Debug`]
     /// 
     /// Logs a critical message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCCritical()
-    /// QDebug
+    /// **See also:** [`q_c_critical()`]
+    /// [`Debug`]
+    [org_name(critical)]
     critical_5(cat: &LoggingCategoryType) -> Debug,
     /// 
     /// Logs a critical message specified with format *msg.* Additional
     /// parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCritical()
+    /// **See also:** [`q_critical()`]
     /// 
     /// Logs a critical message specified with format *msg* for the context *cat.*
     /// Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCCritical()
+    /// **See also:** [`q_c_critical()`]
     /// 
     /// Logs a critical message specified with format *msg* for the context returned
     /// by *catFunc.* Additional parameters, specified by *msg,* may be used.
     /// 
-    /// **See also:** qCCritical()
+    /// **See also:** [`q_c_critical()`]
     /// 
     /// Logs a critical message using a QDebug stream
     /// 
-    /// **See also:** qCritical()
-    /// QDebug
+    /// **See also:** [`q_critical()`]
+    /// [`Debug`]
     /// 
     /// Logs a critical message into category *cat* using a QDebug stream.
     /// 
-    /// **See also:** qCCritical()
-    /// QDebug
+    /// **See also:** [`q_c_critical()`]
+    /// [`Debug`]
     /// 
     /// Logs a critical message into category returned by *catFunc* using a QDebug stream.
     /// 
-    /// **See also:** qCCritical()
-    /// QDebug
+    /// **See also:** [`q_c_critical()`]
+    /// [`Debug`]
+    [org_name(critical)]
     critical_6(cat_func: MessageLogger::CategoryFunction) -> Debug,
+    [org_name(noDebug)]
     no_debug_2() -> NoDebug,
 }
 

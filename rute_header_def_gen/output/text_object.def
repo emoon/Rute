@@ -12,7 +12,7 @@
 /// objects, you will also need to reimplement QTextDocument::createObject()
 /// which acts as a factory method for creating text objects.
 /// 
-/// **See also:** QTextDocument
+/// **See also:** [`TextDocument`]
 /// {Text Object Example}
 /// # Licence
 ///
@@ -21,29 +21,29 @@ struct TextObject : Object {
     /// 
     /// Sets the text object's *format.*
     /// 
-    /// **See also:** format()
+    /// **See also:** [`format()`]
     set_format(format: &TextFormatType),
     /// 
     /// Returns the text object's format.
     /// 
-    /// **See also:** setFormat()
-    /// document()
+    /// **See also:** [`set_format()`]
+    /// [`document()`]
     /// 
     /// Returns the index of the object's format in the document's internal
     /// list of formats.
     /// 
-    /// **See also:** QTextDocument::allFormats()
+    /// **See also:** [`TextDocument::all_formats`]
     format() -> TextFormat,
     /// 
     /// Returns the index of the object's format in the document's internal
     /// list of formats.
     /// 
-    /// **See also:** QTextDocument::allFormats()
+    /// **See also:** [`TextDocument::all_formats`]
     format_index() -> i32,
     /// 
     /// Returns the document this object belongs to.
     /// 
-    /// **See also:** format()
+    /// **See also:** [`format()`]
     document() -> TextDocument?,
     /// 
     /// Returns the object index of this object. This can be used together with

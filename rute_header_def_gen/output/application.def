@@ -63,32 +63,25 @@
 /// * Miscellaneous
 /// * closeAllWindows(), startingUp(), closingDown().
 /// 
-/// **See also:** QCoreApplication
-/// QAbstractEventDispatcher
-/// QEventLoop
-/// QSettings
+/// **See also:** [`CoreApplication`]
+/// [`AbstractEventDispatcher`]
+/// [`EventLoop`]
+/// [`Settings`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QApplication)]
-enum ColorSpec {
-    NormalColor,
-    CustomColor,
-    ManyColor,
-}
-
 struct Application : GuiApplication {
     /// 
     /// By default, this property returns an empty string unless the user specifies
     /// the `-stylesheet` option on the command line when running the application.
     /// 
-    /// **See also:** QWidget::setStyle()
+    /// **See also:** [`Widget::set_style`]
     /// {Qt Style Sheets}
     /// 
     /// Returns the application's style object.
     /// 
-    /// **See also:** setStyle()
-    /// QStyle
+    /// **See also:** [`set_style()`]
+    /// [`Style`]
     [static] style() -> Style?,
     /// 
     /// Sets the application's GUI style to *style.* Ownership of the style object
@@ -109,10 +102,10 @@ struct Application : GuiApplication {
     /// **Warning**: Qt style sheets are currently not supported for custom QStyle
     /// subclasses. We plan to address this in some future release.
     /// 
-    /// **See also:** style()
-    /// QStyle
-    /// setPalette()
-    /// desktopSettingsAware()
+    /// **See also:** [`style()`]
+    /// [`Style`]
+    /// [`set_palette()`]
+    /// [`desktop_settings_aware()`]
     /// 
     /// **Overloads**
     /// Requests a QStyle object for *style* from the QStyleFactory.
@@ -147,10 +140,10 @@ struct Application : GuiApplication {
     /// **Warning**: Qt style sheets are currently not supported for custom QStyle
     /// subclasses. We plan to address this in some future release.
     /// 
-    /// **See also:** style()
-    /// QStyle
-    /// setPalette()
-    /// desktopSettingsAware()
+    /// **See also:** [`style()`]
+    /// [`Style`]
+    /// [`set_palette()`]
+    /// [`desktop_settings_aware()`]
     /// 
     /// **Overloads**
     /// Requests a QStyle object for *style* from the QStyleFactory.
@@ -165,11 +158,12 @@ struct Application : GuiApplication {
     /// **Warning**: To ensure that the application's style is set correctly, it is
     /// best to call this function before the QApplication constructor, if
     /// possible.
+    [org_name(setStyle)]
     [static] set_style_2(arg0: String) -> Style?,
     /// 
     /// Returns the color specification.
     /// 
-    /// **See also:** QApplication::setColorSpec()
+    /// **See also:** [`Application::set_color_spec`]
     [static] color_spec() -> i32,
     /// 
     /// Sets the color specification for the application to *spec.*
@@ -199,7 +193,7 @@ struct Application : GuiApplication {
     /// 
     /// Example:
     /// 
-    /// **See also:** colorSpec()
+    /// **See also:** [`color_spec()`]
     [static] set_color_spec(arg0: i32),
     /// 
     /// **Overloads**
@@ -209,14 +203,14 @@ struct Application : GuiApplication {
     /// exception is the popup menu under Windows, if the user has defined a
     /// special background color for menus in the display settings.
     /// 
-    /// **See also:** setPalette()
-    /// QWidget::palette()
+    /// **See also:** [`set_palette()`]
+    /// [`Widget::palette`]
     /// 
     /// **Overloads**
     /// Returns the palette for widgets of the given *className.*
     /// 
-    /// **See also:** setPalette()
-    /// QWidget::palette()
+    /// **See also:** [`set_palette()`]
+    /// [`Widget::palette`]
     [static] palette(arg0: *WidgetType) -> Palette,
     /// 
     /// **Overloads**
@@ -226,14 +220,15 @@ struct Application : GuiApplication {
     /// exception is the popup menu under Windows, if the user has defined a
     /// special background color for menus in the display settings.
     /// 
-    /// **See also:** setPalette()
-    /// QWidget::palette()
+    /// **See also:** [`set_palette()`]
+    /// [`Widget::palette`]
     /// 
     /// **Overloads**
     /// Returns the palette for widgets of the given *className.*
     /// 
-    /// **See also:** setPalette()
-    /// QWidget::palette()
+    /// **See also:** [`set_palette()`]
+    /// [`Widget::palette`]
+    [org_name(palette)]
     [static] palette_2(class_name: *char) -> Palette,
     /// 
     /// Changes the default application palette to *palette.*
@@ -256,84 +251,86 @@ struct Application : GuiApplication {
     /// they make use of native theme engines. This is the case for the
     /// Windows Vista and MacOS styles.
     /// 
-    /// **See also:** QWidget::setPalette()
-    /// palette()
-    /// QStyle::polish()
+    /// **See also:** [`Widget::set_palette`]
+    /// [`palette()`]
+    /// [`Style::polish`]
     [static] set_palette(arg0: &PaletteType, class_name: *char),
     /// 
     /// Returns the default application font.
     /// 
-    /// **See also:** fontMetrics()
-    /// QWidget::font()
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::font`]
     /// 
     /// **Overloads**
     /// Returns the default font for the *widget.*
     /// 
-    /// **See also:** fontMetrics()
-    /// QWidget::setFont()
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::set_font`]
     /// 
     /// **Overloads**
     /// Returns the font for widgets of the given *className.*
     /// 
-    /// **See also:** setFont()
-    /// QWidget::font()
+    /// **See also:** [`set_font()`]
+    /// [`Widget::font`]
     /// 
     /// Returns display (screen) font metrics for the application font.
     /// 
-    /// **See also:** font()
-    /// setFont()
-    /// QWidget::fontMetrics()
-    /// QPainter::fontMetrics()
+    /// **See also:** [`font()`]
+    /// [`set_font()`]
+    /// [`Widget::font_metrics`]
+    /// [`Painter::font_metrics`]
     [static] font() -> Font,
     /// 
     /// Returns the default application font.
     /// 
-    /// **See also:** fontMetrics()
-    /// QWidget::font()
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::font`]
     /// 
     /// **Overloads**
     /// Returns the default font for the *widget.*
     /// 
-    /// **See also:** fontMetrics()
-    /// QWidget::setFont()
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::set_font`]
     /// 
     /// **Overloads**
     /// Returns the font for widgets of the given *className.*
     /// 
-    /// **See also:** setFont()
-    /// QWidget::font()
+    /// **See also:** [`set_font()`]
+    /// [`Widget::font`]
     /// 
     /// Returns display (screen) font metrics for the application font.
     /// 
-    /// **See also:** font()
-    /// setFont()
-    /// QWidget::fontMetrics()
-    /// QPainter::fontMetrics()
+    /// **See also:** [`font()`]
+    /// [`set_font()`]
+    /// [`Widget::font_metrics`]
+    /// [`Painter::font_metrics`]
+    [org_name(font)]
     [static] font_2(arg0: *WidgetType) -> Font,
     /// 
     /// Returns the default application font.
     /// 
-    /// **See also:** fontMetrics()
-    /// QWidget::font()
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::font`]
     /// 
     /// **Overloads**
     /// Returns the default font for the *widget.*
     /// 
-    /// **See also:** fontMetrics()
-    /// QWidget::setFont()
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::set_font`]
     /// 
     /// **Overloads**
     /// Returns the font for widgets of the given *className.*
     /// 
-    /// **See also:** setFont()
-    /// QWidget::font()
+    /// **See also:** [`set_font()`]
+    /// [`Widget::font`]
     /// 
     /// Returns display (screen) font metrics for the application font.
     /// 
-    /// **See also:** font()
-    /// setFont()
-    /// QWidget::fontMetrics()
-    /// QPainter::fontMetrics()
+    /// **See also:** [`font()`]
+    /// [`set_font()`]
+    /// [`Widget::font_metrics`]
+    /// [`Painter::font_metrics`]
+    [org_name(font)]
     [static] font_3(class_name: *char) -> Font,
     /// 
     /// Changes the default application font to *font.* If *className* is passed,
@@ -352,13 +349,13 @@ struct Application : GuiApplication {
     /// property. To set a bold font for all QPushButtons, set the application
     /// styleSheet() as
     /// 
-    /// **See also:** font()
-    /// fontMetrics()
-    /// QWidget::setFont()
+    /// **See also:** [`font()`]
+    /// [`font_metrics()`]
+    /// [`Widget::set_font`]
     [static] set_font(arg0: &FontType, class_name: *char),
     [static] set_window_icon(icon: &IconType),
     /// 
-    /// **See also:** QWidget::setWindowIcon()
+    /// **See also:** [`Widget::set_window_icon`]
     /// {Setting the Application Icon}
     [static] window_icon() -> Icon,
     /// 
@@ -370,8 +367,8 @@ struct Application : GuiApplication {
     /// 
     /// Example:
     /// 
-    /// **See also:** topLevelWidgets()
-    /// QWidget::isVisible()
+    /// **See also:** [`top_level_widgets()`]
+    /// [`Widget::is_visible`]
     [static] all_widgets() -> WidgetList,
     /// 
     /// Returns a list of the top-level widgets (windows) in the application.
@@ -381,9 +378,9 @@ struct Application : GuiApplication {
     /// 
     /// Example:
     /// 
-    /// **See also:** allWidgets()
-    /// QWidget::isWindow()
-    /// QWidget::isHidden()
+    /// **See also:** [`all_widgets()`]
+    /// [`Widget::is_window`]
+    /// [`Widget::is_hidden`]
     [static] top_level_widgets() -> WidgetList,
     /// 
     /// Returns the desktop widget (also called the root window).
@@ -407,8 +404,8 @@ struct Application : GuiApplication {
     /// popup widgets are organized in a stack. This function returns the active
     /// popup widget at the top of the stack.
     /// 
-    /// **See also:** activeModalWidget()
-    /// topLevelWidgets()
+    /// **See also:** [`active_modal_widget()`]
+    /// [`top_level_widgets()`]
     [static] active_popup_widget() -> Widget?,
     /// 
     /// Returns the active modal widget.
@@ -421,17 +418,17 @@ struct Application : GuiApplication {
     /// Modal widgets are organized in a stack. This function returns the active
     /// modal widget at the top of the stack.
     /// 
-    /// **See also:** activePopupWidget()
-    /// topLevelWidgets()
+    /// **See also:** [`active_popup_widget()`]
+    /// [`top_level_widgets()`]
     [static] active_modal_widget() -> Widget?,
     /// 
     /// Returns the application widget that has the keyboard input focus, or 0 if
     /// no widget in this application has the focus.
     /// 
-    /// **See also:** QWidget::setFocus()
-    /// QWidget::hasFocus()
-    /// activeWindow()
-    /// focusChanged()
+    /// **See also:** [`Widget::set_focus`]
+    /// [`Widget::has_focus`]
+    /// [`active_window()`]
+    /// [`focus_changed()`]
     [static] focus_widget() -> Widget?,
     /// 
     /// Returns the application top-level window that has the keyboard input focus,
@@ -439,9 +436,9 @@ struct Application : GuiApplication {
     /// activeWindow() even if there is no focusWidget(), for example if no widget
     /// in that window accepts key events.
     /// 
-    /// **See also:** QWidget::setFocus()
-    /// QWidget::hasFocus()
-    /// focusWidget()
+    /// **See also:** [`Widget::set_focus`]
+    /// [`Widget::has_focus`]
+    /// [`focus_widget()`]
     [static] active_window() -> Widget?,
     /// 
     /// Sets the active window to the *active* widget in response to a system
@@ -459,8 +456,8 @@ struct Application : GuiApplication {
     /// painted in active state (e.g. cursors in line edits will blink), and it
     /// will have tool tips enabled.
     /// 
-    /// **See also:** activeWindow()
-    /// QWidget::activateWindow()
+    /// **See also:** [`active_window()`]
+    /// [`Widget::activate_window`]
     [static] set_active_window(act: *WidgetType),
     /// 
     /// Returns the widget at global screen position *point,* or 0 if there is no
@@ -468,9 +465,9 @@ struct Application : GuiApplication {
     /// 
     /// This function can be slow.
     /// 
-    /// **See also:** QCursor::pos()
-    /// QWidget::grabMouse()
-    /// QWidget::grabKeyboard()
+    /// **See also:** [`Cursor::pos`]
+    /// [`Widget::grab_mouse`]
+    /// [`Widget::grab_keyboard`]
     /// 
     /// **Overloads**
     /// Returns the widget at global screen position ( *x,* *y),* or 0 if there is
@@ -482,13 +479,14 @@ struct Application : GuiApplication {
     /// 
     /// This function can be slow.
     /// 
-    /// **See also:** QCursor::pos()
-    /// QWidget::grabMouse()
-    /// QWidget::grabKeyboard()
+    /// **See also:** [`Cursor::pos`]
+    /// [`Widget::grab_mouse`]
+    /// [`Widget::grab_keyboard`]
     /// 
     /// **Overloads**
     /// Returns the widget at global screen position ( *x,* *y),* or 0 if there is
     /// no Qt widget there.
+    [org_name(widgetAt)]
     [static] widget_at_2(x: i32, y: i32) -> Widget?,
     /// 
     /// Returns the top-level widget at the given *point;* returns 0 if
@@ -505,6 +503,7 @@ struct Application : GuiApplication {
     /// **Overloads**
     /// Returns the top-level widget at the point ( *x* , *y* ); returns
     /// 0 if there is no such widget.
+    [org_name(topLevelAt)]
     [static] top_level_at_2(x: i32, y: i32) -> Widget?,
     /// 
     /// Sounds the bell, using the default volume and sound. The function is *not*
@@ -571,7 +570,7 @@ struct Application : GuiApplication {
     /// 
     /// By default, this property has a value of 3.
     /// 
-    /// **See also:** QStyleHints::wheelScrollLines()
+    /// **See also:** [`StyleHints::wheel_scroll_lines`]
     [static] wheel_scroll_lines() -> i32,
     [static] set_start_drag_time(ms: i32),
     /// 
@@ -584,7 +583,7 @@ struct Application : GuiApplication {
     /// 
     /// The default value is 500 ms.
     /// 
-    /// **See also:** startDragDistance()
+    /// **See also:** [`start_drag_distance()`]
     /// {Drag and Drop}
     [static] start_drag_time() -> i32,
     [static] set_start_drag_distance(l: i32),
@@ -603,8 +602,8 @@ struct Application : GuiApplication {
     /// The default value (if the platform doesn't provide a different default)
     /// is 10 pixels.
     /// 
-    /// **See also:** startDragTime()
-    /// QPoint::manhattanLength()
+    /// **See also:** [`start_drag_time()`]
+    /// [`Point::manhattan_length`]
     /// {Drag and Drop}
     [static] start_drag_distance() -> i32,
     /// 
@@ -616,8 +615,8 @@ struct Application : GuiApplication {
     /// **Note**: All effects are disabled on screens running at less than 16-bit color
     /// depth.
     /// 
-    /// **See also:** setEffectEnabled()
-    /// Qt::UIEffect
+    /// **See also:** [`set_effect_enabled()`]
+    /// [`t::ui_effect()`]
     [static] is_effect_enabled(arg0: Rute::UIEffect) -> bool,
     /// 
     /// Enables the UI effect *effect* if *enable* is true, otherwise the effect
@@ -626,9 +625,9 @@ struct Application : GuiApplication {
     /// **Note**: All effects are disabled on screens running at less than 16-bit color
     /// depth.
     /// 
-    /// **See also:** isEffectEnabled()
-    /// Qt::UIEffect
-    /// setDesktopSettingsAware()
+    /// **See also:** [`is_effect_enabled()`]
+    /// [`t::ui_effect()`]
+    /// [`set_desktop_settings_aware()`]
     [static] set_effect_enabled(arg0: Rute::UIEffect, enable: bool),
     /// 
     /// Enters the main event loop and waits until exit() is called, then returns
@@ -658,10 +657,10 @@ struct Application : GuiApplication {
     /// end of the `main()` function, after the QApplication::exec() call.
     /// 
     /// **See also:** quitOnLastWindowClosed
-    /// QCoreApplication::quit()
-    /// QCoreApplication::exit()
-    /// QCoreApplication::processEvents()
-    /// QCoreApplication::exec()
+    /// [`CoreApplication::quit`]
+    /// [`CoreApplication::exit`]
+    /// [`CoreApplication::process_events`]
+    /// [`CoreApplication::exec`]
     [static] exec() -> i32,
     /// 
     [event] notify(arg0: *ObjectType, arg1: *EventType) -> bool,
@@ -674,15 +673,15 @@ struct Application : GuiApplication {
     /// The signal is emitted after both widget have been notified about the change
     /// through QFocusEvent.
     /// 
-    /// **See also:** QWidget::setFocus()
-    /// QWidget::clearFocus()
-    /// Qt::FocusReason
+    /// **See also:** [`Widget::set_focus`]
+    /// [`Widget::clear_focus`]
+    /// [`t::focus_reason()`]
     [signal] focus_changed(old: *WidgetType, now: *WidgetType),
     /// 
     /// By default, this property returns an empty string unless the user specifies
     /// the `-stylesheet` option on the command line when running the application.
     /// 
-    /// **See also:** QWidget::setStyle()
+    /// **See also:** [`Widget::set_style`]
     /// {Qt Style Sheets}
     style_sheet() -> String,
     set_style_sheet(sheet: String),
@@ -712,13 +711,13 @@ struct Application : GuiApplication {
     /// to false.
     /// 
     /// **See also:** quitOnLastWindowClosed
-    /// lastWindowClosed()
-    /// QWidget::close()
-    /// QWidget::closeEvent()
-    /// lastWindowClosed()
-    /// QCoreApplication::quit()
-    /// topLevelWidgets()
-    /// QWidget::isWindow()
+    /// [`last_window_closed()`]
+    /// [`Widget::close`]
+    /// [`Widget::close_event`]
+    /// [`last_window_closed()`]
+    /// [`CoreApplication::quit`]
+    /// [`top_level_widgets()`]
+    /// [`Widget::is_window`]
     [static] close_all_windows(),
     /// 
     /// Displays a simple message box about Qt. The message includes the version
@@ -733,6 +732,13 @@ struct Application : GuiApplication {
     /// 
     [event] event(arg0: *EventType) -> bool,
     [event] compress_event(arg0: *EventType, receiver: *ObjectType, arg1: *PostEventListType) -> bool,
+}
+
+[org_name(QApplication)]
+enum ColorSpec {
+    NormalColor,
+    CustomColor,
+    ManyColor,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

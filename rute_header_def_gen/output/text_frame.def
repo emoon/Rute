@@ -27,8 +27,8 @@
 /// QTextFrame::iterator class: this provides read-only access to its
 /// internal list of text blocks and child frames.
 /// 
-/// **See also:** QTextCursor
-/// QTextDocument
+/// **See also:** [`TextCursor`]
+/// [`TextDocument`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -36,67 +36,67 @@ struct TextFrame : TextObject {
     /// 
     /// Sets the frame's *format.*
     /// 
-    /// **See also:** frameFormat()
+    /// **See also:** [`frame_format()`]
     set_frame_format(format: &TextFrameFormatType),
     /// 
     /// Returns the frame's format.
     /// 
-    /// **See also:** setFrameFormat()
+    /// **See also:** [`set_frame_format()`]
     frame_format() -> TextFrameFormat,
     /// 
     /// Returns the first cursor position inside the frame.
     /// 
-    /// **See also:** lastCursorPosition()
-    /// firstPosition()
-    /// lastPosition()
+    /// **See also:** [`last_cursor_position()`]
+    /// [`first_position()`]
+    /// [`last_position()`]
     first_cursor_position() -> TextCursor,
     /// 
     /// Returns the last cursor position inside the frame.
     /// 
-    /// **See also:** firstCursorPosition()
-    /// firstPosition()
-    /// lastPosition()
+    /// **See also:** [`first_cursor_position()`]
+    /// [`first_position()`]
+    /// [`last_position()`]
     last_cursor_position() -> TextCursor,
     /// 
     /// Returns the first document position inside the frame.
     /// 
-    /// **See also:** lastPosition()
-    /// firstCursorPosition()
-    /// lastCursorPosition()
+    /// **See also:** [`last_position()`]
+    /// [`first_cursor_position()`]
+    /// [`last_cursor_position()`]
     first_position() -> i32,
     /// 
     /// Returns the last document position inside the frame.
     /// 
-    /// **See also:** firstPosition()
-    /// firstCursorPosition()
-    /// lastCursorPosition()
+    /// **See also:** [`first_position()`]
+    /// [`first_cursor_position()`]
+    /// [`last_cursor_position()`]
     last_position() -> i32,
     layout_data() -> TextFrameLayoutData?,
     set_layout_data(data: *TextFrameLayoutDataType),
     /// 
     /// Returns a (possibly empty) list of the frame's child frames.
     /// 
-    /// **See also:** parentFrame()
+    /// **See also:** [`parent_frame()`]
     child_frames() -> [TextFrame?],
     /// 
     /// Returns the frame's parent frame. If the frame is the root frame of a
     /// document, this will return 0.
     /// 
-    /// **See also:** childFrames()
-    /// QTextDocument::rootFrame()
+    /// **See also:** [`child_frames()`]
+    /// [`TextDocument::root_frame`]
     parent_frame() -> TextFrame?,
     /// 
     /// Returns an iterator pointing to the first document element inside the frame.
     /// Please see the document [STL-style-Iterators](STL-style-Iterators)
     /// for more information.
     /// 
-    /// **See also:** end()
+    /// **See also:** [`end()`]
     begin() -> TextFrame::iterator,
     /// 
     /// Returns an iterator pointing to the position past the last document element inside the frame.
     /// Please see the document [STL-Style Iterators](STL-Style%20Iterators)
     /// for more information.
-    /// **See also:** begin()
+    /// **See also:** [`begin()`]
     end() -> TextFrame::iterator,
 }
 

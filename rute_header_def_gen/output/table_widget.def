@@ -33,8 +33,8 @@
 /// number of columns with columnCount(). The table can be cleared with the
 /// clear() function.
 /// 
-/// **See also:** QTableWidgetItem
-/// QTableView
+/// **See also:** [`TableWidgetItem`]
+/// [`TableView`]
 /// {Model/View Programming}
 /// # Licence
 ///
@@ -45,7 +45,7 @@ struct TableWidget : TableView {
     /// this is less than rowCount(), the data in the unwanted rows
     /// is discarded.
     /// 
-    /// **See also:** setColumnCount()
+    /// **See also:** [`set_column_count()`]
     set_row_count(rows: i32),
     /// 
     /// By default, for a table constructed without row and column counts,
@@ -58,7 +58,7 @@ struct TableWidget : TableView {
     /// this is less than columnCount(), the data in the unwanted columns
     /// is discarded.
     /// 
-    /// **See also:** setRowCount()
+    /// **See also:** [`set_row_count()`]
     set_column_count(columns: i32),
     /// 
     /// By default, for a table constructed without row and column counts,
@@ -104,28 +104,28 @@ struct TableWidget : TableView {
     /// 
     /// This signal is emitted whenever the selection changes.
     /// 
-    /// **See also:** selectedItems()
-    /// QTableWidgetItem::isSelected()
+    /// **See also:** [`selected_items()`]
+    /// [`TableWidgetItem::is_selected`]
     /// 
     /// Returns the item at the position equivalent to QPoint( *ax* , *ay* ) in
     /// the table widget's coordinate system, or returns 0 if the specified point
     /// is not covered by an item in the table widget.
     /// 
-    /// **See also:** item()
+    /// **See also:** [`item()`]
     /// 
     /// Returns the item for the given *row* and *column* if one has been set; otherwise
     /// returns 0.
     /// 
-    /// **See also:** setItem()
+    /// **See also:** [`set_item()`]
     /// 
     /// Returns a pointer to the item at the given *point,* or returns 0 if
     /// *point* is not covered by an item in the table widget.
     /// 
-    /// **See also:** item()
+    /// **See also:** [`item()`]
     /// 
     /// Returns the item prototype used by the table.
     /// 
-    /// **See also:** setItemPrototype()
+    /// **See also:** [`set_item_prototype()`]
     /// 
     /// Returns a list of pointers to the items contained in the *data* object.
     /// If the object was not created by a QTreeWidget in the same process, the list
@@ -151,8 +151,8 @@ struct TableWidget : TableView {
     /// you to use the same *row* argument for all items in the same row
     /// (i.e. setItem() will not move the row).
     /// 
-    /// **See also:** item()
-    /// takeItem()
+    /// **See also:** [`item()`]
+    /// [`take_item()`]
     /// 
     /// Selects or deselects *item* depending on *select.*
     /// 
@@ -169,7 +169,7 @@ struct TableWidget : TableView {
     /// 
     /// The table takes ownership of the prototype.
     /// 
-    /// **See also:** itemPrototype()
+    /// **See also:** [`item_prototype()`]
     set_item(row: i32, column: i32, item: *TableWidgetItemType),
     /// 
     /// Removes the item at *row* and *column* from the table without deleting it.
@@ -204,21 +204,21 @@ struct TableWidget : TableView {
     /// 
     /// Returns the row of the current item.
     /// 
-    /// **See also:** currentColumn()
-    /// setCurrentCell()
+    /// **See also:** [`current_column()`]
+    /// [`set_current_cell()`]
     current_row() -> i32,
     /// 
     /// Returns the column of the current item.
     /// 
-    /// **See also:** currentRow()
-    /// setCurrentCell()
+    /// **See also:** [`current_row()`]
+    /// [`set_current_cell()`]
     current_column() -> i32,
     /// 
     /// This signal is emitted whenever the current item changes. The *previous* item is the item that previously had the focus, *current* is the new current item.
     /// 
     /// Returns the current item.
     /// 
-    /// **See also:** setCurrentItem()
+    /// **See also:** [`set_current_item()`]
     current_item() -> TableWidgetItem?,
     /// 
     /// Sets the current item to *item.*
@@ -227,13 +227,13 @@ struct TableWidget : TableView {
     /// 
     /// the item is also selected.
     /// 
-    /// **See also:** currentItem()
-    /// setCurrentCell()
+    /// **See also:** [`current_item()`]
+    /// [`set_current_cell()`]
     /// 
     /// Sets the current item to be *item,* using the given *command.*
     /// 
-    /// **See also:** currentItem()
-    /// setCurrentCell()
+    /// **See also:** [`current_item()`]
+    /// [`set_current_cell()`]
     set_current_item(item: *TableWidgetItemType),
     /// 
     /// Sets the current item to *item.*
@@ -242,13 +242,14 @@ struct TableWidget : TableView {
     /// 
     /// the item is also selected.
     /// 
-    /// **See also:** currentItem()
-    /// setCurrentCell()
+    /// **See also:** [`current_item()`]
+    /// [`set_current_cell()`]
     /// 
     /// Sets the current item to be *item,* using the given *command.*
     /// 
-    /// **See also:** currentItem()
-    /// setCurrentCell()
+    /// **See also:** [`current_item()`]
+    /// [`set_current_cell()`]
+    [org_name(setCurrentItem)]
     set_current_item_2(item: *TableWidgetItemType, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Sets the current cell to be the cell at position ( *row,* *column).*
@@ -257,15 +258,15 @@ struct TableWidget : TableView {
     /// 
     /// the cell may also be selected.
     /// 
-    /// **See also:** setCurrentItem()
-    /// currentRow()
-    /// currentColumn()
+    /// **See also:** [`set_current_item()`]
+    /// [`current_row()`]
+    /// [`current_column()`]
     /// 
     /// Sets the current cell to be the cell at position ( *row,* *column),* using the given *command.*
     /// 
-    /// **See also:** setCurrentItem()
-    /// currentRow()
-    /// currentColumn()
+    /// **See also:** [`set_current_item()`]
+    /// [`current_row()`]
+    /// [`current_column()`]
     set_current_cell(row: i32, column: i32),
     /// 
     /// Sets the current cell to be the cell at position ( *row,* *column).*
@@ -274,15 +275,16 @@ struct TableWidget : TableView {
     /// 
     /// the cell may also be selected.
     /// 
-    /// **See also:** setCurrentItem()
-    /// currentRow()
-    /// currentColumn()
+    /// **See also:** [`set_current_item()`]
+    /// [`current_row()`]
+    /// [`current_column()`]
     /// 
     /// Sets the current cell to be the cell at position ( *row,* *column),* using the given *command.*
     /// 
-    /// **See also:** setCurrentItem()
-    /// currentRow()
-    /// currentColumn()
+    /// **See also:** [`set_current_item()`]
+    /// [`current_row()`]
+    /// [`current_column()`]
+    [org_name(setCurrentCell)]
     set_current_cell_2(row: i32, column: i32, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Sorts all the rows in the table widget based on *column* and *order.*
@@ -295,27 +297,27 @@ struct TableWidget : TableView {
     /// 
     /// Opens an editor for the give *item.* The editor remains open after editing.
     /// 
-    /// **See also:** closePersistentEditor()
-    /// isPersistentEditorOpen()
+    /// **See also:** [`close_persistent_editor()`]
+    /// [`is_persistent_editor_open()`]
     open_persistent_editor(item: *TableWidgetItemType),
     /// 
     /// Closes the persistent editor for *item.*
     /// 
-    /// **See also:** openPersistentEditor()
-    /// isPersistentEditorOpen()
+    /// **See also:** [`open_persistent_editor()`]
+    /// [`is_persistent_editor_open()`]
     close_persistent_editor(item: *TableWidgetItemType),
     /// 
     /// Returns whether a persistent editor is open for item *item.*
     /// 
-    /// **See also:** openPersistentEditor()
-    /// closePersistentEditor()
+    /// **See also:** [`open_persistent_editor()`]
+    /// [`close_persistent_editor()`]
     is_persistent_editor_open(item: *TableWidgetItemType) -> bool,
     /// 
     /// Returns the widget displayed in the cell in the given *row* and *column.*
     /// 
     /// **Note**: The table takes ownership of the widget.
     /// 
-    /// **See also:** setCellWidget()
+    /// **See also:** [`set_cell_widget()`]
     cell_widget(row: i32, column: i32) -> Widget?,
     /// 
     /// Sets the given *widget* to be displayed in the cell in the given *row*
@@ -325,7 +327,7 @@ struct TableWidget : TableView {
     /// deleted. For example, in the code snippet below, the QLineEdit object will
     /// be deleted.
     /// 
-    /// **See also:** cellWidget()
+    /// **See also:** [`cell_widget()`]
     set_cell_widget(row: i32, column: i32, widget: *WidgetType),
     /// 
     /// Removes the widget set on the cell indicated by *row* and *column.*
@@ -348,7 +350,7 @@ struct TableWidget : TableView {
     /// 
     /// Returns a list of all selected ranges.
     /// 
-    /// **See also:** QTableWidgetSelectionRange
+    /// **See also:** [`TableWidgetSelectionRange`]
     selected_ranges() -> [TableWidgetSelectionRange],
     /// 
     /// Returns a list of all selected items.
@@ -357,7 +359,7 @@ struct TableWidget : TableView {
     /// selected cells. Use the selectedIndexes() function to retrieve the
     /// complete selection *including* empty cells.
     /// 
-    /// **See also:** selectedIndexes()
+    /// **See also:** [`selected_indexes()`]
     selected_items() -> [TableWidgetItem?],
     /// 
     /// Finds items that matches the *text* using the given *flags.*
@@ -373,24 +375,25 @@ struct TableWidget : TableView {
     /// the table widget's coordinate system, or returns 0 if the specified point
     /// is not covered by an item in the table widget.
     /// 
-    /// **See also:** item()
+    /// **See also:** [`item()`]
     /// 
     /// Returns a pointer to the item at the given *point,* or returns 0 if
     /// *point* is not covered by an item in the table widget.
     /// 
-    /// **See also:** item()
+    /// **See also:** [`item()`]
     item_at(p: &PointType) -> TableWidgetItem?,
     /// 
     /// Returns the item at the position equivalent to QPoint( *ax* , *ay* ) in
     /// the table widget's coordinate system, or returns 0 if the specified point
     /// is not covered by an item in the table widget.
     /// 
-    /// **See also:** item()
+    /// **See also:** [`item()`]
     /// 
     /// Returns a pointer to the item at the given *point,* or returns 0 if
     /// *point* is not covered by an item in the table widget.
     /// 
-    /// **See also:** item()
+    /// **See also:** [`item()`]
+    [org_name(itemAt)]
     item_at_2(x: i32, y: i32) -> TableWidgetItem?,
     /// 
     /// Returns the rectangle on the viewport occupied by the item at *item.*
@@ -398,7 +401,7 @@ struct TableWidget : TableView {
     /// 
     /// Returns the item prototype used by the table.
     /// 
-    /// **See also:** setItemPrototype()
+    /// **See also:** [`set_item_prototype()`]
     item_prototype() -> TableWidgetItem?,
     /// 
     /// Sets the item prototype for the table to the specified *item.*
@@ -411,7 +414,7 @@ struct TableWidget : TableView {
     /// 
     /// The table takes ownership of the prototype.
     /// 
-    /// **See also:** itemPrototype()
+    /// **See also:** [`item_prototype()`]
     set_item_prototype(item: *TableWidgetItemType),
     /// 
     /// Scrolls the view if necessary to ensure that the *item* is visible.
@@ -477,8 +480,8 @@ struct TableWidget : TableView {
     /// 
     /// This signal is emitted whenever the selection changes.
     /// 
-    /// **See also:** selectedItems()
-    /// QTableWidgetItem::isSelected()
+    /// **See also:** [`selected_items()`]
+    /// [`TableWidgetItem::is_selected`]
     [signal] item_selection_changed(),
     /// 
     /// This signal is emitted whenever a cell in the table is pressed.
@@ -519,7 +522,7 @@ struct TableWidget : TableView {
     /// Returns a list of MIME types that can be used to describe a list of
     /// tablewidget items.
     /// 
-    /// **See also:** mimeData()
+    /// **See also:** [`mime_data()`]
     [event] mime_types() -> [String],
     [event] mime_data(items: [*TableWidgetItemType]) -> MimeData?,
     /// 
@@ -528,12 +531,12 @@ struct TableWidget : TableView {
     /// Returns `true` if the data and action can be handled by the model;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** supportedDropActions()
+    /// **See also:** [`supported_drop_actions()`]
     [event] drop_mime_data(row: i32, column: i32, data: *MimeDataType, action: Rute::DropAction) -> bool,
     /// 
     /// Returns the drop actions supported by this view.
     /// 
-    /// **See also:** Qt::DropActions
+    /// **See also:** [`t::drop_actions()`]
     [event] supported_drop_actions() -> Rute::DropActions,
     /// 
     /// Returns a list of pointers to the items contained in the *data* object.
@@ -550,6 +553,7 @@ struct TableWidget : TableView {
     /// Returns the QModelIndex associated with the given *item.*
     /// 
     /// **Note**: In Qt versions prior to 5.10, this function took a non- `const` *item.*
+    [org_name(indexFromItem)]
     index_from_item_2(item: *TableWidgetItemType) -> ModelIndex,
     /// 
     /// Returns a pointer to the QTableWidgetItem associated with the given *index.*

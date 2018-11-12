@@ -28,8 +28,8 @@
 /// 
 /// ![qerrormessage.png](qerrormessage.png)
 /// 
-/// **See also:** QMessageBox
-/// QStatusBar::showMessage()
+/// **See also:** [`MessageBox`]
+/// [`StatusBar::show_message`]
 /// {Standard Dialogs Example}
 /// # Licence
 ///
@@ -56,7 +56,7 @@ struct ErrorMessage : Dialog {
     /// Normally, the message is displayed immediately. However, if there are
     /// pending messages, it will be queued to be displayed later.
     /// 
-    /// **See also:** showMessage()
+    /// **See also:** [`show_message()`]
     show_message(message: String),
     /// 
     /// Shows the given message, *message,* and returns immediately. If the user
@@ -74,7 +74,8 @@ struct ErrorMessage : Dialog {
     /// Normally, the message is displayed immediately. However, if there are
     /// pending messages, it will be queued to be displayed later.
     /// 
-    /// **See also:** showMessage()
+    /// **See also:** [`show_message()`]
+    [org_name(showMessage)]
     show_message_2(message: String, type: String),
     /// 
     [event] done(arg0: i32),

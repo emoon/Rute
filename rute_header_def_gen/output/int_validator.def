@@ -22,9 +22,9 @@
 /// is not set by default, the validator will accept group separators. It is thus
 /// recommended to use QLocale::toInt() to obtain the numeric value.
 /// 
-/// **See also:** QDoubleValidator
-/// QRegExpValidator
-/// QLocale::toInt()
+/// **See also:** [`DoubleValidator`]
+/// [`RegExpValidator`]
+/// [`Locale::to_int`]
 /// {Line Edits Example}
 /// # Licence
 ///
@@ -58,13 +58,13 @@ struct IntValidator : Validator {
     /// By default, this property's value is derived from the lowest signed
     /// integer available (typically -2147483647).
     /// 
-    /// **See also:** setRange()
+    /// **See also:** [`set_range()`]
     bottom() -> i32,
     /// 
     /// By default, this property's value is derived from the highest signed
     /// integer available (typically 2147483647).
     /// 
-    /// **See also:** setRange()
+    /// **See also:** [`set_range()`]
     top() -> i32,
     [signal] bottom_changed(bottom: i32),
     [signal] top_changed(top: i32),

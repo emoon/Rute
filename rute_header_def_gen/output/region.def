@@ -82,19 +82,12 @@
 /// SOFTWARE.
 /// ```
 /// 
-/// **See also:** QPainter::setClipRegion()
-/// QPainter::setClipRect()
-/// QPainterPath
+/// **See also:** [`Painter::set_clip_region`]
+/// [`Painter::set_clip_rect`]
+/// [`PainterPath`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QRegion)]
-enum RegionType {
-    Rectangle,
-    Ellipse,
-}
-
-
 struct Region {
     /// 
     /// Swaps region *other* with this region. This operation is very
@@ -111,7 +104,7 @@ struct Region {
     /// empty region is a region that contains no points. This function is
     /// the same as isEmpty
     /// 
-    /// **See also:** isEmpty()
+    /// **See also:** [`is_empty()`]
     is_null() -> bool,
     /// 
     /// Returns a const_iterator pointing to the beginning of the range of
@@ -119,9 +112,9 @@ struct Region {
     /// 
     /// The union of all the rectangles is equal to the original region.
     /// 
-    /// **See also:** rbegin()
-    /// cbegin()
-    /// end()
+    /// **See also:** [`rbegin()`]
+    /// [`cbegin()`]
+    /// [`end()`]
     begin() -> Region::const_iterator,
     /// 
     /// Same as begin().
@@ -132,9 +125,9 @@ struct Region {
     /// 
     /// The union of all the rectangles is equal to the original region.
     /// 
-    /// **See also:** rend()
-    /// cend()
-    /// begin()
+    /// **See also:** [`rend()`]
+    /// [`cend()`]
+    /// [`begin()`]
     end() -> Region::const_iterator,
     /// 
     /// Same as end().
@@ -145,9 +138,9 @@ struct Region {
     /// 
     /// The union of all the rectangles is equal to the original region.
     /// 
-    /// **See also:** begin()
-    /// crbegin()
-    /// rend()
+    /// **See also:** [`begin()`]
+    /// [`crbegin()`]
+    /// [`rend()`]
     rbegin() -> Region::const_reverse_iterator,
     /// 
     /// Same as rbegin().
@@ -158,9 +151,9 @@ struct Region {
     /// 
     /// The union of all the rectangles is equal to the original region.
     /// 
-    /// **See also:** end()
-    /// crend()
-    /// rbegin()
+    /// **See also:** [`end()`]
+    /// [`crend()`]
+    /// [`rbegin()`]
     rend() -> Region::const_reverse_iterator,
     /// 
     /// Same as rend().
@@ -180,13 +173,14 @@ struct Region {
     /// **Overloads**
     /// Returns `true` if the region overlaps the rectangle *r;* otherwise
     /// returns `false.`
+    [org_name(contains)]
     contains_2(r: &RectType) -> bool,
     /// 
     /// Returns a region which is the union of this region and the given *rect.*
     /// 
-    /// **See also:** intersected()
-    /// subtracted()
-    /// xored()
+    /// **See also:** [`intersected()`]
+    /// [`subtracted()`]
+    /// [`xored()`]
     /// 
     /// Returns a region which is the union of this region and *r.*
     /// 
@@ -194,16 +188,16 @@ struct Region {
     /// 
     /// The figure shows the union of two elliptical regions.
     /// 
-    /// **See also:** intersected()
-    /// subtracted()
-    /// xored()
+    /// **See also:** [`intersected()`]
+    /// [`subtracted()`]
+    /// [`xored()`]
     united(r: &RegionType) -> Region,
     /// 
     /// Returns a region which is the union of this region and the given *rect.*
     /// 
-    /// **See also:** intersected()
-    /// subtracted()
-    /// xored()
+    /// **See also:** [`intersected()`]
+    /// [`subtracted()`]
+    /// [`xored()`]
     /// 
     /// Returns a region which is the union of this region and *r.*
     /// 
@@ -211,16 +205,17 @@ struct Region {
     /// 
     /// The figure shows the union of two elliptical regions.
     /// 
-    /// **See also:** intersected()
-    /// subtracted()
-    /// xored()
+    /// **See also:** [`intersected()`]
+    /// [`subtracted()`]
+    /// [`xored()`]
+    [org_name(united)]
     united_2(r: &RectType) -> Region,
     /// 
     /// Returns a region which is the intersection of this region and the given *rect.*
     /// 
-    /// **See also:** subtracted()
-    /// united()
-    /// xored()
+    /// **See also:** [`subtracted()`]
+    /// [`united()`]
+    /// [`xored()`]
     /// 
     /// Returns a region which is the intersection of this region and *r.*
     /// 
@@ -228,16 +223,16 @@ struct Region {
     /// 
     /// The figure shows the intersection of two elliptical regions.
     /// 
-    /// **See also:** subtracted()
-    /// united()
-    /// xored()
+    /// **See also:** [`subtracted()`]
+    /// [`united()`]
+    /// [`xored()`]
     intersected(r: &RegionType) -> Region,
     /// 
     /// Returns a region which is the intersection of this region and the given *rect.*
     /// 
-    /// **See also:** subtracted()
-    /// united()
-    /// xored()
+    /// **See also:** [`subtracted()`]
+    /// [`united()`]
+    /// [`xored()`]
     /// 
     /// Returns a region which is the intersection of this region and *r.*
     /// 
@@ -245,9 +240,10 @@ struct Region {
     /// 
     /// The figure shows the intersection of two elliptical regions.
     /// 
-    /// **See also:** subtracted()
-    /// united()
-    /// xored()
+    /// **See also:** [`subtracted()`]
+    /// [`united()`]
+    /// [`xored()`]
+    [org_name(intersected)]
     intersected_2(r: &RectType) -> Region,
     /// 
     /// Returns a region which is the exclusive or (XOR) of this region
@@ -257,9 +253,9 @@ struct Region {
     /// 
     /// The figure shows the exclusive or of two elliptical regions.
     /// 
-    /// **See also:** intersected()
-    /// united()
-    /// subtracted()
+    /// **See also:** [`intersected()`]
+    /// [`united()`]
+    /// [`subtracted()`]
     xored(r: &RegionType) -> Region,
     /// 
     /// Returns `true` if this region intersects with *region,* otherwise
@@ -274,6 +270,7 @@ struct Region {
     /// 
     /// Returns `true` if this region intersects with *rect,* otherwise
     /// returns `false.`
+    [org_name(intersects)]
     intersects_2(r: &RectType) -> bool,
     /// 
     /// Returns the bounding rectangle of this region. An empty region
@@ -302,6 +299,12 @@ struct Region {
     /// Returns the number of rectangles that this region is composed of.
     /// Same as `end() - begin()` .
     rect_count() -> i32,
+}
+
+[org_name(QRegion)]
+enum RegionType {
+    Rectangle,
+    Ellipse,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

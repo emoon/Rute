@@ -33,6 +33,314 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct TextFormat {
+    qt_check_for_qgadget_macro(),
+    /// 
+    /// Swaps this text format with *other.* This function is very fast
+    /// and never fails.
+    swap(other: &TextFormatType),
+    /// 
+    /// Merges the *other* format with this format; where there are
+    /// conflicts the *other* format takes precedence.
+    merge(other: &TextFormatType),
+    /// 
+    /// Returns `true` if the format is valid (i.e. is not
+    /// InvalidFormat); otherwise returns `false.`
+    is_valid() -> bool,
+    /// 
+    /// Returns true if the format does not store any properties; false otherwise.
+    /// 
+    /// **See also:** [`property_count()`]
+    /// [`properties()`]
+    is_empty() -> bool,
+    /// 
+    /// Returns the type of this format.
+    /// 
+    /// **See also:** FormatType
+    type() -> i32,
+    /// 
+    /// Returns the index of the format object, or -1 if the format object is invalid.
+    /// 
+    /// **See also:** [`set_object_index()`]
+    object_index() -> i32,
+    /// 
+    /// Sets the format object's object *index.*
+    /// 
+    /// **See also:** [`object_index()`]
+    set_object_index(object: i32),
+    /// 
+    /// Returns the property specified by the given *propertyId.*
+    /// 
+    /// **See also:** Property
+    /// 
+    /// Returns the number of properties stored in the format.
+    property(property_id: i32) -> Variant,
+    /// 
+    /// Sets the property specified by the *propertyId* to the given *value.*
+    /// 
+    /// **See also:** Property
+    /// 
+    /// Sets the value of the property given by *propertyId* to *value.*
+    /// 
+    /// **See also:** [`length_vector_property()`]
+    /// Property
+    set_property(property_id: i32, value: &VariantType),
+    /// 
+    /// Clears the value of the property given by *propertyId*
+    /// 
+    /// **See also:** Property
+    clear_property(property_id: i32),
+    /// 
+    /// Returns `true` if the text format has a property with the given *propertyId;* otherwise returns `false.`
+    /// 
+    /// **See also:** [`properties()`]
+    /// Property
+    has_property(property_id: i32) -> bool,
+    /// 
+    /// Returns the value of the property specified by *propertyId.* If the
+    /// property isn't of QTextFormat::Bool type, false is returned instead.
+    /// 
+    /// **See also:** [`set_property()`]
+    /// [`int_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`color_property()`]
+    /// [`length_property()`]
+    /// [`length_vector_property()`]
+    /// Property
+    bool_property(property_id: i32) -> bool,
+    /// 
+    /// Returns the value of the property specified by *propertyId.* If the
+    /// property is not of QTextFormat::Integer type, 0 is returned instead.
+    /// 
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`color_property()`]
+    /// [`length_property()`]
+    /// [`length_vector_property()`]
+    /// Property
+    int_property(property_id: i32) -> i32,
+    /// 
+    /// Returns the value of the property specified by *propertyId.* If the
+    /// property isn't of QVariant::Double or QMetaType::Float type, 0 is
+    /// returned instead.
+    /// 
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`int_property()`]
+    /// [`string_property()`]
+    /// [`color_property()`]
+    /// [`length_property()`]
+    /// [`length_vector_property()`]
+    /// Property
+    double_property(property_id: i32) -> f32,
+    /// 
+    /// Returns the value of the property given by *propertyId;* if the
+    /// property isn't of QVariant::Color type, an invalid color is
+    /// returned instead.
+    /// 
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`int_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`length_property()`]
+    /// [`length_vector_property()`]
+    /// Property
+    color_property(property_id: i32) -> Color,
+    /// 
+    /// Returns the value of the property given by *propertyId;* if the
+    /// property isn't of QVariant::Pen type, Qt::NoPen is
+    /// returned instead.
+    /// 
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`int_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`length_property()`]
+    /// [`length_vector_property()`]
+    /// Property
+    pen_property(property_id: i32) -> Pen,
+    /// 
+    /// Returns the value of the property given by *propertyId;* if the
+    /// property isn't of QVariant::Brush type, Qt::NoBrush is
+    /// returned instead.
+    /// 
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`int_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`length_property()`]
+    /// [`length_vector_property()`]
+    /// Property
+    brush_property(property_id: i32) -> Brush,
+    /// 
+    /// Returns the value of the property given by *propertyId.*
+    /// 
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`int_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`color_property()`]
+    /// [`length_vector_property()`]
+    /// Property
+    length_property(property_id: i32) -> TextLength,
+    /// 
+    /// Returns the value of the property given by *propertyId.* If the
+    /// property isn't of QTextFormat::LengthVector type, an empty length
+    /// vector is returned instead.
+    /// 
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`int_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`color_property()`]
+    /// [`length_property()`]
+    /// Property
+    length_vector_property(property_id: i32) -> [TextLength],
+    /// 
+    /// Sets the property specified by the *propertyId* to the given *value.*
+    /// 
+    /// **See also:** Property
+    /// 
+    /// Sets the value of the property given by *propertyId* to *value.*
+    /// 
+    /// **See also:** [`length_vector_property()`]
+    /// Property
+    [org_name(setProperty)]
+    set_property_2(property_id: i32, lengths: [TextLengthType]),
+    /// 
+    /// Returns a map with all properties of this text format.
+    properties() -> Map<int,,
+    /// 
+    /// Returns the number of properties stored in the format.
+    property_count() -> i32,
+    /// 
+    /// Sets the text format's object type to *type.*
+    /// 
+    /// **See also:** ObjectTypes
+    /// [`object_type()`]
+    set_object_type(type: i32),
+    /// 
+    /// Returns the text format's object type.
+    /// 
+    /// **See also:** ObjectTypes
+    /// [`set_object_type()`]
+    object_type() -> i32,
+    /// 
+    /// Returns `true` if this text format is a `CharFormat;` otherwise
+    /// returns `false.`
+    is_char_format() -> bool,
+    /// 
+    /// Returns `true` if this text format is a `BlockFormat;` otherwise
+    /// returns `false.`
+    is_block_format() -> bool,
+    /// 
+    /// Returns `true` if this text format is a `ListFormat;` otherwise
+    /// returns `false.`
+    is_list_format() -> bool,
+    /// 
+    /// Returns `true` if this text format is a `FrameFormat;` otherwise
+    /// returns `false.`
+    is_frame_format() -> bool,
+    /// 
+    /// Returns `true` if this text format is an image format; otherwise
+    /// returns `false.`
+    is_image_format() -> bool,
+    /// 
+    /// Returns `true` if this text format is a `TableFormat;` otherwise
+    /// returns `false.`
+    is_table_format() -> bool,
+    /// 
+    /// Returns `true` if this text format is a `TableCellFormat;` otherwise
+    /// returns `false.`
+    is_table_cell_format() -> bool,
+    /// 
+    /// Returns this format as a block format.
+    to_block_format() -> TextBlockFormat,
+    /// 
+    /// Returns this format as a character format.
+    to_char_format() -> TextCharFormat,
+    /// 
+    /// Returns this format as a list format.
+    to_list_format() -> TextListFormat,
+    /// 
+    /// Returns this format as a table format.
+    to_table_format() -> TextTableFormat,
+    /// 
+    /// Returns this format as a frame format.
+    to_frame_format() -> TextFrameFormat,
+    /// 
+    /// Returns this format as an image format.
+    to_image_format() -> TextImageFormat,
+    /// 
+    /// Returns this format as a table cell format.
+    to_table_cell_format() -> TextTableCellFormat,
+    /// 
+    /// Sets the document's layout direction to the specified *direction.*
+    /// 
+    /// **See also:** [`layout_direction()`]
+    set_layout_direction(direction: Rute::LayoutDirection),
+    /// 
+    /// Returns the document's layout direction.
+    /// 
+    /// **See also:** [`set_layout_direction()`]
+    layout_direction() -> Rute::LayoutDirection,
+    /// 
+    /// Sets the brush use to paint the document's background to the
+    /// *brush* specified.
+    /// 
+    /// **See also:** [`background()`]
+    /// [`clear_background()`]
+    /// [`set_foreground()`]
+    set_background(brush: &BrushType),
+    /// 
+    /// Returns the brush used to paint the document's background.
+    /// 
+    /// **See also:** [`set_background()`]
+    /// [`clear_background()`]
+    /// [`foreground()`]
+    background() -> Brush,
+    /// 
+    /// Clears the brush used to paint the document's background. The default
+    /// brush will be used.
+    /// 
+    /// **See also:** [`background()`]
+    /// [`set_background()`]
+    /// [`clear_foreground()`]
+    clear_background(),
+    /// 
+    /// Sets the foreground brush to the specified *brush.* The foreground
+    /// brush is mostly used to render text.
+    /// 
+    /// **See also:** [`foreground()`]
+    /// [`clear_foreground()`]
+    /// [`set_background()`]
+    set_foreground(brush: &BrushType),
+    /// 
+    /// Returns the brush used to render foreground details, such as text,
+    /// frame outlines, and table borders.
+    /// 
+    /// **See also:** [`set_foreground()`]
+    /// [`clear_foreground()`]
+    /// [`background()`]
+    foreground() -> Brush,
+    /// 
+    /// Clears the brush used to paint the document's foreground. The default
+    /// brush will be used.
+    /// 
+    /// **See also:** [`foreground()`]
+    /// [`set_foreground()`]
+    /// [`clear_background()`]
+    clear_foreground(),
+}
+
 [org_name(QTextFormat)]
 enum FormatType {
     InvalidFormat,
@@ -144,314 +452,6 @@ enum PageBreakFlag {
     PageBreak_Auto,
     PageBreak_AlwaysBefore,
     PageBreak_AlwaysAfter,
-}
-
-
-struct TextFormat {
-    qt_check_for_qgadget_macro(),
-    /// 
-    /// Swaps this text format with *other.* This function is very fast
-    /// and never fails.
-    swap(other: &TextFormatType),
-    /// 
-    /// Merges the *other* format with this format; where there are
-    /// conflicts the *other* format takes precedence.
-    merge(other: &TextFormatType),
-    /// 
-    /// Returns `true` if the format is valid (i.e. is not
-    /// InvalidFormat); otherwise returns `false.`
-    is_valid() -> bool,
-    /// 
-    /// Returns true if the format does not store any properties; false otherwise.
-    /// 
-    /// **See also:** propertyCount()
-    /// properties()
-    is_empty() -> bool,
-    /// 
-    /// Returns the type of this format.
-    /// 
-    /// **See also:** FormatType
-    type() -> i32,
-    /// 
-    /// Returns the index of the format object, or -1 if the format object is invalid.
-    /// 
-    /// **See also:** setObjectIndex()
-    object_index() -> i32,
-    /// 
-    /// Sets the format object's object *index.*
-    /// 
-    /// **See also:** objectIndex()
-    set_object_index(object: i32),
-    /// 
-    /// Returns the property specified by the given *propertyId.*
-    /// 
-    /// **See also:** Property
-    /// 
-    /// Returns the number of properties stored in the format.
-    property(property_id: i32) -> Variant,
-    /// 
-    /// Sets the property specified by the *propertyId* to the given *value.*
-    /// 
-    /// **See also:** Property
-    /// 
-    /// Sets the value of the property given by *propertyId* to *value.*
-    /// 
-    /// **See also:** lengthVectorProperty()
-    /// Property
-    set_property(property_id: i32, value: &VariantType),
-    /// 
-    /// Clears the value of the property given by *propertyId*
-    /// 
-    /// **See also:** Property
-    clear_property(property_id: i32),
-    /// 
-    /// Returns `true` if the text format has a property with the given *propertyId;* otherwise returns `false.`
-    /// 
-    /// **See also:** properties()
-    /// Property
-    has_property(property_id: i32) -> bool,
-    /// 
-    /// Returns the value of the property specified by *propertyId.* If the
-    /// property isn't of QTextFormat::Bool type, false is returned instead.
-    /// 
-    /// **See also:** setProperty()
-    /// intProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// colorProperty()
-    /// lengthProperty()
-    /// lengthVectorProperty()
-    /// Property
-    bool_property(property_id: i32) -> bool,
-    /// 
-    /// Returns the value of the property specified by *propertyId.* If the
-    /// property is not of QTextFormat::Integer type, 0 is returned instead.
-    /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// colorProperty()
-    /// lengthProperty()
-    /// lengthVectorProperty()
-    /// Property
-    int_property(property_id: i32) -> i32,
-    /// 
-    /// Returns the value of the property specified by *propertyId.* If the
-    /// property isn't of QVariant::Double or QMetaType::Float type, 0 is
-    /// returned instead.
-    /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// intProperty()
-    /// stringProperty()
-    /// colorProperty()
-    /// lengthProperty()
-    /// lengthVectorProperty()
-    /// Property
-    double_property(property_id: i32) -> f32,
-    /// 
-    /// Returns the value of the property given by *propertyId;* if the
-    /// property isn't of QVariant::Color type, an invalid color is
-    /// returned instead.
-    /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// intProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// lengthProperty()
-    /// lengthVectorProperty()
-    /// Property
-    color_property(property_id: i32) -> Color,
-    /// 
-    /// Returns the value of the property given by *propertyId;* if the
-    /// property isn't of QVariant::Pen type, Qt::NoPen is
-    /// returned instead.
-    /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// intProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// lengthProperty()
-    /// lengthVectorProperty()
-    /// Property
-    pen_property(property_id: i32) -> Pen,
-    /// 
-    /// Returns the value of the property given by *propertyId;* if the
-    /// property isn't of QVariant::Brush type, Qt::NoBrush is
-    /// returned instead.
-    /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// intProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// lengthProperty()
-    /// lengthVectorProperty()
-    /// Property
-    brush_property(property_id: i32) -> Brush,
-    /// 
-    /// Returns the value of the property given by *propertyId.*
-    /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// intProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// colorProperty()
-    /// lengthVectorProperty()
-    /// Property
-    length_property(property_id: i32) -> TextLength,
-    /// 
-    /// Returns the value of the property given by *propertyId.* If the
-    /// property isn't of QTextFormat::LengthVector type, an empty length
-    /// vector is returned instead.
-    /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// intProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// colorProperty()
-    /// lengthProperty()
-    /// Property
-    length_vector_property(property_id: i32) -> [TextLength],
-    /// 
-    /// Sets the property specified by the *propertyId* to the given *value.*
-    /// 
-    /// **See also:** Property
-    /// 
-    /// Sets the value of the property given by *propertyId* to *value.*
-    /// 
-    /// **See also:** lengthVectorProperty()
-    /// Property
-    set_property_2(property_id: i32, lengths: [TextLengthType]),
-    /// 
-    /// Returns a map with all properties of this text format.
-    properties() -> Map<int,,
-    /// 
-    /// Returns the number of properties stored in the format.
-    property_count() -> i32,
-    /// 
-    /// Sets the text format's object type to *type.*
-    /// 
-    /// **See also:** ObjectTypes
-    /// objectType()
-    set_object_type(type: i32),
-    /// 
-    /// Returns the text format's object type.
-    /// 
-    /// **See also:** ObjectTypes
-    /// setObjectType()
-    object_type() -> i32,
-    /// 
-    /// Returns `true` if this text format is a `CharFormat;` otherwise
-    /// returns `false.`
-    is_char_format() -> bool,
-    /// 
-    /// Returns `true` if this text format is a `BlockFormat;` otherwise
-    /// returns `false.`
-    is_block_format() -> bool,
-    /// 
-    /// Returns `true` if this text format is a `ListFormat;` otherwise
-    /// returns `false.`
-    is_list_format() -> bool,
-    /// 
-    /// Returns `true` if this text format is a `FrameFormat;` otherwise
-    /// returns `false.`
-    is_frame_format() -> bool,
-    /// 
-    /// Returns `true` if this text format is an image format; otherwise
-    /// returns `false.`
-    is_image_format() -> bool,
-    /// 
-    /// Returns `true` if this text format is a `TableFormat;` otherwise
-    /// returns `false.`
-    is_table_format() -> bool,
-    /// 
-    /// Returns `true` if this text format is a `TableCellFormat;` otherwise
-    /// returns `false.`
-    is_table_cell_format() -> bool,
-    /// 
-    /// Returns this format as a block format.
-    to_block_format() -> TextBlockFormat,
-    /// 
-    /// Returns this format as a character format.
-    to_char_format() -> TextCharFormat,
-    /// 
-    /// Returns this format as a list format.
-    to_list_format() -> TextListFormat,
-    /// 
-    /// Returns this format as a table format.
-    to_table_format() -> TextTableFormat,
-    /// 
-    /// Returns this format as a frame format.
-    to_frame_format() -> TextFrameFormat,
-    /// 
-    /// Returns this format as an image format.
-    to_image_format() -> TextImageFormat,
-    /// 
-    /// Returns this format as a table cell format.
-    to_table_cell_format() -> TextTableCellFormat,
-    /// 
-    /// Sets the document's layout direction to the specified *direction.*
-    /// 
-    /// **See also:** layoutDirection()
-    set_layout_direction(direction: Rute::LayoutDirection),
-    /// 
-    /// Returns the document's layout direction.
-    /// 
-    /// **See also:** setLayoutDirection()
-    layout_direction() -> Rute::LayoutDirection,
-    /// 
-    /// Sets the brush use to paint the document's background to the
-    /// *brush* specified.
-    /// 
-    /// **See also:** background()
-    /// clearBackground()
-    /// setForeground()
-    set_background(brush: &BrushType),
-    /// 
-    /// Returns the brush used to paint the document's background.
-    /// 
-    /// **See also:** setBackground()
-    /// clearBackground()
-    /// foreground()
-    background() -> Brush,
-    /// 
-    /// Clears the brush used to paint the document's background. The default
-    /// brush will be used.
-    /// 
-    /// **See also:** background()
-    /// setBackground()
-    /// clearForeground()
-    clear_background(),
-    /// 
-    /// Sets the foreground brush to the specified *brush.* The foreground
-    /// brush is mostly used to render text.
-    /// 
-    /// **See also:** foreground()
-    /// clearForeground()
-    /// setBackground()
-    set_foreground(brush: &BrushType),
-    /// 
-    /// Returns the brush used to render foreground details, such as text,
-    /// frame outlines, and table borders.
-    /// 
-    /// **See also:** setForeground()
-    /// clearForeground()
-    /// background()
-    foreground() -> Brush,
-    /// 
-    /// Clears the brush used to paint the document's foreground. The default
-    /// brush will be used.
-    /// 
-    /// **See also:** foreground()
-    /// setForeground()
-    /// clearBackground()
-    clear_foreground(),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

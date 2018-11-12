@@ -58,7 +58,7 @@
 /// parsing the paragraph's text. For an example, see the
 /// setCurrentBlockUserData() documentation.
 /// 
-/// **See also:** QTextDocument
+/// **See also:** [`TextDocument`]
 /// {Syntax Highlighter Example}
 /// # Licence
 ///
@@ -75,16 +75,16 @@ struct SyntaxHighlighter : Object {
     /// 
     /// Reapplies the highlighting to the whole document.
     /// 
-    /// **See also:** rehighlightBlock()
+    /// **See also:** [`rehighlight_block()`]
     /// 
     /// Reapplies the highlighting to the given QTextBlock *block.*
     /// 
-    /// **See also:** rehighlight()
+    /// **See also:** [`rehighlight()`]
     rehighlight(),
     /// 
     /// Reapplies the highlighting to the given QTextBlock *block.*
     /// 
-    /// **See also:** rehighlight()
+    /// **See also:** [`rehighlight()`]
     rehighlight_block(block: &TextBlockType),
     /// 
     /// Highlights the given text block. This function is called when
@@ -103,9 +103,9 @@ struct SyntaxHighlighter : Object {
     /// and previousBlockState() to handle syntaxes with constructs that
     /// span several text blocks
     /// 
-    /// **See also:** previousBlockState()
-    /// setFormat()
-    /// setCurrentBlockState()
+    /// **See also:** [`previous_block_state()`]
+    /// [`set_format()`]
+    /// [`set_current_block_state()`]
     [event] highlight_block(text: String),
     /// 
     /// This function is applied to the syntax highlighter's current text
@@ -120,8 +120,8 @@ struct SyntaxHighlighter : Object {
     /// QTextCursor's functions. Note that the document itself remains
     /// unmodified by the format set through this function.
     /// 
-    /// **See also:** format()
-    /// highlightBlock()
+    /// **See also:** [`format()`]
+    /// [`highlight_block()`]
     /// 
     /// **Overloads**
     /// The specified *color* is applied to the current text block from
@@ -130,8 +130,8 @@ struct SyntaxHighlighter : Object {
     /// The other attributes of the current text block, e.g. the font and
     /// background color, are reset to default values.
     /// 
-    /// **See also:** format()
-    /// highlightBlock()
+    /// **See also:** [`format()`]
+    /// [`highlight_block()`]
     /// 
     /// **Overloads**
     /// The specified *font* is applied to the current text block from
@@ -140,8 +140,8 @@ struct SyntaxHighlighter : Object {
     /// The other attributes of the current text block, e.g. the font and
     /// background color, are reset to default values.
     /// 
-    /// **See also:** format()
-    /// highlightBlock()
+    /// **See also:** [`format()`]
+    /// [`highlight_block()`]
     set_format(start: i32, count: i32, format: &TextCharFormatType),
     /// 
     /// This function is applied to the syntax highlighter's current text
@@ -156,8 +156,8 @@ struct SyntaxHighlighter : Object {
     /// QTextCursor's functions. Note that the document itself remains
     /// unmodified by the format set through this function.
     /// 
-    /// **See also:** format()
-    /// highlightBlock()
+    /// **See also:** [`format()`]
+    /// [`highlight_block()`]
     /// 
     /// **Overloads**
     /// The specified *color* is applied to the current text block from
@@ -166,8 +166,8 @@ struct SyntaxHighlighter : Object {
     /// The other attributes of the current text block, e.g. the font and
     /// background color, are reset to default values.
     /// 
-    /// **See also:** format()
-    /// highlightBlock()
+    /// **See also:** [`format()`]
+    /// [`highlight_block()`]
     /// 
     /// **Overloads**
     /// The specified *font* is applied to the current text block from
@@ -176,8 +176,9 @@ struct SyntaxHighlighter : Object {
     /// The other attributes of the current text block, e.g. the font and
     /// background color, are reset to default values.
     /// 
-    /// **See also:** format()
-    /// highlightBlock()
+    /// **See also:** [`format()`]
+    /// [`highlight_block()`]
+    [org_name(setFormat)]
     set_format_2(start: i32, count: i32, color: &ColorType),
     /// 
     /// This function is applied to the syntax highlighter's current text
@@ -192,8 +193,8 @@ struct SyntaxHighlighter : Object {
     /// QTextCursor's functions. Note that the document itself remains
     /// unmodified by the format set through this function.
     /// 
-    /// **See also:** format()
-    /// highlightBlock()
+    /// **See also:** [`format()`]
+    /// [`highlight_block()`]
     /// 
     /// **Overloads**
     /// The specified *color* is applied to the current text block from
@@ -202,8 +203,8 @@ struct SyntaxHighlighter : Object {
     /// The other attributes of the current text block, e.g. the font and
     /// background color, are reset to default values.
     /// 
-    /// **See also:** format()
-    /// highlightBlock()
+    /// **See also:** [`format()`]
+    /// [`highlight_block()`]
     /// 
     /// **Overloads**
     /// The specified *font* is applied to the current text block from
@@ -212,8 +213,9 @@ struct SyntaxHighlighter : Object {
     /// The other attributes of the current text block, e.g. the font and
     /// background color, are reset to default values.
     /// 
-    /// **See also:** format()
-    /// highlightBlock()
+    /// **See also:** [`format()`]
+    /// [`highlight_block()`]
+    [org_name(setFormat)]
     set_format_3(start: i32, count: i32, font: &FontType),
     /// 
     /// Returns the format at *position* inside the syntax highlighter's
@@ -224,8 +226,8 @@ struct SyntaxHighlighter : Object {
     /// syntax highlighter's current block. If no value was
     /// previously set, the returned value is -1.
     /// 
-    /// **See also:** highlightBlock()
-    /// setCurrentBlockState()
+    /// **See also:** [`highlight_block()`]
+    /// [`set_current_block_state()`]
     previous_block_state() -> i32,
     /// 
     /// Returns the state of the current text block. If no value is set,
@@ -234,7 +236,7 @@ struct SyntaxHighlighter : Object {
     /// 
     /// Sets the state of the current text block to *newState.*
     /// 
-    /// **See also:** highlightBlock()
+    /// **See also:** [`highlight_block()`]
     set_current_block_state(new_state: i32),
     /// 
     /// Attaches the given *data* to the current text block. The
@@ -265,14 +267,14 @@ struct SyntaxHighlighter : Object {
     /// find where a corresponding opening/closing parenthesis is when
     /// editing parenthesis intensive code.
     /// 
-    /// **See also:** QTextBlock::setUserData()
+    /// **See also:** [`TextBlock::set_user_data`]
     set_current_block_user_data(data: *TextBlockUserDataType),
     /// 
     /// Returns the QTextBlockUserData object previously attached to the
     /// current text block.
     /// 
-    /// **See also:** QTextBlock::userData()
-    /// setCurrentBlockUserData()
+    /// **See also:** [`TextBlock::user_data`]
+    /// [`set_current_block_user_data()`]
     current_block_user_data() -> TextBlockUserData?,
     /// 
     /// Returns the state of the current text block. If no value is set,
@@ -281,8 +283,8 @@ struct SyntaxHighlighter : Object {
     /// Returns the QTextBlockUserData object previously attached to the
     /// current text block.
     /// 
-    /// **See also:** QTextBlock::userData()
-    /// setCurrentBlockUserData()
+    /// **See also:** [`TextBlock::user_data`]
+    /// [`set_current_block_user_data()`]
     /// 
     /// Returns the current text block.
     current_block() -> TextBlock,

@@ -18,37 +18,33 @@
 /// use QRectF::normalized() to create normalized rectangles, and use
 /// those instead.
 /// 
-/// **See also:** QGraphicsPathItem
-/// QGraphicsEllipseItem
-/// QGraphicsPolygonItem
-/// QGraphicsTextItem
-/// QGraphicsLineItem
-/// QGraphicsPixmapItem
+/// **See also:** [`GraphicsPathItem`]
+/// [`GraphicsEllipseItem`]
+/// [`GraphicsPolygonItem`]
+/// [`GraphicsTextItem`]
+/// [`GraphicsLineItem`]
+/// [`GraphicsPixmapItem`]
 /// {Graphics
 /// View Framework}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsRectItem)]
-enum GraphicsRectItemFixMeEnums {
-    Type,
-}
-
 struct GraphicsRectItem : AbstractGraphicsShapeItem {
     /// 
     /// Returns the item's rectangle.
     /// 
-    /// **See also:** setRect()
+    /// **See also:** [`set_rect()`]
     rect() -> RectF,
     /// 
     /// Sets the item's rectangle to be the given *rectangle.*
     /// 
-    /// **See also:** rect()
+    /// **See also:** [`rect()`]
     set_rect(rect: &RectFType),
     /// 
     /// Sets the item's rectangle to be the given *rectangle.*
     /// 
-    /// **See also:** rect()
+    /// **See also:** [`rect()`]
+    [org_name(setRect)]
     set_rect_2(x: f32, y: f32, w: f32, h: f32),
     /// 
     [event] bounding_rect() -> RectF,
@@ -67,6 +63,11 @@ struct GraphicsRectItem : AbstractGraphicsShapeItem {
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
     [event] extension(variant: &VariantType) -> Variant,
+}
+
+[org_name(QGraphicsRectItem)]
+enum GraphicsRectItemFixMeEnums {
+    Type,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

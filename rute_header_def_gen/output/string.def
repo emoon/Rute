@@ -309,38 +309,14 @@
 /// and the `'+'` will automatically be performed as the
 /// `QStringBuilder` `'%'` everywhere.
 /// 
-/// **See also:** fromRawData()
-/// QChar
-/// QLatin1String
-/// QByteArray
-/// QStringRef
+/// **See also:** [`from_raw_data()`]
+/// [`Char`]
+/// [`Latin1String`]
+/// [`ByteArray`]
+/// [`StringRef`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QString)]
-enum SectionFlag {
-    SectionDefault,
-    SectionSkipEmpty,
-    SectionIncludeLeadingSep,
-    SectionIncludeTrailingSep,
-    SectionCaseInsensitiveSeps,
-}
-
-[org_name(QString)]
-enum SplitBehavior {
-    KeepEmptyParts,
-    SkipEmptyParts,
-}
-
-[org_name(QString)]
-enum NormalizationForm {
-    NormalizationForm_D,
-    NormalizationForm_C,
-    NormalizationForm_KD,
-    NormalizationForm_KC,
-}
-
-
 struct String {
     /// 
     /// Swaps string *other* with this string. This operation is very fast and
@@ -353,8 +329,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** isEmpty()
-    /// resize()
+    /// **See also:** [`is_empty()`]
+    /// [`resize()`]
     size() -> i32,
     /// 
     /// Returns the number of (potentially overlapping) occurrences of
@@ -363,8 +339,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of occurrences of character *ch* in the string.
@@ -372,8 +348,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count() Returns the number of (potentially overlapping) occurrences of the
     /// string reference *str* in this string.
@@ -381,8 +357,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of times the regular expression *rx* matches
@@ -407,7 +383,7 @@ struct String {
     /// Returns the number of characters in this string. Equivalent to
     /// size().
     /// 
-    /// **See also:** resize()
+    /// **See also:** [`resize()`]
     length() -> i32,
     /// 
     /// Returns `true` if the string has no characters; otherwise returns
@@ -415,7 +391,7 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     is_empty() -> bool,
     /// 
     /// Sets the size of the string to *size* characters.
@@ -439,8 +415,8 @@ struct String {
     /// 
     /// If *size* is negative, it is equivalent to passing zero.
     /// 
-    /// **See also:** truncate()
-    /// reserve()
+    /// **See also:** [`truncate()`]
+    /// [`reserve()`]
     /// 
     /// **Overloads**
     /// Unlike [resize(int)](QString::)
@@ -470,14 +446,15 @@ struct String {
     /// 
     /// If *size* is negative, it is equivalent to passing zero.
     /// 
-    /// **See also:** truncate()
-    /// reserve()
+    /// **See also:** [`truncate()`]
+    /// [`reserve()`]
     /// 
     /// **Overloads**
     /// Unlike [resize(int)](QString::)
     /// , this overload
     /// initializes the new characters to *fillChar:*
     /// 
+    [org_name(resize)]
     resize_2(size: i32, fill_char: CharType),
     /// 
     /// Sets every character in the string to character *ch.* If *size*
@@ -485,7 +462,7 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** resize()
+    /// **See also:** [`resize()`]
     fill(c: CharType, size: i32) -> String?,
     /// 
     /// Returns a substring that contains the size() - *len* leftmost characters
@@ -493,12 +470,12 @@ struct String {
     /// 
     /// **Note**: The behavior is undefined if *len* is negative or greater than size().
     /// 
-    /// **See also:** endsWith()
-    /// left()
-    /// right()
-    /// mid()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`ends_with()`]
+    /// [`left()`]
+    /// [`right()`]
+    /// [`mid()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     /// 
     /// Removes *n* characters from the end of the string.
     /// 
@@ -510,10 +487,10 @@ struct String {
     /// If you want to remove characters from the *beginning* of the
     /// string, use remove() instead.
     /// 
-    /// **See also:** truncate()
-    /// resize()
-    /// remove()
-    /// QStringRef::chop()
+    /// **See also:** [`truncate()`]
+    /// [`resize()`]
+    /// [`remove()`]
+    /// [`StringRef::chop`]
     chop(n: i32),
     /// 
     /// Returns the maximum number of characters that can be stored in
@@ -524,8 +501,8 @@ struct String {
     /// need to call this function. If you want to know how many
     /// characters are in the string, call size().
     /// 
-    /// **See also:** reserve()
-    /// squeeze()
+    /// **See also:** [`reserve()`]
+    /// [`squeeze()`]
     capacity() -> i32,
     /// 
     /// Attempts to allocate memory for at least *size* characters. If
@@ -545,8 +522,8 @@ struct String {
     /// we're fairly sure that size is large enough to make a call to
     /// reserve() worthwhile:
     /// 
-    /// **See also:** squeeze()
-    /// capacity()
+    /// **See also:** [`squeeze()`]
+    /// [`capacity()`]
     reserve(size: i32),
     /// 
     /// Releases any memory not required to store the character data.
@@ -555,8 +532,8 @@ struct String {
     /// tuning QString's memory usage. In general, you will rarely ever
     /// need to call this function.
     /// 
-    /// **See also:** reserve()
-    /// capacity()
+    /// **See also:** [`reserve()`]
+    /// [`capacity()`]
     squeeze(),
     /// 
     /// Returns a Unicode representation of the string.
@@ -565,8 +542,8 @@ struct String {
     /// **Note**: The returned string may not be '\\0'-terminated.
     /// Use size() to determine the length of the array.
     /// 
-    /// **See also:** utf16()
-    /// fromRawData()
+    /// **See also:** [`utf16()`]
+    /// [`from_raw_data()`]
     unicode() -> Char?,
     /// 
     /// Returns a pointer to the data stored in the QString. The pointer
@@ -583,14 +560,14 @@ struct String {
     /// faster because it never causes a [deep copy](deep%20copy)
     /// to occur.
     /// 
-    /// **See also:** constData()
-    /// operator[]()
+    /// **See also:** [`const_data()`]
+    /// [`operator()`]
     /// 
     /// **Overloads**
     /// **Note**: The returned string may not be '\\0'-terminated.
     /// Use size() to determine the length of the array.
     /// 
-    /// **See also:** fromRawData()
+    /// **See also:** [`from_raw_data()`]
     data() -> Char?,
     /// 
     /// Returns a pointer to the data stored in the QString. The pointer
@@ -607,14 +584,15 @@ struct String {
     /// faster because it never causes a [deep copy](deep%20copy)
     /// to occur.
     /// 
-    /// **See also:** constData()
-    /// operator[]()
+    /// **See also:** [`const_data()`]
+    /// [`operator()`]
     /// 
     /// **Overloads**
     /// **Note**: The returned string may not be '\\0'-terminated.
     /// Use size() to determine the length of the array.
     /// 
-    /// **See also:** fromRawData()
+    /// **See also:** [`from_raw_data()`]
+    [org_name(data)]
     data_2() -> Char?,
     /// 
     /// Returns a pointer to the data stored in the QString. The pointer
@@ -626,9 +604,9 @@ struct String {
     /// **Note**: The returned string may not be '\\0'-terminated.
     /// Use size() to determine the length of the array.
     /// 
-    /// **See also:** data()
-    /// operator[]()
-    /// fromRawData()
+    /// **See also:** [`data()`]
+    /// [`operator()`]
+    /// [`from_raw_data()`]
     const_data() -> Char?,
     detach(),
     is_detached() -> bool,
@@ -636,8 +614,8 @@ struct String {
     /// 
     /// Clears the contents of the string and makes it null.
     /// 
-    /// **See also:** resize()
-    /// isNull()
+    /// **See also:** [`resize()`]
+    /// [`is_null()`]
     clear(),
     /// 
     /// Returns the character at the given index *position* in the
@@ -646,7 +624,7 @@ struct String {
     /// The *position* must be a valid index position in the string
     /// (i.e., 0 <= *position* < size()).
     /// 
-    /// **See also:** operator[]()
+    /// **See also:** [`operator()`]
     at(i: i32) -> Char,
     /// 
     /// Returns the first character in the string.
@@ -657,9 +635,9 @@ struct String {
     /// **Warning**: Calling this function on an empty string constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** back()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`back()`]
+    /// [`at()`]
+    /// [`operator()`]
     /// 
     /// Returns a reference to the first character in the string.
     /// Same as `operator[](0)` .
@@ -669,9 +647,9 @@ struct String {
     /// **Warning**: Calling this function on an empty string constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** back()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`back()`]
+    /// [`at()`]
+    /// [`operator()`]
     front() -> Char,
     /// 
     /// Returns the first character in the string.
@@ -682,9 +660,9 @@ struct String {
     /// **Warning**: Calling this function on an empty string constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** back()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`back()`]
+    /// [`at()`]
+    /// [`operator()`]
     /// 
     /// Returns a reference to the first character in the string.
     /// Same as `operator[](0)` .
@@ -694,10 +672,11 @@ struct String {
     /// **Warning**: Calling this function on an empty string constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** back()
-    /// at()
-    /// operator[]()
-    front_2() -> i32,
+    /// **See also:** [`back()`]
+    /// [`at()`]
+    /// [`operator()`]
+    [org_name(front)]
+    front_2() -> CharRef,
     /// 
     /// Returns the last character in the string.
     /// Same as `at(size() - 1)` .
@@ -707,9 +686,9 @@ struct String {
     /// **Warning**: Calling this function on an empty string constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** front()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`front()`]
+    /// [`at()`]
+    /// [`operator()`]
     /// 
     /// Returns a reference to the last character in the string.
     /// Same as `operator[](size() - 1)` .
@@ -719,9 +698,9 @@ struct String {
     /// **Warning**: Calling this function on an empty string constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** front()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`front()`]
+    /// [`at()`]
+    /// [`operator()`]
     back() -> Char,
     /// 
     /// Returns the last character in the string.
@@ -732,9 +711,9 @@ struct String {
     /// **Warning**: Calling this function on an empty string constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** front()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`front()`]
+    /// [`at()`]
+    /// [`operator()`]
     /// 
     /// Returns a reference to the last character in the string.
     /// Same as `operator[](size() - 1)` .
@@ -744,10 +723,11 @@ struct String {
     /// **Warning**: Calling this function on an empty string constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** front()
-    /// at()
-    /// operator[]()
-    back_2() -> i32,
+    /// **See also:** [`front()`]
+    /// [`at()`]
+    /// [`operator()`]
+    [org_name(back)]
+    back_2() -> CharRef,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
     /// replaced by string *a,* i.e., `%1,` `%2,` ..., `%99.`
@@ -1005,7 +985,7 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
     arg(a: i64, fieldwidth: i32, base: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -1264,7 +1244,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_2(a: qulonglong, fieldwidth: i32, base: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -1523,7 +1504,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_3(a: long, fieldwidth: i32, base: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -1782,7 +1764,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_4(a: ulong, fieldwidth: i32, base: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -2041,7 +2024,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_5(a: i32, field_width: i32, base: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -2300,7 +2284,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_6(a: uint, field_width: i32, base: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -2559,7 +2544,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_7(a: short, field_width: i32, base: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -2818,7 +2804,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_8(a: ushort, field_width: i32, base: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -3077,7 +3064,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_9(a: double, field_width: i32, fmt: char, prec: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -3336,7 +3324,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_10(a: char, field_width: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -3595,7 +3584,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_11(a: CharType, field_width: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -3854,7 +3844,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_12(a: String, field_width: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -4113,7 +4104,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_13(a: StringViewType, field_width: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -4372,7 +4364,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_14(a: Latin1StringType, field_width: i32, fill_char: CharType) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -4631,7 +4624,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_15(a1: String, a2: String) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -4890,7 +4884,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_16(a1: String, a2: String, a3: String) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -5149,7 +5144,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_17(a1: String, a2: String, a3: String, a4: String) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -5408,7 +5404,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_18(a1: String, a2: String, a3: String, a4: String, a5: String) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -5667,7 +5664,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_19(a1: String, a2: String, a3: String, a4: String, a5: String, a6: String) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -5926,7 +5924,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_20(a1: String, a2: String, a3: String, a4: String, a5: String, a6: String, a7: String) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -6185,7 +6184,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_21(a1: String, a2: String, a3: String, a4: String, a5: String, a6: String, a7: String, a8: String) -> String,
     /// 
     /// Returns a copy of this string with the lowest numbered place marker
@@ -6444,7 +6444,8 @@ struct String {
     /// use the locale's zero to pad. For negative numbers, the zero padding
     /// will probably appear before the minus sign.
     /// 
-    /// **See also:** QLocale::toString()
+    /// **See also:** [`Locale::to_string`]
+    [org_name(arg)]
     arg_22(a1: String, a2: String, a3: String, a4: String, a5: String, a6: String, a7: String, a8: String, a9: String) -> String,
     /// 
     /// Use vasprintf(), arg() or QTextStream instead.
@@ -6460,7 +6461,7 @@ struct String {
     /// This method does not call the va_end macro, the caller
     /// is responsible to call va_end on *ap.*
     /// 
-    /// **See also:** asprintf()
+    /// **See also:** [`asprintf()`]
     [static] vasprintf(format: *char, ap: va_list) -> String,
     /// 
     /// Safely builds a formatted string from the format string *cformat*
@@ -6490,7 +6491,7 @@ struct String {
     /// the arg() function instead. This allows the order of the
     /// replacements to be controlled by the translator.
     /// 
-    /// **See also:** arg()
+    /// **See also:** [`arg()`]
     [static] asprintf(format: *char) -> String,
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
@@ -6503,9 +6504,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
     /// 
@@ -6517,9 +6518,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the
@@ -6584,9 +6585,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
     /// 
@@ -6598,9 +6599,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the
@@ -6653,6 +6654,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(indexOf)]
     index_of_2(s: String, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
@@ -6665,9 +6667,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
     /// 
@@ -6679,9 +6681,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the
@@ -6734,6 +6736,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(indexOf)]
     index_of_3(s: Latin1StringType, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
@@ -6746,9 +6749,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
     /// 
@@ -6760,9 +6763,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the
@@ -6815,6 +6818,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(indexOf)]
     index_of_4(s: &StringRefType, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -6826,9 +6830,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -6840,9 +6844,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the character
@@ -6858,9 +6862,9 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last match of the regular
@@ -6911,9 +6915,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -6925,9 +6929,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the character
@@ -6943,9 +6947,9 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last match of the regular
@@ -6985,6 +6989,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(lastIndexOf)]
     last_index_of_2(s: String, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -6996,9 +7001,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -7010,9 +7015,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the character
@@ -7028,9 +7033,9 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last match of the regular
@@ -7070,6 +7075,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(lastIndexOf)]
     last_index_of_3(s: Latin1StringType, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -7081,9 +7087,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -7095,9 +7101,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the character
@@ -7113,9 +7119,9 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last match of the regular
@@ -7155,6 +7161,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(lastIndexOf)]
     last_index_of_4(s: &StringRefType, from: i32, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns `true` if this string contains an occurrence of the string
@@ -7165,8 +7172,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if this string contains an occurrence of the latin-1 string
@@ -7182,8 +7189,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if the regular expression *rx* matches somewhere in
@@ -7206,7 +7213,7 @@ struct String {
     /// writes the results of the match into the QRegularExpressionMatch object
     /// pointed to by *match.*
     /// 
-    /// **See also:** QRegularExpression::match()
+    /// **See also:** [`RegularExpression::match`]
     contains(c: CharType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string contains an occurrence of the string
@@ -7217,8 +7224,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if this string contains an occurrence of the latin-1 string
@@ -7234,8 +7241,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if the regular expression *rx* matches somewhere in
@@ -7258,7 +7265,8 @@ struct String {
     /// writes the results of the match into the QRegularExpressionMatch object
     /// pointed to by *match.*
     /// 
-    /// **See also:** QRegularExpression::match()
+    /// **See also:** [`RegularExpression::match`]
+    [org_name(contains)]
     contains_2(s: String, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string contains an occurrence of the string
@@ -7269,8 +7277,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if this string contains an occurrence of the latin-1 string
@@ -7286,8 +7294,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if the regular expression *rx* matches somewhere in
@@ -7310,7 +7318,8 @@ struct String {
     /// writes the results of the match into the QRegularExpressionMatch object
     /// pointed to by *match.*
     /// 
-    /// **See also:** QRegularExpression::match()
+    /// **See also:** [`RegularExpression::match`]
+    [org_name(contains)]
     contains_3(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if this string contains an occurrence of the string
@@ -7321,8 +7330,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if this string contains an occurrence of the latin-1 string
@@ -7338,8 +7347,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if the regular expression *rx* matches somewhere in
@@ -7362,7 +7371,8 @@ struct String {
     /// writes the results of the match into the QRegularExpressionMatch object
     /// pointed to by *match.*
     /// 
-    /// **See also:** QRegularExpression::match()
+    /// **See also:** [`RegularExpression::match`]
+    [org_name(contains)]
     contains_4(s: &StringRefType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns the number of (potentially overlapping) occurrences of
@@ -7371,8 +7381,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of occurrences of character *ch* in the string.
@@ -7380,8 +7390,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count() Returns the number of (potentially overlapping) occurrences of the
     /// string reference *str* in this string.
@@ -7389,8 +7399,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of times the regular expression *rx* matches
@@ -7410,6 +7420,7 @@ struct String {
     /// 
     /// **Overloads** count()
     /// Same as size().
+    [org_name(count)]
     count_2(c: CharType, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the number of (potentially overlapping) occurrences of
@@ -7418,8 +7429,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of occurrences of character *ch* in the string.
@@ -7427,8 +7438,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count() Returns the number of (potentially overlapping) occurrences of the
     /// string reference *str* in this string.
@@ -7436,8 +7447,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of times the regular expression *rx* matches
@@ -7457,6 +7468,7 @@ struct String {
     /// 
     /// **Overloads** count()
     /// Same as size().
+    [org_name(count)]
     count_3(s: String, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the number of (potentially overlapping) occurrences of
@@ -7465,8 +7477,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of occurrences of character *ch* in the string.
@@ -7474,8 +7486,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count() Returns the number of (potentially overlapping) occurrences of the
     /// string reference *str* in this string.
@@ -7483,8 +7495,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of times the regular expression *rx* matches
@@ -7504,6 +7516,7 @@ struct String {
     /// 
     /// **Overloads** count()
     /// Same as size().
+    [org_name(count)]
     count_4(s: &StringRefType, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
@@ -7516,9 +7529,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
     /// 
@@ -7530,9 +7543,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the
@@ -7585,6 +7598,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(indexOf)]
     index_of_5(arg0: &RegExpType, from: i32) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -7596,9 +7610,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -7610,9 +7624,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the character
@@ -7628,9 +7642,9 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last match of the regular
@@ -7670,6 +7684,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(lastIndexOf)]
     last_index_of_5(arg0: &RegExpType, from: i32) -> i32,
     /// 
     /// Returns `true` if this string contains an occurrence of the string
@@ -7680,8 +7695,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if this string contains an occurrence of the latin-1 string
@@ -7697,8 +7712,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if the regular expression *rx* matches somewhere in
@@ -7721,7 +7736,8 @@ struct String {
     /// writes the results of the match into the QRegularExpressionMatch object
     /// pointed to by *match.*
     /// 
-    /// **See also:** QRegularExpression::match()
+    /// **See also:** [`RegularExpression::match`]
+    [org_name(contains)]
     contains_5(rx: &RegExpType) -> bool,
     /// 
     /// Returns the number of (potentially overlapping) occurrences of
@@ -7730,8 +7746,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of occurrences of character *ch* in the string.
@@ -7739,8 +7755,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count() Returns the number of (potentially overlapping) occurrences of the
     /// string reference *str* in this string.
@@ -7748,8 +7764,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of times the regular expression *rx* matches
@@ -7769,6 +7785,7 @@ struct String {
     /// 
     /// **Overloads** count()
     /// Same as size().
+    [org_name(count)]
     count_5(arg0: &RegExpType) -> i32,
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
@@ -7781,9 +7798,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
     /// 
@@ -7795,9 +7812,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the
@@ -7850,6 +7867,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(indexOf)]
     index_of_6(arg0: &RegExpType, from: i32) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -7861,9 +7879,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -7875,9 +7893,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the character
@@ -7893,9 +7911,9 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last match of the regular
@@ -7935,6 +7953,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(lastIndexOf)]
     last_index_of_6(arg0: &RegExpType, from: i32) -> i32,
     /// 
     /// Returns `true` if this string contains an occurrence of the string
@@ -7945,8 +7964,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if this string contains an occurrence of the latin-1 string
@@ -7962,8 +7981,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if the regular expression *rx* matches somewhere in
@@ -7986,7 +8005,8 @@ struct String {
     /// writes the results of the match into the QRegularExpressionMatch object
     /// pointed to by *match.*
     /// 
-    /// **See also:** QRegularExpression::match()
+    /// **See also:** [`RegularExpression::match`]
+    [org_name(contains)]
     contains_6(rx: &RegExpType) -> bool,
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
@@ -7999,9 +8019,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
     /// 
@@ -8013,9 +8033,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the
@@ -8068,6 +8088,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(indexOf)]
     index_of_7(re: &RegularExpressionType, from: i32) -> i32,
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
@@ -8080,9 +8101,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// Returns the index position of the first occurrence of the string *str* in this string, searching forward from index position *from.* Returns -1 if *str* is not found.
     /// 
@@ -8094,9 +8115,9 @@ struct String {
     /// If *from* is -1, the search starts at the last character; if it is
     /// -2, at the next to last character and so on.
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** indexOf()
     /// Returns the index position of the first occurrence of the
@@ -8149,6 +8170,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(indexOf)]
     index_of_8(re: &RegularExpressionType, from: i32, rmatch: *RegularExpressionMatchType) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -8160,9 +8182,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -8174,9 +8196,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the character
@@ -8192,9 +8214,9 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last match of the regular
@@ -8234,6 +8256,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(lastIndexOf)]
     last_index_of_7(re: &RegularExpressionType, from: i32) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -8245,9 +8268,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the string *str* in this string, searching backward from index position *from.* If *from* is -1 (default), the search starts at the last
@@ -8259,9 +8282,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last occurrence of the character
@@ -8277,9 +8300,9 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads** lastIndexOf()
     /// Returns the index position of the last match of the regular
@@ -8319,6 +8342,7 @@ struct String {
     /// 
     /// Example:
     /// 
+    [org_name(lastIndexOf)]
     last_index_of_8(re: &RegularExpressionType, from: i32, rmatch: *RegularExpressionMatchType) -> i32,
     /// 
     /// Returns `true` if this string contains an occurrence of the string
@@ -8329,8 +8353,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if this string contains an occurrence of the latin-1 string
@@ -8346,8 +8370,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if the regular expression *rx* matches somewhere in
@@ -8370,7 +8394,8 @@ struct String {
     /// writes the results of the match into the QRegularExpressionMatch object
     /// pointed to by *match.*
     /// 
-    /// **See also:** QRegularExpression::match()
+    /// **See also:** [`RegularExpression::match`]
+    [org_name(contains)]
     contains_7(re: &RegularExpressionType) -> bool,
     /// 
     /// Returns `true` if this string contains an occurrence of the string
@@ -8381,8 +8406,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if this string contains an occurrence of the latin-1 string
@@ -8398,8 +8423,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads** contains()
     /// Returns `true` if the regular expression *rx* matches somewhere in
@@ -8422,7 +8447,8 @@ struct String {
     /// writes the results of the match into the QRegularExpressionMatch object
     /// pointed to by *match.*
     /// 
-    /// **See also:** QRegularExpression::match()
+    /// **See also:** [`RegularExpression::match`]
+    [org_name(contains)]
     contains_8(re: &RegularExpressionType, match: *RegularExpressionMatchType) -> bool,
     /// 
     /// Returns the number of (potentially overlapping) occurrences of
@@ -8431,8 +8457,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of occurrences of character *ch* in the string.
@@ -8440,8 +8466,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count() Returns the number of (potentially overlapping) occurrences of the
     /// string reference *str* in this string.
@@ -8449,8 +8475,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads** count()
     /// Returns the number of times the regular expression *rx* matches
@@ -8470,6 +8496,7 @@ struct String {
     /// 
     /// **Overloads** count()
     /// Same as size().
+    [org_name(count)]
     count_6(re: &RegularExpressionType) -> i32,
     /// 
     /// This function returns a section of the string.
@@ -8491,11 +8518,11 @@ struct String {
     /// of the string, the right-most field being -1, the one from
     /// right-most field being -2, and so on.
     /// 
-    /// **See also:** split()
+    /// **See also:** [`split()`]
     /// 
     /// **Overloads** section()
     /// 
-    /// **See also:** split()
+    /// **See also:** [`split()`]
     /// 
     /// **Overloads** section()
     /// This string is treated as a sequence of fields separated by the
@@ -8504,8 +8531,8 @@ struct String {
     /// **Warning**: Using this QRegExp version is much more expensive than
     /// the overloaded string and character versions.
     /// 
-    /// **See also:** split()
-    /// simplified()
+    /// **See also:** [`split()`]
+    /// [`simplified()`]
     /// 
     /// **Overloads** section()
     /// This string is treated as a sequence of fields separated by the
@@ -8514,8 +8541,8 @@ struct String {
     /// **Warning**: Using this QRegularExpression version is much more expensive than
     /// the overloaded string and character versions.
     /// 
-    /// **See also:** split()
-    /// simplified()
+    /// **See also:** [`split()`]
+    /// [`simplified()`]
     section(sep: CharType, start: i32, end: i32, flags: String::SectionFlags) -> String,
     /// 
     /// This function returns a section of the string.
@@ -8537,11 +8564,11 @@ struct String {
     /// of the string, the right-most field being -1, the one from
     /// right-most field being -2, and so on.
     /// 
-    /// **See also:** split()
+    /// **See also:** [`split()`]
     /// 
     /// **Overloads** section()
     /// 
-    /// **See also:** split()
+    /// **See also:** [`split()`]
     /// 
     /// **Overloads** section()
     /// This string is treated as a sequence of fields separated by the
@@ -8550,8 +8577,8 @@ struct String {
     /// **Warning**: Using this QRegExp version is much more expensive than
     /// the overloaded string and character versions.
     /// 
-    /// **See also:** split()
-    /// simplified()
+    /// **See also:** [`split()`]
+    /// [`simplified()`]
     /// 
     /// **Overloads** section()
     /// This string is treated as a sequence of fields separated by the
@@ -8560,8 +8587,9 @@ struct String {
     /// **Warning**: Using this QRegularExpression version is much more expensive than
     /// the overloaded string and character versions.
     /// 
-    /// **See also:** split()
-    /// simplified()
+    /// **See also:** [`split()`]
+    /// [`simplified()`]
+    [org_name(section)]
     section_2(in_sep: String, start: i32, end: i32, flags: String::SectionFlags) -> String,
     /// 
     /// This function returns a section of the string.
@@ -8583,11 +8611,11 @@ struct String {
     /// of the string, the right-most field being -1, the one from
     /// right-most field being -2, and so on.
     /// 
-    /// **See also:** split()
+    /// **See also:** [`split()`]
     /// 
     /// **Overloads** section()
     /// 
-    /// **See also:** split()
+    /// **See also:** [`split()`]
     /// 
     /// **Overloads** section()
     /// This string is treated as a sequence of fields separated by the
@@ -8596,8 +8624,8 @@ struct String {
     /// **Warning**: Using this QRegExp version is much more expensive than
     /// the overloaded string and character versions.
     /// 
-    /// **See also:** split()
-    /// simplified()
+    /// **See also:** [`split()`]
+    /// [`simplified()`]
     /// 
     /// **Overloads** section()
     /// This string is treated as a sequence of fields separated by the
@@ -8606,8 +8634,9 @@ struct String {
     /// **Warning**: Using this QRegularExpression version is much more expensive than
     /// the overloaded string and character versions.
     /// 
-    /// **See also:** split()
-    /// simplified()
+    /// **See also:** [`split()`]
+    /// [`simplified()`]
+    [org_name(section)]
     section_3(reg: &RegExpType, start: i32, end: i32, flags: String::SectionFlags) -> String,
     /// 
     /// This function returns a section of the string.
@@ -8629,11 +8658,11 @@ struct String {
     /// of the string, the right-most field being -1, the one from
     /// right-most field being -2, and so on.
     /// 
-    /// **See also:** split()
+    /// **See also:** [`split()`]
     /// 
     /// **Overloads** section()
     /// 
-    /// **See also:** split()
+    /// **See also:** [`split()`]
     /// 
     /// **Overloads** section()
     /// This string is treated as a sequence of fields separated by the
@@ -8642,8 +8671,8 @@ struct String {
     /// **Warning**: Using this QRegExp version is much more expensive than
     /// the overloaded string and character versions.
     /// 
-    /// **See also:** split()
-    /// simplified()
+    /// **See also:** [`split()`]
+    /// [`simplified()`]
     /// 
     /// **Overloads** section()
     /// This string is treated as a sequence of fields separated by the
@@ -8652,8 +8681,9 @@ struct String {
     /// **Warning**: Using this QRegularExpression version is much more expensive than
     /// the overloaded string and character versions.
     /// 
-    /// **See also:** split()
-    /// simplified()
+    /// **See also:** [`split()`]
+    /// [`simplified()`]
+    [org_name(section)]
     section_4(re: &RegularExpressionType, start: i32, end: i32, flags: String::SectionFlags) -> String,
     /// 
     /// Returns a substring that contains the *n* leftmost characters
@@ -8662,12 +8692,12 @@ struct String {
     /// The entire string is returned if *n* is greater than or equal
     /// to size(), or less than zero.
     /// 
-    /// **See also:** right()
-    /// mid()
-    /// startsWith()
-    /// chopped()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`right()`]
+    /// [`mid()`]
+    /// [`starts_with()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     /// 
     /// Returns a string of size *width* that contains this string
     /// padded by the *fill* character.
@@ -8679,7 +8709,7 @@ struct String {
     /// *width,* then any characters in a copy of the string after
     /// position *width* are removed, and the copy is returned.
     /// 
-    /// **See also:** rightJustified()
+    /// **See also:** [`right_justified()`]
     /// 
     /// Returns a substring reference to the *n* leftmost characters
     /// of the string.
@@ -8687,10 +8717,10 @@ struct String {
     /// If *n* is greater than or equal to size(), or less than zero,
     /// a reference to the entire string is returned.
     /// 
-    /// **See also:** left()
-    /// rightRef()
-    /// midRef()
-    /// startsWith()
+    /// **See also:** [`left()`]
+    /// [`right_ref()`]
+    /// [`mid_ref()`]
+    /// [`starts_with()`]
     left(n: i32) -> String,
     /// 
     /// Returns a substring that contains the *n* rightmost characters
@@ -8699,12 +8729,12 @@ struct String {
     /// The entire string is returned if *n* is greater than or equal
     /// to size(), or less than zero.
     /// 
-    /// **See also:** left()
-    /// mid()
-    /// endsWith()
-    /// chopped()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`left()`]
+    /// [`mid()`]
+    /// [`ends_with()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     /// 
     /// Returns a string of size() *width* that contains the *fill*
     /// character followed by the string. For example:
@@ -8715,7 +8745,7 @@ struct String {
     /// If *truncate* is true and the size() of the string is more than
     /// *width,* then the resulting string is truncated at position *width.*
     /// 
-    /// **See also:** leftJustified()
+    /// **See also:** [`left_justified()`]
     /// 
     /// Returns a substring reference to the *n* rightmost characters
     /// of the string.
@@ -8723,10 +8753,10 @@ struct String {
     /// If *n* is greater than or equal to size(), or less than zero,
     /// a reference to the entire string is returned.
     /// 
-    /// **See also:** right()
-    /// leftRef()
-    /// midRef()
-    /// endsWith()
+    /// **See also:** [`right()`]
+    /// [`left_ref()`]
+    /// [`mid_ref()`]
+    /// [`ends_with()`]
     right(n: i32) -> String,
     /// 
     /// Returns a string that contains *n* characters of this string,
@@ -8740,11 +8770,11 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** left()
-    /// right()
-    /// chopped()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`left()`]
+    /// [`right()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     /// 
     /// Returns a substring reference to *n* characters of this string,
     /// starting at the specified *position.*
@@ -8759,9 +8789,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** mid()
-    /// leftRef()
-    /// rightRef()
+    /// **See also:** [`mid()`]
+    /// [`left_ref()`]
+    /// [`right_ref()`]
     mid(position: i32, n: i32) -> String,
     /// 
     /// Returns a substring that contains the size() - *len* leftmost characters
@@ -8769,12 +8799,12 @@ struct String {
     /// 
     /// **Note**: The behavior is undefined if *len* is negative or greater than size().
     /// 
-    /// **See also:** endsWith()
-    /// left()
-    /// right()
-    /// mid()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`ends_with()`]
+    /// [`left()`]
+    /// [`right()`]
+    /// [`mid()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     chopped(n: i32) -> String,
     /// 
     /// Returns a substring reference to the *n* leftmost characters
@@ -8783,10 +8813,10 @@ struct String {
     /// If *n* is greater than or equal to size(), or less than zero,
     /// a reference to the entire string is returned.
     /// 
-    /// **See also:** left()
-    /// rightRef()
-    /// midRef()
-    /// startsWith()
+    /// **See also:** [`left()`]
+    /// [`right_ref()`]
+    /// [`mid_ref()`]
+    /// [`starts_with()`]
     left_ref(n: i32) -> StringRef,
     /// 
     /// Returns a substring reference to the *n* rightmost characters
@@ -8795,10 +8825,10 @@ struct String {
     /// If *n* is greater than or equal to size(), or less than zero,
     /// a reference to the entire string is returned.
     /// 
-    /// **See also:** right()
-    /// leftRef()
-    /// midRef()
-    /// endsWith()
+    /// **See also:** [`right()`]
+    /// [`left_ref()`]
+    /// [`mid_ref()`]
+    /// [`ends_with()`]
     right_ref(n: i32) -> StringRef,
     /// 
     /// Returns a substring reference to *n* characters of this string,
@@ -8814,9 +8844,9 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** mid()
-    /// leftRef()
-    /// rightRef()
+    /// **See also:** [`mid()`]
+    /// [`left_ref()`]
+    /// [`right_ref()`]
     mid_ref(position: i32, n: i32) -> StringRef,
     /// 
     /// Returns `true` if the string starts with *s;* otherwise returns
@@ -8825,7 +8855,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
     /// 
     /// **Overloads** startsWith()
     /// 
@@ -8839,7 +8869,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the string starts with the string-view *str;*
@@ -8848,7 +8878,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case-sensitive;
     /// otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
     starts_with(s: String, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string starts with *s;* otherwise returns
@@ -8857,7 +8887,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
     /// 
     /// **Overloads** startsWith()
     /// 
@@ -8871,7 +8901,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the string starts with the string-view *str;*
@@ -8880,7 +8910,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case-sensitive;
     /// otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
+    [org_name(startsWith)]
     starts_with_2(s: &StringRefType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string starts with *s;* otherwise returns
@@ -8889,7 +8920,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
     /// 
     /// **Overloads** startsWith()
     /// 
@@ -8903,7 +8934,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the string starts with the string-view *str;*
@@ -8912,7 +8943,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case-sensitive;
     /// otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
+    [org_name(startsWith)]
     starts_with_3(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string starts with *s;* otherwise returns
@@ -8921,7 +8953,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
     /// 
     /// **Overloads** startsWith()
     /// 
@@ -8935,7 +8967,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the string starts with the string-view *str;*
@@ -8944,7 +8976,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case-sensitive;
     /// otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
+    [org_name(startsWith)]
     starts_with_4(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string starts with *s;* otherwise returns
@@ -8953,7 +8986,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is
     /// case sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
     /// 
     /// **Overloads** startsWith()
     /// 
@@ -8967,7 +9000,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the string starts with the string-view *str;*
@@ -8976,7 +9009,8 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case-sensitive;
     /// otherwise the search is case insensitive.
     /// 
-    /// **See also:** endsWith()
+    /// **See also:** [`ends_with()`]
+    [org_name(startsWith)]
     starts_with_5(c: CharType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string ends with *s;* otherwise returns
@@ -8985,7 +9019,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string reference *s;*
     /// otherwise returns `false.`
@@ -8993,7 +9027,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string view *str;*
     /// otherwise returns `false.`
@@ -9001,7 +9035,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// 
@@ -9017,7 +9051,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string reference *s;*
     /// otherwise returns `false.`
@@ -9025,7 +9059,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string view *str;*
     /// otherwise returns `false.`
@@ -9033,7 +9067,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// 
@@ -9041,6 +9075,7 @@ struct String {
     /// `false.`
     /// 
     /// **Overloads** endsWith()
+    [org_name(endsWith)]
     ends_with_2(s: &StringRefType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string ends with *s;* otherwise returns
@@ -9049,7 +9084,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string reference *s;*
     /// otherwise returns `false.`
@@ -9057,7 +9092,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string view *str;*
     /// otherwise returns `false.`
@@ -9065,7 +9100,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// 
@@ -9073,6 +9108,7 @@ struct String {
     /// `false.`
     /// 
     /// **Overloads** endsWith()
+    [org_name(endsWith)]
     ends_with_3(s: StringViewType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string ends with *s;* otherwise returns
@@ -9081,7 +9117,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string reference *s;*
     /// otherwise returns `false.`
@@ -9089,7 +9125,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string view *str;*
     /// otherwise returns `false.`
@@ -9097,7 +9133,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// 
@@ -9105,6 +9141,7 @@ struct String {
     /// `false.`
     /// 
     /// **Overloads** endsWith()
+    [org_name(endsWith)]
     ends_with_4(s: Latin1StringType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns `true` if the string ends with *s;* otherwise returns
@@ -9113,7 +9150,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string reference *s;*
     /// otherwise returns `false.`
@@ -9121,7 +9158,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string view *str;*
     /// otherwise returns `false.`
@@ -9129,7 +9166,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// 
@@ -9137,6 +9174,7 @@ struct String {
     /// `false.`
     /// 
     /// **Overloads** endsWith()
+    [org_name(endsWith)]
     ends_with_5(c: CharType, cs: Rute::CaseSensitivity) -> bool,
     /// 
     /// Returns a string of size *width* that contains this string
@@ -9149,7 +9187,7 @@ struct String {
     /// *width,* then any characters in a copy of the string after
     /// position *width* are removed, and the copy is returned.
     /// 
-    /// **See also:** rightJustified()
+    /// **See also:** [`right_justified()`]
     left_justified(width: i32, fill: CharType, trunc: bool) -> String,
     /// 
     /// Returns a string of size() *width* that contains the *fill*
@@ -9161,7 +9199,7 @@ struct String {
     /// If *truncate* is true and the size() of the string is more than
     /// *width,* then the resulting string is truncated at position *width.*
     /// 
-    /// **See also:** leftJustified()
+    /// **See also:** [`left_justified()`]
     right_justified(width: i32, fill: CharType, trunc: bool) -> String,
     /// 
     /// Returns a lowercase copy of the string.
@@ -9169,8 +9207,8 @@ struct String {
     /// The case conversion will always happen in the 'C' locale. For locale dependent
     /// case folding use QLocale::toLower()
     /// 
-    /// **See also:** toUpper()
-    /// QLocale::toLower()
+    /// **See also:** [`to_upper()`]
+    /// [`Locale::to_lower`]
     to_lower() -> String,
     /// 
     /// Returns a lowercase copy of the string.
@@ -9178,8 +9216,9 @@ struct String {
     /// The case conversion will always happen in the 'C' locale. For locale dependent
     /// case folding use QLocale::toLower()
     /// 
-    /// **See also:** toUpper()
-    /// QLocale::toLower()
+    /// **See also:** [`to_upper()`]
+    /// [`Locale::to_lower`]
+    [org_name(toLower)]
     to_lower_2() -> String,
     /// 
     /// Returns an uppercase copy of the string.
@@ -9187,8 +9226,8 @@ struct String {
     /// The case conversion will always happen in the 'C' locale. For locale dependent
     /// case folding use QLocale::toUpper()
     /// 
-    /// **See also:** toLower()
-    /// QLocale::toLower()
+    /// **See also:** [`to_lower()`]
+    /// [`Locale::to_lower`]
     to_upper() -> String,
     /// 
     /// Returns an uppercase copy of the string.
@@ -9196,8 +9235,9 @@ struct String {
     /// The case conversion will always happen in the 'C' locale. For locale dependent
     /// case folding use QLocale::toUpper()
     /// 
-    /// **See also:** toLower()
-    /// QLocale::toLower()
+    /// **See also:** [`to_lower()`]
+    /// [`Locale::to_lower`]
+    [org_name(toUpper)]
     to_upper_2() -> String,
     /// 
     /// Returns the case folded equivalent of the string. For most Unicode
@@ -9206,6 +9246,7 @@ struct String {
     /// 
     /// Returns the case folded equivalent of the string. For most Unicode
     /// characters this is the same as toLower().
+    [org_name(toCaseFolded)]
     to_case_folded_2() -> String,
     /// 
     /// Returns a string that has whitespace removed from the start
@@ -9218,7 +9259,7 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** trimmed()
+    /// **See also:** [`trimmed()`]
     simplified() -> String,
     /// 
     /// Returns a string that has whitespace removed from the start
@@ -9231,7 +9272,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** trimmed()
+    /// **See also:** [`trimmed()`]
+    [org_name(simplified)]
     simplified_2() -> String,
     /// 
     /// Converts a plain text string to an HTML string with
@@ -9250,10 +9292,10 @@ struct String {
     /// If the given *position* is greater than size(), the array is
     /// first extended using resize().
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** insert()
     /// Inserts the string reference *str* at the given index *position* and
@@ -9301,10 +9343,10 @@ struct String {
     /// If the given *position* is greater than size(), the array is
     /// first extended using resize().
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** insert()
     /// Inserts the string reference *str* at the given index *position* and
@@ -9342,6 +9384,7 @@ struct String {
     /// 
     /// **Overloads** insert()
     /// Inserts *ch* at the given index *position* in the string.
+    [org_name(insert)]
     insert_2(i: i32, uc: *CharType, len: i32) -> String?,
     /// 
     /// Inserts the string *str* at the given index *position* and
@@ -9352,10 +9395,10 @@ struct String {
     /// If the given *position* is greater than size(), the array is
     /// first extended using resize().
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** insert()
     /// Inserts the string reference *str* at the given index *position* and
@@ -9393,6 +9436,7 @@ struct String {
     /// 
     /// **Overloads** insert()
     /// Inserts *ch* at the given index *position* in the string.
+    [org_name(insert)]
     insert_3(i: i32, s: String) -> String?,
     /// 
     /// Inserts the string *str* at the given index *position* and
@@ -9403,10 +9447,10 @@ struct String {
     /// If the given *position* is greater than size(), the array is
     /// first extended using resize().
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** insert()
     /// Inserts the string reference *str* at the given index *position* and
@@ -9444,6 +9488,7 @@ struct String {
     /// 
     /// **Overloads** insert()
     /// Inserts *ch* at the given index *position* in the string.
+    [org_name(insert)]
     insert_4(i: i32, s: &StringRefType) -> String?,
     /// 
     /// Inserts the string *str* at the given index *position* and
@@ -9454,10 +9499,10 @@ struct String {
     /// If the given *position* is greater than size(), the array is
     /// first extended using resize().
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** insert()
     /// Inserts the string reference *str* at the given index *position* and
@@ -9495,6 +9540,7 @@ struct String {
     /// 
     /// **Overloads** insert()
     /// Inserts *ch* at the given index *position* in the string.
+    [org_name(insert)]
     insert_5(i: i32, s: Latin1StringType) -> String?,
     /// 
     /// Appends the string *str* onto the end of this string.
@@ -9509,9 +9555,9 @@ struct String {
     /// data so it can grow without reallocating the entire string each
     /// time.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** append()
     /// Appends *len* characters from the QChar array *str* to this string.
@@ -9555,9 +9601,9 @@ struct String {
     /// data so it can grow without reallocating the entire string each
     /// time.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** append()
     /// Appends *len* characters from the QChar array *str* to this string.
@@ -9587,6 +9633,7 @@ struct String {
     /// Appends the character *ch* to this string.
     /// 
     /// Appends the given string *reference* to this string and returns the result.
+    [org_name(append)]
     append_2(uc: *CharType, len: i32) -> String?,
     /// 
     /// Appends the string *str* onto the end of this string.
@@ -9601,9 +9648,9 @@ struct String {
     /// data so it can grow without reallocating the entire string each
     /// time.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** append()
     /// Appends *len* characters from the QChar array *str* to this string.
@@ -9633,6 +9680,7 @@ struct String {
     /// Appends the character *ch* to this string.
     /// 
     /// Appends the given string *reference* to this string and returns the result.
+    [org_name(append)]
     append_3(s: String) -> String?,
     /// 
     /// Appends the string *str* onto the end of this string.
@@ -9647,9 +9695,9 @@ struct String {
     /// data so it can grow without reallocating the entire string each
     /// time.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** append()
     /// Appends *len* characters from the QChar array *str* to this string.
@@ -9679,6 +9727,7 @@ struct String {
     /// Appends the character *ch* to this string.
     /// 
     /// Appends the given string *reference* to this string and returns the result.
+    [org_name(append)]
     append_4(s: &StringRefType) -> String?,
     /// 
     /// Appends the string *str* onto the end of this string.
@@ -9693,9 +9742,9 @@ struct String {
     /// data so it can grow without reallocating the entire string each
     /// time.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** append()
     /// Appends *len* characters from the QChar array *str* to this string.
@@ -9725,6 +9774,7 @@ struct String {
     /// Appends the character *ch* to this string.
     /// 
     /// Appends the given string *reference* to this string and returns the result.
+    [org_name(append)]
     append_5(s: Latin1StringType) -> String?,
     /// 
     /// Prepends the string *str* to the beginning of this string and
@@ -9732,8 +9782,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// insert()
+    /// **See also:** [`append()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** prepend()
     /// Prepends the Latin-1 string *str* to this string.
@@ -9769,8 +9819,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// insert()
+    /// **See also:** [`append()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** prepend()
     /// Prepends the Latin-1 string *str* to this string.
@@ -9799,6 +9849,7 @@ struct String {
     /// 
     /// **Overloads** prepend()
     /// Prepends the character *ch* to this string.
+    [org_name(prepend)]
     prepend_2(uc: *CharType, len: i32) -> String?,
     /// 
     /// Prepends the string *str* to the beginning of this string and
@@ -9806,8 +9857,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// insert()
+    /// **See also:** [`append()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** prepend()
     /// Prepends the Latin-1 string *str* to this string.
@@ -9836,6 +9887,7 @@ struct String {
     /// 
     /// **Overloads** prepend()
     /// Prepends the character *ch* to this string.
+    [org_name(prepend)]
     prepend_3(s: String) -> String?,
     /// 
     /// Prepends the string *str* to the beginning of this string and
@@ -9843,8 +9895,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// insert()
+    /// **See also:** [`append()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** prepend()
     /// Prepends the Latin-1 string *str* to this string.
@@ -9873,6 +9925,7 @@ struct String {
     /// 
     /// **Overloads** prepend()
     /// Prepends the character *ch* to this string.
+    [org_name(prepend)]
     prepend_4(s: &StringRefType) -> String?,
     /// 
     /// Prepends the string *str* to the beginning of this string and
@@ -9880,8 +9933,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// insert()
+    /// **See also:** [`append()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** prepend()
     /// Prepends the Latin-1 string *str* to this string.
@@ -9910,6 +9963,7 @@ struct String {
     /// 
     /// **Overloads** prepend()
     /// Prepends the character *ch* to this string.
+    [org_name(prepend)]
     prepend_5(s: Latin1StringType) -> String?,
     /// 
     /// Removes *n* characters from the string, starting at the given *position* index, and returns a reference to the string.
@@ -9917,8 +9971,8 @@ struct String {
     /// If the specified *position* index is within the string, but *position* + *n* is beyond the end of the string, the string is
     /// truncated at the specified *position.*
     /// 
-    /// **See also:** insert()
-    /// replace()
+    /// **See also:** [`insert()`]
+    /// [`replace()`]
     /// 
     /// Removes every occurrence of the given *str* string in this
     /// string, and returns a reference to this string.
@@ -9928,7 +9982,7 @@ struct String {
     /// 
     /// This is the same as `replace(str,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// **Overloads**
     /// Removes every occurrence of the given *str* string in this
@@ -9939,7 +9993,7 @@ struct String {
     /// 
     /// This is the same as `replace(str,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// Removes every occurrence of the character *ch* in this string, and
     /// returns a reference to this string.
@@ -9951,21 +10005,21 @@ struct String {
     /// 
     /// This is the same as `replace(ch,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// Removes every occurrence of the regular expression *rx* in the
     /// string, and returns a reference to the string. For example:
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// replace()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`replace()`]
     /// 
     /// Removes every occurrence of the regular expression *re* in the
     /// string, and returns a reference to the string. For example:
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// replace()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`replace()`]
     remove(i: i32, len: i32) -> String?,
     /// 
     /// Removes *n* characters from the string, starting at the given *position* index, and returns a reference to the string.
@@ -9973,8 +10027,8 @@ struct String {
     /// If the specified *position* index is within the string, but *position* + *n* is beyond the end of the string, the string is
     /// truncated at the specified *position.*
     /// 
-    /// **See also:** insert()
-    /// replace()
+    /// **See also:** [`insert()`]
+    /// [`replace()`]
     /// 
     /// Removes every occurrence of the given *str* string in this
     /// string, and returns a reference to this string.
@@ -9984,7 +10038,7 @@ struct String {
     /// 
     /// This is the same as `replace(str,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// **Overloads**
     /// Removes every occurrence of the given *str* string in this
@@ -9995,7 +10049,7 @@ struct String {
     /// 
     /// This is the same as `replace(str,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// Removes every occurrence of the character *ch* in this string, and
     /// returns a reference to this string.
@@ -10007,21 +10061,22 @@ struct String {
     /// 
     /// This is the same as `replace(ch,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// Removes every occurrence of the regular expression *rx* in the
     /// string, and returns a reference to the string. For example:
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// replace()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`replace()`]
     /// 
     /// Removes every occurrence of the regular expression *re* in the
     /// string, and returns a reference to the string. For example:
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// replace()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`replace()`]
+    [org_name(remove)]
     remove_2(c: CharType, cs: Rute::CaseSensitivity) -> String?,
     /// 
     /// Removes *n* characters from the string, starting at the given *position* index, and returns a reference to the string.
@@ -10029,8 +10084,8 @@ struct String {
     /// If the specified *position* index is within the string, but *position* + *n* is beyond the end of the string, the string is
     /// truncated at the specified *position.*
     /// 
-    /// **See also:** insert()
-    /// replace()
+    /// **See also:** [`insert()`]
+    /// [`replace()`]
     /// 
     /// Removes every occurrence of the given *str* string in this
     /// string, and returns a reference to this string.
@@ -10040,7 +10095,7 @@ struct String {
     /// 
     /// This is the same as `replace(str,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// **Overloads**
     /// Removes every occurrence of the given *str* string in this
@@ -10051,7 +10106,7 @@ struct String {
     /// 
     /// This is the same as `replace(str,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// Removes every occurrence of the character *ch* in this string, and
     /// returns a reference to this string.
@@ -10063,21 +10118,22 @@ struct String {
     /// 
     /// This is the same as `replace(ch,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// Removes every occurrence of the regular expression *rx* in the
     /// string, and returns a reference to the string. For example:
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// replace()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`replace()`]
     /// 
     /// Removes every occurrence of the regular expression *re* in the
     /// string, and returns a reference to the string. For example:
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// replace()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`replace()`]
+    [org_name(remove)]
     remove_3(s: Latin1StringType, cs: Rute::CaseSensitivity) -> String?,
     /// 
     /// Removes *n* characters from the string, starting at the given *position* index, and returns a reference to the string.
@@ -10085,8 +10141,8 @@ struct String {
     /// If the specified *position* index is within the string, but *position* + *n* is beyond the end of the string, the string is
     /// truncated at the specified *position.*
     /// 
-    /// **See also:** insert()
-    /// replace()
+    /// **See also:** [`insert()`]
+    /// [`replace()`]
     /// 
     /// Removes every occurrence of the given *str* string in this
     /// string, and returns a reference to this string.
@@ -10096,7 +10152,7 @@ struct String {
     /// 
     /// This is the same as `replace(str,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// **Overloads**
     /// Removes every occurrence of the given *str* string in this
@@ -10107,7 +10163,7 @@ struct String {
     /// 
     /// This is the same as `replace(str,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// Removes every occurrence of the character *ch* in this string, and
     /// returns a reference to this string.
@@ -10119,21 +10175,22 @@ struct String {
     /// 
     /// This is the same as `replace(ch,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// Removes every occurrence of the regular expression *rx* in the
     /// string, and returns a reference to the string. For example:
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// replace()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`replace()`]
     /// 
     /// Removes every occurrence of the regular expression *re* in the
     /// string, and returns a reference to the string. For example:
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// replace()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`replace()`]
+    [org_name(remove)]
     remove_4(s: String, cs: Rute::CaseSensitivity) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -10145,8 +10202,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -10229,10 +10286,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -10243,11 +10300,11 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
     replace(i: i32, len: i32, after: CharType) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -10259,8 +10316,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -10343,10 +10400,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -10357,11 +10414,12 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
+    [org_name(replace)]
     replace_2(i: i32, len: i32, s: *CharType, slen: i32) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -10373,8 +10431,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -10457,10 +10515,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -10471,11 +10529,12 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
+    [org_name(replace)]
     replace_3(i: i32, len: i32, after: String) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -10487,8 +10546,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -10571,10 +10630,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -10585,11 +10644,12 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
+    [org_name(replace)]
     replace_4(before: CharType, after: CharType, cs: Rute::CaseSensitivity) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -10601,8 +10661,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -10685,10 +10745,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -10699,11 +10759,12 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
+    [org_name(replace)]
     replace_5(before: *CharType, blen: i32, after: *CharType, alen: i32, cs: Rute::CaseSensitivity) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -10715,8 +10776,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -10799,10 +10860,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -10813,11 +10874,12 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
+    [org_name(replace)]
     replace_6(before: Latin1StringType, after: Latin1StringType, cs: Rute::CaseSensitivity) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -10829,8 +10891,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -10913,10 +10975,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -10927,11 +10989,12 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
+    [org_name(replace)]
     replace_7(before: Latin1StringType, after: String, cs: Rute::CaseSensitivity) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -10943,8 +11006,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -11027,10 +11090,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -11041,11 +11104,12 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
+    [org_name(replace)]
     replace_8(before: String, after: Latin1StringType, cs: Rute::CaseSensitivity) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -11057,8 +11121,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -11141,10 +11205,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -11155,11 +11219,12 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
+    [org_name(replace)]
     replace_9(before: String, after: String, cs: Rute::CaseSensitivity) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -11171,8 +11236,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -11255,10 +11320,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -11269,11 +11334,12 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
+    [org_name(replace)]
     replace_10(c: CharType, after: String, cs: Rute::CaseSensitivity) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -11285,8 +11351,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -11369,10 +11435,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -11383,11 +11449,12 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
+    [org_name(replace)]
     replace_11(c: CharType, after: Latin1StringType, cs: Rute::CaseSensitivity) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -11399,8 +11466,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -11483,10 +11550,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -11497,11 +11564,12 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
+    [org_name(replace)]
     replace_12(rx: &RegExpType, after: String) -> String?,
     /// 
     /// Removes *n* characters from the string, starting at the given *position* index, and returns a reference to the string.
@@ -11509,8 +11577,8 @@ struct String {
     /// If the specified *position* index is within the string, but *position* + *n* is beyond the end of the string, the string is
     /// truncated at the specified *position.*
     /// 
-    /// **See also:** insert()
-    /// replace()
+    /// **See also:** [`insert()`]
+    /// [`replace()`]
     /// 
     /// Removes every occurrence of the given *str* string in this
     /// string, and returns a reference to this string.
@@ -11520,7 +11588,7 @@ struct String {
     /// 
     /// This is the same as `replace(str,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// **Overloads**
     /// Removes every occurrence of the given *str* string in this
@@ -11531,7 +11599,7 @@ struct String {
     /// 
     /// This is the same as `replace(str,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// Removes every occurrence of the character *ch* in this string, and
     /// returns a reference to this string.
@@ -11543,21 +11611,22 @@ struct String {
     /// 
     /// This is the same as `replace(ch,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// Removes every occurrence of the regular expression *rx* in the
     /// string, and returns a reference to the string. For example:
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// replace()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`replace()`]
     /// 
     /// Removes every occurrence of the regular expression *re* in the
     /// string, and returns a reference to the string. For example:
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// replace()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`replace()`]
+    [org_name(remove)]
     remove_5(rx: &RegExpType) -> String?,
     /// 
     /// Replaces *n* characters beginning at index *position* with
@@ -11569,8 +11638,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** replace() Replaces *n* characters beginning at index *position* with the
     /// first *size* characters of the QChar array *unicode* and returns a
@@ -11653,10 +11722,10 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with *rx* .cap(1), cap(2), ...
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegExp::cap()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegExp::cap`]
     /// 
     /// **Overloads** replace()
     /// Replaces every occurrence of the regular expression *re* in the
@@ -11667,11 +11736,12 @@ struct String {
     /// occurrences of **\\1** , **\\2** , ..., in *after* are replaced
     /// with the string captured by the corresponding capturing group.
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// remove()
-    /// QRegularExpression
-    /// QRegularExpressionMatch
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`remove()`]
+    /// [`RegularExpression`]
+    /// [`RegularExpressionMatch`]
+    [org_name(replace)]
     replace_13(re: &RegularExpressionType, after: String) -> String?,
     /// 
     /// Removes *n* characters from the string, starting at the given *position* index, and returns a reference to the string.
@@ -11679,8 +11749,8 @@ struct String {
     /// If the specified *position* index is within the string, but *position* + *n* is beyond the end of the string, the string is
     /// truncated at the specified *position.*
     /// 
-    /// **See also:** insert()
-    /// replace()
+    /// **See also:** [`insert()`]
+    /// [`replace()`]
     /// 
     /// Removes every occurrence of the given *str* string in this
     /// string, and returns a reference to this string.
@@ -11690,7 +11760,7 @@ struct String {
     /// 
     /// This is the same as `replace(str,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// **Overloads**
     /// Removes every occurrence of the given *str* string in this
@@ -11701,7 +11771,7 @@ struct String {
     /// 
     /// This is the same as `replace(str,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// Removes every occurrence of the character *ch* in this string, and
     /// returns a reference to this string.
@@ -11713,21 +11783,22 @@ struct String {
     /// 
     /// This is the same as `replace(ch,` , cs).
     /// 
-    /// **See also:** replace()
+    /// **See also:** [`replace()`]
     /// 
     /// Removes every occurrence of the regular expression *rx* in the
     /// string, and returns a reference to the string. For example:
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// replace()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`replace()`]
     /// 
     /// Removes every occurrence of the regular expression *re* in the
     /// string, and returns a reference to the string. For example:
     /// 
-    /// **See also:** indexOf()
-    /// lastIndexOf()
-    /// replace()
+    /// **See also:** [`index_of()`]
+    /// [`last_index_of()`]
+    /// [`replace()`]
+    [org_name(remove)]
     remove_6(re: &RegularExpressionType) -> String?,
     /// 
     /// Splits the string into substrings wherever *sep* occurs, and
@@ -11749,8 +11820,8 @@ struct String {
     /// To understand this behavior, recall that the empty string matches
     /// everywhere, so the above is qualitatively the same as:
     /// 
-    /// **See also:** QStringList::join()
-    /// section()
+    /// **See also:** [`StringList::join`]
+    /// [`section()`]
     /// 
     /// Splits the string into substring references wherever *sep* occurs, and
     /// returns the list of those strings.
@@ -11761,7 +11832,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// 
@@ -11783,8 +11854,8 @@ struct String {
     /// **\\b** (word boundary), to split the string into an
     /// alternating sequence of non-word and word tokens:
     /// 
-    /// **See also:** QStringList::join()
-    /// section()
+    /// **See also:** [`StringList::join`]
+    /// [`section()`]
     /// 
     /// **Overloads**
     /// Splits the string into substring references wherever the regular expression
@@ -11795,7 +11866,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// Splits the string into substrings wherever the regular expression
@@ -11813,8 +11884,8 @@ struct String {
     /// **\\b** (word boundary), to split the string into an
     /// alternating sequence of non-word and word tokens:
     /// 
-    /// **See also:** QStringList::join()
-    /// section()
+    /// **See also:** [`StringList::join`]
+    /// [`section()`]
     /// 
     /// **Overloads**
     /// Splits the string into substring references wherever the regular expression
@@ -11837,7 +11908,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// 
@@ -11850,7 +11921,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// Splits the string into substring references wherever the regular expression
@@ -11883,8 +11954,8 @@ struct String {
     /// To understand this behavior, recall that the empty string matches
     /// everywhere, so the above is qualitatively the same as:
     /// 
-    /// **See also:** QStringList::join()
-    /// section()
+    /// **See also:** [`StringList::join`]
+    /// [`section()`]
     /// 
     /// Splits the string into substring references wherever *sep* occurs, and
     /// returns the list of those strings.
@@ -11895,7 +11966,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// 
@@ -11917,8 +11988,8 @@ struct String {
     /// **\\b** (word boundary), to split the string into an
     /// alternating sequence of non-word and word tokens:
     /// 
-    /// **See also:** QStringList::join()
-    /// section()
+    /// **See also:** [`StringList::join`]
+    /// [`section()`]
     /// 
     /// **Overloads**
     /// Splits the string into substring references wherever the regular expression
@@ -11929,7 +12000,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// Splits the string into substrings wherever the regular expression
@@ -11947,8 +12018,8 @@ struct String {
     /// **\\b** (word boundary), to split the string into an
     /// alternating sequence of non-word and word tokens:
     /// 
-    /// **See also:** QStringList::join()
-    /// section()
+    /// **See also:** [`StringList::join`]
+    /// [`section()`]
     /// 
     /// **Overloads**
     /// Splits the string into substring references wherever the regular expression
@@ -11960,6 +12031,7 @@ struct String {
     /// string will cause all references be dangling pointers.
     /// 
     /// **See also:** split() QStringRef
+    [org_name(split)]
     split_2(sep: CharType, behavior: String::SplitBehavior, cs: Rute::CaseSensitivity) -> [String],
     /// 
     /// Splits the string into substring references wherever *sep* occurs, and
@@ -11971,7 +12043,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// 
@@ -11984,7 +12056,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// Splits the string into substring references wherever the regular expression
@@ -11996,6 +12068,7 @@ struct String {
     /// string will cause all references be dangling pointers.
     /// 
     /// **See also:** split() QStringRef
+    [org_name(splitRef)]
     split_ref_2(sep: CharType, behavior: String::SplitBehavior, cs: Rute::CaseSensitivity) -> [StringRef],
     /// 
     /// Splits the string into substrings wherever *sep* occurs, and
@@ -12017,8 +12090,8 @@ struct String {
     /// To understand this behavior, recall that the empty string matches
     /// everywhere, so the above is qualitatively the same as:
     /// 
-    /// **See also:** QStringList::join()
-    /// section()
+    /// **See also:** [`StringList::join`]
+    /// [`section()`]
     /// 
     /// Splits the string into substring references wherever *sep* occurs, and
     /// returns the list of those strings.
@@ -12029,7 +12102,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// 
@@ -12051,8 +12124,8 @@ struct String {
     /// **\\b** (word boundary), to split the string into an
     /// alternating sequence of non-word and word tokens:
     /// 
-    /// **See also:** QStringList::join()
-    /// section()
+    /// **See also:** [`StringList::join`]
+    /// [`section()`]
     /// 
     /// **Overloads**
     /// Splits the string into substring references wherever the regular expression
@@ -12063,7 +12136,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// Splits the string into substrings wherever the regular expression
@@ -12081,8 +12154,8 @@ struct String {
     /// **\\b** (word boundary), to split the string into an
     /// alternating sequence of non-word and word tokens:
     /// 
-    /// **See also:** QStringList::join()
-    /// section()
+    /// **See also:** [`StringList::join`]
+    /// [`section()`]
     /// 
     /// **Overloads**
     /// Splits the string into substring references wherever the regular expression
@@ -12094,6 +12167,7 @@ struct String {
     /// string will cause all references be dangling pointers.
     /// 
     /// **See also:** split() QStringRef
+    [org_name(split)]
     split_3(sep: &RegExpType, behavior: String::SplitBehavior) -> [String],
     /// 
     /// Splits the string into substring references wherever *sep* occurs, and
@@ -12105,7 +12179,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// 
@@ -12118,7 +12192,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// Splits the string into substring references wherever the regular expression
@@ -12130,6 +12204,7 @@ struct String {
     /// string will cause all references be dangling pointers.
     /// 
     /// **See also:** split() QStringRef
+    [org_name(splitRef)]
     split_ref_3(sep: &RegExpType, behavior: String::SplitBehavior) -> [StringRef],
     /// 
     /// Splits the string into substrings wherever *sep* occurs, and
@@ -12151,8 +12226,8 @@ struct String {
     /// To understand this behavior, recall that the empty string matches
     /// everywhere, so the above is qualitatively the same as:
     /// 
-    /// **See also:** QStringList::join()
-    /// section()
+    /// **See also:** [`StringList::join`]
+    /// [`section()`]
     /// 
     /// Splits the string into substring references wherever *sep* occurs, and
     /// returns the list of those strings.
@@ -12163,7 +12238,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// 
@@ -12185,8 +12260,8 @@ struct String {
     /// **\\b** (word boundary), to split the string into an
     /// alternating sequence of non-word and word tokens:
     /// 
-    /// **See also:** QStringList::join()
-    /// section()
+    /// **See also:** [`StringList::join`]
+    /// [`section()`]
     /// 
     /// **Overloads**
     /// Splits the string into substring references wherever the regular expression
@@ -12197,7 +12272,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// Splits the string into substrings wherever the regular expression
@@ -12215,8 +12290,8 @@ struct String {
     /// **\\b** (word boundary), to split the string into an
     /// alternating sequence of non-word and word tokens:
     /// 
-    /// **See also:** QStringList::join()
-    /// section()
+    /// **See also:** [`StringList::join`]
+    /// [`section()`]
     /// 
     /// **Overloads**
     /// Splits the string into substring references wherever the regular expression
@@ -12228,6 +12303,7 @@ struct String {
     /// string will cause all references be dangling pointers.
     /// 
     /// **See also:** split() QStringRef
+    [org_name(split)]
     split_4(sep: &RegularExpressionType, behavior: String::SplitBehavior) -> [String],
     /// 
     /// Splits the string into substring references wherever *sep* occurs, and
@@ -12239,7 +12315,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// 
@@ -12252,7 +12328,7 @@ struct String {
     /// **Note**: All references are valid as long this string is alive. Destroying this
     /// string will cause all references be dangling pointers.
     /// 
-    /// **See also:** QStringRef split()
+    /// **See also:** [`q_string_ref_split()`]
     /// 
     /// **Overloads**
     /// Splits the string into substring references wherever the regular expression
@@ -12264,6 +12340,7 @@ struct String {
     /// string will cause all references be dangling pointers.
     /// 
     /// **See also:** split() QStringRef
+    [org_name(splitRef)]
     split_ref_4(sep: &RegularExpressionType, behavior: String::SplitBehavior) -> [StringRef],
     /// 
     /// Returns the string in the given Unicode normalization *mode,*
@@ -12288,7 +12365,7 @@ struct String {
     /// 
     /// The returned string is in host byte order.
     /// 
-    /// **See also:** unicode()
+    /// **See also:** [`unicode()`]
     utf16() -> ushort?,
     /// 
     /// Returns a Latin-1 representation of the string as a QByteArray.
@@ -12297,10 +12374,10 @@ struct String {
     /// characters. Those characters may be suppressed or replaced with a
     /// question mark.
     /// 
-    /// **See also:** fromLatin1()
-    /// toUtf8()
-    /// toLocal8Bit()
-    /// QTextCodec
+    /// **See also:** [`from_latin1()`]
+    /// [`to_utf8()`]
+    /// [`to_local8_bit()`]
+    /// [`TextCodec`]
     to_latin1() -> ByteArray,
     /// 
     /// Returns a Latin-1 representation of the string as a QByteArray.
@@ -12309,10 +12386,11 @@ struct String {
     /// characters. Those characters may be suppressed or replaced with a
     /// question mark.
     /// 
-    /// **See also:** fromLatin1()
-    /// toUtf8()
-    /// toLocal8Bit()
-    /// QTextCodec
+    /// **See also:** [`from_latin1()`]
+    /// [`to_utf8()`]
+    /// [`to_local8_bit()`]
+    /// [`TextCodec`]
+    [org_name(toLatin1)]
     to_latin1_2() -> ByteArray,
     /// 
     /// Returns a UTF-8 representation of the string as a QByteArray.
@@ -12320,10 +12398,10 @@ struct String {
     /// UTF-8 is a Unicode codec and can represent all characters in a Unicode
     /// string like QString.
     /// 
-    /// **See also:** fromUtf8()
-    /// toLatin1()
-    /// toLocal8Bit()
-    /// QTextCodec
+    /// **See also:** [`from_utf8()`]
+    /// [`to_latin1()`]
+    /// [`to_local8_bit()`]
+    /// [`TextCodec`]
     to_utf8() -> ByteArray,
     /// 
     /// Returns a UTF-8 representation of the string as a QByteArray.
@@ -12331,10 +12409,11 @@ struct String {
     /// UTF-8 is a Unicode codec and can represent all characters in a Unicode
     /// string like QString.
     /// 
-    /// **See also:** fromUtf8()
-    /// toLatin1()
-    /// toLocal8Bit()
-    /// QTextCodec
+    /// **See also:** [`from_utf8()`]
+    /// [`to_latin1()`]
+    /// [`to_local8_bit()`]
+    /// [`TextCodec`]
+    [org_name(toUtf8)]
     to_utf8_2() -> ByteArray,
     /// 
     /// Returns the local 8-bit representation of the string as a
@@ -12349,10 +12428,10 @@ struct String {
     /// locale, the returned byte array is undefined. Those characters may be
     /// suppressed or replaced by another.
     /// 
-    /// **See also:** fromLocal8Bit()
-    /// toLatin1()
-    /// toUtf8()
-    /// QTextCodec
+    /// **See also:** [`from_local8_bit()`]
+    /// [`to_latin1()`]
+    /// [`to_utf8()`]
+    /// [`TextCodec`]
     to_local8_bit() -> ByteArray,
     /// 
     /// Returns the local 8-bit representation of the string as a
@@ -12367,10 +12446,11 @@ struct String {
     /// locale, the returned byte array is undefined. Those characters may be
     /// suppressed or replaced by another.
     /// 
-    /// **See also:** fromLocal8Bit()
-    /// toLatin1()
-    /// toUtf8()
-    /// QTextCodec
+    /// **See also:** [`from_local8_bit()`]
+    /// [`to_latin1()`]
+    /// [`to_utf8()`]
+    /// [`TextCodec`]
+    [org_name(toLocal8Bit)]
     to_local8_bit_2() -> ByteArray,
     /// 
     /// Returns a UCS-4/UTF-32 representation of the string as a QVector<uint>.
@@ -12382,22 +12462,22 @@ struct String {
     /// 
     /// The returned vector is not NUL terminated.
     /// 
-    /// **See also:** fromUtf8()
-    /// toUtf8()
-    /// toLatin1()
-    /// toLocal8Bit()
-    /// QTextCodec
-    /// fromUcs4()
-    /// toWCharArray()
+    /// **See also:** [`from_utf8()`]
+    /// [`to_utf8()`]
+    /// [`to_latin1()`]
+    /// [`to_local8_bit()`]
+    /// [`TextCodec`]
+    /// [`from_ucs4()`]
+    /// [`to_w_char_array()`]
     to_ucs4() -> [uint],
     /// Returns a QString initialized with the first *size* characters
     /// of the Latin-1 string *str.*
     /// 
     /// If *size* is -1 (default), it is taken to be strlen( *str).*
     /// 
-    /// **See also:** toLatin1()
-    /// fromUtf8()
-    /// fromLocal8Bit()
+    /// **See also:** [`to_latin1()`]
+    /// [`from_utf8()`]
+    /// [`from_local8_bit()`]
     /// 
     /// **Overloads**
     /// Returns a QString initialized with the Latin-1 string *str.*
@@ -12419,9 +12499,9 @@ struct String {
     /// unterminated characters at the end of the string will be replaced or
     /// suppressed. In order to do stateful decoding, please use [QTextDecoder.](QTextDecoder.)
     /// 
-    /// **See also:** toUtf8()
-    /// fromLatin1()
-    /// fromLocal8Bit()
+    /// **See also:** [`to_utf8()`]
+    /// [`from_latin1()`]
+    /// [`from_local8_bit()`]
     /// 
     /// **Overloads**
     /// Returns a QString initialized with the UTF-8 string *str.*
@@ -12433,9 +12513,9 @@ struct String {
     /// 
     /// QTextCodec::codecForLocale() is used to perform the conversion.
     /// 
-    /// **See also:** toLocal8Bit()
-    /// fromLatin1()
-    /// fromUtf8()
+    /// **See also:** [`to_local8_bit()`]
+    /// [`from_latin1()`]
+    /// [`from_utf8()`]
     /// 
     /// **Overloads**
     /// Returns a QString initialized with the 8-bit string *str.*
@@ -12445,12 +12525,13 @@ struct String {
     /// 
     /// If *size* is -1 (default), it is taken to be strlen( *str).*
     /// 
-    /// **See also:** toLatin1()
-    /// fromUtf8()
-    /// fromLocal8Bit()
+    /// **See also:** [`to_latin1()`]
+    /// [`from_utf8()`]
+    /// [`from_local8_bit()`]
     /// 
     /// **Overloads**
     /// Returns a QString initialized with the Latin-1 string *str.*
+    [org_name(fromLatin1)]
     [static] from_latin1_2(str: &ByteArrayType) -> String,
     /// Returns a QString initialized with the first *size* bytes
     /// of the UTF-8 string *str.*
@@ -12469,12 +12550,13 @@ struct String {
     /// unterminated characters at the end of the string will be replaced or
     /// suppressed. In order to do stateful decoding, please use [QTextDecoder.](QTextDecoder.)
     /// 
-    /// **See also:** toUtf8()
-    /// fromLatin1()
-    /// fromLocal8Bit()
+    /// **See also:** [`to_utf8()`]
+    /// [`from_latin1()`]
+    /// [`from_local8_bit()`]
     /// 
     /// **Overloads**
     /// Returns a QString initialized with the UTF-8 string *str.*
+    [org_name(fromUtf8)]
     [static] from_utf8_2(str: &ByteArrayType) -> String,
     /// Returns a QString initialized with the first *size* characters
     /// of the 8-bit string *str.*
@@ -12483,12 +12565,13 @@ struct String {
     /// 
     /// QTextCodec::codecForLocale() is used to perform the conversion.
     /// 
-    /// **See also:** toLocal8Bit()
-    /// fromLatin1()
-    /// fromUtf8()
+    /// **See also:** [`to_local8_bit()`]
+    /// [`from_latin1()`]
+    /// [`from_utf8()`]
     /// 
     /// **Overloads**
     /// Returns a QString initialized with the 8-bit string *str.*
+    [org_name(fromLocal8Bit)]
     [static] from_local8_bit_2(str: &ByteArrayType) -> String,
     /// 
     /// Returns a QString initialized with the first *size* characters
@@ -12505,9 +12588,9 @@ struct String {
     /// 
     /// QString makes a deep copy of the Unicode data.
     /// 
-    /// **See also:** utf16()
-    /// setUtf16()
-    /// fromStdU16String()
+    /// **See also:** [`utf16()`]
+    /// [`set_utf16()`]
+    /// [`from_std_u16_string()`]
     /// 
     /// Returns a QString initialized with the first *size* characters
     /// of the Unicode string *str* (ISO-10646-UTF-16 encoded).
@@ -12523,9 +12606,9 @@ struct String {
     /// 
     /// QString makes a deep copy of the Unicode data.
     /// 
-    /// **See also:** utf16()
-    /// setUtf16()
-    /// fromStdU16String()
+    /// **See also:** [`utf16()`]
+    /// [`set_utf16()`]
+    /// [`from_std_u16_string()`]
     [static] from_utf16(arg0: *ushort, size: i32) -> String,
     /// 
     /// Returns a QString initialized with the first *size* characters
@@ -12534,12 +12617,12 @@ struct String {
     /// If *size* is -1 (default), *str* must be terminated
     /// with a 0.
     /// 
-    /// **See also:** toUcs4()
-    /// fromUtf16()
-    /// utf16()
-    /// setUtf16()
-    /// fromWCharArray()
-    /// fromStdU32String()
+    /// **See also:** [`to_ucs4()`]
+    /// [`from_utf16()`]
+    /// [`utf16()`]
+    /// [`set_utf16()`]
+    /// [`from_w_char_array()`]
+    /// [`from_std_u32_string()`]
     /// 
     /// Returns a QString initialized with the first *size* characters
     /// of the Unicode string *unicode* (ISO-10646-UCS-4 encoded).
@@ -12547,12 +12630,12 @@ struct String {
     /// If *size* is -1 (default), *unicode* must be terminated
     /// with a 0.
     /// 
-    /// **See also:** toUcs4()
-    /// fromUtf16()
-    /// utf16()
-    /// setUtf16()
-    /// fromWCharArray()
-    /// fromStdU32String()
+    /// **See also:** [`to_ucs4()`]
+    /// [`from_utf16()`]
+    /// [`utf16()`]
+    /// [`set_utf16()`]
+    /// [`from_w_char_array()`]
+    /// [`from_std_u32_string()`]
     [static] from_ucs4(arg0: *uint, size: i32) -> String,
     /// 
     /// Constructs a QString that uses the first *size* Unicode characters
@@ -12574,8 +12657,8 @@ struct String {
     /// '\\0'-terminated string (although utf16() does, at the cost of
     /// copying the raw data).
     /// 
-    /// **See also:** fromUtf16()
-    /// setRawData()
+    /// **See also:** [`from_utf16()`]
+    /// [`set_raw_data()`]
     [static] from_raw_data(arg0: *CharType, size: i32) -> String,
     /// 
     /// Returns a QString initialized with the first *size* characters
@@ -12592,9 +12675,9 @@ struct String {
     /// 
     /// QString makes a deep copy of the Unicode data.
     /// 
-    /// **See also:** utf16()
-    /// setUtf16()
-    /// fromStdU16String()
+    /// **See also:** [`utf16()`]
+    /// [`set_utf16()`]
+    /// [`from_std_u16_string()`]
     /// 
     /// Returns a QString initialized with the first *size* characters
     /// of the Unicode string *str* (ISO-10646-UTF-16 encoded).
@@ -12610,9 +12693,10 @@ struct String {
     /// 
     /// QString makes a deep copy of the Unicode data.
     /// 
-    /// **See also:** utf16()
-    /// setUtf16()
-    /// fromStdU16String()
+    /// **See also:** [`utf16()`]
+    /// [`set_utf16()`]
+    /// [`from_std_u16_string()`]
+    [org_name(fromUtf16)]
     [static] from_utf16_2(str: *char16_t, size: i32) -> String,
     /// 
     /// Returns a QString initialized with the first *size* characters
@@ -12621,12 +12705,12 @@ struct String {
     /// If *size* is -1 (default), *str* must be terminated
     /// with a 0.
     /// 
-    /// **See also:** toUcs4()
-    /// fromUtf16()
-    /// utf16()
-    /// setUtf16()
-    /// fromWCharArray()
-    /// fromStdU32String()
+    /// **See also:** [`to_ucs4()`]
+    /// [`from_utf16()`]
+    /// [`utf16()`]
+    /// [`set_utf16()`]
+    /// [`from_w_char_array()`]
+    /// [`from_std_u32_string()`]
     /// 
     /// Returns a QString initialized with the first *size* characters
     /// of the Unicode string *unicode* (ISO-10646-UCS-4 encoded).
@@ -12634,12 +12718,13 @@ struct String {
     /// If *size* is -1 (default), *unicode* must be terminated
     /// with a 0.
     /// 
-    /// **See also:** toUcs4()
-    /// fromUtf16()
-    /// utf16()
-    /// setUtf16()
-    /// fromWCharArray()
-    /// fromStdU32String()
+    /// **See also:** [`to_ucs4()`]
+    /// [`from_utf16()`]
+    /// [`utf16()`]
+    /// [`set_utf16()`]
+    /// [`from_w_char_array()`]
+    /// [`from_std_u32_string()`]
+    [org_name(fromUcs4)]
     [static] from_ucs4_2(str: *char32_t, size: i32) -> String,
     /// 
     /// Fills the *array* with the data contained in this QString object.
@@ -12655,12 +12740,12 @@ struct String {
     /// 
     /// **Note**: This function does not append a null character to the array.
     /// 
-    /// **See also:** utf16()
-    /// toUcs4()
-    /// toLatin1()
-    /// toUtf8()
-    /// toLocal8Bit()
-    /// toStdWString()
+    /// **See also:** [`utf16()`]
+    /// [`to_ucs4()`]
+    /// [`to_latin1()`]
+    /// [`to_utf8()`]
+    /// [`to_local8_bit()`]
+    /// [`to_std_w_string()`]
     to_w_char_array(array: *wchar_t) -> i32,
     /// 
     /// Returns a copy of the *string,* where the encoding of *string* depends on
@@ -12669,12 +12754,12 @@ struct String {
     /// 
     /// If *size* is -1 (default), the *string* has to be 0 terminated.
     /// 
-    /// **See also:** fromUtf16()
-    /// fromLatin1()
-    /// fromLocal8Bit()
-    /// fromUtf8()
-    /// fromUcs4()
-    /// fromStdWString()
+    /// **See also:** [`from_utf16()`]
+    /// [`from_latin1()`]
+    /// [`from_local8_bit()`]
+    /// [`from_utf8()`]
+    /// [`from_ucs4()`]
+    /// [`from_std_w_string()`]
     [static] from_w_char_array(string: *wchar_t, size: i32) -> String,
     /// 
     /// Resets the QString to use the first *size* Unicode characters
@@ -12686,7 +12771,7 @@ struct String {
     /// This function can be used instead of fromRawData() to re-use
     /// existings QString objects to save memory re-allocations.
     /// 
-    /// **See also:** fromRawData()
+    /// **See also:** [`from_raw_data()`]
     set_raw_data(unicode: *CharType, size: i32) -> String?,
     /// 
     /// Resizes the string to *size* characters and copies *unicode*
@@ -12695,8 +12780,8 @@ struct String {
     /// If *unicode* is 0, nothing is copied, but the string is still
     /// resized to *size.*
     /// 
-    /// **See also:** unicode()
-    /// setUtf16()
+    /// **See also:** [`unicode()`]
+    /// [`set_utf16()`]
     set_unicode(unicode: *CharType, size: i32) -> String?,
     /// 
     /// Resizes the string to *size* characters and copies *unicode*
@@ -12708,8 +12793,8 @@ struct String {
     /// Note that unlike fromUtf16(), this function does not consider BOMs and
     /// possibly differing byte ordering.
     /// 
-    /// **See also:** utf16()
-    /// setUnicode()
+    /// **See also:** [`utf16()`]
+    /// [`set_unicode()`]
     set_utf16(utf16: *ushort, size: i32) -> String?,
     /// 
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -12724,9 +12809,8 @@ struct String {
     /// a human would expect. Consider sorting user-visible strings with
     /// localeAwareCompare().
     /// 
-    /// **See also:** operator==()
-    /// operator<()
-    /// operator>()
+    /// **See also:** [`operator()`]
+    /// [`operator()`]
     /// 
     /// **Overloads** compare()
     /// Performs a comparison of *s1* and *s2,* using the case
@@ -12767,9 +12851,8 @@ struct String {
     /// a human would expect. Consider sorting user-visible strings with
     /// localeAwareCompare().
     /// 
-    /// **See also:** operator==()
-    /// operator<()
-    /// operator>()
+    /// **See also:** [`operator()`]
+    /// [`operator()`]
     /// 
     /// **Overloads** compare()
     /// Performs a comparison of *s1* and *s2,* using the case
@@ -12796,6 +12879,7 @@ struct String {
     /// is less than, equal to, or greater than *ref.*
     /// 
     /// **Overloads** compare()
+    [org_name(compare)]
     compare_2(other: Latin1StringType, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -12810,9 +12894,8 @@ struct String {
     /// a human would expect. Consider sorting user-visible strings with
     /// localeAwareCompare().
     /// 
-    /// **See also:** operator==()
-    /// operator<()
-    /// operator>()
+    /// **See also:** [`operator()`]
+    /// [`operator()`]
     /// 
     /// **Overloads** compare()
     /// Performs a comparison of *s1* and *s2,* using the case
@@ -12839,6 +12922,7 @@ struct String {
     /// is less than, equal to, or greater than *ref.*
     /// 
     /// **Overloads** compare()
+    [org_name(compare)]
     [static] compare_3(s1: String, s2: String, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -12853,9 +12937,8 @@ struct String {
     /// a human would expect. Consider sorting user-visible strings with
     /// localeAwareCompare().
     /// 
-    /// **See also:** operator==()
-    /// operator<()
-    /// operator>()
+    /// **See also:** [`operator()`]
+    /// [`operator()`]
     /// 
     /// **Overloads** compare()
     /// Performs a comparison of *s1* and *s2,* using the case
@@ -12882,6 +12965,7 @@ struct String {
     /// is less than, equal to, or greater than *ref.*
     /// 
     /// **Overloads** compare()
+    [org_name(compare)]
     [static] compare_4(s1: String, s2: Latin1StringType, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -12896,9 +12980,8 @@ struct String {
     /// a human would expect. Consider sorting user-visible strings with
     /// localeAwareCompare().
     /// 
-    /// **See also:** operator==()
-    /// operator<()
-    /// operator>()
+    /// **See also:** [`operator()`]
+    /// [`operator()`]
     /// 
     /// **Overloads** compare()
     /// Performs a comparison of *s1* and *s2,* using the case
@@ -12925,6 +13008,7 @@ struct String {
     /// is less than, equal to, or greater than *ref.*
     /// 
     /// **Overloads** compare()
+    [org_name(compare)]
     [static] compare_5(s1: Latin1StringType, s2: String, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -12939,9 +13023,8 @@ struct String {
     /// a human would expect. Consider sorting user-visible strings with
     /// localeAwareCompare().
     /// 
-    /// **See also:** operator==()
-    /// operator<()
-    /// operator>()
+    /// **See also:** [`operator()`]
+    /// [`operator()`]
     /// 
     /// **Overloads** compare()
     /// Performs a comparison of *s1* and *s2,* using the case
@@ -12968,6 +13051,7 @@ struct String {
     /// is less than, equal to, or greater than *ref.*
     /// 
     /// **Overloads** compare()
+    [org_name(compare)]
     compare_6(s: &StringRefType, cs: Rute::CaseSensitivity) -> i32,
     /// 
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -12982,9 +13066,8 @@ struct String {
     /// a human would expect. Consider sorting user-visible strings with
     /// localeAwareCompare().
     /// 
-    /// **See also:** operator==()
-    /// operator<()
-    /// operator>()
+    /// **See also:** [`operator()`]
+    /// [`operator()`]
     /// 
     /// **Overloads** compare()
     /// Performs a comparison of *s1* and *s2,* using the case
@@ -13011,6 +13094,7 @@ struct String {
     /// is less than, equal to, or greater than *ref.*
     /// 
     /// **Overloads** compare()
+    [org_name(compare)]
     [static] compare_7(s1: String, s2: &StringRefType, arg0: Rute::CaseSensitivity) -> i32,
     /// 
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -13024,8 +13108,8 @@ struct String {
     /// On MacOS and iOS this function compares according the
     /// setting in the International preferences panel.
     /// 
-    /// **See also:** compare()
-    /// QLocale
+    /// **See also:** [`compare()`]
+    /// [`Locale`]
     /// 
     /// **Overloads** localeAwareCompare()
     /// Compares this string with the *other* string and returns an
@@ -13070,8 +13154,8 @@ struct String {
     /// On MacOS and iOS this function compares according the
     /// setting in the International preferences panel.
     /// 
-    /// **See also:** compare()
-    /// QLocale
+    /// **See also:** [`compare()`]
+    /// [`Locale`]
     /// 
     /// **Overloads** localeAwareCompare()
     /// Compares this string with the *other* string and returns an
@@ -13103,6 +13187,7 @@ struct String {
     /// lists of strings to the user.
     /// 
     /// Same as `localeAwareCompare(*this, other)` .
+    [org_name(localeAwareCompare)]
     [static] locale_aware_compare_2(s1: String, s2: String) -> i32,
     /// 
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -13116,8 +13201,8 @@ struct String {
     /// On MacOS and iOS this function compares according the
     /// setting in the International preferences panel.
     /// 
-    /// **See also:** compare()
-    /// QLocale
+    /// **See also:** [`compare()`]
+    /// [`Locale`]
     /// 
     /// **Overloads** localeAwareCompare()
     /// Compares this string with the *other* string and returns an
@@ -13149,6 +13234,7 @@ struct String {
     /// lists of strings to the user.
     /// 
     /// Same as `localeAwareCompare(*this, other)` .
+    [org_name(localeAwareCompare)]
     locale_aware_compare_3(s: &StringRefType) -> i32,
     /// 
     /// Compares *s1* with *s2* and returns an integer less than, equal
@@ -13162,8 +13248,8 @@ struct String {
     /// On MacOS and iOS this function compares according the
     /// setting in the International preferences panel.
     /// 
-    /// **See also:** compare()
-    /// QLocale
+    /// **See also:** [`compare()`]
+    /// [`Locale`]
     /// 
     /// **Overloads** localeAwareCompare()
     /// Compares this string with the *other* string and returns an
@@ -13195,6 +13281,7 @@ struct String {
     /// lists of strings to the user.
     /// 
     /// Same as `localeAwareCompare(*this, other)` .
+    [org_name(localeAwareCompare)]
     [static] locale_aware_compare_4(s1: String, s2: &StringRefType) -> i32,
     /// 
     /// Returns the string converted to a `short` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -13214,10 +13301,10 @@ struct String {
     /// 
     /// This function ignores leading and trailing whitespace.
     /// 
-    /// **See also:** number()
-    /// toUShort()
-    /// toInt()
-    /// QLocale::toShort()
+    /// **See also:** [`number()`]
+    /// [`to_u_short()`]
+    /// [`to_int()`]
+    /// [`Locale::to_short`]
     to_short(ok: *bool, base: i32) -> short,
     /// 
     /// Returns the string converted to an `unsigned short` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -13237,9 +13324,9 @@ struct String {
     /// 
     /// This function ignores leading and trailing whitespace.
     /// 
-    /// **See also:** number()
-    /// toShort()
-    /// QLocale::toUShort()
+    /// **See also:** [`number()`]
+    /// [`to_short()`]
+    /// [`Locale::to_u_short`]
     to_u_short(ok: *bool, base: i32) -> ushort,
     /// 
     /// Returns the string converted to an `int` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -13259,10 +13346,10 @@ struct String {
     /// 
     /// This function ignores leading and trailing whitespace.
     /// 
-    /// **See also:** number()
-    /// toUInt()
-    /// toDouble()
-    /// QLocale::toInt()
+    /// **See also:** [`number()`]
+    /// [`to_u_int()`]
+    /// [`to_double()`]
+    /// [`Locale::to_int`]
     to_int(ok: *bool, base: i32) -> i32,
     /// 
     /// Returns the string converted to an `unsigned int` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -13282,9 +13369,9 @@ struct String {
     /// 
     /// This function ignores leading and trailing whitespace.
     /// 
-    /// **See also:** number()
-    /// toInt()
-    /// QLocale::toUInt()
+    /// **See also:** [`number()`]
+    /// [`to_int()`]
+    /// [`Locale::to_u_int`]
     to_u_int(ok: *bool, base: i32) -> uint,
     /// 
     /// Returns the string converted to a `long long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -13304,10 +13391,10 @@ struct String {
     /// 
     /// This function ignores leading and trailing whitespace.
     /// 
-    /// **See also:** number()
-    /// toULongLong()
-    /// toInt()
-    /// QLocale::toLongLong()
+    /// **See also:** [`number()`]
+    /// [`to_u_long_long()`]
+    /// [`to_int()`]
+    /// [`Locale::to_long_long`]
     /// 
     /// Returns the string converted to a `long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
     /// Returns 0 if the conversion fails.
@@ -13326,10 +13413,10 @@ struct String {
     /// 
     /// This function ignores leading and trailing whitespace.
     /// 
-    /// **See also:** number()
-    /// toULong()
-    /// toInt()
-    /// QLocale::toInt()
+    /// **See also:** [`number()`]
+    /// [`to_u_long()`]
+    /// [`to_int()`]
+    /// [`Locale::to_int`]
     to_long(ok: *bool, base: i32) -> long,
     /// 
     /// Returns the string converted to an `unsigned long long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -13349,9 +13436,9 @@ struct String {
     /// 
     /// This function ignores leading and trailing whitespace.
     /// 
-    /// **See also:** number()
-    /// toLongLong()
-    /// QLocale::toULongLong()
+    /// **See also:** [`number()`]
+    /// [`to_long_long()`]
+    /// [`Locale::to_u_long_long`]
     /// 
     /// Returns the string converted to an `unsigned long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
     /// Returns 0 if the conversion fails.
@@ -13370,8 +13457,8 @@ struct String {
     /// 
     /// This function ignores leading and trailing whitespace.
     /// 
-    /// **See also:** number()
-    /// QLocale::toUInt()
+    /// **See also:** [`number()`]
+    /// [`Locale::to_u_int`]
     to_u_long(ok: *bool, base: i32) -> ulong,
     /// 
     /// Returns the string converted to a `long long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -13391,10 +13478,10 @@ struct String {
     /// 
     /// This function ignores leading and trailing whitespace.
     /// 
-    /// **See also:** number()
-    /// toULongLong()
-    /// toInt()
-    /// QLocale::toLongLong()
+    /// **See also:** [`number()`]
+    /// [`to_u_long_long()`]
+    /// [`to_int()`]
+    /// [`Locale::to_long_long`]
     to_long_long(ok: *bool, base: i32) -> i64,
     /// 
     /// Returns the string converted to an `unsigned long long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -13414,9 +13501,9 @@ struct String {
     /// 
     /// This function ignores leading and trailing whitespace.
     /// 
-    /// **See also:** number()
-    /// toLongLong()
-    /// QLocale::toULongLong()
+    /// **See also:** [`number()`]
+    /// [`to_long_long()`]
+    /// [`Locale::to_u_long_long`]
     to_u_long_long(ok: *bool, base: i32) -> qulonglong,
     /// 
     /// Returns the string converted to a `float` value.
@@ -13442,11 +13529,11 @@ struct String {
     /// 
     /// This function ignores leading and trailing whitespace.
     /// 
-    /// **See also:** number()
-    /// toDouble()
-    /// toInt()
-    /// QLocale::toFloat()
-    /// trimmed()
+    /// **See also:** [`number()`]
+    /// [`to_double()`]
+    /// [`to_int()`]
+    /// [`Locale::to_float`]
+    /// [`trimmed()`]
     to_float(ok: *bool) -> f32,
     /// 
     /// Returns the string converted to a `double` value.
@@ -13470,10 +13557,10 @@ struct String {
     /// 
     /// This function ignores leading and trailing whitespace.
     /// 
-    /// **See also:** number()
-    /// QLocale::setDefault()
-    /// QLocale::toDouble()
-    /// trimmed()
+    /// **See also:** [`number()`]
+    /// [`Locale::set_default`]
+    /// [`Locale::to_double`]
+    /// [`trimmed()`]
     to_double(ok: *bool) -> double,
     /// 
     /// Sets the string to the printed value of *n* in the specified *base,* and returns a reference to the string.
@@ -13566,6 +13653,7 @@ struct String {
     /// The formatting always uses QLocale::C, i.e., English/UnitedStates.
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
+    [org_name(setNum)]
     set_num_2(arg0: ushort, base: i32) -> String?,
     /// 
     /// Sets the string to the printed value of *n* in the specified *base,* and returns a reference to the string.
@@ -13612,6 +13700,7 @@ struct String {
     /// The formatting always uses QLocale::C, i.e., English/UnitedStates.
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
+    [org_name(setNum)]
     set_num_3(arg0: i32, base: i32) -> String?,
     /// 
     /// Sets the string to the printed value of *n* in the specified *base,* and returns a reference to the string.
@@ -13658,6 +13747,7 @@ struct String {
     /// The formatting always uses QLocale::C, i.e., English/UnitedStates.
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
+    [org_name(setNum)]
     set_num_4(arg0: uint, base: i32) -> String?,
     /// 
     /// Sets the string to the printed value of *n* in the specified *base,* and returns a reference to the string.
@@ -13704,6 +13794,7 @@ struct String {
     /// The formatting always uses QLocale::C, i.e., English/UnitedStates.
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
+    [org_name(setNum)]
     set_num_5(arg0: long, base: i32) -> String?,
     /// 
     /// Sets the string to the printed value of *n* in the specified *base,* and returns a reference to the string.
@@ -13750,6 +13841,7 @@ struct String {
     /// The formatting always uses QLocale::C, i.e., English/UnitedStates.
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
+    [org_name(setNum)]
     set_num_6(arg0: ulong, base: i32) -> String?,
     /// 
     /// Sets the string to the printed value of *n* in the specified *base,* and returns a reference to the string.
@@ -13796,6 +13888,7 @@ struct String {
     /// The formatting always uses QLocale::C, i.e., English/UnitedStates.
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
+    [org_name(setNum)]
     set_num_7(arg0: i64, base: i32) -> String?,
     /// 
     /// Sets the string to the printed value of *n* in the specified *base,* and returns a reference to the string.
@@ -13842,6 +13935,7 @@ struct String {
     /// The formatting always uses QLocale::C, i.e., English/UnitedStates.
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
+    [org_name(setNum)]
     set_num_8(arg0: qulonglong, base: i32) -> String?,
     /// 
     /// Sets the string to the printed value of *n* in the specified *base,* and returns a reference to the string.
@@ -13888,6 +13982,7 @@ struct String {
     /// The formatting always uses QLocale::C, i.e., English/UnitedStates.
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
+    [org_name(setNum)]
     set_num_9(arg0: f32, f: char, prec: i32) -> String?,
     /// 
     /// Sets the string to the printed value of *n* in the specified *base,* and returns a reference to the string.
@@ -13934,6 +14029,7 @@ struct String {
     /// The formatting always uses QLocale::C, i.e., English/UnitedStates.
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
+    [org_name(setNum)]
     set_num_10(arg0: double, f: char, prec: i32) -> String?,
     /// 
     /// Returns a string equivalent of the number *n* according to the
@@ -13947,7 +14043,7 @@ struct String {
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
     /// 
-    /// **See also:** setNum()
+    /// **See also:** [`set_num()`]
     /// 
     /// **Overloads**
     /// 
@@ -13967,8 +14063,8 @@ struct String {
     /// Unlike QLocale::toString(), this function does not honor the
     /// user's locale settings.
     /// 
-    /// **See also:** setNum()
-    /// QLocale::toString()
+    /// **See also:** [`set_num()`]
+    /// [`Locale::to_string`]
     [static] number(arg0: i32, base: i32) -> String,
     /// 
     /// Returns a string equivalent of the number *n* according to the
@@ -13982,7 +14078,7 @@ struct String {
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
     /// 
-    /// **See also:** setNum()
+    /// **See also:** [`set_num()`]
     /// 
     /// **Overloads**
     /// 
@@ -14002,8 +14098,9 @@ struct String {
     /// Unlike QLocale::toString(), this function does not honor the
     /// user's locale settings.
     /// 
-    /// **See also:** setNum()
-    /// QLocale::toString()
+    /// **See also:** [`set_num()`]
+    /// [`Locale::to_string`]
+    [org_name(number)]
     [static] number_2(arg0: uint, base: i32) -> String,
     /// 
     /// Returns a string equivalent of the number *n* according to the
@@ -14017,7 +14114,7 @@ struct String {
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
     /// 
-    /// **See also:** setNum()
+    /// **See also:** [`set_num()`]
     /// 
     /// **Overloads**
     /// 
@@ -14037,8 +14134,9 @@ struct String {
     /// Unlike QLocale::toString(), this function does not honor the
     /// user's locale settings.
     /// 
-    /// **See also:** setNum()
-    /// QLocale::toString()
+    /// **See also:** [`set_num()`]
+    /// [`Locale::to_string`]
+    [org_name(number)]
     [static] number_3(arg0: long, base: i32) -> String,
     /// 
     /// Returns a string equivalent of the number *n* according to the
@@ -14052,7 +14150,7 @@ struct String {
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
     /// 
-    /// **See also:** setNum()
+    /// **See also:** [`set_num()`]
     /// 
     /// **Overloads**
     /// 
@@ -14072,8 +14170,9 @@ struct String {
     /// Unlike QLocale::toString(), this function does not honor the
     /// user's locale settings.
     /// 
-    /// **See also:** setNum()
-    /// QLocale::toString()
+    /// **See also:** [`set_num()`]
+    /// [`Locale::to_string`]
+    [org_name(number)]
     [static] number_4(arg0: ulong, base: i32) -> String,
     /// 
     /// Returns a string equivalent of the number *n* according to the
@@ -14087,7 +14186,7 @@ struct String {
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
     /// 
-    /// **See also:** setNum()
+    /// **See also:** [`set_num()`]
     /// 
     /// **Overloads**
     /// 
@@ -14107,8 +14206,9 @@ struct String {
     /// Unlike QLocale::toString(), this function does not honor the
     /// user's locale settings.
     /// 
-    /// **See also:** setNum()
-    /// QLocale::toString()
+    /// **See also:** [`set_num()`]
+    /// [`Locale::to_string`]
+    [org_name(number)]
     [static] number_5(arg0: i64, base: i32) -> String,
     /// 
     /// Returns a string equivalent of the number *n* according to the
@@ -14122,7 +14222,7 @@ struct String {
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
     /// 
-    /// **See also:** setNum()
+    /// **See also:** [`set_num()`]
     /// 
     /// **Overloads**
     /// 
@@ -14142,8 +14242,9 @@ struct String {
     /// Unlike QLocale::toString(), this function does not honor the
     /// user's locale settings.
     /// 
-    /// **See also:** setNum()
-    /// QLocale::toString()
+    /// **See also:** [`set_num()`]
+    /// [`Locale::to_string`]
+    [org_name(number)]
     [static] number_6(arg0: qulonglong, base: i32) -> String,
     /// 
     /// Returns a string equivalent of the number *n* according to the
@@ -14157,7 +14258,7 @@ struct String {
     /// To get a localized string representation of a number, use
     /// QLocale::toString() with the appropriate locale.
     /// 
-    /// **See also:** setNum()
+    /// **See also:** [`set_num()`]
     /// 
     /// **Overloads**
     /// 
@@ -14177,8 +14278,9 @@ struct String {
     /// Unlike QLocale::toString(), this function does not honor the
     /// user's locale settings.
     /// 
-    /// **See also:** setNum()
-    /// QLocale::toString()
+    /// **See also:** [`set_num()`]
+    /// [`Locale::to_string`]
+    [org_name(number)]
     [static] number_7(arg0: double, f: char, prec: i32) -> String,
     /// 
     /// Prepends the string *str* to the beginning of this string and
@@ -14186,8 +14288,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// insert()
+    /// **See also:** [`append()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** prepend()
     /// Prepends the Latin-1 string *str* to this string.
@@ -14216,6 +14318,7 @@ struct String {
     /// 
     /// **Overloads** prepend()
     /// Prepends the character *ch* to this string.
+    [org_name(prepend)]
     prepend_6(s: *char) -> String?,
     /// 
     /// Prepends the string *str* to the beginning of this string and
@@ -14223,8 +14326,8 @@ struct String {
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// insert()
+    /// **See also:** [`append()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** prepend()
     /// Prepends the Latin-1 string *str* to this string.
@@ -14253,6 +14356,7 @@ struct String {
     /// 
     /// **Overloads** prepend()
     /// Prepends the character *ch* to this string.
+    [org_name(prepend)]
     prepend_7(s: &ByteArrayType) -> String?,
     /// 
     /// Appends the string *str* onto the end of this string.
@@ -14267,9 +14371,9 @@ struct String {
     /// data so it can grow without reallocating the entire string each
     /// time.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** append()
     /// Appends *len* characters from the QChar array *str* to this string.
@@ -14299,6 +14403,7 @@ struct String {
     /// Appends the character *ch* to this string.
     /// 
     /// Appends the given string *reference* to this string and returns the result.
+    [org_name(append)]
     append_6(s: *char) -> String?,
     /// 
     /// Appends the string *str* onto the end of this string.
@@ -14313,9 +14418,9 @@ struct String {
     /// data so it can grow without reallocating the entire string each
     /// time.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads** append()
     /// Appends *len* characters from the QChar array *str* to this string.
@@ -14345,6 +14450,7 @@ struct String {
     /// Appends the character *ch* to this string.
     /// 
     /// Appends the given string *reference* to this string and returns the result.
+    [org_name(append)]
     append_7(s: &ByteArrayType) -> String?,
     /// 
     /// Inserts the string *str* at the given index *position* and
@@ -14355,10 +14461,10 @@ struct String {
     /// If the given *position* is greater than size(), the array is
     /// first extended using resize().
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** insert()
     /// Inserts the string reference *str* at the given index *position* and
@@ -14396,6 +14502,7 @@ struct String {
     /// 
     /// **Overloads** insert()
     /// Inserts *ch* at the given index *position* in the string.
+    [org_name(insert)]
     insert_6(i: i32, s: *char) -> String?,
     /// 
     /// Inserts the string *str* at the given index *position* and
@@ -14406,10 +14513,10 @@ struct String {
     /// If the given *position* is greater than size(), the array is
     /// first extended using resize().
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads** insert()
     /// Inserts the string reference *str* at the given index *position* and
@@ -14447,14 +14554,15 @@ struct String {
     /// 
     /// **Overloads** insert()
     /// Inserts *ch* at the given index *position* in the string.
+    [org_name(insert)]
     insert_7(i: i32, s: &ByteArrayType) -> String?,
     /// 
     /// Returns an [STL-style iterator](STL-style%20iterators)
     /// pointing to the first character in
     /// the string.
     /// 
-    /// **See also:** constBegin()
-    /// end()
+    /// **See also:** [`const_begin()`]
+    /// [`end()`]
     /// 
     /// **Overloads** begin()
     begin() -> String::iterator,
@@ -14463,34 +14571,35 @@ struct String {
     /// pointing to the first character in
     /// the string.
     /// 
-    /// **See also:** constBegin()
-    /// end()
+    /// **See also:** [`const_begin()`]
+    /// [`end()`]
     /// 
     /// **Overloads** begin()
+    [org_name(begin)]
     begin_2() -> String::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the first character
     /// in the string.
     /// 
-    /// **See also:** begin()
-    /// cend()
+    /// **See also:** [`begin()`]
+    /// [`cend()`]
     cbegin() -> String::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the first character
     /// in the string.
     /// 
-    /// **See also:** begin()
-    /// constEnd()
+    /// **See also:** [`begin()`]
+    /// [`const_end()`]
     const_begin() -> String::const_iterator,
     /// 
     /// Returns an [STL-style iterator](STL-style%20iterators)
     /// pointing to the imaginary character
     /// after the last character in the string.
     /// 
-    /// **See also:** begin()
-    /// constEnd()
+    /// **See also:** [`begin()`]
+    /// [`const_end()`]
     /// 
     /// **Overloads** end()
     /// 
@@ -14500,7 +14609,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string reference *s;*
     /// otherwise returns `false.`
@@ -14508,7 +14617,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string view *str;*
     /// otherwise returns `false.`
@@ -14516,7 +14625,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// 
@@ -14530,8 +14639,8 @@ struct String {
     /// pointing to the imaginary character
     /// after the last character in the string.
     /// 
-    /// **See also:** begin()
-    /// constEnd()
+    /// **See also:** [`begin()`]
+    /// [`const_end()`]
     /// 
     /// **Overloads** end()
     /// 
@@ -14541,7 +14650,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string reference *s;*
     /// otherwise returns `false.`
@@ -14549,7 +14658,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith() Returns `true` if the string ends with the string view *str;*
     /// otherwise returns `false.`
@@ -14557,7 +14666,7 @@ struct String {
     /// If *cs* is Qt::CaseSensitive (default), the search is case
     /// sensitive; otherwise the search is case insensitive.
     /// 
-    /// **See also:** startsWith()
+    /// **See also:** [`starts_with()`]
     /// 
     /// **Overloads** endsWith()
     /// 
@@ -14565,31 +14674,32 @@ struct String {
     /// `false.`
     /// 
     /// **Overloads** endsWith()
+    [org_name(end)]
     end_2() -> String::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the imaginary
     /// character after the last character in the list.
     /// 
-    /// **See also:** cbegin()
-    /// end()
+    /// **See also:** [`cbegin()`]
+    /// [`end()`]
     cend() -> String::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the imaginary
     /// character after the last character in the list.
     /// 
-    /// **See also:** constBegin()
-    /// end()
+    /// **See also:** [`const_begin()`]
+    /// [`end()`]
     const_end() -> String::const_iterator,
     /// 
     /// Returns a [STL-style](STL-style%20iterators)
     /// reverse iterator pointing to the first
     /// character in the string, in reverse order.
     /// 
-    /// **See also:** begin()
-    /// crbegin()
-    /// rend()
+    /// **See also:** [`begin()`]
+    /// [`crbegin()`]
+    /// [`rend()`]
     /// **Overloads**
     rbegin() -> String::reverse_iterator,
     /// 
@@ -14597,9 +14707,9 @@ struct String {
     /// reverse iterator pointing to one past
     /// the last character in the string, in reverse order.
     /// 
-    /// **See also:** end()
-    /// crend()
-    /// rbegin()
+    /// **See also:** [`end()`]
+    /// [`crend()`]
+    /// [`rbegin()`]
     /// **Overloads**
     rend() -> String::reverse_iterator,
     /// 
@@ -14607,45 +14717,47 @@ struct String {
     /// reverse iterator pointing to the first
     /// character in the string, in reverse order.
     /// 
-    /// **See also:** begin()
-    /// crbegin()
-    /// rend()
+    /// **See also:** [`begin()`]
+    /// [`crbegin()`]
+    /// [`rend()`]
     /// **Overloads**
+    [org_name(rbegin)]
     rbegin_2() -> String::const_reverse_iterator,
     /// 
     /// Returns a [STL-style](STL-style%20iterators)
     /// reverse iterator pointing to one past
     /// the last character in the string, in reverse order.
     /// 
-    /// **See also:** end()
-    /// crend()
-    /// rbegin()
+    /// **See also:** [`end()`]
+    /// [`crend()`]
+    /// [`rbegin()`]
     /// **Overloads**
+    [org_name(rend)]
     rend_2() -> String::const_reverse_iterator,
     /// 
     /// Returns a const [STL-style](STL-style%20iterators)
     /// reverse iterator pointing to the first
     /// character in the string, in reverse order.
     /// 
-    /// **See also:** begin()
-    /// rbegin()
-    /// rend()
+    /// **See also:** [`begin()`]
+    /// [`rbegin()`]
+    /// [`rend()`]
     crbegin() -> String::const_reverse_iterator,
     /// 
     /// Returns a const [STL-style](STL-style%20iterators)
     /// reverse iterator pointing to one
     /// past the last character in the string, in reverse order.
     /// 
-    /// **See also:** end()
-    /// rend()
-    /// rbegin()
+    /// **See also:** [`end()`]
+    /// [`rend()`]
+    /// [`rbegin()`]
     crend() -> String::const_reverse_iterator,
     /// 
     /// This function is provided for STL compatibility, appending the
     /// given *other* string onto the end of this string. It is
     /// equivalent to `append(other).`
     /// 
-    /// **See also:** append()
+    /// **See also:** [`append()`]
     /// 
     /// **Overloads**
     /// Appends the given *ch* character onto the end of this string.
@@ -14655,17 +14767,18 @@ struct String {
     /// given *other* string onto the end of this string. It is
     /// equivalent to `append(other).`
     /// 
-    /// **See also:** append()
+    /// **See also:** [`append()`]
     /// 
     /// **Overloads**
     /// Appends the given *ch* character onto the end of this string.
+    [org_name(push_back)]
     push_back_2(s: String),
     /// 
     /// This function is provided for STL compatibility, prepending the
     /// given *other* string to the beginning of this string. It is
     /// equivalent to `prepend(other).`
     /// 
-    /// **See also:** prepend()
+    /// **See also:** [`prepend()`]
     /// 
     /// **Overloads**
     /// Prepends the given *ch* character to the beginning of this string.
@@ -14675,16 +14788,17 @@ struct String {
     /// given *other* string to the beginning of this string. It is
     /// equivalent to `prepend(other).`
     /// 
-    /// **See also:** prepend()
+    /// **See also:** [`prepend()`]
     /// 
     /// **Overloads**
     /// Prepends the given *ch* character to the beginning of this string.
+    [org_name(push_front)]
     push_front_2(s: String),
     /// 
     /// This function is provided for STL compatibility. It is
     /// equivalent to squeeze().
     /// 
-    /// **See also:** squeeze()
+    /// **See also:** [`squeeze()`]
     shrink_to_fit(),
     /// 
     /// Returns `true` if this string is null; otherwise returns `false.`
@@ -14696,14 +14810,37 @@ struct String {
     /// whether or not a string contains any data, and this can be
     /// determined using the isEmpty() function.
     /// 
-    /// **See also:** isEmpty()
+    /// **See also:** [`is_empty()`]
     is_null() -> bool,
     is_simple_text() -> bool,
     /// 
     /// Returns `true` if the string is read right to left.
     /// 
-    /// **See also:** QStringRef::isRightToLeft()
+    /// **See also:** [`StringRef::is_right_to_left`]
     is_right_to_left() -> bool,
+}
+
+[org_name(QString)]
+enum SectionFlag {
+    SectionDefault,
+    SectionSkipEmpty,
+    SectionIncludeLeadingSep,
+    SectionIncludeTrailingSep,
+    SectionCaseInsensitiveSeps,
+}
+
+[org_name(QString)]
+enum SplitBehavior {
+    KeepEmptyParts,
+    SkipEmptyParts,
+}
+
+[org_name(QString)]
+enum NormalizationForm {
+    NormalizationForm_D,
+    NormalizationForm_C,
+    NormalizationForm_KD,
+    NormalizationForm_KC,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

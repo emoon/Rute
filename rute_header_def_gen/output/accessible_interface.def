@@ -74,28 +74,27 @@
 /// 
 /// Lists, tables and trees should implement QAccessibleTableInterface.
 /// 
-/// **See also:** QAccessible
-/// QAccessibleActionInterface
-/// QAccessibleTextInterface
-/// QAccessibleValueInterface
-/// QAccessibleTableInterface
+/// **See also:** [`Accessible`]
+/// [`AccessibleActionInterface`]
+/// [`AccessibleTextInterface`]
+/// [`AccessibleValueInterface`]
+/// [`AccessibleTableInterface`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct AccessibleInterface {
     /// 
     /// Returns `true` if all the data necessary to use this interface
     /// implementation is valid (e.g. all pointers are non-null);
     /// otherwise returns `false.`
     /// 
-    /// **See also:** object()
+    /// **See also:** [`object()`]
     [event] is_valid() -> bool,
     /// 
     /// Returns a pointer to the QObject this interface implementation provides
     /// information for.
     /// 
-    /// **See also:** isValid()
+    /// **See also:** [`is_valid()`]
     [event] object() -> Object?,
     /// 
     /// Returns the window associated with the underlying object.
@@ -118,8 +117,8 @@ struct AccessibleInterface {
     /// It is possible to filter the relations by using *match.*
     /// It should never return itself.
     /// 
-    /// **See also:** parent()
-    /// child()
+    /// **See also:** [`parent()`]
+    /// [`child()`]
     [event] relations(match: Accessible::Relation) -> Vector<QPair<QAccessibleInterface *, QAccessible::Relation> >,
     /// 
     /// Returns the object that has the keyboard focus.
@@ -140,14 +139,14 @@ struct AccessibleInterface {
     /// over all children. If the widget manages its children (e.g. a table) it will be more efficient
     /// to write a specialized implementation.
     /// 
-    /// **See also:** rect()
+    /// **See also:** [`rect()`]
     [event] child_at(x: i32, y: i32) -> AccessibleInterface?,
     /// 
     /// Returns the QAccessibleInterface of the parent in the accessible object hierarchy.
     /// 
     /// Returns 0 if no parent exists (e.g. for the top level application object).
     /// 
-    /// **See also:** child()
+    /// **See also:** [`child()`]
     [event] parent() -> AccessibleInterface?,
     /// 
     /// Returns the number of children that belong to this object. A child
@@ -156,7 +155,7 @@ struct AccessibleInterface {
     /// 
     /// All objects provide this information.
     /// 
-    /// **See also:** indexOfChild()
+    /// **See also:** [`index_of_child()`]
     /// 
     /// Returns the QAccessibleInterface of a child that contains the screen coordinates ( *x,* *y).*
     /// If there are no children at this position this function returns 0.
@@ -171,15 +170,15 @@ struct AccessibleInterface {
     /// over all children. If the widget manages its children (e.g. a table) it will be more efficient
     /// to write a specialized implementation.
     /// 
-    /// **See also:** rect()
+    /// **See also:** [`rect()`]
     /// 
     /// Returns the accessible child with index *index.*
     /// 0-based index. The number of children of an object can be checked with childCount.
     /// 
     /// Returns 0 when asking for an invalid child (e.g. when the child became invalid in the meantime).
     /// 
-    /// **See also:** childCount()
-    /// parent()
+    /// **See also:** [`child_count()`]
+    /// [`parent()`]
     [event] child(index: i32) -> AccessibleInterface?,
     /// 
     /// Returns the number of children that belong to this object. A child
@@ -188,7 +187,7 @@ struct AccessibleInterface {
     /// 
     /// All objects provide this information.
     /// 
-    /// **See also:** indexOfChild()
+    /// **See also:** [`index_of_child()`]
     [event] child_count() -> i32,
     /// 
     /// Returns the 0-based index of the object *child* in this object's
@@ -196,7 +195,7 @@ struct AccessibleInterface {
     /// 
     /// All objects provide this information about their children.
     /// 
-    /// **See also:** childCount()
+    /// **See also:** [`child_count()`]
     [event] index_of_child(arg0: *AccessibleInterfaceType) -> i32,
     /// 
     /// Returns the value of the text property *t* of the object.
@@ -240,8 +239,8 @@ struct AccessibleInterface {
     /// 
     /// All objects provide a string for [QAccessible::Name.](QAccessible::Name.)
     /// 
-    /// **See also:** role()
-    /// state()
+    /// **See also:** [`role()`]
+    /// [`state()`]
     /// 
     [event] text(t: Accessible::Text) -> String,
     /// 
@@ -250,7 +249,7 @@ struct AccessibleInterface {
     /// Note that the text properties of most objects are read-only
     /// so calling this function might have no effect.
     /// 
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     [event] set_text(t: Accessible::Text, text: String),
     /// 
     /// Returns the geometry of the object. The geometry is in screen coordinates.
@@ -260,7 +259,7 @@ struct AccessibleInterface {
     /// 
     /// All visual objects provide this information.
     /// 
-    /// **See also:** childAt()
+    /// **See also:** [`child_at()`]
     [event] rect() -> Rect,
     /// 
     /// Returns the role of the object.
@@ -268,8 +267,8 @@ struct AccessibleInterface {
     /// 
     /// All accessible objects have a role.
     /// 
-    /// **See also:** text()
-    /// state()
+    /// **See also:** [`text()`]
+    /// [`state()`]
     [event] role() -> Accessible::Role,
     /// 
     /// Returns the current state of the object.
@@ -278,18 +277,18 @@ struct AccessibleInterface {
     /// 
     /// All accessible objects have a state.
     /// 
-    /// **See also:** text()
-    /// role()
+    /// **See also:** [`text()`]
+    /// [`role()`]
     [event] state() -> Accessible::State,
     /// 
     /// Returns the accessible's foreground color if applicable or an invalid QColor.
     /// 
-    /// **See also:** backgroundColor()
+    /// **See also:** [`background_color()`]
     [event] foreground_color() -> Color,
     /// 
     /// Returns the accessible's background color if applicable or an invalid QColor.
     /// 
-    /// **See also:** foregroundColor()
+    /// **See also:** [`foreground_color()`]
     [event] background_color() -> Color,
     /// 
     text_interface() -> AccessibleTextInterface?,
@@ -325,12 +324,12 @@ struct AccessibleInterface {
     /// 
     /// ```
     /// 
-    /// **See also:** QAccessible::InterfaceType
-    /// QAccessibleTextInterface
-    /// QAccessibleValueInterface
-    /// QAccessibleActionInterface
-    /// QAccessibleTableInterface
-    /// QAccessibleTableCellInterface
+    /// **See also:** [`Accessible::interface_type()`]
+    /// [`AccessibleTextInterface`]
+    /// [`AccessibleValueInterface`]
+    /// [`AccessibleActionInterface`]
+    /// [`AccessibleTableInterface`]
+    /// [`AccessibleTableCellInterface`]
     [event] interface_cast(arg0: Accessible::InterfaceType),
 }
 

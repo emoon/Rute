@@ -102,16 +102,11 @@
 /// QWidgets and QGraphicsItems, it should not be used for
 /// high-performance scenarios.
 /// 
-/// **See also:** QGraphicsScene::addWidget()
-/// QGraphicsWidget
+/// **See also:** [`GraphicsScene::add_widget`]
+/// [`GraphicsWidget`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsProxyWidget)]
-enum GraphicsProxyWidgetFixMeEnums {
-    Type,
-}
-
 struct GraphicsProxyWidget : GraphicsWidget {
     /// 
     /// Embeds *widget* into this proxy widget. The embedded widget must reside
@@ -143,12 +138,12 @@ struct GraphicsProxyWidget : GraphicsWidget {
     /// set and widgets that wrap an external application or controller
     /// cannot be embedded. Examples are QGLWidget and QAxWidget.
     /// 
-    /// **See also:** widget()
+    /// **See also:** [`widget()`]
     set_widget(widget: *WidgetType),
     /// 
     /// Returns a pointer to the embedded widget.
     /// 
-    /// **See also:** setWidget()
+    /// **See also:** [`set_widget()`]
     widget() -> Widget?,
     /// 
     /// Returns the rectangle for *widget,* which must be a descendant of
@@ -157,7 +152,7 @@ struct GraphicsProxyWidget : GraphicsWidget {
     /// If no widget is embedded, *widget* is 0, or *widget* is not a
     /// descendant of the embedded widget, this function returns an empty QRectF.
     /// 
-    /// **See also:** widget()
+    /// **See also:** [`widget()`]
     sub_widget_rect(widget: *WidgetType) -> RectF,
     /// 
     [event] paint(painter: *PainterType, option: *StyleOptionGraphicsItemType, widget: *WidgetType),
@@ -173,8 +168,8 @@ struct GraphicsProxyWidget : GraphicsWidget {
     /// 
     /// If the widget is already embedded, return the existing proxy widget.
     /// 
-    /// **See also:** newProxyWidget()
-    /// QGraphicsScene::addWidget()
+    /// **See also:** [`new_proxy_widget()`]
+    /// [`GraphicsScene::add_widget`]
     create_proxy_for_child_widget(child: *WidgetType) -> GraphicsProxyWidget?,
     /// 
     [event] item_change(change: GraphicsItem::GraphicsItemChange, value: &VariantType) -> Variant,
@@ -247,8 +242,13 @@ struct GraphicsProxyWidget : GraphicsWidget {
     /// the QGraphicsProxyWidget() constructor with this proxy widget as
     /// the parent.
     /// 
-    /// **See also:** createProxyForChildWidget()
+    /// **See also:** [`create_proxy_for_child_widget()`]
     new_proxy_widget(arg0: *WidgetType) -> GraphicsProxyWidget?,
+}
+
+[org_name(QGraphicsProxyWidget)]
+enum GraphicsProxyWidgetFixMeEnums {
+    Type,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

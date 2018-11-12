@@ -60,8 +60,8 @@
 /// in contrast to these classes, it is used to manage QGraphicsWidget and
 /// QGraphicsLayout instead of QWidget and QLayout.
 /// 
-/// **See also:** QGraphicsGridLayout
-/// QGraphicsWidget
+/// **See also:** [`GraphicsGridLayout`]
+/// [`GraphicsWidget`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -70,11 +70,11 @@ struct GraphicsLinearLayout : GraphicsLayout {
     /// Change the layout orientation to *orientation.* Changing the layout
     /// orientation will automatically invalidate the layout.
     /// 
-    /// **See also:** orientation()
+    /// **See also:** [`orientation()`]
     set_orientation(orientation: Rute::Orientation),
     /// 
     /// Returns the layout orientation.
-    /// **See also:** setOrientation()
+    /// **See also:** [`set_orientation()`]
     orientation() -> Rute::Orientation,
     /// 
     /// This convenience function is equivalent to calling
@@ -84,38 +84,38 @@ struct GraphicsLinearLayout : GraphicsLayout {
     /// Inserts *item* into the layout at *index,* or before any item that is
     /// currently at *index.*
     /// 
-    /// **See also:** addItem()
-    /// itemAt()
-    /// insertStretch()
-    /// setItemSpacing()
+    /// **See also:** [`add_item()`]
+    /// [`item_at()`]
+    /// [`insert_stretch()`]
+    /// [`set_item_spacing()`]
     insert_item(index: i32, item: *GraphicsLayoutItemType),
     /// 
     /// Removes *item* from the layout without destroying it. Ownership of
     /// *item* is transferred to the caller.
     /// 
-    /// **See also:** removeAt()
-    /// insertItem()
+    /// **See also:** [`remove_at()`]
+    /// [`insert_item()`]
     remove_item(item: *GraphicsLayoutItemType),
     /// 
     /// Removes the item at *index* without destroying it. Ownership of the item
     /// is transferred to the caller.
     /// 
-    /// **See also:** removeItem()
-    /// insertItem()
+    /// **See also:** [`remove_item()`]
+    /// [`insert_item()`]
     [event] remove_at(index: i32),
     /// 
     /// Sets the layout's spacing to *spacing.* Spacing refers to the
     /// vertical and horizontal distances between items.
     /// 
-    /// **See also:** setItemSpacing()
-    /// setStretchFactor()
-    /// QGraphicsGridLayout::setSpacing()
+    /// **See also:** [`set_item_spacing()`]
+    /// [`set_stretch_factor()`]
+    /// [`GraphicsGridLayout::set_spacing`]
     set_spacing(spacing: f32),
     /// 
     /// Returns the layout's spacing. Spacing refers to the
     /// vertical and horizontal distances between items.
     /// 
-    /// **See also:** setSpacing()
+    /// **See also:** [`set_spacing()`]
     spacing() -> f32,
     /// 
     /// Sets the spacing after item at *index* to *spacing.*
@@ -127,8 +127,8 @@ struct GraphicsLinearLayout : GraphicsLayout {
     /// Sets the alignment of *item* to *alignment.* If *item's* alignment
     /// changes, the layout is automatically invalidated.
     /// 
-    /// **See also:** alignment()
-    /// invalidate()
+    /// **See also:** [`alignment()`]
+    /// [`invalidate()`]
     set_alignment(item: *GraphicsLayoutItemType, alignment: Rute::Alignment),
     /// 
     /// Returns the alignment for *item.* The default alignment is
@@ -138,7 +138,7 @@ struct GraphicsLinearLayout : GraphicsLayout {
     /// in the case where there's more space available in the layout than the
     /// widgets can occupy.
     /// 
-    /// **See also:** setAlignment()
+    /// **See also:** [`set_alignment()`]
     alignment(item: *GraphicsLayoutItemType) -> Rute::Alignment,
     /// 
     [event] count() -> i32,

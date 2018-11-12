@@ -220,13 +220,1898 @@
 /// When an escape button can't be determined using these rules,
 /// pressing **Esc** has no effect.
 /// 
-/// **See also:** QDialogButtonBox
+/// **See also:** [`DialogButtonBox`]
 /// {fowler}{GUI Design Handbook: Message Box}
 /// {Standard Dialogs Example}
 /// {Application Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct MessageBox : Dialog {
+    /// 
+    /// Adds the given *button* to the message box with the specified *role.*
+    /// 
+    /// **See also:** [`remove_button()`]
+    /// [`button()`]
+    /// [`set_standard_buttons()`]
+    /// 
+    /// **Overloads**
+    /// Creates a button with the given *text,* adds it to the message box for the
+    /// specified *role,* and returns it.
+    /// 
+    /// **Overloads**
+    /// Adds a standard *button* to the message box if it is valid to do so, and
+    /// returns the push button.
+    /// 
+    /// **See also:** [`set_standard_buttons()`]
+    add_button(button: *AbstractButtonType, role: MessageBox::ButtonRole),
+    /// 
+    /// Adds the given *button* to the message box with the specified *role.*
+    /// 
+    /// **See also:** [`remove_button()`]
+    /// [`button()`]
+    /// [`set_standard_buttons()`]
+    /// 
+    /// **Overloads**
+    /// Creates a button with the given *text,* adds it to the message box for the
+    /// specified *role,* and returns it.
+    /// 
+    /// **Overloads**
+    /// Adds a standard *button* to the message box if it is valid to do so, and
+    /// returns the push button.
+    /// 
+    /// **See also:** [`set_standard_buttons()`]
+    [org_name(addButton)]
+    add_button_2(text: String, role: MessageBox::ButtonRole) -> PushButton?,
+    /// 
+    /// Adds the given *button* to the message box with the specified *role.*
+    /// 
+    /// **See also:** [`remove_button()`]
+    /// [`button()`]
+    /// [`set_standard_buttons()`]
+    /// 
+    /// **Overloads**
+    /// Creates a button with the given *text,* adds it to the message box for the
+    /// specified *role,* and returns it.
+    /// 
+    /// **Overloads**
+    /// Adds a standard *button* to the message box if it is valid to do so, and
+    /// returns the push button.
+    /// 
+    /// **See also:** [`set_standard_buttons()`]
+    [org_name(addButton)]
+    add_button_3(button: MessageBox::StandardButton) -> PushButton?,
+    /// 
+    /// Removes *button* from the button box without deleting it.
+    /// 
+    /// **See also:** [`add_button()`]
+    /// [`set_standard_buttons()`]
+    remove_button(button: *AbstractButtonType),
+    /// 
+    /// **Overloads**
+    /// Opens the dialog and connects its finished() or buttonClicked() signal to
+    /// the slot specified by *receiver* and *member.* If the slot in *member*
+    /// has a pointer for its first parameter the connection is to buttonClicked(),
+    /// otherwise the connection is to finished().
+    /// 
+    /// The signal will be disconnected from the slot when the dialog is closed.
+    open(receiver: *ObjectType, member: *char),
+    /// 
+    /// Returns a list of all the buttons that have been added to the message box.
+    /// 
+    /// **See also:** [`button_role()`]
+    /// [`add_button()`]
+    /// [`remove_button()`]
+    buttons() -> [AbstractButton?],
+    /// 
+    /// Returns the button role for the specified *button.* This function returns
+    /// [InvalidRole](InvalidRole)
+    /// if *button* is 0 or has not been added to the message box.
+    /// 
+    /// **See also:** [`buttons()`]
+    /// [`add_button()`]
+    button_role(button: *AbstractButtonType) -> MessageBox::ButtonRole,
+    set_standard_buttons(buttons: MessageBox::StandardButtons),
+    /// 
+    /// This property controls which standard buttons are used by the message box.
+    /// 
+    /// By default, this property contains no standard buttons.
+    /// 
+    /// **See also:** [`add_button()`]
+    standard_buttons() -> MessageBox::StandardButtons,
+    /// 
+    /// This property controls which standard buttons are used by the message box.
+    /// 
+    /// By default, this property contains no standard buttons.
+    /// 
+    /// **See also:** [`add_button()`]
+    /// 
+    /// Returns the standard button enum value corresponding to the given *button,*
+    /// or NoButton if the given *button* isn't a standard button.
+    /// 
+    /// **See also:** [`button()`]
+    /// [`standard_buttons()`]
+    standard_button(button: *AbstractButtonType) -> MessageBox::StandardButton,
+    /// 
+    /// This signal is emitted whenever a button is clicked inside the QMessageBox.
+    /// The button that was clicked in returned in *button.*
+    /// 
+    /// Returns a pointer corresponding to the standard button *which,*
+    /// or 0 if the standard button doesn't exist in this message box.
+    /// 
+    /// **See also:** standardButtons
+    /// [`standard_button()`]
+    /// 
+    /// Returns a list of all the buttons that have been added to the message box.
+    /// 
+    /// **See also:** [`button_role()`]
+    /// [`add_button()`]
+    /// [`remove_button()`]
+    /// 
+    /// Returns the button role for the specified *button.* This function returns
+    /// [InvalidRole](InvalidRole)
+    /// if *button* is 0 or has not been added to the message box.
+    /// 
+    /// **See also:** [`buttons()`]
+    /// [`add_button()`]
+    /// 
+    /// Returns the text of the message box button *button,* or
+    /// an empty string if the message box does not contain the button.
+    /// 
+    /// Use button() and QPushButton::text() instead.
+    button(which: MessageBox::StandardButton) -> AbstractButton?,
+    /// 
+    /// Returns the button that should be the message box's
+    /// [default button](QPushButton::setDefault())
+    /// . Returns 0
+    /// if no default button was set.
+    /// 
+    /// **See also:** [`add_button()`]
+    /// [`PushButton::set_default`]
+    default_button() -> PushButton?,
+    /// 
+    /// Sets the message box's [default button](QPushButton::setDefault())
+    /// 
+    /// to *button.*
+    /// 
+    /// **See also:** [`add_button()`]
+    /// [`PushButton::set_default`]
+    /// 
+    /// Sets the message box's [default button](QPushButton::setDefault())
+    /// 
+    /// to *button.*
+    /// 
+    /// **See also:** [`add_button()`]
+    /// [`PushButton::set_default`]
+    set_default_button(button: *PushButtonType),
+    /// 
+    /// Sets the message box's [default button](QPushButton::setDefault())
+    /// 
+    /// to *button.*
+    /// 
+    /// **See also:** [`add_button()`]
+    /// [`PushButton::set_default`]
+    /// 
+    /// Sets the message box's [default button](QPushButton::setDefault())
+    /// 
+    /// to *button.*
+    /// 
+    /// **See also:** [`add_button()`]
+    /// [`PushButton::set_default`]
+    [org_name(setDefaultButton)]
+    set_default_button_2(button: MessageBox::StandardButton),
+    /// 
+    /// Returns the button that is activated when escape is pressed.
+    /// 
+    /// By default, QMessageBox attempts to automatically detect an
+    /// escape button as follows:
+    /// 
+    /// * If there is only one button, it is made the escape button.
+    /// * If there is a [Cancel](Cancel)
+    /// button, it is made the escape button.
+    /// * On MacOS only, if there is exactly one button with the role QMessageBox::RejectRole, it is made the escape button.
+    /// 
+    /// When an escape button could not be automatically detected, pressing
+    /// **Esc** has no effect.
+    /// 
+    /// **See also:** [`add_button()`]
+    escape_button() -> AbstractButton?,
+    /// 
+    /// Sets the button that gets activated when the **Escape** key is
+    /// pressed to *button.*
+    /// 
+    /// **See also:** [`add_button()`]
+    /// [`clicked_button()`]
+    /// 
+    /// Sets the buttons that gets activated when the **Escape** key is
+    /// pressed to *button.*
+    /// 
+    /// **See also:** [`add_button()`]
+    /// [`clicked_button()`]
+    set_escape_button(button: *AbstractButtonType),
+    /// 
+    /// Sets the button that gets activated when the **Escape** key is
+    /// pressed to *button.*
+    /// 
+    /// **See also:** [`add_button()`]
+    /// [`clicked_button()`]
+    /// 
+    /// Sets the buttons that gets activated when the **Escape** key is
+    /// pressed to *button.*
+    /// 
+    /// **See also:** [`add_button()`]
+    /// [`clicked_button()`]
+    [org_name(setEscapeButton)]
+    set_escape_button_2(button: MessageBox::StandardButton),
+    /// 
+    /// Returns the button that was clicked by the user,
+    /// or 0 if the user hit the **Esc** key and
+    /// no [escape button](setEscapeButton())
+    /// was set.
+    /// 
+    /// If exec() hasn't been called yet, returns 0.
+    /// 
+    /// Example:
+    /// 
+    /// **See also:** [`standard_button()`]
+    /// [`button()`]
+    clicked_button() -> AbstractButton?,
+    /// 
+    /// The text will be interpreted either as a plain text or as rich text,
+    /// depending on the text format setting ( [QMessageBox::textFormat).](QMessageBox::textFormat).)
+    /// 
+    /// The default setting is Qt::AutoText, i.e., the message box will try
+    /// to auto-detect the format of the text.
+    /// 
+    /// The default value of this property is an empty string.
+    /// 
+    /// **See also:** textFormat
+    /// [`MessageBox::informative_text()`]
+    /// [`MessageBox::detailed_text()`]
+    /// 
+    /// The current text format used by the message box. See the [Qt::TextFormat](Qt::TextFormat)
+    /// enum for an explanation of the possible options.
+    /// 
+    /// The default format is Qt::AutoText.
+    /// 
+    /// **See also:** [`set_text()`]
+    /// 
+    /// Specifies how the label of the message box should interact with user
+    /// input.
+    /// 
+    /// The default value depends on the style.
+    /// 
+    /// **See also:** [`Style::sh_message_box_text_interaction_flags()`]
+    text() -> String,
+    set_text(text: String),
+    /// 
+    /// The icon of the message box can be specified with one of the
+    /// values:
+    /// 
+    /// * QMessageBox::NoIcon
+    /// * QMessageBox::Question
+    /// * QMessageBox::Information
+    /// * QMessageBox::Warning
+    /// * QMessageBox::Critical
+    /// 
+    /// The default is QMessageBox::NoIcon.
+    /// 
+    /// The pixmap used to display the actual icon depends on the current
+    /// [GUI style](QWidget::style())
+    /// . You can also set a custom pixmap
+    /// for the icon by setting the [icon
+    /// pixmap](QMessageBox::iconPixmap)
+    /// property.
+    /// 
+    /// **See also:** iconPixmap
+    /// 
+    /// The icon currently used by the message box. Note that it's often
+    /// hard to draw one pixmap that looks appropriate in all GUI styles;
+    /// you may want to supply a different pixmap for each platform.
+    /// 
+    /// By default, this property is undefined.
+    /// 
+    /// **See also:** icon
+    icon() -> MessageBox::Icon,
+    set_icon(arg0: MessageBox::Icon),
+    /// 
+    /// The icon currently used by the message box. Note that it's often
+    /// hard to draw one pixmap that looks appropriate in all GUI styles;
+    /// you may want to supply a different pixmap for each platform.
+    /// 
+    /// By default, this property is undefined.
+    /// 
+    /// **See also:** icon
+    icon_pixmap() -> Pixmap,
+    set_icon_pixmap(pixmap: &PixmapType),
+    /// 
+    /// The current text format used by the message box. See the [Qt::TextFormat](Qt::TextFormat)
+    /// enum for an explanation of the possible options.
+    /// 
+    /// The default format is Qt::AutoText.
+    /// 
+    /// **See also:** [`set_text()`]
+    text_format() -> Rute::TextFormat,
+    set_text_format(format: Rute::TextFormat),
+    set_text_interaction_flags(flags: Rute::TextInteractionFlags),
+    /// 
+    /// Specifies how the label of the message box should interact with user
+    /// input.
+    /// 
+    /// The default value depends on the style.
+    /// 
+    /// **See also:** [`Style::sh_message_box_text_interaction_flags()`]
+    text_interaction_flags() -> Rute::TextInteractionFlags,
+    /// 
+    /// Sets the checkbox *cb* on the message dialog. The message box takes ownership of the checkbox.
+    /// The argument *cb* can be 0 to remove an existing checkbox from the message box.
+    /// 
+    /// **See also:** [`check_box()`]
+    set_check_box(cb: *CheckBoxType),
+    /// 
+    /// Returns the checkbox shown on the dialog. This is 0 if no checkbox is set.
+    /// **See also:** [`set_check_box()`]
+    check_box() -> CheckBox?,
+    /// 
+    /// Opens an information message box with the given *title* and
+    /// *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box.
+    /// *defaultButton* specifies the button used when **Enter** is pressed.
+    /// *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// Opens an information message box with the given *title* and the
+    /// *text.* The dialog may have up to three buttons. Each of the
+    /// buttons, *button0,* *button1* and *button2* may be set to one
+    /// of the following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// **Overloads**
+    /// Displays an information message box with the given *title* and
+    /// *text,* as well as one, two or three buttons. Returns the index
+    /// of the button that was clicked (0, 1 or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be
+    /// used. *button1Text* is the text of the second button, and is
+    /// optional. *button2Text* is the text of the third button, and is
+    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
+    /// default button; pressing Return or Enter is the same as clicking
+    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the escape button; pressing
+    /// **Esc** is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1 or 2 to make pressing **Esc** equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [static] information(parent: *WidgetType, title: String, text: String, buttons: MessageBox::StandardButtons, default_button: MessageBox::StandardButton) -> MessageBox::StandardButton,
+    /// 
+    /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
+    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// Opens a question message box with the given *title* and *text.*
+    /// The dialog may have up to three buttons. Each of the buttons, *button0,* *button1* and *button2* may be set to one of the
+    /// following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Yes, or QMessageBox::No, etc.)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// **Overloads**
+    /// Displays a question message box with the given *title* and *text,* as well as one, two or three buttons. Returns the index of
+    /// the button that was clicked (0, 1 or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be used.
+    /// *button1Text* is the text of the second button, and is optional.
+    /// *button2Text* is the text of the third button, and is optional.
+    /// *defaultButtonNumber* (0, 1 or 2) is the index of the default
+    /// button; pressing Return or Enter is the same as clicking the
+    /// default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
+    /// Escape is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1 or 2 to make pressing Escape equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [static] question(parent: *WidgetType, title: String, text: String, buttons: MessageBox::StandardButtons, default_button: MessageBox::StandardButton) -> MessageBox::StandardButton,
+    /// 
+    /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
+    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`information()`]
+    /// [`critical()`]
+    /// 
+    /// Opens a warning message box with the given *title* and *text.*
+    /// The dialog may have up to three buttons. Each of the button
+    /// parameters, *button0,* *button1* and *button2* may be set to
+    /// one of the following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Ok or QMessageBox::No or ...)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
+    /// 
+    /// **Overloads**
+    /// Displays a warning message box with the given *title* and *text,* as well as one, two, or three buttons. Returns the number
+    /// of the button that was clicked (0, 1, or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be used.
+    /// *button1Text* is the text of the second button, and is optional,
+    /// and *button2Text* is the text of the third button, and is
+    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
+    /// default button; pressing Return or Enter is the same as clicking
+    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
+    /// Escape is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
+    [static] warning(parent: *WidgetType, title: String, text: String, buttons: MessageBox::StandardButtons, default_button: MessageBox::StandardButton) -> MessageBox::StandardButton,
+    /// 
+    /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
+    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`information()`]
+    /// 
+    /// Opens a critical message box with the given *title* and *text.*
+    /// The dialog may have up to three buttons. Each of the button
+    /// parameters, *button0,* *button1* and *button2* may be set to
+    /// one of the following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
+    /// 
+    /// **Overloads**
+    /// Displays a critical error message box with the given *title* and
+    /// *text,* as well as one, two, or three buttons. Returns the
+    /// number of the button that was clicked (0, 1 or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be used.
+    /// *button1Text* is the text of the second button, and is optional,
+    /// and *button2Text* is the text of the third button, and is
+    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
+    /// default button; pressing Return or Enter is the same as clicking
+    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
+    /// Escape is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
+    [static] critical(parent: *WidgetType, title: String, text: String, buttons: MessageBox::StandardButtons, default_button: MessageBox::StandardButton) -> MessageBox::StandardButton,
+    /// 
+    /// Displays a simple about box with title *title* and text *text.* The about box's parent is *parent.*
+    /// 
+    /// about() looks for a suitable icon in four locations:
+    /// 
+    /// * It prefers [parent->icon()](QWidget::windowIcon())
+    /// if that exists.
+    /// * If not, it tries the top-level widget containing *parent.*
+    /// * If that fails, it tries the [active window.](QApplication::activeWindow())
+    /// 
+    /// * As a last resort it uses the Information icon.
+    /// 
+    /// The about box has a single button labelled . On MacOS , the
+    /// about box is popped up as a modeless window; on other platforms,
+    /// it is currently application modal.
+    /// 
+    /// **See also:** [`Widget::window_icon`]
+    /// [`Application::active_window`]
+    /// 
+    /// Displays a simple message box about Qt, with the given *title*
+    /// and centered over *parent* (if *parent* is not 0). The message
+    /// includes the version number of Qt being used by the application.
+    /// 
+    /// This is useful for inclusion in the **Help** menu of an application,
+    /// as shown in the [Menus](mainwindows/menus)
+    /// example.
+    /// 
+    /// QApplication provides this functionality as a slot.
+    /// 
+    /// On MacOS , the about box is popped up as a modeless window; on
+    /// other platforms, it is currently application modal.
+    /// 
+    /// **See also:** [`Application::about_qt`]
+    [static] about(parent: *WidgetType, title: String, text: String),
+    /// 
+    /// Displays a simple message box about Qt, with the given *title*
+    /// and centered over *parent* (if *parent* is not 0). The message
+    /// includes the version number of Qt being used by the application.
+    /// 
+    /// This is useful for inclusion in the **Help** menu of an application,
+    /// as shown in the [Menus](mainwindows/menus)
+    /// example.
+    /// 
+    /// QApplication provides this functionality as a slot.
+    /// 
+    /// On MacOS , the about box is popped up as a modeless window; on
+    /// other platforms, it is currently application modal.
+    /// 
+    /// **See also:** [`Application::about_qt`]
+    [static] about_qt(parent: *WidgetType, title: String),
+    /// 
+    /// Opens an information message box with the given *title* and
+    /// *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box.
+    /// *defaultButton* specifies the button used when **Enter** is pressed.
+    /// *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// Opens an information message box with the given *title* and the
+    /// *text.* The dialog may have up to three buttons. Each of the
+    /// buttons, *button0,* *button1* and *button2* may be set to one
+    /// of the following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// **Overloads**
+    /// Displays an information message box with the given *title* and
+    /// *text,* as well as one, two or three buttons. Returns the index
+    /// of the button that was clicked (0, 1 or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be
+    /// used. *button1Text* is the text of the second button, and is
+    /// optional. *button2Text* is the text of the third button, and is
+    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
+    /// default button; pressing Return or Enter is the same as clicking
+    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the escape button; pressing
+    /// **Esc** is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1 or 2 to make pressing **Esc** equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [org_name(information)]
+    [static] information_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
+    /// 
+    /// Opens an information message box with the given *title* and
+    /// *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box.
+    /// *defaultButton* specifies the button used when **Enter** is pressed.
+    /// *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// Opens an information message box with the given *title* and the
+    /// *text.* The dialog may have up to three buttons. Each of the
+    /// buttons, *button0,* *button1* and *button2* may be set to one
+    /// of the following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// **Overloads**
+    /// Displays an information message box with the given *title* and
+    /// *text,* as well as one, two or three buttons. Returns the index
+    /// of the button that was clicked (0, 1 or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be
+    /// used. *button1Text* is the text of the second button, and is
+    /// optional. *button2Text* is the text of the third button, and is
+    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
+    /// default button; pressing Return or Enter is the same as clicking
+    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the escape button; pressing
+    /// **Esc** is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1 or 2 to make pressing **Esc** equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [org_name(information)]
+    [static] information_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
+    /// 
+    /// Opens an information message box with the given *title* and
+    /// *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box.
+    /// *defaultButton* specifies the button used when **Enter** is pressed.
+    /// *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// Opens an information message box with the given *title* and the
+    /// *text.* The dialog may have up to three buttons. Each of the
+    /// buttons, *button0,* *button1* and *button2* may be set to one
+    /// of the following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// **Overloads**
+    /// Displays an information message box with the given *title* and
+    /// *text,* as well as one, two or three buttons. Returns the index
+    /// of the button that was clicked (0, 1 or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be
+    /// used. *button1Text* is the text of the second button, and is
+    /// optional. *button2Text* is the text of the third button, and is
+    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
+    /// default button; pressing Return or Enter is the same as clicking
+    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the escape button; pressing
+    /// **Esc** is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1 or 2 to make pressing **Esc** equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [org_name(information)]
+    [static] information_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> MessageBox::StandardButton,
+    /// 
+    /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
+    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// Opens a question message box with the given *title* and *text.*
+    /// The dialog may have up to three buttons. Each of the buttons, *button0,* *button1* and *button2* may be set to one of the
+    /// following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Yes, or QMessageBox::No, etc.)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// **Overloads**
+    /// Displays a question message box with the given *title* and *text,* as well as one, two or three buttons. Returns the index of
+    /// the button that was clicked (0, 1 or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be used.
+    /// *button1Text* is the text of the second button, and is optional.
+    /// *button2Text* is the text of the third button, and is optional.
+    /// *defaultButtonNumber* (0, 1 or 2) is the index of the default
+    /// button; pressing Return or Enter is the same as clicking the
+    /// default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
+    /// Escape is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1 or 2 to make pressing Escape equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [org_name(question)]
+    [static] question_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
+    /// 
+    /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
+    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// Opens a question message box with the given *title* and *text.*
+    /// The dialog may have up to three buttons. Each of the buttons, *button0,* *button1* and *button2* may be set to one of the
+    /// following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Yes, or QMessageBox::No, etc.)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// **Overloads**
+    /// Displays a question message box with the given *title* and *text,* as well as one, two or three buttons. Returns the index of
+    /// the button that was clicked (0, 1 or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be used.
+    /// *button1Text* is the text of the second button, and is optional.
+    /// *button2Text* is the text of the third button, and is optional.
+    /// *defaultButtonNumber* (0, 1 or 2) is the index of the default
+    /// button; pressing Return or Enter is the same as clicking the
+    /// default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
+    /// Escape is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1 or 2 to make pressing Escape equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [org_name(question)]
+    [static] question_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
+    /// 
+    /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
+    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// Opens a question message box with the given *title* and *text.*
+    /// The dialog may have up to three buttons. Each of the buttons, *button0,* *button1* and *button2* may be set to one of the
+    /// following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Yes, or QMessageBox::No, etc.)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    /// 
+    /// **Overloads**
+    /// Displays a question message box with the given *title* and *text,* as well as one, two or three buttons. Returns the index of
+    /// the button that was clicked (0, 1 or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be used.
+    /// *button1Text* is the text of the second button, and is optional.
+    /// *button2Text* is the text of the third button, and is optional.
+    /// *defaultButtonNumber* (0, 1 or 2) is the index of the default
+    /// button; pressing Return or Enter is the same as clicking the
+    /// default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
+    /// Escape is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1 or 2 to make pressing Escape equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [org_name(question)]
+    [static] question_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
+    /// 
+    /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
+    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`information()`]
+    /// [`critical()`]
+    /// 
+    /// Opens a warning message box with the given *title* and *text.*
+    /// The dialog may have up to three buttons. Each of the button
+    /// parameters, *button0,* *button1* and *button2* may be set to
+    /// one of the following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Ok or QMessageBox::No or ...)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
+    /// 
+    /// **Overloads**
+    /// Displays a warning message box with the given *title* and *text,* as well as one, two, or three buttons. Returns the number
+    /// of the button that was clicked (0, 1, or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be used.
+    /// *button1Text* is the text of the second button, and is optional,
+    /// and *button2Text* is the text of the third button, and is
+    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
+    /// default button; pressing Return or Enter is the same as clicking
+    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
+    /// Escape is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
+    [org_name(warning)]
+    [static] warning_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
+    /// 
+    /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
+    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`information()`]
+    /// [`critical()`]
+    /// 
+    /// Opens a warning message box with the given *title* and *text.*
+    /// The dialog may have up to three buttons. Each of the button
+    /// parameters, *button0,* *button1* and *button2* may be set to
+    /// one of the following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Ok or QMessageBox::No or ...)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
+    /// 
+    /// **Overloads**
+    /// Displays a warning message box with the given *title* and *text,* as well as one, two, or three buttons. Returns the number
+    /// of the button that was clicked (0, 1, or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be used.
+    /// *button1Text* is the text of the second button, and is optional,
+    /// and *button2Text* is the text of the third button, and is
+    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
+    /// default button; pressing Return or Enter is the same as clicking
+    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
+    /// Escape is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
+    [org_name(warning)]
+    [static] warning_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
+    /// 
+    /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
+    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`information()`]
+    /// [`critical()`]
+    /// 
+    /// Opens a warning message box with the given *title* and *text.*
+    /// The dialog may have up to three buttons. Each of the button
+    /// parameters, *button0,* *button1* and *button2* may be set to
+    /// one of the following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Ok or QMessageBox::No or ...)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
+    /// 
+    /// **Overloads**
+    /// Displays a warning message box with the given *title* and *text,* as well as one, two, or three buttons. Returns the number
+    /// of the button that was clicked (0, 1, or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be used.
+    /// *button1Text* is the text of the second button, and is optional,
+    /// and *button2Text* is the text of the third button, and is
+    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
+    /// default button; pressing Return or Enter is the same as clicking
+    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
+    /// Escape is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
+    [org_name(warning)]
+    [static] warning_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
+    /// 
+    /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
+    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`information()`]
+    /// 
+    /// Opens a critical message box with the given *title* and *text.*
+    /// The dialog may have up to three buttons. Each of the button
+    /// parameters, *button0,* *button1* and *button2* may be set to
+    /// one of the following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
+    /// 
+    /// **Overloads**
+    /// Displays a critical error message box with the given *title* and
+    /// *text,* as well as one, two, or three buttons. Returns the
+    /// number of the button that was clicked (0, 1 or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be used.
+    /// *button1Text* is the text of the second button, and is optional,
+    /// and *button2Text* is the text of the third button, and is
+    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
+    /// default button; pressing Return or Enter is the same as clicking
+    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
+    /// Escape is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
+    [org_name(critical)]
+    [static] critical_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
+    /// 
+    /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
+    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`information()`]
+    /// 
+    /// Opens a critical message box with the given *title* and *text.*
+    /// The dialog may have up to three buttons. Each of the button
+    /// parameters, *button0,* *button1* and *button2* may be set to
+    /// one of the following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
+    /// 
+    /// **Overloads**
+    /// Displays a critical error message box with the given *title* and
+    /// *text,* as well as one, two, or three buttons. Returns the
+    /// number of the button that was clicked (0, 1 or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be used.
+    /// *button1Text* is the text of the second button, and is optional,
+    /// and *button2Text* is the text of the third button, and is
+    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
+    /// default button; pressing Return or Enter is the same as clicking
+    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
+    /// Escape is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
+    [org_name(critical)]
+    [static] critical_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
+    /// 
+    /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
+    /// 
+    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
+    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
+    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
+    /// chooses a suitable default automatically.
+    /// 
+    /// Returns the identity of the standard button that was clicked. If
+    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
+    /// is returned.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`information()`]
+    /// 
+    /// Opens a critical message box with the given *title* and *text.*
+    /// The dialog may have up to three buttons. Each of the button
+    /// parameters, *button0,* *button1* and *button2* may be set to
+    /// one of the following values:
+    /// 
+    /// * QMessageBox::NoButton
+    /// * QMessageBox::Ok
+    /// * QMessageBox::Cancel
+    /// * QMessageBox::Yes
+    /// * QMessageBox::No
+    /// * QMessageBox::Abort
+    /// * QMessageBox::Retry
+    /// * QMessageBox::Ignore
+    /// * QMessageBox::YesAll
+    /// * QMessageBox::NoAll
+    /// 
+    /// If you don't want all three buttons, set the last button, or last
+    /// two buttons to QMessageBox::NoButton.
+    /// 
+    /// One button can be OR-ed with QMessageBox::Default, and one
+    /// button can be OR-ed with QMessageBox::Escape.
+    /// 
+    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
+    /// of the button that was clicked.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
+    /// 
+    /// **Overloads**
+    /// Displays a critical error message box with the given *title* and
+    /// *text,* as well as one, two, or three buttons. Returns the
+    /// number of the button that was clicked (0, 1 or 2).
+    /// 
+    /// *button0Text* is the text of the first button, and is optional.
+    /// If *button0Text* is not supplied, (translated) will be used.
+    /// *button1Text* is the text of the second button, and is optional,
+    /// and *button2Text* is the text of the third button, and is
+    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
+    /// default button; pressing Return or Enter is the same as clicking
+    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
+    /// Escape is the same as clicking this button. It defaults to -1;
+    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
+    /// the relevant button.
+    /// 
+    /// The message box is an [application modal](Qt::ApplicationModal)
+    /// 
+    /// dialog box.
+    /// 
+    /// **Warning**: Do not delete *parent* during the execution of the dialog.
+    /// If you want to do this, you should create the dialog
+    /// yourself using one of the QMessageBox constructors.
+    /// 
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
+    [org_name(critical)]
+    [static] critical_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
+    /// 
+    /// Returns the text of the message box button *button,* or
+    /// an empty string if the message box does not contain the button.
+    /// 
+    /// Use button() and QPushButton::text() instead.
+    button_text(button: i32) -> String,
+    /// 
+    /// Sets the text of the message box button *button* to *text.*
+    /// Setting the text of a button that is not in the message box is
+    /// silently ignored.
+    /// 
+    /// Use addButton() instead.
+    set_button_text(button: i32, text: String),
+    /// 
+    /// Infromative text can be used to expand upon the text() to give more
+    /// information to the user. On the Mac, this text appears in small
+    /// system font below the text(). On other platforms, it is simply
+    /// appended to the existing text.
+    /// 
+    /// By default, this property contains an empty string.
+    /// 
+    /// **See also:** [`MessageBox::text()`]
+    /// [`MessageBox::detailed_text()`]
+    informative_text() -> String,
+    set_informative_text(text: String),
+    /// 
+    /// The text will be interpreted as a plain text.
+    /// 
+    /// By default, this property contains an empty string.
+    /// 
+    /// **See also:** [`MessageBox::text()`]
+    /// [`MessageBox::informative_text()`]
+    detailed_text() -> String,
+    set_detailed_text(text: String),
+    /// 
+    /// This function shadows QWidget::setWindowTitle().
+    /// 
+    /// Sets the title of the message box to *title.* On MacOS ,
+    /// the window title is ignored (as required by the MacOS
+    /// Guidelines).
+    set_window_title(title: String),
+    /// 
+    /// This function shadows QWidget::setWindowModality().
+    /// 
+    /// Sets the modality of the message box to *windowModality.*
+    /// 
+    /// On MacOS , if the modality is set to Qt::WindowModal and the message box
+    /// has a parent, then the message box will be a Qt::Sheet, otherwise the
+    /// message box will be a standard dialog.
+    set_window_modality(window_modality: Rute::WindowModality),
+    /// 
+    /// Returns the pixmap used for a standard icon. This allows the
+    /// pixmaps to be used in more complex message boxes. *icon*
+    /// specifies the required icon, e.g. QMessageBox::Question,
+    /// QMessageBox::Information, QMessageBox::Warning or
+    /// QMessageBox::Critical.
+    /// 
+    /// Call QStyle::standardIcon() with QStyle::SP_MessageBoxInformation etc.
+    /// instead.
+    [static] standard_icon(icon: MessageBox::Icon) -> Pixmap,
+    /// 
+    /// This signal is emitted whenever a button is clicked inside the QMessageBox.
+    /// The button that was clicked in returned in *button.*
+    [signal] button_clicked(button: *AbstractButtonType),
+    /// 
+    [event] event(e: *EventType) -> bool,
+    /// 
+    [event] resize_event(event: *ResizeEventType),
+    /// 
+    [event] show_event(event: *ShowEventType),
+    /// 
+    [event] close_event(event: *CloseEventType),
+    /// 
+    [event] key_press_event(event: *KeyEventType),
+    /// 
+    [event] change_event(event: *EventType),
+}
+
 [org_name(QMessageBox)]
 enum Icon {
     NoIcon,
@@ -280,1875 +2165,6 @@ enum StandardButton {
     Escape,
     FlagMask,
     ButtonMask,
-}
-
-struct MessageBox : Dialog {
-    /// 
-    /// Adds the given *button* to the message box with the specified *role.*
-    /// 
-    /// **See also:** removeButton()
-    /// button()
-    /// setStandardButtons()
-    /// 
-    /// **Overloads**
-    /// Creates a button with the given *text,* adds it to the message box for the
-    /// specified *role,* and returns it.
-    /// 
-    /// **Overloads**
-    /// Adds a standard *button* to the message box if it is valid to do so, and
-    /// returns the push button.
-    /// 
-    /// **See also:** setStandardButtons()
-    add_button(button: *AbstractButtonType, role: MessageBox::ButtonRole),
-    /// 
-    /// Adds the given *button* to the message box with the specified *role.*
-    /// 
-    /// **See also:** removeButton()
-    /// button()
-    /// setStandardButtons()
-    /// 
-    /// **Overloads**
-    /// Creates a button with the given *text,* adds it to the message box for the
-    /// specified *role,* and returns it.
-    /// 
-    /// **Overloads**
-    /// Adds a standard *button* to the message box if it is valid to do so, and
-    /// returns the push button.
-    /// 
-    /// **See also:** setStandardButtons()
-    add_button_2(text: String, role: MessageBox::ButtonRole) -> PushButton?,
-    /// 
-    /// Adds the given *button* to the message box with the specified *role.*
-    /// 
-    /// **See also:** removeButton()
-    /// button()
-    /// setStandardButtons()
-    /// 
-    /// **Overloads**
-    /// Creates a button with the given *text,* adds it to the message box for the
-    /// specified *role,* and returns it.
-    /// 
-    /// **Overloads**
-    /// Adds a standard *button* to the message box if it is valid to do so, and
-    /// returns the push button.
-    /// 
-    /// **See also:** setStandardButtons()
-    add_button_3(button: MessageBox::StandardButton) -> PushButton?,
-    /// 
-    /// Removes *button* from the button box without deleting it.
-    /// 
-    /// **See also:** addButton()
-    /// setStandardButtons()
-    remove_button(button: *AbstractButtonType),
-    /// 
-    /// **Overloads**
-    /// Opens the dialog and connects its finished() or buttonClicked() signal to
-    /// the slot specified by *receiver* and *member.* If the slot in *member*
-    /// has a pointer for its first parameter the connection is to buttonClicked(),
-    /// otherwise the connection is to finished().
-    /// 
-    /// The signal will be disconnected from the slot when the dialog is closed.
-    open(receiver: *ObjectType, member: *char),
-    /// 
-    /// Returns a list of all the buttons that have been added to the message box.
-    /// 
-    /// **See also:** buttonRole()
-    /// addButton()
-    /// removeButton()
-    buttons() -> [AbstractButton?],
-    /// 
-    /// Returns the button role for the specified *button.* This function returns
-    /// [InvalidRole](InvalidRole)
-    /// if *button* is 0 or has not been added to the message box.
-    /// 
-    /// **See also:** buttons()
-    /// addButton()
-    button_role(button: *AbstractButtonType) -> MessageBox::ButtonRole,
-    set_standard_buttons(buttons: MessageBox::StandardButtons),
-    /// 
-    /// This property controls which standard buttons are used by the message box.
-    /// 
-    /// By default, this property contains no standard buttons.
-    /// 
-    /// **See also:** addButton()
-    standard_buttons() -> MessageBox::StandardButtons,
-    /// 
-    /// This property controls which standard buttons are used by the message box.
-    /// 
-    /// By default, this property contains no standard buttons.
-    /// 
-    /// **See also:** addButton()
-    /// 
-    /// Returns the standard button enum value corresponding to the given *button,*
-    /// or NoButton if the given *button* isn't a standard button.
-    /// 
-    /// **See also:** button()
-    /// standardButtons()
-    standard_button(button: *AbstractButtonType) -> MessageBox::StandardButton,
-    /// 
-    /// This signal is emitted whenever a button is clicked inside the QMessageBox.
-    /// The button that was clicked in returned in *button.*
-    /// 
-    /// Returns a pointer corresponding to the standard button *which,*
-    /// or 0 if the standard button doesn't exist in this message box.
-    /// 
-    /// **See also:** standardButtons
-    /// standardButton()
-    /// 
-    /// Returns a list of all the buttons that have been added to the message box.
-    /// 
-    /// **See also:** buttonRole()
-    /// addButton()
-    /// removeButton()
-    /// 
-    /// Returns the button role for the specified *button.* This function returns
-    /// [InvalidRole](InvalidRole)
-    /// if *button* is 0 or has not been added to the message box.
-    /// 
-    /// **See also:** buttons()
-    /// addButton()
-    /// 
-    /// Returns the text of the message box button *button,* or
-    /// an empty string if the message box does not contain the button.
-    /// 
-    /// Use button() and QPushButton::text() instead.
-    button(which: MessageBox::StandardButton) -> AbstractButton?,
-    /// 
-    /// Returns the button that should be the message box's
-    /// [default button](QPushButton::setDefault())
-    /// . Returns 0
-    /// if no default button was set.
-    /// 
-    /// **See also:** addButton()
-    /// QPushButton::setDefault()
-    default_button() -> PushButton?,
-    /// 
-    /// Sets the message box's [default button](QPushButton::setDefault())
-    /// 
-    /// to *button.*
-    /// 
-    /// **See also:** addButton()
-    /// QPushButton::setDefault()
-    /// 
-    /// Sets the message box's [default button](QPushButton::setDefault())
-    /// 
-    /// to *button.*
-    /// 
-    /// **See also:** addButton()
-    /// QPushButton::setDefault()
-    set_default_button(button: *PushButtonType),
-    /// 
-    /// Sets the message box's [default button](QPushButton::setDefault())
-    /// 
-    /// to *button.*
-    /// 
-    /// **See also:** addButton()
-    /// QPushButton::setDefault()
-    /// 
-    /// Sets the message box's [default button](QPushButton::setDefault())
-    /// 
-    /// to *button.*
-    /// 
-    /// **See also:** addButton()
-    /// QPushButton::setDefault()
-    set_default_button_2(button: MessageBox::StandardButton),
-    /// 
-    /// Returns the button that is activated when escape is pressed.
-    /// 
-    /// By default, QMessageBox attempts to automatically detect an
-    /// escape button as follows:
-    /// 
-    /// * If there is only one button, it is made the escape button.
-    /// * If there is a [Cancel](Cancel)
-    /// button, it is made the escape button.
-    /// * On MacOS only, if there is exactly one button with the role QMessageBox::RejectRole, it is made the escape button.
-    /// 
-    /// When an escape button could not be automatically detected, pressing
-    /// **Esc** has no effect.
-    /// 
-    /// **See also:** addButton()
-    escape_button() -> AbstractButton?,
-    /// 
-    /// Sets the button that gets activated when the **Escape** key is
-    /// pressed to *button.*
-    /// 
-    /// **See also:** addButton()
-    /// clickedButton()
-    /// 
-    /// Sets the buttons that gets activated when the **Escape** key is
-    /// pressed to *button.*
-    /// 
-    /// **See also:** addButton()
-    /// clickedButton()
-    set_escape_button(button: *AbstractButtonType),
-    /// 
-    /// Sets the button that gets activated when the **Escape** key is
-    /// pressed to *button.*
-    /// 
-    /// **See also:** addButton()
-    /// clickedButton()
-    /// 
-    /// Sets the buttons that gets activated when the **Escape** key is
-    /// pressed to *button.*
-    /// 
-    /// **See also:** addButton()
-    /// clickedButton()
-    set_escape_button_2(button: MessageBox::StandardButton),
-    /// 
-    /// Returns the button that was clicked by the user,
-    /// or 0 if the user hit the **Esc** key and
-    /// no [escape button](setEscapeButton())
-    /// was set.
-    /// 
-    /// If exec() hasn't been called yet, returns 0.
-    /// 
-    /// Example:
-    /// 
-    /// **See also:** standardButton()
-    /// button()
-    clicked_button() -> AbstractButton?,
-    /// 
-    /// The text will be interpreted either as a plain text or as rich text,
-    /// depending on the text format setting ( [QMessageBox::textFormat).](QMessageBox::textFormat).)
-    /// 
-    /// The default setting is Qt::AutoText, i.e., the message box will try
-    /// to auto-detect the format of the text.
-    /// 
-    /// The default value of this property is an empty string.
-    /// 
-    /// **See also:** textFormat
-    /// QMessageBox::informativeText
-    /// QMessageBox::detailedText
-    /// 
-    /// The current text format used by the message box. See the [Qt::TextFormat](Qt::TextFormat)
-    /// enum for an explanation of the possible options.
-    /// 
-    /// The default format is Qt::AutoText.
-    /// 
-    /// **See also:** setText()
-    /// 
-    /// Specifies how the label of the message box should interact with user
-    /// input.
-    /// 
-    /// The default value depends on the style.
-    /// 
-    /// **See also:** QStyle::SH_MessageBox_TextInteractionFlags
-    text() -> String,
-    set_text(text: String),
-    /// 
-    /// The icon of the message box can be specified with one of the
-    /// values:
-    /// 
-    /// * QMessageBox::NoIcon
-    /// * QMessageBox::Question
-    /// * QMessageBox::Information
-    /// * QMessageBox::Warning
-    /// * QMessageBox::Critical
-    /// 
-    /// The default is QMessageBox::NoIcon.
-    /// 
-    /// The pixmap used to display the actual icon depends on the current
-    /// [GUI style](QWidget::style())
-    /// . You can also set a custom pixmap
-    /// for the icon by setting the [icon
-    /// pixmap](QMessageBox::iconPixmap)
-    /// property.
-    /// 
-    /// **See also:** iconPixmap
-    /// 
-    /// The icon currently used by the message box. Note that it's often
-    /// hard to draw one pixmap that looks appropriate in all GUI styles;
-    /// you may want to supply a different pixmap for each platform.
-    /// 
-    /// By default, this property is undefined.
-    /// 
-    /// **See also:** icon
-    icon() -> MessageBox::Icon,
-    set_icon(arg0: MessageBox::Icon),
-    /// 
-    /// The icon currently used by the message box. Note that it's often
-    /// hard to draw one pixmap that looks appropriate in all GUI styles;
-    /// you may want to supply a different pixmap for each platform.
-    /// 
-    /// By default, this property is undefined.
-    /// 
-    /// **See also:** icon
-    icon_pixmap() -> Pixmap,
-    set_icon_pixmap(pixmap: &PixmapType),
-    /// 
-    /// The current text format used by the message box. See the [Qt::TextFormat](Qt::TextFormat)
-    /// enum for an explanation of the possible options.
-    /// 
-    /// The default format is Qt::AutoText.
-    /// 
-    /// **See also:** setText()
-    text_format() -> Rute::TextFormat,
-    set_text_format(format: Rute::TextFormat),
-    set_text_interaction_flags(flags: Rute::TextInteractionFlags),
-    /// 
-    /// Specifies how the label of the message box should interact with user
-    /// input.
-    /// 
-    /// The default value depends on the style.
-    /// 
-    /// **See also:** QStyle::SH_MessageBox_TextInteractionFlags
-    text_interaction_flags() -> Rute::TextInteractionFlags,
-    /// 
-    /// Sets the checkbox *cb* on the message dialog. The message box takes ownership of the checkbox.
-    /// The argument *cb* can be 0 to remove an existing checkbox from the message box.
-    /// 
-    /// **See also:** checkBox()
-    set_check_box(cb: *CheckBoxType),
-    /// 
-    /// Returns the checkbox shown on the dialog. This is 0 if no checkbox is set.
-    /// **See also:** setCheckBox()
-    check_box() -> CheckBox?,
-    /// 
-    /// Opens an information message box with the given *title* and
-    /// *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box.
-    /// *defaultButton* specifies the button used when **Enter** is pressed.
-    /// *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    /// 
-    /// Opens an information message box with the given *title* and the
-    /// *text.* The dialog may have up to three buttons. Each of the
-    /// buttons, *button0,* *button1* and *button2* may be set to one
-    /// of the following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    /// 
-    /// **Overloads**
-    /// Displays an information message box with the given *title* and
-    /// *text,* as well as one, two or three buttons. Returns the index
-    /// of the button that was clicked (0, 1 or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be
-    /// used. *button1Text* is the text of the second button, and is
-    /// optional. *button2Text* is the text of the third button, and is
-    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
-    /// default button; pressing Return or Enter is the same as clicking
-    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the escape button; pressing
-    /// **Esc** is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1 or 2 to make pressing **Esc** equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    [static] information(parent: *WidgetType, title: String, text: String, buttons: MessageBox::StandardButtons, default_button: MessageBox::StandardButton) -> MessageBox::StandardButton,
-    /// 
-    /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
-    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    /// 
-    /// Opens a question message box with the given *title* and *text.*
-    /// The dialog may have up to three buttons. Each of the buttons, *button0,* *button1* and *button2* may be set to one of the
-    /// following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Yes, or QMessageBox::No, etc.)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    /// 
-    /// **Overloads**
-    /// Displays a question message box with the given *title* and *text,* as well as one, two or three buttons. Returns the index of
-    /// the button that was clicked (0, 1 or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be used.
-    /// *button1Text* is the text of the second button, and is optional.
-    /// *button2Text* is the text of the third button, and is optional.
-    /// *defaultButtonNumber* (0, 1 or 2) is the index of the default
-    /// button; pressing Return or Enter is the same as clicking the
-    /// default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
-    /// Escape is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1 or 2 to make pressing Escape equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    [static] question(parent: *WidgetType, title: String, text: String, buttons: MessageBox::StandardButtons, default_button: MessageBox::StandardButton) -> MessageBox::StandardButton,
-    /// 
-    /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
-    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// information()
-    /// critical()
-    /// 
-    /// Opens a warning message box with the given *title* and *text.*
-    /// The dialog may have up to three buttons. Each of the button
-    /// parameters, *button0,* *button1* and *button2* may be set to
-    /// one of the following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Ok or QMessageBox::No or ...)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
-    /// 
-    /// **Overloads**
-    /// Displays a warning message box with the given *title* and *text,* as well as one, two, or three buttons. Returns the number
-    /// of the button that was clicked (0, 1, or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be used.
-    /// *button1Text* is the text of the second button, and is optional,
-    /// and *button2Text* is the text of the third button, and is
-    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
-    /// default button; pressing Return or Enter is the same as clicking
-    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
-    /// Escape is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
-    [static] warning(parent: *WidgetType, title: String, text: String, buttons: MessageBox::StandardButtons, default_button: MessageBox::StandardButton) -> MessageBox::StandardButton,
-    /// 
-    /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
-    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// information()
-    /// 
-    /// Opens a critical message box with the given *title* and *text.*
-    /// The dialog may have up to three buttons. Each of the button
-    /// parameters, *button0,* *button1* and *button2* may be set to
-    /// one of the following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
-    /// 
-    /// **Overloads**
-    /// Displays a critical error message box with the given *title* and
-    /// *text,* as well as one, two, or three buttons. Returns the
-    /// number of the button that was clicked (0, 1 or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be used.
-    /// *button1Text* is the text of the second button, and is optional,
-    /// and *button2Text* is the text of the third button, and is
-    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
-    /// default button; pressing Return or Enter is the same as clicking
-    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
-    /// Escape is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
-    [static] critical(parent: *WidgetType, title: String, text: String, buttons: MessageBox::StandardButtons, default_button: MessageBox::StandardButton) -> MessageBox::StandardButton,
-    /// 
-    /// Displays a simple about box with title *title* and text *text.* The about box's parent is *parent.*
-    /// 
-    /// about() looks for a suitable icon in four locations:
-    /// 
-    /// * It prefers [parent->icon()](QWidget::windowIcon())
-    /// if that exists.
-    /// * If not, it tries the top-level widget containing *parent.*
-    /// * If that fails, it tries the [active window.](QApplication::activeWindow())
-    /// 
-    /// * As a last resort it uses the Information icon.
-    /// 
-    /// The about box has a single button labelled . On MacOS , the
-    /// about box is popped up as a modeless window; on other platforms,
-    /// it is currently application modal.
-    /// 
-    /// **See also:** QWidget::windowIcon()
-    /// QApplication::activeWindow()
-    /// 
-    /// Displays a simple message box about Qt, with the given *title*
-    /// and centered over *parent* (if *parent* is not 0). The message
-    /// includes the version number of Qt being used by the application.
-    /// 
-    /// This is useful for inclusion in the **Help** menu of an application,
-    /// as shown in the [Menus](mainwindows/menus)
-    /// example.
-    /// 
-    /// QApplication provides this functionality as a slot.
-    /// 
-    /// On MacOS , the about box is popped up as a modeless window; on
-    /// other platforms, it is currently application modal.
-    /// 
-    /// **See also:** QApplication::aboutQt()
-    [static] about(parent: *WidgetType, title: String, text: String),
-    /// 
-    /// Displays a simple message box about Qt, with the given *title*
-    /// and centered over *parent* (if *parent* is not 0). The message
-    /// includes the version number of Qt being used by the application.
-    /// 
-    /// This is useful for inclusion in the **Help** menu of an application,
-    /// as shown in the [Menus](mainwindows/menus)
-    /// example.
-    /// 
-    /// QApplication provides this functionality as a slot.
-    /// 
-    /// On MacOS , the about box is popped up as a modeless window; on
-    /// other platforms, it is currently application modal.
-    /// 
-    /// **See also:** QApplication::aboutQt()
-    [static] about_qt(parent: *WidgetType, title: String),
-    /// 
-    /// Opens an information message box with the given *title* and
-    /// *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box.
-    /// *defaultButton* specifies the button used when **Enter** is pressed.
-    /// *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    /// 
-    /// Opens an information message box with the given *title* and the
-    /// *text.* The dialog may have up to three buttons. Each of the
-    /// buttons, *button0,* *button1* and *button2* may be set to one
-    /// of the following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    /// 
-    /// **Overloads**
-    /// Displays an information message box with the given *title* and
-    /// *text,* as well as one, two or three buttons. Returns the index
-    /// of the button that was clicked (0, 1 or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be
-    /// used. *button1Text* is the text of the second button, and is
-    /// optional. *button2Text* is the text of the third button, and is
-    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
-    /// default button; pressing Return or Enter is the same as clicking
-    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the escape button; pressing
-    /// **Esc** is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1 or 2 to make pressing **Esc** equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    [static] information_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
-    /// 
-    /// Opens an information message box with the given *title* and
-    /// *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box.
-    /// *defaultButton* specifies the button used when **Enter** is pressed.
-    /// *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    /// 
-    /// Opens an information message box with the given *title* and the
-    /// *text.* The dialog may have up to three buttons. Each of the
-    /// buttons, *button0,* *button1* and *button2* may be set to one
-    /// of the following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    /// 
-    /// **Overloads**
-    /// Displays an information message box with the given *title* and
-    /// *text,* as well as one, two or three buttons. Returns the index
-    /// of the button that was clicked (0, 1 or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be
-    /// used. *button1Text* is the text of the second button, and is
-    /// optional. *button2Text* is the text of the third button, and is
-    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
-    /// default button; pressing Return or Enter is the same as clicking
-    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the escape button; pressing
-    /// **Esc** is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1 or 2 to make pressing **Esc** equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    [static] information_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
-    /// 
-    /// Opens an information message box with the given *title* and
-    /// *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box.
-    /// *defaultButton* specifies the button used when **Enter** is pressed.
-    /// *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    /// 
-    /// Opens an information message box with the given *title* and the
-    /// *text.* The dialog may have up to three buttons. Each of the
-    /// buttons, *button0,* *button1* and *button2* may be set to one
-    /// of the following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    /// 
-    /// **Overloads**
-    /// Displays an information message box with the given *title* and
-    /// *text,* as well as one, two or three buttons. Returns the index
-    /// of the button that was clicked (0, 1 or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be
-    /// used. *button1Text* is the text of the second button, and is
-    /// optional. *button2Text* is the text of the third button, and is
-    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
-    /// default button; pressing Return or Enter is the same as clicking
-    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the escape button; pressing
-    /// **Esc** is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1 or 2 to make pressing **Esc** equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    [static] information_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> MessageBox::StandardButton,
-    /// 
-    /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
-    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    /// 
-    /// Opens a question message box with the given *title* and *text.*
-    /// The dialog may have up to three buttons. Each of the buttons, *button0,* *button1* and *button2* may be set to one of the
-    /// following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Yes, or QMessageBox::No, etc.)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    /// 
-    /// **Overloads**
-    /// Displays a question message box with the given *title* and *text,* as well as one, two or three buttons. Returns the index of
-    /// the button that was clicked (0, 1 or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be used.
-    /// *button1Text* is the text of the second button, and is optional.
-    /// *button2Text* is the text of the third button, and is optional.
-    /// *defaultButtonNumber* (0, 1 or 2) is the index of the default
-    /// button; pressing Return or Enter is the same as clicking the
-    /// default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
-    /// Escape is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1 or 2 to make pressing Escape equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    [static] question_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
-    /// 
-    /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
-    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    /// 
-    /// Opens a question message box with the given *title* and *text.*
-    /// The dialog may have up to three buttons. Each of the buttons, *button0,* *button1* and *button2* may be set to one of the
-    /// following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Yes, or QMessageBox::No, etc.)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    /// 
-    /// **Overloads**
-    /// Displays a question message box with the given *title* and *text,* as well as one, two or three buttons. Returns the index of
-    /// the button that was clicked (0, 1 or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be used.
-    /// *button1Text* is the text of the second button, and is optional.
-    /// *button2Text* is the text of the third button, and is optional.
-    /// *defaultButtonNumber* (0, 1 or 2) is the index of the default
-    /// button; pressing Return or Enter is the same as clicking the
-    /// default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
-    /// Escape is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1 or 2 to make pressing Escape equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    [static] question_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
-    /// 
-    /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
-    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    /// 
-    /// Opens a question message box with the given *title* and *text.*
-    /// The dialog may have up to three buttons. Each of the buttons, *button0,* *button1* and *button2* may be set to one of the
-    /// following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Yes, or QMessageBox::No, etc.)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    /// 
-    /// **Overloads**
-    /// Displays a question message box with the given *title* and *text,* as well as one, two or three buttons. Returns the index of
-    /// the button that was clicked (0, 1 or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be used.
-    /// *button1Text* is the text of the second button, and is optional.
-    /// *button2Text* is the text of the third button, and is optional.
-    /// *defaultButtonNumber* (0, 1 or 2) is the index of the default
-    /// button; pressing Return or Enter is the same as clicking the
-    /// default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
-    /// Escape is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1 or 2 to make pressing Escape equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    [static] question_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
-    /// 
-    /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
-    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// information()
-    /// critical()
-    /// 
-    /// Opens a warning message box with the given *title* and *text.*
-    /// The dialog may have up to three buttons. Each of the button
-    /// parameters, *button0,* *button1* and *button2* may be set to
-    /// one of the following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Ok or QMessageBox::No or ...)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
-    /// 
-    /// **Overloads**
-    /// Displays a warning message box with the given *title* and *text,* as well as one, two, or three buttons. Returns the number
-    /// of the button that was clicked (0, 1, or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be used.
-    /// *button1Text* is the text of the second button, and is optional,
-    /// and *button2Text* is the text of the third button, and is
-    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
-    /// default button; pressing Return or Enter is the same as clicking
-    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
-    /// Escape is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
-    [static] warning_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
-    /// 
-    /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
-    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// information()
-    /// critical()
-    /// 
-    /// Opens a warning message box with the given *title* and *text.*
-    /// The dialog may have up to three buttons. Each of the button
-    /// parameters, *button0,* *button1* and *button2* may be set to
-    /// one of the following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Ok or QMessageBox::No or ...)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
-    /// 
-    /// **Overloads**
-    /// Displays a warning message box with the given *title* and *text,* as well as one, two, or three buttons. Returns the number
-    /// of the button that was clicked (0, 1, or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be used.
-    /// *button1Text* is the text of the second button, and is optional,
-    /// and *button2Text* is the text of the third button, and is
-    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
-    /// default button; pressing Return or Enter is the same as clicking
-    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
-    /// Escape is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
-    [static] warning_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
-    /// 
-    /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
-    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// information()
-    /// critical()
-    /// 
-    /// Opens a warning message box with the given *title* and *text.*
-    /// The dialog may have up to three buttons. Each of the button
-    /// parameters, *button0,* *button1* and *button2* may be set to
-    /// one of the following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Ok or QMessageBox::No or ...)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
-    /// 
-    /// **Overloads**
-    /// Displays a warning message box with the given *title* and *text,* as well as one, two, or three buttons. Returns the number
-    /// of the button that was clicked (0, 1, or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be used.
-    /// *button1Text* is the text of the second button, and is optional,
-    /// and *button2Text* is the text of the third button, and is
-    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
-    /// default button; pressing Return or Enter is the same as clicking
-    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
-    /// Escape is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
-    [static] warning_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
-    /// 
-    /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
-    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// information()
-    /// 
-    /// Opens a critical message box with the given *title* and *text.*
-    /// The dialog may have up to three buttons. Each of the button
-    /// parameters, *button0,* *button1* and *button2* may be set to
-    /// one of the following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
-    /// 
-    /// **Overloads**
-    /// Displays a critical error message box with the given *title* and
-    /// *text,* as well as one, two, or three buttons. Returns the
-    /// number of the button that was clicked (0, 1 or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be used.
-    /// *button1Text* is the text of the second button, and is optional,
-    /// and *button2Text* is the text of the third button, and is
-    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
-    /// default button; pressing Return or Enter is the same as clicking
-    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
-    /// Escape is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
-    [static] critical_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
-    /// 
-    /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
-    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// information()
-    /// 
-    /// Opens a critical message box with the given *title* and *text.*
-    /// The dialog may have up to three buttons. Each of the button
-    /// parameters, *button0,* *button1* and *button2* may be set to
-    /// one of the following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
-    /// 
-    /// **Overloads**
-    /// Displays a critical error message box with the given *title* and
-    /// *text,* as well as one, two, or three buttons. Returns the
-    /// number of the button that was clicked (0, 1 or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be used.
-    /// *button1Text* is the text of the second button, and is optional,
-    /// and *button2Text* is the text of the third button, and is
-    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
-    /// default button; pressing Return or Enter is the same as clicking
-    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
-    /// Escape is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
-    [static] critical_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
-    /// 
-    /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
-    /// 
-    /// The standard *buttons* are added to the message box. *defaultButton* specifies the button used when **Enter** is
-    /// pressed. *defaultButton* must refer to a button that was given in *buttons.*
-    /// If *defaultButton* is QMessageBox::NoButton, QMessageBox
-    /// chooses a suitable default automatically.
-    /// 
-    /// Returns the identity of the standard button that was clicked. If
-    /// **Esc** was pressed instead, the [escape button](Default%20and%20Escape%20Keys)
-    /// is returned.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** question()
-    /// warning()
-    /// information()
-    /// 
-    /// Opens a critical message box with the given *title* and *text.*
-    /// The dialog may have up to three buttons. Each of the button
-    /// parameters, *button0,* *button1* and *button2* may be set to
-    /// one of the following values:
-    /// 
-    /// * QMessageBox::NoButton
-    /// * QMessageBox::Ok
-    /// * QMessageBox::Cancel
-    /// * QMessageBox::Yes
-    /// * QMessageBox::No
-    /// * QMessageBox::Abort
-    /// * QMessageBox::Retry
-    /// * QMessageBox::Ignore
-    /// * QMessageBox::YesAll
-    /// * QMessageBox::NoAll
-    /// 
-    /// If you don't want all three buttons, set the last button, or last
-    /// two buttons to QMessageBox::NoButton.
-    /// 
-    /// One button can be OR-ed with QMessageBox::Default, and one
-    /// button can be OR-ed with QMessageBox::Escape.
-    /// 
-    /// Returns the identity (QMessageBox::Ok, or QMessageBox::No, etc.)
-    /// of the button that was clicked.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
-    /// 
-    /// **Overloads**
-    /// Displays a critical error message box with the given *title* and
-    /// *text,* as well as one, two, or three buttons. Returns the
-    /// number of the button that was clicked (0, 1 or 2).
-    /// 
-    /// *button0Text* is the text of the first button, and is optional.
-    /// If *button0Text* is not supplied, (translated) will be used.
-    /// *button1Text* is the text of the second button, and is optional,
-    /// and *button2Text* is the text of the third button, and is
-    /// optional. *defaultButtonNumber* (0, 1 or 2) is the index of the
-    /// default button; pressing Return or Enter is the same as clicking
-    /// the default button. It defaults to 0 (the first button). *escapeButtonNumber* is the index of the Escape button; pressing
-    /// Escape is the same as clicking this button. It defaults to -1;
-    /// supply 0, 1, or 2 to make pressing Escape equivalent to clicking
-    /// the relevant button.
-    /// 
-    /// The message box is an [application modal](Qt::ApplicationModal)
-    /// 
-    /// dialog box.
-    /// 
-    /// **Warning**: Do not delete *parent* during the execution of the dialog.
-    /// If you want to do this, you should create the dialog
-    /// yourself using one of the QMessageBox constructors.
-    /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
-    [static] critical_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
-    /// 
-    /// Returns the text of the message box button *button,* or
-    /// an empty string if the message box does not contain the button.
-    /// 
-    /// Use button() and QPushButton::text() instead.
-    button_text(button: i32) -> String,
-    /// 
-    /// Sets the text of the message box button *button* to *text.*
-    /// Setting the text of a button that is not in the message box is
-    /// silently ignored.
-    /// 
-    /// Use addButton() instead.
-    set_button_text(button: i32, text: String),
-    /// 
-    /// Infromative text can be used to expand upon the text() to give more
-    /// information to the user. On the Mac, this text appears in small
-    /// system font below the text(). On other platforms, it is simply
-    /// appended to the existing text.
-    /// 
-    /// By default, this property contains an empty string.
-    /// 
-    /// **See also:** QMessageBox::text
-    /// QMessageBox::detailedText
-    informative_text() -> String,
-    set_informative_text(text: String),
-    /// 
-    /// The text will be interpreted as a plain text.
-    /// 
-    /// By default, this property contains an empty string.
-    /// 
-    /// **See also:** QMessageBox::text
-    /// QMessageBox::informativeText
-    detailed_text() -> String,
-    set_detailed_text(text: String),
-    /// 
-    /// This function shadows QWidget::setWindowTitle().
-    /// 
-    /// Sets the title of the message box to *title.* On MacOS ,
-    /// the window title is ignored (as required by the MacOS
-    /// Guidelines).
-    set_window_title(title: String),
-    /// 
-    /// This function shadows QWidget::setWindowModality().
-    /// 
-    /// Sets the modality of the message box to *windowModality.*
-    /// 
-    /// On MacOS , if the modality is set to Qt::WindowModal and the message box
-    /// has a parent, then the message box will be a Qt::Sheet, otherwise the
-    /// message box will be a standard dialog.
-    set_window_modality(window_modality: Rute::WindowModality),
-    /// 
-    /// Returns the pixmap used for a standard icon. This allows the
-    /// pixmaps to be used in more complex message boxes. *icon*
-    /// specifies the required icon, e.g. QMessageBox::Question,
-    /// QMessageBox::Information, QMessageBox::Warning or
-    /// QMessageBox::Critical.
-    /// 
-    /// Call QStyle::standardIcon() with QStyle::SP_MessageBoxInformation etc.
-    /// instead.
-    [static] standard_icon(icon: MessageBox::Icon) -> Pixmap,
-    /// 
-    /// This signal is emitted whenever a button is clicked inside the QMessageBox.
-    /// The button that was clicked in returned in *button.*
-    [signal] button_clicked(button: *AbstractButtonType),
-    /// 
-    [event] event(e: *EventType) -> bool,
-    /// 
-    [event] resize_event(event: *ResizeEventType),
-    /// 
-    [event] show_event(event: *ShowEventType),
-    /// 
-    [event] close_event(event: *CloseEventType),
-    /// 
-    [event] key_press_event(event: *KeyEventType),
-    /// 
-    [event] change_event(event: *EventType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

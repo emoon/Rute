@@ -27,9 +27,9 @@
 /// QAbstractEventDispatcher also allows the integration of an
 /// external event loop with the Qt event loop.
 /// 
-/// **See also:** QEventLoop
-/// QCoreApplication
-/// QThread
+/// **See also:** [`EventLoop`]
+/// [`CoreApplication`]
+/// [`Thread`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -65,7 +65,7 @@ struct AbstractEventDispatcher : Object {
     /// **Note:** This function does not process events continuously; it
     /// returns after all available events are processed.
     /// 
-    /// **See also:** hasPendingEvents()
+    /// **See also:** [`has_pending_events()`]
     [event] process_events(flags: EventLoop::ProcessEventsFlags) -> bool,
     /// 
     /// Returns `true` if there is an event waiting; otherwise returns false. This
@@ -106,44 +106,45 @@ struct AbstractEventDispatcher : Object {
     /// given *object* and returns the timer id.
     /// 
     /// Register a timer with the specified *timerId,* *interval,* and *timerType* for the given *object.*
+    [org_name(registerTimer)]
     [event] register_timer_2(timer_id: i32, interval: i32, timer_type: Rute::TimerType, object: *ObjectType),
     /// 
     /// Unregisters the timer with the given *timerId.*
     /// Returns `true` if successful; otherwise returns `false.`
     /// 
-    /// **See also:** registerTimer()
-    /// unregisterTimers()
+    /// **See also:** [`register_timer()`]
+    /// [`unregister_timers()`]
     /// 
     /// Unregisters all the timers associated with the given *object.*
     /// Returns `true` if all timers were successful removed; otherwise returns `false.`
     /// 
-    /// **See also:** unregisterTimer()
-    /// registeredTimers()
+    /// **See also:** [`unregister_timer()`]
+    /// [`registered_timers()`]
     [event] unregister_timer(timer_id: i32) -> bool,
     /// 
     /// Unregisters all the timers associated with the given *object.*
     /// Returns `true` if all timers were successful removed; otherwise returns `false.`
     /// 
-    /// **See also:** unregisterTimer()
-    /// registeredTimers()
+    /// **See also:** [`unregister_timer()`]
+    /// [`registered_timers()`]
     [event] unregister_timers(object: *ObjectType) -> bool,
     /// 
     /// Returns a list of registered timers for *object.* The TimerInfo struct has
     /// `timerId,` `interval,` and `timerType` members.
     /// 
-    /// **See also:** Qt::TimerType
+    /// **See also:** [`t::timer_type()`]
     [event] registered_timers(object: *ObjectType) -> List<QAbstractEventDispatcher::TimerInfo>,
     /// 
     /// Returns the remaining time in milliseconds with the given *timerId.*
     /// If the timer is inactive, the returned value will be -1. If the timer is
     /// overdue, the returned value will be 0.
     /// 
-    /// **See also:** Qt::TimerType
+    /// **See also:** [`t::timer_type()`]
     [event] remaining_time(timer_id: i32) -> i32,
     /// 
     /// Wakes up the event loop.
     /// 
-    /// **See also:** awake()
+    /// **See also:** [`awake()`]
     [event] wake_up(),
     /// 
     /// Interrupts event dispatching. The event dispatcher will
@@ -179,7 +180,7 @@ struct AbstractEventDispatcher : Object {
     /// For maximum portability, you should always try to use QEvent objects
     /// and QObject::installEventFilter() whenever possible.
     /// 
-    /// **See also:** QObject::installEventFilter()
+    /// **See also:** [`Object::install_event_filter`]
     /// 
     install_native_event_filter(filter_obj: *AbstractNativeEventFilterType),
     /// 
@@ -193,8 +194,8 @@ struct AbstractEventDispatcher : Object {
     /// filter activation (that is, even from within the [nativeEventFilter()](QAbstractNativeEventFilter::)
     /// function).
     /// 
-    /// **See also:** installNativeEventFilter()
-    /// QAbstractNativeEventFilter
+    /// **See also:** [`install_native_event_filter()`]
+    /// [`AbstractNativeEventFilter`]
     remove_native_event_filter(filter_obj: *AbstractNativeEventFilterType),
     /// 
     /// Sends *message* through the event filters that were set by
@@ -212,21 +213,21 @@ struct AbstractEventDispatcher : Object {
     /// Note that the type of *message* is platform dependent. See
     /// QAbstractNativeEventFilter for details.
     /// 
-    /// **See also:** installNativeEventFilter()
-    /// QAbstractNativeEventFilter::nativeEventFilter()
+    /// **See also:** [`install_native_event_filter()`]
+    /// [`AbstractNativeEventFilter::native_event_filter`]
     filter_native_event(event_type: &ByteArrayType, message: *void, result: *long) -> bool,
     /// 
     /// This signal is emitted before the event loop calls a function that
     /// could block.
     /// 
-    /// **See also:** awake()
+    /// **See also:** [`awake()`]
     [signal] about_to_block(),
     /// 
     /// This signal is emitted after the event loop returns from a
     /// function that could block.
     /// 
-    /// **See also:** wakeUp()
-    /// aboutToBlock()
+    /// **See also:** [`wake_up()`]
+    /// [`about_to_block()`]
     [signal] awake(),
 }
 

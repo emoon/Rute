@@ -23,6 +23,86 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct PixelFormat {
+    get(offset: PixelFormat::Field, width: PixelFormat::FieldWidth) -> uchar,
+    [static] set(offset: PixelFormat::Field, width: PixelFormat::FieldWidth, value: uchar) -> quint64,
+    /// 
+    /// Accessor function for getting the colorModel.
+    color_model() -> PixelFormat::ColorModel,
+    /// 
+    /// Accessor function for getting the channelCount. Channel Count is deduced
+    /// by color channels with a size > 0 and if the size of the alpha channel is > 0.
+    channel_count() -> uchar,
+    /// 
+    /// Accessor function for the size of the red color channel.
+    red_size() -> uchar,
+    /// 
+    /// Accessor function for the size of the green color channel.
+    green_size() -> uchar,
+    /// 
+    /// Accessor function for the size of the blue color channel.
+    blue_size() -> uchar,
+    /// 
+    /// Accessor function for the cyan color channel.
+    cyan_size() -> uchar,
+    /// 
+    /// Accessor function for the megenta color channel.
+    magenta_size() -> uchar,
+    /// 
+    /// Accessor function for the yellow color channel.
+    yellow_size() -> uchar,
+    /// 
+    /// Accessor function for the black/key color channel.
+    black_size() -> uchar,
+    /// 
+    /// Accessor function for the hue channel size.
+    hue_size() -> uchar,
+    /// 
+    /// Accessor function for the saturation channel size.
+    saturation_size() -> uchar,
+    /// 
+    /// Accessor function for the lightness channel size.
+    lightness_size() -> uchar,
+    /// 
+    /// Accessor function for the brightness channel size.
+    brightness_size() -> uchar,
+    /// 
+    /// Accessor function for the alpha channel size.
+    alpha_size() -> uchar,
+    /// 
+    /// Accessor function for the bits used per pixel. This function returns the
+    /// sum of the color channels + the size of the alpha channel.
+    bits_per_pixel() -> uchar,
+    /// 
+    /// Accessor function for alphaUsage.
+    alpha_usage() -> PixelFormat::AlphaUsage,
+    /// 
+    /// Accessor function for alphaPosition.
+    alpha_position() -> PixelFormat::AlphaPosition,
+    /// 
+    /// Accessor function for the AlphaPremultiplied enum. This indicates if the
+    /// alpha channel is multiplied in to the color channels.
+    /// 
+    premultiplied() -> PixelFormat::AlphaPremultiplied,
+    /// 
+    /// Accessor function for the type representation of a color channel or a pixel.
+    /// 
+    /// **See also:** TypeInterpretation
+    type_interpretation() -> PixelFormat::TypeInterpretation,
+    /// 
+    /// The byte order is almost always set the the byte order of the current
+    /// system. However, it can be useful to describe some YUV formats. This
+    /// function should never return QPixelFormat::CurrentSystemEndian as this
+    /// value is translated to a endian value in the constructor.
+    byte_order() -> PixelFormat::ByteOrder,
+    /// 
+    /// Accessor function for the YUVLayout. It is difficult to describe the color
+    /// channels of a YUV pixel format since YUV color model uses macro pixels.
+    /// Instead the layout of the pixels are stored as an enum.
+    yuv_layout() -> PixelFormat::YUVLayout,
+    sub_enum() -> uchar,
+}
+
 [org_name(QPixelFormat)]
 enum FieldWidth {
     ModelFieldWidth,
@@ -125,87 +205,6 @@ enum ByteOrder {
     LittleEndian,
     BigEndian,
     CurrentSystemEndian,
-}
-
-
-struct PixelFormat {
-    get(offset: PixelFormat::Field, width: PixelFormat::FieldWidth) -> uchar,
-    [static] set(offset: PixelFormat::Field, width: PixelFormat::FieldWidth, value: uchar) -> quint64,
-    /// 
-    /// Accessor function for getting the colorModel.
-    color_model() -> PixelFormat::ColorModel,
-    /// 
-    /// Accessor function for getting the channelCount. Channel Count is deduced
-    /// by color channels with a size > 0 and if the size of the alpha channel is > 0.
-    channel_count() -> uchar,
-    /// 
-    /// Accessor function for the size of the red color channel.
-    red_size() -> uchar,
-    /// 
-    /// Accessor function for the size of the green color channel.
-    green_size() -> uchar,
-    /// 
-    /// Accessor function for the size of the blue color channel.
-    blue_size() -> uchar,
-    /// 
-    /// Accessor function for the cyan color channel.
-    cyan_size() -> uchar,
-    /// 
-    /// Accessor function for the megenta color channel.
-    magenta_size() -> uchar,
-    /// 
-    /// Accessor function for the yellow color channel.
-    yellow_size() -> uchar,
-    /// 
-    /// Accessor function for the black/key color channel.
-    black_size() -> uchar,
-    /// 
-    /// Accessor function for the hue channel size.
-    hue_size() -> uchar,
-    /// 
-    /// Accessor function for the saturation channel size.
-    saturation_size() -> uchar,
-    /// 
-    /// Accessor function for the lightness channel size.
-    lightness_size() -> uchar,
-    /// 
-    /// Accessor function for the brightness channel size.
-    brightness_size() -> uchar,
-    /// 
-    /// Accessor function for the alpha channel size.
-    alpha_size() -> uchar,
-    /// 
-    /// Accessor function for the bits used per pixel. This function returns the
-    /// sum of the color channels + the size of the alpha channel.
-    bits_per_pixel() -> uchar,
-    /// 
-    /// Accessor function for alphaUsage.
-    alpha_usage() -> PixelFormat::AlphaUsage,
-    /// 
-    /// Accessor function for alphaPosition.
-    alpha_position() -> PixelFormat::AlphaPosition,
-    /// 
-    /// Accessor function for the AlphaPremultiplied enum. This indicates if the
-    /// alpha channel is multiplied in to the color channels.
-    /// 
-    premultiplied() -> PixelFormat::AlphaPremultiplied,
-    /// 
-    /// Accessor function for the type representation of a color channel or a pixel.
-    /// 
-    /// **See also:** TypeInterpretation
-    type_interpretation() -> PixelFormat::TypeInterpretation,
-    /// 
-    /// The byte order is almost always set the the byte order of the current
-    /// system. However, it can be useful to describe some YUV formats. This
-    /// function should never return QPixelFormat::CurrentSystemEndian as this
-    /// value is translated to a endian value in the constructor.
-    byte_order() -> PixelFormat::ByteOrder,
-    /// 
-    /// Accessor function for the YUVLayout. It is difficult to describe the color
-    /// channels of a YUV pixel format since YUV color model uses macro pixels.
-    /// Instead the layout of the pixels are stored as an enum.
-    yuv_layout() -> PixelFormat::YUVLayout,
-    sub_enum() -> uchar,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

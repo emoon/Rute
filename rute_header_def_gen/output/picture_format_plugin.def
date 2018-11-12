@@ -25,14 +25,14 @@ struct PictureFormatPlugin : Object {
     /// given *format,* into * *picture.* Returns `true` on success;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** savePicture()
+    /// **See also:** [`save_picture()`]
     [event] load_picture(format: String, filename: String, pic: *PictureType) -> bool,
     /// 
     /// Saves the given *picture* into the file called *fileName,*
     /// using the specified *format.* Returns `true` on success; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** loadPicture()
+    /// **See also:** [`load_picture()`]
     [event] save_picture(format: String, filename: String, pic: &PictureType) -> bool,
     /// 
     /// Installs a QPictureIO picture I/O handler for the picture format *format.* Returns `true` on success.

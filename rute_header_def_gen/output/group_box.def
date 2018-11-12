@@ -27,7 +27,7 @@
 /// widgets). The following example shows how we can set up a
 /// QGroupBox with a layout:
 /// 
-/// **See also:** QButtonGroup
+/// **See also:** [`ButtonGroup`]
 /// {Group Box Example}
 /// # Licence
 ///
@@ -59,7 +59,7 @@ struct GroupBox : Widget {
     /// 
     /// The default alignment is Qt::AlignLeft.
     /// 
-    /// **See also:** Qt::Alignment
+    /// **See also:** [`t::alignment()`]
     alignment() -> Rute::Alignment,
     set_alignment(alignment: i32),
     /// 
@@ -80,7 +80,7 @@ struct GroupBox : Widget {
     /// box is unchecked.
     /// 
     /// **See also:** checkable
-    /// toggled()
+    /// [`toggled()`]
     /// checked
     [signal] clicked(checked: bool),
     /// 
@@ -112,7 +112,7 @@ struct GroupBox : Widget {
     /// is useful for subclasses when they need a QStyleOptionGroupBox, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionGroupBoxType),
 }
 

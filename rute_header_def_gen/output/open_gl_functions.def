@@ -99,33 +99,11 @@
 /// bool npot = funcs.hasOpenGLFeature(QOpenGLFunctions::NPOTTextures);
 /// ```
 /// 
-/// **See also:** QOpenGLContext
-/// QSurfaceFormat
+/// **See also:** [`OpenGLContext`]
+/// [`SurfaceFormat`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QOpenGLFunctions)]
-enum OpenGLFeature {
-    Multitexture,
-    Shaders,
-    Buffers,
-    Framebuffers,
-    BlendColor,
-    BlendEquation,
-    BlendEquationSeparate,
-    BlendFuncSeparate,
-    BlendSubtract,
-    CompressedTextures,
-    Multisample,
-    StencilSeparate,
-    NPOTTextures,
-    NPOTTextureRepeat,
-    FixedFunctionPipeline,
-    TextureRGFormats,
-    MultipleRenderTargets,
-}
-
-
 struct OpenGLFunctions {
     /// 
     /// Returns the set of features that are present on this system's
@@ -134,7 +112,7 @@ struct OpenGLFunctions {
     /// It is assumed that the QOpenGLContext associated with this function
     /// resolver is current.
     /// 
-    /// **See also:** hasOpenGLFeature()
+    /// **See also:** [`has_open_gl_feature()`]
     open_gl_features() -> OpenGLFunctions::OpenGLFeatures,
     /// 
     /// Returns `true` if *feature* is present on this system's OpenGL
@@ -143,7 +121,7 @@ struct OpenGLFunctions {
     /// It is assumed that the QOpenGLContext associated with this function
     /// resolver is current.
     /// 
-    /// **See also:** openGLFeatures()
+    /// **See also:** [`open_gl_features()`]
     has_open_gl_feature(feature: OpenGLFunctions::OpenGLFeature) -> bool,
     /// 
     /// Initializes OpenGL function resolution for the current context.
@@ -160,7 +138,7 @@ struct OpenGLFunctions {
     /// [glBindTexture()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glBindTexture.xhtml)
     /// 
     /// 
-    gl_bind_texture(target: i32, texture: i32),
+    gl_bind_texture(target: GLenum, texture: GLuint),
     /// 
     /// Convenience function that calls glBlendFunc( *sfactor,* *dfactor).*
     /// 
@@ -174,7 +152,7 @@ struct OpenGLFunctions {
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glBlendFuncSeparate()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glBlendFuncSeparate.xhtml)
     /// 
-    gl_blend_func(sfactor: i32, dfactor: i32),
+    gl_blend_func(sfactor: GLenum, dfactor: GLenum),
     /// 
     /// Convenience function that calls glClear( *mask).*
     /// 
@@ -204,7 +182,7 @@ struct OpenGLFunctions {
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glClearDepthf()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glClearDepthf.xhtml)
     /// 
-    gl_clear(mask: i32),
+    gl_clear(mask: GLbitfield),
     /// 
     /// Convenience function that calls glClearColor( *red,* *green,* *blue,* *alpha).*
     /// 
@@ -212,7 +190,7 @@ struct OpenGLFunctions {
     /// [glClearColor()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glClearColor.xhtml)
     /// 
     /// 
-    gl_clear_color(red: i32, green: i32, blue: i32, alpha: i32),
+    gl_clear_color(red: GLclampf, green: GLclampf, blue: GLclampf, alpha: GLclampf),
     /// 
     /// Convenience function that calls glClearStencil( *s).*
     /// 
@@ -228,7 +206,7 @@ struct OpenGLFunctions {
     /// [glColorMask()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glColorMask.xhtml)
     /// 
     /// 
-    gl_color_mask(red: i32, green: i32, blue: i32, alpha: i32),
+    gl_color_mask(red: GLboolean, green: GLboolean, blue: GLboolean, alpha: GLboolean),
     /// 
     /// Convenience function that calls glCopyTexImage2D( *target,* *level,* *internalformat,* *x,* *y,* *width,* *height,* *border).*
     /// 
@@ -236,7 +214,7 @@ struct OpenGLFunctions {
     /// [glCopyTexImage2D()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glCopyTexImage2D.xhtml)
     /// 
     /// 
-    gl_copy_tex_image2_d(target: i32, level: GLint, internalformat: i32, x: GLint, y: GLint, width: i32, height: i32, border: GLint),
+    gl_copy_tex_image2_d(target: GLenum, level: GLint, internalformat: GLenum, x: GLint, y: GLint, width: GLsizei, height: GLsizei, border: GLint),
     /// 
     /// Convenience function that calls glCopyTexSubImage2D( *target,* *level,* *xoffset,* *yoffset,* *x,* *y,* *width,* *height).*
     /// 
@@ -244,7 +222,7 @@ struct OpenGLFunctions {
     /// [glCopyTexSubImage2D()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glCopyTexSubImage2D.xhtml)
     /// 
     /// 
-    gl_copy_tex_sub_image2_d(target: i32, level: GLint, xoffset: GLint, yoffset: GLint, x: GLint, y: GLint, width: i32, height: i32),
+    gl_copy_tex_sub_image2_d(target: GLenum, level: GLint, xoffset: GLint, yoffset: GLint, x: GLint, y: GLint, width: GLsizei, height: GLsizei),
     /// 
     /// Convenience function that calls glCullFace( *mode).*
     /// 
@@ -252,7 +230,7 @@ struct OpenGLFunctions {
     /// [glCullFace()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glCullFace.xhtml)
     /// 
     /// 
-    gl_cull_face(mode: i32),
+    gl_cull_face(mode: GLenum),
     /// 
     /// Convenience function that calls glDeleteTextures( *n,* *textures).*
     /// 
@@ -260,7 +238,7 @@ struct OpenGLFunctions {
     /// [glDeleteTextures()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glDeleteTextures.xhtml)
     /// 
     /// 
-    gl_delete_textures(n: i32, textures: *i32),
+    gl_delete_textures(n: GLsizei, textures: *GLuint),
     /// 
     /// Convenience function that calls glDepthFunc( *func).*
     /// 
@@ -268,7 +246,7 @@ struct OpenGLFunctions {
     /// [glDepthFunc()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glDepthFunc.xhtml)
     /// 
     /// 
-    gl_depth_func(func: i32),
+    gl_depth_func(func: GLenum),
     /// 
     /// Convenience function that calls glDepthMask( *flag).*
     /// 
@@ -276,7 +254,7 @@ struct OpenGLFunctions {
     /// [glDepthMask()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glDepthMask.xhtml)
     /// 
     /// 
-    gl_depth_mask(flag: i32),
+    gl_depth_mask(flag: GLboolean),
     /// 
     /// Convenience function that calls glDisable( *cap).*
     /// 
@@ -292,7 +270,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_disable(cap: i32),
+    gl_disable(cap: GLenum),
     /// 
     /// Convenience function that calls glDrawArrays( *mode,* *first,* *count).*
     /// 
@@ -300,7 +278,7 @@ struct OpenGLFunctions {
     /// [glDrawArrays()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glDrawArrays.xhtml)
     /// 
     /// 
-    gl_draw_arrays(mode: i32, first: GLint, count: i32),
+    gl_draw_arrays(mode: GLenum, first: GLint, count: GLsizei),
     /// 
     /// Convenience function that calls glDrawElements( *mode,* *count,* *type,* *indices).*
     /// 
@@ -308,7 +286,7 @@ struct OpenGLFunctions {
     /// [glDrawElements()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glDrawElements.xhtml)
     /// 
     /// 
-    gl_draw_elements(mode: i32, count: i32, type: i32, indices: *i32),
+    gl_draw_elements(mode: GLenum, count: GLsizei, type: GLenum, indices: *GLvoid),
     /// 
     /// Convenience function that calls glEnable( *cap).*
     /// 
@@ -324,7 +302,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_enable(cap: i32),
+    gl_enable(cap: GLenum),
     /// 
     /// Convenience function that calls glFinish().
     /// 
@@ -348,7 +326,7 @@ struct OpenGLFunctions {
     /// [glFrontFace()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glFrontFace.xhtml)
     /// 
     /// 
-    gl_front_face(mode: i32),
+    gl_front_face(mode: GLenum),
     /// 
     /// Convenience function that calls glGenTextures( *n,* *textures).*
     /// 
@@ -356,7 +334,7 @@ struct OpenGLFunctions {
     /// [glGenTextures()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGenTextures.xhtml)
     /// 
     /// 
-    gl_gen_textures(n: i32, textures: *i32),
+    gl_gen_textures(n: GLsizei, textures: *GLuint),
     /// 
     /// Convenience function that calls glGetBooleanv( *pname,* *params).*
     /// 
@@ -364,7 +342,7 @@ struct OpenGLFunctions {
     /// [glGetBooleanv()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGet.xhtml)
     /// 
     /// 
-    gl_get_booleanv(pname: i32, params: *i32),
+    gl_get_booleanv(pname: GLenum, params: *GLboolean),
     /// 
     /// Convenience function that calls glGetError().
     /// 
@@ -372,7 +350,7 @@ struct OpenGLFunctions {
     /// [glGetError()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGetError.xhtml)
     /// 
     /// 
-    gl_get_error() -> i32,
+    gl_get_error() -> GLenum,
     /// 
     /// Convenience function that calls glGetFloatv( *pname,* *params).*
     /// 
@@ -380,7 +358,7 @@ struct OpenGLFunctions {
     /// [glGetFloatv()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGet.xhtml)
     /// 
     /// 
-    gl_get_floatv(pname: i32, params: *i32),
+    gl_get_floatv(pname: GLenum, params: *GLfloat),
     /// 
     /// Convenience function that calls glGetIntegerv( *pname,* *params).*
     /// 
@@ -388,7 +366,7 @@ struct OpenGLFunctions {
     /// [glGetIntegerv()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGet.xhtml)
     /// 
     /// 
-    gl_get_integerv(pname: i32, params: *GLint),
+    gl_get_integerv(pname: GLenum, params: *GLint),
     /// 
     /// Convenience function that calls glGetTexParameterfv( *target,* *pname,* *params).*
     /// 
@@ -396,7 +374,7 @@ struct OpenGLFunctions {
     /// [glGetTexParameterfv()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGetTexParameter.xhtml)
     /// 
     /// 
-    gl_get_tex_parameterfv(target: i32, pname: i32, params: *i32),
+    gl_get_tex_parameterfv(target: GLenum, pname: GLenum, params: *GLfloat),
     /// 
     /// Convenience function that calls glGetTexParameteriv( *target,* *pname,* *params).*
     /// 
@@ -404,7 +382,7 @@ struct OpenGLFunctions {
     /// [glGetTexParameteriv()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGetTexParameter.xhtml)
     /// 
     /// 
-    gl_get_tex_parameteriv(target: i32, pname: i32, params: *GLint),
+    gl_get_tex_parameteriv(target: GLenum, pname: GLenum, params: *GLint),
     /// 
     /// Convenience function that calls glHint( *target,* *mode).*
     /// 
@@ -412,7 +390,7 @@ struct OpenGLFunctions {
     /// [glHint()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glHint.xhtml)
     /// 
     /// 
-    gl_hint(target: i32, mode: i32),
+    gl_hint(target: GLenum, mode: GLenum),
     /// 
     /// Convenience function that calls glIsEnabled( *cap).*
     /// 
@@ -420,7 +398,7 @@ struct OpenGLFunctions {
     /// [glIsEnabled()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glIsEnabled.xhtml)
     /// 
     /// 
-    gl_is_enabled(cap: i32) -> i32,
+    gl_is_enabled(cap: GLenum) -> GLboolean,
     /// 
     /// Convenience function that calls glIsTexture( *texture).*
     /// 
@@ -428,7 +406,7 @@ struct OpenGLFunctions {
     /// [glIsTexture()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glIsTexture.xhtml)
     /// 
     /// 
-    gl_is_texture(texture: i32) -> i32,
+    gl_is_texture(texture: GLuint) -> GLboolean,
     /// 
     /// Convenience function that calls glLineWidth( *width).*
     /// 
@@ -436,7 +414,7 @@ struct OpenGLFunctions {
     /// [glLineWidth()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glLineWidth.xhtml)
     /// 
     /// 
-    gl_line_width(width: i32),
+    gl_line_width(width: GLfloat),
     /// 
     /// Convenience function that calls glPixelStorei( *pname,* *param).*
     /// 
@@ -444,7 +422,7 @@ struct OpenGLFunctions {
     /// [glPixelStorei()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glPixelStorei.xhtml)
     /// 
     /// 
-    gl_pixel_storei(pname: i32, param: GLint),
+    gl_pixel_storei(pname: GLenum, param: GLint),
     /// 
     /// Convenience function that calls glPolygonOffset( *factor,* *units).*
     /// 
@@ -452,7 +430,7 @@ struct OpenGLFunctions {
     /// [glPolygonOffset()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glPolygonOffset.xhtml)
     /// 
     /// 
-    gl_polygon_offset(factor: i32, units: i32),
+    gl_polygon_offset(factor: GLfloat, units: GLfloat),
     /// 
     /// Convenience function that calls glReadPixels( *x,* *y,* *width,* *height,* *format,* *type,* *pixels).*
     /// 
@@ -460,7 +438,7 @@ struct OpenGLFunctions {
     /// [glReadPixels()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glReadPixels.xhtml)
     /// 
     /// 
-    gl_read_pixels(x: GLint, y: GLint, width: i32, height: i32, format: i32, type: i32, pixels: *i32),
+    gl_read_pixels(x: GLint, y: GLint, width: GLsizei, height: GLsizei, format: GLenum, type: GLenum, pixels: *GLvoid),
     /// 
     /// Convenience function that calls glScissor( *x,* *y,* *width,* *height).*
     /// 
@@ -468,7 +446,7 @@ struct OpenGLFunctions {
     /// [glScissor()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glScissor.xhtml)
     /// 
     /// 
-    gl_scissor(x: GLint, y: GLint, width: i32, height: i32),
+    gl_scissor(x: GLint, y: GLint, width: GLsizei, height: GLsizei),
     /// 
     /// Convenience function that calls glStencilFunc( *func,* *ref,* *mask).*
     /// 
@@ -482,7 +460,7 @@ struct OpenGLFunctions {
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glStencilFuncSeparate()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glStencilFuncSeparate.xhtml)
     /// 
-    gl_stencil_func(func: i32, ref: GLint, mask: i32),
+    gl_stencil_func(func: GLenum, ref: GLint, mask: GLuint),
     /// 
     /// Convenience function that calls glStencilMask( *mask).*
     /// 
@@ -496,7 +474,7 @@ struct OpenGLFunctions {
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glStencilMaskSeparate()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glStencilMaskSeparate.xhtml)
     /// 
-    gl_stencil_mask(mask: i32),
+    gl_stencil_mask(mask: GLuint),
     /// 
     /// Convenience function that calls glStencilOp( *fail,* *zfail,* *zpass).*
     /// 
@@ -510,7 +488,7 @@ struct OpenGLFunctions {
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glStencilOpSeparate()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glStencilOpSeparate.xhtml)
     /// 
-    gl_stencil_op(fail: i32, zfail: i32, zpass: i32),
+    gl_stencil_op(fail: GLenum, zfail: GLenum, zpass: GLenum),
     /// 
     /// Convenience function that calls glTexImage2D( *target,* *level,* *internalformat,* *width,* *height,* *border,* *format,* *type,* *pixels).*
     /// 
@@ -518,7 +496,7 @@ struct OpenGLFunctions {
     /// [glTexImage2D()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glTexImage2D.xhtml)
     /// 
     /// 
-    gl_tex_image2_d(target: i32, level: GLint, internalformat: GLint, width: i32, height: i32, border: GLint, format: i32, type: i32, pixels: *i32),
+    gl_tex_image2_d(target: GLenum, level: GLint, internalformat: GLint, width: GLsizei, height: GLsizei, border: GLint, format: GLenum, type: GLenum, pixels: *GLvoid),
     /// 
     /// Convenience function that calls glTexParameterf( *target,* *pname,* *param).*
     /// 
@@ -533,7 +511,7 @@ struct OpenGLFunctions {
     /// [glTexParameterfv()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glTexParameter.xhtml)
     /// 
     /// 
-    gl_tex_parameterf(target: i32, pname: i32, param: i32),
+    gl_tex_parameterf(target: GLenum, pname: GLenum, param: GLfloat),
     /// 
     /// Convenience function that calls glTexParameterfv( *target,* *pname,* *params).*
     /// 
@@ -541,7 +519,7 @@ struct OpenGLFunctions {
     /// [glTexParameterfv()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glTexParameter.xhtml)
     /// 
     /// 
-    gl_tex_parameterfv(target: i32, pname: i32, params: *i32),
+    gl_tex_parameterfv(target: GLenum, pname: GLenum, params: *GLfloat),
     /// 
     /// Convenience function that calls glTexParameteri( *target,* *pname,* *param).*
     /// 
@@ -556,7 +534,7 @@ struct OpenGLFunctions {
     /// [glTexParameteriv()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glTexParameter.xhtml)
     /// 
     /// 
-    gl_tex_parameteri(target: i32, pname: i32, param: GLint),
+    gl_tex_parameteri(target: GLenum, pname: GLenum, param: GLint),
     /// 
     /// Convenience function that calls glTexParameteriv( *target,* *pname,* *params).*
     /// 
@@ -564,7 +542,7 @@ struct OpenGLFunctions {
     /// [glTexParameteriv()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glTexParameter.xhtml)
     /// 
     /// 
-    gl_tex_parameteriv(target: i32, pname: i32, params: *GLint),
+    gl_tex_parameteriv(target: GLenum, pname: GLenum, params: *GLint),
     /// 
     /// Convenience function that calls glTexSubImage2D( *target,* *level,* *xoffset,* *yoffset,* *width,* *height,* *format,* *type,* *pixels).*
     /// 
@@ -572,7 +550,7 @@ struct OpenGLFunctions {
     /// [glTexSubImage2D()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glTexSubImage2D.xhtml)
     /// 
     /// 
-    gl_tex_sub_image2_d(target: i32, level: GLint, xoffset: GLint, yoffset: GLint, width: i32, height: i32, format: i32, type: i32, pixels: *i32),
+    gl_tex_sub_image2_d(target: GLenum, level: GLint, xoffset: GLint, yoffset: GLint, width: GLsizei, height: GLsizei, format: GLenum, type: GLenum, pixels: *GLvoid),
     /// 
     /// Convenience function that calls glViewport( *x,* *y,* *width,* *height).*
     /// 
@@ -580,14 +558,14 @@ struct OpenGLFunctions {
     /// [glViewport()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glViewport.xhtml)
     /// 
     /// 
-    gl_viewport(x: GLint, y: GLint, width: i32, height: i32),
+    gl_viewport(x: GLint, y: GLint, width: GLsizei, height: GLsizei),
     /// 
     /// Convenience function that calls glActiveTexture( *texture).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glActiveTexture()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glActiveTexture.xhtml)
     /// 
-    gl_active_texture(texture: i32),
+    gl_active_texture(texture: GLenum),
     /// 
     /// Convenience function that calls glAttachShader( *program,* *shader).*
     /// 
@@ -596,14 +574,14 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_attach_shader(program: i32, shader: i32),
+    gl_attach_shader(program: GLuint, shader: GLuint),
     /// 
     /// Convenience function that calls glBindBuffer( *target,* *buffer).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glBindBuffer()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glBindBuffer.xhtml)
     /// 
-    gl_bind_buffer(target: i32, buffer: i32),
+    gl_bind_buffer(target: GLenum, buffer: GLuint),
     /// 
     /// Convenience function that calls glBindFramebuffer( *target,* *framebuffer).*
     /// 
@@ -613,21 +591,21 @@ struct OpenGLFunctions {
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glBindFramebuffer()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glBindFramebuffer.xhtml)
     /// 
-    gl_bind_framebuffer(target: i32, framebuffer: i32),
+    gl_bind_framebuffer(target: GLenum, framebuffer: GLuint),
     /// 
     /// Convenience function that calls glBindRenderbuffer( *target,* *renderbuffer).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glBindRenderbuffer()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glBindRenderbuffer.xhtml)
     /// 
-    gl_bind_renderbuffer(target: i32, renderbuffer: i32),
+    gl_bind_renderbuffer(target: GLenum, renderbuffer: GLuint),
     /// 
     /// Convenience function that calls glBlendColor( *red,* *green,* *blue,* *alpha).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glBlendColor()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glBlendColor.xhtml)
     /// 
-    gl_blend_color(red: i32, green: i32, blue: i32, alpha: i32),
+    gl_blend_color(red: GLclampf, green: GLclampf, blue: GLclampf, alpha: GLclampf),
     /// 
     /// Convenience function that calls glBlendEquation( *mode).*
     /// 
@@ -640,42 +618,42 @@ struct OpenGLFunctions {
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glBlendEquationSeparate()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glBlendEquationSeparate.xhtml)
     /// 
-    gl_blend_equation(mode: i32),
+    gl_blend_equation(mode: GLenum),
     /// 
     /// Convenience function that calls glBlendEquationSeparate( *modeRGB,* *modeAlpha).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glBlendEquationSeparate()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glBlendEquationSeparate.xhtml)
     /// 
-    gl_blend_equation_separate(mode_rgb: i32, mode_alpha: i32),
+    gl_blend_equation_separate(mode_rgb: GLenum, mode_alpha: GLenum),
     /// 
     /// Convenience function that calls glBlendFuncSeparate( *srcRGB,* *dstRGB,* *srcAlpha,* *dstAlpha).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glBlendFuncSeparate()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glBlendFuncSeparate.xhtml)
     /// 
-    gl_blend_func_separate(src_rgb: i32, dst_rgb: i32, src_alpha: i32, dst_alpha: i32),
+    gl_blend_func_separate(src_rgb: GLenum, dst_rgb: GLenum, src_alpha: GLenum, dst_alpha: GLenum),
     /// 
     /// Convenience function that calls glBufferData( *target,* *size,* *data,* *usage).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glBufferData()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glBufferData.xhtml)
     /// 
-    gl_buffer_data(target: i32, size: qopengl_GLsizeiptr, data: *void, usage: i32),
+    gl_buffer_data(target: GLenum, size: qopengl_GLsizeiptr, data: *void, usage: GLenum),
     /// 
     /// Convenience function that calls glBufferSubData( *target,* *offset,* *size,* *data).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glBufferSubData()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glBufferSubData.xhtml)
     /// 
-    gl_buffer_sub_data(target: i32, offset: qopengl_GLintptr, size: qopengl_GLsizeiptr, data: *void),
+    gl_buffer_sub_data(target: GLenum, offset: qopengl_GLintptr, size: qopengl_GLsizeiptr, data: *void),
     /// 
     /// Convenience function that calls glCheckFramebufferStatus( *target).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glCheckFramebufferStatus()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glCheckFramebufferStatus.xhtml)
     /// 
-    gl_check_framebuffer_status(target: i32) -> i32,
+    gl_check_framebuffer_status(target: GLenum) -> GLenum,
     /// 
     /// Convenience function that calls glClearDepth( *depth)* on
     /// desktop OpenGL systems and glClearDepthf( *depth)* on
@@ -684,7 +662,7 @@ struct OpenGLFunctions {
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glClearDepthf()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glClearDepthf.xhtml)
     /// 
-    gl_clear_depthf(depth: i32),
+    gl_clear_depthf(depth: GLclampf),
     /// 
     /// Convenience function that calls glCompileShader( *shader).*
     /// 
@@ -693,21 +671,21 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_compile_shader(shader: i32),
+    gl_compile_shader(shader: GLuint),
     /// 
     /// Convenience function that calls glCompressedTexImage2D( *target,* *level,* *internalformat,* *width,* *height,* *border,* *imageSize,* *data).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glCompressedTexImage2D()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glCompressedTexImage2D.xhtml)
     /// 
-    gl_compressed_tex_image2_d(target: i32, level: GLint, internalformat: i32, width: i32, height: i32, border: GLint, image_size: i32, data: *void),
+    gl_compressed_tex_image2_d(target: GLenum, level: GLint, internalformat: GLenum, width: GLsizei, height: GLsizei, border: GLint, image_size: GLsizei, data: *void),
     /// 
     /// Convenience function that calls glCompressedTexSubImage2D( *target,* *level,* *xoffset,* *yoffset,* *width,* *height,* *format,* *imageSize,* *data).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glCompressedTexSubImage2D()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glCompressedTexSubImage2D.xhtml)
     /// 
-    gl_compressed_tex_sub_image2_d(target: i32, level: GLint, xoffset: GLint, yoffset: GLint, width: i32, height: i32, format: i32, image_size: i32, data: *void),
+    gl_compressed_tex_sub_image2_d(target: GLenum, level: GLint, xoffset: GLint, yoffset: GLint, width: GLsizei, height: GLsizei, format: GLenum, image_size: GLsizei, data: *void),
     /// 
     /// Convenience function that calls glCreateProgram().
     /// 
@@ -716,7 +694,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_create_program() -> i32,
+    gl_create_program() -> GLuint,
     /// 
     /// Convenience function that calls glCreateShader( *type).*
     /// 
@@ -725,21 +703,21 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_create_shader(type: i32) -> i32,
+    gl_create_shader(type: GLenum) -> GLuint,
     /// 
     /// Convenience function that calls glDeleteBuffers( *n,* *buffers).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glDeleteBuffers()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glDeleteBuffers.xhtml)
     /// 
-    gl_delete_buffers(n: i32, buffers: *i32),
+    gl_delete_buffers(n: GLsizei, buffers: *GLuint),
     /// 
     /// Convenience function that calls glDeleteFramebuffers( *n,* *framebuffers).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glDeleteFramebuffers()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glDeleteFramebuffers.xhtml)
     /// 
-    gl_delete_framebuffers(n: i32, framebuffers: *i32),
+    gl_delete_framebuffers(n: GLsizei, framebuffers: *GLuint),
     /// 
     /// Convenience function that calls glDeleteProgram( *program).*
     /// 
@@ -748,14 +726,14 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_delete_program(program: i32),
+    gl_delete_program(program: GLuint),
     /// 
     /// Convenience function that calls glDeleteRenderbuffers( *n,* *renderbuffers).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glDeleteRenderbuffers()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glDeleteRenderbuffers.xhtml)
     /// 
-    gl_delete_renderbuffers(n: i32, renderbuffers: *i32),
+    gl_delete_renderbuffers(n: GLsizei, renderbuffers: *GLuint),
     /// 
     /// Convenience function that calls glDeleteShader( *shader).*
     /// 
@@ -764,7 +742,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_delete_shader(shader: i32),
+    gl_delete_shader(shader: GLuint),
     /// 
     /// Convenience function that calls glDepthRange( *zNear,* *zFar)* on
     /// desktop OpenGL systems and glDepthRangef( *zNear,* *zFar)* on
@@ -773,7 +751,7 @@ struct OpenGLFunctions {
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glDepthRangef()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glDepthRangef.xhtml)
     /// 
-    gl_depth_rangef(z_near: i32, z_far: i32),
+    gl_depth_rangef(z_near: GLclampf, z_far: GLclampf),
     /// 
     /// Convenience function that calls glDetachShader( *program,* *shader).*
     /// 
@@ -782,49 +760,49 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_detach_shader(program: i32, shader: i32),
+    gl_detach_shader(program: GLuint, shader: GLuint),
     /// 
     /// Convenience function that calls glFramebufferRenderbuffer( *target,* *attachment,* *renderbuffertarget,* *renderbuffer).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glFramebufferRenderbuffer()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glFramebufferRenderbuffer.xhtml)
     /// 
-    gl_framebuffer_renderbuffer(target: i32, attachment: i32, renderbuffertarget: i32, renderbuffer: i32),
+    gl_framebuffer_renderbuffer(target: GLenum, attachment: GLenum, renderbuffertarget: GLenum, renderbuffer: GLuint),
     /// 
     /// Convenience function that calls glFramebufferTexture2D( *target,* *attachment,* *textarget,* *texture,* *level).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glFramebufferTexture2D()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glFramebufferTexture2D.xhtml)
     /// 
-    gl_framebuffer_texture2_d(target: i32, attachment: i32, textarget: i32, texture: i32, level: GLint),
+    gl_framebuffer_texture2_d(target: GLenum, attachment: GLenum, textarget: GLenum, texture: GLuint, level: GLint),
     /// 
     /// Convenience function that calls glGenBuffers( *n,* *buffers).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glGenBuffers()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGenBuffers.xhtml)
     /// 
-    gl_gen_buffers(n: i32, buffers: *i32),
+    gl_gen_buffers(n: GLsizei, buffers: *GLuint),
     /// 
     /// Convenience function that calls glGenerateMipmap( *target).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glGenerateMipmap()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGenerateMipmap.xhtml)
     /// 
-    gl_generate_mipmap(target: i32),
+    gl_generate_mipmap(target: GLenum),
     /// 
     /// Convenience function that calls glGenFramebuffers( *n,* *framebuffers).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glGenFramebuffers()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGenFramebuffers.xhtml)
     /// 
-    gl_gen_framebuffers(n: i32, framebuffers: *i32),
+    gl_gen_framebuffers(n: GLsizei, framebuffers: *GLuint),
     /// 
     /// Convenience function that calls glGenRenderbuffers( *n,* *renderbuffers).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glGenRenderbuffers()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGenRenderbuffers.xhtml)
     /// 
-    gl_gen_renderbuffers(n: i32, renderbuffers: *i32),
+    gl_gen_renderbuffers(n: GLsizei, renderbuffers: *GLuint),
     /// 
     /// Convenience function that calls glGetActiveUniform( *program,* *index,* *bufsize,* *length,* *size,* *type,* *name).*
     /// 
@@ -833,7 +811,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_get_active_uniform(program: i32, index: i32, bufsize: i32, length: *i32, size: *GLint, type: *i32, name: *char),
+    gl_get_active_uniform(program: GLuint, index: GLuint, bufsize: GLsizei, length: *GLsizei, size: *GLint, type: *GLenum, name: *char),
     /// 
     /// Convenience function that calls glGetAttachedShaders( *program,* *maxcount,* *count,* *shaders).*
     /// 
@@ -842,21 +820,21 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_get_attached_shaders(program: i32, maxcount: i32, count: *i32, shaders: *i32),
+    gl_get_attached_shaders(program: GLuint, maxcount: GLsizei, count: *GLsizei, shaders: *GLuint),
     /// 
     /// Convenience function that calls glGetBufferParameteriv( *target,* *pname,* *params).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glGetBufferParameteriv()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGetBufferParameteriv.xhtml)
     /// 
-    gl_get_buffer_parameteriv(target: i32, pname: i32, params: *GLint),
+    gl_get_buffer_parameteriv(target: GLenum, pname: GLenum, params: *GLint),
     /// 
     /// Convenience function that calls glGetFramebufferAttachmentParameteriv( *target,* *attachment,* *pname,* *params).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glGetFramebufferAttachmentParameteriv()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGetFramebufferAttachmentParameteriv.xhtml)
     /// 
-    gl_get_framebuffer_attachment_parameteriv(target: i32, attachment: i32, pname: i32, params: *GLint),
+    gl_get_framebuffer_attachment_parameteriv(target: GLenum, attachment: GLenum, pname: GLenum, params: *GLint),
     /// 
     /// Convenience function that calls glGetProgramiv( *program,* *pname,* *params).*
     /// 
@@ -865,7 +843,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_get_programiv(program: i32, pname: i32, params: *GLint),
+    gl_get_programiv(program: GLuint, pname: GLenum, params: *GLint),
     /// 
     /// Convenience function that calls glGetProgramInfoLog( *program,* *bufsize,* *length,* *infolog).*
     /// 
@@ -874,14 +852,14 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_get_program_info_log(program: i32, bufsize: i32, length: *i32, infolog: *char),
+    gl_get_program_info_log(program: GLuint, bufsize: GLsizei, length: *GLsizei, infolog: *char),
     /// 
     /// Convenience function that calls glGetRenderbufferParameteriv( *target,* *pname,* *params).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glGetRenderbufferParameteriv()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glGetRenderbufferParameteriv.xhtml)
     /// 
-    gl_get_renderbuffer_parameteriv(target: i32, pname: i32, params: *GLint),
+    gl_get_renderbuffer_parameteriv(target: GLenum, pname: GLenum, params: *GLint),
     /// 
     /// Convenience function that calls glGetShaderiv( *shader,* *pname,* *params).*
     /// 
@@ -890,7 +868,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_get_shaderiv(shader: i32, pname: i32, params: *GLint),
+    gl_get_shaderiv(shader: GLuint, pname: GLenum, params: *GLint),
     /// 
     /// Convenience function that calls glGetShaderInfoLog( *shader,* *bufsize,* *length,* *infolog).*
     /// 
@@ -899,7 +877,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_get_shader_info_log(shader: i32, bufsize: i32, length: *i32, infolog: *char),
+    gl_get_shader_info_log(shader: GLuint, bufsize: GLsizei, length: *GLsizei, infolog: *char),
     /// 
     /// Convenience function that calls glGetShaderPrecisionFormat( *shadertype,* *precisiontype,* *range,* *precision).*
     /// 
@@ -908,7 +886,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_get_shader_precision_format(shadertype: i32, precisiontype: i32, range: *GLint, precision: *GLint),
+    gl_get_shader_precision_format(shadertype: GLenum, precisiontype: GLenum, range: *GLint, precision: *GLint),
     /// 
     /// Convenience function that calls glGetShaderSource( *shader,* *bufsize,* *length,* *source).*
     /// 
@@ -917,7 +895,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_get_shader_source(shader: i32, bufsize: i32, length: *i32, source: *char),
+    gl_get_shader_source(shader: GLuint, bufsize: GLsizei, length: *GLsizei, source: *char),
     /// 
     /// Convenience function that calls glGetUniformfv( *program,* *location,* *params).*
     /// 
@@ -926,7 +904,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_get_uniformfv(program: i32, location: GLint, params: *i32),
+    gl_get_uniformfv(program: GLuint, location: GLint, params: *GLfloat),
     /// 
     /// Convenience function that calls glGetUniformiv( *program,* *location,* *params).*
     /// 
@@ -935,7 +913,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_get_uniformiv(program: i32, location: GLint, params: *GLint),
+    gl_get_uniformiv(program: GLuint, location: GLint, params: *GLint),
     /// 
     /// Convenience function that calls glGetUniformLocation( *program,* *name).*
     /// 
@@ -944,21 +922,21 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_get_uniform_location(program: i32, name: *char) -> i32,
+    gl_get_uniform_location(program: GLuint, name: *char) -> GLint,
     /// 
     /// Convenience function that calls glIsBuffer( *buffer).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glIsBuffer()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glIsBuffer.xhtml)
     /// 
-    gl_is_buffer(buffer: i32) -> i32,
+    gl_is_buffer(buffer: GLuint) -> GLboolean,
     /// 
     /// Convenience function that calls glIsFramebuffer( *framebuffer).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glIsFramebuffer()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glIsFramebuffer.xhtml)
     /// 
-    gl_is_framebuffer(framebuffer: i32) -> i32,
+    gl_is_framebuffer(framebuffer: GLuint) -> GLboolean,
     /// 
     /// Convenience function that calls glIsProgram( *program).*
     /// 
@@ -967,14 +945,14 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_is_program(program: i32) -> i32,
+    gl_is_program(program: GLuint) -> GLboolean,
     /// 
     /// Convenience function that calls glIsRenderbuffer( *renderbuffer).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glIsRenderbuffer()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glIsRenderbuffer.xhtml)
     /// 
-    gl_is_renderbuffer(renderbuffer: i32) -> i32,
+    gl_is_renderbuffer(renderbuffer: GLuint) -> GLboolean,
     /// 
     /// Convenience function that calls glIsShader( *shader).*
     /// 
@@ -983,7 +961,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_is_shader(shader: i32) -> i32,
+    gl_is_shader(shader: GLuint) -> GLboolean,
     /// 
     /// Convenience function that calls glLinkProgram( *program).*
     /// 
@@ -992,7 +970,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_link_program(program: i32),
+    gl_link_program(program: GLuint),
     /// 
     /// Convenience function that calls glReleaseShaderCompiler().
     /// 
@@ -1008,14 +986,14 @@ struct OpenGLFunctions {
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glRenderbufferStorage()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glRenderbufferStorage.xhtml)
     /// 
-    gl_renderbuffer_storage(target: i32, internalformat: i32, width: i32, height: i32),
+    gl_renderbuffer_storage(target: GLenum, internalformat: GLenum, width: GLsizei, height: GLsizei),
     /// 
     /// Convenience function that calls glSampleCoverage( *value,* *invert).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glSampleCoverage()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glSampleCoverage.xhtml)
     /// 
-    gl_sample_coverage(value: i32, invert: i32),
+    gl_sample_coverage(value: GLclampf, invert: GLboolean),
     /// 
     /// Convenience function that calls glShaderBinary( *n,* *shaders,* *binaryformat,* *binary,* *length).*
     /// 
@@ -1024,7 +1002,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_shader_binary(n: GLint, shaders: *i32, binaryformat: i32, binary: *void, length: GLint),
+    gl_shader_binary(n: GLint, shaders: *GLuint, binaryformat: GLenum, binary: *void, length: GLint),
     /// 
     /// Convenience function that calls glShaderSource( *shader,* *count,* *string,* *length).*
     /// 
@@ -1033,28 +1011,28 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_shader_source(shader: i32, count: i32, string: *char, length: *GLint),
+    gl_shader_source(shader: GLuint, count: GLsizei, string: *char, length: *GLint),
     /// 
     /// Convenience function that calls glStencilFuncSeparate( *face,* *func,* *ref,* *mask).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glStencilFuncSeparate()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glStencilFuncSeparate.xhtml)
     /// 
-    gl_stencil_func_separate(face: i32, func: i32, ref: GLint, mask: i32),
+    gl_stencil_func_separate(face: GLenum, func: GLenum, ref: GLint, mask: GLuint),
     /// 
     /// Convenience function that calls glStencilMaskSeparate( *face,* *mask).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glStencilMaskSeparate()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glStencilMaskSeparate.xhtml)
     /// 
-    gl_stencil_mask_separate(face: i32, mask: i32),
+    gl_stencil_mask_separate(face: GLenum, mask: GLuint),
     /// 
     /// Convenience function that calls glStencilOpSeparate( *face,* *fail,* *zfail,* *zpass).*
     /// 
     /// For more information, see the OpenGL ES 2.0 documentation for
     /// [glStencilOpSeparate()](https://www.khronos.org/registry/OpenGL-Refpages/es3/html/glStencilOpSeparate.xhtml)
     /// 
-    gl_stencil_op_separate(face: i32, fail: i32, zfail: i32, zpass: i32),
+    gl_stencil_op_separate(face: GLenum, fail: GLenum, zfail: GLenum, zpass: GLenum),
     /// 
     /// Convenience function that calls glUniform1f( *location,* *x).*
     /// 
@@ -1071,7 +1049,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_uniform1f(location: GLint, x: i32),
+    gl_uniform1f(location: GLint, x: GLfloat),
     /// 
     /// Convenience function that calls glUniform1fv( *location,* *count,* *v).*
     /// 
@@ -1080,7 +1058,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_uniform1fv(location: GLint, count: i32, v: *i32),
+    gl_uniform1fv(location: GLint, count: GLsizei, v: *GLfloat),
     /// 
     /// Convenience function that calls glUniform1i( *location,* *x).*
     /// 
@@ -1106,7 +1084,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_uniform1iv(location: GLint, count: i32, v: *GLint),
+    gl_uniform1iv(location: GLint, count: GLsizei, v: *GLint),
     /// 
     /// Convenience function that calls glUniform2f( *location,* *x,* *y).*
     /// 
@@ -1123,7 +1101,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_uniform2f(location: GLint, x: i32, y: i32),
+    gl_uniform2f(location: GLint, x: GLfloat, y: GLfloat),
     /// 
     /// Convenience function that calls glUniform2fv( *location,* *count,* *v).*
     /// 
@@ -1132,7 +1110,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_uniform2fv(location: GLint, count: i32, v: *i32),
+    gl_uniform2fv(location: GLint, count: GLsizei, v: *GLfloat),
     /// 
     /// Convenience function that calls glUniform2i( *location,* *x,* *y).*
     /// 
@@ -1158,7 +1136,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_uniform2iv(location: GLint, count: i32, v: *GLint),
+    gl_uniform2iv(location: GLint, count: GLsizei, v: *GLint),
     /// 
     /// Convenience function that calls glUniform3f( *location,* *x,* *y,* *z).*
     /// 
@@ -1175,7 +1153,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_uniform3f(location: GLint, x: i32, y: i32, z: i32),
+    gl_uniform3f(location: GLint, x: GLfloat, y: GLfloat, z: GLfloat),
     /// 
     /// Convenience function that calls glUniform3fv( *location,* *count,* *v).*
     /// 
@@ -1184,7 +1162,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_uniform3fv(location: GLint, count: i32, v: *i32),
+    gl_uniform3fv(location: GLint, count: GLsizei, v: *GLfloat),
     /// 
     /// Convenience function that calls glUniform3i( *location,* *x,* *y,* *z).*
     /// 
@@ -1210,7 +1188,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_uniform3iv(location: GLint, count: i32, v: *GLint),
+    gl_uniform3iv(location: GLint, count: GLsizei, v: *GLint),
     /// 
     /// Convenience function that calls glUniform4f( *location,* *x,* *y,* *z,* *w).*
     /// 
@@ -1227,7 +1205,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_uniform4f(location: GLint, x: i32, y: i32, z: i32, w: i32),
+    gl_uniform4f(location: GLint, x: GLfloat, y: GLfloat, z: GLfloat, w: GLfloat),
     /// 
     /// Convenience function that calls glUniform4fv( *location,* *count,* *v).*
     /// 
@@ -1236,7 +1214,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_uniform4fv(location: GLint, count: i32, v: *i32),
+    gl_uniform4fv(location: GLint, count: GLsizei, v: *GLfloat),
     /// 
     /// Convenience function that calls glUniform4i( *location,* *x,* *y,* *z,* *w).*
     /// 
@@ -1262,7 +1240,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_uniform4iv(location: GLint, count: i32, v: *GLint),
+    gl_uniform4iv(location: GLint, count: GLsizei, v: *GLint),
     /// 
     /// Convenience function that calls glUseProgram( *program).*
     /// 
@@ -1271,7 +1249,7 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_use_program(program: i32),
+    gl_use_program(program: GLuint),
     /// 
     /// Convenience function that calls glValidateProgram( *program).*
     /// 
@@ -1280,8 +1258,29 @@ struct OpenGLFunctions {
     /// 
     /// 
     /// This convenience function will do nothing on OpenGL ES 1.x systems.
-    gl_validate_program(program: i32),
+    gl_validate_program(program: GLuint),
     [static] is_initialized(d: *OpenGLFunctionsPrivateType) -> bool,
+}
+
+[org_name(QOpenGLFunctions)]
+enum OpenGLFeature {
+    Multitexture,
+    Shaders,
+    Buffers,
+    Framebuffers,
+    BlendColor,
+    BlendEquation,
+    BlendEquationSeparate,
+    BlendFuncSeparate,
+    BlendSubtract,
+    CompressedTextures,
+    Multisample,
+    StencilSeparate,
+    NPOTTextures,
+    NPOTTextureRepeat,
+    FixedFunctionPipeline,
+    TextureRGFormats,
+    MultipleRenderTargets,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

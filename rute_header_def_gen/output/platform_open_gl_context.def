@@ -1,7 +1,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct PlatformOpenGLContext {
     /// 
     /// Called after a new instance is constructed. The default implementation does nothing.
@@ -18,7 +17,7 @@ struct PlatformOpenGLContext {
     /// Reimplement in subclass if your platform uses framebuffer objects for surfaces.
     /// 
     /// The default implementation returns 0.
-    default_framebuffer_object(surface: *PlatformSurfaceType) -> i32,
+    [event] default_framebuffer_object(surface: *PlatformSurfaceType) -> GLuint,
     [event] make_current(surface: *PlatformSurfaceType) -> bool,
     [event] done_current(),
     [event] is_sharing() -> bool,

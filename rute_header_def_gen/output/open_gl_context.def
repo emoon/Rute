@@ -64,19 +64,13 @@
 /// application is portable between different platforms. However, if you use
 /// QOpenGLFunctions::glBindFramebuffer(), this is done automatically for you.
 /// 
-/// **See also:** QOpenGLFunctions
-/// QOpenGLBuffer
-/// QOpenGLShaderProgram
-/// QOpenGLFramebufferObject
+/// **See also:** [`OpenGLFunctions`]
+/// [`OpenGLBuffer`]
+/// [`OpenGLShaderProgram`]
+/// [`OpenGLFramebufferObject`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QOpenGLContext)]
-enum OpenGLModuleType {
-    LibGL,
-    LibGLES,
-}
-
 struct OpenGLContext : Object {
     /// 
     /// Sets the *format* the OpenGL context should be compatible with. You need
@@ -126,7 +120,7 @@ struct OpenGLContext : Object {
     /// approaches based on context sharing where OpenGL resources like textures are
     /// accessible both from Qt's and the foreign framework's contexts.
     /// 
-    /// **See also:** nativeHandle()
+    /// **See also:** [`native_handle()`]
     set_native_handle(handle: &VariantType),
     /// 
     /// Attempts to create the OpenGL context with the current configuration.
@@ -148,8 +142,8 @@ struct OpenGLContext : Object {
     /// **Note**: If the context already exists, this function destroys the existing
     /// context first, and then creates a new one.
     /// 
-    /// **See also:** makeCurrent()
-    /// format()
+    /// **See also:** [`make_current()`]
+    /// [`format()`]
     create() -> bool,
     /// 
     /// Returns if this context is valid, i.e. has been successfully created.
@@ -163,7 +157,7 @@ struct OpenGLContext : Object {
     /// OpenGL context by calling create(), call makeCurrent() again and then
     /// reinitialize all OpenGL resources.
     /// 
-    /// **See also:** create()
+    /// **See also:** [`create()`]
     is_valid() -> bool,
     /// 
     /// Returns the format of the underlying platform context, if create() has been called.
@@ -207,7 +201,7 @@ struct OpenGLContext : Object {
     /// neither create() nor setNativeHandle() was called, a null variant is
     /// returned.
     /// 
-    /// **See also:** setNativeHandle()
+    /// **See also:** [`set_native_handle()`]
     native_handle() -> Variant,
     /// 
     /// Call this to get the default framebuffer object for the current surface.
@@ -231,8 +225,8 @@ struct OpenGLContext : Object {
     /// QOpenGLFramebufferObject::bindDefault() or
     /// QOpenGLFramebufferObject::release()).
     /// 
-    /// **See also:** QOpenGLFramebufferObject
-    default_framebuffer_object() -> i32,
+    /// **See also:** [`OpenGLFramebufferObject`]
+    default_framebuffer_object() -> GLuint,
     /// 
     /// Makes the context current in the current thread, against the given
     /// *surface.* Returns `true` if successful; otherwise returns `false.`
@@ -255,17 +249,17 @@ struct OpenGLContext : Object {
     /// [QObject thread affinity](QObject%23Thread%20Affinity)
     /// documentation.
     /// 
-    /// **See also:** functions()
-    /// doneCurrent()
-    /// Qt::AA_DontCheckOpenGLContextThreadAffinity
+    /// **See also:** [`functions()`]
+    /// [`done_current()`]
+    /// [`t::aa_dont_check_open_gl_context_thread_affinity()`]
     make_current(surface: *SurfaceType) -> bool,
     /// 
     /// Convenience function for calling makeCurrent with a 0 surface.
     /// 
     /// This results in no context being current in the current thread.
     /// 
-    /// **See also:** makeCurrent()
-    /// currentContext()
+    /// **See also:** [`make_current()`]
+    /// [`current_context()`]
     done_current(),
     /// 
     /// Swap the back and front buffers of *surface.*
@@ -286,6 +280,7 @@ struct OpenGLContext : Object {
     /// Returns 0 if no such function can be found.
     /// 
     /// **Overloads**
+    [org_name(getProcAddress)]
     get_proc_address_2(proc_name: *char) -> FunctionPointer,
     /// 
     /// Returns the surface the context has been made current with.
@@ -369,7 +364,7 @@ struct OpenGLContext : Object {
     /// 
     /// The context or a sharing context must be current.
     /// 
-    /// **See also:** hasExtension()
+    /// **See also:** [`has_extension()`]
     extensions() -> Set<QByteArray>,
     /// 
     /// Returns `true` if this OpenGL context supports the specified OpenGL
@@ -377,7 +372,7 @@ struct OpenGLContext : Object {
     /// 
     /// The context or a sharing context must be current.
     /// 
-    /// **See also:** extensions()
+    /// **See also:** [`extensions()`]
     has_extension(extension: &ByteArrayType) -> bool,
     /// 
     /// Returns the platform-specific handle for the OpenGL implementation that
@@ -390,7 +385,7 @@ struct OpenGLContext : Object {
     /// 
     /// **Note**: This function requires that the QGuiApplication instance is already created.
     /// 
-    /// **See also:** openGLModuleType()
+    /// **See also:** [`open_gl_module_type()`]
     /// 
     [static] open_gl_module_handle(),
     /// 
@@ -414,9 +409,9 @@ struct OpenGLContext : Object {
     /// If the context has not yet been created, the result is based on the
     /// requested format set via setFormat().
     /// 
-    /// **See also:** create()
-    /// format()
-    /// setFormat()
+    /// **See also:** [`create()`]
+    /// [`format()`]
+    /// [`set_format()`]
     /// 
     is_open_gles() -> bool,
     /// 
@@ -442,10 +437,16 @@ struct OpenGLContext : Object {
     /// current on any surface. Instead, you can create a new context which shares
     /// with the global one, and then make the new context current.
     /// 
-    /// **See also:** Qt::AA_ShareOpenGLContexts
-    /// setShareContext()
-    /// makeCurrent()
+    /// **See also:** [`t::aa_share_open_gl_contexts()`]
+    /// [`set_share_context()`]
+    /// [`make_current()`]
     [static] global_share_context() -> OpenGLContext?,
+}
+
+[org_name(QOpenGLContext)]
+enum OpenGLModuleType {
+    LibGL,
+    LibGLES,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
