@@ -14,4 +14,4 @@ qdoc_parser = { path = "../../qdoc_parser" }
 
 [dependencies.clang]
 version = "0.20"
-features = ["clang_4_0"]
+features = ["clang_6_0"]
