@@ -95,6 +95,7 @@ fn add_paths_compile_args(
     add_path_arg(header_paths, base_path, "include/QtWidgets");
     add_path_arg(header_paths, base_path, "include/QtGui");
     add_path_arg(header_paths, base_path, "include/QtCore/qnamespace.h");
+    add_path_arg(header_paths, base_path, "include/QtCore/qmimedata.h");
 
     add_flag(args, "-std=c++11");
     add_flag(args, "-x");
