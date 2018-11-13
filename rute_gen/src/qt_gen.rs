@@ -71,13 +71,17 @@ struct EnumTypeHandler;
 impl TypeHandlerTrait for EnumTypeHandler {
     fn replace_arg(&self, arg: &Variable, _is_return_value: IsReturnArg) -> String {
         let mut base_name = arg.type_name.as_str();
+        let mut prefix_char = "";
 
         if arg.type_name == "Rute" {
             base_name = "Qt";
+        } else {
+            prefix_char = "Q";
         }
 
         format!(
-            "({}::{})s_{}_lookup[{}]",
+            "({}{}::{})s_{}_lookup[{}]",
+            prefix_char,
             base_name,
             arg.enum_sub_type,
             arg.enum_sub_type.to_snake_case(),
@@ -1193,6 +1197,10 @@ impl QtGenerator {
         for (_, enum_def) in enums {
             let enum_name = enum_def.name.to_snake_case();
             let mut template_data = Object::new();
+
+            if enum_name.contains("image") {
+                println!("\ne num name {} {}\n", enum_def.name, enum_name);
+            }
 
             template_data.insert("enum_name".into(), Value::scalar(enum_name));
             template_data.insert(

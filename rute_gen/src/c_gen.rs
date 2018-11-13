@@ -304,7 +304,7 @@ impl CapiHeaderGen {
             write!(
                 dest,
                 "{})",
-                func.gen_c_def_filter(Some(Some("void*".into())), |_, _| None)
+                func.gen_c_def_filter(Some(Some("void*, void*".into())), |_, _| None)
             ).unwrap()
         }
     }
