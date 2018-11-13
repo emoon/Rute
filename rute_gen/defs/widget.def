@@ -4270,16 +4270,16 @@ struct Widget : Object, PaintDevice {
     /// [`set_tablet_tracking()`]
     /// [`TabletEvent`]
     [event] tablet_event(event: *TabletEventType),
-    ///
-    /// This event handler is called with the given *event* whenever the
-    /// widget's actions are changed.
-    ///
-    /// **See also:** [`add_action()`]
-    /// [`insert_action()`]
-    /// [`remove_action()`]
-    /// [`actions()`]
-    /// [`ActionEvent`]
-    [event] action_event(event: *ActionEventType),
+    //
+    // This event handler is called with the given *event* whenever the
+    // widget's actions are changed.
+    //
+    // **See also:** [`add_action()`]
+    // [`insert_action()`]
+    // [`remove_action()`]
+    // [`actions()`]
+    // [`ActionEvent`]
+    //[event] action_event(event: *ActionEventType),
     ///
     /// This event handler is called when a drag is in progress and the
     /// mouse enters this widget. The event is passed in the *event* parameter.
@@ -4419,8 +4419,8 @@ struct Widget : Object, PaintDevice {
     /// the given widget's. This function is called automatically when the
     /// painter is opened on a QWidget.
     [event] init_painter(painter: *PainterType),
-    [event] redirected(offset: *PointType) -> PaintDevice?,
-    [event] shared_painter() -> Painter?,
+    //[event] redirected(offset: *PointType) -> PaintDevice?,
+    //[event] shared_painter() -> Painter?,
     ///
     /// This event handler, for event *event,* can be reimplemented in a
     /// subclass to receive Input Method composition events. This handler
@@ -4438,7 +4438,7 @@ struct Widget : Object, PaintDevice {
     ///
     /// **See also:** [`event()`]
     /// [`InputMethodEvent`]
-    [event] input_method_event(arg0: *InputMethodEventType),
+    //[event] input_method_event(arg0: *InputMethodEventType),
     //
     // This method is only relevant for input widgets. It is used by the
     // input method to query a set of properties of the widget to be

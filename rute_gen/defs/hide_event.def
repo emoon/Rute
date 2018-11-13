@@ -1,0 +1,20 @@
+///
+/// This event is sent just before QWidget::hide() returns, and also
+/// when a top-level window has been hidden (iconified) by the user.
+///
+/// If spontaneous() is true, the event originated outside the
+/// application. In this case, the user hid the window using the
+/// window manager controls, either by iconifying the window or by
+/// switching to another virtual desktop where the window is not
+/// visible. The window will become hidden but not withdrawn. If the
+/// window was iconified, QWidget::isMinimized() returns `true.`
+///
+/// **See also:** [`ShowEvent`]
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[attributes(NoWrapClass, NoCreate)]
+struct HideEvent : Event {
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

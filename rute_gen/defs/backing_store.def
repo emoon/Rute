@@ -21,13 +21,13 @@ struct BackingStore {
     ///
     /// Returns a pointer to the top-level window associated with this
     /// surface.
-    window() -> Window?,
+    //window() -> Window?,
     ///
     /// Returns the paint device for this surface.
     ///
     /// **Warning**: The device is only valid between calls to beginPaint() and
     /// endPaint(). You should not cache the returned value.
-    paint_device() -> PaintDevice?,
+    //paint_device() -> PaintDevice?,
     ///
     /// Flushes the given *region* from the specified *window* onto the
     /// screen.

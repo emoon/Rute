@@ -1,17 +1,17 @@
-/// 
+///
 /// The QBitmap class is a monochrome off-screen paint device used
 /// mainly for creating custom QCursor and QBrush objects,
 /// constructing QRegion objects, and for setting masks for pixmaps
 /// and widgets.
-/// 
+///
 /// QBitmap is a QPixmap subclass ensuring a depth of 1, except for
 /// null objects which have a depth of 0. If a pixmap with a depth
 /// greater than 1 is assigned to a bitmap, the bitmap will be
 /// dithered automatically.
-/// 
+///
 /// Use the QColor objects Qt::color0 and Qt::color1 when drawing on a
 /// QBitmap object (or a QPixmap object with depth 1).
-/// 
+///
 /// Painting with Qt::color0 sets the bitmap bits to 0, and painting
 /// with Qt::color1 sets the bits to 1. For a bitmap, 0-bits indicate
 /// background (or transparent pixels) and 1-bits indicate foreground
@@ -19,7 +19,7 @@
 /// to Qt::color0. Note that using the Qt::black and Qt::white colors
 /// make no sense because the QColor::pixel() value is not necessarily
 /// 0 for black and 1 for white.
-/// 
+///
 /// The QBitmap class provides the transformed() function returning a
 /// transformed copy of the bitmap; use the QTransform argument to
 /// translate, scale, shear, and rotate the bitmap. In addition,
@@ -27,45 +27,46 @@
 /// bitmap constructed from the given `uchar` data, and the static
 /// fromImage() function returning a converted copy of a QImage
 /// object.
-/// 
+///
 /// Just like the QPixmap class, QBitmap is optimized by the use of
 /// implicit data sharing. For more information, see the [Implicit
 /// Data Sharing](Implicit%0A%20%20%20%20Data%20Sharing)
 /// documentation.
-/// 
-/// **See also:** QPixmap
-/// QImage
-/// QImageReader
-/// QImageWriter
+///
+/// **See also:** [`Pixmap`]
+/// [`Image`]
+/// [`ImageReader`]
+/// [`ImageWriter`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[attributes(NoWrapClass)]
 struct Bitmap : Pixmap {
-    /// 
+    ///
     /// Swaps bitmap *other* with this bitmap. This operation is very
     /// fast and never fails.
     swap(other: &BitmapType),
-    /// 
+    ///
     /// Clears the bitmap, setting all its bits to Qt::color0.
     clear(),
-    /// 
+    ///
     /// Returns a copy of the given *image* converted to a bitmap using
     /// the specified image conversion *flags.*
-    /// 
-    /// **See also:** fromData()
+    ///
+    /// **See also:** [`from_data()`]
     [static] from_image(image: &ImageType, flags: Rute::ImageConversionFlags) -> Bitmap,
-    /// 
+    ///
     /// Constructs a bitmap with the given *size,* and sets the contents to
     /// the *bits* supplied.
-    /// 
+    ///
     /// The bitmap data has to be byte aligned and provided in in the bit
     /// order specified by *monoFormat.* The mono format must be either
     /// QImage::Format_Mono or QImage::Format_MonoLSB. Use
     /// QImage::Format_Mono to specify data on the XBM format.
-    /// 
-    /// **See also:** fromImage()
-    /// 
-    [static] from_data(size: &SizeType, bits: *uchar, mono_format: Image::Format) -> Bitmap,
+    ///
+    /// **See also:** [`from_image()`]
+    ///
+    //[static] from_data(size: &SizeType, bits: *uchar, mono_format: Image::Format) -> Bitmap,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

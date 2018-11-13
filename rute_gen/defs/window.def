@@ -73,6 +73,7 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[attributes(NoCppClone)]
 struct Window : Object, Surface {
     ///
     /// Sets the *surfaceType* of the window.
@@ -95,7 +96,8 @@ struct Window : Object, Surface {
     /// Returns the surface type of the window.
     ///
     /// **See also:** [`set_surface_type()`]
-    [event] surface_type() -> Surface::SurfaceType,
+    //[event]
+    surface_type() -> Surface::SurfaceType,
     is_visible() -> bool,
     ///
     /// Visibility is whether the window should appear in the windowing system as
@@ -234,7 +236,8 @@ struct Window : Object, Surface {
     /// **See also:** [`create()`]
     /// [`requested_format()`]
     /// [`OpenGLContext::format`]
-    [event] format() -> SurfaceFormat,
+    //[event]
+    format() -> SurfaceFormat,
     ///
     /// Returns the requested surface format of this window.
     ///
@@ -548,7 +551,8 @@ struct Window : Object, Surface {
     /// **See also:** [`set_size_increment()`]
     ///
     /// **See also:** [`resize()`]
-    [event] size() -> Size,
+    //[event]
+    size() -> Size,
     ///
     /// **See also:** [`set_position()`]
     position() -> Point,
@@ -693,7 +697,8 @@ struct Window : Object, Surface {
     ///
     /// Returns the QObject that will be the final receiver of events tied focus, such
     /// as key events.
-    [event] focus_object() -> Object?,
+    //[event]
+    focus_object() -> Object?,
     ///
     /// Translates the window coordinate *pos* to global screen
     /// coordinates. For example, `mapToGlobal(QPoint(0,0))` would give
@@ -1070,7 +1075,7 @@ struct Window : Object, Surface {
     /// This might make your application non-portable.
     ///
     /// Should return true only if the event was handled.
-    [event] native_event(event_type: &ByteArrayType, message: *void, result: *long) -> bool,
+    //[event] native_event(event_type: &ByteArrayType, message: *void, result: *long) -> bool,
 }
 
 [org_name(QWindow)]

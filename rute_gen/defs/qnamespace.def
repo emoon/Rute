@@ -45,7 +45,7 @@ enum Modifier {
 }
 
 [org_name(Qt)]
-enum MouseButton {
+enum MouseButtons {
     NoButton,
     LeftButton,
     RightButton,
@@ -401,7 +401,7 @@ enum ApplicationAttribute {
 }
 
 [org_name(Qt)]
-enum ImageConversionFlag {
+enum ImageConversionFlags {
     ColorMode_Mask,
     AutoColor,
     ColorOnly,
