@@ -410,11 +410,30 @@ fn print_func<W: Write>(
 ///
 /// Print enums
 ///
-fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_class_name: &str) {
+fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_class_name: &str, docs: &HashMap<String, QDocFile>) {
+    let mut hash_lookup = HashMap::new();
+
     writeln!(dest, "[org_name({})]", org_class_name);
 
     if let Some(enum_name) = entry.get_display_name() {
         writeln!(dest, "enum {} {{", enum_name);
+        let full_enum_name = format!("{}::{}", org_class_name, enum_name);
+
+        for (_, f) in docs {
+            for entry in &f.0 {
+                match entry.data {
+                    QDocItem::Enum(ref enum_def) => {
+                        if full_enum_name == enum_def.name {
+                            hash_lookup = enum_def.data.clone();
+                        }
+                    }
+
+                    _ => (),
+                }
+            }
+        }
+
+
     } else {
         writeln!(dest, "enum {}FixMeEnums {{", struct_name);
     }
@@ -422,7 +441,12 @@ fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_cl
     for entry in entry.get_children() {
         match entry.get_kind() {
             EntityKind::EnumConstantDecl => {
-                writeln!(dest, "    {},", entry.get_display_name().unwrap());
+                let name = entry.get_display_name().unwrap();
+                if let Some(data) = hash_lookup.get(&name) {
+                    writeln!(dest,"    /// {}", data);
+                }
+
+                writeln!(dest, "    {},", name);
             }
 
             _ => (),
@@ -561,7 +585,7 @@ fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFil
     // print all enums for the class
     for field in entry.get_children() {
         match field.get_kind() {
-            EntityKind::EnumDecl => print_enums(&mut dest, &field, &name[1..], &name),
+            EntityKind::EnumDecl => print_enums(&mut dest, &field, &name[1..], &name, docs),
             _ => (),
         }
     }
@@ -624,7 +648,7 @@ impl Generator {
 
         // Process all files in parallel using Rayon
         header_files.par_iter().for_each(|filename| {
-            //println!("Processing filename {:?}", filename);
+            println!("Processing filename {:?}", filename);
 
             // Create a new `Index`
             let index = Index::new(&clang, false, false);
@@ -710,7 +734,7 @@ impl Generator {
                         BufWriter::with_capacity(16 * 1024, File::create(target_filename).unwrap());
 
                     for enum_def in enums {
-                        print_enums(&mut dest, &enum_def, &base_name, "Qt");
+                        print_enums(&mut dest, &enum_def, &base_name, "Qt", docs);
                     }
                 }
             }

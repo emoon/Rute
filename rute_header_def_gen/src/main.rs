@@ -12,7 +12,7 @@ use header_gen::Generator;
 use std::path::Path;
 use std::env;
 
-use qdoc_parser::{QDocFilterable, QDocParser};
+use qdoc_parser::{QDocFilterable, QDocParser, QDocItem};
 
 fn generate_code_link(data: &str) -> String {
     if data.contains("::") && data.ends_with("()") && data.starts_with("Q") {
