@@ -416,26 +416,39 @@ struct TabBar : Widget {
 
 [org_name(QTabBar)]
 enum Shape {
+    /// The normal rounded look above the pages
     RoundedNorth,
+    /// The normal rounded look below the pages
     RoundedSouth,
+    /// The normal rounded look on the left side of the pages
     RoundedWest,
+    /// The normal rounded look on the right side the pages
     RoundedEast,
+    /// Triangular tabs above the pages.
     TriangularNorth,
+    /// Triangular tabs similar to those used in
     TriangularSouth,
+    /// Triangular tabs on the left of the pages.
     TriangularWest,
+    /// Triangular tabs on the right of the pages.
     TriangularEast,
 }
 
 [org_name(QTabBar)]
 enum ButtonPosition {
+    /// Left side of the tab.
     LeftSide,
+    /// Right side of the tab.
     RightSide,
 }
 
 [org_name(QTabBar)]
 enum SelectionBehavior {
+    /// Select the tab to the left of the one being removed.
     SelectLeftTab,
+    /// Select the tab to the right of the one being removed.
     SelectRightTab,
+    /// Select the previously selected tab.
     SelectPreviousTab,
 }
 

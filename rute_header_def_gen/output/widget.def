@@ -4475,6 +4475,24 @@ struct Widget : Object, PaintDevice {
     /// Updates the widget's micro focus.
     update_micro_focus(),
     /// 
+    /// Creates a new widget window.
+    /// 
+    /// The parameter *window* is ignored in Qt 5. Please use
+    /// QWindow::fromWinId() to create a QWindow wrapping a foreign
+    /// window and pass it to QWidget::createWindowContainer() instead.
+    /// 
+    /// Initializes the window (sets the geometry etc.) if *initializeWindow* is true. If *initializeWindow* is false, no
+    /// initialization is performed. This parameter only makes sense if *window* is a valid window.
+    /// 
+    /// Destroys the old window if *destroyOldWindow* is true. If *destroyOldWindow* is false, you are responsible for destroying the
+    /// window yourself (using platform native code).
+    /// 
+    /// The QWidget constructor calls create(0,true,true) to create a
+    /// window for this widget.
+    /// 
+    /// **See also:** [`create_window_container()`]
+    /// [`Window::from_win_id`]
+    /// 
     /// Creates a QWidget that makes it possible to embed *window* into
     /// a QWidget-based application.
     /// 
@@ -4508,24 +4526,6 @@ struct Widget : Object, PaintDevice {
     /// * Rendering Integration; The window container does not interoperate with QGraphicsProxyWidget, QWidget::render() or similar functionality.
     /// * Focus Handling; It is possible to let the window container instance have any focus policy and it will delegate focus to the window via a call to QWindow::requestActivate(). However, returning to the normal focus chain from the QWindow instance will be up to the QWindow instance implementation itself. For instance, when entering a Qt Quick based window with tab focus, it is quite likely that further tab presses will only cycle inside the QML application. Also, whether QWindow::requestActivate() actually gives the window focus, is platform dependent.
     /// * Using many window container instances in a QWidget-based application can greatly hurt the overall performance of the application.
-    /// 
-    /// Creates a new widget window.
-    /// 
-    /// The parameter *window* is ignored in Qt 5. Please use
-    /// QWindow::fromWinId() to create a QWindow wrapping a foreign
-    /// window and pass it to QWidget::createWindowContainer() instead.
-    /// 
-    /// Initializes the window (sets the geometry etc.) if *initializeWindow* is true. If *initializeWindow* is false, no
-    /// initialization is performed. This parameter only makes sense if *window* is a valid window.
-    /// 
-    /// Destroys the old window if *destroyOldWindow* is true. If *destroyOldWindow* is false, you are responsible for destroying the
-    /// window yourself (using platform native code).
-    /// 
-    /// The QWidget constructor calls create(0,true,true) to create a
-    /// window for this widget.
-    /// 
-    /// **See also:** [`create_window_container()`]
-    /// [`Window::from_win_id`]
     create(arg0: WId, initialize_window: bool, destroy_old_window: bool),
     /// 
     /// Finds a new widget to give the keyboard focus to, as appropriate
@@ -4566,8 +4566,11 @@ struct Widget : Object, PaintDevice {
 
 [org_name(QWidget)]
 enum RenderFlag {
+    /// If you enable this option, the widget's background
     DrawWindowBackground,
+    /// If you enable this option, the widget's children
     DrawChildren,
+    /// If you enable this option, the widget's QWidget::mask()
     IgnoreMask,
 }
 

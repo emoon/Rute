@@ -203,12 +203,19 @@ struct JsonValue {
 
 [org_name(QJsonValue)]
 enum Type {
+    /// A Null value
     Null,
+    /// A boolean value. Use toBool() to convert to a bool.
     Bool,
+    /// A double. Use toDouble() to convert to a double.
     Double,
+    /// A string. Use toString() to convert to a QString.
     String,
+    /// An array. Use toArray() to convert to a QJsonArray.
     Array,
+    /// An object. Use toObject() to convert to a QJsonObject.
     Object,
+    /// The value is undefined. This is usually returned as an
     Undefined,
 }
 

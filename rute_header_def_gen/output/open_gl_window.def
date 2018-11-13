@@ -244,8 +244,11 @@ struct OpenGLWindow : PaintDeviceWindow {
 
 [org_name(QOpenGLWindow)]
 enum UpdateBehavior {
+    /// Indicates that the entire window surface will
     NoPartialUpdate,
+    /// Indicates that the drawing performed in paintGL()
     PartialUpdateBlit,
+    /// Similar to PartialUpdateBlit, but instead of using
     PartialUpdateBlend,
 }
 

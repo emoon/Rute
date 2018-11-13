@@ -265,39 +265,61 @@ struct OpenGLBuffer {
 
 [org_name(QOpenGLBuffer)]
 enum Type {
+    /// Vertex buffer object for use when specifying
     VertexBuffer,
+    /// Index buffer object for use with
     IndexBuffer,
+    /// Pixel pack buffer object for reading pixel
     PixelPackBuffer,
+    /// Pixel unpack buffer object for writing pixel
     PixelUnpackBuffer,
 }
 
 [org_name(QOpenGLBuffer)]
 enum UsagePattern {
+    /// The data will be set once and used a few times
     StreamDraw,
+    /// The data will be set once and used a few times
     StreamRead,
+    /// The data will be set once and used a few times
     StreamCopy,
+    /// The data will be set once and used many times
     StaticDraw,
+    /// The data will be set once and used many times
     StaticRead,
+    /// The data will be set once and used many times
     StaticCopy,
+    /// The data will be modified repeatedly and used
     DynamicDraw,
+    /// The data will be modified repeatedly and used
     DynamicRead,
+    /// The data will be modified repeatedly and used
     DynamicCopy,
 }
 
 [org_name(QOpenGLBuffer)]
 enum Access {
+    /// The buffer will be mapped for reading only.
     ReadOnly,
+    /// The buffer will be mapped for writing only.
     WriteOnly,
+    /// The buffer will be mapped for reading and writing.
     ReadWrite,
 }
 
 [org_name(QOpenGLBuffer)]
 enum RangeAccessFlag {
+    /// The buffer will be mapped for reading.
     RangeRead,
+    /// The buffer will be mapped for writing.
     RangeWrite,
+    /// Discard the previous contents of the specified range.
     RangeInvalidate,
+    /// Discard the previous contents of the entire buffer.
     RangeInvalidateBuffer,
+    /// Indicates that modifications are to be flushed explicitly via
     RangeFlushExplicit,
+    /// Indicates that pending operations should not be synchronized before returning from mapRange().
     RangeUnsynchronized,
 }
 

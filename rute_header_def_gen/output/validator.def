@@ -121,8 +121,11 @@ struct Validator : Object {
 
 [org_name(QValidator)]
 enum State {
+    /// The string is
     Invalid,
+    /// The string is a plausible intermediate value.
     Intermediate,
+    /// The string is acceptable as a final result;
     Acceptable,
 }
 

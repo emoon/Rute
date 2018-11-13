@@ -138,39 +138,65 @@ struct SizePolicy {
 
 [org_name(QSizePolicy)]
 enum PolicyFlag {
+    /// The widget can grow beyond its size hint if necessary.
     GrowFlag,
+    /// The widget should get as much space as possible.
     ExpandFlag,
+    /// The widget can shrink below its size hint if necessary.
     ShrinkFlag,
+    /// The widget's size hint is ignored. The widget will get
     IgnoreFlag,
 }
 
 [org_name(QSizePolicy)]
 enum Policy {
+    /// The QWidget::sizeHint() is the only acceptable
     Fixed,
+    /// The sizeHint() is minimal, and sufficient. The
     Minimum,
+    /// The sizeHint() is a maximum. The widget can be
     Maximum,
+    /// The sizeHint() is best, but the widget can be
     Preferred,
+    /// The sizeHint() is minimal, and sufficient.
     MinimumExpanding,
+    /// The sizeHint() is a sensible size, but the
     Expanding,
+    /// The sizeHint() is ignored. The widget will get as
     Ignored,
 }
 
 [org_name(QSizePolicy)]
 enum ControlType {
+    /// The default type, when none is specified.
     DefaultType,
+    /// A QDialogButtonBox instance.
     ButtonBox,
+    /// A QCheckBox instance.
     CheckBox,
+    /// A QComboBox instance.
     ComboBox,
+    /// A QFrame instance.
     Frame,
+    /// A QGroupBox instance.
     GroupBox,
+    /// A QLabel instance.
     Label,
+    /// A QFrame instance with QFrame::HLine or QFrame::VLine.
     Line,
+    /// A QLineEdit instance.
     LineEdit,
+    /// A QPushButton instance.
     PushButton,
+    /// A QRadioButton instance.
     RadioButton,
+    /// A QAbstractSlider instance.
     Slider,
+    /// A QAbstractSpinBox instance.
     SpinBox,
+    /// A QTabWidget instance.
     TabWidget,
+    /// A QToolButton instance.
     ToolButton,
 }
 

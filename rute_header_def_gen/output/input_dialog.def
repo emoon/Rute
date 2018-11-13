@@ -471,15 +471,21 @@ struct InputDialog : Dialog {
 
 [org_name(QInputDialog)]
 enum InputDialogOption {
+    /// Don't display
     NoButtons,
+    /// Use a QListView rather than a non-editable QComboBox for
     UseListViewForComboBoxItems,
+    /// Use a QPlainTextEdit for multiline text input. This value was
     UsePlainTextEditForTextInput,
 }
 
 [org_name(QInputDialog)]
 enum InputMode {
+    /// Used to input text strings.
     TextInput,
+    /// Used to input integers.
     IntInput,
+    /// Used to input floating point numbers with double
     DoubleInput,
 }
 

@@ -493,15 +493,21 @@ struct TabWidget : Widget {
 
 [org_name(QTabWidget)]
 enum TabPosition {
+    /// The tabs are drawn above the pages.
     North,
+    /// The tabs are drawn below the pages.
     South,
+    /// The tabs are drawn to the left of the pages.
     West,
+    /// The tabs are drawn to the right of the pages.
     East,
 }
 
 [org_name(QTabWidget)]
 enum TabShape {
+    /// The tabs are drawn with a rounded look. This is the default
     Rounded,
+    /// The tabs are drawn with a triangular look.
     Triangular,
 }
 

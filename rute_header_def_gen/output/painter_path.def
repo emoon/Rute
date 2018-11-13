@@ -1170,9 +1170,13 @@ struct PainterPath {
 
 [org_name(QPainterPath)]
 enum ElementType {
+    /// A new subpath. See also moveTo().
     MoveToElement,
+    /// A line. See also lineTo().
     LineToElement,
+    /// A curve. See also cubicTo() and quadTo().
     CurveToElement,
+    /// The extra data required to describe a curve in
     CurveToDataElement,
 }
 

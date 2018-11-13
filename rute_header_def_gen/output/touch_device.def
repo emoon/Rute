@@ -56,18 +56,27 @@ struct TouchDevice {
 
 [org_name(QTouchDevice)]
 enum DeviceType {
+    /// In this type of device, the touch surface and display are integrated. This
     TouchScreen,
+    /// In this type of device, the touch surface is separate from the display. There
     TouchPad,
 }
 
 [org_name(QTouchDevice)]
 enum CapabilityFlag {
+    /// Indicates that position information is available, meaning
     Position,
+    /// Indicates that touch area information is available, meaning that the rect() family
     Area,
+    /// Indicates that pressure information is available, meaning that pressure()
     Pressure,
+    /// Indicates that velocity information is available, meaning that velocity()
     Velocity,
+    /// Indicates that the list returned by QTouchEvent::TouchPoint::rawScreenPositions()
     RawPositions,
+    /// Indicates that the normalized position is available, meaning that normalizedPos()
     NormalizedPosition,
+    /// Indicates that the device synthesizes mouse events.
     MouseEmulation,
 }
 

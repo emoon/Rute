@@ -560,7 +560,9 @@ struct OpenGLWidget : Widget {
 
 [org_name(QOpenGLWidget)]
 enum UpdateBehavior {
+    /// QOpenGLWidget will discard the
     NoPartialUpdate,
+    /// The framebuffer objects color buffer and ancillary
     PartialUpdate,
 }
 

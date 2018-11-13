@@ -273,7 +273,9 @@ struct ListWidgetItem {
 
 [org_name(QListWidgetItem)]
 enum ItemType {
+    /// The default type for list widget items.
     Type,
+    /// The minimum value for custom types. Values below UserType are
     UserType,
 }
 

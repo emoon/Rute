@@ -359,7 +359,9 @@ struct DataWidgetMapper : Object {
 
 [org_name(QDataWidgetMapper)]
 enum SubmitPolicy {
+    /// Whenever a widget loses focus, the widget's current
     AutoSubmit,
+    /// The model is not updated until submit() is called.
     ManualSubmit,
 }
 

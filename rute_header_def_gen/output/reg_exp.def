@@ -907,18 +907,27 @@ struct RegExp {
 
 [org_name(QRegExp)]
 enum PatternSyntax {
+    /// A rich Perl-like pattern matching syntax. This is
     RegExp,
+    /// This provides a simple pattern matching syntax
     Wildcard,
+    /// The pattern is a fixed string. This is
     FixedString,
+    /// Like RegExp, but with
     RegExp2,
+    /// This is similar to Wildcard but with the
     WildcardUnix,
+    /// The pattern is a regular expression as
     W3CXmlSchema11,
 }
 
 [org_name(QRegExp)]
 enum CaretMode {
+    /// The caret corresponds to index 0 in the searched string.
     CaretAtZero,
+    /// The caret corresponds to the start offset of the search.
     CaretAtOffset,
+    /// The caret never matches.
     CaretWontMatch,
 }
 

@@ -303,24 +303,43 @@ enum ButtonRole {
 
 [org_name(QDialogButtonBox)]
 enum StandardButton {
+    /// An invalid button.
     NoButton,
+    /// An "OK" button defined with the
     Ok,
+    /// A "Save" button defined with the
     Save,
+    /// A "Save All" button defined with the
     SaveAll,
+    /// An "Open" button defined with the
     Open,
+    /// A "Yes" button defined with the
     Yes,
+    /// A "Yes to All" button defined with the
     YesToAll,
+    /// A "No" button defined with the
     No,
+    /// A "No to All" button defined with the
     NoToAll,
+    /// An "Abort" button defined with the
     Abort,
+    /// A "Retry" button defined with the
     Retry,
+    /// An "Ignore" button defined with the
     Ignore,
+    /// A "Close" button defined with the
     Close,
+    /// A "Cancel" button defined with the
     Cancel,
+    /// A "Discard" or "Don't Save" button, depending on the platform,
     Discard,
+    /// A "Help" button defined with the
     Help,
+    /// An "Apply" button defined with the
     Apply,
+    /// A "Reset" button defined with the
     Reset,
+    /// A "Restore Defaults" button defined with the
     RestoreDefaults,
     FirstButton,
     LastButton,
@@ -328,10 +347,15 @@ enum StandardButton {
 
 [org_name(QDialogButtonBox)]
 enum ButtonLayout {
+    /// Use a policy appropriate for applications on Windows.
     WinLayout,
+    /// Use a policy appropriate for applications on
     MacLayout,
+    /// Use a policy appropriate for applications on KDE.
     KdeLayout,
+    /// Use a policy appropriate for applications on GNOME.
     GnomeLayout,
+    /// Use a policy appropriate for applications on Android.
     AndroidLayout,
 }
 

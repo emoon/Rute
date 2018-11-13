@@ -249,9 +249,13 @@ struct FileSystemModel : AbstractItemModel {
 
 [org_name(QFileSystemModel)]
 enum Roles {
+    /// 
     FileIconRole,
+    /// 
     FilePathRole,
+    /// 
     FileNameRole,
+    /// 
     FilePermissions,
 }
 

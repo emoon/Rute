@@ -22,11 +22,13 @@ struct StyleOptionTitleBar : StyleOptionComplex {
 
 [org_name(QStyleOptionTitleBar)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionTitleBar)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 

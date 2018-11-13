@@ -21,26 +21,35 @@ struct StyleOptionToolBox : StyleOption {
 
 [org_name(QStyleOptionToolBox)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionToolBox)]
 enum StyleOptionVersion {
+    /// 2
     Version,
 }
 
 [org_name(QStyleOptionToolBox)]
 enum TabPosition {
+    /// The tab is the first (i.e., top-most) tab in
     Beginning,
+    /// The tab is placed in the middle of the toolbox.
     Middle,
+    /// The tab is placed at the bottom of the toolbox.
     End,
+    /// There is only one tab in the toolbox.
     OnlyOneTab,
 }
 
 [org_name(QStyleOptionToolBox)]
 enum SelectedPosition {
+    /// The tab is not adjacent to a selected tab (or is the selected tab).
     NotAdjacent,
+    /// The next tab (typically the tab on the right) is selected.
     NextIsSelected,
+    /// The previous tab (typically the tab on the left) is selected.
     PreviousIsSelected,
 }
 

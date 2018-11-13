@@ -156,23 +156,37 @@ struct TextFrameFormat : TextFormat {
 
 [org_name(QTextFrameFormat)]
 enum Position {
+    /// 
     InFlow,
+    /// 
     FloatLeft,
+    /// 
     FloatRight,
 }
 
 [org_name(QTextFrameFormat)]
 enum BorderStyle {
+    /// 
     BorderStyle_None,
+    /// 
     BorderStyle_Dotted,
+    /// 
     BorderStyle_Dashed,
+    /// 
     BorderStyle_Solid,
+    /// 
     BorderStyle_Double,
+    /// 
     BorderStyle_DotDash,
+    /// 
     BorderStyle_DotDotDash,
+    /// 
     BorderStyle_Groove,
+    /// 
     BorderStyle_Ridge,
+    /// 
     BorderStyle_Inset,
+    /// 
     BorderStyle_Outset,
 }
 

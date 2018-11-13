@@ -22,21 +22,29 @@ struct StyleOptionButton : StyleOption {
 
 [org_name(QStyleOptionButton)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionButton)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 
 [org_name(QStyleOptionButton)]
 enum ButtonFeature {
+    /// Indicates a normal push button.
     None,
+    /// Indicates a flat push button.
     Flat,
+    /// Indicates that the button has a drop down menu.
     HasMenu,
+    /// Indicates that the button is a default button.
     DefaultButton,
+    /// Indicates that the button is an auto default button.
     AutoDefaultButton,
+    /// Indicates that the button is a Windows Vista type command link.
     CommandLinkButton,
 }
 

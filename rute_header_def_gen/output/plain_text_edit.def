@@ -776,7 +776,9 @@ struct PlainTextEdit : AbstractScrollArea {
 
 [org_name(QPlainTextEdit)]
 enum LineWrapMode {
+    /// 
     NoWrap,
+    /// 
     WidgetWidth,
 }
 

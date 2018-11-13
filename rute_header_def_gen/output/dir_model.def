@@ -233,8 +233,11 @@ struct DirModel : AbstractItemModel {
 
 [org_name(QDirModel)]
 enum Roles {
+    /// 
     FileIconRole,
+    /// 
     FilePathRole,
+    /// 
     FileNameRole,
 }
 

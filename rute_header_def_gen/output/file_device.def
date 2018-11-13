@@ -168,56 +168,91 @@ struct FileDevice : IODevice {
 
 [org_name(QFileDevice)]
 enum FileError {
+    /// No error occurred.
     NoError,
+    /// An error occurred when reading from the file.
     ReadError,
+    /// An error occurred when writing to the file.
     WriteError,
+    /// A fatal error occurred.
     FatalError,
+    /// Out of resources (e.g., too many open files, out of memory, etc.)
     ResourceError,
+    /// The file could not be opened.
     OpenError,
+    /// The operation was aborted.
     AbortError,
+    /// A timeout occurred.
     TimeOutError,
+    /// An unspecified error occurred.
     UnspecifiedError,
+    /// The file could not be removed.
     RemoveError,
+    /// The file could not be renamed.
     RenameError,
+    /// The position in the file could not be changed.
     PositionError,
+    /// The file could not be resized.
     ResizeError,
+    /// The file could not be accessed.
     PermissionsError,
+    /// The file could not be copied.
     CopyError,
 }
 
 [org_name(QFileDevice)]
 enum FileTime {
+    /// When the file was most recently accessed
     FileAccessTime,
+    /// When the file was created (may not be not
     FileBirthTime,
+    /// When the file's metadata was last changed.
     FileMetadataChangeTime,
+    /// When the file was most recently modified.
     FileModificationTime,
 }
 
 [org_name(QFileDevice)]
 enum Permission {
+    /// The file is readable by the owner of the file.
     ReadOwner,
+    /// The file is writable by the owner of the file.
     WriteOwner,
+    /// The file is executable by the owner of the file.
     ExeOwner,
+    /// The file is readable by the user.
     ReadUser,
+    /// The file is writable by the user.
     WriteUser,
+    /// The file is executable by the user.
     ExeUser,
+    /// The file is readable by the group.
     ReadGroup,
+    /// The file is writable by the group.
     WriteGroup,
+    /// The file is executable by the group.
     ExeGroup,
+    /// The file is readable by anyone.
     ReadOther,
+    /// The file is writable by anyone.
     WriteOther,
+    /// The file is executable by anyone.
     ExeOther,
 }
 
 [org_name(QFileDevice)]
 enum FileHandleFlag {
+    /// The file handle passed into open() should be
     AutoCloseHandle,
+    /// If not explicitly closed, the underlying file
     DontCloseHandle,
 }
 
 [org_name(QFileDevice)]
 enum MemoryMapFlags {
+    /// No options.
     NoOptions,
+    /// The mapped memory will be private, so any
     MapPrivateOption,
 }
 

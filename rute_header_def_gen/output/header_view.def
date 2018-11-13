@@ -773,10 +773,15 @@ struct HeaderView : AbstractItemView {
 
 [org_name(QHeaderView)]
 enum ResizeMode {
+    /// The user can resize the section. The section can also be
     Interactive,
+    /// QHeaderView will automatically resize the section to fill
     Stretch,
+    /// The user cannot resize the section. The section can only be
     Fixed,
+    /// QHeaderView will automatically resize the section
     ResizeToContents,
+    /// Use Fixed instead.
     Custom,
 }
 

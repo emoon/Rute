@@ -164,7 +164,9 @@ struct ProgressBar : Widget {
 
 [org_name(QProgressBar)]
 enum Direction {
+    /// The text is rotated 90 degrees clockwise.
     TopToBottom,
+    /// The text is rotated 90 degrees counter-clockwise.
     BottomToTop,
 }
 

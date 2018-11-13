@@ -759,16 +759,23 @@ struct MetaMethod {
 
 [org_name(QMetaMethod)]
 enum Access {
+    /// 
     Private,
+    /// 
     Protected,
+    /// 
     Public,
 }
 
 [org_name(QMetaMethod)]
 enum MethodType {
+    /// The function is a plain member function.
     Method,
+    /// The function is a signal.
     Signal,
+    /// The function is a slot.
     Slot,
+    /// The function is a constructor.
     Constructor,
 }
 

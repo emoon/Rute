@@ -4650,9 +4650,13 @@ struct ByteArray {
 
 [org_name(QByteArray)]
 enum Base64Option {
+    /// (default) The regular Base64 alphabet, called simply "base64"
     Base64Encoding,
+    /// An alternate alphabet, called "base64url", which replaces two
     Base64UrlEncoding,
+    /// (default) Keeps the trailing padding equal signs at the end
     KeepTrailingEquals,
+    /// Omits adding the padding equal signs at the end of the encoded
     OmitTrailingEquals,
 }
 

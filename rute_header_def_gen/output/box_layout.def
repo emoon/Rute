@@ -229,9 +229,13 @@ struct BoxLayout : Layout {
 
 [org_name(QBoxLayout)]
 enum Direction {
+    /// Horizontal from left to right.
     LeftToRight,
+    /// Horizontal from right to left.
     RightToLeft,
+    /// Vertical from top to bottom.
     TopToBottom,
+    /// Vertical from bottom to top.
     BottomToTop,
     Down,
     Up,

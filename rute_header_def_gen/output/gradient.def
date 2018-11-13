@@ -135,23 +135,33 @@ struct Gradient {
 
 [org_name(QGradient)]
 enum Type {
+    /// Interpolates colors between start and end points
     LinearGradient,
+    /// Interpolate colors between a focal point and end
     RadialGradient,
+    /// Interpolate colors around a center point (QConicalGradient).
     ConicalGradient,
+    /// No gradient is used.
     NoGradient,
 }
 
 [org_name(QGradient)]
 enum Spread {
+    /// The area is filled with the closest stop
     PadSpread,
+    /// The gradient is reflected outside the
     ReflectSpread,
+    /// The gradient  is repeated outside the gradient
     RepeatSpread,
 }
 
 [org_name(QGradient)]
 enum CoordinateMode {
+    /// This is the default mode. The gradient coordinates
     LogicalMode,
+    /// In this mode the gradient coordinates
     StretchToDeviceMode,
+    /// In this mode the gradient coordinates are
     ObjectBoundingMode,
 }
 

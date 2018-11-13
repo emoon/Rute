@@ -23,11 +23,13 @@ struct StyleOptionTabBarBase : StyleOption {
 
 [org_name(QStyleOptionTabBarBase)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionTabBarBase)]
 enum StyleOptionVersion {
+    /// 2
     Version,
 }
 

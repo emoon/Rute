@@ -29,16 +29,23 @@ struct Surface {
 
 [org_name(QSurface)]
 enum SurfaceClass {
+    /// The surface is an instance of QWindow.
     Window,
+    /// The surface is an instance of QOffscreenSurface.
     Offscreen,
 }
 
 [org_name(QSurface)]
 enum SurfaceType {
+    /// The surface is is composed of pixels and can be rendered to using
     RasterSurface,
+    /// The surface is an OpenGL compatible surface and can be used
     OpenGLSurface,
+    /// The surface can be rendered to using a software rasterizer,
     RasterGLSurface,
+    /// The surface is an OpenVG compatible surface and can be used
     OpenVGSurface,
+    /// The surface is a Vulkan compatible surface and can be used
     VulkanSurface,
 }
 

@@ -1498,16 +1498,23 @@ struct AbstractItemModel : Object {
 
 [org_name(QAbstractItemModel)]
 enum LayoutChangeHint {
+    /// No hint is available.
     NoLayoutChangeHint,
+    /// Rows are being sorted.
     VerticalSortHint,
+    /// Columns are being sorted.
     HorizontalSortHint,
 }
 
 [org_name(QAbstractItemModel)]
 enum CheckIndexOption {
+    /// No check options are specified.
     NoOption,
+    /// The model index passed to
     IndexIsValid,
+    /// Does not perform any check
     DoNotUseParent,
+    /// The parent of the model index
     ParentIsInvalid,
 }
 

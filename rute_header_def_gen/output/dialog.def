@@ -360,7 +360,9 @@ struct Dialog : Widget {
 
 [org_name(QDialog)]
 enum DialogCode {
+    /// 
     Rejected,
+    /// 
     Accepted,
 }
 

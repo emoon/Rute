@@ -20,11 +20,13 @@ struct StyleOptionDockWidget : StyleOption {
 
 [org_name(QStyleOptionDockWidget)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionDockWidget)]
 enum StyleOptionVersion {
+    /// 2
     Version,
 }
 

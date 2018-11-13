@@ -29,11 +29,13 @@ struct StyleOptionGraphicsItem : StyleOption {
 
 [org_name(QStyleOptionGraphicsItem)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionGraphicsItem)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 

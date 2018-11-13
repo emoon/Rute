@@ -1,85 +1,152 @@
 [org_name(Qt)]
 enum GlobalColor {
+    /// 0 pixel value (for bitmaps)
     color0,
+    /// 1 pixel value (for bitmaps)
     color1,
+    /// 
     black,
+    /// 
     white,
+    /// 
     darkGray,
+    /// 
     gray,
+    /// 
     lightGray,
+    /// 
     red,
+    /// 
     green,
+    /// 
     blue,
+    /// 
     cyan,
+    /// 
     magenta,
+    /// 
     yellow,
+    /// 
     darkRed,
+    /// 
     darkGreen,
+    /// 
     darkBlue,
+    /// 
     darkCyan,
+    /// 
     darkMagenta,
+    /// 
     darkYellow,
+    /// a transparent black value (i.e., QColor(0, 0, 0, 0))
     transparent,
 }
 
 [org_name(Qt)]
 enum KeyboardModifier {
+    /// No modifier key is pressed.
     NoModifier,
+    /// A Shift key on the keyboard is pressed.
     ShiftModifier,
+    /// A Ctrl key on the keyboard is pressed.
     ControlModifier,
+    /// An Alt key on the keyboard is pressed.
     AltModifier,
+    /// A Meta key on the keyboard is pressed.
     MetaModifier,
+    /// A keypad button is pressed.
     KeypadModifier,
+    /// X11 only. A Mode_switch key on the keyboard is pressed.
     GroupSwitchModifier,
     KeyboardModifierMask,
 }
 
 [org_name(Qt)]
 enum Modifier {
+    /// The Meta keys.
     META,
+    /// The Shift keys provided on all standard keyboards.
     SHIFT,
+    /// The Ctrl keys.
     CTRL,
+    /// The normal Alt keys, but not keys like AltGr.
     ALT,
     MODIFIER_MASK,
+    /// The shortcut is specified as a Unicode code
     UNICODE_ACCEL,
 }
 
 [org_name(Qt)]
 enum MouseButton {
+    /// The button state does not refer to any
     NoButton,
+    /// The left button is pressed, or an event refers
     LeftButton,
+    /// The right button.
     RightButton,
+    /// The middle button.
     MidButton,
+    /// The middle button.
     MiddleButton,
+    /// The 'Back' button. (Typically present on
     BackButton,
+    /// The 'Back' Button.
     XButton1,
+    /// The 'Back' Button.
     ExtraButton1,
+    /// The 'Forward' Button. (Typically present
     ForwardButton,
+    /// The 'Forward Button.
     XButton2,
+    /// The 'Forward' Button.
     ExtraButton2,
+    /// The 'Task' Button.
     TaskButton,
+    /// The 'Task' Button.
     ExtraButton3,
+    /// The 7th non-wheel Mouse Button.
     ExtraButton4,
+    /// The 8th non-wheel Mouse Button.
     ExtraButton5,
+    /// The 9th non-wheel Mouse Button.
     ExtraButton6,
+    /// The 10th non-wheel Mouse Button.
     ExtraButton7,
+    /// The 11th non-wheel Mouse Button.
     ExtraButton8,
+    /// The 12th non-wheel Mouse Button.
     ExtraButton9,
+    /// The 13th non-wheel Mouse Button.
     ExtraButton10,
+    /// The 14th non-wheel Mouse Button.
     ExtraButton11,
+    /// The 15th non-wheel Mouse Button.
     ExtraButton12,
+    /// The 16th non-wheel Mouse Button.
     ExtraButton13,
+    /// The 17th non-wheel Mouse Button.
     ExtraButton14,
+    /// The 18th non-wheel Mouse Button.
     ExtraButton15,
+    /// The 19th non-wheel Mouse Button.
     ExtraButton16,
+    /// The 20th non-wheel Mouse Button.
     ExtraButton17,
+    /// The 21st non-wheel Mouse Button.
     ExtraButton18,
+    /// The 22nd non-wheel Mouse Button.
     ExtraButton19,
+    /// The 23rd non-wheel Mouse Button.
     ExtraButton20,
+    /// The 24th non-wheel Mouse Button.
     ExtraButton21,
+    /// The 25th non-wheel Mouse Button.
     ExtraButton22,
+    /// The 26th non-wheel Mouse Button.
     ExtraButton23,
+    /// The 27th non-wheel Mouse Button.
     ExtraButton24,
+    /// This value corresponds to a mask of all
     AllButtons,
     MaxMouseButton,
     MouseButtonMask,
@@ -87,69 +154,109 @@ enum MouseButton {
 
 [org_name(Qt)]
 enum Orientation {
+    /// 
     Horizontal,
+    /// 
     Vertical,
 }
 
 [org_name(Qt)]
 enum FocusPolicy {
+    /// the widget does not accept focus.
     NoFocus,
+    /// the widget accepts focus by tabbing.
     TabFocus,
+    /// the widget accepts focus by clicking.
     ClickFocus,
+    /// the widget accepts focus by both tabbing
     StrongFocus,
+    /// like Qt::StrongFocus plus the widget accepts
     WheelFocus,
 }
 
 [org_name(Qt)]
 enum TabFocusBehavior {
+    /// iterate nothing.
     NoTabFocus,
+    /// iterate text controls and widgets.
     TabFocusTextControls,
+    /// iterate list controls and widgets.
     TabFocusListControls,
+    /// iterate all controls and widgets.
     TabFocusAllControls,
 }
 
 [org_name(Qt)]
 enum SortOrder {
+    /// The items are sorted ascending e.g. starts with
     AscendingOrder,
+    /// The items are sorted descending e.g. starts with
     DescendingOrder,
 }
 
 [org_name(Qt)]
 enum TileRule {
+    /// Scale the image to fit to the available area.
     StretchTile,
+    /// Repeat the image until there is no more space. May
     RepeatTile,
+    /// Similar to Repeat, but scales the image down to
     RoundTile,
 }
 
 [org_name(Qt)]
 enum AlignmentFlag {
+    /// Aligns with the left edge.
     AlignLeft,
+    /// Synonym for Qt::AlignLeft.
     AlignLeading,
+    /// Aligns with the right edge.
     AlignRight,
+    /// Synonym for Qt::AlignRight.
     AlignTrailing,
+    /// Centers horizontally in the available space.
     AlignHCenter,
+    /// Justifies the text in the available space.
     AlignJustify,
+    /// If the widget's layout direction is
     AlignAbsolute,
+    /// 
     AlignHorizontal_Mask,
+    /// Aligns with the top.
     AlignTop,
+    /// Aligns with the bottom.
     AlignBottom,
+    /// Centers vertically in the available space.
     AlignVCenter,
+    /// Aligns with the baseline.
     AlignBaseline,
+    /// 
     AlignVertical_Mask,
+    /// Centers in both dimensions.
     AlignCenter,
 }
 
 [org_name(Qt)]
 enum TextFlag {
+    /// Treats all whitespace as spaces and prints just
     TextSingleLine,
+    /// If it's impossible to stay within the given bounds,
     TextDontClip,
+    /// Makes the U+0009 (ASCII tab) character move to
     TextExpandTabs,
+    /// Displays the string "\&P" as
     TextShowMnemonic,
+    /// Breaks lines at appropriate points, e.g. at word
     TextWordWrap,
+    /// Breaks lines anywhere, even within words.
     TextWrapAnywhere,
+    /// Treat this text as "hidden" and don't print it.
     TextDontPrint,
+    /// When this option is set,
     TextIncludeTrailingSpaces,
+    /// Same as Qt::TextShowMnemonic but doesn't draw
     TextHideMnemonic,
+    /// Ensures that text lines are justified.
     TextJustificationForced,
     TextForceLeftToRight,
     TextForceRightToLeft,
@@ -159,139 +266,235 @@ enum TextFlag {
 
 [org_name(Qt)]
 enum TextElideMode {
+    /// The ellipsis should appear at the beginning of the text.
     ElideLeft,
+    /// The ellipsis should appear at the end of the text.
     ElideRight,
+    /// The ellipsis should appear in the middle of the text.
     ElideMiddle,
+    /// Ellipsis should NOT appear in the text.
     ElideNone,
 }
 
 [org_name(Qt)]
 enum WhiteSpaceMode {
+    /// The whitespace mode used to display
     WhiteSpaceNormal,
+    /// A preformatted text mode in which
     WhiteSpacePre,
+    /// 
     WhiteSpaceNoWrap,
     WhiteSpaceModeUndefined,
 }
 
 [org_name(Qt)]
 enum HitTestAccuracy {
+    /// The point at which input occurred must coincide
     ExactHit,
+    /// The point at which input occurred can lie close to
     FuzzyHit,
 }
 
 [org_name(Qt)]
 enum WindowType {
+    /// This is the default type for QWidget. Widgets of
     Widget,
+    /// Indicates that the widget is a window, usually
     Window,
+    /// Indicates that the widget is a window that should
     Dialog,
+    /// Indicates that the window is a sheet on
     Sheet,
+    /// Indicates that the widget is a drawer on
     Drawer,
+    /// Indicates that the widget is a pop-up top-level
     Popup,
+    /// Indicates that the widget is a tool window. A tool
     Tool,
+    /// Indicates that the widget is a tooltip. This is
     ToolTip,
+    /// Indicates that the window is a splash screen.
     SplashScreen,
+    /// Indicates that this widget is the desktop. This
     Desktop,
+    /// Indicates that this widget is a sub-window, such
     SubWindow,
+    /// Indicates that this window object is a handle
     ForeignWindow,
+    /// Indicates that the window represents a cover window,
     CoverWindow,
+    /// A mask for extracting the window type
     WindowType_Mask,
+    /// Gives the window a thin dialog border on Windows.
     MSWindowsFixedSizeDialogHint,
+    /// Gives the window its own display
     MSWindowsOwnDC,
+    /// This flag can be used to indicate to the platform plugin
     BypassWindowManagerHint,
+    /// Bypass the window
     X11BypassWindowManagerHint,
+    /// Produces a borderless window.
     FramelessWindowHint,
+    /// Gives the window a title bar.
     WindowTitleHint,
+    /// Adds a window system menu, and
     WindowSystemMenuHint,
+    /// Adds a minimize button. On
     WindowMinimizeButtonHint,
+    /// Adds a maximize button. On
     WindowMaximizeButtonHint,
+    /// Adds a minimize and a maximize
     WindowMinMaxButtonsHint,
+    /// Adds a context help button to dialogs.
     WindowContextHelpButtonHint,
+    /// Adds a shade button in place of the minimize
     WindowShadeButtonHint,
+    /// Informs the window system that the
     WindowStaysOnTopHint,
+    /// Informs the window system that this window
     WindowTransparentForInput,
+    /// Informs the window system that this window
     WindowOverridesSystemGestures,
+    /// Informs the window system that this window should
     WindowDoesNotAcceptFocus,
+    /// Informs the window system that when
     MaximizeUsingFullscreenGeometryHint,
+    /// Turns off the default window title hints.
     CustomizeWindowHint,
+    /// Informs the window system that the
     WindowStaysOnBottomHint,
+    /// Adds a close button. On
     WindowCloseButtonHint,
+    /// On
     MacWindowToolBarButtonHint,
+    /// Prevents the window and its children from
     BypassGraphicsProxyWidget,
+    /// Disables window drop shadow on supporting platforms.
     NoDropShadowWindowHint,
+    /// On
     WindowFullscreenButtonHint,
 }
 
 [org_name(Qt)]
 enum WindowState {
+    /// The window has no state set (in normal state).
     WindowNoState,
+    /// The window is minimized (i.e. iconified).
     WindowMinimized,
+    /// The window is maximized with a frame around it.
     WindowMaximized,
+    /// The window fills the entire screen without any frame around it.
     WindowFullScreen,
+    /// The window is the active window, i.e. it has keyboard focus.
     WindowActive,
 }
 
 [org_name(Qt)]
 enum ApplicationState {
+    /// The application is about to suspend. When entering this state, the
     ApplicationSuspended,
+    /// The application is hidden and runs in the background. This
     ApplicationHidden,
+    /// The application is visible, but not selected to be in front.
     ApplicationInactive,
+    /// The application is visible and selected to be in front.
     ApplicationActive,
 }
 
 [org_name(Qt)]
 enum ScreenOrientation {
+    /// The display's primary orientation.
     PrimaryOrientation,
+    /// Portrait orientation, display height is greater than display width,
     PortraitOrientation,
+    /// Landscape orientation, display width is greater than display height.
     LandscapeOrientation,
+    /// Inverted portrait orientation, rotated 180 degrees relative to portrait.
     InvertedPortraitOrientation,
+    /// Inverted landscape orientation, rotated 180 degrees relative to landscape.
     InvertedLandscapeOrientation,
 }
 
 [org_name(Qt)]
 enum WidgetAttribute {
+    /// Indicates that the widget is disabled, i.e.
     WA_Disabled,
+    /// Indicates that the widget is under the mouse cursor.
     WA_UnderMouse,
+    /// Indicates that the widget has mouse
     WA_MouseTracking,
+    /// This flag is superfluous and
     WA_ContentsPropagated,
+    /// Indicates that the widget paints all its pixels
     WA_OpaquePaintEvent,
+    /// This value is obsolete. Use
     WA_NoBackground,
+    /// Indicates that the widget contents are north-west
     WA_StaticContents,
     WA_LaidOut,
+    /// Indicates that the widget wants to draw directly
     WA_PaintOnScreen,
+    /// Indicates that the widget has no background,
     WA_NoSystemBackground,
+    /// Indicates that updates are blocked (including the
     WA_UpdatesDisabled,
+    /// Indicates that the widget is mapped on screen.
     WA_Mapped,
+    /// This value is obsolete and has no effect.
     WA_MacNoClickThrough,
+    /// Enables input methods for Asian languages.
     WA_InputMethodEnabled,
     WA_WState_Visible,
     WA_WState_Hidden,
+    /// Indicates that the widget is
     WA_ForceDisabled,
+    /// Enables key event compression if set,
     WA_KeyCompression,
+    /// Indicates that a move event is pending, e.g.,
     WA_PendingMoveEvent,
+    /// Indicates that a resize event is pending,
     WA_PendingResizeEvent,
+    /// Indicates that the widget has a palette of its own.
     WA_SetPalette,
+    /// Indicates that the widget has a font of its own. This
     WA_SetFont,
+    /// Indicates that the widget has a cursor of its own. This
     WA_SetCursor,
+    /// Indicates that the widget does
     WA_NoChildEventsFromChildren,
+    /// Indicates that the window is marked as modified.
     WA_WindowModified,
+    /// Indicates that the widget has an explicit size. This flag
     WA_Resized,
+    /// Indicates that the widget has an explicit
     WA_Moved,
     WA_PendingUpdate,
     WA_InvalidSize,
+    /// This value is obsolete and has no effect.
     WA_MacBrushedMetal,
     WA_MacMetalStyle,
+    /// Indicates that the widget wants to
     WA_CustomWhatsThis,
+    /// Indicates that the widget
     WA_LayoutOnEntireRect,
+    /// Indicates that the widget is outside
     WA_OutsideWSRange,
     WA_GrabbedShortcut,
+    /// When enabled, this attribute disables
     WA_TransparentForMouseEvents,
+    /// Makes all painters operating on this widget
     WA_PaintUnclipped,
     WA_SetWindowIcon,
+    /// Used for pop-up widgets. Indicates that the most
     WA_NoMouseReplay,
+    /// Makes Qt delete this widget when the
     WA_DeleteOnClose,
+    /// Indicates that the layout direction for the widget
     WA_RightToLeft,
     WA_SetLayoutDirection,
+    /// Indicates that the widget does
     WA_NoChildEventsForParent,
+    /// Indicates that updates are
     WA_ForceUpdatesDisabled,
     WA_WState_Created,
     WA_WState_CompressKeys,
@@ -302,101 +505,180 @@ enum WidgetAttribute {
     WA_WState_DND,
     WA_WState_OwnSizePolicy,
     WA_WState_ExplicitShowHide,
+    /// 
     WA_ShowModal,
+    /// Makes the widget receive mouse events for
     WA_MouseNoMask,
+    /// 
     WA_GroupLeader,
+    /// Prohibits mouse events from being propagated
     WA_NoMousePropagation,
+    /// Forces Qt to generate paint events when the mouse
     WA_Hover,
     WA_InputMethodTransparent,
+    /// Makes Qt quit the application when the last widget
     WA_QuitOnClose,
+    /// Set on a toplevel window when
     WA_KeyboardFocusChange,
+    /// Allows data from drag and drop operations
     WA_AcceptDrops,
     WA_DropSiteRegistered,
     WA_ForceAcceptDrops,
+    /// Makes a toplevel window inherit font, palette
     WA_WindowPropagation,
     WA_NoX11EventCompression,
     WA_TintedBackground,
     WA_X11OpenGLOverlay,
+    /// Enables tooltips for inactive windows.
     WA_AlwaysShowToolTips,
+    /// Indicates that the native Carbon size grip
     WA_MacOpaqueSizeGrip,
+    /// Indicates that the widget has a style of its own. This
     WA_SetStyle,
+    /// Indicates the locale should be taken into consideration
     WA_SetLocale,
+    /// Indicates that this widget should get a
     WA_MacShowFocusRect,
+    /// Indicates the widget should have the
     WA_MacNormalSize,
+    /// Indicates the widget should have the small
     WA_MacSmallSize,
+    /// Indicates the widget should have the mini
     WA_MacMiniSize,
+    /// Ignore the layout item rect from the style
     WA_LayoutUsesWidgetRect,
+    /// Indicates the widget should be drawn using a
     WA_StyledBackground,
+    /// This value is obsolete and has no
     WA_MSWindowsUseDirect3D,
     WA_CanHostQMdiSubWindowTitleBar,
+    /// On
     WA_MacAlwaysShowToolWindow,
+    /// Indicates that the widget is styled using a
     WA_StyleSheet,
+    /// Show the widget without making it active.
     WA_ShowWithoutActivating,
     WA_X11BypassTransientForHint,
+    /// Indicates that a native window is created for the
     WA_NativeWindow,
+    /// Indicates that the widget's ancestors
     WA_DontCreateNativeAncestors,
+    /// Indicates the widget can choose between
     WA_MacVariableSize,
+    /// Indicates that the widget is hidden or is
     WA_DontShowOnScreen,
+    /// Adds _NET_WM_WINDOW_TYPE_DESKTOP to the
     WA_X11NetWmWindowTypeDesktop,
+    /// Adds _NET_WM_WINDOW_TYPE_DOCK to the
     WA_X11NetWmWindowTypeDock,
+    /// Adds _NET_WM_WINDOW_TYPE_TOOLBAR to the
     WA_X11NetWmWindowTypeToolBar,
+    /// Adds _NET_WM_WINDOW_TYPE_MENU to the
     WA_X11NetWmWindowTypeMenu,
+    /// Adds _NET_WM_WINDOW_TYPE_UTILITY to the
     WA_X11NetWmWindowTypeUtility,
+    /// Adds _NET_WM_WINDOW_TYPE_SPLASH to the
     WA_X11NetWmWindowTypeSplash,
+    /// Adds _NET_WM_WINDOW_TYPE_DIALOG
     WA_X11NetWmWindowTypeDialog,
+    /// Adds
     WA_X11NetWmWindowTypeDropDownMenu,
+    /// Adds _NET_WM_WINDOW_TYPE_POPUP_MENU
     WA_X11NetWmWindowTypePopupMenu,
+    /// Adds _NET_WM_WINDOW_TYPE_TOOLTIP to the
     WA_X11NetWmWindowTypeToolTip,
+    /// Adds
     WA_X11NetWmWindowTypeNotification,
+    /// Adds _NET_WM_WINDOW_TYPE_COMBO
     WA_X11NetWmWindowTypeCombo,
+    /// Adds _NET_WM_WINDOW_TYPE_DND to
     WA_X11NetWmWindowTypeDND,
+    /// This value is obsolete and has no effect.
     WA_MacFrameworkScaled,
     WA_SetWindowModality,
     WA_WState_WindowOpacitySet,
+    /// Indicates that the widget should have a
     WA_TranslucentBackground,
+    /// Allows touch events (see QTouchEvent)
     WA_AcceptTouchEvents,
     WA_WState_AcceptedTouchBeginEvent,
+    /// Allows touchpad single
     WA_TouchPadAcceptSingleTouchEvents,
+    /// Asks the window manager to not give focus
     WA_X11DoNotAcceptFocus,
     WA_MacNoShadow,
+    /// Since Qt 5.4, this value forces QOpenGLWidget and
     WA_AlwaysStackOnTop,
+    /// Indicates that the widget has tablet
     WA_TabletTracking,
+    /// A QWidget respects the safe
     WA_ContentsMarginsRespectsSafeArea,
     WA_AttributeCount,
 }
 
 [org_name(Qt)]
 enum ApplicationAttribute {
+    /// This attribute is no longer fully
     AA_ImmediateWidgetCreation,
+    /// This value is obsolete and
     AA_MSWindowsUseDirect3DByDefault,
+    /// Actions with the Icon property won't be
     AA_DontShowIconsInMenus,
+    /// Ensures that widgets have native windows.
     AA_NativeWindows,
+    /// Ensures that siblings of native
     AA_DontCreateNativeWidgetSiblings,
+    /// Indicates that Qt is used to author a plugin. Depending
     AA_PluginApplication,
+    /// This attribute has been deprecated.
     AA_MacPluginApplication,
+    /// All menubars created while this attribute is
     AA_DontUseNativeMenuBar,
+    /// On
     AA_MacDontSwapCtrlAndMeta,
+    /// Assume the screen has a resolution of 96 DPI rather
     AA_Use96Dpi,
+    /// This value is obsolete and has no effect.
     AA_X11InitThreads,
+    /// All mouse events
     AA_SynthesizeTouchForUnhandledMouseEvents,
+    /// All touch events
     AA_SynthesizeMouseForUnhandledTouchEvents,
+    /// Make QIcon::pixmap() generate high-dpi pixmaps
     AA_UseHighDpiPixmaps,
+    /// Make top-level widgets use pure raster surfaces,
     AA_ForceRasterWidgets,
+    /// Forces the usage of desktop OpenGL (for example,
     AA_UseDesktopOpenGL,
+    /// Forces the usage of OpenGL ES 2.0 or higher on
     AA_UseOpenGLES,
+    /// Forces the usage of a software based OpenGL
     AA_UseSoftwareOpenGL,
+    /// Enables resource sharing between the OpenGL
     AA_ShareOpenGLContexts,
+    /// Indicates whether a palette was explicitly set on the
     AA_SetPalette,
+    /// Enables high-DPI scaling in Qt on supported
     AA_EnableHighDpiScaling,
+    /// Disables high-DPI scaling in Qt, exposing window
     AA_DisableHighDpiScaling,
+    /// By default, Qt Style Sheets
     AA_UseStyleSheetPropagationInWidgetStyles,
+    /// All dialogs created while this attribute is
     AA_DontUseNativeDialogs,
+    /// All tablet events
     AA_SynthesizeMouseForUnhandledTabletEvents,
+    /// Enables compression of certain frequent events.
     AA_CompressHighFrequencyEvents,
+    /// When making a context
     AA_DontCheckOpenGLContextThreadAffinity,
+    /// Disables caching of shader program binaries
     AA_DisableShaderDiskCache,
+    /// Actions with the Shortcut property
     AA_DontShowShortcutsInContextMenus,
+    /// Enables compression of input events from tablet devices.
     AA_CompressTabletEvents,
+    /// Disables the WindowContextHelpButtonHint
     AA_DisableWindowContextHelpButton,
     AA_AttributeCount,
 }
@@ -404,634 +686,1200 @@ enum ApplicationAttribute {
 [org_name(Qt)]
 enum ImageConversionFlag {
     ColorMode_Mask,
+    /// (default) - If the image has
     AutoColor,
+    /// The pixmap is dithered/converted to the
     ColorOnly,
+    /// The pixmap becomes monochrome. If necessary,
     MonoOnly,
     AlphaDither_Mask,
+    /// (default) - No dithering.
     ThresholdAlphaDither,
+    /// A faster, ordered dither.
     OrderedAlphaDither,
+    /// A high-quality dither using error diffusion.
     DiffuseAlphaDither,
     NoAlpha,
     Dither_Mask,
+    /// (default) - A high-quality dither using error diffusion.
     DiffuseDither,
+    /// A faster, ordered dither.
     OrderedDither,
+    /// No dithering; closest color is used.
     ThresholdDither,
     DitherMode_Mask,
+    /// (default) - Only dither when down-converting to 1 or 8-bit indexed formats.
     AutoDither,
+    /// Always dither images when converting to smaller color-spaces.
     PreferDither,
+    /// Only dither to indexed formats if the source image uses more
     AvoidDither,
+    /// Do not check whether the image contains non-opaque
     NoOpaqueDetection,
+    /// Don't do any format conversions on the image.
     NoFormatConversion,
 }
 
 [org_name(Qt)]
 enum BGMode {
+    /// 
     TransparentMode,
+    /// 
     OpaqueMode,
 }
 
 [org_name(Qt)]
 enum Key {
+    /// 
     Key_Escape,
+    /// 
     Key_Tab,
+    /// 
     Key_Backtab,
+    /// 
     Key_Backspace,
+    /// 
     Key_Return,
+    /// Typically located on the keypad.
     Key_Enter,
+    /// 
     Key_Insert,
+    /// 
     Key_Delete,
+    /// The Pause/Break key (
     Key_Pause,
+    /// 
     Key_Print,
+    /// 
     Key_SysReq,
+    /// Corresponds to the
     Key_Clear,
+    /// 
     Key_Home,
+    /// 
     Key_End,
+    /// 
     Key_Left,
+    /// 
     Key_Up,
+    /// 
     Key_Right,
+    /// 
     Key_Down,
+    /// 
     Key_PageUp,
+    /// 
     Key_PageDown,
+    /// 
     Key_Shift,
+    /// On
     Key_Control,
+    /// On
     Key_Meta,
+    /// 
     Key_Alt,
+    /// 
     Key_CapsLock,
+    /// 
     Key_NumLock,
+    /// 
     Key_ScrollLock,
+    /// 
     Key_F1,
+    /// 
     Key_F2,
+    /// 
     Key_F3,
+    /// 
     Key_F4,
+    /// 
     Key_F5,
+    /// 
     Key_F6,
+    /// 
     Key_F7,
+    /// 
     Key_F8,
+    /// 
     Key_F9,
+    /// 
     Key_F10,
+    /// 
     Key_F11,
+    /// 
     Key_F12,
+    /// 
     Key_F13,
+    /// 
     Key_F14,
+    /// 
     Key_F15,
+    /// 
     Key_F16,
+    /// 
     Key_F17,
+    /// 
     Key_F18,
+    /// 
     Key_F19,
+    /// 
     Key_F20,
+    /// 
     Key_F21,
+    /// 
     Key_F22,
+    /// 
     Key_F23,
+    /// 
     Key_F24,
+    /// 
     Key_F25,
+    /// 
     Key_F26,
+    /// 
     Key_F27,
+    /// 
     Key_F28,
+    /// 
     Key_F29,
+    /// 
     Key_F30,
+    /// 
     Key_F31,
+    /// 
     Key_F32,
+    /// 
     Key_F33,
+    /// 
     Key_F34,
+    /// 
     Key_F35,
+    /// 
     Key_Super_L,
+    /// 
     Key_Super_R,
+    /// 
     Key_Menu,
+    /// 
     Key_Hyper_L,
+    /// 
     Key_Hyper_R,
+    /// 
     Key_Help,
+    /// 
     Key_Direction_L,
+    /// 
     Key_Direction_R,
+    /// 
     Key_Space,
+    /// 
     Key_Any,
+    /// 
     Key_Exclam,
+    /// 
     Key_QuoteDbl,
+    /// 
     Key_NumberSign,
+    /// 
     Key_Dollar,
+    /// 
     Key_Percent,
+    /// 
     Key_Ampersand,
+    /// 
     Key_Apostrophe,
+    /// 
     Key_ParenLeft,
+    /// 
     Key_ParenRight,
+    /// 
     Key_Asterisk,
+    /// 
     Key_Plus,
+    /// 
     Key_Comma,
+    /// 
     Key_Minus,
+    /// 
     Key_Period,
+    /// 
     Key_Slash,
+    /// 
     Key_0,
+    /// 
     Key_1,
+    /// 
     Key_2,
+    /// 
     Key_3,
+    /// 
     Key_4,
+    /// 
     Key_5,
+    /// 
     Key_6,
+    /// 
     Key_7,
+    /// 
     Key_8,
+    /// 
     Key_9,
+    /// 
     Key_Colon,
+    /// 
     Key_Semicolon,
+    /// 
     Key_Less,
+    /// 
     Key_Equal,
+    /// 
     Key_Greater,
+    /// 
     Key_Question,
+    /// 
     Key_At,
+    /// 
     Key_A,
+    /// 
     Key_B,
+    /// 
     Key_C,
+    /// 
     Key_D,
+    /// 
     Key_E,
+    /// 
     Key_F,
+    /// 
     Key_G,
+    /// 
     Key_H,
+    /// 
     Key_I,
+    /// 
     Key_J,
+    /// 
     Key_K,
+    /// 
     Key_L,
+    /// 
     Key_M,
+    /// 
     Key_N,
+    /// 
     Key_O,
+    /// 
     Key_P,
+    /// 
     Key_Q,
+    /// 
     Key_R,
+    /// 
     Key_S,
+    /// 
     Key_T,
+    /// 
     Key_U,
+    /// 
     Key_V,
+    /// 
     Key_W,
+    /// 
     Key_X,
+    /// 
     Key_Y,
+    /// 
     Key_Z,
+    /// 
     Key_BracketLeft,
+    /// 
     Key_Backslash,
+    /// 
     Key_BracketRight,
+    /// 
     Key_AsciiCircum,
+    /// 
     Key_Underscore,
+    /// 
     Key_QuoteLeft,
+    /// 
     Key_BraceLeft,
+    /// 
     Key_Bar,
+    /// 
     Key_BraceRight,
+    /// 
     Key_AsciiTilde,
+    /// 
     Key_nobreakspace,
+    /// 
     Key_exclamdown,
+    /// 
     Key_cent,
+    /// 
     Key_sterling,
+    /// 
     Key_currency,
+    /// 
     Key_yen,
+    /// 
     Key_brokenbar,
+    /// 
     Key_section,
+    /// 
     Key_diaeresis,
+    /// 
     Key_copyright,
+    /// 
     Key_ordfeminine,
+    /// 
     Key_guillemotleft,
+    /// 
     Key_notsign,
+    /// 
     Key_hyphen,
+    /// 
     Key_registered,
+    /// 
     Key_macron,
+    /// 
     Key_degree,
+    /// 
     Key_plusminus,
+    /// 
     Key_twosuperior,
+    /// 
     Key_threesuperior,
+    /// 
     Key_acute,
+    /// 
     Key_mu,
+    /// 
     Key_paragraph,
+    /// 
     Key_periodcentered,
+    /// 
     Key_cedilla,
+    /// 
     Key_onesuperior,
+    /// 
     Key_masculine,
+    /// 
     Key_guillemotright,
+    /// 
     Key_onequarter,
+    /// 
     Key_onehalf,
+    /// 
     Key_threequarters,
+    /// 
     Key_questiondown,
+    /// 
     Key_Agrave,
+    /// 
     Key_Aacute,
+    /// 
     Key_Acircumflex,
+    /// 
     Key_Atilde,
+    /// 
     Key_Adiaeresis,
+    /// 
     Key_Aring,
+    /// 
     Key_AE,
+    /// 
     Key_Ccedilla,
+    /// 
     Key_Egrave,
+    /// 
     Key_Eacute,
+    /// 
     Key_Ecircumflex,
+    /// 
     Key_Ediaeresis,
+    /// 
     Key_Igrave,
+    /// 
     Key_Iacute,
+    /// 
     Key_Icircumflex,
+    /// 
     Key_Idiaeresis,
+    /// 
     Key_ETH,
+    /// 
     Key_Ntilde,
+    /// 
     Key_Ograve,
+    /// 
     Key_Oacute,
+    /// 
     Key_Ocircumflex,
+    /// 
     Key_Otilde,
+    /// 
     Key_Odiaeresis,
+    /// 
     Key_multiply,
+    /// 
     Key_Ooblique,
+    /// 
     Key_Ugrave,
+    /// 
     Key_Uacute,
+    /// 
     Key_Ucircumflex,
+    /// 
     Key_Udiaeresis,
+    /// 
     Key_Yacute,
+    /// 
     Key_THORN,
+    /// 
     Key_ssharp,
+    /// 
     Key_division,
+    /// 
     Key_ydiaeresis,
+    /// On Windows, when the KeyDown event for this key is sent, the Ctrl+Alt modifiers are also set.
     Key_AltGr,
+    /// 
     Key_Multi_key,
+    /// 
     Key_Codeinput,
+    /// 
     Key_SingleCandidate,
+    /// 
     Key_MultipleCandidate,
+    /// 
     Key_PreviousCandidate,
+    /// 
     Key_Mode_switch,
+    /// 
     Key_Kanji,
+    /// 
     Key_Muhenkan,
+    /// 
     Key_Henkan,
+    /// 
     Key_Romaji,
+    /// 
     Key_Hiragana,
+    /// 
     Key_Katakana,
+    /// 
     Key_Hiragana_Katakana,
+    /// 
     Key_Zenkaku,
+    /// 
     Key_Hankaku,
+    /// 
     Key_Zenkaku_Hankaku,
+    /// 
     Key_Touroku,
+    /// 
     Key_Massyo,
+    /// 
     Key_Kana_Lock,
+    /// 
     Key_Kana_Shift,
+    /// 
     Key_Eisu_Shift,
+    /// 
     Key_Eisu_toggle,
+    /// 
     Key_Hangul,
+    /// 
     Key_Hangul_Start,
+    /// 
     Key_Hangul_End,
+    /// 
     Key_Hangul_Hanja,
+    /// 
     Key_Hangul_Jamo,
+    /// 
     Key_Hangul_Romaja,
+    /// 
     Key_Hangul_Jeonja,
+    /// 
     Key_Hangul_Banja,
+    /// 
     Key_Hangul_PreHanja,
+    /// 
     Key_Hangul_PostHanja,
+    /// 
     Key_Hangul_Special,
+    /// 
     Key_Dead_Grave,
+    /// 
     Key_Dead_Acute,
+    /// 
     Key_Dead_Circumflex,
+    /// 
     Key_Dead_Tilde,
+    /// 
     Key_Dead_Macron,
+    /// 
     Key_Dead_Breve,
+    /// 
     Key_Dead_Abovedot,
+    /// 
     Key_Dead_Diaeresis,
+    /// 
     Key_Dead_Abovering,
+    /// 
     Key_Dead_Doubleacute,
+    /// 
     Key_Dead_Caron,
+    /// 
     Key_Dead_Cedilla,
+    /// 
     Key_Dead_Ogonek,
+    /// 
     Key_Dead_Iota,
+    /// 
     Key_Dead_Voiced_Sound,
+    /// 
     Key_Dead_Semivoiced_Sound,
+    /// 
     Key_Dead_Belowdot,
+    /// 
     Key_Dead_Hook,
+    /// 
     Key_Dead_Horn,
+    /// 
     Key_Dead_Stroke,
+    /// 
     Key_Dead_Abovecomma,
+    /// 
     Key_Dead_Abovereversedcomma,
+    /// 
     Key_Dead_Doublegrave,
+    /// 
     Key_Dead_Belowring,
+    /// 
     Key_Dead_Belowmacron,
+    /// 
     Key_Dead_Belowcircumflex,
+    /// 
     Key_Dead_Belowtilde,
+    /// 
     Key_Dead_Belowbreve,
+    /// 
     Key_Dead_Belowdiaeresis,
+    /// 
     Key_Dead_Invertedbreve,
+    /// 
     Key_Dead_Belowcomma,
+    /// 
     Key_Dead_Currency,
+    /// 
     Key_Dead_a,
+    /// 
     Key_Dead_A,
+    /// 
     Key_Dead_e,
+    /// 
     Key_Dead_E,
+    /// 
     Key_Dead_i,
+    /// 
     Key_Dead_I,
+    /// 
     Key_Dead_o,
+    /// 
     Key_Dead_O,
+    /// 
     Key_Dead_u,
+    /// 
     Key_Dead_U,
+    /// 
     Key_Dead_Small_Schwa,
+    /// 
     Key_Dead_Capital_Schwa,
+    /// 
     Key_Dead_Greek,
+    /// 
     Key_Dead_Lowline,
+    /// 
     Key_Dead_Aboveverticalline,
+    /// 
     Key_Dead_Belowverticalline,
+    /// 
     Key_Dead_Longsolidusoverlay,
+    /// 
     Key_Back,
+    /// 
     Key_Forward,
+    /// 
     Key_Stop,
+    /// 
     Key_Refresh,
+    /// 
     Key_VolumeDown,
+    /// 
     Key_VolumeMute,
+    /// 
     Key_VolumeUp,
+    /// 
     Key_BassBoost,
+    /// 
     Key_BassUp,
+    /// 
     Key_BassDown,
+    /// 
     Key_TrebleUp,
+    /// 
     Key_TrebleDown,
+    /// A key setting the state of the media player to play
     Key_MediaPlay,
+    /// A key setting the state of the media player to stop
     Key_MediaStop,
+    /// 
     Key_MediaPrevious,
+    /// 
     Key_MediaNext,
+    /// 
     Key_MediaRecord,
+    /// A key setting the state of the media player to pause (
     Key_MediaPause,
+    /// A key to toggle the play/pause state in the media player (rather than setting an absolute state)
     Key_MediaTogglePlayPause,
+    /// 
     Key_HomePage,
+    /// 
     Key_Favorites,
+    /// 
     Key_Search,
+    /// 
     Key_Standby,
+    /// 
     Key_OpenUrl,
+    /// 
     Key_LaunchMail,
+    /// 
     Key_LaunchMedia,
+    /// On X11 this key is mapped to "My Computer" (XF86XK_MyComputer) key for legacy reasons.
     Key_Launch0,
+    /// On X11 this key is mapped to "Calculator" (XF86XK_Calculator) key for legacy reasons.
     Key_Launch1,
+    /// On X11 this key is mapped to XF86XK_Launch0 key for legacy reasons.
     Key_Launch2,
+    /// On X11 this key is mapped to XF86XK_Launch1 key for legacy reasons.
     Key_Launch3,
+    /// On X11 this key is mapped to XF86XK_Launch2 key for legacy reasons.
     Key_Launch4,
+    /// On X11 this key is mapped to XF86XK_Launch3 key for legacy reasons.
     Key_Launch5,
+    /// On X11 this key is mapped to XF86XK_Launch4 key for legacy reasons.
     Key_Launch6,
+    /// On X11 this key is mapped to XF86XK_Launch5 key for legacy reasons.
     Key_Launch7,
+    /// On X11 this key is mapped to XF86XK_Launch6 key for legacy reasons.
     Key_Launch8,
+    /// On X11 this key is mapped to XF86XK_Launch7 key for legacy reasons.
     Key_Launch9,
+    /// On X11 this key is mapped to XF86XK_Launch8 key for legacy reasons.
     Key_LaunchA,
+    /// On X11 this key is mapped to XF86XK_Launch9 key for legacy reasons.
     Key_LaunchB,
+    /// On X11 this key is mapped to XF86XK_LaunchA key for legacy reasons.
     Key_LaunchC,
+    /// On X11 this key is mapped to XF86XK_LaunchB key for legacy reasons.
     Key_LaunchD,
+    /// On X11 this key is mapped to XF86XK_LaunchC key for legacy reasons.
     Key_LaunchE,
+    /// On X11 this key is mapped to XF86XK_LaunchD key for legacy reasons.
     Key_LaunchF,
+    /// 
     Key_MonBrightnessUp,
+    /// 
     Key_MonBrightnessDown,
+    /// 
     Key_KeyboardLightOnOff,
+    /// 
     Key_KeyboardBrightnessUp,
+    /// 
     Key_KeyboardBrightnessDown,
+    /// 
     Key_PowerOff,
+    /// 
     Key_WakeUp,
+    /// 
     Key_Eject,
+    /// 
     Key_ScreenSaver,
+    /// 
     Key_WWW,
+    /// 
     Key_Memo,
+    /// 
     Key_LightBulb,
+    /// 
     Key_Shop,
+    /// 
     Key_History,
+    /// 
     Key_AddFavorite,
+    /// 
     Key_HotLinks,
+    /// 
     Key_BrightnessAdjust,
+    /// 
     Key_Finance,
+    /// 
     Key_Community,
+    /// 
     Key_AudioRewind,
+    /// 
     Key_BackForward,
+    /// 
     Key_ApplicationLeft,
+    /// 
     Key_ApplicationRight,
+    /// 
     Key_Book,
+    /// 
     Key_CD,
+    /// On X11 this key is not mapped for legacy reasons. Use Qt::Key_Launch1 instead.
     Key_Calculator,
+    /// 
     Key_ToDoList,
+    /// 
     Key_ClearGrab,
+    /// 
     Key_Close,
+    /// 
     Key_Copy,
+    /// 
     Key_Cut,
+    /// 
     Key_Display,
+    /// 
     Key_DOS,
+    /// 
     Key_Documents,
+    /// 
     Key_Excel,
+    /// 
     Key_Explorer,
+    /// 
     Key_Game,
+    /// 
     Key_Go,
+    /// 
     Key_iTouch,
+    /// 
     Key_LogOff,
+    /// 
     Key_Market,
+    /// 
     Key_Meeting,
+    /// 
     Key_MenuKB,
+    /// 
     Key_MenuPB,
+    /// 
     Key_MySites,
+    /// 
     Key_News,
+    /// 
     Key_OfficeHome,
+    /// 
     Key_Option,
+    /// 
     Key_Paste,
+    /// 
     Key_Phone,
+    /// 
     Key_Calendar,
+    /// 
     Key_Reply,
+    /// 
     Key_Reload,
+    /// 
     Key_RotateWindows,
+    /// 
     Key_RotationPB,
+    /// 
     Key_RotationKB,
+    /// 
     Key_Save,
+    /// 
     Key_Send,
+    /// 
     Key_Spell,
+    /// 
     Key_SplitScreen,
+    /// 
     Key_Support,
+    /// 
     Key_TaskPane,
+    /// 
     Key_Terminal,
+    /// 
     Key_Tools,
+    /// 
     Key_Travel,
+    /// 
     Key_Video,
+    /// 
     Key_Word,
+    /// 
     Key_Xfer,
+    /// 
     Key_ZoomIn,
+    /// 
     Key_ZoomOut,
+    /// 
     Key_Away,
+    /// 
     Key_Messenger,
+    /// 
     Key_WebCam,
+    /// 
     Key_MailForward,
+    /// 
     Key_Pictures,
+    /// 
     Key_Music,
+    /// 
     Key_Battery,
+    /// 
     Key_Bluetooth,
+    /// 
     Key_WLAN,
+    /// 
     Key_UWB,
+    /// 
     Key_AudioForward,
+    /// 
     Key_AudioRepeat,
+    /// 
     Key_AudioRandomPlay,
+    /// 
     Key_Subtitle,
+    /// 
     Key_AudioCycleTrack,
+    /// 
     Key_Time,
+    /// 
     Key_Hibernate,
+    /// 
     Key_View,
+    /// 
     Key_TopMenu,
+    /// 
     Key_PowerDown,
+    /// 
     Key_Suspend,
+    /// 
     Key_ContrastAdjust,
+    /// On X11 this key is mapped to XF86XK_LaunchE key for legacy reasons.
     Key_LaunchG,
+    /// On X11 this key is mapped to XF86XK_LaunchF key for legacy reasons.
     Key_LaunchH,
+    /// 
     Key_TouchpadToggle,
+    /// 
     Key_TouchpadOn,
+    /// 
     Key_TouchpadOff,
+    /// 
     Key_MicMute,
+    /// 
     Key_Red,
+    /// 
     Key_Green,
+    /// 
     Key_Yellow,
+    /// 
     Key_Blue,
+    /// 
     Key_ChannelUp,
+    /// 
     Key_ChannelDown,
+    /// 
     Key_Guide,
+    /// 
     Key_Info,
+    /// 
     Key_Settings,
+    /// 
     Key_MicVolumeUp,
+    /// 
     Key_MicVolumeDown,
+    /// 
     Key_New,
+    /// 
     Key_Open,
+    /// 
     Key_Find,
+    /// 
     Key_Undo,
+    /// 
     Key_Redo,
+    /// 
     Key_MediaLast,
+    /// 
     Key_Select,
+    /// 
     Key_Yes,
+    /// 
     Key_No,
+    /// 
     Key_Cancel,
+    /// 
     Key_Printer,
+    /// 
     Key_Execute,
+    /// 
     Key_Sleep,
+    /// 
     Key_Play,
+    /// 
     Key_Zoom,
+    /// 
     Key_Exit,
+    /// 
     Key_Context1,
+    /// 
     Key_Context2,
+    /// 
     Key_Context3,
+    /// 
     Key_Context4,
+    /// A key to answer or initiate a call (see Qt::Key_ToggleCallHangup for a key to toggle current call state)
     Key_Call,
+    /// A key to end an ongoing call (see Qt::Key_ToggleCallHangup for a key to toggle current call state)
     Key_Hangup,
+    /// 
     Key_Flip,
+    /// A key to toggle the current call state (ie. either answer, or hangup) depending on current call state
     Key_ToggleCallHangup,
+    /// 
     Key_VoiceDial,
+    /// 
     Key_LastNumberRedial,
+    /// A key to activate the camera shutter. On Windows Runtime, the environment variable QT_QPA_ENABLE_CAMERA_KEYS must be set to receive the event.
     Key_Camera,
+    /// A key to focus the camera. On Windows Runtime, the environment variable QT_QPA_ENABLE_CAMERA_KEYS must be set to receive the event.
     Key_CameraFocus,
+    /// 
     Key_unknown,
 }
 
 [org_name(Qt)]
 enum ArrowType {
+    /// 
     NoArrow,
+    /// 
     UpArrow,
+    /// 
     DownArrow,
+    /// 
     LeftArrow,
+    /// 
     RightArrow,
 }
 
 [org_name(Qt)]
 enum PenStyle {
+    /// no line at all. For example, QPainter::drawRect()
     NoPen,
+    /// A plain line.
     SolidLine,
+    /// Dashes separated by a few pixels.
     DashLine,
+    /// Dots separated by a few pixels.
     DotLine,
+    /// Alternate dots and dashes.
     DashDotLine,
+    /// One dash, two dots, one dash, two dots.
     DashDotDotLine,
+    /// A custom pattern defined using
     CustomDashLine,
     MPenStyle,
 }
 
 [org_name(Qt)]
 enum PenCapStyle {
+    /// a square line end that does not cover the end
     FlatCap,
+    /// a square line end that covers the end point and
     SquareCap,
+    /// a rounded line end.
     RoundCap,
     MPenCapStyle,
 }
 
 [org_name(Qt)]
 enum PenJoinStyle {
+    /// The outer edges of the lines are extended to
     MiterJoin,
+    /// The triangular notch between the two lines is filled.
     BevelJoin,
+    /// A circular arc between the two lines is filled.
     RoundJoin,
+    /// A miter join corresponding to the definition of
     SvgMiterJoin,
     MPenJoinStyle,
 }
 
 [org_name(Qt)]
 enum BrushStyle {
+    /// No brush pattern.
     NoBrush,
+    /// Uniform color.
     SolidPattern,
+    /// Extremely dense brush pattern.
     Dense1Pattern,
+    /// Very dense brush pattern.
     Dense2Pattern,
+    /// Somewhat dense brush pattern.
     Dense3Pattern,
+    /// Half dense brush pattern.
     Dense4Pattern,
+    /// Somewhat sparse brush pattern.
     Dense5Pattern,
+    /// Very sparse brush pattern.
     Dense6Pattern,
+    /// Extremely sparse brush pattern.
     Dense7Pattern,
+    /// Horizontal lines.
     HorPattern,
+    /// Vertical lines.
     VerPattern,
+    /// Crossing horizontal and vertical lines.
     CrossPattern,
+    /// Backward diagonal lines.
     BDiagPattern,
+    /// Forward diagonal lines.
     FDiagPattern,
+    /// Crossing diagonal lines.
     DiagCrossPattern,
+    /// Linear gradient (set using a dedicated QBrush constructor).
     LinearGradientPattern,
+    /// Radial gradient (set using a dedicated QBrush constructor).
     RadialGradientPattern,
+    /// Conical gradient (set using a dedicated QBrush constructor).
     ConicalGradientPattern,
+    /// Custom pattern (see QBrush::setTexture()).
     TexturePattern,
 }
 
 [org_name(Qt)]
 enum SizeMode {
+    /// Specifies the size using absolute measurements.
     AbsoluteSize,
+    /// Specifies the size relative to the bounding rectangle,
     RelativeSize,
 }
 
 [org_name(Qt)]
 enum UIEffect {
     UI_General,
+    /// Show animated menus.
     UI_AnimateMenu,
+    /// Show faded menus.
     UI_FadeMenu,
+    /// Show animated comboboxes.
     UI_AnimateCombo,
+    /// Show tooltip animations.
     UI_AnimateTooltip,
+    /// Show tooltip fading effects.
     UI_FadeTooltip,
+    /// Reserved
     UI_AnimateToolBox,
 }
 
 [org_name(Qt)]
 enum CursorShape {
+    /// 
     ArrowCursor,
+    /// 
     UpArrowCursor,
+    /// 
     CrossCursor,
+    /// 
     WaitCursor,
+    /// 
     IBeamCursor,
+    /// 
     SizeVerCursor,
+    /// 
     SizeHorCursor,
+    /// 
     SizeBDiagCursor,
+    /// 
     SizeFDiagCursor,
+    /// 
     SizeAllCursor,
+    /// A blank/invisible cursor, typically used when the cursor
     BlankCursor,
+    /// 
     SplitVCursor,
+    /// 
     SplitHCursor,
+    /// 
     PointingHandCursor,
+    /// 
     ForbiddenCursor,
+    /// 
     WhatsThisCursor,
+    /// 
     BusyCursor,
+    /// 
     OpenHandCursor,
+    /// 
     ClosedHandCursor,
+    /// A cursor that is usually used when dragging an item
     DragCopyCursor,
+    /// A cursor that is usually used when dragging an item.
     DragMoveCursor,
+    /// A cursor that is usually used when dragging an item
     DragLinkCursor,
     LastCursor,
+    /// 
     BitmapCursor,
     CustomCursor,
 }
 
 [org_name(Qt)]
 enum TextFormat {
+    /// The text string is interpreted as a plain text
     PlainText,
+    /// The text string is interpreted as a rich text
     RichText,
+    /// The text string is interpreted as for
     AutoText,
 }
 
 [org_name(Qt)]
 enum AspectRatioMode {
+    /// The size is scaled freely. The aspect
     IgnoreAspectRatio,
+    /// The size is scaled to a rectangle as
     KeepAspectRatio,
+    /// The size is scaled to a
     KeepAspectRatioByExpanding,
 }
 
 [org_name(Qt)]
 enum DockWidgetArea {
+    /// 
     LeftDockWidgetArea,
+    /// 
     RightDockWidgetArea,
+    /// 
     TopDockWidgetArea,
+    /// 
     BottomDockWidgetArea,
     DockWidgetArea_Mask,
+    /// 
     AllDockWidgetAreas,
+    /// 
     NoDockWidgetArea,
 }
 
@@ -1042,12 +1890,18 @@ enum DockWidgetAreaSizes {
 
 [org_name(Qt)]
 enum ToolBarArea {
+    /// 
     LeftToolBarArea,
+    /// 
     RightToolBarArea,
+    /// 
     TopToolBarArea,
+    /// 
     BottomToolBarArea,
     ToolBarArea_Mask,
+    /// 
     AllToolBarAreas,
+    /// 
     NoToolBarArea,
 }
 
@@ -1058,366 +1912,584 @@ enum ToolBarAreaSizes {
 
 [org_name(Qt)]
 enum DateFormat {
+    /// The default Qt format, which includes the day and month name,
     TextDate,
+    /// 
     ISODate,
+    /// 
     SystemLocaleDate,
+    /// 
     LocalDate,
+    /// 
     LocaleDate,
+    /// The
     SystemLocaleShortDate,
+    /// The
     SystemLocaleLongDate,
+    /// The
     DefaultLocaleShortDate,
+    /// The
     DefaultLocaleLongDate,
+    /// 
     RFC2822Date,
+    /// 
     ISODateWithMs,
 }
 
 [org_name(Qt)]
 enum TimeSpec {
+    /// Locale dependent time (Timezones and Daylight Savings Time).
     LocalTime,
+    /// Coordinated Universal Time, replaces Greenwich Mean Time.
     UTC,
+    /// An offset in seconds from Coordinated Universal Time.
     OffsetFromUTC,
+    /// A named time zone using a specific set of Daylight Savings rules.
     TimeZone,
 }
 
 [org_name(Qt)]
 enum DayOfWeek {
+    /// 
     Monday,
+    /// 
     Tuesday,
+    /// 
     Wednesday,
+    /// 
     Thursday,
+    /// 
     Friday,
+    /// 
     Saturday,
+    /// 
     Sunday,
 }
 
 [org_name(Qt)]
 enum ScrollBarPolicy {
+    /// QAbstractScrollArea shows a scroll bar when the
     ScrollBarAsNeeded,
+    /// QAbstractScrollArea never shows a scroll bar.
     ScrollBarAlwaysOff,
+    /// QAbstractScrollArea always shows a scroll bar. This
     ScrollBarAlwaysOn,
 }
 
 [org_name(Qt)]
 enum CaseSensitivity {
+    /// 
     CaseInsensitive,
+    /// 
     CaseSensitive,
 }
 
 [org_name(Qt)]
 enum Corner {
+    /// The top-left corner of the rectangle.
     TopLeftCorner,
+    /// The top-right corner of the rectangle.
     TopRightCorner,
+    /// The bottom-left corner of the rectangle.
     BottomLeftCorner,
+    /// The bottom-right corner of the rectangle.
     BottomRightCorner,
 }
 
 [org_name(Qt)]
 enum Edge {
+    /// The top edge of the rectangle.
     TopEdge,
+    /// The left edge of the rectangle.
     LeftEdge,
+    /// The right edge of the rectangle.
     RightEdge,
+    /// The bottom edge of the rectangle.
     BottomEdge,
 }
 
 [org_name(Qt)]
 enum ConnectionType {
+    /// 
     AutoConnection,
+    /// The slot is invoked immediately when the signal is
     DirectConnection,
+    /// The slot is invoked when control returns to the event loop
     QueuedConnection,
+    /// Same as Qt::QueuedConnection, except that the signalling thread blocks
     BlockingQueuedConnection,
+    /// This is a flag that can be combined with any one of the above
     UniqueConnection,
 }
 
 [org_name(Qt)]
 enum ShortcutContext {
+    /// The shortcut is active when its
     WidgetShortcut,
+    /// The shortcut is active when its
     WindowShortcut,
+    /// The shortcut is active when one of
     ApplicationShortcut,
+    /// The shortcut is active
     WidgetWithChildrenShortcut,
 }
 
 [org_name(Qt)]
 enum FillRule {
+    /// Specifies that the region is filled using the
     OddEvenFill,
+    /// Specifies that the region is filled using the
     WindingFill,
 }
 
 [org_name(Qt)]
 enum MaskMode {
+    /// Creates a mask where all pixels matching the given color are opaque.
     MaskInColor,
+    /// Creates a mask where all pixels matching the given color are transparent.
     MaskOutColor,
 }
 
 [org_name(Qt)]
 enum ClipOperation {
+    /// This operation turns clipping off.
     NoClip,
+    /// Replaces the current clip path/rect/region with
     ReplaceClip,
+    /// Intersects the current clip path/rect/region
     IntersectClip,
 }
 
 [org_name(Qt)]
 enum ItemSelectionMode {
+    /// The output list contains only items whose
     ContainsItemShape,
+    /// The output list contains both items whose
     IntersectsItemShape,
+    /// The output list contains only items whose
     ContainsItemBoundingRect,
+    /// The output list contains both items
     IntersectsItemBoundingRect,
 }
 
 [org_name(Qt)]
 enum ItemSelectionOperation {
+    /// The currently selected items are replaced by items
     ReplaceSelection,
+    /// The items in the selection area are added to the currently
     AddToSelection,
 }
 
 [org_name(Qt)]
 enum TransformationMode {
+    /// The transformation is performed
     FastTransformation,
+    /// The resulting image is transformed
     SmoothTransformation,
 }
 
 [org_name(Qt)]
 enum Axis {
+    /// The X axis.
     XAxis,
+    /// The Y axis.
     YAxis,
+    /// The Z axis.
     ZAxis,
 }
 
 [org_name(Qt)]
 enum FocusReason {
+    /// A mouse action occurred.
     MouseFocusReason,
+    /// The Tab key was pressed.
     TabFocusReason,
+    /// A Backtab occurred. The input for this may
     BacktabFocusReason,
+    /// The window system made this window either
     ActiveWindowFocusReason,
+    /// The application opened/closed a pop-up that
     PopupFocusReason,
+    /// The user typed a label's buddy shortcut
     ShortcutFocusReason,
+    /// The menu bar took focus.
     MenuBarFocusReason,
+    /// Another reason, usually application-specific.
     OtherFocusReason,
     NoFocusReason,
 }
 
 [org_name(Qt)]
 enum ContextMenuPolicy {
+    /// the widget does not feature a context menu,
     NoContextMenu,
+    /// the widget's QWidget::contextMenuEvent() handler is called.
     DefaultContextMenu,
+    /// the widget displays its QWidget::actions() as context menu.
     ActionsContextMenu,
+    /// the widget emits the QWidget::customContextMenuRequested() signal.
     CustomContextMenu,
+    /// the widget does not feature a context
     PreventContextMenu,
 }
 
 [org_name(Qt)]
 enum InputMethodQuery {
+    /// The widget accepts input method input.
     ImEnabled,
+    /// The rectangle covering the area of the input cursor in widget coordinates.
     ImCursorRectangle,
+    /// This query is obsolete. Use
     ImMicroFocus,
+    /// The currently used font for text input.
     ImFont,
+    /// The logical position of the cursor within the text surrounding the input area
     ImCursorPosition,
+    /// The plain text around the input area, for example the current paragraph.
     ImSurroundingText,
+    /// The currently selected text.
     ImCurrentSelection,
+    /// The maximum number of characters that the widget can hold. If there is no limit,
     ImMaximumTextLength,
+    /// The position of the selection anchor. This may be less or greater than
     ImAnchorPosition,
+    /// The hints for input method on expected input. (See Qt::InputMethodHints)
     ImHints,
+    /// The preferred input language.
     ImPreferredLanguage,
+    /// The logical position of the cursor within the entire document.
     ImAbsolutePosition,
+    /// The plain text before the cursor. The widget can decide how much text to return,
     ImTextBeforeCursor,
+    /// The plain text after the cursor. The widget can decide how much text to return,
     ImTextAfterCursor,
+    /// The Enter key type.
     ImEnterKeyType,
+    /// The bounding rectangle of the selection anchor.
     ImAnchorRectangle,
+    /// The actual exposed input item rectangle. Parts of the input item might be
     ImInputItemClipRectangle,
+    /// Platform specific data for input method.
     ImPlatformData,
+    /// Commonly changed properties on input.
     ImQueryInput,
+    /// Query for all input method properties.
     ImQueryAll,
 }
 
 [org_name(Qt)]
 enum InputMethodHint {
+    /// No hints.
     ImhNone,
+    /// The input method should not show the characters while typing.
     ImhHiddenText,
+    /// Typed text should not be stored by the active input method
     ImhSensitiveData,
+    /// The input method should not try to automatically switch to upper case
     ImhNoAutoUppercase,
+    /// Numbers are preferred (but not required).
     ImhPreferNumbers,
+    /// Upper case letters are preferred (but not required).
     ImhPreferUppercase,
+    /// Lower case letters are preferred (but not required).
     ImhPreferLowercase,
+    /// Do not use predictive text (i.e. dictionary lookup) while typing.
     ImhNoPredictiveText,
+    /// The text editor functions as a date field.
     ImhDate,
+    /// The text editor functions as a time field.
     ImhTime,
+    /// Latin characters are preferred (but not required).
     ImhPreferLatin,
+    /// Multiple lines can be entered into the text field.
     ImhMultiLine,
+    /// Do not use built-in edit menu. This flag was introduced in Qt 5.11.
     ImhNoEditMenu,
+    /// Do not use built-in text cursor and selection handles. This flag was introduced in Qt 5.11.
     ImhNoTextHandles,
+    /// Only digits are allowed.
     ImhDigitsOnly,
+    /// Only number input is allowed. This includes decimal point and minus sign.
     ImhFormattedNumbersOnly,
+    /// Only upper case letter input is allowed.
     ImhUppercaseOnly,
+    /// Only lower case letter input is allowed.
     ImhLowercaseOnly,
+    /// Only characters suitable for phone dialing are allowed.
     ImhDialableCharactersOnly,
+    /// Only characters suitable for email addresses are allowed.
     ImhEmailCharactersOnly,
+    /// Only characters suitable for URLs are allowed.
     ImhUrlCharactersOnly,
+    /// Only latin based input is allowed.
     ImhLatinOnly,
+    /// This mask yields nonzero if any of the exclusive flags are used.
     ImhExclusiveInputMask,
 }
 
 [org_name(Qt)]
 enum EnterKeyType {
+    /// The default Enter key.
     EnterKeyDefault,
+    /// Show a Return button that inserts a new line.
     EnterKeyReturn,
+    /// Show a "Done" button.
     EnterKeyDone,
+    /// Show a "Go" button.
     EnterKeyGo,
+    /// Show a "Send" button.
     EnterKeySend,
+    /// Show a "Search" button.
     EnterKeySearch,
+    /// Show a "Next" button.
     EnterKeyNext,
+    /// Show a "Previous" button.
     EnterKeyPrevious,
 }
 
 [org_name(Qt)]
 enum ToolButtonStyle {
+    /// Only display the icon.
     ToolButtonIconOnly,
+    /// Only display the text.
     ToolButtonTextOnly,
+    /// The text appears beside the icon.
     ToolButtonTextBesideIcon,
+    /// The text appears under the icon.
     ToolButtonTextUnderIcon,
+    /// Follow the
     ToolButtonFollowStyle,
 }
 
 [org_name(Qt)]
 enum LayoutDirection {
+    /// Left-to-right layout.
     LeftToRight,
+    /// Right-to-left layout.
     RightToLeft,
+    /// Automatic layout.
     LayoutDirectionAuto,
 }
 
 [org_name(Qt)]
 enum AnchorPoint {
+    /// The left side of a layout item.
     AnchorLeft,
+    /// A "virtual" side that is centered between the left and the
     AnchorHorizontalCenter,
+    /// The right side of a layout item.
     AnchorRight,
+    /// The top side of a layout item.
     AnchorTop,
+    /// A "virtual" side that is centered between the top and the
     AnchorVerticalCenter,
+    /// The bottom side of a layout item.
     AnchorBottom,
 }
 
 [org_name(Qt)]
 enum FindChildOption {
+    /// Looks only at the direct children of the object.
     FindDirectChildrenOnly,
+    /// Looks at all children of the object (recursive search).
     FindChildrenRecursively,
 }
 
 [org_name(Qt)]
 enum DropAction {
+    /// Copy the data to the target.
     CopyAction,
+    /// Move the data from the source to the target.
     MoveAction,
+    /// Create a link from the source to the target.
     LinkAction,
+    /// 
     ActionMask,
+    /// On Windows, this value is used when the ownership of the D&D data
     TargetMoveAction,
+    /// Ignore the action (do nothing with the data).
     IgnoreAction,
 }
 
 [org_name(Qt)]
 enum CheckState {
+    /// The item is unchecked.
     Unchecked,
+    /// The item is partially checked. Items in hierarchical models
     PartiallyChecked,
+    /// The item is checked.
     Checked,
 }
 
 [org_name(Qt)]
 enum ItemDataRole {
+    /// The key data to be rendered in the form of text. (QString)
     DisplayRole,
+    /// The data to be rendered as a decoration in the form
     DecorationRole,
+    /// The data in a form suitable for editing in an
     EditRole,
+    /// The data displayed in the item's tooltip. (QString)
     ToolTipRole,
+    /// The data displayed in the status bar. (QString)
     StatusTipRole,
+    /// The data displayed for the item in "What's This?"
     WhatsThisRole,
+    /// The font used for items rendered with the default
     FontRole,
+    /// The alignment of the text for items rendered with the
     TextAlignmentRole,
+    /// This role is obsolete. Use BackgroundRole instead.
     BackgroundColorRole,
+    /// The background brush used for items rendered with
     BackgroundRole,
+    /// This role is obsolete. Use ForegroundRole instead.
     TextColorRole,
+    /// The foreground brush (text color, typically)
     ForegroundRole,
+    /// This role is used to obtain the checked state of
     CheckStateRole,
+    /// The text to be used by accessibility
     AccessibleTextRole,
+    /// A description of the item for accessibility
     AccessibleDescriptionRole,
+    /// The size hint for the item that will be supplied
     SizeHintRole,
+    /// This role is used to obtain the initial sort order
     InitialSortOrderRole,
     DisplayPropertyRole,
     DecorationPropertyRole,
     ToolTipPropertyRole,
     StatusTipPropertyRole,
     WhatsThisPropertyRole,
+    /// The first role that can be used for application-specific purposes.
     UserRole,
 }
 
 [org_name(Qt)]
 enum ItemFlag {
+    /// It does not have any properties set.
     NoItemFlags,
+    /// It can be selected.
     ItemIsSelectable,
+    /// It can be edited.
     ItemIsEditable,
+    /// It can be dragged.
     ItemIsDragEnabled,
+    /// It can be used as a drop target.
     ItemIsDropEnabled,
+    /// It can be checked or unchecked by the user.
     ItemIsUserCheckable,
+    /// The user can interact with the item.
     ItemIsEnabled,
+    /// The item's state depends on the state of its children.
     ItemIsAutoTristate,
+    /// 
     ItemIsTristate,
+    /// The item never has child items.
     ItemNeverHasChildren,
+    /// The user can cycle through three separate states.
     ItemIsUserTristate,
 }
 
 [org_name(Qt)]
 enum MatchFlag {
+    /// Performs QVariant-based matching.
     MatchExactly,
+    /// The search term is contained in the item.
     MatchContains,
+    /// The search term matches the start of the item.
     MatchStartsWith,
+    /// The search term matches the end of the item.
     MatchEndsWith,
+    /// Performs string-based matching using a regular
     MatchRegExp,
+    /// Performs string-based matching using a string with
     MatchWildcard,
+    /// Performs string-based matching.
     MatchFixedString,
+    /// The search is case sensitive.
     MatchCaseSensitive,
+    /// Perform a search that wraps around, so that when
     MatchWrap,
+    /// Searches the entire hierarchy.
     MatchRecursive,
 }
 
 [org_name(Qt)]
 enum WindowModality {
+    /// The window is not modal and does not block input to other windows.
     NonModal,
+    /// The window is modal to a single window hierarchy and blocks input to its parent window, all grandparent windows, and all siblings of its parent and grandparent windows.
     WindowModal,
+    /// The window is modal to the application and blocks input to all windows.
     ApplicationModal,
 }
 
 [org_name(Qt)]
 enum TextInteractionFlag {
+    /// No interaction with the text is possible.
     NoTextInteraction,
+    /// Text can be selected with the mouse and copied to the clipboard using
     TextSelectableByMouse,
+    /// Text can be selected with the cursor keys on the keyboard. A text cursor is shown.
     TextSelectableByKeyboard,
+    /// Links can be highlighted and activated with the mouse.
     LinksAccessibleByMouse,
+    /// Links can be focused using tab and activated with enter.
     LinksAccessibleByKeyboard,
+    /// The text is fully editable.
     TextEditable,
+    /// The default for a text editor.
     TextEditorInteraction,
+    /// The default for QTextBrowser.
     TextBrowserInteraction,
 }
 
 [org_name(Qt)]
 enum EventPriority {
+    /// Events with this priority are sent before
     HighEventPriority,
+    /// Events with this priority are sent
     NormalEventPriority,
+    /// Events with this priority are sent after
     LowEventPriority,
 }
 
 [org_name(Qt)]
 enum SizeHint {
+    /// is used to specify the minimum size of a graphics layout item.
     MinimumSize,
+    /// is used to specify the preferred size of a graphics layout item.
     PreferredSize,
+    /// is used to specify the maximum size of a graphics layout item.
     MaximumSize,
+    /// is used to specify the minimum descent of a text string in a graphics layout item.
     MinimumDescent,
     NSizeHints,
 }
 
 [org_name(Qt)]
 enum WindowFrameSection {
+    /// 
     NoSection,
+    /// 
     LeftSection,
+    /// 
     TopLeftSection,
+    /// 
     TopSection,
+    /// 
     TopRightSection,
+    /// 
     RightSection,
+    /// 
     BottomRightSection,
+    /// 
     BottomSection,
+    /// 
     BottomLeftSection,
+    /// 
     TitleBarArea,
 }
 
@@ -1428,103 +2500,151 @@ enum Initialization {
 
 [org_name(Qt)]
 enum CoordinateSystem {
+    /// Coordinates are relative to the top-left corner
     DeviceCoordinates,
+    /// Coordinates are relative to the top-left corner
     LogicalCoordinates,
 }
 
 [org_name(Qt)]
 enum TouchPointState {
+    /// The touch point is now pressed.
     TouchPointPressed,
+    /// The touch point moved.
     TouchPointMoved,
+    /// The touch point did not move.
     TouchPointStationary,
+    /// The touch point was released.
     TouchPointReleased,
 }
 
 [org_name(Qt)]
 enum GestureState {
+    /// No gesture has been detected.
     NoGesture,
+    /// A continuous gesture has started.
     GestureStarted,
+    /// A gesture continues.
     GestureUpdated,
+    /// A gesture has finished.
     GestureFinished,
+    /// A gesture was canceled.
     GestureCanceled,
 }
 
 [org_name(Qt)]
 enum GestureType {
+    /// A Tap gesture.
     TapGesture,
+    /// A Tap-And-Hold (Long-Tap) gesture.
     TapAndHoldGesture,
+    /// A Pan gesture.
     PanGesture,
+    /// A Pinch gesture.
     PinchGesture,
+    /// A Swipe gesture.
     SwipeGesture,
+    /// A flag that can be used to test if the gesture is a
     CustomGesture,
     LastGestureType,
 }
 
 [org_name(Qt)]
 enum GestureFlag {
+    /// By default gestures can start on the
     DontStartGestureOnChildren,
+    /// Allows any ignored gesture events to be
     ReceivePartialGestures,
+    /// Since Qt 4.7, this flag allows you
     IgnoredGesturesPropagateToParent,
 }
 
 [org_name(Qt)]
 enum NativeGestureType {
+    /// Sent before gesture event stream.
     BeginNativeGesture,
+    /// Sent after gesture event stream.
     EndNativeGesture,
+    /// Sent after a panning gesture.
     PanNativeGesture,
+    /// Specifies the magnification delta in percent.
     ZoomNativeGesture,
+    /// Boolean magnification state.
     SmartZoomNativeGesture,
+    /// Rotation delta in degrees.
     RotateNativeGesture,
+    /// Sent after a swipe movements.
     SwipeNativeGesture,
 }
 
 [org_name(Qt)]
 enum NavigationMode {
+    /// Only the touch screen is used.
     NavigationModeNone,
+    /// Qt::Key_Up and Qt::Key_Down are used to change focus.
     NavigationModeKeypadTabOrder,
+    /// Qt::Key_Up, Qt::Key_Down, Qt::Key_Left and Qt::Key_Right are used to change focus.
     NavigationModeKeypadDirectional,
+    /// The mouse cursor is used to change focus,
     NavigationModeCursorAuto,
+    /// The mouse cursor is used to change focus,
     NavigationModeCursorForceVisible,
 }
 
 [org_name(Qt)]
 enum CursorMoveStyle {
+    /// Within a left-to-right text block, decrease cursor
     LogicalMoveStyle,
+    /// Pressing the left arrow key will always cause the cursor
     VisualMoveStyle,
 }
 
 [org_name(Qt)]
 enum TimerType {
+    /// Precise timers try to keep millisecond accuracy
     PreciseTimer,
+    /// Coarse timers try to keep accuracy within 5% of the desired interval
     CoarseTimer,
+    /// Very coarse timers only keep full second accuracy
     VeryCoarseTimer,
 }
 
 [org_name(Qt)]
 enum ScrollPhase {
+    /// The input device doesn't support scroll phase.
     NoScrollPhase,
+    /// Scrolling is about to begin, but the scrolling
     ScrollBegin,
+    /// The scrolling distance has changed (default).
     ScrollUpdate,
+    /// Scrolling has ended, but the scrolling distance
     ScrollEnd,
 }
 
 [org_name(Qt)]
 enum MouseEventSource {
+    /// The most common value. On
     MouseEventNotSynthesized,
+    /// Indicates that the mouse
     MouseEventSynthesizedBySystem,
+    /// Indicates that the mouse event was
     MouseEventSynthesizedByQt,
+    /// Indicates that the mouse
     MouseEventSynthesizedByApplication,
 }
 
 [org_name(Qt)]
 enum MouseEventFlag {
+    /// Indicates that Qt has created a
     MouseEventCreatedDoubleClick,
     MouseEventFlagMask,
 }
 
 [org_name(Qt)]
 enum ChecksumType {
+    /// Checksum calculation based on ISO 3309.
     ChecksumIso3309,
+    /// Checksum calculation based on ITU-V.41.
     ChecksumItuV41,
 }
 

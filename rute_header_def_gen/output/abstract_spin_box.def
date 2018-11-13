@@ -273,21 +273,29 @@ struct AbstractSpinBox : Widget {
 
 [org_name(QAbstractSpinBox)]
 enum StepEnabledFlag {
+    /// 
     StepNone,
+    /// 
     StepUpEnabled,
+    /// 
     StepDownEnabled,
 }
 
 [org_name(QAbstractSpinBox)]
 enum ButtonSymbols {
+    /// Little arrows in the classic style.
     UpDownArrows,
+    /// 
     PlusMinus,
+    /// Don't display buttons.
     NoButtons,
 }
 
 [org_name(QAbstractSpinBox)]
 enum CorrectionMode {
+    /// The spinbox will revert to the last
     CorrectToPreviousValue,
+    /// The spinbox will revert to the nearest
     CorrectToNearestValue,
 }
 

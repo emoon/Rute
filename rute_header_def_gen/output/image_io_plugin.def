@@ -75,8 +75,11 @@ struct ImageIOPlugin : Object {
 
 [org_name(QImageIOPlugin)]
 enum Capability {
+    /// The plugin can read images.
     CanRead,
+    /// The plugin can write images.
     CanWrite,
+    /// The plugin can read images incrementally.
     CanReadIncremental,
 }
 

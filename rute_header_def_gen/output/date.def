@@ -437,7 +437,9 @@ struct Date {
 
 [org_name(QDate)]
 enum MonthNameType {
+    /// This type of name can be used for date-to-string formatting.
     DateFormat,
+    /// This type is used when you need to enumerate months or weekdays.
     StandaloneFormat,
 }
 

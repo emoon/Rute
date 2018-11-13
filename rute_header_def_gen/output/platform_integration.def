@@ -193,24 +193,37 @@ struct PlatformIntegration {
 
 [org_name(QPlatformIntegration)]
 enum Capability {
+    /// The platform uses a pixmap implementation that is reentrant
     ThreadedPixmaps,
+    /// The platform supports OpenGL
     OpenGL,
+    /// The platform supports using OpenGL outside the GUI thread.
     ThreadedOpenGL,
+    /// The platform supports a shared graphics cache
     SharedGraphicsCache,
+    /// The OpenGL implementation on the platform will queue
     BufferQueueingOpenGL,
     WindowMasks,
+    /// The platform supports multiple QWindows, i.e. does some kind
     MultipleWindows,
+    /// The platform handles the application state explicitly.
     ApplicationState,
+    /// The platform allows creating QWindows which represent
     ForeignWindows,
+    /// The platform supports top-level windows which do not
     NonFullScreenWindows,
     NativeWidgets,
+    /// The platform is based on a system that performs window
     WindowManagement,
     WindowActivation,
     SyncState,
     RasterGLSurface,
+    /// Deprecated. Used to indicate whether the QOpenGLContext
     AllGLFunctionsQueryable,
+    /// The platform supports setting the application icon. (since 5.5)
     ApplicationIcon,
     SwitchableWidgetComposition,
+    /// The platform supports native child windows via
     TopStackedNativeChildWindows,
 }
 

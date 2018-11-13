@@ -15,7 +15,9 @@ struct PlatformSurfaceEvent : Event {
 
 [org_name(QPlatformSurfaceEvent)]
 enum SurfaceEventType {
+    /// The underlying native surface has been created
     SurfaceCreated,
+    /// The underlying native surface will be destroyed immediately after this event
     SurfaceAboutToBeDestroyed,
 }
 

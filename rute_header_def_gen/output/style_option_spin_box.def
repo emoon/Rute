@@ -21,11 +21,13 @@ struct StyleOptionSpinBox : StyleOptionComplex {
 
 [org_name(QStyleOptionSpinBox)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionSpinBox)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 

@@ -416,14 +416,19 @@ struct TreeWidgetItem {
 
 [org_name(QTreeWidgetItem)]
 enum ItemType {
+    /// The default type for tree widget items.
     Type,
+    /// The minimum value for custom types. Values below UserType are
     UserType,
 }
 
 [org_name(QTreeWidgetItem)]
 enum ChildIndicatorPolicy {
+    /// The controls for expanding and collapsing will be shown for this item even if there are no children.
     ShowIndicator,
+    /// The controls for expanding and collapsing will never be shown even if there are children.  If the node is forced open the user will not be able to expand or collapse the item.
     DontShowIndicator,
+    /// The controls for expanding and collapsing will be shown if the item contains children.
     DontShowIndicatorWhenChildless,
 }
 

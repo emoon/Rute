@@ -303,7 +303,9 @@ struct Region {
 
 [org_name(QRegion)]
 enum RegionType {
+    /// the region covers the entire rectangle.
     Rectangle,
+    /// the region is an ellipse inside the rectangle.
     Ellipse,
 }
 

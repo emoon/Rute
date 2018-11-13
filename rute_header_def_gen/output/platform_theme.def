@@ -54,41 +54,74 @@ struct PlatformTheme {
 
 [org_name(QPlatformTheme)]
 enum ThemeHint {
+    /// (int) Cursor flash time in ms, overriding
     CursorFlashTime,
+    /// (int) Keyboard input interval in ms, overriding
     KeyboardInputInterval,
+    /// (int) Mouse double click interval in ms,
     MouseDoubleClickInterval,
+    /// (int) Start drag distance,
     StartDragDistance,
+    /// (int) Start drag time in ms,
     StartDragTime,
+    /// (int) Keyboard auto repeat rate,
     KeyboardAutoRepeatRate,
+    /// (int) Pass word mask delay in ms,
     PasswordMaskDelay,
+    /// (int) Velocity of a drag,
     StartDragVelocity,
+    /// (int) Determines the width of the text cursor.
     TextCursorWidth,
+    /// (bool) Determines whether the drop shadow effect for
     DropShadow,
+    /// (int) Determines the value returned by
     MaximumScrollBarDragDistance,
+    /// (int) A value representing a Qt::ToolButtonStyle.
     ToolButtonStyle,
+    /// Icon size for tool bars.
     ToolBarIconSize,
+    /// (bool) Activate items by single click.
     ItemViewActivateItemOnSingleClick,
+    /// (QString) Name of the icon theme.
     SystemIconThemeName,
+    /// (QString) Name of the fallback icon theme.
     SystemIconFallbackThemeName,
+    /// (QStringList) Search paths for icons.
     IconThemeSearchPaths,
+    /// (QStringList) A list of preferred style names.
     StyleNames,
+    /// (bool) A boolean value indicating whether Windows
     WindowAutoPlacement,
+    /// (int) An integer representing a
     DialogButtonBoxLayout,
+    /// (bool) A boolean value indicating whether
     DialogButtonBoxButtonsHaveIcons,
+    /// (bool) Pop menus can cover the full screen including task bar.
     UseFullScreenForPopupMenu,
+    /// (int) An integer value (enum KeyboardSchemes) specifying the
     KeyboardScheme,
+    /// (int) A flag value consisting of UiEffect values specifying the enabled UI animations.
     UiEffects,
+    /// (int) A QTextCharFormat::UnderlineStyle specifying
     SpellCheckUnderlineStyle,
     TabAllWidgets,
+    /// (int) A Qt::TabFocusBehavior specifying
     TabFocusBehavior,
     IconPixmapSizes,
     PasswordMaskCharacter,
+    /// (bool) Whether the mouse should snap to the default button when a dialog
     DialogSnapToDefaultButton,
+    /// (bool) Whether the context menu should be shown on mouse release.
     ContextMenuOnMouseRelease,
+    /// (int) Mouse press and hold interval in ms,
     MousePressAndHoldInterval,
+    /// (int) The maximum distance in logical pixels which the mouse can travel
     MouseDoubleClickDistance,
+    /// (int) The number of lines to scroll a widget, when the mouse wheel is rotated.
     WheelScrollLines,
+    /// (int) The maximum distance in logical pixels which a touchpoint can travel
     TouchDoubleTapDistance,
+    /// (bool) Whether to display shortcut key sequences in context menus.
     ShowShortcutsInContextMenus,
     IconFallbackSearchPaths,
     MouseQuickSelectionThreshold,

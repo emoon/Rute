@@ -14822,24 +14822,35 @@ struct String {
 
 [org_name(QString)]
 enum SectionFlag {
+    /// Empty fields are counted, leading and
     SectionDefault,
+    /// Treat empty fields as if they don't exist,
     SectionSkipEmpty,
+    /// Include the leading separator (if
     SectionIncludeLeadingSep,
+    /// Include the trailing separator
     SectionIncludeTrailingSep,
+    /// Compare the separator
     SectionCaseInsensitiveSeps,
 }
 
 [org_name(QString)]
 enum SplitBehavior {
+    /// If a field is empty, keep it in the result.
     KeepEmptyParts,
+    /// If a field is empty, don't include it in the result.
     SkipEmptyParts,
 }
 
 [org_name(QString)]
 enum NormalizationForm {
+    /// Canonical Decomposition
     NormalizationForm_D,
+    /// Canonical Decomposition followed by Canonical Composition
     NormalizationForm_C,
+    /// Compatibility Decomposition
     NormalizationForm_KD,
+    /// Compatibility Decomposition followed by Canonical Composition
     NormalizationForm_KC,
 }
 

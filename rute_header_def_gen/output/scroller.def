@@ -320,24 +320,35 @@ struct Scroller : Object {
 
 [org_name(QScroller)]
 enum State {
+    /// The scroller is not scrolling and nothing is pressed.
     Inactive,
+    /// A touch event was received or the mouse button was pressed but the scroll area is currently not dragged.
     Pressed,
+    /// The scroll area is currently following the touch point or mouse.
     Dragging,
+    /// The scroll area is moving on it's own.
     Scrolling,
 }
 
 [org_name(QScroller)]
 enum ScrollerGestureType {
+    /// The gesture recognizer will only trigger on touch
     TouchGesture,
+    /// The gesture recognizer will only trigger on left mouse button events.
     LeftMouseButtonGesture,
+    /// The gesture recognizer will only trigger on right mouse button events.
     RightMouseButtonGesture,
+    /// The gesture recognizer will only trigger on middle mouse button events.
     MiddleMouseButtonGesture,
 }
 
 [org_name(QScroller)]
 enum Input {
+    /// The user pressed the input device (e.g.  QEvent::MouseButtonPress,
     InputPress,
+    /// The user moved the input device (e.g.  QEvent::MouseMove,
     InputMove,
+    /// The user released the input device (e.g.  QEvent::MouseButtonRelease,
     InputRelease,
 }
 

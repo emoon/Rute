@@ -290,16 +290,27 @@ struct ItemSelectionModel : Object {
 
 [org_name(QItemSelectionModel)]
 enum SelectionFlag {
+    /// No selection will be made.
     NoUpdate,
+    /// The complete selection will be cleared.
     Clear,
+    /// All specified indexes will be selected.
     Select,
+    /// All specified indexes will be deselected.
     Deselect,
+    /// All specified indexes will be selected or
     Toggle,
+    /// The current selection will be updated.
     Current,
+    /// All indexes will be expanded to span rows.
     Rows,
+    /// All indexes will be expanded to span columns.
     Columns,
+    /// A combination of Select and Current, provided for
     SelectCurrent,
+    /// A combination of Toggle and Current, provided for
     ToggleCurrent,
+    /// A combination of Clear and Select, provided for
     ClearAndSelect,
 }
 

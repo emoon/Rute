@@ -4469,77 +4469,134 @@ struct GraphicsItem {
 
 [org_name(QGraphicsItem)]
 enum GraphicsItemFlag {
+    /// The item supports interactive movement using
     ItemIsMovable,
+    /// The item supports selection. Enabling this
     ItemIsSelectable,
+    /// The item supports keyboard input focus (i.e., it is
     ItemIsFocusable,
+    /// The item clips to its own shape. The item cannot
     ItemClipsToShape,
+    /// The item clips the painting of all its
     ItemClipsChildrenToShape,
+    /// The item ignores inherited
     ItemIgnoresTransformations,
+    /// The item ignores its parent's opacity. The
     ItemIgnoresParentOpacity,
+    /// The item doesn't propagate its
     ItemDoesntPropagateOpacityToChildren,
+    /// The item is stacked behind its parent. By
     ItemStacksBehindParent,
+    /// The item makes use of either
     ItemUsesExtendedStyleOption,
+    /// The item does not paint anything (i.e., calling
     ItemHasNoContents,
+    /// The item enables itemChange()
     ItemSendsGeometryChanges,
+    /// The item supports input methods typically
     ItemAcceptsInputMethod,
+    /// The item automatically
     ItemNegativeZStacksBehindParent,
+    /// The item is a panel. A panel provides activation and
     ItemIsPanel,
     ItemIsFocusScope,
+    /// The item enables itemChange()
     ItemSendsScenePositionChanges,
     ItemStopsClickFocusPropagation,
     ItemStopsFocusHandling,
+    /// This flag indicates that all of the
     ItemContainsChildrenInShape,
 }
 
 [org_name(QGraphicsItem)]
 enum GraphicsItemChange {
+    /// The item's position changes. This notification
     ItemPositionChange,
+    /// The item's affine transformation matrix is
     ItemMatrixChange,
+    /// The item's visible state changes. If the item is
     ItemVisibleChange,
+    /// The item's enabled state changes. If the item is
     ItemEnabledChange,
+    /// The item's selected state changes. If the item is
     ItemSelectedChange,
+    /// The item's parent changes. The value argument is
     ItemParentChange,
+    /// A child is added to this item. The value
     ItemChildAddedChange,
+    /// A child is removed from this item. The value
     ItemChildRemovedChange,
+    /// The item's transformation matrix changes. This
     ItemTransformChange,
+    /// The item's position has changed. This
     ItemPositionHasChanged,
+    /// The item's transformation matrix has
     ItemTransformHasChanged,
+    /// The item is moved to a new scene. This notification is
     ItemSceneChange,
+    /// The item's visible state has changed. The
     ItemVisibleHasChanged,
+    /// The item's enabled state has changed. The
     ItemEnabledHasChanged,
+    /// The item's selected state has changed. The
     ItemSelectedHasChanged,
+    /// The item's parent has changed. The value
     ItemParentHasChanged,
+    /// The item's scene has changed. The item's scene() is
     ItemSceneHasChanged,
+    /// The item's cursor changes. The value argument is
     ItemCursorChange,
+    /// The item's cursor has changed. The value
     ItemCursorHasChanged,
+    /// The item's tooltip changes. The value argument is
     ItemToolTipChange,
+    /// The item's tooltip has changed. The value
     ItemToolTipHasChanged,
+    /// The item's flags change. The value argument is the
     ItemFlagsChange,
+    /// The item's flags have changed. The value
     ItemFlagsHaveChanged,
+    /// The item's Z-value changes. The value argument is
     ItemZValueChange,
+    /// The item's Z-value has changed. The value
     ItemZValueHasChanged,
+    /// The item's opacity changes. The value argument is
     ItemOpacityChange,
+    /// The item's opacity has changed. The value
     ItemOpacityHasChanged,
+    /// The item's scene position has changed.
     ItemScenePositionHasChanged,
+    /// The item's rotation property changes. This
     ItemRotationChange,
+    /// The item's rotation property has changed.
     ItemRotationHasChanged,
+    /// The item's scale property changes. This notification
     ItemScaleChange,
+    /// The item's scale property has changed. This
     ItemScaleHasChanged,
+    /// The item's transform origin point
     ItemTransformOriginPointChange,
+    /// The item's transform origin point
     ItemTransformOriginPointHasChanged,
 }
 
 [org_name(QGraphicsItem)]
 enum CacheMode {
+    /// The default; all item caching is
     NoCache,
+    /// Caching is enabled for the item's logical
     ItemCoordinateCache,
+    /// Caching is enabled at the paint device level,
     DeviceCoordinateCache,
 }
 
 [org_name(QGraphicsItem)]
 enum PanelModality {
+    /// The panel is not modal and does not block input to
     NonModal,
+    /// The panel is modal to a single item hierarchy
     PanelModal,
+    /// The window is modal to the entire scene and
     SceneModal,
 }
 

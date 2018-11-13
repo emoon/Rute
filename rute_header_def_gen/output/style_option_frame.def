@@ -28,18 +28,23 @@ struct StyleOptionFrame : StyleOption {
 
 [org_name(QStyleOptionFrame)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionFrame)]
 enum StyleOptionVersion {
+    /// 3
     Version,
 }
 
 [org_name(QStyleOptionFrame)]
 enum FrameFeature {
+    /// Indicates a normal frame.
     None,
+    /// Indicates a flat frame.
     Flat,
+    /// Indicates a rounded frame.
     Rounded,
 }
 

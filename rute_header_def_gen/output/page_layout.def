@@ -406,23 +406,33 @@ struct PageLayout {
 
 [org_name(QPageLayout)]
 enum Unit {
+    /// 
     Millimeter,
+    /// 1/72th of an inch
     Point,
+    /// 
     Inch,
+    /// 1/72th of a foot, 1/6th of an inch, 12 Points
     Pica,
+    /// 1/72th of a French inch, 0.375 mm
     Didot,
+    /// 1/6th of a French inch, 12 Didot, 4.5mm
     Cicero,
 }
 
 [org_name(QPageLayout)]
 enum Orientation {
+    /// The page size is used in its default orientation
     Portrait,
+    /// The page size is rotated through 90 degrees
     Landscape,
 }
 
 [org_name(QPageLayout)]
 enum Mode {
+    /// Paint Rect includes margins, margins must fall between the minimum and maximum.
     StandardMode,
+    /// Paint Rect excludes margins, margins can be any value and must be managed manually.
     FullPageMode,
 }
 

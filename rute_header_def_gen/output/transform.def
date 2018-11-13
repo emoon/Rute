@@ -1362,11 +1362,17 @@ struct Transform {
 
 [org_name(QTransform)]
 enum TransformationType {
+    /// 
     TxNone,
+    /// 
     TxTranslate,
+    /// 
     TxScale,
+    /// 
     TxRotate,
+    /// 
     TxShear,
+    /// 
     TxProject,
 }
 

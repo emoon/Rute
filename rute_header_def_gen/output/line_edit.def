@@ -753,15 +753,21 @@ struct LineEdit : Widget {
 
 [org_name(QLineEdit)]
 enum ActionPosition {
+    /// The widget is displayed to the left of the text
     LeadingPosition,
+    /// The widget is displayed to the right of the text
     TrailingPosition,
 }
 
 [org_name(QLineEdit)]
 enum EchoMode {
+    /// Display characters as they are entered. This is the
     Normal,
+    /// Do not display anything. This may be appropriate
     NoEcho,
+    /// Display platform-dependent password mask characters instead
     Password,
+    /// Display characters as they are entered
     PasswordEchoOnEdit,
 }
 

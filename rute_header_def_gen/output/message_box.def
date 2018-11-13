@@ -2114,56 +2114,96 @@ struct MessageBox : Dialog {
 
 [org_name(QMessageBox)]
 enum Icon {
+    /// the message box does not have any icon.
     NoIcon,
+    /// an icon indicating that
     Information,
+    /// an icon indicating that the
     Warning,
+    /// an icon indicating that
     Critical,
+    /// an icon indicating that
     Question,
 }
 
 [org_name(QMessageBox)]
 enum ButtonRole {
+    /// The button is invalid.
     InvalidRole,
+    /// Clicking the button causes the dialog to be accepted
     AcceptRole,
+    /// Clicking the button causes the dialog to be rejected
     RejectRole,
+    /// Clicking the button causes a destructive change
     DestructiveRole,
+    /// Clicking the button causes changes to the elements within
     ActionRole,
+    /// The button can be clicked to request help.
     HelpRole,
+    /// The button is a "Yes"-like button.
     YesRole,
+    /// The button is a "No"-like button.
     NoRole,
+    /// The button resets the dialog's fields to default values.
     ResetRole,
+    /// The button applies current changes.
     ApplyRole,
     NRoles,
 }
 
 [org_name(QMessageBox)]
 enum StandardButton {
+    /// An invalid button.
     NoButton,
+    /// An "OK" button defined with the
     Ok,
+    /// A "Save" button defined with the
     Save,
+    /// A "Save All" button defined with the
     SaveAll,
+    /// An "Open" button defined with the
     Open,
+    /// A "Yes" button defined with the
     Yes,
+    /// A "Yes to All" button defined with the
     YesToAll,
+    /// A "No" button defined with the
     No,
+    /// A "No to All" button defined with the
     NoToAll,
+    /// An "Abort" button defined with the
     Abort,
+    /// A "Retry" button defined with the
     Retry,
+    /// An "Ignore" button defined with the
     Ignore,
+    /// A "Close" button defined with the
     Close,
+    /// A "Cancel" button defined with the
     Cancel,
+    /// A "Discard" or "Don't Save" button, depending on the platform,
     Discard,
+    /// A "Help" button defined with the
     Help,
+    /// An "Apply" button defined with the
     Apply,
+    /// A "Reset" button defined with the
     Reset,
+    /// A "Restore Defaults" button defined with the
     RestoreDefaults,
     FirstButton,
     LastButton,
+    /// Use YesToAll instead.
     YesAll,
+    /// Use NoToAll instead.
     NoAll,
+    /// Use the
     Default,
+    /// Call setEscapeButton() instead.
     Escape,
+    /// 
     FlagMask,
+    /// 
     ButtonMask,
 }
 

@@ -882,16 +882,23 @@ struct TextEdit : AbstractScrollArea {
 
 [org_name(QTextEdit)]
 enum LineWrapMode {
+    /// 
     NoWrap,
+    /// 
     WidgetWidth,
+    /// 
     FixedPixelWidth,
+    /// 
     FixedColumnWidth,
 }
 
 [org_name(QTextEdit)]
 enum AutoFormattingFlag {
+    /// Don't do any automatic formatting.
     AutoNone,
+    /// Automatically create bullet lists (e.g. when
     AutoBulletList,
+    /// Apply all automatic formatting. Currently only
     AutoAll,
 }
 

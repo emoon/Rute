@@ -736,8 +736,11 @@ struct Application : GuiApplication {
 
 [org_name(QApplication)]
 enum ColorSpec {
+    /// the default color allocation policy
     NormalColor,
+    /// the same as NormalColor for X11; allocates colors
     CustomColor,
+    /// the right choice for applications that use thousands of
     ManyColor,
 }
 

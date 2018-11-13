@@ -410,39 +410,65 @@ struct Palette {
 
 [org_name(QPalette)]
 enum ColorGroup {
+    /// 
     Active,
+    /// 
     Disabled,
+    /// 
     Inactive,
     NColorGroups,
     Current,
     All,
+    /// synonym for Active
     Normal,
 }
 
 [org_name(QPalette)]
 enum ColorRole {
+    /// A general foreground color.
     WindowText,
+    /// The general button background color. This background can be different from
     Button,
+    /// Lighter than
     Light,
+    /// Between
     Midlight,
+    /// Darker than
     Dark,
+    /// Between
     Mid,
+    /// The foreground color used with
     Text,
+    /// A text color that is very different from
     BrightText,
+    /// A foreground color used with the
     ButtonText,
+    /// Used mostly as the background color for text entry widgets,
     Base,
+    /// A general background color.
     Window,
+    /// A very dark color. By default, the shadow color is
     Shadow,
+    /// A color to indicate a selected item or the current
     Highlight,
+    /// A text color that contrasts with
     HighlightedText,
+    /// A text color used for unvisited hyperlinks.
     Link,
+    /// A text color used for already visited hyperlinks.
     LinkVisited,
+    /// Used as the alternate background color in views with
     AlternateBase,
+    /// No role; this special role is often used to indicate that a
     NoRole,
+    /// Used as the background color for QToolTip and
     ToolTipBase,
+    /// Used as the foreground color for QToolTip and
     ToolTipText,
     NColorRoles,
+    /// This value is obsolete. Use WindowText instead.
     Foreground,
+    /// This value is obsolete. Use Window instead.
     Background,
 }
 

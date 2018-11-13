@@ -548,11 +548,17 @@ struct MainWindow : Widget {
 
 [org_name(QMainWindow)]
 enum DockOption {
+    /// Identical to the
     AnimatedDocks,
+    /// Identical to the
     AllowNestedDocks,
+    /// The user can drop one dock widget "on top" of
     AllowTabbedDocks,
+    /// Each dock area contains a single stack of tabbed
     ForceTabbedDocks,
+    /// The two vertical dock areas on the sides of the
     VerticalTabs,
+    /// When dragging the titlebar of a dock, all the tabs
     GroupedDragging,
 }
 

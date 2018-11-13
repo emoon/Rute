@@ -152,8 +152,11 @@ struct ToolButton : AbstractButton {
 
 [org_name(QToolButton)]
 enum ToolButtonPopupMode {
+    /// After pressing and holding the tool button
     DelayedPopup,
+    /// In this mode the tool button displays a
     MenuButtonPopup,
+    /// The menu is displayed, without delay, when
     InstantPopup,
 }
 

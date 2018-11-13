@@ -28,11 +28,13 @@ struct StyleOptionGroupBox : StyleOptionComplex {
 
 [org_name(QStyleOptionGroupBox)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionGroupBox)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 

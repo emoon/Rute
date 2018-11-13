@@ -1264,22 +1264,39 @@ struct OpenGLFunctions {
 
 [org_name(QOpenGLFunctions)]
 enum OpenGLFeature {
+    /// glActiveTexture() function is available.
     Multitexture,
+    /// Shader functions are available.
     Shaders,
+    /// Vertex and index buffer functions are available.
     Buffers,
+    /// Framebuffer object functions are available.
     Framebuffers,
+    /// glBlendColor() is available.
     BlendColor,
+    /// glBlendEquation() is available.
     BlendEquation,
+    /// glBlendEquationSeparate() is available.
     BlendEquationSeparate,
+    /// glBlendFuncSeparate() is available.
     BlendFuncSeparate,
+    /// Blend subtract mode is available.
     BlendSubtract,
+    /// Compressed texture functions are available.
     CompressedTextures,
+    /// glSampleCoverage() function is available.
     Multisample,
+    /// Separate stencil functions are available.
     StencilSeparate,
+    /// Non power of two textures are available.
     NPOTTextures,
+    /// Non power of two textures can use GL_REPEAT as wrap parameter.
     NPOTTextureRepeat,
+    /// The fixed function pipeline is available.
     FixedFunctionPipeline,
+    /// The GL_RED and GL_RG texture formats are available.
     TextureRGFormats,
+    /// Multiple color attachments to framebuffer objects are available.
     MultipleRenderTargets,
 }
 

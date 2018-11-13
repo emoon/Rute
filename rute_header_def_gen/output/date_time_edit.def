@@ -554,14 +554,23 @@ struct DateTimeEdit : AbstractSpinBox {
 
 [org_name(QDateTimeEdit)]
 enum Section {
+    /// 
     NoSection,
+    /// 
     AmPmSection,
+    /// 
     MSecSection,
+    /// 
     SecondSection,
+    /// 
     MinuteSection,
+    /// 
     HourSection,
+    /// 
     DaySection,
+    /// 
     MonthSection,
+    /// 
     YearSection,
     TimeSections_Mask,
     DateSections_Mask,

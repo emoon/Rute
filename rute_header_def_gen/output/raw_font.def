@@ -422,14 +422,19 @@ struct RawFont {
 
 [org_name(QRawFont)]
 enum AntialiasingType {
+    /// Will rasterize by measuring the coverage of the shape on whole pixels.
     PixelAntialiasing,
+    /// Will rasterize by measuring the coverage of each subpixel,
     SubPixelAntialiasing,
 }
 
 [org_name(QRawFont)]
 enum LayoutFlag {
+    /// Will calculate the advance for each glyph separately.
     SeparateAdvances,
+    /// Will apply kerning between adjacent glyphs. Note that OpenType GPOS based
     KernedAdvances,
+    /// Use design metrics instead of hinted metrics adjusted to the resolution
     UseDesignMetrics,
 }
 

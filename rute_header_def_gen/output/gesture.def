@@ -68,7 +68,9 @@ struct Gesture : Object {
 
 [org_name(QGesture)]
 enum GestureCancelPolicy {
+    /// On accepting this gesture no other gestures will be affected.
     CancelNone,
+    /// On accepting this gesture all gestures that are
     CancelAllInContext,
 }
 

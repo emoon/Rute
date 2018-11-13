@@ -49,8 +49,11 @@ struct GraphicsSceneContextMenuEvent : GraphicsSceneEvent {
 
 [org_name(QGraphicsSceneContextMenuEvent)]
 enum Reason {
+    /// The mouse caused the event to be sent. On most
     Mouse,
+    /// The keyboard caused this event to be sent. On
     Keyboard,
+    /// The event was sent by some other means (i.e. not
     Other,
 }
 

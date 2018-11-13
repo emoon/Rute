@@ -311,8 +311,11 @@ struct Clipboard : Object {
 
 [org_name(QClipboard)]
 enum Mode {
+    /// indicates that data should be stored and retrieved from
     Clipboard,
+    /// indicates that data should be stored and retrieved from
     Selection,
+    /// indicates that data should be stored and retrieved from
     FindBuffer,
     LastMode,
 }

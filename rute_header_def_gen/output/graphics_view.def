@@ -1689,38 +1689,55 @@ struct GraphicsView : AbstractScrollArea {
 
 [org_name(QGraphicsView)]
 enum ViewportAnchor {
+    /// No anchor, i.e. the view leaves the scene's
     NoAnchor,
+    /// The scene point at the center of the view
     AnchorViewCenter,
+    /// The point under the mouse is used as the anchor.
     AnchorUnderMouse,
 }
 
 [org_name(QGraphicsView)]
 enum CacheModeFlag {
+    /// All painting is done directly onto the viewport.
     CacheNone,
+    /// The background is cached. This affects both custom
     CacheBackground,
 }
 
 [org_name(QGraphicsView)]
 enum DragMode {
+    /// Nothing happens; the mouse event is ignored.
     NoDrag,
+    /// The cursor changes into a pointing hand, and
     ScrollHandDrag,
+    /// A rubber band will appear. Dragging the mouse will
     RubberBandDrag,
 }
 
 [org_name(QGraphicsView)]
 enum ViewportUpdateMode {
+    /// When any visible part of the scene changes or is
     FullViewportUpdate,
+    /// QGraphicsView will determine the minimal
     MinimalViewportUpdate,
+    /// QGraphicsView will attempt to find an optimal
     SmartViewportUpdate,
+    /// QGraphicsView will never update its viewport when
     NoViewportUpdate,
+    /// The bounding rectangle of all changes in
     BoundingRectViewportUpdate,
 }
 
 [org_name(QGraphicsView)]
 enum OptimizationFlag {
+    /// This value is obsolete and has no effect.
     DontClipPainter,
+    /// When rendering, QGraphicsView protects the
     DontSavePainterState,
+    /// Disables QGraphicsView's antialiasing
     DontAdjustForAntialiasing,
+    /// Since Qt 4.6, restore the old painting algorithm
     IndirectPainting,
 }
 

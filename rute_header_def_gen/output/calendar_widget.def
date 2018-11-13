@@ -350,21 +350,29 @@ struct CalendarWidget : Widget {
 
 [org_name(QCalendarWidget)]
 enum HorizontalHeaderFormat {
+    /// The header is hidden.
     NoHorizontalHeader,
+    /// The header displays a single letter abbreviation for day names (e.g. M for Monday).
     SingleLetterDayNames,
+    /// The header displays a short abbreviation for day names (e.g. Mon for Monday).
     ShortDayNames,
+    /// The header displays complete day names (e.g. Monday).
     LongDayNames,
 }
 
 [org_name(QCalendarWidget)]
 enum VerticalHeaderFormat {
+    /// The header is hidden.
     NoVerticalHeader,
+    /// The header displays ISO week numbers as described by
     ISOWeekNumbers,
 }
 
 [org_name(QCalendarWidget)]
 enum SelectionMode {
+    /// Dates cannot be selected.
     NoSelection,
+    /// Single dates can be selected.
     SingleSelection,
 }
 

@@ -227,75 +227,133 @@ struct PaintEngine {
 
 [org_name(QPaintEngine)]
 enum PaintEngineFeature {
+    /// The engine has support for transforming
     PrimitiveTransform,
+    /// The engine has support for transforming brush
     PatternTransform,
+    /// The engine can transform pixmaps, including
     PixmapTransform,
+    /// The engine is capable of rendering brushes with
     PatternBrush,
+    /// The engine supports linear gradient fills.
     LinearGradientFill,
+    /// The engine supports radial gradient fills.
     RadialGradientFill,
+    /// The engine supports conical gradient fills.
     ConicalGradientFill,
+    /// The engine can alpha blend primitives.
     AlphaBlend,
+    /// The engine supports Porter-Duff operations
     PorterDuff,
+    /// The engine has path support.
     PainterPaths,
+    /// The engine can use antialising to improve the appearance
     Antialiasing,
+    /// The engine supports drawing strokes that
     BrushStroke,
+    /// The engine supports the feature provided by
     ConstantOpacity,
+    /// The engine is capable of rendering brushes that has a
     MaskedBrush,
+    /// The engine has support for performing perspective
     PerspectiveTransform,
+    /// The engine supports blending modes.
     BlendModes,
+    /// The engine has native support for gradients
     ObjectBoundingModeGradients,
+    /// The engine supports bitwise raster operations.
     RasterOpModes,
+    /// The engine is capable of painting outside of
     PaintOutsidePaintEvent,
+    /// All of the above features. This enum value is usually
     AllFeatures,
 }
 
 [org_name(QPaintEngine)]
 enum DirtyFlag {
+    /// The pen is dirty and needs to be updated.
     DirtyPen,
+    /// The brush is dirty and needs to be updated.
     DirtyBrush,
+    /// The brush origin is dirty and needs to
     DirtyBrushOrigin,
+    /// The font is dirty and needs to be updated.
     DirtyFont,
+    /// The background is dirty and needs to be
     DirtyBackground,
+    /// The background mode is dirty and needs
     DirtyBackgroundMode,
+    /// The transform is dirty and needs to be
     DirtyTransform,
+    /// The clip region is dirty and needs to be
     DirtyClipRegion,
+    /// The clip path is dirty and needs to be
     DirtyClipPath,
+    /// The render hints is dirty and needs to be
     DirtyHints,
+    /// The composition mode is dirty and
     DirtyCompositionMode,
+    /// Whether clipping is enabled or not is
     DirtyClipEnabled,
+    /// The constant opacity has changed and needs to
     DirtyOpacity,
+    /// Convenience enum used internally.
     AllDirty,
 }
 
 [org_name(QPaintEngine)]
 enum PolygonDrawMode {
+    /// The polygon should be drawn using OddEven fill
     OddEvenMode,
+    /// The polygon should be drawn using Winding fill rule.
     WindingMode,
+    /// The polygon is a convex polygon and can be drawn
     ConvexMode,
+    /// Only the outline of the polygon should be
     PolylineMode,
 }
 
 [org_name(QPaintEngine)]
 enum Type {
+    /// 
     X11,
+    /// 
     Windows,
+    /// 
     QuickDraw,
+    /// 
     CoreGraphics,
+    /// 
     MacPrinter,
+    /// Qt for Embedded Linux
     QWindowSystem,
+    /// (No longer supported)
     PostScript,
+    /// 
     OpenGL,
+    /// QPicture format
     Picture,
+    /// Scalable Vector Graphics XML format
     SVG,
+    /// 
     Raster,
+    /// Windows only, Direct3D based engine
     Direct3D,
+    /// Portable Document Format
     Pdf,
+    /// 
     OpenVG,
+    /// 
     OpenGL2,
+    /// 
     PaintBuffer,
+    /// 
     Blitter,
+    /// Windows only, Direct2D based engine
     Direct2D,
+    /// First user type ID
     User,
+    /// Last user type ID
     MaxUser,
 }
 

@@ -2230,8 +2230,11 @@ enum FloatingPointPrecisionOption {
 
 [org_name(QLocale)]
 enum CurrencySymbolFormat {
+    /// a ISO-4217 code of the currency.
     CurrencyIsoCode,
+    /// a currency symbol.
     CurrencySymbol,
+    /// a user readable name of the currency.
     CurrencyDisplayName,
 }
 
@@ -2239,8 +2242,11 @@ enum CurrencySymbolFormat {
 enum DataSizeFormat {
     DataSizeBase1000,
     DataSizeSIQuantifiers,
+    /// format using base 1024 and IEC prefixes: KiB, MiB, GiB, ...
     DataSizeIecFormat,
+    /// format using base 1024 and SI prefixes: kB, MB, GB, ...
     DataSizeTraditionalFormat,
+    /// format using base 1000 and SI prefixes: kB, MB, GB, ...
     DataSizeSIFormat,
 }
 

@@ -242,21 +242,33 @@ struct AbstractSlider : Widget {
 
 [org_name(QAbstractSlider)]
 enum SliderAction {
+    /// 
     SliderNoAction,
+    /// 
     SliderSingleStepAdd,
+    /// 
     SliderSingleStepSub,
+    /// 
     SliderPageStepAdd,
+    /// 
     SliderPageStepSub,
+    /// 
     SliderToMinimum,
+    /// 
     SliderToMaximum,
+    /// 
     SliderMove,
 }
 
 [org_name(QAbstractSlider)]
 enum SliderChange {
+    /// 
     SliderRangeChange,
+    /// 
     SliderOrientationChange,
+    /// 
     SliderStepsChange,
+    /// 
     SliderValueChange,
 }
 

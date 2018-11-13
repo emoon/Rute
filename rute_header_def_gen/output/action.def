@@ -422,25 +422,37 @@ struct Action : Object {
 
 [org_name(QAction)]
 enum MenuRole {
+    /// This action should not be put into the application menu
     NoRole,
+    /// This action should be put in the application menu based on the action's text
     TextHeuristicRole,
+    /// This action should be put in the application menu with an application specific role
     ApplicationSpecificRole,
+    /// This action handles the "About Qt" menu item.
     AboutQtRole,
+    /// This action should be placed where the "About" menu item is in the application menu. The text of
     AboutRole,
+    /// This action should be placed where the  "Preferences..." menu item is in the application menu.
     PreferencesRole,
+    /// This action should be placed where the Quit menu item is in the application menu.
     QuitRole,
 }
 
 [org_name(QAction)]
 enum Priority {
+    /// The action should not be prioritized in
     LowPriority,
+    /// 
     NormalPriority,
+    /// The action should be prioritized in
     HighPriority,
 }
 
 [org_name(QAction)]
 enum ActionEvent {
+    /// this will cause the QAction::triggered() signal to be emitted.
     Trigger,
+    /// this will cause the QAction::hovered() signal to be emitted.
     Hover,
 }
 

@@ -32,8 +32,11 @@ struct ScrollEvent : Event {
 
 [org_name(QScrollEvent)]
 enum ScrollState {
+    /// Set for the first scroll event of a scroll activity.
     ScrollStarted,
+    /// Set for all but the first and the last scroll event of a scroll activity.
     ScrollUpdated,
+    /// Set for the last scroll event of a scroll activity.
     ScrollFinished,
 }
 

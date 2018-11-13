@@ -960,43 +960,65 @@ struct FileDialog : Dialog {
 
 [org_name(QFileDialog)]
 enum ViewMode {
+    /// Displays an icon, a name, and details for each item in
     Detail,
+    /// Displays only an icon and a name for each item in the
     List,
 }
 
 [org_name(QFileDialog)]
 enum FileMode {
+    /// The name of a file, whether it exists or not.
     AnyFile,
+    /// The name of a single existing file.
     ExistingFile,
+    /// The name of a directory. Both files and
     Directory,
+    /// The names of zero or more existing files.
     ExistingFiles,
+    /// Use
     DirectoryOnly,
 }
 
 [org_name(QFileDialog)]
 enum AcceptMode {
+    /// 
     AcceptOpen,
+    /// 
     AcceptSave,
 }
 
 [org_name(QFileDialog)]
 enum DialogLabel {
+    /// 
     LookIn,
+    /// 
     FileName,
+    /// 
     FileType,
+    /// 
     Accept,
+    /// 
     Reject,
 }
 
 [org_name(QFileDialog)]
 enum Option {
+    /// Only show directories in the file dialog. By
     ShowDirsOnly,
+    /// Don't resolve symlinks in the file
     DontResolveSymlinks,
+    /// Don't ask for confirmation if an
     DontConfirmOverwrite,
+    /// In previous versions of Qt, the static
     DontUseSheet,
+    /// Don't use the native file dialog. By
     DontUseNativeDialog,
+    /// Indicates that the model is readonly.
     ReadOnly,
+    /// Indicates if the file name filter details are
     HideNameFilterDetails,
+    /// Always use the default directory icon.
     DontUseCustomDirectoryIcons,
 }
 

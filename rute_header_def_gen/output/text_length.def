@@ -37,8 +37,11 @@ struct TextLength {
 
 [org_name(QTextLength)]
 enum Type {
+    /// The width of the object is variable
     VariableLength,
+    /// The width of the object is fixed
     FixedLength,
+    /// The width of the object is in
     PercentageLength,
 }
 

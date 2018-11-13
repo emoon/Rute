@@ -99,9 +99,13 @@ struct IconEngine {
 
 [org_name(QIconEngine)]
 enum IconEngineHook {
+    /// Allows to query the sizes of the
     AvailableSizesHook,
+    /// Allows to query the name used to create the
     IconNameHook,
+    /// Allow to query if this engine represents a null
     IsNullHook,
+    /// Provides a way to get a pixmap that is scaled
     ScaledPixmapHook,
 }
 

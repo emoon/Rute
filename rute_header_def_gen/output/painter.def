@@ -7128,58 +7128,103 @@ struct Painter {
 
 [org_name(QPainter)]
 enum RenderHint {
+    /// Indicates that the engine should antialias
     Antialiasing,
+    /// Indicates that the engine should antialias
     TextAntialiasing,
+    /// Indicates that the engine should use
     SmoothPixmapTransform,
+    /// This value is obsolete and will be ignored,
     HighQualityAntialiasing,
+    /// This value is obsolete, the default for QPen
     NonCosmeticDefaultPen,
+    /// Compatibility hint telling the engine to use the
     Qt4CompatiblePainting,
 }
 
 [org_name(QPainter)]
 enum PixmapFragmentHint {
+    /// Indicates that the pixmap fragments to be drawn are
     OpaqueHint,
 }
 
 [org_name(QPainter)]
 enum CompositionMode {
+    /// This is the default mode. The
     CompositionMode_SourceOver,
+    /// The alpha of the
     CompositionMode_DestinationOver,
+    /// The pixels in the destination are
     CompositionMode_Clear,
+    /// The output is the source
     CompositionMode_Source,
+    /// The output is the destination
     CompositionMode_Destination,
+    /// The output is the source, where
     CompositionMode_SourceIn,
+    /// The output is the
     CompositionMode_DestinationIn,
+    /// The output is the source, where
     CompositionMode_SourceOut,
+    /// The output is the
     CompositionMode_DestinationOut,
+    /// The source pixel is blended on
     CompositionMode_SourceAtop,
+    /// The destination pixel is
     CompositionMode_DestinationAtop,
+    /// The source, whose alpha is reduced with
     CompositionMode_Xor,
+    /// Both the alpha and color of the source
     CompositionMode_Plus,
+    /// The output is the source color
     CompositionMode_Multiply,
+    /// The source and destination colors
     CompositionMode_Screen,
+    /// Multiplies or screens the colors
     CompositionMode_Overlay,
+    /// The darker of the source and
     CompositionMode_Darken,
+    /// The lighter of the source and
     CompositionMode_Lighten,
+    /// The destination color is
     CompositionMode_ColorDodge,
+    /// The destination color is darkened
     CompositionMode_ColorBurn,
+    /// Multiplies or screens the colors
     CompositionMode_HardLight,
+    /// Darkens or lightens the colors
     CompositionMode_SoftLight,
+    /// Subtracts the darker of the
     CompositionMode_Difference,
+    /// Similar to
     CompositionMode_Exclusion,
+    /// Does a bitwise OR operation on
     RasterOp_SourceOrDestination,
+    /// Does a bitwise AND operation
     RasterOp_SourceAndDestination,
+    /// Does a bitwise XOR operation
     RasterOp_SourceXorDestination,
+    /// Does a bitwise NOR
     RasterOp_NotSourceAndNotDestination,
+    /// Does a bitwise NAND
     RasterOp_NotSourceOrNotDestination,
+    /// Does a bitwise operation
     RasterOp_NotSourceXorDestination,
+    /// Does a bitwise operation where the
     RasterOp_NotSource,
+    /// Does a bitwise operation
     RasterOp_NotSourceAndDestination,
+    /// Does a bitwise operation
     RasterOp_SourceAndNotDestination,
+    /// Does a bitwise operation
     RasterOp_NotSourceOrDestination,
+    /// Does a bitwise operation
     RasterOp_SourceOrNotDestination,
+    /// The pixels in the destination are
     RasterOp_ClearDestination,
+    /// The pixels in the destination are
     RasterOp_SetDestination,
+    /// Does a bitwise operation
     RasterOp_NotDestination,
 }
 

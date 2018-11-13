@@ -106,12 +106,18 @@ struct GestureRecognizer {
 
 [org_name(QGestureRecognizer)]
 enum ResultFlag {
+    /// The event does not change the state of the recognizer.
     Ignore,
+    /// The event changed the internal state of the recognizer,
     MayBeGesture,
+    /// The gesture has been triggered and the appropriate
     TriggerGesture,
+    /// The gesture has been finished successfully and the
     FinishGesture,
+    /// The event made it clear that it is not a gesture. If
     CancelGesture,
     ResultState_Mask,
+    /// This hint specifies that the gesture framework
     ConsumeEventHint,
     ResultHint_Mask,
 }

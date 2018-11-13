@@ -22,11 +22,13 @@ struct StyleOptionSizeGrip : StyleOptionComplex {
 
 [org_name(QStyleOptionSizeGrip)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionSizeGrip)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 

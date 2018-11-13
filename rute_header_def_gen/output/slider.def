@@ -102,11 +102,17 @@ struct Slider : AbstractSlider {
 
 [org_name(QSlider)]
 enum TickPosition {
+    /// Do not draw any tick marks.
     NoTicks,
+    /// Draw tick marks above the (horizontal) slider
     TicksAbove,
+    /// Draw tick marks to the left of the (vertical) slider
     TicksLeft,
+    /// Draw tick marks below the (horizontal) slider
     TicksBelow,
+    /// Draw tick marks to the right of the (vertical) slider
     TicksRight,
+    /// Draw tick marks on both sides of the groove.
     TicksBothSides,
 }
 

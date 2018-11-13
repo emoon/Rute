@@ -21,34 +21,47 @@ struct StyleOptionHeader : StyleOption {
 
 [org_name(QStyleOptionHeader)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionHeader)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 
 [org_name(QStyleOptionHeader)]
 enum SectionPosition {
+    /// At the beginining of the header
     Beginning,
+    /// In the middle of the header
     Middle,
+    /// At the end of the header
     End,
+    /// Only one header section
     OnlyOneSection,
 }
 
 [org_name(QStyleOptionHeader)]
 enum SelectedPosition {
+    /// Not adjacent to the selected section
     NotAdjacent,
+    /// The next section is selected
     NextIsSelected,
+    /// The previous section is selected
     PreviousIsSelected,
+    /// Both the next and previous section are selected
     NextAndPreviousAreSelected,
 }
 
 [org_name(QStyleOptionHeader)]
 enum SortIndicator {
+    /// No sort indicator is needed
     None,
+    /// Draw an up indicator
     SortUp,
+    /// Draw a down indicator
     SortDown,
 }
 

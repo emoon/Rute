@@ -397,15 +397,21 @@ struct Completer : Object {
 
 [org_name(QCompleter)]
 enum CompletionMode {
+    /// Current completions are displayed in a popup window.
     PopupCompletion,
+    /// All possible completions are displayed in a popup window with the most likely suggestion indicated as current.
     UnfilteredPopupCompletion,
+    /// Completions appear inline (as selected text).
     InlineCompletion,
 }
 
 [org_name(QCompleter)]
 enum ModelSorting {
+    /// The model is unsorted.
     UnsortedModel,
+    /// The model is sorted case sensitively.
     CaseSensitivelySortedModel,
+    /// The model is sorted case insensitively.
     CaseInsensitivelySortedModel,
 }
 

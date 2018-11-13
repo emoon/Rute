@@ -256,16 +256,23 @@ struct LCDNumber : Frame {
 
 [org_name(QLCDNumber)]
 enum Mode {
+    /// Hexadecimal
     Hex,
+    /// Decimal
     Dec,
+    /// Octal
     Oct,
+    /// Binary
     Bin,
 }
 
 [org_name(QLCDNumber)]
 enum SegmentStyle {
+    /// gives raised segments filled with the background color.
     Outline,
+    /// gives raised segments filled with the windowText color.
     Filled,
+    /// gives flat segments filled with the windowText color.
     Flat,
 }
 

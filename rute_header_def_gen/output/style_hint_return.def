@@ -12,18 +12,23 @@ struct StyleHintReturn {
 
 [org_name(QStyleHintReturn)]
 enum HintReturnType {
+    /// QStyleHintReturn
     SH_Default,
+    /// 
     SH_Mask,
+    /// 
     SH_Variant,
 }
 
 [org_name(QStyleHintReturn)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleHintReturn)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 

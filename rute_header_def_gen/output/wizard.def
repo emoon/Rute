@@ -813,15 +813,25 @@ struct Wizard : Dialog {
 
 [org_name(QWizard)]
 enum WizardButton {
+    /// The
     BackButton,
+    /// The
     NextButton,
+    /// The
     CommitButton,
+    /// The
     FinishButton,
+    /// The
     CancelButton,
+    /// The
     HelpButton,
+    /// The first user-defined button (see also HaveCustomButton1)
     CustomButton1,
+    /// The second user-defined button (see also HaveCustomButton2)
     CustomButton2,
+    /// The third user-defined button (see also HaveCustomButton3)
     CustomButton3,
+    /// A horizontal stretch in the button layout
     Stretch,
     NoButton,
     NStandardButtons,
@@ -830,40 +840,65 @@ enum WizardButton {
 
 [org_name(QWizard)]
 enum WizardPixmap {
+    /// The tall pixmap on the left side of a ClassicStyle or ModernStyle page
     WatermarkPixmap,
+    /// The small pixmap on the right side of a ClassicStyle or ModernStyle page header
     LogoPixmap,
+    /// The pixmap that occupies the background of a ModernStyle page header
     BannerPixmap,
+    /// The pixmap that occupies the background of a MacStyle wizard
     BackgroundPixmap,
     NPixmaps,
 }
 
 [org_name(QWizard)]
 enum WizardStyle {
+    /// Classic Windows look
     ClassicStyle,
+    /// Modern Windows look
     ModernStyle,
+    /// 
     MacStyle,
+    /// Windows Aero look
     AeroStyle,
     NStyles,
 }
 
 [org_name(QWizard)]
 enum WizardOption {
+    /// The pages are independent of each other
     IndependentPages,
+    /// Don't show any subtitles, even if they are set.
     IgnoreSubTitles,
+    /// Extend any WatermarkPixmap all the
     ExtendedWatermarkPixmap,
+    /// Don't make the
     NoDefaultButton,
+    /// Don't show the
     NoBackButtonOnStartPage,
+    /// Don't show the
     NoBackButtonOnLastPage,
+    /// Disable the
     DisabledBackButtonOnLastPage,
+    /// Show the (disabled)
     HaveNextButtonOnLastPage,
+    /// Show the (disabled)
     HaveFinishButtonOnEarlyPages,
+    /// Don't show the
     NoCancelButton,
+    /// Put the
     CancelButtonOnLeft,
+    /// Show the
     HaveHelpButton,
+    /// Put the
     HelpButtonOnRight,
+    /// Show the first user-defined button (CustomButton1).
     HaveCustomButton1,
+    /// Show the second user-defined button (CustomButton2).
     HaveCustomButton2,
+    /// Show the third user-defined button (CustomButton3).
     HaveCustomButton3,
+    /// Don't show the
     NoCancelButtonOnLastPage,
 }
 

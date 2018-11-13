@@ -34,25 +34,33 @@ struct StyleOptionToolBar : StyleOption {
 
 [org_name(QStyleOptionToolBar)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionToolBar)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 
 [org_name(QStyleOptionToolBar)]
 enum ToolBarPosition {
+    /// The toolbar is located at the beginning of the line,
     Beginning,
+    /// The toolbar is located in the middle of the line,
     Middle,
+    /// The toolbar is located at the end of the line,
     End,
+    /// There is only one toolbar or line. This is the default value
     OnlyOne,
 }
 
 [org_name(QStyleOptionToolBar)]
 enum ToolBarFeature {
+    /// The toolbar cannot be moved. The default value.
     None,
+    /// The toolbar is movable, and a handle will appear when
     Movable,
 }
 

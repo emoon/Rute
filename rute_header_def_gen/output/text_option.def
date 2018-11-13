@@ -131,28 +131,43 @@ struct TextOption {
 
 [org_name(QTextOption)]
 enum TabType {
+    /// A left-tab
     LeftTab,
+    /// A right-tab
     RightTab,
+    /// A centered-tab
     CenterTab,
+    /// A tab stopping at a certain delimiter-character
     DelimiterTab,
 }
 
 [org_name(QTextOption)]
 enum WrapMode {
+    /// Text is not wrapped at all.
     NoWrap,
+    /// Text is wrapped at word boundaries.
     WordWrap,
+    /// Same as QTextOption::NoWrap
     ManualWrap,
+    /// Text can be wrapped at any point on a line, even if
     WrapAnywhere,
+    /// If possible, wrapping occurs at a word
     WrapAtWordBoundaryOrAnywhere,
 }
 
 [org_name(QTextOption)]
 enum Flag {
+    /// Visualize spaces with little dots, and tabs with little arrows.
     ShowTabsAndSpaces,
+    /// Visualize line and paragraph separators with appropriate symbol characters.
     ShowLineAndParagraphSeparators,
+    /// While determining the line-break positions take into account the
     AddSpaceForLineAndParagraphSeparators,
+    /// Suppress all color changes in the character formats (except the main selection).
     SuppressColors,
+    /// Visualize the end of the document with a section sign. This enum value was added
     ShowDocumentTerminator,
+    /// When this option is set, QTextLine::naturalTextWidth() and naturalTextRect() will
     IncludeTrailingSpaces,
 }
 

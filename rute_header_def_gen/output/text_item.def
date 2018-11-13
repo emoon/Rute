@@ -30,9 +30,13 @@ struct TextItem {
 
 [org_name(QTextItem)]
 enum RenderFlag {
+    /// Render the text from right to left.
     RightToLeft,
+    /// Paint a line above the text.
     Overline,
+    /// Paint a line under the text.
     Underline,
+    /// Paint a line through the text.
     StrikeOut,
     Dummy,
 }

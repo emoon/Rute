@@ -1657,173 +1657,325 @@ struct OpenGLTexture {
 
 [org_name(QOpenGLTexture)]
 enum Target {
+    /// A 1-dimensional texture.
     Target1D,
+    /// An array of 1-dimensional textures.
     Target1DArray,
+    /// A 2-dimensional texture.
     Target2D,
+    /// An array of 1-dimensional textures.
     Target2DArray,
+    /// A 3-dimensional texture.
     Target3D,
+    /// A cubemap texture.
     TargetCubeMap,
+    /// An array of cubemap textures.
     TargetCubeMapArray,
+    /// A 2-dimensional texture with multisample support.
     Target2DMultisample,
+    /// An array of 2-dimensional textures with multisample support.
     Target2DMultisampleArray,
+    /// A rectangular 2-dimensional texture.
     TargetRectangle,
+    /// A texture with data from an OpenGL buffer object.
     TargetBuffer,
 }
 
 [org_name(QOpenGLTexture)]
 enum BindingTarget {
+    /// Equivalent to GL_TEXTURE_BINDING_1D
     BindingTarget1D,
+    /// Equivalent to GL_TEXTURE_BINDING_1D_ARRAY
     BindingTarget1DArray,
+    /// Equivalent to GL_TEXTURE_BINDING_2D
     BindingTarget2D,
+    /// Equivalent to GL_TEXTURE_BINDING_2D_ARRAY
     BindingTarget2DArray,
+    /// Equivalent to GL_TEXTURE_BINDING_3D
     BindingTarget3D,
+    /// Equivalent to GL_TEXTURE_BINDING_CUBE_MAP
     BindingTargetCubeMap,
+    /// Equivalent to GL_TEXTURE_BINDING_CUBE_MAP_ARRAY
     BindingTargetCubeMapArray,
+    /// Equivalent to GL_TEXTURE_BINDING_2D_MULTISAMPLE
     BindingTarget2DMultisample,
+    /// Equivalent to GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY
     BindingTarget2DMultisampleArray,
+    /// Equivalent to GL_TEXTURE_BINDING_RECTANGLE
     BindingTargetRectangle,
+    /// Equivalent to GL_TEXTURE_BINDING_BUFFER
     BindingTargetBuffer,
 }
 
 [org_name(QOpenGLTexture)]
 enum MipMapGeneration {
+    /// Mipmaps should be generated
     GenerateMipMaps,
+    /// Mipmaps should not be generated
     DontGenerateMipMaps,
 }
 
 [org_name(QOpenGLTexture)]
 enum TextureUnitReset {
+    /// The previous active texture unit will be reset
     ResetTextureUnit,
+    /// The previous active texture unit will not be rest
     DontResetTextureUnit,
 }
 
 [org_name(QOpenGLTexture)]
 enum TextureFormat {
+    /// Equivalent to GL_NONE
     NoFormat,
+    /// Equivalent to GL_R8
     R8_UNorm,
+    /// Equivalent to GL_RG8
     RG8_UNorm,
+    /// Equivalent to GL_RGB8
     RGB8_UNorm,
+    /// Equivalent to GL_RGBA8
     RGBA8_UNorm,
+    /// Equivalent to GL_R16
     R16_UNorm,
+    /// Equivalent to GL_RG16
     RG16_UNorm,
+    /// Equivalent to GL_RGB16
     RGB16_UNorm,
+    /// Equivalent to GL_RGBA16
     RGBA16_UNorm,
+    /// Equivalent to GL_R8_SNORM
     R8_SNorm,
+    /// Equivalent to GL_RG8_SNORM
     RG8_SNorm,
+    /// Equivalent to GL_RGB8_SNORM
     RGB8_SNorm,
+    /// Equivalent to GL_RGBA8_SNORM
     RGBA8_SNorm,
+    /// Equivalent to GL_R16_SNORM
     R16_SNorm,
+    /// Equivalent to GL_RG16_SNORM
     RG16_SNorm,
+    /// Equivalent to GL_RGB16_SNORM
     RGB16_SNorm,
+    /// Equivalent to GL_RGBA16_SNORM
     RGBA16_SNorm,
+    /// Equivalent to GL_R8UI
     R8U,
+    /// Equivalent to GL_RG8UI
     RG8U,
+    /// Equivalent to GL_RGB8UI
     RGB8U,
+    /// Equivalent to GL_RGBA8UI
     RGBA8U,
+    /// Equivalent to GL_R16UI
     R16U,
+    /// Equivalent to GL_RG16UI
     RG16U,
+    /// Equivalent to GL_RGB16UI
     RGB16U,
+    /// Equivalent to GL_RGBA16UI
     RGBA16U,
+    /// Equivalent to GL_R32UI
     R32U,
+    /// Equivalent to GL_RG32UI
     RG32U,
+    /// Equivalent to GL_RGB32UI
     RGB32U,
+    /// Equivalent to GL_RGBA32UI
     RGBA32U,
+    /// Equivalent to GL_R8I
     R8I,
+    /// Equivalent to GL_RG8I
     RG8I,
+    /// Equivalent to GL_RGB8I
     RGB8I,
+    /// Equivalent to GL_RGBA8I
     RGBA8I,
+    /// Equivalent to GL_R16I
     R16I,
+    /// Equivalent to GL_RG16I
     RG16I,
+    /// Equivalent to GL_RGB16I
     RGB16I,
+    /// Equivalent to GL_RGBA16I
     RGBA16I,
+    /// Equivalent to GL_R32I
     R32I,
+    /// Equivalent to GL_RG32I
     RG32I,
+    /// Equivalent to GL_RGB32I
     RGB32I,
+    /// Equivalent to GL_RGBA32I
     RGBA32I,
+    /// Equivalent to GL_R16F
     R16F,
+    /// Equivalent to GL_RG16F
     RG16F,
+    /// Equivalent to GL_RGB16F
     RGB16F,
+    /// Equivalent to GL_RGBA16F
     RGBA16F,
+    /// Equivalent to GL_R32F
     R32F,
+    /// Equivalent to GL_RG32F
     RG32F,
+    /// Equivalent to GL_RGB32F
     RGB32F,
+    /// Equivalent to GL_RGBA32F
     RGBA32F,
+    /// Equivalent to GL_RGB9_E5
     RGB9E5,
+    /// Equivalent to GL_R11F_G11F_B10F
     RG11B10F,
+    /// Equivalent to GL_R3_G3_B2
     RG3B2,
+    /// Equivalent to GL_RGB565
     R5G6B5,
+    /// Equivalent to GL_RGB5_A1
     RGB5A1,
+    /// Equivalent to GL_RGBA4
     RGBA4,
+    /// Equivalent to GL_RGB10_A2UI
     RGB10A2,
+    /// Equivalent to GL_DEPTH_COMPONENT16
     D16,
+    /// Equivalent to GL_DEPTH_COMPONENT24
     D24,
+    /// Equivalent to GL_DEPTH24_STENCIL8
     D24S8,
+    /// Equivalent to GL_DEPTH_COMPONENT32
     D32,
+    /// Equivalent to GL_DEPTH_COMPONENT32F
     D32F,
+    /// Equivalent to GL_DEPTH32F_STENCIL8
     D32FS8X24,
+    /// Equivalent to GL_STENCIL_INDEX8. Introduced in Qt 5.4
     S8,
+    /// Equivalent to GL_COMPRESSED_RGB_S3TC_DXT1_EXT
     RGB_DXT1,
+    /// Equivalent to GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
     RGBA_DXT1,
+    /// Equivalent to GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
     RGBA_DXT3,
+    /// Equivalent to GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
     RGBA_DXT5,
+    /// Equivalent to GL_COMPRESSED_RED_RGTC1
     R_ATI1N_UNorm,
+    /// Equivalent to GL_COMPRESSED_SIGNED_RED_RGTC1
     R_ATI1N_SNorm,
+    /// Equivalent to GL_COMPRESSED_RG_RGTC2
     RG_ATI2N_UNorm,
+    /// Equivalent to GL_COMPRESSED_SIGNED_RG_RGTC2
     RG_ATI2N_SNorm,
+    /// Equivalent to GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_ARB
     RGB_BP_UNSIGNED_FLOAT,
+    /// Equivalent to GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT_ARB
     RGB_BP_SIGNED_FLOAT,
+    /// Equivalent to GL_COMPRESSED_RGBA_BPTC_UNORM_ARB
     RGB_BP_UNorm,
+    /// Equivalent to GL_COMPRESSED_R11_EAC
     R11_EAC_UNorm,
+    /// Equivalent to GL_COMPRESSED_SIGNED_R11_EAC
     R11_EAC_SNorm,
+    /// Equivalent to GL_COMPRESSED_RG11_EAC
     RG11_EAC_UNorm,
+    /// Equivalent to GL_COMPRESSED_SIGNED_RG11_EAC
     RG11_EAC_SNorm,
+    /// Equivalent to GL_COMPRESSED_RGB8_ETC2
     RGB8_ETC2,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ETC2
     SRGB8_ETC2,
+    /// Equivalent to GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2
     RGB8_PunchThrough_Alpha1_ETC2,
+    /// Equivalent to GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2
     SRGB8_PunchThrough_Alpha1_ETC2,
+    /// Equivalent to GL_COMPRESSED_RGBA8_ETC2_EAC
     RGBA8_ETC2_EAC,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC
     SRGB8_Alpha8_ETC2_EAC,
+    /// Equivalent to GL_ETC1_RGB8_OES
     RGB8_ETC1,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_4x4_KHR
     RGBA_ASTC_4x4,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_5x4_KHR
     RGBA_ASTC_5x4,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_5x5_KHR
     RGBA_ASTC_5x5,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_6x5_KHR
     RGBA_ASTC_6x5,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_6x6_KHR
     RGBA_ASTC_6x6,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_8x5_KHR
     RGBA_ASTC_8x5,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_8x6_KHR
     RGBA_ASTC_8x6,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_8x8_KHR
     RGBA_ASTC_8x8,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_10x5_KHR
     RGBA_ASTC_10x5,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_10x6_KHR
     RGBA_ASTC_10x6,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_10x8_KHR
     RGBA_ASTC_10x8,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_10x10_KHR
     RGBA_ASTC_10x10,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_12x10_KHR
     RGBA_ASTC_12x10,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_12x12_KHR
     RGBA_ASTC_12x12,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR
     SRGB8_Alpha8_ASTC_4x4,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR
     SRGB8_Alpha8_ASTC_5x4,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR
     SRGB8_Alpha8_ASTC_5x5,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR
     SRGB8_Alpha8_ASTC_6x5,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR
     SRGB8_Alpha8_ASTC_6x6,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR
     SRGB8_Alpha8_ASTC_8x5,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR
     SRGB8_Alpha8_ASTC_8x6,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR
     SRGB8_Alpha8_ASTC_8x8,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR
     SRGB8_Alpha8_ASTC_10x5,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR
     SRGB8_Alpha8_ASTC_10x6,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR
     SRGB8_Alpha8_ASTC_10x8,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR
     SRGB8_Alpha8_ASTC_10x10,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR
     SRGB8_Alpha8_ASTC_12x10,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR
     SRGB8_Alpha8_ASTC_12x12,
+    /// Equivalent to GL_SRGB8
     SRGB8,
+    /// Equivalent to GL_SRGB8_ALPHA8
     SRGB8_Alpha8,
+    /// Equivalent to GL_COMPRESSED_SRGB_S3TC_DXT1_EXT
     SRGB_DXT1,
+    /// Equivalent to GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT
     SRGB_Alpha_DXT1,
+    /// Equivalent to GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT
     SRGB_Alpha_DXT3,
+    /// Equivalent to GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT
     SRGB_Alpha_DXT5,
+    /// Equivalent to GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM_ARB
     SRGB_BP_UNorm,
+    /// Equivalent to GL_DEPTH_COMPONENT (only OpenGL ES 3 or ES 2 with OES_depth_texture)
     DepthFormat,
+    /// Equivalent to GL_ALPHA (OpenGL ES 2 only)
     AlphaFormat,
+    /// Equivalent to GL_RGB (OpenGL ES 2 only)
     RGBFormat,
+    /// Equivalent to GL_RGBA (OpenGL ES 2 only)
     RGBAFormat,
+    /// Equivalent to GL_LUMINANCE (OpenGL ES 2 only)
     LuminanceFormat,
+    /// Equivalent to GL_LUMINANCE_ALPHA (OpenGL ES 2 only)
     LuminanceAlphaFormat,
 }
 
@@ -1851,152 +2003,254 @@ enum TextureFormatClass {
 
 [org_name(QOpenGLTexture)]
 enum CubeMapFace {
+    /// Equivalent to GL_TEXTURE_CUBE_MAP_POSITIVE_X
     CubeMapPositiveX,
+    /// Equivalent to GL_TEXTURE_CUBE_MAP_NEGATIVE_X
     CubeMapNegativeX,
+    /// Equivalent to GL_TEXTURE_CUBE_MAP_POSITIVE_Y
     CubeMapPositiveY,
+    /// Equivalent to GL_TEXTURE_CUBE_MAP_NEGATIVE_Y
     CubeMapNegativeY,
+    /// Equivalent to GL_TEXTURE_CUBE_MAP_POSITIVE_Z
     CubeMapPositiveZ,
+    /// Equivalent to GL_TEXTURE_CUBE_MAP_NEGATIVE_Z
     CubeMapNegativeZ,
 }
 
 [org_name(QOpenGLTexture)]
 enum PixelFormat {
+    /// Equivalent to GL_NONE
     NoSourceFormat,
+    /// Equivalent to GL_RED
     Red,
+    /// Equivalent to GL_RG
     RG,
+    /// Equivalent to GL_RGB
     RGB,
+    /// Equivalent to GL_BGR
     BGR,
+    /// Equivalent to GL_RGBA
     RGBA,
+    /// Equivalent to GL_BGRA
     BGRA,
+    /// Equivalent to GL_RED_INTEGER
     Red_Integer,
+    /// Equivalent to GL_RG_INTEGER
     RG_Integer,
+    /// Equivalent to GL_RGB_INTEGER
     RGB_Integer,
+    /// Equivalent to GL_BGR_INTEGER
     BGR_Integer,
+    /// Equivalent to GL_RGBA_INTEGER
     RGBA_Integer,
+    /// Equivalent to GL_BGRA_INTEGER
     BGRA_Integer,
+    /// Equivalent to GL_STENCIL_INDEX. Introduced in Qt 5.4
     Stencil,
+    /// Equivalent to GL_DEPTH_COMPONENT
     Depth,
+    /// Equivalent to GL_DEPTH_STENCIL
     DepthStencil,
+    /// Equivalent to GL_ALPHA (OpenGL ES 2 only)
     Alpha,
+    /// Equivalent to GL_LUMINANCE (OpenGL ES 2 only)
     Luminance,
+    /// Equivalent to GL_LUMINANCE_ALPHA (OpenGL ES 2 only)
     LuminanceAlpha,
 }
 
 [org_name(QOpenGLTexture)]
 enum PixelType {
+    /// Equivalent to GL_NONE
     NoPixelType,
+    /// Equivalent to GL_BYTE
     Int8,
+    /// Equivalent to GL_UNSIGNED_BYTE
     UInt8,
+    /// Equivalent to GL_SHORT
     Int16,
+    /// Equivalent to GL_UNSIGNED_SHORT
     UInt16,
+    /// Equivalent to GL_INT
     Int32,
+    /// Equivalent to GL_UNSIGNED_INT
     UInt32,
+    /// Equivalent to GL_HALF_FLOAT
     Float16,
+    /// Equivalent to GL_HALF_FLOAT_OES
     Float16OES,
+    /// Equivalent to GL_FLOAT
     Float32,
+    /// Equivalent to GL_UNSIGNED_INT_5_9_9_9_REV
     UInt32_RGB9_E5,
+    /// Equivalent to GL_UNSIGNED_INT_10F_11F_11F_REV
     UInt32_RG11B10F,
+    /// Equivalent to GL_UNSIGNED_BYTE_3_3_2
     UInt8_RG3B2,
+    /// Equivalent to GL_UNSIGNED_BYTE_2_3_3_REV
     UInt8_RG3B2_Rev,
+    /// Equivalent to GL_UNSIGNED_SHORT_5_5_5_1
     UInt16_RGB5A1,
+    /// Equivalent to GL_UNSIGNED_SHORT_1_5_5_5_REV
     UInt16_RGB5A1_Rev,
+    /// Equivalent to GL_UNSIGNED_SHORT_5_6_5
     UInt16_R5G6B5,
+    /// Equivalent to GL_UNSIGNED_SHORT_5_6_5_REV
     UInt16_R5G6B5_Rev,
+    /// Equivalent to GL_UNSIGNED_SHORT_4_4_4_4
     UInt16_RGBA4,
+    /// Equivalent to GL_UNSIGNED_SHORT_4_4_4_4_REV
     UInt16_RGBA4_Rev,
+    /// Equivalent to GL_UNSIGNED_INT_8_8_8_8
     UInt32_RGBA8,
+    /// Equivalent to GL_UNSIGNED_INT_8_8_8_8_REV
     UInt32_RGBA8_Rev,
+    /// Equivalent to GL_UNSIGNED_INT_10_10_10_2
     UInt32_RGB10A2,
+    /// Equivalent to GL_UNSIGNED_INT_2_10_10_10_REV
     UInt32_RGB10A2_Rev,
+    /// Equivalent to GL_UNSIGNED_INT_24_8. Introduced in Qt 5.4
     UInt32_D24S8,
+    /// Equivalent to GL_FLOAT_32_UNSIGNED_INT_24_8_REV. Introduced in Qt 5.4
     Float32_D32_UInt32_S8_X24,
 }
 
 [org_name(QOpenGLTexture)]
 enum SwizzleComponent {
+    /// The red component. Equivalent to GL_TEXTURE_SWIZZLE_R
     SwizzleRed,
+    /// The green component. Equivalent to GL_TEXTURE_SWIZZLE_G
     SwizzleGreen,
+    /// The blue component. Equivalent to GL_TEXTURE_SWIZZLE_B
     SwizzleBlue,
+    /// The alpha component. Equivalent to GL_TEXTURE_SWIZZLE_A
     SwizzleAlpha,
 }
 
 [org_name(QOpenGLTexture)]
 enum SwizzleValue {
+    /// Maps the component to the red channel. Equivalent to GL_RED
     RedValue,
+    /// Maps the component to the green channel. Equivalent to GL_GREEN
     GreenValue,
+    /// Maps the component to the blue channel. Equivalent to GL_BLUE
     BlueValue,
+    /// Maps the component to the alpha channel. Equivalent to GL_ALPHA
     AlphaValue,
+    /// Maps the component to a fixed value of 0. Equivalent to GL_ZERO
     ZeroValue,
+    /// Maps the component to a fixed value of 1. Equivalent to GL_ONE
     OneValue,
 }
 
 [org_name(QOpenGLTexture)]
 enum WrapMode {
+    /// Texture coordinate is repeated. Equivalent to GL_REPEAT
     Repeat,
+    /// Texture coordinate is reflected about 0 and 1. Equivalent to GL_MIRRORED_REPEAT
     MirroredRepeat,
+    /// Clamps the texture coordinates to [0,1]. Equivalent to GL_CLAMP_TO_EDGE
     ClampToEdge,
+    /// As for ClampToEdge but also blends samples at 0 and 1 with a
     ClampToBorder,
 }
 
 [org_name(QOpenGLTexture)]
 enum CoordinateDirection {
+    /// The horizontal direction. Equivalent to GL_TEXTURE_WRAP_S
     DirectionS,
+    /// The vertical direction. Equivalent to GL_TEXTURE_WRAP_T
     DirectionT,
+    /// The depth direction. Equivalent to GL_TEXTURE_WRAP_R
     DirectionR,
 }
 
 [org_name(QOpenGLTexture)]
 enum Feature {
+    /// Support for immutable texture storage
     ImmutableStorage,
+    /// Support for immutable texture storage with
     ImmutableMultisampleStorage,
+    /// Support for the GL_TEXTURE_RECTANGLE target
     TextureRectangle,
+    /// Support for texture targets with array layers
     TextureArrays,
+    /// Support for the 3 dimensional texture target
     Texture3D,
+    /// Support for texture targets that have multisample capabilities
     TextureMultisample,
+    /// Support for textures that use OpenGL buffer objects
     TextureBuffer,
+    /// Support for cubemap array texture target
     TextureCubeMapArrays,
+    /// Support for texture component swizzle masks
     Swizzle,
+    /// Support for stencil texturing (i.e. looking up depth or stencil
     StencilTexturing,
+    /// Support for anisotropic texture filtering
     AnisotropicFiltering,
+    /// Basic support for non-power-of-two textures
     NPOTTextures,
+    /// Full support for non-power-of-two textures including texture
     NPOTTextureRepeat,
+    /// Support for the 1 dimensional texture target
     Texture1D,
+    /// Support for texture comparison operators
     TextureComparisonOperators,
+    /// Support for setting the base and maximum mipmap levels
     TextureMipMapLevel,
     MaxFeatureFlag,
 }
 
 [org_name(QOpenGLTexture)]
 enum DepthStencilMode {
+    /// Equivalent to GL_DEPTH_COMPONENT.
     DepthMode,
+    /// Equivalent to GL_STENCIL_INDEX.
     StencilMode,
 }
 
 [org_name(QOpenGLTexture)]
 enum ComparisonFunction {
+    /// Equivalent to GL_LEQUAL.
     CompareLessEqual,
+    /// Equivalent to GL_GEQUAL.
     CompareGreaterEqual,
+    /// Equivalent to GL_LESS.
     CompareLess,
+    /// Equivalent to GL_GREATER.
     CompareGreater,
+    /// Equivalent to GL_EQUAL.
     CompareEqual,
+    /// Equivalent to GL_NOTEQUAL.
     CommpareNotEqual,
+    /// Equivalent to GL_ALWAYS.
     CompareAlways,
+    /// Equivalent to GL_NEVER.
     CompareNever,
 }
 
 [org_name(QOpenGLTexture)]
 enum ComparisonMode {
+    /// Equivalent to GL_COMPARE_REF_TO_TEXTURE.
     CompareRefToTexture,
+    /// Equivalent to GL_NONE.
     CompareNone,
 }
 
 [org_name(QOpenGLTexture)]
 enum Filter {
+    /// Equivalent to GL_NEAREST
     Nearest,
+    /// Equivalent to GL_LINEAR
     Linear,
+    /// Equivalent to GL_NEAREST_MIPMAP_NEAREST
     NearestMipMapNearest,
+    /// Equivalent to GL_NEAREST_MIPMAP_LINEAR
     NearestMipMapLinear,
+    /// Equivalent to GL_LINEAR_MIPMAP_NEAREST
     LinearMipMapNearest,
+    /// Equivalent to GL_LINEAR_MIPMAP_LINEAR
     LinearMipMapLinear,
 }
 

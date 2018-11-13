@@ -284,42 +284,71 @@ struct SysInfo {
 
 [org_name(QSysInfo)]
 enum Sizes {
+    /// The size in bits of a pointer for the platform on which
     WordSize,
 }
 
 [org_name(QSysInfo)]
 enum Endian {
+    /// Big-endian byte order (also called Network byte order)
     BigEndian,
+    /// Little-endian byte order
     LittleEndian,
+    /// Equals BigEndian or LittleEndian, depending on
     ByteOrder,
 }
 
 [org_name(QSysInfo)]
 enum WinVersion {
+    /// Operating system other than Windows.
     WV_None,
+    /// Windows 3.1 with Win 32s
     WV_32s,
+    /// Windows 95
     WV_95,
+    /// Windows 98
     WV_98,
+    /// Windows Me
     WV_Me,
+    /// MS-DOS-based version of Windows
     WV_DOS_based,
+    /// Windows NT (operating system version 4.0)
     WV_NT,
+    /// Windows 2000 (operating system version 5.0)
     WV_2000,
+    /// Windows XP (operating system version 5.1)
     WV_XP,
+    /// Windows Server 2003, Windows Server 2003 R2, Windows Home Server, Windows XP Professional x64 Edition (operating system version 5.2)
     WV_2003,
+    /// Windows Vista, Windows Server 2008 (operating system version 6.0)
     WV_VISTA,
+    /// Windows 7, Windows Server 2008 R2 (operating system version 6.1)
     WV_WINDOWS7,
+    /// Windows 8 (operating system version 6.2)
     WV_WINDOWS8,
+    /// Windows 8.1 (operating system version 6.3), introduced in Qt 5.2
     WV_WINDOWS8_1,
+    /// Windows 10 (operating system version 10.0), introduced in Qt 5.5
     WV_WINDOWS10,
+    /// NT-based version of Windows
     WV_NT_based,
+    /// Operating system version 4.0, corresponds to Windows NT
     WV_4_0,
+    /// Operating system version 5.0, corresponds to Windows 2000
     WV_5_0,
+    /// Operating system version 5.1, corresponds to Windows XP
     WV_5_1,
+    /// Operating system version 5.2, corresponds to Windows Server 2003, Windows Server 2003 R2, Windows Home Server, and Windows XP Professional x64 Edition
     WV_5_2,
+    /// Operating system version 6.0, corresponds to Windows Vista and Windows Server 2008
     WV_6_0,
+    /// Operating system version 6.1, corresponds to Windows 7 and Windows Server 2008 R2
     WV_6_1,
+    /// Operating system version 6.2, corresponds to Windows 8
     WV_6_2,
+    /// Operating system version 6.3, corresponds to Windows 8.1, introduced in Qt 5.2
     WV_6_3,
+    /// Operating system version 10.0, corresponds to Windows 10, introduced in Qt 5.5
     WV_10_0,
     WV_CE,
     WV_CENET,
@@ -330,62 +359,119 @@ enum WinVersion {
 
 [org_name(QSysInfo)]
 enum MacVersion {
+    /// Not a Darwin operating system
     MV_None,
+    /// An unknown and currently unsupported platform
     MV_Unknown,
+    /// 
     MV_9,
+    /// 
     MV_10_0,
+    /// 
     MV_10_1,
+    /// 
     MV_10_2,
+    /// 
     MV_10_3,
+    /// 
     MV_10_4,
+    /// 
     MV_10_5,
+    /// 
     MV_10_6,
+    /// 
     MV_10_7,
+    /// 
     MV_10_8,
+    /// 
     MV_10_9,
+    /// 
     MV_10_10,
+    /// 
     MV_10_11,
+    /// 
     MV_10_12,
+    /// Apple codename for MV_10_0
     MV_CHEETAH,
+    /// Apple codename for MV_10_1
     MV_PUMA,
+    /// Apple codename for MV_10_2
     MV_JAGUAR,
+    /// Apple codename for MV_10_3
     MV_PANTHER,
+    /// Apple codename for MV_10_4
     MV_TIGER,
+    /// Apple codename for MV_10_5
     MV_LEOPARD,
+    /// Apple codename for MV_10_6
     MV_SNOWLEOPARD,
+    /// Apple codename for MV_10_7
     MV_LION,
+    /// Apple codename for MV_10_8
     MV_MOUNTAINLION,
+    /// Apple codename for MV_10_9
     MV_MAVERICKS,
+    /// Apple codename for MV_10_10
     MV_YOSEMITE,
+    /// Apple codename for MV_10_11
     MV_ELCAPITAN,
+    /// Apple codename for MV_10_12
     MV_SIERRA,
+    /// iOS (any)
     MV_IOS,
+    /// iOS 4.3
     MV_IOS_4_3,
+    /// iOS 5.0
     MV_IOS_5_0,
+    /// iOS 5.1
     MV_IOS_5_1,
+    /// iOS 6.0
     MV_IOS_6_0,
+    /// iOS 6.1
     MV_IOS_6_1,
+    /// iOS 7.0
     MV_IOS_7_0,
+    /// iOS 7.1
     MV_IOS_7_1,
+    /// iOS 8.0
     MV_IOS_8_0,
+    /// iOS 8.1
     MV_IOS_8_1,
+    /// iOS 8.2
     MV_IOS_8_2,
+    /// iOS 8.3
     MV_IOS_8_3,
+    /// iOS 8.4
     MV_IOS_8_4,
+    /// iOS 9.0
     MV_IOS_9_0,
+    /// iOS 9.1
     MV_IOS_9_1,
+    /// iOS 9.2
     MV_IOS_9_2,
+    /// iOS 9.3
     MV_IOS_9_3,
+    /// iOS 10.0
     MV_IOS_10_0,
+    /// tvOS (any)
     MV_TVOS,
+    /// tvOS 9.0
     MV_TVOS_9_0,
+    /// tvOS 9.1
     MV_TVOS_9_1,
+    /// tvOS 9.2
     MV_TVOS_9_2,
+    /// tvOS 10.0
     MV_TVOS_10_0,
+    /// watchOS (any)
     MV_WATCHOS,
+    /// watchOS 2.0
     MV_WATCHOS_2_0,
+    /// watchOS 2.1
     MV_WATCHOS_2_1,
+    /// watchOS 2.2
     MV_WATCHOS_2_2,
+    /// watchOS 3.0
     MV_WATCHOS_3_0,
 }
 

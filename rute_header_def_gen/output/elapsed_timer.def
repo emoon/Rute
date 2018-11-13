@@ -213,10 +213,15 @@ struct ElapsedTimer {
 
 [org_name(QElapsedTimer)]
 enum ClockType {
+    /// The human-readable system time. This clock is not monotonic.
     SystemTime,
+    /// The system's monotonic clock, usually found in Unix systems. This clock is monotonic and does not overflow.
     MonotonicClock,
+    /// The system's tick counter, used on Windows systems. This clock may overflow.
     TickCounter,
+    /// The Mach kernel's absolute time (
     MachAbsoluteTime,
+    /// The high-resolution performance counter provided by Windows. This clock is monotonic and does not overflow.
     PerformanceCounter,
 }
 

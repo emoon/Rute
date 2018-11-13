@@ -283,8 +283,11 @@ struct LineF {
 
 [org_name(QLineF)]
 enum IntersectType {
+    /// Indicates that the lines do not intersect;
     NoIntersection,
+    /// The two lines intersect with each other
     BoundedIntersection,
+    /// The two lines intersect, but not
     UnboundedIntersection,
 }
 

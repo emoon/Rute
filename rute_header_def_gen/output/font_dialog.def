@@ -198,11 +198,17 @@ struct FontDialog : Dialog {
 
 [org_name(QFontDialog)]
 enum FontDialogOption {
+    /// Don't display
     NoButtons,
+    /// Use Qt's standard font dialog on the Mac instead of Apple's
     DontUseNativeDialog,
+    /// Show scalable fonts
     ScalableFonts,
+    /// Show non scalable fonts
     NonScalableFonts,
+    /// Show monospaced fonts
     MonospacedFonts,
+    /// Show proportional fonts
     ProportionalFonts,
 }
 

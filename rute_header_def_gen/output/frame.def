@@ -153,25 +153,37 @@ struct Frame : Widget {
 
 [org_name(QFrame)]
 enum Shape {
+    /// QFrame draws nothing
     NoFrame,
+    /// QFrame draws a box around its contents
     Box,
+    /// QFrame draws a panel to make the contents appear
     Panel,
+    /// draws a rectangular panel that can be raised or
     WinPanel,
+    /// QFrame draws a horizontal line that frames nothing
     HLine,
+    /// QFrame draws a vertical line that frames nothing
     VLine,
+    /// draws a rectangular panel with a look that
     StyledPanel,
 }
 
 [org_name(QFrame)]
 enum Shadow {
+    /// the frame and contents appear level with the
     Plain,
+    /// the frame and contents appear raised; draws a 3D
     Raised,
+    /// the frame and contents appear sunken; draws a 3D
     Sunken,
 }
 
 [org_name(QFrame)]
 enum StyleMask {
+    /// The
     Shadow_Mask,
+    /// The
     Shape_Mask,
 }
 

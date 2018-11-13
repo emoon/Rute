@@ -109,11 +109,17 @@ struct OpenGLShader : Object {
 
 [org_name(QOpenGLShader)]
 enum ShaderTypeBit {
+    /// Vertex shader written in the OpenGL Shading Language (GLSL).
     Vertex,
+    /// Fragment shader written in the OpenGL Shading Language (GLSL).
     Fragment,
+    /// Geometry shaders written in the OpenGL Shading Language (GLSL)
     Geometry,
+    /// Tessellation control shaders written in the OpenGL
     TessellationControl,
+    /// Tessellation evaluation shaders written in the OpenGL
     TessellationEvaluation,
+    /// Compute shaders written in the OpenGL shading language (GLSL),
     Compute,
 }
 

@@ -1093,43 +1093,69 @@ struct Url {
 
 [org_name(QUrl)]
 enum ParsingMode {
+    /// QUrl will try to correct some common errors in URLs.
     TolerantMode,
+    /// Only valid URLs are accepted. This mode is useful for
     StrictMode,
+    /// QUrl will interpret the URL component in the fully-decoded form,
     DecodedMode,
 }
 
 [org_name(QUrl)]
 enum UrlFormattingOption {
+    /// The format of the URL is unchanged.
     None,
+    /// The scheme is removed from the URL.
     RemoveScheme,
+    /// Any password in the URL is removed.
     RemovePassword,
+    /// Any user information in the URL is removed.
     RemoveUserInfo,
+    /// Any specified port is removed from the URL.
     RemovePort,
+    /// 
     RemoveAuthority,
+    /// The URL's path is removed, leaving only the scheme,
     RemovePath,
+    /// The query part of the URL (following a '?' character)
     RemoveQuery,
+    /// 
     RemoveFragment,
+    /// If the URL is a local file according to isLocalFile()
     PreferLocalFile,
+    /// The trailing slash is removed from the path, if one is present.
     StripTrailingSlash,
+    /// The filename (i.e. everything after the last '/' in the path) is removed.
     RemoveFilename,
+    /// Modifies the path to remove redundant directory separators,
     NormalizePathSegments,
 }
 
 [org_name(QUrl)]
 enum ComponentFormattingOption {
+    /// The component is returned in a "pretty form", with
     PrettyDecoded,
+    /// Leave space characters in their encoded form ("%20").
     EncodeSpaces,
+    /// Leave non-US-ASCII characters encoded in their UTF-8
     EncodeUnicode,
+    /// Leave certain delimiters in their encoded form, as
     EncodeDelimiters,
+    /// Leave US-ASCII characters not permitted in the URL by
     EncodeReserved,
+    /// Decode the US-ASCII characters that the URL specification
     DecodeReserved,
+    /// Leave all characters in their properly-encoded form,
     FullyEncoded,
+    /// Attempt to decode as much as possible. For individual
     FullyDecoded,
 }
 
 [org_name(QUrl)]
 enum UserInputResolutionOption {
+    /// The default resolution mechanism is to check
     DefaultResolution,
+    /// This option makes fromUserInput() always return
     AssumeLocalFile,
 }
 

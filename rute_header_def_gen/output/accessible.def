@@ -166,195 +166,351 @@ struct Accessible {
 
 [org_name(QAccessible)]
 enum Event {
+    /// A sound has been played by an object
     SoundPlayed,
+    /// A system alert (e.g., a message from a QMessageBox)
     Alert,
+    /// A window has been activated (i.e., a new window has
     ForegroundChanged,
+    /// A menu has been opened on the menubar (Qt uses
     MenuStart,
+    /// A menu has been closed (Qt uses PopupMenuEnd for all
     MenuEnd,
+    /// A pop-up menu has opened.
     PopupMenuStart,
+    /// A pop-up menu has closed.
     PopupMenuEnd,
+    /// Context help (QWhatsThis) for an object is initiated.
     ContextHelpStart,
+    /// Context help (QWhatsThis) for an object is finished.
     ContextHelpEnd,
+    /// A drag and drop operation is about to be initiated.
     DragDropStart,
+    /// A drag and drop operation is about to finished.
     DragDropEnd,
+    /// A dialog (QDialog) has been set visible.
     DialogStart,
+    /// A dialog (QDialog) has been hidden
     DialogEnd,
+    /// A scrollbar scroll operation is about to start; this may
     ScrollingStart,
+    /// A scrollbar scroll operation has ended (the mouse has
     ScrollingEnd,
+    /// A menu item is triggered.
     MenuCommand,
+    /// An action has been changed.
     ActionChanged,
+    /// 
     ActiveDescendantChanged,
+    /// 
     AttributeChanged,
+    /// The contents of a text document have changed.
     DocumentContentChanged,
+    /// A document has been loaded.
     DocumentLoadComplete,
+    /// A document load has been stopped.
     DocumentLoadStopped,
+    /// A document reload has been initiated.
     DocumentReload,
+    /// The end position of the display text for a hypertext
     HyperlinkEndIndexChanged,
+    /// The number of anchors in a hypertext link has changed,
     HyperlinkNumberOfAnchorsChanged,
+    /// The link for the selected hypertext link has changed.
     HyperlinkSelectedLinkChanged,
+    /// A hypertext link has been activated, perhaps by being
     HypertextLinkActivated,
+    /// A hypertext link has been selected.
     HypertextLinkSelected,
+    /// The start position of the display text for a hypertext
     HyperlinkStartIndexChanged,
+    /// The display text for a hypertext link has changed.
     HypertextChanged,
+    /// 
     HypertextNLinksChanged,
+    /// 
     ObjectAttributeChanged,
+    /// 
     PageChanged,
+    /// 
     SectionChanged,
+    /// A table caption has been changed.
     TableCaptionChanged,
+    /// The description of a table column, typically found in
     TableColumnDescriptionChanged,
+    /// A table column header has been changed.
     TableColumnHeaderChanged,
     TableModelChanged,
+    /// The description of a table row, typically found in the
     TableRowDescriptionChanged,
+    /// A table row header has been changed.
     TableRowHeaderChanged,
+    /// The summary of a table has been changed.
     TableSummaryChanged,
     TextAttributeChanged,
     TextCaretMoved,
+    /// A text column has been changed.
     TextColumnChanged,
     TextInserted,
     TextRemoved,
     TextUpdated,
     TextSelectionChanged,
+    /// 
     VisibleDataChanged,
+    /// A new object is created.
     ObjectCreated,
+    /// An object is deleted.
     ObjectDestroyed,
+    /// An object is displayed; for example, with
     ObjectShow,
+    /// An object is hidden; for example, with QWidget::hide().
     ObjectHide,
+    /// A layout or item view  has added, removed, or moved an
     ObjectReorder,
+    /// An object has gained keyboard focus.
     Focus,
+    /// The selection has changed in a menu or item view.
     Selection,
+    /// An item has been added to the selection in an item view.
     SelectionAdd,
+    /// An item has been removed from an item view selection.
     SelectionRemove,
+    /// Several changes to a selection has occurred in an item
     SelectionWithin,
     StateChanged,
+    /// An object's location on the screen has changed.
     LocationChanged,
+    /// The QAccessible::Name property of an object has changed.
     NameChanged,
+    /// The object's QAccessible::Description changed.
     DescriptionChanged,
     ValueChanged,
+    /// An object's parent object changed.
     ParentChanged,
+    /// The QAccessible::Help text property of an object has
     HelpChanged,
+    /// The default QAccessible::Action for the accessible
     DefaultActionChanged,
+    /// The keyboard accelerator for an action has been changed.
     AcceleratorChanged,
     InvalidEvent,
 }
 
 [org_name(QAccessible)]
 enum Role {
+    /// The object has no role. This usually indicates an invalid object.
     NoRole,
+    /// The title bar caption of a window.
     TitleBar,
+    /// A menu bar from which menus are opened by the user.
     MenuBar,
+    /// A scroll bar, which allows the user to scroll the visible area.
     ScrollBar,
+    /// A grip that the user can drag to change the size of widgets.
     Grip,
+    /// An object that represents a sound.
     Sound,
+    /// An object that represents the mouse cursor.
     Cursor,
+    /// An object that represents the system caret (text cursor).
     Caret,
+    /// An object that is used to alert the user.
     AlertMessage,
+    /// A top level window.
     Window,
+    /// The client area in a window.
     Client,
+    /// A menu which lists options that the user can select to perform an action.
     PopupMenu,
+    /// An item in a menu or menu bar.
     MenuItem,
+    /// A tool tip which provides information about other objects.
     ToolTip,
+    /// The application's main window.
     Application,
+    /// A document, for example in an office application.
     Document,
+    /// A generic container.
     Pane,
+    /// An object that displays a graphical representation of data.
     Chart,
+    /// A dialog box.
     Dialog,
+    /// An object that represents a border.
     Border,
+    /// An object that represents a logical grouping of other objects.
     Grouping,
+    /// A separator that divides space into logical areas.
     Separator,
+    /// A tool bar, which groups widgets that the user accesses frequently.
     ToolBar,
+    /// A status bar.
     StatusBar,
+    /// A table representing data in a grid of rows and columns.
     Table,
+    /// A header for a column of data.
     ColumnHeader,
+    /// A header for a row of data.
     RowHeader,
+    /// A column of cells, usually within a table.
     Column,
+    /// A row of cells, usually within a table.
     Row,
+    /// A cell in a table.
     Cell,
+    /// A link to something else.
     Link,
+    /// An object that displays help in a separate, short lived window.
     HelpBalloon,
+    /// An object that provids interactive help.
     Assistant,
+    /// A list of items, from which the user can select one or more items.
     List,
+    /// An item in a list of items.
     ListItem,
+    /// A list of items in a tree structure.
     Tree,
+    /// An item in a tree structure.
     TreeItem,
+    /// A page tab that the user can select to switch to a different page in a dialog.
     PageTab,
+    /// A property page where the user can change options and settings.
     PropertyPage,
+    /// An indicator that represents a current value or item.
     Indicator,
+    /// A graphic or picture, e.g. an icon.
     Graphic,
+    /// Static text, such as labels for other widgets.
     StaticText,
+    /// Editable text such as a line or text edit.
     EditableText,
+    /// A button.
     Button,
     PushButton,
+    /// An object that represents an option that can be checked or unchecked. Some options provide a "mixed" state, e.g. neither checked nor unchecked.
     CheckBox,
+    /// An object that represents an option that is mutually exclusive with other options.
     RadioButton,
+    /// A list of choices that the user can select from.
     ComboBox,
+    /// The object displays the progress of an operation in progress.
     ProgressBar,
+    /// An object that represents a dial or knob.
     Dial,
+    /// A hotkey field that allows the user to enter a key sequence.
     HotkeyField,
+    /// A slider that allows the user to select a value within a given range.
     Slider,
+    /// A spin box widget that allows the user to enter a value within a given range.
     SpinBox,
+    /// An object that displays graphics that the user can interact with.
     Canvas,
+    /// An object that displays an animation.
     Animation,
+    /// An object that represents a mathematical equation.
     Equation,
+    /// A button that drops down a list of items.
     ButtonDropDown,
+    /// A button that drops down a menu.
     ButtonMenu,
+    /// A button that drops down a grid.
     ButtonDropGrid,
+    /// Blank space between other objects.
     Whitespace,
+    /// A list of page tabs.
     PageTabList,
+    /// A clock displaying time.
     Clock,
+    /// A splitter distributing available space between its child widgets.
     Splitter,
+    /// An object that can contain layered children, e.g. in a stack.
     LayeredPane,
+    /// A terminal or command line interface.
     Terminal,
+    /// The object represents the desktop or workspace.
     Desktop,
+    /// A paragraph of text (usually found in documents).
     Paragraph,
+    /// HTML document, usually in a browser.
     WebDocument,
+    /// A section (in a document).
     Section,
+    /// A dialog that lets the user choose a color.
     ColorChooser,
+    /// A footer in a page (usually in documents).
     Footer,
+    /// A web form containing controls.
     Form,
+    /// A heading in a document.
     Heading,
+    /// A section whose content is parenthetic or ancillary to the main content of the resource.
     Note,
+    /// A part of the document or web page that is complementary to the main content, usually a landmark (see WAI-ARIA).
     ComplementaryContent,
+    /// The first value to be used for user defined roles.
     UserRole,
 }
 
 [org_name(QAccessible)]
 enum Text {
+    /// The name of the object. This can be used both
     Name,
+    /// A short text describing the object.
     Description,
+    /// The value of the object.
     Value,
+    /// A longer text giving information about how to use the object.
     Help,
+    /// The keyboard shortcut that executes the object's default action.
     Accelerator,
     DebugDescription,
+    /// The first value to be used for user defined text.
     UserText,
 }
 
 [org_name(QAccessible)]
 enum RelationFlag {
+    /// The first object is the label of the second object.
     Label,
+    /// The first object is labelled by the second object.
     Labelled,
+    /// The first object controls the second object.
     Controller,
+    /// The first object is controlled by the second object.
     Controlled,
+    /// Used as a mask to specify that we are interesting in information
     AllRelations,
 }
 
 [org_name(QAccessible)]
 enum InterfaceType {
+    /// For text that supports selections or is more than one line. Simple labels do not need to implement this interface.
     TextInterface,
     EditableTextInterface,
+    /// For objects that are used to manipulate a value, for example slider or scroll bar.
     ValueInterface,
+    /// For interactive objects that allow the user to trigger an action. Basically everything that allows for example mouse interaction.
     ActionInterface,
     ImageInterface,
+    /// For lists, tables and trees.
     TableInterface,
+    /// For cells in a TableInterface object.
     TableCellInterface,
 }
 
 [org_name(QAccessible)]
 enum TextBoundaryType {
+    /// Use individual characters as boundary.
     CharBoundary,
+    /// Use words as boundaries.
     WordBoundary,
+    /// Use sentences as boundary.
     SentenceBoundary,
+    /// Use paragraphs as boundary.
     ParagraphBoundary,
+    /// Use newlines as boundary.
     LineBoundary,
+    /// No boundary (use the whole text).
     NoBoundary,
 }
 

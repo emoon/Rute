@@ -249,10 +249,15 @@ struct TextBlockFormat : TextFormat {
 
 [org_name(QTextBlockFormat)]
 enum LineHeightTypes {
+    /// This is the default line height: single spacing.
     SingleHeight,
+    /// This sets the spacing proportional to the line (in percentage).
     ProportionalHeight,
+    /// This sets the line height to a fixed line height (in pixels).
     FixedHeight,
+    /// This sets the minimum line height (in pixels).
     MinimumHeight,
+    /// This adds the specified height between lines (in pixels).
     LineDistanceHeight,
 }
 

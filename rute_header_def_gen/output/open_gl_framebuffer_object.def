@@ -662,15 +662,21 @@ struct OpenGLFramebufferObject {
 
 [org_name(QOpenGLFramebufferObject)]
 enum Attachment {
+    /// No attachment is added to the framebuffer object. Note that the
     NoAttachment,
+    /// If the
     CombinedDepthStencil,
+    /// A depth buffer is attached to the framebuffer object.
     Depth,
 }
 
 [org_name(QOpenGLFramebufferObject)]
 enum FramebufferRestorePolicy {
+    /// Do not restore the previous framebuffer binding.
     DontRestoreFramebufferBinding,
+    /// After the blit operation, bind the default
     RestoreFramebufferBindingToDefault,
+    /// Restore the previously bound framebuffer. This is
     RestoreFrameBufferBinding,
 }
 

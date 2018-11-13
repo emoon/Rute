@@ -616,20 +616,31 @@ struct ComboBox : Widget {
 
 [org_name(QComboBox)]
 enum InsertPolicy {
+    /// The string will not be inserted into the combobox.
     NoInsert,
+    /// The string will be inserted as the first item in the combobox.
     InsertAtTop,
+    /// The current item will be
     InsertAtCurrent,
+    /// The string will be inserted after the last item in the combobox.
     InsertAtBottom,
+    /// The string is inserted after the current item in the combobox.
     InsertAfterCurrent,
+    /// The string is inserted before the current item in the combobox.
     InsertBeforeCurrent,
+    /// The string is inserted in the alphabetic order in the combobox.
     InsertAlphabetically,
 }
 
 [org_name(QComboBox)]
 enum SizeAdjustPolicy {
+    /// The combobox will always adjust to the contents
     AdjustToContents,
+    /// The combobox will adjust to its contents the first time it is shown.
     AdjustToContentsOnFirstShow,
+    /// Use AdjustToContents or AdjustToContentsOnFirstShow instead.
     AdjustToMinimumContentsLength,
+    /// The combobox will adjust to
     AdjustToMinimumContentsLengthWithIcon,
 }
 

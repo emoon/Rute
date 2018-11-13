@@ -161,10 +161,15 @@ struct AbstractItemDelegate : Object {
 
 [org_name(QAbstractItemDelegate)]
 enum EndEditHint {
+    /// There is no recommended action to be performed.
     NoHint,
+    /// The view should use the delegate to open an
     EditNextItem,
+    /// The view should use the delegate to open an
     EditPreviousItem,
+    /// If the model caches data, it should write out
     SubmitModelCache,
+    /// If the model caches data, it should discard
     RevertModelCache,
 }
 

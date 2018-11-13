@@ -225,7 +225,9 @@ struct StaticText {
 
 [org_name(QStaticText)]
 enum PerformanceHint {
+    /// Do basic caching for high performance at a low memory cost.
     ModerateCaching,
+    /// Use additional caching when available. This may improve performance
     AggressiveCaching,
 }
 

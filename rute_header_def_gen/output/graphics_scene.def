@@ -2081,15 +2081,21 @@ struct GraphicsScene : Object {
 
 [org_name(QGraphicsScene)]
 enum ItemIndexMethod {
+    /// A Binary Space Partitioning tree is applied. All
     BspTreeIndex,
+    /// No index is applied. Item location is of linear complexity,
     NoIndex,
 }
 
 [org_name(QGraphicsScene)]
 enum SceneLayer {
+    /// The item layer. QGraphicsScene renders all items are in
     ItemLayer,
+    /// The background layer. QGraphicsScene renders the
     BackgroundLayer,
+    /// The foreground layer. QGraphicsScene renders the
     ForegroundLayer,
+    /// All layers; this value represents a combination of all
     AllLayers,
 }
 

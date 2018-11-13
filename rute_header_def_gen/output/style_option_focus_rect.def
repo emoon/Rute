@@ -17,11 +17,13 @@ struct StyleOptionFocusRect : StyleOption {
 
 [org_name(QStyleOptionFocusRect)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionFocusRect)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 

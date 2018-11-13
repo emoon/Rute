@@ -449,7 +449,9 @@ struct OpenGLDebugLogger : Object {
 
 [org_name(QOpenGLDebugLogger)]
 enum LoggingMode {
+    /// Messages from the OpenGL server are logged asynchronously. This means
     AsynchronousLogging,
+    /// Messages from the OpenGL server are logged synchronously and
     SynchronousLogging,
 }
 

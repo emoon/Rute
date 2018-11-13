@@ -191,21 +191,37 @@ struct ImageIOHandler {
 
 [org_name(QImageIOHandler)]
 enum ImageOption {
+    /// The original size of an image. A handler that supports
     Size,
+    /// The clip rect, or ROI (Region Of Interest). A
     ClipRect,
+    /// The image description. Some image formats,
     Description,
+    /// The scaled clip rect (or ROI, Region Of
     ScaledClipRect,
+    /// The scaled size of the image. A handler that
     ScaledSize,
+    /// The compression ratio of the image data. A
     CompressionRatio,
+    /// The gamma level of the image. A handler that supports
     Gamma,
+    /// The quality level of the image. A handler that
     Quality,
+    /// The name of the image. A handler that supports this
     Name,
+    /// The subtype of the image. A handler that supports
     SubType,
+    /// A handler that supports this option is
     IncrementalReading,
+    /// The endianness of the image. Certain image
     Endianness,
+    /// Image formats that support animation return
     Animation,
+    /// Certain image formats allow the
     BackgroundColor,
+    /// The image's data format returned by the handler.
     ImageFormat,
+    /// Image formats that support different saving
     SupportedSubTypes,
     OptimizedWrite,
     ProgressiveScanWrite,
@@ -215,13 +231,21 @@ enum ImageOption {
 
 [org_name(QImageIOHandler)]
 enum Transformation {
+    /// No transformation should be applied.
     TransformationNone,
+    /// Mirror the image horizontally.
     TransformationMirror,
+    /// Mirror the image vertically.
     TransformationFlip,
+    /// Rotate the image 180 degrees.
     TransformationRotate180,
+    /// Rotate the image 90 degrees.
     TransformationRotate90,
+    /// Mirror the image horizontally
     TransformationMirrorAndRotate90,
+    /// Mirror the image vertically
     TransformationFlipAndRotate90,
+    /// Rotate the image 270 degrees.
     TransformationRotate270,
 }
 

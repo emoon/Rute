@@ -892,66 +892,125 @@ struct Variant {
 
 [org_name(QVariant)]
 enum Type {
+    /// no type
     Invalid,
+    /// a bool
     Bool,
+    /// an int
     Int,
+    /// a
     UInt,
+    /// a
     LongLong,
+    /// a
     ULongLong,
+    /// a double
     Double,
+    /// a QChar
     Char,
+    /// a QVariantMap
     Map,
+    /// a QVariantList
     List,
+    /// a QString
     String,
+    /// a QStringList
     StringList,
+    /// a QByteArray
     ByteArray,
+    /// a QBitArray
     BitArray,
+    /// a QDate
     Date,
+    /// a QTime
     Time,
+    /// a QDateTime
     DateTime,
+    /// a QUrl
     Url,
+    /// a QLocale
     Locale,
+    /// a QRect
     Rect,
+    /// a QRectF
     RectF,
+    /// a QSize
     Size,
+    /// a QSizeF
     SizeF,
+    /// a QLine
     Line,
+    /// a QLineF
     LineF,
+    /// a QPoint
     Point,
+    /// a QPointF
     PointF,
+    /// a QRegExp
     RegExp,
+    /// a QRegularExpression
     RegularExpression,
+    /// a QVariantHash
     Hash,
+    /// a QEasingCurve
     EasingCurve,
+    /// a QUuid
     Uuid,
+    /// a QModelIndex
     ModelIndex,
+    /// a QPersistentModelIndex (since 5.5)
     PersistentModelIndex,
     LastCoreType,
+    /// a QFont
     Font,
+    /// a QPixmap
     Pixmap,
+    /// a QBrush
     Brush,
+    /// a QColor
     Color,
+    /// a QPalette
     Palette,
+    /// a QImage
     Image,
+    /// a QPolygon
     Polygon,
+    /// a QRegion
     Region,
+    /// a QBitmap
     Bitmap,
+    /// a QCursor
     Cursor,
+    /// a QKeySequence
     KeySequence,
+    /// a QPen
     Pen,
+    /// a QTextLength
     TextLength,
+    /// a QTextFormat
     TextFormat,
+    /// a QMatrix
     Matrix,
+    /// a QTransform
     Transform,
+    /// a QMatrix4x4
     Matrix4x4,
+    /// a QVector2D
     Vector2D,
+    /// a QVector3D
     Vector3D,
+    /// a QVector4D
     Vector4D,
+    /// a QQuaternion
     Quaternion,
+    /// a QPolygonF
     PolygonF,
+    /// a QIcon
     Icon,
     LastGuiType,
+    /// a QSizePolicy
     SizePolicy,
+    /// Base value for user-defined types.
     UserType,
     LastType,
 }

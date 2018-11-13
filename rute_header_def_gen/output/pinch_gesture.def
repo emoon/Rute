@@ -122,8 +122,11 @@ struct PinchGesture : Gesture {
 
 [org_name(QPinchGesture)]
 enum ChangeFlag {
+    /// The scale factor held by scaleFactor changed.
     ScaleFactorChanged,
+    /// The rotation angle held by rotationAngle changed.
     RotationAngleChanged,
+    /// The center point held by centerPoint changed.
     CenterPointChanged,
 }
 

@@ -235,9 +235,13 @@ struct SessionManager : Object {
 
 [org_name(QSessionManager)]
 enum RestartHint {
+    /// If the application is still running when the
     RestartIfRunning,
+    /// The application wants to be started at the
     RestartAnyway,
+    /// The application wants to be started immediately
     RestartImmediately,
+    /// The application does not want to be restarted
     RestartNever,
 }
 

@@ -1073,17 +1073,25 @@ struct Window : Object, Surface {
 
 [org_name(QWindow)]
 enum Visibility {
+    /// The window is not visible in any way, however it may remember
     Hidden,
+    /// This means to give the window a default visible
     AutomaticVisibility,
+    /// The window occupies part of the screen, but not necessarily
     Windowed,
+    /// The window is reduced to an entry or icon on the task bar,
     Minimized,
+    /// The window occupies one entire screen, and the titlebar is
     Maximized,
+    /// The window occupies one entire screen, is not resizable,
     FullScreen,
 }
 
 [org_name(QWindow)]
 enum AncestorMode {
+    /// Transient parents are not considered ancestors.
     ExcludeTransients,
+    /// Transient parents are considered ancestors.
     IncludeTransients,
 }
 

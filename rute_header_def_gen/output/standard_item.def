@@ -848,7 +848,9 @@ struct StandardItem {
 
 [org_name(QStandardItem)]
 enum ItemType {
+    /// The default type for standard items.
     Type,
+    /// The minimum value for custom types. Values below UserType are
     UserType,
 }
 

@@ -160,8 +160,11 @@ struct ColorDialog : Dialog {
 
 [org_name(QColorDialog)]
 enum ColorDialogOption {
+    /// Allow the user to select the alpha component of a color.
     ShowAlphaChannel,
+    /// Don't display
     NoButtons,
+    /// Use Qt's standard color dialog instead of the operating system
     DontUseNativeDialog,
 }
 

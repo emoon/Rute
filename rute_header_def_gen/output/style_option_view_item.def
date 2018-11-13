@@ -22,38 +22,55 @@ struct StyleOptionViewItem : StyleOption {
 
 [org_name(QStyleOptionViewItem)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum StyleOptionVersion {
+    /// 4
     Version,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum Position {
+    /// On the left of the text.
     Left,
+    /// On the right of the text.
     Right,
+    /// Above the text.
     Top,
+    /// Below the text.
     Bottom,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum ViewItemFeature {
+    /// Indicates a normal item.
     None,
+    /// Indicates an item with wrapped text.
     WrapText,
+    /// Indicates that the item's background is rendered using alternateBase.
     Alternate,
+    /// Indicates that the item has a check state indicator.
     HasCheckIndicator,
+    /// Indicates that the item has a display role.
     HasDisplay,
+    /// Indicates that the item has a decoration role.
     HasDecoration,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum ViewItemPosition {
+    /// The ViewItemPosition is unknown and should be
     Invalid,
+    /// The item appears at the beginning of the row.
     Beginning,
+    /// The item appears in the middle of the row.
     Middle,
+    /// The item appears at the end of the row.
     End,
+    /// The item is the only one on the row, and is
     OnlyOne,
 }
 

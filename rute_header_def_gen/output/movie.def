@@ -304,14 +304,19 @@ struct Movie : Object {
 
 [org_name(QMovie)]
 enum MovieState {
+    /// The movie is not running. This is QMovie's initial
     NotRunning,
+    /// The movie is paused, and QMovie stops emitting updated() or
     Paused,
+    /// The movie is running.
     Running,
 }
 
 [org_name(QMovie)]
 enum CacheMode {
+    /// No frames are cached (the default).
     CacheNone,
+    /// All frames are cached.
     CacheAll,
 }
 

@@ -870,267 +870,504 @@ struct Char {
 
 [org_name(QChar)]
 enum SpecialCharacter {
+    /// A QChar with this value isNull().
     Null,
+    /// Character tabulation.
     Tabulation,
+    /// 
     LineFeed,
+    /// 
     CarriageReturn,
+    /// 
     Space,
+    /// Non-breaking space.
     Nbsp,
+    /// 
     SoftHyphen,
+    /// The character shown when a font has no glyph
     ReplacementCharacter,
+    /// Used to represent an object such as an
     ObjectReplacementCharacter,
+    /// 
     ByteOrderMark,
+    /// 
     ByteOrderSwapped,
+    /// 
     ParagraphSeparator,
+    /// 
     LineSeparator,
+    /// 
     LastValidCodePoint,
 }
 
 [org_name(QChar)]
 enum Category {
+    /// Unicode class name Mn
     Mark_NonSpacing,
+    /// Unicode class name Mc
     Mark_SpacingCombining,
+    /// Unicode class name Me
     Mark_Enclosing,
+    /// Unicode class name Nd
     Number_DecimalDigit,
+    /// Unicode class name Nl
     Number_Letter,
+    /// Unicode class name No
     Number_Other,
+    /// Unicode class name Zs
     Separator_Space,
+    /// Unicode class name Zl
     Separator_Line,
+    /// Unicode class name Zp
     Separator_Paragraph,
+    /// Unicode class name Cc
     Other_Control,
+    /// Unicode class name Cf
     Other_Format,
+    /// Unicode class name Cs
     Other_Surrogate,
+    /// Unicode class name Co
     Other_PrivateUse,
+    /// Unicode class name Cn
     Other_NotAssigned,
+    /// Unicode class name Lu
     Letter_Uppercase,
+    /// Unicode class name Ll
     Letter_Lowercase,
+    /// Unicode class name Lt
     Letter_Titlecase,
+    /// Unicode class name Lm
     Letter_Modifier,
+    /// Unicode class name Lo
     Letter_Other,
+    /// Unicode class name Pc
     Punctuation_Connector,
+    /// Unicode class name Pd
     Punctuation_Dash,
+    /// Unicode class name Ps
     Punctuation_Open,
+    /// Unicode class name Pe
     Punctuation_Close,
+    /// Unicode class name Pi
     Punctuation_InitialQuote,
+    /// Unicode class name Pf
     Punctuation_FinalQuote,
+    /// Unicode class name Po
     Punctuation_Other,
+    /// Unicode class name Sm
     Symbol_Math,
+    /// Unicode class name Sc
     Symbol_Currency,
+    /// Unicode class name Sk
     Symbol_Modifier,
+    /// Unicode class name So
     Symbol_Other,
 }
 
 [org_name(QChar)]
 enum Script {
+    /// For unassigned, private-use, noncharacter, and surrogate code points.
     Script_Unknown,
+    /// For characters that may be used with multiple scripts
     Script_Inherited,
+    /// For characters that may be used with multiple scripts
     Script_Common,
+    /// 
     Script_Latin,
+    /// 
     Script_Greek,
+    /// 
     Script_Cyrillic,
+    /// 
     Script_Armenian,
+    /// 
     Script_Hebrew,
+    /// 
     Script_Arabic,
+    /// 
     Script_Syriac,
+    /// 
     Script_Thaana,
+    /// 
     Script_Devanagari,
+    /// 
     Script_Bengali,
+    /// 
     Script_Gurmukhi,
+    /// 
     Script_Gujarati,
+    /// 
     Script_Oriya,
+    /// 
     Script_Tamil,
+    /// 
     Script_Telugu,
+    /// 
     Script_Kannada,
+    /// 
     Script_Malayalam,
+    /// 
     Script_Sinhala,
+    /// 
     Script_Thai,
+    /// 
     Script_Lao,
+    /// 
     Script_Tibetan,
+    /// 
     Script_Myanmar,
+    /// 
     Script_Georgian,
+    /// 
     Script_Hangul,
+    /// 
     Script_Ethiopic,
+    /// 
     Script_Cherokee,
+    /// 
     Script_CanadianAboriginal,
+    /// 
     Script_Ogham,
+    /// 
     Script_Runic,
+    /// 
     Script_Khmer,
+    /// 
     Script_Mongolian,
+    /// 
     Script_Hiragana,
+    /// 
     Script_Katakana,
+    /// 
     Script_Bopomofo,
+    /// 
     Script_Han,
+    /// 
     Script_Yi,
+    /// 
     Script_OldItalic,
+    /// 
     Script_Gothic,
+    /// 
     Script_Deseret,
+    /// 
     Script_Tagalog,
+    /// 
     Script_Hanunoo,
+    /// 
     Script_Buhid,
+    /// 
     Script_Tagbanwa,
+    /// 
     Script_Coptic,
+    /// 
     Script_Limbu,
+    /// 
     Script_TaiLe,
+    /// 
     Script_LinearB,
+    /// 
     Script_Ugaritic,
+    /// 
     Script_Shavian,
+    /// 
     Script_Osmanya,
+    /// 
     Script_Cypriot,
+    /// 
     Script_Braille,
+    /// 
     Script_Buginese,
+    /// 
     Script_NewTaiLue,
+    /// 
     Script_Glagolitic,
+    /// 
     Script_Tifinagh,
+    /// 
     Script_SylotiNagri,
+    /// 
     Script_OldPersian,
+    /// 
     Script_Kharoshthi,
+    /// 
     Script_Balinese,
+    /// 
     Script_Cuneiform,
+    /// 
     Script_Phoenician,
+    /// 
     Script_PhagsPa,
+    /// 
     Script_Nko,
+    /// 
     Script_Sundanese,
+    /// 
     Script_Lepcha,
+    /// 
     Script_OlChiki,
+    /// 
     Script_Vai,
+    /// 
     Script_Saurashtra,
+    /// 
     Script_KayahLi,
+    /// 
     Script_Rejang,
+    /// 
     Script_Lycian,
+    /// 
     Script_Carian,
+    /// 
     Script_Lydian,
+    /// 
     Script_Cham,
+    /// 
     Script_TaiTham,
+    /// 
     Script_TaiViet,
+    /// 
     Script_Avestan,
+    /// 
     Script_EgyptianHieroglyphs,
+    /// 
     Script_Samaritan,
+    /// 
     Script_Lisu,
+    /// 
     Script_Bamum,
+    /// 
     Script_Javanese,
+    /// 
     Script_MeeteiMayek,
+    /// 
     Script_ImperialAramaic,
+    /// 
     Script_OldSouthArabian,
+    /// 
     Script_InscriptionalParthian,
+    /// 
     Script_InscriptionalPahlavi,
+    /// 
     Script_OldTurkic,
+    /// 
     Script_Kaithi,
+    /// 
     Script_Batak,
+    /// 
     Script_Brahmi,
+    /// 
     Script_Mandaic,
+    /// 
     Script_Chakma,
+    /// 
     Script_MeroiticCursive,
+    /// 
     Script_MeroiticHieroglyphs,
+    /// 
     Script_Miao,
+    /// 
     Script_Sharada,
+    /// 
     Script_SoraSompeng,
+    /// 
     Script_Takri,
+    /// 
     Script_CaucasianAlbanian,
+    /// 
     Script_BassaVah,
+    /// 
     Script_Duployan,
+    /// 
     Script_Elbasan,
+    /// 
     Script_Grantha,
+    /// 
     Script_PahawhHmong,
+    /// 
     Script_Khojki,
+    /// 
     Script_LinearA,
+    /// 
     Script_Mahajani,
+    /// 
     Script_Manichaean,
+    /// 
     Script_MendeKikakui,
+    /// 
     Script_Modi,
+    /// 
     Script_Mro,
+    /// 
     Script_OldNorthArabian,
+    /// 
     Script_Nabataean,
+    /// 
     Script_Palmyrene,
+    /// 
     Script_PauCinHau,
+    /// 
     Script_OldPermic,
+    /// 
     Script_PsalterPahlavi,
+    /// 
     Script_Siddham,
+    /// 
     Script_Khudawadi,
+    /// 
     Script_Tirhuta,
+    /// 
     Script_WarangCiti,
+    /// 
     Script_Ahom,
+    /// 
     Script_AnatolianHieroglyphs,
+    /// 
     Script_Hatran,
+    /// 
     Script_Multani,
+    /// 
     Script_OldHungarian,
+    /// 
     Script_SignWriting,
+    /// 
     Script_Adlam,
+    /// 
     Script_Bhaiksuki,
+    /// 
     Script_Marchen,
+    /// 
     Script_Newa,
+    /// 
     Script_Osage,
+    /// 
     Script_Tangut,
+    /// 
     Script_MasaramGondi,
+    /// 
     Script_Nushu,
+    /// 
     Script_Soyombo,
+    /// 
     Script_ZanabazarSquare,
     ScriptCount,
 }
 
 [org_name(QChar)]
 enum Direction {
+    /// 
     DirL,
+    /// 
     DirR,
+    /// 
     DirEN,
+    /// 
     DirES,
+    /// 
     DirET,
+    /// 
     DirAN,
+    /// 
     DirCS,
+    /// 
     DirB,
+    /// 
     DirS,
+    /// 
     DirWS,
+    /// 
     DirON,
+    /// 
     DirLRE,
+    /// 
     DirLRO,
+    /// 
     DirAL,
+    /// 
     DirRLE,
+    /// 
     DirRLO,
+    /// 
     DirPDF,
+    /// 
     DirNSM,
+    /// 
     DirBN,
+    /// Since Qt 5.3
     DirLRI,
+    /// Since Qt 5.3
     DirRLI,
+    /// Since Qt 5.3
     DirFSI,
+    /// Since Qt 5.3
     DirPDI,
 }
 
 [org_name(QChar)]
 enum Decomposition {
+    /// 
     NoDecomposition,
+    /// 
     Canonical,
+    /// 
     Font,
+    /// 
     NoBreak,
+    /// 
     Initial,
+    /// 
     Medial,
+    /// 
     Final,
+    /// 
     Isolated,
+    /// 
     Circle,
+    /// 
     Super,
+    /// 
     Sub,
+    /// 
     Vertical,
+    /// 
     Wide,
+    /// 
     Narrow,
+    /// 
     Small,
+    /// 
     Square,
+    /// 
     Compat,
+    /// 
     Fraction,
 }
 
 [org_name(QChar)]
 enum JoiningType {
+    /// 
     Joining_None,
+    /// 
     Joining_Causing,
+    /// 
     Joining_Dual,
+    /// 
     Joining_Right,
+    /// 
     Joining_Left,
+    /// 
     Joining_Transparent,
 }
 
 [org_name(QChar)]
 enum Joining {
+    /// 
     OtherJoining,
+    /// 
     Dual,
+    /// 
     Right,
+    /// 
     Center,
 }
 
@@ -1159,25 +1396,45 @@ enum CombiningClass {
 
 [org_name(QChar)]
 enum UnicodeVersion {
+    /// The value is not assigned to any character
     Unicode_Unassigned,
+    /// Version 1.1
     Unicode_1_1,
+    /// Version 2.0
     Unicode_2_0,
+    /// Version 2.1.2
     Unicode_2_1_2,
+    /// Version 3.0
     Unicode_3_0,
+    /// Version 3.1
     Unicode_3_1,
+    /// Version 3.2
     Unicode_3_2,
+    /// Version 4.0
     Unicode_4_0,
+    /// Version 4.1
     Unicode_4_1,
+    /// Version 5.0
     Unicode_5_0,
+    /// Version 5.1
     Unicode_5_1,
+    /// Version 5.2
     Unicode_5_2,
+    /// Version 6.0
     Unicode_6_0,
+    /// Version 6.1
     Unicode_6_1,
+    /// Version 6.2
     Unicode_6_2,
+    /// Version 6.3  Since Qt 5.3
     Unicode_6_3,
+    /// Version 7.0  Since Qt 5.5
     Unicode_7_0,
+    /// Version 8.0  Since Qt 5.6
     Unicode_8_0,
+    /// Version 9.0  Since Qt 5.11
     Unicode_9_0,
+    /// Version 10.0 Since Qt 5.11
     Unicode_10_0,
 }
 

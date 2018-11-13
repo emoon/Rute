@@ -80,8 +80,11 @@ struct DirIterator {
 
 [org_name(QDirIterator)]
 enum IteratorFlag {
+    /// The default value, representing no flags. The
     NoIteratorFlags,
+    /// When combined with Subdirectories, this flag
     FollowSymlinks,
+    /// List entries inside all subdirectories as well.
     Subdirectories,
 }
 

@@ -173,10 +173,15 @@ struct GlyphRun {
 
 [org_name(QGlyphRun)]
 enum GlyphRunFlag {
+    /// Indicates that the glyphs should be visualized together with an overline.
     Overline,
+    /// Indicates that the glyphs should be visualized together with an underline.
     Underline,
+    /// Indicates that the glyphs should be struck out visually.
     StrikeOut,
+    /// Indicates that the glyphs are ordered right to left. This can affect the
     RightToLeft,
+    /// Indicates that the glyph run splits a ligature glyph. This means
     SplitLigature,
 }
 

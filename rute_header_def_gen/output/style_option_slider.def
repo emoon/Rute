@@ -22,11 +22,13 @@ struct StyleOptionSlider : StyleOptionComplex {
 
 [org_name(QStyleOptionSlider)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionSlider)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 

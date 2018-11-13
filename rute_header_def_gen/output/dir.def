@@ -956,41 +956,68 @@ struct Dir {
 
 [org_name(QDir)]
 enum Filter {
+    /// List directories that match the filters.
     Dirs,
+    /// List files.
     Files,
+    /// List disk drives (ignored under Unix).
     Drives,
+    /// Do not list symbolic links (ignored by operating
     NoSymLinks,
+    /// List directories, files, drives and symlinks (this does not list
     AllEntries,
     TypeMask,
+    /// List files for which the application has read
     Readable,
+    /// List files for which the application has write
     Writable,
+    /// List files for which the application has
     Executable,
     PermissionMask,
+    /// Only list files that have been modified (ignored
     Modified,
+    /// List hidden files (on Unix, files starting with a ".").
     Hidden,
+    /// List system files (on Unix, FIFOs, sockets and
     System,
     AccessMask,
+    /// List all directories; i.e. don't apply the filters
     AllDirs,
+    /// The filter should be case sensitive.
     CaseSensitive,
+    /// Do not list the special entry ".".
     NoDot,
+    /// Do not list the special entry "..".
     NoDotDot,
+    /// Do not list the special entries "." and "..".
     NoDotAndDotDot,
     NoFilter,
 }
 
 [org_name(QDir)]
 enum SortFlag {
+    /// Sort by name.
     Name,
+    /// Sort by time (modification time).
     Time,
+    /// Sort by file size.
     Size,
+    /// Do not sort.
     Unsorted,
     SortByMask,
+    /// Put the directories first, then the files.
     DirsFirst,
+    /// Reverse the sort order.
     Reversed,
+    /// Sort case-insensitively.
     IgnoreCase,
+    /// Put the files first, then the directories.
     DirsLast,
+    /// Sort items appropriately using the current locale settings.
     LocaleAware,
+    /// Sort by file type (extension).
     Type,
+    /// Not sorted by default.
     NoSort,
 }
 

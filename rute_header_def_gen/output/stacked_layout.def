@@ -141,7 +141,9 @@ struct StackedLayout : Layout {
 
 [org_name(QStackedLayout)]
 enum StackingMode {
+    /// Only the current widget is visible. This is the default.
     StackOne,
+    /// All widgets are visible. The current widget is merely raised.
     StackAll,
 }
 

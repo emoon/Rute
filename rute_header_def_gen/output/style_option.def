@@ -81,41 +81,69 @@ struct StyleOption {
 
 [org_name(QStyleOption)]
 enum OptionType {
+    /// QStyleOption
     SO_Default,
+    /// 
     SO_FocusRect,
+    /// 
     SO_Button,
+    /// 
     SO_Tab,
+    /// 
     SO_MenuItem,
+    /// 
     SO_Frame,
+    /// 
     SO_ProgressBar,
+    /// 
     SO_ToolBox,
+    /// 
     SO_Header,
+    /// 
     SO_DockWidget,
+    /// 
     SO_ViewItem,
+    /// 
     SO_TabWidgetFrame,
+    /// 
     SO_TabBarBase,
+    /// 
     SO_RubberBand,
+    /// 
     SO_ToolBar,
+    /// 
     SO_GraphicsItem,
+    /// 
     SO_Complex,
+    /// 
     SO_Slider,
+    /// 
     SO_SpinBox,
+    /// 
     SO_ToolButton,
+    /// 
     SO_ComboBox,
+    /// 
     SO_TitleBar,
+    /// 
     SO_GroupBox,
+    /// 
     SO_SizeGrip,
+    /// Reserved for custom QStyleOptions;
     SO_CustomBase,
+    /// Reserved for custom QStyleOptions;
     SO_ComplexCustomBase,
 }
 
 [org_name(QStyleOption)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOption)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 

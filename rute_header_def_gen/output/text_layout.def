@@ -335,7 +335,9 @@ struct TextLayout {
 
 [org_name(QTextLayout)]
 enum CursorMode {
+    /// 
     SkipCharacters,
+    /// 
     SkipWords,
 }
 

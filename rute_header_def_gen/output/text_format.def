@@ -343,114 +343,207 @@ struct TextFormat {
 
 [org_name(QTextFormat)]
 enum FormatType {
+    /// An invalid format as created by the default
     InvalidFormat,
+    /// The object formats a text block
     BlockFormat,
+    /// The object formats a single character
     CharFormat,
+    /// The object formats a list
     ListFormat,
     TableFormat,
+    /// The object formats a frame
     FrameFormat,
+    /// 
     UserFormat,
 }
 
 [org_name(QTextFormat)]
 enum Property {
+    /// The index of the formatted object. See objectIndex().
     ObjectIndex,
+    /// How a frame is located relative to the surrounding text
     CssFloat,
+    /// The layout direction of the text in the document
     LayoutDirection,
+    /// 
     OutlinePen,
+    /// 
     BackgroundBrush,
+    /// 
     ForegroundBrush,
+    /// 
     BackgroundImageUrl,
+    /// 
     BlockAlignment,
+    /// 
     BlockTopMargin,
+    /// 
     BlockBottomMargin,
+    /// 
     BlockLeftMargin,
+    /// 
     BlockRightMargin,
+    /// 
     TextIndent,
+    /// Specifies the tab positions.  The tab positions are structs of QTextOption::Tab which are stored in
     TabPositions,
+    /// 
     BlockIndent,
+    /// 
     LineHeight,
+    /// 
     LineHeightType,
+    /// 
     BlockNonBreakableLines,
+    /// The width of a horizontal ruler element.
     BlockTrailingHorizontalRulerWidth,
     FirstFontProperty,
+    /// Specifies the capitalization type that is to be applied to the text.
     FontCapitalization,
+    /// Specifies the meaning of the FontLetterSpacing property. The default
     FontLetterSpacingType,
+    /// Changes the default spacing between individual letters in the font. The value is
     FontLetterSpacing,
+    /// Changes the default spacing between individual words. A positive value increases the word spacing
     FontWordSpacing,
+    /// Corresponds to the QFont::Stretch property
     FontStretch,
+    /// Corresponds to the QFont::StyleHint property
     FontStyleHint,
+    /// Corresponds to the QFont::StyleStrategy property
     FontStyleStrategy,
+    /// Specifies whether the font has kerning turned on.
     FontKerning,
+    /// Controls the use of hinting according to values
     FontHintingPreference,
+    /// 
     FontFamily,
+    /// 
     FontPointSize,
+    /// Specifies the change in size given to the fontsize already set using
     FontSizeAdjustment,
     FontSizeIncrement,
+    /// 
     FontWeight,
+    /// 
     FontItalic,
+    /// 
     FontUnderline,
+    /// 
     FontOverline,
+    /// 
     FontStrikeOut,
+    /// 
     FontFixedPitch,
+    /// 
     FontPixelSize,
     LastFontProperty,
+    /// 
     TextUnderlineColor,
+    /// 
     TextVerticalAlignment,
+    /// 
     TextOutline,
+    /// 
     TextUnderlineStyle,
+    /// Specifies the (optional) tool tip to be displayed for a fragment of text.
     TextToolTip,
+    /// 
     IsAnchor,
+    /// 
     AnchorHref,
+    /// 
     AnchorName,
+    /// 
     ObjectType,
+    /// Specifies the style used for the items in a list,
     ListStyle,
+    /// Specifies the amount of indentation used for a list.
     ListIndent,
+    /// Defines the text which is prepended to item numbers in
     ListNumberPrefix,
+    /// Defines the text which is appended to item numbers in
     ListNumberSuffix,
+    /// 
     FrameBorder,
+    /// 
     FrameMargin,
+    /// 
     FramePadding,
+    /// 
     FrameWidth,
+    /// 
     FrameHeight,
+    /// 
     FrameTopMargin,
+    /// 
     FrameBottomMargin,
+    /// 
     FrameLeftMargin,
+    /// 
     FrameRightMargin,
+    /// 
     FrameBorderBrush,
+    /// See the
     FrameBorderStyle,
+    /// 
     TableColumns,
+    /// 
     TableColumnWidthConstraints,
+    /// 
     TableCellSpacing,
+    /// 
     TableCellPadding,
+    /// 
     TableHeaderRowCount,
+    /// 
     TableCellRowSpan,
+    /// 
     TableCellColumnSpan,
+    /// 
     TableCellTopPadding,
+    /// 
     TableCellBottomPadding,
+    /// 
     TableCellLeftPadding,
+    /// 
     TableCellRightPadding,
+    /// 
     ImageName,
+    /// 
     ImageWidth,
+    /// 
     ImageHeight,
+    /// When set on the characterFormat of a selection,
     FullWidthSelection,
+    /// Specifies how pages are broken. See the PageBreakFlag enum.
     PageBreakPolicy,
+    /// 
     UserProperty,
 }
 
 [org_name(QTextFormat)]
 enum ObjectTypes {
+    /// 
     NoObject,
+    /// 
     ImageObject,
+    /// 
     TableObject,
+    /// 
     TableCellObject,
+    /// The first object that can be used for application-specific purposes.
     UserObject,
 }
 
 [org_name(QTextFormat)]
 enum PageBreakFlag {
+    /// The page break is determined automatically depending on the
     PageBreak_Auto,
+    /// The page is always broken before the paragraph/table
     PageBreak_AlwaysBefore,
+    /// A new page is always started after the paragraph/table
     PageBreak_AlwaysAfter,
 }
 

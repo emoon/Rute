@@ -101,7 +101,9 @@ struct RubberBand : Widget {
 
 [org_name(QRubberBand)]
 enum Shape {
+    /// A QRubberBand can represent a vertical or horizontal
     Line,
+    /// A QRubberBand can represent a rectangle. Some
     Rectangle,
 }
 

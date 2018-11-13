@@ -740,93 +740,153 @@ struct Font {
 
 [org_name(QFont)]
 enum StyleHint {
+    /// is a synonym for
     Helvetica,
+    /// the font matcher prefer sans serif fonts.
     SansSerif,
+    /// is a synonym for
     Times,
+    /// the font matcher prefers serif fonts.
     Serif,
+    /// a synonym for
     Courier,
+    /// the font matcher prefers fixed pitch fonts.
     TypeWriter,
+    /// the font matcher prefers decorative fonts.
     OldEnglish,
+    /// is a synonym for
     Decorative,
+    /// the font matcher prefers system fonts.
     System,
+    /// leaves the font matching algorithm to choose the
     AnyStyle,
+    /// the font matcher prefers fonts that map to the
     Cursive,
+    /// the font matcher prefers fonts that map to the
     Monospace,
+    /// the font matcher prefers fonts that map to the
     Fantasy,
 }
 
 [org_name(QFont)]
 enum StyleStrategy {
+    /// the default style strategy. It does not prefer
     PreferDefault,
+    /// prefers bitmap fonts (as opposed to outline
     PreferBitmap,
+    /// prefers device fonts.
     PreferDevice,
+    /// prefers outline fonts (as opposed to bitmap fonts).
     PreferOutline,
+    /// forces the use of outline fonts.
     ForceOutline,
+    /// prefer an exact match. The font matcher will try to
     PreferMatch,
+    /// prefer the best quality font. The font matcher
     PreferQuality,
+    /// antialias if possible.
     PreferAntialias,
+    /// don't antialias the fonts.
     NoAntialias,
+    /// forces the use of OpenGL compatible
     OpenGLCompatible,
+    /// forces the use of integer values in font engines that support fractional
     ForceIntegerMetrics,
+    /// avoid subpixel antialiasing on the fonts if possible.
     NoSubpixelAntialias,
+    /// Sometimes, a font will apply complex rules to a set of characters in
     PreferNoShaping,
+    /// If the font selected for a certain writing system
     NoFontMerging,
 }
 
 [org_name(QFont)]
 enum HintingPreference {
+    /// Use the default hinting level for the target platform.
     PreferDefaultHinting,
+    /// If possible, render text without hinting the outlines
     PreferNoHinting,
+    /// If possible, render text with no horizontal hinting,
     PreferVerticalHinting,
+    /// If possible, render text with hinting in both horizontal and
     PreferFullHinting,
 }
 
 [org_name(QFont)]
 enum Weight {
+    /// 0
     Thin,
+    /// 12
     ExtraLight,
+    /// 25
     Light,
+    /// 50
     Normal,
+    /// 57
     Medium,
+    /// 63
     DemiBold,
+    /// 75
     Bold,
+    /// 81
     ExtraBold,
+    /// 87
     Black,
 }
 
 [org_name(QFont)]
 enum Style {
+    /// Normal glyphs used in unstyled text.
     StyleNormal,
+    /// Italic glyphs that are specifically designed for
     StyleItalic,
+    /// Glyphs with an italic appearance that are typically
     StyleOblique,
 }
 
 [org_name(QFont)]
 enum Stretch {
+    /// 0 Accept any stretch matched using the other QFont properties (added in Qt 5.8)
     AnyStretch,
+    /// 50
     UltraCondensed,
+    /// 62
     ExtraCondensed,
+    /// 75
     Condensed,
+    /// 87
     SemiCondensed,
+    /// 100
     Unstretched,
+    /// 112
     SemiExpanded,
+    /// 125
     Expanded,
+    /// 150
     ExtraExpanded,
+    /// 200
     UltraExpanded,
 }
 
 [org_name(QFont)]
 enum Capitalization {
+    /// This is the normal text rendering option where no capitalization change is applied.
     MixedCase,
+    /// This alters the text to be rendered in all uppercase type.
     AllUppercase,
+    /// This alters the text to be rendered in all lowercase type.
     AllLowercase,
+    /// This alters the text to be rendered in small-caps type.
     SmallCaps,
+    /// This alters the text to be rendered with the first character of each word as an uppercase character.
     Capitalize,
 }
 
 [org_name(QFont)]
 enum SpacingType {
+    /// A value of 100 will keep the spacing unchanged; a value of 200 will enlarge the
     PercentageSpacing,
+    /// A positive value increases the letter spacing by the corresponding pixels; a negative
     AbsoluteSpacing,
 }
 

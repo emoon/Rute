@@ -113,16 +113,23 @@ struct PlatformGraphicsBuffer : Object {
 
 [org_name(QPlatformGraphicsBuffer)]
 enum AccessType {
+    /// 
     None,
+    /// 
     SWReadAccess,
+    /// 
     SWWriteAccess,
+    /// 
     TextureAccess,
+    /// 
     HWCompositor,
 }
 
 [org_name(QPlatformGraphicsBuffer)]
 enum Origin {
+    /// 
     OriginBottomLeft,
+    /// 
     OriginTopLeft,
 }
 

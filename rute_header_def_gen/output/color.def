@@ -1560,16 +1560,23 @@ struct Color {
 
 [org_name(QColor)]
 enum Spec {
+    /// 
     Invalid,
+    /// 
     Rgb,
+    /// 
     Hsv,
+    /// 
     Cmyk,
+    /// 
     Hsl,
 }
 
 [org_name(QColor)]
 enum NameFormat {
+    /// #RRGGBB A "#" character followed by three two-digit hexadecimal numbers (i.e.
     HexRgb,
+    /// #AARRGGBB A "#" character followed by four two-digit hexadecimal numbers (i.e.
     HexArgb,
 }
 

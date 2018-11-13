@@ -50,6 +50,7 @@ struct PlatformCursor : Object {
 
 [org_name(QPlatformCursor)]
 enum Capability {
+    /// Indicates that the platform implements
     OverrideCursor,
 }
 

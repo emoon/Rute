@@ -22,21 +22,29 @@ struct StyleOptionToolButton : StyleOptionComplex {
 
 [org_name(QStyleOptionToolButton)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionToolButton)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 
 [org_name(QStyleOptionToolButton)]
 enum ToolButtonFeature {
+    /// A normal tool button.
     None,
+    /// The tool button is an arrow.
     Arrow,
+    /// The tool button has a menu.
     Menu,
+    /// The button should display an arrow to
     MenuButtonPopup,
+    /// There is a delay to showing the menu.
     PopupDelay,
+    /// The button has a popup menu.
     HasMenu,
 }
 

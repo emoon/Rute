@@ -34,41 +34,69 @@ struct ScrollerProperties {
 
 [org_name(QScrollerProperties)]
 enum OvershootPolicy {
+    /// Overshooting is possible when the content is scrollable. This is the
     OvershootWhenScrollable,
+    /// Overshooting is never enabled, even when the content is scrollable.
     OvershootAlwaysOff,
+    /// Overshooting is always enabled, even when the content is not
     OvershootAlwaysOn,
 }
 
 [org_name(QScrollerProperties)]
 enum FrameRates {
+    /// the default value is 60 frames per second (which corresponds to QAbstractAnimation).
     Standard,
+    /// 60 frames per second
     Fps60,
+    /// 30 frames per second
     Fps30,
+    /// 20 frames per second
     Fps20,
 }
 
 [org_name(QScrollerProperties)]
 enum ScrollMetric {
+    /// This is the time a mouse press event is delayed when starting
     MousePressEventDelay,
+    /// This is the minimum distance the touch or mouse point needs to be
     DragStartDistance,
+    /// A value that describes to which extent new drag velocities are
     DragVelocitySmoothingFactor,
+    /// Restricts the movement to one axis if the movement is inside an angle
     AxisLockThreshold,
+    /// The QEasingCurve used when decelerating the scrolling velocity after an
     ScrollingCurve,
+    /// This factor influences how long it takes the scroller to decelerate
     DecelerationFactor,
+    /// The minimum velocity that is needed after ending the touch or releasing
     MinimumVelocity,
+    /// This is the maximum velocity that can be reached in
     MaximumVelocity,
+    /// This is the maximum allowed scroll speed for a click-through
     MaximumClickThroughVelocity,
+    /// This is the maximum time in
     AcceleratingFlickMaximumTime,
+    /// The current speed is multiplied by this number if an
     AcceleratingFlickSpeedupFactor,
+    /// This is the distance that the user must drag the area beween two snap
     SnapPositionRatio,
+    /// This is the time factor for the scrolling curve. A lower value means that the
     SnapTime,
+    /// This value is the factor between the mouse dragging and
     OvershootDragResistanceFactor,
+    /// This is the maximum distance for overshoot movements while
     OvershootDragDistanceFactor,
+    /// This is the maximum distance for overshoot movements while
     OvershootScrollDistanceFactor,
+    /// This is the time in
     OvershootScrollTime,
+    /// This is the horizontal overshooting policy (see OvershootPolicy).
     HorizontalOvershootPolicy,
+    /// This is the horizontal overshooting policy (see OvershootPolicy).
     VerticalOvershootPolicy,
+    /// This is the frame rate which should be used while dragging or scrolling.
     FrameRate,
+    /// This is always the last entry.
     ScrollMetricCount,
 }
 

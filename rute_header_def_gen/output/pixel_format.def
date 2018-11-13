@@ -143,67 +143,105 @@ enum Field {
 
 [org_name(QPixelFormat)]
 enum ColorModel {
+    /// The color model is RGB.
     RGB,
+    /// This is logically the opposite endian version of RGB. However,
     BGR,
+    /// The color model uses a color palette.
     Indexed,
+    /// The color model is Grayscale.
     Grayscale,
+    /// The color model is CMYK.
     CMYK,
+    /// The color model is HSL.
     HSL,
+    /// The color model is HSV.
     HSV,
+    /// The color model is YUV.
     YUV,
+    /// There is no color model, only alpha is used.
     Alpha,
 }
 
 [org_name(QPixelFormat)]
 enum AlphaUsage {
+    /// The alpha channel is used.
     UsesAlpha,
+    /// The alpha channel is not used.
     IgnoresAlpha,
 }
 
 [org_name(QPixelFormat)]
 enum AlphaPosition {
+    /// The alpha channel will be put in front of the color
     AtBeginning,
+    /// The alpha channel will be put in the back of the color
     AtEnd,
 }
 
 [org_name(QPixelFormat)]
 enum AlphaPremultiplied {
+    /// The alpha channel is not multiplied into the color channels.
     NotPremultiplied,
+    /// The alpha channel is multiplied into the color channels.
     Premultiplied,
 }
 
 [org_name(QPixelFormat)]
 enum TypeInterpretation {
+    /// 
     UnsignedInteger,
+    /// 
     UnsignedShort,
+    /// 
     UnsignedByte,
+    /// 
     FloatingPoint,
 }
 
 [org_name(QPixelFormat)]
 enum YUVLayout {
+    /// 
     YUV444,
+    /// 
     YUV422,
+    /// 
     YUV411,
+    /// 
     YUV420P,
+    /// 
     YUV420SP,
+    /// 
     YV12,
+    /// 
     UYVY,
+    /// 
     YUYV,
+    /// 
     NV12,
+    /// 
     NV21,
+    /// 
     IMC1,
+    /// 
     IMC2,
+    /// 
     IMC3,
+    /// 
     IMC4,
+    /// 
     Y8,
+    /// 
     Y16,
 }
 
 [org_name(QPixelFormat)]
 enum ByteOrder {
+    /// The byte order is little endian.
     LittleEndian,
+    /// The byte order is big endian.
     BigEndian,
+    /// This enum will not be stored, but is converted in
     CurrentSystemEndian,
 }
 

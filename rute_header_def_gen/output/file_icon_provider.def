@@ -30,17 +30,25 @@ struct FileIconProvider {
 
 [org_name(QFileIconProvider)]
 enum IconType {
+    /// 
     Computer,
+    /// 
     Desktop,
+    /// 
     Trashcan,
+    /// 
     Network,
+    /// 
     Drive,
+    /// 
     Folder,
+    /// 
     File,
 }
 
 [org_name(QFileIconProvider)]
 enum Option {
+    /// Always use the default directory icon.
     DontUseCustomDirectoryIcons,
 }
 

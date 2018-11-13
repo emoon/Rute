@@ -68,10 +68,15 @@ struct FontComboBox : ComboBox {
 
 [org_name(QFontComboBox)]
 enum FontFilter {
+    /// Show all fonts
     AllFonts,
+    /// Show scalable fonts
     ScalableFonts,
+    /// Show non scalable fonts
     NonScalableFonts,
+    /// Show monospaced fonts
     MonospacedFonts,
+    /// Show proportional fonts
     ProportionalFonts,
 }
 

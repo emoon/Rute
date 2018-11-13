@@ -39,11 +39,17 @@ struct AccessibleTableModelChangeEvent : AccessibleEvent {
 
 [org_name(QAccessibleTableModelChangeEvent)]
 enum ModelChangeType {
+    /// The model has been reset, all previous knowledge about the model is now invalid.
     ModelReset,
+    /// No cells have been added or removed, but the data of the specified cell range is invalid.
     DataChanged,
+    /// New rows have been inserted.
     RowsInserted,
+    /// New columns have been inserted.
     ColumnsInserted,
+    /// Rows have been removed.
     RowsRemoved,
+    /// Columns have been removed.
     ColumnsRemoved,
 }
 

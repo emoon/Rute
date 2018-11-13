@@ -260,7 +260,9 @@ struct TableWidgetItem {
 
 [org_name(QTableWidgetItem)]
 enum ItemType {
+    /// The default type for table widget items.
     Type,
+    /// The minimum value for custom types. Values below UserType are
     UserType,
 }
 

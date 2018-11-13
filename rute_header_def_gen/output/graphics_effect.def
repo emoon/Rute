@@ -231,16 +231,23 @@ struct GraphicsEffect : Object {
 
 [org_name(QGraphicsEffect)]
 enum ChangeFlag {
+    /// The effect is installed on a source.
     SourceAttached,
+    /// The effect is uninstalled on a source.
     SourceDetached,
+    /// The bounding rect of the source has
     SourceBoundingRectChanged,
+    /// The visual appearance of the source has changed.
     SourceInvalidated,
 }
 
 [org_name(QGraphicsEffect)]
 enum PixmapPadMode {
+    /// The pixmap should not receive any additional
     NoPad,
+    /// The pixmap should be padded
     PadToTransparentBorder,
+    /// The pixmap should be padded to
     PadToEffectiveBoundingRect,
 }
 

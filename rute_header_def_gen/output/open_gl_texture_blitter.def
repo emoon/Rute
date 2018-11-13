@@ -186,7 +186,9 @@ struct OpenGLTextureBlitter {
 
 [org_name(QOpenGLTextureBlitter)]
 enum Origin {
+    /// Indicates that the data in the texture
     OriginBottomLeft,
+    /// Indicates that the data in the texture has Y
     OriginTopLeft,
 }
 

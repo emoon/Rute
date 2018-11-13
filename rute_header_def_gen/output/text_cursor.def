@@ -847,44 +847,75 @@ struct TextCursor {
 
 [org_name(QTextCursor)]
 enum MoveMode {
+    /// Moves the anchor to the same position as the cursor itself.
     MoveAnchor,
+    /// Keeps the anchor where it is.
     KeepAnchor,
 }
 
 [org_name(QTextCursor)]
 enum MoveOperation {
+    /// Keep the cursor where it is
     NoMove,
+    /// Move to the start of the document.
     Start,
+    /// Move up one line.
     Up,
+    /// Move to the start of the current line.
     StartOfLine,
+    /// Move to the start of the current block.
     StartOfBlock,
+    /// Move to the start of the current word.
     StartOfWord,
+    /// Move to the start of the previous block.
     PreviousBlock,
+    /// Move to the previous character.
     PreviousCharacter,
+    /// Move to the beginning of the previous word.
     PreviousWord,
+    /// Move left one character.
     Left,
+    /// Move left one word.
     WordLeft,
+    /// Move to the end of the document.
     End,
+    /// Move down one line.
     Down,
+    /// Move to the end of the current line.
     EndOfLine,
+    /// Move to the end of the current word.
     EndOfWord,
+    /// Move to the end of the current block.
     EndOfBlock,
+    /// Move to the beginning of the next block.
     NextBlock,
+    /// Move to the next character.
     NextCharacter,
+    /// Move to the next word.
     NextWord,
+    /// Move right one character.
     Right,
+    /// Move right one word.
     WordRight,
+    /// Move to the beginning of the next table cell inside the
     NextCell,
+    /// Move to the beginning of the previous table cell
     PreviousCell,
+    /// Move to the first new cell of the next row in the current
     NextRow,
+    /// Move to the last cell of the previous row in the
     PreviousRow,
 }
 
 [org_name(QTextCursor)]
 enum SelectionType {
+    /// Selects the word under the cursor. If the cursor
     WordUnderCursor,
+    /// Selects the line of text under the cursor.
     LineUnderCursor,
+    /// Selects the block of text under the cursor.
     BlockUnderCursor,
+    /// Selects the entire document.
     Document,
 }
 

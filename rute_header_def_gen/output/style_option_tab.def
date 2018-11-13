@@ -30,39 +30,53 @@ struct StyleOptionTab : StyleOption {
 
 [org_name(QStyleOptionTab)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionTab)]
 enum StyleOptionVersion {
+    /// 3
     Version,
 }
 
 [org_name(QStyleOptionTab)]
 enum TabPosition {
+    /// The tab is the first tab in the tab bar.
     Beginning,
+    /// The tab is neither the first nor the last tab in the tab bar.
     Middle,
+    /// The tab is the last tab in the tab bar.
     End,
+    /// The tab is both the first and the last tab in the tab bar.
     OnlyOneTab,
 }
 
 [org_name(QStyleOptionTab)]
 enum SelectedPosition {
+    /// The tab is not adjacent to a selected tab (or is the selected tab).
     NotAdjacent,
+    /// The next tab (typically the tab on the right) is selected.
     NextIsSelected,
+    /// The previous tab (typically the tab on the left) is selected.
     PreviousIsSelected,
 }
 
 [org_name(QStyleOptionTab)]
 enum CornerWidget {
+    /// There are no corner widgets
     NoCornerWidgets,
+    /// Left corner widget
     LeftCornerWidget,
+    /// Right corner widget
     RightCornerWidget,
 }
 
 [org_name(QStyleOptionTab)]
 enum TabFeature {
+    /// A normal tab button.
     None,
+    /// The tab button is positioned on a tab frame
     HasFrame,
 }
 

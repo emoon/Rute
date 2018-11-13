@@ -119,7 +119,9 @@ struct InputMethod : Object {
 
 [org_name(QInputMethod)]
 enum Action {
+    /// A normal click/tap
     Click,
+    /// A context menu click/tap (e.g. right-button or tap-and-hold)
     ContextMenu,
 }
 

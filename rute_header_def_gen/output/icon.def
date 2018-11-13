@@ -525,15 +525,21 @@ struct Icon {
 
 [org_name(QIcon)]
 enum Mode {
+    /// Display the pixmap when the user is
     Normal,
+    /// Display the pixmap when the
     Disabled,
+    /// Display the pixmap when the
     Active,
+    /// Display the pixmap when the item represented by the icon is
     Selected,
 }
 
 [org_name(QIcon)]
 enum State {
+    /// Display the pixmap when the widget is in an "on" state
     On,
+    /// Display the pixmap when the widget is in an "off" state
     Off,
 }
 

@@ -21,11 +21,13 @@ struct StyleOptionTabWidgetFrame : StyleOption {
 
 [org_name(QStyleOptionTabWidgetFrame)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionTabWidgetFrame)]
 enum StyleOptionVersion {
+    /// 2
     Version,
 }
 

@@ -116,8 +116,11 @@ struct GraphicsPixmapItem : GraphicsItem {
 
 [org_name(QGraphicsPixmapItem)]
 enum ShapeMode {
+    /// The shape is determined by calling QPixmap::mask().
     MaskShape,
+    /// The shape is determined by tracing the outline of
     BoundingRectShape,
+    /// The shape is determine by calling
     HeuristicMaskShape,
 }
 

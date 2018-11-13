@@ -279,19 +279,25 @@ struct MdiArea : AbstractScrollArea {
 
 [org_name(QMdiArea)]
 enum AreaOption {
+    /// When the active subwindow
     DontMaximizeSubWindowOnActivation,
 }
 
 [org_name(QMdiArea)]
 enum WindowOrder {
+    /// The windows are returned in the order of
     CreationOrder,
+    /// The windows are returned in the order in
     StackingOrder,
+    /// The windows are returned in the order in
     ActivationHistoryOrder,
 }
 
 [org_name(QMdiArea)]
 enum ViewMode {
+    /// Display sub-windows with window frames (default).
     SubWindowView,
+    /// Display sub-windows with tabs in a tab bar.
     TabbedView,
 }
 

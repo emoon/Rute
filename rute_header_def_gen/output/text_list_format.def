@@ -84,13 +84,21 @@ struct TextListFormat : TextFormat {
 
 [org_name(QTextListFormat)]
 enum Style {
+    /// a filled circle
     ListDisc,
+    /// an empty circle
     ListCircle,
+    /// a filled square
     ListSquare,
+    /// decimal values in ascending order
     ListDecimal,
+    /// lower case Latin characters in alphabetical order
     ListLowerAlpha,
+    /// upper case Latin characters in alphabetical order
     ListUpperAlpha,
+    /// lower case roman numerals (supports up to 4999 items only)
     ListLowerRoman,
+    /// upper case roman numerals (supports up to 4999 items only)
     ListUpperRoman,
     ListStyleUndefined,
 }

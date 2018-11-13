@@ -445,7 +445,9 @@ struct OpenGLContext : Object {
 
 [org_name(QOpenGLContext)]
 enum OpenGLModuleType {
+    /// OpenGL
     LibGL,
+    /// OpenGL ES 2.0 or higher
     LibGLES,
 }
 

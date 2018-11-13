@@ -265,49 +265,88 @@ struct FontDatabase {
 
 [org_name(QFontDatabase)]
 enum WritingSystem {
+    /// 
     Any,
+    /// 
     Latin,
+    /// 
     Greek,
+    /// 
     Cyrillic,
+    /// 
     Armenian,
+    /// 
     Hebrew,
+    /// 
     Arabic,
+    /// 
     Syriac,
+    /// 
     Thaana,
+    /// 
     Devanagari,
+    /// 
     Bengali,
+    /// 
     Gurmukhi,
+    /// 
     Gujarati,
+    /// 
     Oriya,
+    /// 
     Tamil,
+    /// 
     Telugu,
+    /// 
     Kannada,
+    /// 
     Malayalam,
+    /// 
     Sinhala,
+    /// 
     Thai,
+    /// 
     Lao,
+    /// 
     Tibetan,
+    /// 
     Myanmar,
+    /// 
     Georgian,
+    /// 
     Khmer,
+    /// 
     SimplifiedChinese,
+    /// 
     TraditionalChinese,
+    /// 
     Japanese,
+    /// 
     Korean,
+    /// 
     Vietnamese,
+    /// 
     Symbol,
+    /// (the same as Symbol)
     Other,
+    /// 
     Ogham,
+    /// 
     Runic,
+    /// 
     Nko,
     WritingSystemsCount,
 }
 
 [org_name(QFontDatabase)]
 enum SystemFont {
+    /// The default system font.
     GeneralFont,
+    /// The fixed font that the system recommends.
     FixedFont,
+    /// The system standard font for titles.
     TitleFont,
+    /// The smallest readable system font.
     SmallestReadableFont,
 }
 

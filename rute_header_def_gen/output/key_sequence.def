@@ -423,89 +423,165 @@ struct KeySequence {
 
 [org_name(QKeySequence)]
 enum StandardKey {
+    /// Unbound key.
     UnknownKey,
+    /// Open help contents.
     HelpContents,
+    /// Activate "what's this".
     WhatsThis,
+    /// Open document.
     Open,
+    /// Close document/tab.
     Close,
+    /// Save document.
     Save,
+    /// Create new document.
     New,
+    /// Delete.
     Delete,
+    /// Cut.
     Cut,
+    /// Copy.
     Copy,
+    /// Paste.
     Paste,
+    /// Undo.
     Undo,
+    /// Redo.
     Redo,
+    /// Navigate back.
     Back,
+    /// Navigate forward.
     Forward,
+    /// Refresh or reload current document.
     Refresh,
+    /// Zoom in.
     ZoomIn,
+    /// Zoom out.
     ZoomOut,
+    /// Print document.
     Print,
+    /// Add new tab.
     AddTab,
+    /// Navigate to next tab or child window.
     NextChild,
+    /// Navigate to previous tab or child window.
     PreviousChild,
+    /// Find in document.
     Find,
+    /// Find next result.
     FindNext,
+    /// Find previous result.
     FindPrevious,
+    /// Find and replace.
     Replace,
+    /// Select all text.
     SelectAll,
+    /// Bold text.
     Bold,
+    /// Italic text.
     Italic,
+    /// Underline text.
     Underline,
+    /// Move cursor to next character.
     MoveToNextChar,
+    /// Move cursor to previous character.
     MoveToPreviousChar,
+    /// Move cursor to next word.
     MoveToNextWord,
+    /// Move cursor to previous word.
     MoveToPreviousWord,
+    /// Move cursor to next line.
     MoveToNextLine,
+    /// Move cursor to previous line.
     MoveToPreviousLine,
+    /// Move cursor to next page.
     MoveToNextPage,
+    /// Move cursor to previous page.
     MoveToPreviousPage,
+    /// Move cursor to start of line.
     MoveToStartOfLine,
+    /// Move cursor to end of line.
     MoveToEndOfLine,
+    /// Move cursor to start of a block. This shortcut is only used on
     MoveToStartOfBlock,
+    /// Move cursor to end of block. This shortcut is only used on the
     MoveToEndOfBlock,
+    /// Move cursor to start of document.
     MoveToStartOfDocument,
+    /// Move cursor to end of document.
     MoveToEndOfDocument,
+    /// Extend selection to next character.
     SelectNextChar,
+    /// Extend selection to previous character.
     SelectPreviousChar,
+    /// Extend selection to next word.
     SelectNextWord,
+    /// Extend selection to previous word.
     SelectPreviousWord,
+    /// Extend selection to next line.
     SelectNextLine,
+    /// Extend selection to previous line.
     SelectPreviousLine,
+    /// Extend selection to next page.
     SelectNextPage,
+    /// Extend selection to previous page.
     SelectPreviousPage,
+    /// Extend selection to start of line.
     SelectStartOfLine,
+    /// Extend selection to end of line.
     SelectEndOfLine,
+    /// Extend selection to the start of a text block. This shortcut is only used on
     SelectStartOfBlock,
+    /// Extend selection to the end of a text block. This shortcut is only used on
     SelectEndOfBlock,
+    /// Extend selection to start of document.
     SelectStartOfDocument,
+    /// Extend selection to end of document.
     SelectEndOfDocument,
+    /// Delete the beginning of a word up to the cursor.
     DeleteStartOfWord,
+    /// Delete word from the end of the cursor.
     DeleteEndOfWord,
+    /// Delete end of line.
     DeleteEndOfLine,
+    /// Insert a new paragraph.
     InsertParagraphSeparator,
+    /// Insert a new line.
     InsertLineSeparator,
+    /// Save document after prompting the user for a file name.
     SaveAs,
+    /// Open the preferences dialog.
     Preferences,
+    /// Quit the application.
     Quit,
+    /// Toggle the window state to/from full screen.
     FullScreen,
+    /// Deselect text. Since 5.1
     Deselect,
+    /// Delete the entire line.
     DeleteCompleteLine,
+    /// Delete previous character.
     Backspace,
+    /// Cancel the current operation.
     Cancel,
 }
 
 [org_name(QKeySequence)]
 enum SequenceFormat {
+    /// The key sequence as a platform specific string.
     NativeText,
+    /// The key sequence is given in a "portable" format,
     PortableText,
 }
 
 [org_name(QKeySequence)]
 enum SequenceMatch {
+    /// The key sequences are different; not even partially
     NoMatch,
+    /// The key sequences match partially, but are not
     PartialMatch,
+    /// The key sequences are the same.
     ExactMatch,
 }
 

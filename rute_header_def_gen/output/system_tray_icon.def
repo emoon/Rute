@@ -193,18 +193,27 @@ struct SystemTrayIcon : Object {
 
 [org_name(QSystemTrayIcon)]
 enum ActivationReason {
+    /// Unknown reason
     Unknown,
+    /// The context menu for the system tray entry was requested
     Context,
+    /// The system tray entry was double clicked.
     DoubleClick,
+    /// The system tray entry was clicked
     Trigger,
+    /// The system tray entry was clicked with the middle mouse button
     MiddleClick,
 }
 
 [org_name(QSystemTrayIcon)]
 enum MessageIcon {
+    /// No icon is shown.
     NoIcon,
+    /// An information icon is shown.
     Information,
+    /// A standard warning icon is shown.
     Warning,
+    /// A critical warning icon is shown.
     Critical,
 }
 

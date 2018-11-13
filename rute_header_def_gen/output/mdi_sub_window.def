@@ -236,7 +236,9 @@ struct MdiSubWindow : Widget {
 enum SubWindowOption {
     AllowOutsideAreaHorizontally,
     AllowOutsideAreaVertically,
+    /// If you enable this option, a rubber band
     RubberBandResize,
+    /// If you enable this option, a rubber band
     RubberBandMove,
 }
 

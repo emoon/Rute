@@ -130,9 +130,13 @@ struct EventLoop : Object {
 
 [org_name(QEventLoop)]
 enum ProcessEventsFlag {
+    /// All events. Note that
     AllEvents,
+    /// Do not process user input events,
     ExcludeUserInputEvents,
+    /// Do not process socket notifier
     ExcludeSocketNotifiers,
+    /// Wait for events if no pending events are
     WaitForMoreEvents,
     X11ExcludeTimers,
     EventLoopExec,

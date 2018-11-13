@@ -277,80 +277,155 @@ enum ExtensionFlag {
 
 [org_name(QMetaType)]
 enum Type {
+    /// 
     Void,
+    /// 
     Bool,
+    /// 
     Int,
+    /// 
     UInt,
+    /// LongLong
     LongLong,
+    /// ULongLong
     ULongLong,
+    /// 
     Double,
+    /// 
     Long,
+    /// 
     Short,
+    /// 
     Char,
+    /// 
     ULong,
+    /// 
     UShort,
+    /// 
     UChar,
+    /// 
     Float,
+    /// 
     SChar,
+    /// 
     Nullptr,
+    /// 
     VoidStar,
+    /// QChar
     QChar,
+    /// QString
     QString,
+    /// QStringList
     QStringList,
+    /// QByteArray
     QByteArray,
+    /// QBitArray
     QBitArray,
+    /// QDate
     QDate,
+    /// QTime
     QTime,
+    /// QDateTime
     QDateTime,
+    /// QUrl
     QUrl,
+    /// QLocale
     QLocale,
+    /// QRect
     QRect,
+    /// QRectF
     QRectF,
+    /// QSize
     QSize,
+    /// QSizeF
     QSizeF,
+    /// QLine
     QLine,
+    /// QLineF
     QLineF,
+    /// QPoint
     QPoint,
+    /// QPointF
     QPointF,
+    /// QRegExp
     QRegExp,
+    /// QEasingCurve
     QEasingCurve,
+    /// QUuid
     QUuid,
+    /// QVariant
     QVariant,
+    /// QRegularExpression
     QRegularExpression,
+    /// QJsonValue
     QJsonValue,
+    /// QJsonObject
     QJsonObject,
+    /// QJsonArray
     QJsonArray,
+    /// QJsonDocument
     QJsonDocument,
+    /// QModelIndex
     QModelIndex,
+    /// QPersistentModelIndex (since 5.5)
     QPersistentModelIndex,
+    /// QObject *
     QObjectStar,
+    /// QVariantMap
     QVariantMap,
+    /// QVariantList
     QVariantList,
+    /// QVariantHash
     QVariantHash,
+    /// QByteArrayList
     QByteArrayList,
+    /// QFont
     QFont,
+    /// QPixmap
     QPixmap,
+    /// QBrush
     QBrush,
+    /// QColor
     QColor,
+    /// QPalette
     QPalette,
+    /// QIcon
     QIcon,
+    /// QImage
     QImage,
+    /// QPolygon
     QPolygon,
+    /// QRegion
     QRegion,
+    /// QBitmap
     QBitmap,
+    /// QCursor
     QCursor,
+    /// QKeySequence
     QKeySequence,
+    /// QPen
     QPen,
+    /// QTextLength
     QTextLength,
+    /// QTextFormat
     QTextFormat,
+    /// QMatrix
     QMatrix,
+    /// QTransform
     QTransform,
+    /// QMatrix4x4
     QMatrix4x4,
+    /// QVector2D
     QVector2D,
+    /// QVector3D
     QVector3D,
+    /// QVector4D
     QVector4D,
+    /// QQuaternion
     QQuaternion,
+    /// QPolygonF
     QPolygonF,
+    /// QSizePolicy
     QSizePolicy,
     FirstCoreType,
     LastCoreType,
@@ -360,16 +435,23 @@ enum Type {
     LastWidgetsType,
     HighestInternalId,
     QReal,
+    /// This is an invalid type id. It is returned from QMetaType for types that are not registered
     UnknownType,
+    /// Base value for user types
     User,
 }
 
 [org_name(QMetaType)]
 enum TypeFlag {
+    /// This type has non-trivial constructors. If the flag is not set instances can be safely initialized with memset to 0.
     NeedsConstruction,
+    /// This type has a non-trivial destructor. If the flag is not set calls to the destructor are not necessary before discarding objects.
     NeedsDestruction,
+    /// An instance of a type having this attribute can be safely moved by memcpy.
     MovableType,
+    /// This type is a pointer to a derived of QObject
     PointerToQObject,
+    /// This type is an enumeration
     IsEnumeration,
     SharedPointerToQObject,
     WeakPointerToQObject,

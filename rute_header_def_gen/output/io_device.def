@@ -1208,15 +1208,25 @@ struct IODevice : Object {
 
 [org_name(QIODevice)]
 enum OpenModeFlag {
+    /// The device is not open.
     NotOpen,
+    /// The device is open for reading.
     ReadOnly,
+    /// The device is open for writing. Note that this mode implies
     WriteOnly,
+    /// The device is open for reading and writing.
     ReadWrite,
+    /// The device is opened in append mode so that all data is
     Append,
+    /// If possible, the device is truncated before it is opened.
     Truncate,
+    /// When reading, the end-of-line terminators are
     Text,
+    /// Any buffer in the device is bypassed.
     Unbuffered,
+    /// Fail if the file to be opened already exists. Create and
     NewOnly,
+    /// Fail if the file to be opened does not exist. This flag
     ExistingOnly,
 }
 

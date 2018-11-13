@@ -654,30 +654,47 @@ struct RegularExpression {
 
 [org_name(QRegularExpression)]
 enum PatternOption {
+    /// No pattern options are set.
     NoPatternOption,
+    /// The pattern should match against the subject string in a case
     CaseInsensitiveOption,
+    /// The dot metacharacter (
     DotMatchesEverythingOption,
+    /// The caret (
     MultilineOption,
+    /// Any whitespace in the pattern string which is not escaped and outside a
     ExtendedPatternSyntaxOption,
+    /// The greediness of the quantifiers is inverted:
     InvertedGreedinessOption,
+    /// The non-named capturing groups do not capture substrings; named
     DontCaptureOption,
+    /// The meaning of the
     UseUnicodePropertiesOption,
+    /// The regular expression will be optimized (and possibly
     OptimizeOnFirstUsageOption,
+    /// Regular expressions are automatically optimized after a
     DontAutomaticallyOptimizeOption,
 }
 
 [org_name(QRegularExpression)]
 enum MatchType {
+    /// A normal match is done.
     NormalMatch,
+    /// The pattern string is matched partially against the subject string. If
     PartialPreferCompleteMatch,
+    /// The pattern string is matched partially against the subject string. If
     PartialPreferFirstMatch,
+    /// No matching is done. This value is returned as the match type by a
     NoMatch,
 }
 
 [org_name(QRegularExpression)]
 enum MatchOption {
+    /// No match options are set.
     NoMatchOption,
+    /// The match is constrained to start exactly at the offset passed to
     AnchoredMatchOption,
+    /// The subject string is not checked for UTF-16 validity before
     DontCheckSubjectStringMatchOption,
 }
 

@@ -473,8 +473,11 @@ struct AbstractScrollArea : Frame {
 
 [org_name(QAbstractScrollArea)]
 enum SizeAdjustPolicy {
+    /// The scroll area will behave like before - and not do any adjust.
     AdjustIgnored,
+    /// The scroll area will adjust to its viewport the first time it is shown.
     AdjustToContentsOnFirstShow,
+    /// The scroll area will always adjust to the viewport
     AdjustToContents,
 }
 

@@ -1116,84 +1116,131 @@ struct AbstractItemView : AbstractScrollArea {
 
 [org_name(QAbstractItemView)]
 enum SelectionMode {
+    /// Items cannot be selected.
     NoSelection,
+    /// When the user selects an item, any already-selected
     SingleSelection,
+    /// When the user selects an item in the usual way, the
     MultiSelection,
+    /// When the user selects an item in the usual way,
     ExtendedSelection,
+    /// When the user selects an item in the usual way,
     ContiguousSelection,
 }
 
 [org_name(QAbstractItemView)]
 enum SelectionBehavior {
+    /// Selecting single items.
     SelectItems,
+    /// Selecting only rows.
     SelectRows,
+    /// Selecting only columns.
     SelectColumns,
 }
 
 [org_name(QAbstractItemView)]
 enum ScrollHint {
+    /// Scroll to ensure that the item is visible.
     EnsureVisible,
+    /// Scroll to position the item at the top of the
     PositionAtTop,
+    /// Scroll to position the item at the bottom of the
     PositionAtBottom,
+    /// Scroll to position the item at the center of the
     PositionAtCenter,
 }
 
 [org_name(QAbstractItemView)]
 enum EditTrigger {
+    /// No editing possible.
     NoEditTriggers,
+    /// Editing start whenever current item changes.
     CurrentChanged,
+    /// Editing starts when an item is double clicked.
     DoubleClicked,
+    /// Editing starts when clicking on an already selected
     SelectedClicked,
+    /// Editing starts when the platform edit key has been
     EditKeyPressed,
+    /// Editing starts when any key is pressed over an item.
     AnyKeyPressed,
+    /// Editing starts for all above actions.
     AllEditTriggers,
 }
 
 [org_name(QAbstractItemView)]
 enum ScrollMode {
+    /// The view will scroll the contents one item at a time.
     ScrollPerItem,
+    /// The view will scroll the contents one pixel at a time.
     ScrollPerPixel,
 }
 
 [org_name(QAbstractItemView)]
 enum DragDropMode {
+    /// Does not support dragging or dropping.
     NoDragDrop,
+    /// The view supports dragging of its own items
     DragOnly,
+    /// The view accepts drops
     DropOnly,
+    /// The view supports both dragging and dropping
     DragDrop,
+    /// The view accepts move (
     InternalMove,
 }
 
 [org_name(QAbstractItemView)]
 enum CursorAction {
+    /// Move to the item above the current item.
     MoveUp,
+    /// Move to the item below the current item.
     MoveDown,
+    /// Move to the item left of the current item.
     MoveLeft,
+    /// Move to the item right of the current item.
     MoveRight,
+    /// Move to the top-left corner item.
     MoveHome,
+    /// Move to the bottom-right corner item.
     MoveEnd,
+    /// Move one page up above the current item.
     MovePageUp,
+    /// Move one page down below the current item.
     MovePageDown,
+    /// Move to the item after the current item.
     MoveNext,
+    /// Move to the item before the current item.
     MovePrevious,
 }
 
 [org_name(QAbstractItemView)]
 enum State {
+    /// The is the default state.
     NoState,
+    /// The user is dragging items.
     DraggingState,
+    /// The user is selecting items.
     DragSelectingState,
+    /// The user is editing an item in a widget editor.
     EditingState,
+    /// The user is opening a branch of items.
     ExpandingState,
+    /// The user is closing a branch of items.
     CollapsingState,
+    /// The item view is performing an animation.
     AnimatingState,
 }
 
 [org_name(QAbstractItemView)]
 enum DropIndicatorPosition {
+    /// The item will be dropped on the index.
     OnItem,
+    /// The item will be dropped above the index.
     AboveItem,
+    /// The item will be dropped below the index.
     BelowItem,
+    /// The item will be dropped onto a region of the viewport with
     OnViewport,
 }
 

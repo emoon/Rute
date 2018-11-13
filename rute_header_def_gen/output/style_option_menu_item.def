@@ -22,30 +22,43 @@ struct StyleOptionMenuItem : StyleOption {
 
 [org_name(QStyleOptionMenuItem)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionMenuItem)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 
 [org_name(QStyleOptionMenuItem)]
 enum MenuItemType {
+    /// A normal menu item.
     Normal,
+    /// A menu item that is the default action as specified with
     DefaultItem,
+    /// A menu separator.
     Separator,
+    /// Indicates the menu item points to a sub-menu.
     SubMenu,
+    /// A popup menu scroller (currently only used on
     Scroller,
+    /// A tear-off handle for the menu.
     TearOff,
+    /// The margin of the menu.
     Margin,
+    /// The empty area of the menu.
     EmptyArea,
 }
 
 [org_name(QStyleOptionMenuItem)]
 enum CheckType {
+    /// The item is not checkable.
     NotCheckable,
+    /// The item is an exclusive check item (like a radio button).
     Exclusive,
+    /// The item is a non-exclusive check item (like a check box).
     NonExclusive,
 }
 

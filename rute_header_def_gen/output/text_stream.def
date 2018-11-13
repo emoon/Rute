@@ -596,33 +596,49 @@ struct TextStream {
 
 [org_name(QTextStream)]
 enum RealNumberNotation {
+    /// Scientific or fixed-point notation, depending on which makes most sense (
     SmartNotation,
+    /// Fixed-point notation (
     FixedNotation,
+    /// Scientific notation (
     ScientificNotation,
 }
 
 [org_name(QTextStream)]
 enum FieldAlignment {
+    /// Pad on the right side of fields.
     AlignLeft,
+    /// Pad on the left side of fields.
     AlignRight,
+    /// Pad on both sides of field.
     AlignCenter,
+    /// Same as AlignRight, except that the
     AlignAccountingStyle,
 }
 
 [org_name(QTextStream)]
 enum Status {
+    /// The text stream is operating normally.
     Ok,
+    /// The text stream has read past the end of the
     ReadPastEnd,
+    /// The text stream has read corrupt data.
     ReadCorruptData,
+    /// The text stream cannot write to the underlying device.
     WriteFailed,
 }
 
 [org_name(QTextStream)]
 enum NumberFlag {
+    /// Show the base as a prefix if the base
     ShowBase,
+    /// Always put the decimal separator in numbers, even if
     ForcePoint,
+    /// Always put the sign in numbers, even for positive numbers.
     ForceSign,
+    /// Use uppercase versions of base prefixes ("0X", "0B").
     UppercaseBase,
+    /// Use uppercase letters for expressing
     UppercaseDigits,
 }
 

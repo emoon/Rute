@@ -1,22 +1,21 @@
-///
+/// 
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[attributes(NoCreate, NoWrapClass)]
 struct InputEvent : Event {
-    ///
+    /// 
     /// Returns the keyboard modifier flags that existed immediately
     /// before the event occurred.
-    ///
+    /// 
     /// **See also:** [`GuiApplication::keyboard_modifiers`]
     modifiers() -> Rute::KeyboardModifiers,
     set_modifiers(amodifiers: Rute::KeyboardModifiers),
-    ///
+    /// 
     /// Returns the window system's timestamp for this event.
     /// It will normally be in milliseconds since some arbitrary point
     /// in time, such as the time when the system was started.
-    timestamp() -> u64,
-    set_timestamp(atimestamp: u64),
+    timestamp() -> ulong,
+    set_timestamp(atimestamp: ulong),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

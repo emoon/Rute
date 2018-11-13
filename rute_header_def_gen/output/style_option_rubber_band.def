@@ -21,11 +21,13 @@ struct StyleOptionRubberBand : StyleOption {
 
 [org_name(QStyleOptionRubberBand)]
 enum StyleOptionType {
+    /// The type of style option provided (
     Type,
 }
 
 [org_name(QStyleOptionRubberBand)]
 enum StyleOptionVersion {
+    /// 1
     Version,
 }
 

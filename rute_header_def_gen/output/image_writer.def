@@ -321,9 +321,13 @@ struct ImageWriter {
 
 [org_name(QImageWriter)]
 enum ImageWriterError {
+    /// An unknown error occurred. If you get this
     UnknownError,
+    /// QImageWriter encountered a device error when
     DeviceError,
+    /// Qt does not support the requested
     UnsupportedFormatError,
+    /// An attempt was made to write an invalid QImage. An
     InvalidImageError,
 }
 

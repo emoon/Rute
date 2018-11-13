@@ -20,25 +20,45 @@ struct TreeWidgetItemIterator {
 
 [org_name(QTreeWidgetItemIterator)]
 enum IteratorFlag {
+    /// 
     All,
+    /// 
     Hidden,
+    /// 
     NotHidden,
+    /// 
     Selected,
+    /// 
     Unselected,
+    /// 
     Selectable,
+    /// 
     NotSelectable,
+    /// 
     DragEnabled,
+    /// 
     DragDisabled,
+    /// 
     DropEnabled,
+    /// 
     DropDisabled,
+    /// 
     HasChildren,
+    /// 
     NoChildren,
+    /// 
     Checked,
+    /// 
     NotChecked,
+    /// 
     Enabled,
+    /// 
     Disabled,
+    /// 
     Editable,
+    /// 
     NotEditable,
+    /// 
     UserFlag,
 }
 

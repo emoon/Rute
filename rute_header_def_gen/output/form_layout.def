@@ -1008,22 +1008,31 @@ struct FormLayout : Layout {
 
 [org_name(QFormLayout)]
 enum FieldGrowthPolicy {
+    /// The fields never grow beyond their
     FieldsStayAtSizeHint,
+    /// Fields with an horizontal
     ExpandingFieldsGrow,
+    /// All fields with a size policy that allows them to grow
     AllNonFixedFieldsGrow,
 }
 
 [org_name(QFormLayout)]
 enum RowWrapPolicy {
+    /// Fields are always laid out next to their label.  This is
     DontWrapRows,
+    /// Labels are given enough horizontal space to fit the widest label,
     WrapLongRows,
+    /// Fields are always laid out below their label.
     WrapAllRows,
 }
 
 [org_name(QFormLayout)]
 enum ItemRole {
+    /// A label widget.
     LabelRole,
+    /// A field widget.
     FieldRole,
+    /// A widget that spans label and field columns.
     SpanningRole,
 }
 

@@ -79,10 +79,15 @@ struct InputMethodEvent : Event {
 
 [org_name(QInputMethodEvent)]
 enum AttributeType {
+    /// A QTextCharFormat for the part of the preedit string specified by
     TextFormat,
+    /// If set, a cursor should be shown inside the preedit
     Cursor,
+    /// The variant contains a QLocale object specifying the language of a
     Language,
+    /// The ruby text for a part of the preedit string. There should be at
     Ruby,
+    /// If set, the edit cursor should be moved to the specified position
     Selection,
 }
 

@@ -312,20 +312,30 @@ struct TabletEvent : InputEvent {
 
 [org_name(QTabletEvent)]
 enum TabletDevice {
+    /// No device, or an unknown device.
     NoDevice,
+    /// A Puck (a device that is similar to a flat mouse with
     Puck,
+    /// A Stylus.
     Stylus,
+    /// An airbrush
     Airbrush,
+    /// A 4D Mouse.
     FourDMouse,
     XFreeEraser,
+    /// A special stylus that also knows about rotation
     RotationStylus,
 }
 
 [org_name(QTabletEvent)]
 enum PointerType {
+    /// An unknown device.
     UnknownPointer,
+    /// Tip end of a stylus-like device (the narrow end of the pen).
     Pen,
+    /// Any puck-like device.
     Cursor,
+    /// Eraser end of a stylus-like device (the broad end of the pen).
     Eraser,
 }
 

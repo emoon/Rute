@@ -1269,29 +1269,41 @@ struct TextDocument : Object {
 
 [org_name(QTextDocument)]
 enum MetaInformation {
+    /// The title of the document.
     DocumentTitle,
+    /// The url of the document. The loadResource() function uses
     DocumentUrl,
 }
 
 [org_name(QTextDocument)]
 enum FindFlag {
+    /// Search backwards instead of forwards.
     FindBackward,
+    /// By default find works case insensitive. Specifying this option
     FindCaseSensitively,
+    /// Makes find match only complete words.
     FindWholeWords,
 }
 
 [org_name(QTextDocument)]
 enum ResourceType {
+    /// The resource contains HTML.
     HtmlResource,
+    /// The resource contains image data.
     ImageResource,
+    /// The resource contains CSS.
     StyleSheetResource,
+    /// The first available value for user defined
     UserResource,
 }
 
 [org_name(QTextDocument)]
 enum Stacks {
+    /// The undo stack.
     UndoStack,
+    /// The redo stack.
     RedoStack,
+    /// Both the undo and redo stacks.
     UndoAndRedoStacks,
 }
 

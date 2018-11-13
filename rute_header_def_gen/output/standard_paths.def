@@ -94,31 +94,53 @@ struct StandardPaths {
 
 [org_name(QStandardPaths)]
 enum StandardLocation {
+    /// Returns the user's desktop directory. This is a generic value.
     DesktopLocation,
+    /// Returns the directory containing user document files.
     DocumentsLocation,
+    /// Returns the directory containing user's fonts. This is a generic value.
     FontsLocation,
+    /// Returns the directory containing the user applications
     ApplicationsLocation,
+    /// Returns the directory containing the user's music or other audio files.
     MusicLocation,
+    /// Returns the directory containing the user's movies and videos.
     MoviesLocation,
+    /// Returns the directory containing the user's pictures or photos.
     PicturesLocation,
+    /// Returns a directory where temporary files can be stored. The returned value
     TempLocation,
+    /// Returns the user's home directory (the same as QDir::homePath()). On Unix
     HomeLocation,
+    /// Returns the same value as AppLocalDataLocation. This enumeration value
     DataLocation,
+    /// Returns a directory location where user-specific
     CacheLocation,
+    /// Returns a directory location where persistent
     GenericDataLocation,
+    /// Returns a directory location where runtime communication
     RuntimeLocation,
+    /// Returns a directory location where user-specific
     ConfigLocation,
+    /// Returns a directory for user's downloaded files. This is a generic value.
     DownloadLocation,
+    /// Returns a directory location where user-specific non-essential
     GenericCacheLocation,
+    /// Returns a directory location where user-specific
     GenericConfigLocation,
+    /// Returns a directory location where persistent
     AppDataLocation,
+    /// Returns a directory location where user-specific
     AppConfigLocation,
+    /// Returns the local settings path on the Windows operating
     AppLocalDataLocation,
 }
 
 [org_name(QStandardPaths)]
 enum LocateOption {
+    /// return only files
     LocateFile,
+    /// return only directories
     LocateDirectory,
 }
 

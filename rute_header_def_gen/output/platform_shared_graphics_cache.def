@@ -171,11 +171,13 @@ struct PlatformSharedGraphicsCache : Object {
 
 [org_name(QPlatformSharedGraphicsCache)]
 enum PixelFormat {
+    /// The cache will use 8 bits to represent the alpha value of each pixel. If an
     Alpha8,
 }
 
 [org_name(QPlatformSharedGraphicsCache)]
 enum BufferType {
+    /// The buffer will be allocated in graphics memory, and an OpenGL texture
     OpenGLTexture,
 }
 

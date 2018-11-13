@@ -650,30 +650,47 @@ struct TextCharFormat : TextFormat {
 
 [org_name(QTextCharFormat)]
 enum VerticalAlignment {
+    /// Adjacent characters are positioned in the standard
     AlignNormal,
+    /// Characters are placed above the base line for
     AlignSuperScript,
+    /// Characters are placed below the base line for
     AlignSubScript,
+    /// The center of the object is vertically aligned with the
     AlignMiddle,
+    /// The top edge of the object is vertically aligned with
     AlignTop,
+    /// The bottom edge of the object is vertically aligned with
     AlignBottom,
+    /// The base lines of the characters are aligned.
     AlignBaseline,
 }
 
 [org_name(QTextCharFormat)]
 enum UnderlineStyle {
+    /// Text is draw without any underlining decoration.
     NoUnderline,
+    /// A line is drawn using Qt::SolidLine.
     SingleUnderline,
+    /// Dashes are drawn using Qt::DashLine.
     DashUnderline,
+    /// Dots are drawn using Qt::DotLine;
     DotLine,
+    /// Dashs and dots are drawn using Qt::DashDotLine.
     DashDotLine,
+    /// Underlines draw drawn using Qt::DashDotDotLine.
     DashDotDotLine,
+    /// The text is underlined using a wave shaped line.
     WaveUnderline,
+    /// The underline is drawn depending on the SpellCheckUnderlineStyle
     SpellCheckUnderline,
 }
 
 [org_name(QTextCharFormat)]
 enum FontPropertiesInheritanceBehavior {
+    /// If a property is not explicitly set, do not
     FontPropertiesSpecifiedOnly,
+    /// If a property is not explicitly set, override the
     FontPropertiesAll,
 }
 
