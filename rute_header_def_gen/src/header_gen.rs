@@ -479,7 +479,7 @@ fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFil
         }
     }
 
-    if method_count == 0 && enum_count == 0 {
+    if method_count == 0 && enum_count == 0 && base_classes.is_empty() {
         return;
     }
 
@@ -624,7 +624,7 @@ impl Generator {
 
         // Process all files in parallel using Rayon
         header_files.par_iter().for_each(|filename| {
-            println!("Processing filename {:?}", filename);
+            //println!("Processing filename {:?}", filename);
 
             // Create a new `Index`
             let index = Index::new(&clang, false, false);
@@ -637,7 +637,6 @@ impl Generator {
                 .unwrap();
 
             // Use this to figure out if something doesn't work correctly
-            //println!("{:?}", tu.get_diagnostics());
 
             // Get the structs in this translation unit
             let structs = tu
@@ -646,7 +645,6 @@ impl Generator {
                 .into_iter()
                 .filter(|e| e.get_kind() == EntityKind::ClassDecl)
                 .collect::<Vec<_>>();
-
 
             for struct_ in structs {
                 if let Some(name) = struct_.get_name() {
