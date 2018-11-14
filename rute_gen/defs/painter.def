@@ -374,13 +374,12 @@
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [attributes(NoCppClone)]
 struct Painter {
-    qt_check_for_qgadget_macro(),
     ///
     /// Returns the paint device on which this painter is currently
     /// painting, or 0 if the painter is not active.
     ///
     /// **See also:** [`is_active()`]
-    device() -> PaintDevice?,
+    device() -> *PaintDevice?,
     ///
     /// Begins painting the paint *device* and returns `true` if
     /// successful; otherwise returns `false.`
@@ -513,7 +512,7 @@ struct Painter {
     /// **See also:** [`font()`]
     /// [`is_active()`]
     /// {QPainter#Settings}{Settings}
-    font_info() -> FontInfo,
+    //font_info() -> FontInfo,
     ///
     /// **Overloads**
     /// Sets the painter's pen to have style Qt::SolidLine, width 1 and the
@@ -1675,8 +1674,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    [org_name(drawLines)]
-    draw_lines_2(lines: [LineFType]),
+    //[org_name(drawLines)]
+    //draw_lines_2(lines: [LineFType]),
     ///
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
@@ -1751,8 +1750,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    [org_name(drawLines)]
-    draw_lines_4(point_pairs: [PointFType]),
+    //[org_name(drawLines)]
+    //draw_lines_4(point_pairs: [PointFType]),
     ///
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
@@ -1789,8 +1788,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    [org_name(drawLines)]
-    draw_lines_5(lines: *LineType, line_count: i32),
+    //[org_name(drawLines)]
+    //draw_lines_5(lines: *LineType, line_count: i32),
     ///
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
@@ -1827,8 +1826,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    [org_name(drawLines)]
-    draw_lines_6(lines: [LineType]),
+    //[org_name(drawLines)]
+    //draw_lines_6(lines: [LineType]),
     ///
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
@@ -1903,8 +1902,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    [org_name(drawLines)]
-    draw_lines_8(point_pairs: [PointType]),
+    //[org_name(drawLines)]
+    //draw_lines_8(point_pairs: [PointType]),
     ///
     /// Draws the current *rectangle* with the current pen and brush.
     ///
@@ -2046,8 +2045,8 @@ struct Painter {
     ///
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    [org_name(drawRects)]
-    draw_rects_2(rectangles: [RectFType]),
+    //[org_name(drawRects)]
+    //draw_rects_2(rectangles: [RectFType]),
     ///
     /// Draws the first *rectCount* of the given *rectangles* using the
     /// current pen and brush.
@@ -2080,8 +2079,8 @@ struct Painter {
     ///
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    [org_name(drawRects)]
-    draw_rects_4(rectangles: [RectType]),
+    //[org_name(drawRects)]
+    //draw_rects_4(rectangles: [RectType]),
     ///
     /// Draws the ellipse defined by the given *rectangle.*
     ///
@@ -7047,7 +7046,7 @@ struct Painter {
     /// on if the painter is active; otherwise 0.
     ///
     /// **See also:** [`is_active()`]
-    paint_engine() -> PaintEngine?,
+    paint_engine() -> *PaintEngine?,
     ///
     /// Please use QWidget::render() instead.
     ///
@@ -7128,6 +7127,7 @@ struct Painter {
 }
 
 [org_name(QPainter)]
+[enum_flags(RenderHints)]
 enum RenderHint {
     Antialiasing,
     TextAntialiasing,

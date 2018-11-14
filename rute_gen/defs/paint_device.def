@@ -5,11 +5,11 @@
 struct PaintDevice {
     painting_active() -> bool,
     //[event]
-    paint_engine() -> PaintEngine?,
+    paint_engine() -> *PaintEngine?,
     width() -> i32,
     height() -> i32,
-    width_mm() -> i32,
-    height_mm() -> i32,
+    //width_mm() -> i32,
+    //height_mm() -> i32,
     logical_dpi_x() -> i32,
     logical_dpi_y() -> i32,
     physical_dpi_x() -> i32,
@@ -20,11 +20,11 @@ struct PaintDevice {
     depth() -> i32,
     [static] device_pixel_ratio_f_scale() -> f32,
     //[event]
-    init_painter(painter: *PainterType),
+    //init_painter(painter: *PainterType),
     //[event]
-    redirected(offset: *PointType) -> PaintDevice?,
+    //redirected(offset: *PointType) -> *PaintDevice?,
     //[event]
-    shared_painter() -> Painter?,
+    //shared_painter() -> Painter?,
 }
 
 [org_name(QPaintDevice)]

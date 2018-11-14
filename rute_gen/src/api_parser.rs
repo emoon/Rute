@@ -198,6 +198,8 @@ pub enum EnumEntry {
 pub struct Enum {
     /// Name of the enum
     pub name: String,
+    /// Qt supports having a flags macro on enums being type checked with an extra name
+    pub flags_name: String,
     /// Original class name (like Qt, QAccesibility)
     pub original_class_name: String,
     /// All the enem entries
@@ -288,6 +290,15 @@ impl ApiParser {
                             Rule::fieldlist => enum_def.entries = Self::fill_field_list_enum(entry),
                             Rule::org_name => {
                                 enum_def.original_class_name = entry
+                                    .into_inner()
+                                    .next()
+                                    .map(|e| e.as_str())
+                                    .unwrap()
+                                    .to_owned();
+                            }
+                            Rule::enum_flags => {
+                                enum_def.flags_name =
+                                    entry
                                     .into_inner()
                                     .next()
                                     .map(|e| e.as_str())

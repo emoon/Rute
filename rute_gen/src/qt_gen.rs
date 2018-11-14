@@ -1254,25 +1254,32 @@ impl QtGenerator {
 
         for api_def in api_defs {
             for enum_def in &api_def.enums {
-                enums.insert(enum_def.name.clone(), enum_def);
+                enums.insert((enum_def.name.clone(), enum_def.flags_name.clone()), enum_def);
             }
-        }
-
-        let mut enum_org_names = BTreeMap::new();
-
-        for (_, enum_def) in &enums {
-            enum_org_names.insert(&enum_def.original_class_name, ());
         }
 
         dest.write_all(b"#pragma once\n")?;
         dest.write_all(AUTO_GEN_HEADER)?;
         dest.write_all(b"#include <map>\n\n")?;
 
-        for (name, _) in &enums {
+        for ((name, _), _) in &enums {
             dest.write_fmt(format_args!(
                 "extern std::map<int, int> s_{}_lookup;\n",
                 name.to_snake_case()
             ))?;
+        }
+
+        writeln!(dest, "")?;
+
+        // forwarding define because sometimes Qt uses a macro for this
+        for ((name, flags_name), _) in &enums {
+            if !flags_name.is_empty() {
+                dest.write_fmt(format_args!(
+                    "#define s_{}_lookup s_{}_lookup\n",
+                    flags_name.to_snake_case(),
+                    name.to_snake_case()
+                ))?;
+            }
         }
 
         Ok(())

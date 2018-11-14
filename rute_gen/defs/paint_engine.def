@@ -220,7 +220,7 @@ struct PaintEngine {
     ///
     /// Returns the device that this engine is painting on, if painting is
     /// active; otherwise returns 0.
-    paint_device() -> PaintDevice?,
+    paint_device() -> *PaintDevice?,
     set_system_clip(base_clip: &RegionType),
     system_clip() -> Region,
     set_system_rect(rect: &RectType),
@@ -231,20 +231,20 @@ struct PaintEngine {
     /// Reimplement this function to return the paint engine [Type](Type)
     ///
     //[event]
-    [org_name(type)]
-    get_type() -> PaintEngine::Type,
-    fix_neg_rect(x: *i32, y: *i32, w: *i32, h: *i32),
-    test_dirty(df: PaintEngine::DirtyFlags) -> bool,
-    set_dirty(df: PaintEngine::DirtyFlags),
-    clear_dirty(df: PaintEngine::DirtyFlags),
+    //[org_name(type)]
+    //get_type() -> PaintEngine::Type,
+    //fix_neg_rect(x: *i32, y: *i32, w: *i32, h: *i32),
+    //test_dirty(df: PaintEngine::DirtyFlags) -> bool,
+    //set_dirty(df: PaintEngine::DirtyFlags),
+    //clear_dirty(df: PaintEngine::DirtyFlags),
     ///
     /// Returns `true` if the paint engine supports the specified *feature;* otherwise returns `false.`
-    has_feature(feature: PaintEngine::PaintEngineFeatures) -> bool,
+    //has_feature(feature: PaintEngine::PaintEngineFeatures) -> bool,
     ///
     /// Returns the paint engine's painter.
-    painter() -> Painter?,
-    sync_state(),
-    is_extended() -> bool,
+    //painter() -> *Painter?,
+    //sync_state(),
+    //is_extended() -> bool,
 }
 
 [org_name(QPaintEngine)]
@@ -272,6 +272,7 @@ enum PaintEngineFeature {
 }
 
 [org_name(QPaintEngine)]
+[enum_flags(DirtyFlags)]
 enum DirtyFlag {
     DirtyPen,
     DirtyBrush,

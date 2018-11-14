@@ -192,7 +192,7 @@ struct Object {
     /// deleted object and the program might crash.
     ///
     /// **See also:** [`install_event_filter()`]
-    [event] event(event: *EventType) -> bool,
+    //[event] event(event: *EventType) -> bool,
     ///
     /// Filters events if this object has been installed as an event
     /// filter for the *watched* object.
@@ -213,7 +213,8 @@ struct Object {
     /// deleted object and the program might crash.
     ///
     /// **See also:** [`install_event_filter()`]
-    [event] event_filter(watched: *ObjectType, event: *EventType) -> bool,
+    //[event]
+    //event_filter(watched: *ObjectType, event: *EventType) -> bool,
     ///
     /// You can find an object by name (and type) using findChild().
     /// You can find a set of objects with findChildren().
@@ -632,7 +633,7 @@ struct Object {
     /// Returns a pointer to the parent object.
     ///
     /// **See also:** [`children()`]
-    parent() -> Object?,
+    parent() -> *Object?,
     //
     // Returns `true` if this object is an instance of a class that
     // inherits *className* or a QObject subclass that inherits *className;* otherwise returns `false.`
@@ -716,7 +717,7 @@ struct Object {
     /// **See also:** [`sender()`]
     /// [`MetaObject::index_of_signal`]
     /// [`MetaObject::method`]
-    sender() -> Object?,
+    //sender() -> Object?,
     ///
     /// Returns the meta-method index of the signal that called the currently
     /// executing slot, which is a member of the class returned by sender().
@@ -740,7 +741,7 @@ struct Object {
     /// **See also:** [`sender()`]
     /// [`MetaObject::index_of_signal`]
     /// [`MetaObject::method`]
-    sender_signal_index() -> i32,
+    //sender_signal_index() -> i32,
     //
     // Returns the number of receivers connected to the *signal.*
     //
@@ -773,7 +774,7 @@ struct Object {
     /// modularity. However, it might be useful when you need to perform
     /// expensive initialization only if something is connected to a
     /// signal.
-    is_signal_connected(signal: &MetaMethodType) -> bool,
+    //is_signal_connected(signal: &MetaMethodType) -> bool,
     //
     // This event handler can be reimplemented in a subclass to receive
     // timer events for the object.

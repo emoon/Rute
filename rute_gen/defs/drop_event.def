@@ -96,11 +96,11 @@ struct DropEvent : Event {
     /// to itself.
     ///
     /// **See also:** [`Drag::q_drag`]
-    source() -> Object?,
+    source() -> *Object?,
     ///
     /// Returns the data that was dropped on the widget and its associated MIME
     /// type information.
-    mime_data() -> MimeData?,
+    mime_data() -> *MimeData?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

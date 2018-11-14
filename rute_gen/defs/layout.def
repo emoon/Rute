@@ -114,14 +114,14 @@ struct Layout : Object, LayoutItem {
     /// {QStyle::}{PM_LayoutTopMargin}
     /// {QStyle::}{PM_LayoutRightMargin}
     /// {QStyle::}{PM_LayoutBottomMargin}
-    get_contents_margins(left: *i32, top: *i32, right: *i32, bottom: *i32),
-    ///
-    /// Returns the margins used around the layout.
-    ///
-    /// By default, QLayout uses the values provided by the style. On
-    /// most platforms, the margin is 11 pixels in all directions.
-    ///
-    /// **See also:** [`set_contents_margins()`]
+    //get_contents_margins(left: *i32, top: *i32, right: *i32, bottom: *i32),
+    //
+    // Returns the margins used around the layout.
+    //
+    // By default, QLayout uses the values provided by the style. On
+    // most platforms, the margin is 11 pixels in all directions.
+    //
+    // **See also:** [`set_contents_margins()`]
     contents_margins() -> Margins,
     ///
     /// Returns the layout's geometry() rectangle, but taking into account the
@@ -159,7 +159,7 @@ struct Layout : Object, LayoutItem {
     ///
     /// Returns the menu bar set for this layout, or 0 if no menu bar is
     /// set.
-    menu_bar() -> Widget?,
+    menu_bar() -> *Widget?,
     ///
     /// Returns the parent widget of this layout, or 0 if this layout is
     /// not installed on any widget.
@@ -168,7 +168,7 @@ struct Layout : Object, LayoutItem {
     /// widget of the parent layout.
     ///
     /// **See also:** [`parent()`]
-    parent_widget() -> Widget?,
+    parent_widget() -> *Widget?,
     ///
     //[event]
     invalidate(),
@@ -280,7 +280,7 @@ struct Layout : Object, LayoutItem {
     /// **See also:** [`count()`]
     /// [`take_at()`]
     //[event]
-    item_at(index: i32) -> LayoutItem?,
+    item_at(index: i32) -> *LayoutItem?,
     ///
     /// Must be implemented in subclasses to remove the layout item at *index* from the layout, and return the item. If there is no such
     /// item, the function must do nothing and return 0. Items are numbered
@@ -293,7 +293,7 @@ struct Layout : Object, LayoutItem {
     /// **See also:** [`item_at()`]
     /// [`count()`]
     //[event]
-    take_at(index: i32) -> LayoutItem?,
+    take_at(index: i32) -> *LayoutItem?,
     ///
     /// Searches for widget *widget* in this layout (not including child
     /// layouts).
@@ -332,14 +332,14 @@ struct Layout : Object, LayoutItem {
     /// custom layouts.
     ///
     /// **See also:** [`index_of()`]
-    replace_widget(from: *WidgetType, to: *WidgetType, options: Rute::FindChildOptions) -> LayoutItem?,
+    replace_widget(from: *WidgetType, to: *WidgetType, options: Rute::FindChildOptions) -> *LayoutItem?,
     total_height_for_width(w: i32) -> i32,
     total_minimum_size() -> Size,
     total_maximum_size() -> Size,
     total_size_hint() -> Size,
     ///
     //[event]
-    layout() -> Layout?,
+    layout() -> *Layout?,
     ///
     /// Enables this layout if *enable* is true, otherwise disables it.
     ///
@@ -359,10 +359,10 @@ struct Layout : Object, LayoutItem {
     /// Returns a size that satisfies all size constraints on *widget,*
     /// including heightForWidth() and that is as close as possible to *size.*
     [static] closest_acceptable_size(w: *WidgetType, s: &SizeType) -> Size,
-    widget_event(arg0: *EventType),
+    //widget_event(arg0: *EventType),
     ///
     //[event]
-    child_event(e: *ChildEventType),
+    //child_event(e: *ChildEventType),
     ///
     /// This function is called from `addLayout()` or `insertLayout()` functions in
     /// subclasses to add layout *l* as a sub-layout.
@@ -373,7 +373,7 @@ struct Layout : Object, LayoutItem {
     /// **See also:** [`BoxLayout::add_layout`]
     /// [`BoxLayout::insert_layout`]
     /// [`GridLayout::add_layout`]
-    add_child_layout(l: *LayoutType),
+    //add_child_layout(l: *LayoutType),
     ///
     /// This function is called from `addWidget()` functions in
     /// subclasses to add *w* as a managed widget of a layout.
@@ -381,8 +381,8 @@ struct Layout : Object, LayoutItem {
     /// If *w* is already managed by a layout, this function will give a warning
     /// and remove *w* from that layout. This function must therefore be
     /// called before adding *w* to the layout's data structure.
-    add_child_widget(w: *WidgetType),
-    adopt_layout(layout: *LayoutType) -> bool,
+    //add_child_widget(w: *WidgetType),
+    //adopt_layout(layout: *LayoutType) -> bool,
     ///
     /// Returns the rectangle that should be covered when the geometry of
     /// this layout is set to *r,* provided that this layout supports
@@ -390,7 +390,7 @@ struct Layout : Object, LayoutItem {
     ///
     /// The result is derived from sizeHint() and expanding(). It is never
     /// larger than *r.*
-    alignment_rect(arg0: &RectType) -> Rect,
+    //alignment_rect(arg0: &RectType) -> Rect,
 }
 
 [org_name(QLayout)]
