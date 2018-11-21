@@ -24,8 +24,6 @@
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct PixelFormat {
-    get(offset: PixelFormat::Field, width: PixelFormat::FieldWidth) -> u8,
-    [static] set(offset: PixelFormat::Field, width: PixelFormat::FieldWidth, value: u8) -> u64,
     ///
     /// Accessor function for getting the colorModel.
     color_model() -> PixelFormat::ColorModel,
@@ -105,70 +103,106 @@ struct PixelFormat {
 
 [org_name(QPixelFormat)]
 enum ColorModel {
+    /// The color model is RGB.
     RGB,
+    /// This is logically the opposite endian version of RGB. However, for ease of use it has its own model.
     BGR,
+    /// The color model uses a color palette.
     Indexed,
+    /// The color model is Grayscale.
     Grayscale,
+    /// The color model is CMYK.
     CMYK,
+    /// The color model is HSL.
     HSL,
+    /// The color model is HSV.
     HSV,
+    /// The color model is YUV.
     YUV,
+    /// There is no color model, only alpha is used.
     Alpha,
 }
 
 [org_name(QPixelFormat)]
 enum AlphaUsage {
+    /// The alpha channel is used.
     UsesAlpha,
+    /// The alpha channel is not used.
     IgnoresAlpha,
 }
 
 [org_name(QPixelFormat)]
 enum AlphaPosition {
+    /// The alpha channel will be put in front of the color channels . E.g. ARGB.
     AtBeginning,
+    /// The alpha channel will be put in the back of the color channels. E.g. RGBA.
     AtEnd,
 }
 
 [org_name(QPixelFormat)]
 enum AlphaPremultiplied {
+    /// The alpha channel is not multiplied into the color channels.
     NotPremultiplied,
+    /// The alpha channel is multiplied into the color channels.
     Premultiplied,
 }
 
 [org_name(QPixelFormat)]
 enum TypeInterpretation {
+    ///
     UnsignedInteger,
+    ///
     UnsignedShort,
+    ///
     UnsignedByte,
+    ///
     FloatingPoint,
 }
 
 [org_name(QPixelFormat)]
 enum YUVLayout {
+    ///
     YUV444,
+    ///
     YUV422,
+    ///
     YUV411,
+    ///
     YUV420P,
+    ///
     YUV420SP,
+    ///
     YV12,
+    ///
     UYVY,
+    ///
     YUYV,
+    ///
     NV12,
+    ///
     NV21,
+    ///
     IMC1,
+    ///
     IMC2,
+    ///
     IMC3,
+    ///
     IMC4,
+    ///
     Y8,
+    ///
     Y16,
 }
 
 [org_name(QPixelFormat)]
 enum ByteOrder {
+    /// The byte order is little endian.
     LittleEndian,
+    /// The byte order is big endian.
     BigEndian,
+    /// This enum will not be stored, but is converted in the constructor to the endian enum that matches the enum of the current system.
     CurrentSystemEndian,
 }
-
-
 
 // vim: syntax=rust expandtab ts=4 sw=4

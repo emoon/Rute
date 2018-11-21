@@ -144,7 +144,7 @@ struct Window : Object, Surface {
     /// Returns the parent window, if any.
     ///
     /// A window without a parent is known as a top level window.
-    parent(mode: Window::AncestorMode) -> Window?,
+    parent(mode: Window::AncestorMode) -> *Window?,
     ///
     /// Returns the parent window, if any.
     ///
@@ -158,7 +158,7 @@ struct Window : Object, Surface {
     ///
     /// A window without a parent is known as a top level window.
     [org_name(parent)]
-    parent_2() -> Window?,
+    parent_2() -> *Window?,
     ///
     /// Sets the *parent* Window. This will lead to the windowing system managing
     /// the clip of the window, so it will be clipped to the *parent* window.
@@ -276,7 +276,8 @@ struct Window : Object, Surface {
     ///
     /// **See also:** [`flags()`]
     /// [`set_flags()`]
-    type() -> Rute::WindowType,
+    [org_name(type)]
+    window_type() -> Rute::WindowType,
     ///
     /// The window title might appear in the title area of the window decorations,
     /// depending on the windowing system and the window flags. It might also
@@ -673,7 +674,7 @@ struct Window : Object, Surface {
     /// This signal is emitted when a window's *screen* changes, either
     /// by being set explicitly with setScreen(), or automatically when
     /// the window's screen is removed.
-    screen() -> Screen?,
+    screen() -> *Screen?,
     ///
     /// Sets the screen on which the window should be shown.
     ///
@@ -698,7 +699,7 @@ struct Window : Object, Surface {
     /// Returns the QObject that will be the final receiver of events tied focus, such
     /// as key events.
     //[event]
-    focus_object() -> Object?,
+    focus_object() -> *Object?,
     ///
     /// Translates the window coordinate *pos* to global screen
     /// coordinates. For example, `mapToGlobal(QPoint(0,0))` would give
@@ -758,7 +759,7 @@ struct Window : Object, Surface {
     ///
     /// **See also:** [`set_parent()`]
     /// **See also:** [`set_transient_parent()`]
-    [static] from_win_id(id: u64) -> Window?,
+    [static] from_win_id(id: u64) -> *Window?,
     ///
     /// Requests the window to be activated, i.e. receive keyboard focus.
     ///
@@ -1020,13 +1021,13 @@ struct Window : Object, Surface {
     /// The function is called when the window has requested being hidden in the
     /// windowing system.
     [event] hide_event(arg0: *HideEventType),
-    ///
-    /// Override this to handle any event ( *ev)* sent to the window.
-    /// Return `true` if the event was recognized and processed.
-    ///
-    /// Remember to call the base class version if you wish for mouse events,
-    /// key events, resize events, etc to be dispatched as usual.
-    [event] event(arg0: *EventType) -> bool,
+    //
+    // Override this to handle any event ( *ev)* sent to the window.
+    // Return `true` if the event was recognized and processed.
+    //
+    // Remember to call the base class version if you wish for mouse events,
+    // key events, resize events, etc to be dispatched as usual.
+    //[event] event(arg0: *EventType) -> bool,
     ///
     /// Override this to handle key press events ( *ev).*
     ///

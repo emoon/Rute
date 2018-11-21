@@ -106,11 +106,11 @@ struct TouchEvent : InputEvent {
     /// global-local mapping on data like rawScreenPositions() which,
     /// for performance reasons, only stores the global positions in the
     /// touch event.
-    window() -> Window?,
+    window() -> *Window?,
     ///
     /// Returns the target object within the window on which the event occurred.
     /// This is typically a QWidget or a QQuickItem. May be 0 when no specific target is available.
-    target() -> Object?,
+    target() -> *Object?,
     ///
     /// Returns a bitwise OR of all the touch point states for this event.
     touch_point_states() -> Rute::TouchPointStates,

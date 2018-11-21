@@ -138,10 +138,10 @@
 /// **Note**: When using the native X11 graphics system, the pixmap
 /// becomes invalid when the QApplication instance is destroyed.
 ///
-/// **See also:** QBitmap
-/// QImage
-/// QImageReader
-/// QImageWriter
+/// **See also:** [`Bitmap`]
+/// [`Image`]
+/// [`ImageReader`]
+/// [`ImageWriter`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -156,24 +156,24 @@ struct Pixmap : PaintDevice {
     /// A null pixmap has zero width, zero height and no contents. You
     /// cannot draw in a null pixmap.
     is_null() -> bool,
-    [event] dev_type() -> i32,
+    //[event] dev_type() -> i32,
     ///
     /// Returns the width of the pixmap.
     ///
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
     width() -> i32,
     ///
     /// Returns the height of the pixmap.
     ///
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
     height() -> i32,
     ///
     /// Returns the size of the pixmap.
     ///
-    /// **See also:** width()
-    /// height()
+    /// **See also:** [`width()`]
+    /// [`height()`]
     /// {QPixmap#Pixmap Information}{Pixmap
     /// Information}
     size() -> Size,
@@ -188,7 +188,7 @@ struct Pixmap : PaintDevice {
     /// The pixmap depth is also called bits per pixel (bpp) or bit planes
     /// of a pixmap. A null pixmap has depth 0.
     ///
-    /// **See also:** defaultDepth()
+    /// **See also:** [`default_depth()`]
     /// {QPixmap#Pixmap Information}{Pixmap
     /// Information}
     depth() -> i32,
@@ -199,8 +199,8 @@ struct Pixmap : PaintDevice {
     ///
     /// **Note**: QGuiApplication must be created before calling this function.
     ///
-    /// **See also:** depth()
-    /// QColormap::depth()
+    /// **See also:** [`depth()`]
+    /// [`Colormap::depth`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
     ///
     [static] default_depth() -> i32,
@@ -215,7 +215,7 @@ struct Pixmap : PaintDevice {
     /// being painted on.
     ///
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fill_by_color_type(fill_color: &ColorType),
+    fill(fill_color: &ColorType),
     ///
     /// Use QPainter or the fill(QColor) overload instead.
     ///
@@ -227,7 +227,8 @@ struct Pixmap : PaintDevice {
     /// being painted on.
     ///
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fill_by_device(device: *PaintDeviceType, ofs: &PointType),
+    [org_name(fill)]
+    fill_2(device: *PaintDeviceType, ofs: &PointType),
     ///
     /// Use QPainter or the fill(QColor) overload instead.
     ///
@@ -239,14 +240,15 @@ struct Pixmap : PaintDevice {
     /// being painted on.
     ///
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fill_by_device_offset(device: *PaintDeviceType, xofs: i32, yofs: i32),
+    [org_name(fill)]
+    fill_3(device: *PaintDeviceType, xofs: i32, yofs: i32),
     ///
     /// Extracts a bitmap mask from the pixmap's alpha channel.
     ///
     /// **Warning**: This is potentially an expensive operation. The mask of
     /// the pixmap is extracted dynamically from the pixeldata.
     ///
-    /// **See also:** setMask()
+    /// **See also:** [`set_mask()`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
     mask() -> Bitmap,
     ///
@@ -263,9 +265,9 @@ struct Pixmap : PaintDevice {
     ///
     /// **Warning**: This is potentially an expensive operation.
     ///
-    /// **See also:** mask()
+    /// **See also:** [`mask()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    /// QBitmap
+    /// [`Bitmap`]
     set_mask(arg0: &BitmapType),
     ///
     /// Returns the device pixel ratio for the pixmap. This is the
@@ -276,8 +278,8 @@ struct Pixmap : PaintDevice {
     ///
     /// The default value is 1.0.
     ///
-    /// **See also:** setDevicePixelRatio()
-    /// QImageReader
+    /// **See also:** [`set_device_pixel_ratio()`]
+    /// [`ImageReader`]
     device_pixel_ratio() -> f32,
     ///
     /// Sets the device pixel ratio for the pixmap. This is the
@@ -299,25 +301,25 @@ struct Pixmap : PaintDevice {
     /// (see [Drawing High Resolution Versions of Pixmaps and Images](Drawing%20High%20Resolution%20Versions%20of%20Pixmaps%20and%20Images)
     /// ).
     ///
-    /// **See also:** devicePixelRatio()
+    /// **See also:** [`device_pixel_ratio()`]
     set_device_pixel_ratio(scale_factor: f32),
     ///
     /// Returns `true` if this pixmap has an alpha channel, *or* has a
     /// mask, otherwise returns `false.`
     ///
-    /// **See also:** hasAlphaChannel()
-    /// mask()
+    /// **See also:** [`has_alpha_channel()`]
+    /// [`mask()`]
     ///
     /// Returns `true` if the pixmap has a format that respects the alpha
     /// channel, otherwise returns `false.`
     ///
-    /// **See also:** hasAlpha()
+    /// **See also:** [`has_alpha()`]
     has_alpha() -> bool,
     ///
     /// Returns `true` if the pixmap has a format that respects the alpha
     /// channel, otherwise returns `false.`
     ///
-    /// **See also:** hasAlpha()
+    /// **See also:** [`has_alpha()`]
     has_alpha_channel() -> bool,
     ///
     /// Creates and returns a heuristic mask for this pixmap.
@@ -334,8 +336,8 @@ struct Pixmap : PaintDevice {
     /// This function is slow because it involves converting to/from a
     /// QImage, and non-trivial computations.
     ///
-    /// **See also:** QImage::createHeuristicMask()
-    /// createMaskFromColor()
+    /// **See also:** [`Image::create_heuristic_mask`]
+    /// [`create_mask_from_color()`]
     create_heuristic_mask(clip_tight: bool) -> Bitmap,
     ///
     /// Creates and returns a mask for this pixmap based on the given *maskColor.* If the *mode* is Qt::MaskInColor, all pixels matching the
@@ -345,11 +347,29 @@ struct Pixmap : PaintDevice {
     /// This function is slow because it involves converting to/from a
     /// QImage.
     ///
-    /// **See also:** createHeuristicMask()
-    /// QImage::createMaskFromColor()
+    /// **See also:** [`create_heuristic_mask()`]
+    /// [`Image::create_mask_from_color`]
     create_mask_from_color(mask_color: &ColorType, mode: Rute::MaskMode) -> Bitmap,
     ///
-    /// The [`grab_window()`] function grabs pixels from the screen, not from
+    /// width, int height)
+    ///
+    /// Creates and returns a pixmap constructed by grabbing the contents
+    /// of the given *window* restricted by QRect( *x,* *y,* *width,*
+    /// *height).*
+    ///
+    /// The arguments ( *x* , *y* ) specify the offset in the window,
+    /// whereas ( *width* , *height* ) specify the area to be copied. If
+    /// *width* is negative, the function copies everything to the right
+    /// border of the window. If *height* is negative, the function
+    /// copies everything to the bottom of the window.
+    ///
+    /// The window system identifier ( `WId)` can be retrieved using the
+    /// QWidget::winId() function. The rationale for using a window
+    /// identifier and not a QWidget, is to enable grabbing of windows
+    /// that are not part of the application, window system frames, and so
+    /// on.
+    ///
+    /// The grabWindow() function grabs pixels from the screen, not from
     /// the window, i.e. if there is another window partially or entirely
     /// over the one you grab, you get pixels from the overlying window,
     /// too. The mouse cursor is generally not grabbed.
@@ -372,18 +392,20 @@ struct Pixmap : PaintDevice {
     /// are local to a screen. Use QScreen::grabWindow() instead.
     ///
     /// **See also:** [`grab_widget()`]
-    /// [`Screen`]
+    /// {Screenshot Example}
+    /// **See also:** [`Screen`]
     [static] grab_window(arg0: u64, x: i32, y: i32, w: i32, h: i32) -> Pixmap,
     ///
     /// Use QWidget::grab() instead.
     ///
     /// Use QWidget::grab() instead.
-    [static] grab_widget_by_rect(widget: *ObjectType, rect: &RectType) -> Pixmap,
+    [static] grab_widget(widget: *ObjectType, rect: &RectType) -> Pixmap,
     ///
     /// Use QWidget::grab() instead.
     ///
     /// Use QWidget::grab() instead.
-    [static] grab_widget(widget: *ObjectType, x: i32, y: i32, w: i32, h: i32) -> Pixmap,
+    [org_name(grabWidget)]
+    [static] grab_widget_2(widget: *ObjectType, x: i32, y: i32, w: i32, h: i32) -> Pixmap,
     ///
     /// Qt::AspectRatioMode aspectRatioMode, Qt::TransformationMode
     /// transformMode) const
@@ -415,7 +437,7 @@ struct Pixmap : PaintDevice {
     /// the case when the painter is for instance based on OpenGL or when
     /// the scale factor changes rapidly.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     ///
@@ -429,7 +451,7 @@ struct Pixmap : PaintDevice {
     ///
     /// If *width* is 0 or negative, a null pixmap is returned.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     ///
@@ -442,7 +464,7 @@ struct Pixmap : PaintDevice {
     ///
     /// If *height* is 0 or negative, a null pixmap is returned.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     scaled(w: i32, h: i32, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Pixmap,
@@ -477,7 +499,7 @@ struct Pixmap : PaintDevice {
     /// the case when the painter is for instance based on OpenGL or when
     /// the scale factor changes rapidly.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     ///
@@ -491,7 +513,7 @@ struct Pixmap : PaintDevice {
     ///
     /// If *width* is 0 or negative, a null pixmap is returned.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     ///
@@ -504,10 +526,11 @@ struct Pixmap : PaintDevice {
     ///
     /// If *height* is 0 or negative, a null pixmap is returned.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
-    scaled_by_size(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Pixmap,
+    [org_name(scaled)]
+    scaled_2(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Pixmap,
     ///
     /// mode) const
     ///
@@ -518,7 +541,7 @@ struct Pixmap : PaintDevice {
     ///
     /// If *width* is 0 or negative, a null pixmap is returned.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     scaled_to_width(w: i32, mode: Rute::TransformationMode) -> Pixmap,
@@ -532,7 +555,7 @@ struct Pixmap : PaintDevice {
     ///
     /// If *height* is 0 or negative, a null pixmap is returned.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     scaled_to_height(h: i32, mode: Rute::TransformationMode) -> Pixmap,
@@ -550,22 +573,9 @@ struct Pixmap : PaintDevice {
     /// Note that for the moment, alpha masks on monochrome images are
     /// ignored.
     ///
-    /// **See also:** fromImage()
+    /// **See also:** [`from_image()`]
     /// {QImage#Image Formats}{Image Formats}
     to_image() -> Image,
-    ///
-    /// Create a QPixmap from an image read directly from an *imageReader.*
-    /// The *flags* argument is a bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
-    ///
-    /// Passing 0 for *flags* sets all the default options.
-    ///
-    /// On some systems, reading an image directly to QPixmap can use less memory than
-    /// reading a QImage to convert it to QPixmap.
-    ///
-    /// **See also:** fromImage()
-    /// toImage()
-    /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-    [static] from_image_reader(image_reader: *ImageReaderType, flags: Rute::ImageConversionFlags) -> Pixmap,
     ///
     /// Converts the given *image* to a pixmap using the specified *flags* to control the conversion. The *flags* argument is a
     /// bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
@@ -576,8 +586,8 @@ struct Pixmap : PaintDevice {
     /// the color table. If this is too expensive an operation, you can
     /// use QBitmap::fromImage() instead.
     ///
-    /// **See also:** fromImageReader()
-    /// toImage()
+    /// **See also:** [`from_image_reader()`]
+    /// [`to_image()`]
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
     ///
     /// **Overloads**
@@ -591,114 +601,177 @@ struct Pixmap : PaintDevice {
     /// On some systems, reading an image directly to QPixmap can use less memory than
     /// reading a QImage to convert it to QPixmap.
     ///
-    /// **See also:** fromImage()
-    /// toImage()
+    /// **See also:** [`from_image()`]
+    /// [`to_image()`]
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
     [static] from_image(image: &ImageType, flags: Rute::ImageConversionFlags) -> Pixmap,
     ///
-    /// Loads a pixmap from the file with the given *fileName.* Returns
-    /// true if the pixmap was successfully loaded; otherwise invalidates
-    /// the pixmap and returns `false.`
+    /// Create a QPixmap from an image read directly from an *imageReader.*
+    /// The *flags* argument is a bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
     ///
-    /// The loader attempts to read the pixmap using the specified *format.* If the *format* is not specified (which is the default),
-    /// the loader probes the file for a header to guess the file format.
+    /// Passing 0 for *flags* sets all the default options.
     ///
-    /// The file name can either refer to an actual file on disk or to one
-    /// of the application's embedded resources. See the
-    /// [Resource System](resources.html)
-    /// overview for details on how to
-    /// embed pixmaps and other resource files in the application's
-    /// executable.
+    /// On some systems, reading an image directly to QPixmap can use less memory than
+    /// reading a QImage to convert it to QPixmap.
     ///
-    /// If the data needs to be modified to fit in a lower-resolution
-    /// result (e.g. converting from 32-bit to 8-bit), use the *flags* to
-    /// control the conversion.
+    /// **See also:** [`from_image()`]
+    /// [`to_image()`]
+    /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
+    [static] from_image_reader(image_reader: *ImageReaderType, flags: Rute::ImageConversionFlags) -> Pixmap,
     ///
-    /// Note that QPixmaps are automatically added to the QPixmapCache
-    /// when loaded from a file; the key used is internal and can not
-    /// be acquired.
+    /// Converts the given *image* to a pixmap using the specified *flags* to control the conversion. The *flags* argument is a
+    /// bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
+    /// . Passing 0 for *flags* sets all the default options.
     ///
-    /// **See also:** loadFromData()
-    /// {QPixmap#Reading and Writing Image
-    /// Files}{Reading and Writing Image Files}
+    /// In case of monochrome and 8-bit images, the image is first
+    /// converted to a 32-bit pixmap and then filled with the colors in
+    /// the color table. If this is too expensive an operation, you can
+    /// use QBitmap::fromImage() instead.
     ///
-    /// Loads a pixmap from the *len* first bytes of the given binary *data.* Returns `true` if the pixmap was loaded successfully;
-    /// otherwise invalidates the pixmap and returns `false.`
-    ///
-    /// The loader attempts to read the pixmap using the specified *format.* If the *format* is not specified (which is the default),
-    /// the loader probes the file for a header to guess the file format.
-    ///
-    /// If the data needs to be modified to fit in a lower-resolution
-    /// result (e.g. converting from 32-bit to 8-bit), use the *flags* to
-    /// control the conversion.
-    ///
-    /// **See also:** load()
-    /// {QPixmap#Reading and Writing Image Files}{Reading and
-    /// Writing Image Files}
+    /// **See also:** [`from_image_reader()`]
+    /// [`to_image()`]
+    /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
     ///
     /// **Overloads**
-    /// Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
-    load(file_name: String, format: *char, flags: Rute::ImageConversionFlags) -> bool,
+    /// Converts the given *image* to a pixmap without copying if possible.
     ///
-    /// Loads a pixmap from the *len* first bytes of the given binary *data.* Returns `true` if the pixmap was loaded successfully;
-    /// otherwise invalidates the pixmap and returns `false.`
+    /// Create a QPixmap from an image read directly from an *imageReader.*
+    /// The *flags* argument is a bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
     ///
-    /// The loader attempts to read the pixmap using the specified *format.* If the *format* is not specified (which is the default),
-    /// the loader probes the file for a header to guess the file format.
+    /// Passing 0 for *flags* sets all the default options.
     ///
-    /// If the data needs to be modified to fit in a lower-resolution
-    /// result (e.g. converting from 32-bit to 8-bit), use the *flags* to
-    /// control the conversion.
+    /// On some systems, reading an image directly to QPixmap can use less memory than
+    /// reading a QImage to convert it to QPixmap.
     ///
-    /// **See also:** load()
-    /// {QPixmap#Reading and Writing Image Files}{Reading and
-    /// Writing Image Files}
-    ///
-    /// **Overloads**
-    /// Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
-    load_from_data(buf: *u8, len: uint, format: *char, flags: Rute::ImageConversionFlags) -> bool,
-    ///
-    /// Saves the pixmap to the file with the given *fileName* using the
-    /// specified image file *format* and *quality* factor. Returns `true`
-    /// if successful; otherwise returns `false.`
-    ///
-    /// The *quality* factor must be in the range [0,100] or -1. Specify
-    /// 0 to obtain small compressed files, 100 for large uncompressed
-    /// files, and -1 to use the default settings.
-    ///
-    /// If *format* is 0, an image format will be chosen from *fileName's*
-    /// suffix.
-    ///
-    /// **See also:** {QPixmap#Reading and Writing Image Files}{Reading and Writing
-    /// Image Files}
-    ///
-    /// **Overloads**
-    /// This function writes a QPixmap to the given *device* using the
-    /// specified image file *format* and *quality* factor. This can be
-    /// used, for example, to save a pixmap directly into a QByteArray:
-    ///
-    save(file_name: String, format: *char, quality: i32) -> bool,
-    ///
-    /// Saves the pixmap to the file with the given *fileName* using the
-    /// specified image file *format* and *quality* factor. Returns `true`
-    /// if successful; otherwise returns `false.`
-    ///
-    /// The *quality* factor must be in the range [0,100] or -1. Specify
-    /// 0 to obtain small compressed files, 100 for large uncompressed
-    /// files, and -1 to use the default settings.
-    ///
-    /// If *format* is 0, an image format will be chosen from *fileName's*
-    /// suffix.
-    ///
-    /// **See also:** {QPixmap#Reading and Writing Image Files}{Reading and Writing
-    /// Image Files}
-    ///
-    /// **Overloads**
-    /// This function writes a QPixmap to the given *device* using the
-    /// specified image file *format* and *quality* factor. This can be
-    /// used, for example, to save a pixmap directly into a QByteArray:
-    ///
-    save_by_io_device(device: *IODeviceType, format: *char, quality: i32) -> bool,
+    /// **See also:** [`from_image()`]
+    /// [`to_image()`]
+    /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
+    [org_name(fromImage)]
+    [static] from_image_2(image: &ImageType, flags: Rute::ImageConversionFlags) -> Pixmap,
+    //
+    // Loads a pixmap from the file with the given *fileName.* Returns
+    // true if the pixmap was successfully loaded; otherwise invalidates
+    // the pixmap and returns `false.`
+    //
+    // The loader attempts to read the pixmap using the specified *format.* If the *format* is not specified (which is the default),
+    // the loader probes the file for a header to guess the file format.
+    //
+    // The file name can either refer to an actual file on disk or to one
+    // of the application's embedded resources. See the
+    // [Resource System](resources.html)
+    // overview for details on how to
+    // embed pixmaps and other resource files in the application's
+    // executable.
+    //
+    // If the data needs to be modified to fit in a lower-resolution
+    // result (e.g. converting from 32-bit to 8-bit), use the *flags* to
+    // control the conversion.
+    //
+    // Note that QPixmaps are automatically added to the QPixmapCache
+    // when loaded from a file; the key used is internal and can not
+    // be acquired.
+    //
+    // **See also:** [`load_from_data()`]
+    // {QPixmap#Reading and Writing Image
+    // Files}{Reading and Writing Image Files}
+    //
+    // Loads a pixmap from the *len* first bytes of the given binary *data.* Returns `true` if the pixmap was loaded successfully;
+    // otherwise invalidates the pixmap and returns `false.`
+    //
+    // The loader attempts to read the pixmap using the specified *format.* If the *format* is not specified (which is the default),
+    // the loader probes the file for a header to guess the file format.
+    //
+    // If the data needs to be modified to fit in a lower-resolution
+    // result (e.g. converting from 32-bit to 8-bit), use the *flags* to
+    // control the conversion.
+    //
+    // **See also:** [`load()`]
+    // {QPixmap#Reading and Writing Image Files}{Reading and
+    // Writing Image Files}
+    //
+    // **Overloads**
+    // Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
+    //load(file_name: String, format: *char, flags: Rute::ImageConversionFlags) -> bool,
+    //
+    // Loads a pixmap from the *len* first bytes of the given binary *data.* Returns `true` if the pixmap was loaded successfully;
+    // otherwise invalidates the pixmap and returns `false.`
+    //
+    // The loader attempts to read the pixmap using the specified *format.* If the *format* is not specified (which is the default),
+    // the loader probes the file for a header to guess the file format.
+    //
+    // If the data needs to be modified to fit in a lower-resolution
+    // result (e.g. converting from 32-bit to 8-bit), use the *flags* to
+    // control the conversion.
+    //
+    // **See also:** [`load()`]
+    // {QPixmap#Reading and Writing Image Files}{Reading and
+    // Writing Image Files}
+    //
+    // **Overloads**
+    // Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
+    //load_from_data(buf: *uchar, len: uint, format: *char, flags: Rute::ImageConversionFlags) -> bool,
+    //
+    // Loads a pixmap from the *len* first bytes of the given binary *data.* Returns `true` if the pixmap was loaded successfully;
+    // otherwise invalidates the pixmap and returns `false.`
+    //
+    // The loader attempts to read the pixmap using the specified *format.* If the *format* is not specified (which is the default),
+    // the loader probes the file for a header to guess the file format.
+    //
+    // If the data needs to be modified to fit in a lower-resolution
+    // result (e.g. converting from 32-bit to 8-bit), use the *flags* to
+    // control the conversion.
+    //
+    // **See also:** [`load()`]
+    // {QPixmap#Reading and Writing Image Files}{Reading and
+    // Writing Image Files}
+    //
+    // **Overloads**
+    // Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
+    //[org_name(loadFromData)]
+    //load_from_data_2(data: &ByteArrayType, format: *char, flags: Rute::ImageConversionFlags) -> bool,
+    //
+    // Saves the pixmap to the file with the given *fileName* using the
+    // specified image file *format* and *quality* factor. Returns `true`
+    // if successful; otherwise returns `false.`
+    //
+    // The *quality* factor must be in the range [0,100] or -1. Specify
+    // 0 to obtain small compressed files, 100 for large uncompressed
+    // files, and -1 to use the default settings.
+    //
+    // If *format* is 0, an image format will be chosen from *fileName's*
+    // suffix.
+    //
+    // **See also:** {QPixmap#Reading and Writing Image Files}{Reading and Writing
+    // Image Files}
+    //
+    // **Overloads**
+    // This function writes a QPixmap to the given *device* using the
+    // specified image file *format* and *quality* factor. This can be
+    // used, for example, to save a pixmap directly into a QByteArray:
+    //
+    //save(file_name: String, format: *char, quality: i32) -> bool,
+    //
+    // Saves the pixmap to the file with the given *fileName* using the
+    // specified image file *format* and *quality* factor. Returns `true`
+    // if successful; otherwise returns `false.`
+    //
+    // The *quality* factor must be in the range [0,100] or -1. Specify
+    // 0 to obtain small compressed files, 100 for large uncompressed
+    // files, and -1 to use the default settings.
+    //
+    // If *format* is 0, an image format will be chosen from *fileName's*
+    // suffix.
+    //
+    // **See also:** {QPixmap#Reading and Writing Image Files}{Reading and Writing
+    // Image Files}
+    //
+    // **Overloads**
+    // This function writes a QPixmap to the given *device* using the
+    // specified image file *format* and *quality* factor. This can be
+    // used, for example, to save a pixmap directly into a QByteArray:
+    //
+    //[org_name(save)]
+    //save_2(device: *IODeviceType, format: *char, quality: i32) -> bool,
     ///
     /// Replaces this pixmap's data with the given *image* using the
     /// specified *flags* to control the conversion. The *flags*
@@ -711,7 +784,7 @@ struct Pixmap : PaintDevice {
     /// It has been promoted to official API status in 4.7 to support updating
     /// the pixmap's image without creating a new QPixmap as fromImage() would.
     ///
-    /// **See also:** fromImage()
+    /// **See also:** [`from_image()`]
     convert_from_image(img: &ImageType, flags: Rute::ImageConversionFlags) -> bool,
     ///
     /// **Overloads**
@@ -725,8 +798,8 @@ struct Pixmap : PaintDevice {
     ///
     /// If the given *rectangle* is empty, the whole image is copied.
     ///
-    /// **See also:** operator=()
-    /// QPixmap()
+    /// **See also:** [`operator()`]
+    /// [`q_pixmap()`]
     /// {QPixmap#Pixmap
     /// Transformations}{Pixmap Transformations}
     copy(x: i32, y: i32, width: i32, height: i32) -> Pixmap,
@@ -742,17 +815,18 @@ struct Pixmap : PaintDevice {
     ///
     /// If the given *rectangle* is empty, the whole image is copied.
     ///
-    /// **See also:** operator=()
-    /// QPixmap()
+    /// **See also:** [`operator()`]
+    /// [`q_pixmap()`]
     /// {QPixmap#Pixmap
     /// Transformations}{Pixmap Transformations}
-    copy_by_rect(rect: &RectType) -> Pixmap,
+    [org_name(copy)]
+    copy_2(rect: &RectType) -> Pixmap,
     ///
     /// This convenience function is equivalent to calling QPixmap::scroll( *dx,*
     /// *dy,* QRect( *x,* *y,* *width,* *height),* *exposed).*
     ///
-    /// **See also:** QWidget::scroll()
-    /// QGraphicsItem::scroll()
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
     ///
     /// Scrolls the area *rect* of this pixmap by ( *dx,* *dy).* The exposed
     /// region is left unchanged. You can optionally pass a pointer to an empty
@@ -760,15 +834,15 @@ struct Pixmap : PaintDevice {
     ///
     /// You cannot scroll while there is an active painter on the pixmap.
     ///
-    /// **See also:** QWidget::scroll()
-    /// QGraphicsItem::scroll()
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
     scroll(dx: i32, dy: i32, x: i32, y: i32, width: i32, height: i32, exposed: *RegionType),
     ///
     /// This convenience function is equivalent to calling QPixmap::scroll( *dx,*
     /// *dy,* QRect( *x,* *y,* *width,* *height),* *exposed).*
     ///
-    /// **See also:** QWidget::scroll()
-    /// QGraphicsItem::scroll()
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
     ///
     /// Scrolls the area *rect* of this pixmap by ( *dx,* *dy).* The exposed
     /// region is left unchanged. You can optionally pass a pointer to an empty
@@ -776,9 +850,10 @@ struct Pixmap : PaintDevice {
     ///
     /// You cannot scroll while there is an active painter on the pixmap.
     ///
-    /// **See also:** QWidget::scroll()
-    /// QGraphicsItem::scroll()
-    scroll_by_rect(dx: i32, dy: i32, rect: &RectType, exposed: *RegionType),
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
+    [org_name(scroll)]
+    scroll_2(dx: i32, dy: i32, rect: &RectType, exposed: *RegionType),
     ///
     /// Returns a number that identifies this QPixmap. Distinct QPixmap
     /// objects can only have the same cache key if they refer to the same
@@ -808,8 +883,8 @@ struct Pixmap : PaintDevice {
     /// Returns `true` if this is a QBitmap; otherwise returns `false.`
     is_q_bitmap() -> bool,
     //[event]
-    paint_engine() -> PaintEngine?,
-    [static] from_image_in_place(image: &ImageType, flags: Rute::ImageConversionFlags) -> Pixmap,
+    paint_engine() -> *PaintEngine?,
+    //[static] from_image_in_place(image: &ImageType, flags: Rute::ImageConversionFlags) -> Pixmap,
     //handle() -> PlatformPixmap?,
 }
 

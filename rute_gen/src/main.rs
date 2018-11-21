@@ -205,7 +205,7 @@ fn main() {
             run_clang_format(&signal_wrappers);
             run_clang_format(&enum_mapping);
             run_clang_format(&enum_mapping_header);
-            run_clang_format(&qt_bulk_cpp);
+            //run_clang_format(&qt_bulk_cpp);
             run_clang_format(&qt_rute_cpp);
             run_clang_format(&main_ffi_header);
         }

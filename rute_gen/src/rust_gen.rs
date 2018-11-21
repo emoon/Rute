@@ -136,10 +136,7 @@ impl TypeHandlerTrait for TraitTypeHandler {
             format!("&{}", arg_name).into(),
             format!(
                 "let {} = {}::new_from_temporary(*({} as *const RU{}));",
-                arg_name,
-                type_name,
-                arg.name,
-                type_name
+                arg_name, type_name, arg.name, type_name
             ).into(),
         )
     }
@@ -156,10 +153,7 @@ struct EnumTypeHandler;
 ///
 impl TypeHandlerTrait for EnumTypeHandler {
     fn gen_body_return(&self, varible: &Variable) -> Cow<str> {
-        format!(
-            "{{ transmute::<i32, {}>(ret_val) }}",
-            varible.enum_sub_type
-        ).into()
+        format!("{{ transmute::<i32, {}>(ret_val) }}", varible.enum_sub_type).into()
     }
 
     fn gen_body_to_ffi(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
@@ -461,7 +455,7 @@ impl RustGenerator {
             .iter()
             .filter(|f| f.func_type == FunctionType::Signal || f.func_type == FunctionType::Event)
             .try_for_each(|func| {
-				f.write_all(func.doc_comments.as_bytes())?;
+                f.write_all(func.doc_comments.as_bytes())?;
                 let res =
                     self.generate_callback(&func, &sdef.name, &self.callback_trampoline_template);
                 f.write_all(res.as_bytes())
@@ -591,9 +585,12 @@ impl RustGenerator {
             }
         }
 
-        template_data.insert("event_name".into(), Value::scalar(func.get_name_skip_event().to_owned()));
+        template_data.insert(
+            "event_name".into(),
+            Value::scalar(func.get_name_skip_event().to_owned()),
+        );
         template_data.insert("function_arguments".into(), Value::scalar(ffi_func_def));
-        template_data.insert("function_params".into(), Value::scalar(func_args ));
+        template_data.insert("function_params".into(), Value::scalar(func_args));
         template_data.insert(
             "function_arg_types".into(),
             Value::scalar(function_arg_types),
@@ -827,7 +824,7 @@ impl RustGenerator {
             .iter()
             .filter(|f| f.func_type == func_type)
             .for_each(|f| {
-            	dest.write_all(f.doc_comments.as_bytes()).unwrap();
+                dest.write_all(f.doc_comments.as_bytes()).unwrap();
                 let res = self.generate_function(&f, name, &sdef.name);
                 dest.write_all(res.as_bytes()).unwrap();
             });
@@ -838,7 +835,7 @@ impl RustGenerator {
                 .iter()
                 .filter(|f| f.func_type == FunctionType::Signal)
                 .try_for_each(|f| {
-            		dest.write_all(f.doc_comments.as_bytes()).unwrap();
+                    dest.write_all(f.doc_comments.as_bytes()).unwrap();
                     let res = self.generate_callback(&f, name, &self.callback_template);
                     dest.write_all(res.as_bytes())
                 })?;
@@ -935,6 +932,42 @@ impl RustGenerator {
             })
     }
 
+    fn gen_mod_name_enum(var: &Variable) -> String {
+        if arg.type_name == "Rute" {
+            format!("use auto::rute_enums::{};", arg.enum_sub_type)
+        } else {
+            format!("use auto::{}::{};", arg.type_name.to_snake_case(), arg.enum_sub_type)
+        }
+    }
+
+    fn gen_mod_name(var: &Variable) -> String {
+        match v.vtype {
+            VariableType::Enum => Self::gen_mod_name_enum(var),
+            _ => "".to_owned(),
+        }
+    }
+
+    ///
+    /// Gather up all the types we need and import them
+    ///
+    fn generate_mod_usage<W: Write>(&self, dest: &mut W, api_def: &ApiDef) -> io::Result<()> {
+        let mut lookup = BTreeMap::new();
+
+        for func in api_defs
+            .iter_mut()
+            .flat_map(|api| api.class_structs.iter())
+            .flat_map(|s| s.functions.iter())
+        {
+            for arg in &func.function_args {
+                lookup.insert(Self::gen_mod_name(&arg), ());
+            }
+
+            if let Some(ref var) = func.return_arg {
+                lookup.insert(Self::gen_mod_name(&var), ());
+            }
+        }
+    }
+
     pub fn generate(&self, filename: &str, api_def: &ApiDef) -> io::Result<()> {
         let mut dest = BufWriter::new(File::create(filename)?);
 
@@ -942,7 +975,7 @@ impl RustGenerator {
         dest.write_all(HEADER)?;
 
         // As we may need types/enums/etc from other types we need to generate that
-        //self.generate_mod_usage(&mut f, api_def);
+        self.generate_mod_usage(&mut f, api_def);
 
         // write all the structs
         self.generate_structs(&mut dest, api_def)?;

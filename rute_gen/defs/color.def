@@ -1569,7 +1569,9 @@ enum Spec {
 
 [org_name(QColor)]
 enum NameFormat {
+    /// #RRGGBB A "#" character followed by three two-digit hexadecimal numbers (i.e. `#RRGGBB` ).
     HexRgb,
+    /// #AARRGGBB A "#" character followed by four two-digit hexadecimal numbers (i.e. `#AARRGGBB` ).
     HexArgb,
 }
 

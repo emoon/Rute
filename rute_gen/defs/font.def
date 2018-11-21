@@ -494,7 +494,7 @@ struct Font {
     /// **See also:** [`letter_spacing()`]
     /// [`letter_spacing_type()`]
     /// [`set_word_spacing()`]
-    set_letter_spacing(type: Font::SpacingType, spacing: f32),
+    set_letter_spacing(stype: Font::SpacingType, spacing: f32),
     ///
     /// Returns the word spacing for the font.
     ///

@@ -7079,7 +7079,7 @@ struct Painter {
     ///
     /// **See also:** [`set_redirected()`]
     /// [`restore_redirected()`]
-    [static] redirected(device: *PaintDeviceType, offset: *PointType) -> PaintDevice?,
+    [static] redirected(device: *PaintDeviceType, offset: *PointType) -> *PaintDevice?,
     ///
     /// Using QWidget::render() obsoletes the use of this function.
     ///

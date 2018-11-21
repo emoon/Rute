@@ -1198,10 +1198,6 @@ impl QtGenerator {
             let enum_name = enum_def.name.to_snake_case();
             let mut template_data = Object::new();
 
-            if enum_name.contains("image") {
-                println!("\ne num name {} {}\n", enum_def.name, enum_name);
-            }
-
             template_data.insert("enum_name".into(), Value::scalar(enum_name));
             template_data.insert(
                 "qt_class".into(),

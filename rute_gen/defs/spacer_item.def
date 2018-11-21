@@ -58,7 +58,7 @@ struct SpacerItem : LayoutItem {
     ///
     /// Returns a pointer to this object.
     //[event]
-    spacer_item() -> SpacerItem?,
+    spacer_item() -> *SpacerItem?,
     ///
     /// Returns the size policy of this item.
     size_policy() -> SizePolicy,

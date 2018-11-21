@@ -42,12 +42,12 @@ struct BackingStore {
     ///
     /// You should call this function after ending painting with endPaint().
     ///
-    /// **See also:** QWindow::transientParent()
+    /// **See also:** [`Window::transient_parent`]
     flush(region: &RegionType, window: *WindowType, offset: &PointType),
     ///
     /// Sets the size of the window surface to *size.*
     ///
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     resize(size: &SizeType),
     ///
     /// Returns the current size of the window surface.
@@ -64,8 +64,8 @@ struct BackingStore {
     /// You should call this function before using the paintDevice() to
     /// paint.
     ///
-    /// **See also:** endPaint()
-    /// paintDevice()
+    /// **See also:** [`end_paint()`]
+    /// [`paint_device()`]
     begin_paint(arg0: &RegionType),
     ///
     /// Ends painting.
@@ -73,8 +73,8 @@ struct BackingStore {
     /// You should call this function after painting with the paintDevice()
     /// has ended.
     ///
-    /// **See also:** beginPaint()
-    /// paintDevice()
+    /// **See also:** [`begin_paint()`]
+    /// [`paint_device()`]
     end_paint(),
     ///
     /// Set *region* as the static contents of this window.

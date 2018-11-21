@@ -366,7 +366,7 @@ struct Widget : Object, PaintDevice {
     /// **See also:** [`Widget::set_style`]
     /// [`Application::set_style`]
     /// [`Application::style`]
-    style() -> Style?,
+    style() -> *Style?,
     ///
     /// Sets the widget's GUI style to *style.* The ownership of the style
     /// object is not transferred.
@@ -473,8 +473,6 @@ struct Widget : Object, PaintDevice {
     /// This function is deprecated. It is equivalent to isEnabled()
     is_enabled_to(arg0: *WidgetType) -> bool,
     ///
-    /// This function is deprecated. It is equivalent to isEnabled()
-    is_enabled_to_tlw() -> bool,
     set_enabled(arg0: bool),
     ///
     /// Disables widget input events if *disable* is true; otherwise
@@ -1186,16 +1184,13 @@ struct Widget : Object, PaintDevice {
     /// {Application Example}
     /// {SDI Example}
     /// {MDI Example}
-    window() -> Widget?,
+    window() -> *Widget?,
     ///
     /// Returns the native parent for this widget, i.e. the next ancestor widget
     /// that has a system identifier, or 0 if it does not have any native parent.
     ///
     /// **See also:** [`effective_win_id()`]
-    native_parent_widget() -> Widget?,
-    ///
-    /// Use window() instead.
-    top_level_widget() -> Widget?,
+    native_parent_widget() -> *Widget?,
     ///
     /// This property describes the widget's palette. The palette is used by the
     /// widget's style when rendering standard components, and is available as a
@@ -1369,14 +1364,14 @@ struct Widget : Object, PaintDevice {
     /// [`set_font()`]
     font() -> Font?,
     set_font(arg0: &FontType),
-    ///
-    /// Returns the font info for the widget's current font.
-    /// Equivalent to `QFontInfo(widget->font()).`
-    ///
-    /// **See also:** [`font()`]
-    /// [`font_metrics()`]
-    /// [`set_font()`]
-    font_info() -> FontInfo,
+    //
+    // Returns the font info for the widget's current font.
+    // Equivalent to `QFontInfo(widget->font()).`
+    //
+    // **See also:** [`font()`]
+    // [`font_metrics()`]
+    // [`set_font()`]
+    //font_info() -> FontInfo,
     ///
     /// The mouse cursor will assume this shape when it's over this
     /// widget. See the [list of predefined cursor objects](Qt::CursorShape)
@@ -1663,13 +1658,13 @@ struct Widget : Object, PaintDevice {
     ///
     /// **See also:** [`ungrab_gesture()`]
     /// [`GestureEvent`]
-    grab_gesture(type: Rute::GestureType, flags: Rute::GestureFlags),
+    grab_gesture(gtype: Rute::GestureType, flags: Rute::GestureFlags),
     ///
     /// Unsubscribes the widget from a given *gesture* type
     ///
     /// **See also:** [`grab_gesture()`]
     /// [`GestureEvent`]
-    ungrab_gesture(type: Rute::GestureType),
+    ungrab_gesture(gtype: Rute::GestureType),
     set_window_title(arg0: String),
     set_style_sheet(style_sheet: String),
     ///
@@ -2169,7 +2164,7 @@ struct Widget : Object, PaintDevice {
     /// Returns the focus proxy, or 0 if there is no focus proxy.
     ///
     /// **See also:** [`set_focus_proxy()`]
-    focus_proxy() -> Widget?,
+    focus_proxy() -> *Widget?,
     ///
     /// The default value of this property is Qt::DefaultContextMenu,
     /// which means the contextMenuEvent() handler is called. Other values
@@ -2376,7 +2371,7 @@ struct Widget : Object, PaintDevice {
     ///
     /// **See also:** [`grab_mouse()`]
     /// [`keyboard_grabber()`]
-    [static] mouse_grabber() -> Widget?,
+    [static] mouse_grabber() -> *Widget?,
     ///
     /// Returns the widget that is currently grabbing the keyboard input.
     ///
@@ -2385,7 +2380,7 @@ struct Widget : Object, PaintDevice {
     ///
     /// **See also:** [`grab_mouse()`]
     /// [`mouse_grabber()`]
-    [static] keyboard_grabber() -> Widget?,
+    [static] keyboard_grabber() -> *Widget?,
     ///
     /// An updates enabled widget receives paint events and has a system
     /// background; a disabled widget does not. This also implies that
@@ -3098,7 +3093,8 @@ struct Widget : Object, PaintDevice {
     /// [`event()`]
     /// [`move()`]
     /// [`MoveEvent`]
-    move(x: i32, y: i32),
+    [org_name(move)]
+    move_widget(x: i32, y: i32),
     ///
     /// **Overloads**
     /// This corresponds to move(QPoint( *x,* *y)).*
@@ -3327,7 +3323,7 @@ struct Widget : Object, PaintDevice {
     /// Sets the size policy of the widget to *horizontal* and *vertical,* with standard stretch and no height-for-width.
     ///
     /// **See also:** [`SizePolicy::q_size_policy`]
-    set_size_policy(arg0: SizePolicyType),
+    set_size_policy(arg0: &SizePolicyType),
     ///
     /// **Overloads**
     /// Sets the size policy of the widget to *horizontal* and *vertical,* with standard stretch and no height-for-width.
@@ -3342,10 +3338,12 @@ struct Widget : Object, PaintDevice {
     /// the layout's preferred height. if there is no layout, the default
     /// implementation returns -1 indicating that the preferred height
     /// does not depend on the width.
-    [event] height_for_width(arg0: i32) -> i32,
+    //[event]
+    height_for_width(arg0: i32) -> i32,
     ///
     /// Returns `true` if the widget's preferred height depends on its width; otherwise returns `false.`
-    [event] has_height_for_width() -> bool,
+    //[event]
+    has_height_for_width() -> bool,
     ///
     /// Returns the unobscured region where paint events can occur.
     ///
@@ -3403,12 +3401,12 @@ struct Widget : Object, PaintDevice {
     /// [`get_contents_margins()`]
     [org_name(setContentsMargins)]
     set_contents_margins_2(margins: &MarginsType),
-    ///
-    /// Returns the widget's contents margins for *left,* *top,* *right,* and *bottom.*
-    ///
-    /// **See also:** [`set_contents_margins()`]
-    /// [`contents_rect()`]
-    get_contents_margins(left: *i32, top: *i32, right: *i32, bottom: *i32),
+    //
+    // Returns the widget's contents margins for *left,* *top,* *right,* and *bottom.*
+    //
+    // **See also:** [`set_contents_margins()`]
+    // [`contents_rect()`]
+    //get_contents_margins(left: *i32, top: *i32, right: *i32, bottom: *i32),
     ///
     /// **See also:** [`get_contents_margins()`]
     /// [`set_contents_margins()`]
@@ -3443,7 +3441,7 @@ struct Widget : Object, PaintDevice {
     /// **See also:** [`set_layout()`]
     /// [`size_policy()`]
     /// {Layout Management}
-    layout() -> Layout?,
+    layout() -> *Layout?,
     ///
     /// Sets the layout manager for this widget to *layout.*
     ///
@@ -3596,16 +3594,16 @@ struct Widget : Object, PaintDevice {
     ///
     /// This is not the same as QApplication::focusWidget(), which returns
     /// the focus widget in the currently active window.
-    focus_widget() -> Widget?,
+    focus_widget() -> *Widget?,
     ///
     /// Returns the next widget in this widget's focus chain.
     ///
     /// **See also:** [`previous_in_focus_chain()`]
-    next_in_focus_chain() -> Widget?,
+    next_in_focus_chain() -> *Widget?,
     ///
     /// **See also:** [`next_in_focus_chain()`]
     ///
-    previous_in_focus_chain() -> Widget?,
+    previous_in_focus_chain() -> *Widget?,
     ///
     /// Setting this property to true announces to the system that this
     /// widget *may* be able to accept drop events.
@@ -3639,9 +3637,9 @@ struct Widget : Object, PaintDevice {
     /// [`insert_action()`]
     /// [`actions()`]
     /// [`Menu`]
-    add_action(action: *ActionType),
-    add_actions(actions: [*ActionType]),
-    insert_actions(before: *ActionType, actions: [*ActionType]),
+    //add_action(action: *ActionType),
+    //add_actions(actions: [*ActionType]),
+    //insert_actions(before: *ActionType, actions: [*ActionType]),
     ///
     /// Inserts the action *action* to this widget's list of actions,
     /// before the action *before.* It appends the action if *before* is 0 or
@@ -3654,13 +3652,13 @@ struct Widget : Object, PaintDevice {
     /// [`Menu`]
     /// contextMenuPolicy
     /// [`actions()`]
-    insert_action(before: *ActionType, action: *ActionType),
+    //insert_action(before: *ActionType, action: *ActionType),
     ///
     /// Removes the action *action* from this widget's list of actions.
     /// **See also:** [`insert_action()`]
     /// [`actions()`]
     /// [`insert_action()`]
-    remove_action(action: *ActionType),
+    //remove_action(action: *ActionType),
     //
     // Returns the (possibly empty) list of this widget's actions.
     //
@@ -3671,8 +3669,8 @@ struct Widget : Object, PaintDevice {
     ///
     /// Returns the parent of this widget, or 0 if it does not have any
     /// parent widget.
-    parent_widget() -> Widget?,
-    set_window_flags(type: Rute::WindowFlags),
+    parent_widget() -> *Widget?,
+    set_window_flags(gtype: Rute::WindowFlags),
     ///
     /// Window flags are a combination of a type (e.g. Qt::Dialog) and
     /// zero or more hints to the window system (e.g.
@@ -3708,7 +3706,7 @@ struct Widget : Object, PaintDevice {
     /// you're doing.
     ///
     /// **See also:** [`set_window_flags()`]
-    override_window_flags(type: Rute::WindowFlags),
+    override_window_flags(wtype: Rute::WindowFlags),
     ///
     /// Returns the window type of this widget. This is identical to
     /// windowFlags() & Qt::WindowType_Mask.
@@ -3721,7 +3719,7 @@ struct Widget : Object, PaintDevice {
     /// The window identifier type depends on the underlying window
     /// system, see `qwindowdefs.h` for the actual definition. If there
     /// is no widget with this identifier, 0 is returned.
-    [static] find(arg0: u64) -> Widget?,
+    [static] find(arg0: u64) -> *Widget?,
     ///
     /// Returns the visible child widget at the position ( *x* , *y* )
     /// in the widget's coordinate system. If there is no visible child
@@ -3730,7 +3728,7 @@ struct Widget : Object, PaintDevice {
     /// **Overloads**
     /// Returns the visible child widget at point *p* in the widget's own
     /// coordinate system.
-    child_at(x: i32, y: i32) -> Widget?,
+    child_at(x: i32, y: i32) -> *Widget?,
     ///
     /// Returns the visible child widget at the position ( *x* , *y* )
     /// in the widget's coordinate system. If there is no visible child
@@ -3740,7 +3738,7 @@ struct Widget : Object, PaintDevice {
     /// Returns the visible child widget at point *p* in the widget's own
     /// coordinate system.
     [org_name(childAt)]
-    child_at_2(p: &PointType) -> Widget?,
+    child_at_2(p: &PointType) -> *Widget?,
     ///
     /// Returns the widget's paint engine.
     ///
@@ -3749,7 +3747,7 @@ struct Widget : Object, PaintDevice {
     /// function is called by Qt internally, and the default
     /// implementation may not always return a valid pointer.
     //[event]
-    paint_engine() -> PaintEngine?,
+    paint_engine() -> *PaintEngine?,
     ///
     /// Ensures that the widget and its children have been polished by
     /// QStyle (i.e., have a proper font and palette).
@@ -3804,7 +3802,7 @@ struct Widget : Object, PaintDevice {
     set_auto_fill_background(enabled: bool),
     ///
     /// Returns the QBackingStore this widget will be drawn into.
-    backing_store() -> BackingStore?,
+    backing_store() -> *BackingStore?,
     ///
     /// If this is a native widget, return the associated QWindow.
     /// Otherwise return null.
@@ -3813,7 +3811,7 @@ struct Widget : Object, PaintDevice {
     /// on which winId() was called.
     ///
     /// **See also:** [`win_id()`]
-    window_handle() -> Window?,
+    window_handle() -> *Window?,
     ///
     /// Creates a QWidget that makes it possible to embed *window* into
     /// a QWidget-based application.
@@ -3848,7 +3846,7 @@ struct Widget : Object, PaintDevice {
     /// * Rendering Integration; The window container does not interoperate with QGraphicsProxyWidget, QWidget::render() or similar functionality.
     /// * Focus Handling; It is possible to let the window container instance have any focus policy and it will delegate focus to the window via a call to QWindow::requestActivate(). However, returning to the normal focus chain from the QWindow instance will be up to the QWindow instance implementation itself. For instance, when entering a Qt Quick based window with tab focus, it is quite likely that further tab presses will only cycle inside the QML application. Also, whether QWindow::requestActivate() actually gives the window focus, is platform dependent.
     /// * Using many window container instances in a QWidget-based application can greatly hurt the overall performance of the application.
-    [static] create_window_container(window: *WindowType, parent: *WidgetType, flags: Rute::WindowFlags) -> Widget?,
+    [static] create_window_container(window: *WindowType, parent: *WidgetType, flags: Rute::WindowFlags) -> *Widget?,
     ///
     /// This signal is emitted when the window's title has changed, with the
     /// new *title* as an argument.
@@ -3918,7 +3916,7 @@ struct Widget : Object, PaintDevice {
     /// [`resize_event()`]
     /// [`Object::event`]
     /// [`Object::timer_event`]
-    [event] event(event: *EventType) -> bool,
+    //[event] event(event: *EventType) -> bool,
     ///
     /// This event handler, for event *event,* can be reimplemented in a
     /// subclass to receive mouse press events for the widget.
@@ -4473,100 +4471,45 @@ struct Widget : Object, PaintDevice {
     /// **See also:** [`input_method_query()`]
     input_method_hints() -> Rute::InputMethodHints,
     set_input_method_hints(hints: Rute::InputMethodHints),
-    ///
-    /// Updates the widget's micro focus.
-    update_micro_focus(),
-    ///
-    /// Creates a QWidget that makes it possible to embed *window* into
-    /// a QWidget-based application.
-    ///
-    /// The window container is created as a child of *parent* and with
-    /// window flags *flags.*
-    ///
-    /// Once the window has been embedded into the container, the
-    /// container will control the window's geometry and
-    /// visibility. Explicit calls to QWindow::setGeometry(),
-    /// QWindow::show() or QWindow::hide() on an embedded window is not
-    /// recommended.
-    ///
-    /// The container takes over ownership of *window.* The window can
-    /// be removed from the window container with a call to
-    /// QWindow::setParent().
-    ///
-    /// The window container is attached as a native child window to the
-    /// toplevel window it is a child of. When a window container is used
-    /// as a child of a QAbstractScrollArea or QMdiArea, it will
-    /// create a [native window](Native%20Widgets%20vs%20Alien%20Widgets)
-    /// for
-    /// every widget in its parent chain to allow for proper stacking and
-    /// clipping in this use case. Creating a native window for the window
-    /// container also allows for proper stacking and clipping. This must
-    /// be done before showing the window container. Applications with
-    /// many native child windows may suffer from performance issues.
-    ///
-    /// The window container has a number of known limitations:
-    ///
-    /// * Stacking order; The embedded window will stack on top of the widget hierarchy as an opaque box. The stacking order of multiple overlapping window container instances is undefined.
-    /// * Rendering Integration; The window container does not interoperate with QGraphicsProxyWidget, QWidget::render() or similar functionality.
-    /// * Focus Handling; It is possible to let the window container instance have any focus policy and it will delegate focus to the window via a call to QWindow::requestActivate(). However, returning to the normal focus chain from the QWindow instance will be up to the QWindow instance implementation itself. For instance, when entering a Qt Quick based window with tab focus, it is quite likely that further tab presses will only cycle inside the QML application. Also, whether QWindow::requestActivate() actually gives the window focus, is platform dependent.
-    /// * Using many window container instances in a QWidget-based application can greatly hurt the overall performance of the application.
-    ///
-    /// Creates a new widget window.
-    ///
-    /// The parameter *window* is ignored in Qt 5. Please use
-    /// QWindow::fromWinId() to create a QWindow wrapping a foreign
-    /// window and pass it to QWidget::createWindowContainer() instead.
-    ///
-    /// Initializes the window (sets the geometry etc.) if *initializeWindow* is true. If *initializeWindow* is false, no
-    /// initialization is performed. This parameter only makes sense if *window* is a valid window.
-    ///
-    /// Destroys the old window if *destroyOldWindow* is true. If *destroyOldWindow* is false, you are responsible for destroying the
-    /// window yourself (using platform native code).
-    ///
-    /// The QWidget constructor calls create(0,true,true) to create a
-    /// window for this widget.
-    ///
-    /// **See also:** [`create_window_container()`]
-    /// [`Window::from_win_id`]
-    create(arg0: u64, initialize_window: bool, destroy_old_window: bool),
-    ///
-    /// Finds a new widget to give the keyboard focus to, as appropriate
-    /// for Tab and Shift+Tab, and returns `true` if it can find a new
-    /// widget, or false if it can't.
-    ///
-    /// If *next* is true, this function searches forward, if *next*
-    /// is false, it searches backward.
-    ///
-    /// Sometimes, you will want to reimplement this function. For
-    /// example, a web browser might reimplement it to move its forward or backward, and call
-    /// focusNextPrevChild() only when it reaches the last or
-    /// first link on the .
-    ///
-    /// Child widgets call focusNextPrevChild() on their parent widgets,
-    /// but only the window that contains the child widgets decides where
-    /// to redirect focus. By reimplementing this function for an object,
-    /// you thus gain control of focus traversal for all child widgets.
-    ///
-    /// **See also:** [`focus_next_child()`]
-    /// [`focus_previous_child()`]
-    [event] focus_next_prev_child(next: bool) -> bool,
-    ///
-    /// Finds a new widget to give the keyboard focus to, as appropriate
-    /// for **Tab,** and returns `true` if it can find a new widget, or
-    /// false if it can't.
-    ///
-    /// **See also:** [`focus_previous_child()`]
-    focus_next_child() -> bool,
-    ///
-    /// Finds a new widget to give the keyboard focus to, as appropriate
-    /// for **Shift+Tab,** and returns `true` if it can find a new widget,
-    /// or false if it can't.
-    ///
-    /// **See also:** [`focus_next_child()`]
-    focus_previous_child() -> bool,
+    //
+    // Finds a new widget to give the keyboard focus to, as appropriate
+    // for Tab and Shift+Tab, and returns `true` if it can find a new
+    // widget, or false if it can't.
+    //
+    // If *next* is true, this function searches forward, if *next*
+    // is false, it searches backward.
+    //
+    // Sometimes, you will want to reimplement this function. For
+    // example, a web browser might reimplement it to move its forward or backward, and call
+    // focusNextPrevChild() only when it reaches the last or
+    // first link on the .
+    //
+    // Child widgets call focusNextPrevChild() on their parent widgets,
+    // but only the window that contains the child widgets decides where
+    // to redirect focus. By reimplementing this function for an object,
+    // you thus gain control of focus traversal for all child widgets.
+    //
+    // **See also:** [`focus_next_child()`]
+    // [`focus_previous_child()`]
+    //[event] focus_next_prev_child(next: bool) -> bool,
+    //
+    // Finds a new widget to give the keyboard focus to, as appropriate
+    // for **Tab,** and returns `true` if it can find a new widget, or
+    // false if it can't.
+    //
+    // **See also:** [`focus_previous_child()`]
+    //focus_next_child() -> bool,
+    //
+    // Finds a new widget to give the keyboard focus to, as appropriate
+    // for **Shift+Tab,** and returns `true` if it can find a new widget,
+    // or false if it can't.
+    //
+    // **See also:** [`focus_next_child()`]
+    //focus_previous_child() -> bool,
 }
 
 [org_name(QWidget)]
+[enum_flags(RenderFlags)]
 enum RenderFlag {
     DrawWindowBackground,
     DrawChildren,
