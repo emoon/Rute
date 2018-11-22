@@ -932,17 +932,30 @@ impl RustGenerator {
             })
     }
 
-    fn gen_mod_name_enum(var: &Variable) -> String {
+    fn gen_mod_name_enum(arg: &Variable) -> String {
         if arg.type_name == "Rute" {
             format!("use auto::rute_enums::{};", arg.enum_sub_type)
         } else {
-            format!("use auto::{}::{};", arg.type_name.to_snake_case(), arg.enum_sub_type)
+            format!(
+                "use auto::{}::{};",
+                arg.type_name.to_snake_case(),
+                arg.enum_sub_type
+            )
         }
     }
 
+    fn gen_mod_name_regular(arg: &Variable) -> String {
+    	if arg.type_name.ends_with("Type") {
+            format!("use auto::{}::{};", arg.type_name[..arg.type_name.len() - 4].to_snake_case(), arg.type_name)
+    	} else {
+            format!("use auto::{}::{};", arg.type_name.to_snake_case(), arg.type_name)
+    	}
+    }
+
     fn gen_mod_name(var: &Variable) -> String {
-        match v.vtype {
+        match var.vtype {
             VariableType::Enum => Self::gen_mod_name_enum(var),
+            VariableType::Regular => Self::gen_mod_name_regular(var),
             _ => "".to_owned(),
         }
     }
@@ -953,19 +966,25 @@ impl RustGenerator {
     fn generate_mod_usage<W: Write>(&self, dest: &mut W, api_def: &ApiDef) -> io::Result<()> {
         let mut lookup = BTreeMap::new();
 
-        for func in api_defs
-            .iter_mut()
-            .flat_map(|api| api.class_structs.iter())
+        for func in api_def
+            .class_structs
+            .iter()
             .flat_map(|s| s.functions.iter())
         {
             for arg in &func.function_args {
                 lookup.insert(Self::gen_mod_name(&arg), ());
             }
 
-            if let Some(ref var) = func.return_arg {
+            if let Some(ref var) = func.return_val {
                 lookup.insert(Self::gen_mod_name(&var), ());
             }
         }
+
+        for (import, _) in lookup {
+            writeln!(dest, "{}", import)?;
+        }
+
+        Ok(())
     }
 
     pub fn generate(&self, filename: &str, api_def: &ApiDef) -> io::Result<()> {
@@ -975,7 +994,7 @@ impl RustGenerator {
         dest.write_all(HEADER)?;
 
         // As we may need types/enums/etc from other types we need to generate that
-        self.generate_mod_usage(&mut f, api_def);
+        self.generate_mod_usage(&mut dest, api_def)?;
 
         // write all the structs
         self.generate_structs(&mut dest, api_def)?;

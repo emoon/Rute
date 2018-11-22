@@ -281,16 +281,24 @@ impl CapiHeaderGen {
     /// Generate def for connecting events
     ///
     /// TODO: Cleanup this code
-    pub fn callback_fun_def_name(dest: &mut String, def: bool, name: &str, post_name: &str, func: &Function) {
+    pub fn callback_fun_def_name(
+        dest: &mut String,
+        def: bool,
+        name: &str,
+        post_name: &str,
+        func: &Function,
+    ) {
         use std::fmt::Write;
         if def {
             write!(dest,
                 "void (*set_{}{})(void* object, void* user_data, void* wrapped_func, void (*event)(",
                 name, post_name).unwrap()
         } else {
-            write!(dest,
+            write!(
+                dest,
                 "void set_{}{}(void* object, void* user_data, void* wrapped_func, void (*event)(",
-                name, post_name).unwrap();
+                name, post_name
+            ).unwrap();
         };
 
         // TODO: Fix this hack
@@ -312,7 +320,12 @@ impl CapiHeaderGen {
     ///
     /// Code to write down callback def
     ///
-    fn generate_callback_def<W: Write>(&mut self, dest: &mut W, post_name: &str, func: &Function) -> io::Result<()> {
+    fn generate_callback_def<W: Write>(
+        &mut self,
+        dest: &mut W,
+        post_name: &str,
+        func: &Function,
+    ) -> io::Result<()> {
         self.temp_string.clear();
 
         Self::callback_fun_def_name(&mut self.temp_string, true, &func.name, post_name, func);

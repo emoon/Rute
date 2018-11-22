@@ -43,7 +43,7 @@ impl Variable {
                 } else {
                     "*const RUBase".into()
                 }
-            },
+            }
             VariableType::Regular => format!(" RU{}", name).into(),
             VariableType::Str => "*const ::std::os::raw::c_char".into(),
         }
@@ -333,7 +333,9 @@ impl RustFFIGenerator {
     /// Generate ffi function
     ///
     fn generate_function<W: Write>(dest: &mut W, func: &Function) -> io::Result<()> {
-        let func_def = func.rust_func_def(true, None, |arg, is_ret| arg.get_rust_ffi_type(is_ret).into());
+        let func_def = func.rust_func_def(true, None, |arg, is_ret| {
+            arg.get_rust_ffi_type(is_ret).into()
+        });
         writeln!(dest, "    pub {}: extern \"C\" fn{},", func.name, &func_def)
     }
 
@@ -351,7 +353,8 @@ impl RustFFIGenerator {
             func.name,
         )?;
 
-        writeln!(dest,
+        writeln!(
+            dest,
             "    pub remove_{}: extern \"C\" fn(object: *const RUBase),\n",
             func.name,
         )

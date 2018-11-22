@@ -17,8 +17,7 @@ use std::ffi::{CString, CStr};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 \n\n";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -228,7 +227,6 @@ pub static RUST_IMPL_TRAIT_STATIC_TEMPLATE: &str = "
 impl<'a> {{trait_name}}Type for {{target_name}}<'a> {}
 ";
 
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_CALLBACK_TRAMPOLINE_TEMPLATE: &str = "
@@ -249,7 +247,7 @@ unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline{{function
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pub static RUST_STATIC_STRUCT_TEMPLATE: &str ="
+pub static RUST_STATIC_STRUCT_TEMPLATE: &str = "
 pub struct {{type_name}}Static<'a> {
     pub all_funcs: *const RU{{type_name}}AllFuncs,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,

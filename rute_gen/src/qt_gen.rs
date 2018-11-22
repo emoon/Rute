@@ -229,7 +229,10 @@ fn generate_includes<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
         .filter(|s| s.name != "StaticFuncs")
     {
         f.write_fmt(format_args!("#include <{}>\n", sdef.qt_name))?;
-        f.write_fmt(format_args!("#include \"{}_ffi.h\"\n", sdef.name.to_snake_case()))?;
+        f.write_fmt(format_args!(
+            "#include \"{}_ffi.h\"\n",
+            sdef.name.to_snake_case()
+        ))?;
     }
 
     f.write_all(b"\n")
@@ -647,14 +650,8 @@ impl QtGenerator {
     ) -> io::Result<()> {
         let mut object = Object::new();
 
-        object.insert(
-            "type_name".into(),
-            Value::scalar(sdef.name.to_snake_case())
-        );
-        object.insert(
-            "event_type_snake".into(),
-            Value::scalar(&func.name)
-        );
+        object.insert("type_name".into(), Value::scalar(sdef.name.to_snake_case()));
+        object.insert("event_type_snake".into(), Value::scalar(&func.name));
         object.insert("event_type".into(), Value::scalar(&sdef.name));
         object.insert(
             "event_name".into(),
@@ -1083,7 +1080,10 @@ impl QtGenerator {
                 });
 
             template_data.insert("events".into(), Value::scalar(events));
-            template_data.insert("supports_clone".into(), Value::scalar(sdef.supports_cpp_clone()));
+            template_data.insert(
+                "supports_clone".into(),
+                Value::scalar(sdef.supports_cpp_clone()),
+            );
 
             let res = self.wrapper_template.render(&template_data).unwrap();
             f.write_all(res.as_bytes())?;
@@ -1250,7 +1250,10 @@ impl QtGenerator {
 
         for api_def in api_defs {
             for enum_def in &api_def.enums {
-                enums.insert((enum_def.name.clone(), enum_def.flags_name.clone()), enum_def);
+                enums.insert(
+                    (enum_def.name.clone(), enum_def.flags_name.clone()),
+                    enum_def,
+                );
             }
         }
 

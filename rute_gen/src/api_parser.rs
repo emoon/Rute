@@ -297,8 +297,7 @@ impl ApiParser {
                                     .to_owned();
                             }
                             Rule::enum_flags => {
-                                enum_def.flags_name =
-                                    entry
+                                enum_def.flags_name = entry
                                     .into_inner()
                                     .next()
                                     .map(|e| e.as_str())
