@@ -628,7 +628,7 @@ struct Object {
     /// This signal is emitted after the object's name has been changed. The new object name is passed as *objectName.*
     ///
     /// **See also:** [`Object::object_name()`]
-    [signal] object_name_changed(object_name: String, arg0: Object::QPrivateSignal),
+    //[signal] object_name_changed(object_name: String, arg0: Object::QPrivateSignal),
     ///
     /// Returns a pointer to the parent object.
     ///

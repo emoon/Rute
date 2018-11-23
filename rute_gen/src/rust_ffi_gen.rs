@@ -122,6 +122,7 @@ impl HeaderFFIGen for RustFFIGenerator {
         for sdef in api_defs {
             // TODO: Fix me
             if sdef.base_filename != "qnamespace" {
+                writeln!(dest, "#[allow(unused_imports)]")?;
                 writeln!(
                     dest,
                     "use auto::{}_ffi::*;",
@@ -166,11 +167,13 @@ impl HeaderFFIGen for RustFFIGenerator {
         }
 
         for (module, name) in imports {
+            writeln!(dest, "#[allow(unused_imports)]")?;
             writeln!(dest, "use auto::{}_ffi::{};", module.to_snake_case(), name)?;
         }
 
         for name in &sdef.full_inherit {
             if name != &sdef.name {
+                writeln!(dest, "#[allow(unused_imports)]")?;
                 writeln!(dest, "use auto::{}_ffi::*;", name.to_snake_case())?;
             }
         }

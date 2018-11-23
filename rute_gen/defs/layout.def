@@ -358,7 +358,7 @@ struct Layout : Object, LayoutItem {
     ///
     /// Returns a size that satisfies all size constraints on *widget,*
     /// including heightForWidth() and that is as close as possible to *size.*
-    [static] closest_acceptable_size(w: *WidgetType, s: &SizeType) -> Size,
+    //[static] closest_acceptable_size(w: *WidgetType, s: &SizeType) -> Size,
     //widget_event(arg0: *EventType),
     ///
     //[event]

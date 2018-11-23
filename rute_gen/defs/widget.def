@@ -3697,7 +3697,7 @@ struct Widget : Object, PaintDevice {
     /// **See also:** [`set_window_flags()`]
     /// [`window_flags()`]
     /// [`window_type()`]
-    set_window_flag(arg0: Rute::WindowType, on: bool),
+    //set_window_flag(arg0: Rute::WindowType, on: bool),
     ///
     /// Sets the window flags for the widget to *flags,*
     /// *without* telling the window system.
@@ -3712,7 +3712,7 @@ struct Widget : Object, PaintDevice {
     /// windowFlags() & Qt::WindowType_Mask.
     ///
     /// **See also:** windowFlags
-    window_type() -> Rute::WindowType,
+    //window_type() -> Rute::WindowType,
     ///
     /// Returns a pointer to the widget with window identifer/handle *id.*
     ///

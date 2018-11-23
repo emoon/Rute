@@ -617,7 +617,7 @@ struct Pixmap : PaintDevice {
     /// **See also:** [`from_image()`]
     /// [`to_image()`]
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-    [static] from_image_reader(image_reader: *ImageReaderType, flags: Rute::ImageConversionFlags) -> Pixmap,
+    //[static] from_image_reader(image_reader: *ImageReaderType, flags: Rute::ImageConversionFlags) -> Pixmap,
     ///
     /// Converts the given *image* to a pixmap using the specified *flags* to control the conversion. The *flags* argument is a
     /// bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)

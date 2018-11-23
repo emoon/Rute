@@ -709,13 +709,13 @@ struct RectF {
     /// **See also:** [`operator()`]
     /// [`margins_removed()`]
     /// [`operator()`]
-    margins_added(margins: &MarginsFType) -> RectF,
+    //margins_added(margins: &MarginsFType) -> RectF,
     ///
     /// Removes the *margins* from the rectangle, shrinking it.
     ///
     /// **See also:** [`margins_added()`]
     /// [`operator()`]
-    margins_removed(margins: &MarginsFType) -> RectF,
+    //margins_removed(margins: &MarginsFType) -> RectF,
     ///
     /// Returns a QRect based on the values of this rectangle. Note that the
     /// coordinates in the returned rectangle are rounded to the nearest integer.

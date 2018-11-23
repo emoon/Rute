@@ -4,7 +4,7 @@ use liquid::value::{Object, Value};
 use liquid::{ParserBuilder, Template};
 use std::borrow::Cow;
 use std::collections::BTreeMap;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write};
@@ -269,6 +269,14 @@ fn setup_type_handlers() -> TypeHandler {
     type_handler
 }
 
+fn get_trait_name(name: &str) -> String {
+    if name.ends_with("Type") {
+        format!("{}Trait", &name[..name.len() - 4])
+    } else {
+        name.to_owned()
+    }
+}
+
 impl RustGenerator {
     pub fn new() -> RustGenerator {
         let parser = ParserBuilder::with_liquid().build();
@@ -317,7 +325,7 @@ impl RustGenerator {
             VariableType::Primitive => dest.push_str(&type_name),
             VariableType::Enum => dest.push_str(&var.enum_sub_type),
             VariableType::Regular => {
-                dest.push_str(&type_name);
+                dest.push_str(&get_trait_name(&type_name));
 
                 if need_lifetime {
                     dest.push_str("<'a>");
@@ -335,7 +343,7 @@ impl RustGenerator {
                 if return_arg == IsReturnArg::No {
                     dest.push('&');
                 }
-                dest.push_str(&type_name);
+                dest.push_str(&get_trait_name(&type_name));
 
                 if need_lifetime {
                     dest.push_str("<'a>");
@@ -377,7 +385,7 @@ impl RustGenerator {
             }
 
             for (i, (name, label)) in gen_labels.lookup.iter().enumerate() {
-                func_imp.push_str(&format!("{}: {}<'a>", *label as u8 as char, name));
+                func_imp.push_str(&format!("{}: {}<'a>", *label as u8 as char, get_trait_name(&name)));
 
                 if len != i {
                     func_imp.push_str(", ");
@@ -703,7 +711,7 @@ impl RustGenerator {
                                 .insert("return_type".into(), Value::scalar("pointer_ref"));
                             template_data.insert(
                                 "return_vtype".into(),
-                                Value::scalar(ret_val.type_name.to_owned()),
+                                Value::scalar(get_trait_name(&ret_val.type_name)),
                             );
                         }
 
@@ -813,7 +821,7 @@ impl RustGenerator {
         sdef: &Struct,
         should_have_lifetime: bool,
     ) -> io::Result<()> {
-        let struct_name = format!("{}Type", name);
+        let struct_name = format!("{}Trait", name);
         if should_have_lifetime {
             writeln!(dest, "pub trait {}<'a> {{", struct_name)?;
         } else {
@@ -932,31 +940,38 @@ impl RustGenerator {
             })
     }
 
-    fn gen_mod_name_enum(arg: &Variable) -> String {
-        if arg.type_name == "Rute" {
-            format!("use auto::rute_enums::{};", arg.enum_sub_type)
-        } else {
-            format!(
-                "use auto::{}::{};",
-                arg.type_name.to_snake_case(),
-                arg.enum_sub_type
-            )
+    fn gen_mod_regular(var: &Variable) -> Vec<String> {
+        let mut strings = Vec::new();
+        let name = get_trait_name(&var.type_name);
+
+        // If type ends with trait we import the regular type as well
+        if name.ends_with("Trait") {
+            let type_name = &name[..name.len() - 5];
+            strings.push(format!("#[allow(unused_imports)]\nuse auto::{}::{};", var.def_file, type_name));
+            strings.push(format!("#[allow(unused_imports)]\nuse auto::{}_ffi::*;", var.def_file));
         }
+
+        strings.push(format!("#[allow(unused_imports)]\nuse auto::{}::{};", var.def_file, name));
+        strings
     }
 
-    fn gen_mod_name_regular(arg: &Variable) -> String {
-    	if arg.type_name.ends_with("Type") {
-            format!("use auto::{}::{};", arg.type_name[..arg.type_name.len() - 4].to_snake_case(), arg.type_name)
-    	} else {
-            format!("use auto::{}::{};", arg.type_name.to_snake_case(), arg.type_name)
-    	}
-    }
+    fn gen_mod_name(var: &Variable, def_file: &str, lookup: &HashSet<String>, print: bool) -> Vec<String> {
+        if var.def_file == def_file {
+            return Vec::new()
+        }
 
-    fn gen_mod_name(var: &Variable) -> String {
         match var.vtype {
-            VariableType::Enum => Self::gen_mod_name_enum(var),
-            VariableType::Regular => Self::gen_mod_name_regular(var),
-            _ => "".to_owned(),
+            VariableType::Enum => {
+                if !lookup.contains(&var.enum_sub_type) {
+                    vec![format!("#[allow(unused_imports)]\nuse auto::{}::{};", var.def_file, var.enum_sub_type)]
+                } else {
+                    Vec::new()
+                }
+            }
+
+            VariableType::Regular => Self::gen_mod_regular(var),
+            VariableType::Reference => Self::gen_mod_regular(var),
+            _ => Vec::new(),
         }
     }
 
@@ -965,20 +980,76 @@ impl RustGenerator {
     ///
     fn generate_mod_usage<W: Write>(&self, dest: &mut W, api_def: &ApiDef) -> io::Result<()> {
         let mut lookup = BTreeMap::new();
+        let mut local_types = HashSet::new();
 
-        for func in api_def
-            .class_structs
-            .iter()
-            .flat_map(|s| s.functions.iter())
-        {
-            for arg in &func.function_args {
-                lookup.insert(Self::gen_mod_name(&arg), ());
-            }
+        // Build a lookup for the local types so they won't be included by global ones.
+        // There are some cases (mostly for enums) where enums has the same name for various
+        // cases so we need to make sure we don't import the remote one if we have a local
+        // one with the same name
 
-            if let Some(ref var) = func.return_val {
-                lookup.insert(Self::gen_mod_name(&var), ());
+        for sdef in &api_def.class_structs {
+            local_types.insert(sdef.name.to_owned());
+        }
+
+        for edef in &api_def.enums {
+            local_types.insert(edef.name.to_owned());
+        }
+
+        let print = false;
+
+        for sdef in &api_def.class_structs {
+            for func in &sdef.functions {
+                for arg in &func.function_args {
+                    for var in Self::gen_mod_name(&arg, &sdef.def_file, &local_types, print) {
+                        if !lookup.contains_key(&var) {
+                            lookup.insert(var, ());
+                        }
+                    }
+                }
+
+                if let Some(ref var) = func.return_val {
+                    for var in Self::gen_mod_name(&var, &sdef.def_file, &local_types, print) {
+                        if !lookup.contains_key(&var) {
+                            lookup.insert(var, ());
+                        }
+                    }
+                }
             }
         }
+
+        // import in-traits
+
+        for sdef in &api_def.class_structs {
+            let mut print = false;
+
+            if sdef.name.contains("Cursor") {
+                print = true;
+            }
+
+            for name in &sdef.full_inherit {
+                let mut wrote = false;
+                if name != &sdef.name {
+                    writeln!(dest, "#[allow(unused_imports)]")?;
+                    writeln!(dest, "use auto::{}::*;", name.to_snake_case());
+                    writeln!(dest, "#[allow(unused_imports)]")?;
+                    writeln!(dest, "use auto::{}_ffi::*;", name.to_snake_case());
+                    wrote = true;
+                }
+
+                if print {
+                    println!("{} {} - {}", name, sdef.name, wrote);
+                }
+            }
+        }
+
+        // always import the ffi issue
+
+        writeln!(dest, "#[allow(unused_imports)]")?;
+        writeln!(dest, "use auto::rute::*;");
+        writeln!(dest, "#[allow(unused_imports)]")?;
+        writeln!(dest, "use auto::rute_ffi::*;");
+        writeln!(dest, "#[allow(unused_imports)]")?;
+        writeln!(dest, "use auto::{}_ffi::*;", api_def.base_filename);
 
         for (import, _) in lookup {
             writeln!(dest, "{}", import)?;
@@ -1003,21 +1074,13 @@ impl RustGenerator {
         self.generate_static_structs(&mut dest, api_def)?;
 
         // Generate the implementations for the structs
-        self.generate_structs_impl(&mut dest, api_def)
+        self.generate_structs_impl(&mut dest, api_def)?;
+
+        // generate the enums
+        Self::generate_enums(&mut dest, api_def)
     }
 
-    ///
-    /// Generate global enums
-    ///
-    pub fn generate_global_enums(&self, filename: &str, api_def: &ApiDef) -> io::Result<()> {
-        let mut dest = BufWriter::new(File::create(filename)?);
-
-        // write header
-        writeln!(
-            dest,
-            "// This file is auto-generated by rute_gen. DO NOT EDIT.\n"
-        )?;
-
+    fn generate_enums<W: Write>(dest: &mut W, api_def: &ApiDef) -> io::Result<()> {
         for enum_def in &api_def.enums {
             writeln!(dest, "#[repr(u32)]")?;
             writeln!(dest, "pub enum {} {{", enum_def.name)?;
@@ -1035,9 +1098,29 @@ impl RustGenerator {
             }
 
             writeln!(dest, "}}\n")?;
+
+            // if enum has a flag alias we need to generate that as well
+            if !enum_def.flags_name.is_empty() {
+                writeln!(dest, "pub type {} = {};\n", enum_def.flags_name, enum_def.name);
+            }
         }
 
         Ok(())
+    }
+
+    ///
+    /// Generate global enums
+    ///
+    pub fn generate_global_enums(&self, filename: &str, api_def: &ApiDef) -> io::Result<()> {
+        let mut dest = BufWriter::new(File::create(filename)?);
+
+        // write header
+        writeln!(
+            dest,
+            "// This file is auto-generated by rute_gen. DO NOT EDIT.\n"
+        )?;
+
+        Self::generate_enums(&mut dest, api_def)
     }
 }
 

@@ -38,7 +38,7 @@ pub enum VariableType {
     Enum,
     /// Struct/other type
     Regular,
-    /// Struct/other type
+    /// String type
     Str,
     /// Prmitive type (such as i32,u64,etc)
     Primitive,
@@ -53,6 +53,8 @@ pub enum VariableType {
 pub struct Variable {
     /// Documentation
     pub doc_comments: String,
+    /// Which def file this variable comes from
+    pub def_file: String,
     /// Name of the variable
     pub name: String,
     /// Type of the variable
@@ -82,6 +84,7 @@ impl Default for Variable {
         Variable {
             name: String::new(),
             doc_comments: String::new(),
+            def_file: String::new(),
             vtype: VariableType::None,
             type_name: String::new(),
             enum_sub_type: String::new(),
@@ -116,6 +119,8 @@ pub enum FunctionType {
 pub struct Function {
     /// Documentation
     pub doc_comments: String,
+    /// Which def file this function comes from
+    pub def_file: String,
     /// Name of the function
     pub name: String,
     /// This is the C++ name of the function. Most of the time it will
@@ -139,6 +144,7 @@ impl Default for Function {
         Function {
             doc_comments: String::new(),
             name: String::new(),
+            def_file: String::new(),
             cpp_name: String::new(),
             function_args: Vec::new(),
             return_val: None,
@@ -157,6 +163,8 @@ pub struct Struct {
     pub doc_comments: String,
     /// Name
     pub name: String,
+    /// Which def file this struct comes from
+    pub def_file: String,
     /// Name for the C++ class in the generation
     pub cpp_name: String,
     /// Name of the Qt Class/Struct
@@ -198,6 +206,8 @@ pub enum EnumEntry {
 pub struct Enum {
     /// Name of the enum
     pub name: String,
+    /// The file this enum is present in (notice if it's qnamespace we change it to rute_enums)
+    pub def_file: String,
     /// Qt supports having a flags macro on enums being type checked with an extra name
     pub flags_name: String,
     /// Original class name (like Qt, QAccesibility)
@@ -265,7 +275,7 @@ impl ApiParser {
         for chunk in chunks {
             match chunk.as_rule() {
                 Rule::structdef => {
-                    let sdef = Self::fill_struct(chunk, &struct_comments);
+                    let sdef = Self::fill_struct(chunk, &struct_comments, &api_def.base_filename);
                     struct_comments.clear();
 
                     // If we have some variables in the struct we push it to pod_struct
@@ -283,6 +293,14 @@ impl ApiParser {
 
                 Rule::enumdef => {
                     let mut enum_def = Enum::default();
+
+                    // Global enums are stored in qnamespace in Qt but we have them in rute_enums
+                    // so we change the name here to reflect that
+                    if base_filename == "qnamespace" {
+                        enum_def.def_file = "rute_enums".to_owned();
+                    } else {
+                        enum_def.def_file = base_filename.to_owned();
+                    }
 
                     for entry in chunk.into_inner() {
                         match entry.as_rule() {
@@ -319,10 +337,11 @@ impl ApiParser {
     ///
     /// Fill struct def
     ///
-    fn fill_struct(chunk: Pair<Rule>, doc_comments: &str) -> Struct {
+    fn fill_struct(chunk: Pair<Rule>, doc_comments: &str, def_file: &str) -> Struct {
         let mut sdef = Struct::default();
 
         sdef.doc_comments = doc_comments.to_owned();
+        sdef.def_file = def_file.to_owned();
 
         for entry in chunk.into_inner() {
             match entry.as_rule() {
@@ -687,6 +706,52 @@ impl ApiParser {
         out_structs
     }
 
+    fn update_variable(arg: &mut Variable,
+        struct_name_map: &HashMap<String, String>,
+        type_def_file: &HashMap<String, String>,
+        enum_def_file: &HashMap<String, String>)
+    {
+        if let Some(qt_name) = struct_name_map.get(&arg.type_name) {
+            arg.qt_type_name = qt_name.to_owned();
+        }
+
+        match arg.vtype {
+            VariableType::Enum => {
+                if let Some(def_file) = enum_def_file.get(&arg.enum_sub_type) {
+                    arg.def_file = def_file.to_owned();
+                } else {
+                    println!("--> enum {} wasn't found in lookup", arg.enum_sub_type);
+                }
+            },
+
+            VariableType::Regular => {
+                if let Some(def_file) = type_def_file.get(&Self::get_trait_name(&arg.type_name)) {
+                    arg.def_file = def_file.to_owned();
+                } else {
+                    println!("--> type {:?} wasn't found in lookup", arg);
+                }
+            },
+
+            VariableType::Reference => {
+                if let Some(def_file) = type_def_file.get(&Self::get_trait_name(&arg.type_name)) {
+                    arg.def_file = def_file.to_owned();
+                } else {
+                    println!("--> type {:?} wasn't found in lookup", arg);
+                }
+            },
+
+            _ => (),
+        }
+    }
+
+    fn get_trait_name(name: &str) -> String {
+        if name.ends_with("Type") {
+            format!("{}Trait", &name[..name.len() - 4])
+        } else {
+            name.to_owned()
+        }
+    }
+
     pub fn second_pass(api_defs: &mut [ApiDef]) {
         // Build a hash_set of all classes that are inherited
         let mut inherited_classes = HashMap::new();
@@ -720,30 +785,43 @@ impl ApiParser {
         }
 
         // Build a hash map of all type and their QtName
+        // and we also build two hashmaps for all types and which modules they belong into
+        // and they are separate for structs and enums
         let mut struct_name_map = HashMap::new();
+        let mut type_def_file = HashMap::new();
+        let mut enum_def_file = HashMap::new();
 
         for api_def in api_defs.iter() {
             api_def.class_structs.iter().for_each(|s| {
                 struct_name_map.insert(s.name.to_owned(), s.cpp_name.to_owned());
+                type_def_file.insert(s.name.to_owned(), s.def_file.to_owned());
+                type_def_file.insert(format!("{}Trait",s.name), s.def_file.to_owned());
+                println!("type {} in module {}", s.name, s.def_file);
+            });
+
+            api_def.enums.iter().for_each(|s| {
+                enum_def_file.insert(s.name.to_owned(), s.def_file.to_owned());
+                println!("enum {} in module {}", s.name, s.def_file);
+
+                if !s.flags_name.is_empty() {
+                    enum_def_file.insert(s.flags_name.to_owned(), s.def_file.to_owned());
+                    println!("enum {} in module {}", s.flags_name, s.def_file);
+                }
             });
         }
 
-        // Patch up the qt names in the function arguments
+        // Patch up the qt names/def_file in the function arguments
         for func in api_defs
             .iter_mut()
             .flat_map(|api| api.class_structs.iter_mut())
             .flat_map(|s| s.functions.iter_mut())
         {
             for arg in func.function_args.iter_mut() {
-                if let Some(qt_name) = struct_name_map.get(&arg.type_name) {
-                    arg.qt_type_name = qt_name.to_owned();
-                }
+                Self::update_variable(arg, &struct_name_map, &type_def_file, &enum_def_file);
             }
 
             if let Some(ref mut ret_val) = func.return_val {
-                if let Some(qt_name) = struct_name_map.get(&ret_val.type_name) {
-                    ret_val.qt_type_name = qt_name.to_owned();
-                }
+                Self::update_variable(ret_val, &struct_name_map, &type_def_file, &enum_def_file);
             }
         }
     }

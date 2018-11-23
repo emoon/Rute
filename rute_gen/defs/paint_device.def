@@ -18,7 +18,7 @@ struct PaintDevice {
     device_pixel_ratio_f() -> f32,
     color_count() -> i32,
     depth() -> i32,
-    [static] device_pixel_ratio_f_scale() -> f32,
+    //[static] device_pixel_ratio_f_scale() -> f32,
     //[event]
     //init_painter(painter: *PainterType),
     //[event]

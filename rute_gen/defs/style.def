@@ -382,7 +382,7 @@ struct Style : Object {
     ///
     /// **See also:** [`t::alignment()`]
     //[event]
-    item_text_rect(fm: &FontMetricsType, r: &RectType, flags: i32, enabled: bool, text: String) -> Rect,
+    //item_text_rect(fm: &FontMetricsType, r: &RectType, flags: i32, enabled: bool, text: String) -> Rect,
     ///
     /// Returns the area within the given *rectangle* in which to draw
     /// the specified *pixmap* according to the defined *alignment.*
@@ -550,7 +550,7 @@ struct Style : Object {
     /// **See also:** [`draw_complex_control()`]
     /// [`draw_control()`]
     //[event]
-    draw_primitive(pe: Style::PrimitiveElement, opt: *StyleOptionType, p: *PainterType, w: *WidgetType),
+    //draw_primitive(pe: Style::PrimitiveElement, opt: *StyleOptionType, p: *PainterType, w: *WidgetType),
     ///
     /// Returns the sub-area for the given *element* as described in the
     /// provided style *option.* The returned rectangle is defined in
@@ -612,7 +612,7 @@ struct Style : Object {
     /// * [QStyleOptionProgressBar](QStyleOptionProgressBar)
     ///
     //[event]
-    sub_element_rect(sub_element: Style::SubElement, option: *StyleOptionType, widget: *WidgetType) -> Rect,
+    //sub_element_rect(sub_element: Style::SubElement, option: *StyleOptionType, widget: *WidgetType) -> Rect,
     ///
     /// Returns the size of the element described by the specified
     /// *option* and *type,* based on the provided *contentsSize.*
@@ -718,7 +718,7 @@ struct Style : Object {
     /// **See also:** ContentsType
     /// [`StyleOption`]
     //[event]
-    size_from_contents(ct: Style::ContentsType, opt: *StyleOptionType, contents_size: &SizeType, w: *WidgetType) -> Size,
+    //size_from_contents(ct: Style::ContentsType, opt: *StyleOptionType, contents_size: &SizeType, w: *WidgetType) -> Size,
     ///
     /// Returns an integer representing the specified style *hint* for
     /// the given *widget* described by the provided style *option.*
@@ -727,7 +727,7 @@ struct Style : Object {
     /// the integer that styleHint() returns. See the QStyleHintReturn class
     /// description for details.
     //[event]
-    style_hint(stylehint: Style::StyleHint, opt: *StyleOptionType, widget: *WidgetType, return_data: *StyleHintReturnType) -> i32,
+    //style_hint(stylehint: Style::StyleHint, opt: *StyleOptionType, widget: *WidgetType, return_data: *StyleHintReturnType) -> i32,
     ///
     /// Returns a pixmap for the given *standardPixmap.*
     ///
@@ -743,7 +743,7 @@ struct Style : Object {
     ///
     /// **See also:** [`standard_icon()`]
     //[event]
-    standard_pixmap(standard_pixmap: Style::StandardPixmap, opt: *StyleOptionType, widget: *WidgetType) -> Pixmap,
+    //standard_pixmap(standard_pixmap: Style::StandardPixmap, opt: *StyleOptionType, widget: *WidgetType) -> Pixmap,
     ///
     /// const QWidget *widget = 0) const = 0;
     ///
@@ -755,7 +755,7 @@ struct Style : Object {
     /// appropriate icon. The *widget* argument is optional and can also
     /// be used to aid the determination of the icon.
     //[event]
-    standard_icon(standard_icon: Style::StandardPixmap, option: *StyleOptionType, widget: *WidgetType) -> Icon,
+    //standard_icon(standard_icon: Style::StandardPixmap, option: *StyleOptionType, widget: *WidgetType) -> Icon,
     ///
     /// const QPixmap &pixmap, const QStyleOption *option) const
     ///
@@ -771,7 +771,7 @@ struct Style : Object {
     ///
     /// **See also:** [`Icon`]
     //[event]
-    generated_icon_pixmap(icon_mode: Icon::Mode, pixmap: &PixmapType, opt: *StyleOptionType) -> Pixmap,
+    //generated_icon_pixmap(icon_mode: Icon::Mode, pixmap: &PixmapType, opt: *StyleOptionType) -> Pixmap,
     ///
     /// Returns the given *logicalRectangle* converted to screen
     /// coordinates based on the specified *direction.* The *boundingRectangle* is used when performing the translation.
@@ -781,13 +781,13 @@ struct Style : Object {
     /// function.
     ///
     /// **See also:** [`Widget::layout_direction()`]
-    [static] visual_rect(direction: Rute::LayoutDirection, bounding_rect: &RectType, logical_rect: &RectType) -> Rect,
+    //[static] visual_rect(direction: Rute::LayoutDirection, bounding_rect: &RectType, logical_rect: &RectType) -> Rect,
     ///
     /// Returns the given *logicalPosition* converted to screen
     /// coordinates based on the specified *direction.* The *boundingRectangle* is used when performing the translation.
     ///
     /// **See also:** [`Widget::layout_direction()`]
-    [static] visual_pos(direction: Rute::LayoutDirection, bounding_rect: &RectType, logical_pos: &PointType) -> Point,
+    //[static] visual_pos(direction: Rute::LayoutDirection, bounding_rect: &RectType, logical_pos: &PointType) -> Point,
     ///
     /// Converts the given *logicalValue* to a pixel position. The *min*
     /// parameter maps to 0, *max* maps to *span* and other values are
@@ -801,7 +801,7 @@ struct Style : Object {
     /// Set the *upsideDown* parameter to true to reverse this behavior.
     ///
     /// **See also:** [`slider_value_from_position()`]
-    [static] slider_position_from_value(min: i32, max: i32, val: i32, space: i32, upside_down: bool) -> i32,
+    //[static] slider_position_from_value(min: i32, max: i32, val: i32, space: i32, upside_down: bool) -> i32,
     ///
     /// Converts the given pixel *position* to a logical value. 0 maps to
     /// the *min* parameter, *span* maps to *max* and other values are
@@ -816,7 +816,7 @@ struct Style : Object {
     /// behavior.
     ///
     /// **See also:** [`slider_position_from_value()`]
-    [static] slider_value_from_position(min: i32, max: i32, pos: i32, space: i32, upside_down: bool) -> i32,
+    //[static] slider_value_from_position(min: i32, max: i32, pos: i32, space: i32, upside_down: bool) -> i32,
     ///
     /// Transforms an *alignment* of Qt::AlignLeft or Qt::AlignRight
     /// without Qt::AlignAbsolute into Qt::AlignLeft or Qt::AlignRight with
@@ -827,10 +827,10 @@ struct Style : Object {
     /// default alignment for the given layout *direction.*
     ///
     /// QWidget::layoutDirection
-    [static] visual_alignment(direction: Rute::LayoutDirection, alignment: Rute::Alignment) -> Rute::Alignment,
+    //[static] visual_alignment(direction: Rute::LayoutDirection, alignment: Rute::Alignment) -> Rute::Alignment,
     ///
     /// Returns a new rectangle of the specified *size* that is aligned to the given *rectangle* according to the specified *alignment* and *direction.*
-    [static] aligned_rect(direction: Rute::LayoutDirection, alignment: Rute::Alignment, size: &SizeType, rectangle: &RectType) -> Rect,
+    //[static] aligned_rect(direction: Rute::LayoutDirection, alignment: Rute::Alignment, size: &SizeType, rectangle: &RectType) -> Rect,
     ///
     /// QSizePolicy::ControlType control2, Qt::Orientation orientation,
     /// const QStyleOption *option = 0, const QWidget *widget = 0) const
@@ -847,7 +847,7 @@ struct Style : Object {
     ///
     /// **See also:** [`combined_layout_spacing()`]
     //[event]
-    layout_spacing(control1: SizePolicy::ControlType, control2: SizePolicy::ControlType, orientation: Rute::Orientation, option: *StyleOptionType, widget: *WidgetType) -> i32,
+    //layout_spacing(control1: SizePolicy::ControlType, control2: SizePolicy::ControlType, orientation: Rute::Orientation, option: *StyleOptionType, widget: *WidgetType) -> i32,
     ///
     /// Returns the spacing that should be used between *controls1* and
     /// *controls2* in a layout. *orientation* specifies whether the
@@ -864,7 +864,7 @@ struct Style : Object {
     /// negative value.
     ///
     /// **See also:** [`layout_spacing()`]
-    combined_layout_spacing(controls1: SizePolicy::ControlTypes, controls2: SizePolicy::ControlTypes, orientation: Rute::Orientation, option: *StyleOptionType, widget: *WidgetType) -> i32,
+    //combined_layout_spacing(controls1: SizePolicy::ControlTypes, controls2: SizePolicy::ControlTypes, orientation: Rute::Orientation, option: *StyleOptionType, widget: *WidgetType) -> i32,
     ///
     /// This function returns the current proxy for this style.
     /// By default most styles will return themselves. However

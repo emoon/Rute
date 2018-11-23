@@ -3079,7 +3079,7 @@ struct Painter {
     ///
     /// **Overloads**
     /// Draws the given *picture* at point ( *x,* *y).*
-    draw_picture(p: &PointFType, picture: &PictureType),
+    //draw_picture(p: &PointFType, picture: &PictureType),
     ///
     /// Replays the given *picture* at the given *point.*
     ///
@@ -3100,8 +3100,8 @@ struct Painter {
     ///
     /// **Overloads**
     /// Draws the given *picture* at point ( *x,* *y).*
-    [org_name(drawPicture)]
-    draw_picture_2(x: i32, y: i32, picture: &PictureType),
+    //[org_name(drawPicture)]
+    //draw_picture_2(x: i32, y: i32, picture: &PictureType),
     ///
     /// Replays the given *picture* at the given *point.*
     ///
@@ -3122,8 +3122,8 @@ struct Painter {
     ///
     /// **Overloads**
     /// Draws the given *picture* at point ( *x,* *y).*
-    [org_name(drawPicture)]
-    draw_picture_3(p: &PointType, picture: &PictureType),
+    //[org_name(drawPicture)]
+    //draw_picture_3(p: &PointType, picture: &PictureType),
     ///
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -4786,7 +4786,7 @@ struct Painter {
     /// **See also:** [`GlyphRun::set_raw_font`]
     /// [`GlyphRun::set_positions`]
     /// [`GlyphRun::set_glyph_indexes`]
-    draw_glyph_run(position: &PointFType, glyph_run: &GlyphRunType),
+    //draw_glyph_run(position: &PointFType, glyph_run: &GlyphRunType),
     ///
     /// **Overloads**
     /// Draws the *staticText* at the *topLeftPosition.*
@@ -4816,7 +4816,7 @@ struct Painter {
     /// **Note**: The y-position is used as the top of the font.
     ///
     /// **See also:** [`StaticText`]
-    draw_static_text(top_left_position: &PointFType, static_text: &StaticTextType),
+    //draw_static_text(top_left_position: &PointFType, static_text: &StaticTextType),
     ///
     /// **Overloads**
     /// Draws the *staticText* at the *topLeftPosition.*
@@ -4846,8 +4846,8 @@ struct Painter {
     /// **Note**: The y-position is used as the top of the font.
     ///
     /// **See also:** [`StaticText`]
-    [org_name(drawStaticText)]
-    draw_static_text_2(top_left_position: &PointType, static_text: &StaticTextType),
+    //[org_name(drawStaticText)]
+    //draw_static_text_2(top_left_position: &PointType, static_text: &StaticTextType),
     ///
     /// **Overloads**
     /// Draws the *staticText* at the *topLeftPosition.*
@@ -4877,8 +4877,8 @@ struct Painter {
     /// **Note**: The y-position is used as the top of the font.
     ///
     /// **See also:** [`StaticText`]
-    [org_name(drawStaticText)]
-    draw_static_text_3(left: i32, top: i32, static_text: &StaticTextType),
+    //[org_name(drawStaticText)]
+    //draw_static_text_3(left: i32, top: i32, static_text: &StaticTextType),
     ///
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -6116,8 +6116,8 @@ struct Painter {
     ///
     /// **See also:** [`set_font()`]
     /// [`set_pen()`]
-    [org_name(drawText)]
-    draw_text_8(r: &RectFType, text: String, o: &TextOptionType),
+    //[org_name(drawText)]
+    //draw_text_8(r: &RectFType, text: String, o: &TextOptionType),
     ///
     /// Returns the bounding rectangle of the *text* as it will appear
     /// when drawn inside the given *rectangle* with the specified *flags* using the currently set font(); i.e the function tells you
@@ -6331,13 +6331,13 @@ struct Painter {
     /// description of general rich text properties.
     ///
     /// **See also:** [`TextOption`]
-    [org_name(boundingRect)]
-    bounding_rect_4(rect: &RectFType, text: String, o: &TextOptionType) -> RectF,
-    draw_text_item(p: &PointFType, ti: &TextItemType),
-    [org_name(drawTextItem)]
-    draw_text_item_2(x: i32, y: i32, ti: &TextItemType),
-    [org_name(drawTextItem)]
-    draw_text_item_3(p: &PointType, ti: &TextItemType),
+    //[org_name(boundingRect)]
+    //bounding_rect_4(rect: &RectFType, text: String, o: &TextOptionType) -> RectF,
+    //draw_text_item(p: &PointFType, ti: &TextItemType),
+    //[org_name(drawTextItem)]
+    //draw_text_item_2(x: i32, y: i32, ti: &TextItemType),
+    //[org_name(drawTextItem)]
+    //draw_text_item_3(p: &PointType, ti: &TextItemType),
     ///
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.

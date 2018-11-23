@@ -137,7 +137,7 @@ struct PaintEngine {
     ///
     /// The default implementation ignores the *path* and does nothing.
     //[event]
-    draw_path(path: &PainterPathType),
+    //draw_path(path: &PainterPathType),
     ///
     /// Draws the first *pointCount* points in the buffer *points*
     ///
@@ -202,7 +202,7 @@ struct PaintEngine {
     /// default implementation of this function converts the text to a
     /// QPainterPath and paints the resulting path.
     //[event]
-    draw_text_item(p: &PointFType, text_item: &TextItemType),
+    //draw_text_item(p: &PointFType, text_item: &TextItemType),
     ///
     /// Reimplement this function to draw the *pixmap* in the given *rect,* starting at the given *p.* The pixmap will be
     /// drawn repeatedly until the *rect* is filled.
