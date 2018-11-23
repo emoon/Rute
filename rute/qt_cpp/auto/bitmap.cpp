@@ -10,23 +10,23 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void bitmap_swap(struct RUBase* self_c, struct RUBase* other) {
-    WRBitmap* qt_value = (WRBitmap*)self_c;
+    QBitmap* qt_value = (QBitmap*)self_c;
     qt_value->swap(*((QBitmap*)other));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void bitmap_clear(struct RUBase* self_c) {
-    WRBitmap* qt_value = (WRBitmap*)self_c;
+    QBitmap* qt_value = (QBitmap*)self_c;
     qt_value->clear();
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RUBitmap bitmap_from_image(struct RUBase* self_c, struct RUBase* image, int flags) {
-    WRBitmap* qt_value = (WRBitmap*)self_c;
+    QBitmap* qt_value = (QBitmap*)self_c;
     auto ret_value = qt_value->fromImage(*((QImage*)image), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
-    WRBitmap* new_val = new WRBitmap();
+    QBitmap* new_val = new QBitmap();
     *new_val = ret_value;
     struct RUBitmap ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -37,26 +37,8 @@ static struct RUBitmap bitmap_from_image(struct RUBase* self_c, struct RUBase* i
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUBitmap bitmap_from_data(struct RUBase* self_c, struct RUBase* size, struct RUBase* bits, int mono_format) {
-    WRBitmap* qt_value = (WRBitmap*)self_c;
-    auto ret_value = qt_value->fromData(*((QSize*)size), bits, (Image::Format)s_format_lookup[mono_format]);
-    WRBitmap* new_val = new WRBitmap();
-    *new_val = ret_value;
-    struct RUBitmap ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_bitmap_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUBitmap create_bitmap(
-    struct RUBase* priv_data,
-    RUDeleteCallback delete_callback,
-    void* private_user_data)
-{
-    auto ctl = generic_create_func_with_delete<struct RUBitmap, WRBitmap>(priv_data, delete_callback, private_user_data);
+static struct RUBitmap create_bitmap(struct RUBase* priv_data) {
+    auto ctl = generic_create_func<struct RUBitmap, QBitmap>(priv_data);
     ctl.all_funcs = &s_bitmap_all_funcs;
     return ctl;
 }
@@ -64,7 +46,7 @@ static struct RUBitmap create_bitmap(
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void destroy_bitmap(struct RUBase* priv_data) {
-    destroy_generic<WRBitmap>(priv_data);
+    destroy_generic<QBitmap>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,7 +67,6 @@ struct RUBitmapFuncs s_bitmap_funcs = {
     bitmap_swap,
     bitmap_clear,
     bitmap_from_image,
-    bitmap_from_data,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

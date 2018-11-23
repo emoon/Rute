@@ -9,22 +9,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static uint8_t pixel_format_get(struct RUBase* self_c, int offset, int width) {
-    WRPixelFormat* qt_value = (WRPixelFormat*)self_c;
-    auto ret_value = qt_value->get((PixelFormat::Field)s_field_lookup[offset], (PixelFormat::FieldWidth)s_field_width_lookup[width]);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static uint64_t pixel_format_set(struct RUBase* self_c, int offset, int width, uint8_t value) {
-    WRPixelFormat* qt_value = (WRPixelFormat*)self_c;
-    auto ret_value = qt_value->set((PixelFormat::Field)s_field_lookup[offset], (PixelFormat::FieldWidth)s_field_width_lookup[width], value);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static int pixel_format_color_model(struct RUBase* self_c) {
     WRPixelFormat* qt_value = (WRPixelFormat*)self_c;
     auto ret_value = qt_value->colorModel();
@@ -219,21 +203,8 @@ static void destroy_pixel_format(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixelFormat get_pixel_format(struct RUBase* priv_data) {
-    (void)priv_data;
-    RUPixelFormat ctl;
-    ctl.qt_data = nullptr;
-    ctl.host_data = nullptr;
-    ctl.all_funcs = &s_pixel_format_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 struct RUPixelFormatFuncs s_pixel_format_funcs = {
     destroy_pixel_format,
-    pixel_format_get,
-    pixel_format_set,
     pixel_format_color_model,
     pixel_format_channel_count,
     pixel_format_red_size,

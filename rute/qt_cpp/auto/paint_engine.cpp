@@ -10,7 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static bool paint_engine_is_active(struct RUBase* self_c) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
     auto ret_value = qt_value->isActive();
     return ret_value;
 }
@@ -18,333 +18,139 @@ static bool paint_engine_is_active(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void paint_engine_set_active(struct RUBase* self_c, bool new_state) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
     qt_value->setActive(new_state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_paint_engine_begin(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* pdev)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_begin = trampoline_func;
-    qt_object->m_begin_user_data = user_data;
-    qt_object->m_begin_wrapped_func = wrapped_func;
+static bool paint_engine_begin(struct RUBase* self_c, struct RUBase* pdev) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    auto ret_value = qt_value->begin((QPaintDevice*)pdev);
+    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void remove_paint_engine_begin(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_begin = nullptr;
-    qt_object->m_begin_user_data = nullptr;
-    qt_object->m_begin_wrapped_func = nullptr;
+static bool paint_engine_end(struct RUBase* self_c) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    auto ret_value = qt_value->end();
+    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_paint_engine_end(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_end = trampoline_func;
-    qt_object->m_end_user_data = user_data;
-    qt_object->m_end_wrapped_func = wrapped_func;
+static void paint_engine_update_state(struct RUBase* self_c, struct RUBase* state) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->updateState(*((QPaintEngineState*)state));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void remove_paint_engine_end(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_end = nullptr;
-    qt_object->m_end_user_data = nullptr;
-    qt_object->m_end_wrapped_func = nullptr;
+static void paint_engine_draw_rects(struct RUBase* self_c, struct RUBase* rects, int rect_count) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawRects((QRect*)rects, rect_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_paint_engine_update_state(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* state)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_update_state = trampoline_func;
-    qt_object->m_update_state_user_data = user_data;
-    qt_object->m_update_state_wrapped_func = wrapped_func;
+static void paint_engine_draw_rects_2(struct RUBase* self_c, struct RUBase* rects, int rect_count) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawRects((QRectF*)rects, rect_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void remove_paint_engine_update_state(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_update_state = nullptr;
-    qt_object->m_update_state_user_data = nullptr;
-    qt_object->m_update_state_wrapped_func = nullptr;
+static void paint_engine_draw_lines(struct RUBase* self_c, struct RUBase* lines, int line_count) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawLines((QLine*)lines, line_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_paint_engine_draw_rects(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* rects, int rect_count)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_rects = trampoline_func;
-    qt_object->m_draw_rects_user_data = user_data;
-    qt_object->m_draw_rects_wrapped_func = wrapped_func;
+static void paint_engine_draw_lines_2(struct RUBase* self_c, struct RUBase* lines, int line_count) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawLines((QLineF*)lines, line_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void remove_paint_engine_draw_rects(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_rects = nullptr;
-    qt_object->m_draw_rects_user_data = nullptr;
-    qt_object->m_draw_rects_wrapped_func = nullptr;
+static void paint_engine_draw_ellipse(struct RUBase* self_c, struct RUBase* r) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawEllipse(*((QRectF*)r));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_paint_engine_draw_rects(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* rects, int rect_count)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_rects = trampoline_func;
-    qt_object->m_draw_rects_user_data = user_data;
-    qt_object->m_draw_rects_wrapped_func = wrapped_func;
+static void paint_engine_draw_ellipse_2(struct RUBase* self_c, struct RUBase* r) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawEllipse(*((QRect*)r));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void remove_paint_engine_draw_rects(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_rects = nullptr;
-    qt_object->m_draw_rects_user_data = nullptr;
-    qt_object->m_draw_rects_wrapped_func = nullptr;
+static void paint_engine_draw_points(struct RUBase* self_c, struct RUBase* points, int point_count) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawPoints((QPointF*)points, point_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_paint_engine_draw_lines(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* lines, int line_count)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_lines = trampoline_func;
-    qt_object->m_draw_lines_user_data = user_data;
-    qt_object->m_draw_lines_wrapped_func = wrapped_func;
+static void paint_engine_draw_points_2(struct RUBase* self_c, struct RUBase* points, int point_count) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawPoints((QPoint*)points, point_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void remove_paint_engine_draw_lines(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_lines = nullptr;
-    qt_object->m_draw_lines_user_data = nullptr;
-    qt_object->m_draw_lines_wrapped_func = nullptr;
+static void paint_engine_draw_polygon(struct RUBase* self_c, struct RUBase* points, int point_count, int mode) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawPolygon((QPointF*)points, point_count, (QPaintEngine::PolygonDrawMode)s_polygon_draw_mode_lookup[mode]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_paint_engine_draw_lines(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* lines, int line_count)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_lines = trampoline_func;
-    qt_object->m_draw_lines_user_data = user_data;
-    qt_object->m_draw_lines_wrapped_func = wrapped_func;
+static void paint_engine_draw_polygon_2(struct RUBase* self_c, struct RUBase* points, int point_count, int mode) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawPolygon((QPoint*)points, point_count, (QPaintEngine::PolygonDrawMode)s_polygon_draw_mode_lookup[mode]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void remove_paint_engine_draw_lines(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_lines = nullptr;
-    qt_object->m_draw_lines_user_data = nullptr;
-    qt_object->m_draw_lines_wrapped_func = nullptr;
+static void paint_engine_draw_pixmap(struct RUBase* self_c, struct RUBase* r, struct RUBase* pm, struct RUBase* sr) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawPixmap(*((QRectF*)r), *((QPixmap*)pm), *((QRectF*)sr));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_paint_engine_draw_ellipse(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* r)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_ellipse = trampoline_func;
-    qt_object->m_draw_ellipse_user_data = user_data;
-    qt_object->m_draw_ellipse_wrapped_func = wrapped_func;
+static void paint_engine_draw_tiled_pixmap(struct RUBase* self_c, struct RUBase* r, struct RUBase* pixmap, struct RUBase* s) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawTiledPixmap(*((QRectF*)r), *((QPixmap*)pixmap), *((QPointF*)s));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void remove_paint_engine_draw_ellipse(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_ellipse = nullptr;
-    qt_object->m_draw_ellipse_user_data = nullptr;
-    qt_object->m_draw_ellipse_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_paint_engine_draw_ellipse(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* r)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_ellipse = trampoline_func;
-    qt_object->m_draw_ellipse_user_data = user_data;
-    qt_object->m_draw_ellipse_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_paint_engine_draw_ellipse(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_ellipse = nullptr;
-    qt_object->m_draw_ellipse_user_data = nullptr;
-    qt_object->m_draw_ellipse_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_paint_engine_draw_points(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* points, int point_count)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_points = trampoline_func;
-    qt_object->m_draw_points_user_data = user_data;
-    qt_object->m_draw_points_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_paint_engine_draw_points(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_points = nullptr;
-    qt_object->m_draw_points_user_data = nullptr;
-    qt_object->m_draw_points_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_paint_engine_draw_points(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* points, int point_count)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_points = trampoline_func;
-    qt_object->m_draw_points_user_data = user_data;
-    qt_object->m_draw_points_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_paint_engine_draw_points(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_points = nullptr;
-    qt_object->m_draw_points_user_data = nullptr;
-    qt_object->m_draw_points_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_paint_engine_draw_polygon(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* points, int point_count, int mode)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_polygon = trampoline_func;
-    qt_object->m_draw_polygon_user_data = user_data;
-    qt_object->m_draw_polygon_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_paint_engine_draw_polygon(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_polygon = nullptr;
-    qt_object->m_draw_polygon_user_data = nullptr;
-    qt_object->m_draw_polygon_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_paint_engine_draw_polygon(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* points, int point_count, int mode)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_polygon = trampoline_func;
-    qt_object->m_draw_polygon_user_data = user_data;
-    qt_object->m_draw_polygon_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_paint_engine_draw_polygon(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_polygon = nullptr;
-    qt_object->m_draw_polygon_user_data = nullptr;
-    qt_object->m_draw_polygon_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_paint_engine_draw_pixmap(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* r, struct RUBase* pm, struct RUBase* sr)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_pixmap = trampoline_func;
-    qt_object->m_draw_pixmap_user_data = user_data;
-    qt_object->m_draw_pixmap_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_paint_engine_draw_pixmap(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_pixmap = nullptr;
-    qt_object->m_draw_pixmap_user_data = nullptr;
-    qt_object->m_draw_pixmap_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_paint_engine_draw_text_item(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* p, struct RUBase* text_item)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_text_item = trampoline_func;
-    qt_object->m_draw_text_item_user_data = user_data;
-    qt_object->m_draw_text_item_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_paint_engine_draw_text_item(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_text_item = nullptr;
-    qt_object->m_draw_text_item_user_data = nullptr;
-    qt_object->m_draw_text_item_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_paint_engine_draw_tiled_pixmap(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* r, struct RUBase* pixmap, struct RUBase* s)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_tiled_pixmap = trampoline_func;
-    qt_object->m_draw_tiled_pixmap_user_data = user_data;
-    qt_object->m_draw_tiled_pixmap_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_paint_engine_draw_tiled_pixmap(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_tiled_pixmap = nullptr;
-    qt_object->m_draw_tiled_pixmap_user_data = nullptr;
-    qt_object->m_draw_tiled_pixmap_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_paint_engine_draw_image(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* r, struct RUBase* pm, struct RUBase* sr, int flags)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_image = trampoline_func;
-    qt_object->m_draw_image_user_data = user_data;
-    qt_object->m_draw_image_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_paint_engine_draw_image(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_draw_image = nullptr;
-    qt_object->m_draw_image_user_data = nullptr;
-    qt_object->m_draw_image_wrapped_func = nullptr;
+static void paint_engine_draw_image(struct RUBase* self_c, struct RUBase* r, struct RUBase* pm, struct RUBase* sr, int flags) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    qt_value->drawImage(*((QRectF*)r), *((QImage*)pm), *((QRectF*)sr), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void paint_engine_set_paint_device(struct RUBase* self_c, struct RUBase* device) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
     qt_value->setPaintDevice((QPaintDevice*)device);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RUPaintDevice paint_engine_paint_device(struct RUBase* self_c) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
     auto ret_value = qt_value->paintDevice();
-    WRPaintDevice* new_val = new WRPaintDevice();
-    *new_val = ret_value;
     struct RUPaintDevice ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_paint_device_all_funcs;
     return ctl;
 }
@@ -352,14 +158,14 @@ static struct RUPaintDevice paint_engine_paint_device(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void paint_engine_set_system_clip(struct RUBase* self_c, struct RUBase* base_clip) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
     qt_value->setSystemClip(*((QRegion*)base_clip));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RURegion paint_engine_system_clip(struct RUBase* self_c) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
     auto ret_value = qt_value->systemClip();
     WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
@@ -373,14 +179,14 @@ static struct RURegion paint_engine_system_clip(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void paint_engine_set_system_rect(struct RUBase* self_c, struct RUBase* rect) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
     qt_value->setSystemRect(*((QRect*)rect));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RURect paint_engine_system_rect(struct RUBase* self_c) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
     auto ret_value = qt_value->systemRect();
     WRRect* new_val = new WRRect();
     *new_val = ret_value;
@@ -393,182 +199,46 @@ static struct RURect paint_engine_system_rect(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_paint_engine_coordinate_offset(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_coordinate_offset = trampoline_func;
-    qt_object->m_coordinate_offset_user_data = user_data;
-    qt_object->m_coordinate_offset_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_paint_engine_coordinate_offset(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_coordinate_offset = nullptr;
-    qt_object->m_coordinate_offset_user_data = nullptr;
-    qt_object->m_coordinate_offset_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_paint_engine_type(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c)) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_type = trampoline_func;
-    qt_object->m_type_user_data = user_data;
-    qt_object->m_type_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_paint_engine_type(void* object) {
-    WRPaintEngine* qt_object = (WRPaintEngine*)object;
-    qt_object->m_type = nullptr;
-    qt_object->m_type_user_data = nullptr;
-    qt_object->m_type_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void paint_engine_fix_neg_rect(struct RUBase* self_c, struct RUBase* x, struct RUBase* y, struct RUBase* w, struct RUBase* h) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
-    qt_value->fixNegRect(x, y, w, h);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool paint_engine_test_dirty(struct RUBase* self_c, int df) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
-    auto ret_value = qt_value->testDirty((PaintEngine::DirtyFlags)s_dirty_flags_lookup[df]);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void paint_engine_set_dirty(struct RUBase* self_c, int df) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
-    qt_value->setDirty((PaintEngine::DirtyFlags)s_dirty_flags_lookup[df]);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void paint_engine_clear_dirty(struct RUBase* self_c, int df) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
-    qt_value->clearDirty((PaintEngine::DirtyFlags)s_dirty_flags_lookup[df]);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool paint_engine_has_feature(struct RUBase* self_c, int feature) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
-    auto ret_value = qt_value->hasFeature((PaintEngine::PaintEngineFeatures)s_paint_engine_features_lookup[feature]);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUPainter paint_engine_painter(struct RUBase* self_c) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
-    auto ret_value = qt_value->painter();
-    WRPainter* new_val = new WRPainter();
+static struct RUPoint paint_engine_coordinate_offset(struct RUBase* self_c) {
+    QPaintEngine* qt_value = (QPaintEngine*)self_c;
+    auto ret_value = qt_value->coordinateOffset();
+    WRPoint* new_val = new WRPoint();
     *new_val = ret_value;
-    struct RUPainter ctl;
+    struct RUPoint ctl;
     ctl.qt_data = (struct RUBase*)new_val;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_painter_all_funcs;
+    ctl.all_funcs = &s_point_all_funcs;
     return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void paint_engine_sync_state(struct RUBase* self_c) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
-    qt_value->syncState();
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool paint_engine_is_extended(struct RUBase* self_c) {
-    WRPaintEngine* qt_value = (WRPaintEngine*)self_c;
-    auto ret_value = qt_value->isExtended();
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUPaintEngine create_paint_engine(
-    struct RUBase* priv_data,
-    RUDeleteCallback delete_callback,
-    void* private_user_data)
-{
-    auto ctl = generic_create_func_with_delete<struct RUPaintEngine, WRPaintEngine>(priv_data, delete_callback, private_user_data);
-    ctl.all_funcs = &s_paint_engine_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void destroy_paint_engine(struct RUBase* priv_data) {
-    destroy_generic<WRPaintEngine>(priv_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 struct RUPaintEngineFuncs s_paint_engine_funcs = {
-    destroy_paint_engine,
     paint_engine_is_active,
     paint_engine_set_active,
-    set_paint_engine_begin,
-    remove_paint_engine_begin,
-    set_paint_engine_end,
-    remove_paint_engine_end,
-    set_paint_engine_update_state,
-    remove_paint_engine_update_state,
-    set_paint_engine_draw_rects,
-    remove_paint_engine_draw_rects,
-    set_paint_engine_draw_rects,
-    remove_paint_engine_draw_rects,
-    set_paint_engine_draw_lines,
-    remove_paint_engine_draw_lines,
-    set_paint_engine_draw_lines,
-    remove_paint_engine_draw_lines,
-    set_paint_engine_draw_ellipse,
-    remove_paint_engine_draw_ellipse,
-    set_paint_engine_draw_ellipse,
-    remove_paint_engine_draw_ellipse,
-    set_paint_engine_draw_points,
-    remove_paint_engine_draw_points,
-    set_paint_engine_draw_points,
-    remove_paint_engine_draw_points,
-    set_paint_engine_draw_polygon,
-    remove_paint_engine_draw_polygon,
-    set_paint_engine_draw_polygon,
-    remove_paint_engine_draw_polygon,
-    set_paint_engine_draw_pixmap,
-    remove_paint_engine_draw_pixmap,
-    set_paint_engine_draw_text_item,
-    remove_paint_engine_draw_text_item,
-    set_paint_engine_draw_tiled_pixmap,
-    remove_paint_engine_draw_tiled_pixmap,
-    set_paint_engine_draw_image,
-    remove_paint_engine_draw_image,
+    paint_engine_begin,
+    paint_engine_end,
+    paint_engine_update_state,
+    paint_engine_draw_rects,
+    paint_engine_draw_rects_2,
+    paint_engine_draw_lines,
+    paint_engine_draw_lines_2,
+    paint_engine_draw_ellipse,
+    paint_engine_draw_ellipse_2,
+    paint_engine_draw_points,
+    paint_engine_draw_points_2,
+    paint_engine_draw_polygon,
+    paint_engine_draw_polygon_2,
+    paint_engine_draw_pixmap,
+    paint_engine_draw_tiled_pixmap,
+    paint_engine_draw_image,
     paint_engine_set_paint_device,
     paint_engine_paint_device,
     paint_engine_set_system_clip,
     paint_engine_system_clip,
     paint_engine_set_system_rect,
     paint_engine_system_rect,
-    set_paint_engine_coordinate_offset,
-    remove_paint_engine_coordinate_offset,
-    set_paint_engine_type,
-    remove_paint_engine_type,
-    paint_engine_fix_neg_rect,
-    paint_engine_test_dirty,
-    paint_engine_set_dirty,
-    paint_engine_clear_dirty,
-    paint_engine_has_feature,
-    paint_engine_painter,
-    paint_engine_sync_state,
-    paint_engine_is_extended,
+    paint_engine_coordinate_offset,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

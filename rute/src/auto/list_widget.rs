@@ -16,9 +16,26 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::list_widget_ffi::*;
+#[allow(unused_imports)]
+use auto::object::*;
+#[allow(unused_imports)]
+use auto::object_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_device::*;
+#[allow(unused_imports)]
+use auto::paint_device_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
+#[allow(unused_imports)]
+use auto::widget::*;
+#[allow(unused_imports)]
+use auto::widget_ffi::*;
 #[derive(Clone)]
 pub struct ListWidget<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
@@ -75,29 +92,43 @@ impl<'a> ListWidget<'a> {
         }
     }
 }
-pub trait ListWidgetType<'a> {
-    fn add_item(&self, label: &str) -> &Self {
+pub trait ListWidgetTrait<'a> {
+    fn add_item(&self, label: &str) {
         let str_in_label_1 = CString::new(label).unwrap();
 
         let (obj_data, funcs) = self.get_list_widget_obj_funcs();
         unsafe {
             ((*funcs).add_item)(obj_data, str_in_label_1.as_ptr());
         }
-        self
     }
-    fn clear(&self) -> &Self {
+    fn clear(&self) {
         let (obj_data, funcs) = self.get_list_widget_obj_funcs();
         unsafe {
             ((*funcs).clear)(obj_data);
         }
-        self
     }
 
     #[inline]
     fn get_list_widget_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetFuncs);
 }
 
-impl<'a> WidgetType<'a> for ListWidget<'a> {
+impl<'a> ObjectTrait<'a> for ListWidget<'a> {
+    #[inline]
+    fn get_object_obj_funcs(&self) -> (*const RUBase, *const RUObjectFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).object_funcs) }
+    }
+}
+
+impl<'a> PaintDeviceTrait<'a> for ListWidget<'a> {
+    #[inline]
+    fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).paint_device_funcs) }
+    }
+}
+
+impl<'a> WidgetTrait<'a> for ListWidget<'a> {
     #[inline]
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
@@ -105,7 +136,7 @@ impl<'a> WidgetType<'a> for ListWidget<'a> {
     }
 }
 
-impl<'a> ListWidgetType<'a> for ListWidget<'a> {
+impl<'a> ListWidgetTrait<'a> for ListWidget<'a> {
     #[inline]
     fn get_list_widget_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetFuncs) {
         let obj = self.data.get().unwrap();

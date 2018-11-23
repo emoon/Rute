@@ -50,6 +50,8 @@ struct RUListWidgetFuncs s_list_widget_funcs = {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 struct RUListWidgetAllFuncs s_list_widget_all_funcs = {
+    &s_object_funcs,
+    &s_paint_device_funcs,
     &s_widget_funcs,
     &s_list_widget_funcs,
 };

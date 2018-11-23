@@ -1,35 +1,141 @@
+#[allow(unused_imports)]
 use auto::application_ffi::*;
+#[allow(unused_imports)]
 use auto::backing_store_ffi::*;
+#[allow(unused_imports)]
 use auto::bitmap_ffi::*;
+#[allow(unused_imports)]
 use auto::brush_ffi::*;
+#[allow(unused_imports)]
+use auto::close_event_ffi::*;
+#[allow(unused_imports)]
 use auto::color_ffi::*;
+#[allow(unused_imports)]
+use auto::context_menu_event_ffi::*;
+#[allow(unused_imports)]
+use auto::cursor_ffi::*;
+#[allow(unused_imports)]
+use auto::drag_enter_event_ffi::*;
+#[allow(unused_imports)]
+use auto::drag_leave_event_ffi::*;
+#[allow(unused_imports)]
+use auto::drag_move_event_ffi::*;
+#[allow(unused_imports)]
+use auto::drop_event_ffi::*;
+#[allow(unused_imports)]
 use auto::event_ffi::*;
+#[allow(unused_imports)]
+use auto::expose_event_ffi::*;
+#[allow(unused_imports)]
+use auto::focus_event_ffi::*;
+#[allow(unused_imports)]
 use auto::font_ffi::*;
+#[allow(unused_imports)]
 use auto::font_info_ffi::*;
+#[allow(unused_imports)]
 use auto::gradient_ffi::*;
+#[allow(unused_imports)]
+use auto::hide_event_ffi::*;
+#[allow(unused_imports)]
+use auto::icon_ffi::*;
+#[allow(unused_imports)]
 use auto::image_ffi::*;
+#[allow(unused_imports)]
+use auto::input_event_ffi::*;
+#[allow(unused_imports)]
+use auto::key_event_ffi::*;
+#[allow(unused_imports)]
+use auto::key_sequence_ffi::*;
+#[allow(unused_imports)]
+use auto::layout_ffi::*;
+#[allow(unused_imports)]
+use auto::layout_item_ffi::*;
+#[allow(unused_imports)]
+use auto::line_f_ffi::*;
+#[allow(unused_imports)]
+use auto::line_ffi::*;
+#[allow(unused_imports)]
 use auto::list_widget_ffi::*;
+#[allow(unused_imports)]
 use auto::list_widget_item_ffi::*;
+#[allow(unused_imports)]
 use auto::margins_ffi::*;
+#[allow(unused_imports)]
+use auto::matrix_ffi::*;
+#[allow(unused_imports)]
+use auto::mime_data_ffi::*;
+#[allow(unused_imports)]
+use auto::mouse_event_ffi::*;
+#[allow(unused_imports)]
+use auto::move_event_ffi::*;
+#[allow(unused_imports)]
+use auto::object_ffi::*;
+#[allow(unused_imports)]
 use auto::paint_device_ffi::*;
+#[allow(unused_imports)]
 use auto::paint_engine_ffi::*;
+#[allow(unused_imports)]
 use auto::paint_engine_state_ffi::*;
+#[allow(unused_imports)]
 use auto::paint_event_ffi::*;
+#[allow(unused_imports)]
 use auto::painter_ffi::*;
+#[allow(unused_imports)]
+use auto::palette_ffi::*;
+#[allow(unused_imports)]
 use auto::pen_ffi::*;
+#[allow(unused_imports)]
 use auto::pixel_format_ffi::*;
+#[allow(unused_imports)]
 use auto::pixmap_ffi::*;
+#[allow(unused_imports)]
 use auto::point_f_ffi::*;
+#[allow(unused_imports)]
 use auto::point_ffi::*;
+#[allow(unused_imports)]
+use auto::polygon_f_ffi::*;
+#[allow(unused_imports)]
+use auto::polygon_ffi::*;
+#[allow(unused_imports)]
 use auto::push_button_ffi::*;
+#[allow(unused_imports)]
 use auto::rect_f_ffi::*;
+#[allow(unused_imports)]
 use auto::rect_ffi::*;
+#[allow(unused_imports)]
 use auto::region_ffi::*;
+#[allow(unused_imports)]
+use auto::resize_event_ffi::*;
+#[allow(unused_imports)]
 use auto::screen_ffi::*;
+#[allow(unused_imports)]
+use auto::show_event_ffi::*;
+#[allow(unused_imports)]
 use auto::size_f_ffi::*;
+#[allow(unused_imports)]
 use auto::size_ffi::*;
+#[allow(unused_imports)]
+use auto::size_policy_ffi::*;
+#[allow(unused_imports)]
+use auto::spacer_item_ffi::*;
+#[allow(unused_imports)]
+use auto::style_ffi::*;
+#[allow(unused_imports)]
+use auto::surface_ffi::*;
+#[allow(unused_imports)]
+use auto::surface_format_ffi::*;
+#[allow(unused_imports)]
+use auto::tablet_event_ffi::*;
+#[allow(unused_imports)]
+use auto::touch_event_ffi::*;
+#[allow(unused_imports)]
 use auto::transform_ffi::*;
+#[allow(unused_imports)]
+use auto::wheel_event_ffi::*;
+#[allow(unused_imports)]
 use auto::widget_ffi::*;
+#[allow(unused_imports)]
+use auto::window_ffi::*;
 use rute_ffi_base::*;
 use std::os::raw::c_void;
 
@@ -38,16 +144,7 @@ use std::os::raw::c_void;
 pub struct RuteFFI {
     pub create_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
     pub get_application: extern "C" fn(priv_data: *const RUBase) -> RUApplication,
-    pub create_backing_store: extern "C" fn(
-        priv_data: *const RUBase,
-        callback: unsafe extern "C" fn(),
-        host_data: *const c_void,
-    ) -> RUBackingStore,
-    pub create_bitmap: extern "C" fn(
-        priv_data: *const RUBase,
-        callback: unsafe extern "C" fn(),
-        host_data: *const c_void,
-    ) -> RUBitmap,
+    pub create_bitmap: extern "C" fn(priv_data: *const RUBase) -> RUBitmap,
     pub get_bitmap: extern "C" fn(priv_data: *const RUBase) -> RUBitmap,
     pub create_brush: extern "C" fn(
         priv_data: *const RUBase,
@@ -60,23 +157,52 @@ pub struct RuteFFI {
         host_data: *const c_void,
     ) -> RUColor,
     pub get_color: extern "C" fn(priv_data: *const RUBase) -> RUColor,
-    pub create_font: extern "C" fn(priv_data: *const RUBase) -> RUFont,
-    pub create_font_info: extern "C" fn(
+    pub create_cursor: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
-    ) -> RUFontInfo,
+    ) -> RUCursor,
+    pub get_cursor: extern "C" fn(priv_data: *const RUBase) -> RUCursor,
+    pub create_font: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUFont,
+    pub get_font: extern "C" fn(priv_data: *const RUBase) -> RUFont,
     pub create_gradient: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
     ) -> RUGradient,
+    pub create_icon: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUIcon,
+    pub get_icon: extern "C" fn(priv_data: *const RUBase) -> RUIcon,
     pub create_image: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
     ) -> RUImage,
     pub get_image: extern "C" fn(priv_data: *const RUBase) -> RUImage,
+    pub create_key_sequence: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUKeySequence,
+    pub get_key_sequence: extern "C" fn(priv_data: *const RUBase) -> RUKeySequence,
+    pub create_line: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RULine,
+    pub create_line_f: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RULineF,
+    pub get_line_f: extern "C" fn(priv_data: *const RUBase) -> RULineF,
     pub create_list_widget: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -92,17 +218,17 @@ pub struct RuteFFI {
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
     ) -> RUMargins,
-    pub create_paint_device: extern "C" fn(
+    pub create_matrix: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
-    ) -> RUPaintDevice,
-    pub get_paint_device: extern "C" fn(priv_data: *const RUBase) -> RUPaintDevice,
-    pub create_paint_engine: extern "C" fn(
+    ) -> RUMatrix,
+    pub create_mime_data: extern "C" fn(priv_data: *const RUBase) -> RUMimeData,
+    pub create_object: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
-    ) -> RUPaintEngine,
+    ) -> RUObject,
     pub create_paint_engine_state: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -114,6 +240,11 @@ pub struct RuteFFI {
         host_data: *const c_void,
     ) -> RUPainter,
     pub get_painter: extern "C" fn(priv_data: *const RUBase) -> RUPainter,
+    pub create_palette: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUPalette,
     pub create_pen: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -124,7 +255,6 @@ pub struct RuteFFI {
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
     ) -> RUPixelFormat,
-    pub get_pixel_format: extern "C" fn(priv_data: *const RUBase) -> RUPixelFormat,
     pub create_pixmap: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -143,6 +273,16 @@ pub struct RuteFFI {
         host_data: *const c_void,
     ) -> RUPointF,
     pub get_point_f: extern "C" fn(priv_data: *const RUBase) -> RUPointF,
+    pub create_polygon: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUPolygon,
+    pub create_polygon_f: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUPolygonF,
     pub create_push_button: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -173,6 +313,17 @@ pub struct RuteFFI {
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
     ) -> RUSizeF,
+    pub create_size_policy: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUSizePolicy,
+    pub create_surface_format: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUSurfaceFormat,
+    pub get_surface_format: extern "C" fn(priv_data: *const RUBase) -> RUSurfaceFormat,
     pub create_transform: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -185,6 +336,12 @@ pub struct RuteFFI {
         host_data: *const c_void,
     ) -> RUWidget,
     pub get_widget: extern "C" fn(priv_data: *const RUBase) -> RUWidget,
+    pub create_window: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUWindow,
+    pub get_window: extern "C" fn(priv_data: *const RUBase) -> RUWindow,
 }
 
 extern "C" {

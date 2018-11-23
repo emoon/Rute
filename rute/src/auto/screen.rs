@@ -16,9 +16,18 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_enums::ScreenOrientation;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
+#[allow(unused_imports)]
+use auto::screen_ffi::*;
+#[allow(unused_imports)]
+use auto::size::Size;
 #[derive(Clone)]
 pub struct Screen<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
@@ -55,7 +64,7 @@ impl<'a> Screen<'a> {
         }
     }
 }
-pub trait ScreenType<'a> {
+pub trait ScreenTrait<'a> {
     fn name(&self) -> String {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -225,7 +234,7 @@ pub trait ScreenType<'a> {
     fn get_screen_obj_funcs(&self) -> (*const RUBase, *const RUScreenFuncs);
 }
 
-impl<'a> ScreenType<'a> for Screen<'a> {
+impl<'a> ScreenTrait<'a> for Screen<'a> {
     #[inline]
     fn get_screen_obj_funcs(&self) -> (*const RUBase, *const RUScreenFuncs) {
         let obj = self.data.get().unwrap();

@@ -16,9 +16,26 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::object::*;
+#[allow(unused_imports)]
+use auto::object_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_device::*;
+#[allow(unused_imports)]
+use auto::paint_device_ffi::*;
+#[allow(unused_imports)]
+use auto::push_button_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
+#[allow(unused_imports)]
+use auto::widget::*;
+#[allow(unused_imports)]
+use auto::widget_ffi::*;
 #[derive(Clone)]
 pub struct PushButton<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
@@ -72,6 +89,153 @@ impl<'a> PushButton<'a> {
             all_funcs: ffi_data.all_funcs,
             owned: false,
             _marker: PhantomData,
+        }
+    }
+    fn set_pressed_event_ud<F, T>(&self, data: &'a T, func: F)
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_push_button_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_pressed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(push_button_pressed_trampoline_ud::<T> as usize),
+            );
+        }
+    }
+
+    fn set_pressed_event<F>(&self, func: F)
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_push_button_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_pressed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(push_button_pressed_trampoline as usize),
+            );
+        }
+    }
+
+    fn set_released_event_ud<F, T>(&self, data: &'a T, func: F)
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_push_button_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_released_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(push_button_released_trampoline_ud::<T> as usize),
+            );
+        }
+    }
+
+    fn set_released_event<F>(&self, func: F)
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_push_button_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_released_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(push_button_released_trampoline as usize),
+            );
+        }
+    }
+
+    fn set_clicked_event_ud<F, T>(&self, data: &'a T, func: F)
+    where
+        F: Fn(&T, bool) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_push_button_obj_funcs();
+
+        let f: Box<Box<Fn(&T, bool) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_clicked_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(push_button_clicked_trampoline_ud::<T> as usize),
+            );
+        }
+    }
+
+    fn set_clicked_event<F>(&self, func: F)
+    where
+        F: Fn(bool) + 'a,
+    {
+        let (obj_data, funcs) = self.get_push_button_obj_funcs();
+        let f: Box<Box<Fn(bool) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_clicked_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(push_button_clicked_trampoline as usize),
+            );
+        }
+    }
+
+    fn set_toggled_event_ud<F, T>(&self, data: &'a T, func: F)
+    where
+        F: Fn(&T, bool) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_push_button_obj_funcs();
+
+        let f: Box<Box<Fn(&T, bool) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_toggled_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(push_button_toggled_trampoline_ud::<T> as usize),
+            );
+        }
+    }
+
+    fn set_toggled_event<F>(&self, func: F)
+    where
+        F: Fn(bool) + 'a,
+    {
+        let (obj_data, funcs) = self.get_push_button_obj_funcs();
+        let f: Box<Box<Fn(bool) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_toggled_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(push_button_toggled_trampoline as usize),
+            );
         }
     }
 }
@@ -150,7 +314,7 @@ unsafe extern "C" fn push_button_toggled_trampoline(
     f(checked);
 }
 
-pub trait PushButtonType<'a> {
+pub trait PushButtonTrait<'a> {
     fn auto_default(&self) -> bool {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {
@@ -158,12 +322,11 @@ pub trait PushButtonType<'a> {
             ret_val
         }
     }
-    fn set_auto_default(&self, arg0: bool) -> &Self {
+    fn set_auto_default(&self, arg0: bool) {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {
             ((*funcs).set_auto_default)(obj_data, arg0);
         }
-        self
     }
     fn is_default(&self) -> bool {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
@@ -172,19 +335,17 @@ pub trait PushButtonType<'a> {
             ret_val
         }
     }
-    fn set_default(&self, arg0: bool) -> &Self {
+    fn set_default(&self, arg0: bool) {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {
             ((*funcs).set_default)(obj_data, arg0);
         }
-        self
     }
-    fn set_flat(&self, arg0: bool) -> &Self {
+    fn set_flat(&self, arg0: bool) {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {
             ((*funcs).set_flat)(obj_data, arg0);
         }
-        self
     }
     fn is_flat(&self) -> bool {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
@@ -193,21 +354,19 @@ pub trait PushButtonType<'a> {
             ret_val
         }
     }
-    fn show_menu(&self) -> &Self {
+    fn show_menu(&self) {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {
             ((*funcs).show_menu)(obj_data);
         }
-        self
     }
-    fn set_text(&self, text: &str) -> &Self {
+    fn set_text(&self, text: &str) {
         let str_in_text_1 = CString::new(text).unwrap();
 
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
         unsafe {
             ((*funcs).set_text)(obj_data, str_in_text_1.as_ptr());
         }
-        self
     }
     fn text(&self) -> String {
         let (obj_data, funcs) = self.get_push_button_obj_funcs();
@@ -218,175 +377,27 @@ pub trait PushButtonType<'a> {
         }
     }
 
-    fn set_pressed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_push_button_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_pressed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(push_button_pressed_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_pressed_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_push_button_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_pressed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(push_button_pressed_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_released_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_push_button_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_released_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(push_button_released_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_released_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_push_button_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_released_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(push_button_released_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_clicked_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, bool) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_push_button_obj_funcs();
-
-        let f: Box<Box<Fn(&T, bool) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_clicked_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(push_button_clicked_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_clicked_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(bool) + 'a,
-    {
-        let (obj_data, funcs) = self.get_push_button_obj_funcs();
-        let f: Box<Box<Fn(bool) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_clicked_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(push_button_clicked_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_toggled_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, bool) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_push_button_obj_funcs();
-
-        let f: Box<Box<Fn(&T, bool) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_toggled_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(push_button_toggled_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_toggled_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(bool) + 'a,
-    {
-        let (obj_data, funcs) = self.get_push_button_obj_funcs();
-        let f: Box<Box<Fn(bool) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_toggled_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(push_button_toggled_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
     #[inline]
     fn get_push_button_obj_funcs(&self) -> (*const RUBase, *const RUPushButtonFuncs);
 }
 
-impl<'a> WidgetType<'a> for PushButton<'a> {
+impl<'a> ObjectTrait<'a> for PushButton<'a> {
+    #[inline]
+    fn get_object_obj_funcs(&self) -> (*const RUBase, *const RUObjectFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).object_funcs) }
+    }
+}
+
+impl<'a> PaintDeviceTrait<'a> for PushButton<'a> {
+    #[inline]
+    fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).paint_device_funcs) }
+    }
+}
+
+impl<'a> WidgetTrait<'a> for PushButton<'a> {
     #[inline]
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
@@ -394,7 +405,7 @@ impl<'a> WidgetType<'a> for PushButton<'a> {
     }
 }
 
-impl<'a> PushButtonType<'a> for PushButton<'a> {
+impl<'a> PushButtonTrait<'a> for PushButton<'a> {
     #[inline]
     fn get_push_button_obj_funcs(&self) -> (*const RUBase, *const RUPushButtonFuncs) {
         let obj = self.data.get().unwrap();

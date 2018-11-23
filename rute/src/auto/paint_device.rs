@@ -16,9 +16,16 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::paint_device_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_engine::PaintEngine;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -31,26 +38,6 @@ pub struct PaintDevice<'a> {
 }
 
 impl<'a> PaintDevice<'a> {
-    pub fn new() -> PaintDevice<'a> {
-        let data = Rc::new(Cell::new(None));
-
-        let ffi_data = unsafe {
-            ((*rute_ffi_get()).create_paint_device)(
-                ::std::ptr::null(),
-                transmute(rute_object_delete_callback as usize),
-                Rc::into_raw(data.clone()) as *const c_void,
-            )
-        };
-
-        data.set(Some(ffi_data.qt_data));
-
-        PaintDevice {
-            data,
-            all_funcs: ffi_data.all_funcs,
-            owned: true,
-            _marker: PhantomData,
-        }
-    }
     pub fn new_from_rc(ffi_data: RUPaintDevice) -> PaintDevice<'a> {
         PaintDevice {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
@@ -77,322 +64,30 @@ impl<'a> PaintDevice<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn set_dev_type_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_dev_type_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_device_dev_type_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_dev_type_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_dev_type_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_device_dev_type_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_paint_engine_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_paint_engine_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_device_paint_engine_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_paint_engine_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_paint_engine_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_device_paint_engine_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_init_painter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PainterType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PainterType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_init_painter_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_device_init_painter_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_init_painter_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PainterType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
-        let f: Box<Box<Fn(&PainterType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_init_painter_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_device_init_painter_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_redirected_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PointType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PointType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_redirected_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_device_redirected_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_redirected_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PointType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
-        let f: Box<Box<Fn(&PointType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_redirected_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_device_redirected_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_shared_painter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_shared_painter_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_device_shared_painter_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_shared_painter_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_shared_painter_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_device_shared_painter_trampoline as usize),
-            );
-        }
-
-        self
-    }
 }
-
-pub struct PaintDeviceStatic<'a> {
-    pub all_funcs: *const RUPaintDeviceAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-
-unsafe extern "C" fn paint_device_dev_type_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> i32 {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn paint_device_dev_type_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> i32 {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-unsafe extern "C" fn paint_device_paint_engine_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUPaintEngine {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn paint_device_paint_engine_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUPaintEngine {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-unsafe extern "C" fn paint_device_init_painter_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    painter: *const RUBase,
-) {
-    let f: &&(Fn(&T, &PainterType) + 'static) = transmute(func);
-    let obj_painter_0 = Painter::new_from_temporary(*(painter as *const RUPainter));
-    let data = self_c as *const T;
-    f(&*data, &obj_painter_0);
-}
-
-unsafe extern "C" fn paint_device_init_painter_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    painter: *const RUBase,
-) {
-    let f: &&(Fn(&PainterType) + 'static) = transmute(func);
-    let obj_painter_0 = Painter::new_from_temporary(*(painter as *const RUPainter));
-    f(&obj_painter_0);
-}
-
-unsafe extern "C" fn paint_device_redirected_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    offset: *const RUBase,
-) -> RUPaintDevice {
-    let f: &&(Fn(&T, &PointType) + 'static) = transmute(func);
-    let obj_offset_0 = Point::new_from_temporary(*(offset as *const RUPoint));
-    let data = self_c as *const T;
-    f(&*data, &obj_offset_0);
-}
-
-unsafe extern "C" fn paint_device_redirected_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    offset: *const RUBase,
-) -> RUPaintDevice {
-    let f: &&(Fn(&PointType) + 'static) = transmute(func);
-    let obj_offset_0 = Point::new_from_temporary(*(offset as *const RUPoint));
-    f(&obj_offset_0);
-}
-
-unsafe extern "C" fn paint_device_shared_painter_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUPainter {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn paint_device_shared_painter_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUPainter {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-pub trait PaintDeviceType<'a> {
+pub trait PaintDeviceTrait<'a> {
     fn painting_active(&self) -> bool {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).painting_active)(obj_data);
             ret_val
+        }
+    }
+    fn paint_engine(&self) -> Option<PaintEngine> {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).paint_engine)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = PaintEngine::new_from_rc(t);
+            } else {
+                ret_val = PaintEngine::new_from_owned(t);
+            }
+            Some(ret_val)
         }
     }
     fn width(&self) -> i32 {
@@ -406,20 +101,6 @@ pub trait PaintDeviceType<'a> {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).height)(obj_data);
-            ret_val
-        }
-    }
-    fn width_mm(&self) -> i32 {
-        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).width_mm)(obj_data);
-            ret_val
-        }
-    }
-    fn height_mm(&self) -> i32 {
-        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).height_mm)(obj_data);
             ret_val
         }
     }
@@ -484,29 +165,25 @@ pub trait PaintDeviceType<'a> {
     fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs);
 }
 
-impl<'a> PaintDeviceType<'a> for PaintDevice<'a> {
+impl<'a> PaintDeviceTrait<'a> for PaintDevice<'a> {
     #[inline]
     fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).paint_device_funcs) }
     }
 }
-pub trait PaintDeviceStaticType {
-    fn device_pixel_ratio_f_scale<'a>() -> f32 {
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_paint_device)(::std::ptr::null()).all_funcs)
-                    .paint_device_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).device_pixel_ratio_f_scale)(obj_data);
-            ret_val
-        }
-    }
+#[repr(u32)]
+pub enum PaintDeviceMetric {
+    PdmWidth,
+    PdmHeight,
+    PdmWidthMm,
+    PdmHeightMm,
+    PdmNumColors,
+    PdmDepth,
+    PdmDpiX,
+    PdmDpiY,
+    PdmPhysicalDpiX,
+    PdmPhysicalDpiY,
+    PdmDevicePixelRatio,
+    PdmDevicePixelRatioScaled,
 }
-
-impl<'a> PaintDeviceStaticType for PaintDevice<'a> {}
-
-impl<'a> PaintDeviceStaticType for PaintDeviceStatic<'a> {}

@@ -7,8 +7,6 @@ use std::os::raw::c_void;
 #[derive(Copy, Clone)]
 pub struct RUPixelFormatFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
-    pub get: extern "C" fn(self_c: *const RUBase, offset: i32, width: i32) -> u8,
-    pub set: extern "C" fn(self_c: *const RUBase, offset: i32, width: i32, value: u8) -> u64,
     pub color_model: extern "C" fn(self_c: *const RUBase) -> i32,
     pub channel_count: extern "C" fn(self_c: *const RUBase) -> u8,
     pub red_size: extern "C" fn(self_c: *const RUBase) -> u8,

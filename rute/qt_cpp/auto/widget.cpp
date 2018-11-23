@@ -9,16 +9,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUWId widget_win_id(struct RUBase* self_c) {
+static uint64_t widget_win_id(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->winId();
-    * new_val = new ();
-    *new_val = ret_value;
-    struct RUWId ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_w_id_all_funcs;
-    return ctl;
+    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,30 +24,18 @@ static void widget_create_win_id(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUWId widget_internal_win_id(struct RUBase* self_c) {
+static uint64_t widget_internal_win_id(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->internalWinId();
-    * new_val = new ();
-    *new_val = ret_value;
-    struct RUWId ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_w_id_all_funcs;
-    return ctl;
+    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUWId widget_effective_win_id(struct RUBase* self_c) {
+static uint64_t widget_effective_win_id(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->effectiveWinId();
-    * new_val = new ();
-    *new_val = ret_value;
-    struct RUWId ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_w_id_all_funcs;
-    return ctl;
+    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,11 +43,9 @@ static struct RUWId widget_effective_win_id(struct RUBase* self_c) {
 static struct RUStyle widget_style(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->style();
-    * new_val = new ();
-    *new_val = ret_value;
     struct RUStyle ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_style_all_funcs;
     return ctl;
 }
@@ -338,7 +318,21 @@ static void widget_set_minimum_size(struct RUBase* self_c, struct RUBase* arg0) 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_maximum_size(struct RUBase* self_c, int maxw, int maxh) {
+static void widget_set_minimum_size_2(struct RUBase* self_c, int minw, int minh) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMinimumSize(minw, minh);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_maximum_size(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMaximumSize(*((QSize*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_maximum_size_2(struct RUBase* self_c, int maxw, int maxh) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->setMaximumSize(maxw, maxh);
 }
@@ -394,7 +388,7 @@ static void widget_set_size_increment(struct RUBase* self_c, struct RUBase* arg0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_size_increment(struct RUBase* self_c, int w, int h) {
+static void widget_set_size_increment_2(struct RUBase* self_c, int w, int h) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->setSizeIncrement(w, h);
 }
@@ -422,14 +416,21 @@ static void widget_set_base_size(struct RUBase* self_c, struct RUBase* arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_base_size(struct RUBase* self_c, int basew, int baseh) {
+static void widget_set_base_size_2(struct RUBase* self_c, int basew, int baseh) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->setBaseSize(basew, baseh);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_fixed_size(struct RUBase* self_c, int w, int h) {
+static void widget_set_fixed_size(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setFixedSize(*((QSize*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_fixed_size_2(struct RUBase* self_c, int w, int h) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->setFixedSize(w, h);
 }
@@ -537,11 +538,9 @@ static struct RUPoint widget_map_from(struct RUBase* self_c, struct RUBase* arg0
 static struct RUWidget widget_window(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->window();
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
@@ -551,25 +550,9 @@ static struct RUWidget widget_window(struct RUBase* self_c) {
 static struct RUWidget widget_native_parent_widget(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->nativeParentWidget();
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_widget_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUWidget widget_top_level_widget(struct RUBase* self_c) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->topLevelWidget();
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
-    struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
@@ -579,7 +562,7 @@ static struct RUWidget widget_top_level_widget(struct RUBase* self_c) {
 static struct RUPalette widget_palette(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->palette();
-    * new_val = new ();
+    WRPalette* new_val = new WRPalette();
     *new_val = ret_value;
     struct RUPalette ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -599,7 +582,7 @@ static void widget_set_palette(struct RUBase* self_c, struct RUBase* arg0) {
 
 static void widget_set_background_role(struct RUBase* self_c, int arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setBackgroundRole((Palette::ColorRole)s_color_role_lookup[arg0]);
+    qt_value->setBackgroundRole((QPalette::ColorRole)s_color_role_lookup[arg0]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -614,7 +597,7 @@ static int widget_background_role(struct RUBase* self_c) {
 
 static void widget_set_foreground_role(struct RUBase* self_c, int arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setForegroundRole((Palette::ColorRole)s_color_role_lookup[arg0]);
+    qt_value->setForegroundRole((QPalette::ColorRole)s_color_role_lookup[arg0]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -630,7 +613,7 @@ static int widget_foreground_role(struct RUBase* self_c) {
 static struct RUFont widget_font(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->font();
-    QFont* new_val = new QFont();
+    WRFont* new_val = new WRFont();
     *new_val = ret_value;
     struct RUFont ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -648,24 +631,10 @@ static void widget_set_font(struct RUBase* self_c, struct RUBase* arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUFontInfo widget_font_info(struct RUBase* self_c) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->fontInfo();
-    WRFontInfo* new_val = new WRFontInfo();
-    *new_val = ret_value;
-    struct RUFontInfo ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_font_info_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static struct RUCursor widget_cursor(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->cursor();
-    * new_val = new ();
+    WRCursor* new_val = new WRCursor();
     *new_val = ret_value;
     struct RUCursor ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -735,7 +704,7 @@ static void widget_set_mask(struct RUBase* self_c, struct RUBase* arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_mask(struct RUBase* self_c, struct RUBase* arg0) {
+static void widget_set_mask_2(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->setMask(*((QRegion*)arg0));
 }
@@ -765,14 +734,14 @@ static void widget_clear_mask(struct RUBase* self_c) {
 
 static void widget_render(struct RUBase* self_c, struct RUBase* target, struct RUBase* target_offset, struct RUBase* source_region, int render_flags) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->render((QPaintDevice*)target, *((QPoint*)target_offset), *((QRegion*)source_region), (Widget::RenderFlags)s_render_flags_lookup[render_flags]);
+    qt_value->render((QPaintDevice*)target, *((QPoint*)target_offset), *((QRegion*)source_region), (QWidget::RenderFlags)s_render_flags_lookup[render_flags]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_render(struct RUBase* self_c, struct RUBase* painter, struct RUBase* target_offset, struct RUBase* source_region, int render_flags) {
+static void widget_render_2(struct RUBase* self_c, struct RUBase* painter, struct RUBase* target_offset, struct RUBase* source_region, int render_flags) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->render((QPainter*)painter, *((QPoint*)target_offset), *((QRegion*)source_region), (Widget::RenderFlags)s_render_flags_lookup[render_flags]);
+    qt_value->render((QPainter*)painter, *((QPoint*)target_offset), *((QRegion*)source_region), (QWidget::RenderFlags)s_render_flags_lookup[render_flags]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -791,37 +760,16 @@ static struct RUPixmap widget_grab(struct RUBase* self_c, struct RUBase* rectang
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUGraphicsEffect widget_graphics_effect(struct RUBase* self_c) {
+static void widget_grab_gesture(struct RUBase* self_c, int gtype, int flags) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->graphicsEffect();
-    * new_val = new ();
-    *new_val = ret_value;
-    struct RUGraphicsEffect ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_graphics_effect_all_funcs;
-    return ctl;
+    qt_value->grabGesture((Qt::GestureType)s_gesture_type_lookup[gtype], (Qt::GestureFlags)s_gesture_flags_lookup[flags]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_graphics_effect(struct RUBase* self_c, struct RUBase* effect) {
+static void widget_ungrab_gesture(struct RUBase* self_c, int gtype) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setGraphicsEffect((QGraphicsEffect*)effect);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void widget_grab_gesture(struct RUBase* self_c, int gesture_type, int flags) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->grabGesture((Qt::GestureType)s_gesture_type_lookup[gesture_type], (Qt::GestureFlags)s_gesture_flags_lookup[flags]);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void widget_ungrab_gesture(struct RUBase* self_c, int gesture_type) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->ungrabGesture((Qt::GestureType)s_gesture_type_lookup[gesture_type]);
+    qt_value->ungrabGesture((Qt::GestureType)s_gesture_type_lookup[gtype]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -866,7 +814,7 @@ static void widget_set_window_icon(struct RUBase* self_c, struct RUBase* icon) {
 static struct RUIcon widget_window_icon(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->windowIcon();
-    * new_val = new ();
+    WRIcon* new_val = new WRIcon();
     *new_val = ret_value;
     struct RUIcon ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -1057,34 +1005,6 @@ static void widget_unset_layout_direction(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_locale(struct RUBase* self_c, struct RUBase* locale) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setLocale(*((QLocale*)locale));
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RULocale widget_locale(struct RUBase* self_c) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->locale();
-    * new_val = new ();
-    *new_val = ret_value;
-    struct RULocale ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_locale_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void widget_unset_locale(struct RUBase* self_c) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->unsetLocale();
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static bool widget_is_right_to_left(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->isRightToLeft();
@@ -1130,7 +1050,7 @@ static void widget_clear_focus(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_focus(struct RUBase* self_c, int reason) {
+static void widget_set_focus_2(struct RUBase* self_c, int reason) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->setFocus((Qt::FocusReason)s_focus_reason_lookup[reason]);
 }
@@ -1177,11 +1097,9 @@ static void widget_set_focus_proxy(struct RUBase* self_c, struct RUBase* arg0) {
 static struct RUWidget widget_focus_proxy(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->focusProxy();
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
@@ -1210,7 +1128,7 @@ static void widget_grab_mouse(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_grab_mouse(struct RUBase* self_c, struct RUBase* arg0) {
+static void widget_grab_mouse_2(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->grabMouse(*((QCursor*)arg0));
 }
@@ -1270,11 +1188,9 @@ static void widget_set_shortcut_auto_repeat(struct RUBase* self_c, int id, bool 
 static struct RUWidget widget_mouse_grabber(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->mouseGrabber();
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
@@ -1284,11 +1200,9 @@ static struct RUWidget widget_mouse_grabber(struct RUBase* self_c) {
 static struct RUWidget widget_keyboard_grabber(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->keyboardGrabber();
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
@@ -1324,34 +1238,44 @@ static void widget_repaint(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_update(struct RUBase* self_c, int x, int y, int w, int h) {
+static void widget_update_2(struct RUBase* self_c, int x, int y, int w, int h) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->update(x, y, w, h);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_repaint(struct RUBase* self_c, int x, int y, int w, int h) {
+static void widget_update_3(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->update(*((QRect*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_update_4(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->update(*((QRegion*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_repaint_2(struct RUBase* self_c, int x, int y, int w, int h) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->repaint(x, y, w, h);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_set_visible(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, bool visible)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_set_visible = trampoline_func;
-    qt_object->m_set_visible_user_data = user_data;
-    qt_object->m_set_visible_wrapped_func = wrapped_func;
+static void widget_repaint_3(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->repaint(*((QRect*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void remove_widget_set_visible(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_set_visible = nullptr;
-    qt_object->m_set_visible_user_data = nullptr;
-    qt_object->m_set_visible_wrapped_func = nullptr;
+static void widget_repaint_4(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->repaint(*((QRegion*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1441,9 +1365,23 @@ static void widget_move_widget(struct RUBase* self_c, int x, int y) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void widget_move_2(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->move(*((QPoint*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void widget_resize(struct RUBase* self_c, int w, int h) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->resize(w, h);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_resize_2(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->resize(*((QSize*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1525,38 +1463,30 @@ static void widget_override_window_state(struct RUBase* self_c, int state) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_size_hint(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_size_hint = trampoline_func;
-    qt_object->m_size_hint_user_data = user_data;
-    qt_object->m_size_hint_wrapped_func = wrapped_func;
+static struct RUSize widget_size_hint(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->sizeHint();
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void remove_widget_size_hint(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_size_hint = nullptr;
-    qt_object->m_size_hint_user_data = nullptr;
-    qt_object->m_size_hint_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_widget_minimum_size_hint(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_minimum_size_hint = trampoline_func;
-    qt_object->m_minimum_size_hint_user_data = user_data;
-    qt_object->m_minimum_size_hint_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_widget_minimum_size_hint(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_minimum_size_hint = nullptr;
-    qt_object->m_minimum_size_hint_user_data = nullptr;
-    qt_object->m_minimum_size_hint_wrapped_func = nullptr;
+static struct RUSize widget_minimum_size_hint(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->minimumSizeHint();
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1564,7 +1494,7 @@ static void remove_widget_minimum_size_hint(void* object) {
 static struct RUSizePolicy widget_size_policy(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->sizePolicy();
-    * new_val = new ();
+    WRSizePolicy* new_val = new WRSizePolicy();
     *new_val = ret_value;
     struct RUSizePolicy ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -1575,52 +1505,32 @@ static struct RUSizePolicy widget_size_policy(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_size_policy(struct RUBase* self_c, struct RUSizePolicyType arg0) {
+static void widget_set_size_policy(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->setSizePolicy(*((QSizePolicy*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_size_policy(struct RUBase* self_c, int horizontal, int vertical) {
+static void widget_set_size_policy_2(struct RUBase* self_c, int horizontal, int vertical) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setSizePolicy((SizePolicy::Policy)s_policy_lookup[horizontal], (SizePolicy::Policy)s_policy_lookup[vertical]);
+    qt_value->setSizePolicy((QSizePolicy::Policy)s_policy_lookup[horizontal], (QSizePolicy::Policy)s_policy_lookup[vertical]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_height_for_width(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, int arg0)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_height_for_width = trampoline_func;
-    qt_object->m_height_for_width_user_data = user_data;
-    qt_object->m_height_for_width_wrapped_func = wrapped_func;
+static int widget_height_for_width(struct RUBase* self_c, int arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->heightForWidth(arg0);
+    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void remove_widget_height_for_width(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_height_for_width = nullptr;
-    qt_object->m_height_for_width_user_data = nullptr;
-    qt_object->m_height_for_width_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_widget_has_height_for_width(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_has_height_for_width = trampoline_func;
-    qt_object->m_has_height_for_width_user_data = user_data;
-    qt_object->m_has_height_for_width_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_widget_has_height_for_width(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_has_height_for_width = nullptr;
-    qt_object->m_has_height_for_width_user_data = nullptr;
-    qt_object->m_has_height_for_width_wrapped_func = nullptr;
+static bool widget_has_height_for_width(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->hasHeightForWidth();
+    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1642,6 +1552,13 @@ static struct RURegion widget_visible_region(struct RUBase* self_c) {
 static void widget_set_contents_margins(struct RUBase* self_c, int left, int top, int right, int bottom) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->setContentsMargins(left, top, right, bottom);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_contents_margins_2(struct RUBase* self_c, struct RUBase* margins) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setContentsMargins(*((QMargins*)margins));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1677,11 +1594,9 @@ static struct RURect widget_contents_rect(struct RUBase* self_c) {
 static struct RULayout widget_layout(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->layout();
-    * new_val = new ();
-    *new_val = ret_value;
     struct RULayout ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_layout_all_funcs;
     return ctl;
 }
@@ -1702,7 +1617,7 @@ static void widget_set_parent(struct RUBase* self_c, struct RUBase* parent) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_parent(struct RUBase* self_c, struct RUBase* parent, int f) {
+static void widget_set_parent_2(struct RUBase* self_c, struct RUBase* parent, int f) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->setParent((QWidget*)parent, (Qt::WindowFlags)s_window_flags_lookup[f]);
 }
@@ -1716,7 +1631,7 @@ static void widget_scroll(struct RUBase* self_c, int dx, int dy) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_scroll_by_rect(struct RUBase* self_c, int dx, int dy, struct RUBase* arg0) {
+static void widget_scroll_2(struct RUBase* self_c, int dx, int dy, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->scroll(dx, dy, *((QRect*)arg0));
 }
@@ -1726,11 +1641,9 @@ static void widget_scroll_by_rect(struct RUBase* self_c, int dx, int dy, struct 
 static struct RUWidget widget_focus_widget(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->focusWidget();
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
@@ -1740,11 +1653,9 @@ static struct RUWidget widget_focus_widget(struct RUBase* self_c) {
 static struct RUWidget widget_next_in_focus_chain(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->nextInFocusChain();
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
@@ -1754,11 +1665,9 @@ static struct RUWidget widget_next_in_focus_chain(struct RUBase* self_c) {
 static struct RUWidget widget_previous_in_focus_chain(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->previousInFocusChain();
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
@@ -1783,20 +1692,18 @@ static void widget_set_accept_drops(struct RUBase* self_c, bool on) {
 static struct RUWidget widget_parent_widget(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->parentWidget();
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_window_flags(struct RUBase* self_c, int flags) {
+static void widget_set_window_flags(struct RUBase* self_c, int gtype) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setWindowFlags((Qt::WindowFlags)s_window_flags_lookup[flags]);
+    qt_value->setWindowFlags((Qt::WindowFlags)s_window_flags_lookup[gtype]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1809,36 +1716,19 @@ static int widget_window_flags(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_window_flag(struct RUBase* self_c, int flag, bool on) {
+static void widget_override_window_flags(struct RUBase* self_c, int wtype) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setWindowFlag((Qt::WindowType)s_window_type_lookup[flag], on);
+    qt_value->overrideWindowFlags((Qt::WindowFlags)s_window_flags_lookup[wtype]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_override_window_flags(struct RUBase* self_c, int flags) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->overrideWindowFlags((Qt::WindowFlags)s_window_flags_lookup[flags]);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static int widget_window_type(struct RUBase* self_c) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->windowType();
-    return s_window_type_lookup[(int)ret_value];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUWidget widget_find(struct RUBase* self_c, struct RUWId arg0) {
+static struct RUWidget widget_find(struct RUBase* self_c, uint64_t arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->find(arg0);
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
@@ -1848,26 +1738,34 @@ static struct RUWidget widget_find(struct RUBase* self_c, struct RUWId arg0) {
 static struct RUWidget widget_child_at(struct RUBase* self_c, int x, int y) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->childAt(x, y);
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUWidget widget_child_at(struct RUBase* self_c, struct RUBase* p) {
+static struct RUWidget widget_child_at_2(struct RUBase* self_c, struct RUBase* p) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->childAt(*((QPoint*)p));
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUPaintEngine widget_paint_engine(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->paintEngine();
+    struct RUPaintEngine ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_paint_engine_all_funcs;
     return ctl;
 }
 
@@ -1906,11 +1804,9 @@ static void widget_set_auto_fill_background(struct RUBase* self_c, bool enabled)
 static struct RUBackingStore widget_backing_store(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->backingStore();
-    WRBackingStore* new_val = new WRBackingStore();
-    *new_val = ret_value;
     struct RUBackingStore ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_backing_store_all_funcs;
     return ctl;
 }
@@ -1920,11 +1816,9 @@ static struct RUBackingStore widget_backing_store(struct RUBase* self_c) {
 static struct RUWindow widget_window_handle(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->windowHandle();
-    * new_val = new ();
-    *new_val = ret_value;
     struct RUWindow ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_window_all_funcs;
     return ctl;
 }
@@ -1934,18 +1828,16 @@ static struct RUWindow widget_window_handle(struct RUBase* self_c) {
 static struct RUWidget widget_create_window_container(struct RUBase* self_c, struct RUBase* window, struct RUBase* parent, int flags) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->createWindowContainer((QWindow*)window, (QWidget*)parent, (Qt::WindowFlags)s_window_flags_lookup[flags]);
-    WRWidget* new_val = new WRWidget();
-    *new_val = ret_value;
     struct RUWidget ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_widget_all_funcs;
     return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_window_title_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void* self_c, const char* title)) {
+static void set_widget_window_title_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* title)) {
     QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(windowTitleChanged(QString)), wrap, SLOT(method(QString)));
@@ -1953,7 +1845,7 @@ static void set_widget_window_title_changed_event(void* object, void* user_data,
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_window_icon_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void* self_c, struct RUBase* icon)) {
+static void set_widget_window_icon_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* icon)) {
     QSlotWrapperSignal_self_IconType_void* wrap = new QSlotWrapperSignal_self_IconType_void(user_data, (Signal_self_IconType_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(windowIconChanged(*(QIcon)*)), wrap, SLOT(method(*(QIcon)*)));
@@ -1961,7 +1853,7 @@ static void set_widget_window_icon_changed_event(void* object, void* user_data, 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_window_icon_text_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void* self_c, const char* icon_text)) {
+static void set_widget_window_icon_text_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* icon_text)) {
     QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(windowIconTextChanged(QString)), wrap, SLOT(method(QString)));
@@ -1969,28 +1861,10 @@ static void set_widget_window_icon_text_changed_event(void* object, void* user_d
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_custom_context_menu_requested_event(void* object, void* user_data, void* wrapped_func, void (*event)(void* self_c, struct RUBase* pos)) {
+static void set_widget_custom_context_menu_requested_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* pos)) {
     QSlotWrapperSignal_self_PointType_void* wrap = new QSlotWrapperSignal_self_PointType_void(user_data, (Signal_self_PointType_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(customContextMenuRequested(*(QPoint)*)), wrap, SLOT(method(*(QPoint)*)));
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_widget_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_event = trampoline_func;
-    qt_object->m_event_user_data = user_data;
-    qt_object->m_event_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_widget_event(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_event = nullptr;
-    qt_object->m_event_user_data = nullptr;
-    qt_object->m_event_wrapped_func = nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2301,24 +2175,6 @@ static void remove_widget_tablet_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_action_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_action_event = trampoline_func;
-    qt_object->m_action_event_user_data = user_data;
-    qt_object->m_action_event_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_widget_action_event(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_action_event = nullptr;
-    qt_object->m_action_event_user_data = nullptr;
-    qt_object->m_action_event_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void set_widget_drag_enter_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_drag_enter_event = trampoline_func;
@@ -2445,96 +2301,6 @@ static void remove_widget_change_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_init_painter(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* painter)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_init_painter = trampoline_func;
-    qt_object->m_init_painter_user_data = user_data;
-    qt_object->m_init_painter_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_widget_init_painter(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_init_painter = nullptr;
-    qt_object->m_init_painter_user_data = nullptr;
-    qt_object->m_init_painter_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_widget_redirected(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* offset)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_redirected = trampoline_func;
-    qt_object->m_redirected_user_data = user_data;
-    qt_object->m_redirected_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_widget_redirected(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_redirected = nullptr;
-    qt_object->m_redirected_user_data = nullptr;
-    qt_object->m_redirected_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_widget_shared_painter(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_shared_painter = trampoline_func;
-    qt_object->m_shared_painter_user_data = user_data;
-    qt_object->m_shared_painter_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_widget_shared_painter(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_shared_painter = nullptr;
-    qt_object->m_shared_painter_user_data = nullptr;
-    qt_object->m_shared_painter_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_widget_input_method_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_input_method_event = trampoline_func;
-    qt_object->m_input_method_event_user_data = user_data;
-    qt_object->m_input_method_event_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_widget_input_method_event(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_input_method_event = nullptr;
-    qt_object->m_input_method_event_user_data = nullptr;
-    qt_object->m_input_method_event_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_widget_input_method_query(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, int arg0)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_input_method_query = trampoline_func;
-    qt_object->m_input_method_query_user_data = user_data;
-    qt_object->m_input_method_query_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_widget_input_method_query(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_input_method_query = nullptr;
-    qt_object->m_input_method_query_user_data = nullptr;
-    qt_object->m_input_method_query_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static int widget_input_method_hints(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->inputMethodHints();
@@ -2546,54 +2312,6 @@ static int widget_input_method_hints(struct RUBase* self_c) {
 static void widget_set_input_method_hints(struct RUBase* self_c, int hints) {
     WRWidget* qt_value = (WRWidget*)self_c;
     qt_value->setInputMethodHints((Qt::InputMethodHints)s_input_method_hints_lookup[hints]);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void widget_update_micro_focus(struct RUBase* self_c) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->updateMicroFocus();
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void widget_create(struct RUBase* self_c, struct RUWId arg0, bool initialize_window, bool destroy_old_window) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->create(arg0, initialize_window, destroy_old_window);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_widget_focus_next_prev_child(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, bool next)) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_focus_next_prev_child = trampoline_func;
-    qt_object->m_focus_next_prev_child_user_data = user_data;
-    qt_object->m_focus_next_prev_child_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_widget_focus_next_prev_child(void* object) {
-    WRWidget* qt_object = (WRWidget*)object;
-    qt_object->m_focus_next_prev_child = nullptr;
-    qt_object->m_focus_next_prev_child_user_data = nullptr;
-    qt_object->m_focus_next_prev_child_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool widget_focus_next_child(struct RUBase* self_c) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->focusNextChild();
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool widget_focus_previous_child(struct RUBase* self_c) {
-    WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->focusPreviousChild();
-    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2662,18 +2380,21 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_maximum_width,
     widget_maximum_height,
     widget_set_minimum_size,
+    widget_set_minimum_size_2,
     widget_set_maximum_size,
+    widget_set_maximum_size_2,
     widget_set_minimum_width,
     widget_set_minimum_height,
     widget_set_maximum_width,
     widget_set_maximum_height,
     widget_size_increment,
     widget_set_size_increment,
-    widget_set_size_increment,
+    widget_set_size_increment_2,
     widget_base_size,
     widget_set_base_size,
-    widget_set_base_size,
+    widget_set_base_size_2,
     widget_set_fixed_size,
+    widget_set_fixed_size_2,
     widget_set_fixed_width,
     widget_set_fixed_height,
     widget_map_to_global,
@@ -2684,7 +2405,6 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_map_from,
     widget_window,
     widget_native_parent_widget,
-    widget_top_level_widget,
     widget_palette,
     widget_set_palette,
     widget_set_background_role,
@@ -2693,7 +2413,6 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_foreground_role,
     widget_font,
     widget_set_font,
-    widget_font_info,
     widget_cursor,
     widget_set_cursor,
     widget_unset_cursor,
@@ -2703,14 +2422,12 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_set_tablet_tracking,
     widget_has_tablet_tracking,
     widget_set_mask,
-    widget_set_mask,
+    widget_set_mask_2,
     widget_mask,
     widget_clear_mask,
     widget_render,
-    widget_render,
+    widget_render_2,
     widget_grab,
-    widget_graphics_effect,
-    widget_set_graphics_effect,
     widget_grab_gesture,
     widget_ungrab_gesture,
     widget_set_window_title,
@@ -2743,16 +2460,13 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_set_layout_direction,
     widget_layout_direction,
     widget_unset_layout_direction,
-    widget_set_locale,
-    widget_locale,
-    widget_unset_locale,
     widget_is_right_to_left,
     widget_is_left_to_right,
     widget_set_focus,
     widget_is_active_window,
     widget_activate_window,
     widget_clear_focus,
-    widget_set_focus,
+    widget_set_focus_2,
     widget_focus_policy,
     widget_set_focus_policy,
     widget_has_focus,
@@ -2762,7 +2476,7 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_context_menu_policy,
     widget_set_context_menu_policy,
     widget_grab_mouse,
-    widget_grab_mouse,
+    widget_grab_mouse_2,
     widget_release_mouse,
     widget_grab_keyboard,
     widget_release_keyboard,
@@ -2776,10 +2490,12 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_set_updates_enabled,
     widget_update,
     widget_repaint,
-    widget_update,
-    widget_repaint,
-    set_widget_set_visible,
-    remove_widget_set_visible,
+    widget_update_2,
+    widget_update_3,
+    widget_update_4,
+    widget_repaint_2,
+    widget_repaint_3,
+    widget_repaint_4,
     widget_set_hidden,
     widget_show,
     widget_hide,
@@ -2792,7 +2508,9 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_lower,
     widget_stack_under,
     widget_move_widget,
+    widget_move_2,
     widget_resize,
+    widget_resize_2,
     widget_adjust_size,
     widget_is_visible,
     widget_is_visible_to,
@@ -2803,27 +2521,24 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_window_state,
     widget_set_window_state,
     widget_override_window_state,
-    set_widget_size_hint,
-    remove_widget_size_hint,
-    set_widget_minimum_size_hint,
-    remove_widget_minimum_size_hint,
+    widget_size_hint,
+    widget_minimum_size_hint,
     widget_size_policy,
     widget_set_size_policy,
-    widget_set_size_policy,
-    set_widget_height_for_width,
-    remove_widget_height_for_width,
-    set_widget_has_height_for_width,
-    remove_widget_has_height_for_width,
+    widget_set_size_policy_2,
+    widget_height_for_width,
+    widget_has_height_for_width,
     widget_visible_region,
     widget_set_contents_margins,
+    widget_set_contents_margins_2,
     widget_contents_margins,
     widget_contents_rect,
     widget_layout,
     widget_set_layout,
     widget_set_parent,
-    widget_set_parent,
+    widget_set_parent_2,
     widget_scroll,
-    widget_scroll_by_rect,
+    widget_scroll_2,
     widget_focus_widget,
     widget_next_in_focus_chain,
     widget_previous_in_focus_chain,
@@ -2832,12 +2547,11 @@ struct RUWidgetFuncs s_widget_funcs = {
     widget_parent_widget,
     widget_set_window_flags,
     widget_window_flags,
-    widget_set_window_flag,
     widget_override_window_flags,
-    widget_window_type,
     widget_find,
     widget_child_at,
-    widget_child_at,
+    widget_child_at_2,
+    widget_paint_engine,
     widget_ensure_polished,
     widget_is_ancestor_of,
     widget_auto_fill_background,
@@ -2849,8 +2563,6 @@ struct RUWidgetFuncs s_widget_funcs = {
     set_widget_window_icon_changed_event,
     set_widget_window_icon_text_changed_event,
     set_widget_custom_context_menu_requested_event,
-    set_widget_event,
-    remove_widget_event,
     set_widget_mouse_press_event,
     remove_widget_mouse_press_event,
     set_widget_mouse_release_event,
@@ -2885,8 +2597,6 @@ struct RUWidgetFuncs s_widget_funcs = {
     remove_widget_context_menu_event,
     set_widget_tablet_event,
     remove_widget_tablet_event,
-    set_widget_action_event,
-    remove_widget_action_event,
     set_widget_drag_enter_event,
     remove_widget_drag_enter_event,
     set_widget_drag_move_event,
@@ -2901,29 +2611,15 @@ struct RUWidgetFuncs s_widget_funcs = {
     remove_widget_hide_event,
     set_widget_change_event,
     remove_widget_change_event,
-    set_widget_init_painter,
-    remove_widget_init_painter,
-    set_widget_redirected,
-    remove_widget_redirected,
-    set_widget_shared_painter,
-    remove_widget_shared_painter,
-    set_widget_input_method_event,
-    remove_widget_input_method_event,
-    set_widget_input_method_query,
-    remove_widget_input_method_query,
     widget_input_method_hints,
     widget_set_input_method_hints,
-    widget_update_micro_focus,
-    widget_create,
-    set_widget_focus_next_prev_child,
-    remove_widget_focus_next_prev_child,
-    widget_focus_next_child,
-    widget_focus_previous_child,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 struct RUWidgetAllFuncs s_widget_all_funcs = {
+    &s_object_funcs,
+    &s_paint_device_funcs,
     &s_widget_funcs,
 };
 

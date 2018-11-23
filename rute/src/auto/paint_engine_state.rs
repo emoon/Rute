@@ -16,9 +16,36 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::brush::Brush;
+#[allow(unused_imports)]
+use auto::font::Font;
+#[allow(unused_imports)]
+use auto::paint_engine::DirtyFlags;
+#[allow(unused_imports)]
+use auto::paint_engine_state_ffi::*;
+#[allow(unused_imports)]
+use auto::painter::CompositionMode;
+#[allow(unused_imports)]
+use auto::painter::Painter;
+#[allow(unused_imports)]
+use auto::painter::RenderHints;
+#[allow(unused_imports)]
+use auto::pen::Pen;
+#[allow(unused_imports)]
+use auto::point_f::PointF;
+#[allow(unused_imports)]
+use auto::region::Region;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_enums::BGMode;
+#[allow(unused_imports)]
+use auto::rute_enums::ClipOperation;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 ///
 /// QPaintEngineState records which properties that have changed since
 /// the last time the paint engine was updated, as well as their
@@ -133,7 +160,7 @@ impl<'a> PaintEngineState<'a> {
         }
     }
 }
-pub trait PaintEngineStateType<'a> {
+pub trait PaintEngineStateTrait<'a> {
     ///
     /// Returns a combination of flags identifying the set of properties
     /// that need to be updated when updating the paint engine's state
@@ -439,7 +466,7 @@ pub trait PaintEngineStateType<'a> {
     fn get_paint_engine_state_obj_funcs(&self) -> (*const RUBase, *const RUPaintEngineStateFuncs);
 }
 
-impl<'a> PaintEngineStateType<'a> for PaintEngineState<'a> {
+impl<'a> PaintEngineStateTrait<'a> for PaintEngineState<'a> {
     #[inline]
     fn get_paint_engine_state_obj_funcs(&self) -> (*const RUBase, *const RUPaintEngineStateFuncs) {
         let obj = self.data.get().unwrap();

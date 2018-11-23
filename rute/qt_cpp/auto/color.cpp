@@ -25,9 +25,9 @@ static const char* color_name(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static const char* color_name_by_format(struct RUBase* self_c, int format) {
+static const char* color_name_2(struct RUBase* self_c, int format) {
     WRColor* qt_value = (WRColor*)self_c;
-    auto ret_value = qt_value->name((Color::NameFormat)s_name_format_lookup[format]);
+    auto ret_value = qt_value->name((QColor::NameFormat)s_name_format_lookup[format]);
     return q_string_to_const_char(ret_value);
 }
 
@@ -36,14 +36,6 @@ static const char* color_name_by_format(struct RUBase* self_c, int format) {
 static void color_set_named_color(struct RUBase* self_c, const char* name) {
     WRColor* qt_value = (WRColor*)self_c;
     qt_value->setNamedColor(QString::fromUtf8(name));
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUArray color_color_names(struct RUBase* self_c) {
-    WRColor* qt_value = (WRColor*)self_c;
-    auto ret_value = qt_value->colorNames();
-    return return_string_array(ret_value);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -183,13 +175,6 @@ static void color_set_rgb(struct RUBase* self_c, int r, int g, int b, int a) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void color_get_rgb_f(struct RUBase* self_c, struct RUBase* r, struct RUBase* g, struct RUBase* b, struct RUBase* a) {
-    WRColor* qt_value = (WRColor*)self_c;
-    qt_value->getRgbF(r, g, b, a);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void color_set_rgb_f(struct RUBase* self_c, float r, float g, float b, float a) {
     WRColor* qt_value = (WRColor*)self_c;
     qt_value->setRgbF(r, g, b, a);
@@ -277,23 +262,9 @@ static float color_value_f(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void color_get_hsv(struct RUBase* self_c, struct RUBase* h, struct RUBase* s, struct RUBase* v, struct RUBase* a) {
-    WRColor* qt_value = (WRColor*)self_c;
-    qt_value->getHsv(h, s, v, a);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void color_set_hsv(struct RUBase* self_c, int h, int s, int v, int a) {
     WRColor* qt_value = (WRColor*)self_c;
     qt_value->setHsv(h, s, v, a);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void color_get_hsv_f(struct RUBase* self_c, struct RUBase* h, struct RUBase* s, struct RUBase* v, struct RUBase* a) {
-    WRColor* qt_value = (WRColor*)self_c;
-    qt_value->getHsvF(h, s, v, a);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -369,23 +340,9 @@ static float color_black_f(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void color_get_cmyk(struct RUBase* self_c, struct RUBase* c, struct RUBase* m, struct RUBase* y, struct RUBase* k, struct RUBase* a) {
-    WRColor* qt_value = (WRColor*)self_c;
-    qt_value->getCmyk(c, m, y, k, a);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void color_set_cmyk(struct RUBase* self_c, int c, int m, int y, int k, int a) {
     WRColor* qt_value = (WRColor*)self_c;
     qt_value->setCmyk(c, m, y, k, a);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void color_get_cmyk_f(struct RUBase* self_c, struct RUBase* c, struct RUBase* m, struct RUBase* y, struct RUBase* k, struct RUBase* a) {
-    WRColor* qt_value = (WRColor*)self_c;
-    qt_value->getCmykF(c, m, y, k, a);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -445,23 +402,9 @@ static float color_lightness_f(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void color_get_hsl(struct RUBase* self_c, struct RUBase* h, struct RUBase* s, struct RUBase* l, struct RUBase* a) {
-    WRColor* qt_value = (WRColor*)self_c;
-    qt_value->getHsl(h, s, l, a);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void color_set_hsl(struct RUBase* self_c, int h, int s, int l, int a) {
     WRColor* qt_value = (WRColor*)self_c;
     qt_value->setHsl(h, s, l, a);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void color_get_hsl_f(struct RUBase* self_c, struct RUBase* h, struct RUBase* s, struct RUBase* l, struct RUBase* a) {
-    WRColor* qt_value = (WRColor*)self_c;
-    qt_value->getHslF(h, s, l, a);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -531,7 +474,7 @@ static struct RUColor color_to_hsl(struct RUBase* self_c) {
 
 static struct RUColor color_convert_to(struct RUBase* self_c, int color_spec) {
     WRColor* qt_value = (WRColor*)self_c;
-    auto ret_value = qt_value->convertTo((Color::Spec)s_spec_lookup[color_spec]);
+    auto ret_value = qt_value->convertTo((QColor::Spec)s_spec_lookup[color_spec]);
     WRColor* new_val = new WRColor();
     *new_val = ret_value;
     struct RUColor ctl;
@@ -543,7 +486,7 @@ static struct RUColor color_convert_to(struct RUBase* self_c, int color_spec) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUColor color_from_rgb(struct RUBase* self_c, int r, int g, int b, int a) {
+static struct RUColor color_from_rgb_2(struct RUBase* self_c, int r, int g, int b, int a) {
     WRColor* qt_value = (WRColor*)self_c;
     auto ret_value = qt_value->fromRgb(r, g, b, a);
     WRColor* new_val = new WRColor();
@@ -766,9 +709,8 @@ struct RUColorFuncs s_color_funcs = {
     destroy_color,
     color_is_valid,
     color_name,
-    color_name_by_format,
+    color_name_2,
     color_set_named_color,
-    color_color_names,
     color_spec,
     color_alpha,
     color_set_alpha,
@@ -787,7 +729,6 @@ struct RUColorFuncs s_color_funcs = {
     color_set_green_f,
     color_set_blue_f,
     color_set_rgb,
-    color_get_rgb_f,
     color_set_rgb_f,
     color_hue,
     color_saturation,
@@ -799,9 +740,7 @@ struct RUColorFuncs s_color_funcs = {
     color_hsv_hue_f,
     color_hsv_saturation_f,
     color_value_f,
-    color_get_hsv,
     color_set_hsv,
-    color_get_hsv_f,
     color_set_hsv_f,
     color_cyan,
     color_magenta,
@@ -811,9 +750,7 @@ struct RUColorFuncs s_color_funcs = {
     color_magenta_f,
     color_yellow_f,
     color_black_f,
-    color_get_cmyk,
     color_set_cmyk,
-    color_get_cmyk_f,
     color_set_cmyk_f,
     color_hsl_hue,
     color_hsl_saturation,
@@ -821,16 +758,14 @@ struct RUColorFuncs s_color_funcs = {
     color_hsl_hue_f,
     color_hsl_saturation_f,
     color_lightness_f,
-    color_get_hsl,
     color_set_hsl,
-    color_get_hsl_f,
     color_set_hsl_f,
     color_to_rgb,
     color_to_hsv,
     color_to_cmyk,
     color_to_hsl,
     color_convert_to,
-    color_from_rgb,
+    color_from_rgb_2,
     color_from_rgb_f,
     color_from_rgba64,
     color_from_hsv,

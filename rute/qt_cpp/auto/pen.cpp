@@ -31,14 +31,6 @@ static void pen_set_style(struct RUBase* self_c, int arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUArray pen_dash_pattern(struct RUBase* self_c) {
-    WRPen* qt_value = (WRPen*)self_c;
-    auto ret_value = qt_value->dashPattern();
-    return return_primitive_array<struct RUArray>(ret_value);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static float pen_dash_offset(struct RUBase* self_c) {
     WRPen* qt_value = (WRPen*)self_c;
     auto ret_value = qt_value->dashOffset();
@@ -225,7 +217,6 @@ struct RUPenFuncs s_pen_funcs = {
     pen_swap,
     pen_style,
     pen_set_style,
-    pen_dash_pattern,
     pen_dash_offset,
     pen_set_dash_offset,
     pen_miter_limit,

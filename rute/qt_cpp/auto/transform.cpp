@@ -57,7 +57,7 @@ static bool transform_is_translating(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int transform_type(struct RUBase* self_c) {
+static int transform_get_type(struct RUBase* self_c) {
     WRTransform* qt_value = (WRTransform*)self_c;
     auto ret_value = qt_value->type();
     return s_transformation_type_lookup[(int)ret_value];
@@ -165,20 +165,6 @@ static float transform_dy(struct RUBase* self_c) {
     WRTransform* qt_value = (WRTransform*)self_c;
     auto ret_value = qt_value->dy();
     return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUTransform transform_inverted(struct RUBase* self_c, struct RUBase* invertible) {
-    WRTransform* qt_value = (WRTransform*)self_c;
-    auto ret_value = qt_value->inverted(invertible);
-    WRTransform* new_val = new WRTransform();
-    *new_val = ret_value;
-    struct RUTransform ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_transform_all_funcs;
-    return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -298,7 +284,7 @@ static struct RUPoint transform_map(struct RUBase* self_c, struct RUBase* p) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPointF transform_map(struct RUBase* self_c, struct RUBase* p) {
+static struct RUPointF transform_map_2(struct RUBase* self_c, struct RUBase* p) {
     WRTransform* qt_value = (WRTransform*)self_c;
     auto ret_value = qt_value->map(*((QPointF*)p));
     WRPointF* new_val = new WRPointF();
@@ -312,10 +298,10 @@ static struct RUPointF transform_map(struct RUBase* self_c, struct RUBase* p) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RULine transform_map(struct RUBase* self_c, struct RUBase* l) {
+static struct RULine transform_map_3(struct RUBase* self_c, struct RUBase* l) {
     WRTransform* qt_value = (WRTransform*)self_c;
     auto ret_value = qt_value->map(*((QLine*)l));
-    * new_val = new ();
+    WRLine* new_val = new WRLine();
     *new_val = ret_value;
     struct RULine ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -326,10 +312,10 @@ static struct RULine transform_map(struct RUBase* self_c, struct RUBase* l) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RULineF transform_map(struct RUBase* self_c, struct RUBase* l) {
+static struct RULineF transform_map_4(struct RUBase* self_c, struct RUBase* l) {
     WRTransform* qt_value = (WRTransform*)self_c;
     auto ret_value = qt_value->map(*((QLineF*)l));
-    * new_val = new ();
+    WRLineF* new_val = new WRLineF();
     *new_val = ret_value;
     struct RULineF ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -340,10 +326,10 @@ static struct RULineF transform_map(struct RUBase* self_c, struct RUBase* l) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPolygonF transform_map(struct RUBase* self_c, struct RUBase* a) {
+static struct RUPolygonF transform_map_5(struct RUBase* self_c, struct RUBase* a) {
     WRTransform* qt_value = (WRTransform*)self_c;
     auto ret_value = qt_value->map(*((QPolygonF*)a));
-    * new_val = new ();
+    WRPolygonF* new_val = new WRPolygonF();
     *new_val = ret_value;
     struct RUPolygonF ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -354,10 +340,10 @@ static struct RUPolygonF transform_map(struct RUBase* self_c, struct RUBase* a) 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPolygon transform_map(struct RUBase* self_c, struct RUBase* a) {
+static struct RUPolygon transform_map_6(struct RUBase* self_c, struct RUBase* a) {
     WRTransform* qt_value = (WRTransform*)self_c;
     auto ret_value = qt_value->map(*((QPolygon*)a));
-    * new_val = new ();
+    WRPolygon* new_val = new WRPolygon();
     *new_val = ret_value;
     struct RUPolygon ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -368,7 +354,7 @@ static struct RUPolygon transform_map(struct RUBase* self_c, struct RUBase* a) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RURegion transform_map(struct RUBase* self_c, struct RUBase* r) {
+static struct RURegion transform_map_7(struct RUBase* self_c, struct RUBase* r) {
     WRTransform* qt_value = (WRTransform*)self_c;
     auto ret_value = qt_value->map(*((QRegion*)r));
     WRRegion* new_val = new WRRegion();
@@ -382,24 +368,10 @@ static struct RURegion transform_map(struct RUBase* self_c, struct RUBase* r) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPainterPath transform_map(struct RUBase* self_c, struct RUBase* p) {
-    WRTransform* qt_value = (WRTransform*)self_c;
-    auto ret_value = qt_value->map(*((QPainterPath*)p));
-    * new_val = new ();
-    *new_val = ret_value;
-    struct RUPainterPath ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_painter_path_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static struct RUPolygon transform_map_to_polygon(struct RUBase* self_c, struct RUBase* r) {
     WRTransform* qt_value = (WRTransform*)self_c;
     auto ret_value = qt_value->mapToPolygon(*((QRect*)r));
-    * new_val = new ();
+    WRPolygon* new_val = new WRPolygon();
     *new_val = ret_value;
     struct RUPolygon ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -424,7 +396,7 @@ static struct RURect transform_map_rect(struct RUBase* self_c, struct RUBase* ar
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RURectF transform_map_rect(struct RUBase* self_c, struct RUBase* arg0) {
+static struct RURectF transform_map_rect_2(struct RUBase* self_c, struct RUBase* arg0) {
     WRTransform* qt_value = (WRTransform*)self_c;
     auto ret_value = qt_value->mapRect(*((QRectF*)arg0));
     WRRectF* new_val = new WRRectF();
@@ -438,24 +410,10 @@ static struct RURectF transform_map_rect(struct RUBase* self_c, struct RUBase* a
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void transform_map(struct RUBase* self_c, int x, int y, struct RUBase* tx, struct RUBase* ty) {
-    WRTransform* qt_value = (WRTransform*)self_c;
-    qt_value->map(x, y, tx, ty);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void transform_map(struct RUBase* self_c, float x, float y, struct RUBase* tx, struct RUBase* ty) {
-    WRTransform* qt_value = (WRTransform*)self_c;
-    qt_value->map(x, y, tx, ty);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static struct RUMatrix transform_to_affine(struct RUBase* self_c) {
     WRTransform* qt_value = (WRTransform*)self_c;
     auto ret_value = qt_value->toAffine();
-    * new_val = new ();
+    WRMatrix* new_val = new WRMatrix();
     *new_val = ret_value;
     struct RUMatrix ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -531,7 +489,7 @@ struct RUTransformFuncs s_transform_funcs = {
     transform_is_scaling,
     transform_is_rotating,
     transform_is_translating,
-    transform_type,
+    transform_get_type,
     transform_determinant,
     transform_det,
     transform_m11,
@@ -545,7 +503,6 @@ struct RUTransformFuncs s_transform_funcs = {
     transform_m33,
     transform_dx,
     transform_dy,
-    transform_inverted,
     transform_adjoint,
     transform_scale,
     transform_shear,
@@ -556,18 +513,15 @@ struct RUTransformFuncs s_transform_funcs = {
     transform_quad_to_quad,
     transform_reset,
     transform_map,
-    transform_map,
-    transform_map,
-    transform_map,
-    transform_map,
-    transform_map,
-    transform_map,
-    transform_map,
+    transform_map_2,
+    transform_map_3,
+    transform_map_4,
+    transform_map_5,
+    transform_map_6,
+    transform_map_7,
     transform_map_to_polygon,
     transform_map_rect,
-    transform_map_rect,
-    transform_map,
-    transform_map,
+    transform_map_rect_2,
     transform_to_affine,
     transform_from_translate,
     transform_from_scale,

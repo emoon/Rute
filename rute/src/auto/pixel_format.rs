@@ -16,9 +16,14 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::pixel_format_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 ///
 /// In Qt there is a often a need to represent the layout of the pixels in a
 /// graphics buffer. Internally QPixelFormat stores everything in a 64 bit
@@ -100,22 +105,7 @@ impl<'a> PixelFormat<'a> {
         }
     }
 }
-
-pub struct PixelFormatStatic<'a> {
-    pub all_funcs: *const RUPixelFormatAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait PixelFormatType<'a> {
-    fn get(&self, offset: Field, width: FieldWidth) -> u8 {
-        let enum_offset_1 = offset as i32;
-        let enum_width_2 = width as i32;
-
-        let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).get)(obj_data, enum_offset_1, enum_width_2);
-            ret_val
-        }
-    }
+pub trait PixelFormatTrait<'a> {
     ///
     /// Accessor function for getting the colorModel.
     fn color_model(&self) -> ColorModel {
@@ -335,32 +325,75 @@ pub trait PixelFormatType<'a> {
     fn get_pixel_format_obj_funcs(&self) -> (*const RUBase, *const RUPixelFormatFuncs);
 }
 
-impl<'a> PixelFormatType<'a> for PixelFormat<'a> {
+impl<'a> PixelFormatTrait<'a> for PixelFormat<'a> {
     #[inline]
     fn get_pixel_format_obj_funcs(&self) -> (*const RUBase, *const RUPixelFormatFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).pixel_format_funcs) }
     }
 }
-pub trait PixelFormatStaticType {
-    fn set<'a>(offset: Field, width: FieldWidth, value: u8) -> u64 {
-        let enum_offset_1 = offset as i32;
-        let enum_width_2 = width as i32;
-
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_pixel_format)(::std::ptr::null()).all_funcs)
-                    .pixel_format_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).set)(obj_data, enum_offset_1, enum_width_2, value);
-            ret_val
-        }
-    }
+#[repr(u32)]
+pub enum ColorModel {
+    Rgb,
+    Bgr,
+    Indexed,
+    Grayscale,
+    Cmyk,
+    Hsl,
+    Hsv,
+    Yuv,
+    Alpha,
 }
 
-impl<'a> PixelFormatStaticType for PixelFormat<'a> {}
+#[repr(u32)]
+pub enum AlphaUsage {
+    UsesAlpha,
+    IgnoresAlpha,
+}
 
-impl<'a> PixelFormatStaticType for PixelFormatStatic<'a> {}
+#[repr(u32)]
+pub enum AlphaPosition {
+    AtBeginning,
+    AtEnd,
+}
+
+#[repr(u32)]
+pub enum AlphaPremultiplied {
+    NotPremultiplied,
+    Premultiplied,
+}
+
+#[repr(u32)]
+pub enum TypeInterpretation {
+    UnsignedInteger,
+    UnsignedShort,
+    UnsignedByte,
+    FloatingPoint,
+}
+
+#[repr(u32)]
+pub enum YUVLayout {
+    YuV444,
+    YuV422,
+    YuV411,
+    YuV420P,
+    YuV420Sp,
+    YV12,
+    Uyvy,
+    Yuyv,
+    NV12,
+    NV21,
+    ImC1,
+    ImC2,
+    ImC3,
+    ImC4,
+    Y8,
+    Y16,
+}
+
+#[repr(u32)]
+pub enum ByteOrder {
+    LittleEndian,
+    BigEndian,
+    CurrentSystemEndian,
+}

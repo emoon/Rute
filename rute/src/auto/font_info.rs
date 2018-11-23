@@ -16,9 +16,18 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::font::Style;
+#[allow(unused_imports)]
+use auto::font_info_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
+#[allow(unused_imports)]
+use auto::style::StyleHint;
 ///
 /// The QFontInfo class provides the same access functions as QFont,
 /// e.g. family(), pointSize(), italic(), weight(), fixedPitch(),
@@ -52,26 +61,6 @@ pub struct FontInfo<'a> {
 }
 
 impl<'a> FontInfo<'a> {
-    pub fn new() -> FontInfo<'a> {
-        let data = Rc::new(Cell::new(None));
-
-        let ffi_data = unsafe {
-            ((*rute_ffi_get()).create_font_info)(
-                ::std::ptr::null(),
-                transmute(rute_object_delete_callback as usize),
-                Rc::into_raw(data.clone()) as *const c_void,
-            )
-        };
-
-        data.set(Some(ffi_data.qt_data));
-
-        FontInfo {
-            data,
-            all_funcs: ffi_data.all_funcs,
-            owned: true,
-            _marker: PhantomData,
-        }
-    }
     pub fn new_from_rc(ffi_data: RUFontInfo) -> FontInfo<'a> {
         FontInfo {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
@@ -99,18 +88,17 @@ impl<'a> FontInfo<'a> {
         }
     }
 }
-pub trait FontInfoType<'a> {
+pub trait FontInfoTrait<'a> {
     ///
     /// Swaps this font info instance with *other.* This function is very
     /// fast and never fails.
-    fn swap<F: FontInfoType<'a>>(&self, other: &F) -> &Self {
+    fn swap(&self, other: &FontInfoTrait) {
         let (obj_other_1, _funcs) = other.get_font_info_obj_funcs();
 
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
-        self
     }
     ///
     /// Returns the family name of the matched window system font.
@@ -308,7 +296,7 @@ pub trait FontInfoType<'a> {
     fn get_font_info_obj_funcs(&self) -> (*const RUBase, *const RUFontInfoFuncs);
 }
 
-impl<'a> FontInfoType<'a> for FontInfo<'a> {
+impl<'a> FontInfoTrait<'a> for FontInfo<'a> {
     #[inline]
     fn get_font_info_obj_funcs(&self) -> (*const RUBase, *const RUFontInfoFuncs) {
         let obj = self.data.get().unwrap();

@@ -16,9 +16,20 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::event::*;
+#[allow(unused_imports)]
+use auto::event_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_event_ffi::*;
+#[allow(unused_imports)]
+use auto::rect::Rect;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 #[derive(Clone)]
 pub struct PaintEvent<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
@@ -55,7 +66,7 @@ impl<'a> PaintEvent<'a> {
         }
     }
 }
-pub trait PaintEventType<'a> {
+pub trait PaintEventTrait<'a> {
     fn rect(&self) -> Option<Rect> {
         let (obj_data, funcs) = self.get_paint_event_obj_funcs();
         unsafe {
@@ -78,7 +89,7 @@ pub trait PaintEventType<'a> {
     fn get_paint_event_obj_funcs(&self) -> (*const RUBase, *const RUPaintEventFuncs);
 }
 
-impl<'a> EventType<'a> for PaintEvent<'a> {
+impl<'a> EventTrait<'a> for PaintEvent<'a> {
     #[inline]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs) {
         let obj = self.data.get().unwrap();
@@ -86,7 +97,7 @@ impl<'a> EventType<'a> for PaintEvent<'a> {
     }
 }
 
-impl<'a> PaintEventType<'a> for PaintEvent<'a> {
+impl<'a> PaintEventTrait<'a> for PaintEvent<'a> {
     #[inline]
     fn get_paint_event_obj_funcs(&self) -> (*const RUBase, *const RUPaintEventFuncs) {
         let obj = self.data.get().unwrap();

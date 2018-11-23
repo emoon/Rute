@@ -16,9 +16,14 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::color_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 ///
 /// A color is normally specified in terms of RGB (red, green, and
 /// blue) components, but it is also possible to specify it in terms
@@ -201,8 +206,8 @@ use auto::*;
 /// alpha-channel to feature [alpha-blended drawing](QColor%23Alpha-Blended%0A%20%20%20%20Drawing)
 ///
 ///
-/// **See also:** QPalette
-/// QBrush
+/// **See also:** [`Palette`]
+/// [`Brush`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -267,7 +272,7 @@ pub struct ColorStatic<'a> {
     pub all_funcs: *const RUColorAllFuncs,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
-pub trait ColorType<'a> {
+pub trait ColorTrait<'a> {
     ///
     /// Returns `true` if the color is valid; otherwise returns `false.`
     ///
@@ -277,7 +282,7 @@ pub trait ColorType<'a> {
     ///
     /// It uses the same algorithm used in setNamedColor().
     ///
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     ///
     /// **Overloads**
     ///
@@ -293,11 +298,11 @@ pub trait ColorType<'a> {
     /// Returns the name of the color in the format ; i.e. a
     /// character followed by three two-digit hexadecimal numbers.
     ///
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     ///
     /// Returns the name of the color in the specified *format.*
     ///
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     /// NameFormat
     fn name(&self) -> String {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -311,18 +316,18 @@ pub trait ColorType<'a> {
     /// Returns the name of the color in the format ; i.e. a
     /// character followed by three two-digit hexadecimal numbers.
     ///
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     ///
     /// Returns the name of the color in the specified *format.*
     ///
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     /// NameFormat
-    fn name_by_format(&self, format: NameFormat) -> String {
+    fn name_2(&self, format: NameFormat) -> String {
         let enum_format_1 = format as i32;
 
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).name_by_format)(obj_data, enum_format_1);
+            let ret_val = ((*funcs).name_2)(obj_data, enum_format_1);
             let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
             ret_val
         }
@@ -342,27 +347,70 @@ pub trait ColorType<'a> {
     ///
     /// The color is invalid if *name* cannot be parsed.
     ///
-    /// **See also:** QColor()
-    /// name()
-    /// isValid()
+    /// **See also:** [`q_color()`]
+    /// [`name()`]
+    /// [`is_valid()`]
     ///
     /// **Overloads**
     ///
     /// **Overloads**
-    fn set_named_color(&self, name: &str) -> &Self {
+    fn set_named_color(&self, name: &str) {
         let str_in_name_1 = CString::new(name).unwrap();
 
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_named_color)(obj_data, str_in_name_1.as_ptr());
         }
-        self
     }
+    ///
+    /// Sets the RGB value of this QColor to *name,* which may be in one
+    /// of these formats:
+    ///
+    /// * #RGB (each of R, G, and B is a single hex digit)
+    /// * #RRGGBB
+    /// * #AARRGGBB (Since 5.2)
+    /// * #RRRGGGBBB
+    /// * #RRRRGGGGBBBB
+    /// * A name from the list of colors defined in the list of [SVG color keyword names](http://www.w3.org/TR/SVG/types.html%23ColorKeywords)
+    /// provided by the World Wide Web Consortium; for example, "steelblue" or "gainsboro". These color names work on all platforms. Note that these color names are *not* the same as defined by the Qt::GlobalColor enums, e.g. "green" and Qt::green does not refer to the same color.
+    /// * `transparent` - representing the absence of a color.
+    ///
+    /// The color is invalid if *name* cannot be parsed.
+    ///
+    /// **See also:** [`q_color()`]
+    /// [`name()`]
+    /// [`is_valid()`]
+    ///
+    /// **Overloads**
+    ///
+    /// **Overloads**
+    ///
+    /// Sets the RGB value of this QColor to *name,* which may be in one
+    /// of these formats:
+    ///
+    /// * #RGB (each of R, G, and B is a single hex digit)
+    /// * #RRGGBB
+    /// * #AARRGGBB (Since 5.2)
+    /// * #RRRGGGBBB
+    /// * #RRRRGGGGBBBB
+    /// * A name from the list of colors defined in the list of [SVG color keyword names](http://www.w3.org/TR/SVG/types.html%23ColorKeywords)
+    /// provided by the World Wide Web Consortium; for example, "steelblue" or "gainsboro". These color names work on all platforms. Note that these color names are *not* the same as defined by the Qt::GlobalColor enums, e.g. "green" and Qt::green does not refer to the same color.
+    /// * `transparent` - representing the absence of a color.
+    ///
+    /// The color is invalid if *name* cannot be parsed.
+    ///
+    /// **See also:** [`q_color()`]
+    /// [`name()`]
+    /// [`is_valid()`]
+    ///
+    /// **Overloads**
+    ///
+    /// **Overloads**
     ///
     /// Returns how the color was specified.
     ///
     /// **See also:** Spec
-    /// convertTo()
+    /// [`convert_to()`]
     fn spec(&self) -> Spec {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -374,14 +422,14 @@ pub trait ColorType<'a> {
     ///
     /// Returns the alpha color component of this color.
     ///
-    /// **See also:** setAlpha()
-    /// alphaF()
+    /// **See also:** [`set_alpha()`]
+    /// [`alpha_f()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     ///
     /// Returns the alpha color component of this color.
     ///
-    /// **See also:** setAlphaF()
-    /// alpha()
+    /// **See also:** [`set_alpha_f()`]
+    /// [`alpha()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     fn alpha(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -394,29 +442,28 @@ pub trait ColorType<'a> {
     /// Sets the alpha of this color to *alpha.* Integer alpha is specified in the
     /// range 0-255.
     ///
-    /// **See also:** alpha()
-    /// alphaF()
+    /// **See also:** [`alpha()`]
+    /// [`alpha_f()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     ///
     /// Sets the alpha of this color to *alpha.* qreal alpha is specified in the
     /// range 0.0-1.0.
     ///
-    /// **See also:** alphaF()
-    /// alpha()
+    /// **See also:** [`alpha_f()`]
+    /// [`alpha()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     ///
-    fn set_alpha(&self, alpha: i32) -> &Self {
+    fn set_alpha(&self, alpha: i32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_alpha)(obj_data, alpha);
         }
-        self
     }
     ///
     /// Returns the alpha color component of this color.
     ///
-    /// **See also:** setAlphaF()
-    /// alpha()
+    /// **See also:** [`set_alpha_f()`]
+    /// [`alpha()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     fn alpha_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -429,29 +476,28 @@ pub trait ColorType<'a> {
     /// Sets the alpha of this color to *alpha.* qreal alpha is specified in the
     /// range 0.0-1.0.
     ///
-    /// **See also:** alphaF()
-    /// alpha()
+    /// **See also:** [`alpha_f()`]
+    /// [`alpha()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     ///
-    fn set_alpha_f(&self, alpha: f32) -> &Self {
+    fn set_alpha_f(&self, alpha: f32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_alpha_f)(obj_data, alpha);
         }
-        self
     }
     ///
     /// Returns the red color component of this color.
     ///
-    /// **See also:** setRed()
-    /// redF()
-    /// getRgb()
+    /// **See also:** [`set_red()`]
+    /// [`red_f()`]
+    /// [`get_rgb()`]
     ///
     /// Returns the red color component of this color.
     ///
-    /// **See also:** setRedF()
-    /// red()
-    /// getRgbF()
+    /// **See also:** [`set_red_f()`]
+    /// [`red()`]
+    /// [`get_rgb_f()`]
     fn red(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -462,15 +508,15 @@ pub trait ColorType<'a> {
     ///
     /// Returns the green color component of this color.
     ///
-    /// **See also:** setGreen()
-    /// greenF()
-    /// getRgb()
+    /// **See also:** [`set_green()`]
+    /// [`green_f()`]
+    /// [`get_rgb()`]
     ///
     /// Returns the green color component of this color.
     ///
-    /// **See also:** setGreenF()
-    /// green()
-    /// getRgbF()
+    /// **See also:** [`set_green_f()`]
+    /// [`green()`]
+    /// [`get_rgb_f()`]
     fn green(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -481,15 +527,15 @@ pub trait ColorType<'a> {
     ///
     /// Returns the blue color component of this color.
     ///
-    /// **See also:** setBlue()
-    /// blueF()
-    /// getRgb()
+    /// **See also:** [`set_blue()`]
+    /// [`blue_f()`]
+    /// [`get_rgb()`]
     ///
     /// Returns the blue color component of this color.
     ///
-    /// **See also:** setBlueF()
-    /// blue()
-    /// getRgbF()
+    /// **See also:** [`set_blue_f()`]
+    /// [`blue()`]
+    /// [`get_rgb_f()`]
     fn blue(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -501,71 +547,68 @@ pub trait ColorType<'a> {
     /// Sets the red color component of this color to *red.* Integer components
     /// are specified in the range 0-255.
     ///
-    /// **See also:** red()
-    /// redF()
-    /// setRgb()
+    /// **See also:** [`red()`]
+    /// [`red_f()`]
+    /// [`set_rgb()`]
     ///
     /// Sets the red color component of this color to *red.* Float components
     /// are specified in the range 0.0-1.0.
     ///
-    /// **See also:** redF()
-    /// red()
-    /// setRgbF()
-    fn set_red(&self, red: i32) -> &Self {
+    /// **See also:** [`red_f()`]
+    /// [`red()`]
+    /// [`set_rgb_f()`]
+    fn set_red(&self, red: i32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_red)(obj_data, red);
         }
-        self
     }
     ///
     /// Sets the green color component of this color to *green.* Integer
     /// components are specified in the range 0-255.
     ///
-    /// **See also:** green()
-    /// greenF()
-    /// setRgb()
+    /// **See also:** [`green()`]
+    /// [`green_f()`]
+    /// [`set_rgb()`]
     ///
     /// Sets the green color component of this color to *green.* Float components
     /// are specified in the range 0.0-1.0.
     ///
-    /// **See also:** greenF()
-    /// green()
-    /// setRgbF()
-    fn set_green(&self, green: i32) -> &Self {
+    /// **See also:** [`green_f()`]
+    /// [`green()`]
+    /// [`set_rgb_f()`]
+    fn set_green(&self, green: i32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_green)(obj_data, green);
         }
-        self
     }
     ///
     /// Sets the blue color component of this color to *blue.* Integer components
     /// are specified in the range 0-255.
     ///
-    /// **See also:** blue()
-    /// blueF()
-    /// setRgb()
+    /// **See also:** [`blue()`]
+    /// [`blue_f()`]
+    /// [`set_rgb()`]
     ///
     /// Sets the blue color component of this color to *blue.* Float components
     /// are specified in the range 0.0-1.0.
     ///
-    /// **See also:** blueF()
-    /// blue()
-    /// setRgbF()
-    fn set_blue(&self, blue: i32) -> &Self {
+    /// **See also:** [`blue_f()`]
+    /// [`blue()`]
+    /// [`set_rgb_f()`]
+    fn set_blue(&self, blue: i32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_blue)(obj_data, blue);
         }
-        self
     }
     ///
     /// Returns the red color component of this color.
     ///
-    /// **See also:** setRedF()
-    /// red()
-    /// getRgbF()
+    /// **See also:** [`set_red_f()`]
+    /// [`red()`]
+    /// [`get_rgb_f()`]
     fn red_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -576,9 +619,9 @@ pub trait ColorType<'a> {
     ///
     /// Returns the green color component of this color.
     ///
-    /// **See also:** setGreenF()
-    /// green()
-    /// getRgbF()
+    /// **See also:** [`set_green_f()`]
+    /// [`green()`]
+    /// [`get_rgb_f()`]
     fn green_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -589,9 +632,9 @@ pub trait ColorType<'a> {
     ///
     /// Returns the blue color component of this color.
     ///
-    /// **See also:** setBlueF()
-    /// blue()
-    /// getRgbF()
+    /// **See also:** [`set_blue_f()`]
+    /// [`blue()`]
+    /// [`get_rgb_f()`]
     fn blue_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -603,81 +646,40 @@ pub trait ColorType<'a> {
     /// Sets the red color component of this color to *red.* Float components
     /// are specified in the range 0.0-1.0.
     ///
-    /// **See also:** redF()
-    /// red()
-    /// setRgbF()
-    fn set_red_f(&self, red: f32) -> &Self {
+    /// **See also:** [`red_f()`]
+    /// [`red()`]
+    /// [`set_rgb_f()`]
+    fn set_red_f(&self, red: f32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_red_f)(obj_data, red);
         }
-        self
     }
     ///
     /// Sets the green color component of this color to *green.* Float components
     /// are specified in the range 0.0-1.0.
     ///
-    /// **See also:** greenF()
-    /// green()
-    /// setRgbF()
-    fn set_green_f(&self, green: f32) -> &Self {
+    /// **See also:** [`green_f()`]
+    /// [`green()`]
+    /// [`set_rgb_f()`]
+    fn set_green_f(&self, green: f32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_green_f)(obj_data, green);
         }
-        self
     }
     ///
     /// Sets the blue color component of this color to *blue.* Float components
     /// are specified in the range 0.0-1.0.
     ///
-    /// **See also:** blueF()
-    /// blue()
-    /// setRgbF()
-    fn set_blue_f(&self, blue: f32) -> &Self {
+    /// **See also:** [`blue_f()`]
+    /// [`blue()`]
+    /// [`set_rgb_f()`]
+    fn set_blue_f(&self, blue: f32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_blue_f)(obj_data, blue);
         }
-        self
-    }
-    ///
-    /// Sets the color channels of this color to *r* (red), *g* (green),
-    /// *b* (blue) and *a* (alpha, transparency).
-    ///
-    /// All values must be in the range 0.0-1.0.
-    ///
-    /// **See also:** rgb()
-    /// getRgbF()
-    /// setRgb()
-    ///
-    /// Sets the RGB value to *r,* *g,* *b* and the alpha value to *a.*
-    ///
-    /// All the values must be in the range 0-255.
-    ///
-    /// **See also:** rgb()
-    /// getRgb()
-    /// setRgbF()
-    ///
-    /// Sets the RGB value to *rgba,* including its alpha.
-    ///
-    /// **See also:** rgba()
-    /// rgb()
-    /// setRgba64()
-    ///
-    /// Sets the RGB64 value to *rgba,* including its alpha.
-    ///
-    /// **See also:** \setRgba()
-    /// rgba64()
-    ///
-    /// **Overloads**
-    /// Sets the RGB value to *rgb.* The alpha value is set to opaque.
-    fn set_rgb(&self, r: i32, g: i32, b: i32, a: i32) -> &Self {
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            ((*funcs).set_rgb)(obj_data, r, g, b, a);
-        }
-        self
     }
     ///
     /// Sets the contents pointed to by *r,* *g,* *b,* and *a,* to the red,
@@ -687,48 +689,176 @@ pub trait ColorType<'a> {
     /// These components can be retrieved individually using the redF(), greenF(),
     /// blueF() and alphaF() functions.
     ///
-    /// **See also:** rgb()
-    /// setRgb()
-    fn get_rgb_f(&self, r: &f32, g: &f32, b: &f32, a: &f32) -> &Self {
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            ((*funcs).get_rgb_f)(obj_data, r, g, b, a);
-        }
-        self
-    }
+    /// **See also:** [`rgb()`]
+    /// [`set_rgb()`]
+    ///
+    /// Sets the contents pointed to by *r,* *g,* *b,* and *a,* to the red,
+    /// green, blue, and alpha-channel (transparency) components of the color's
+    /// RGB value.
+    ///
+    /// These components can be retrieved individually using the red(), green(),
+    /// blue() and alpha() functions.
+    ///
+    /// **See also:** [`rgb()`]
+    /// [`set_rgb()`]
     ///
     /// Sets the color channels of this color to *r* (red), *g* (green),
     /// *b* (blue) and *a* (alpha, transparency).
     ///
     /// All values must be in the range 0.0-1.0.
     ///
-    /// **See also:** rgb()
-    /// getRgbF()
-    /// setRgb()
-    fn set_rgb_f(&self, r: f32, g: f32, b: f32, a: f32) -> &Self {
+    /// **See also:** [`rgb()`]
+    /// [`get_rgb_f()`]
+    /// [`set_rgb()`]
+    ///
+    /// Sets the RGB value to *r,* *g,* *b* and the alpha value to *a.*
+    ///
+    /// All the values must be in the range 0-255.
+    ///
+    /// **See also:** [`rgb()`]
+    /// [`get_rgb()`]
+    /// [`set_rgb_f()`]
+    ///
+    /// Sets the RGB value to *rgba,* including its alpha.
+    ///
+    /// **See also:** [`rgba()`]
+    /// [`rgb()`]
+    /// [`set_rgba64()`]
+    ///
+    /// Sets the RGB64 value to *rgba,* including its alpha.
+    ///
+    /// **See also:** [`set_rgba()`]
+    /// [`rgba64()`]
+    ///
+    /// **Overloads**
+    /// Sets the RGB value to *rgb.* The alpha value is set to opaque.
+    fn set_rgb(&self, r: i32, g: i32, b: i32, a: i32) {
+        let (obj_data, funcs) = self.get_color_obj_funcs();
+        unsafe {
+            ((*funcs).set_rgb)(obj_data, r, g, b, a);
+        }
+    }
+    ///
+    /// Sets the contents pointed to by *r,* *g,* *b,* and *a,* to the red,
+    /// green, blue, and alpha-channel (transparency) components of the color's
+    /// RGB value.
+    ///
+    /// These components can be retrieved individually using the redF(), greenF(),
+    /// blueF() and alphaF() functions.
+    ///
+    /// **See also:** [`rgb()`]
+    /// [`set_rgb()`]
+    ///
+    /// Sets the color channels of this color to *r* (red), *g* (green),
+    /// *b* (blue) and *a* (alpha, transparency).
+    ///
+    /// All values must be in the range 0.0-1.0.
+    ///
+    /// **See also:** [`rgb()`]
+    /// [`get_rgb_f()`]
+    /// [`set_rgb()`]
+    fn set_rgb_f(&self, r: f32, g: f32, b: f32, a: f32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_rgb_f)(obj_data, r, g, b, a);
         }
-        self
     }
+    ///
+    /// Returns the RGB value of the color, including its alpha.
+    ///
+    /// For an invalid color, the alpha value of the returned color is unspecified.
+    ///
+    /// **See also:** [`set_rgba()`]
+    /// [`rgb()`]
+    /// [`rgba64()`]
+    ///
+    /// Returns the RGB64 value of the color, including its alpha.
+    ///
+    /// For an invalid color, the alpha value of the returned color is unspecified.
+    ///
+    /// **See also:** [`set_rgba64()`]
+    /// [`rgba()`]
+    /// [`rgb()`]
+    ///
+    /// Sets the RGB value to *rgba,* including its alpha.
+    ///
+    /// **See also:** [`rgba()`]
+    /// [`rgb()`]
+    /// [`set_rgba64()`]
+    ///
+    /// Sets the RGB64 value to *rgba,* including its alpha.
+    ///
+    /// **See also:** [`set_rgba()`]
+    /// [`rgba64()`]
+    ///
+    /// Returns the RGB value of the color, including its alpha.
+    ///
+    /// For an invalid color, the alpha value of the returned color is unspecified.
+    ///
+    /// **See also:** [`set_rgba()`]
+    /// [`rgb()`]
+    /// [`rgba64()`]
+    ///
+    /// Returns the RGB64 value of the color, including its alpha.
+    ///
+    /// For an invalid color, the alpha value of the returned color is unspecified.
+    ///
+    /// **See also:** [`set_rgba64()`]
+    /// [`rgba()`]
+    /// [`rgb()`]
+    ///
+    /// Returns the RGB value of the color. The alpha value is opaque.
+    ///
+    /// **See also:** [`get_rgb()`]
+    /// [`rgba()`]
+    ///
+    /// Sets the color channels of this color to *r* (red), *g* (green),
+    /// *b* (blue) and *a* (alpha, transparency).
+    ///
+    /// All values must be in the range 0.0-1.0.
+    ///
+    /// **See also:** [`rgb()`]
+    /// [`get_rgb_f()`]
+    /// [`set_rgb()`]
+    ///
+    /// Sets the RGB value to *r,* *g,* *b* and the alpha value to *a.*
+    ///
+    /// All the values must be in the range 0-255.
+    ///
+    /// **See also:** [`rgb()`]
+    /// [`get_rgb()`]
+    /// [`set_rgb_f()`]
+    ///
+    /// Sets the RGB value to *rgba,* including its alpha.
+    ///
+    /// **See also:** [`rgba()`]
+    /// [`rgb()`]
+    /// [`set_rgba64()`]
+    ///
+    /// Sets the RGB64 value to *rgba,* including its alpha.
+    ///
+    /// **See also:** [`set_rgba()`]
+    /// [`rgba64()`]
+    ///
+    /// **Overloads**
+    /// Sets the RGB value to *rgb.* The alpha value is set to opaque.
     ///
     /// Returns the hue color component of this color.
     ///
     /// The color is implicitly converted to HSV.
     ///
-    /// **See also:** hsvHue()
-    /// hueF()
-    /// getHsv()
+    /// **See also:** [`hsv_hue()`]
+    /// [`hue_f()`]
+    /// [`get_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     ///
     /// Returns the hue color component of this color.
     ///
     /// The color is implicitly converted to HSV.
     ///
-    /// **See also:** hsvHueF()
-    /// hue()
-    /// getHsvF()
+    /// **See also:** [`hsv_hue_f()`]
+    /// [`hue()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     fn hue(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -742,9 +872,9 @@ pub trait ColorType<'a> {
     ///
     /// The color is implicitly converted to HSV.
     ///
-    /// **See also:** hsvSaturation()
-    /// saturationF()
-    /// getHsv()
+    /// **See also:** [`hsv_saturation()`]
+    /// [`saturation_f()`]
+    /// [`get_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
     ///
@@ -752,9 +882,9 @@ pub trait ColorType<'a> {
     ///
     /// The color is implicitly converted to HSV.
     ///
-    /// **See also:** hsvSaturationF()
-    /// saturation()
-    /// getHsvF()
+    /// **See also:** [`hsv_saturation_f()`]
+    /// [`saturation()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
     fn saturation(&self) -> i32 {
@@ -767,14 +897,14 @@ pub trait ColorType<'a> {
     ///
     /// Returns the hue color component of this color.
     ///
-    /// **See also:** hueF()
-    /// getHsv()
+    /// **See also:** [`hue_f()`]
+    /// [`get_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     ///
     /// Returns the hue color component of this color.
     ///
-    /// **See also:** hue()
-    /// getHsvF()
+    /// **See also:** [`hue()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
     fn hsv_hue(&self) -> i32 {
@@ -787,14 +917,14 @@ pub trait ColorType<'a> {
     ///
     /// Returns the saturation color component of this color.
     ///
-    /// **See also:** saturationF()
-    /// getHsv()
+    /// **See also:** [`saturation_f()`]
+    /// [`get_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     ///
     /// Returns the saturation color component of this color.
     ///
-    /// **See also:** saturation()
-    /// getHsvF()
+    /// **See also:** [`saturation()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     fn hsv_saturation(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -806,14 +936,14 @@ pub trait ColorType<'a> {
     ///
     /// Returns the value color component of this color.
     ///
-    /// **See also:** valueF()
-    /// getHsv()
+    /// **See also:** [`value_f()`]
+    /// [`get_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     ///
     /// Returns the value color component of this color.
     ///
-    /// **See also:** value()
-    /// getHsvF()
+    /// **See also:** [`value()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     fn value(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -827,9 +957,9 @@ pub trait ColorType<'a> {
     ///
     /// The color is implicitly converted to HSV.
     ///
-    /// **See also:** hsvHueF()
-    /// hue()
-    /// getHsvF()
+    /// **See also:** [`hsv_hue_f()`]
+    /// [`hue()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     fn hue_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -843,9 +973,9 @@ pub trait ColorType<'a> {
     ///
     /// The color is implicitly converted to HSV.
     ///
-    /// **See also:** hsvSaturationF()
-    /// saturation()
-    /// getHsvF()
+    /// **See also:** [`hsv_saturation_f()`]
+    /// [`saturation()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
     fn saturation_f(&self) -> f32 {
@@ -858,8 +988,8 @@ pub trait ColorType<'a> {
     ///
     /// Returns the hue color component of this color.
     ///
-    /// **See also:** hue()
-    /// getHsvF()
+    /// **See also:** [`hue()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
     fn hsv_hue_f(&self) -> f32 {
@@ -872,8 +1002,8 @@ pub trait ColorType<'a> {
     ///
     /// Returns the saturation color component of this color.
     ///
-    /// **See also:** saturation()
-    /// getHsvF()
+    /// **See also:** [`saturation()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     fn hsv_saturation_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -885,8 +1015,8 @@ pub trait ColorType<'a> {
     ///
     /// Returns the value color component of this color.
     ///
-    /// **See also:** value()
-    /// getHsvF()
+    /// **See also:** [`value()`]
+    /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     fn value_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -896,40 +1026,13 @@ pub trait ColorType<'a> {
         }
     }
     ///
-    /// Sets the contents pointed to by *h,* *s,* *v,* and *a,* to the hue,
-    /// saturation, value, and alpha-channel (transparency) components of the
-    /// color's HSV value.
-    ///
-    /// These components can be retrieved individually using the hueF(),
-    /// saturationF(), valueF() and alphaF() functions.
-    ///
-    /// **See also:** setHsv()
-    /// {QColor#The HSV Color Model}{The HSV Color Model}
-    ///
-    /// Sets the contents pointed to by *h,* *s,* *v,* and *a,* to the hue,
-    /// saturation, value, and alpha-channel (transparency) components of the
-    /// color's HSV value.
-    ///
-    /// These components can be retrieved individually using the hue(),
-    /// saturation(), value() and alpha() functions.
-    ///
-    /// **See also:** setHsv()
-    /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn get_hsv(&self, h: &i32, s: &i32, v: &i32, a: &i32) -> &Self {
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            ((*funcs).get_hsv)(obj_data, h, s, v, a);
-        }
-        self
-    }
-    ///
     /// Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is
     /// the value and *a* is the alpha component of the HSV color.
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** getHsvF()
-    /// setHsv()
+    /// **See also:** [`get_hsv_f()`]
+    /// [`set_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     ///
     /// Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is
@@ -938,32 +1041,14 @@ pub trait ColorType<'a> {
     /// The saturation, value and alpha-channel values must be in the range 0-255,
     /// and the hue value must be greater than -1.
     ///
-    /// **See also:** getHsv()
-    /// setHsvF()
+    /// **See also:** [`get_hsv()`]
+    /// [`set_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn set_hsv(&self, h: i32, s: i32, v: i32, a: i32) -> &Self {
+    fn set_hsv(&self, h: i32, s: i32, v: i32, a: i32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_hsv)(obj_data, h, s, v, a);
         }
-        self
-    }
-    ///
-    /// Sets the contents pointed to by *h,* *s,* *v,* and *a,* to the hue,
-    /// saturation, value, and alpha-channel (transparency) components of the
-    /// color's HSV value.
-    ///
-    /// These components can be retrieved individually using the hueF(),
-    /// saturationF(), valueF() and alphaF() functions.
-    ///
-    /// **See also:** setHsv()
-    /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn get_hsv_f(&self, h: &f32, s: &f32, v: &f32, a: &f32) -> &Self {
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            ((*funcs).get_hsv_f)(obj_data, h, s, v, a);
-        }
-        self
     }
     ///
     /// Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is
@@ -971,27 +1056,26 @@ pub trait ColorType<'a> {
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** getHsvF()
-    /// setHsv()
+    /// **See also:** [`get_hsv_f()`]
+    /// [`set_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn set_hsv_f(&self, h: f32, s: f32, v: f32, a: f32) -> &Self {
+    fn set_hsv_f(&self, h: f32, s: f32, v: f32, a: f32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_hsv_f)(obj_data, h, s, v, a);
         }
-        self
     }
     ///
     /// Returns the cyan color component of this color.
     ///
-    /// **See also:** cyanF()
-    /// getCmyk()
+    /// **See also:** [`cyan_f()`]
+    /// [`get_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     ///
     /// Returns the cyan color component of this color.
     ///
-    /// **See also:** cyan()
-    /// getCmykF()
+    /// **See also:** [`cyan()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     fn cyan(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -1003,14 +1087,14 @@ pub trait ColorType<'a> {
     ///
     /// Returns the magenta color component of this color.
     ///
-    /// **See also:** magentaF()
-    /// getCmyk()
+    /// **See also:** [`magenta_f()`]
+    /// [`get_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     ///
     /// Returns the magenta color component of this color.
     ///
-    /// **See also:** magenta()
-    /// getCmykF()
+    /// **See also:** [`magenta()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     fn magenta(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -1022,14 +1106,14 @@ pub trait ColorType<'a> {
     ///
     /// Returns the yellow color component of this color.
     ///
-    /// **See also:** yellowF()
-    /// getCmyk()
+    /// **See also:** [`yellow_f()`]
+    /// [`get_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     ///
     /// Returns the yellow color component of this color.
     ///
-    /// **See also:** yellow()
-    /// getCmykF()
+    /// **See also:** [`yellow()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     fn yellow(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -1041,15 +1125,15 @@ pub trait ColorType<'a> {
     ///
     /// Returns the black color component of this color.
     ///
-    /// **See also:** blackF()
-    /// getCmyk()
+    /// **See also:** [`black_f()`]
+    /// [`get_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     ///
     ///
     /// Returns the black color component of this color.
     ///
-    /// **See also:** black()
-    /// getCmykF()
+    /// **See also:** [`black()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     fn black(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -1061,8 +1145,8 @@ pub trait ColorType<'a> {
     ///
     /// Returns the cyan color component of this color.
     ///
-    /// **See also:** cyan()
-    /// getCmykF()
+    /// **See also:** [`cyan()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     fn cyan_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -1074,8 +1158,8 @@ pub trait ColorType<'a> {
     ///
     /// Returns the magenta color component of this color.
     ///
-    /// **See also:** magenta()
-    /// getCmykF()
+    /// **See also:** [`magenta()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     fn magenta_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -1087,8 +1171,8 @@ pub trait ColorType<'a> {
     ///
     /// Returns the yellow color component of this color.
     ///
-    /// **See also:** yellow()
-    /// getCmykF()
+    /// **See also:** [`yellow()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     fn yellow_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -1100,8 +1184,8 @@ pub trait ColorType<'a> {
     ///
     /// Returns the black color component of this color.
     ///
-    /// **See also:** black()
-    /// getCmykF()
+    /// **See also:** [`black()`]
+    /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     fn black_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -1111,40 +1195,13 @@ pub trait ColorType<'a> {
         }
     }
     ///
-    /// Sets the contents pointed to by *c,* *m,* *y,* *k,* and *a,* to the
-    /// cyan, magenta, yellow, black, and alpha-channel (transparency) components
-    /// of the color's CMYK value.
-    ///
-    /// These components can be retrieved individually using the cyan(), magenta(),
-    /// yellow(), black() and alpha() functions.
-    ///
-    /// **See also:** setCmyk()
-    /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    ///
-    /// Sets the contents pointed to by *c,* *m,* *y,* *k,* and *a,* to the
-    /// cyan, magenta, yellow, black, and alpha-channel (transparency) components
-    /// of the color's CMYK value.
-    ///
-    /// These components can be retrieved individually using the cyanF(),
-    /// magentaF(), yellowF(), blackF() and alphaF() functions.
-    ///
-    /// **See also:** setCmykF()
-    /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn get_cmyk(&self, c: &i32, m: &i32, y: &i32, k: &i32, a: &i32) -> &Self {
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            ((*funcs).get_cmyk)(obj_data, c, m, y, k, a);
-        }
-        self
-    }
-    ///
     /// Sets the color to CMYK values, *c* (cyan), *m* (magenta), *y* (yellow),
     /// *k* (black), and *a* (alpha-channel, i.e. transparency).
     ///
     /// All the values must be in the range 0-255.
     ///
-    /// **See also:** getCmyk()
-    /// setCmykF()
+    /// **See also:** [`get_cmyk()`]
+    /// [`set_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     ///
     /// **Overloads**
@@ -1153,32 +1210,14 @@ pub trait ColorType<'a> {
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** getCmykF()
-    /// setCmyk()
+    /// **See also:** [`get_cmyk_f()`]
+    /// [`set_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn set_cmyk(&self, c: i32, m: i32, y: i32, k: i32, a: i32) -> &Self {
+    fn set_cmyk(&self, c: i32, m: i32, y: i32, k: i32, a: i32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_cmyk)(obj_data, c, m, y, k, a);
         }
-        self
-    }
-    ///
-    /// Sets the contents pointed to by *c,* *m,* *y,* *k,* and *a,* to the
-    /// cyan, magenta, yellow, black, and alpha-channel (transparency) components
-    /// of the color's CMYK value.
-    ///
-    /// These components can be retrieved individually using the cyanF(),
-    /// magentaF(), yellowF(), blackF() and alphaF() functions.
-    ///
-    /// **See also:** setCmykF()
-    /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn get_cmyk_f(&self, c: &f32, m: &f32, y: &f32, k: &f32, a: &f32) -> &Self {
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            ((*funcs).get_cmyk_f)(obj_data, c, m, y, k, a);
-        }
-        self
     }
     ///
     /// **Overloads**
@@ -1187,26 +1226,25 @@ pub trait ColorType<'a> {
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** getCmykF()
-    /// setCmyk()
+    /// **See also:** [`get_cmyk_f()`]
+    /// [`set_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn set_cmyk_f(&self, c: f32, m: f32, y: f32, k: f32, a: f32) -> &Self {
+    fn set_cmyk_f(&self, c: f32, m: f32, y: f32, k: f32, a: f32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_cmyk_f)(obj_data, c, m, y, k, a);
         }
-        self
     }
     ///
     /// Returns the hue color component of this color.
     ///
-    /// **See also:** getHslF()
-    /// getHsl()
+    /// **See also:** [`get_hsl_f()`]
+    /// [`get_hsl()`]
     ///
     /// Returns the hue color component of this color.
     ///
-    /// **See also:** hue()
-    /// getHslF()
+    /// **See also:** [`hue()`]
+    /// [`get_hsl_f()`]
     fn hsl_hue(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -1217,14 +1255,14 @@ pub trait ColorType<'a> {
     ///
     /// Returns the saturation color component of this color.
     ///
-    /// **See also:** saturationF()
-    /// getHsv()
+    /// **See also:** [`saturation_f()`]
+    /// [`get_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     ///
     /// Returns the saturation color component of this color.
     ///
-    /// **See also:** saturationF()
-    /// getHslF()
+    /// **See also:** [`saturation_f()`]
+    /// [`get_hsl_f()`]
     fn hsl_saturation(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -1235,13 +1273,13 @@ pub trait ColorType<'a> {
     ///
     /// Returns the lightness color component of this color.
     ///
-    /// **See also:** lightnessF()
-    /// getHsl()
+    /// **See also:** [`lightness_f()`]
+    /// [`get_hsl()`]
     ///
     /// Returns the lightness color component of this color.
     ///
-    /// **See also:** value()
-    /// getHslF()
+    /// **See also:** [`value()`]
+    /// [`get_hsl_f()`]
     fn lightness(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -1252,8 +1290,8 @@ pub trait ColorType<'a> {
     ///
     /// Returns the hue color component of this color.
     ///
-    /// **See also:** hue()
-    /// getHslF()
+    /// **See also:** [`hue()`]
+    /// [`get_hsl_f()`]
     fn hsl_hue_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -1264,8 +1302,8 @@ pub trait ColorType<'a> {
     ///
     /// Returns the saturation color component of this color.
     ///
-    /// **See also:** saturationF()
-    /// getHslF()
+    /// **See also:** [`saturation_f()`]
+    /// [`get_hsl_f()`]
     fn hsl_saturation_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -1276,8 +1314,8 @@ pub trait ColorType<'a> {
     ///
     /// Returns the lightness color component of this color.
     ///
-    /// **See also:** value()
-    /// getHslF()
+    /// **See also:** [`value()`]
+    /// [`get_hsl_f()`]
     fn lightness_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -1286,38 +1324,13 @@ pub trait ColorType<'a> {
         }
     }
     ///
-    /// Sets the contents pointed to by *h,* *s,* *l,* and *a,* to the hue,
-    /// saturation, lightness, and alpha-channel (transparency) components of the
-    /// color's HSL value.
-    ///
-    /// These components can be retrieved individually using the hslHueF(),
-    /// hslSaturationF(), lightnessF() and alphaF() functions.
-    ///
-    /// **See also:** setHsl()
-    ///
-    /// Sets the contents pointed to by *h,* *s,* *l,* and *a,* to the hue,
-    /// saturation, lightness, and alpha-channel (transparency) components of the
-    /// color's HSL value.
-    ///
-    /// These components can be retrieved individually using the hslHue(),
-    /// hslSaturation(), lightness() and alpha() functions.
-    ///
-    /// **See also:** setHsl()
-    fn get_hsl(&self, h: &i32, s: &i32, l: &i32, a: &i32) -> &Self {
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            ((*funcs).get_hsl)(obj_data, h, s, l, a);
-        }
-        self
-    }
-    ///
     /// Sets a HSL color lightness; *h* is the hue, *s* is the saturation, *l* is
     /// the lightness and *a* is the alpha component of the HSL color.
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** getHslF()
-    /// setHsl()
+    /// **See also:** [`get_hsl_f()`]
+    /// [`set_hsl()`]
     ///
     /// Sets a HSL color value; *h* is the hue, *s* is the saturation, *l* is
     /// the lightness and *a* is the alpha component of the HSL color.
@@ -1325,30 +1338,13 @@ pub trait ColorType<'a> {
     /// The saturation, value and alpha-channel values must be in the range 0-255,
     /// and the hue value must be greater than -1.
     ///
-    /// **See also:** getHsl()
-    /// setHslF()
-    fn set_hsl(&self, h: i32, s: i32, l: i32, a: i32) -> &Self {
+    /// **See also:** [`get_hsl()`]
+    /// [`set_hsl_f()`]
+    fn set_hsl(&self, h: i32, s: i32, l: i32, a: i32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_hsl)(obj_data, h, s, l, a);
         }
-        self
-    }
-    ///
-    /// Sets the contents pointed to by *h,* *s,* *l,* and *a,* to the hue,
-    /// saturation, lightness, and alpha-channel (transparency) components of the
-    /// color's HSL value.
-    ///
-    /// These components can be retrieved individually using the hslHueF(),
-    /// hslSaturationF(), lightnessF() and alphaF() functions.
-    ///
-    /// **See also:** setHsl()
-    fn get_hsl_f(&self, h: &f32, s: &f32, l: &f32, a: &f32) -> &Self {
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            ((*funcs).get_hsl_f)(obj_data, h, s, l, a);
-        }
-        self
     }
     ///
     /// Sets a HSL color lightness; *h* is the hue, *s* is the saturation, *l* is
@@ -1356,21 +1352,20 @@ pub trait ColorType<'a> {
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** getHslF()
-    /// setHsl()
-    fn set_hsl_f(&self, h: f32, s: f32, l: f32, a: f32) -> &Self {
+    /// **See also:** [`get_hsl_f()`]
+    /// [`set_hsl()`]
+    fn set_hsl_f(&self, h: f32, s: f32, l: f32, a: f32) {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_hsl_f)(obj_data, h, s, l, a);
         }
-        self
     }
     ///
     /// Create and returns an RGB QColor based on this color.
     ///
-    /// **See also:** fromRgb()
-    /// convertTo()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`convert_to()`]
+    /// [`is_valid()`]
     fn to_rgb(&self) -> Color {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -1388,9 +1383,9 @@ pub trait ColorType<'a> {
     ///
     /// Creates and returns an HSV QColor based on this color.
     ///
-    /// **See also:** fromHsv()
-    /// convertTo()
-    /// isValid()
+    /// **See also:** [`from_hsv()`]
+    /// [`convert_to()`]
+    /// [`is_valid()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     fn to_hsv(&self) -> Color {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -1409,9 +1404,9 @@ pub trait ColorType<'a> {
     ///
     /// Creates and returns a CMYK QColor based on this color.
     ///
-    /// **See also:** fromCmyk()
-    /// convertTo()
-    /// isValid()
+    /// **See also:** [`from_cmyk()`]
+    /// [`convert_to()`]
+    /// [`is_valid()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     fn to_cmyk(&self) -> Color {
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -1430,9 +1425,9 @@ pub trait ColorType<'a> {
     ///
     /// Creates and returns an HSL QColor based on this color.
     ///
-    /// **See also:** fromHsl()
-    /// convertTo()
-    /// isValid()
+    /// **See also:** [`from_hsl()`]
+    /// [`convert_to()`]
+    /// [`is_valid()`]
     fn to_hsl(&self) -> Color {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -1450,11 +1445,11 @@ pub trait ColorType<'a> {
     ///
     /// Creates a copy of *this* color in the format specified by *colorSpec.*
     ///
-    /// **See also:** spec()
-    /// toCmyk()
-    /// toHsv()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`spec()`]
+    /// [`to_cmyk()`]
+    /// [`to_hsv()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     fn convert_to(&self, color_spec: Spec) -> Color {
         let enum_color_spec_1 = color_spec as i32;
 
@@ -1474,13 +1469,13 @@ pub trait ColorType<'a> {
     ///
     /// Returns the lightness color component of this color.
     ///
-    /// **See also:** lightnessF()
-    /// getHsl()
+    /// **See also:** [`lightness_f()`]
+    /// [`get_hsl()`]
     ///
     /// Returns the lightness color component of this color.
     ///
-    /// **See also:** value()
-    /// getHslF()
+    /// **See also:** [`value()`]
+    /// [`get_hsl_f()`]
     ///
     /// Returns a lighter (or darker) color, but does not change this object.
     ///
@@ -1493,8 +1488,8 @@ pub trait ColorType<'a> {
     /// The function converts the current RGB color to HSV, multiplies the value
     /// (V) component by *factor* and converts the color back to RGB.
     ///
-    /// **See also:** darker()
-    /// isValid()
+    /// **See also:** [`darker()`]
+    /// [`is_valid()`]
     ///
     /// Use lighter( *factor)* instead.
     fn light(&self, f: i32) -> Color {
@@ -1523,8 +1518,8 @@ pub trait ColorType<'a> {
     /// The function converts the current RGB color to HSV, multiplies the value
     /// (V) component by *factor* and converts the color back to RGB.
     ///
-    /// **See also:** darker()
-    /// isValid()
+    /// **See also:** [`darker()`]
+    /// [`is_valid()`]
     fn lighter(&self, f: i32) -> Color {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -1551,8 +1546,8 @@ pub trait ColorType<'a> {
     /// The function converts the current RGB color to HSV, divides the value (V)
     /// component by *factor* and converts the color back to RGB.
     ///
-    /// **See also:** lighter()
-    /// isValid()
+    /// **See also:** [`lighter()`]
+    /// [`is_valid()`]
     ///
     /// Use darker( *factor)* instead.
     fn dark(&self, f: i32) -> Color {
@@ -1581,8 +1576,8 @@ pub trait ColorType<'a> {
     /// The function converts the current RGB color to HSV, divides the value (V)
     /// component by *factor* and converts the color back to RGB.
     ///
-    /// **See also:** lighter()
-    /// isValid()
+    /// **See also:** [`lighter()`]
+    /// [`is_valid()`]
     fn darker(&self, f: i32) -> Color {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -1602,31 +1597,14 @@ pub trait ColorType<'a> {
     fn get_color_obj_funcs(&self) -> (*const RUBase, *const RUColorFuncs);
 }
 
-impl<'a> ColorType<'a> for Color<'a> {
+impl<'a> ColorTrait<'a> for Color<'a> {
     #[inline]
     fn get_color_obj_funcs(&self) -> (*const RUBase, *const RUColorFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).color_funcs) }
     }
 }
-pub trait ColorStaticType {
-    ///
-    /// Returns a QStringList containing the color names Qt knows about.
-    ///
-    /// **See also:** {QColor#Predefined Colors}{Predefined Colors}
-    fn color_names<'a>() -> RefArray<String, WrapperRcOwn> {
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_color)(::std::ptr::null()).all_funcs).color_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).color_names)(obj_data);
-            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
-            ret_val
-        }
-    }
+pub trait ColorStaticTrait {
     ///
     /// Static convenience function that returns a QColor constructed from the
     /// given QRgb value *rgb.*
@@ -1635,10 +1613,10 @@ pub trait ColorStaticType {
     /// 255), use the fromRgba() function to include the alpha-channel specified by
     /// the given QRgb value.
     ///
-    /// **See also:** fromRgba()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgba()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     ///
     /// Static convenience function that returns a QColor constructed from the
     /// given QRgb value *rgba.*
@@ -1646,9 +1624,9 @@ pub trait ColorStaticType {
     /// Unlike the fromRgb() function, the alpha-channel specified by the given
     /// QRgb value is included.
     ///
-    /// **See also:** fromRgb()
-    /// fromRgba64()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`is_valid()`]
     ///
     /// Static convenience function that returns a QColor constructed from the RGB
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
@@ -1656,10 +1634,10 @@ pub trait ColorStaticType {
     ///
     /// All the values must be in the range 0-255.
     ///
-    /// **See also:** toRgb()
-    /// fromRgba64()
-    /// fromRgbF()
-    /// isValid()
+    /// **See also:** [`to_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`from_rgb_f()`]
+    /// [`is_valid()`]
     ///
     /// Static convenience function that returns a QColor constructed from the RGB
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
@@ -1667,28 +1645,116 @@ pub trait ColorStaticType {
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** fromRgb()
-    /// fromRgba64()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     ///
     /// Static convenience function that returns a QColor constructed from the RGBA64
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
     /// (alpha-channel, i.e. transparency).
     ///
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     ///
     /// Static convenience function that returns a QColor constructed from the
     /// given QRgba64 value *rgba64.*
     ///
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
-    fn from_rgb<'a>(r: i32, g: i32, b: i32, a: i32) -> Color<'a> {
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
+    ///
+    /// Static convenience function that returns a QColor constructed from the
+    /// given QRgb value *rgba.*
+    ///
+    /// Unlike the fromRgb() function, the alpha-channel specified by the given
+    /// QRgb value is included.
+    ///
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`is_valid()`]
+    ///
+    /// Static convenience function that returns a QColor constructed from the RGBA64
+    /// color values, *r* (red), *g* (green), *b* (blue), and *a*
+    /// (alpha-channel, i.e. transparency).
+    ///
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
+    ///
+    /// Static convenience function that returns a QColor constructed from the
+    /// given QRgba64 value *rgba64.*
+    ///
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
+    ///
+    /// Static convenience function that returns a QColor constructed from the
+    /// given QRgb value *rgb.*
+    ///
+    /// The alpha component of *rgb* is ignored (i.e. it is automatically set to
+    /// 255), use the fromRgba() function to include the alpha-channel specified by
+    /// the given QRgb value.
+    ///
+    /// **See also:** [`from_rgba()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
+    ///
+    /// Static convenience function that returns a QColor constructed from the
+    /// given QRgb value *rgba.*
+    ///
+    /// Unlike the fromRgb() function, the alpha-channel specified by the given
+    /// QRgb value is included.
+    ///
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`is_valid()`]
+    ///
+    /// Static convenience function that returns a QColor constructed from the RGB
+    /// color values, *r* (red), *g* (green), *b* (blue), and *a*
+    /// (alpha-channel, i.e. transparency).
+    ///
+    /// All the values must be in the range 0-255.
+    ///
+    /// **See also:** [`to_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`from_rgb_f()`]
+    /// [`is_valid()`]
+    ///
+    /// Static convenience function that returns a QColor constructed from the RGB
+    /// color values, *r* (red), *g* (green), *b* (blue), and *a*
+    /// (alpha-channel, i.e. transparency).
+    ///
+    /// All the values must be in the range 0.0-1.0.
+    ///
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
+    ///
+    /// Static convenience function that returns a QColor constructed from the RGBA64
+    /// color values, *r* (red), *g* (green), *b* (blue), and *a*
+    /// (alpha-channel, i.e. transparency).
+    ///
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
+    ///
+    /// Static convenience function that returns a QColor constructed from the
+    /// given QRgba64 value *rgba64.*
+    ///
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
+    fn from_rgb_2<'a>(r: i32, g: i32, b: i32, a: i32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1696,7 +1762,7 @@ pub trait ColorStaticType {
             )
         };
         unsafe {
-            let ret_val = ((*funcs).from_rgb)(obj_data, r, g, b, a);
+            let ret_val = ((*funcs).from_rgb_2)(obj_data, r, g, b, a);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -1714,10 +1780,10 @@ pub trait ColorStaticType {
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** fromRgb()
-    /// fromRgba64()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgba64()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     fn from_rgb_f<'a>(r: f32, g: f32, b: f32, a: f32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
@@ -1742,18 +1808,18 @@ pub trait ColorStaticType {
     /// color values, *r* (red), *g* (green), *b* (blue), and *a*
     /// (alpha-channel, i.e. transparency).
     ///
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     ///
     /// Static convenience function that returns a QColor constructed from the
     /// given QRgba64 value *rgba64.*
     ///
-    /// **See also:** fromRgb()
-    /// fromRgbF()
-    /// toRgb()
-    /// isValid()
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
     fn from_rgba64<'a>(r: u16, g: u16, b: u16, a: u16) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
@@ -1774,6 +1840,23 @@ pub trait ColorStaticType {
         }
     }
     ///
+    /// Static convenience function that returns a QColor constructed from the RGBA64
+    /// color values, *r* (red), *g* (green), *b* (blue), and *a*
+    /// (alpha-channel, i.e. transparency).
+    ///
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
+    ///
+    /// Static convenience function that returns a QColor constructed from the
+    /// given QRgba64 value *rgba64.*
+    ///
+    /// **See also:** [`from_rgb()`]
+    /// [`from_rgb_f()`]
+    /// [`to_rgb()`]
+    /// [`is_valid()`]
+    ///
     /// Static convenience function that returns a QColor constructed from the HSV
     /// color values, *h* (hue), *s* (saturation), *v* (value), and *a*
     /// (alpha-channel, i.e. transparency).
@@ -1781,9 +1864,9 @@ pub trait ColorStaticType {
     /// The value of *s,* *v,* and *a* must all be in the range 0-255; the value
     /// of *h* must be in the range 0-359.
     ///
-    /// **See also:** toHsv()
-    /// fromHsvF()
-    /// isValid()
+    /// **See also:** [`to_hsv()`]
+    /// [`from_hsv_f()`]
+    /// [`is_valid()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     ///
     /// **Overloads**
@@ -1793,9 +1876,9 @@ pub trait ColorStaticType {
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** toHsv()
-    /// fromHsv()
-    /// isValid()
+    /// **See also:** [`to_hsv()`]
+    /// [`from_hsv()`]
+    /// [`is_valid()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     fn from_hsv<'a>(h: i32, s: i32, v: i32, a: i32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
@@ -1824,9 +1907,9 @@ pub trait ColorStaticType {
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** toHsv()
-    /// fromHsv()
-    /// isValid()
+    /// **See also:** [`to_hsv()`]
+    /// [`from_hsv()`]
+    /// [`is_valid()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
     fn from_hsv_f<'a>(h: f32, s: f32, v: f32, a: f32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
@@ -1854,9 +1937,9 @@ pub trait ColorStaticType {
     ///
     /// All the values must be in the range 0-255.
     ///
-    /// **See also:** toCmyk()
-    /// fromCmykF()
-    /// isValid()
+    /// **See also:** [`to_cmyk()`]
+    /// [`from_cmyk_f()`]
+    /// [`is_valid()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     ///
     /// **Overloads**
@@ -1866,9 +1949,9 @@ pub trait ColorStaticType {
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** toCmyk()
-    /// fromCmyk()
-    /// isValid()
+    /// **See also:** [`to_cmyk()`]
+    /// [`from_cmyk()`]
+    /// [`is_valid()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     fn from_cmyk<'a>(c: i32, m: i32, y: i32, k: i32, a: i32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
@@ -1897,9 +1980,9 @@ pub trait ColorStaticType {
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** toCmyk()
-    /// fromCmyk()
-    /// isValid()
+    /// **See also:** [`to_cmyk()`]
+    /// [`from_cmyk()`]
+    /// [`is_valid()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
     fn from_cmyk_f<'a>(c: f32, m: f32, y: f32, k: f32, a: f32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
@@ -1928,9 +2011,9 @@ pub trait ColorStaticType {
     /// The value of *s,* *l,* and *a* must all be in the range 0-255; the value
     /// of *h* must be in the range 0-359.
     ///
-    /// **See also:** toHsl()
-    /// fromHslF()
-    /// isValid()
+    /// **See also:** [`to_hsl()`]
+    /// [`from_hsl_f()`]
+    /// [`is_valid()`]
     ///
     /// **Overloads**
     /// Static convenience function that returns a QColor constructed from the HSV
@@ -1939,9 +2022,9 @@ pub trait ColorStaticType {
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** toHsl()
-    /// fromHsl()
-    /// isValid()
+    /// **See also:** [`to_hsl()`]
+    /// [`from_hsl()`]
+    /// [`is_valid()`]
     fn from_hsl<'a>(h: i32, s: i32, l: i32, a: i32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
@@ -1969,9 +2052,9 @@ pub trait ColorStaticType {
     ///
     /// All the values must be in the range 0.0-1.0.
     ///
-    /// **See also:** toHsl()
-    /// fromHsl()
-    /// isValid()
+    /// **See also:** [`to_hsl()`]
+    /// [`from_hsl()`]
+    /// [`is_valid()`]
     fn from_hsl_f<'a>(h: f32, s: f32, l: f32, a: f32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
@@ -1998,7 +2081,7 @@ pub trait ColorStaticType {
     ///
     /// It uses the same algorithm used in setNamedColor().
     ///
-    /// **See also:** setNamedColor()
+    /// **See also:** [`set_named_color()`]
     ///
     /// **Overloads**
     ///
@@ -2019,6 +2102,20 @@ pub trait ColorStaticType {
     }
 }
 
-impl<'a> ColorStaticType for Color<'a> {}
+impl<'a> ColorStaticTrait for Color<'a> {}
 
-impl<'a> ColorStaticType for ColorStatic<'a> {}
+impl<'a> ColorStaticTrait for ColorStatic<'a> {}
+#[repr(u32)]
+pub enum Spec {
+    Invalid,
+    Rgb,
+    Hsv,
+    Cmyk,
+    Hsl,
+}
+
+#[repr(u32)]
+pub enum NameFormat {
+    HexRgb,
+    HexArgb,
+}

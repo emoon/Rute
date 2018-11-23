@@ -16,9 +16,148 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::font_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
+///
+/// When you create a QFont object you specify various attributes that
+/// you want the font to have. Qt will use the font with the specified
+/// attributes, or if no matching font exists, Qt will use the closest
+/// matching installed font. The attributes of the font that is
+/// actually used are retrievable from a QFontInfo object. If the
+/// window system provides an exact match exactMatch() returns `true.`
+/// Use QFontMetrics to get measurements, e.g. the pixel length of a
+/// string using QFontMetrics::width().
+///
+/// Note that a QGuiApplication instance must exist before a QFont can be
+/// used. You can set the application's default font with
+/// QGuiApplication::setFont().
+///
+/// If a chosen font does not include all the characters that
+/// need to be displayed, QFont will try to find the characters in the
+/// nearest equivalent fonts. When a QPainter draws a character from a
+/// font the QFont will report whether or not it has the character; if
+/// it does not, QPainter will draw an unfilled square.
+///
+/// Create QFonts like this:
+///
+/// The attributes set in the constructor can also be set later, e.g.
+/// setFamily(), setPointSize(), setPointSizeF(), setWeight() and
+/// setItalic(). The remaining attributes must be set after
+/// contstruction, e.g. setBold(), setUnderline(), setOverline(),
+/// setStrikeOut() and setFixedPitch(). QFontInfo objects should be
+/// created *after* the font's attributes have been set. A QFontInfo
+/// object will not change, even if you change the font's
+/// attributes. The corresponding functions, e.g. family(),
+/// pointSize(), etc., return the values that were set, even though
+/// the values used may differ. The actual values are available from a
+/// QFontInfo object.
+///
+/// If the requested font family is unavailable you can influence the
+/// [font matching algorithm](%23fontmatching)
+/// by choosing a
+/// particular [QFont::StyleHint](QFont::StyleHint)
+/// and [QFont::StyleStrategy](QFont::StyleStrategy)
+/// with
+/// setStyleHint(). The default family (corresponding to the current
+/// style hint) is returned by defaultFamily().
+///
+/// The font-matching algorithm has a lastResortFamily() and
+/// lastResortFont() in cases where a suitable match cannot be found.
+/// You can provide substitutions for font family names using
+/// insertSubstitution() and insertSubstitutions(). Substitutions can
+/// be removed with removeSubstitutions(). Use substitute() to retrieve
+/// a family's first substitute, or the family name itself if it has
+/// no substitutes. Use substitutes() to retrieve a list of a family's
+/// substitutes (which may be empty).
+///
+/// Every QFont has a key() which you can use, for example, as the key
+/// in a cache or dictionary. If you want to store a user's font
+/// preferences you could use QSettings, writing the font information
+/// with toString() and reading it back with fromString(). The
+/// operator<<() and operator>>() functions are also available, but
+/// they work on a data stream.
+///
+/// It is possible to set the height of characters shown on the screen
+/// to a specified number of pixels with setPixelSize(); however using
+/// setPointSize() has a similar effect and provides device
+/// independence.
+///
+/// Loading fonts can be expensive, especially on X11. QFont contains
+/// extensive optimizations to make the copying of QFont objects fast,
+/// and to cache the results of the slow window system functions it
+/// depends upon.
+///
+/// The font matching algorithm works as follows:
+/// * The specified font family is searched for.
+/// * If not found, the styleHint() is used to select a replacement family.
+/// * Each replacement font family is searched for.
+/// * If none of these are found or there was no styleHint(), "helvetica" will be searched for.
+/// * If "helvetica" isn't found Qt will try the lastResortFamily().
+/// * If the lastResortFamily() isn't found Qt will try the lastResortFont() which will always return a name of some kind.
+///
+/// Note that the actual font matching algorithm varies from platform to platform.
+///
+/// In Windows a request for the font is automatically changed to
+/// , an improved version of Courier that allows for smooth scaling.
+/// The older bitmap font can be selected by setting the PreferBitmap
+/// style strategy (see setStyleStrategy()).
+///
+/// Once a font is found, the remaining attributes are matched in order of
+/// priority:
+/// * fixedPitch()
+/// * pointSize() (see below)
+/// * weight()
+/// * style()
+///
+/// If you have a font which matches on family, even if none of the
+/// other attributes match, this font will be chosen in preference to
+/// a font which doesn't match on family but which does match on the
+/// other attributes. This is because font family is the dominant
+/// search criteria.
+///
+/// The point size is defined to match if it is within 20% of the
+/// requested point size. When several fonts match and are only
+/// distinguished by point size, the font with the closest point size
+/// to the one requested will be chosen.
+///
+/// The actual family, font size, weight and other font attributes
+/// used for drawing text will depend on what's available for the
+/// chosen family under the window system. A QFontInfo object can be
+/// used to determine the actual values used for drawing the text.
+///
+/// Examples:
+///
+/// If you had both an Adobe and a Cronyx Helvetica, you might get
+/// either.
+///
+/// You can specify the foundry you want in the family name. The font f
+/// in the above example will be set to .
+///
+/// To determine the attributes of the font actually used in the window
+/// system, use a QFontInfo object, e.g.
+///
+/// To find out font metrics use a QFontMetrics object, e.g.
+///
+/// For more general information on fonts, see the
+/// [comp.fonts FAQ](comp.fonts%20FAQ)
+///
+/// Information on encodings can be found from
+/// [Roman Czyborra's](Roman%20Czyborra's)
+/// page.
+///
+/// **See also:** [`FontMetrics`]
+/// [`FontInfo`]
+/// [`FontDatabase`]
+/// {Character Map Example}
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Font<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
@@ -29,9 +168,20 @@ pub struct Font<'a> {
 
 impl<'a> Font<'a> {
     pub fn new() -> Font<'a> {
-        let ffi_data = unsafe { ((*rute_ffi_get()).create_font)(::std::ptr::null()) };
+        let data = Rc::new(Cell::new(None));
+
+        let ffi_data = unsafe {
+            ((*rute_ffi_get()).create_font)(
+                ::std::ptr::null(),
+                transmute(rute_object_delete_callback as usize),
+                Rc::into_raw(data.clone()) as *const c_void,
+            )
+        };
+
+        data.set(Some(ffi_data.qt_data));
+
         Font {
-            data: Rc::new(Cell::new(Some(ffi_data.qt_data))),
+            data,
             all_funcs: ffi_data.all_funcs,
             owned: true,
             _marker: PhantomData,
@@ -64,14 +214,177 @@ impl<'a> Font<'a> {
         }
     }
 }
-pub trait FontType<'a> {
-    fn set_pixel_size(&self, size: i32) -> &Self {
+
+pub struct FontStatic<'a> {
+    pub all_funcs: *const RUFontAllFuncs,
+    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
+}
+pub trait FontTrait<'a> {
+    ///
+    /// Swaps this font instance with *other.* This function is very fast
+    /// and never fails.
+    fn swap(&self, other: &FontTrait) {
+        let (obj_other_1, _funcs) = other.get_font_obj_funcs();
+
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
-            ((*funcs).set_pixel_size)(obj_data, size);
+            ((*funcs).swap)(obj_data, obj_other_1);
         }
-        self
     }
+    ///
+    /// Returns the requested font family name, i.e. the name set in the
+    /// constructor or the last setFont() call.
+    ///
+    /// **See also:** [`set_family()`]
+    /// [`substitutes()`]
+    /// [`substitute()`]
+    fn family(&self) -> String {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).family)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// Sets the family name of the font. The name is case insensitive and
+    /// may include a foundry name.
+    ///
+    /// The *family* name may optionally also include a foundry name,
+    /// e.g. . If the *family* is
+    /// available from more than one foundry and the foundry isn't
+    /// specified, an arbitrary foundry is chosen. If the family isn't
+    /// available a family will be set using the [font matching](QFont)
+    ///
+    /// algorithm.
+    ///
+    /// **See also:** [`family()`]
+    /// [`set_style_hint()`]
+    /// [`FontInfo`]
+    fn set_family(&self, arg0: &str) {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_family)(obj_data, str_in_arg0_1.as_ptr());
+        }
+    }
+    ///
+    /// Returns the requested font style name. This can be used to match the
+    /// font with irregular styles (that can't be normalized in other style
+    /// properties).
+    ///
+    /// **See also:** [`set_family()`]
+    /// [`set_style()`]
+    fn style_name(&self) -> String {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).style_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// Sets the style name of the font to *styleName.* When set, other style properties
+    /// like [style()](style())
+    /// and [weight()](weight())
+    /// will be ignored for font matching, though they may be
+    /// simulated afterwards if supported by the platform's font engine.
+    ///
+    /// Due to the lower quality of artificially simulated styles, and the lack of full cross
+    /// platform support, it is not recommended to use matching by style name together with
+    /// matching by style properties
+    ///
+    /// **See also:** [`style_name()`]
+    fn set_style_name(&self, arg0: &str) {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_style_name)(obj_data, str_in_arg0_1.as_ptr());
+        }
+    }
+    ///
+    /// Returns the point size of the font. Returns -1 if the font size
+    /// was specified in pixels.
+    ///
+    /// **See also:** [`set_point_size()`]
+    /// [`point_size_f()`]
+    ///
+    /// Returns the point size of the font. Returns -1 if the font size was
+    /// specified in pixels.
+    ///
+    /// **See also:** [`point_size()`]
+    /// [`set_point_size_f()`]
+    /// [`pixel_size()`]
+    /// [`FontInfo::point_size`]
+    /// [`FontInfo::pixel_size`]
+    fn point_size(&self) -> i32 {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).point_size)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Sets the point size to *pointSize.* The point size must be
+    /// greater than zero.
+    ///
+    /// **See also:** [`point_size()`]
+    /// [`set_point_size_f()`]
+    ///
+    /// Sets the point size to *pointSize.* The point size must be
+    /// greater than zero. The requested precision may not be achieved on
+    /// all platforms.
+    ///
+    /// **See also:** [`point_size_f()`]
+    /// [`set_point_size()`]
+    /// [`set_pixel_size()`]
+    fn set_point_size(&self, arg0: i32) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_point_size)(obj_data, arg0);
+        }
+    }
+    ///
+    /// Returns the point size of the font. Returns -1 if the font size was
+    /// specified in pixels.
+    ///
+    /// **See also:** [`point_size()`]
+    /// [`set_point_size_f()`]
+    /// [`pixel_size()`]
+    /// [`FontInfo::point_size`]
+    /// [`FontInfo::pixel_size`]
+    fn point_size_f(&self) -> f32 {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).point_size_f)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Sets the point size to *pointSize.* The point size must be
+    /// greater than zero. The requested precision may not be achieved on
+    /// all platforms.
+    ///
+    /// **See also:** [`point_size_f()`]
+    /// [`set_point_size()`]
+    /// [`set_pixel_size()`]
+    fn set_point_size_f(&self, arg0: f32) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_point_size_f)(obj_data, arg0);
+        }
+    }
+    ///
+    /// Returns the pixel size of the font if it was set with
+    /// setPixelSize(). Returns -1 if the size was set with setPointSize()
+    /// or setPointSizeF().
+    ///
+    /// **See also:** [`set_pixel_size()`]
+    /// [`point_size()`]
+    /// [`FontInfo::point_size`]
+    /// [`FontInfo::pixel_size`]
     fn pixel_size(&self) -> i32 {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
@@ -79,28 +392,933 @@ pub trait FontType<'a> {
             ret_val
         }
     }
+    ///
+    /// Sets the font size to *pixelSize* pixels.
+    ///
+    /// Using this function makes the font device dependent. Use
+    /// setPointSize() or setPointSizeF() to set the size of the font
+    /// in a device independent manner.
+    ///
+    /// **See also:** [`pixel_size()`]
+    fn set_pixel_size(&self, arg0: i32) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_pixel_size)(obj_data, arg0);
+        }
+    }
+    ///
+    /// Returns the weight of the font, using the same scale as the
+    /// [QFont::Weight](QFont::Weight)
+    /// enumeration.
+    ///
+    /// **See also:** [`set_weight()`]
+    /// Weight
+    /// [`FontInfo`]
+    fn weight(&self) -> i32 {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).weight)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Sets the weight of the font to *weight,* using the scale defined by
+    /// [QFont::Weight](QFont::Weight)
+    /// enumeration.
+    ///
+    /// **Note**: If styleName() is set, this value may be ignored for font selection.
+    ///
+    /// **See also:** [`weight()`]
+    /// [`FontInfo`]
+    fn set_weight(&self, arg0: i32) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_weight)(obj_data, arg0);
+        }
+    }
+    ///
+    /// Returns `true` if weight() is a value greater than
+    /// [QFont::Medium](Weight)
+    /// ; otherwise returns `false.`
+    ///
+    /// **See also:** [`weight()`]
+    /// [`set_bold()`]
+    /// [`FontInfo::bold`]
+    fn bold(&self) -> bool {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).bold)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// If *enable* is true sets the font's weight to
+    /// [QFont::Bold](Weight)
+    ///
+    /// otherwise sets the weight to [QFont::Normal](Weight)
+    ///
+    ///
+    /// For finer boldness control use setWeight().
+    ///
+    /// **Note**: If styleName() is set, this value may be ignored, or if supported
+    /// on the platform, the font artificially embolded.
+    ///
+    /// **See also:** [`bold()`]
+    /// [`set_weight()`]
+    fn set_bold(&self, arg0: bool) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_bold)(obj_data, arg0);
+        }
+    }
+    ///
+    /// Sets the style name of the font to *styleName.* When set, other style properties
+    /// like [style()](style())
+    /// and [weight()](weight())
+    /// will be ignored for font matching, though they may be
+    /// simulated afterwards if supported by the platform's font engine.
+    ///
+    /// Due to the lower quality of artificially simulated styles, and the lack of full cross
+    /// platform support, it is not recommended to use matching by style name together with
+    /// matching by style properties
+    ///
+    /// **See also:** [`style_name()`]
+    ///
+    /// Sets the style of the font to *style.*
+    ///
+    /// **See also:** [`italic()`]
+    /// [`FontInfo`]
+    ///
+    /// Sets the style hint and strategy to *hint* and *strategy,*
+    /// respectively.
+    ///
+    /// If these aren't set explicitly the style hint will default to
+    /// `AnyStyle` and the style strategy to `PreferDefault.`
+    ///
+    /// Qt does not support style hints on X11 since this information
+    /// is not provided by the window system.
+    ///
+    /// **See also:** StyleHint
+    /// [`style_hint()`]
+    /// StyleStrategy
+    /// [`style_strategy()`]
+    /// [`FontInfo`]
+    ///
+    /// Sets the style strategy for the font to *s.*
+    ///
+    /// **See also:** [`Font::style_strategy()`]
+    fn set_style(&self, style: Style) {
+        let enum_style_1 = style as i32;
+
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_style)(obj_data, enum_style_1);
+        }
+    }
+    ///
+    /// Returns the requested font style name. This can be used to match the
+    /// font with irregular styles (that can't be normalized in other style
+    /// properties).
+    ///
+    /// **See also:** [`set_family()`]
+    /// [`set_style()`]
+    ///
+    /// Returns the style of the font.
+    ///
+    /// **See also:** [`set_style()`]
+    ///
+    /// Returns the StyleStrategy.
+    ///
+    /// The style strategy affects the [font matching](QFont)
+    /// algorithm.
+    /// See [QFont::StyleStrategy](QFont::StyleStrategy)
+    /// for the list of available strategies.
+    ///
+    /// **See also:** [`set_style_hint()`]
+    /// [`Font::style_hint()`]
+    ///
+    /// Returns the StyleHint.
+    ///
+    /// The style hint affects the [font matching algorithm](%23fontmatching)
+    ///
+    /// See [QFont::StyleHint](QFont::StyleHint)
+    /// for the list of available hints.
+    ///
+    /// **See also:** [`set_style_hint()`]
+    /// [`Font::style_strategy()`]
+    /// [`FontInfo::style_hint`]
+    fn style(&self) -> Style {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).style)(obj_data);
+            let ret_val = { transmute::<i32, Style>(ret_val) };
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if the style() of the font is not QFont::StyleNormal
+    ///
+    /// **See also:** [`set_italic()`]
+    /// [`style()`]
+    fn italic(&self) -> bool {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).italic)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Sets the style() of the font to QFont::StyleItalic if *enable* is true;
+    /// otherwise the style is set to QFont::StyleNormal.
+    ///
+    /// **Note**: If styleName() is set, this value may be ignored, or if supported
+    /// on the platform, the font may be rendered tilted instead of picking a
+    /// designed italic font-variant.
+    ///
+    /// **See also:** [`italic()`]
+    /// [`FontInfo`]
+    fn set_italic(&self, b: bool) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_italic)(obj_data, b);
+        }
+    }
+    ///
+    /// Returns `true` if underline has been set; otherwise returns `false.`
+    ///
+    /// **See also:** [`set_underline()`]
+    fn underline(&self) -> bool {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).underline)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// If *enable* is true, sets underline on; otherwise sets underline
+    /// off.
+    ///
+    /// **See also:** [`underline()`]
+    /// [`FontInfo`]
+    fn set_underline(&self, arg0: bool) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_underline)(obj_data, arg0);
+        }
+    }
+    ///
+    /// Returns `true` if overline has been set; otherwise returns `false.`
+    ///
+    /// **See also:** [`set_overline()`]
+    fn overline(&self) -> bool {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).overline)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// If *enable* is true, sets overline on; otherwise sets overline off.
+    ///
+    /// **See also:** [`overline()`]
+    /// [`FontInfo`]
+    fn set_overline(&self, arg0: bool) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_overline)(obj_data, arg0);
+        }
+    }
+    ///
+    /// Returns `true` if fixed pitch has been set; otherwise returns `false.`
+    ///
+    /// **See also:** [`set_fixed_pitch()`]
+    /// [`FontInfo::fixed_pitch`]
+    fn fixed_pitch(&self) -> bool {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).fixed_pitch)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// If *enable* is true, sets fixed pitch on; otherwise sets fixed
+    /// pitch off.
+    ///
+    /// **See also:** [`fixed_pitch()`]
+    /// [`FontInfo`]
+    fn set_fixed_pitch(&self, arg0: bool) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_fixed_pitch)(obj_data, arg0);
+        }
+    }
+    ///
+    /// Returns `true` if kerning should be used when drawing text with this font.
+    ///
+    /// **See also:** [`set_kerning()`]
+    fn kerning(&self) -> bool {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).kerning)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Enables kerning for this font if *enable* is true; otherwise
+    /// disables it. By default, kerning is enabled.
+    ///
+    /// When kerning is enabled, glyph metrics do not add up anymore,
+    /// even for Latin text. In other words, the assumption that
+    /// width('a') + width('b') is equal to width("ab") is not
+    /// necessarily true.
+    ///
+    /// **See also:** [`kerning()`]
+    /// [`FontMetrics`]
+    fn set_kerning(&self, arg0: bool) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_kerning)(obj_data, arg0);
+        }
+    }
+    ///
+    /// Returns the StyleHint.
+    ///
+    /// The style hint affects the [font matching algorithm](%23fontmatching)
+    ///
+    /// See [QFont::StyleHint](QFont::StyleHint)
+    /// for the list of available hints.
+    ///
+    /// **See also:** [`set_style_hint()`]
+    /// [`Font::style_strategy()`]
+    /// [`FontInfo::style_hint`]
+    fn style_hint(&self) -> StyleHint {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).style_hint)(obj_data);
+            let ret_val = { transmute::<i32, StyleHint>(ret_val) };
+            ret_val
+        }
+    }
+    ///
+    /// Sets the style hint and strategy to *hint* and *strategy,*
+    /// respectively.
+    ///
+    /// If these aren't set explicitly the style hint will default to
+    /// `AnyStyle` and the style strategy to `PreferDefault.`
+    ///
+    /// Qt does not support style hints on X11 since this information
+    /// is not provided by the window system.
+    ///
+    /// **See also:** StyleHint
+    /// [`style_hint()`]
+    /// StyleStrategy
+    /// [`style_strategy()`]
+    /// [`FontInfo`]
+    fn set_style_hint(&self, arg0: StyleHint, arg1: StyleStrategy) {
+        let enum_arg0_1 = arg0 as i32;
+        let enum_arg1_2 = arg1 as i32;
+
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_style_hint)(obj_data, enum_arg0_1, enum_arg1_2);
+        }
+    }
+    ///
+    /// Returns the letter spacing for the font.
+    ///
+    /// **See also:** [`set_letter_spacing()`]
+    /// [`letter_spacing_type()`]
+    /// [`set_word_spacing()`]
+    ///
+    /// Returns the spacing type used for letter spacing.
+    ///
+    /// **See also:** [`letter_spacing()`]
+    /// [`set_letter_spacing()`]
+    /// [`set_word_spacing()`]
+    fn letter_spacing(&self) -> f32 {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).letter_spacing)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Returns the spacing type used for letter spacing.
+    ///
+    /// **See also:** [`letter_spacing()`]
+    /// [`set_letter_spacing()`]
+    /// [`set_word_spacing()`]
+    fn letter_spacing_type(&self) -> SpacingType {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).letter_spacing_type)(obj_data);
+            let ret_val = { transmute::<i32, SpacingType>(ret_val) };
+            ret_val
+        }
+    }
+    ///
+    /// Sets the letter spacing for the font to *spacing* and the type
+    /// of spacing to *type.*
+    ///
+    /// Letter spacing changes the default spacing between individual
+    /// letters in the font. The spacing between the letters can be
+    /// made smaller as well as larger either in percentage of the
+    /// character width or in pixels, depending on the selected spacing type.
+    ///
+    /// **See also:** [`letter_spacing()`]
+    /// [`letter_spacing_type()`]
+    /// [`set_word_spacing()`]
+    fn set_letter_spacing(&self, stype: SpacingType, spacing: f32) {
+        let enum_stype_1 = stype as i32;
+
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_letter_spacing)(obj_data, enum_stype_1, spacing);
+        }
+    }
+    ///
+    /// Returns the word spacing for the font.
+    ///
+    /// **See also:** [`set_word_spacing()`]
+    /// [`set_letter_spacing()`]
+    fn word_spacing(&self) -> f32 {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).word_spacing)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Sets the word spacing for the font to *spacing.*
+    ///
+    /// Word spacing changes the default spacing between individual
+    /// words. A positive value increases the word spacing
+    /// by a corresponding amount of pixels, while a negative value
+    /// decreases the inter-word spacing accordingly.
+    ///
+    /// Word spacing will not apply to writing systems, where indiviaul
+    /// words are not separated by white space.
+    ///
+    /// **See also:** [`word_spacing()`]
+    /// [`set_letter_spacing()`]
+    fn set_word_spacing(&self, spacing: f32) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_word_spacing)(obj_data, spacing);
+        }
+    }
+    ///
+    /// Sets the capitalization of the text in this font to *caps.*
+    ///
+    /// A font's capitalization makes the text appear in the selected capitalization mode.
+    ///
+    /// **See also:** [`capitalization()`]
+    fn set_capitalization(&self, arg0: Capitalization) {
+        let enum_arg0_1 = arg0 as i32;
+
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_capitalization)(obj_data, enum_arg0_1);
+        }
+    }
+    ///
+    /// Returns the current capitalization type of the font.
+    ///
+    /// **See also:** [`set_capitalization()`]
+    fn capitalization(&self) -> Capitalization {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).capitalization)(obj_data);
+            let ret_val = { transmute::<i32, Capitalization>(ret_val) };
+            ret_val
+        }
+    }
+    ///
+    /// Set the preference for the hinting level of the glyphs to *hintingPreference.* This is a hint
+    /// to the underlying font rendering system to use a certain level of hinting, and has varying
+    /// support across platforms. See the table in the documentation for QFont::HintingPreference for
+    /// more details.
+    ///
+    /// The default hinting preference is QFont::PreferDefaultHinting.
+    fn set_hinting_preference(&self, hinting_preference: HintingPreference) {
+        let enum_hinting_preference_1 = hinting_preference as i32;
+
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_hinting_preference)(obj_data, enum_hinting_preference_1);
+        }
+    }
+    ///
+    /// Returns the currently preferred hinting level for glyphs rendered with this font.
+    fn hinting_preference(&self) -> HintingPreference {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).hinting_preference)(obj_data);
+            let ret_val = { transmute::<i32, HintingPreference>(ret_val) };
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if raw mode is used for font name matching; otherwise
+    /// returns `false.`
+    ///
+    /// **See also:** [`set_raw_mode()`]
+    fn raw_mode(&self) -> bool {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).raw_mode)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// If *enable* is true, turns raw mode on; otherwise turns raw mode
+    /// off. This function only has an effect under X11.
+    ///
+    /// If raw mode is enabled, Qt will search for an X font with a
+    /// complete font name matching the family name, ignoring all other
+    /// values set for the QFont. If the font name matches several fonts,
+    /// Qt will use the first font returned by X. QFontInfo *cannot* be
+    /// used to fetch information about a QFont using raw mode (it will
+    /// return the values set in the QFont for all parameters, including
+    /// the family name).
+    ///
+    /// **Warning**: Enabling raw mode has no effect since Qt 5.0.
+    ///
+    /// **See also:** [`raw_mode()`]
+    fn set_raw_mode(&self, arg0: bool) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_raw_mode)(obj_data, arg0);
+        }
+    }
+    ///
+    /// Returns `true` if a window system font exactly matching the settings
+    /// of this font is available.
+    ///
+    /// **See also:** [`FontInfo`]
+    fn exact_match(&self) -> bool {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).exact_match)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if this font and *f* are copies of each other, i.e.
+    /// one of them was created as a copy of the other and neither has
+    /// been modified since. This is much stricter than equality.
+    ///
+    /// **See also:** [`operator()`]
+    /// [`operator()`]
+    fn is_copy_of(&self, arg0: &FontTrait) -> bool {
+        let (obj_arg0_1, _funcs) = arg0.get_font_obj_funcs();
+
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_copy_of)(obj_data, obj_arg0_1);
+            ret_val
+        }
+    }
+    ///
+    /// Sets a font by its system specific name.
+    ///
+    /// A font set with setRawName() is still a full-featured QFont. It can
+    /// be queried (for example with italic()) or modified (for example with
+    /// setItalic()) and is therefore also suitable for rendering rich text.
+    ///
+    /// If Qt's internal font database cannot resolve the raw name, the
+    /// font becomes a raw font with *name* as its family.
+    ///
+    /// **See also:** [`raw_name()`]
+    /// [`set_family()`]
+    fn set_raw_name(&self, arg0: &str) {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).set_raw_name)(obj_data, str_in_arg0_1.as_ptr());
+        }
+    }
+    ///
+    /// Returns the name of the font within the underlying window system.
+    ///
+    /// On X11, this function will return an empty string.
+    ///
+    /// Using the return value of this function is usually *not* *portable.*
+    ///
+    /// **See also:** [`set_raw_name()`]
+    fn raw_name(&self) -> String {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).raw_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// Returns the font's key, a textual representation of a font. It is
+    /// typically used as the key for a cache or dictionary of fonts.
+    ///
+    /// **See also:** [`Map`]
+    fn key(&self) -> String {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).key)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// Returns the family name that corresponds to the current style
+    /// hint.
+    ///
+    /// **See also:** StyleHint
+    /// [`style_hint()`]
+    /// [`set_style_hint()`]
+    fn default_family(&self) -> String {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).default_family)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// Returns the font family name.
+    ///
+    /// The current implementation tries a wide variety of common fonts,
+    /// returning the first one it finds. Is is possible that no family is
+    /// found in which case an empty string is returned.
+    ///
+    /// **See also:** [`last_resort_font()`]
+    fn last_resort_family(&self) -> String {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).last_resort_family)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// Returns a font name for the font matching algorithm.
+    /// This is used if the last resort family is not available. It will
+    /// always return a name, if necessary returning something like
+    /// or .
+    ///
+    /// The current implementation tries a wide variety of common fonts,
+    /// returning the first one it finds. The implementation may change
+    /// at any time, but this function will always return a string
+    /// containing something.
+    ///
+    /// It is theoretically possible that there really isn't a
+    /// lastResortFont() in which case Qt will abort with an error
+    /// message. We have not been able to identify a case where this
+    /// happens. Please [report it as a bug](bughowto.html)
+    /// if
+    /// it does, preferably with a list of the fonts you have installed.
+    ///
+    /// **See also:** [`last_resort_family()`]
+    fn last_resort_font(&self) -> String {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).last_resort_font)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// Returns a new QFont that has attributes copied from *other* that
+    /// have not been previously set on this font.
+    fn resolve(&self, arg0: &FontTrait) -> Font {
+        let (obj_arg0_1, _funcs) = arg0.get_font_obj_funcs();
+
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).resolve)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Font::new_from_rc(t);
+            } else {
+                ret_val = Font::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns a new QFont that has attributes copied from *other* that
+    /// have not been previously set on this font.
+    fn resolve_2(&self) -> u64 {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).resolve_2)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Returns a new QFont that has attributes copied from *other* that
+    /// have not been previously set on this font.
+    fn resolve_3(&self, mask: u64) {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).resolve_3)(obj_data, mask);
+        }
+    }
 
     #[inline]
     fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs);
 }
 
-impl<'a> FontType<'a> for Font<'a> {
+impl<'a> FontTrait<'a> for Font<'a> {
     #[inline]
     fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).font_funcs) }
     }
 }
+pub trait FontStaticTrait {
+    ///
+    /// Returns the first family name to be used whenever *familyName* is
+    /// specified. The lookup is case insensitive.
+    ///
+    /// If there is no substitution for *familyName,* *familyName* is
+    /// returned.
+    ///
+    /// To obtain a list of substitutions use substitutes().
+    ///
+    /// **See also:** [`set_family()`]
+    /// [`insert_substitutions()`]
+    /// [`insert_substitution()`]
+    /// [`remove_substitutions()`]
+    ///
+    /// Returns a list of family names to be used whenever *familyName*
+    /// is specified. The lookup is case insensitive.
+    ///
+    /// If there is no substitution for *familyName,* an empty list is
+    /// returned.
+    ///
+    /// **See also:** [`substitute()`]
+    /// [`insert_substitutions()`]
+    /// [`insert_substitution()`]
+    /// [`remove_substitutions()`]
+    fn substitute<'a>(arg0: &str) -> String {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
 
-impl<'a> Drop for Font<'a> {
-    fn drop(&mut self) {
-        if self.owned && Rc::strong_count(&self.data) == 1 {
-            let obj = self.data.get().unwrap();
-            unsafe {
-                ((*(*self.all_funcs).font_funcs).destroy)(obj);
-            }
-
-            self.data.set(None);
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_font)(::std::ptr::null()).all_funcs).font_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).substitute)(obj_data, str_in_arg0_1.as_ptr());
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
         }
     }
+    ///
+    /// Inserts *substituteName* into the substitution
+    /// table for the family *familyName.*
+    ///
+    /// **See also:** [`insert_substitutions()`]
+    /// [`remove_substitutions()`]
+    /// [`substitutions()`]
+    /// [`substitute()`]
+    /// [`substitutes()`]
+    ///
+    /// Inserts the list of families *substituteNames* into the
+    /// substitution list for *familyName.*
+    ///
+    /// **See also:** [`insert_substitution()`]
+    /// [`remove_substitutions()`]
+    /// [`substitutions()`]
+    /// [`substitute()`]
+    fn insert_substitution<'a>(arg0: &str, arg1: &str) {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+        let str_in_arg1_2 = CString::new(arg1).unwrap();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_font)(::std::ptr::null()).all_funcs).font_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).insert_substitution)(
+                obj_data,
+                str_in_arg0_1.as_ptr(),
+                str_in_arg1_2.as_ptr(),
+            );
+        }
+    }
+    ///
+    /// Removes all the substitutions for *familyName.*
+    ///
+    /// **See also:** [`insert_substitutions()`]
+    /// [`insert_substitution()`]
+    /// [`substitutions()`]
+    /// [`substitute()`]
+    fn remove_substitutions<'a>(arg0: &str) {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_font)(::std::ptr::null()).all_funcs).font_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).remove_substitutions)(obj_data, str_in_arg0_1.as_ptr());
+        }
+    }
+    fn initialize<'a>() {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_font)(::std::ptr::null()).all_funcs).font_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).initialize)(obj_data);
+        }
+    }
+    fn cleanup<'a>() {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_font)(::std::ptr::null()).all_funcs).font_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).cleanup)(obj_data);
+        }
+    }
+    fn cache_statistics<'a>() {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_font)(::std::ptr::null()).all_funcs).font_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).cache_statistics)(obj_data);
+        }
+    }
+}
+
+impl<'a> FontStaticTrait for Font<'a> {}
+
+impl<'a> FontStaticTrait for FontStatic<'a> {}
+#[repr(u32)]
+pub enum StyleHint {
+    Helvetica,
+    SansSerif,
+    Times,
+    Serif,
+    Courier,
+    TypeWriter,
+    OldEnglish,
+    Decorative,
+    System,
+    AnyStyle,
+    Cursive,
+    Monospace,
+    Fantasy,
+}
+
+#[repr(u32)]
+pub enum StyleStrategy {
+    PreferDefault,
+    PreferBitmap,
+    PreferDevice,
+    PreferOutline,
+    ForceOutline,
+    PreferMatch,
+    PreferQuality,
+    PreferAntialias,
+    NoAntialias,
+    OpenGlCompatible,
+    ForceIntegerMetrics,
+    NoSubpixelAntialias,
+    PreferNoShaping,
+    NoFontMerging,
+}
+
+#[repr(u32)]
+pub enum HintingPreference {
+    PreferDefaultHinting,
+    PreferNoHinting,
+    PreferVerticalHinting,
+    PreferFullHinting,
+}
+
+#[repr(u32)]
+pub enum Weight {
+    Thin,
+    ExtraLight,
+    Light,
+    Normal,
+    Medium,
+    DemiBold,
+    Bold,
+    ExtraBold,
+    Black,
+}
+
+#[repr(u32)]
+pub enum Style {
+    StyleNormal,
+    StyleItalic,
+    StyleOblique,
+}
+
+#[repr(u32)]
+pub enum Stretch {
+    AnyStretch,
+    UltraCondensed,
+    ExtraCondensed,
+    Condensed,
+    SemiCondensed,
+    Unstretched,
+    SemiExpanded,
+    Expanded,
+    ExtraExpanded,
+    UltraExpanded,
+}
+
+#[repr(u32)]
+pub enum Capitalization {
+    MixedCase,
+    AllUppercase,
+    AllLowercase,
+    SmallCaps,
+    Capitalize,
+}
+
+#[repr(u32)]
+pub enum SpacingType {
+    PercentageSpacing,
+    AbsoluteSpacing,
+}
+
+#[repr(u32)]
+pub enum ResolveProperties {
+    FamilyResolved,
+    SizeResolved,
+    StyleHintResolved,
+    StyleStrategyResolved,
+    WeightResolved,
+    StyleResolved,
+    UnderlineResolved,
+    OverlineResolved,
+    StrikeOutResolved,
+    FixedPitchResolved,
+    StretchResolved,
+    KerningResolved,
+    CapitalizationResolved,
+    LetterSpacingResolved,
+    WordSpacingResolved,
+    HintingPreferenceResolved,
+    StyleNameResolved,
+    AllPropertiesResolved,
 }

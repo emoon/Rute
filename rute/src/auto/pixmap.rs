@@ -16,9 +16,82 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::bitmap::Bitmap;
+#[allow(unused_imports)]
+use auto::bitmap::BitmapTrait;
+#[allow(unused_imports)]
+use auto::bitmap_ffi::*;
+#[allow(unused_imports)]
+use auto::color::Color;
+#[allow(unused_imports)]
+use auto::color::ColorTrait;
+#[allow(unused_imports)]
+use auto::color_ffi::*;
+#[allow(unused_imports)]
+use auto::image::Image;
+#[allow(unused_imports)]
+use auto::image::ImageTrait;
+#[allow(unused_imports)]
+use auto::image_ffi::*;
+#[allow(unused_imports)]
+use auto::object::Object;
+#[allow(unused_imports)]
+use auto::object::ObjectTrait;
+#[allow(unused_imports)]
+use auto::object_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_device::PaintDevice;
+#[allow(unused_imports)]
+use auto::paint_device::PaintDeviceTrait;
+#[allow(unused_imports)]
+use auto::paint_device::*;
+#[allow(unused_imports)]
+use auto::paint_device_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_device_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_engine::PaintEngine;
+#[allow(unused_imports)]
+use auto::pixmap_ffi::*;
+#[allow(unused_imports)]
+use auto::point::Point;
+#[allow(unused_imports)]
+use auto::point::PointTrait;
+#[allow(unused_imports)]
+use auto::point_ffi::*;
+#[allow(unused_imports)]
+use auto::rect::Rect;
+#[allow(unused_imports)]
+use auto::rect::RectTrait;
+#[allow(unused_imports)]
+use auto::rect_ffi::*;
+#[allow(unused_imports)]
+use auto::region::Region;
+#[allow(unused_imports)]
+use auto::region::RegionTrait;
+#[allow(unused_imports)]
+use auto::region_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_enums::AspectRatioMode;
+#[allow(unused_imports)]
+use auto::rute_enums::ImageConversionFlags;
+#[allow(unused_imports)]
+use auto::rute_enums::MaskMode;
+#[allow(unused_imports)]
+use auto::rute_enums::TransformationMode;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
+#[allow(unused_imports)]
+use auto::size::Size;
+#[allow(unused_imports)]
+use auto::size::SizeTrait;
+#[allow(unused_imports)]
+use auto::size_ffi::*;
 ///
 /// Qt provides four classes for handling image data: QImage, QPixmap,
 /// QBitmap and QPicture. QImage is designed and optimized for I/O,
@@ -159,10 +232,10 @@ use auto::*;
 /// **Note**: When using the native X11 graphics system, the pixmap
 /// becomes invalid when the QApplication instance is destroyed.
 ///
-/// **See also:** QBitmap
-/// QImage
-/// QImageReader
-/// QImageWriter
+/// **See also:** [`Bitmap`]
+/// [`Image`]
+/// [`ImageReader`]
+/// [`ImageWriter`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -221,141 +294,23 @@ impl<'a> Pixmap<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn set_dev_type_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_dev_type_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(pixmap_dev_type_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_dev_type_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_dev_type_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(pixmap_dev_type_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_paint_engine_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_paint_engine_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(pixmap_paint_engine_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_paint_engine_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_paint_engine_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(pixmap_paint_engine_trampoline as usize),
-            );
-        }
-
-        self
-    }
 }
 
 pub struct PixmapStatic<'a> {
     pub all_funcs: *const RUPixmapAllFuncs,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
-
-unsafe extern "C" fn pixmap_dev_type_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> i32 {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn pixmap_dev_type_trampoline(self_c: *const c_void, func: *const c_void) -> i32 {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-unsafe extern "C" fn pixmap_paint_engine_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUPaintEngine {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn pixmap_paint_engine_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUPaintEngine {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-pub trait PixmapType<'a> {
+pub trait PixmapTrait<'a> {
     ///
     /// Swaps pixmap *other* with this pixmap. This operation is very
     /// fast and never fails.
-    fn swap<P: PixmapType<'a>>(&self, other: &P) -> &Self {
+    fn swap(&self, other: &PixmapTrait) {
         let (obj_other_1, _funcs) = other.get_pixmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
-        self
     }
     ///
     /// Returns `true` if this is a null pixmap; otherwise returns `false.`
@@ -372,7 +327,7 @@ pub trait PixmapType<'a> {
     ///
     /// Returns the width of the pixmap.
     ///
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
     fn width(&self) -> i32 {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
@@ -384,7 +339,7 @@ pub trait PixmapType<'a> {
     ///
     /// Returns the height of the pixmap.
     ///
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
     fn height(&self) -> i32 {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
@@ -396,8 +351,8 @@ pub trait PixmapType<'a> {
     ///
     /// Returns the size of the pixmap.
     ///
-    /// **See also:** width()
-    /// height()
+    /// **See also:** [`width()`]
+    /// [`height()`]
     /// {QPixmap#Pixmap Information}{Pixmap
     /// Information}
     fn size(&self) -> Size {
@@ -438,7 +393,7 @@ pub trait PixmapType<'a> {
     /// The pixmap depth is also called bits per pixel (bpp) or bit planes
     /// of a pixmap. A null pixmap has depth 0.
     ///
-    /// **See also:** defaultDepth()
+    /// **See also:** [`default_depth()`]
     /// {QPixmap#Pixmap Information}{Pixmap
     /// Information}
     fn depth(&self) -> i32 {
@@ -459,14 +414,13 @@ pub trait PixmapType<'a> {
     /// being painted on.
     ///
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fn fill_by_color_type<C: ColorType<'a>>(&self, fill_color: &C) -> &Self {
+    fn fill(&self, fill_color: &ColorTrait) {
         let (obj_fill_color_1, _funcs) = fill_color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
-            ((*funcs).fill_by_color_type)(obj_data, obj_fill_color_1);
+            ((*funcs).fill)(obj_data, obj_fill_color_1);
         }
-        self
     }
     ///
     /// Use QPainter or the fill(QColor) overload instead.
@@ -479,19 +433,14 @@ pub trait PixmapType<'a> {
     /// being painted on.
     ///
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fn fill_by_device<P: PaintDeviceType<'a>, Q: PointType<'a>>(
-        &self,
-        device: &P,
-        ofs: &Q,
-    ) -> &Self {
+    fn fill_2(&self, device: &PaintDeviceTrait, ofs: &PointTrait) {
         let (obj_device_1, _funcs) = device.get_paint_device_obj_funcs();
         let (obj_ofs_2, _funcs) = ofs.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
-            ((*funcs).fill_by_device)(obj_data, obj_device_1, obj_ofs_2);
+            ((*funcs).fill_2)(obj_data, obj_device_1, obj_ofs_2);
         }
-        self
     }
     ///
     /// Use QPainter or the fill(QColor) overload instead.
@@ -504,19 +453,13 @@ pub trait PixmapType<'a> {
     /// being painted on.
     ///
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fn fill_by_device_offset<P: PaintDeviceType<'a>>(
-        &self,
-        device: &P,
-        xofs: i32,
-        yofs: i32,
-    ) -> &Self {
+    fn fill_3(&self, device: &PaintDeviceTrait, xofs: i32, yofs: i32) {
         let (obj_device_1, _funcs) = device.get_paint_device_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
-            ((*funcs).fill_by_device_offset)(obj_data, obj_device_1, xofs, yofs);
+            ((*funcs).fill_3)(obj_data, obj_device_1, xofs, yofs);
         }
-        self
     }
     ///
     /// Extracts a bitmap mask from the pixmap's alpha channel.
@@ -524,7 +467,7 @@ pub trait PixmapType<'a> {
     /// **Warning**: This is potentially an expensive operation. The mask of
     /// the pixmap is extracted dynamically from the pixeldata.
     ///
-    /// **See also:** setMask()
+    /// **See also:** [`set_mask()`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
     fn mask(&self) -> Bitmap {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
@@ -554,17 +497,16 @@ pub trait PixmapType<'a> {
     ///
     /// **Warning**: This is potentially an expensive operation.
     ///
-    /// **See also:** mask()
+    /// **See also:** [`mask()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    /// QBitmap
-    fn set_mask<B: BitmapType<'a>>(&self, arg0: &B) -> &Self {
+    /// [`Bitmap`]
+    fn set_mask(&self, arg0: &BitmapTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_bitmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             ((*funcs).set_mask)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// Returns the device pixel ratio for the pixmap. This is the
@@ -575,8 +517,8 @@ pub trait PixmapType<'a> {
     ///
     /// The default value is 1.0.
     ///
-    /// **See also:** setDevicePixelRatio()
-    /// QImageReader
+    /// **See also:** [`set_device_pixel_ratio()`]
+    /// [`ImageReader`]
     fn device_pixel_ratio(&self) -> f32 {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
@@ -604,25 +546,24 @@ pub trait PixmapType<'a> {
     /// (see [Drawing High Resolution Versions of Pixmaps and Images](Drawing%20High%20Resolution%20Versions%20of%20Pixmaps%20and%20Images)
     /// ).
     ///
-    /// **See also:** devicePixelRatio()
-    fn set_device_pixel_ratio(&self, scale_factor: f32) -> &Self {
+    /// **See also:** [`device_pixel_ratio()`]
+    fn set_device_pixel_ratio(&self, scale_factor: f32) {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             ((*funcs).set_device_pixel_ratio)(obj_data, scale_factor);
         }
-        self
     }
     ///
     /// Returns `true` if this pixmap has an alpha channel, *or* has a
     /// mask, otherwise returns `false.`
     ///
-    /// **See also:** hasAlphaChannel()
-    /// mask()
+    /// **See also:** [`has_alpha_channel()`]
+    /// [`mask()`]
     ///
     /// Returns `true` if the pixmap has a format that respects the alpha
     /// channel, otherwise returns `false.`
     ///
-    /// **See also:** hasAlpha()
+    /// **See also:** [`has_alpha()`]
     fn has_alpha(&self) -> bool {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
@@ -634,7 +575,7 @@ pub trait PixmapType<'a> {
     /// Returns `true` if the pixmap has a format that respects the alpha
     /// channel, otherwise returns `false.`
     ///
-    /// **See also:** hasAlpha()
+    /// **See also:** [`has_alpha()`]
     fn has_alpha_channel(&self) -> bool {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
@@ -657,8 +598,8 @@ pub trait PixmapType<'a> {
     /// This function is slow because it involves converting to/from a
     /// QImage, and non-trivial computations.
     ///
-    /// **See also:** QImage::createHeuristicMask()
-    /// createMaskFromColor()
+    /// **See also:** [`Image::create_heuristic_mask`]
+    /// [`create_mask_from_color()`]
     fn create_heuristic_mask(&self, clip_tight: bool) -> Bitmap {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
@@ -681,9 +622,9 @@ pub trait PixmapType<'a> {
     /// This function is slow because it involves converting to/from a
     /// QImage.
     ///
-    /// **See also:** createHeuristicMask()
-    /// QImage::createMaskFromColor()
-    fn create_mask_from_color<C: ColorType<'a>>(&self, mask_color: &C, mode: MaskMode) -> Bitmap {
+    /// **See also:** [`create_heuristic_mask()`]
+    /// [`Image::create_mask_from_color`]
+    fn create_mask_from_color(&self, mask_color: &ColorTrait, mode: MaskMode) -> Bitmap {
         let (obj_mask_color_1, _funcs) = mask_color.get_color_obj_funcs();
         let enum_mode_2 = mode as i32;
 
@@ -732,7 +673,7 @@ pub trait PixmapType<'a> {
     /// the case when the painter is for instance based on OpenGL or when
     /// the scale factor changes rapidly.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     ///
@@ -746,7 +687,7 @@ pub trait PixmapType<'a> {
     ///
     /// If *width* is 0 or negative, a null pixmap is returned.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     ///
@@ -759,7 +700,7 @@ pub trait PixmapType<'a> {
     ///
     /// If *height* is 0 or negative, a null pixmap is returned.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     fn scaled(
@@ -816,7 +757,7 @@ pub trait PixmapType<'a> {
     /// the case when the painter is for instance based on OpenGL or when
     /// the scale factor changes rapidly.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     ///
@@ -830,7 +771,7 @@ pub trait PixmapType<'a> {
     ///
     /// If *width* is 0 or negative, a null pixmap is returned.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     ///
@@ -843,12 +784,12 @@ pub trait PixmapType<'a> {
     ///
     /// If *height* is 0 or negative, a null pixmap is returned.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
-    fn scaled_by_size<S: SizeType<'a>>(
+    fn scaled_2(
         &self,
-        s: &S,
+        s: &SizeTrait,
         aspect_mode: AspectRatioMode,
         mode: TransformationMode,
     ) -> Pixmap {
@@ -858,8 +799,7 @@ pub trait PixmapType<'a> {
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
-            let ret_val =
-                ((*funcs).scaled_by_size)(obj_data, obj_s_1, enum_aspect_mode_2, enum_mode_3);
+            let ret_val = ((*funcs).scaled_2)(obj_data, obj_s_1, enum_aspect_mode_2, enum_mode_3);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -880,7 +820,7 @@ pub trait PixmapType<'a> {
     ///
     /// If *width* is 0 or negative, a null pixmap is returned.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     fn scaled_to_width(&self, w: i32, mode: TransformationMode) -> Pixmap {
@@ -909,7 +849,7 @@ pub trait PixmapType<'a> {
     ///
     /// If *height* is 0 or negative, a null pixmap is returned.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     fn scaled_to_height(&self, h: i32, mode: TransformationMode) -> Pixmap {
@@ -942,7 +882,7 @@ pub trait PixmapType<'a> {
     /// Note that for the moment, alpha masks on monochrome images are
     /// ignored.
     ///
-    /// **See also:** fromImage()
+    /// **See also:** [`from_image()`]
     /// {QImage#Image Formats}{Image Formats}
     fn to_image(&self) -> Image {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
@@ -959,155 +899,6 @@ pub trait PixmapType<'a> {
         }
     }
     ///
-    /// Loads a pixmap from the file with the given *fileName.* Returns
-    /// true if the pixmap was successfully loaded; otherwise invalidates
-    /// the pixmap and returns `false.`
-    ///
-    /// The loader attempts to read the pixmap using the specified *format.* If the *format* is not specified (which is the default),
-    /// the loader probes the file for a header to guess the file format.
-    ///
-    /// The file name can either refer to an actual file on disk or to one
-    /// of the application's embedded resources. See the
-    /// [Resource System](resources.html)
-    /// overview for details on how to
-    /// embed pixmaps and other resource files in the application's
-    /// executable.
-    ///
-    /// If the data needs to be modified to fit in a lower-resolution
-    /// result (e.g. converting from 32-bit to 8-bit), use the *flags* to
-    /// control the conversion.
-    ///
-    /// Note that QPixmaps are automatically added to the QPixmapCache
-    /// when loaded from a file; the key used is internal and can not
-    /// be acquired.
-    ///
-    /// **See also:** loadFromData()
-    /// {QPixmap#Reading and Writing Image
-    /// Files}{Reading and Writing Image Files}
-    ///
-    /// Loads a pixmap from the *len* first bytes of the given binary *data.* Returns `true` if the pixmap was loaded successfully;
-    /// otherwise invalidates the pixmap and returns `false.`
-    ///
-    /// The loader attempts to read the pixmap using the specified *format.* If the *format* is not specified (which is the default),
-    /// the loader probes the file for a header to guess the file format.
-    ///
-    /// If the data needs to be modified to fit in a lower-resolution
-    /// result (e.g. converting from 32-bit to 8-bit), use the *flags* to
-    /// control the conversion.
-    ///
-    /// **See also:** load()
-    /// {QPixmap#Reading and Writing Image Files}{Reading and
-    /// Writing Image Files}
-    ///
-    /// **Overloads**
-    /// Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
-    fn load(&self, file_name: &str, format: &char, flags: ImageConversionFlags) -> bool {
-        let str_in_file_name_1 = CString::new(file_name).unwrap();
-        let enum_flags_3 = flags as i32;
-
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            let ret_val =
-                ((*funcs).load)(obj_data, str_in_file_name_1.as_ptr(), format, enum_flags_3);
-            ret_val
-        }
-    }
-    ///
-    /// Loads a pixmap from the *len* first bytes of the given binary *data.* Returns `true` if the pixmap was loaded successfully;
-    /// otherwise invalidates the pixmap and returns `false.`
-    ///
-    /// The loader attempts to read the pixmap using the specified *format.* If the *format* is not specified (which is the default),
-    /// the loader probes the file for a header to guess the file format.
-    ///
-    /// If the data needs to be modified to fit in a lower-resolution
-    /// result (e.g. converting from 32-bit to 8-bit), use the *flags* to
-    /// control the conversion.
-    ///
-    /// **See also:** load()
-    /// {QPixmap#Reading and Writing Image Files}{Reading and
-    /// Writing Image Files}
-    ///
-    /// **Overloads**
-    /// Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
-    fn load_from_data(
-        &self,
-        buf: &u8,
-        len: uint,
-        format: &char,
-        flags: ImageConversionFlags,
-    ) -> bool {
-        let enum_flags_4 = flags as i32;
-
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).load_from_data)(obj_data, buf, len, format, enum_flags_4);
-            ret_val
-        }
-    }
-    ///
-    /// Saves the pixmap to the file with the given *fileName* using the
-    /// specified image file *format* and *quality* factor. Returns `true`
-    /// if successful; otherwise returns `false.`
-    ///
-    /// The *quality* factor must be in the range [0,100] or -1. Specify
-    /// 0 to obtain small compressed files, 100 for large uncompressed
-    /// files, and -1 to use the default settings.
-    ///
-    /// If *format* is 0, an image format will be chosen from *fileName's*
-    /// suffix.
-    ///
-    /// **See also:** {QPixmap#Reading and Writing Image Files}{Reading and Writing
-    /// Image Files}
-    ///
-    /// **Overloads**
-    /// This function writes a QPixmap to the given *device* using the
-    /// specified image file *format* and *quality* factor. This can be
-    /// used, for example, to save a pixmap directly into a QByteArray:
-    ///
-    fn save(&self, file_name: &str, format: &char, quality: i32) -> bool {
-        let str_in_file_name_1 = CString::new(file_name).unwrap();
-
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).save)(obj_data, str_in_file_name_1.as_ptr(), format, quality);
-            ret_val
-        }
-    }
-    ///
-    /// Saves the pixmap to the file with the given *fileName* using the
-    /// specified image file *format* and *quality* factor. Returns `true`
-    /// if successful; otherwise returns `false.`
-    ///
-    /// The *quality* factor must be in the range [0,100] or -1. Specify
-    /// 0 to obtain small compressed files, 100 for large uncompressed
-    /// files, and -1 to use the default settings.
-    ///
-    /// If *format* is 0, an image format will be chosen from *fileName's*
-    /// suffix.
-    ///
-    /// **See also:** {QPixmap#Reading and Writing Image Files}{Reading and Writing
-    /// Image Files}
-    ///
-    /// **Overloads**
-    /// This function writes a QPixmap to the given *device* using the
-    /// specified image file *format* and *quality* factor. This can be
-    /// used, for example, to save a pixmap directly into a QByteArray:
-    ///
-    fn save_by_io_device<I: IODeviceType<'a>>(
-        &self,
-        device: &I,
-        format: &char,
-        quality: i32,
-    ) -> bool {
-        let (obj_device_1, _funcs) = device.get_io_device_obj_funcs();
-
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).save_by_io_device)(obj_data, obj_device_1, format, quality);
-            ret_val
-        }
-    }
-    ///
     /// Replaces this pixmap's data with the given *image* using the
     /// specified *flags* to control the conversion. The *flags*
     /// argument is a bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
@@ -1119,8 +910,8 @@ pub trait PixmapType<'a> {
     /// It has been promoted to official API status in 4.7 to support updating
     /// the pixmap's image without creating a new QPixmap as fromImage() would.
     ///
-    /// **See also:** fromImage()
-    fn convert_from_image<I: ImageType<'a>>(&self, img: &I, flags: ImageConversionFlags) -> bool {
+    /// **See also:** [`from_image()`]
+    fn convert_from_image(&self, img: &ImageTrait, flags: ImageConversionFlags) -> bool {
         let (obj_img_1, _funcs) = img.get_image_obj_funcs();
         let enum_flags_2 = flags as i32;
 
@@ -1142,8 +933,8 @@ pub trait PixmapType<'a> {
     ///
     /// If the given *rectangle* is empty, the whole image is copied.
     ///
-    /// **See also:** operator=()
-    /// QPixmap()
+    /// **See also:** [`operator()`]
+    /// [`q_pixmap()`]
     /// {QPixmap#Pixmap
     /// Transformations}{Pixmap Transformations}
     fn copy(&self, x: i32, y: i32, width: i32, height: i32) -> Pixmap {
@@ -1172,16 +963,16 @@ pub trait PixmapType<'a> {
     ///
     /// If the given *rectangle* is empty, the whole image is copied.
     ///
-    /// **See also:** operator=()
-    /// QPixmap()
+    /// **See also:** [`operator()`]
+    /// [`q_pixmap()`]
     /// {QPixmap#Pixmap
     /// Transformations}{Pixmap Transformations}
-    fn copy_by_rect<R: RectType<'a>>(&self, rect: &R) -> Pixmap {
+    fn copy_2(&self, rect: &RectTrait) -> Pixmap {
         let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).copy_by_rect)(obj_data, obj_rect_1);
+            let ret_val = ((*funcs).copy_2)(obj_data, obj_rect_1);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -1196,8 +987,8 @@ pub trait PixmapType<'a> {
     /// This convenience function is equivalent to calling QPixmap::scroll( *dx,*
     /// *dy,* QRect( *x,* *y,* *width,* *height),* *exposed).*
     ///
-    /// **See also:** QWidget::scroll()
-    /// QGraphicsItem::scroll()
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
     ///
     /// Scrolls the area *rect* of this pixmap by ( *dx,* *dy).* The exposed
     /// region is left unchanged. You can optionally pass a pointer to an empty
@@ -1205,9 +996,9 @@ pub trait PixmapType<'a> {
     ///
     /// You cannot scroll while there is an active painter on the pixmap.
     ///
-    /// **See also:** QWidget::scroll()
-    /// QGraphicsItem::scroll()
-    fn scroll<R: RegionType<'a>>(
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
+    fn scroll(
         &self,
         dx: i32,
         dy: i32,
@@ -1215,22 +1006,21 @@ pub trait PixmapType<'a> {
         y: i32,
         width: i32,
         height: i32,
-        exposed: &R,
-    ) -> &Self {
+        exposed: &RegionTrait,
+    ) {
         let (obj_exposed_7, _funcs) = exposed.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             ((*funcs).scroll)(obj_data, dx, dy, x, y, width, height, obj_exposed_7);
         }
-        self
     }
     ///
     /// This convenience function is equivalent to calling QPixmap::scroll( *dx,*
     /// *dy,* QRect( *x,* *y,* *width,* *height),* *exposed).*
     ///
-    /// **See also:** QWidget::scroll()
-    /// QGraphicsItem::scroll()
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
     ///
     /// Scrolls the area *rect* of this pixmap by ( *dx,* *dy).* The exposed
     /// region is left unchanged. You can optionally pass a pointer to an empty
@@ -1238,23 +1028,16 @@ pub trait PixmapType<'a> {
     ///
     /// You cannot scroll while there is an active painter on the pixmap.
     ///
-    /// **See also:** QWidget::scroll()
-    /// QGraphicsItem::scroll()
-    fn scroll_by_rect<R: RectType<'a>, S: RegionType<'a>>(
-        &self,
-        dx: i32,
-        dy: i32,
-        rect: &R,
-        exposed: &S,
-    ) -> &Self {
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
+    fn scroll_2(&self, dx: i32, dy: i32, rect: &RectTrait, exposed: &RegionTrait) {
         let (obj_rect_3, _funcs) = rect.get_rect_obj_funcs();
         let (obj_exposed_4, _funcs) = exposed.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
-            ((*funcs).scroll_by_rect)(obj_data, dx, dy, obj_rect_3, obj_exposed_4);
+            ((*funcs).scroll_2)(obj_data, dx, dy, obj_rect_3, obj_exposed_4);
         }
-        self
     }
     ///
     /// Returns a number that identifies this QPixmap. Distinct QPixmap
@@ -1292,12 +1075,11 @@ pub trait PixmapType<'a> {
     ///
     /// The detach() function returns immediately if there is just a
     /// single reference or if the pixmap has not been initialized yet.
-    fn detach(&self) -> &Self {
+    fn detach(&self) {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             ((*funcs).detach)(obj_data);
         }
-        self
     }
     ///
     /// Returns `true` if this is a QBitmap; otherwise returns `false.`
@@ -1308,12 +1090,29 @@ pub trait PixmapType<'a> {
             ret_val
         }
     }
+    fn paint_engine(&self) -> Option<PaintEngine> {
+        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).paint_engine)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = PaintEngine::new_from_rc(t);
+            } else {
+                ret_val = PaintEngine::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
 
     #[inline]
     fn get_pixmap_obj_funcs(&self) -> (*const RUBase, *const RUPixmapFuncs);
 }
 
-impl<'a> PaintDeviceType<'a> for Pixmap<'a> {
+impl<'a> PaintDeviceTrait<'a> for Pixmap<'a> {
     #[inline]
     fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
         let obj = self.data.get().unwrap();
@@ -1321,14 +1120,14 @@ impl<'a> PaintDeviceType<'a> for Pixmap<'a> {
     }
 }
 
-impl<'a> PixmapType<'a> for Pixmap<'a> {
+impl<'a> PixmapTrait<'a> for Pixmap<'a> {
     #[inline]
     fn get_pixmap_obj_funcs(&self) -> (*const RUBase, *const RUPixmapFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).pixmap_funcs) }
     }
 }
-pub trait PixmapStaticType {
+pub trait PixmapStaticTrait {
     ///
     /// Returns the default pixmap depth used by the application.
     ///
@@ -1336,8 +1135,8 @@ pub trait PixmapStaticType {
     ///
     /// **Note**: QGuiApplication must be created before calling this function.
     ///
-    /// **See also:** depth()
-    /// QColormap::depth()
+    /// **See also:** [`depth()`]
+    /// [`Colormap::depth`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
     ///
     fn default_depth<'a>() -> i32 {
@@ -1393,10 +1192,10 @@ pub trait PixmapStaticType {
     /// platform plugins in which window system identifiers ( `WId)`
     /// are local to a screen. Use QScreen::grabWindow() instead.
     ///
-    /// **See also:** grabWidget()
+    /// **See also:** [`grab_widget()`]
     /// {Screenshot Example}
-    /// **See also:** QScreen
-    fn grab_window<'a>(arg0: WId<'a>, x: i32, y: i32, w: i32, h: i32) -> Pixmap<'a> {
+    /// **See also:** [`Screen`]
+    fn grab_window<'a>(arg0: u64, x: i32, y: i32, w: i32, h: i32) -> Pixmap<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1419,10 +1218,7 @@ pub trait PixmapStaticType {
     /// Use QWidget::grab() instead.
     ///
     /// Use QWidget::grab() instead.
-    fn grab_widget_by_rect<'a, O: ObjectType<'a>, R: RectType<'a>>(
-        widget: &O,
-        rect: &R,
-    ) -> Pixmap<'a> {
+    fn grab_widget<'a>(widget: &ObjectTrait<'a>, rect: &RectTrait<'a>) -> Pixmap<'a> {
         let (obj_widget_1, _funcs) = widget.get_object_obj_funcs();
         let (obj_rect_2, _funcs) = rect.get_rect_obj_funcs();
 
@@ -1433,7 +1229,7 @@ pub trait PixmapStaticType {
             )
         };
         unsafe {
-            let ret_val = ((*funcs).grab_widget_by_rect)(obj_data, obj_widget_1, obj_rect_2);
+            let ret_val = ((*funcs).grab_widget)(obj_data, obj_widget_1, obj_rect_2);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -1448,13 +1244,7 @@ pub trait PixmapStaticType {
     /// Use QWidget::grab() instead.
     ///
     /// Use QWidget::grab() instead.
-    fn grab_widget<'a, O: ObjectType<'a>>(
-        widget: &O,
-        x: i32,
-        y: i32,
-        w: i32,
-        h: i32,
-    ) -> Pixmap<'a> {
+    fn grab_widget_2<'a>(widget: &ObjectTrait<'a>, x: i32, y: i32, w: i32, h: i32) -> Pixmap<'a> {
         let (obj_widget_1, _funcs) = widget.get_object_obj_funcs();
 
         let (obj_data, funcs) = unsafe {
@@ -1464,44 +1254,7 @@ pub trait PixmapStaticType {
             )
         };
         unsafe {
-            let ret_val = ((*funcs).grab_widget)(obj_data, obj_widget_1, x, y, w, h);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Pixmap::new_from_rc(t);
-            } else {
-                ret_val = Pixmap::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
-    /// Create a QPixmap from an image read directly from an *imageReader.*
-    /// The *flags* argument is a bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
-    ///
-    /// Passing 0 for *flags* sets all the default options.
-    ///
-    /// On some systems, reading an image directly to QPixmap can use less memory than
-    /// reading a QImage to convert it to QPixmap.
-    ///
-    /// **See also:** fromImage()
-    /// toImage()
-    /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-    fn from_image_reader<'a, I: ImageReaderType<'a>>(
-        image_reader: &I,
-        flags: ImageConversionFlags,
-    ) -> Pixmap<'a> {
-        let (obj_image_reader_1, _funcs) = image_reader.get_image_reader_obj_funcs();
-        let enum_flags_2 = flags as i32;
-
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_pixmap)(::std::ptr::null()).all_funcs).pixmap_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).from_image_reader)(obj_data, obj_image_reader_1, enum_flags_2);
+            let ret_val = ((*funcs).grab_widget_2)(obj_data, obj_widget_1, x, y, w, h);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -1522,8 +1275,8 @@ pub trait PixmapStaticType {
     /// the color table. If this is too expensive an operation, you can
     /// use QBitmap::fromImage() instead.
     ///
-    /// **See also:** fromImageReader()
-    /// toImage()
+    /// **See also:** [`from_image_reader()`]
+    /// [`to_image()`]
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
     ///
     /// **Overloads**
@@ -1537,10 +1290,10 @@ pub trait PixmapStaticType {
     /// On some systems, reading an image directly to QPixmap can use less memory than
     /// reading a QImage to convert it to QPixmap.
     ///
-    /// **See also:** fromImage()
-    /// toImage()
+    /// **See also:** [`from_image()`]
+    /// [`to_image()`]
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-    fn from_image<'a, I: ImageType<'a>>(image: &I, flags: ImageConversionFlags) -> Pixmap<'a> {
+    fn from_image<'a>(image: &ImageTrait<'a>, flags: ImageConversionFlags) -> Pixmap<'a> {
         let (obj_image_1, _funcs) = image.get_image_obj_funcs();
         let enum_flags_2 = flags as i32;
 
@@ -1562,10 +1315,47 @@ pub trait PixmapStaticType {
             ret_val
         }
     }
-    fn from_image_in_place<'a, I: ImageType<'a>>(
-        image: &I,
-        flags: ImageConversionFlags,
-    ) -> Pixmap<'a> {
+    ///
+    /// Create a QPixmap from an image read directly from an *imageReader.*
+    /// The *flags* argument is a bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
+    ///
+    /// Passing 0 for *flags* sets all the default options.
+    ///
+    /// On some systems, reading an image directly to QPixmap can use less memory than
+    /// reading a QImage to convert it to QPixmap.
+    ///
+    /// **See also:** [`from_image()`]
+    /// [`to_image()`]
+    /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
+    ///
+    /// Converts the given *image* to a pixmap using the specified *flags* to control the conversion. The *flags* argument is a
+    /// bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
+    /// . Passing 0 for *flags* sets all the default options.
+    ///
+    /// In case of monochrome and 8-bit images, the image is first
+    /// converted to a 32-bit pixmap and then filled with the colors in
+    /// the color table. If this is too expensive an operation, you can
+    /// use QBitmap::fromImage() instead.
+    ///
+    /// **See also:** [`from_image_reader()`]
+    /// [`to_image()`]
+    /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
+    ///
+    /// **Overloads**
+    /// Converts the given *image* to a pixmap without copying if possible.
+    ///
+    /// Create a QPixmap from an image read directly from an *imageReader.*
+    /// The *flags* argument is a bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
+    ///
+    /// Passing 0 for *flags* sets all the default options.
+    ///
+    /// On some systems, reading an image directly to QPixmap can use less memory than
+    /// reading a QImage to convert it to QPixmap.
+    ///
+    /// **See also:** [`from_image()`]
+    /// [`to_image()`]
+    /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
+    fn from_image_2<'a>(image: &ImageTrait<'a>, flags: ImageConversionFlags) -> Pixmap<'a> {
         let (obj_image_1, _funcs) = image.get_image_obj_funcs();
         let enum_flags_2 = flags as i32;
 
@@ -1576,7 +1366,7 @@ pub trait PixmapStaticType {
             )
         };
         unsafe {
-            let ret_val = ((*funcs).from_image_in_place)(obj_data, obj_image_1, enum_flags_2);
+            let ret_val = ((*funcs).from_image_2)(obj_data, obj_image_1, enum_flags_2);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -1589,6 +1379,6 @@ pub trait PixmapStaticType {
     }
 }
 
-impl<'a> PixmapStaticType for Pixmap<'a> {}
+impl<'a> PixmapStaticTrait for Pixmap<'a> {}
 
-impl<'a> PixmapStaticType for PixmapStatic<'a> {}
+impl<'a> PixmapStaticTrait for PixmapStatic<'a> {}

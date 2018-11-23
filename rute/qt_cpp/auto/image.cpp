@@ -24,20 +24,10 @@ static bool image_is_null(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_image_dev_type(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c)) {
-    WRImage* qt_object = (WRImage*)object;
-    qt_object->m_dev_type = trampoline_func;
-    qt_object->m_dev_type_user_data = user_data;
-    qt_object->m_dev_type_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_image_dev_type(void* object) {
-    WRImage* qt_object = (WRImage*)object;
-    qt_object->m_dev_type = nullptr;
-    qt_object->m_dev_type_user_data = nullptr;
-    qt_object->m_dev_type_wrapped_func = nullptr;
+static int image_dev_type(struct RUBase* self_c) {
+    WRImage* qt_value = (WRImage*)self_c;
+    auto ret_value = qt_value->devType();
+    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,9 +47,9 @@ static bool image_is_detached(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUImage image_copy_by_rect(struct RUBase* self_c, struct RUBase* rect) {
+static struct RUImage image_copy(struct RUBase* self_c, struct RUBase* rect) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->copyByRect(*((QRect*)rect));
+    auto ret_value = qt_value->copy(*((QRect*)rect));
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -71,7 +61,7 @@ static struct RUImage image_copy_by_rect(struct RUBase* self_c, struct RUBase* r
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUImage image_copy(struct RUBase* self_c, int x, int y, int w, int h) {
+static struct RUImage image_copy_2(struct RUBase* self_c, int x, int y, int w, int h) {
     WRImage* qt_value = (WRImage*)self_c;
     auto ret_value = qt_value->copy(x, y, w, h);
     WRImage* new_val = new WRImage();
@@ -95,7 +85,21 @@ static int image_format(struct RUBase* self_c) {
 
 static struct RUImage image_convert_to_format(struct RUBase* self_c, int f, int flags) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->convertToFormat((Image::Format)s_format_lookup[f], (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    auto ret_value = qt_value->convertToFormat((QImage::Format)s_format_lookup[f], (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    WRImage* new_val = new WRImage();
+    *new_val = ret_value;
+    struct RUImage ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_image_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUImage image_convert_to_format_2(struct RUBase* self_c, int f, int flags) {
+    WRImage* qt_value = (WRImage*)self_c;
+    auto ret_value = qt_value->convertToFormat((QImage::Format)s_format_lookup[f], (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -109,7 +113,7 @@ static struct RUImage image_convert_to_format(struct RUBase* self_c, int f, int 
 
 static bool image_reinterpret_as_format(struct RUBase* self_c, int f) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->reinterpretAsFormat((Image::Format)s_format_lookup[f]);
+    auto ret_value = qt_value->reinterpretAsFormat((QImage::Format)s_format_lookup[f]);
     return ret_value;
 }
 
@@ -183,21 +187,6 @@ static int image_bit_plane_count(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static uint32_t image_color(struct RUBase* self_c, int i) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->color(i);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void image_set_color(struct RUBase* self_c, int i, uint32_t c) {
-    WRImage* qt_value = (WRImage*)self_c;
-    qt_value->setColor(i, c);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void image_set_color_count(struct RUBase* self_c, int arg0) {
     WRImage* qt_value = (WRImage*)self_c;
     qt_value->setColorCount(arg0);
@@ -221,49 +210,9 @@ static bool image_is_grayscale(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static uint8_t image_bits(struct RUBase* self_c) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->bits();
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static uint8_t image_const_bits(struct RUBase* self_c) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->constBits();
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static int image_byte_count(struct RUBase* self_c) {
     WRImage* qt_value = (WRImage*)self_c;
     auto ret_value = qt_value->byteCount();
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static int image_size_in_bytes(struct RUBase* self_c) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->sizeInBytes();
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static uint8_t image_scan_line(struct RUBase* self_c, int arg0) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->scanLine(arg0);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static uint8_t image_const_scan_line(struct RUBase* self_c, int arg0) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->constScanLine(arg0);
     return ret_value;
 }
 
@@ -285,9 +234,9 @@ static bool image_valid(struct RUBase* self_c, int x, int y) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool image_valid_by_point(struct RUBase* self_c, struct RUBase* pt) {
+static bool image_valid_2(struct RUBase* self_c, struct RUBase* pt) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->validByPoint(*((QPoint*)pt));
+    auto ret_value = qt_value->valid(*((QPoint*)pt));
     return ret_value;
 }
 
@@ -301,40 +250,24 @@ static int image_pixel_index(struct RUBase* self_c, int x, int y) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int image_pixel_index_by_point(struct RUBase* self_c, struct RUBase* pt) {
+static int image_pixel_index_2(struct RUBase* self_c, struct RUBase* pt) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->pixelIndexByPoint(*((QPoint*)pt));
+    auto ret_value = qt_value->pixelIndex(*((QPoint*)pt));
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static uint32_t image_pixel(struct RUBase* self_c, int x, int y) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->pixel(x, y);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static uint32_t image_pixel_by_point(struct RUBase* self_c, struct RUBase* pt) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->pixelByPoint(*((QPoint*)pt));
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void image_set_pixel(struct RUBase* self_c, int x, int y, struct RUuint index_or_rgb) {
+static void image_set_pixel(struct RUBase* self_c, int x, int y, uint32_t index_or_rgb) {
     WRImage* qt_value = (WRImage*)self_c;
     qt_value->setPixel(x, y, index_or_rgb);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void image_set_pixel_by_point(struct RUBase* self_c, struct RUBase* pt, struct RUuint index_or_rgb) {
+static void image_set_pixel_2(struct RUBase* self_c, struct RUBase* pt, uint32_t index_or_rgb) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->setPixelByPoint(*((QPoint*)pt), index_or_rgb);
+    qt_value->setPixel(*((QPoint*)pt), index_or_rgb);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -353,9 +286,9 @@ static struct RUColor image_pixel_color(struct RUBase* self_c, int x, int y) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUColor image_pixel_color_by_point(struct RUBase* self_c, struct RUBase* pt) {
+static struct RUColor image_pixel_color_2(struct RUBase* self_c, struct RUBase* pt) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->pixelColorByPoint(*((QPoint*)pt));
+    auto ret_value = qt_value->pixelColor(*((QPoint*)pt));
     WRColor* new_val = new WRColor();
     *new_val = ret_value;
     struct RUColor ctl;
@@ -374,9 +307,9 @@ static void image_set_pixel_color(struct RUBase* self_c, int x, int y, struct RU
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void image_set_pixel_color_by_point(struct RUBase* self_c, struct RUBase* pt, struct RUBase* c) {
+static void image_set_pixel_color_2(struct RUBase* self_c, struct RUBase* pt, struct RUBase* c) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->setPixelColorByPoint(*((QPoint*)pt), *((QColor*)c));
+    qt_value->setPixelColor(*((QPoint*)pt), *((QColor*)c));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -403,14 +336,14 @@ static void image_fill(struct RUBase* self_c, uint32_t pixel) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void image_fill_by_type(struct RUBase* self_c, struct RUBase* color) {
+static void image_fill_2(struct RUBase* self_c, struct RUBase* color) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->fillByType(*((QColor*)color));
+    qt_value->fill(*((QColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void image_fill_by_color(struct RUBase* self_c, int color) {
+static void image_fill_3(struct RUBase* self_c, int color) {
     WRImage* qt_value = (WRImage*)self_c;
     qt_value->fill((Qt::GlobalColor)s_global_color_lookup[color]);
 }
@@ -474,20 +407,6 @@ static struct RUImage image_create_heuristic_mask(struct RUBase* self_c, bool cl
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUImage image_create_mask_from_color(struct RUBase* self_c, struct RURgbType color, int mode) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->createMaskFromColor(*((QRgb*)color), (Qt::MaskMode)s_mask_mode_lookup[mode]);
-    WRImage* new_val = new WRImage();
-    *new_val = ret_value;
-    struct RUImage ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_image_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static struct RUImage image_scaled(struct RUBase* self_c, int w, int h, int aspect_mode, int mode) {
     WRImage* qt_value = (WRImage*)self_c;
     auto ret_value = qt_value->scaled(w, h, (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[aspect_mode], (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
@@ -502,9 +421,9 @@ static struct RUImage image_scaled(struct RUBase* self_c, int w, int h, int aspe
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUImage image_scaled_by_size(struct RUBase* self_c, struct RUBase* s, int aspect_mode, int mode) {
+static struct RUImage image_scaled_2(struct RUBase* self_c, struct RUBase* s, int aspect_mode, int mode) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->scaledBySize(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[aspect_mode], (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
+    auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[aspect_mode], (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -558,7 +477,35 @@ static struct RUImage image_mirrored(struct RUBase* self_c, bool horizontally, b
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct RUImage image_mirrored_2(struct RUBase* self_c, bool horizontally, bool vertically) {
+    WRImage* qt_value = (WRImage*)self_c;
+    auto ret_value = qt_value->mirrored(horizontally, vertically);
+    WRImage* new_val = new WRImage();
+    *new_val = ret_value;
+    struct RUImage ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_image_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUImage image_rgb_swapped(struct RUBase* self_c) {
+    WRImage* qt_value = (WRImage*)self_c;
+    auto ret_value = qt_value->rgbSwapped();
+    WRImage* new_val = new WRImage();
+    *new_val = ret_value;
+    struct RUImage ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_image_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUImage image_rgb_swapped_2(struct RUBase* self_c) {
     WRImage* qt_value = (WRImage*)self_c;
     auto ret_value = qt_value->rgbSwapped();
     WRImage* new_val = new WRImage();
@@ -574,39 +521,7 @@ static struct RUImage image_rgb_swapped(struct RUBase* self_c) {
 
 static void image_invert_pixels(struct RUBase* self_c, int arg0) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->invertPixels((Image::InvertMode)s_invert_mode_lookup[arg0]);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool image_load_by_io_device(struct RUBase* self_c, struct RUBase* device, struct RUBase* format) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->load((QIODevice*)device, format);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool image_load(struct RUBase* self_c, const char* file_name, struct RUBase* format) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->load(QString::fromUtf8(file_name), format);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool image_load_from_data(struct RUBase* self_c, struct RUBase* data, struct RUBase* aformat) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->loadFromData(*((QByteArray*)data), aformat);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool image_save(struct RUBase* self_c, const char* file_name, struct RUBase* format, int quality) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->save(QString::fromUtf8(file_name), format, quality);
-    return ret_value;
+    qt_value->invertPixels((QImage::InvertMode)s_invert_mode_lookup[arg0]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -619,20 +534,14 @@ static int64_t image_cache_key(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_image_paint_engine(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c)) {
-    WRImage* qt_object = (WRImage*)object;
-    qt_object->m_paint_engine = trampoline_func;
-    qt_object->m_paint_engine_user_data = user_data;
-    qt_object->m_paint_engine_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_image_paint_engine(void* object) {
-    WRImage* qt_object = (WRImage*)object;
-    qt_object->m_paint_engine = nullptr;
-    qt_object->m_paint_engine_user_data = nullptr;
-    qt_object->m_paint_engine_wrapped_func = nullptr;
+static struct RUPaintEngine image_paint_engine(struct RUBase* self_c) {
+    WRImage* qt_value = (WRImage*)self_c;
+    auto ret_value = qt_value->paintEngine();
+    struct RUPaintEngine ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_paint_engine_all_funcs;
+    return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -688,14 +597,6 @@ static void image_set_offset(struct RUBase* self_c, struct RUBase* arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUArray image_text_keys(struct RUBase* self_c) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->textKeys();
-    return return_string_array(ret_value);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static const char* image_text(struct RUBase* self_c, const char* key) {
     WRImage* qt_value = (WRImage*)self_c;
     auto ret_value = qt_value->text(QString::fromUtf8(key));
@@ -727,99 +628,13 @@ static struct RUPixelFormat image_pixel_format(struct RUBase* self_c) {
 
 static struct RUPixelFormat image_to_pixel_format(struct RUBase* self_c, int format) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->toPixelFormat((Image::Format)s_format_lookup[format]);
+    auto ret_value = qt_value->toPixelFormat((QImage::Format)s_format_lookup[format]);
     WRPixelFormat* new_val = new WRPixelFormat();
     *new_val = ret_value;
     struct RUPixelFormat ctl;
     ctl.qt_data = (struct RUBase*)new_val;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
     ctl.all_funcs = &s_pixel_format_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static int image_to_image_format(struct RUBase* self_c, struct RUPixelFormatType format) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->toImageFormat(*((QPixelFormat*)format));
-    return s_format_lookup[(int)ret_value];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUImage image_mirrored_helper(struct RUBase* self_c, bool horizontal, bool vertical) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->mirroredHelper(horizontal, vertical);
-    WRImage* new_val = new WRImage();
-    *new_val = ret_value;
-    struct RUImage ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_image_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUImage image_rgb_swapped_helper(struct RUBase* self_c) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->rgbSwappedHelper();
-    WRImage* new_val = new WRImage();
-    *new_val = ret_value;
-    struct RUImage ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_image_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void image_mirrored_inplace(struct RUBase* self_c, bool horizontal, bool vertical) {
-    WRImage* qt_value = (WRImage*)self_c;
-    qt_value->mirroredInplace(horizontal, vertical);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void image_rgb_swapped_inplace(struct RUBase* self_c) {
-    WRImage* qt_value = (WRImage*)self_c;
-    qt_value->rgbSwappedInplace();
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUImage image_convert_to_format_helper(struct RUBase* self_c, int format, int flags) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->convertToFormatHelper((Image::Format)s_format_lookup[format], (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
-    WRImage* new_val = new WRImage();
-    *new_val = ret_value;
-    struct RUImage ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_image_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool image_convert_to_format_inplace(struct RUBase* self_c, int format, int flags) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->convertToFormatInplace((Image::Format)s_format_lookup[format], (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUImage image_smooth_scaled(struct RUBase* self_c, int w, int h) {
-    WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->smoothScaled(w, h);
-    WRImage* new_val = new WRImage();
-    *new_val = ret_value;
-    struct RUImage ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_image_all_funcs;
     return ctl;
 }
 
@@ -858,14 +673,14 @@ struct RUImageFuncs s_image_funcs = {
     destroy_image,
     image_swap,
     image_is_null,
-    set_image_dev_type,
-    remove_image_dev_type,
+    image_dev_type,
     image_detach,
     image_is_detached,
-    image_copy_by_rect,
     image_copy,
+    image_copy_2,
     image_format,
     image_convert_to_format,
+    image_convert_to_format_2,
     image_reinterpret_as_format,
     image_width,
     image_height,
@@ -874,74 +689,52 @@ struct RUImageFuncs s_image_funcs = {
     image_depth,
     image_color_count,
     image_bit_plane_count,
-    image_color,
-    image_set_color,
     image_set_color_count,
     image_all_gray,
     image_is_grayscale,
-    image_bits,
-    image_const_bits,
     image_byte_count,
-    image_size_in_bytes,
-    image_scan_line,
-    image_const_scan_line,
     image_bytes_per_line,
     image_valid,
-    image_valid_by_point,
+    image_valid_2,
     image_pixel_index,
-    image_pixel_index_by_point,
-    image_pixel,
-    image_pixel_by_point,
+    image_pixel_index_2,
     image_set_pixel,
-    image_set_pixel_by_point,
+    image_set_pixel_2,
     image_pixel_color,
-    image_pixel_color_by_point,
+    image_pixel_color_2,
     image_set_pixel_color,
-    image_set_pixel_color_by_point,
+    image_set_pixel_color_2,
     image_device_pixel_ratio,
     image_set_device_pixel_ratio,
     image_fill,
-    image_fill_by_type,
-    image_fill_by_color,
+    image_fill_2,
+    image_fill_3,
     image_has_alpha_channel,
     image_set_alpha_channel,
     image_alpha_channel,
     image_create_alpha_mask,
     image_create_heuristic_mask,
-    image_create_mask_from_color,
     image_scaled,
-    image_scaled_by_size,
+    image_scaled_2,
     image_scaled_to_width,
     image_scaled_to_height,
     image_mirrored,
+    image_mirrored_2,
     image_rgb_swapped,
+    image_rgb_swapped_2,
     image_invert_pixels,
-    image_load_by_io_device,
-    image_load,
-    image_load_from_data,
-    image_save,
     image_cache_key,
-    set_image_paint_engine,
-    remove_image_paint_engine,
+    image_paint_engine,
     image_dots_per_meter_x,
     image_dots_per_meter_y,
     image_set_dots_per_meter_x,
     image_set_dots_per_meter_y,
     image_offset,
     image_set_offset,
-    image_text_keys,
     image_text,
     image_set_text,
     image_pixel_format,
     image_to_pixel_format,
-    image_to_image_format,
-    image_mirrored_helper,
-    image_rgb_swapped_helper,
-    image_mirrored_inplace,
-    image_rgb_swapped_inplace,
-    image_convert_to_format_helper,
-    image_convert_to_format_inplace,
-    image_smooth_scaled,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

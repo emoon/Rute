@@ -16,9 +16,14 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::event_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 #[derive(Clone)]
 pub struct Event<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
@@ -55,7 +60,7 @@ impl<'a> Event<'a> {
         }
     }
 }
-pub trait EventType<'a> {
+pub trait EventTrait<'a> {
     fn spontaneous(&self) -> bool {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {
@@ -63,12 +68,11 @@ pub trait EventType<'a> {
             ret_val
         }
     }
-    fn set_accepted(&self, accepted: bool) -> &Self {
+    fn set_accepted(&self, accepted: bool) {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {
             ((*funcs).set_accepted)(obj_data, accepted);
         }
-        self
     }
     fn is_accepted(&self) -> bool {
         let (obj_data, funcs) = self.get_event_obj_funcs();
@@ -77,26 +81,24 @@ pub trait EventType<'a> {
             ret_val
         }
     }
-    fn accept(&self) -> &Self {
+    fn accept(&self) {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {
             ((*funcs).accept)(obj_data);
         }
-        self
     }
-    fn ignore(&self) -> &Self {
+    fn ignore(&self) {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {
             ((*funcs).ignore)(obj_data);
         }
-        self
     }
 
     #[inline]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs);
 }
 
-impl<'a> EventType<'a> for Event<'a> {
+impl<'a> EventTrait<'a> for Event<'a> {
     #[inline]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs) {
         let obj = self.data.get().unwrap();

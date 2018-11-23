@@ -16,9 +16,28 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::application_ffi::*;
+#[allow(unused_imports)]
+use auto::font::Font;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
+#[allow(unused_imports)]
+use auto::screen::Screen;
+#[allow(unused_imports)]
+use auto::screen::ScreenTrait;
+#[allow(unused_imports)]
+use auto::screen_ffi::*;
+#[allow(unused_imports)]
+use auto::widget::Widget;
+#[allow(unused_imports)]
+use auto::widget::WidgetTrait;
+#[allow(unused_imports)]
+use auto::widget_ffi::*;
 #[derive(Clone)]
 pub struct Application<'a> {
     pub data: Rc<Cell<Option<*const RUBase>>>,
@@ -63,6 +82,79 @@ impl<'a> Application<'a> {
             _marker: PhantomData,
         }
     }
+    fn set_about_to_quit_event_ud<F, T>(&self, data: &'a T, func: F)
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_about_to_quit_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(application_about_to_quit_trampoline_ud::<T> as usize),
+            );
+        }
+    }
+
+    fn set_about_to_quit_event<F>(&self, func: F)
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_about_to_quit_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(application_about_to_quit_trampoline as usize),
+            );
+        }
+    }
+
+    fn set_screen_added_event_ud<F, T>(&self, data: &'a T, func: F)
+    where
+        F: Fn(&T, &ScreenTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ScreenTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_screen_added_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(application_screen_added_trampoline_ud::<T> as usize),
+            );
+        }
+    }
+
+    fn set_screen_added_event<F>(&self, func: F)
+    where
+        F: Fn(&ScreenTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_application_obj_funcs();
+        let f: Box<Box<Fn(&ScreenTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_screen_added_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(application_screen_added_trampoline as usize),
+            );
+        }
+    }
 }
 
 pub struct ApplicationStatic<'a> {
@@ -94,7 +186,7 @@ unsafe extern "C" fn application_screen_added_trampoline_ud<T>(
     func: *const c_void,
     screen: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &ScreenType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &ScreenTrait) + 'static) = transmute(func);
     let obj_screen_0 = Screen::new_from_temporary(*(screen as *const RUScreen));
     let data = self_c as *const T;
     f(&*data, &obj_screen_0);
@@ -105,27 +197,25 @@ unsafe extern "C" fn application_screen_added_trampoline(
     func: *const c_void,
     screen: *const RUBase,
 ) {
-    let f: &&(Fn(&ScreenType) + 'static) = transmute(func);
+    let f: &&(Fn(&ScreenTrait) + 'static) = transmute(func);
     let obj_screen_0 = Screen::new_from_temporary(*(screen as *const RUScreen));
     f(&obj_screen_0);
 }
 
-pub trait ApplicationType<'a> {
-    fn set_style_sheet(&self, sheet: &str) -> &Self {
+pub trait ApplicationTrait<'a> {
+    fn set_style_sheet(&self, sheet: &str) {
         let str_in_sheet_1 = CString::new(sheet).unwrap();
 
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             ((*funcs).set_style_sheet)(obj_data, str_in_sheet_1.as_ptr());
         }
-        self
     }
-    fn set_auto_sip_enabled(&self, enabled: bool) -> &Self {
+    fn set_auto_sip_enabled(&self, enabled: bool) {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
             ((*funcs).set_auto_sip_enabled)(obj_data, enabled);
         }
-        self
     }
     fn auto_sip_enabled(&self) -> bool {
         let (obj_data, funcs) = self.get_application_obj_funcs();
@@ -135,100 +225,18 @@ pub trait ApplicationType<'a> {
         }
     }
 
-    fn set_about_to_quit_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_application_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_about_to_quit_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(application_about_to_quit_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_about_to_quit_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_application_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_about_to_quit_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(application_about_to_quit_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_screen_added_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &ScreenType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_application_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &ScreenType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_screen_added_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(application_screen_added_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_screen_added_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&ScreenType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_application_obj_funcs();
-        let f: Box<Box<Fn(&ScreenType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_screen_added_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(application_screen_added_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
     #[inline]
     fn get_application_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs);
 }
 
-impl<'a> ApplicationType<'a> for Application<'a> {
+impl<'a> ApplicationTrait<'a> for Application<'a> {
     #[inline]
     fn get_application_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).application_funcs) }
     }
 }
-pub trait ApplicationStaticType {
+pub trait ApplicationStaticTrait {
     fn color_spec<'a>() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -366,7 +374,7 @@ pub trait ApplicationStaticType {
             Some(ret_val)
         }
     }
-    fn set_active_window<'a, W: WidgetType<'a>>(actor: &W) {
+    fn set_active_window<'a>(actor: &WidgetTrait<'a>) {
         let (obj_actor_1, _funcs) = actor.get_widget_obj_funcs();
 
         let (obj_data, funcs) = unsafe {
@@ -627,6 +635,6 @@ pub trait ApplicationStaticType {
     }
 }
 
-impl<'a> ApplicationStaticType for Application<'a> {}
+impl<'a> ApplicationStaticTrait for Application<'a> {}
 
-impl<'a> ApplicationStaticType for ApplicationStatic<'a> {}
+impl<'a> ApplicationStaticTrait for ApplicationStatic<'a> {}

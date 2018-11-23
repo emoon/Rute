@@ -16,9 +16,20 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::color::Color;
+#[allow(unused_imports)]
+use auto::color::ColorTrait;
+#[allow(unused_imports)]
+use auto::color_ffi::*;
+#[allow(unused_imports)]
+use auto::gradient_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 ///
 /// Qt currently supports three types of gradient fills:
 ///
@@ -156,7 +167,7 @@ impl<'a> Gradient<'a> {
         }
     }
 }
-pub trait GradientType<'a> {
+pub trait GradientTrait<'a> {
     /// Returns the type of gradient.
     fn get_type(&self) -> Type {
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
@@ -174,14 +185,13 @@ pub trait GradientType<'a> {
     /// gradients.
     ///
     /// **See also:** spread()
-    fn set_spread(&self, spread: Spread) -> &Self {
+    fn set_spread(&self, spread: Spread) {
         let enum_spread_1 = spread as i32;
 
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             ((*funcs).set_spread)(obj_data, enum_spread_1);
         }
-        self
     }
     ///
     /// Returns the spread method use by this gradient. The default is
@@ -201,14 +211,13 @@ pub trait GradientType<'a> {
     ///
     /// **See also:** setStops()
     /// stops()
-    fn set_color_at<C: ColorType<'a>>(&self, pos: f32, color: &C) -> &Self {
+    fn set_color_at(&self, pos: f32, color: &ColorTrait) {
         let (obj_color_2, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             ((*funcs).set_color_at)(obj_data, pos, obj_color_2);
         }
-        self
     }
     ///
     /// Returns the coordinate mode of this gradient. The default mode is
@@ -224,14 +233,13 @@ pub trait GradientType<'a> {
     ///
     /// Sets the coordinate mode of this gradient to *mode.* The default
     /// mode is LogicalMode.
-    fn set_coordinate_mode(&self, mode: CoordinateMode) -> &Self {
+    fn set_coordinate_mode(&self, mode: CoordinateMode) {
         let enum_mode_1 = mode as i32;
 
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             ((*funcs).set_coordinate_mode)(obj_data, enum_mode_1);
         }
-        self
     }
     fn interpolation_mode(&self) -> InterpolationMode {
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
@@ -241,24 +249,50 @@ pub trait GradientType<'a> {
             ret_val
         }
     }
-    fn set_interpolation_mode(&self, mode: InterpolationMode) -> &Self {
+    fn set_interpolation_mode(&self, mode: InterpolationMode) {
         let enum_mode_1 = mode as i32;
 
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             ((*funcs).set_interpolation_mode)(obj_data, enum_mode_1);
         }
-        self
     }
 
     #[inline]
     fn get_gradient_obj_funcs(&self) -> (*const RUBase, *const RUGradientFuncs);
 }
 
-impl<'a> GradientType<'a> for Gradient<'a> {
+impl<'a> GradientTrait<'a> for Gradient<'a> {
     #[inline]
     fn get_gradient_obj_funcs(&self) -> (*const RUBase, *const RUGradientFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).gradient_funcs) }
     }
+}
+#[repr(u32)]
+pub enum Type {
+    LinearGradient,
+    RadialGradient,
+    ConicalGradient,
+    NoGradient,
+}
+
+#[repr(u32)]
+pub enum Spread {
+    PadSpread,
+    ReflectSpread,
+    RepeatSpread,
+}
+
+#[repr(u32)]
+pub enum CoordinateMode {
+    LogicalMode,
+    StretchToDeviceMode,
+    ObjectBoundingMode,
+}
+
+#[repr(u32)]
+pub enum InterpolationMode {
+    ColorInterpolation,
+    ComponentInterpolation,
 }

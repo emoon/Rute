@@ -16,9 +16,26 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::point::Point;
+#[allow(unused_imports)]
+use auto::point::PointTrait;
+#[allow(unused_imports)]
+use auto::point_ffi::*;
+#[allow(unused_imports)]
+use auto::rect::Rect;
+#[allow(unused_imports)]
+use auto::rect::RectTrait;
+#[allow(unused_imports)]
+use auto::rect_ffi::*;
+#[allow(unused_imports)]
+use auto::region_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 ///
 /// QRegion is used with QPainter::setClipRegion() to limit the paint
 /// area to what needs to be painted. There is also a QWidget::repaint()
@@ -103,9 +120,9 @@ use auto::*;
 /// SOFTWARE.
 /// ```
 ///
-/// **See also:** QPainter::setClipRegion()
-/// QPainter::setClipRect()
-/// QPainterPath
+/// **See also:** [`Painter::set_clip_region`]
+/// [`Painter::set_clip_rect`]
+/// [`PainterPath`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -165,18 +182,17 @@ impl<'a> Region<'a> {
         }
     }
 }
-pub trait RegionType<'a> {
+pub trait RegionTrait<'a> {
     ///
     /// Swaps region *other* with this region. This operation is very
     /// fast and never fails.
-    fn swap<R: RegionType<'a>>(&self, other: &R) -> &Self {
+    fn swap(&self, other: &RegionTrait) {
         let (obj_other_1, _funcs) = other.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
-        self
     }
     ///
     /// Returns `true` if the region is empty; otherwise returns `false.` An
@@ -195,119 +211,11 @@ pub trait RegionType<'a> {
     /// empty region is a region that contains no points. This function is
     /// the same as isEmpty
     ///
-    /// **See also:** isEmpty()
+    /// **See also:** [`is_empty()`]
     fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_null)(obj_data);
-            ret_val
-        }
-    }
-    ///
-    /// Returns a const_iterator pointing to the beginning of the range of
-    /// non-overlapping rectangles that make up the region.
-    ///
-    /// The union of all the rectangles is equal to the original region.
-    ///
-    /// **See also:** rbegin()
-    /// cbegin()
-    /// end()
-    fn begin(&self) -> const_iterator {
-        let (obj_data, funcs) = self.get_region_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).begin)(obj_data);
-            let ret_val = { transmute::<i32, const_iterator>(ret_val) };
-            ret_val
-        }
-    }
-    ///
-    /// Same as begin().
-    fn cbegin(&self) -> const_iterator {
-        let (obj_data, funcs) = self.get_region_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).cbegin)(obj_data);
-            let ret_val = { transmute::<i32, const_iterator>(ret_val) };
-            ret_val
-        }
-    }
-    ///
-    /// Returns a const_iterator pointing to one past the end of
-    /// non-overlapping rectangles that make up the region.
-    ///
-    /// The union of all the rectangles is equal to the original region.
-    ///
-    /// **See also:** rend()
-    /// cend()
-    /// begin()
-    fn end(&self) -> const_iterator {
-        let (obj_data, funcs) = self.get_region_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).end)(obj_data);
-            let ret_val = { transmute::<i32, const_iterator>(ret_val) };
-            ret_val
-        }
-    }
-    ///
-    /// Same as end().
-    fn cend(&self) -> const_iterator {
-        let (obj_data, funcs) = self.get_region_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).cend)(obj_data);
-            let ret_val = { transmute::<i32, const_iterator>(ret_val) };
-            ret_val
-        }
-    }
-    ///
-    /// Returns a const_reverse_iterator pointing to the beginning of the
-    /// range of non-overlapping rectangles that make up the region.
-    ///
-    /// The union of all the rectangles is equal to the original region.
-    ///
-    /// **See also:** begin()
-    /// crbegin()
-    /// rend()
-    fn rbegin(&self) -> const_reverse_iterator {
-        let (obj_data, funcs) = self.get_region_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).rbegin)(obj_data);
-            let ret_val = { transmute::<i32, const_reverse_iterator>(ret_val) };
-            ret_val
-        }
-    }
-    ///
-    /// Same as rbegin().
-    fn crbegin(&self) -> const_reverse_iterator {
-        let (obj_data, funcs) = self.get_region_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).crbegin)(obj_data);
-            let ret_val = { transmute::<i32, const_reverse_iterator>(ret_val) };
-            ret_val
-        }
-    }
-    ///
-    /// Returns a const_reverse_iterator pointing to one past the end of
-    /// the range of non-overlapping rectangles that make up the region.
-    ///
-    /// The union of all the rectangles is equal to the original region.
-    ///
-    /// **See also:** end()
-    /// crend()
-    /// rbegin()
-    fn rend(&self) -> const_reverse_iterator {
-        let (obj_data, funcs) = self.get_region_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).rend)(obj_data);
-            let ret_val = { transmute::<i32, const_reverse_iterator>(ret_val) };
-            ret_val
-        }
-    }
-    ///
-    /// Same as rend().
-    fn crend(&self) -> const_reverse_iterator {
-        let (obj_data, funcs) = self.get_region_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).crend)(obj_data);
-            let ret_val = { transmute::<i32, const_reverse_iterator>(ret_val) };
             ret_val
         }
     }
@@ -318,7 +226,7 @@ pub trait RegionType<'a> {
     /// **Overloads**
     /// Returns `true` if the region overlaps the rectangle *r;* otherwise
     /// returns `false.`
-    fn contains<P: PointType<'a>>(&self, p: &P) -> bool {
+    fn contains(&self, p: &PointTrait) -> bool {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -334,21 +242,21 @@ pub trait RegionType<'a> {
     /// **Overloads**
     /// Returns `true` if the region overlaps the rectangle *r;* otherwise
     /// returns `false.`
-    fn contains<R: RectType<'a>>(&self, r: &R) -> bool {
+    fn contains_2(&self, r: &RectTrait) -> bool {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).contains)(obj_data, obj_r_1);
+            let ret_val = ((*funcs).contains_2)(obj_data, obj_r_1);
             ret_val
         }
     }
     ///
     /// Returns a region which is the union of this region and the given *rect.*
     ///
-    /// **See also:** intersected()
-    /// subtracted()
-    /// xored()
+    /// **See also:** [`intersected()`]
+    /// [`subtracted()`]
+    /// [`xored()`]
     ///
     /// Returns a region which is the union of this region and *r.*
     ///
@@ -356,10 +264,10 @@ pub trait RegionType<'a> {
     ///
     /// The figure shows the union of two elliptical regions.
     ///
-    /// **See also:** intersected()
-    /// subtracted()
-    /// xored()
-    fn united<R: RegionType<'a>>(&self, r: &R) -> Region {
+    /// **See also:** [`intersected()`]
+    /// [`subtracted()`]
+    /// [`xored()`]
+    fn united(&self, r: &RegionTrait) -> Region {
         let (obj_r_1, _funcs) = r.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -378,9 +286,9 @@ pub trait RegionType<'a> {
     ///
     /// Returns a region which is the union of this region and the given *rect.*
     ///
-    /// **See also:** intersected()
-    /// subtracted()
-    /// xored()
+    /// **See also:** [`intersected()`]
+    /// [`subtracted()`]
+    /// [`xored()`]
     ///
     /// Returns a region which is the union of this region and *r.*
     ///
@@ -388,15 +296,15 @@ pub trait RegionType<'a> {
     ///
     /// The figure shows the union of two elliptical regions.
     ///
-    /// **See also:** intersected()
-    /// subtracted()
-    /// xored()
-    fn united<R: RectType<'a>>(&self, r: &R) -> Region {
+    /// **See also:** [`intersected()`]
+    /// [`subtracted()`]
+    /// [`xored()`]
+    fn united_2(&self, r: &RectTrait) -> Region {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).united)(obj_data, obj_r_1);
+            let ret_val = ((*funcs).united_2)(obj_data, obj_r_1);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -410,9 +318,9 @@ pub trait RegionType<'a> {
     ///
     /// Returns a region which is the intersection of this region and the given *rect.*
     ///
-    /// **See also:** subtracted()
-    /// united()
-    /// xored()
+    /// **See also:** [`subtracted()`]
+    /// [`united()`]
+    /// [`xored()`]
     ///
     /// Returns a region which is the intersection of this region and *r.*
     ///
@@ -420,10 +328,10 @@ pub trait RegionType<'a> {
     ///
     /// The figure shows the intersection of two elliptical regions.
     ///
-    /// **See also:** subtracted()
-    /// united()
-    /// xored()
-    fn intersected<R: RegionType<'a>>(&self, r: &R) -> Region {
+    /// **See also:** [`subtracted()`]
+    /// [`united()`]
+    /// [`xored()`]
+    fn intersected(&self, r: &RegionTrait) -> Region {
         let (obj_r_1, _funcs) = r.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -442,9 +350,9 @@ pub trait RegionType<'a> {
     ///
     /// Returns a region which is the intersection of this region and the given *rect.*
     ///
-    /// **See also:** subtracted()
-    /// united()
-    /// xored()
+    /// **See also:** [`subtracted()`]
+    /// [`united()`]
+    /// [`xored()`]
     ///
     /// Returns a region which is the intersection of this region and *r.*
     ///
@@ -452,15 +360,15 @@ pub trait RegionType<'a> {
     ///
     /// The figure shows the intersection of two elliptical regions.
     ///
-    /// **See also:** subtracted()
-    /// united()
-    /// xored()
-    fn intersected<R: RectType<'a>>(&self, r: &R) -> Region {
+    /// **See also:** [`subtracted()`]
+    /// [`united()`]
+    /// [`xored()`]
+    fn intersected_2(&self, r: &RectTrait) -> Region {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).intersected)(obj_data, obj_r_1);
+            let ret_val = ((*funcs).intersected_2)(obj_data, obj_r_1);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -479,10 +387,10 @@ pub trait RegionType<'a> {
     ///
     /// The figure shows the exclusive or of two elliptical regions.
     ///
-    /// **See also:** intersected()
-    /// united()
-    /// subtracted()
-    fn xored<R: RegionType<'a>>(&self, r: &R) -> Region {
+    /// **See also:** [`intersected()`]
+    /// [`united()`]
+    /// [`subtracted()`]
+    fn xored(&self, r: &RegionTrait) -> Region {
         let (obj_r_1, _funcs) = r.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -504,7 +412,7 @@ pub trait RegionType<'a> {
     ///
     /// Returns `true` if this region intersects with *rect,* otherwise
     /// returns `false.`
-    fn intersects<R: RegionType<'a>>(&self, r: &R) -> bool {
+    fn intersects(&self, r: &RegionTrait) -> bool {
         let (obj_r_1, _funcs) = r.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -519,12 +427,12 @@ pub trait RegionType<'a> {
     ///
     /// Returns `true` if this region intersects with *rect,* otherwise
     /// returns `false.`
-    fn intersects<R: RectType<'a>>(&self, r: &R) -> bool {
+    fn intersects_2(&self, r: &RectTrait) -> bool {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).intersects)(obj_data, obj_r_1);
+            let ret_val = ((*funcs).intersects_2)(obj_data, obj_r_1);
             ret_val
         }
     }
@@ -546,6 +454,13 @@ pub trait RegionType<'a> {
         }
     }
     ///
+    /// Use begin() and end() instead.
+    ///
+    /// Returns an array of non-overlapping rectangles that make up the
+    /// region.
+    ///
+    /// The union of all the rectangles is equal to the original region.
+    ///
     /// Sets the region using the array of rectangles specified by *rects* and
     /// *number.*
     /// The rectangles *must* be optimally Y-X sorted and follow these restrictions:
@@ -555,14 +470,13 @@ pub trait RegionType<'a> {
     /// * No two rectangles may abut horizontally (they should be combined into a single wider rectangle in that case).
     /// * The rectangles must be sorted in ascending order, with Y as the major sort key and X as the minor sort key.
     ///
-    fn set_rects<R: RectType<'a>>(&self, rect: &R, num: i32) -> &Self {
+    fn set_rects(&self, rect: &RectTrait, num: i32) {
         let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
             ((*funcs).set_rects)(obj_data, obj_rect_1, num);
         }
-        self
     }
     ///
     /// Returns the number of rectangles that this region is composed of.
@@ -579,10 +493,15 @@ pub trait RegionType<'a> {
     fn get_region_obj_funcs(&self) -> (*const RUBase, *const RURegionFuncs);
 }
 
-impl<'a> RegionType<'a> for Region<'a> {
+impl<'a> RegionTrait<'a> for Region<'a> {
     #[inline]
     fn get_region_obj_funcs(&self) -> (*const RUBase, *const RURegionFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).region_funcs) }
     }
+}
+#[repr(u32)]
+pub enum RegionType {
+    Rectangle,
+    Ellipse,
 }

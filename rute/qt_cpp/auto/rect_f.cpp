@@ -305,7 +305,7 @@ static void rect_f_move_to(struct RUBase* self_c, float x, float y) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void rect_f_move_to(struct RUBase* self_c, struct RUBase* p) {
+static void rect_f_move_to_2(struct RUBase* self_c, struct RUBase* p) {
     WRRectF* qt_value = (WRRectF*)self_c;
     qt_value->moveTo(*((QPointF*)p));
 }
@@ -319,23 +319,9 @@ static void rect_f_set_rect(struct RUBase* self_c, float x, float y, float w, fl
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void rect_f_get_rect(struct RUBase* self_c, struct RUBase* x, struct RUBase* y, struct RUBase* w, struct RUBase* h) {
-    WRRectF* qt_value = (WRRectF*)self_c;
-    qt_value->getRect(x, y, w, h);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static void rect_f_set_coords(struct RUBase* self_c, float x1, float y1, float x2, float y2) {
     WRRectF* qt_value = (WRRectF*)self_c;
     qt_value->setCoords(x1, y1, x2, y2);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void rect_f_get_coords(struct RUBase* self_c, struct RUBase* x1, struct RUBase* y1, struct RUBase* x2, struct RUBase* y2) {
-    WRRectF* qt_value = (WRRectF*)self_c;
-    qt_value->getCoords(x1, y1, x2, y2);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -420,7 +406,7 @@ static bool rect_f_contains(struct RUBase* self_c, struct RUBase* r) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool rect_f_contains(struct RUBase* self_c, struct RUBase* p) {
+static bool rect_f_contains_2(struct RUBase* self_c, struct RUBase* p) {
     WRRectF* qt_value = (WRRectF*)self_c;
     auto ret_value = qt_value->contains(*((QPointF*)p));
     return ret_value;
@@ -428,7 +414,7 @@ static bool rect_f_contains(struct RUBase* self_c, struct RUBase* p) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool rect_f_contains(struct RUBase* self_c, float x, float y) {
+static bool rect_f_contains_3(struct RUBase* self_c, float x, float y) {
     WRRectF* qt_value = (WRRectF*)self_c;
     auto ret_value = qt_value->contains(x, y);
     return ret_value;
@@ -468,34 +454,6 @@ static bool rect_f_intersects(struct RUBase* self_c, struct RUBase* r) {
     WRRectF* qt_value = (WRRectF*)self_c;
     auto ret_value = qt_value->intersects(*((QRectF*)r));
     return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RURectF rect_f_margins_added(struct RUBase* self_c, struct RUBase* margins) {
-    WRRectF* qt_value = (WRRectF*)self_c;
-    auto ret_value = qt_value->marginsAdded(*((QMarginsF*)margins));
-    WRRectF* new_val = new WRRectF();
-    *new_val = ret_value;
-    struct RURectF ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_rect_f_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RURectF rect_f_margins_removed(struct RUBase* self_c, struct RUBase* margins) {
-    WRRectF* qt_value = (WRRectF*)self_c;
-    auto ret_value = qt_value->marginsRemoved(*((QMarginsF*)margins));
-    WRRectF* new_val = new WRRectF();
-    *new_val = ret_value;
-    struct RURectF ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_rect_f_all_funcs;
-    return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -583,11 +541,9 @@ struct RURectFFuncs s_rect_f_funcs = {
     rect_f_move_bottom_left,
     rect_f_move_center,
     rect_f_move_to,
-    rect_f_move_to,
+    rect_f_move_to_2,
     rect_f_set_rect,
-    rect_f_get_rect,
     rect_f_set_coords,
-    rect_f_get_coords,
     rect_f_adjust,
     rect_f_adjusted,
     rect_f_size,
@@ -597,13 +553,11 @@ struct RURectFFuncs s_rect_f_funcs = {
     rect_f_set_height,
     rect_f_set_size,
     rect_f_contains,
-    rect_f_contains,
-    rect_f_contains,
+    rect_f_contains_2,
+    rect_f_contains_3,
     rect_f_united,
     rect_f_intersected,
     rect_f_intersects,
-    rect_f_margins_added,
-    rect_f_margins_removed,
     rect_f_to_rect,
     rect_f_to_aligned_rect,
 };

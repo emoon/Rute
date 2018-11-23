@@ -10,14 +10,14 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void font_info_swap(struct RUBase* self_c, struct RUBase* other) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     qt_value->swap(*((QFontInfo*)other));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static const char* font_info_family(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->family();
     return q_string_to_const_char(ret_value);
 }
@@ -25,7 +25,7 @@ static const char* font_info_family(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static const char* font_info_style_name(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->styleName();
     return q_string_to_const_char(ret_value);
 }
@@ -33,7 +33,7 @@ static const char* font_info_style_name(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static int font_info_pixel_size(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->pixelSize();
     return ret_value;
 }
@@ -41,7 +41,7 @@ static int font_info_pixel_size(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static int font_info_point_size(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->pointSize();
     return ret_value;
 }
@@ -49,7 +49,7 @@ static int font_info_point_size(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static float font_info_point_size_f(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->pointSizeF();
     return ret_value;
 }
@@ -57,7 +57,7 @@ static float font_info_point_size_f(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static bool font_info_italic(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->italic();
     return ret_value;
 }
@@ -65,7 +65,7 @@ static bool font_info_italic(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static int font_info_style(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->style();
     return s_style_lookup[(int)ret_value];
 }
@@ -73,7 +73,7 @@ static int font_info_style(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static int font_info_weight(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->weight();
     return ret_value;
 }
@@ -81,7 +81,7 @@ static int font_info_weight(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static bool font_info_bold(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->bold();
     return ret_value;
 }
@@ -89,7 +89,7 @@ static bool font_info_bold(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static bool font_info_underline(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->underline();
     return ret_value;
 }
@@ -97,7 +97,7 @@ static bool font_info_underline(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static bool font_info_overline(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->overline();
     return ret_value;
 }
@@ -105,7 +105,7 @@ static bool font_info_overline(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static bool font_info_fixed_pitch(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->fixedPitch();
     return ret_value;
 }
@@ -113,7 +113,7 @@ static bool font_info_fixed_pitch(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static int font_info_style_hint(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->styleHint();
     return s_style_hint_lookup[(int)ret_value];
 }
@@ -121,7 +121,7 @@ static int font_info_style_hint(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static bool font_info_raw_mode(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->rawMode();
     return ret_value;
 }
@@ -129,33 +129,14 @@ static bool font_info_raw_mode(struct RUBase* self_c) {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static bool font_info_exact_match(struct RUBase* self_c) {
-    WRFontInfo* qt_value = (WRFontInfo*)self_c;
+    QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->exactMatch();
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUFontInfo create_font_info(
-    struct RUBase* priv_data,
-    RUDeleteCallback delete_callback,
-    void* private_user_data)
-{
-    auto ctl = generic_create_func_with_delete<struct RUFontInfo, WRFontInfo>(priv_data, delete_callback, private_user_data);
-    ctl.all_funcs = &s_font_info_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void destroy_font_info(struct RUBase* priv_data) {
-    destroy_generic<WRFontInfo>(priv_data);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 struct RUFontInfoFuncs s_font_info_funcs = {
-    destroy_font_info,
     font_info_swap,
     font_info_family,
     font_info_style_name,

@@ -16,9 +16,42 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::brush_ffi::*;
+#[allow(unused_imports)]
+use auto::color::Color;
+#[allow(unused_imports)]
+use auto::color::ColorTrait;
+#[allow(unused_imports)]
+use auto::color_ffi::*;
+#[allow(unused_imports)]
+use auto::image::Image;
+#[allow(unused_imports)]
+use auto::image::ImageTrait;
+#[allow(unused_imports)]
+use auto::image_ffi::*;
+#[allow(unused_imports)]
+use auto::pixmap::Pixmap;
+#[allow(unused_imports)]
+use auto::pixmap::PixmapTrait;
+#[allow(unused_imports)]
+use auto::pixmap_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_enums::BrushStyle;
+#[allow(unused_imports)]
+use auto::rute_enums::GlobalColor;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
+#[allow(unused_imports)]
+use auto::transform::Transform;
+#[allow(unused_imports)]
+use auto::transform::TransformTrait;
+#[allow(unused_imports)]
+use auto::transform_ffi::*;
 ///
 /// A brush has a style, a color, a gradient and a texture.
 ///
@@ -76,9 +109,9 @@ use auto::*;
 /// System](Paint%0A%20%20%20%20System)
 ///
 ///
-/// **See also:** Qt::BrushStyle
-/// QPainter
-/// QColor
+/// **See also:** [`t::brush_style()`]
+/// [`Painter`]
+/// [`Color`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -138,23 +171,22 @@ impl<'a> Brush<'a> {
         }
     }
 }
-pub trait BrushType<'a> {
+pub trait BrushTrait<'a> {
     ///
     /// Swaps brush *other* with this brush. This operation is very
     /// fast and never fails.
-    fn swap<B: BrushType<'a>>(&self, other: &B) -> &Self {
+    fn swap(&self, other: &BrushTrait) {
         let (obj_other_1, _funcs) = other.get_brush_obj_funcs();
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
-        self
     }
     ///
     /// Returns the brush style.
     ///
-    /// **See also:** setStyle()
+    /// **See also:** [`set_style()`]
     fn style(&self) -> BrushStyle {
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
@@ -166,36 +198,34 @@ pub trait BrushType<'a> {
     ///
     /// Sets the brush style to *style.*
     ///
-    /// **See also:** style()
-    fn set_style(&self, arg0: BrushStyle) -> &Self {
+    /// **See also:** [`style()`]
+    fn set_style(&self, arg0: BrushStyle) {
         let enum_arg0_1 = arg0 as i32;
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             ((*funcs).set_style)(obj_data, enum_arg0_1);
         }
-        self
     }
     ///
     /// Sets *matrix* as an explicit transformation matrix on the
     /// current brush. The brush transformation matrix is merged with
     /// QPainter transformation matrix to produce the final result.
     ///
-    /// **See also:** transform()
-    fn set_transform<T: TransformType<'a>>(&self, arg0: &T) -> &Self {
+    /// **See also:** [`transform()`]
+    fn set_transform(&self, arg0: &TransformTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_transform_obj_funcs();
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             ((*funcs).set_transform)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// Returns the custom brush pattern, or a null pixmap if no custom brush pattern
     /// has been set.
     ///
-    /// **See also:** setTexture()
+    /// **See also:** [`set_texture()`]
     ///
     /// Returns the custom brush pattern, or a null image if no custom
     /// brush pattern has been set.
@@ -203,7 +233,7 @@ pub trait BrushType<'a> {
     /// If the texture was set as a QPixmap it will be converted to a
     /// QImage.
     ///
-    /// **See also:** setTextureImage()
+    /// **See also:** [`set_texture_image()`]
     fn texture(&self) -> Pixmap {
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
@@ -226,7 +256,7 @@ pub trait BrushType<'a> {
     /// pixmaps, i.e. for QPixmap::depth() == 1 ( [QBitmaps](QBitmap)
     /// ).
     ///
-    /// **See also:** texture()
+    /// **See also:** [`texture()`]
     ///
     /// Sets the brush image to *image.* The style is set to
     /// Qt::TexturePattern.
@@ -237,16 +267,15 @@ pub trait BrushType<'a> {
     /// brushes, either convert the image to QBitmap with `QBitmap::fromImage()` and set the resulting QBitmap as a texture,
     /// or change the entries in the color table for the image.
     ///
-    /// **See also:** textureImage()
-    /// setTexture()
-    fn set_texture<P: PixmapType<'a>>(&self, pixmap: &P) -> &Self {
+    /// **See also:** [`texture_image()`]
+    /// [`set_texture()`]
+    fn set_texture(&self, pixmap: &PixmapTrait) {
         let (obj_pixmap_1, _funcs) = pixmap.get_pixmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             ((*funcs).set_texture)(obj_data, obj_pixmap_1);
         }
-        self
     }
     ///
     /// Returns the custom brush pattern, or a null image if no custom
@@ -255,7 +284,7 @@ pub trait BrushType<'a> {
     /// If the texture was set as a QPixmap it will be converted to a
     /// QImage.
     ///
-    /// **See also:** setTextureImage()
+    /// **See also:** [`set_texture_image()`]
     fn texture_image(&self) -> Image {
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
@@ -280,21 +309,20 @@ pub trait BrushType<'a> {
     /// brushes, either convert the image to QBitmap with `QBitmap::fromImage()` and set the resulting QBitmap as a texture,
     /// or change the entries in the color table for the image.
     ///
-    /// **See also:** textureImage()
-    /// setTexture()
-    fn set_texture_image<I: ImageType<'a>>(&self, image: &I) -> &Self {
+    /// **See also:** [`texture_image()`]
+    /// [`set_texture()`]
+    fn set_texture_image(&self, image: &ImageTrait) {
         let (obj_image_1, _funcs) = image.get_image_obj_funcs();
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             ((*funcs).set_texture_image)(obj_data, obj_image_1);
         }
-        self
     }
     ///
     /// Returns the brush color.
     ///
-    /// **See also:** setColor()
+    /// **See also:** [`set_color()`]
     fn color(&self) -> Option<Color> {
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
@@ -319,18 +347,17 @@ pub trait BrushType<'a> {
     /// style is a gradient. The same is the case if the style is
     /// Qt::TexturePattern style unless the current texture is a QBitmap.
     ///
-    /// **See also:** color()
+    /// **See also:** [`color()`]
     ///
     /// **Overloads**
     /// Sets the brush color to the given *color.*
-    fn set_color_by_type<C: ColorType<'a>>(&self, color: &C) -> &Self {
+    fn set_color(&self, color: &ColorTrait) {
         let (obj_color_1, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
-            ((*funcs).set_color_by_type)(obj_data, obj_color_1);
+            ((*funcs).set_color)(obj_data, obj_color_1);
         }
-        self
     }
     ///
     /// Sets the brush color to the given *color.*
@@ -339,36 +366,16 @@ pub trait BrushType<'a> {
     /// style is a gradient. The same is the case if the style is
     /// Qt::TexturePattern style unless the current texture is a QBitmap.
     ///
-    /// **See also:** color()
+    /// **See also:** [`color()`]
     ///
     /// **Overloads**
     /// Sets the brush color to the given *color.*
-    fn set_color(&self, color: GlobalColor) -> &Self {
+    fn set_color_2(&self, color: GlobalColor) {
         let enum_color_1 = color as i32;
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
-            ((*funcs).set_color)(obj_data, enum_color_1);
-        }
-        self
-    }
-    ///
-    /// Returns the gradient describing this brush.
-    fn gradient(&self) -> Option<Gradient> {
-        let (obj_data, funcs) = self.get_brush_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).gradient)(obj_data);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Gradient::new_from_rc(t);
-            } else {
-                ret_val = Gradient::new_from_owned(t);
-            }
-            Some(ret_val)
+            ((*funcs).set_color_2)(obj_data, enum_color_1);
         }
     }
     ///
@@ -398,7 +405,7 @@ pub trait BrushType<'a> {
     fn get_brush_obj_funcs(&self) -> (*const RUBase, *const RUBrushFuncs);
 }
 
-impl<'a> BrushType<'a> for Brush<'a> {
+impl<'a> BrushTrait<'a> for Brush<'a> {
     #[inline]
     fn get_brush_obj_funcs(&self) -> (*const RUBase, *const RUBrushFuncs) {
         let obj = self.data.get().unwrap();

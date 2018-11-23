@@ -16,9 +16,258 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::backing_store::BackingStore;
+#[allow(unused_imports)]
+use auto::bitmap::Bitmap;
+#[allow(unused_imports)]
+use auto::bitmap::BitmapTrait;
+#[allow(unused_imports)]
+use auto::bitmap_ffi::*;
+#[allow(unused_imports)]
+use auto::close_event::CloseEvent;
+#[allow(unused_imports)]
+use auto::close_event::CloseEventTrait;
+#[allow(unused_imports)]
+use auto::close_event_ffi::*;
+#[allow(unused_imports)]
+use auto::context_menu_event::ContextMenuEvent;
+#[allow(unused_imports)]
+use auto::context_menu_event::ContextMenuEventTrait;
+#[allow(unused_imports)]
+use auto::context_menu_event_ffi::*;
+#[allow(unused_imports)]
+use auto::cursor::Cursor;
+#[allow(unused_imports)]
+use auto::cursor::CursorTrait;
+#[allow(unused_imports)]
+use auto::cursor_ffi::*;
+#[allow(unused_imports)]
+use auto::drag_enter_event::DragEnterEvent;
+#[allow(unused_imports)]
+use auto::drag_enter_event::DragEnterEventTrait;
+#[allow(unused_imports)]
+use auto::drag_enter_event_ffi::*;
+#[allow(unused_imports)]
+use auto::drag_leave_event::DragLeaveEvent;
+#[allow(unused_imports)]
+use auto::drag_leave_event::DragLeaveEventTrait;
+#[allow(unused_imports)]
+use auto::drag_leave_event_ffi::*;
+#[allow(unused_imports)]
+use auto::drag_move_event::DragMoveEvent;
+#[allow(unused_imports)]
+use auto::drag_move_event::DragMoveEventTrait;
+#[allow(unused_imports)]
+use auto::drag_move_event_ffi::*;
+#[allow(unused_imports)]
+use auto::drop_event::DropEvent;
+#[allow(unused_imports)]
+use auto::drop_event::DropEventTrait;
+#[allow(unused_imports)]
+use auto::drop_event_ffi::*;
+#[allow(unused_imports)]
+use auto::event::Event;
+#[allow(unused_imports)]
+use auto::event::EventTrait;
+#[allow(unused_imports)]
+use auto::event_ffi::*;
+#[allow(unused_imports)]
+use auto::focus_event::FocusEvent;
+#[allow(unused_imports)]
+use auto::focus_event::FocusEventTrait;
+#[allow(unused_imports)]
+use auto::focus_event_ffi::*;
+#[allow(unused_imports)]
+use auto::font::Font;
+#[allow(unused_imports)]
+use auto::font::FontTrait;
+#[allow(unused_imports)]
+use auto::font_ffi::*;
+#[allow(unused_imports)]
+use auto::hide_event::HideEvent;
+#[allow(unused_imports)]
+use auto::hide_event::HideEventTrait;
+#[allow(unused_imports)]
+use auto::hide_event_ffi::*;
+#[allow(unused_imports)]
+use auto::icon::Icon;
+#[allow(unused_imports)]
+use auto::icon::IconTrait;
+#[allow(unused_imports)]
+use auto::icon_ffi::*;
+#[allow(unused_imports)]
+use auto::key_event::KeyEvent;
+#[allow(unused_imports)]
+use auto::key_event::KeyEventTrait;
+#[allow(unused_imports)]
+use auto::key_event_ffi::*;
+#[allow(unused_imports)]
+use auto::key_sequence::KeySequence;
+#[allow(unused_imports)]
+use auto::key_sequence::KeySequenceTrait;
+#[allow(unused_imports)]
+use auto::key_sequence_ffi::*;
+#[allow(unused_imports)]
+use auto::layout::Layout;
+#[allow(unused_imports)]
+use auto::layout::LayoutTrait;
+#[allow(unused_imports)]
+use auto::layout_ffi::*;
+#[allow(unused_imports)]
+use auto::margins::Margins;
+#[allow(unused_imports)]
+use auto::margins::MarginsTrait;
+#[allow(unused_imports)]
+use auto::margins_ffi::*;
+#[allow(unused_imports)]
+use auto::mouse_event::MouseEvent;
+#[allow(unused_imports)]
+use auto::mouse_event::MouseEventTrait;
+#[allow(unused_imports)]
+use auto::mouse_event_ffi::*;
+#[allow(unused_imports)]
+use auto::move_event::MoveEvent;
+#[allow(unused_imports)]
+use auto::move_event::MoveEventTrait;
+#[allow(unused_imports)]
+use auto::move_event_ffi::*;
+#[allow(unused_imports)]
+use auto::object::*;
+#[allow(unused_imports)]
+use auto::object_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_device::PaintDevice;
+#[allow(unused_imports)]
+use auto::paint_device::PaintDeviceTrait;
+#[allow(unused_imports)]
+use auto::paint_device::*;
+#[allow(unused_imports)]
+use auto::paint_device_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_device_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_engine::PaintEngine;
+#[allow(unused_imports)]
+use auto::paint_event::PaintEvent;
+#[allow(unused_imports)]
+use auto::paint_event::PaintEventTrait;
+#[allow(unused_imports)]
+use auto::paint_event_ffi::*;
+#[allow(unused_imports)]
+use auto::painter::Painter;
+#[allow(unused_imports)]
+use auto::painter::PainterTrait;
+#[allow(unused_imports)]
+use auto::painter_ffi::*;
+#[allow(unused_imports)]
+use auto::palette::ColorRole;
+#[allow(unused_imports)]
+use auto::palette::Palette;
+#[allow(unused_imports)]
+use auto::palette::PaletteTrait;
+#[allow(unused_imports)]
+use auto::palette_ffi::*;
+#[allow(unused_imports)]
+use auto::pixmap::Pixmap;
+#[allow(unused_imports)]
+use auto::point::Point;
+#[allow(unused_imports)]
+use auto::point::PointTrait;
+#[allow(unused_imports)]
+use auto::point_ffi::*;
+#[allow(unused_imports)]
+use auto::rect::Rect;
+#[allow(unused_imports)]
+use auto::rect::RectTrait;
+#[allow(unused_imports)]
+use auto::rect_ffi::*;
+#[allow(unused_imports)]
+use auto::region::Region;
+#[allow(unused_imports)]
+use auto::region::RegionTrait;
+#[allow(unused_imports)]
+use auto::region_ffi::*;
+#[allow(unused_imports)]
+use auto::resize_event::ResizeEvent;
+#[allow(unused_imports)]
+use auto::resize_event::ResizeEventTrait;
+#[allow(unused_imports)]
+use auto::resize_event_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_enums::ContextMenuPolicy;
+#[allow(unused_imports)]
+use auto::rute_enums::FocusPolicy;
+#[allow(unused_imports)]
+use auto::rute_enums::FocusReason;
+#[allow(unused_imports)]
+use auto::rute_enums::GestureFlags;
+#[allow(unused_imports)]
+use auto::rute_enums::GestureType;
+#[allow(unused_imports)]
+use auto::rute_enums::InputMethodHints;
+#[allow(unused_imports)]
+use auto::rute_enums::LayoutDirection;
+#[allow(unused_imports)]
+use auto::rute_enums::ShortcutContext;
+#[allow(unused_imports)]
+use auto::rute_enums::WindowFlags;
+#[allow(unused_imports)]
+use auto::rute_enums::WindowModality;
+#[allow(unused_imports)]
+use auto::rute_enums::WindowStates;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
+#[allow(unused_imports)]
+use auto::show_event::ShowEvent;
+#[allow(unused_imports)]
+use auto::show_event::ShowEventTrait;
+#[allow(unused_imports)]
+use auto::show_event_ffi::*;
+#[allow(unused_imports)]
+use auto::size::Size;
+#[allow(unused_imports)]
+use auto::size::SizeTrait;
+#[allow(unused_imports)]
+use auto::size_ffi::*;
+#[allow(unused_imports)]
+use auto::size_policy::Policy;
+#[allow(unused_imports)]
+use auto::size_policy::SizePolicy;
+#[allow(unused_imports)]
+use auto::size_policy::SizePolicyTrait;
+#[allow(unused_imports)]
+use auto::size_policy_ffi::*;
+#[allow(unused_imports)]
+use auto::style::Style;
+#[allow(unused_imports)]
+use auto::style::StyleTrait;
+#[allow(unused_imports)]
+use auto::style_ffi::*;
+#[allow(unused_imports)]
+use auto::tablet_event::TabletEvent;
+#[allow(unused_imports)]
+use auto::tablet_event::TabletEventTrait;
+#[allow(unused_imports)]
+use auto::tablet_event_ffi::*;
+#[allow(unused_imports)]
+use auto::wheel_event::WheelEvent;
+#[allow(unused_imports)]
+use auto::wheel_event::WheelEventTrait;
+#[allow(unused_imports)]
+use auto::wheel_event_ffi::*;
+#[allow(unused_imports)]
+use auto::widget_ffi::*;
+#[allow(unused_imports)]
+use auto::window::Window;
+#[allow(unused_imports)]
+use auto::window::WindowTrait;
+#[allow(unused_imports)]
+use auto::window_ffi::*;
 ///
 /// The widget is the atom of the user interface: it receives mouse, keyboard
 /// and other events from the window system, and paints a representation of
@@ -332,10 +581,10 @@ use auto::*;
 /// * Call QWidget::winId to enforce a native window (this implies 3).
 /// * Set the Qt::WA_PaintOnScreen attribute to enforce a native window (this implies 3).
 ///
-/// **See also:** QEvent
-/// QPainter
-/// QGridLayout
-/// QBoxLayout
+/// **See also:** [`Event`]
+/// [`Painter`]
+/// [`GridLayout`]
+/// [`BoxLayout`]
 ///
 /// # Licence
 ///
@@ -395,260 +644,162 @@ impl<'a> Widget<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn set_set_visible_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    fn set_window_title_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, bool) + 'a,
+        F: Fn(&T, &str) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, bool) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &str) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
-            ((*funcs).set_set_visible_event)(
+            ((*funcs).set_window_title_changed_event)(
                 obj_data,
                 user_data,
                 Box::into_raw(f) as *const _,
-                transmute(widget_set_visible_trampoline_ud::<T> as usize),
+                transmute(widget_window_title_changed_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_set_visible_event<F>(&self, func: F) -> &Self
+    fn set_window_title_changed_event<F>(&self, func: F)
     where
-        F: Fn(bool) + 'a,
+        F: Fn(&str) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(bool) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&str) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
-            ((*funcs).set_set_visible_event)(
+            ((*funcs).set_window_title_changed_event)(
                 obj_data,
                 ::std::ptr::null(),
                 Box::into_raw(f) as *const _,
-                transmute(widget_set_visible_trampoline as usize),
+                transmute(widget_window_title_changed_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_size_hint_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    fn set_window_icon_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T) + 'a,
+        F: Fn(&T, &IconTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &IconTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
-            ((*funcs).set_size_hint_event)(
+            ((*funcs).set_window_icon_changed_event)(
                 obj_data,
                 user_data,
                 Box::into_raw(f) as *const _,
-                transmute(widget_size_hint_trampoline_ud::<T> as usize),
+                transmute(widget_window_icon_changed_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_size_hint_event<F>(&self, func: F) -> &Self
+    fn set_window_icon_changed_event<F>(&self, func: F)
     where
-        F: Fn() + 'a,
+        F: Fn(&IconTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&IconTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
-            ((*funcs).set_size_hint_event)(
+            ((*funcs).set_window_icon_changed_event)(
                 obj_data,
                 ::std::ptr::null(),
                 Box::into_raw(f) as *const _,
-                transmute(widget_size_hint_trampoline as usize),
+                transmute(widget_window_icon_changed_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_minimum_size_hint_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    fn set_window_icon_text_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T) + 'a,
+        F: Fn(&T, &str) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &str) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
-            ((*funcs).set_minimum_size_hint_event)(
+            ((*funcs).set_window_icon_text_changed_event)(
                 obj_data,
                 user_data,
                 Box::into_raw(f) as *const _,
-                transmute(widget_minimum_size_hint_trampoline_ud::<T> as usize),
+                transmute(widget_window_icon_text_changed_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_minimum_size_hint_event<F>(&self, func: F) -> &Self
+    fn set_window_icon_text_changed_event<F>(&self, func: F)
     where
-        F: Fn() + 'a,
+        F: Fn(&str) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&str) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
-            ((*funcs).set_minimum_size_hint_event)(
+            ((*funcs).set_window_icon_text_changed_event)(
                 obj_data,
                 ::std::ptr::null(),
                 Box::into_raw(f) as *const _,
-                transmute(widget_minimum_size_hint_trampoline as usize),
+                transmute(widget_window_icon_text_changed_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_height_for_width_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    fn set_custom_context_menu_requested_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, i32) + 'a,
+        F: Fn(&T, &PointTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &PointTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
-            ((*funcs).set_height_for_width_event)(
+            ((*funcs).set_custom_context_menu_requested_event)(
                 obj_data,
                 user_data,
                 Box::into_raw(f) as *const _,
-                transmute(widget_height_for_width_trampoline_ud::<T> as usize),
+                transmute(widget_custom_context_menu_requested_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_height_for_width_event<F>(&self, func: F) -> &Self
+    fn set_custom_context_menu_requested_event<F>(&self, func: F)
     where
-        F: Fn(i32) + 'a,
+        F: Fn(&PointTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&PointTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
-            ((*funcs).set_height_for_width_event)(
+            ((*funcs).set_custom_context_menu_requested_event)(
                 obj_data,
                 ::std::ptr::null(),
                 Box::into_raw(f) as *const _,
-                transmute(widget_height_for_width_trampoline as usize),
+                transmute(widget_custom_context_menu_requested_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_has_height_for_width_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_mouse_press_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T) + 'a,
+        F: Fn(&T, &MouseEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_has_height_for_width_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_has_height_for_width_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_has_height_for_width_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_has_height_for_width_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_has_height_for_width_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_event_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &EventType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &EventType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_event_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_event_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_event_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&EventType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&EventType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_event_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_event_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_mouse_press_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &MouseEventType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &MouseEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -659,16 +810,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_mouse_press_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_mouse_press_event<F>(&self, func: F) -> &Self
+    pub fn set_mouse_press_event<F>(&self, func: F)
     where
-        F: Fn(&MouseEventType) + 'a,
+        F: Fn(&MouseEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_mouse_press_event)(
@@ -678,18 +827,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_mouse_press_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_mouse_release_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_mouse_release_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &MouseEventType) + 'a,
+        F: Fn(&T, &MouseEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MouseEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -700,16 +847,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_mouse_release_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_mouse_release_event<F>(&self, func: F) -> &Self
+    pub fn set_mouse_release_event<F>(&self, func: F)
     where
-        F: Fn(&MouseEventType) + 'a,
+        F: Fn(&MouseEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_mouse_release_event)(
@@ -719,18 +864,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_mouse_release_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_mouse_double_click_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_mouse_double_click_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &MouseEventType) + 'a,
+        F: Fn(&T, &MouseEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MouseEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -741,16 +884,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_mouse_double_click_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_mouse_double_click_event<F>(&self, func: F) -> &Self
+    pub fn set_mouse_double_click_event<F>(&self, func: F)
     where
-        F: Fn(&MouseEventType) + 'a,
+        F: Fn(&MouseEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_mouse_double_click_event)(
@@ -760,18 +901,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_mouse_double_click_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_mouse_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_mouse_move_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &MouseEventType) + 'a,
+        F: Fn(&T, &MouseEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MouseEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -782,16 +921,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_mouse_move_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_mouse_move_event<F>(&self, func: F) -> &Self
+    pub fn set_mouse_move_event<F>(&self, func: F)
     where
-        F: Fn(&MouseEventType) + 'a,
+        F: Fn(&MouseEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_mouse_move_event)(
@@ -801,18 +938,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_mouse_move_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_wheel_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_wheel_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &WheelEventType) + 'a,
+        F: Fn(&T, &WheelEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &WheelEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &WheelEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -823,16 +958,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_wheel_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_wheel_event<F>(&self, func: F) -> &Self
+    pub fn set_wheel_event<F>(&self, func: F)
     where
-        F: Fn(&WheelEventType) + 'a,
+        F: Fn(&WheelEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&WheelEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&WheelEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_wheel_event)(
@@ -842,18 +975,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_wheel_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_key_press_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_key_press_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &KeyEventType) + 'a,
+        F: Fn(&T, &KeyEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &KeyEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &KeyEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -864,16 +995,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_key_press_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_key_press_event<F>(&self, func: F) -> &Self
+    pub fn set_key_press_event<F>(&self, func: F)
     where
-        F: Fn(&KeyEventType) + 'a,
+        F: Fn(&KeyEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&KeyEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&KeyEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_key_press_event)(
@@ -883,18 +1012,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_key_press_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_key_release_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_key_release_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &KeyEventType) + 'a,
+        F: Fn(&T, &KeyEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &KeyEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &KeyEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -905,16 +1032,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_key_release_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_key_release_event<F>(&self, func: F) -> &Self
+    pub fn set_key_release_event<F>(&self, func: F)
     where
-        F: Fn(&KeyEventType) + 'a,
+        F: Fn(&KeyEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&KeyEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&KeyEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_key_release_event)(
@@ -924,18 +1049,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_key_release_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_focus_in_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_focus_in_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &FocusEventType) + 'a,
+        F: Fn(&T, &FocusEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &FocusEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &FocusEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -946,16 +1069,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_focus_in_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_focus_in_event<F>(&self, func: F) -> &Self
+    pub fn set_focus_in_event<F>(&self, func: F)
     where
-        F: Fn(&FocusEventType) + 'a,
+        F: Fn(&FocusEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&FocusEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&FocusEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_focus_in_event)(
@@ -965,18 +1086,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_focus_in_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_focus_out_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_focus_out_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &FocusEventType) + 'a,
+        F: Fn(&T, &FocusEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &FocusEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &FocusEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -987,16 +1106,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_focus_out_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_focus_out_event<F>(&self, func: F) -> &Self
+    pub fn set_focus_out_event<F>(&self, func: F)
     where
-        F: Fn(&FocusEventType) + 'a,
+        F: Fn(&FocusEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&FocusEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&FocusEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_focus_out_event)(
@@ -1006,18 +1123,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_focus_out_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_enter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_enter_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &EventType) + 'a,
+        F: Fn(&T, &EventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &EventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1028,16 +1143,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_enter_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_enter_event<F>(&self, func: F) -> &Self
+    pub fn set_enter_event<F>(&self, func: F)
     where
-        F: Fn(&EventType) + 'a,
+        F: Fn(&EventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&EventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_enter_event)(
@@ -1047,18 +1160,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_enter_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_leave_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_leave_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &EventType) + 'a,
+        F: Fn(&T, &EventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &EventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1069,16 +1180,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_leave_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_leave_event<F>(&self, func: F) -> &Self
+    pub fn set_leave_event<F>(&self, func: F)
     where
-        F: Fn(&EventType) + 'a,
+        F: Fn(&EventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&EventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_leave_event)(
@@ -1088,18 +1197,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_leave_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_paint_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_paint_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &PaintEventType) + 'a,
+        F: Fn(&T, &PaintEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &PaintEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &PaintEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1110,16 +1217,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_paint_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_paint_event<F>(&self, func: F) -> &Self
+    pub fn set_paint_event<F>(&self, func: F)
     where
-        F: Fn(&PaintEventType) + 'a,
+        F: Fn(&PaintEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&PaintEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&PaintEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_paint_event)(
@@ -1129,18 +1234,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_paint_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_move_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &MoveEventType) + 'a,
+        F: Fn(&T, &MoveEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MoveEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MoveEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1151,16 +1254,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_move_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_move_event<F>(&self, func: F) -> &Self
+    pub fn set_move_event<F>(&self, func: F)
     where
-        F: Fn(&MoveEventType) + 'a,
+        F: Fn(&MoveEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MoveEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MoveEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_move_event)(
@@ -1170,18 +1271,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_move_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_resize_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_resize_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &ResizeEventType) + 'a,
+        F: Fn(&T, &ResizeEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &ResizeEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &ResizeEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1192,16 +1291,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_resize_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_resize_event<F>(&self, func: F) -> &Self
+    pub fn set_resize_event<F>(&self, func: F)
     where
-        F: Fn(&ResizeEventType) + 'a,
+        F: Fn(&ResizeEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&ResizeEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&ResizeEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_resize_event)(
@@ -1211,18 +1308,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_resize_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_close_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_close_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &CloseEventType) + 'a,
+        F: Fn(&T, &CloseEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &CloseEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &CloseEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1233,16 +1328,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_close_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_close_event<F>(&self, func: F) -> &Self
+    pub fn set_close_event<F>(&self, func: F)
     where
-        F: Fn(&CloseEventType) + 'a,
+        F: Fn(&CloseEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&CloseEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&CloseEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_close_event)(
@@ -1252,18 +1345,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_close_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_context_menu_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_context_menu_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &ContextMenuEventType) + 'a,
+        F: Fn(&T, &ContextMenuEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &ContextMenuEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &ContextMenuEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1274,16 +1365,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_context_menu_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_context_menu_event<F>(&self, func: F) -> &Self
+    pub fn set_context_menu_event<F>(&self, func: F)
     where
-        F: Fn(&ContextMenuEventType) + 'a,
+        F: Fn(&ContextMenuEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&ContextMenuEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&ContextMenuEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_context_menu_event)(
@@ -1293,18 +1382,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_context_menu_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_tablet_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_tablet_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &TabletEventType) + 'a,
+        F: Fn(&T, &TabletEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &TabletEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &TabletEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1315,16 +1402,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_tablet_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_tablet_event<F>(&self, func: F) -> &Self
+    pub fn set_tablet_event<F>(&self, func: F)
     where
-        F: Fn(&TabletEventType) + 'a,
+        F: Fn(&TabletEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&TabletEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&TabletEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_tablet_event)(
@@ -1334,59 +1419,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_tablet_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_action_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_drag_enter_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &ActionEventType) + 'a,
+        F: Fn(&T, &DragEnterEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &ActionEventType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_action_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_action_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_action_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&ActionEventType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&ActionEventType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_action_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_action_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_drag_enter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &DragEnterEventType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &DragEnterEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &DragEnterEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1397,16 +1439,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_drag_enter_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_drag_enter_event<F>(&self, func: F) -> &Self
+    pub fn set_drag_enter_event<F>(&self, func: F)
     where
-        F: Fn(&DragEnterEventType) + 'a,
+        F: Fn(&DragEnterEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&DragEnterEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&DragEnterEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_drag_enter_event)(
@@ -1416,18 +1456,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_drag_enter_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_drag_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_drag_move_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &DragMoveEventType) + 'a,
+        F: Fn(&T, &DragMoveEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &DragMoveEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &DragMoveEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1438,16 +1476,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_drag_move_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_drag_move_event<F>(&self, func: F) -> &Self
+    pub fn set_drag_move_event<F>(&self, func: F)
     where
-        F: Fn(&DragMoveEventType) + 'a,
+        F: Fn(&DragMoveEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&DragMoveEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&DragMoveEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_drag_move_event)(
@@ -1457,18 +1493,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_drag_move_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_drag_leave_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_drag_leave_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &DragLeaveEventType) + 'a,
+        F: Fn(&T, &DragLeaveEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &DragLeaveEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &DragLeaveEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1479,16 +1513,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_drag_leave_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_drag_leave_event<F>(&self, func: F) -> &Self
+    pub fn set_drag_leave_event<F>(&self, func: F)
     where
-        F: Fn(&DragLeaveEventType) + 'a,
+        F: Fn(&DragLeaveEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&DragLeaveEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&DragLeaveEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_drag_leave_event)(
@@ -1498,18 +1530,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_drag_leave_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_drop_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_drop_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &DropEventType) + 'a,
+        F: Fn(&T, &DropEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &DropEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &DropEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1520,16 +1550,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_drop_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_drop_event<F>(&self, func: F) -> &Self
+    pub fn set_drop_event<F>(&self, func: F)
     where
-        F: Fn(&DropEventType) + 'a,
+        F: Fn(&DropEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&DropEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&DropEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_drop_event)(
@@ -1539,18 +1567,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_drop_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_show_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_show_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &ShowEventType) + 'a,
+        F: Fn(&T, &ShowEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &ShowEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &ShowEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1561,16 +1587,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_show_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_show_event<F>(&self, func: F) -> &Self
+    pub fn set_show_event<F>(&self, func: F)
     where
-        F: Fn(&ShowEventType) + 'a,
+        F: Fn(&ShowEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&ShowEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&ShowEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_show_event)(
@@ -1580,18 +1604,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_show_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_hide_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_hide_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &HideEventType) + 'a,
+        F: Fn(&T, &HideEventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &HideEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &HideEventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1602,16 +1624,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_hide_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_hide_event<F>(&self, func: F) -> &Self
+    pub fn set_hide_event<F>(&self, func: F)
     where
-        F: Fn(&HideEventType) + 'a,
+        F: Fn(&HideEventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&HideEventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&HideEventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_hide_event)(
@@ -1621,18 +1641,16 @@ impl<'a> Widget<'a> {
                 transmute(widget_hide_trampoline as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_change_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    pub fn set_change_event_ud<F, T>(&self, data: &'a T, func: F)
     where
-        F: Fn(&T, &EventType) + 'a,
+        F: Fn(&T, &EventTrait) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &EventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -1643,16 +1661,14 @@ impl<'a> Widget<'a> {
                 transmute(widget_change_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    pub fn set_change_event<F>(&self, func: F) -> &Self
+    pub fn set_change_event<F>(&self, func: F)
     where
-        F: Fn(&EventType) + 'a,
+        F: Fn(&EventTrait) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&EventType) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_change_event)(
@@ -1662,254 +1678,6 @@ impl<'a> Widget<'a> {
                 transmute(widget_change_trampoline as usize),
             );
         }
-
-        self
-    }
-
-    pub fn set_init_painter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PainterType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PainterType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_init_painter_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_init_painter_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_init_painter_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PainterType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&PainterType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_init_painter_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_init_painter_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_redirected_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PointType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PointType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_redirected_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_redirected_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_redirected_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PointType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&PointType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_redirected_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_redirected_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_shared_painter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_shared_painter_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_shared_painter_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_shared_painter_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_shared_painter_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_shared_painter_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_input_method_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &InputMethodEventType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &InputMethodEventType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_input_method_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_input_method_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_input_method_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&InputMethodEventType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&InputMethodEventType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_input_method_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_input_method_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_input_method_query_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, InputMethodQuery) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, InputMethodQuery) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_input_method_query_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_input_method_query_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_input_method_query_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(InputMethodQuery) + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(InputMethodQuery) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_input_method_query_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_input_method_query_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_focus_next_prev_child_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, bool) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, bool) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_focus_next_prev_child_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_focus_next_prev_child_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_focus_next_prev_child_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(bool) + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(bool) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_focus_next_prev_child_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_focus_next_prev_child_trampoline as usize),
-            );
-        }
-
-        self
     }
 }
 
@@ -1917,151 +1685,6 @@ pub struct WidgetStatic<'a> {
     pub all_funcs: *const RUWidgetAllFuncs,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
-
-unsafe extern "C" fn widget_set_visible_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    visible: bool,
-) {
-    let f: &&(Fn(&T, bool) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, visible);
-}
-
-unsafe extern "C" fn widget_set_visible_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    visible: bool,
-) {
-    let f: &&(Fn(bool) + 'static) = transmute(func);
-
-    f(visible);
-}
-
-///
-/// If the value of this property is an invalid size, no size is
-/// recommended.
-///
-/// The default implementation of sizeHint() returns an invalid size
-/// if there is no layout for this widget, and returns the layout's
-/// preferred size otherwise.
-///
-/// **See also:** QSize::isValid()
-/// minimumSizeHint()
-/// sizePolicy()
-/// setMinimumSize()
-/// updateGeometry()
-
-unsafe extern "C" fn widget_size_hint_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUSize {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn widget_size_hint_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUSize {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-///
-/// If the value of this property is an invalid size, no minimum size
-/// is recommended.
-///
-/// The default implementation of minimumSizeHint() returns an invalid
-/// size if there is no layout for this widget, and returns the
-/// layout's minimum size otherwise. Most built-in widgets reimplement
-/// minimumSizeHint().
-///
-/// [QLayout](QLayout)
-/// will never resize a widget to a size smaller than the
-/// minimum size hint unless minimumSize() is set or the size policy is
-/// set to QSizePolicy::Ignore. If minimumSize() is set, the minimum
-/// size hint will be ignored.
-///
-/// **See also:** QSize::isValid()
-/// resize()
-/// setMinimumSize()
-/// sizePolicy()
-
-unsafe extern "C" fn widget_minimum_size_hint_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUSize {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn widget_minimum_size_hint_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUSize {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-///
-/// Returns the preferred height for this widget, given the width *w.*
-///
-/// If this widget has a layout, the default implementation returns
-/// the layout's preferred height. if there is no layout, the default
-/// implementation returns -1 indicating that the preferred height
-/// does not depend on the width.
-
-unsafe extern "C" fn widget_height_for_width_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: i32,
-) -> i32 {
-    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, arg0);
-}
-
-unsafe extern "C" fn widget_height_for_width_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: i32,
-) -> i32 {
-    let f: &&(Fn(i32) + 'static) = transmute(func);
-
-    f(arg0);
-}
-
-///
-/// Returns `true` if the widget's preferred height depends on its width; otherwise returns `false.`
-
-unsafe extern "C" fn widget_has_height_for_width_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> bool {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn widget_has_height_for_width_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> bool {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
 ///
 /// This signal is emitted when the window's title has changed, with the
 /// new *title* as an argument.
@@ -2100,7 +1723,7 @@ unsafe extern "C" fn widget_window_icon_changed_trampoline_ud<T>(
     func: *const c_void,
     icon: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &IconType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &IconTrait) + 'static) = transmute(func);
     let obj_icon_0 = Icon::new_from_temporary(*(icon as *const RUIcon));
     let data = self_c as *const T;
     f(&*data, &obj_icon_0);
@@ -2111,7 +1734,7 @@ unsafe extern "C" fn widget_window_icon_changed_trampoline(
     func: *const c_void,
     icon: *const RUBase,
 ) {
-    let f: &&(Fn(&IconType) + 'static) = transmute(func);
+    let f: &&(Fn(&IconTrait) + 'static) = transmute(func);
     let obj_icon_0 = Icon::new_from_temporary(*(icon as *const RUIcon));
     f(&obj_icon_0);
 }
@@ -2156,8 +1779,8 @@ unsafe extern "C" fn widget_window_icon_text_changed_trampoline(
 /// [viewport()](QAbstractScrollArea::viewport())
 ///
 ///
-/// **See also:** mapToGlobal()
-/// QMenu
+/// **See also:** [`map_to_global()`]
+/// [`Menu`]
 /// contextMenuPolicy
 
 unsafe extern "C" fn widget_custom_context_menu_requested_trampoline_ud<T>(
@@ -2165,7 +1788,7 @@ unsafe extern "C" fn widget_custom_context_menu_requested_trampoline_ud<T>(
     func: *const c_void,
     pos: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &PointType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &PointTrait) + 'static) = transmute(func);
     let obj_pos_0 = Point::new_from_temporary(*(pos as *const RUPoint));
     let data = self_c as *const T;
     f(&*data, &obj_pos_0);
@@ -2176,7 +1799,7 @@ unsafe extern "C" fn widget_custom_context_menu_requested_trampoline(
     func: *const c_void,
     pos: *const RUBase,
 ) {
-    let f: &&(Fn(&PointType) + 'static) = transmute(func);
+    let f: &&(Fn(&PointTrait) + 'static) = transmute(func);
     let obj_pos_0 = Point::new_from_temporary(*(pos as *const RUPoint));
     f(&obj_pos_0);
 }
@@ -2203,44 +1826,22 @@ unsafe extern "C" fn widget_custom_context_menu_requested_trampoline(
 /// any further processing such as event
 /// propagation to the parent widget stops.
 ///
-/// **See also:** closeEvent()
-/// focusInEvent()
-/// focusOutEvent()
-/// enterEvent()
-/// keyPressEvent()
-/// keyReleaseEvent()
-/// leaveEvent()
-/// mouseDoubleClickEvent()
-/// mouseMoveEvent()
-/// mousePressEvent()
-/// mouseReleaseEvent()
-/// moveEvent()
-/// paintEvent()
-/// resizeEvent()
-/// QObject::event()
-/// QObject::timerEvent()
-
-unsafe extern "C" fn widget_event_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    event: *const RUBase,
-) -> bool {
-    let f: &&(Fn(&T, &EventType) + 'static) = transmute(func);
-    let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_event_0);
-}
-
-unsafe extern "C" fn widget_event_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    event: *const RUBase,
-) -> bool {
-    let f: &&(Fn(&EventType) + 'static) = transmute(func);
-    let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
-    f(&obj_event_0);
-}
-
+/// **See also:** [`close_event()`]
+/// [`focus_in_event()`]
+/// [`focus_out_event()`]
+/// [`enter_event()`]
+/// [`key_press_event()`]
+/// [`key_release_event()`]
+/// [`leave_event()`]
+/// [`mouse_double_click_event()`]
+/// [`mouse_move_event()`]
+/// [`mouse_press_event()`]
+/// [`mouse_release_event()`]
+/// [`move_event()`]
+/// [`paint_event()`]
+/// [`resize_event()`]
+/// [`Object::event`]
+/// [`Object::timer_event`]
 ///
 /// This event handler, for event *event,* can be reimplemented in a
 /// subclass to receive mouse press events for the widget.
@@ -2254,11 +1855,11 @@ unsafe extern "C" fn widget_event_trampoline(
 /// when you click outside the window. For other widget types it does
 /// nothing.
 ///
-/// **See also:** mouseReleaseEvent()
-/// mouseDoubleClickEvent()
-/// mouseMoveEvent()
-/// event()
-/// QMouseEvent
+/// **See also:** [`mouse_release_event()`]
+/// [`mouse_double_click_event()`]
+/// [`mouse_move_event()`]
+/// [`event()`]
+/// [`MouseEvent`]
 /// {Scribble Example}
 
 unsafe extern "C" fn widget_mouse_press_trampoline_ud<T>(
@@ -2266,7 +1867,7 @@ unsafe extern "C" fn widget_mouse_press_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &MouseEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2277,7 +1878,7 @@ unsafe extern "C" fn widget_mouse_press_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&MouseEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     f(&obj_event_0);
 }
@@ -2286,11 +1887,11 @@ unsafe extern "C" fn widget_mouse_press_trampoline(
 /// This event handler, for event *event,* can be reimplemented in a
 /// subclass to receive mouse release events for the widget.
 ///
-/// **See also:** mousePressEvent()
-/// mouseDoubleClickEvent()
-/// mouseMoveEvent()
-/// event()
-/// QMouseEvent
+/// **See also:** [`mouse_press_event()`]
+/// [`mouse_double_click_event()`]
+/// [`mouse_move_event()`]
+/// [`event()`]
+/// [`MouseEvent`]
 /// {Scribble Example}
 
 unsafe extern "C" fn widget_mouse_release_trampoline_ud<T>(
@@ -2298,7 +1899,7 @@ unsafe extern "C" fn widget_mouse_release_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &MouseEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2309,7 +1910,7 @@ unsafe extern "C" fn widget_mouse_release_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&MouseEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     f(&obj_event_0);
 }
@@ -2325,18 +1926,18 @@ unsafe extern "C" fn widget_mouse_release_trampoline(
 /// developer to ensure that the application interprets these events
 /// correctly.
 ///
-/// **See also:** mousePressEvent()
-/// mouseReleaseEvent()
-/// mouseMoveEvent()
-/// event()
-/// QMouseEvent
+/// **See also:** [`mouse_press_event()`]
+/// [`mouse_release_event()`]
+/// [`mouse_move_event()`]
+/// [`event()`]
+/// [`MouseEvent`]
 
 unsafe extern "C" fn widget_mouse_double_click_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &MouseEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2347,7 +1948,7 @@ unsafe extern "C" fn widget_mouse_double_click_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&MouseEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     f(&obj_event_0);
 }
@@ -2374,12 +1975,12 @@ unsafe extern "C" fn widget_mouse_double_click_trampoline(
 /// immediately, you must call QToolTip::showText() instead of
 /// setToolTip() in your implementation of mouseMoveEvent().
 ///
-/// **See also:** setMouseTracking()
-/// mousePressEvent()
-/// mouseReleaseEvent()
-/// mouseDoubleClickEvent()
-/// event()
-/// QMouseEvent
+/// **See also:** [`set_mouse_tracking()`]
+/// [`mouse_press_event()`]
+/// [`mouse_release_event()`]
+/// [`mouse_double_click_event()`]
+/// [`event()`]
+/// [`MouseEvent`]
 /// {Scribble Example}
 
 unsafe extern "C" fn widget_mouse_move_trampoline_ud<T>(
@@ -2387,7 +1988,7 @@ unsafe extern "C" fn widget_mouse_move_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &MouseEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2398,7 +1999,7 @@ unsafe extern "C" fn widget_mouse_move_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&MouseEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     f(&obj_event_0);
 }
@@ -2414,17 +2015,17 @@ unsafe extern "C" fn widget_mouse_move_trampoline(
 ///
 /// The default implementation ignores the event.
 ///
-/// **See also:** QEvent::ignore()
-/// QEvent::accept()
-/// event()
-/// QWheelEvent
+/// **See also:** [`Event::ignore`]
+/// [`Event::accept`]
+/// [`event()`]
+/// [`WheelEvent`]
 
 unsafe extern "C" fn widget_wheel_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &WheelEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &WheelEventTrait) + 'static) = transmute(func);
     let obj_event_0 = WheelEvent::new_from_temporary(*(event as *const RUWheelEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2435,7 +2036,7 @@ unsafe extern "C" fn widget_wheel_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&WheelEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&WheelEventTrait) + 'static) = transmute(func);
     let obj_event_0 = WheelEvent::new_from_temporary(*(event as *const RUWheelEvent));
     f(&obj_event_0);
 }
@@ -2459,12 +2060,12 @@ unsafe extern "C" fn widget_wheel_trampoline(
 /// need to call QKeyEvent::accept() - just do not call the base class
 /// implementation if you act upon the key.
 ///
-/// **See also:** keyReleaseEvent()
-/// setFocusPolicy()
-/// focusInEvent()
-/// focusOutEvent()
-/// event()
-/// QKeyEvent
+/// **See also:** [`key_release_event()`]
+/// [`set_focus_policy()`]
+/// [`focus_in_event()`]
+/// [`focus_out_event()`]
+/// [`event()`]
+/// [`KeyEvent`]
 /// {Tetrix Example}
 
 unsafe extern "C" fn widget_key_press_trampoline_ud<T>(
@@ -2472,7 +2073,7 @@ unsafe extern "C" fn widget_key_press_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &KeyEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &KeyEventTrait) + 'static) = transmute(func);
     let obj_event_0 = KeyEvent::new_from_temporary(*(event as *const RUKeyEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2483,7 +2084,7 @@ unsafe extern "C" fn widget_key_press_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&KeyEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&KeyEventTrait) + 'static) = transmute(func);
     let obj_event_0 = KeyEvent::new_from_temporary(*(event as *const RUKeyEvent));
     f(&obj_event_0);
 }
@@ -2508,20 +2109,20 @@ unsafe extern "C" fn widget_key_press_trampoline(
 /// need to call QKeyEvent::accept() - just do not call the base class
 /// implementation if you act upon the key.
 ///
-/// **See also:** keyPressEvent()
-/// QEvent::ignore()
-/// setFocusPolicy()
-/// focusInEvent()
-/// focusOutEvent()
-/// event()
-/// QKeyEvent
+/// **See also:** [`key_press_event()`]
+/// [`Event::ignore`]
+/// [`set_focus_policy()`]
+/// [`focus_in_event()`]
+/// [`focus_out_event()`]
+/// [`event()`]
+/// [`KeyEvent`]
 
 unsafe extern "C" fn widget_key_release_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &KeyEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &KeyEventTrait) + 'static) = transmute(func);
     let obj_event_0 = KeyEvent::new_from_temporary(*(event as *const RUKeyEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2532,7 +2133,7 @@ unsafe extern "C" fn widget_key_release_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&KeyEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&KeyEventTrait) + 'static) = transmute(func);
     let obj_event_0 = KeyEvent::new_from_temporary(*(event as *const RUKeyEvent));
     f(&obj_event_0);
 }
@@ -2550,19 +2151,19 @@ unsafe extern "C" fn widget_key_release_trampoline(
 /// The default implementation updates the widget (except for windows
 /// that do not specify a focusPolicy()).
 ///
-/// **See also:** focusOutEvent()
-/// setFocusPolicy()
-/// keyPressEvent()
-/// keyReleaseEvent()
-/// event()
-/// QFocusEvent
+/// **See also:** [`focus_out_event()`]
+/// [`set_focus_policy()`]
+/// [`key_press_event()`]
+/// [`key_release_event()`]
+/// [`event()`]
+/// [`FocusEvent`]
 
 unsafe extern "C" fn widget_focus_in_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &FocusEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &FocusEventTrait) + 'static) = transmute(func);
     let obj_event_0 = FocusEvent::new_from_temporary(*(event as *const RUFocusEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2573,7 +2174,7 @@ unsafe extern "C" fn widget_focus_in_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&FocusEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&FocusEventTrait) + 'static) = transmute(func);
     let obj_event_0 = FocusEvent::new_from_temporary(*(event as *const RUFocusEvent));
     f(&obj_event_0);
 }
@@ -2591,19 +2192,19 @@ unsafe extern "C" fn widget_focus_in_trampoline(
 /// The default implementation updates the widget (except for windows
 /// that do not specify a focusPolicy()).
 ///
-/// **See also:** focusInEvent()
-/// setFocusPolicy()
-/// keyPressEvent()
-/// keyReleaseEvent()
-/// event()
-/// QFocusEvent
+/// **See also:** [`focus_in_event()`]
+/// [`set_focus_policy()`]
+/// [`key_press_event()`]
+/// [`key_release_event()`]
+/// [`event()`]
+/// [`FocusEvent`]
 
 unsafe extern "C" fn widget_focus_out_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &FocusEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &FocusEventTrait) + 'static) = transmute(func);
     let obj_event_0 = FocusEvent::new_from_temporary(*(event as *const RUFocusEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2614,7 +2215,7 @@ unsafe extern "C" fn widget_focus_out_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&FocusEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&FocusEventTrait) + 'static) = transmute(func);
     let obj_event_0 = FocusEvent::new_from_temporary(*(event as *const RUFocusEvent));
     f(&obj_event_0);
 }
@@ -2626,16 +2227,16 @@ unsafe extern "C" fn widget_focus_out_trampoline(
 /// An event is sent to the widget when the mouse cursor enters the
 /// widget.
 ///
-/// **See also:** leaveEvent()
-/// mouseMoveEvent()
-/// event()
+/// **See also:** [`leave_event()`]
+/// [`mouse_move_event()`]
+/// [`event()`]
 
 unsafe extern "C" fn widget_enter_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &EventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &EventTrait) + 'static) = transmute(func);
     let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2646,7 +2247,7 @@ unsafe extern "C" fn widget_enter_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&EventType) + 'static) = transmute(func);
+    let f: &&(Fn(&EventTrait) + 'static) = transmute(func);
     let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
     f(&obj_event_0);
 }
@@ -2658,16 +2259,16 @@ unsafe extern "C" fn widget_enter_trampoline(
 /// A leave event is sent to the widget when the mouse cursor leaves
 /// the widget.
 ///
-/// **See also:** enterEvent()
-/// mouseMoveEvent()
-/// event()
+/// **See also:** [`enter_event()`]
+/// [`mouse_move_event()`]
+/// [`event()`]
 
 unsafe extern "C" fn widget_leave_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &EventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &EventTrait) + 'static) = transmute(func);
     let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2678,7 +2279,7 @@ unsafe extern "C" fn widget_leave_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&EventType) + 'static) = transmute(func);
+    let f: &&(Fn(&EventTrait) + 'static) = transmute(func);
     let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
     f(&obj_event_0);
 }
@@ -2723,12 +2324,12 @@ unsafe extern "C" fn widget_leave_trampoline(
 /// Qt::WA_PaintOnScreen must be set. Otherwise, QWidget::paintEngine() will
 /// never be called; the backingstore will be used instead.
 ///
-/// **See also:** event()
-/// repaint()
-/// update()
-/// QPainter
-/// QPixmap
-/// QPaintEvent
+/// **See also:** [`event()`]
+/// [`repaint()`]
+/// [`update()`]
+/// [`Painter`]
+/// [`Pixmap`]
+/// [`PaintEvent`]
 /// {Analog Clock Example}
 
 unsafe extern "C" fn widget_paint_trampoline_ud<T>(
@@ -2736,7 +2337,7 @@ unsafe extern "C" fn widget_paint_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &PaintEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &PaintEventTrait) + 'static) = transmute(func);
     let obj_event_0 = PaintEvent::new_from_temporary(*(event as *const RUPaintEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2747,7 +2348,7 @@ unsafe extern "C" fn widget_paint_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&PaintEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&PaintEventTrait) + 'static) = transmute(func);
     let obj_event_0 = PaintEvent::new_from_temporary(*(event as *const RUPaintEvent));
     f(&obj_event_0);
 }
@@ -2760,17 +2361,17 @@ unsafe extern "C" fn widget_paint_trampoline(
 ///
 /// The old position is accessible through QMoveEvent::oldPos().
 ///
-/// **See also:** resizeEvent()
-/// event()
-/// move()
-/// QMoveEvent
+/// **See also:** [`resize_event()`]
+/// [`event()`]
+/// [`move()`]
+/// [`MoveEvent`]
 
 unsafe extern "C" fn widget_move_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &MoveEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &MoveEventTrait) + 'static) = transmute(func);
     let obj_event_0 = MoveEvent::new_from_temporary(*(event as *const RUMoveEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2781,7 +2382,7 @@ unsafe extern "C" fn widget_move_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&MoveEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&MoveEventTrait) + 'static) = transmute(func);
     let obj_event_0 = MoveEvent::new_from_temporary(*(event as *const RUMoveEvent));
     f(&obj_event_0);
 }
@@ -2797,11 +2398,11 @@ unsafe extern "C" fn widget_move_trampoline(
 /// after processing the resize event. No drawing need be (or should
 /// be) done inside this handler.
 ///
-/// **See also:** moveEvent()
-/// event()
-/// resize()
-/// QResizeEvent
-/// paintEvent()
+/// **See also:** [`move_event()`]
+/// [`event()`]
+/// [`resize()`]
+/// [`ResizeEvent`]
+/// [`paint_event()`]
 /// {Scribble Example}
 
 unsafe extern "C" fn widget_resize_trampoline_ud<T>(
@@ -2809,7 +2410,7 @@ unsafe extern "C" fn widget_resize_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &ResizeEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &ResizeEventTrait) + 'static) = transmute(func);
     let obj_event_0 = ResizeEvent::new_from_temporary(*(event as *const RUResizeEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2820,7 +2421,7 @@ unsafe extern "C" fn widget_resize_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&ResizeEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&ResizeEventTrait) + 'static) = transmute(func);
     let obj_event_0 = ResizeEvent::new_from_temporary(*(event as *const RUResizeEvent));
     f(&obj_event_0);
 }
@@ -2841,10 +2442,10 @@ unsafe extern "C" fn widget_resize_trampoline(
 /// uses a helper function to determine whether
 /// or not to close the window:
 ///
-/// **See also:** event()
-/// hide()
-/// close()
-/// QCloseEvent
+/// **See also:** [`event()`]
+/// [`hide()`]
+/// [`close()`]
+/// [`CloseEvent`]
 /// {Application Example}
 
 unsafe extern "C" fn widget_close_trampoline_ud<T>(
@@ -2852,7 +2453,7 @@ unsafe extern "C" fn widget_close_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &CloseEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &CloseEventTrait) + 'static) = transmute(func);
     let obj_event_0 = CloseEvent::new_from_temporary(*(event as *const RUCloseEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2863,7 +2464,7 @@ unsafe extern "C" fn widget_close_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&CloseEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&CloseEventTrait) + 'static) = transmute(func);
     let obj_event_0 = CloseEvent::new_from_temporary(*(event as *const RUCloseEvent));
     f(&obj_event_0);
 }
@@ -2880,16 +2481,16 @@ unsafe extern "C" fn widget_close_trampoline(
 /// See the [QContextMenuEvent](QContextMenuEvent)
 /// documentation for more details.
 ///
-/// **See also:** event()
-/// QContextMenuEvent
-/// customContextMenuRequested()
+/// **See also:** [`event()`]
+/// [`ContextMenuEvent`]
+/// [`custom_context_menu_requested()`]
 
 unsafe extern "C" fn widget_context_menu_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &ContextMenuEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &ContextMenuEventTrait) + 'static) = transmute(func);
     let obj_event_0 = ContextMenuEvent::new_from_temporary(*(event as *const RUContextMenuEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2900,7 +2501,7 @@ unsafe extern "C" fn widget_context_menu_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&ContextMenuEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&ContextMenuEventTrait) + 'static) = transmute(func);
     let obj_event_0 = ContextMenuEvent::new_from_temporary(*(event as *const RUContextMenuEvent));
     f(&obj_event_0);
 }
@@ -2922,18 +2523,18 @@ unsafe extern "C" fn widget_context_menu_trampoline(
 /// tablet move events occur even while the stylus is hovering in proximity of
 /// the tablet, with no buttons pressed.
 ///
-/// **See also:** QEvent::ignore()
-/// QEvent::accept()
-/// event()
-/// setTabletTracking()
-/// QTabletEvent
+/// **See also:** [`Event::ignore`]
+/// [`Event::accept`]
+/// [`event()`]
+/// [`set_tablet_tracking()`]
+/// [`TabletEvent`]
 
 unsafe extern "C" fn widget_tablet_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &TabletEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &TabletEventTrait) + 'static) = transmute(func);
     let obj_event_0 = TabletEvent::new_from_temporary(*(event as *const RUTabletEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -2944,39 +2545,8 @@ unsafe extern "C" fn widget_tablet_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&TabletEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&TabletEventTrait) + 'static) = transmute(func);
     let obj_event_0 = TabletEvent::new_from_temporary(*(event as *const RUTabletEvent));
-    f(&obj_event_0);
-}
-
-///
-/// This event handler is called with the given *event* whenever the
-/// widget's actions are changed.
-///
-/// **See also:** addAction()
-/// insertAction()
-/// removeAction()
-/// actions()
-/// QActionEvent
-
-unsafe extern "C" fn widget_action_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    event: *const RUBase,
-) {
-    let f: &&(Fn(&T, &ActionEventType) + 'static) = transmute(func);
-    let obj_event_0 = ActionEvent::new_from_temporary(*(event as *const RUActionEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_event_0);
-}
-
-unsafe extern "C" fn widget_action_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    event: *const RUBase,
-) {
-    let f: &&(Fn(&ActionEventType) + 'static) = transmute(func);
-    let obj_event_0 = ActionEvent::new_from_temporary(*(event as *const RUActionEvent));
     f(&obj_event_0);
 }
 
@@ -2992,15 +2562,15 @@ unsafe extern "C" fn widget_action_trampoline(
 /// for an
 /// overview of how to provide drag-and-drop in your application.
 ///
-/// **See also:** QDrag
-/// QDragEnterEvent
+/// **See also:** [`Drag`]
+/// [`DragEnterEvent`]
 
 unsafe extern "C" fn widget_drag_enter_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &DragEnterEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &DragEnterEventTrait) + 'static) = transmute(func);
     let obj_event_0 = DragEnterEvent::new_from_temporary(*(event as *const RUDragEnterEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -3011,7 +2581,7 @@ unsafe extern "C" fn widget_drag_enter_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&DragEnterEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&DragEnterEventTrait) + 'static) = transmute(func);
     let obj_event_0 = DragEnterEvent::new_from_temporary(*(event as *const RUDragEnterEvent));
     f(&obj_event_0);
 }
@@ -3027,15 +2597,15 @@ unsafe extern "C" fn widget_drag_enter_trampoline(
 /// for an
 /// overview of how to provide drag-and-drop in your application.
 ///
-/// **See also:** QDrag
-/// QDragMoveEvent
+/// **See also:** [`Drag`]
+/// [`DragMoveEvent`]
 
 unsafe extern "C" fn widget_drag_move_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &DragMoveEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &DragMoveEventTrait) + 'static) = transmute(func);
     let obj_event_0 = DragMoveEvent::new_from_temporary(*(event as *const RUDragMoveEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -3046,7 +2616,7 @@ unsafe extern "C" fn widget_drag_move_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&DragMoveEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&DragMoveEventTrait) + 'static) = transmute(func);
     let obj_event_0 = DragMoveEvent::new_from_temporary(*(event as *const RUDragMoveEvent));
     f(&obj_event_0);
 }
@@ -3060,15 +2630,15 @@ unsafe extern "C" fn widget_drag_move_trampoline(
 /// for an
 /// overview of how to provide drag-and-drop in your application.
 ///
-/// **See also:** QDrag
-/// QDragLeaveEvent
+/// **See also:** [`Drag`]
+/// [`DragLeaveEvent`]
 
 unsafe extern "C" fn widget_drag_leave_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &DragLeaveEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &DragLeaveEventTrait) + 'static) = transmute(func);
     let obj_event_0 = DragLeaveEvent::new_from_temporary(*(event as *const RUDragLeaveEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -3079,7 +2649,7 @@ unsafe extern "C" fn widget_drag_leave_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&DragLeaveEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&DragLeaveEventTrait) + 'static) = transmute(func);
     let obj_event_0 = DragLeaveEvent::new_from_temporary(*(event as *const RUDragLeaveEvent));
     f(&obj_event_0);
 }
@@ -3092,15 +2662,15 @@ unsafe extern "C" fn widget_drag_leave_trampoline(
 /// for an
 /// overview of how to provide drag-and-drop in your application.
 ///
-/// **See also:** QDrag
-/// QDropEvent
+/// **See also:** [`Drag`]
+/// [`DropEvent`]
 
 unsafe extern "C" fn widget_drop_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &DropEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &DropEventTrait) + 'static) = transmute(func);
     let obj_event_0 = DropEvent::new_from_temporary(*(event as *const RUDropEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -3111,7 +2681,7 @@ unsafe extern "C" fn widget_drop_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&DropEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&DropEventTrait) + 'static) = transmute(func);
     let obj_event_0 = DropEvent::new_from_temporary(*(event as *const RUDropEvent));
     f(&obj_event_0);
 }
@@ -3132,15 +2702,15 @@ unsafe extern "C" fn widget_drop_trampoline(
 /// the sense of isVisible().
 ///
 /// **See also:** visible
-/// event()
-/// QShowEvent
+/// [`event()`]
+/// [`ShowEvent`]
 
 unsafe extern "C" fn widget_show_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &ShowEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &ShowEventTrait) + 'static) = transmute(func);
     let obj_event_0 = ShowEvent::new_from_temporary(*(event as *const RUShowEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -3151,7 +2721,7 @@ unsafe extern "C" fn widget_show_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&ShowEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&ShowEventTrait) + 'static) = transmute(func);
     let obj_event_0 = ShowEvent::new_from_temporary(*(event as *const RUShowEvent));
     f(&obj_event_0);
 }
@@ -3171,15 +2741,15 @@ unsafe extern "C" fn widget_show_trampoline(
 /// the sense of isVisible().
 ///
 /// **See also:** visible
-/// event()
-/// QHideEvent
+/// [`event()`]
+/// [`HideEvent`]
 
 unsafe extern "C" fn widget_hide_trampoline_ud<T>(
     self_c: *const c_void,
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &HideEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &HideEventTrait) + 'static) = transmute(func);
     let obj_event_0 = HideEvent::new_from_temporary(*(event as *const RUHideEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -3190,7 +2760,7 @@ unsafe extern "C" fn widget_hide_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&HideEventType) + 'static) = transmute(func);
+    let f: &&(Fn(&HideEventTrait) + 'static) = transmute(func);
     let obj_event_0 = HideEvent::new_from_temporary(*(event as *const RUHideEvent));
     f(&obj_event_0);
 }
@@ -3216,7 +2786,7 @@ unsafe extern "C" fn widget_change_trampoline_ud<T>(
     func: *const c_void,
     arg0: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &EventType) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &EventTrait) + 'static) = transmute(func);
     let obj_arg0_0 = Event::new_from_temporary(*(arg0 as *const RUEvent));
     let data = self_c as *const T;
     f(&*data, &obj_arg0_0);
@@ -3227,193 +2797,12 @@ unsafe extern "C" fn widget_change_trampoline(
     func: *const c_void,
     arg0: *const RUBase,
 ) {
-    let f: &&(Fn(&EventType) + 'static) = transmute(func);
+    let f: &&(Fn(&EventTrait) + 'static) = transmute(func);
     let obj_arg0_0 = Event::new_from_temporary(*(arg0 as *const RUEvent));
     f(&obj_arg0_0);
 }
 
-///
-/// Initializes the *painter* pen, background and font to the same as
-/// the given widget's. This function is called automatically when the
-/// painter is opened on a QWidget.
-
-unsafe extern "C" fn widget_init_painter_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    painter: *const RUBase,
-) {
-    let f: &&(Fn(&T, &PainterType) + 'static) = transmute(func);
-    let obj_painter_0 = Painter::new_from_temporary(*(painter as *const RUPainter));
-    let data = self_c as *const T;
-    f(&*data, &obj_painter_0);
-}
-
-unsafe extern "C" fn widget_init_painter_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    painter: *const RUBase,
-) {
-    let f: &&(Fn(&PainterType) + 'static) = transmute(func);
-    let obj_painter_0 = Painter::new_from_temporary(*(painter as *const RUPainter));
-    f(&obj_painter_0);
-}
-
-unsafe extern "C" fn widget_redirected_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    offset: *const RUBase,
-) -> RUPaintDevice {
-    let f: &&(Fn(&T, &PointType) + 'static) = transmute(func);
-    let obj_offset_0 = Point::new_from_temporary(*(offset as *const RUPoint));
-    let data = self_c as *const T;
-    f(&*data, &obj_offset_0);
-}
-
-unsafe extern "C" fn widget_redirected_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    offset: *const RUBase,
-) -> RUPaintDevice {
-    let f: &&(Fn(&PointType) + 'static) = transmute(func);
-    let obj_offset_0 = Point::new_from_temporary(*(offset as *const RUPoint));
-    f(&obj_offset_0);
-}
-
-unsafe extern "C" fn widget_shared_painter_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUPainter {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn widget_shared_painter_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUPainter {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-///
-/// This event handler, for event *event,* can be reimplemented in a
-/// subclass to receive Input Method composition events. This handler
-/// is called when the state of the input method changes.
-///
-/// Note that when creating custom text editing widgets, the
-/// Qt::WA_InputMethodEnabled window attribute must be set explicitly
-/// (using the setAttribute() function) in order to receive input
-/// method events.
-///
-/// The default implementation calls event->ignore(), which rejects the
-/// Input Method event. See the [QInputMethodEvent](QInputMethodEvent)
-/// documentation for more
-/// details.
-///
-/// **See also:** event()
-/// QInputMethodEvent
-
-unsafe extern "C" fn widget_input_method_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &InputMethodEventType) + 'static) = transmute(func);
-    let obj_arg0_0 = InputMethodEvent::new_from_temporary(*(arg0 as *const RUInputMethodEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn widget_input_method_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&InputMethodEventType) + 'static) = transmute(func);
-    let obj_arg0_0 = InputMethodEvent::new_from_temporary(*(arg0 as *const RUInputMethodEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// This method is only relevant for input widgets. It is used by the
-/// input method to query a set of properties of the widget to be
-/// able to support complex input method operations as support for
-/// surrounding text and reconversions.
-///
-/// *query* specifies which property is queried.
-///
-/// **See also:** inputMethodEvent()
-/// QInputMethodEvent
-/// QInputMethodQueryEvent
-/// inputMethodHints
-
-unsafe extern "C" fn widget_input_method_query_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: i32,
-) -> RUVariant {
-    let f: &&(Fn(&T, InputMethodQuery) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn widget_input_method_query_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: i32,
-) -> RUVariant {
-    let f: &&(Fn(InputMethodQuery) + 'static) = transmute(func);
-
-    f();
-}
-
-///
-/// Finds a new widget to give the keyboard focus to, as appropriate
-/// for Tab and Shift+Tab, and returns `true` if it can find a new
-/// widget, or false if it can't.
-///
-/// If *next* is true, this function searches forward, if *next*
-/// is false, it searches backward.
-///
-/// Sometimes, you will want to reimplement this function. For
-/// example, a web browser might reimplement it to move its forward or backward, and call
-/// focusNextPrevChild() only when it reaches the last or
-/// first link on the .
-///
-/// Child widgets call focusNextPrevChild() on their parent widgets,
-/// but only the window that contains the child widgets decides where
-/// to redirect focus. By reimplementing this function for an object,
-/// you thus gain control of focus traversal for all child widgets.
-///
-/// **See also:** focusNextChild()
-/// focusPreviousChild()
-
-unsafe extern "C" fn widget_focus_next_prev_child_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    next: bool,
-) -> bool {
-    let f: &&(Fn(&T, bool) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, next);
-}
-
-unsafe extern "C" fn widget_focus_next_prev_child_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    next: bool,
-) -> bool {
-    let f: &&(Fn(bool) + 'static) = transmute(func);
-
-    f(next);
-}
-
-pub trait WidgetType<'a> {
+pub trait WidgetTrait<'a> {
     ///
     /// Returns the window system identifier of the widget.
     ///
@@ -3426,39 +2815,24 @@ pub trait WidgetType<'a> {
     /// This value may change at run-time. An event with type QEvent::WinIdChange
     /// will be sent to the widget following a change in window system identifier.
     ///
-    /// **See also:** find()
-    fn win_id(&self) -> WId {
+    /// **See also:** [`find()`]
+    fn win_id(&self) -> u64 {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).win_id)(obj_data);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = WId::new_from_rc(t);
-            } else {
-                ret_val = WId::new_from_owned(t);
-            }
             ret_val
         }
     }
-    fn create_win_id(&self) -> &Self {
+    fn create_win_id(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).create_win_id)(obj_data);
         }
-        self
     }
-    fn internal_win_id(&self) -> WId {
+    fn internal_win_id(&self) -> u64 {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).internal_win_id)(obj_data);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = WId::new_from_rc(t);
-            } else {
-                ret_val = WId::new_from_owned(t);
-            }
             ret_val
         }
     }
@@ -3473,18 +2847,11 @@ pub trait WidgetType<'a> {
     /// **Note**: We recommend that you do not store this value as it is likely to
     /// change at run-time.
     ///
-    /// **See also:** nativeParentWidget()
-    fn effective_win_id(&self) -> WId {
+    /// **See also:** [`native_parent_widget()`]
+    fn effective_win_id(&self) -> u64 {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).effective_win_id)(obj_data);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = WId::new_from_rc(t);
-            } else {
-                ret_val = WId::new_from_owned(t);
-            }
             ret_val
         }
     }
@@ -3498,13 +2865,13 @@ pub trait WidgetType<'a> {
     /// **Warning**: Qt style sheets are currently not supported for custom QStyle
     /// subclasses. We plan to address this in some future release.
     ///
-    /// **See also:** setStyle()
-    /// QApplication::styleSheet
+    /// **See also:** [`set_style()`]
+    /// [`Application::style_sheet()`]
     /// {Qt Style Sheets}
     ///
-    /// **See also:** QWidget::setStyle()
-    /// QApplication::setStyle()
-    /// QApplication::style()
+    /// **See also:** [`Widget::set_style`]
+    /// [`Application::set_style`]
+    /// [`Application::style`]
     fn style(&self) -> Option<Style> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -3540,18 +2907,17 @@ pub trait WidgetType<'a> {
     /// **Warning**: Qt style sheets are currently not supported for custom QStyle
     /// subclasses. We plan to address this in some future release.
     ///
-    /// **See also:** style()
-    /// QStyle
-    /// QApplication::style()
-    /// QApplication::setStyle()
-    fn set_style<S: StyleType<'a>>(&self, arg0: &S) -> &Self {
+    /// **See also:** [`style()`]
+    /// [`Style`]
+    /// [`Application::style`]
+    /// [`Application::set_style`]
+    fn set_style(&self, arg0: &StyleTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_style_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_style)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// Use isWindow() instead.
@@ -3582,9 +2948,9 @@ pub trait WidgetType<'a> {
     /// parent widget is specified in the constructor. This behavior is
     /// specified by the Qt::Window flag.
     ///
-    /// **See also:** window()
-    /// isModal()
-    /// parentWidget()
+    /// **See also:** [`window()`]
+    /// [`is_modal()`]
+    /// [`parent_widget()`]
     fn is_window(&self) -> bool {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -3608,9 +2974,9 @@ pub trait WidgetType<'a> {
     ///
     /// By default, this property is Qt::NonModal.
     ///
-    /// **See also:** isWindow()
-    /// QWidget::modal
-    /// QDialog
+    /// **See also:** [`is_window()`]
+    /// [`Widget::modal()`]
+    /// [`Dialog`]
     fn window_modality(&self) -> WindowModality {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -3619,14 +2985,13 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_window_modality(&self, window_modality: WindowModality) -> &Self {
+    fn set_window_modality(&self, window_modality: WindowModality) {
         let enum_window_modality_1 = window_modality as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_window_modality)(obj_data, enum_window_modality_1);
         }
-        self
     }
     ///
     /// Returns `true` if this widget would become enabled if *ancestor* is
@@ -3643,9 +3008,10 @@ pub trait WidgetType<'a> {
     /// Therefore isEnabledTo(0) stops at this widget's window, unlike
     /// isEnabled() which also takes parent windows into considerations.
     ///
-    /// **See also:** setEnabled()
+    /// **See also:** [`set_enabled()`]
     /// enabled
     ///
+    /// This function is deprecated. It is equivalent to isEnabled()
     fn is_enabled(&self) -> bool {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -3668,11 +3034,11 @@ pub trait WidgetType<'a> {
     /// Therefore isEnabledTo(0) stops at this widget's window, unlike
     /// isEnabled() which also takes parent windows into considerations.
     ///
-    /// **See also:** setEnabled()
+    /// **See also:** [`set_enabled()`]
     /// enabled
     ///
     /// This function is deprecated. It is equivalent to isEnabled()
-    fn is_enabled_to<W: WidgetType<'a>>(&self, arg0: &W) -> bool {
+    fn is_enabled_to(&self, arg0: &WidgetTrait) -> bool {
         let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -3681,12 +3047,12 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_enabled(&self, arg0: bool) -> &Self {
+    ///
+    fn set_enabled(&self, arg0: bool) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_enabled)(obj_data, arg0);
         }
-        self
     }
     ///
     /// Disables widget input events if *disable* is true; otherwise
@@ -3695,23 +3061,21 @@ pub trait WidgetType<'a> {
     /// See the [enabled](enabled)
     /// documentation for more information.
     ///
-    /// **See also:** isEnabledTo()
-    /// QKeyEvent
-    /// QMouseEvent
-    /// changeEvent()
-    fn set_disabled(&self, arg0: bool) -> &Self {
+    /// **See also:** [`is_enabled_to()`]
+    /// [`KeyEvent`]
+    /// [`MouseEvent`]
+    /// [`change_event()`]
+    fn set_disabled(&self, arg0: bool) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_disabled)(obj_data, arg0);
         }
-        self
     }
-    fn set_window_modified(&self, arg0: bool) -> &Self {
+    fn set_window_modified(&self, arg0: bool) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_window_modified)(obj_data, arg0);
         }
-        self
     }
     ///
     /// See the [Window Geometry](Window%20Geometry)
@@ -3768,8 +3132,8 @@ pub trait WidgetType<'a> {
     ///
     /// **See also:** frameGeometry
     /// size
-    /// x()
-    /// y()
+    /// [`x()`]
+    /// [`y()`]
     fn pos(&self) -> Point {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -3822,8 +3186,8 @@ pub trait WidgetType<'a> {
     /// geometry
     /// minimumSize
     /// maximumSize
-    /// resizeEvent()
-    /// adjustSize()
+    /// [`resize_event()`]
+    /// [`adjust_size()`]
     ///
     /// When the user resizes the window, the size will move in steps of
     /// sizeIncrement().width() pixels horizontally and
@@ -3850,11 +3214,11 @@ pub trait WidgetType<'a> {
     /// if there is no layout for this widget, and returns the layout's
     /// preferred size otherwise.
     ///
-    /// **See also:** QSize::isValid()
-    /// minimumSizeHint()
-    /// sizePolicy()
-    /// setMinimumSize()
-    /// updateGeometry()
+    /// **See also:** [`Size::is_valid`]
+    /// [`minimum_size_hint()`]
+    /// [`size_policy()`]
+    /// [`set_minimum_size()`]
+    /// [`update_geometry()`]
     ///
     /// If there is a QLayout that manages this widget's children, the
     /// size policy specified by that layout is used. If there is no such
@@ -3875,10 +3239,10 @@ pub trait WidgetType<'a> {
     /// use additional space, and that they can make do with less than
     /// sizeHint().
     ///
-    /// **See also:** sizeHint()
-    /// QLayout
-    /// QSizePolicy
-    /// updateGeometry()
+    /// **See also:** [`size_hint()`]
+    /// [`Layout`]
+    /// [`SizePolicy`]
+    /// [`update_geometry()`]
     fn size(&self) -> Size {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -3979,8 +3343,8 @@ pub trait WidgetType<'a> {
     /// By default, for a widget with no children, this property contains a
     /// rectangle with zero width and height located at the origin.
     ///
-    /// **See also:** childrenRegion()
-    /// geometry()
+    /// **See also:** [`children_region()`]
+    /// [`geometry()`]
     fn children_rect(&self) -> Rect {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -4001,9 +3365,9 @@ pub trait WidgetType<'a> {
     /// By default, for a widget with no children, this property contains an
     /// empty region.
     ///
-    /// **See also:** childrenRect()
-    /// geometry()
-    /// mask()
+    /// **See also:** [`children_rect()`]
+    /// [`geometry()`]
+    /// [`mask()`]
     fn children_region(&self) -> Region {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -4048,10 +3412,10 @@ pub trait WidgetType<'a> {
     /// set to QSizePolicy::Ignore. If minimumSize() is set, the minimum
     /// size hint will be ignored.
     ///
-    /// **See also:** QSize::isValid()
-    /// resize()
-    /// setMinimumSize()
-    /// sizePolicy()
+    /// **See also:** [`Size::is_valid`]
+    /// [`resize()`]
+    /// [`set_minimum_size()`]
+    /// [`size_policy()`]
     fn minimum_size(&self) -> Size {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -4161,51 +3525,72 @@ pub trait WidgetType<'a> {
         }
     }
     ///
+    /// **Overloads**
+    /// This function corresponds to setMinimumSize(QSize(minw, minh)).
     /// Sets the minimum width to *minw* and the minimum height to *minh.*
-    fn set_minimum_size<S: SizeType<'a>>(&self, arg0: &S) -> &Self {
+    fn set_minimum_size(&self, arg0: &SizeTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_minimum_size)(obj_data, obj_arg0_1);
         }
-        self
     }
-    /// Sets the maximum width to *maxw* and the maximum height
-    fn set_maximum_size(&self, maxw: i32, maxh: i32) -> &Self {
+    ///
+    /// **Overloads**
+    /// This function corresponds to setMinimumSize(QSize(minw, minh)).
+    /// Sets the minimum width to *minw* and the minimum height to *minh.*
+    fn set_minimum_size_2(&self, minw: i32, minh: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).set_maximum_size)(obj_data, maxw, maxh);
+            ((*funcs).set_minimum_size_2)(obj_data, minw, minh);
         }
-        self
     }
-    fn set_minimum_width(&self, minw: i32) -> &Self {
+    ///
+    /// **Overloads**
+    /// This function corresponds to setMaximumSize(QSize( *maxw,* *maxh)).* Sets the maximum width to *maxw* and the maximum height
+    /// to *maxh.*
+    fn set_maximum_size(&self, arg0: &SizeTrait) {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_maximum_size)(obj_data, obj_arg0_1);
+        }
+    }
+    ///
+    /// **Overloads**
+    /// This function corresponds to setMaximumSize(QSize( *maxw,* *maxh)).* Sets the maximum width to *maxw* and the maximum height
+    /// to *maxh.*
+    fn set_maximum_size_2(&self, maxw: i32, maxh: i32) {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_maximum_size_2)(obj_data, maxw, maxh);
+        }
+    }
+    fn set_minimum_width(&self, minw: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_minimum_width)(obj_data, minw);
         }
-        self
     }
-    fn set_minimum_height(&self, minh: i32) -> &Self {
+    fn set_minimum_height(&self, minh: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_minimum_height)(obj_data, minh);
         }
-        self
     }
-    fn set_maximum_width(&self, maxw: i32) -> &Self {
+    fn set_maximum_width(&self, maxw: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_maximum_width)(obj_data, maxw);
         }
-        self
     }
-    fn set_maximum_height(&self, maxh: i32) -> &Self {
+    fn set_maximum_height(&self, maxh: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_maximum_height)(obj_data, maxh);
         }
-        self
     }
     ///
     /// When the user resizes the window, the size will move in steps of
@@ -4243,25 +3628,23 @@ pub trait WidgetType<'a> {
     /// **Overloads**
     /// Sets the x (width) size increment to *w* and the y (height) size
     /// increment to *h.*
-    fn set_size_increment<S: SizeType<'a>>(&self, arg0: &S) -> &Self {
+    fn set_size_increment(&self, arg0: &SizeTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_size_increment)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// **Overloads**
     /// Sets the x (width) size increment to *w* and the y (height) size
     /// increment to *h.*
-    fn set_size_increment(&self, w: i32, h: i32) -> &Self {
+    fn set_size_increment_2(&self, w: i32, h: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).set_size_increment)(obj_data, w, h);
+            ((*funcs).set_size_increment_2)(obj_data, w, h);
         }
-        self
     }
     ///
     /// The base size is used to calculate a proper widget size if the
@@ -4270,7 +3653,7 @@ pub trait WidgetType<'a> {
     /// By default, for a newly-created widget, this property contains a size with
     /// zero width and height.
     ///
-    /// **See also:** setSizeIncrement()
+    /// **See also:** [`set_size_increment()`]
     fn base_size(&self) -> Size {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -4289,25 +3672,23 @@ pub trait WidgetType<'a> {
     /// **Overloads**
     /// This corresponds to setBaseSize(QSize( *basew,* *baseh)).* Sets
     /// the widgets base size to width *basew* and height *baseh.*
-    fn set_base_size<S: SizeType<'a>>(&self, arg0: &S) -> &Self {
+    fn set_base_size(&self, arg0: &SizeTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_base_size)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// **Overloads**
     /// This corresponds to setBaseSize(QSize( *basew,* *baseh)).* Sets
     /// the widgets base size to width *basew* and height *baseh.*
-    fn set_base_size(&self, basew: i32, baseh: i32) -> &Self {
+    fn set_base_size_2(&self, basew: i32, baseh: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).set_base_size)(obj_data, basew, baseh);
+            ((*funcs).set_base_size_2)(obj_data, basew, baseh);
         }
-        self
     }
     ///
     /// Sets both the minimum and maximum sizes of the widget to *s,*
@@ -4326,52 +3707,74 @@ pub trait WidgetType<'a> {
     ///
     /// **Overloads**
     /// Sets the width of the widget to *w* and the height to *h.*
-    fn set_fixed_size(&self, w: i32, h: i32) -> &Self {
+    fn set_fixed_size(&self, arg0: &SizeTrait) {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).set_fixed_size)(obj_data, w, h);
+            ((*funcs).set_fixed_size)(obj_data, obj_arg0_1);
         }
-        self
+    }
+    ///
+    /// Sets both the minimum and maximum sizes of the widget to *s,*
+    /// thereby preventing it from ever growing or shrinking.
+    ///
+    /// This will override the default size constraints set by QLayout.
+    ///
+    /// To remove constraints, set the size to QWIDGETSIZE_MAX.
+    ///
+    /// Alternatively, if you want the widget to have a
+    /// fixed size based on its contents, you can call
+    /// QLayout::setSizeConstraint(QLayout::SetFixedSize);
+    ///
+    /// **See also:** maximumSize
+    /// minimumSize
+    ///
+    /// **Overloads**
+    /// Sets the width of the widget to *w* and the height to *h.*
+    fn set_fixed_size_2(&self, w: i32, h: i32) {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_fixed_size_2)(obj_data, w, h);
+        }
     }
     ///
     /// Sets both the minimum and maximum width of the widget to *w*
     /// without changing the heights. Provided for convenience.
     ///
-    /// **See also:** sizeHint()
-    /// minimumSize()
-    /// maximumSize()
-    /// setFixedSize()
-    fn set_fixed_width(&self, w: i32) -> &Self {
+    /// **See also:** [`size_hint()`]
+    /// [`minimum_size()`]
+    /// [`maximum_size()`]
+    /// [`set_fixed_size()`]
+    fn set_fixed_width(&self, w: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_fixed_width)(obj_data, w);
         }
-        self
     }
     ///
     /// Sets both the minimum and maximum heights of the widget to *h*
     /// without changing the widths. Provided for convenience.
     ///
-    /// **See also:** sizeHint()
-    /// minimumSize()
-    /// maximumSize()
-    /// setFixedSize()
-    fn set_fixed_height(&self, h: i32) -> &Self {
+    /// **See also:** [`size_hint()`]
+    /// [`minimum_size()`]
+    /// [`maximum_size()`]
+    /// [`set_fixed_size()`]
+    fn set_fixed_height(&self, h: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_fixed_height)(obj_data, h);
         }
-        self
     }
     ///
     /// Translates the widget coordinate *pos* to global screen
     /// coordinates. For example, `mapToGlobal(QPoint(0,0))` would give
     /// the global coordinates of the top-left pixel of the widget.
     ///
-    /// **See also:** mapFromGlobal()
-    /// mapTo()
-    /// mapToParent()
-    fn map_to_global<P: PointType<'a>>(&self, arg0: &P) -> Point {
+    /// **See also:** [`map_from_global()`]
+    /// [`map_to()`]
+    /// [`map_to_parent()`]
+    fn map_to_global(&self, arg0: &PointTrait) -> Point {
         let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -4391,10 +3794,10 @@ pub trait WidgetType<'a> {
     /// Translates the global screen coordinate *pos* to widget
     /// coordinates.
     ///
-    /// **See also:** mapToGlobal()
-    /// mapFrom()
-    /// mapFromParent()
-    fn map_from_global<P: PointType<'a>>(&self, arg0: &P) -> Point {
+    /// **See also:** [`map_to_global()`]
+    /// [`map_from()`]
+    /// [`map_from_parent()`]
+    fn map_from_global(&self, arg0: &PointTrait) -> Point {
         let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -4416,11 +3819,11 @@ pub trait WidgetType<'a> {
     ///
     /// Same as mapToGlobal() if the widget has no parent.
     ///
-    /// **See also:** mapFromParent()
-    /// mapTo()
-    /// mapToGlobal()
-    /// underMouse()
-    fn map_to_parent<P: PointType<'a>>(&self, arg0: &P) -> Point {
+    /// **See also:** [`map_from_parent()`]
+    /// [`map_to()`]
+    /// [`map_to_global()`]
+    /// [`under_mouse()`]
+    fn map_to_parent(&self, arg0: &PointTrait) -> Point {
         let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -4442,11 +3845,11 @@ pub trait WidgetType<'a> {
     ///
     /// Same as mapFromGlobal() if the widget has no parent.
     ///
-    /// **See also:** mapToParent()
-    /// mapFrom()
-    /// mapFromGlobal()
-    /// underMouse()
-    fn map_from_parent<P: PointType<'a>>(&self, arg0: &P) -> Point {
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_from()`]
+    /// [`map_from_global()`]
+    /// [`under_mouse()`]
+    fn map_from_parent(&self, arg0: &PointTrait) -> Point {
         let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -4467,29 +3870,29 @@ pub trait WidgetType<'a> {
     /// of *parent.* The *parent* must not be 0 and must be a parent
     /// of the calling widget.
     ///
-    /// **See also:** mapFrom()
-    /// mapToParent()
-    /// mapToGlobal()
-    /// underMouse()
+    /// **See also:** [`map_from()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_global()`]
+    /// [`under_mouse()`]
     ///
     /// Translates the widget coordinate *pos* to a coordinate in the
     /// parent widget.
     ///
     /// Same as mapToGlobal() if the widget has no parent.
     ///
-    /// **See also:** mapFromParent()
-    /// mapTo()
-    /// mapToGlobal()
-    /// underMouse()
+    /// **See also:** [`map_from_parent()`]
+    /// [`map_to()`]
+    /// [`map_to_global()`]
+    /// [`under_mouse()`]
     ///
     /// Translates the widget coordinate *pos* to global screen
     /// coordinates. For example, `mapToGlobal(QPoint(0,0))` would give
     /// the global coordinates of the top-left pixel of the widget.
     ///
-    /// **See also:** mapFromGlobal()
-    /// mapTo()
-    /// mapToParent()
-    fn map_to<P: PointType<'a>, W: WidgetType<'a>>(&self, arg0: &W, arg1: &P) -> Point {
+    /// **See also:** [`map_from_global()`]
+    /// [`map_to()`]
+    /// [`map_to_parent()`]
+    fn map_to(&self, arg0: &WidgetTrait, arg1: &PointTrait) -> Point {
         let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
         let (obj_arg1_2, _funcs) = arg1.get_point_obj_funcs();
 
@@ -4511,28 +3914,28 @@ pub trait WidgetType<'a> {
     /// of *parent* to this widget's coordinate system. The *parent*
     /// must not be 0 and must be a parent of the calling widget.
     ///
-    /// **See also:** mapTo()
-    /// mapFromParent()
-    /// mapFromGlobal()
-    /// underMouse()
+    /// **See also:** [`map_to()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_global()`]
+    /// [`under_mouse()`]
     ///
     /// Translates the parent widget coordinate *pos* to widget
     /// coordinates.
     ///
     /// Same as mapFromGlobal() if the widget has no parent.
     ///
-    /// **See also:** mapToParent()
-    /// mapFrom()
-    /// mapFromGlobal()
-    /// underMouse()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_from()`]
+    /// [`map_from_global()`]
+    /// [`under_mouse()`]
     ///
     /// Translates the global screen coordinate *pos* to widget
     /// coordinates.
     ///
-    /// **See also:** mapToGlobal()
-    /// mapFrom()
-    /// mapFromParent()
-    fn map_from<P: PointType<'a>, W: WidgetType<'a>>(&self, arg0: &W, arg1: &P) -> Point {
+    /// **See also:** [`map_to_global()`]
+    /// [`map_from()`]
+    /// [`map_from_parent()`]
+    fn map_from(&self, arg0: &WidgetTrait, arg1: &PointTrait) -> Point {
         let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
         let (obj_arg1_2, _funcs) = arg1.get_point_obj_funcs();
 
@@ -4551,12 +3954,12 @@ pub trait WidgetType<'a> {
     }
     ///
     /// If this is a native widget, return the associated QWindow.
-    /// Otherwise return None.
+    /// Otherwise return null.
     ///
     /// Native widgets include toplevel widgets, QGLWidget, and child widgets
     /// on which winId() was called.
     ///
-    /// **See also:** winId()
+    /// **See also:** [`win_id()`]
     ///
     /// This property only makes sense for windows. A modal widget
     /// prevents widgets in other windows from getting input. The value of
@@ -4566,16 +3969,16 @@ pub trait WidgetType<'a> {
     ///
     /// By default, this property is Qt::NonModal.
     ///
-    /// **See also:** isWindow()
-    /// QWidget::modal
-    /// QDialog
+    /// **See also:** [`is_window()`]
+    /// [`Widget::modal()`]
+    /// [`Dialog`]
     ///
     /// Returns the current window state. The window state is a OR'ed
     /// combination of Qt::WindowState: Qt::WindowMinimized,
     /// Qt::WindowMaximized, Qt::WindowFullScreen, and Qt::WindowActive.
     ///
-    /// **See also:** Qt::WindowState
-    /// setWindowState()
+    /// **See also:** [`t::window_state()`]
+    /// [`set_window_state()`]
     ///
     /// Returns the window for this widget, i.e. the next ancestor widget
     /// that has (or could have) a window-system frame.
@@ -4584,7 +3987,7 @@ pub trait WidgetType<'a> {
     ///
     /// Typical usage is changing the window title:
     ///
-    /// **See also:** isWindow()
+    /// **See also:** [`is_window()`]
     ///
     /// This property only makes sense for top-level widgets, such as
     /// windows and dialogs. If no caption has been set, the title is based of the
@@ -4677,8 +4080,8 @@ pub trait WidgetType<'a> {
     /// a window, causing the widget to be hidden. You must call show() to make
     /// the widget visible again..
     ///
-    /// **See also:** windowType()
-    /// setWindowFlag()
+    /// **See also:** [`window_type()`]
+    /// [`set_window_flag()`]
     /// {Window Flags Example}
     ///
     /// Returns the window type of this widget. This is identical to
@@ -4704,7 +4107,7 @@ pub trait WidgetType<'a> {
     /// that semi-transparent windows update and resize significantly slower than
     /// opaque windows.
     ///
-    /// **See also:** setMask()
+    /// **See also:** [`set_mask()`]
     ///
     /// A modified window is a window whose content has changed but has
     /// not been saved to disk. This flag will have different effects
@@ -4747,30 +4150,11 @@ pub trait WidgetType<'a> {
     /// Returns the native parent for this widget, i.e. the next ancestor widget
     /// that has a system identifier, or 0 if it does not have any native parent.
     ///
-    /// **See also:** effectiveWinId()
+    /// **See also:** [`effective_win_id()`]
     fn native_parent_widget(&self) -> Option<Widget> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).native_parent_widget)(obj_data);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Widget::new_from_rc(t);
-            } else {
-                ret_val = Widget::new_from_owned(t);
-            }
-            Some(ret_val)
-        }
-    }
-    ///
-    /// Use window() instead.
-    fn top_level_widget(&self) -> Option<Widget> {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).top_level_widget)(obj_data);
             if ret_val.qt_data == ::std::ptr::null() {
                 return None;
             }
@@ -4834,8 +4218,8 @@ pub trait WidgetType<'a> {
     /// the , , ,
     /// and .
     ///
-    /// **See also:** QApplication::palette()
-    /// QWidget::font()
+    /// **See also:** [`Application::palette`]
+    /// [`Widget::font`]
     fn palette(&self) -> Option<Palette> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -4853,14 +4237,13 @@ pub trait WidgetType<'a> {
             Some(ret_val)
         }
     }
-    fn set_palette<P: PaletteType<'a>>(&self, arg0: &P) -> &Self {
+    fn set_palette(&self, arg0: &PaletteTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_palette_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_palette)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// Sets the background role of the widget to *role.*
@@ -4876,16 +4259,15 @@ pub trait WidgetType<'a> {
     /// You can modify the palette or set a style sheet if you don't
     /// achieve the result you want with setBackgroundRole().
     ///
-    /// **See also:** backgroundRole()
-    /// foregroundRole()
-    fn set_background_role(&self, arg0: ColorRole) -> &Self {
+    /// **See also:** [`background_role()`]
+    /// [`foreground_role()`]
+    fn set_background_role(&self, arg0: ColorRole) {
         let enum_arg0_1 = arg0 as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_background_role)(obj_data, enum_arg0_1);
         }
-        self
     }
     ///
     /// Returns the background role of the widget.
@@ -4897,8 +4279,8 @@ pub trait WidgetType<'a> {
     /// If no explicit background role is set, the widget inherts its parent
     /// widget's background role.
     ///
-    /// **See also:** setBackgroundRole()
-    /// foregroundRole()
+    /// **See also:** [`set_background_role()`]
+    /// [`foreground_role()`]
     fn background_role(&self) -> ColorRole {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -4921,16 +4303,15 @@ pub trait WidgetType<'a> {
     /// You can modify the palette or set a style sheet if you don't
     /// achieve the result you want with setForegroundRole().
     ///
-    /// **See also:** foregroundRole()
-    /// backgroundRole()
-    fn set_foreground_role(&self, arg0: ColorRole) -> &Self {
+    /// **See also:** [`foreground_role()`]
+    /// [`background_role()`]
+    fn set_foreground_role(&self, arg0: ColorRole) {
         let enum_arg0_1 = arg0 as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_foreground_role)(obj_data, enum_arg0_1);
         }
-        self
     }
     ///
     /// Returns the foreground role.
@@ -4942,8 +4323,8 @@ pub trait WidgetType<'a> {
     /// If no explicit foreground role is set, the function returns a role
     /// that contrasts with the background role.
     ///
-    /// **See also:** setForegroundRole()
-    /// backgroundRole()
+    /// **See also:** [`set_foreground_role()`]
+    /// [`background_role()`]
     fn foreground_role(&self) -> ColorRole {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -4993,22 +4374,22 @@ pub trait WidgetType<'a> {
     /// are used on the same widget as setFont(),
     /// style sheets will take precedence if the settings conflict.
     ///
-    /// **See also:** fontInfo()
-    /// fontMetrics()
+    /// **See also:** [`font_info()`]
+    /// [`font_metrics()`]
     ///
     /// Returns the font metrics for the widget's current font.
     /// Equivalent to `QFontMetrics(widget->font()).`
     ///
-    /// **See also:** font()
-    /// fontInfo()
-    /// setFont()
+    /// **See also:** [`font()`]
+    /// [`font_info()`]
+    /// [`set_font()`]
     ///
     /// Returns the font info for the widget's current font.
     /// Equivalent to `QFontInfo(widget->font()).`
     ///
-    /// **See also:** font()
-    /// fontMetrics()
-    /// setFont()
+    /// **See also:** [`font()`]
+    /// [`font_metrics()`]
+    /// [`set_font()`]
     fn font(&self) -> Option<Font> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -5026,34 +4407,12 @@ pub trait WidgetType<'a> {
             Some(ret_val)
         }
     }
-    fn set_font<F: FontType<'a>>(&self, arg0: &F) -> &Self {
+    fn set_font(&self, arg0: &FontTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_font_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_font)(obj_data, obj_arg0_1);
-        }
-        self
-    }
-    ///
-    /// Returns the font info for the widget's current font.
-    /// Equivalent to `QFontInfo(widget->font()).`
-    ///
-    /// **See also:** font()
-    /// fontMetrics()
-    /// setFont()
-    fn font_info(&self) -> FontInfo {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).font_info)(obj_data);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = FontInfo::new_from_rc(t);
-            } else {
-                ret_val = FontInfo::new_from_owned(t);
-            }
-            ret_val
         }
     }
     ///
@@ -5074,7 +4433,7 @@ pub trait WidgetType<'a> {
     /// a cursor set for all widgets, even when outside the window, consider
     /// QApplication::setOverrideCursor().
     ///
-    /// **See also:** QApplication::setOverrideCursor()
+    /// **See also:** [`Application::set_override_cursor`]
     fn cursor(&self) -> Cursor {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -5089,28 +4448,25 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_cursor<C: CursorType<'a>>(&self, arg0: &C) -> &Self {
+    fn set_cursor(&self, arg0: &CursorTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_cursor_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_cursor)(obj_data, obj_arg0_1);
         }
-        self
     }
-    fn unset_cursor(&self) -> &Self {
+    fn unset_cursor(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).unset_cursor)(obj_data);
         }
-        self
     }
-    fn set_mouse_tracking(&self, enable: bool) -> &Self {
+    fn set_mouse_tracking(&self, enable: bool) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_mouse_tracking)(obj_data, enable);
         }
-        self
     }
     fn has_mouse_tracking(&self) -> bool {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -5126,8 +4482,8 @@ pub trait WidgetType<'a> {
     /// This value is not updated properly during drag and drop
     /// operations.
     ///
-    /// **See also:** enterEvent()
-    /// leaveEvent()
+    /// **See also:** [`enter_event()`]
+    /// [`leave_event()`]
     fn under_mouse(&self) -> bool {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -5135,12 +4491,11 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_tablet_tracking(&self, enable: bool) -> &Self {
+    fn set_tablet_tracking(&self, enable: bool) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_tablet_tracking)(obj_data, enable);
         }
-        self
     }
     fn has_tablet_tracking(&self) -> bool {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -5179,17 +4534,16 @@ pub trait WidgetType<'a> {
     /// Masked widgets receive mouse events only on their visible
     /// portions.
     ///
-    /// **See also:** clearMask()
-    /// windowOpacity()
+    /// **See also:** [`clear_mask()`]
+    /// [`window_opacity()`]
     /// {Shaped Clock Example}
-    fn set_mask<B: BitmapType<'a>>(&self, arg0: &B) -> &Self {
+    fn set_mask(&self, arg0: &BitmapTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_bitmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_mask)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// **Overloads**
@@ -5221,25 +4575,24 @@ pub trait WidgetType<'a> {
     /// Masked widgets receive mouse events only on their visible
     /// portions.
     ///
-    /// **See also:** clearMask()
-    /// windowOpacity()
+    /// **See also:** [`clear_mask()`]
+    /// [`window_opacity()`]
     /// {Shaped Clock Example}
-    fn set_mask<R: RegionType<'a>>(&self, arg0: &R) -> &Self {
+    fn set_mask_2(&self, arg0: &RegionTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).set_mask)(obj_data, obj_arg0_1);
+            ((*funcs).set_mask_2)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// Returns the mask currently set on a widget. If no mask is set the
     /// return value will be an empty region.
     ///
-    /// **See also:** setMask()
-    /// clearMask()
-    /// QRegion::isEmpty()
+    /// **See also:** [`set_mask()`]
+    /// [`clear_mask()`]
+    /// [`Region::is_empty`]
     /// {Shaped Clock Example}
     fn mask(&self) -> Region {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -5258,13 +4611,12 @@ pub trait WidgetType<'a> {
     ///
     /// Removes any mask set by setMask().
     ///
-    /// **See also:** setMask()
-    fn clear_mask(&self) -> &Self {
+    /// **See also:** [`set_mask()`]
+    fn clear_mask(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).clear_mask)(obj_data);
         }
-        self
     }
     ///
     /// Renders the *sourceRegion* of this widget into the *target*
@@ -5292,14 +4644,14 @@ pub trait WidgetType<'a> {
     /// **Note**: The *painter* must be active. On MacOS the widget will be
     /// rendered into a QPixmap and then drawn by the *painter.*
     ///
-    /// **See also:** QPainter::device()
-    fn render<P: PaintDeviceType<'a>, Q: PointType<'a>, R: RegionType<'a>>(
+    /// **See also:** [`Painter::device`]
+    fn render(
         &self,
-        target: &P,
-        target_offset: &Q,
-        source_region: &R,
+        target: &PaintDeviceTrait,
+        target_offset: &PointTrait,
+        source_region: &RegionTrait,
         render_flags: RenderFlags,
-    ) -> &Self {
+    ) {
         let (obj_target_1, _funcs) = target.get_paint_device_obj_funcs();
         let (obj_target_offset_2, _funcs) = target_offset.get_point_obj_funcs();
         let (obj_source_region_3, _funcs) = source_region.get_region_obj_funcs();
@@ -5315,7 +4667,6 @@ pub trait WidgetType<'a> {
                 enum_render_flags_4,
             );
         }
-        self
     }
     ///
     /// Renders the *sourceRegion* of this widget into the *target*
@@ -5343,14 +4694,14 @@ pub trait WidgetType<'a> {
     /// **Note**: The *painter* must be active. On MacOS the widget will be
     /// rendered into a QPixmap and then drawn by the *painter.*
     ///
-    /// **See also:** QPainter::device()
-    fn render<P: PainterType<'a>, Q: PointType<'a>, R: RegionType<'a>>(
+    /// **See also:** [`Painter::device`]
+    fn render_2(
         &self,
-        painter: &P,
-        target_offset: &Q,
-        source_region: &R,
+        painter: &PainterTrait,
+        target_offset: &PointTrait,
+        source_region: &RegionTrait,
         render_flags: RenderFlags,
-    ) -> &Self {
+    ) {
         let (obj_painter_1, _funcs) = painter.get_painter_obj_funcs();
         let (obj_target_offset_2, _funcs) = target_offset.get_point_obj_funcs();
         let (obj_source_region_3, _funcs) = source_region.get_region_obj_funcs();
@@ -5358,7 +4709,7 @@ pub trait WidgetType<'a> {
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).render)(
+            ((*funcs).render_2)(
                 obj_data,
                 obj_painter_1,
                 obj_target_offset_2,
@@ -5366,7 +4717,6 @@ pub trait WidgetType<'a> {
                 enum_render_flags_4,
             );
         }
-        self
     }
     ///
     /// Renders the widget into a pixmap restricted by the
@@ -5376,8 +4726,8 @@ pub trait WidgetType<'a> {
     /// If a rectangle with an invalid size is specified (the default),
     /// the entire widget is painted.
     ///
-    /// **See also:** render()
-    /// QPixmap
+    /// **See also:** [`render()`]
+    /// [`Pixmap`]
     ///
     /// Adds a shortcut to Qt's shortcut system that watches for the given
     /// *key* sequence in the given *context.* If the *context* is
@@ -5401,13 +4751,13 @@ pub trait WidgetType<'a> {
     /// key sequence, so are much easier to use than this low-level
     /// function.
     ///
-    /// **See also:** releaseShortcut()
-    /// setShortcutEnabled()
+    /// **See also:** [`release_shortcut()`]
+    /// [`set_shortcut_enabled()`]
     ///
     /// Subscribes the widget to a given *gesture* with specific *flags.*
     ///
-    /// **See also:** ungrabGesture()
-    /// QGestureEvent
+    /// **See also:** [`ungrab_gesture()`]
+    /// [`GestureEvent`]
     ///
     /// Grabs the mouse input.
     ///
@@ -5432,9 +4782,9 @@ pub trait WidgetType<'a> {
     /// owned by the process.
     /// On MacOS , grabMouse() only works when the mouse is inside the frame of that widget.
     ///
-    /// **See also:** releaseMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
+    /// **See also:** [`release_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
     ///
     /// **Overloads** grabMouse()
     /// Grabs the mouse input and changes the cursor shape.
@@ -5447,10 +4797,10 @@ pub trait WidgetType<'a> {
     ///
     /// **Note**: See the note in QWidget::grabMouse().
     ///
-    /// **See also:** releaseMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
-    /// setCursor()
+    /// **See also:** [`release_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
+    /// [`set_cursor()`]
     ///
     /// Grabs the keyboard input.
     ///
@@ -5466,11 +4816,11 @@ pub trait WidgetType<'a> {
     /// If a different widget is currently grabbing keyboard input, that
     /// widget's grab is released first.
     ///
-    /// **See also:** releaseKeyboard()
-    /// grabMouse()
-    /// releaseMouse()
-    /// focusWidget()
-    fn grab<R: RectType<'a>>(&self, rectangle: &R) -> Pixmap {
+    /// **See also:** [`release_keyboard()`]
+    /// [`grab_mouse()`]
+    /// [`release_mouse()`]
+    /// [`focus_widget()`]
+    fn grab(&self, rectangle: &RectTrait) -> Pixmap {
         let (obj_rectangle_1, _funcs) = rectangle.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -5486,78 +4836,48 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn graphics_effect(&self) -> Option<GraphicsEffect> {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).graphics_effect)(obj_data);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = GraphicsEffect::new_from_rc(t);
-            } else {
-                ret_val = GraphicsEffect::new_from_owned(t);
-            }
-            Some(ret_val)
-        }
-    }
-    fn set_graphics_effect<G: GraphicsEffectType<'a>>(&self, effect: &G) -> &Self {
-        let (obj_effect_1, _funcs) = effect.get_graphics_effect_obj_funcs();
-
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            ((*funcs).set_graphics_effect)(obj_data, obj_effect_1);
-        }
-        self
-    }
     ///
     /// Subscribes the widget to a given *gesture* with specific *flags.*
     ///
-    /// **See also:** ungrabGesture()
-    /// QGestureEvent
-    fn grab_gesture(&self, gesture_type: GestureType, flags: GestureFlags) -> &Self {
-        let enum_gesture_type_1 = gesture_type as i32;
+    /// **See also:** [`ungrab_gesture()`]
+    /// [`GestureEvent`]
+    fn grab_gesture(&self, gtype: GestureType, flags: GestureFlags) {
+        let enum_gtype_1 = gtype as i32;
         let enum_flags_2 = flags as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).grab_gesture)(obj_data, enum_gesture_type_1, enum_flags_2);
+            ((*funcs).grab_gesture)(obj_data, enum_gtype_1, enum_flags_2);
         }
-        self
     }
     ///
     /// Unsubscribes the widget from a given *gesture* type
     ///
-    /// **See also:** grabGesture()
-    /// QGestureEvent
-    fn ungrab_gesture(&self, gesture_type: GestureType) -> &Self {
-        let enum_gesture_type_1 = gesture_type as i32;
+    /// **See also:** [`grab_gesture()`]
+    /// [`GestureEvent`]
+    fn ungrab_gesture(&self, gtype: GestureType) {
+        let enum_gtype_1 = gtype as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).ungrab_gesture)(obj_data, enum_gesture_type_1);
+            ((*funcs).ungrab_gesture)(obj_data, enum_gtype_1);
         }
-        self
     }
-    fn set_window_title(&self, arg0: &str) -> &Self {
+    fn set_window_title(&self, arg0: &str) {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_window_title)(obj_data, str_in_arg0_1.as_ptr());
         }
-        self
     }
-    fn set_style_sheet(&self, style_sheet: &str) -> &Self {
+    fn set_style_sheet(&self, style_sheet: &str) {
         let str_in_style_sheet_1 = CString::new(style_sheet).unwrap();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_style_sheet)(obj_data, str_in_style_sheet_1.as_ptr());
         }
-        self
     }
     ///
     /// The style sheet contains a textual description of customizations to the
@@ -5569,8 +4889,8 @@ pub trait WidgetType<'a> {
     /// **Warning**: Qt style sheets are currently not supported for custom QStyle
     /// subclasses. We plan to address this in some future release.
     ///
-    /// **See also:** setStyle()
-    /// QApplication::styleSheet
+    /// **See also:** [`set_style()`]
+    /// [`Application::style_sheet()`]
     /// {Qt Style Sheets}
     fn style_sheet(&self) -> String {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -5615,14 +4935,13 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_window_icon<I: IconType<'a>>(&self, icon: &I) -> &Self {
+    fn set_window_icon(&self, icon: &IconTrait) {
         let (obj_icon_1, _funcs) = icon.get_icon_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_window_icon)(obj_data, obj_icon_1);
         }
-        self
     }
     ///
     /// This signal is emitted when the window's icon text has changed, with the
@@ -5663,14 +4982,13 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_window_icon_text(&self, arg0: &str) -> &Self {
+    fn set_window_icon_text(&self, arg0: &str) {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_window_icon_text)(obj_data, str_in_arg0_1.as_ptr());
         }
-        self
     }
     ///
     /// This signal is emitted when the window's icon text has changed, with the
@@ -5698,14 +5016,13 @@ pub trait WidgetType<'a> {
     ///
     /// Sets the window's role to *role.* This only makes sense for
     /// windows on X11.
-    fn set_window_role(&self, arg0: &str) -> &Self {
+    fn set_window_role(&self, arg0: &str) {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_window_role)(obj_data, str_in_arg0_1.as_ptr());
         }
-        self
     }
     ///
     /// Returns the window's role, or an empty string.
@@ -5720,14 +5037,13 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_window_file_path(&self, file_path: &str) -> &Self {
+    fn set_window_file_path(&self, file_path: &str) {
         let str_in_file_path_1 = CString::new(file_path).unwrap();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_window_file_path)(obj_data, str_in_file_path_1.as_ptr());
         }
-        self
     }
     ///
     /// This property only makes sense for windows. It associates a file path with
@@ -5757,12 +5073,11 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_window_opacity(&self, level: f32) -> &Self {
+    fn set_window_opacity(&self, level: f32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_window_opacity)(obj_data, level);
         }
-        self
     }
     ///
     /// The valid range of opacity is from 1.0 (completely opaque) to
@@ -5783,7 +5098,7 @@ pub trait WidgetType<'a> {
     /// that semi-transparent windows update and resize significantly slower than
     /// opaque windows.
     ///
-    /// **See also:** setMask()
+    /// **See also:** [`set_mask()`]
     fn window_opacity(&self) -> f32 {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -5798,14 +5113,13 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_tool_tip(&self, arg0: &str) -> &Self {
+    fn set_tool_tip(&self, arg0: &str) {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_tool_tip)(obj_data, str_in_arg0_1.as_ptr());
         }
-        self
     }
     ///
     /// Note that by default tooltips are only shown for widgets that are
@@ -5819,7 +5133,7 @@ pub trait WidgetType<'a> {
     ///
     /// By default, this property contains an empty string.
     ///
-    /// **See also:** QToolTip
+    /// **See also:** [`ToolTip`]
     /// statusTip
     /// whatsThis
     ///
@@ -5835,12 +5149,11 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_tool_tip_duration(&self, msec: i32) -> &Self {
+    fn set_tool_tip_duration(&self, msec: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_tool_tip_duration)(obj_data, msec);
         }
-        self
     }
     ///
     /// Specifies how long time the tooltip will be displayed, in milliseconds.
@@ -5854,14 +5167,13 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_status_tip(&self, arg0: &str) -> &Self {
+    fn set_status_tip(&self, arg0: &str) {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_status_tip)(obj_data, str_in_arg0_1.as_ptr());
         }
-        self
     }
     ///
     /// By default, this property contains an empty string.
@@ -5876,21 +5188,20 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_whats_this(&self, arg0: &str) -> &Self {
+    fn set_whats_this(&self, arg0: &str) {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_whats_this)(obj_data, str_in_arg0_1.as_ptr());
         }
-        self
     }
     ///
     /// By default, this property contains an empty string.
     ///
-    /// **See also:** QWhatsThis
-    /// QWidget::toolTip
-    /// QWidget::statusTip
+    /// **See also:** [`WhatsThis`]
+    /// [`Widget::tool_tip()`]
+    /// [`Widget::status_tip()`]
     fn whats_this(&self) -> String {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -5915,8 +5226,8 @@ pub trait WidgetType<'a> {
     ///
     /// By default, this property contains an empty string.
     ///
-    /// **See also:** QWidget::accessibleDescription
-    /// QAccessibleInterface::text()
+    /// **See also:** [`Widget::accessible_description()`]
+    /// [`AccessibleInterface::text`]
     fn accessible_name(&self) -> String {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -5925,14 +5236,13 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_accessible_name(&self, name: &str) -> &Self {
+    fn set_accessible_name(&self, name: &str) {
         let str_in_name_1 = CString::new(name).unwrap();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_accessible_name)(obj_data, str_in_name_1.as_ptr());
         }
-        self
     }
     ///
     /// The accessible description of a widget should convey what a widget does.
@@ -5946,8 +5256,8 @@ pub trait WidgetType<'a> {
     /// By default, this property contains an empty string and Qt falls back
     /// to using the tool tip to provide this information.
     ///
-    /// **See also:** QWidget::accessibleName
-    /// QAccessibleInterface::text()
+    /// **See also:** [`Widget::accessible_name()`]
+    /// [`AccessibleInterface::text`]
     fn accessible_description(&self) -> String {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -5956,23 +5266,21 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_accessible_description(&self, description: &str) -> &Self {
+    fn set_accessible_description(&self, description: &str) {
         let str_in_description_1 = CString::new(description).unwrap();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_accessible_description)(obj_data, str_in_description_1.as_ptr());
         }
-        self
     }
-    fn set_layout_direction(&self, direction: LayoutDirection) -> &Self {
+    fn set_layout_direction(&self, direction: LayoutDirection) {
         let enum_direction_1 = direction as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_layout_direction)(obj_data, enum_direction_1);
         }
-        self
     }
     ///
     /// By default, this property is set to Qt::LeftToRight.
@@ -5986,7 +5294,7 @@ pub trait WidgetType<'a> {
     ///
     /// This method no longer affects text layout direction since Qt 4.7.
     ///
-    /// **See also:** QApplication::layoutDirection
+    /// **See also:** [`Application::layout_direction()`]
     fn layout_direction(&self) -> LayoutDirection {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -5995,21 +5303,11 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn unset_layout_direction(&self) -> &Self {
+    fn unset_layout_direction(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).unset_layout_direction)(obj_data);
         }
-        self
-    }
-    fn set_locale<L: LocaleType<'a>>(&self, locale: &L) -> &Self {
-        let (obj_locale_1, _funcs) = locale.get_locale_obj_funcs();
-
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            ((*funcs).set_locale)(obj_data, obj_locale_1);
-        }
-        self
     }
     ///
     /// As long as no special locale has been set, this is either
@@ -6019,29 +5317,8 @@ pub trait WidgetType<'a> {
     /// If the widget displays dates or numbers, these should be formatted
     /// using the widget's locale.
     ///
-    /// **See also:** QLocale
-    /// QLocale::setDefault()
-    fn locale(&self) -> Locale {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).locale)(obj_data);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Locale::new_from_rc(t);
-            } else {
-                ret_val = Locale::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    fn unset_locale(&self) -> &Self {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            ((*funcs).unset_locale)(obj_data);
-        }
-        self
-    }
+    /// **See also:** [`Locale`]
+    /// [`Locale::set_default`]
     fn is_right_to_left(&self) -> bool {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -6068,7 +5345,7 @@ pub trait WidgetType<'a> {
     /// gets it. If there is a focus proxy, setFocus() and
     /// hasFocus() operate on the focus proxy.
     ///
-    /// **See also:** focusProxy()
+    /// **See also:** [`focus_proxy()`]
     ///
     /// Gives the keyboard input focus to this widget (or its focus
     /// proxy) if this widget or one of its parents is the [active window](isActiveWindow())
@@ -6100,29 +5377,28 @@ pub trait WidgetType<'a> {
     /// called from focusOutEvent() or focusInEvent(), you may get an
     /// infinite recursion.
     ///
-    /// **See also:** hasFocus()
-    /// clearFocus()
-    /// focusInEvent()
-    /// focusOutEvent()
-    /// setFocusPolicy()
-    /// focusWidget()
-    /// QApplication::focusWidget()
-    /// grabKeyboard()
-    /// grabMouse()
+    /// **See also:** [`has_focus()`]
+    /// [`clear_focus()`]
+    /// [`focus_in_event()`]
+    /// [`focus_out_event()`]
+    /// [`set_focus_policy()`]
+    /// [`focus_widget()`]
+    /// [`Application::focus_widget`]
+    /// [`grab_keyboard()`]
+    /// [`grab_mouse()`]
     /// {Keyboard Focus in Widgets}
-    /// QEvent::RequestSoftwareInputPanel
+    /// [`Event::request_software_input_panel()`]
     ///
     /// **Overloads**
     /// Gives the keyboard input focus to this widget (or its focus
     /// proxy) if this widget or one of its parents is the
     /// [active window](isActiveWindow())
     ///
-    fn set_focus(&self) -> &Self {
+    fn set_focus(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_focus)(obj_data);
         }
-        self
     }
     ///
     /// The active window is the window that contains the widget that has
@@ -6134,8 +5410,8 @@ pub trait WidgetType<'a> {
     ///
     /// By default, this property is `false.`
     ///
-    /// **See also:** activateWindow()
-    /// QApplication::activeWindow()
+    /// **See also:** [`activate_window()`]
+    /// [`Application::active_window`]
     fn is_active_window(&self) -> bool {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -6163,16 +5439,15 @@ pub trait WidgetType<'a> {
     /// does not allow an application to interrupt what the user is currently
     /// doing in another application.
     ///
-    /// **See also:** isActiveWindow()
-    /// window()
-    /// show()
-    /// QWindowsWindowFunctions::setWindowActivationBehavior()
-    fn activate_window(&self) -> &Self {
+    /// **See also:** [`is_active_window()`]
+    /// [`window()`]
+    /// [`show()`]
+    /// [`WindowsWindowFunctions::set_window_activation_behavior`]
+    fn activate_window(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).activate_window)(obj_data);
         }
-        self
     }
     ///
     /// Takes keyboard input focus from the widget.
@@ -6184,18 +5459,17 @@ pub trait WidgetType<'a> {
     /// This widget must enable focus setting in order to get the keyboard
     /// input focus, i.e. it must call setFocusPolicy().
     ///
-    /// **See also:** hasFocus()
-    /// setFocus()
-    /// focusInEvent()
-    /// focusOutEvent()
-    /// setFocusPolicy()
-    /// QApplication::focusWidget()
-    fn clear_focus(&self) -> &Self {
+    /// **See also:** [`has_focus()`]
+    /// [`set_focus()`]
+    /// [`focus_in_event()`]
+    /// [`focus_out_event()`]
+    /// [`set_focus_policy()`]
+    /// [`Application::focus_widget`]
+    fn clear_focus(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).clear_focus)(obj_data);
         }
-        self
     }
     ///
     /// Sets the widget's focus proxy to widget *w.* If *w* is 0, the
@@ -6209,7 +5483,7 @@ pub trait WidgetType<'a> {
     /// gets it. If there is a focus proxy, setFocus() and
     /// hasFocus() operate on the focus proxy.
     ///
-    /// **See also:** focusProxy()
+    /// **See also:** [`focus_proxy()`]
     ///
     /// Gives the keyboard input focus to this widget (or its focus
     /// proxy) if this widget or one of its parents is the [active window](isActiveWindow())
@@ -6241,31 +5515,30 @@ pub trait WidgetType<'a> {
     /// called from focusOutEvent() or focusInEvent(), you may get an
     /// infinite recursion.
     ///
-    /// **See also:** hasFocus()
-    /// clearFocus()
-    /// focusInEvent()
-    /// focusOutEvent()
-    /// setFocusPolicy()
-    /// focusWidget()
-    /// QApplication::focusWidget()
-    /// grabKeyboard()
-    /// grabMouse()
+    /// **See also:** [`has_focus()`]
+    /// [`clear_focus()`]
+    /// [`focus_in_event()`]
+    /// [`focus_out_event()`]
+    /// [`set_focus_policy()`]
+    /// [`focus_widget()`]
+    /// [`Application::focus_widget`]
+    /// [`grab_keyboard()`]
+    /// [`grab_mouse()`]
     /// {Keyboard Focus in Widgets}
-    /// QEvent::RequestSoftwareInputPanel
+    /// [`Event::request_software_input_panel()`]
     ///
     /// **Overloads**
     /// Gives the keyboard input focus to this widget (or its focus
     /// proxy) if this widget or one of its parents is the
     /// [active window](isActiveWindow())
     ///
-    fn set_focus(&self, reason: FocusReason) -> &Self {
+    fn set_focus_2(&self, reason: FocusReason) {
         let enum_reason_1 = reason as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).set_focus)(obj_data, enum_reason_1);
+            ((*funcs).set_focus_2)(obj_data, enum_reason_1);
         }
-        self
     }
     ///
     /// The policy is Qt::TabFocus if the widget accepts keyboard
@@ -6282,10 +5555,10 @@ pub trait WidgetType<'a> {
     /// If the widget has a focus proxy, then the focus policy will
     /// be propagated to it.
     ///
-    /// **See also:** focusInEvent()
-    /// focusOutEvent()
-    /// keyPressEvent()
-    /// keyReleaseEvent()
+    /// **See also:** [`focus_in_event()`]
+    /// [`focus_out_event()`]
+    /// [`key_press_event()`]
+    /// [`key_release_event()`]
     /// enabled
     fn focus_policy(&self) -> FocusPolicy {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -6295,14 +5568,13 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_focus_policy(&self, policy: FocusPolicy) -> &Self {
+    fn set_focus_policy(&self, policy: FocusPolicy) {
         let enum_policy_1 = policy as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_focus_policy)(obj_data, enum_policy_1);
         }
-        self
     }
     fn has_focus(&self) -> bool {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -6323,20 +5595,19 @@ pub trait WidgetType<'a> {
     /// gets it. If there is a focus proxy, setFocus() and
     /// hasFocus() operate on the focus proxy.
     ///
-    /// **See also:** focusProxy()
-    fn set_focus_proxy<W: WidgetType<'a>>(&self, arg0: &W) -> &Self {
+    /// **See also:** [`focus_proxy()`]
+    fn set_focus_proxy(&self, arg0: &WidgetTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_focus_proxy)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// Returns the focus proxy, or 0 if there is no focus proxy.
     ///
-    /// **See also:** setFocusProxy()
+    /// **See also:** [`set_focus_proxy()`]
     fn focus_proxy(&self) -> Option<Widget> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -6362,9 +5633,9 @@ pub trait WidgetType<'a> {
     /// Qt::CustomContextMenu, the signal customContextMenuRequested() is
     /// emitted.
     ///
-    /// **See also:** contextMenuEvent()
-    /// customContextMenuRequested()
-    /// actions()
+    /// **See also:** [`context_menu_event()`]
+    /// [`custom_context_menu_requested()`]
+    /// [`actions()`]
     fn context_menu_policy(&self) -> ContextMenuPolicy {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -6373,14 +5644,13 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_context_menu_policy(&self, policy: ContextMenuPolicy) -> &Self {
+    fn set_context_menu_policy(&self, policy: ContextMenuPolicy) {
         let enum_policy_1 = policy as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_context_menu_policy)(obj_data, enum_policy_1);
         }
-        self
     }
     ///
     /// Grabs the mouse input.
@@ -6406,9 +5676,9 @@ pub trait WidgetType<'a> {
     /// owned by the process.
     /// On MacOS , grabMouse() only works when the mouse is inside the frame of that widget.
     ///
-    /// **See also:** releaseMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
+    /// **See also:** [`release_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
     ///
     /// **Overloads** grabMouse()
     /// Grabs the mouse input and changes the cursor shape.
@@ -6421,16 +5691,15 @@ pub trait WidgetType<'a> {
     ///
     /// **Note**: See the note in QWidget::grabMouse().
     ///
-    /// **See also:** releaseMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
-    /// setCursor()
-    fn grab_mouse(&self) -> &Self {
+    /// **See also:** [`release_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
+    /// [`set_cursor()`]
+    fn grab_mouse(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).grab_mouse)(obj_data);
         }
-        self
     }
     ///
     /// Grabs the mouse input.
@@ -6456,9 +5725,9 @@ pub trait WidgetType<'a> {
     /// owned by the process.
     /// On MacOS , grabMouse() only works when the mouse is inside the frame of that widget.
     ///
-    /// **See also:** releaseMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
+    /// **See also:** [`release_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
     ///
     /// **Overloads** grabMouse()
     /// Grabs the mouse input and changes the cursor shape.
@@ -6471,31 +5740,29 @@ pub trait WidgetType<'a> {
     ///
     /// **Note**: See the note in QWidget::grabMouse().
     ///
-    /// **See also:** releaseMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
-    /// setCursor()
-    fn grab_mouse<C: CursorType<'a>>(&self, arg0: &C) -> &Self {
+    /// **See also:** [`release_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
+    /// [`set_cursor()`]
+    fn grab_mouse_2(&self, arg0: &CursorTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_cursor_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).grab_mouse)(obj_data, obj_arg0_1);
+            ((*funcs).grab_mouse_2)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// Releases the mouse grab.
     ///
-    /// **See also:** grabMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
-    fn release_mouse(&self) -> &Self {
+    /// **See also:** [`grab_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
+    fn release_mouse(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).release_mouse)(obj_data);
         }
-        self
     }
     ///
     /// Grabs the keyboard input.
@@ -6512,29 +5779,27 @@ pub trait WidgetType<'a> {
     /// If a different widget is currently grabbing keyboard input, that
     /// widget's grab is released first.
     ///
-    /// **See also:** releaseKeyboard()
-    /// grabMouse()
-    /// releaseMouse()
-    /// focusWidget()
-    fn grab_keyboard(&self) -> &Self {
+    /// **See also:** [`release_keyboard()`]
+    /// [`grab_mouse()`]
+    /// [`release_mouse()`]
+    /// [`focus_widget()`]
+    fn grab_keyboard(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).grab_keyboard)(obj_data);
         }
-        self
     }
     ///
     /// Releases the keyboard grab.
     ///
-    /// **See also:** grabKeyboard()
-    /// grabMouse()
-    /// releaseMouse()
-    fn release_keyboard(&self) -> &Self {
+    /// **See also:** [`grab_keyboard()`]
+    /// [`grab_mouse()`]
+    /// [`release_mouse()`]
+    fn release_keyboard(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).release_keyboard)(obj_data);
         }
-        self
     }
     ///
     /// Adds a shortcut to Qt's shortcut system that watches for the given
@@ -6559,9 +5824,9 @@ pub trait WidgetType<'a> {
     /// key sequence, so are much easier to use than this low-level
     /// function.
     ///
-    /// **See also:** releaseShortcut()
-    /// setShortcutEnabled()
-    fn grab_shortcut<K: KeySequenceType<'a>>(&self, key: &K, context: ShortcutContext) -> i32 {
+    /// **See also:** [`release_shortcut()`]
+    /// [`set_shortcut_enabled()`]
+    fn grab_shortcut(&self, key: &KeySequenceTrait, context: ShortcutContext) -> i32 {
         let (obj_key_1, _funcs) = key.get_key_sequence_obj_funcs();
         let enum_context_2 = context as i32;
 
@@ -6584,14 +5849,13 @@ pub trait WidgetType<'a> {
     /// this low-level function. Note also that this is an expensive
     /// operation.
     ///
-    /// **See also:** grabShortcut()
-    /// setShortcutEnabled()
-    fn release_shortcut(&self, id: i32) -> &Self {
+    /// **See also:** [`grab_shortcut()`]
+    /// [`set_shortcut_enabled()`]
+    fn release_shortcut(&self, id: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).release_shortcut)(obj_data, id);
         }
-        self
     }
     ///
     /// If *enable* is true, the shortcut with the given *id* is
@@ -6603,27 +5867,25 @@ pub trait WidgetType<'a> {
     /// to use QAction or QShortcut to handle shortcuts, since they are
     /// easier to use than this low-level function.
     ///
-    /// **See also:** grabShortcut()
-    /// releaseShortcut()
-    fn set_shortcut_enabled(&self, id: i32, enable: bool) -> &Self {
+    /// **See also:** [`grab_shortcut()`]
+    /// [`release_shortcut()`]
+    fn set_shortcut_enabled(&self, id: i32, enable: bool) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_shortcut_enabled)(obj_data, id, enable);
         }
-        self
     }
     ///
     /// If *enable* is true, auto repeat of the shortcut with the
     /// given *id* is enabled; otherwise it is disabled.
     ///
-    /// **See also:** grabShortcut()
-    /// releaseShortcut()
-    fn set_shortcut_auto_repeat(&self, id: i32, enable: bool) -> &Self {
+    /// **See also:** [`grab_shortcut()`]
+    /// [`release_shortcut()`]
+    fn set_shortcut_auto_repeat(&self, id: i32, enable: bool) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_shortcut_auto_repeat)(obj_data, id, enable);
         }
-        self
     }
     ///
     /// An updates enabled widget receives paint events and has a system
@@ -6647,7 +5909,7 @@ pub trait WidgetType<'a> {
     /// have been explicitly disabled. Re-enabling updates implicitly calls
     /// update() on the widget.
     ///
-    /// **See also:** paintEvent()
+    /// **See also:** [`paint_event()`]
     fn updates_enabled(&self) -> bool {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -6655,12 +5917,11 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_updates_enabled(&self, enable: bool) -> &Self {
+    fn set_updates_enabled(&self, enable: bool) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_updates_enabled)(obj_data, enable);
         }
-        self
     }
     ///
     /// An updates enabled widget receives paint events and has a system
@@ -6684,7 +5945,7 @@ pub trait WidgetType<'a> {
     /// have been explicitly disabled. Re-enabling updates implicitly calls
     /// update() on the widget.
     ///
-    /// **See also:** paintEvent()
+    /// **See also:** [`paint_event()`]
     ///
     /// Notifies the layout system that this widget has changed and may
     /// need to change geometry.
@@ -6709,9 +5970,9 @@ pub trait WidgetType<'a> {
     /// If the Qt::WA_OpaquePaintEvent widget attribute is set, the widget is
     /// responsible for painting all its pixels with an opaque color.
     ///
-    /// **See also:** repaint()
-    /// paintEvent()
-    /// setUpdatesEnabled()
+    /// **See also:** [`repaint()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
     /// {Analog Clock Example}
     /// **Overloads**
     /// This version updates a rectangle ( *x,* *y,* *w,* *h)* inside
@@ -6724,12 +5985,11 @@ pub trait WidgetType<'a> {
     /// This version repaints a region *rgn* inside the widget.
     ///
     /// Updates the widget's micro focus.
-    fn update(&self) -> &Self {
+    fn update(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).update)(obj_data);
         }
-        self
     }
     ///
     /// Repaints the widget directly by calling paintEvent() immediately,
@@ -6744,9 +6004,9 @@ pub trait WidgetType<'a> {
     /// called from paintEvent(), you may get infinite recursion. The
     /// update() function never causes recursion.
     ///
-    /// **See also:** update()
-    /// paintEvent()
-    /// setUpdatesEnabled()
+    /// **See also:** [`update()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
     /// **Overloads**
     /// This version repaints a rectangle ( *x,* *y,* *w,* *h)* inside
     /// the widget.
@@ -6758,12 +6018,11 @@ pub trait WidgetType<'a> {
     ///
     /// **Overloads**
     /// This version repaints a region *rgn* inside the widget.
-    fn repaint(&self) -> &Self {
+    fn repaint(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).repaint)(obj_data);
         }
-        self
     }
     ///
     /// An updates enabled widget receives paint events and has a system
@@ -6787,7 +6046,7 @@ pub trait WidgetType<'a> {
     /// have been explicitly disabled. Re-enabling updates implicitly calls
     /// update() on the widget.
     ///
-    /// **See also:** paintEvent()
+    /// **See also:** [`paint_event()`]
     ///
     /// Notifies the layout system that this widget has changed and may
     /// need to change geometry.
@@ -6812,9 +6071,9 @@ pub trait WidgetType<'a> {
     /// If the Qt::WA_OpaquePaintEvent widget attribute is set, the widget is
     /// responsible for painting all its pixels with an opaque color.
     ///
-    /// **See also:** repaint()
-    /// paintEvent()
-    /// setUpdatesEnabled()
+    /// **See also:** [`repaint()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
     /// {Analog Clock Example}
     /// **Overloads**
     /// This version updates a rectangle ( *x,* *y,* *w,* *h)* inside
@@ -6827,12 +6086,151 @@ pub trait WidgetType<'a> {
     /// This version repaints a region *rgn* inside the widget.
     ///
     /// Updates the widget's micro focus.
-    fn update(&self, x: i32, y: i32, w: i32, h: i32) -> &Self {
+    fn update_2(&self, x: i32, y: i32, w: i32, h: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).update)(obj_data, x, y, w, h);
+            ((*funcs).update_2)(obj_data, x, y, w, h);
         }
-        self
+    }
+    ///
+    /// An updates enabled widget receives paint events and has a system
+    /// background; a disabled widget does not. This also implies that
+    /// calling update() and repaint() has no effect if updates are
+    /// disabled.
+    ///
+    /// By default, this property is `true.`
+    ///
+    /// setUpdatesEnabled() is normally used to disable updates for a
+    /// short period of time, for instance to avoid screen flicker during
+    /// large changes. In Qt, widgets normally do not generate screen
+    /// flicker, but on X11 the server might erase regions on the screen
+    /// when widgets get hidden before they can be replaced by other
+    /// widgets. Disabling updates solves this.
+    ///
+    /// Example:
+    ///
+    /// Disabling a widget implicitly disables all its children. Enabling a widget
+    /// enables all child widgets *except* top-level widgets or those that
+    /// have been explicitly disabled. Re-enabling updates implicitly calls
+    /// update() on the widget.
+    ///
+    /// **See also:** [`paint_event()`]
+    ///
+    /// Notifies the layout system that this widget has changed and may
+    /// need to change geometry.
+    ///
+    /// Call this function if the sizeHint() or sizePolicy() have changed.
+    ///
+    /// For explicitly hidden widgets, updateGeometry() is a no-op. The
+    /// layout system will be notified as soon as the widget is shown.
+    ///
+    /// Updates the widget unless updates are disabled or the widget is
+    /// hidden.
+    ///
+    /// This function does not cause an immediate repaint; instead it
+    /// schedules a paint event for processing when Qt returns to the main
+    /// event loop. This permits Qt to optimize for more speed and less
+    /// flicker than a call to repaint() does.
+    ///
+    /// Calling update() several times normally results in just one
+    /// paintEvent() call.
+    ///
+    /// Qt normally erases the widget's area before the paintEvent() call.
+    /// If the Qt::WA_OpaquePaintEvent widget attribute is set, the widget is
+    /// responsible for painting all its pixels with an opaque color.
+    ///
+    /// **See also:** [`repaint()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
+    /// {Analog Clock Example}
+    /// **Overloads**
+    /// This version updates a rectangle ( *x,* *y,* *w,* *h)* inside
+    /// the widget.
+    ///
+    /// **Overloads**
+    /// This version updates a rectangle *rect* inside the widget.
+    ///
+    /// **Overloads**
+    /// This version repaints a region *rgn* inside the widget.
+    ///
+    /// Updates the widget's micro focus.
+    fn update_3(&self, arg0: &RectTrait) {
+        let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).update_3)(obj_data, obj_arg0_1);
+        }
+    }
+    ///
+    /// An updates enabled widget receives paint events and has a system
+    /// background; a disabled widget does not. This also implies that
+    /// calling update() and repaint() has no effect if updates are
+    /// disabled.
+    ///
+    /// By default, this property is `true.`
+    ///
+    /// setUpdatesEnabled() is normally used to disable updates for a
+    /// short period of time, for instance to avoid screen flicker during
+    /// large changes. In Qt, widgets normally do not generate screen
+    /// flicker, but on X11 the server might erase regions on the screen
+    /// when widgets get hidden before they can be replaced by other
+    /// widgets. Disabling updates solves this.
+    ///
+    /// Example:
+    ///
+    /// Disabling a widget implicitly disables all its children. Enabling a widget
+    /// enables all child widgets *except* top-level widgets or those that
+    /// have been explicitly disabled. Re-enabling updates implicitly calls
+    /// update() on the widget.
+    ///
+    /// **See also:** [`paint_event()`]
+    ///
+    /// Notifies the layout system that this widget has changed and may
+    /// need to change geometry.
+    ///
+    /// Call this function if the sizeHint() or sizePolicy() have changed.
+    ///
+    /// For explicitly hidden widgets, updateGeometry() is a no-op. The
+    /// layout system will be notified as soon as the widget is shown.
+    ///
+    /// Updates the widget unless updates are disabled or the widget is
+    /// hidden.
+    ///
+    /// This function does not cause an immediate repaint; instead it
+    /// schedules a paint event for processing when Qt returns to the main
+    /// event loop. This permits Qt to optimize for more speed and less
+    /// flicker than a call to repaint() does.
+    ///
+    /// Calling update() several times normally results in just one
+    /// paintEvent() call.
+    ///
+    /// Qt normally erases the widget's area before the paintEvent() call.
+    /// If the Qt::WA_OpaquePaintEvent widget attribute is set, the widget is
+    /// responsible for painting all its pixels with an opaque color.
+    ///
+    /// **See also:** [`repaint()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
+    /// {Analog Clock Example}
+    /// **Overloads**
+    /// This version updates a rectangle ( *x,* *y,* *w,* *h)* inside
+    /// the widget.
+    ///
+    /// **Overloads**
+    /// This version updates a rectangle *rect* inside the widget.
+    ///
+    /// **Overloads**
+    /// This version repaints a region *rgn* inside the widget.
+    ///
+    /// Updates the widget's micro focus.
+    fn update_4(&self, arg0: &RegionTrait) {
+        let (obj_arg0_1, _funcs) = arg0.get_region_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).update_4)(obj_data, obj_arg0_1);
+        }
     }
     ///
     /// Repaints the widget directly by calling paintEvent() immediately,
@@ -6847,9 +6245,9 @@ pub trait WidgetType<'a> {
     /// called from paintEvent(), you may get infinite recursion. The
     /// update() function never causes recursion.
     ///
-    /// **See also:** update()
-    /// paintEvent()
-    /// setUpdatesEnabled()
+    /// **See also:** [`update()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
     /// **Overloads**
     /// This version repaints a rectangle ( *x,* *y,* *w,* *h)* inside
     /// the widget.
@@ -6861,21 +6259,89 @@ pub trait WidgetType<'a> {
     ///
     /// **Overloads**
     /// This version repaints a region *rgn* inside the widget.
-    fn repaint(&self, x: i32, y: i32, w: i32, h: i32) -> &Self {
+    fn repaint_2(&self, x: i32, y: i32, w: i32, h: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).repaint)(obj_data, x, y, w, h);
+            ((*funcs).repaint_2)(obj_data, x, y, w, h);
         }
-        self
+    }
+    ///
+    /// Repaints the widget directly by calling paintEvent() immediately,
+    /// unless updates are disabled or the widget is hidden.
+    ///
+    /// We suggest only using repaint() if you need an immediate repaint,
+    /// for example during animation. In almost all circumstances update()
+    /// is better, as it permits Qt to optimize for speed and minimize
+    /// flicker.
+    ///
+    /// **Warning**: If you call repaint() in a function which may itself be
+    /// called from paintEvent(), you may get infinite recursion. The
+    /// update() function never causes recursion.
+    ///
+    /// **See also:** [`update()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
+    /// **Overloads**
+    /// This version repaints a rectangle ( *x,* *y,* *w,* *h)* inside
+    /// the widget.
+    ///
+    /// If *w* is negative, it is replaced with `width() - x` , and if
+    /// *h* is negative, it is replaced width `height() - y` .
+    /// **Overloads**
+    /// This version repaints a rectangle *rect* inside the widget.
+    ///
+    /// **Overloads**
+    /// This version repaints a region *rgn* inside the widget.
+    fn repaint_3(&self, arg0: &RectTrait) {
+        let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).repaint_3)(obj_data, obj_arg0_1);
+        }
+    }
+    ///
+    /// Repaints the widget directly by calling paintEvent() immediately,
+    /// unless updates are disabled or the widget is hidden.
+    ///
+    /// We suggest only using repaint() if you need an immediate repaint,
+    /// for example during animation. In almost all circumstances update()
+    /// is better, as it permits Qt to optimize for speed and minimize
+    /// flicker.
+    ///
+    /// **Warning**: If you call repaint() in a function which may itself be
+    /// called from paintEvent(), you may get infinite recursion. The
+    /// update() function never causes recursion.
+    ///
+    /// **See also:** [`update()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
+    /// **Overloads**
+    /// This version repaints a rectangle ( *x,* *y,* *w,* *h)* inside
+    /// the widget.
+    ///
+    /// If *w* is negative, it is replaced with `width() - x` , and if
+    /// *h* is negative, it is replaced width `height() - y` .
+    /// **Overloads**
+    /// This version repaints a rectangle *rect* inside the widget.
+    ///
+    /// **Overloads**
+    /// This version repaints a region *rgn* inside the widget.
+    fn repaint_4(&self, arg0: &RegionTrait) {
+        let (obj_arg0_1, _funcs) = arg0.get_region_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).repaint_4)(obj_data, obj_arg0_1);
+        }
     }
     ///
     /// Convenience function, equivalent to setVisible(! *hidden).*
-    fn set_hidden(&self, hidden: bool) -> &Self {
+    fn set_hidden(&self, hidden: bool) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_hidden)(obj_data, hidden);
         }
-        self
     }
     ///
     /// Shows the widget minimized, as an icon.
@@ -6883,12 +6349,12 @@ pub trait WidgetType<'a> {
     /// Calling this function only affects [windows](isWindow())
     ///
     ///
-    /// **See also:** showNormal()
-    /// showMaximized()
-    /// show()
-    /// hide()
-    /// isVisible()
-    /// isMinimized()
+    /// **See also:** [`show_normal()`]
+    /// [`show_maximized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
+    /// [`is_minimized()`]
     ///
     /// Shows the widget in full-screen mode.
     ///
@@ -6917,11 +6383,11 @@ pub trait WidgetType<'a> {
     /// X11 window managers that follow modern post-ICCCM specifications
     /// support full-screen mode properly.
     ///
-    /// **See also:** showNormal()
-    /// showMaximized()
-    /// show()
-    /// hide()
-    /// isVisible()
+    /// **See also:** [`show_normal()`]
+    /// [`show_maximized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
     ///
     /// Shows the widget maximized.
     ///
@@ -6932,39 +6398,39 @@ pub trait WidgetType<'a> {
     /// managers. See the [Window Geometry](Window%20Geometry)
     /// documentation for an explanation.
     ///
-    /// **See also:** setWindowState()
-    /// showNormal()
-    /// showMinimized()
-    /// show()
-    /// hide()
-    /// isVisible()
+    /// **See also:** [`set_window_state()`]
+    /// [`show_normal()`]
+    /// [`show_minimized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
     ///
     /// Restores the widget after it has been maximized or minimized.
     ///
     /// Calling this function only affects [windows](isWindow())
     ///
     ///
-    /// **See also:** setWindowState()
-    /// showMinimized()
-    /// showMaximized()
-    /// show()
-    /// hide()
-    /// isVisible()
+    /// **See also:** [`set_window_state()`]
+    /// [`show_minimized()`]
+    /// [`show_maximized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
     ///
     /// Shows the widget and its child widgets.
     ///
     /// This is equivalent to calling showFullScreen(), showMaximized(), or setVisible(true),
     /// depending on the platform's default behavior for the window flags.
     ///
-    /// **See also:** raise()
-    /// showEvent()
-    /// hide()
-    /// setVisible()
-    /// showMinimized()
-    /// showMaximized()
-    /// showNormal()
-    /// isVisible()
-    /// windowFlags()
+    /// **See also:** [`raise()`]
+    /// [`show_event()`]
+    /// [`hide()`]
+    /// [`set_visible()`]
+    /// [`show_minimized()`]
+    /// [`show_maximized()`]
+    /// [`show_normal()`]
+    /// [`is_visible()`]
+    /// [`window_flags()`]
     ///
     /// This event handler can be reimplemented in a subclass to receive
     /// widget show events which are passed in the *event* parameter.
@@ -6981,14 +6447,13 @@ pub trait WidgetType<'a> {
     /// the sense of isVisible().
     ///
     /// **See also:** visible
-    /// event()
-    /// QShowEvent
-    fn show(&self) -> &Self {
+    /// [`event()`]
+    /// [`ShowEvent`]
+    fn show(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).show)(obj_data);
         }
-        self
     }
     ///
     /// Hides the widget. This function is equivalent to
@@ -6998,12 +6463,12 @@ pub trait WidgetType<'a> {
     /// the show() function after this function, the dialog will be displayed in
     /// its original position.
     ///
-    /// **See also:** hideEvent()
-    /// isHidden()
-    /// show()
-    /// setVisible()
-    /// isVisible()
-    /// close()
+    /// **See also:** [`hide_event()`]
+    /// [`is_hidden()`]
+    /// [`show()`]
+    /// [`set_visible()`]
+    /// [`is_visible()`]
+    /// [`close()`]
     ///
     /// This event handler can be reimplemented in a subclass to receive
     /// widget hide events. The event is passed in the *event* parameter.
@@ -7019,14 +6484,13 @@ pub trait WidgetType<'a> {
     /// the sense of isVisible().
     ///
     /// **See also:** visible
-    /// event()
-    /// QHideEvent
-    fn hide(&self) -> &Self {
+    /// [`event()`]
+    /// [`HideEvent`]
+    fn hide(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).hide)(obj_data);
         }
-        self
     }
     ///
     /// Shows the widget minimized, as an icon.
@@ -7034,18 +6498,17 @@ pub trait WidgetType<'a> {
     /// Calling this function only affects [windows](isWindow())
     ///
     ///
-    /// **See also:** showNormal()
-    /// showMaximized()
-    /// show()
-    /// hide()
-    /// isVisible()
-    /// isMinimized()
-    fn show_minimized(&self) -> &Self {
+    /// **See also:** [`show_normal()`]
+    /// [`show_maximized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
+    /// [`is_minimized()`]
+    fn show_minimized(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).show_minimized)(obj_data);
         }
-        self
     }
     ///
     /// Shows the widget maximized.
@@ -7057,18 +6520,17 @@ pub trait WidgetType<'a> {
     /// managers. See the [Window Geometry](Window%20Geometry)
     /// documentation for an explanation.
     ///
-    /// **See also:** setWindowState()
-    /// showNormal()
-    /// showMinimized()
-    /// show()
-    /// hide()
-    /// isVisible()
-    fn show_maximized(&self) -> &Self {
+    /// **See also:** [`set_window_state()`]
+    /// [`show_normal()`]
+    /// [`show_minimized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
+    fn show_maximized(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).show_maximized)(obj_data);
         }
-        self
     }
     ///
     /// Shows the widget in full-screen mode.
@@ -7098,17 +6560,16 @@ pub trait WidgetType<'a> {
     /// X11 window managers that follow modern post-ICCCM specifications
     /// support full-screen mode properly.
     ///
-    /// **See also:** showNormal()
-    /// showMaximized()
-    /// show()
-    /// hide()
-    /// isVisible()
-    fn show_full_screen(&self) -> &Self {
+    /// **See also:** [`show_normal()`]
+    /// [`show_maximized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
+    fn show_full_screen(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).show_full_screen)(obj_data);
         }
-        self
     }
     ///
     /// Restores the widget after it has been maximized or minimized.
@@ -7116,18 +6577,17 @@ pub trait WidgetType<'a> {
     /// Calling this function only affects [windows](isWindow())
     ///
     ///
-    /// **See also:** setWindowState()
-    /// showMinimized()
-    /// showMaximized()
-    /// show()
-    /// hide()
-    /// isVisible()
-    fn show_normal(&self) -> &Self {
+    /// **See also:** [`set_window_state()`]
+    /// [`show_minimized()`]
+    /// [`show_maximized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
+    fn show_normal(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).show_normal)(obj_data);
         }
-        self
     }
     ///
     /// Closes this widget. Returns `true` if the widget was closed;
@@ -7169,10 +6629,10 @@ pub trait WidgetType<'a> {
     /// uses a helper function to determine whether
     /// or not to close the window:
     ///
-    /// **See also:** event()
-    /// hide()
-    /// close()
-    /// QCloseEvent
+    /// **See also:** [`event()`]
+    /// [`hide()`]
+    /// [`close()`]
+    /// [`CloseEvent`]
     /// {Application Example}
     fn close(&self) -> bool {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -7190,14 +6650,13 @@ pub trait WidgetType<'a> {
     /// **Note**: When using activateWindow(), you can call this function to
     /// ensure that the window is stacked on top.
     ///
-    /// **See also:** lower()
-    /// stackUnder()
-    fn raise(&self) -> &Self {
+    /// **See also:** [`lower()`]
+    /// [`stack_under()`]
+    fn raise(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).raise)(obj_data);
         }
-        self
     }
     ///
     /// Lowers the widget to the bottom of the parent widget's stack.
@@ -7205,30 +6664,28 @@ pub trait WidgetType<'a> {
     /// After this call the widget will be visually behind (and therefore
     /// obscured by) any overlapping sibling widgets.
     ///
-    /// **See also:** raise()
-    /// stackUnder()
-    fn lower(&self) -> &Self {
+    /// **See also:** [`raise()`]
+    /// [`stack_under()`]
+    fn lower(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).lower)(obj_data);
         }
-        self
     }
     ///
     /// Places the widget under *w* in the parent widget's stack.
     ///
     /// To make this work, the widget itself and *w* must be siblings.
     ///
-    /// **See also:** raise()
-    /// lower()
-    fn stack_under<W: WidgetType<'a>>(&self, arg0: &W) -> &Self {
+    /// **See also:** [`raise()`]
+    /// [`lower()`]
+    fn stack_under(&self, arg0: &WidgetTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).stack_under)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// **Overloads**
@@ -7241,17 +6698,40 @@ pub trait WidgetType<'a> {
     ///
     /// The old position is accessible through QMoveEvent::oldPos().
     ///
-    /// **See also:** resizeEvent()
-    /// event()
-    /// move()
-    /// QMoveEvent
-    fn move_widget(&self, x: i32, y: i32) -> &Self {
+    /// **See also:** [`resize_event()`]
+    /// [`event()`]
+    /// [`move()`]
+    /// [`MoveEvent`]
+    fn move_widget(&self, x: i32, y: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).move_widget)(obj_data, x, y);
         }
-        self
     }
+    ///
+    /// **Overloads**
+    /// This corresponds to move(QPoint( *x,* *y)).*
+    ///
+    /// This event handler can be reimplemented in a subclass to receive
+    /// widget move events which are passed in the *event* parameter.
+    /// When the widget receives this event, it is already at the new
+    /// position.
+    ///
+    /// The old position is accessible through QMoveEvent::oldPos().
+    ///
+    /// **See also:** [`resize_event()`]
+    /// [`event()`]
+    /// [`move()`]
+    /// [`MoveEvent`]
+    fn move_2(&self, arg0: &PointTrait) {
+        let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).move_2)(obj_data, obj_arg0_1);
+        }
+    }
+    /// **Overloads**
     /// This corresponds to resize(QSize( *w,* *h)).*
     ///
     /// This event handler can be reimplemented in a subclass to receive
@@ -7264,18 +6744,44 @@ pub trait WidgetType<'a> {
     /// after processing the resize event. No drawing need be (or should
     /// be) done inside this handler.
     ///
-    /// **See also:** moveEvent()
-    /// event()
-    /// resize()
-    /// QResizeEvent
-    /// paintEvent()
+    /// **See also:** [`move_event()`]
+    /// [`event()`]
+    /// [`resize()`]
+    /// [`ResizeEvent`]
+    /// [`paint_event()`]
     /// {Scribble Example}
-    fn resize(&self, w: i32, h: i32) -> &Self {
+    fn resize(&self, w: i32, h: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).resize)(obj_data, w, h);
         }
-        self
+    }
+    /// **Overloads**
+    /// This corresponds to resize(QSize( *w,* *h)).*
+    ///
+    /// This event handler can be reimplemented in a subclass to receive
+    /// widget resize events which are passed in the *event* parameter.
+    /// When resizeEvent() is called, the widget already has its new
+    /// geometry. The old size is accessible through
+    /// QResizeEvent::oldSize().
+    ///
+    /// The widget will be erased and receive a paint event immediately
+    /// after processing the resize event. No drawing need be (or should
+    /// be) done inside this handler.
+    ///
+    /// **See also:** [`move_event()`]
+    /// [`event()`]
+    /// [`resize()`]
+    /// [`ResizeEvent`]
+    /// [`paint_event()`]
+    /// {Scribble Example}
+    fn resize_2(&self, arg0: &SizeTrait) {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).resize_2)(obj_data, obj_arg0_1);
+        }
     }
     ///
     /// Adjusts the size of the widget to fit its contents.
@@ -7290,14 +6796,13 @@ pub trait WidgetType<'a> {
     /// , the window will be at least (200, 100). The maximum size of
     /// a window is 2/3 of the screen's width and height.
     ///
-    /// **See also:** sizeHint()
-    /// childrenRect()
-    fn adjust_size(&self) -> &Self {
+    /// **See also:** [`size_hint()`]
+    /// [`children_rect()`]
+    fn adjust_size(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).adjust_size)(obj_data);
         }
-        self
     }
     ///
     /// Returns `true` if this widget would become visible if *ancestor* is
@@ -7312,9 +6817,9 @@ pub trait WidgetType<'a> {
     ///
     /// isVisibleTo(0) is identical to isVisible().
     ///
-    /// **See also:** show()
-    /// hide()
-    /// isVisible()
+    /// **See also:** [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
     fn is_visible(&self) -> bool {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -7335,10 +6840,10 @@ pub trait WidgetType<'a> {
     ///
     /// isVisibleTo(0) is identical to isVisible().
     ///
-    /// **See also:** show()
-    /// hide()
-    /// isVisible()
-    fn is_visible_to<W: WidgetType<'a>>(&self, arg0: &W) -> bool {
+    /// **See also:** [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
+    fn is_visible_to(&self, arg0: &WidgetTrait) -> bool {
         let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -7396,8 +6901,8 @@ pub trait WidgetType<'a> {
     /// combination of Qt::WindowState: Qt::WindowMinimized,
     /// Qt::WindowMaximized, Qt::WindowFullScreen, and Qt::WindowActive.
     ///
-    /// **See also:** Qt::WindowState
-    /// setWindowState()
+    /// **See also:** [`t::window_state()`]
+    /// [`set_window_state()`]
     fn window_state(&self) -> WindowStates {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -7428,25 +6933,83 @@ pub trait WidgetType<'a> {
     /// When the window state changes, the widget receives a changeEvent()
     /// of type QEvent::WindowStateChange.
     ///
-    /// **See also:** Qt::WindowState
-    /// windowState()
-    fn set_window_state(&self, state: WindowStates) -> &Self {
+    /// **See also:** [`t::window_state()`]
+    /// [`window_state()`]
+    fn set_window_state(&self, state: WindowStates) {
         let enum_state_1 = state as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_window_state)(obj_data, enum_state_1);
         }
-        self
     }
-    fn override_window_state(&self, state: WindowStates) -> &Self {
+    fn override_window_state(&self, state: WindowStates) {
         let enum_state_1 = state as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).override_window_state)(obj_data, enum_state_1);
         }
-        self
+    }
+    ///
+    /// If the value of this property is an invalid size, no size is
+    /// recommended.
+    ///
+    /// The default implementation of sizeHint() returns an invalid size
+    /// if there is no layout for this widget, and returns the layout's
+    /// preferred size otherwise.
+    ///
+    /// **See also:** [`Size::is_valid`]
+    /// [`minimum_size_hint()`]
+    /// [`size_policy()`]
+    /// [`set_minimum_size()`]
+    /// [`update_geometry()`]
+    fn size_hint(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).size_hint)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// If the value of this property is an invalid size, no minimum size
+    /// is recommended.
+    ///
+    /// The default implementation of minimumSizeHint() returns an invalid
+    /// size if there is no layout for this widget, and returns the
+    /// layout's minimum size otherwise. Most built-in widgets reimplement
+    /// minimumSizeHint().
+    ///
+    /// [QLayout](QLayout)
+    /// will never resize a widget to a size smaller than the
+    /// minimum size hint unless minimumSize() is set or the size policy is
+    /// set to QSizePolicy::Ignore. If minimumSize() is set, the minimum
+    /// size hint will be ignored.
+    ///
+    /// **See also:** [`Size::is_valid`]
+    /// [`resize()`]
+    /// [`set_minimum_size()`]
+    /// [`size_policy()`]
+    fn minimum_size_hint(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).minimum_size_hint)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
     }
     ///
     /// If there is a QLayout that manages this widget's children, the
@@ -7468,10 +7031,10 @@ pub trait WidgetType<'a> {
     /// use additional space, and that they can make do with less than
     /// sizeHint().
     ///
-    /// **See also:** sizeHint()
-    /// QLayout
-    /// QSizePolicy
-    /// updateGeometry()
+    /// **See also:** [`size_hint()`]
+    /// [`Layout`]
+    /// [`SizePolicy`]
+    /// [`update_geometry()`]
     fn size_policy(&self) -> SizePolicy {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -7490,30 +7053,51 @@ pub trait WidgetType<'a> {
     /// **Overloads**
     /// Sets the size policy of the widget to *horizontal* and *vertical,* with standard stretch and no height-for-width.
     ///
-    /// **See also:** QSizePolicy::QSizePolicy()
-    fn set_size_policy<S: SizePolicyType<'a>>(&self, arg0: &S) -> &Self {
+    /// **See also:** [`SizePolicy::q_size_policy`]
+    fn set_size_policy(&self, arg0: &SizePolicyTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_size_policy_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_size_policy)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// **Overloads**
     /// Sets the size policy of the widget to *horizontal* and *vertical,* with standard stretch and no height-for-width.
     ///
-    /// **See also:** QSizePolicy::QSizePolicy()
-    fn set_size_policy(&self, horizontal: Policy, vertical: Policy) -> &Self {
+    /// **See also:** [`SizePolicy::q_size_policy`]
+    fn set_size_policy_2(&self, horizontal: Policy, vertical: Policy) {
         let enum_horizontal_1 = horizontal as i32;
         let enum_vertical_2 = vertical as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).set_size_policy)(obj_data, enum_horizontal_1, enum_vertical_2);
+            ((*funcs).set_size_policy_2)(obj_data, enum_horizontal_1, enum_vertical_2);
         }
-        self
+    }
+    ///
+    /// Returns the preferred height for this widget, given the width *w.*
+    ///
+    /// If this widget has a layout, the default implementation returns
+    /// the layout's preferred height. if there is no layout, the default
+    /// implementation returns -1 indicating that the preferred height
+    /// does not depend on the width.
+    fn height_for_width(&self, arg0: i32) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).height_for_width)(obj_data, arg0);
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if the widget's preferred height depends on its width; otherwise returns `false.`
+    fn has_height_for_width(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).has_height_for_width)(obj_data);
+            ret_val
+        }
     }
     ///
     /// Returns the unobscured region where paint events can occur.
@@ -7546,8 +7130,8 @@ pub trait WidgetType<'a> {
     ///
     /// Changing the margins will trigger a resizeEvent().
     ///
-    /// **See also:** contentsRect()
-    /// getContentsMargins()
+    /// **See also:** [`contents_rect()`]
+    /// [`get_contents_margins()`]
     ///
     /// **Overloads**
     ///
@@ -7558,19 +7142,48 @@ pub trait WidgetType<'a> {
     ///
     /// Changing the margins will trigger a resizeEvent().
     ///
-    /// **See also:** contentsRect()
-    /// getContentsMargins()
-    fn set_contents_margins(&self, left: i32, top: i32, right: i32, bottom: i32) -> &Self {
+    /// **See also:** [`contents_rect()`]
+    /// [`get_contents_margins()`]
+    fn set_contents_margins(&self, left: i32, top: i32, right: i32, bottom: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_contents_margins)(obj_data, left, top, right, bottom);
         }
-        self
     }
     ///
-    /// **See also:** getContentsMargins()
-    /// setContentsMargins()
-    /// contentsRect()
+    /// Sets the margins around the contents of the widget to have the sizes
+    /// *left,* *top,* *right,* and *bottom.* The margins are used by
+    /// the layout system, and may be used by subclasses to specify the area
+    /// to draw in (e.g. excluding the frame).
+    ///
+    /// Changing the margins will trigger a resizeEvent().
+    ///
+    /// **See also:** [`contents_rect()`]
+    /// [`get_contents_margins()`]
+    ///
+    /// **Overloads**
+    ///
+    /// Sets the margins around the contents of the widget to have the
+    /// sizes determined by *margins.* The margins are
+    /// used by the layout system, and may be used by subclasses to
+    /// specify the area to draw in (e.g. excluding the frame).
+    ///
+    /// Changing the margins will trigger a resizeEvent().
+    ///
+    /// **See also:** [`contents_rect()`]
+    /// [`get_contents_margins()`]
+    fn set_contents_margins_2(&self, margins: &MarginsTrait) {
+        let (obj_margins_1, _funcs) = margins.get_margins_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_contents_margins_2)(obj_data, obj_margins_1);
+        }
+    }
+    ///
+    /// **See also:** [`get_contents_margins()`]
+    /// [`set_contents_margins()`]
+    /// [`contents_rect()`]
     fn contents_margins(&self) -> Margins {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -7588,8 +7201,8 @@ pub trait WidgetType<'a> {
     ///
     /// Returns the area inside the widget's margins.
     ///
-    /// **See also:** setContentsMargins()
-    /// getContentsMargins()
+    /// **See also:** [`set_contents_margins()`]
+    /// [`get_contents_margins()`]
     fn contents_rect(&self) -> Rect {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -7616,7 +7229,7 @@ pub trait WidgetType<'a> {
     ///
     /// This method no longer affects text layout direction since Qt 4.7.
     ///
-    /// **See also:** QApplication::layoutDirection
+    /// **See also:** [`Application::layout_direction()`]
     ///
     /// Returns the layout manager that is installed on this widget, or 0
     /// if no layout manager is installed.
@@ -7624,8 +7237,8 @@ pub trait WidgetType<'a> {
     /// The layout manager sets the geometry of the widget's children
     /// that have been added to the layout.
     ///
-    /// **See also:** setLayout()
-    /// sizePolicy()
+    /// **See also:** [`set_layout()`]
+    /// [`size_policy()`]
     /// {Layout Management}
     fn layout(&self) -> Option<Layout> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -7662,16 +7275,15 @@ pub trait WidgetType<'a> {
     ///
     /// The QWidget will take ownership of *layout.*
     ///
-    /// **See also:** layout()
+    /// **See also:** [`layout()`]
     /// {Layout Management}
-    fn set_layout<L: LayoutType<'a>>(&self, arg0: &L) -> &Self {
+    fn set_layout(&self, arg0: &LayoutTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_layout_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_layout)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// Sets the parent of the widget to *parent,* and resets the window
@@ -7700,18 +7312,17 @@ pub trait WidgetType<'a> {
     /// function. If you have a widget that changes its content
     /// dynamically, it is far easier to use [QStackedWidget.](QStackedWidget.)
     ///
-    /// **See also:** setWindowFlags()
+    /// **See also:** [`set_window_flags()`]
     ///
     /// **Overloads**
     /// This function also takes widget flags, *f* as an argument.
-    fn set_parent<W: WidgetType<'a>>(&self, parent: &W) -> &Self {
+    fn set_parent(&self, parent: &WidgetTrait) {
         let (obj_parent_1, _funcs) = parent.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_parent)(obj_data, obj_parent_1);
         }
-        self
     }
     ///
     /// Sets the parent of the widget to *parent,* and resets the window
@@ -7740,19 +7351,18 @@ pub trait WidgetType<'a> {
     /// function. If you have a widget that changes its content
     /// dynamically, it is far easier to use [QStackedWidget.](QStackedWidget.)
     ///
-    /// **See also:** setWindowFlags()
+    /// **See also:** [`set_window_flags()`]
     ///
     /// **Overloads**
     /// This function also takes widget flags, *f* as an argument.
-    fn set_parent<W: WidgetType<'a>>(&self, parent: &W, f: WindowFlags) -> &Self {
+    fn set_parent_2(&self, parent: &WidgetTrait, f: WindowFlags) {
         let (obj_parent_1, _funcs) = parent.get_widget_obj_funcs();
         let enum_f_2 = f as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).set_parent)(obj_data, obj_parent_1, enum_f_2);
+            ((*funcs).set_parent_2)(obj_data, obj_parent_1, enum_f_2);
         }
-        self
     }
     ///
     /// Scrolls the widget including its children *dx* pixels to the
@@ -7781,13 +7391,12 @@ pub trait WidgetType<'a> {
     ///
     /// If *r* is empty or invalid, the result is undefined.
     ///
-    /// **See also:** QScrollArea
-    fn scroll(&self, dx: i32, dy: i32) -> &Self {
+    /// **See also:** [`ScrollArea`]
+    fn scroll(&self, dx: i32, dy: i32) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).scroll)(obj_data, dx, dy);
         }
-        self
     }
     ///
     /// Scrolls the widget including its children *dx* pixels to the
@@ -7816,15 +7425,14 @@ pub trait WidgetType<'a> {
     ///
     /// If *r* is empty or invalid, the result is undefined.
     ///
-    /// **See also:** QScrollArea
-    fn scroll_by_rect<R: RectType<'a>>(&self, dx: i32, dy: i32, arg0: &R) -> &Self {
+    /// **See also:** [`ScrollArea`]
+    fn scroll_2(&self, dx: i32, dy: i32, arg0: &RectTrait) {
         let (obj_arg0_3, _funcs) = arg0.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).scroll_by_rect)(obj_data, dx, dy, obj_arg0_3);
+            ((*funcs).scroll_2)(obj_data, dx, dy, obj_arg0_3);
         }
-        self
     }
     ///
     /// Returns the last child of this widget that setFocus had been
@@ -7853,7 +7461,7 @@ pub trait WidgetType<'a> {
     ///
     /// Returns the next widget in this widget's focus chain.
     ///
-    /// **See also:** previousInFocusChain()
+    /// **See also:** [`previous_in_focus_chain()`]
     fn next_in_focus_chain(&self) -> Option<Widget> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -7872,7 +7480,7 @@ pub trait WidgetType<'a> {
         }
     }
     ///
-    /// **See also:** nextInFocusChain()
+    /// **See also:** [`next_in_focus_chain()`]
     ///
     fn previous_in_focus_chain(&self) -> Option<Widget> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -7911,13 +7519,48 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_accept_drops(&self, on: bool) -> &Self {
+    fn set_accept_drops(&self, on: bool) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_accept_drops)(obj_data, on);
         }
-        self
     }
+    ///
+    /// Appends the action *action* to this widget's list of actions.
+    ///
+    /// All QWidgets have a list of [QAction](QAction)
+    /// s, however they can be
+    /// represented graphically in many different ways. The default use of
+    /// the QAction list (as returned by actions()) is to create a context
+    /// QMenu.
+    ///
+    /// A QWidget should only have one of each action and adding an action
+    /// it already has will not cause the same action to be in the widget twice.
+    ///
+    /// The ownership of *action* is not transferred to this QWidget.
+    ///
+    /// **See also:** [`remove_action()`]
+    /// [`insert_action()`]
+    /// [`actions()`]
+    /// [`Menu`]
+    ///
+    /// Inserts the action *action* to this widget's list of actions,
+    /// before the action *before.* It appends the action if *before* is 0 or
+    /// *before* is not a valid action for this widget.
+    ///
+    /// A QWidget should only have one of each action.
+    ///
+    /// **See also:** [`remove_action()`]
+    /// [`add_action()`]
+    /// [`Menu`]
+    /// contextMenuPolicy
+    /// [`actions()`]
+    ///
+    /// Removes the action *action* from this widget's list of actions.
+    /// **See also:** [`insert_action()`]
+    /// [`actions()`]
+    /// [`insert_action()`]
+    ///
     /// Returns the parent of this widget, or 0 if it does not have any
     /// parent widget.
     fn parent_widget(&self) -> Option<Widget> {
@@ -7937,14 +7580,13 @@ pub trait WidgetType<'a> {
             Some(ret_val)
         }
     }
-    fn set_window_flags(&self, flags: WindowFlags) -> &Self {
-        let enum_flags_1 = flags as i32;
+    fn set_window_flags(&self, gtype: WindowFlags) {
+        let enum_gtype_1 = gtype as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).set_window_flags)(obj_data, enum_flags_1);
+            ((*funcs).set_window_flags)(obj_data, enum_gtype_1);
         }
-        self
     }
     ///
     /// Window flags are a combination of a type (e.g. Qt::Dialog) and
@@ -7961,8 +7603,8 @@ pub trait WidgetType<'a> {
     /// a window, causing the widget to be hidden. You must call show() to make
     /// the widget visible again..
     ///
-    /// **See also:** windowType()
-    /// setWindowFlag()
+    /// **See also:** [`window_type()`]
+    /// [`set_window_flag()`]
     /// {Window Flags Example}
     fn window_flags(&self) -> WindowFlags {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -7976,18 +7618,9 @@ pub trait WidgetType<'a> {
     /// Sets the window flag *flag* on this widget if *on* is true;
     /// otherwise clears the flag.
     ///
-    /// **See also:** setWindowFlags()
-    /// windowFlags()
-    /// windowType()
-    fn set_window_flag(&self, flag: WindowType, on: bool) -> &Self {
-        let enum_flag_1 = flag as i32;
-
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            ((*funcs).set_window_flag)(obj_data, enum_flag_1, on);
-        }
-        self
-    }
+    /// **See also:** [`set_window_flags()`]
+    /// [`window_flags()`]
+    /// [`window_type()`]
     ///
     /// Sets the window flags for the widget to *flags,*
     /// *without* telling the window system.
@@ -7995,27 +7628,13 @@ pub trait WidgetType<'a> {
     /// **Warning**: Do not call this function unless you really know what
     /// you're doing.
     ///
-    /// **See also:** setWindowFlags()
-    fn override_window_flags(&self, flags: WindowFlags) -> &Self {
-        let enum_flags_1 = flags as i32;
+    /// **See also:** [`set_window_flags()`]
+    fn override_window_flags(&self, wtype: WindowFlags) {
+        let enum_wtype_1 = wtype as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            ((*funcs).override_window_flags)(obj_data, enum_flags_1);
-        }
-        self
-    }
-    ///
-    /// Returns the window type of this widget. This is identical to
-    /// windowFlags() & Qt::WindowType_Mask.
-    ///
-    /// **See also:** windowFlags
-    fn window_type(&self) -> WindowType {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).window_type)(obj_data);
-            let ret_val = { transmute::<i32, WindowType>(ret_val) };
-            ret_val
+            ((*funcs).override_window_flags)(obj_data, enum_wtype_1);
         }
     }
     ///
@@ -8051,12 +7670,12 @@ pub trait WidgetType<'a> {
     /// **Overloads**
     /// Returns the visible child widget at point *p* in the widget's own
     /// coordinate system.
-    fn child_at<P: PointType<'a>>(&self, p: &P) -> Option<Widget> {
+    fn child_at_2(&self, p: &PointTrait) -> Option<Widget> {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).child_at)(obj_data, obj_p_1);
+            let ret_val = ((*funcs).child_at_2)(obj_data, obj_p_1);
             if ret_val.qt_data == ::std::ptr::null() {
                 return None;
             }
@@ -8066,6 +7685,30 @@ pub trait WidgetType<'a> {
                 ret_val = Widget::new_from_rc(t);
             } else {
                 ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Returns the widget's paint engine.
+    ///
+    /// Note that this function should not be called explicitly by the
+    /// user, since it's meant for reimplementation purposes only. The
+    /// function is called by Qt internally, and the default
+    /// implementation may not always return a valid pointer.
+    fn paint_engine(&self) -> Option<PaintEngine> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).paint_engine)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = PaintEngine::new_from_rc(t);
+            } else {
+                ret_val = PaintEngine::new_from_owned(t);
             }
             Some(ret_val)
         }
@@ -8091,19 +7734,18 @@ pub trait WidgetType<'a> {
     /// **Note:** The function is declared const so that it can be called from
     /// other const functions (e.g., sizeHint()).
     ///
-    /// **See also:** event()
-    fn ensure_polished(&self) -> &Self {
+    /// **See also:** [`event()`]
+    fn ensure_polished(&self) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).ensure_polished)(obj_data);
         }
-        self
     }
     ///
     /// Returns `true` if this widget is a parent, (or grandparent and so on
     /// to any level), of the given *child,* and both widgets are within
     /// the same window; otherwise returns `false.`
-    fn is_ancestor_of<W: WidgetType<'a>>(&self, child: &W) -> bool {
+    fn is_ancestor_of(&self, child: &WidgetTrait) -> bool {
         let (obj_child_1, _funcs) = child.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -8131,8 +7773,8 @@ pub trait WidgetType<'a> {
     ///
     /// By default, this property is `false.`
     ///
-    /// **See also:** Qt::WA_OpaquePaintEvent
-    /// Qt::WA_NoSystemBackground
+    /// **See also:** [`t::wa_opaque_paint_event()`]
+    /// [`t::wa_no_system_background()`]
     /// {QWidget#Transparency and Double Buffering}{Transparency and Double Buffering}
     fn auto_fill_background(&self) -> bool {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -8141,12 +7783,11 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_auto_fill_background(&self, enabled: bool) -> &Self {
+    fn set_auto_fill_background(&self, enabled: bool) {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_auto_fill_background)(obj_data, enabled);
         }
-        self
     }
     ///
     /// Returns the QBackingStore this widget will be drawn into.
@@ -8174,7 +7815,7 @@ pub trait WidgetType<'a> {
     /// Native widgets include toplevel widgets, QGLWidget, and child widgets
     /// on which winId() was called.
     ///
-    /// **See also:** winId()
+    /// **See also:** [`win_id()`]
     fn window_handle(&self) -> Option<Window> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -8193,6 +7834,27 @@ pub trait WidgetType<'a> {
         }
     }
     ///
+    /// Initializes the *painter* pen, background and font to the same as
+    /// the given widget's. This function is called automatically when the
+    /// painter is opened on a QWidget.
+    ///
+    /// This event handler, for event *event,* can be reimplemented in a
+    /// subclass to receive Input Method composition events. This handler
+    /// is called when the state of the input method changes.
+    ///
+    /// Note that when creating custom text editing widgets, the
+    /// Qt::WA_InputMethodEnabled window attribute must be set explicitly
+    /// (using the setAttribute() function) in order to receive input
+    /// method events.
+    ///
+    /// The default implementation calls event->ignore(), which rejects the
+    /// Input Method event. See the [QInputMethodEvent](QInputMethodEvent)
+    /// documentation for more
+    /// details.
+    ///
+    /// **See also:** [`event()`]
+    /// [`InputMethodEvent`]
+    ///
     /// This is only relevant for input widgets. It is used by
     /// the input method to retrieve hints as to how the input method
     /// should operate. For example, if the Qt::ImhFormattedNumbersOnly flag
@@ -8210,7 +7872,7 @@ pub trait WidgetType<'a> {
     ///
     /// The default value is Qt::ImhNone.
     ///
-    /// **See also:** inputMethodQuery()
+    /// **See also:** [`input_method_query()`]
     fn input_method_hints(&self) -> InputMethodHints {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -8219,313 +7881,43 @@ pub trait WidgetType<'a> {
             ret_val
         }
     }
-    fn set_input_method_hints(&self, hints: InputMethodHints) -> &Self {
+    fn set_input_method_hints(&self, hints: InputMethodHints) {
         let enum_hints_1 = hints as i32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             ((*funcs).set_input_method_hints)(obj_data, enum_hints_1);
         }
-        self
-    }
-    ///
-    /// Updates the widget's micro focus.
-    fn update_micro_focus(&self) -> &Self {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            ((*funcs).update_micro_focus)(obj_data);
-        }
-        self
-    }
-    ///
-    /// Creates a QWidget that makes it possible to embed *window* into
-    /// a QWidget-based application.
-    ///
-    /// The window container is created as a child of *parent* and with
-    /// window flags *flags.*
-    ///
-    /// Once the window has been embedded into the container, the
-    /// container will control the window's geometry and
-    /// visibility. Explicit calls to QWindow::setGeometry(),
-    /// QWindow::show() or QWindow::hide() on an embedded window is not
-    /// recommended.
-    ///
-    /// The container takes over ownership of *window.* The window can
-    /// be removed from the window container with a call to
-    /// QWindow::setParent().
-    ///
-    /// The window container is attached as a native child window to the
-    /// toplevel window it is a child of. When a window container is used
-    /// as a child of a QAbstractScrollArea or QMdiArea, it will
-    /// create a [native window](Native%20Widgets%20vs%20Alien%20Widgets)
-    /// for
-    /// every widget in its parent chain to allow for proper stacking and
-    /// clipping in this use case. Creating a native window for the window
-    /// container also allows for proper stacking and clipping. This must
-    /// be done before showing the window container. Applications with
-    /// many native child windows may suffer from performance issues.
-    ///
-    /// The window container has a number of known limitations:
-    ///
-    /// * Stacking order; The embedded window will stack on top of the widget hierarchy as an opaque box. The stacking order of multiple overlapping window container instances is undefined.
-    /// * Rendering Integration; The window container does not interoperate with QGraphicsProxyWidget, QWidget::render() or similar functionality.
-    /// * Focus Handling; It is possible to let the window container instance have any focus policy and it will delegate focus to the window via a call to QWindow::requestActivate(). However, returning to the normal focus chain from the QWindow instance will be up to the QWindow instance implementation itself. For instance, when entering a Qt Quick based window with tab focus, it is quite likely that further tab presses will only cycle inside the QML application. Also, whether QWindow::requestActivate() actually gives the window focus, is platform dependent.
-    /// * Using many window container instances in a QWidget-based application can greatly hurt the overall performance of the application.
-    ///
-    /// Creates a new widget window.
-    ///
-    /// The parameter *window* is ignored in Qt 5. Please use
-    /// QWindow::fromWinId() to create a QWindow wrapping a foreign
-    /// window and pass it to QWidget::createWindowContainer() instead.
-    ///
-    /// Initializes the window (sets the geometry etc.) if *initializeWindow* is true. If *initializeWindow* is false, no
-    /// initialization is performed. This parameter only makes sense if *window* is a valid window.
-    ///
-    /// Destroys the old window if *destroyOldWindow* is true. If *destroyOldWindow* is false, you are responsible for destroying the
-    /// window yourself (using platform native code).
-    ///
-    /// The QWidget constructor calls create(0,true,true) to create a
-    /// window for this widget.
-    ///
-    /// **See also:** createWindowContainer()
-    /// QWindow::fromWinId()
-    fn create(&self, arg0: WId, initialize_window: bool, destroy_old_window: bool) -> &Self {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            ((*funcs).create)(obj_data, arg0, initialize_window, destroy_old_window);
-        }
-        self
-    }
-    ///
-    /// Finds a new widget to give the keyboard focus to, as appropriate
-    /// for **Tab,** and returns `true` if it can find a new widget, or
-    /// false if it can't.
-    ///
-    /// **See also:** focusPreviousChild()
-    fn focus_next_child(&self) -> bool {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).focus_next_child)(obj_data);
-            ret_val
-        }
-    }
-    ///
-    /// Finds a new widget to give the keyboard focus to, as appropriate
-    /// for **Shift+Tab,** and returns `true` if it can find a new widget,
-    /// or false if it can't.
-    ///
-    /// **See also:** focusNextChild()
-    fn focus_previous_child(&self) -> bool {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).focus_previous_child)(obj_data);
-            ret_val
-        }
-    }
-    ///
-    /// This signal is emitted when the window's title has changed, with the
-    /// new *title* as an argument.
-    ///
-
-    fn set_window_title_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &str) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &str) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_window_title_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_window_title_changed_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_window_title_changed_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&str) + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&str) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_window_title_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_window_title_changed_trampoline as usize),
-            );
-        }
-
-        self
-    }
-    ///
-    /// This signal is emitted when the window's icon has changed, with the
-    /// new *icon* as an argument.
-    ///
-
-    fn set_window_icon_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &IconType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &IconType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_window_icon_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_window_icon_changed_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_window_icon_changed_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&IconType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&IconType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_window_icon_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_window_icon_changed_trampoline as usize),
-            );
-        }
-
-        self
-    }
-    ///
-    /// This signal is emitted when the window's icon text has changed, with the
-    /// new *iconText* as an argument.
-    ///
-    /// This signal is deprecated.
-
-    fn set_window_icon_text_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &str) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &str) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_window_icon_text_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_window_icon_text_changed_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_window_icon_text_changed_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&str) + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&str) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_window_icon_text_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_window_icon_text_changed_trampoline as usize),
-            );
-        }
-
-        self
-    }
-    ///
-    /// This signal is emitted when the widget's [contextMenuPolicy](contextMenuPolicy)
-    /// is
-    /// Qt::CustomContextMenu, and the user has requested a context menu on
-    /// the widget. The position *pos* is the position of the context menu
-    /// event that the widget receives. Normally this is in widget
-    /// coordinates. The exception to this rule is QAbstractScrollArea and
-    /// its subclasses that map the context menu event to coordinates of the
-    /// [viewport()](QAbstractScrollArea::viewport())
-    ///
-    ///
-    /// **See also:** mapToGlobal()
-    /// QMenu
-    /// contextMenuPolicy
-
-    fn set_custom_context_menu_requested_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PointType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PointType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_custom_context_menu_requested_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(widget_custom_context_menu_requested_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    fn set_custom_context_menu_requested_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PointType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&PointType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_custom_context_menu_requested_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(widget_custom_context_menu_requested_trampoline as usize),
-            );
-        }
-
-        self
     }
 
     #[inline]
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs);
 }
 
-impl<'a> WidgetType<'a> for Widget<'a> {
+impl<'a> ObjectTrait<'a> for Widget<'a> {
+    #[inline]
+    fn get_object_obj_funcs(&self) -> (*const RUBase, *const RUObjectFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).object_funcs) }
+    }
+}
+
+impl<'a> PaintDeviceTrait<'a> for Widget<'a> {
+    #[inline]
+    fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).paint_device_funcs) }
+    }
+}
+
+impl<'a> WidgetTrait<'a> for Widget<'a> {
     #[inline]
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).widget_funcs) }
     }
 }
-pub trait WidgetStaticType {
+pub trait WidgetStaticTrait {
     ///
     /// Puts the *second* widget after the *first* widget in the focus order.
     ///
@@ -8546,10 +7938,10 @@ pub trait WidgetStaticType {
     /// compound widgets, the resulting tab order will be from the last child inside
     /// *first,* to the first child inside *second.*
     ///
-    /// **See also:** setFocusPolicy()
-    /// setFocusProxy()
+    /// **See also:** [`set_focus_policy()`]
+    /// [`set_focus_proxy()`]
     /// {Keyboard Focus in Widgets}
-    fn set_tab_order<'a, W: WidgetType<'a>>(arg0: &W, arg1: &W) {
+    fn set_tab_order<'a>(arg0: &WidgetTrait<'a>, arg1: &WidgetTrait<'a>) {
         let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
         let (obj_arg1_2, _funcs) = arg1.get_widget_obj_funcs();
 
@@ -8569,8 +7961,8 @@ pub trait WidgetStaticType {
     /// If no widget in this application is currently grabbing the mouse,
     /// 0 is returned.
     ///
-    /// **See also:** grabMouse()
-    /// keyboardGrabber()
+    /// **See also:** [`grab_mouse()`]
+    /// [`keyboard_grabber()`]
     fn mouse_grabber<'a>() -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
@@ -8599,8 +7991,8 @@ pub trait WidgetStaticType {
     /// If no widget in this application is currently grabbing the
     /// keyboard, 0 is returned.
     ///
-    /// **See also:** grabMouse()
-    /// mouseGrabber()
+    /// **See also:** [`grab_mouse()`]
+    /// [`mouse_grabber()`]
     fn keyboard_grabber<'a>() -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
@@ -8624,12 +8016,17 @@ pub trait WidgetStaticType {
         }
     }
     ///
+    /// Returns the window type of this widget. This is identical to
+    /// windowFlags() & Qt::WindowType_Mask.
+    ///
+    /// **See also:** windowFlags
+    ///
     /// Returns a pointer to the widget with window identifer/handle *id.*
     ///
     /// The window identifier type depends on the underlying window
     /// system, see `qwindowdefs.h` for the actual definition. If there
     /// is no widget with this identifier, 0 is returned.
-    fn find<'a>(arg0: WId<'a>) -> Option<Widget<'a>> {
+    fn find<'a>(arg0: u64) -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -8685,9 +8082,9 @@ pub trait WidgetStaticType {
     /// * Rendering Integration; The window container does not interoperate with QGraphicsProxyWidget, QWidget::render() or similar functionality.
     /// * Focus Handling; It is possible to let the window container instance have any focus policy and it will delegate focus to the window via a call to QWindow::requestActivate(). However, returning to the normal focus chain from the QWindow instance will be up to the QWindow instance implementation itself. For instance, when entering a Qt Quick based window with tab focus, it is quite likely that further tab presses will only cycle inside the QML application. Also, whether QWindow::requestActivate() actually gives the window focus, is platform dependent.
     /// * Using many window container instances in a QWidget-based application can greatly hurt the overall performance of the application.
-    fn create_window_container<'a, A: WidgetType<'a>, W: WindowType<'a>>(
-        window: &W,
-        parent: &A,
+    fn create_window_container<'a>(
+        window: &WindowTrait<'a>,
+        parent: &WidgetTrait<'a>,
         flags: WindowFlags,
     ) -> Option<Widget<'a>> {
         let (obj_window_1, _funcs) = window.get_window_obj_funcs();
@@ -8722,6 +8119,14 @@ pub trait WidgetStaticType {
     }
 }
 
-impl<'a> WidgetStaticType for Widget<'a> {}
+impl<'a> WidgetStaticTrait for Widget<'a> {}
 
-impl<'a> WidgetStaticType for WidgetStatic<'a> {}
+impl<'a> WidgetStaticTrait for WidgetStatic<'a> {}
+#[repr(u32)]
+pub enum RenderFlag {
+    DrawWindowBackground,
+    DrawChildren,
+    IgnoreMask,
+}
+
+pub type RenderFlags = RenderFlag;

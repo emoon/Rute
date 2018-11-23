@@ -2,6 +2,10 @@
 use rute_ffi_base::*;
 
 #[allow(unused_imports)]
+use auto::point_ffi::RUPoint;
+#[allow(unused_imports)]
+use auto::size_ffi::RUSize;
+#[allow(unused_imports)]
 use std::os::raw::c_void;
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -14,6 +18,7 @@ pub struct RURectFuncs {
     pub top: extern "C" fn(self_c: *const RUBase) -> i32,
     pub right: extern "C" fn(self_c: *const RUBase) -> i32,
     pub bottom: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub normalized: extern "C" fn(self_c: *const RUBase) -> RURect,
     pub x: extern "C" fn(self_c: *const RUBase) -> i32,
     pub y: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_left: extern "C" fn(self_c: *const RUBase, pos: i32),
@@ -22,15 +27,46 @@ pub struct RURectFuncs {
     pub set_bottom: extern "C" fn(self_c: *const RUBase, pos: i32),
     pub set_x: extern "C" fn(self_c: *const RUBase, x: i32),
     pub set_y: extern "C" fn(self_c: *const RUBase, y: i32),
+    pub set_top_left: extern "C" fn(self_c: *const RUBase, p: *const RUBase),
+    pub set_bottom_right: extern "C" fn(self_c: *const RUBase, p: *const RUBase),
+    pub set_top_right: extern "C" fn(self_c: *const RUBase, p: *const RUBase),
+    pub set_bottom_left: extern "C" fn(self_c: *const RUBase, p: *const RUBase),
+    pub top_left: extern "C" fn(self_c: *const RUBase) -> RUPoint,
+    pub bottom_right: extern "C" fn(self_c: *const RUBase) -> RUPoint,
+    pub top_right: extern "C" fn(self_c: *const RUBase) -> RUPoint,
+    pub bottom_left: extern "C" fn(self_c: *const RUBase) -> RUPoint,
+    pub center: extern "C" fn(self_c: *const RUBase) -> RUPoint,
     pub move_left: extern "C" fn(self_c: *const RUBase, pos: i32),
     pub move_top: extern "C" fn(self_c: *const RUBase, pos: i32),
     pub move_right: extern "C" fn(self_c: *const RUBase, pos: i32),
     pub move_bottom: extern "C" fn(self_c: *const RUBase, pos: i32),
+    pub move_top_left: extern "C" fn(self_c: *const RUBase, p: *const RUBase),
+    pub move_bottom_right: extern "C" fn(self_c: *const RUBase, p: *const RUBase),
+    pub move_top_right: extern "C" fn(self_c: *const RUBase, p: *const RUBase),
+    pub move_bottom_left: extern "C" fn(self_c: *const RUBase, p: *const RUBase),
+    pub move_center: extern "C" fn(self_c: *const RUBase, p: *const RUBase),
     pub move_to: extern "C" fn(self_c: *const RUBase, x: i32, t: i32),
+    pub move_to_2: extern "C" fn(self_c: *const RUBase, p: *const RUBase),
+    pub set_rect: extern "C" fn(self_c: *const RUBase, x: i32, y: i32, w: i32, h: i32),
+    pub set_coords: extern "C" fn(self_c: *const RUBase, x1: i32, y1: i32, x2: i32, y2: i32),
+    pub adjust: extern "C" fn(self_c: *const RUBase, x1: i32, y1: i32, x2: i32, y2: i32),
+    pub adjusted:
+        extern "C" fn(self_c: *const RUBase, x1: i32, y1: i32, x2: i32, y2: i32) -> RURect,
+    pub size: extern "C" fn(self_c: *const RUBase) -> RUSize,
     pub width: extern "C" fn(self_c: *const RUBase) -> i32,
     pub height: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_width: extern "C" fn(self_c: *const RUBase, w: i32),
     pub set_height: extern "C" fn(self_c: *const RUBase, h: i32),
+    pub set_size: extern "C" fn(self_c: *const RUBase, s: *const RUBase),
+    pub contains: extern "C" fn(self_c: *const RUBase, r: *const RUBase, proper: bool) -> bool,
+    pub contains_2: extern "C" fn(self_c: *const RUBase, p: *const RUBase, proper: bool) -> bool,
+    pub contains_3: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) -> bool,
+    pub contains_4: extern "C" fn(self_c: *const RUBase, x: i32, y: i32, proper: bool) -> bool,
+    pub united: extern "C" fn(self_c: *const RUBase, other: *const RUBase) -> RURect,
+    pub intersected: extern "C" fn(self_c: *const RUBase, other: *const RUBase) -> RURect,
+    pub intersects: extern "C" fn(self_c: *const RUBase, r: *const RUBase) -> bool,
+    pub margins_added: extern "C" fn(self_c: *const RUBase, margins: *const RUBase) -> RURect,
+    pub margins_removed: extern "C" fn(self_c: *const RUBase, margins: *const RUBase) -> RURect,
 }
 
 #[repr(C)]

@@ -84,7 +84,7 @@ static int paint_engine_state_background_mode(struct RUBase* self_c) {
 static struct RUFont paint_engine_state_font(struct RUBase* self_c) {
     WRPaintEngineState* qt_value = (WRPaintEngineState*)self_c;
     auto ret_value = qt_value->font();
-    QFont* new_val = new QFont();
+    WRFont* new_val = new WRFont();
     *new_val = ret_value;
     struct RUFont ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -152,11 +152,9 @@ static float paint_engine_state_opacity(struct RUBase* self_c) {
 static struct RUPainter paint_engine_state_painter(struct RUBase* self_c) {
     WRPaintEngineState* qt_value = (WRPaintEngineState*)self_c;
     auto ret_value = qt_value->painter();
-    WRPainter* new_val = new WRPainter();
-    *new_val = ret_value;
     struct RUPainter ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
     ctl.all_funcs = &s_painter_all_funcs;
     return ctl;
 }

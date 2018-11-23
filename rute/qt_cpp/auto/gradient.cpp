@@ -19,7 +19,7 @@ static int gradient_get_type(struct RUBase* self_c) {
 
 static void gradient_set_spread(struct RUBase* self_c, int spread) {
     WRGradient* qt_value = (WRGradient*)self_c;
-    qt_value->setSpread((Gradient::Spread)s_spread_lookup[spread]);
+    qt_value->setSpread((QGradient::Spread)s_spread_lookup[spread]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ static int gradient_coordinate_mode(struct RUBase* self_c) {
 
 static void gradient_set_coordinate_mode(struct RUBase* self_c, int mode) {
     WRGradient* qt_value = (WRGradient*)self_c;
-    qt_value->setCoordinateMode((Gradient::CoordinateMode)s_coordinate_mode_lookup[mode]);
+    qt_value->setCoordinateMode((QGradient::CoordinateMode)s_coordinate_mode_lookup[mode]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@ static int gradient_interpolation_mode(struct RUBase* self_c) {
 
 static void gradient_set_interpolation_mode(struct RUBase* self_c, int mode) {
     WRGradient* qt_value = (WRGradient*)self_c;
-    qt_value->setInterpolationMode((Gradient::InterpolationMode)s_interpolation_mode_lookup[mode]);
+    qt_value->setInterpolationMode((QGradient::InterpolationMode)s_interpolation_mode_lookup[mode]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

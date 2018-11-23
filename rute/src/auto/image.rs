@@ -16,9 +16,54 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::color::Color;
+#[allow(unused_imports)]
+use auto::color::ColorTrait;
+#[allow(unused_imports)]
+use auto::color_ffi::*;
+#[allow(unused_imports)]
+use auto::image_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_device::*;
+#[allow(unused_imports)]
+use auto::paint_device_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_engine::PaintEngine;
+#[allow(unused_imports)]
+use auto::pixel_format::PixelFormat;
+#[allow(unused_imports)]
+use auto::point::Point;
+#[allow(unused_imports)]
+use auto::point::PointTrait;
+#[allow(unused_imports)]
+use auto::point_ffi::*;
+#[allow(unused_imports)]
+use auto::rect::Rect;
+#[allow(unused_imports)]
+use auto::rect::RectTrait;
+#[allow(unused_imports)]
+use auto::rect_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_enums::AspectRatioMode;
+#[allow(unused_imports)]
+use auto::rute_enums::GlobalColor;
+#[allow(unused_imports)]
+use auto::rute_enums::ImageConversionFlags;
+#[allow(unused_imports)]
+use auto::rute_enums::TransformationMode;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
+#[allow(unused_imports)]
+use auto::size::Size;
+#[allow(unused_imports)]
+use auto::size::SizeTrait;
+#[allow(unused_imports)]
+use auto::size_ffi::*;
 ///
 /// Qt provides four classes for handling image data: QImage, QPixmap,
 /// QBitmap and QPicture. QImage is designed and optimized for I/O,
@@ -265,10 +310,10 @@ use auto::*;
 /// * setColorCount()
 /// * Resizes the color table. Only monochrome and 8-bit formats.
 ///
-/// **See also:** QImageReader
-/// QImageWriter
-/// QPixmap
-/// QSvgRenderer
+/// **See also:** [`ImageReader`]
+/// [`ImageWriter`]
+/// [`Pixmap`]
+/// [`SvgRenderer`]
 /// {Image Composition Example}
 /// {Image Viewer Example}
 /// {Scribble Example}
@@ -331,141 +376,23 @@ impl<'a> Image<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn set_dev_type_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_dev_type_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(image_dev_type_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_dev_type_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_dev_type_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(image_dev_type_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_paint_engine_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_paint_engine_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(image_paint_engine_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_paint_engine_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_paint_engine_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(image_paint_engine_trampoline as usize),
-            );
-        }
-
-        self
-    }
 }
 
 pub struct ImageStatic<'a> {
     pub all_funcs: *const RUImageAllFuncs,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
-
-unsafe extern "C" fn image_dev_type_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> i32 {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn image_dev_type_trampoline(self_c: *const c_void, func: *const c_void) -> i32 {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-unsafe extern "C" fn image_paint_engine_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUPaintEngine {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn image_paint_engine_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUPaintEngine {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-pub trait ImageType<'a> {
+pub trait ImageTrait<'a> {
     ///
     /// Swaps image *other* with this image. This operation is very
     /// fast and never fails.
-    fn swap<I: ImageType<'a>>(&self, other: &I) -> &Self {
+    fn swap(&self, other: &ImageTrait) {
         let (obj_other_1, _funcs) = other.get_image_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
-        self
     }
     ///
     /// Returns `true` if it is a null image, otherwise returns `false.`
@@ -478,12 +405,18 @@ pub trait ImageType<'a> {
             ret_val
         }
     }
-    fn detach(&self) -> &Self {
+    fn dev_type(&self) -> i32 {
+        let (obj_data, funcs) = self.get_image_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).dev_type)(obj_data);
+            ret_val
+        }
+    }
+    fn detach(&self) {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).detach)(obj_data);
         }
-        self
     }
     fn is_detached(&self) -> bool {
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -513,13 +446,13 @@ pub trait ImageType<'a> {
     /// If the given *rectangle* is a null rectangle the entire image is
     /// copied.
     ///
-    /// **See also:** QImage()
-    fn copy_by_rect<R: RectType<'a>>(&self, rect: &R) -> Image {
+    /// **See also:** [`q_image()`]
+    fn copy(&self, rect: &RectTrait) -> Image {
         let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).copy_by_rect)(obj_data, obj_rect_1);
+            let ret_val = ((*funcs).copy)(obj_data, obj_rect_1);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -551,11 +484,11 @@ pub trait ImageType<'a> {
     /// If the given *rectangle* is a null rectangle the entire image is
     /// copied.
     ///
-    /// **See also:** QImage()
-    fn copy(&self, x: i32, y: i32, w: i32, h: i32) -> Image {
+    /// **See also:** [`q_image()`]
+    fn copy_2(&self, x: i32, y: i32, w: i32, h: i32) -> Image {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).copy)(obj_data, x, y, w, h);
+            let ret_val = ((*funcs).copy_2)(obj_data, x, y, w, h);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -611,6 +544,53 @@ pub trait ImageType<'a> {
         }
     }
     ///
+    /// Returns a copy of the image in the given *format.*
+    ///
+    /// The specified image conversion *flags* control how the image data
+    /// is handled during the conversion process.
+    ///
+    /// **See also:** {Image Formats}
+    ///
+    /// **Overloads**
+    /// Returns a copy of the image converted to the given *format,*
+    /// using the specified *colorTable.*
+    ///
+    /// Conversion from RGB formats to indexed formats is a slow operation
+    /// and will use a straightforward nearest color approach, with no
+    /// dithering.
+    fn convert_to_format_2(&self, f: Format, flags: ImageConversionFlags) -> Image {
+        let enum_f_1 = f as i32;
+        let enum_flags_2 = flags as i32;
+
+        let (obj_data, funcs) = self.get_image_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).convert_to_format_2)(obj_data, enum_f_1, enum_flags_2);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Image::new_from_rc(t);
+            } else {
+                ret_val = Image::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns a copy of the image in the given *format.*
+    ///
+    /// The specified image conversion *flags* control how the image data
+    /// is handled during the conversion process.
+    ///
+    /// **See also:** {Image Formats}
+    ///
+    /// **Overloads**
+    /// Returns a copy of the image converted to the given *format,*
+    /// using the specified *colorTable.*
+    ///
+    /// Conversion from RGB formats to indexed formats is a slow operation
+    /// and will use a straightforward nearest color approach, with no
+    /// dithering.
+    ///
     /// Changes the format of the image to *format* without changing the
     /// data. Only works between formats of the same depth.
     ///
@@ -628,8 +608,8 @@ pub trait ImageType<'a> {
     /// **Warning**: If the image is not detached, this will cause the data to be
     /// copied.
     ///
-    /// **See also:** hasAlphaChannel()
-    /// convertToFormat()
+    /// **See also:** [`has_alpha_channel()`]
+    /// [`convert_to_format()`]
     fn reinterpret_as_format(&self, f: Format) -> bool {
         let enum_f_1 = f as i32;
 
@@ -668,9 +648,9 @@ pub trait ImageType<'a> {
     ///
     /// Returns the image data size in bytes.
     ///
-    /// **See also:** byteCount()
-    /// bytesPerLine()
-    /// bits()
+    /// **See also:** [`byte_count()`]
+    /// [`bytes_per_line()`]
+    /// [`bits()`]
     /// {QImage#Image Information}{Image
     /// Information}
     fn size(&self) -> Size {
@@ -714,8 +694,8 @@ pub trait ImageType<'a> {
     ///
     /// The supported depths are 1, 8, 16, 24 and 32.
     ///
-    /// **See also:** bitPlaneCount()
-    /// convertToFormat()
+    /// **See also:** [`bit_plane_count()`]
+    /// [`convert_to_format()`]
     /// {QImage#Image Formats}{Image Formats}
     /// {QImage#Image Information}{Image Information}
     ///
@@ -733,7 +713,7 @@ pub trait ImageType<'a> {
     /// images do not use color tables, but instead encode pixel values as
     /// ARGB quadruplets.
     ///
-    /// **See also:** setColorCount()
+    /// **See also:** [`set_color_count()`]
     /// {QImage#Image Information}{Image Information}
     fn color_count(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -750,8 +730,8 @@ pub trait ImageType<'a> {
     /// (i.e. smaller than) the depth when the image format contains
     /// unused bits.
     ///
-    /// **See also:** depth()
-    /// format()
+    /// **See also:** [`depth()`]
+    /// [`format()`]
     /// {QImage#Image Formats}{Image Formats}
     fn bit_plane_count(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -767,15 +747,15 @@ pub trait ImageType<'a> {
     /// images do not use color tables, but instead encode pixel values as
     /// ARGB quadruplets.
     ///
-    /// **See also:** setColorCount()
+    /// **See also:** [`set_color_count()`]
     /// {QImage#Image Information}{Image Information}
     ///
     /// Returns a list of the colors contained in the image's color table,
     /// or an empty list if the image does not have a color table
     ///
-    /// **See also:** setColorTable()
-    /// colorCount()
-    /// color()
+    /// **See also:** [`set_color_table()`]
+    /// [`color_count()`]
+    /// [`color()`]
     ///
     /// Returns the color in the color table at index *i.* The first
     /// color is at index 0.
@@ -784,17 +764,10 @@ pub trait ImageType<'a> {
     /// quadruplets (QRgb). Use the qAlpha(), qRed(), qGreen(), and
     /// qBlue() functions to get the color value components.
     ///
-    /// **See also:** setColor()
-    /// pixelIndex()
+    /// **See also:** [`set_color()`]
+    /// [`pixel_index()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
-    fn color(&self, i: i32) -> u32 {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).color)(obj_data, i);
-            ret_val
-        }
-    }
     ///
     /// Sets the color at the given *index* in the color table, to the
     /// given to *colorValue.* The color value is an ARGB quadruplet.
@@ -802,9 +775,9 @@ pub trait ImageType<'a> {
     /// If *index* is outside the current size of the color table, it is
     /// expanded with setColorCount().
     ///
-    /// **See also:** color()
-    /// colorCount()
-    /// setColorTable()
+    /// **See also:** [`color()`]
+    /// [`color_count()`]
+    /// [`set_color_table()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     ///
@@ -817,18 +790,11 @@ pub trait ImageType<'a> {
     /// have entries for all the pixel/index values present in the image,
     /// otherwise the results are undefined.
     ///
-    /// **See also:** colorCount()
-    /// colorTable()
-    /// setColor()
+    /// **See also:** [`color_count()`]
+    /// [`color_table()`]
+    /// [`set_color()`]
     /// {QImage#Image
     /// Transformations}{Image Transformations}
-    fn set_color(&self, i: i32, c: u32) -> &Self {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            ((*funcs).set_color)(obj_data, i, c);
-        }
-        self
-    }
     ///
     /// Resizes the color table to contain *colorCount* entries.
     ///
@@ -839,17 +805,16 @@ pub trait ImageType<'a> {
     /// have entries for all the pixel/index values present in the image,
     /// otherwise the results are undefined.
     ///
-    /// **See also:** colorCount()
-    /// colorTable()
-    /// setColor()
+    /// **See also:** [`color_count()`]
+    /// [`color_table()`]
+    /// [`set_color()`]
     /// {QImage#Image
     /// Transformations}{Image Transformations}
-    fn set_color_count(&self, arg0: i32) -> &Self {
+    fn set_color_count(&self, arg0: i32) {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_color_count)(obj_data, arg0);
         }
-        self
     }
     ///
     /// Returns `true` if all the colors in the image are shades of gray
@@ -858,7 +823,7 @@ pub trait ImageType<'a> {
     ///
     /// Note that this function is slow for images without color table.
     ///
-    /// **See also:** isGrayscale()
+    /// **See also:** [`is_grayscale()`]
     fn all_gray(&self) -> bool {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -873,7 +838,7 @@ pub trait ImageType<'a> {
     /// color(i) is QRgb(i, i, i) for all indexes of the color table;
     /// otherwise returns `false.`
     ///
-    /// **See also:** allGray()
+    /// **See also:** [`all_gray()`]
     /// {QImage#Image Formats}{Image Formats}
     fn is_grayscale(&self) -> bool {
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -892,25 +857,34 @@ pub trait ImageType<'a> {
     /// data, thus ensuring that this QImage is the only one using the
     /// current return value.
     ///
-    /// **See also:** scanLine()
-    /// sizeInBytes()
-    /// constBits()
+    /// **See also:** [`scan_line()`]
+    /// [`size_in_bytes()`]
+    /// [`const_bits()`]
     ///
     /// **Overloads**
     /// Note that QImage uses [implicit data
     /// sharing](Implicit%20Data%20Sharing)
     /// , but this function does *not* perform a deep copy of the
     /// shared pixel data, because the returned data is const.
-    fn bits(&self) -> Option<u8> {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).bits)(obj_data);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            Some(ret_val)
-        }
-    }
+    ///
+    /// Returns a pointer to the first pixel data. This is equivalent to
+    /// scanLine(0).
+    ///
+    /// Note that QImage uses [implicit data
+    /// sharing](Implicit%20Data%20Sharing)
+    /// . This function performs a deep copy of the shared pixel
+    /// data, thus ensuring that this QImage is the only one using the
+    /// current return value.
+    ///
+    /// **See also:** [`scan_line()`]
+    /// [`size_in_bytes()`]
+    /// [`const_bits()`]
+    ///
+    /// **Overloads**
+    /// Note that QImage uses [implicit data
+    /// sharing](Implicit%20Data%20Sharing)
+    /// , but this function does *not* perform a deep copy of the
+    /// shared pixel data, because the returned data is const.
     ///
     /// Returns a pointer to the first pixel data.
     ///
@@ -919,27 +893,17 @@ pub trait ImageType<'a> {
     /// , but this function does *not* perform a deep copy of the
     /// shared pixel data, because the returned data is const.
     ///
-    /// **See also:** bits()
-    /// constScanLine()
-    fn const_bits(&self) -> Option<u8> {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).const_bits)(obj_data);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            Some(ret_val)
-        }
-    }
+    /// **See also:** [`bits()`]
+    /// [`const_scan_line()`]
     ///
     /// Returns the number of bytes occupied by the image data.
     ///
     /// Note this method should never be called on an image larger than 2 gigabytes.
     /// Instead use sizeInBytes().
     ///
-    /// **See also:** sizeInBytes()
-    /// bytesPerLine()
-    /// bits()
+    /// **See also:** [`size_in_bytes()`]
+    /// [`bytes_per_line()`]
+    /// [`bits()`]
     /// {QImage#Image Information}{Image
     /// Information}
     fn byte_count(&self) -> i32 {
@@ -952,18 +916,11 @@ pub trait ImageType<'a> {
     ///
     /// Returns the image data size in bytes.
     ///
-    /// **See also:** byteCount()
-    /// bytesPerLine()
-    /// bits()
+    /// **See also:** [`byte_count()`]
+    /// [`bytes_per_line()`]
+    /// [`bits()`]
     /// {QImage#Image Information}{Image
     /// Information}
-    fn size_in_bytes(&self) -> i32 {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).size_in_bytes)(obj_data);
-            ret_val
-        }
-    }
     ///
     /// Returns a pointer to the pixel data at the scanline with index *i.* The first scanline is at index 0.
     ///
@@ -971,27 +928,35 @@ pub trait ImageType<'a> {
     ///
     /// **Warning**: If you are accessing 32-bpp image data, cast the returned
     /// pointer to `QRgb*` (QRgb has a 32-bit size) and use it to
-    /// read/write the pixel value. You cannot use the `u8*` pointer
+    /// read/write the pixel value. You cannot use the `uchar*` pointer
     /// directly, because the pixel format depends on the byte order on
     /// the underlying platform. Use qRed(), qGreen(), qBlue(), and
     /// qAlpha() to access the pixels.
     ///
-    /// **See also:** bytesPerLine()
-    /// bits()
+    /// **See also:** [`bytes_per_line()`]
+    /// [`bits()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}, constScanLine()
     ///
     /// **Overloads**
-    fn scan_line(&self, arg0: i32) -> Option<u8> {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).scan_line)(obj_data, arg0);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            Some(ret_val)
-        }
-    }
+    ///
+    /// Returns a pointer to the pixel data at the scanline with index *i.* The first scanline is at index 0.
+    ///
+    /// The scanline data is aligned on a 32-bit boundary.
+    ///
+    /// **Warning**: If you are accessing 32-bpp image data, cast the returned
+    /// pointer to `QRgb*` (QRgb has a 32-bit size) and use it to
+    /// read/write the pixel value. You cannot use the `uchar*` pointer
+    /// directly, because the pixel format depends on the byte order on
+    /// the underlying platform. Use qRed(), qGreen(), qBlue(), and
+    /// qAlpha() to access the pixels.
+    ///
+    /// **See also:** [`bytes_per_line()`]
+    /// [`bits()`]
+    /// {QImage#Pixel Manipulation}{Pixel
+    /// Manipulation}, constScanLine()
+    ///
+    /// **Overloads**
     ///
     /// Returns a pointer to the pixel data at the scanline with index *i.* The first scanline is at index 0.
     ///
@@ -1002,24 +967,14 @@ pub trait ImageType<'a> {
     /// , but this function does *not* perform a deep copy of the
     /// shared pixel data, because the returned data is const.
     ///
-    /// **See also:** scanLine()
-    /// constBits()
-    fn const_scan_line(&self, arg0: i32) -> Option<u8> {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).const_scan_line)(obj_data, arg0);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            Some(ret_val)
-        }
-    }
+    /// **See also:** [`scan_line()`]
+    /// [`const_bits()`]
     ///
     /// Returns the number of bytes per image scanline.
     ///
     /// This is equivalent to sizeInBytes() / height() if height() is non-zero.
     ///
-    /// **See also:** scanLine()
+    /// **See also:** [`scan_line()`]
     fn bytes_per_line(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -1031,8 +986,8 @@ pub trait ImageType<'a> {
     /// Returns `true` if *pos* is a valid coordinate pair within the
     /// image; otherwise returns `false.`
     ///
-    /// **See also:** rect()
-    /// QRect::contains()
+    /// **See also:** [`rect()`]
+    /// [`Rect::contains`]
     ///
     /// **Overloads**
     /// Returns `true` if QPoint( *x,* *y)* is a valid coordinate pair
@@ -1048,18 +1003,18 @@ pub trait ImageType<'a> {
     /// Returns `true` if *pos* is a valid coordinate pair within the
     /// image; otherwise returns `false.`
     ///
-    /// **See also:** rect()
-    /// QRect::contains()
+    /// **See also:** [`rect()`]
+    /// [`Rect::contains`]
     ///
     /// **Overloads**
     /// Returns `true` if QPoint( *x,* *y)* is a valid coordinate pair
     /// within the image; otherwise returns `false.`
-    fn valid_by_point<P: PointType<'a>>(&self, pt: &P) -> bool {
+    fn valid_2(&self, pt: &PointTrait) -> bool {
         let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).valid_by_point)(obj_data, obj_pt_1);
+            let ret_val = ((*funcs).valid_2)(obj_data, obj_pt_1);
             ret_val
         }
     }
@@ -1069,8 +1024,8 @@ pub trait ImageType<'a> {
     /// If *position* is not valid, or if the image is not a paletted
     /// image (depth() > 8), the results are undefined.
     ///
-    /// **See also:** valid()
-    /// depth()
+    /// **See also:** [`valid()`]
+    /// [`depth()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     ///
     /// **Overloads**
@@ -1088,18 +1043,18 @@ pub trait ImageType<'a> {
     /// If *position* is not valid, or if the image is not a paletted
     /// image (depth() > 8), the results are undefined.
     ///
-    /// **See also:** valid()
-    /// depth()
+    /// **See also:** [`valid()`]
+    /// [`depth()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     ///
     /// **Overloads**
     /// Returns the pixel index at ( *x,* *y).*
-    fn pixel_index_by_point<P: PointType<'a>>(&self, pt: &P) -> i32 {
+    fn pixel_index_2(&self, pt: &PointTrait) -> i32 {
         let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).pixel_index_by_point)(obj_data, obj_pt_1);
+            let ret_val = ((*funcs).pixel_index_2)(obj_data, obj_pt_1);
             ret_val
         }
     }
@@ -1109,8 +1064,8 @@ pub trait ImageType<'a> {
     /// If *position* is not valid, or if the image is not a paletted
     /// image (depth() > 8), the results are undefined.
     ///
-    /// **See also:** valid()
-    /// depth()
+    /// **See also:** [`valid()`]
+    /// [`depth()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     ///
     /// **Overloads**
@@ -1124,10 +1079,10 @@ pub trait ImageType<'a> {
     /// manipulations. Use constBits() or constScanLine() when many
     /// pixels needs to be read.
     ///
-    /// **See also:** setPixel()
-    /// valid()
-    /// constBits()
-    /// constScanLine()
+    /// **See also:** [`set_pixel()`]
+    /// [`valid()`]
+    /// [`const_bits()`]
+    /// [`const_scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     ///
@@ -1142,10 +1097,10 @@ pub trait ImageType<'a> {
     /// manipulations. Use constBits() or constScanLine() when many
     /// pixels needs to be read.
     ///
-    /// **See also:** setPixel()
-    /// valid()
-    /// constBits()
-    /// constScanLine()
+    /// **See also:** [`set_pixel()`]
+    /// [`valid()`]
+    /// [`const_bits()`]
+    /// [`const_scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     ///
@@ -1153,21 +1108,14 @@ pub trait ImageType<'a> {
     /// Returns the color of the pixel at coordinates ( *x,* *y)* as a QColor.
     ///
     /// Returns the QImage::Format as a QPixelFormat
-    fn pixel(&self, x: i32, y: i32) -> u32 {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).pixel)(obj_data, x, y);
-            ret_val
-        }
-    }
     ///
     /// Returns the pixel index at the given *position.*
     ///
     /// If *position* is not valid, or if the image is not a paletted
     /// image (depth() > 8), the results are undefined.
     ///
-    /// **See also:** valid()
-    /// depth()
+    /// **See also:** [`valid()`]
+    /// [`depth()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     ///
     /// **Overloads**
@@ -1181,10 +1129,10 @@ pub trait ImageType<'a> {
     /// manipulations. Use constBits() or constScanLine() when many
     /// pixels needs to be read.
     ///
-    /// **See also:** setPixel()
-    /// valid()
-    /// constBits()
-    /// constScanLine()
+    /// **See also:** [`set_pixel()`]
+    /// [`valid()`]
+    /// [`const_bits()`]
+    /// [`const_scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     ///
@@ -1199,10 +1147,10 @@ pub trait ImageType<'a> {
     /// manipulations. Use constBits() or constScanLine() when many
     /// pixels needs to be read.
     ///
-    /// **See also:** setPixel()
-    /// valid()
-    /// constBits()
-    /// constScanLine()
+    /// **See also:** [`set_pixel()`]
+    /// [`valid()`]
+    /// [`const_bits()`]
+    /// [`const_scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     ///
@@ -1210,15 +1158,6 @@ pub trait ImageType<'a> {
     /// Returns the color of the pixel at coordinates ( *x,* *y)* as a QColor.
     ///
     /// Returns the QImage::Format as a QPixelFormat
-    fn pixel_by_point<P: PointType<'a>>(&self, pt: &P) -> u32 {
-        let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
-
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).pixel_by_point)(obj_data, obj_pt_1);
-            ret_val
-        }
-    }
     ///
     /// Sets the pixel index or color at the given *position* to *index_or_rgb.*
     ///
@@ -1233,7 +1172,7 @@ pub trait ImageType<'a> {
     /// `detach()` function called within; if performance is a concern, we
     /// recommend the use of scanLine() or bits() to access pixel data directly.
     ///
-    /// **See also:** pixel()
+    /// **See also:** [`pixel()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     ///
     /// **Overloads**
@@ -1248,19 +1187,18 @@ pub trait ImageType<'a> {
     /// `detach()` function called within; if performance is a concern, we
     /// recommend the use of scanLine() or bits() to access pixel data directly.
     ///
-    /// **See also:** pixel()
-    /// bits()
-    /// scanLine()
+    /// **See also:** [`pixel()`]
+    /// [`bits()`]
+    /// [`scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     ///
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
-    fn set_pixel(&self, x: i32, y: i32, index_or_rgb: uint) -> &Self {
+    fn set_pixel(&self, x: i32, y: i32, index_or_rgb: u32) {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_pixel)(obj_data, x, y, index_or_rgb);
         }
-        self
     }
     ///
     /// Sets the pixel index or color at the given *position* to *index_or_rgb.*
@@ -1276,7 +1214,7 @@ pub trait ImageType<'a> {
     /// `detach()` function called within; if performance is a concern, we
     /// recommend the use of scanLine() or bits() to access pixel data directly.
     ///
-    /// **See also:** pixel()
+    /// **See also:** [`pixel()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     ///
     /// **Overloads**
@@ -1291,21 +1229,20 @@ pub trait ImageType<'a> {
     /// `detach()` function called within; if performance is a concern, we
     /// recommend the use of scanLine() or bits() to access pixel data directly.
     ///
-    /// **See also:** pixel()
-    /// bits()
-    /// scanLine()
+    /// **See also:** [`pixel()`]
+    /// [`bits()`]
+    /// [`scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     ///
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
-    fn set_pixel_by_point<P: PointType<'a>>(&self, pt: &P, index_or_rgb: uint) -> &Self {
+    fn set_pixel_2(&self, pt: &PointTrait, index_or_rgb: u32) {
         let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
-            ((*funcs).set_pixel_by_point)(obj_data, obj_pt_1, index_or_rgb);
+            ((*funcs).set_pixel_2)(obj_data, obj_pt_1, index_or_rgb);
         }
-        self
     }
     ///
     /// Returns the color of the pixel at the given *position* as a QColor.
@@ -1316,10 +1253,10 @@ pub trait ImageType<'a> {
     /// manipulations. Use constBits() or constScanLine() when many
     /// pixels needs to be read.
     ///
-    /// **See also:** setPixel()
-    /// valid()
-    /// constBits()
-    /// constScanLine()
+    /// **See also:** [`set_pixel()`]
+    /// [`valid()`]
+    /// [`const_bits()`]
+    /// [`const_scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     ///
@@ -1348,21 +1285,21 @@ pub trait ImageType<'a> {
     /// manipulations. Use constBits() or constScanLine() when many
     /// pixels needs to be read.
     ///
-    /// **See also:** setPixel()
-    /// valid()
-    /// constBits()
-    /// constScanLine()
+    /// **See also:** [`set_pixel()`]
+    /// [`valid()`]
+    /// [`const_bits()`]
+    /// [`const_scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel
     /// Manipulation}
     ///
     /// **Overloads**
     /// Returns the color of the pixel at coordinates ( *x,* *y)* as a QColor.
-    fn pixel_color_by_point<P: PointType<'a>>(&self, pt: &P) -> Color {
+    fn pixel_color_2(&self, pt: &PointTrait) -> Color {
         let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).pixel_color_by_point)(obj_data, obj_pt_1);
+            let ret_val = ((*funcs).pixel_color_2)(obj_data, obj_pt_1);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -1383,21 +1320,20 @@ pub trait ImageType<'a> {
     /// `detach()` function called within; if performance is a concern, we
     /// recommend the use of scanLine() or bits() to access pixel data directly.
     ///
-    /// **See also:** pixel()
-    /// bits()
-    /// scanLine()
+    /// **See also:** [`pixel()`]
+    /// [`bits()`]
+    /// [`scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     ///
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
-    fn set_pixel_color<C: ColorType<'a>>(&self, x: i32, y: i32, c: &C) -> &Self {
+    fn set_pixel_color(&self, x: i32, y: i32, c: &ColorTrait) {
         let (obj_c_3, _funcs) = c.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_pixel_color)(obj_data, x, y, obj_c_3);
         }
-        self
     }
     ///
     /// Sets the color at the given *position* to *color.*
@@ -1409,23 +1345,29 @@ pub trait ImageType<'a> {
     /// `detach()` function called within; if performance is a concern, we
     /// recommend the use of scanLine() or bits() to access pixel data directly.
     ///
-    /// **See also:** pixel()
-    /// bits()
-    /// scanLine()
+    /// **See also:** [`pixel()`]
+    /// [`bits()`]
+    /// [`scan_line()`]
     /// {QImage#Pixel Manipulation}{Pixel Manipulation}
     ///
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
-    fn set_pixel_color_by_point<C: ColorType<'a>, P: PointType<'a>>(&self, pt: &P, c: &C) -> &Self {
+    fn set_pixel_color_2(&self, pt: &PointTrait, c: &ColorTrait) {
         let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
         let (obj_c_2, _funcs) = c.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
-            ((*funcs).set_pixel_color_by_point)(obj_data, obj_pt_1, obj_c_2);
+            ((*funcs).set_pixel_color_2)(obj_data, obj_pt_1, obj_c_2);
         }
-        self
     }
+    ///
+    /// Returns a list of the colors contained in the image's color table,
+    /// or an empty list if the image does not have a color table
+    ///
+    /// **See also:** [`set_color_table()`]
+    /// [`color_count()`]
+    /// [`color()`]
     ///
     /// Returns the device pixel ratio for the image. This is the
     /// ratio between *device pixels* and *device independent pixels* .
@@ -1435,8 +1377,8 @@ pub trait ImageType<'a> {
     ///
     /// The default value is 1.0.
     ///
-    /// **See also:** setDevicePixelRatio()
-    /// QImageReader
+    /// **See also:** [`set_device_pixel_ratio()`]
+    /// [`ImageReader`]
     fn device_pixel_ratio(&self) -> f32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -1464,13 +1406,12 @@ pub trait ImageType<'a> {
     /// (see [Drawing High Resolution Versions of Pixmaps and Images](Drawing%20High%20Resolution%20Versions%20of%20Pixmaps%20and%20Images)
     /// ).
     ///
-    /// **See also:** devicePixelRatio()
-    fn set_device_pixel_ratio(&self, scale_factor: f32) -> &Self {
+    /// **See also:** [`device_pixel_ratio()`]
+    fn set_device_pixel_ratio(&self, scale_factor: f32) {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_device_pixel_ratio)(obj_data, scale_factor);
         }
-        self
     }
     ///
     /// Fills the entire image with the given *pixelValue.*
@@ -1487,7 +1428,7 @@ pub trait ImageType<'a> {
     /// you will want to use QImage::pixel() to use a color from an
     /// existing image or QColor::rgb() to use a specific color.
     ///
-    /// **See also:** depth()
+    /// **See also:** [`depth()`]
     /// {QImage#Image Transformations}{Image Transformations}
     ///
     /// **Overloads**
@@ -1504,12 +1445,11 @@ pub trait ImageType<'a> {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     ///
-    fn fill(&self, pixel: u32) -> &Self {
+    fn fill(&self, pixel: u32) {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).fill)(obj_data, pixel);
         }
-        self
     }
     ///
     /// Fills the entire image with the given *pixelValue.*
@@ -1526,7 +1466,7 @@ pub trait ImageType<'a> {
     /// you will want to use QImage::pixel() to use a color from an
     /// existing image or QColor::rgb() to use a specific color.
     ///
-    /// **See also:** depth()
+    /// **See also:** [`depth()`]
     /// {QImage#Image Transformations}{Image Transformations}
     ///
     /// **Overloads**
@@ -1543,14 +1483,13 @@ pub trait ImageType<'a> {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     ///
-    fn fill_by_type<C: ColorType<'a>>(&self, color: &C) -> &Self {
+    fn fill_2(&self, color: &ColorTrait) {
         let (obj_color_1, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
-            ((*funcs).fill_by_type)(obj_data, obj_color_1);
+            ((*funcs).fill_2)(obj_data, obj_color_1);
         }
-        self
     }
     ///
     /// Fills the entire image with the given *pixelValue.*
@@ -1567,7 +1506,7 @@ pub trait ImageType<'a> {
     /// you will want to use QImage::pixel() to use a color from an
     /// existing image or QColor::rgb() to use a specific color.
     ///
-    /// **See also:** depth()
+    /// **See also:** [`depth()`]
     /// {QImage#Image Transformations}{Image Transformations}
     ///
     /// **Overloads**
@@ -1584,14 +1523,13 @@ pub trait ImageType<'a> {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     ///
-    fn fill_by_color(&self, color: GlobalColor) -> &Self {
+    fn fill_3(&self, color: GlobalColor) {
         let enum_color_1 = color as i32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
-            ((*funcs).fill_by_color)(obj_data, enum_color_1);
+            ((*funcs).fill_3)(obj_data, enum_color_1);
         }
-        self
     }
     ///
     /// Returns `true` if the image has a format that respects the alpha
@@ -1619,17 +1557,16 @@ pub trait ImageType<'a> {
     ///
     /// **Warning**: This function is expensive.
     ///
-    /// **See also:** alphaChannel()
+    /// **See also:** [`alpha_channel()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}, {QImage#Image Formats}{Image Formats}
-    fn set_alpha_channel<I: ImageType<'a>>(&self, alpha_channel: &I) -> &Self {
+    fn set_alpha_channel(&self, alpha_channel: &ImageTrait) {
         let (obj_alpha_channel_1, _funcs) = alpha_channel.get_image_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_alpha_channel)(obj_data, obj_alpha_channel_1);
         }
-        self
     }
     ///
     /// Returns the alpha channel of the image as a new grayscale QImage in which
@@ -1650,9 +1587,9 @@ pub trait ImageType<'a> {
     ///
     /// **Warning**: This is an expensive function.
     ///
-    /// **See also:** setAlphaChannel()
-    /// hasAlphaChannel()
-    /// convertToFormat()
+    /// **See also:** [`set_alpha_channel()`]
+    /// [`has_alpha_channel()`]
+    /// [`convert_to_format()`]
     /// {QPixmap#Pixmap Information}{Pixmap}
     /// {QImage#Image Transformations}{Image Transformations}
     fn alpha_channel(&self) -> Image {
@@ -1683,7 +1620,7 @@ pub trait ImageType<'a> {
     /// big-endian (QImage::Format_Mono) using the convertToFormat()
     /// function.
     ///
-    /// **See also:** createHeuristicMask()
+    /// **See also:** [`create_heuristic_mask()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}
     fn create_alpha_mask(&self, flags: ImageConversionFlags) -> Image {
@@ -1722,7 +1659,7 @@ pub trait ImageType<'a> {
     ///
     /// Note that this function disregards the alpha buffer.
     ///
-    /// **See also:** createAlphaMask()
+    /// **See also:** [`create_alpha_mask()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}
     fn create_heuristic_mask(&self, clip_tight: bool) -> Image {
@@ -1745,25 +1682,8 @@ pub trait ImageType<'a> {
     /// *mode* is MaskOutColor, all pixels matching the given color will
     /// be transparent.
     ///
-    /// **See also:** createAlphaMask()
-    /// createHeuristicMask()
-    fn create_mask_from_color<R: RgbType<'a>>(&self, color: &R, mode: MaskMode) -> Image {
-        let (obj_color_1, _funcs) = color.get_rgb_obj_funcs();
-        let enum_mode_2 = mode as i32;
-
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).create_mask_from_color)(obj_data, obj_color_1, enum_mode_2);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Image::new_from_rc(t);
-            } else {
-                ret_val = Image::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
+    /// **See also:** [`create_alpha_mask()`]
+    /// [`create_heuristic_mask()`]
     ///
     /// Qt::TransformationMode transformMode) const
     /// **Overloads**
@@ -1787,7 +1707,7 @@ pub trait ImageType<'a> {
     ///
     /// If the given *size* is empty, this function returns a null image.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}
     ///
@@ -1856,7 +1776,7 @@ pub trait ImageType<'a> {
     ///
     /// If the given *size* is empty, this function returns a null image.
     ///
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}
     ///
@@ -1879,9 +1799,9 @@ pub trait ImageType<'a> {
     /// If the given *height* is 0 or negative, a null image is returned.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn scaled_by_size<S: SizeType<'a>>(
+    fn scaled_2(
         &self,
-        s: &S,
+        s: &SizeTrait,
         aspect_mode: AspectRatioMode,
         mode: TransformationMode,
     ) -> Image {
@@ -1891,8 +1811,7 @@ pub trait ImageType<'a> {
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
-            let ret_val =
-                ((*funcs).scaled_by_size)(obj_data, obj_s_1, enum_aspect_mode_2, enum_mode_3);
+            let ret_val = ((*funcs).scaled_2)(obj_data, obj_s_1, enum_aspect_mode_2, enum_mode_3);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -1962,10 +1881,31 @@ pub trait ImageType<'a> {
     /// Note that the original image is not changed.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn mirrored(&self, horizontally: bool, vertically: bool) -> Option<Image> {
+    fn mirrored(&self, horizontally: bool, vertically: bool) -> Image {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).mirrored)(obj_data, horizontally, vertically);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Image::new_from_rc(t);
+            } else {
+                ret_val = Image::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns a mirror of the image, mirrored in the horizontal and/or
+    /// the vertical direction depending on whether *horizontal* and *vertical* are set to true or false.
+    ///
+    /// Note that the original image is not changed.
+    ///
+    /// **See also:** {QImage#Image Transformations}{Image Transformations}
+    fn mirrored_2(&self, horizontally: bool, vertically: bool) -> Option<Image> {
+        let (obj_data, funcs) = self.get_image_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).mirrored_2)(obj_data, horizontally, vertically);
             if ret_val.qt_data == ::std::ptr::null() {
                 return None;
             }
@@ -1987,10 +1927,32 @@ pub trait ImageType<'a> {
     /// The original QImage is not changed.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn rgb_swapped(&self) -> Option<Image> {
+    fn rgb_swapped(&self) -> Image {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rgb_swapped)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Image::new_from_rc(t);
+            } else {
+                ret_val = Image::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns a QImage in which the values of the red and blue
+    /// components of all pixels have been swapped, effectively converting
+    /// an RGB image to an BGR image.
+    ///
+    /// The original QImage is not changed.
+    ///
+    /// **See also:** {QImage#Image Transformations}{Image Transformations}
+    fn rgb_swapped_2(&self) -> Option<Image> {
+        let (obj_data, funcs) = self.get_image_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).rgb_swapped_2)(obj_data);
             if ret_val.qt_data == ::std::ptr::null() {
                 return None;
             }
@@ -2021,14 +1983,13 @@ pub trait ImageType<'a> {
     /// converted to ARGB32 to be inverted and then converted back.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn invert_pixels(&self, arg0: InvertMode) -> &Self {
+    fn invert_pixels(&self, arg0: InvertMode) {
         let enum_arg0_1 = arg0 as i32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).invert_pixels)(obj_data, enum_arg0_1);
         }
-        self
     }
     ///
     /// Loads an image from the file with the given *fileName.* Returns `true` if
@@ -2064,15 +2025,6 @@ pub trait ImageType<'a> {
     ///
     /// **Overloads**
     /// Loads an image from the given QByteArray *data.*
-    fn load_by_io_device<I: IODeviceType<'a>>(&self, device: &I, format: &char) -> bool {
-        let (obj_device_1, _funcs) = device.get_io_device_obj_funcs();
-
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).load_by_io_device)(obj_data, obj_device_1, format);
-            ret_val
-        }
-    }
     ///
     /// Loads an image from the file with the given *fileName.* Returns `true` if
     /// the image was successfully loaded; otherwise invalidates the image
@@ -2107,15 +2059,6 @@ pub trait ImageType<'a> {
     ///
     /// **Overloads**
     /// Loads an image from the given QByteArray *data.*
-    fn load(&self, file_name: &str, format: &char) -> bool {
-        let str_in_file_name_1 = CString::new(file_name).unwrap();
-
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).load)(obj_data, str_in_file_name_1.as_ptr(), format);
-            ret_val
-        }
-    }
     ///
     /// Loads an image from the first *len* bytes of the given binary *data.* Returns `true` if the image was successfully loaded; otherwise
     /// invalidates the image and returns `false.`
@@ -2128,15 +2071,18 @@ pub trait ImageType<'a> {
     ///
     /// **Overloads**
     /// Loads an image from the given QByteArray *data.*
-    fn load_from_data<B: ByteArrayType<'a>>(&self, data: &B, aformat: &char) -> bool {
-        let (obj_data_1, _funcs) = data.get_byte_array_obj_funcs();
-
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).load_from_data)(obj_data, obj_data_1, aformat);
-            ret_val
-        }
-    }
+    ///
+    /// Loads an image from the first *len* bytes of the given binary *data.* Returns `true` if the image was successfully loaded; otherwise
+    /// invalidates the image and returns `false.`
+    ///
+    /// The loader attempts to read the image using the specified *format,* e.g.,
+    /// PNG or JPG. If *format* is not specified (which is the default), the
+    /// loader probes the file for a header to guess the file format.
+    ///
+    /// **See also:** {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
+    ///
+    /// **Overloads**
+    /// Loads an image from the given QByteArray *data.*
     ///
     /// Saves the image to the file with the given *fileName,* using the
     /// given image file *format* and *quality* factor. If *format* is
@@ -2159,15 +2105,62 @@ pub trait ImageType<'a> {
     /// This can, for example, be used to save an image directly into a
     /// QByteArray:
     ///
-    fn save(&self, file_name: &str, format: &char, quality: i32) -> bool {
-        let str_in_file_name_1 = CString::new(file_name).unwrap();
-
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).save)(obj_data, str_in_file_name_1.as_ptr(), format, quality);
-            ret_val
-        }
-    }
+    ///
+    /// Saves the image to the file with the given *fileName,* using the
+    /// given image file *format* and *quality* factor. If *format* is
+    /// 0, QImage will attempt to guess the format by looking at *fileName's*
+    /// suffix.
+    ///
+    /// The *quality* factor must be in the range 0 to 100 or -1. Specify
+    /// 0 to obtain small compressed files, 100 for large uncompressed
+    /// files, and -1 (the default) to use the default settings.
+    ///
+    /// Returns `true` if the image was successfully saved; otherwise
+    /// returns `false.`
+    ///
+    /// **See also:** {QImage#Reading and Writing Image Files}{Reading and Writing
+    /// Image Files}
+    ///
+    /// **Overloads**
+    /// This function writes a QImage to the given *device.*
+    ///
+    /// This can, for example, be used to save an image directly into a
+    /// QByteArray:
+    ///
+    ///
+    /// Constructs a QImage from the first *size* bytes of the given
+    /// binary *data.* The loader attempts to read the image using the
+    /// specified *format.* If *format* is not specified (which is the default),
+    /// the loader probes the data for a header to guess the file format.
+    ///
+    /// If *format* is specified, it must be one of the values returned by
+    /// QImageReader::supportedImageFormats().
+    ///
+    /// If the loading of the image fails, the image returned will be a null image.
+    ///
+    /// **See also:** [`load()`]
+    /// [`save()`]
+    /// {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
+    ///
+    /// **Overloads**
+    /// Loads an image from the given QByteArray *data.*
+    ///
+    /// Constructs a QImage from the first *size* bytes of the given
+    /// binary *data.* The loader attempts to read the image using the
+    /// specified *format.* If *format* is not specified (which is the default),
+    /// the loader probes the data for a header to guess the file format.
+    ///
+    /// If *format* is specified, it must be one of the values returned by
+    /// QImageReader::supportedImageFormats().
+    ///
+    /// If the loading of the image fails, the image returned will be a null image.
+    ///
+    /// **See also:** [`load()`]
+    /// [`save()`]
+    /// {QImage#Reading and Writing Image Files}{Reading and Writing Image Files}
+    ///
+    /// **Overloads**
+    /// Loads an image from the given QByteArray *data.*
     ///
     /// Returns a number that identifies the contents of this QImage
     /// object. Distinct QImage objects can only have the same key if they
@@ -2181,12 +2174,29 @@ pub trait ImageType<'a> {
             ret_val
         }
     }
+    fn paint_engine(&self) -> Option<PaintEngine> {
+        let (obj_data, funcs) = self.get_image_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).paint_engine)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = PaintEngine::new_from_rc(t);
+            } else {
+                ret_val = PaintEngine::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
     ///
     /// Returns the number of pixels that fit horizontally in a physical
     /// meter. Together with dotsPerMeterY(), this number defines the
     /// intended scale and aspect ratio of the image.
     ///
-    /// **See also:** setDotsPerMeterX()
+    /// **See also:** [`set_dots_per_meter_x()`]
     /// {QImage#Image Information}{Image
     /// Information}
     fn dots_per_meter_x(&self) -> i32 {
@@ -2201,7 +2211,7 @@ pub trait ImageType<'a> {
     /// meter. Together with dotsPerMeterX(), this number defines the
     /// intended scale and aspect ratio of the image.
     ///
-    /// **See also:** setDotsPerMeterY()
+    /// **See also:** [`set_dots_per_meter_y()`]
     /// {QImage#Image Information}{Image
     /// Information}
     fn dots_per_meter_y(&self) -> i32 {
@@ -2221,14 +2231,13 @@ pub trait ImageType<'a> {
     /// change the scale or aspect ratio of the image when it is rendered
     /// on other paint devices.
     ///
-    /// **See also:** dotsPerMeterX()
+    /// **See also:** [`dots_per_meter_x()`]
     /// {QImage#Image Information}{Image Information}
-    fn set_dots_per_meter_x(&self, arg0: i32) -> &Self {
+    fn set_dots_per_meter_x(&self, arg0: i32) {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_dots_per_meter_x)(obj_data, arg0);
         }
-        self
     }
     ///
     /// Sets the number of pixels that fit vertically in a physical meter,
@@ -2240,20 +2249,19 @@ pub trait ImageType<'a> {
     /// change the scale or aspect ratio of the image when it is rendered
     /// on other paint devices.
     ///
-    /// **See also:** dotsPerMeterY()
+    /// **See also:** [`dots_per_meter_y()`]
     /// {QImage#Image Information}{Image Information}
-    fn set_dots_per_meter_y(&self, arg0: i32) -> &Self {
+    fn set_dots_per_meter_y(&self, arg0: i32) {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_dots_per_meter_y)(obj_data, arg0);
         }
-        self
     }
     ///
     /// Returns the number of pixels by which the image is intended to be
     /// offset by when positioning relative to other images.
     ///
-    /// **See also:** setOffset()
+    /// **See also:** [`set_offset()`]
     /// {QImage#Image Information}{Image Information}
     fn offset(&self) -> Point {
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -2273,16 +2281,15 @@ pub trait ImageType<'a> {
     /// Sets the number of pixels by which the image is intended to be
     /// offset by when positioning relative to other images, to *offset.*
     ///
-    /// **See also:** offset()
+    /// **See also:** [`offset()`]
     /// {QImage#Image Information}{Image Information}
-    fn set_offset<P: PointType<'a>>(&self, arg0: &P) -> &Self {
+    fn set_offset(&self, arg0: &PointTrait) {
         let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_offset)(obj_data, obj_arg0_1);
         }
-        self
     }
     ///
     /// Returns the text keys for this image.
@@ -2290,29 +2297,21 @@ pub trait ImageType<'a> {
     /// You can use these keys with text() to list the image text for a
     /// certain key.
     ///
-    /// **See also:** text()
-    fn text_keys(&self) -> RefArray<String, WrapperRcOwn> {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).text_keys)(obj_data);
-            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
-            ret_val
-        }
-    }
+    /// **See also:** [`text()`]
     ///
     /// Returns the text keys for this image.
     ///
     /// You can use these keys with text() to list the image text for a
     /// certain key.
     ///
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     ///
     /// Returns the image text associated with the given *key.* If the
     /// specified *key* is an empty string, the whole image text is
     /// returned, with each key-text pair separated by a newline.
     ///
-    /// **See also:** setText()
-    /// textKeys()
+    /// **See also:** [`set_text()`]
+    /// [`text_keys()`]
     ///
     /// Returns the text recorded for the given *key* in the given *language,* or in a default language if *language* is 0.
     ///
@@ -2335,7 +2334,7 @@ pub trait ImageType<'a> {
     /// The language the text is recorded in is no longer relevant since the text is
     /// always set using QString and UTF-8 representation.
     ///
-    /// **See also:** textKeys()
+    /// **See also:** [`text_keys()`]
     ///
     /// Returns a list of QImageTextKeyLang objects that enumerate all the texts
     /// key/language pairs set for this image.
@@ -2343,7 +2342,7 @@ pub trait ImageType<'a> {
     /// The language the text is recorded in is no longer relevant since the text
     /// is always set using QString and UTF-8 representation.
     ///
-    /// **See also:** textKeys()
+    /// **See also:** [`text_keys()`]
     fn text(&self, key: &str) -> String {
         let str_in_key_1 = CString::new(key).unwrap();
 
@@ -2372,8 +2371,8 @@ pub trait ImageType<'a> {
     /// You can use QImageWriter::supportedImageFormats() to find out
     /// which image formats are available to you.
     ///
-    /// **See also:** text()
-    /// textKeys()
+    /// **See also:** [`text()`]
+    /// [`text_keys()`]
     ///
     /// Sets the image text to the given *text* and associate it with the
     /// given *key.* The text is recorded in the specified *language,*
@@ -2384,7 +2383,7 @@ pub trait ImageType<'a> {
     /// The language the text is recorded in is no longer relevant since
     /// the text is always set using QString and UTF-8 representation.
     ///
-    fn set_text(&self, key: &str, value: &str) -> &Self {
+    fn set_text(&self, key: &str, value: &str) {
         let str_in_key_1 = CString::new(key).unwrap();
         let str_in_value_2 = CString::new(value).unwrap();
 
@@ -2392,7 +2391,6 @@ pub trait ImageType<'a> {
         unsafe {
             ((*funcs).set_text)(obj_data, str_in_key_1.as_ptr(), str_in_value_2.as_ptr());
         }
-        self
     }
     ///
     /// Returns the QImage::Format as a QPixelFormat
@@ -2410,100 +2408,12 @@ pub trait ImageType<'a> {
             ret_val
         }
     }
-    fn mirrored_helper(&self, horizontal: bool, vertical: bool) -> Image {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).mirrored_helper)(obj_data, horizontal, vertical);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Image::new_from_rc(t);
-            } else {
-                ret_val = Image::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    fn rgb_swapped_helper(&self) -> Image {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).rgb_swapped_helper)(obj_data);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Image::new_from_rc(t);
-            } else {
-                ret_val = Image::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    fn mirrored_inplace(&self, horizontal: bool, vertical: bool) -> &Self {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            ((*funcs).mirrored_inplace)(obj_data, horizontal, vertical);
-        }
-        self
-    }
-    fn rgb_swapped_inplace(&self) -> &Self {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            ((*funcs).rgb_swapped_inplace)(obj_data);
-        }
-        self
-    }
-    fn convert_to_format_helper(&self, format: Format, flags: ImageConversionFlags) -> Image {
-        let enum_format_1 = format as i32;
-        let enum_flags_2 = flags as i32;
-
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val =
-                ((*funcs).convert_to_format_helper)(obj_data, enum_format_1, enum_flags_2);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Image::new_from_rc(t);
-            } else {
-                ret_val = Image::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    fn convert_to_format_inplace(&self, format: Format, flags: ImageConversionFlags) -> bool {
-        let enum_format_1 = format as i32;
-        let enum_flags_2 = flags as i32;
-
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val =
-                ((*funcs).convert_to_format_inplace)(obj_data, enum_format_1, enum_flags_2);
-            ret_val
-        }
-    }
-    ///
-    /// Returns a smoothly scaled copy of the image. The returned image has a size
-    /// of width *w* by height *h* pixels.
-    fn smooth_scaled(&self, w: i32, h: i32) -> Image {
-        let (obj_data, funcs) = self.get_image_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).smooth_scaled)(obj_data, w, h);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Image::new_from_rc(t);
-            } else {
-                ret_val = Image::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
 
     #[inline]
     fn get_image_obj_funcs(&self) -> (*const RUBase, *const RUImageFuncs);
 }
 
-impl<'a> PaintDeviceType<'a> for Image<'a> {
+impl<'a> PaintDeviceTrait<'a> for Image<'a> {
     #[inline]
     fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
         let obj = self.data.get().unwrap();
@@ -2511,14 +2421,14 @@ impl<'a> PaintDeviceType<'a> for Image<'a> {
     }
 }
 
-impl<'a> ImageType<'a> for Image<'a> {
+impl<'a> ImageTrait<'a> for Image<'a> {
     #[inline]
     fn get_image_obj_funcs(&self) -> (*const RUBase, *const RUImageFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).image_funcs) }
     }
 }
-pub trait ImageStaticType {
+pub trait ImageStaticTrait {
     ///
     /// Converts *format* into a QPixelFormat
     fn to_pixel_format<'a>(format: Format) -> PixelFormat<'a> {
@@ -2542,25 +2452,43 @@ pub trait ImageStaticType {
             ret_val
         }
     }
-    ///
-    /// Converts *format* into a QImage::Format
-    fn to_image_format<'a, P: PixelFormatType<'a>>(format: &P) -> Format {
-        let (obj_format_1, _funcs) = format.get_pixel_format_obj_funcs();
-
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_image)(::std::ptr::null()).all_funcs).image_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).to_image_format)(obj_data, obj_format_1);
-            let ret_val = { transmute::<i32, Format>(ret_val) };
-            ret_val
-        }
-    }
 }
 
-impl<'a> ImageStaticType for Image<'a> {}
+impl<'a> ImageStaticTrait for Image<'a> {}
 
-impl<'a> ImageStaticType for ImageStatic<'a> {}
+impl<'a> ImageStaticTrait for ImageStatic<'a> {}
+#[repr(u32)]
+pub enum InvertMode {
+    InvertRgb,
+    InvertRgba,
+}
+
+#[repr(u32)]
+pub enum Format {
+    FormatInvalid,
+    FormatMono,
+    FormatMonoLsb,
+    FormatIndexed8,
+    FormatRgB32,
+    FormatArgB32,
+    FormatArgB32Premultiplied,
+    FormatRgB16,
+    FormatArgB8565Premultiplied,
+    FormatRgB666,
+    FormatArgB6666Premultiplied,
+    FormatRgB555,
+    FormatArgB8555Premultiplied,
+    FormatRgB888,
+    FormatRgB444,
+    FormatArgB4444Premultiplied,
+    FormatRgbX8888,
+    FormatRgbA8888,
+    FormatRgbA8888Premultiplied,
+    FormatBgR30,
+    FormatA2BgR30Premultiplied,
+    FormatRgB30,
+    FormatA2RgB30Premultiplied,
+    FormatAlpha8,
+    FormatGrayscale8,
+    NImageFormats,
+}

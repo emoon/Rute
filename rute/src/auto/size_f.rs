@@ -16,9 +16,18 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_enums::AspectRatioMode;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
+#[allow(unused_imports)]
+use auto::size::Size;
+#[allow(unused_imports)]
+use auto::size_f_ffi::*;
 ///
 /// A size is specified by a width() and a height(). It can be set in
 /// the constructor and changed using the setWidth(), setHeight(), or
@@ -44,9 +53,9 @@ use auto::*;
 ///
 /// QSizeF objects can be streamed as well as compared.
 ///
-/// **See also:** QSize
-/// QPointF
-/// QRectF
+/// **See also:** [`Size`]
+/// [`PointF`]
+/// [`RectF`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -106,13 +115,13 @@ impl<'a> SizeF<'a> {
         }
     }
 }
-pub trait SizeFType<'a> {
+pub trait SizeFTrait<'a> {
     ///
     /// Returns `true` if both the width and height are 0.0 (ignoring the sign);
     /// otherwise returns `false.`
     ///
-    /// **See also:** isValid()
-    /// isEmpty()
+    /// **See also:** [`is_valid()`]
+    /// [`is_empty()`]
     fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
@@ -124,8 +133,8 @@ pub trait SizeFType<'a> {
     /// Returns `true` if either of the width and height is less than or
     /// equal to 0; otherwise returns `false.`
     ///
-    /// **See also:** isNull()
-    /// isValid()
+    /// **See also:** [`is_null()`]
+    /// [`is_valid()`]
     fn is_empty(&self) -> bool {
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
@@ -137,8 +146,8 @@ pub trait SizeFType<'a> {
     /// Returns `true` if both the width and height is equal to or greater
     /// than 0; otherwise returns `false.`
     ///
-    /// **See also:** isNull()
-    /// isEmpty()
+    /// **See also:** [`is_null()`]
+    /// [`is_empty()`]
     fn is_valid(&self) -> bool {
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
@@ -149,8 +158,8 @@ pub trait SizeFType<'a> {
     ///
     /// Returns the width.
     ///
-    /// **See also:** height()
-    /// setWidth()
+    /// **See also:** [`height()`]
+    /// [`set_width()`]
     fn width(&self) -> f32 {
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
@@ -161,8 +170,8 @@ pub trait SizeFType<'a> {
     ///
     /// Returns the height.
     ///
-    /// **See also:** width()
-    /// setHeight()
+    /// **See also:** [`width()`]
+    /// [`set_height()`]
     fn height(&self) -> f32 {
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
@@ -173,28 +182,26 @@ pub trait SizeFType<'a> {
     ///
     /// Sets the width to the given *width.*
     ///
-    /// **See also:** width()
-    /// rwidth()
-    /// setHeight()
-    fn set_width(&self, w: f32) -> &Self {
+    /// **See also:** [`width()`]
+    /// [`rwidth()`]
+    /// [`set_height()`]
+    fn set_width(&self, w: f32) {
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
             ((*funcs).set_width)(obj_data, w);
         }
-        self
     }
     ///
     /// Sets the height to the given *height.*
     ///
-    /// **See also:** height()
-    /// rheight()
-    /// setWidth()
-    fn set_height(&self, h: f32) -> &Self {
+    /// **See also:** [`height()`]
+    /// [`rheight()`]
+    /// [`set_width()`]
+    fn set_height(&self, h: f32) {
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
             ((*funcs).set_height)(obj_data, h);
         }
-        self
     }
     ///
     /// Scales the size to a rectangle with the given *width* and *height,* according to the specified *mode.*
@@ -205,9 +212,9 @@ pub trait SizeFType<'a> {
     ///
     /// Example:
     ///
-    /// **See also:** setWidth()
-    /// setHeight()
-    /// scaled()
+    /// **See also:** [`set_width()`]
+    /// [`set_height()`]
+    /// [`scaled()`]
     ///
     /// **Overloads**
     /// Scales the size to a rectangle with the given *size,* according to
@@ -216,19 +223,18 @@ pub trait SizeFType<'a> {
     /// Returns a size scaled to a rectangle with the given *width* and
     /// *height,* according to the specified *mode.*
     ///
-    /// **See also:** scale()
+    /// **See also:** [`scale()`]
     ///
     /// **Overloads**
     /// Returns a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
-    fn scale(&self, w: f32, h: f32, mode: AspectRatioMode) -> &Self {
+    fn scale(&self, w: f32, h: f32, mode: AspectRatioMode) {
         let enum_mode_3 = mode as i32;
 
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
             ((*funcs).scale)(obj_data, w, h, enum_mode_3);
         }
-        self
     }
     ///
     /// Scales the size to a rectangle with the given *width* and *height,* according to the specified *mode.*
@@ -239,9 +245,9 @@ pub trait SizeFType<'a> {
     ///
     /// Example:
     ///
-    /// **See also:** setWidth()
-    /// setHeight()
-    /// scaled()
+    /// **See also:** [`set_width()`]
+    /// [`set_height()`]
+    /// [`scaled()`]
     ///
     /// **Overloads**
     /// Scales the size to a rectangle with the given *size,* according to
@@ -250,26 +256,25 @@ pub trait SizeFType<'a> {
     /// Returns a size scaled to a rectangle with the given *width* and
     /// *height,* according to the specified *mode.*
     ///
-    /// **See also:** scale()
+    /// **See also:** [`scale()`]
     ///
     /// **Overloads**
     /// Returns a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
-    fn scale<S: SizeFType<'a>>(&self, s: &S, mode: AspectRatioMode) -> &Self {
+    fn scale_2(&self, s: &SizeFTrait, mode: AspectRatioMode) {
         let (obj_s_1, _funcs) = s.get_size_f_obj_funcs();
         let enum_mode_2 = mode as i32;
 
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
-            ((*funcs).scale)(obj_data, obj_s_1, enum_mode_2);
+            ((*funcs).scale_2)(obj_data, obj_s_1, enum_mode_2);
         }
-        self
     }
     ///
     /// Returns a size scaled to a rectangle with the given *width* and
     /// *height,* according to the specified *mode.*
     ///
-    /// **See also:** scale()
+    /// **See also:** [`scale()`]
     ///
     /// **Overloads**
     /// Returns a size scaled to a rectangle with the given size *s,*
@@ -294,18 +299,18 @@ pub trait SizeFType<'a> {
     /// Returns a size scaled to a rectangle with the given *width* and
     /// *height,* according to the specified *mode.*
     ///
-    /// **See also:** scale()
+    /// **See also:** [`scale()`]
     ///
     /// **Overloads**
     /// Returns a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
-    fn scaled<S: SizeFType<'a>>(&self, s: &S, mode: AspectRatioMode) -> SizeF {
+    fn scaled_2(&self, s: &SizeFTrait, mode: AspectRatioMode) -> SizeF {
         let (obj_s_1, _funcs) = s.get_size_f_obj_funcs();
         let enum_mode_2 = mode as i32;
 
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
-            let ret_val = ((*funcs).scaled)(obj_data, obj_s_1, enum_mode_2);
+            let ret_val = ((*funcs).scaled_2)(obj_data, obj_s_1, enum_mode_2);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -320,9 +325,9 @@ pub trait SizeFType<'a> {
     /// Returns a size holding the maximum width and height of this size
     /// and the given *otherSize.*
     ///
-    /// **See also:** boundedTo()
-    /// scale()
-    fn expanded_to<S: SizeFType<'a>>(&self, arg0: &S) -> SizeF {
+    /// **See also:** [`bounded_to()`]
+    /// [`scale()`]
+    fn expanded_to(&self, arg0: &SizeFTrait) -> SizeF {
         let (obj_arg0_1, _funcs) = arg0.get_size_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
@@ -342,9 +347,9 @@ pub trait SizeFType<'a> {
     /// Returns a size holding the minimum width and height of this size
     /// and the given *otherSize.*
     ///
-    /// **See also:** expandedTo()
-    /// scale()
-    fn bounded_to<S: SizeFType<'a>>(&self, arg0: &S) -> SizeF {
+    /// **See also:** [`expanded_to()`]
+    /// [`scale()`]
+    fn bounded_to(&self, arg0: &SizeFTrait) -> SizeF {
         let (obj_arg0_1, _funcs) = arg0.get_size_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
@@ -366,16 +371,13 @@ pub trait SizeFType<'a> {
     /// Using a reference makes it possible to manipulate the width
     /// directly. For example:
     ///
-    /// **See also:** rheight()
-    /// setWidth()
-    fn rwidth(&self) -> Option<f32> {
+    /// **See also:** [`rheight()`]
+    /// [`set_width()`]
+    fn rwidth(&self) -> f32 {
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rwidth)(obj_data);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            Some(ret_val)
+            ret_val
         }
     }
     ///
@@ -384,16 +386,13 @@ pub trait SizeFType<'a> {
     /// Using a reference makes it possible to manipulate the height
     /// directly. For example:
     ///
-    /// **See also:** rwidth()
-    /// setHeight()
-    fn rheight(&self) -> Option<f32> {
+    /// **See also:** [`rwidth()`]
+    /// [`set_height()`]
+    fn rheight(&self) -> f32 {
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rheight)(obj_data);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            Some(ret_val)
+            ret_val
         }
     }
     ///
@@ -402,7 +401,7 @@ pub trait SizeFType<'a> {
     /// Note that the coordinates in the returned size will be rounded to
     /// the nearest integer.
     ///
-    /// **See also:** QSizeF()
+    /// **See also:** [`q_size_f()`]
     fn to_size(&self) -> Size {
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
@@ -422,7 +421,7 @@ pub trait SizeFType<'a> {
     fn get_size_f_obj_funcs(&self) -> (*const RUBase, *const RUSizeFFuncs);
 }
 
-impl<'a> SizeFType<'a> for SizeF<'a> {
+impl<'a> SizeFTrait<'a> for SizeF<'a> {
     #[inline]
     fn get_size_f_obj_funcs(&self) -> (*const RUBase, *const RUSizeFFuncs) {
         let obj = self.data.get().unwrap();

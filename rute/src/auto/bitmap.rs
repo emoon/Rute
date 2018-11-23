@@ -16,9 +16,30 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::bitmap_ffi::*;
+#[allow(unused_imports)]
+use auto::image::Image;
+#[allow(unused_imports)]
+use auto::image::ImageTrait;
+#[allow(unused_imports)]
+use auto::image_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_device::*;
+#[allow(unused_imports)]
+use auto::paint_device_ffi::*;
+#[allow(unused_imports)]
+use auto::pixmap::*;
+#[allow(unused_imports)]
+use auto::pixmap_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_enums::ImageConversionFlags;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 ///
 /// The QBitmap class is a monochrome off-screen paint device used
 /// mainly for creating custom QCursor and QBrush objects,
@@ -54,10 +75,10 @@ use auto::*;
 /// Data Sharing](Implicit%0A%20%20%20%20Data%20Sharing)
 /// documentation.
 ///
-/// **See also:** QPixmap
-/// QImage
-/// QImageReader
-/// QImageWriter
+/// **See also:** [`Pixmap`]
+/// [`Image`]
+/// [`ImageReader`]
+/// [`ImageWriter`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -71,20 +92,9 @@ pub struct Bitmap<'a> {
 
 impl<'a> Bitmap<'a> {
     pub fn new() -> Bitmap<'a> {
-        let data = Rc::new(Cell::new(None));
-
-        let ffi_data = unsafe {
-            ((*rute_ffi_get()).create_bitmap)(
-                ::std::ptr::null(),
-                transmute(rute_object_delete_callback as usize),
-                Rc::into_raw(data.clone()) as *const c_void,
-            )
-        };
-
-        data.set(Some(ffi_data.qt_data));
-
+        let ffi_data = unsafe { ((*rute_ffi_get()).create_bitmap)(::std::ptr::null()) };
         Bitmap {
-            data,
+            data: Rc::new(Cell::new(Some(ffi_data.qt_data))),
             all_funcs: ffi_data.all_funcs,
             owned: true,
             _marker: PhantomData,
@@ -122,34 +132,32 @@ pub struct BitmapStatic<'a> {
     pub all_funcs: *const RUBitmapAllFuncs,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
-pub trait BitmapType<'a> {
+pub trait BitmapTrait<'a> {
     ///
     /// Swaps bitmap *other* with this bitmap. This operation is very
     /// fast and never fails.
-    fn swap<B: BitmapType<'a>>(&self, other: &B) -> &Self {
+    fn swap(&self, other: &BitmapTrait) {
         let (obj_other_1, _funcs) = other.get_bitmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_bitmap_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
-        self
     }
     ///
     /// Clears the bitmap, setting all its bits to Qt::color0.
-    fn clear(&self) -> &Self {
+    fn clear(&self) {
         let (obj_data, funcs) = self.get_bitmap_obj_funcs();
         unsafe {
             ((*funcs).clear)(obj_data);
         }
-        self
     }
 
     #[inline]
     fn get_bitmap_obj_funcs(&self) -> (*const RUBase, *const RUBitmapFuncs);
 }
 
-impl<'a> PaintDeviceType<'a> for Bitmap<'a> {
+impl<'a> PaintDeviceTrait<'a> for Bitmap<'a> {
     #[inline]
     fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
         let obj = self.data.get().unwrap();
@@ -157,7 +165,7 @@ impl<'a> PaintDeviceType<'a> for Bitmap<'a> {
     }
 }
 
-impl<'a> PixmapType<'a> for Bitmap<'a> {
+impl<'a> PixmapTrait<'a> for Bitmap<'a> {
     #[inline]
     fn get_pixmap_obj_funcs(&self) -> (*const RUBase, *const RUPixmapFuncs) {
         let obj = self.data.get().unwrap();
@@ -165,20 +173,20 @@ impl<'a> PixmapType<'a> for Bitmap<'a> {
     }
 }
 
-impl<'a> BitmapType<'a> for Bitmap<'a> {
+impl<'a> BitmapTrait<'a> for Bitmap<'a> {
     #[inline]
     fn get_bitmap_obj_funcs(&self) -> (*const RUBase, *const RUBitmapFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).bitmap_funcs) }
     }
 }
-pub trait BitmapStaticType {
+pub trait BitmapStaticTrait {
     ///
     /// Returns a copy of the given *image* converted to a bitmap using
     /// the specified image conversion *flags.*
     ///
-    /// **See also:** fromData()
-    fn from_image<'a, I: ImageType<'a>>(image: &I, flags: ImageConversionFlags) -> Bitmap<'a> {
+    /// **See also:** [`from_data()`]
+    fn from_image<'a>(image: &ImageTrait<'a>, flags: ImageConversionFlags) -> Bitmap<'a> {
         let (obj_image_1, _funcs) = image.get_image_obj_funcs();
         let enum_flags_2 = flags as i32;
 
@@ -200,45 +208,8 @@ pub trait BitmapStaticType {
             ret_val
         }
     }
-    ///
-    /// Constructs a bitmap with the given *size,* and sets the contents to
-    /// the *bits* supplied.
-    ///
-    /// The bitmap data has to be byte aligned and provided in in the bit
-    /// order specified by *monoFormat.* The mono format must be either
-    /// QImage::Format_Mono or QImage::Format_MonoLSB. Use
-    /// QImage::Format_Mono to specify data on the XBM format.
-    ///
-    /// **See also:** fromImage()
-    ///
-    fn from_data<'a, S: SizeType<'a>>(
-        size: &S,
-        bits: &uchar<'a>,
-        mono_format: Format,
-    ) -> Bitmap<'a> {
-        let (obj_size_1, _funcs) = size.get_size_obj_funcs();
-        let enum_mono_format_3 = mono_format as i32;
-
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_bitmap)(::std::ptr::null()).all_funcs).bitmap_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).from_data)(obj_data, obj_size_1, bits, enum_mono_format_3);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Bitmap::new_from_rc(t);
-            } else {
-                ret_val = Bitmap::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
 }
 
-impl<'a> BitmapStaticType for Bitmap<'a> {}
+impl<'a> BitmapStaticTrait for Bitmap<'a> {}
 
-impl<'a> BitmapStaticType for BitmapStatic<'a> {}
+impl<'a> BitmapStaticTrait for BitmapStatic<'a> {}

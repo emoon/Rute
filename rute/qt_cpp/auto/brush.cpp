@@ -94,30 +94,16 @@ static struct RUColor brush_color(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void brush_set_color_by_type(struct RUBase* self_c, struct RUBase* color) {
+static void brush_set_color(struct RUBase* self_c, struct RUBase* color) {
     WRBrush* qt_value = (WRBrush*)self_c;
-    qt_value->setColorByType(*((QColor*)color));
+    qt_value->setColor(*((QColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void brush_set_color(struct RUBase* self_c, int color) {
+static void brush_set_color_2(struct RUBase* self_c, int color) {
     WRBrush* qt_value = (WRBrush*)self_c;
     qt_value->setColor((Qt::GlobalColor)s_global_color_lookup[color]);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUGradient brush_gradient(struct RUBase* self_c) {
-    WRBrush* qt_value = (WRBrush*)self_c;
-    auto ret_value = qt_value->gradient();
-    WRGradient* new_val = new WRGradient();
-    *new_val = ret_value;
-    struct RUGradient ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_gradient_all_funcs;
-    return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -167,9 +153,8 @@ struct RUBrushFuncs s_brush_funcs = {
     brush_texture_image,
     brush_set_texture_image,
     brush_color,
-    brush_set_color_by_type,
     brush_set_color,
-    brush_gradient,
+    brush_set_color_2,
     brush_is_opaque,
     brush_is_detached,
 };

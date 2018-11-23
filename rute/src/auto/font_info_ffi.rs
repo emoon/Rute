@@ -6,7 +6,6 @@ use std::os::raw::c_void;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUFontInfoFuncs {
-    pub destroy: extern "C" fn(self_c: *const RUBase),
     pub swap: extern "C" fn(self_c: *const RUBase, other: *const RUBase),
     pub family: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
     pub style_name: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,

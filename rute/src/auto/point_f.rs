@@ -16,9 +16,16 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::point::Point;
+#[allow(unused_imports)]
+use auto::point_f_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 ///
 /// A point is specified by a x coordinate and an y coordinate which
 /// can be accessed using the x() and y() functions. The coordinates
@@ -107,7 +114,7 @@ pub struct PointFStatic<'a> {
     pub all_funcs: *const RUPointFAllFuncs,
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
-pub trait PointFType<'a> {
+pub trait PointFTrait<'a> {
     ///
     /// Returns the sum of the absolute values of x() and y(),
     /// traditionally known as the of the vector from
@@ -160,24 +167,22 @@ pub trait PointFType<'a> {
     ///
     /// **See also:** x()
     /// setY()
-    fn set_x(&self, x: f32) -> &Self {
+    fn set_x(&self, x: f32) {
         let (obj_data, funcs) = self.get_point_f_obj_funcs();
         unsafe {
             ((*funcs).set_x)(obj_data, x);
         }
-        self
     }
     ///
     /// Sets the y coordinate of this point to the given *y* coordinate.
     ///
     /// **See also:** y()
     /// setX()
-    fn set_y(&self, y: f32) -> &Self {
+    fn set_y(&self, y: f32) {
         let (obj_data, funcs) = self.get_point_f_obj_funcs();
         unsafe {
             ((*funcs).set_y)(obj_data, y);
         }
-        self
     }
     ///
     /// Returns a reference to the x coordinate of this point.
@@ -186,14 +191,11 @@ pub trait PointFType<'a> {
     ///
     /// **See also:** x()
     /// setX()
-    fn rx(&self) -> Option<f32> {
+    fn rx(&self) -> f32 {
         let (obj_data, funcs) = self.get_point_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rx)(obj_data);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            Some(ret_val)
+            ret_val
         }
     }
     ///
@@ -203,14 +205,11 @@ pub trait PointFType<'a> {
     ///
     /// **See also:** y()
     /// setY()
-    fn ry(&self) -> Option<f32> {
+    fn ry(&self) -> f32 {
         let (obj_data, funcs) = self.get_point_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).ry)(obj_data);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            Some(ret_val)
+            ret_val
         }
     }
     ///
@@ -237,17 +236,17 @@ pub trait PointFType<'a> {
     fn get_point_f_obj_funcs(&self) -> (*const RUBase, *const RUPointFFuncs);
 }
 
-impl<'a> PointFType<'a> for PointF<'a> {
+impl<'a> PointFTrait<'a> for PointF<'a> {
     #[inline]
     fn get_point_f_obj_funcs(&self) -> (*const RUBase, *const RUPointFFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).point_f_funcs) }
     }
 }
-pub trait PointFStaticType {
+pub trait PointFStaticTrait {
     ///
     /// Returns the dot product of *p1* and *p2.*
-    fn dot_product<'a, P: PointFType<'a>>(p1: &P, p2: &P) -> f32 {
+    fn dot_product<'a>(p1: &PointFTrait<'a>, p2: &PointFTrait<'a>) -> f32 {
         let (obj_p1_1, _funcs) = p1.get_point_f_obj_funcs();
         let (obj_p2_2, _funcs) = p2.get_point_f_obj_funcs();
 
@@ -264,6 +263,6 @@ pub trait PointFStaticType {
     }
 }
 
-impl<'a> PointFStaticType for PointF<'a> {}
+impl<'a> PointFStaticTrait for PointF<'a> {}
 
-impl<'a> PointFStaticType for PointFStatic<'a> {}
+impl<'a> PointFStaticTrait for PointFStatic<'a> {}

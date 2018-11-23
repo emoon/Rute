@@ -24,24 +24,6 @@ static bool pixmap_is_null(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_pixmap_dev_type(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c)) {
-    WRPixmap* qt_object = (WRPixmap*)object;
-    qt_object->m_dev_type = trampoline_func;
-    qt_object->m_dev_type_user_data = user_data;
-    qt_object->m_dev_type_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_pixmap_dev_type(void* object) {
-    WRPixmap* qt_object = (WRPixmap*)object;
-    qt_object->m_dev_type = nullptr;
-    qt_object->m_dev_type_user_data = nullptr;
-    qt_object->m_dev_type_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static int pixmap_width(struct RUBase* self_c) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
     auto ret_value = qt_value->width();
@@ -102,23 +84,23 @@ static int pixmap_default_depth(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void pixmap_fill_by_color_type(struct RUBase* self_c, struct RUBase* fill_color) {
+static void pixmap_fill(struct RUBase* self_c, struct RUBase* fill_color) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    qt_value->fillByColorType(*((QColor*)fill_color));
+    qt_value->fill(*((QColor*)fill_color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void pixmap_fill_by_device(struct RUBase* self_c, struct RUBase* device, struct RUBase* ofs) {
+static void pixmap_fill_2(struct RUBase* self_c, struct RUBase* device, struct RUBase* ofs) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    qt_value->fillByDevice((QPaintDevice*)device, *((QPoint*)ofs));
+    qt_value->fill((QPaintDevice*)device, *((QPoint*)ofs));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void pixmap_fill_by_device_offset(struct RUBase* self_c, struct RUBase* device, int xofs, int yofs) {
+static void pixmap_fill_3(struct RUBase* self_c, struct RUBase* device, int xofs, int yofs) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    qt_value->fillByDeviceOffset((QPaintDevice*)device, xofs, yofs);
+    qt_value->fill((QPaintDevice*)device, xofs, yofs);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +108,7 @@ static void pixmap_fill_by_device_offset(struct RUBase* self_c, struct RUBase* d
 static struct RUBitmap pixmap_mask(struct RUBase* self_c) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
     auto ret_value = qt_value->mask();
-    WRBitmap* new_val = new WRBitmap();
+    QBitmap* new_val = new QBitmap();
     *new_val = ret_value;
     struct RUBitmap ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -178,7 +160,7 @@ static bool pixmap_has_alpha_channel(struct RUBase* self_c) {
 static struct RUBitmap pixmap_create_heuristic_mask(struct RUBase* self_c, bool clip_tight) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
     auto ret_value = qt_value->createHeuristicMask(clip_tight);
-    WRBitmap* new_val = new WRBitmap();
+    QBitmap* new_val = new QBitmap();
     *new_val = ret_value;
     struct RUBitmap ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -192,7 +174,7 @@ static struct RUBitmap pixmap_create_heuristic_mask(struct RUBase* self_c, bool 
 static struct RUBitmap pixmap_create_mask_from_color(struct RUBase* self_c, struct RUBase* mask_color, int mode) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
     auto ret_value = qt_value->createMaskFromColor(*((QColor*)mask_color), (Qt::MaskMode)s_mask_mode_lookup[mode]);
-    WRBitmap* new_val = new WRBitmap();
+    QBitmap* new_val = new QBitmap();
     *new_val = ret_value;
     struct RUBitmap ctl;
     ctl.qt_data = (struct RUBase*)new_val;
@@ -203,7 +185,7 @@ static struct RUBitmap pixmap_create_mask_from_color(struct RUBase* self_c, stru
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_grab_window(struct RUBase* self_c, struct RUWId arg0, int x, int y, int w, int h) {
+static struct RUPixmap pixmap_grab_window(struct RUBase* self_c, uint64_t arg0, int x, int y, int w, int h) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
     auto ret_value = qt_value->grabWindow(arg0, x, y, w, h);
     WRPixmap* new_val = new WRPixmap();
@@ -217,9 +199,9 @@ static struct RUPixmap pixmap_grab_window(struct RUBase* self_c, struct RUWId ar
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_grab_widget_by_rect(struct RUBase* self_c, struct RUBase* widget, struct RUBase* rect) {
+static struct RUPixmap pixmap_grab_widget(struct RUBase* self_c, struct RUBase* widget, struct RUBase* rect) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->grabWidgetByRect((QObject*)widget, *((QRect*)rect));
+    auto ret_value = qt_value->grabWidget((QObject*)widget, *((QRect*)rect));
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -231,7 +213,7 @@ static struct RUPixmap pixmap_grab_widget_by_rect(struct RUBase* self_c, struct 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_grab_widget(struct RUBase* self_c, struct RUBase* widget, int x, int y, int w, int h) {
+static struct RUPixmap pixmap_grab_widget_2(struct RUBase* self_c, struct RUBase* widget, int x, int y, int w, int h) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
     auto ret_value = qt_value->grabWidget((QObject*)widget, x, y, w, h);
     WRPixmap* new_val = new WRPixmap();
@@ -259,9 +241,9 @@ static struct RUPixmap pixmap_scaled(struct RUBase* self_c, int w, int h, int as
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_scaled_by_size(struct RUBase* self_c, struct RUBase* s, int aspect_mode, int mode) {
+static struct RUPixmap pixmap_scaled_2(struct RUBase* self_c, struct RUBase* s, int aspect_mode, int mode) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->scaledBySize(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[aspect_mode], (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
+    auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[aspect_mode], (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -315,20 +297,6 @@ static struct RUImage pixmap_to_image(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_from_image_reader(struct RUBase* self_c, struct RUBase* image_reader, int flags) {
-    WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->fromImageReader((QImageReader*)image_reader, (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
-    WRPixmap* new_val = new WRPixmap();
-    *new_val = ret_value;
-    struct RUPixmap ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_pixmap_all_funcs;
-    return ctl;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static struct RUPixmap pixmap_from_image(struct RUBase* self_c, struct RUBase* image, int flags) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
     auto ret_value = qt_value->fromImage(*((QImage*)image), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
@@ -343,34 +311,16 @@ static struct RUPixmap pixmap_from_image(struct RUBase* self_c, struct RUBase* i
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool pixmap_load(struct RUBase* self_c, const char* file_name, struct RUBase* format, int flags) {
+static struct RUPixmap pixmap_from_image_2(struct RUBase* self_c, struct RUBase* image, int flags) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->load(QString::fromUtf8(file_name), format, (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool pixmap_load_from_data(struct RUBase* self_c, struct RUBase* buf, struct RUuint len, struct RUBase* format, int flags) {
-    WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->loadFromData(buf, len, format, (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool pixmap_save(struct RUBase* self_c, const char* file_name, struct RUBase* format, int quality) {
-    WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->save(QString::fromUtf8(file_name), format, quality);
-    return ret_value;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static bool pixmap_save_by_io_device(struct RUBase* self_c, struct RUBase* device, struct RUBase* format, int quality) {
-    WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->saveByIoDevice((QIODevice*)device, format, quality);
-    return ret_value;
+    auto ret_value = qt_value->fromImage(*((QImage*)image), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    WRPixmap* new_val = new WRPixmap();
+    *new_val = ret_value;
+    struct RUPixmap ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_pixmap_all_funcs;
+    return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -397,9 +347,9 @@ static struct RUPixmap pixmap_copy(struct RUBase* self_c, int x, int y, int widt
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_copy_by_rect(struct RUBase* self_c, struct RUBase* rect) {
+static struct RUPixmap pixmap_copy_2(struct RUBase* self_c, struct RUBase* rect) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->copyByRect(*((QRect*)rect));
+    auto ret_value = qt_value->copy(*((QRect*)rect));
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -418,9 +368,9 @@ static void pixmap_scroll(struct RUBase* self_c, int dx, int dy, int x, int y, i
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void pixmap_scroll_by_rect(struct RUBase* self_c, int dx, int dy, struct RUBase* rect, struct RUBase* exposed) {
+static void pixmap_scroll_2(struct RUBase* self_c, int dx, int dy, struct RUBase* rect, struct RUBase* exposed) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    qt_value->scrollByRect(dx, dy, *((QRect*)rect), (QRegion*)exposed);
+    qt_value->scroll(dx, dy, *((QRect*)rect), (QRegion*)exposed);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -456,33 +406,13 @@ static bool pixmap_is_q_bitmap(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_pixmap_paint_engine(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c)) {
-    WRPixmap* qt_object = (WRPixmap*)object;
-    qt_object->m_paint_engine = trampoline_func;
-    qt_object->m_paint_engine_user_data = user_data;
-    qt_object->m_paint_engine_wrapped_func = wrapped_func;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void remove_pixmap_paint_engine(void* object) {
-    WRPixmap* qt_object = (WRPixmap*)object;
-    qt_object->m_paint_engine = nullptr;
-    qt_object->m_paint_engine_user_data = nullptr;
-    qt_object->m_paint_engine_wrapped_func = nullptr;
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static struct RUPixmap pixmap_from_image_in_place(struct RUBase* self_c, struct RUBase* image, int flags) {
+static struct RUPaintEngine pixmap_paint_engine(struct RUBase* self_c) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->fromImageInPlace(*((QImage*)image), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
-    WRPixmap* new_val = new WRPixmap();
-    *new_val = ret_value;
-    struct RUPixmap ctl;
-    ctl.qt_data = (struct RUBase*)new_val;
-    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
-    ctl.all_funcs = &s_pixmap_all_funcs;
+    auto ret_value = qt_value->paintEngine();
+    struct RUPaintEngine ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_paint_engine_all_funcs;
     return ctl;
 }
 
@@ -521,17 +451,15 @@ struct RUPixmapFuncs s_pixmap_funcs = {
     destroy_pixmap,
     pixmap_swap,
     pixmap_is_null,
-    set_pixmap_dev_type,
-    remove_pixmap_dev_type,
     pixmap_width,
     pixmap_height,
     pixmap_size,
     pixmap_rect,
     pixmap_depth,
     pixmap_default_depth,
-    pixmap_fill_by_color_type,
-    pixmap_fill_by_device,
-    pixmap_fill_by_device_offset,
+    pixmap_fill,
+    pixmap_fill_2,
+    pixmap_fill_3,
     pixmap_mask,
     pixmap_set_mask,
     pixmap_device_pixel_ratio,
@@ -541,31 +469,25 @@ struct RUPixmapFuncs s_pixmap_funcs = {
     pixmap_create_heuristic_mask,
     pixmap_create_mask_from_color,
     pixmap_grab_window,
-    pixmap_grab_widget_by_rect,
     pixmap_grab_widget,
+    pixmap_grab_widget_2,
     pixmap_scaled,
-    pixmap_scaled_by_size,
+    pixmap_scaled_2,
     pixmap_scaled_to_width,
     pixmap_scaled_to_height,
     pixmap_to_image,
-    pixmap_from_image_reader,
     pixmap_from_image,
-    pixmap_load,
-    pixmap_load_from_data,
-    pixmap_save,
-    pixmap_save_by_io_device,
+    pixmap_from_image_2,
     pixmap_convert_from_image,
     pixmap_copy,
-    pixmap_copy_by_rect,
+    pixmap_copy_2,
     pixmap_scroll,
-    pixmap_scroll_by_rect,
+    pixmap_scroll_2,
     pixmap_cache_key,
     pixmap_is_detached,
     pixmap_detach,
     pixmap_is_q_bitmap,
-    set_pixmap_paint_engine,
-    remove_pixmap_paint_engine,
-    pixmap_from_image_in_place,
+    pixmap_paint_engine,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

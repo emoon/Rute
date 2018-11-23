@@ -16,9 +16,32 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::brush::Brush;
+#[allow(unused_imports)]
+use auto::brush::BrushTrait;
+#[allow(unused_imports)]
+use auto::brush_ffi::*;
+#[allow(unused_imports)]
+use auto::color::Color;
+#[allow(unused_imports)]
+use auto::color::ColorTrait;
+#[allow(unused_imports)]
+use auto::color_ffi::*;
+#[allow(unused_imports)]
+use auto::pen_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_enums::PenCapStyle;
+#[allow(unused_imports)]
+use auto::rute_enums::PenJoinStyle;
+#[allow(unused_imports)]
+use auto::rute_enums::PenStyle;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 ///
 /// A pen has a style(), width(), brush(), capStyle() and joinStyle().
 ///
@@ -169,8 +192,8 @@ use auto::*;
 ///
 /// * **\l {painting/pathstroke** {The Path Stroking Example}} The Path Stroking example shows Qt's built-in dash patterns and shows how custom patterns can be used to extend the range of available patterns.
 ///
-/// **See also:** QPainter
-/// QBrush
+/// **See also:** [`Painter`]
+/// [`Brush`]
 /// {painting/pathstroke}{Path Stroking Example}
 /// {Scribble Example}
 /// # Licence
@@ -232,23 +255,22 @@ impl<'a> Pen<'a> {
         }
     }
 }
-pub trait PenType<'a> {
+pub trait PenTrait<'a> {
     ///
     /// Swaps pen *other* with this pen. This operation is very
     /// fast and never fails.
-    fn swap<P: PenType<'a>>(&self, other: &P) -> &Self {
+    fn swap(&self, other: &PenTrait) {
         let (obj_other_1, _funcs) = other.get_pen_obj_funcs();
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
-        self
     }
     ///
     /// Returns the pen style.
     ///
-    /// **See also:** setStyle()
+    /// **See also:** [`set_style()`]
     /// {QPen#Pen Style}{Pen Style}
     fn style(&self) -> PenStyle {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
@@ -269,33 +291,20 @@ pub trait PenType<'a> {
     ///
     /// **Note**: This function resets the dash offset to zero.
     ///
-    /// **See also:** style()
+    /// **See also:** [`style()`]
     /// {QPen#Pen Style}{Pen Style}
-    fn set_style(&self, arg0: PenStyle) -> &Self {
+    fn set_style(&self, arg0: PenStyle) {
         let enum_arg0_1 = arg0 as i32;
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_style)(obj_data, enum_arg0_1);
         }
-        self
-    }
-    ///
-    /// Returns the dash pattern of this pen.
-    ///
-    /// **See also:** style()
-    /// isSolid()
-    fn dash_pattern(&self) -> RefArray<f32, WrapperRcOwn> {
-        let (obj_data, funcs) = self.get_pen_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).dash_pattern)(obj_data);
-            ret_val
-        }
     }
     ///
     /// Returns the dash offset for the pen.
     ///
-    /// **See also:** setDashOffset()
+    /// **See also:** [`set_dash_offset()`]
     fn dash_offset(&self) -> f32 {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
@@ -313,18 +322,17 @@ pub trait PenType<'a> {
     /// * For example, a pattern where each stroke is four units long, followed by a gap of two units, will begin with the stroke when drawn as a line. However, if the dash offset is set to 4.0, any line drawn will begin with the gap. Values of the offset up to 4.0 will cause part of the stroke to be drawn first, and values of the offset between 4.0 and 6.0 will cause the line to begin with part of the gap.
     ///
     /// **Note**: This implicitly converts the style of the pen to Qt::CustomDashLine.
-    fn set_dash_offset(&self, doffset: f32) -> &Self {
+    fn set_dash_offset(&self, doffset: f32) {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_dash_offset)(obj_data, doffset);
         }
-        self
     }
     ///
     /// Returns the miter limit of the pen. The miter limit is only
     /// relevant when the join style is set to Qt::MiterJoin.
     ///
-    /// **See also:** setMiterLimit()
+    /// **See also:** [`set_miter_limit()`]
     /// {QPen#Join Style}{Join Style}
     fn miter_limit(&self) -> f32 {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
@@ -347,21 +355,20 @@ pub trait PenType<'a> {
     /// e.g. a miter limit of 5 in width 10 is 50 pixels long. The default
     /// miter limit is 2, i.e. twice the pen width in pixels.
     ///
-    /// **See also:** miterLimit()
-    /// setJoinStyle()
+    /// **See also:** [`miter_limit()`]
+    /// [`set_join_style()`]
     /// {QPen#Join Style}{Join Style}
-    fn set_miter_limit(&self, limit: f32) -> &Self {
+    fn set_miter_limit(&self, limit: f32) {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_miter_limit)(obj_data, limit);
         }
-        self
     }
     ///
     /// Returns the pen width with floating point precision.
     ///
-    /// **See also:** setWidthF()
-    /// width()
+    /// **See also:** [`set_width_f()`]
+    /// [`width()`]
     fn width_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
@@ -380,25 +387,24 @@ pub trait PenType<'a> {
     ///
     /// Setting a pen width with a negative value is not supported.
     ///
-    /// **See also:** setWidth()
-    /// widthF()
-    fn set_width_f(&self, width: f32) -> &Self {
+    /// **See also:** [`set_width()`]
+    /// [`width_f()`]
+    fn set_width_f(&self, width: f32) {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_width_f)(obj_data, width);
         }
-        self
     }
     ///
     /// Returns the pen width with integer precision.
     ///
-    /// **See also:** setWidth()
-    /// widthF()
+    /// **See also:** [`set_width()`]
+    /// [`width_f()`]
     ///
     /// Returns the pen width with floating point precision.
     ///
-    /// **See also:** setWidthF()
-    /// width()
+    /// **See also:** [`set_width_f()`]
+    /// [`width()`]
     fn width(&self) -> i32 {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
@@ -417,8 +423,8 @@ pub trait PenType<'a> {
     ///
     /// Setting a pen width with a negative value is not supported.
     ///
-    /// **See also:** setWidthF()
-    /// width()
+    /// **See also:** [`set_width_f()`]
+    /// [`width()`]
     ///
     /// Sets the pen width to the given *width* in pixels with floating point
     /// precision.
@@ -430,20 +436,19 @@ pub trait PenType<'a> {
     ///
     /// Setting a pen width with a negative value is not supported.
     ///
-    /// **See also:** setWidth()
-    /// widthF()
-    fn set_width(&self, width: i32) -> &Self {
+    /// **See also:** [`set_width()`]
+    /// [`width_f()`]
+    fn set_width(&self, width: i32) {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_width)(obj_data, width);
         }
-        self
     }
     ///
     /// Returns the color of this pen's brush.
     ///
-    /// **See also:** brush()
-    /// setColor()
+    /// **See also:** [`brush()`]
+    /// [`set_color()`]
     fn color(&self) -> Color {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
@@ -461,16 +466,15 @@ pub trait PenType<'a> {
     ///
     /// Sets the color of this pen's brush to the given *color.*
     ///
-    /// **See also:** setBrush()
-    /// color()
-    fn set_color<C: ColorType<'a>>(&self, color: &C) -> &Self {
+    /// **See also:** [`set_brush()`]
+    /// [`color()`]
+    fn set_color(&self, color: &ColorTrait) {
         let (obj_color_1, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_color)(obj_data, obj_color_1);
         }
-        self
     }
     ///
     /// Returns the brush used to fill strokes generated with this pen.
@@ -492,22 +496,21 @@ pub trait PenType<'a> {
     /// Sets the brush used to fill strokes generated with this pen to the given
     /// *brush.*
     ///
-    /// **See also:** brush()
-    /// setColor()
-    fn set_brush<B: BrushType<'a>>(&self, brush: &B) -> &Self {
+    /// **See also:** [`brush()`]
+    /// [`set_color()`]
+    fn set_brush(&self, brush: &BrushTrait) {
         let (obj_brush_1, _funcs) = brush.get_brush_obj_funcs();
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_brush)(obj_data, obj_brush_1);
         }
-        self
     }
     ///
     /// Returns `true` if the pen has a solid fill, otherwise false.
     ///
-    /// **See also:** style()
-    /// dashPattern()
+    /// **See also:** [`style()`]
+    /// [`dash_pattern()`]
     fn is_solid(&self) -> bool {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
@@ -518,7 +521,7 @@ pub trait PenType<'a> {
     ///
     /// Returns the pen's cap style.
     ///
-    /// **See also:** setCapStyle()
+    /// **See also:** [`set_cap_style()`]
     /// {QPen#Cap Style}{Cap Style}
     fn cap_style(&self) -> PenCapStyle {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
@@ -532,21 +535,20 @@ pub trait PenType<'a> {
     /// Sets the pen's cap style to the given *style.* The default value
     /// is Qt::SquareCap.
     ///
-    /// **See also:** capStyle()
+    /// **See also:** [`cap_style()`]
     /// {QPen#Cap Style}{Cap Style}
-    fn set_cap_style(&self, pcs: PenCapStyle) -> &Self {
+    fn set_cap_style(&self, pcs: PenCapStyle) {
         let enum_pcs_1 = pcs as i32;
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_cap_style)(obj_data, enum_pcs_1);
         }
-        self
     }
     ///
     /// Returns the pen's join style.
     ///
-    /// **See also:** setJoinStyle()
+    /// **See also:** [`set_join_style()`]
     /// {QPen#Join Style}{Join Style}
     fn join_style(&self) -> PenJoinStyle {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
@@ -560,16 +562,15 @@ pub trait PenType<'a> {
     /// Sets the pen's join style to the given *style.* The default value
     /// is Qt::BevelJoin.
     ///
-    /// **See also:** joinStyle()
+    /// **See also:** [`join_style()`]
     /// {QPen#Join Style}{Join Style}
-    fn set_join_style(&self, pcs: PenJoinStyle) -> &Self {
+    fn set_join_style(&self, pcs: PenJoinStyle) {
         let enum_pcs_1 = pcs as i32;
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_join_style)(obj_data, enum_pcs_1);
         }
-        self
     }
     ///
     /// Returns `true` if the pen is cosmetic; otherwise returns `false.`
@@ -581,8 +582,8 @@ pub trait PenType<'a> {
     ///
     /// A zero width pen is cosmetic by default.
     ///
-    /// **See also:** setCosmetic()
-    /// widthF()
+    /// **See also:** [`set_cosmetic()`]
+    /// [`width_f()`]
     fn is_cosmetic(&self) -> bool {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
@@ -594,13 +595,12 @@ pub trait PenType<'a> {
     /// Sets this pen to cosmetic or non-cosmetic, depending on the value of
     /// *cosmetic.*
     ///
-    /// **See also:** isCosmetic()
-    fn set_cosmetic(&self, cosmetic: bool) -> &Self {
+    /// **See also:** [`is_cosmetic()`]
+    fn set_cosmetic(&self, cosmetic: bool) {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_cosmetic)(obj_data, cosmetic);
         }
-        self
     }
     fn is_detached(&self) -> bool {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
@@ -614,7 +614,7 @@ pub trait PenType<'a> {
     fn get_pen_obj_funcs(&self) -> (*const RUBase, *const RUPenFuncs);
 }
 
-impl<'a> PenType<'a> for Pen<'a> {
+impl<'a> PenTrait<'a> for Pen<'a> {
     #[inline]
     fn get_pen_obj_funcs(&self) -> (*const RUBase, *const RUPenFuncs) {
         let obj = self.data.get().unwrap();

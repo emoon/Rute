@@ -16,9 +16,14 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::margins_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 ///
 /// QMargin defines a set of four margins; left, top, right and bottom,
 /// that describe the size of the borders surrounding a rectangle.
@@ -85,7 +90,7 @@ impl<'a> Margins<'a> {
         }
     }
 }
-pub trait MarginsType<'a> {
+pub trait MarginsTrait<'a> {
     ///
     /// Returns `true` if all margins are is 0; otherwise returns
     /// false.
@@ -138,46 +143,42 @@ pub trait MarginsType<'a> {
     }
     ///
     /// Sets the left margin to *left.*
-    fn set_left(&self, left: i32) -> &Self {
+    fn set_left(&self, left: i32) {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             ((*funcs).set_left)(obj_data, left);
         }
-        self
     }
     ///
     /// Sets the Top margin to *Top.*
-    fn set_top(&self, top: i32) -> &Self {
+    fn set_top(&self, top: i32) {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             ((*funcs).set_top)(obj_data, top);
         }
-        self
     }
     ///
     /// Sets the right margin to *right.*
-    fn set_right(&self, right: i32) -> &Self {
+    fn set_right(&self, right: i32) {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             ((*funcs).set_right)(obj_data, right);
         }
-        self
     }
     ///
     /// Sets the bottom margin to *bottom.*
-    fn set_bottom(&self, bottom: i32) -> &Self {
+    fn set_bottom(&self, bottom: i32) {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             ((*funcs).set_bottom)(obj_data, bottom);
         }
-        self
     }
 
     #[inline]
     fn get_margins_obj_funcs(&self) -> (*const RUBase, *const RUMarginsFuncs);
 }
 
-impl<'a> MarginsType<'a> for Margins<'a> {
+impl<'a> MarginsTrait<'a> for Margins<'a> {
     #[inline]
     fn get_margins_obj_funcs(&self) -> (*const RUBase, *const RUMarginsFuncs) {
         let obj = self.data.get().unwrap();

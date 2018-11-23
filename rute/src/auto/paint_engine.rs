@@ -16,9 +16,82 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-#[allow(unused_imports)]
-use auto::*;
+// Auto-generated imports
 
+#[allow(unused_imports)]
+use auto::image::Image;
+#[allow(unused_imports)]
+use auto::image::ImageTrait;
+#[allow(unused_imports)]
+use auto::image_ffi::*;
+#[allow(unused_imports)]
+use auto::line::Line;
+#[allow(unused_imports)]
+use auto::line::LineTrait;
+#[allow(unused_imports)]
+use auto::line_f::LineF;
+#[allow(unused_imports)]
+use auto::line_f::LineFTrait;
+#[allow(unused_imports)]
+use auto::line_f_ffi::*;
+#[allow(unused_imports)]
+use auto::line_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_device::PaintDevice;
+#[allow(unused_imports)]
+use auto::paint_device::PaintDeviceTrait;
+#[allow(unused_imports)]
+use auto::paint_device_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_engine_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_engine_state::PaintEngineState;
+#[allow(unused_imports)]
+use auto::paint_engine_state::PaintEngineStateTrait;
+#[allow(unused_imports)]
+use auto::paint_engine_state_ffi::*;
+#[allow(unused_imports)]
+use auto::pixmap::Pixmap;
+#[allow(unused_imports)]
+use auto::pixmap::PixmapTrait;
+#[allow(unused_imports)]
+use auto::pixmap_ffi::*;
+#[allow(unused_imports)]
+use auto::point::Point;
+#[allow(unused_imports)]
+use auto::point::PointTrait;
+#[allow(unused_imports)]
+use auto::point_f::PointF;
+#[allow(unused_imports)]
+use auto::point_f::PointFTrait;
+#[allow(unused_imports)]
+use auto::point_f_ffi::*;
+#[allow(unused_imports)]
+use auto::point_ffi::*;
+#[allow(unused_imports)]
+use auto::rect::Rect;
+#[allow(unused_imports)]
+use auto::rect::RectTrait;
+#[allow(unused_imports)]
+use auto::rect_f::RectF;
+#[allow(unused_imports)]
+use auto::rect_f::RectFTrait;
+#[allow(unused_imports)]
+use auto::rect_f_ffi::*;
+#[allow(unused_imports)]
+use auto::rect_ffi::*;
+#[allow(unused_imports)]
+use auto::region::Region;
+#[allow(unused_imports)]
+use auto::region::RegionTrait;
+#[allow(unused_imports)]
+use auto::region_ffi::*;
+#[allow(unused_imports)]
+use auto::rute::*;
+#[allow(unused_imports)]
+use auto::rute_enums::ImageConversionFlags;
+#[allow(unused_imports)]
+use auto::rute_ffi::*;
 ///
 /// Qt provides several premade implementations of QPaintEngine for the
 /// different painter backends we support. The primary paint engine
@@ -39,8 +112,8 @@ use auto::*;
 ///
 /// QPaintEngine is created and owned by the QPaintDevice that created it.
 ///
-/// **See also:** QPainter
-/// QPaintDevice::paintEngine()
+/// **See also:** [`Painter`]
+/// [`PaintDevice::paint_engine`]
 /// {Paint System}
 /// # Licence
 ///
@@ -54,26 +127,6 @@ pub struct PaintEngine<'a> {
 }
 
 impl<'a> PaintEngine<'a> {
-    pub fn new() -> PaintEngine<'a> {
-        let data = Rc::new(Cell::new(None));
-
-        let ffi_data = unsafe {
-            ((*rute_ffi_get()).create_paint_engine)(
-                ::std::ptr::null(),
-                transmute(rute_object_delete_callback as usize),
-                Rc::into_raw(data.clone()) as *const c_void,
-            )
-        };
-
-        data.set(Some(ffi_data.qt_data));
-
-        PaintEngine {
-            data,
-            all_funcs: ffi_data.all_funcs,
-            owned: true,
-            _marker: PhantomData,
-        }
-    }
     pub fn new_from_rc(ffi_data: RUPaintEngine) -> PaintEngine<'a> {
         PaintEngine {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
@@ -100,1398 +153,13 @@ impl<'a> PaintEngine<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn set_begin_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PaintDeviceType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PaintDeviceType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_begin_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_begin_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_begin_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PaintDeviceType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&PaintDeviceType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_begin_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_begin_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_end_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_end_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_end_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_end_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_end_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_end_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_update_state_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PaintEngineStateType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PaintEngineStateType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_update_state_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_update_state_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_update_state_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PaintEngineStateType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&PaintEngineStateType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_update_state_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_update_state_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_rects_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &RectType, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &RectType, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_rects_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_rects_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_rects_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&RectType, i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&RectType, i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_rects_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_rects_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_rects_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &RectFType, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &RectFType, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_rects_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_rects_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_rects_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&RectFType, i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&RectFType, i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_rects_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_rects_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_lines_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &LineType, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &LineType, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_lines_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_lines_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_lines_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&LineType, i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&LineType, i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_lines_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_lines_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_lines_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &LineFType, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &LineFType, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_lines_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_lines_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_lines_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&LineFType, i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&LineFType, i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_lines_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_lines_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_ellipse_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &RectFType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &RectFType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_ellipse_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_ellipse_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_ellipse_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&RectFType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&RectFType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_ellipse_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_ellipse_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_ellipse_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &RectType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &RectType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_ellipse_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_ellipse_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_ellipse_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&RectType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&RectType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_ellipse_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_ellipse_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_points_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PointFType, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PointFType, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_points_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_points_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_points_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PointFType, i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&PointFType, i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_points_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_points_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_points_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PointType, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PointType, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_points_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_points_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_points_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PointType, i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&PointType, i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_points_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_points_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_polygon_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PointFType, i32, PolygonDrawMode) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PointFType, i32, PolygonDrawMode) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_polygon_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_polygon_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_polygon_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PointFType, i32, PolygonDrawMode) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&PointFType, i32, PolygonDrawMode) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_polygon_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_polygon_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_polygon_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PointType, i32, PolygonDrawMode) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PointType, i32, PolygonDrawMode) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_polygon_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_polygon_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_polygon_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PointType, i32, PolygonDrawMode) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&PointType, i32, PolygonDrawMode) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_polygon_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_polygon_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_pixmap_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &RectFType, &PixmapType, &RectFType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &RectFType, &PixmapType, &RectFType) + 'a>> =
-            Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_pixmap_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_pixmap_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_pixmap_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&RectFType, &PixmapType, &RectFType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&RectFType, &PixmapType, &RectFType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_pixmap_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_pixmap_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_text_item_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &PointFType, &TextItemType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &PointFType, &TextItemType) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_text_item_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_text_item_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_text_item_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&PointFType, &TextItemType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&PointFType, &TextItemType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_text_item_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_text_item_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_tiled_pixmap_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &RectFType, &PixmapType, &PointFType) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &RectFType, &PixmapType, &PointFType) + 'a>> =
-            Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_tiled_pixmap_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_tiled_pixmap_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_tiled_pixmap_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&RectFType, &PixmapType, &PointFType) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&RectFType, &PixmapType, &PointFType) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_tiled_pixmap_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_tiled_pixmap_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_image_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &RectFType, &ImageType, &RectFType, ImageConversionFlags) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<
-            Box<Fn(&T, &RectFType, &ImageType, &RectFType, ImageConversionFlags) + 'a>,
-        > = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_draw_image_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_image_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_draw_image_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&RectFType, &ImageType, &RectFType, ImageConversionFlags) + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn(&RectFType, &ImageType, &RectFType, ImageConversionFlags) + 'a>> =
-            Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_draw_image_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_draw_image_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_coordinate_offset_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_coordinate_offset_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_coordinate_offset_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_coordinate_offset_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_coordinate_offset_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_coordinate_offset_trampoline as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_type_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_type_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_type_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_type_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_type_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(paint_engine_type_trampoline as usize),
-            );
-        }
-
-        self
-    }
 }
-///
-/// Reimplement this function to initialise your paint engine when
-/// painting is to start on the paint device *pdev.* Return true if
-/// the initialization was successful; otherwise return false.
-///
-/// **See also:** end()
-/// isActive()
-
-unsafe extern "C" fn paint_engine_begin_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    pdev: *const RUBase,
-) -> bool {
-    let f: &&(Fn(&T, &PaintDeviceType) + 'static) = transmute(func);
-    let obj_pdev_0 = PaintDevice::new_from_temporary(*(pdev as *const RUPaintDevice));
-    let data = self_c as *const T;
-    f(&*data, &obj_pdev_0);
-}
-
-unsafe extern "C" fn paint_engine_begin_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    pdev: *const RUBase,
-) -> bool {
-    let f: &&(Fn(&PaintDeviceType) + 'static) = transmute(func);
-    let obj_pdev_0 = PaintDevice::new_from_temporary(*(pdev as *const RUPaintDevice));
-    f(&obj_pdev_0);
-}
-
-///
-/// Reimplement this function to finish painting on the current paint
-/// device. Return true if painting was finished successfully;
-/// otherwise return false.
-///
-/// **See also:** begin()
-/// isActive()
-
-unsafe extern "C" fn paint_engine_end_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> bool {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn paint_engine_end_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> bool {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-///
-/// Reimplement this function to update the state of a paint engine.
-///
-/// When implemented, this function is responsible for checking the
-/// paint engine's current *state* and update the properties that are
-/// changed. Use the QPaintEngineState::state() function to find out
-/// which properties that must be updated, then use the corresponding
-/// [get function](GetFunction)
-/// to retrieve the current values for
-/// the given properties.
-///
-/// **See also:** QPaintEngineState
-
-unsafe extern "C" fn paint_engine_update_state_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    state: *const RUBase,
-) {
-    let f: &&(Fn(&T, &PaintEngineStateType) + 'static) = transmute(func);
-    let obj_state_0 = PaintEngineState::new_from_temporary(*(state as *const RUPaintEngineState));
-    let data = self_c as *const T;
-    f(&*data, &obj_state_0);
-}
-
-unsafe extern "C" fn paint_engine_update_state_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    state: *const RUBase,
-) {
-    let f: &&(Fn(&PaintEngineStateType) + 'static) = transmute(func);
-    let obj_state_0 = PaintEngineState::new_from_temporary(*(state as *const RUPaintEngineState));
-    f(&obj_state_0);
-}
-
-///
-/// **Overloads**
-/// The default implementation converts the first *rectCount*
-/// rectangles in the buffer *rects* to a QRectF and calls the
-/// floating point version of this function.
-///
-/// Draws the first *rectCount* rectangles in the buffer *rects.* The default implementation of this function calls drawPath()
-/// or drawPolygon() depending on the feature set of the paint engine.
-
-unsafe extern "C" fn paint_engine_draw_rects_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    rects: *const RUBase,
-    rect_count: i32,
-) {
-    let f: &&(Fn(&T, &RectType, i32) + 'static) = transmute(func);
-    let obj_rects_0 = Rect::new_from_temporary(*(rects as *const RURect));
-    let data = self_c as *const T;
-    f(&*data, &obj_rects_0, rect_count);
-}
-
-unsafe extern "C" fn paint_engine_draw_rects_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    rects: *const RUBase,
-    rect_count: i32,
-) {
-    let f: &&(Fn(&RectType, i32) + 'static) = transmute(func);
-    let obj_rects_0 = Rect::new_from_temporary(*(rects as *const RURect));
-    f(&obj_rects_0, rect_count);
-}
-
-///
-/// **Overloads**
-/// The default implementation converts the first *rectCount*
-/// rectangles in the buffer *rects* to a QRectF and calls the
-/// floating point version of this function.
-///
-/// Draws the first *rectCount* rectangles in the buffer *rects.* The default implementation of this function calls drawPath()
-/// or drawPolygon() depending on the feature set of the paint engine.
-
-unsafe extern "C" fn paint_engine_draw_rects_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    rects: *const RUBase,
-    rect_count: i32,
-) {
-    let f: &&(Fn(&T, &RectFType, i32) + 'static) = transmute(func);
-    let obj_rects_0 = RectF::new_from_temporary(*(rects as *const RURectF));
-    let data = self_c as *const T;
-    f(&*data, &obj_rects_0, rect_count);
-}
-
-unsafe extern "C" fn paint_engine_draw_rects_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    rects: *const RUBase,
-    rect_count: i32,
-) {
-    let f: &&(Fn(&RectFType, i32) + 'static) = transmute(func);
-    let obj_rects_0 = RectF::new_from_temporary(*(rects as *const RURectF));
-    f(&obj_rects_0, rect_count);
-}
-
-///
-/// The default implementation splits the list of lines in *lines*
-/// into *lineCount* separate calls to drawPath() or drawPolygon()
-/// depending on the feature set of the paint engine.
-///
-/// **Overloads**
-/// The default implementation converts the first *lineCount* lines
-/// in *lines* to a QLineF and calls the floating point version of
-/// this function.
-
-unsafe extern "C" fn paint_engine_draw_lines_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    lines: *const RUBase,
-    line_count: i32,
-) {
-    let f: &&(Fn(&T, &LineType, i32) + 'static) = transmute(func);
-    let obj_lines_0 = Line::new_from_temporary(*(lines as *const RULine));
-    let data = self_c as *const T;
-    f(&*data, &obj_lines_0, line_count);
-}
-
-unsafe extern "C" fn paint_engine_draw_lines_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    lines: *const RUBase,
-    line_count: i32,
-) {
-    let f: &&(Fn(&LineType, i32) + 'static) = transmute(func);
-    let obj_lines_0 = Line::new_from_temporary(*(lines as *const RULine));
-    f(&obj_lines_0, line_count);
-}
-
-///
-/// The default implementation splits the list of lines in *lines*
-/// into *lineCount* separate calls to drawPath() or drawPolygon()
-/// depending on the feature set of the paint engine.
-///
-/// **Overloads**
-/// The default implementation converts the first *lineCount* lines
-/// in *lines* to a QLineF and calls the floating point version of
-/// this function.
-
-unsafe extern "C" fn paint_engine_draw_lines_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    lines: *const RUBase,
-    line_count: i32,
-) {
-    let f: &&(Fn(&T, &LineFType, i32) + 'static) = transmute(func);
-    let obj_lines_0 = LineF::new_from_temporary(*(lines as *const RULineF));
-    let data = self_c as *const T;
-    f(&*data, &obj_lines_0, line_count);
-}
-
-unsafe extern "C" fn paint_engine_draw_lines_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    lines: *const RUBase,
-    line_count: i32,
-) {
-    let f: &&(Fn(&LineFType, i32) + 'static) = transmute(func);
-    let obj_lines_0 = LineF::new_from_temporary(*(lines as *const RULineF));
-    f(&obj_lines_0, line_count);
-}
-
-///
-/// Reimplement this function to draw the largest ellipse that can be
-/// contained within rectangle *rect.*
-///
-/// The default implementation calls drawPolygon().
-///
-/// The default implementation of this function calls the floating
-/// point version of this function
-
-unsafe extern "C" fn paint_engine_draw_ellipse_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    r: *const RUBase,
-) {
-    let f: &&(Fn(&T, &RectFType) + 'static) = transmute(func);
-    let obj_r_0 = RectF::new_from_temporary(*(r as *const RURectF));
-    let data = self_c as *const T;
-    f(&*data, &obj_r_0);
-}
-
-unsafe extern "C" fn paint_engine_draw_ellipse_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    r: *const RUBase,
-) {
-    let f: &&(Fn(&RectFType) + 'static) = transmute(func);
-    let obj_r_0 = RectF::new_from_temporary(*(r as *const RURectF));
-    f(&obj_r_0);
-}
-
-///
-/// Reimplement this function to draw the largest ellipse that can be
-/// contained within rectangle *rect.*
-///
-/// The default implementation calls drawPolygon().
-///
-/// The default implementation of this function calls the floating
-/// point version of this function
-
-unsafe extern "C" fn paint_engine_draw_ellipse_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    r: *const RUBase,
-) {
-    let f: &&(Fn(&T, &RectType) + 'static) = transmute(func);
-    let obj_r_0 = Rect::new_from_temporary(*(r as *const RURect));
-    let data = self_c as *const T;
-    f(&*data, &obj_r_0);
-}
-
-unsafe extern "C" fn paint_engine_draw_ellipse_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    r: *const RUBase,
-) {
-    let f: &&(Fn(&RectType) + 'static) = transmute(func);
-    let obj_r_0 = Rect::new_from_temporary(*(r as *const RURect));
-    f(&obj_r_0);
-}
-
-///
-/// Draws the first *pointCount* points in the buffer *points*
-///
-/// Draws the first *pointCount* points in the buffer *points*
-///
-/// The default implementation converts the first *pointCount* QPoints in *points*
-/// to QPointFs and calls the floating point version of drawPoints.
-///
-
-unsafe extern "C" fn paint_engine_draw_points_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    points: *const RUBase,
-    point_count: i32,
-) {
-    let f: &&(Fn(&T, &PointFType, i32) + 'static) = transmute(func);
-    let obj_points_0 = PointF::new_from_temporary(*(points as *const RUPointF));
-    let data = self_c as *const T;
-    f(&*data, &obj_points_0, point_count);
-}
-
-unsafe extern "C" fn paint_engine_draw_points_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    points: *const RUBase,
-    point_count: i32,
-) {
-    let f: &&(Fn(&PointFType, i32) + 'static) = transmute(func);
-    let obj_points_0 = PointF::new_from_temporary(*(points as *const RUPointF));
-    f(&obj_points_0, point_count);
-}
-
-///
-/// Draws the first *pointCount* points in the buffer *points*
-///
-/// Draws the first *pointCount* points in the buffer *points*
-///
-/// The default implementation converts the first *pointCount* QPoints in *points*
-/// to QPointFs and calls the floating point version of drawPoints.
-///
-
-unsafe extern "C" fn paint_engine_draw_points_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    points: *const RUBase,
-    point_count: i32,
-) {
-    let f: &&(Fn(&T, &PointType, i32) + 'static) = transmute(func);
-    let obj_points_0 = Point::new_from_temporary(*(points as *const RUPoint));
-    let data = self_c as *const T;
-    f(&*data, &obj_points_0, point_count);
-}
-
-unsafe extern "C" fn paint_engine_draw_points_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    points: *const RUBase,
-    point_count: i32,
-) {
-    let f: &&(Fn(&PointType, i32) + 'static) = transmute(func);
-    let obj_points_0 = Point::new_from_temporary(*(points as *const RUPoint));
-    f(&obj_points_0, point_count);
-}
-
-///
-/// PolygonDrawMode mode)
-///
-/// Reimplement this virtual function to draw the polygon defined
-/// by the *pointCount* first points in *points,* using mode *mode.*
-///
-/// **Note**: At least one of the drawPolygon() functions must be reimplemented.
-///
-/// **Overloads**
-/// Reimplement this virtual function to draw the polygon defined by the
-/// *pointCount* first points in *points,* using mode *mode.*
-///
-/// **Note**: At least one of the drawPolygon() functions must be reimplemented.
-
-unsafe extern "C" fn paint_engine_draw_polygon_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    points: *const RUBase,
-    point_count: i32,
-    mode: i32,
-) {
-    let f: &&(Fn(&T, &PointFType, i32, PolygonDrawMode) + 'static) = transmute(func);
-    let obj_points_0 = PointF::new_from_temporary(*(points as *const RUPointF));
-    let data = self_c as *const T;
-    f(&*data, &obj_points_0, point_count);
-}
-
-unsafe extern "C" fn paint_engine_draw_polygon_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    points: *const RUBase,
-    point_count: i32,
-    mode: i32,
-) {
-    let f: &&(Fn(&PointFType, i32, PolygonDrawMode) + 'static) = transmute(func);
-    let obj_points_0 = PointF::new_from_temporary(*(points as *const RUPointF));
-    f(&obj_points_0, point_count);
-}
-
-///
-/// PolygonDrawMode mode)
-///
-/// Reimplement this virtual function to draw the polygon defined
-/// by the *pointCount* first points in *points,* using mode *mode.*
-///
-/// **Note**: At least one of the drawPolygon() functions must be reimplemented.
-///
-/// **Overloads**
-/// Reimplement this virtual function to draw the polygon defined by the
-/// *pointCount* first points in *points,* using mode *mode.*
-///
-/// **Note**: At least one of the drawPolygon() functions must be reimplemented.
-
-unsafe extern "C" fn paint_engine_draw_polygon_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    points: *const RUBase,
-    point_count: i32,
-    mode: i32,
-) {
-    let f: &&(Fn(&T, &PointType, i32, PolygonDrawMode) + 'static) = transmute(func);
-    let obj_points_0 = Point::new_from_temporary(*(points as *const RUPoint));
-    let data = self_c as *const T;
-    f(&*data, &obj_points_0, point_count);
-}
-
-unsafe extern "C" fn paint_engine_draw_polygon_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    points: *const RUBase,
-    point_count: i32,
-    mode: i32,
-) {
-    let f: &&(Fn(&PointType, i32, PolygonDrawMode) + 'static) = transmute(func);
-    let obj_points_0 = Point::new_from_temporary(*(points as *const RUPoint));
-    f(&obj_points_0, point_count);
-}
-
-///
-/// &pm, const QRectF &sr)
-///
-/// Reimplement this function to draw the part of the *pm*
-/// specified by the *sr* rectangle in the given *r.*
-
-unsafe extern "C" fn paint_engine_draw_pixmap_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    r: *const RUBase,
-    pm: *const RUBase,
-    sr: *const RUBase,
-) {
-    let f: &&(Fn(&T, &RectFType, &PixmapType, &RectFType) + 'static) = transmute(func);
-    let obj_r_0 = RectF::new_from_temporary(*(r as *const RURectF));
-    let obj_pm_1 = Pixmap::new_from_temporary(*(pm as *const RUPixmap));
-    let obj_sr_2 = RectF::new_from_temporary(*(sr as *const RURectF));
-    let data = self_c as *const T;
-    f(&*data, &obj_r_0, &obj_pm_1, &obj_sr_2);
-}
-
-unsafe extern "C" fn paint_engine_draw_pixmap_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    r: *const RUBase,
-    pm: *const RUBase,
-    sr: *const RUBase,
-) {
-    let f: &&(Fn(&RectFType, &PixmapType, &RectFType) + 'static) = transmute(func);
-    let obj_r_0 = RectF::new_from_temporary(*(r as *const RURectF));
-    let obj_pm_1 = Pixmap::new_from_temporary(*(pm as *const RUPixmap));
-    let obj_sr_2 = RectF::new_from_temporary(*(sr as *const RURectF));
-    f(&obj_r_0, &obj_pm_1, &obj_sr_2);
-}
-
-///
-/// This function draws the text item *textItem* at position *p.* The
-/// default implementation of this function converts the text to a
-/// QPainterPath and paints the resulting path.
-
-unsafe extern "C" fn paint_engine_draw_text_item_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    p: *const RUBase,
-    text_item: *const RUBase,
-) {
-    let f: &&(Fn(&T, &PointFType, &TextItemType) + 'static) = transmute(func);
-    let obj_p_0 = PointF::new_from_temporary(*(p as *const RUPointF));
-    let obj_text_item_1 = TextItem::new_from_temporary(*(text_item as *const RUTextItem));
-    let data = self_c as *const T;
-    f(&*data, &obj_p_0, &obj_text_item_1);
-}
-
-unsafe extern "C" fn paint_engine_draw_text_item_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    p: *const RUBase,
-    text_item: *const RUBase,
-) {
-    let f: &&(Fn(&PointFType, &TextItemType) + 'static) = transmute(func);
-    let obj_p_0 = PointF::new_from_temporary(*(p as *const RUPointF));
-    let obj_text_item_1 = TextItem::new_from_temporary(*(text_item as *const RUTextItem));
-    f(&obj_p_0, &obj_text_item_1);
-}
-
-///
-/// Reimplement this function to draw the *pixmap* in the given *rect,* starting at the given *p.* The pixmap will be
-/// drawn repeatedly until the *rect* is filled.
-
-unsafe extern "C" fn paint_engine_draw_tiled_pixmap_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    r: *const RUBase,
-    pixmap: *const RUBase,
-    s: *const RUBase,
-) {
-    let f: &&(Fn(&T, &RectFType, &PixmapType, &PointFType) + 'static) = transmute(func);
-    let obj_r_0 = RectF::new_from_temporary(*(r as *const RURectF));
-    let obj_pixmap_1 = Pixmap::new_from_temporary(*(pixmap as *const RUPixmap));
-    let obj_s_2 = PointF::new_from_temporary(*(s as *const RUPointF));
-    let data = self_c as *const T;
-    f(&*data, &obj_r_0, &obj_pixmap_1, &obj_s_2);
-}
-
-unsafe extern "C" fn paint_engine_draw_tiled_pixmap_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    r: *const RUBase,
-    pixmap: *const RUBase,
-    s: *const RUBase,
-) {
-    let f: &&(Fn(&RectFType, &PixmapType, &PointFType) + 'static) = transmute(func);
-    let obj_r_0 = RectF::new_from_temporary(*(r as *const RURectF));
-    let obj_pixmap_1 = Pixmap::new_from_temporary(*(pixmap as *const RUPixmap));
-    let obj_s_2 = PointF::new_from_temporary(*(s as *const RUPointF));
-    f(&obj_r_0, &obj_pixmap_1, &obj_s_2);
-}
-
-///
-/// &image, const QRectF &sr, Qt::ImageConversionFlags flags)
-///
-/// Reimplement this function to draw the part of the *image*
-/// specified by the *sr* rectangle in the given *rectangle* using
-/// the given conversion flags *flags,* to convert it to a pixmap.
-
-unsafe extern "C" fn paint_engine_draw_image_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    r: *const RUBase,
-    pm: *const RUBase,
-    sr: *const RUBase,
-    flags: i32,
-) {
-    let f: &&(Fn(&T, &RectFType, &ImageType, &RectFType, ImageConversionFlags) + 'static) =
-        transmute(func);
-    let obj_r_0 = RectF::new_from_temporary(*(r as *const RURectF));
-    let obj_pm_1 = Image::new_from_temporary(*(pm as *const RUImage));
-    let obj_sr_2 = RectF::new_from_temporary(*(sr as *const RURectF));
-    let data = self_c as *const T;
-    f(&*data, &obj_r_0, &obj_pm_1, &obj_sr_2);
-}
-
-unsafe extern "C" fn paint_engine_draw_image_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    r: *const RUBase,
-    pm: *const RUBase,
-    sr: *const RUBase,
-    flags: i32,
-) {
-    let f: &&(Fn(&RectFType, &ImageType, &RectFType, ImageConversionFlags) + 'static) =
-        transmute(func);
-    let obj_r_0 = RectF::new_from_temporary(*(r as *const RURectF));
-    let obj_pm_1 = Image::new_from_temporary(*(pm as *const RUImage));
-    let obj_sr_2 = RectF::new_from_temporary(*(sr as *const RURectF));
-    f(&obj_r_0, &obj_pm_1, &obj_sr_2);
-}
-
-unsafe extern "C" fn paint_engine_coordinate_offset_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUPoint {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn paint_engine_coordinate_offset_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> RUPoint {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-///
-/// Reimplement this function to return the paint engine [Type](Type)
-///
-
-unsafe extern "C" fn paint_engine_type_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> i32 {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn paint_engine_type_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) -> i32 {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-pub trait PaintEngineType<'a> {
+pub trait PaintEngineTrait<'a> {
     ///
     /// Returns `true` if the paint engine is actively drawing; otherwise
     /// returns `false.`
     ///
-    /// **See also:** setActive()
+    /// **See also:** [`set_active()`]
     fn is_active(&self) -> bool {
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
@@ -1502,22 +170,301 @@ pub trait PaintEngineType<'a> {
     ///
     /// Sets the active state of the paint engine to *state.*
     ///
-    /// **See also:** isActive()
-    fn set_active(&self, new_state: bool) -> &Self {
+    /// **See also:** [`is_active()`]
+    fn set_active(&self, new_state: bool) {
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).set_active)(obj_data, new_state);
         }
-        self
     }
-    fn set_paint_device<P: PaintDeviceType<'a>>(&self, device: &P) -> &Self {
+    ///
+    /// Reimplement this function to initialise your paint engine when
+    /// painting is to start on the paint device *pdev.* Return true if
+    /// the initialization was successful; otherwise return false.
+    ///
+    /// **See also:** [`end()`]
+    /// [`is_active()`]
+    fn begin(&self, pdev: &PaintDeviceTrait) -> bool {
+        let (obj_pdev_1, _funcs) = pdev.get_paint_device_obj_funcs();
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).begin)(obj_data, obj_pdev_1);
+            ret_val
+        }
+    }
+    ///
+    /// Reimplement this function to finish painting on the current paint
+    /// device. Return true if painting was finished successfully;
+    /// otherwise return false.
+    ///
+    /// **See also:** [`begin()`]
+    /// [`is_active()`]
+    fn end(&self) -> bool {
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).end)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Reimplement this function to update the state of a paint engine.
+    ///
+    /// When implemented, this function is responsible for checking the
+    /// paint engine's current *state* and update the properties that are
+    /// changed. Use the QPaintEngineState::state() function to find out
+    /// which properties that must be updated, then use the corresponding
+    /// [get function](GetFunction)
+    /// to retrieve the current values for
+    /// the given properties.
+    ///
+    /// **See also:** [`PaintEngineState`]
+    fn update_state(&self, state: &PaintEngineStateTrait) {
+        let (obj_state_1, _funcs) = state.get_paint_engine_state_obj_funcs();
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).update_state)(obj_data, obj_state_1);
+        }
+    }
+    ///
+    /// **Overloads**
+    /// The default implementation converts the first *rectCount*
+    /// rectangles in the buffer *rects* to a QRectF and calls the
+    /// floating point version of this function.
+    ///
+    /// Draws the first *rectCount* rectangles in the buffer *rects.* The default implementation of this function calls drawPath()
+    /// or drawPolygon() depending on the feature set of the paint engine.
+    fn draw_rects(&self, rects: &RectTrait, rect_count: i32) {
+        let (obj_rects_1, _funcs) = rects.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_rects)(obj_data, obj_rects_1, rect_count);
+        }
+    }
+    ///
+    /// **Overloads**
+    /// The default implementation converts the first *rectCount*
+    /// rectangles in the buffer *rects* to a QRectF and calls the
+    /// floating point version of this function.
+    ///
+    /// Draws the first *rectCount* rectangles in the buffer *rects.* The default implementation of this function calls drawPath()
+    /// or drawPolygon() depending on the feature set of the paint engine.
+    fn draw_rects_2(&self, rects: &RectFTrait, rect_count: i32) {
+        let (obj_rects_1, _funcs) = rects.get_rect_f_obj_funcs();
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_rects_2)(obj_data, obj_rects_1, rect_count);
+        }
+    }
+    ///
+    /// The default implementation splits the list of lines in *lines*
+    /// into *lineCount* separate calls to drawPath() or drawPolygon()
+    /// depending on the feature set of the paint engine.
+    ///
+    /// **Overloads**
+    /// The default implementation converts the first *lineCount* lines
+    /// in *lines* to a QLineF and calls the floating point version of
+    /// this function.
+    fn draw_lines(&self, lines: &LineTrait, line_count: i32) {
+        let (obj_lines_1, _funcs) = lines.get_line_obj_funcs();
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_lines)(obj_data, obj_lines_1, line_count);
+        }
+    }
+    ///
+    /// The default implementation splits the list of lines in *lines*
+    /// into *lineCount* separate calls to drawPath() or drawPolygon()
+    /// depending on the feature set of the paint engine.
+    ///
+    /// **Overloads**
+    /// The default implementation converts the first *lineCount* lines
+    /// in *lines* to a QLineF and calls the floating point version of
+    /// this function.
+    fn draw_lines_2(&self, lines: &LineFTrait, line_count: i32) {
+        let (obj_lines_1, _funcs) = lines.get_line_f_obj_funcs();
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_lines_2)(obj_data, obj_lines_1, line_count);
+        }
+    }
+    ///
+    /// Reimplement this function to draw the largest ellipse that can be
+    /// contained within rectangle *rect.*
+    ///
+    /// The default implementation calls drawPolygon().
+    ///
+    /// The default implementation of this function calls the floating
+    /// point version of this function
+    fn draw_ellipse(&self, r: &RectFTrait) {
+        let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_ellipse)(obj_data, obj_r_1);
+        }
+    }
+    ///
+    /// Reimplement this function to draw the largest ellipse that can be
+    /// contained within rectangle *rect.*
+    ///
+    /// The default implementation calls drawPolygon().
+    ///
+    /// The default implementation of this function calls the floating
+    /// point version of this function
+    fn draw_ellipse_2(&self, r: &RectTrait) {
+        let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_ellipse_2)(obj_data, obj_r_1);
+        }
+    }
+    ///
+    /// The default implementation ignores the *path* and does nothing.
+    ///
+    /// Draws the first *pointCount* points in the buffer *points*
+    ///
+    /// Draws the first *pointCount* points in the buffer *points*
+    ///
+    /// The default implementation converts the first *pointCount* QPoints in *points*
+    /// to QPointFs and calls the floating point version of drawPoints.
+    ///
+    fn draw_points(&self, points: &PointFTrait, point_count: i32) {
+        let (obj_points_1, _funcs) = points.get_point_f_obj_funcs();
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_points)(obj_data, obj_points_1, point_count);
+        }
+    }
+    ///
+    /// Draws the first *pointCount* points in the buffer *points*
+    ///
+    /// Draws the first *pointCount* points in the buffer *points*
+    ///
+    /// The default implementation converts the first *pointCount* QPoints in *points*
+    /// to QPointFs and calls the floating point version of drawPoints.
+    ///
+    fn draw_points_2(&self, points: &PointTrait, point_count: i32) {
+        let (obj_points_1, _funcs) = points.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_points_2)(obj_data, obj_points_1, point_count);
+        }
+    }
+    ///
+    /// PolygonDrawMode mode)
+    ///
+    /// Reimplement this virtual function to draw the polygon defined
+    /// by the *pointCount* first points in *points,* using mode *mode.*
+    ///
+    /// **Note**: At least one of the drawPolygon() functions must be reimplemented.
+    ///
+    /// **Overloads**
+    /// Reimplement this virtual function to draw the polygon defined by the
+    /// *pointCount* first points in *points,* using mode *mode.*
+    ///
+    /// **Note**: At least one of the drawPolygon() functions must be reimplemented.
+    fn draw_polygon(&self, points: &PointFTrait, point_count: i32, mode: PolygonDrawMode) {
+        let (obj_points_1, _funcs) = points.get_point_f_obj_funcs();
+        let enum_mode_3 = mode as i32;
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_polygon)(obj_data, obj_points_1, point_count, enum_mode_3);
+        }
+    }
+    ///
+    /// PolygonDrawMode mode)
+    ///
+    /// Reimplement this virtual function to draw the polygon defined
+    /// by the *pointCount* first points in *points,* using mode *mode.*
+    ///
+    /// **Note**: At least one of the drawPolygon() functions must be reimplemented.
+    ///
+    /// **Overloads**
+    /// Reimplement this virtual function to draw the polygon defined by the
+    /// *pointCount* first points in *points,* using mode *mode.*
+    ///
+    /// **Note**: At least one of the drawPolygon() functions must be reimplemented.
+    fn draw_polygon_2(&self, points: &PointTrait, point_count: i32, mode: PolygonDrawMode) {
+        let (obj_points_1, _funcs) = points.get_point_obj_funcs();
+        let enum_mode_3 = mode as i32;
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_polygon_2)(obj_data, obj_points_1, point_count, enum_mode_3);
+        }
+    }
+    ///
+    /// &pm, const QRectF &sr)
+    ///
+    /// Reimplement this function to draw the part of the *pm*
+    /// specified by the *sr* rectangle in the given *r.*
+    fn draw_pixmap(&self, r: &RectFTrait, pm: &PixmapTrait, sr: &RectFTrait) {
+        let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
+        let (obj_pm_2, _funcs) = pm.get_pixmap_obj_funcs();
+        let (obj_sr_3, _funcs) = sr.get_rect_f_obj_funcs();
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_pixmap)(obj_data, obj_r_1, obj_pm_2, obj_sr_3);
+        }
+    }
+    ///
+    /// This function draws the text item *textItem* at position *p.* The
+    /// default implementation of this function converts the text to a
+    /// QPainterPath and paints the resulting path.
+    ///
+    /// Reimplement this function to draw the *pixmap* in the given *rect,* starting at the given *p.* The pixmap will be
+    /// drawn repeatedly until the *rect* is filled.
+    fn draw_tiled_pixmap(&self, r: &RectFTrait, pixmap: &PixmapTrait, s: &PointFTrait) {
+        let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
+        let (obj_pixmap_2, _funcs) = pixmap.get_pixmap_obj_funcs();
+        let (obj_s_3, _funcs) = s.get_point_f_obj_funcs();
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_tiled_pixmap)(obj_data, obj_r_1, obj_pixmap_2, obj_s_3);
+        }
+    }
+    ///
+    /// &image, const QRectF &sr, Qt::ImageConversionFlags flags)
+    ///
+    /// Reimplement this function to draw the part of the *image*
+    /// specified by the *sr* rectangle in the given *rectangle* using
+    /// the given conversion flags *flags,* to convert it to a pixmap.
+    fn draw_image(
+        &self,
+        r: &RectFTrait,
+        pm: &ImageTrait,
+        sr: &RectFTrait,
+        flags: ImageConversionFlags,
+    ) {
+        let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
+        let (obj_pm_2, _funcs) = pm.get_image_obj_funcs();
+        let (obj_sr_3, _funcs) = sr.get_rect_f_obj_funcs();
+        let enum_flags_4 = flags as i32;
+
+        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
+        unsafe {
+            ((*funcs).draw_image)(obj_data, obj_r_1, obj_pm_2, obj_sr_3, enum_flags_4);
+        }
+    }
+    fn set_paint_device(&self, device: &PaintDeviceTrait) {
         let (obj_device_1, _funcs) = device.get_paint_device_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).set_paint_device)(obj_data, obj_device_1);
         }
-        self
     }
     ///
     /// Returns the device that this engine is painting on, if painting is
@@ -1539,14 +486,13 @@ pub trait PaintEngineType<'a> {
             Some(ret_val)
         }
     }
-    fn set_system_clip<R: RegionType<'a>>(&self, base_clip: &R) -> &Self {
+    fn set_system_clip(&self, base_clip: &RegionTrait) {
         let (obj_base_clip_1, _funcs) = base_clip.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).set_system_clip)(obj_data, obj_base_clip_1);
         }
-        self
     }
     fn system_clip(&self) -> Region {
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
@@ -1562,14 +508,13 @@ pub trait PaintEngineType<'a> {
             ret_val
         }
     }
-    fn set_system_rect<R: RectType<'a>>(&self, rect: &R) -> &Self {
+    fn set_system_rect(&self, rect: &RectTrait) {
         let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).set_system_rect)(obj_data, obj_rect_1);
         }
-        self
     }
     fn system_rect(&self) -> Rect {
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
@@ -1585,81 +530,17 @@ pub trait PaintEngineType<'a> {
             ret_val
         }
     }
-    fn fix_neg_rect(&self, x: &i32, y: &i32, w: &i32, h: &i32) -> &Self {
+    fn coordinate_offset(&self) -> Point {
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
-            ((*funcs).fix_neg_rect)(obj_data, x, y, w, h);
-        }
-        self
-    }
-    fn test_dirty(&self, df: DirtyFlags) -> bool {
-        let enum_df_1 = df as i32;
-
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).test_dirty)(obj_data, enum_df_1);
-            ret_val
-        }
-    }
-    fn set_dirty(&self, df: DirtyFlags) -> &Self {
-        let enum_df_1 = df as i32;
-
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        unsafe {
-            ((*funcs).set_dirty)(obj_data, enum_df_1);
-        }
-        self
-    }
-    fn clear_dirty(&self, df: DirtyFlags) -> &Self {
-        let enum_df_1 = df as i32;
-
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        unsafe {
-            ((*funcs).clear_dirty)(obj_data, enum_df_1);
-        }
-        self
-    }
-    ///
-    /// Returns `true` if the paint engine supports the specified *feature;* otherwise returns `false.`
-    fn has_feature(&self, feature: PaintEngineFeatures) -> bool {
-        let enum_feature_1 = feature as i32;
-
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).has_feature)(obj_data, enum_feature_1);
-            ret_val
-        }
-    }
-    ///
-    /// Returns the paint engine's painter.
-    fn painter(&self) -> Option<Painter> {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).painter)(obj_data);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
+            let ret_val = ((*funcs).coordinate_offset)(obj_data);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
-                ret_val = Painter::new_from_rc(t);
+                ret_val = Point::new_from_rc(t);
             } else {
-                ret_val = Painter::new_from_owned(t);
+                ret_val = Point::new_from_owned(t);
             }
-            Some(ret_val)
-        }
-    }
-    fn sync_state(&self) -> &Self {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        unsafe {
-            ((*funcs).sync_state)(obj_data);
-        }
-        self
-    }
-    fn is_extended(&self) -> bool {
-        let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).is_extended)(obj_data);
             ret_val
         }
     }
@@ -1668,10 +549,85 @@ pub trait PaintEngineType<'a> {
     fn get_paint_engine_obj_funcs(&self) -> (*const RUBase, *const RUPaintEngineFuncs);
 }
 
-impl<'a> PaintEngineType<'a> for PaintEngine<'a> {
+impl<'a> PaintEngineTrait<'a> for PaintEngine<'a> {
     #[inline]
     fn get_paint_engine_obj_funcs(&self) -> (*const RUBase, *const RUPaintEngineFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).paint_engine_funcs) }
     }
+}
+#[repr(u32)]
+pub enum PaintEngineFeature {
+    PrimitiveTransform,
+    PatternTransform,
+    PixmapTransform,
+    PatternBrush,
+    LinearGradientFill,
+    RadialGradientFill,
+    ConicalGradientFill,
+    AlphaBlend,
+    PorterDuff,
+    PainterPaths,
+    Antialiasing,
+    BrushStroke,
+    ConstantOpacity,
+    MaskedBrush,
+    PerspectiveTransform,
+    BlendModes,
+    ObjectBoundingModeGradients,
+    RasterOpModes,
+    PaintOutsidePaintEvent,
+    AllFeatures,
+}
+
+#[repr(u32)]
+pub enum DirtyFlag {
+    DirtyPen,
+    DirtyBrush,
+    DirtyBrushOrigin,
+    DirtyFont,
+    DirtyBackground,
+    DirtyBackgroundMode,
+    DirtyTransform,
+    DirtyClipRegion,
+    DirtyClipPath,
+    DirtyHints,
+    DirtyCompositionMode,
+    DirtyClipEnabled,
+    DirtyOpacity,
+    AllDirty,
+}
+
+pub type DirtyFlags = DirtyFlag;
+
+#[repr(u32)]
+pub enum PolygonDrawMode {
+    OddEvenMode,
+    WindingMode,
+    ConvexMode,
+    PolylineMode,
+}
+
+#[repr(u32)]
+pub enum Type {
+    X11,
+    Windows,
+    QuickDraw,
+    CoreGraphics,
+    MacPrinter,
+    QWindowSystem,
+    PostScript,
+    OpenGl,
+    Picture,
+    Svg,
+    Raster,
+    Direct3D,
+    Pdf,
+    OpenVg,
+    OpenGL2,
+    PaintBuffer,
+    Blitter,
+    Direct2D,
+    User,
+    MaxUser,
 }

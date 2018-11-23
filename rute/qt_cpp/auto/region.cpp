@@ -32,70 +32,6 @@ static bool region_is_null(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int region_begin(struct RUBase* self_c) {
-    WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->begin();
-    return s_const_iterator_lookup[(int)ret_value];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static int region_cbegin(struct RUBase* self_c) {
-    WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->cbegin();
-    return s_const_iterator_lookup[(int)ret_value];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static int region_end(struct RUBase* self_c) {
-    WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->end();
-    return s_const_iterator_lookup[(int)ret_value];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static int region_cend(struct RUBase* self_c) {
-    WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->cend();
-    return s_const_iterator_lookup[(int)ret_value];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static int region_rbegin(struct RUBase* self_c) {
-    WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->rbegin();
-    return s_const_reverse_iterator_lookup[(int)ret_value];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static int region_crbegin(struct RUBase* self_c) {
-    WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->crbegin();
-    return s_const_reverse_iterator_lookup[(int)ret_value];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static int region_rend(struct RUBase* self_c) {
-    WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->rend();
-    return s_const_reverse_iterator_lookup[(int)ret_value];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static int region_crend(struct RUBase* self_c) {
-    WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->crend();
-    return s_const_reverse_iterator_lookup[(int)ret_value];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static bool region_contains(struct RUBase* self_c, struct RUBase* p) {
     WRRegion* qt_value = (WRRegion*)self_c;
     auto ret_value = qt_value->contains(*((QPoint*)p));
@@ -104,7 +40,7 @@ static bool region_contains(struct RUBase* self_c, struct RUBase* p) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool region_contains(struct RUBase* self_c, struct RUBase* r) {
+static bool region_contains_2(struct RUBase* self_c, struct RUBase* r) {
     WRRegion* qt_value = (WRRegion*)self_c;
     auto ret_value = qt_value->contains(*((QRect*)r));
     return ret_value;
@@ -126,7 +62,7 @@ static struct RURegion region_united(struct RUBase* self_c, struct RUBase* r) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RURegion region_united(struct RUBase* self_c, struct RUBase* r) {
+static struct RURegion region_united_2(struct RUBase* self_c, struct RUBase* r) {
     WRRegion* qt_value = (WRRegion*)self_c;
     auto ret_value = qt_value->united(*((QRect*)r));
     WRRegion* new_val = new WRRegion();
@@ -154,7 +90,7 @@ static struct RURegion region_intersected(struct RUBase* self_c, struct RUBase* 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RURegion region_intersected(struct RUBase* self_c, struct RUBase* r) {
+static struct RURegion region_intersected_2(struct RUBase* self_c, struct RUBase* r) {
     WRRegion* qt_value = (WRRegion*)self_c;
     auto ret_value = qt_value->intersected(*((QRect*)r));
     WRRegion* new_val = new WRRegion();
@@ -190,7 +126,7 @@ static bool region_intersects(struct RUBase* self_c, struct RUBase* r) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool region_intersects(struct RUBase* self_c, struct RUBase* r) {
+static bool region_intersects_2(struct RUBase* self_c, struct RUBase* r) {
     WRRegion* qt_value = (WRRegion*)self_c;
     auto ret_value = qt_value->intersects(*((QRect*)r));
     return ret_value;
@@ -250,23 +186,15 @@ struct RURegionFuncs s_region_funcs = {
     region_swap,
     region_is_empty,
     region_is_null,
-    region_begin,
-    region_cbegin,
-    region_end,
-    region_cend,
-    region_rbegin,
-    region_crbegin,
-    region_rend,
-    region_crend,
     region_contains,
-    region_contains,
+    region_contains_2,
     region_united,
-    region_united,
+    region_united_2,
     region_intersected,
-    region_intersected,
+    region_intersected_2,
     region_xored,
     region_intersects,
-    region_intersects,
+    region_intersects_2,
     region_bounding_rect,
     region_set_rects,
     region_rect_count,
