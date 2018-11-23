@@ -644,7 +644,7 @@ impl<'a> Widget<'a> {
             _marker: PhantomData,
         }
     }
-    fn set_window_title_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_window_title_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, &str) + 'a,
         T: 'a,
@@ -664,7 +664,7 @@ impl<'a> Widget<'a> {
         }
     }
 
-    fn set_window_title_changed_event<F>(&self, func: F)
+    pub fn set_window_title_changed_event<F>(&self, func: F)
     where
         F: Fn(&str) + 'a,
     {
@@ -681,7 +681,7 @@ impl<'a> Widget<'a> {
         }
     }
 
-    fn set_window_icon_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_window_icon_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, &IconTrait) + 'a,
         T: 'a,
@@ -701,7 +701,7 @@ impl<'a> Widget<'a> {
         }
     }
 
-    fn set_window_icon_changed_event<F>(&self, func: F)
+    pub fn set_window_icon_changed_event<F>(&self, func: F)
     where
         F: Fn(&IconTrait) + 'a,
     {
@@ -718,7 +718,7 @@ impl<'a> Widget<'a> {
         }
     }
 
-    fn set_window_icon_text_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_window_icon_text_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, &str) + 'a,
         T: 'a,
@@ -738,7 +738,7 @@ impl<'a> Widget<'a> {
         }
     }
 
-    fn set_window_icon_text_changed_event<F>(&self, func: F)
+    pub fn set_window_icon_text_changed_event<F>(&self, func: F)
     where
         F: Fn(&str) + 'a,
     {
@@ -755,7 +755,7 @@ impl<'a> Widget<'a> {
         }
     }
 
-    fn set_custom_context_menu_requested_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_custom_context_menu_requested_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, &PointTrait) + 'a,
         T: 'a,
@@ -775,7 +775,7 @@ impl<'a> Widget<'a> {
         }
     }
 
-    fn set_custom_context_menu_requested_event<F>(&self, func: F)
+    pub fn set_custom_context_menu_requested_event<F>(&self, func: F)
     where
         F: Fn(&PointTrait) + 'a,
     {

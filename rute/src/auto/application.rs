@@ -82,7 +82,7 @@ impl<'a> Application<'a> {
             _marker: PhantomData,
         }
     }
-    fn set_about_to_quit_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_about_to_quit_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T) + 'a,
         T: 'a,
@@ -102,7 +102,7 @@ impl<'a> Application<'a> {
         }
     }
 
-    fn set_about_to_quit_event<F>(&self, func: F)
+    pub fn set_about_to_quit_event<F>(&self, func: F)
     where
         F: Fn() + 'a,
     {
@@ -119,7 +119,7 @@ impl<'a> Application<'a> {
         }
     }
 
-    fn set_screen_added_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_screen_added_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, &ScreenTrait) + 'a,
         T: 'a,
@@ -139,7 +139,7 @@ impl<'a> Application<'a> {
         }
     }
 
-    fn set_screen_added_event<F>(&self, func: F)
+    pub fn set_screen_added_event<F>(&self, func: F)
     where
         F: Fn(&ScreenTrait) + 'a,
     {

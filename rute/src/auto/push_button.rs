@@ -91,7 +91,7 @@ impl<'a> PushButton<'a> {
             _marker: PhantomData,
         }
     }
-    fn set_pressed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_pressed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T) + 'a,
         T: 'a,
@@ -111,7 +111,7 @@ impl<'a> PushButton<'a> {
         }
     }
 
-    fn set_pressed_event<F>(&self, func: F)
+    pub fn set_pressed_event<F>(&self, func: F)
     where
         F: Fn() + 'a,
     {
@@ -128,7 +128,7 @@ impl<'a> PushButton<'a> {
         }
     }
 
-    fn set_released_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_released_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T) + 'a,
         T: 'a,
@@ -148,7 +148,7 @@ impl<'a> PushButton<'a> {
         }
     }
 
-    fn set_released_event<F>(&self, func: F)
+    pub fn set_released_event<F>(&self, func: F)
     where
         F: Fn() + 'a,
     {
@@ -165,7 +165,7 @@ impl<'a> PushButton<'a> {
         }
     }
 
-    fn set_clicked_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_clicked_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, bool) + 'a,
         T: 'a,
@@ -185,7 +185,7 @@ impl<'a> PushButton<'a> {
         }
     }
 
-    fn set_clicked_event<F>(&self, func: F)
+    pub fn set_clicked_event<F>(&self, func: F)
     where
         F: Fn(bool) + 'a,
     {
@@ -202,7 +202,7 @@ impl<'a> PushButton<'a> {
         }
     }
 
-    fn set_toggled_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_toggled_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, bool) + 'a,
         T: 'a,
@@ -222,7 +222,7 @@ impl<'a> PushButton<'a> {
         }
     }
 
-    fn set_toggled_event<F>(&self, func: F)
+    pub fn set_toggled_event<F>(&self, func: F)
     where
         F: Fn(bool) + 'a,
     {

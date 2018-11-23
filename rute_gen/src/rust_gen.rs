@@ -548,7 +548,7 @@ impl RustGenerator {
         if func.func_type == FunctionType::Event {
             template_data.insert("visibility".into(), Value::scalar("pub"));
         } else {
-            template_data.insert("visibility".into(), Value::scalar(""));
+            template_data.insert("visibility".into(), Value::scalar("pub"));
         }
 
         let ffi_func_def = func.rust_func_def(

@@ -290,7 +290,7 @@ impl<'a> Window<'a> {
             _marker: PhantomData,
         }
     }
-    fn set_screen_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_screen_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, &ScreenTrait) + 'a,
         T: 'a,
@@ -310,7 +310,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_screen_changed_event<F>(&self, func: F)
+    pub fn set_screen_changed_event<F>(&self, func: F)
     where
         F: Fn(&ScreenTrait) + 'a,
     {
@@ -327,7 +327,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_window_title_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_window_title_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, &str) + 'a,
         T: 'a,
@@ -347,7 +347,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_window_title_changed_event<F>(&self, func: F)
+    pub fn set_window_title_changed_event<F>(&self, func: F)
     where
         F: Fn(&str) + 'a,
     {
@@ -364,7 +364,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_x_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_x_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, i32) + 'a,
         T: 'a,
@@ -384,7 +384,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_x_changed_event<F>(&self, func: F)
+    pub fn set_x_changed_event<F>(&self, func: F)
     where
         F: Fn(i32) + 'a,
     {
@@ -401,7 +401,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_y_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_y_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, i32) + 'a,
         T: 'a,
@@ -421,7 +421,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_y_changed_event<F>(&self, func: F)
+    pub fn set_y_changed_event<F>(&self, func: F)
     where
         F: Fn(i32) + 'a,
     {
@@ -438,7 +438,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_width_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_width_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, i32) + 'a,
         T: 'a,
@@ -458,7 +458,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_width_changed_event<F>(&self, func: F)
+    pub fn set_width_changed_event<F>(&self, func: F)
     where
         F: Fn(i32) + 'a,
     {
@@ -475,7 +475,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_height_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_height_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, i32) + 'a,
         T: 'a,
@@ -495,7 +495,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_height_changed_event<F>(&self, func: F)
+    pub fn set_height_changed_event<F>(&self, func: F)
     where
         F: Fn(i32) + 'a,
     {
@@ -512,7 +512,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_minimum_width_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_minimum_width_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, i32) + 'a,
         T: 'a,
@@ -532,7 +532,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_minimum_width_changed_event<F>(&self, func: F)
+    pub fn set_minimum_width_changed_event<F>(&self, func: F)
     where
         F: Fn(i32) + 'a,
     {
@@ -549,7 +549,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_minimum_height_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_minimum_height_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, i32) + 'a,
         T: 'a,
@@ -569,7 +569,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_minimum_height_changed_event<F>(&self, func: F)
+    pub fn set_minimum_height_changed_event<F>(&self, func: F)
     where
         F: Fn(i32) + 'a,
     {
@@ -586,7 +586,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_maximum_width_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_maximum_width_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, i32) + 'a,
         T: 'a,
@@ -606,7 +606,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_maximum_width_changed_event<F>(&self, func: F)
+    pub fn set_maximum_width_changed_event<F>(&self, func: F)
     where
         F: Fn(i32) + 'a,
     {
@@ -623,7 +623,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_maximum_height_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_maximum_height_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, i32) + 'a,
         T: 'a,
@@ -643,7 +643,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_maximum_height_changed_event<F>(&self, func: F)
+    pub fn set_maximum_height_changed_event<F>(&self, func: F)
     where
         F: Fn(i32) + 'a,
     {
@@ -660,7 +660,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_visible_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_visible_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, bool) + 'a,
         T: 'a,
@@ -680,7 +680,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_visible_changed_event<F>(&self, func: F)
+    pub fn set_visible_changed_event<F>(&self, func: F)
     where
         F: Fn(bool) + 'a,
     {
@@ -697,7 +697,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_active_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_active_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T) + 'a,
         T: 'a,
@@ -717,7 +717,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_active_changed_event<F>(&self, func: F)
+    pub fn set_active_changed_event<F>(&self, func: F)
     where
         F: Fn() + 'a,
     {
@@ -734,7 +734,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_focus_object_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_focus_object_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, &ObjectTrait) + 'a,
         T: 'a,
@@ -754,7 +754,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_focus_object_changed_event<F>(&self, func: F)
+    pub fn set_focus_object_changed_event<F>(&self, func: F)
     where
         F: Fn(&ObjectTrait) + 'a,
     {
@@ -771,7 +771,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_opacity_changed_event_ud<F, T>(&self, data: &'a T, func: F)
+    pub fn set_opacity_changed_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, f32) + 'a,
         T: 'a,
@@ -791,7 +791,7 @@ impl<'a> Window<'a> {
         }
     }
 
-    fn set_opacity_changed_event<F>(&self, func: F)
+    pub fn set_opacity_changed_event<F>(&self, func: F)
     where
         F: Fn(f32) + 'a,
     {
