@@ -196,7 +196,6 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str =
             ((*funcs).{{func_name}})({{function_args}});
         }
     {%- unless static_func %}
-        self
     {%- endunless %}
     {%- endif %}
     }
@@ -260,7 +259,7 @@ pub struct {{type_name}}Static<'a> {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_CALLBACK_TEMPLATE: &str = "
-    {{visibility}} fn set_{{event_name}}_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    {{visibility}} fn set_{{event_name}}_event_ud<F, T>(&self, data: &'a T, func: F)
     where
         F: Fn(&T, {{function_arg_types}}) + 'a,
         T: 'a,
@@ -278,11 +277,9 @@ pub static RUST_CALLBACK_TEMPLATE: &str = "
                 transmute({{widget_snake_name}}_{{event_name}}_trampoline_ud::<T> as usize),
             );
         }
-
-        self
     }
 
-    {{visibility}} fn set_{{event_name}}_event<F>(&self, func: F) -> &Self
+    {{visibility}} fn set_{{event_name}}_event<F>(&self, func: F)
     where
         F: Fn({{function_arg_types}}) + 'a,
     {
@@ -297,7 +294,5 @@ pub static RUST_CALLBACK_TEMPLATE: &str = "
                 transmute({{widget_snake_name}}_{{event_name}}_trampoline as usize),
             );
         }
-
-        self
     }
 ";

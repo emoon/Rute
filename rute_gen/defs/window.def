@@ -937,13 +937,13 @@ struct Window : Object, Surface {
     /// the window's screen is removed.
     [signal] screen_changed(screen: *ScreenType),
     ///
-    /// This signal is emitted when the Qwindow::modality property changes to *modality.*
-    [signal] modality_changed(modality: Rute::WindowModality),
+    // This signal is emitted when the Qwindow::modality property changes to *modality.*
+    //[signal] modality_changed(modality: Rute::WindowModality),
     ///
     /// This signal is emitted when the *windowState* changes, either
     /// by being set explicitly with setWindowStates(), or automatically when
     /// the user clicks one of the titlebar buttons or by other means.
-    [signal] window_state_changed(window_state: Rute::WindowState),
+    //[signal] window_state_changed(window_state: Rute::WindowState),
     [signal] window_title_changed(title: String),
     [signal] x_changed(arg: i32),
     [signal] y_changed(arg: i32),
@@ -954,9 +954,9 @@ struct Window : Object, Surface {
     [signal] maximum_width_changed(arg: i32),
     [signal] maximum_height_changed(arg: i32),
     [signal] visible_changed(arg: bool),
-    [signal] visibility_changed(visibility: Window::Visibility),
+    //[signal] visibility_changed(visibility: Window::Visibility),
     [signal] active_changed(),
-    [signal] content_orientation_changed(orientation: Rute::ScreenOrientation),
+    //[signal] content_orientation_changed(orientation: Rute::ScreenOrientation),
     ///
     /// This signal is emitted when the final receiver of events tied to focus
     /// is changed to *object.*

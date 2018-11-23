@@ -89,12 +89,10 @@ fn run_clang_format(filename: &str) {
 fn main() {
     let wd = WalkDir::new("defs");
     // temporary set to one thread during debugging
-    /*
 	rayon::ThreadPoolBuilder::new()
         .num_threads(1)
         .build_global()
         .unwrap();
-    */
 
     //let qt_gen = QtGenerator::new();
 

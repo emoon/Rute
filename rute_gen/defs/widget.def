@@ -2783,7 +2783,8 @@ struct Widget : Object, PaintDevice {
     /// This version repaints a region *rgn* inside the widget.
     [org_name(repaint)]
     repaint_4(arg0: &RegionType),
-    [event] set_visible(visible: bool),
+
+    //[event] set_visible(visible: bool),
     ///
     /// Convenience function, equivalent to setVisible(! *hidden).*
     set_hidden(hidden: bool),
@@ -4416,7 +4417,7 @@ struct Widget : Object, PaintDevice {
     /// Initializes the *painter* pen, background and font to the same as
     /// the given widget's. This function is called automatically when the
     /// painter is opened on a QWidget.
-    [event] init_painter(painter: *PainterType),
+    //[event] init_painter(painter: *PainterType),
     //[event] redirected(offset: *PointType) -> PaintDevice?,
     //[event] shared_painter() -> Painter?,
     ///

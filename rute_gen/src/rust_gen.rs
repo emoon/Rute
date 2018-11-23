@@ -369,6 +369,7 @@ impl RustGenerator {
         // Check if we have any generic types, then we need to start with constructing the labels
         // for it
 
+        /*
         for arg in &func.function_args[1..] {
             gen_labels.get(&arg.type_name);
         }
@@ -394,6 +395,7 @@ impl RustGenerator {
 
             func_imp.push('>');
         }
+        */
 
         if is_static_func {
             func_imp.push_str("(");
@@ -402,13 +404,15 @@ impl RustGenerator {
         }
 
         for (index, arg) in func.function_args[1..].iter().enumerate() {
+            /*
             if let Some(label) = gen_labels.get(&arg.type_name) {
                 temp_str.clear();
                 temp_str.push('&');
                 temp_str.push(label);
             } else {
-                self.generate_arg_type(&mut temp_str, &arg, IsReturnArg::No, is_static_func);
-            }
+            */
+            self.generate_arg_type(&mut temp_str, &arg, IsReturnArg::No, is_static_func);
+            //}
 
             if !(is_static_func && index == 0) {
                 func_imp.push_str(", ");
@@ -430,9 +434,11 @@ impl RustGenerator {
         // If we don't have any return value we alwayes return self
         //
         if func.return_val.is_none() {
+            /*
             if !is_static_func {
                 func_imp.push_str(" -> &Self");
             }
+            */
         //func_imp.push_str(" -> &");
         //func_imp.push_str(struct_name);
         //func_imp.push_str("<'a>");
@@ -768,7 +774,7 @@ impl RustGenerator {
 
             sdef.functions
                 .iter()
-                .filter(|f| f.func_type == FunctionType::Event)
+                .filter(|f| f.func_type == FunctionType::Event || f.func_type == FunctionType::Signal)
                 .for_each(|f| {
                     let res = self.generate_callback(&f, &sdef.name, &self.callback_template);
                     event_funcs.push_str(&res);
@@ -839,6 +845,7 @@ impl RustGenerator {
 
         if func_type != FunctionType::Static {
             // generate the event functions in the not static trait
+            /*
             sdef.functions
                 .iter()
                 .filter(|f| f.func_type == FunctionType::Signal)
@@ -847,6 +854,7 @@ impl RustGenerator {
                     let res = self.generate_callback(&f, name, &self.callback_template);
                     dest.write_all(res.as_bytes())
                 })?;
+            */
 
             let mut template_data = Object::new();
             template_data.insert("type_name".into(), Value::scalar(&sdef.name));
