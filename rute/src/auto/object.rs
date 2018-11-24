@@ -17,21 +17,30 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::event::Event;
-#[allow(unused_imports)]
-use auto::event::EventTrait;
-#[allow(unused_imports)]
-use auto::event_ffi::*;
-#[allow(unused_imports)]
-use auto::object_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::TimerType;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
+pub(crate) unsafe extern "C" fn object_custom_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&T, &EventTrait) + 'static) = transmute(func);
+    let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_event_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn object_custom_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    event: *const RUBase,
+) {
+    let f: &&(Fn(&EventTrait) + 'static) = transmute(func);
+    let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
+    f(&obj_event_0);
+}
+
 ///
 /// QObject is the heart of the Qt [Object Model](Object%20Model)
 /// . The central
@@ -190,9 +199,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Object<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUObjectAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -217,7 +230,8 @@ impl<'a> Object<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUObject) -> Object<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUObject) -> Object<'a> {
         Object {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -226,7 +240,8 @@ impl<'a> Object<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUObject) -> Object<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUObject) -> Object<'a> {
         Object {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -235,7 +250,8 @@ impl<'a> Object<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUObject) -> Object<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUObject) -> Object<'a> {
         Object {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -243,155 +259,6 @@ impl<'a> Object<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn set_custom_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &EventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_object_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_custom_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(object_custom_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_custom_event<F>(&self, func: F)
-    where
-        F: Fn(&EventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_object_obj_funcs();
-        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_custom_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(object_custom_trampoline as usize),
-            );
-        }
-    }
-}
-///
-/// Returns a pointer to the object that sent the signal, if called in
-/// a slot activated by a signal; otherwise it returns 0. The pointer
-/// is valid only during the execution of the slot that calls this
-/// function from this object's thread context.
-///
-/// The pointer returned by this function becomes invalid if the
-/// sender is destroyed, or if the slot is disconnected from the
-/// sender's signal.
-///
-/// **Warning**: This function violates the object-oriented principle of
-/// modularity. However, getting access to the sender might be useful
-/// when many signals are connected to a single slot.
-///
-/// **Warning**: As mentioned above, the return value of this function is
-/// not valid when the slot is called via a Qt::DirectConnection from
-/// a thread different from this object's thread. Do not use this
-/// function in this type of scenario.
-///
-/// **See also:** [`sender_signal_index()`]
-///
-/// Returns the meta-method index of the signal that called the currently
-/// executing slot, which is a member of the class returned by sender().
-/// If called outside of a slot activated by a signal, -1 is returned.
-///
-/// For signals with default parameters, this function will always return
-/// the index with all parameters, regardless of which was used with
-/// connect(). For example, the signal `destroyed(QObject *obj = 0)`
-/// will have two different indexes (with and without the parameter), but
-/// this function will always return the index with a parameter. This does
-/// not apply when overloading signals with different parameters.
-///
-/// **Warning**: This function violates the object-oriented principle of
-/// modularity. However, getting access to the signal index might be useful
-/// when many signals are connected to a single slot.
-///
-/// **Warning**: The return value of this function is not valid when the slot
-/// is called via a Qt::DirectConnection from a thread different from this
-/// object's thread. Do not use this function in this type of scenario.
-///
-/// **See also:** [`sender()`]
-/// [`MetaObject::index_of_signal`]
-/// [`MetaObject::method`]
-///
-/// Returns the meta-method index of the signal that called the currently
-/// executing slot, which is a member of the class returned by sender().
-/// If called outside of a slot activated by a signal, -1 is returned.
-///
-/// For signals with default parameters, this function will always return
-/// the index with all parameters, regardless of which was used with
-/// connect(). For example, the signal `destroyed(QObject *obj = 0)`
-/// will have two different indexes (with and without the parameter), but
-/// this function will always return the index with a parameter. This does
-/// not apply when overloading signals with different parameters.
-///
-/// **Warning**: This function violates the object-oriented principle of
-/// modularity. However, getting access to the signal index might be useful
-/// when many signals are connected to a single slot.
-///
-/// **Warning**: The return value of this function is not valid when the slot
-/// is called via a Qt::DirectConnection from a thread different from this
-/// object's thread. Do not use this function in this type of scenario.
-///
-/// **See also:** [`sender()`]
-/// [`MetaObject::index_of_signal`]
-/// [`MetaObject::method`]
-///
-/// Returns `true` if the *signal* is connected to at least one receiver,
-/// otherwise returns `false.`
-///
-/// *signal* must be a signal member of this object, otherwise the behaviour
-/// is undefined.
-///
-/// As the code snippet above illustrates, you can use this function
-/// to avoid emitting a signal that nobody listens to.
-///
-/// **Warning**: This function violates the object-oriented principle of
-/// modularity. However, it might be useful when you need to perform
-/// expensive initialization only if something is connected to a
-/// signal.
-///
-/// This event handler can be reimplemented in a subclass to receive
-/// custom events. Custom events are user-defined events with a type
-/// value at least as large as the QEvent::User item of the
-/// QEvent::Type enum, and is typically a QEvent subclass. The event
-/// is passed in the *event* parameter.
-///
-/// **See also:** [`event()`]
-/// [`Event`]
-
-unsafe extern "C" fn object_custom_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    event: *const RUBase,
-) {
-    let f: &&(Fn(&T, &EventTrait) + 'static) = transmute(func);
-    let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_event_0);
-}
-
-unsafe extern "C" fn object_custom_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    event: *const RUBase,
-) {
-    let f: &&(Fn(&EventTrait) + 'static) = transmute(func);
-    let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
-    f(&obj_event_0);
-}
-
-pub trait ObjectTrait<'a> {
     ///
     /// This virtual function receives events to an object and should
     /// return true if the event *e* was recognized and processed.
@@ -460,7 +327,7 @@ pub trait ObjectTrait<'a> {
     /// This signal is emitted after the object's name has been changed. The new object name is passed as *objectName.*
     ///
     /// **See also:** [`Object::object_name()`]
-    fn object_name(&self) -> String {
+    pub fn object_name(&self) -> String {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).object_name)(obj_data);
@@ -468,20 +335,21 @@ pub trait ObjectTrait<'a> {
             ret_val
         }
     }
-    fn set_object_name(&self, name: &str) {
+    pub fn set_object_name(&self, name: &str) -> &Self {
         let str_in_name_1 = CString::new(name).unwrap();
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             ((*funcs).set_object_name)(obj_data, str_in_name_1.as_ptr());
         }
+        self
     }
     ///
     /// Returns `true` if the object is a widget; otherwise returns `false.`
     ///
     /// Calling this function is equivalent to calling
     /// `inherits("QWidget")` , except that it is much faster.
-    fn is_widget_type(&self) -> bool {
+    pub fn is_widget_type(&self) -> bool {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_widget_type)(obj_data);
@@ -493,7 +361,7 @@ pub trait ObjectTrait<'a> {
     ///
     /// Calling this function is equivalent to calling
     /// `inherits("QWindow")` , except that it is much faster.
-    fn is_window_type(&self) -> bool {
+    pub fn is_window_type(&self) -> bool {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_window_type)(obj_data);
@@ -507,7 +375,7 @@ pub trait ObjectTrait<'a> {
     ///
     /// **See also:** [`block_signals()`]
     /// [`SignalBlocker`]
-    fn signals_blocked(&self) -> bool {
+    pub fn signals_blocked(&self) -> bool {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).signals_blocked)(obj_data);
@@ -528,7 +396,7 @@ pub trait ObjectTrait<'a> {
     ///
     /// **See also:** [`signals_blocked()`]
     /// [`SignalBlocker`]
-    fn block_signals(&self, b: bool) -> bool {
+    pub fn block_signals(&self, b: bool) -> bool {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).block_signals)(obj_data, b);
@@ -602,7 +470,7 @@ pub trait ObjectTrait<'a> {
     /// **See also:** [`timer_event()`]
     /// [`kill_timer()`]
     /// [`Timer::single_shot`]
-    fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
+    pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
         let enum_timer_type_2 = timer_type as i32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
@@ -678,7 +546,7 @@ pub trait ObjectTrait<'a> {
     /// **See also:** [`timer_event()`]
     /// [`kill_timer()`]
     /// [`Timer::single_shot`]
-    fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
+    pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
         let enum_timer_type_2 = timer_type as i32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
@@ -695,24 +563,26 @@ pub trait ObjectTrait<'a> {
     ///
     /// **See also:** [`timer_event()`]
     /// [`start_timer()`]
-    fn kill_timer(&self, id: i32) {
+    pub fn kill_timer(&self, id: i32) -> &Self {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             ((*funcs).kill_timer)(obj_data, id);
         }
+        self
     }
     ///
     /// Makes the object a child of *parent.*
     ///
     /// **See also:** [`parent()`]
     /// [`children()`]
-    fn set_parent(&self, parent: &ObjectTrait) {
+    pub fn set_parent<O: ObjectTrait<'a>>(&self, parent: &O) -> &Self {
         let (obj_parent_1, _funcs) = parent.get_object_obj_funcs();
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             ((*funcs).set_parent)(obj_data, obj_parent_1);
         }
+        self
     }
     ///
     /// Installs an event filter *filterObj* on this object. For example:
@@ -749,13 +619,14 @@ pub trait ObjectTrait<'a> {
     /// **See also:** [`remove_event_filter()`]
     /// [`event_filter()`]
     /// [`event()`]
-    fn install_event_filter(&self, filter_obj: &ObjectTrait) {
+    pub fn install_event_filter<O: ObjectTrait<'a>>(&self, filter_obj: &O) -> &Self {
         let (obj_filter_obj_1, _funcs) = filter_obj.get_object_obj_funcs();
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             ((*funcs).install_event_filter)(obj_data, obj_filter_obj_1);
         }
+        self
     }
     ///
     /// Removes an event filter object *obj* from this object. The
@@ -781,11 +652,12 @@ pub trait ObjectTrait<'a> {
     /// **Note**: before Qt 5.9, this function was not const.
     ///
     /// **See also:** [`dump_object_info()`]
-    fn dump_object_tree(&self) {
+    pub fn dump_object_tree(&self) -> &Self {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             ((*funcs).dump_object_tree)(obj_data);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -800,11 +672,12 @@ pub trait ObjectTrait<'a> {
     /// **Note**: before Qt 5.9, this function was not const.
     ///
     /// **See also:** [`dump_object_tree()`]
-    fn dump_object_info(&self) {
+    pub fn dump_object_info(&self) -> &Self {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             ((*funcs).dump_object_info)(obj_data);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -817,11 +690,12 @@ pub trait ObjectTrait<'a> {
     /// **Note**: before Qt 5.9, this function was not const.
     ///
     /// **See also:** [`dump_object_info()`]
-    fn dump_object_tree_2(&self) {
+    pub fn dump_object_tree_2(&self) -> &Self {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             ((*funcs).dump_object_tree_2)(obj_data);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -836,11 +710,12 @@ pub trait ObjectTrait<'a> {
     /// **Note**: before Qt 5.9, this function was not const.
     ///
     /// **See also:** [`dump_object_tree()`]
-    fn dump_object_info_2(&self) {
+    pub fn dump_object_info_2(&self) -> &Self {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             ((*funcs).dump_object_info_2)(obj_data);
         }
+        self
     }
     ///
     /// Sets the value of the object's *name* property to *value.*
@@ -885,7 +760,7 @@ pub trait ObjectTrait<'a> {
     /// Returns a pointer to the parent object.
     ///
     /// **See also:** [`children()`]
-    fn parent(&self) -> Option<Object> {
+    pub fn parent(&self) -> Option<Object> {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).parent)(obj_data);
@@ -926,19 +801,151 @@ pub trait ObjectTrait<'a> {
     ///
     /// **See also:** [`destroyed()`]
     /// [`Pointer`]
-    fn delete_later(&self) {
+    pub fn delete_later(&self) -> &Self {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
             ((*funcs).delete_later)(obj_data);
         }
+        self
+    }
+    ///
+    /// Returns a pointer to the object that sent the signal, if called in
+    /// a slot activated by a signal; otherwise it returns 0. The pointer
+    /// is valid only during the execution of the slot that calls this
+    /// function from this object's thread context.
+    ///
+    /// The pointer returned by this function becomes invalid if the
+    /// sender is destroyed, or if the slot is disconnected from the
+    /// sender's signal.
+    ///
+    /// **Warning**: This function violates the object-oriented principle of
+    /// modularity. However, getting access to the sender might be useful
+    /// when many signals are connected to a single slot.
+    ///
+    /// **Warning**: As mentioned above, the return value of this function is
+    /// not valid when the slot is called via a Qt::DirectConnection from
+    /// a thread different from this object's thread. Do not use this
+    /// function in this type of scenario.
+    ///
+    /// **See also:** [`sender_signal_index()`]
+    ///
+    /// Returns the meta-method index of the signal that called the currently
+    /// executing slot, which is a member of the class returned by sender().
+    /// If called outside of a slot activated by a signal, -1 is returned.
+    ///
+    /// For signals with default parameters, this function will always return
+    /// the index with all parameters, regardless of which was used with
+    /// connect(). For example, the signal `destroyed(QObject *obj = 0)`
+    /// will have two different indexes (with and without the parameter), but
+    /// this function will always return the index with a parameter. This does
+    /// not apply when overloading signals with different parameters.
+    ///
+    /// **Warning**: This function violates the object-oriented principle of
+    /// modularity. However, getting access to the signal index might be useful
+    /// when many signals are connected to a single slot.
+    ///
+    /// **Warning**: The return value of this function is not valid when the slot
+    /// is called via a Qt::DirectConnection from a thread different from this
+    /// object's thread. Do not use this function in this type of scenario.
+    ///
+    /// **See also:** [`sender()`]
+    /// [`MetaObject::index_of_signal`]
+    /// [`MetaObject::method`]
+    ///
+    /// Returns the meta-method index of the signal that called the currently
+    /// executing slot, which is a member of the class returned by sender().
+    /// If called outside of a slot activated by a signal, -1 is returned.
+    ///
+    /// For signals with default parameters, this function will always return
+    /// the index with all parameters, regardless of which was used with
+    /// connect(). For example, the signal `destroyed(QObject *obj = 0)`
+    /// will have two different indexes (with and without the parameter), but
+    /// this function will always return the index with a parameter. This does
+    /// not apply when overloading signals with different parameters.
+    ///
+    /// **Warning**: This function violates the object-oriented principle of
+    /// modularity. However, getting access to the signal index might be useful
+    /// when many signals are connected to a single slot.
+    ///
+    /// **Warning**: The return value of this function is not valid when the slot
+    /// is called via a Qt::DirectConnection from a thread different from this
+    /// object's thread. Do not use this function in this type of scenario.
+    ///
+    /// **See also:** [`sender()`]
+    /// [`MetaObject::index_of_signal`]
+    /// [`MetaObject::method`]
+    ///
+    /// Returns `true` if the *signal* is connected to at least one receiver,
+    /// otherwise returns `false.`
+    ///
+    /// *signal* must be a signal member of this object, otherwise the behaviour
+    /// is undefined.
+    ///
+    /// As the code snippet above illustrates, you can use this function
+    /// to avoid emitting a signal that nobody listens to.
+    ///
+    /// **Warning**: This function violates the object-oriented principle of
+    /// modularity. However, it might be useful when you need to perform
+    /// expensive initialization only if something is connected to a
+    /// signal.
+    ///
+    /// This event handler can be reimplemented in a subclass to receive
+    /// custom events. Custom events are user-defined events with a type
+    /// value at least as large as the QEvent::User item of the
+    /// QEvent::Type enum, and is typically a QEvent subclass. The event
+    /// is passed in the *event* parameter.
+    ///
+    /// **See also:** [`event()`]
+    /// [`Event`]
+    pub fn set_custom_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &EventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_custom_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(object_custom_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
     }
 
+    pub fn set_custom_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&EventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_custom_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(object_custom_trampoline as usize),
+            );
+        }
+
+        self
+    }
+}
+pub trait ObjectTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_object_obj_funcs(&self) -> (*const RUBase, *const RUObjectFuncs);
 }
 
 impl<'a> ObjectTrait<'a> for Object<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_object_obj_funcs(&self) -> (*const RUBase, *const RUObjectFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).object_funcs) }

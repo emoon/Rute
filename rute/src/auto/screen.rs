@@ -17,27 +17,23 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::ScreenOrientation;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::screen_ffi::*;
-#[allow(unused_imports)]
-use auto::size::Size;
 #[derive(Clone)]
 pub struct Screen<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUScreenAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> Screen<'a> {
-    pub fn new_from_rc(ffi_data: RUScreen) -> Screen<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUScreen) -> Screen<'a> {
         Screen {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -46,7 +42,8 @@ impl<'a> Screen<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUScreen) -> Screen<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUScreen) -> Screen<'a> {
         Screen {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -55,7 +52,8 @@ impl<'a> Screen<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUScreen) -> Screen<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUScreen) -> Screen<'a> {
         Screen {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -63,9 +61,7 @@ impl<'a> Screen<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait ScreenTrait<'a> {
-    fn name(&self) -> String {
+    pub fn name(&self) -> String {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).name)(obj_data);
@@ -73,7 +69,7 @@ pub trait ScreenTrait<'a> {
             ret_val
         }
     }
-    fn manufacturer(&self) -> String {
+    pub fn manufacturer(&self) -> String {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).manufacturer)(obj_data);
@@ -81,7 +77,7 @@ pub trait ScreenTrait<'a> {
             ret_val
         }
     }
-    fn model(&self) -> String {
+    pub fn model(&self) -> String {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).model)(obj_data);
@@ -89,7 +85,7 @@ pub trait ScreenTrait<'a> {
             ret_val
         }
     }
-    fn serial_number(&self) -> String {
+    pub fn serial_number(&self) -> String {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).serial_number)(obj_data);
@@ -97,63 +93,63 @@ pub trait ScreenTrait<'a> {
             ret_val
         }
     }
-    fn depth(&self) -> i32 {
+    pub fn depth(&self) -> i32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).depth)(obj_data);
             ret_val
         }
     }
-    fn physical_dots_per_inch_x(&self) -> f32 {
+    pub fn physical_dots_per_inch_x(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).physical_dots_per_inch_x)(obj_data);
             ret_val
         }
     }
-    fn physical_dots_per_inch_y(&self) -> f32 {
+    pub fn physical_dots_per_inch_y(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).physical_dots_per_inch_y)(obj_data);
             ret_val
         }
     }
-    fn physical_dots_per_inch(&self) -> f32 {
+    pub fn physical_dots_per_inch(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).physical_dots_per_inch)(obj_data);
             ret_val
         }
     }
-    fn logical_dots_per_inch_x(&self) -> f32 {
+    pub fn logical_dots_per_inch_x(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).logical_dots_per_inch_x)(obj_data);
             ret_val
         }
     }
-    fn logical_dots_per_inch_y(&self) -> f32 {
+    pub fn logical_dots_per_inch_y(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).logical_dots_per_inch_y)(obj_data);
             ret_val
         }
     }
-    fn logical_dots_per_inch(&self) -> f32 {
+    pub fn logical_dots_per_inch(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).logical_dots_per_inch)(obj_data);
             ret_val
         }
     }
-    fn device_pixel_ratio(&self) -> f32 {
+    pub fn device_pixel_ratio(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).device_pixel_ratio)(obj_data);
             ret_val
         }
     }
-    fn available_size(&self) -> Size {
+    pub fn available_size(&self) -> Size {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).available_size)(obj_data);
@@ -167,7 +163,7 @@ pub trait ScreenTrait<'a> {
             ret_val
         }
     }
-    fn virtual_size(&self) -> Size {
+    pub fn virtual_size(&self) -> Size {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).virtual_size)(obj_data);
@@ -181,7 +177,7 @@ pub trait ScreenTrait<'a> {
             ret_val
         }
     }
-    fn available_virtual_size(&self) -> Size {
+    pub fn available_virtual_size(&self) -> Size {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).available_virtual_size)(obj_data);
@@ -195,7 +191,7 @@ pub trait ScreenTrait<'a> {
             ret_val
         }
     }
-    fn primary_orientation(&self) -> ScreenOrientation {
+    pub fn primary_orientation(&self) -> ScreenOrientation {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).primary_orientation)(obj_data);
@@ -203,7 +199,7 @@ pub trait ScreenTrait<'a> {
             ret_val
         }
     }
-    fn angle_between(&self, a: ScreenOrientation, b: ScreenOrientation) -> i32 {
+    pub fn angle_between(&self, a: ScreenOrientation, b: ScreenOrientation) -> i32 {
         let enum_a_1 = a as i32;
         let enum_b_2 = b as i32;
 
@@ -213,7 +209,7 @@ pub trait ScreenTrait<'a> {
             ret_val
         }
     }
-    fn is_landscape(&self, orientation: ScreenOrientation) -> bool {
+    pub fn is_landscape(&self, orientation: ScreenOrientation) -> bool {
         let enum_orientation_1 = orientation as i32;
 
         let (obj_data, funcs) = self.get_screen_obj_funcs();
@@ -222,20 +218,22 @@ pub trait ScreenTrait<'a> {
             ret_val
         }
     }
-    fn refresh_rate(&self) -> f32 {
+    pub fn refresh_rate(&self) -> f32 {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).refresh_rate)(obj_data);
             ret_val
         }
     }
-
+}
+pub trait ScreenTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_screen_obj_funcs(&self) -> (*const RUBase, *const RUScreenFuncs);
 }
 
 impl<'a> ScreenTrait<'a> for Screen<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_screen_obj_funcs(&self) -> (*const RUBase, *const RUScreenFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).screen_funcs) }

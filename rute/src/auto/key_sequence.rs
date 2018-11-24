@@ -17,13 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::key_sequence_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// In its most common form, a key sequence describes a combination of
 /// keys that must be used together to perform some action. Key sequences
@@ -405,9 +400,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct KeySequence<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUKeySequenceAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -432,7 +431,8 @@ impl<'a> KeySequence<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUKeySequence) -> KeySequence<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUKeySequence) -> KeySequence<'a> {
         KeySequence {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -441,7 +441,8 @@ impl<'a> KeySequence<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUKeySequence) -> KeySequence<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUKeySequence) -> KeySequence<'a> {
         KeySequence {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -450,7 +451,8 @@ impl<'a> KeySequence<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUKeySequence) -> KeySequence<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUKeySequence) -> KeySequence<'a> {
         KeySequence {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -458,17 +460,10 @@ impl<'a> KeySequence<'a> {
             _marker: PhantomData,
         }
     }
-}
-
-pub struct KeySequenceStatic<'a> {
-    pub all_funcs: *const RUKeySequenceAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait KeySequenceTrait<'a> {
     ///
     /// Returns the number of keys in the key sequence.
     /// The maximum is 4.
-    fn count(&self) -> i32 {
+    pub fn count(&self) -> i32 {
         let (obj_data, funcs) = self.get_key_sequence_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).count)(obj_data);
@@ -478,7 +473,7 @@ pub trait KeySequenceTrait<'a> {
     ///
     /// Returns `true` if the key sequence is empty; otherwise returns
     /// false.
-    fn is_empty(&self) -> bool {
+    pub fn is_empty(&self) -> bool {
         let (obj_data, funcs) = self.get_key_sequence_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_empty)(obj_data);
@@ -490,7 +485,7 @@ pub trait KeySequenceTrait<'a> {
     /// successful, PartialMatch if *seq* matches incompletely,
     /// and NoMatch if the sequences have nothing in common.
     /// Returns NoMatch if *seq* is shorter.
-    fn matches(&self, seq: &KeySequenceTrait) -> SequenceMatch {
+    pub fn matches<K: KeySequenceTrait<'a>>(&self, seq: &K) -> SequenceMatch {
         let (obj_seq_1, _funcs) = seq.get_key_sequence_obj_funcs();
 
         let (obj_data, funcs) = self.get_key_sequence_obj_funcs();
@@ -500,43 +495,6 @@ pub trait KeySequenceTrait<'a> {
             ret_val
         }
     }
-    ///
-    /// Returns a list of key bindings for the given *key.*
-    /// The result of calling this function will vary based on the target platform.
-    /// The first element of the list indicates the primary shortcut for the given platform.
-    /// If the result contains more than one result, these can
-    /// be considered alternative shortcuts on the same platform for the given *key.*
-    ///
-    /// Swaps key sequence *other* with this key sequence. This operation is very
-    /// fast and never fails.
-    fn swap(&self, other: &KeySequenceTrait) {
-        let (obj_other_1, _funcs) = other.get_key_sequence_obj_funcs();
-
-        let (obj_data, funcs) = self.get_key_sequence_obj_funcs();
-        unsafe {
-            ((*funcs).swap)(obj_data, obj_other_1);
-        }
-    }
-    fn is_detached(&self) -> bool {
-        let (obj_data, funcs) = self.get_key_sequence_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).is_detached)(obj_data);
-            ret_val
-        }
-    }
-
-    #[inline]
-    fn get_key_sequence_obj_funcs(&self) -> (*const RUBase, *const RUKeySequenceFuncs);
-}
-
-impl<'a> KeySequenceTrait<'a> for KeySequence<'a> {
-    #[inline]
-    fn get_key_sequence_obj_funcs(&self) -> (*const RUBase, *const RUKeySequenceFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).key_sequence_funcs) }
-    }
-}
-pub trait KeySequenceStaticTrait {
     ///
     /// Returns the shortcut key sequence for the mnemonic in *text,*
     /// or an empty key sequence if no mnemonics are found.
@@ -550,7 +508,7 @@ pub trait KeySequenceStaticTrait {
     /// in English. At the time of writing, Microsoft and Open Group do
     /// not appear to have issued equivalent recommendations for other
     /// languages.
-    fn mnemonic<'a>(text: &str) -> KeySequence<'a> {
+    pub fn mnemonic(text: &str) -> KeySequence<'a> {
         let str_in_text_1 = CString::new(text).unwrap();
 
         let (obj_data, funcs) = unsafe {
@@ -572,11 +530,45 @@ pub trait KeySequenceStaticTrait {
             ret_val
         }
     }
+    ///
+    /// Returns a list of key bindings for the given *key.*
+    /// The result of calling this function will vary based on the target platform.
+    /// The first element of the list indicates the primary shortcut for the given platform.
+    /// If the result contains more than one result, these can
+    /// be considered alternative shortcuts on the same platform for the given *key.*
+    ///
+    /// Swaps key sequence *other* with this key sequence. This operation is very
+    /// fast and never fails.
+    pub fn swap<K: KeySequenceTrait<'a>>(&self, other: &K) -> &Self {
+        let (obj_other_1, _funcs) = other.get_key_sequence_obj_funcs();
+
+        let (obj_data, funcs) = self.get_key_sequence_obj_funcs();
+        unsafe {
+            ((*funcs).swap)(obj_data, obj_other_1);
+        }
+        self
+    }
+    pub fn is_detached(&self) -> bool {
+        let (obj_data, funcs) = self.get_key_sequence_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_detached)(obj_data);
+            ret_val
+        }
+    }
+}
+pub trait KeySequenceTrait<'a> {
+    #[inline]
+    #[doc(hidden)]
+    fn get_key_sequence_obj_funcs(&self) -> (*const RUBase, *const RUKeySequenceFuncs);
 }
 
-impl<'a> KeySequenceStaticTrait for KeySequence<'a> {}
-
-impl<'a> KeySequenceStaticTrait for KeySequenceStatic<'a> {}
+impl<'a> KeySequenceTrait<'a> for KeySequence<'a> {
+    #[doc(hidden)]
+    fn get_key_sequence_obj_funcs(&self) -> (*const RUBase, *const RUKeySequenceFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).key_sequence_funcs) }
+    }
+}
 #[repr(u32)]
 pub enum StandardKey {
     UnknownKey,

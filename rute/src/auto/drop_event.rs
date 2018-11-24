@@ -17,33 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::drop_event_ffi::*;
-#[allow(unused_imports)]
-use auto::event::*;
-#[allow(unused_imports)]
-use auto::event_ffi::*;
-#[allow(unused_imports)]
-use auto::mime_data::MimeData;
-#[allow(unused_imports)]
-use auto::object::Object;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point_f::PointF;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::DropAction;
-#[allow(unused_imports)]
-use auto::rute_enums::DropActions;
-#[allow(unused_imports)]
-use auto::rute_enums::KeyboardModifiers;
-#[allow(unused_imports)]
-use auto::rute_enums::MouseButtons;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// When a widget [accepts drop events](QWidget::setAcceptDrops())
 /// , it will
@@ -79,14 +54,19 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct DropEvent<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUDropEventAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> DropEvent<'a> {
-    pub fn new_from_rc(ffi_data: RUDropEvent) -> DropEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUDropEvent) -> DropEvent<'a> {
         DropEvent {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -95,7 +75,8 @@ impl<'a> DropEvent<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUDropEvent) -> DropEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUDropEvent) -> DropEvent<'a> {
         DropEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -104,7 +85,8 @@ impl<'a> DropEvent<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUDropEvent) -> DropEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUDropEvent) -> DropEvent<'a> {
         DropEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -112,13 +94,11 @@ impl<'a> DropEvent<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait DropEventTrait<'a> {
     ///
     /// Returns the position where the drop was made.
     ///
     /// **See also:** [`drop_action()`]
-    fn pos(&self) -> Point {
+    pub fn pos(&self) -> Point {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pos)(obj_data);
@@ -134,7 +114,7 @@ pub trait DropEventTrait<'a> {
     }
     ///
     /// Returns the position where the drop was made.
-    fn pos_f(&self) -> Option<PointF> {
+    pub fn pos_f(&self) -> Option<PointF> {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pos_f)(obj_data);
@@ -153,7 +133,7 @@ pub trait DropEventTrait<'a> {
     }
     ///
     /// Returns the mouse buttons that are pressed..
-    fn mouse_buttons(&self) -> MouseButtons {
+    pub fn mouse_buttons(&self) -> MouseButtons {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).mouse_buttons)(obj_data);
@@ -163,7 +143,7 @@ pub trait DropEventTrait<'a> {
     }
     ///
     /// Returns the modifier keys that are pressed.
-    fn keyboard_modifiers(&self) -> KeyboardModifiers {
+    pub fn keyboard_modifiers(&self) -> KeyboardModifiers {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).keyboard_modifiers)(obj_data);
@@ -175,7 +155,7 @@ pub trait DropEventTrait<'a> {
     /// Returns an OR-combination of possible drop actions.
     ///
     /// **See also:** [`drop_action()`]
-    fn possible_actions(&self) -> DropActions {
+    pub fn possible_actions(&self) -> DropActions {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).possible_actions)(obj_data);
@@ -187,7 +167,7 @@ pub trait DropEventTrait<'a> {
     /// Returns the proposed drop action.
     ///
     /// **See also:** [`drop_action()`]
-    fn proposed_action(&self) -> DropAction {
+    pub fn proposed_action(&self) -> DropAction {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).proposed_action)(obj_data);
@@ -201,11 +181,12 @@ pub trait DropEventTrait<'a> {
     /// **See also:** [`set_drop_action()`]
     /// [`proposed_action()`]
     /// {QEvent::accept()}{accept()}
-    fn accept_proposed_action(&self) {
+    pub fn accept_proposed_action(&self) -> &Self {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             ((*funcs).accept_proposed_action)(obj_data);
         }
+        self
     }
     ///
     /// Returns the action to be performed on the data by the target. This may be
@@ -213,7 +194,7 @@ pub trait DropEventTrait<'a> {
     /// setDropAction() to explicitly choose a drop action.
     ///
     /// **See also:** [`set_drop_action()`]
-    fn drop_action(&self) -> DropAction {
+    pub fn drop_action(&self) -> DropAction {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).drop_action)(obj_data);
@@ -235,13 +216,14 @@ pub trait DropEventTrait<'a> {
     /// instead of acceptProposedAction().
     ///
     /// **See also:** [`drop_action()`]
-    fn set_drop_action(&self, action: DropAction) {
+    pub fn set_drop_action(&self, action: DropAction) -> &Self {
         let enum_action_1 = action as i32;
 
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             ((*funcs).set_drop_action)(obj_data, enum_action_1);
         }
+        self
     }
     ///
     /// If the source of the drag operation is a widget in this
@@ -253,7 +235,7 @@ pub trait DropEventTrait<'a> {
     /// to itself.
     ///
     /// **See also:** [`Drag::q_drag`]
-    fn source(&self) -> Option<Object> {
+    pub fn source(&self) -> Option<Object> {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).source)(obj_data);
@@ -273,7 +255,7 @@ pub trait DropEventTrait<'a> {
     ///
     /// Returns the data that was dropped on the widget and its associated MIME
     /// type information.
-    fn mime_data(&self) -> Option<MimeData> {
+    pub fn mime_data(&self) -> Option<MimeData> {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).mime_data)(obj_data);
@@ -290,13 +272,55 @@ pub trait DropEventTrait<'a> {
             Some(ret_val)
         }
     }
-
+    #[doc(hidden)]
+    pub fn spontaneous(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).spontaneous)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_accepted(&self, accepted: bool) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_accepted)(obj_data, accepted);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_accepted(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_accepted)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn accept(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).accept)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn ignore(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).ignore)(obj_data);
+        }
+        self
+    }
+}
+pub trait DropEventTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_drop_event_obj_funcs(&self) -> (*const RUBase, *const RUDropEventFuncs);
 }
 
 impl<'a> EventTrait<'a> for DropEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).event_funcs) }
@@ -304,7 +328,7 @@ impl<'a> EventTrait<'a> for DropEvent<'a> {
 }
 
 impl<'a> DropEventTrait<'a> for DropEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_drop_event_obj_funcs(&self) -> (*const RUBase, *const RUDropEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).drop_event_funcs) }

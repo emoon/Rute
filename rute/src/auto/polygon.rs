@@ -17,27 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point::PointTrait;
-#[allow(unused_imports)]
-use auto::point::*;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::polygon_ffi::*;
-#[allow(unused_imports)]
-use auto::rect::Rect;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::FillRule;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// A QPolygon object is a QVector<QPoint>. The easiest way to add
 /// points to a QPolygon is to use QVector's streaming operator, as
@@ -70,9 +51,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Polygon<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUPolygonAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -97,7 +82,8 @@ impl<'a> Polygon<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUPolygon) -> Polygon<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUPolygon) -> Polygon<'a> {
         Polygon {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -106,7 +92,8 @@ impl<'a> Polygon<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUPolygon) -> Polygon<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUPolygon) -> Polygon<'a> {
         Polygon {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -115,7 +102,8 @@ impl<'a> Polygon<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUPolygon) -> Polygon<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUPolygon) -> Polygon<'a> {
         Polygon {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -123,25 +111,24 @@ impl<'a> Polygon<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait PolygonTrait<'a> {
     ///
     /// Swaps polygon *other* with this polygon. This operation is very
     /// fast and never fails.
-    fn swap(&self, other: &PolygonTrait) {
+    pub fn swap<P: PolygonTrait<'a>>(&self, other: &P) -> &Self {
         let (obj_other_1, _funcs) = other.get_polygon_obj_funcs();
 
         let (obj_data, funcs) = self.get_polygon_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
+        self
     }
     ///
     /// Returns the bounding rectangle of the polygon, or QRect(0, 0, 0,
     /// 0) if the polygon is empty.
     ///
     /// **See also:** [`Vector::is_empty`]
-    fn bounding_rect(&self) -> Rect {
+    pub fn bounding_rect(&self) -> Rect {
         let (obj_data, funcs) = self.get_polygon_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bounding_rect)(obj_data);
@@ -163,7 +150,7 @@ pub trait PolygonTrait<'a> {
     ///
     /// **Overloads**
     /// Returns the point at the given *index.*
-    fn point_2(&self, i: i32) -> Point {
+    pub fn point_2(&self, i: i32) -> Point {
         let (obj_data, funcs) = self.get_polygon_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).point_2)(obj_data, i);
@@ -208,11 +195,12 @@ pub trait PolygonTrait<'a> {
     /// The example code creates a polygon with two points (10, 20) and
     /// (30, 40):
     ///
-    fn set_point(&self, index: i32, x: i32, y: i32) {
+    pub fn set_point(&self, index: i32, x: i32, y: i32) -> &Self {
         let (obj_data, funcs) = self.get_polygon_obj_funcs();
         unsafe {
             ((*funcs).set_point)(obj_data, index, x, y);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -245,13 +233,14 @@ pub trait PolygonTrait<'a> {
     /// The example code creates a polygon with two points (10, 20) and
     /// (30, 40):
     ///
-    fn set_point_2(&self, index: i32, p: &PointTrait) {
+    pub fn set_point_2<P: PointTrait<'a>>(&self, index: i32, p: &P) -> &Self {
         let (obj_p_2, _funcs) = p.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_polygon_obj_funcs();
         unsafe {
             ((*funcs).set_point_2)(obj_data, index, obj_p_2);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -263,11 +252,12 @@ pub trait PolygonTrait<'a> {
     /// The example code creates a polygon with two points (10, 20) and
     /// (30, 40):
     ///
-    fn set_points_2(&self, n_points: i32, firstx: i32, firsty: i32) {
+    pub fn set_points_2(&self, n_points: i32, firstx: i32, firsty: i32) -> &Self {
         let (obj_data, funcs) = self.get_polygon_obj_funcs();
         unsafe {
             ((*funcs).set_points_2)(obj_data, n_points, firstx, firsty);
         }
+        self
     }
     ///
     /// Copies *nPoints* points from the variable argument list into this
@@ -289,11 +279,12 @@ pub trait PolygonTrait<'a> {
     /// default) in *fromPolygon* into this polygon, starting at the
     /// specified *index.* For example:
     ///
-    fn put_points_2(&self, index: i32, n_points: i32, firstx: i32, firsty: i32) {
+    pub fn put_points_2(&self, index: i32, n_points: i32, firstx: i32, firsty: i32) -> &Self {
         let (obj_data, funcs) = self.get_polygon_obj_funcs();
         unsafe {
             ((*funcs).put_points_2)(obj_data, index, n_points, firstx, firsty);
         }
+        self
     }
     ///
     /// Copies *nPoints* points from the variable argument list into this
@@ -315,18 +306,25 @@ pub trait PolygonTrait<'a> {
     /// default) in *fromPolygon* into this polygon, starting at the
     /// specified *index.* For example:
     ///
-    fn put_points_3(&self, index: i32, n_points: i32, from: &PolygonTrait, from_index: i32) {
+    pub fn put_points_3<P: PolygonTrait<'a>>(
+        &self,
+        index: i32,
+        n_points: i32,
+        from: &P,
+        from_index: i32,
+    ) -> &Self {
         let (obj_from_3, _funcs) = from.get_polygon_obj_funcs();
 
         let (obj_data, funcs) = self.get_polygon_obj_funcs();
         unsafe {
             ((*funcs).put_points_3)(obj_data, index, n_points, obj_from_3, from_index);
         }
+        self
     }
     ///
     /// Returns `true` if the given *point* is inside the polygon according to
     /// the specified *fillRule;* otherwise returns `false.`
-    fn contains_point(&self, pt: &PointTrait, fill_rule: FillRule) -> bool {
+    pub fn contains_point<P: PointTrait<'a>>(&self, pt: &P, fill_rule: FillRule) -> bool {
         let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
         let enum_fill_rule_2 = fill_rule as i32;
 
@@ -344,7 +342,7 @@ pub trait PolygonTrait<'a> {
     ///
     /// **See also:** [`intersected()`]
     /// [`subtracted()`]
-    fn united(&self, r: &PolygonTrait) -> Polygon {
+    pub fn united<P: PolygonTrait<'a>>(&self, r: &P) -> Polygon {
         let (obj_r_1, _funcs) = r.get_polygon_obj_funcs();
 
         let (obj_data, funcs) = self.get_polygon_obj_funcs();
@@ -367,7 +365,7 @@ pub trait PolygonTrait<'a> {
     /// areas. Non-closed polygons will be treated as implicitly closed.
     ///
     /// **See also:** [`intersects()`]
-    fn intersected(&self, r: &PolygonTrait) -> Polygon {
+    pub fn intersected<P: PolygonTrait<'a>>(&self, r: &P) -> Polygon {
         let (obj_r_1, _funcs) = r.get_polygon_obj_funcs();
 
         let (obj_data, funcs) = self.get_polygon_obj_funcs();
@@ -391,7 +389,7 @@ pub trait PolygonTrait<'a> {
     /// areas. Non-closed polygons will be treated as implicitly closed.
     ///
     /// **See also:** [`intersected()`]
-    fn intersects(&self, r: &PolygonTrait) -> bool {
+    pub fn intersects<P: PolygonTrait<'a>>(&self, r: &P) -> bool {
         let (obj_r_1, _funcs) = r.get_polygon_obj_funcs();
 
         let (obj_data, funcs) = self.get_polygon_obj_funcs();
@@ -400,13 +398,95 @@ pub trait PolygonTrait<'a> {
             ret_val
         }
     }
+    #[doc(hidden)]
+    pub fn is_null(&self) -> bool {
+        let (obj_data, funcs) = self.get_point_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_null)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn x(&self) -> i32 {
+        let (obj_data, funcs) = self.get_point_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).x)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn y(&self) -> i32 {
+        let (obj_data, funcs) = self.get_point_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).y)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_x(&self, x: i32) -> &Self {
+        let (obj_data, funcs) = self.get_point_obj_funcs();
+        unsafe {
+            ((*funcs).set_x)(obj_data, x);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_y(&self, y: i32) -> &Self {
+        let (obj_data, funcs) = self.get_point_obj_funcs();
+        unsafe {
+            ((*funcs).set_y)(obj_data, y);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn manhattan_length(&self) -> i32 {
+        let (obj_data, funcs) = self.get_point_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).manhattan_length)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn rx(&self) -> i32 {
+        let (obj_data, funcs) = self.get_point_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).rx)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn ry(&self) -> i32 {
+        let (obj_data, funcs) = self.get_point_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).ry)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn dot_product<P: PointTrait<'a>>(p1: &P, p2: &P) -> i32 {
+        let (obj_p1_1, _funcs) = p1.get_point_obj_funcs();
+        let (obj_p2_2, _funcs) = p2.get_point_obj_funcs();
 
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_point)(::std::ptr::null()).all_funcs).point_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).dot_product)(obj_data, obj_p1_1, obj_p2_2);
+            ret_val
+        }
+    }
+}
+pub trait PolygonTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_polygon_obj_funcs(&self) -> (*const RUBase, *const RUPolygonFuncs);
 }
 
 impl<'a> PointTrait<'a> for Polygon<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_point_obj_funcs(&self) -> (*const RUBase, *const RUPointFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).point_funcs) }
@@ -414,7 +494,7 @@ impl<'a> PointTrait<'a> for Polygon<'a> {
 }
 
 impl<'a> PolygonTrait<'a> for Polygon<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_polygon_obj_funcs(&self) -> (*const RUBase, *const RUPolygonFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).polygon_funcs) }

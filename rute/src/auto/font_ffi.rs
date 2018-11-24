@@ -22,8 +22,6 @@ pub struct RUFontFuncs {
     pub set_weight: extern "C" fn(self_c: *const RUBase, arg0: i32),
     pub bold: extern "C" fn(self_c: *const RUBase) -> bool,
     pub set_bold: extern "C" fn(self_c: *const RUBase, arg0: bool),
-    pub set_style: extern "C" fn(self_c: *const RUBase, style: i32),
-    pub style: extern "C" fn(self_c: *const RUBase) -> i32,
     pub italic: extern "C" fn(self_c: *const RUBase) -> bool,
     pub set_italic: extern "C" fn(self_c: *const RUBase, b: bool),
     pub underline: extern "C" fn(self_c: *const RUBase) -> bool,

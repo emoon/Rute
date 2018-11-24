@@ -17,25 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point::PointTrait;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::rect::Rect;
-#[allow(unused_imports)]
-use auto::rect::RectTrait;
-#[allow(unused_imports)]
-use auto::rect_ffi::*;
-#[allow(unused_imports)]
-use auto::region_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// QRegion is used with QPainter::setClipRegion() to limit the paint
 /// area to what needs to be painted. There is also a QWidget::repaint()
@@ -128,9 +111,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Region<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RURegionAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -155,7 +142,8 @@ impl<'a> Region<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RURegion) -> Region<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RURegion) -> Region<'a> {
         Region {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -164,7 +152,8 @@ impl<'a> Region<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RURegion) -> Region<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RURegion) -> Region<'a> {
         Region {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -173,7 +162,8 @@ impl<'a> Region<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RURegion) -> Region<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RURegion) -> Region<'a> {
         Region {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -181,25 +171,24 @@ impl<'a> Region<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait RegionTrait<'a> {
     ///
     /// Swaps region *other* with this region. This operation is very
     /// fast and never fails.
-    fn swap(&self, other: &RegionTrait) {
+    pub fn swap<R: RegionTrait<'a>>(&self, other: &R) -> &Self {
         let (obj_other_1, _funcs) = other.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
+        self
     }
     ///
     /// Returns `true` if the region is empty; otherwise returns `false.` An
     /// empty region is a region that contains no points.
     ///
     /// Example:
-    fn is_empty(&self) -> bool {
+    pub fn is_empty(&self) -> bool {
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_empty)(obj_data);
@@ -212,7 +201,7 @@ pub trait RegionTrait<'a> {
     /// the same as isEmpty
     ///
     /// **See also:** [`is_empty()`]
-    fn is_null(&self) -> bool {
+    pub fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_null)(obj_data);
@@ -226,7 +215,7 @@ pub trait RegionTrait<'a> {
     /// **Overloads**
     /// Returns `true` if the region overlaps the rectangle *r;* otherwise
     /// returns `false.`
-    fn contains(&self, p: &PointTrait) -> bool {
+    pub fn contains<P: PointTrait<'a>>(&self, p: &P) -> bool {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -242,7 +231,7 @@ pub trait RegionTrait<'a> {
     /// **Overloads**
     /// Returns `true` if the region overlaps the rectangle *r;* otherwise
     /// returns `false.`
-    fn contains_2(&self, r: &RectTrait) -> bool {
+    pub fn contains_2<R: RectTrait<'a>>(&self, r: &R) -> bool {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -267,7 +256,7 @@ pub trait RegionTrait<'a> {
     /// **See also:** [`intersected()`]
     /// [`subtracted()`]
     /// [`xored()`]
-    fn united(&self, r: &RegionTrait) -> Region {
+    pub fn united<R: RegionTrait<'a>>(&self, r: &R) -> Region {
         let (obj_r_1, _funcs) = r.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -299,7 +288,7 @@ pub trait RegionTrait<'a> {
     /// **See also:** [`intersected()`]
     /// [`subtracted()`]
     /// [`xored()`]
-    fn united_2(&self, r: &RectTrait) -> Region {
+    pub fn united_2<R: RectTrait<'a>>(&self, r: &R) -> Region {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -331,7 +320,7 @@ pub trait RegionTrait<'a> {
     /// **See also:** [`subtracted()`]
     /// [`united()`]
     /// [`xored()`]
-    fn intersected(&self, r: &RegionTrait) -> Region {
+    pub fn intersected<R: RegionTrait<'a>>(&self, r: &R) -> Region {
         let (obj_r_1, _funcs) = r.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -363,7 +352,7 @@ pub trait RegionTrait<'a> {
     /// **See also:** [`subtracted()`]
     /// [`united()`]
     /// [`xored()`]
-    fn intersected_2(&self, r: &RectTrait) -> Region {
+    pub fn intersected_2<R: RectTrait<'a>>(&self, r: &R) -> Region {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -390,7 +379,7 @@ pub trait RegionTrait<'a> {
     /// **See also:** [`intersected()`]
     /// [`united()`]
     /// [`subtracted()`]
-    fn xored(&self, r: &RegionTrait) -> Region {
+    pub fn xored<R: RegionTrait<'a>>(&self, r: &R) -> Region {
         let (obj_r_1, _funcs) = r.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -412,7 +401,7 @@ pub trait RegionTrait<'a> {
     ///
     /// Returns `true` if this region intersects with *rect,* otherwise
     /// returns `false.`
-    fn intersects(&self, r: &RegionTrait) -> bool {
+    pub fn intersects<R: RegionTrait<'a>>(&self, r: &R) -> bool {
         let (obj_r_1, _funcs) = r.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -427,7 +416,7 @@ pub trait RegionTrait<'a> {
     ///
     /// Returns `true` if this region intersects with *rect,* otherwise
     /// returns `false.`
-    fn intersects_2(&self, r: &RectTrait) -> bool {
+    pub fn intersects_2<R: RectTrait<'a>>(&self, r: &R) -> bool {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
@@ -439,7 +428,7 @@ pub trait RegionTrait<'a> {
     ///
     /// Returns the bounding rectangle of this region. An empty region
     /// gives a rectangle that is QRect::isNull().
-    fn bounding_rect(&self) -> Rect {
+    pub fn bounding_rect(&self) -> Rect {
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bounding_rect)(obj_data);
@@ -470,31 +459,34 @@ pub trait RegionTrait<'a> {
     /// * No two rectangles may abut horizontally (they should be combined into a single wider rectangle in that case).
     /// * The rectangles must be sorted in ascending order, with Y as the major sort key and X as the minor sort key.
     ///
-    fn set_rects(&self, rect: &RectTrait, num: i32) {
+    pub fn set_rects<R: RectTrait<'a>>(&self, rect: &R, num: i32) -> &Self {
         let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
             ((*funcs).set_rects)(obj_data, obj_rect_1, num);
         }
+        self
     }
     ///
     /// Returns the number of rectangles that this region is composed of.
     /// Same as `end() - begin()` .
-    fn rect_count(&self) -> i32 {
+    pub fn rect_count(&self) -> i32 {
         let (obj_data, funcs) = self.get_region_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rect_count)(obj_data);
             ret_val
         }
     }
-
+}
+pub trait RegionTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_region_obj_funcs(&self) -> (*const RUBase, *const RURegionFuncs);
 }
 
 impl<'a> RegionTrait<'a> for Region<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_region_obj_funcs(&self) -> (*const RUBase, *const RURegionFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).region_funcs) }

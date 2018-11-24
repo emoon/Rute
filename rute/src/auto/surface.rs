@@ -17,17 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::size::Size;
-#[allow(unused_imports)]
-use auto::surface_ffi::*;
-#[allow(unused_imports)]
-use auto::surface_format::SurfaceFormat;
 ///
 /// The size of the surface is accessible with the size() function. The rendering
 /// specific attributes of the surface are accessible through the format() function.
@@ -36,14 +27,19 @@ use auto::surface_format::SurfaceFormat;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Surface<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUSurfaceAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> Surface<'a> {
-    pub fn new_from_rc(ffi_data: RUSurface) -> Surface<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUSurface) -> Surface<'a> {
         Surface {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -52,7 +48,8 @@ impl<'a> Surface<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUSurface) -> Surface<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUSurface) -> Surface<'a> {
         Surface {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -61,7 +58,8 @@ impl<'a> Surface<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUSurface) -> Surface<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUSurface) -> Surface<'a> {
         Surface {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -69,11 +67,9 @@ impl<'a> Surface<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait SurfaceTrait<'a> {
     ///
     /// Returns the surface class of this surface.
-    fn surface_class(&self) -> SurfaceClass {
+    pub fn surface_class(&self) -> SurfaceClass {
         let (obj_data, funcs) = self.get_surface_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).surface_class)(obj_data);
@@ -83,7 +79,7 @@ pub trait SurfaceTrait<'a> {
     }
     ///
     /// Returns the format of the surface.
-    fn format(&self) -> SurfaceFormat {
+    pub fn format(&self) -> SurfaceFormat {
         let (obj_data, funcs) = self.get_surface_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).format)(obj_data);
@@ -99,7 +95,7 @@ pub trait SurfaceTrait<'a> {
     }
     ///
     /// Returns the type of the surface.
-    fn surface_type(&self) -> SurfaceType {
+    pub fn surface_type(&self) -> SurfaceType {
         let (obj_data, funcs) = self.get_surface_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).surface_type)(obj_data);
@@ -113,7 +109,7 @@ pub trait SurfaceTrait<'a> {
     ///
     ///
     /// Returns the size of the surface in pixels.
-    fn size(&self) -> Size {
+    pub fn size(&self) -> Size {
         let (obj_data, funcs) = self.get_surface_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).size)(obj_data);
@@ -127,13 +123,15 @@ pub trait SurfaceTrait<'a> {
             ret_val
         }
     }
-
+}
+pub trait SurfaceTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_surface_obj_funcs(&self) -> (*const RUBase, *const RUSurfaceFuncs);
 }
 
 impl<'a> SurfaceTrait<'a> for Surface<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_surface_obj_funcs(&self) -> (*const RUBase, *const RUSurfaceFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).surface_funcs) }

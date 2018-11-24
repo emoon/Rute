@@ -17,45 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::icon_ffi::*;
-#[allow(unused_imports)]
-use auto::painter::Painter;
-#[allow(unused_imports)]
-use auto::painter::PainterTrait;
-#[allow(unused_imports)]
-use auto::painter_ffi::*;
-#[allow(unused_imports)]
-use auto::pixmap::Pixmap;
-#[allow(unused_imports)]
-use auto::pixmap::PixmapTrait;
-#[allow(unused_imports)]
-use auto::pixmap_ffi::*;
-#[allow(unused_imports)]
-use auto::rect::Rect;
-#[allow(unused_imports)]
-use auto::rect::RectTrait;
-#[allow(unused_imports)]
-use auto::rect_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::Alignment;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::size::Size;
-#[allow(unused_imports)]
-use auto::size::SizeTrait;
-#[allow(unused_imports)]
-use auto::size_ffi::*;
-#[allow(unused_imports)]
-use auto::window::Window;
-#[allow(unused_imports)]
-use auto::window::WindowTrait;
-#[allow(unused_imports)]
-use auto::window_ffi::*;
 ///
 /// A QIcon can generate smaller, larger, active, and disabled pixmaps
 /// from the set of pixmaps it is given. Such pixmaps are used by Qt
@@ -134,9 +97,13 @@ use auto::window_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Icon<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUIconAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -161,7 +128,8 @@ impl<'a> Icon<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUIcon) -> Icon<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUIcon) -> Icon<'a> {
         Icon {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -170,7 +138,8 @@ impl<'a> Icon<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUIcon) -> Icon<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUIcon) -> Icon<'a> {
         Icon {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -179,7 +148,8 @@ impl<'a> Icon<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUIcon) -> Icon<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUIcon) -> Icon<'a> {
         Icon {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -187,23 +157,17 @@ impl<'a> Icon<'a> {
             _marker: PhantomData,
         }
     }
-}
-
-pub struct IconStatic<'a> {
-    pub all_funcs: *const RUIconAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait IconTrait<'a> {
     ///
     /// Swaps icon *other* with this icon. This operation is very
     /// fast and never fails.
-    fn swap(&self, other: &IconTrait) {
+    pub fn swap<I: IconTrait<'a>>(&self, other: &I) -> &Self {
         let (obj_other_1, _funcs) = other.get_icon_obj_funcs();
 
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
+        self
     }
     ///
     /// Returns a pixmap with the requested *size,* *mode,* and *state,* generating one if necessary. The pixmap might be smaller than
@@ -240,7 +204,7 @@ pub trait IconTrait<'a> {
     ///
     /// **See also:** [`actual_size()`]
     /// [`paint()`]
-    fn pixmap(&self, size: &SizeTrait, mode: Mode, state: State) -> Pixmap {
+    pub fn pixmap<S: SizeTrait<'a>>(&self, size: &S, mode: Mode, state: State) -> Pixmap {
         let (obj_size_1, _funcs) = size.get_size_obj_funcs();
         let enum_mode_2 = mode as i32;
         let enum_state_3 = state as i32;
@@ -293,7 +257,7 @@ pub trait IconTrait<'a> {
     ///
     /// **See also:** [`actual_size()`]
     /// [`paint()`]
-    fn pixmap_2(&self, w: i32, h: i32, mode: Mode, state: State) -> Pixmap {
+    pub fn pixmap_2(&self, w: i32, h: i32, mode: Mode, state: State) -> Pixmap {
         let enum_mode_3 = mode as i32;
         let enum_state_4 = state as i32;
 
@@ -345,7 +309,7 @@ pub trait IconTrait<'a> {
     ///
     /// **See also:** [`actual_size()`]
     /// [`paint()`]
-    fn pixmap_3(&self, extent: i32, mode: Mode, state: State) -> Pixmap {
+    pub fn pixmap_3(&self, extent: i32, mode: Mode, state: State) -> Pixmap {
         let enum_mode_2 = mode as i32;
         let enum_state_3 = state as i32;
 
@@ -397,7 +361,13 @@ pub trait IconTrait<'a> {
     ///
     /// **See also:** [`actual_size()`]
     /// [`paint()`]
-    fn pixmap_4(&self, window: &WindowTrait, size: &SizeTrait, mode: Mode, state: State) -> Pixmap {
+    pub fn pixmap_4<S: SizeTrait<'a>, W: WindowTrait<'a>>(
+        &self,
+        window: &W,
+        size: &S,
+        mode: Mode,
+        state: State,
+    ) -> Pixmap {
         let (obj_window_1, _funcs) = window.get_window_obj_funcs();
         let (obj_size_2, _funcs) = size.get_size_obj_funcs();
         let enum_mode_3 = mode as i32;
@@ -437,7 +407,7 @@ pub trait IconTrait<'a> {
     /// **See also:** [`actual_size()`]
     /// [`pixmap()`]
     /// [`paint()`]
-    fn actual_size(&self, size: &SizeTrait, mode: Mode, state: State) -> Size {
+    pub fn actual_size<S: SizeTrait<'a>>(&self, size: &S, mode: Mode, state: State) -> Size {
         let (obj_size_1, _funcs) = size.get_size_obj_funcs();
         let enum_mode_2 = mode as i32;
         let enum_state_3 = state as i32;
@@ -470,10 +440,10 @@ pub trait IconTrait<'a> {
     /// **See also:** [`actual_size()`]
     /// [`pixmap()`]
     /// [`paint()`]
-    fn actual_size_2(
+    pub fn actual_size_2<S: SizeTrait<'a>, W: WindowTrait<'a>>(
         &self,
-        window: &WindowTrait,
-        size: &SizeTrait,
+        window: &W,
+        size: &S,
         mode: Mode,
         state: State,
     ) -> Size {
@@ -510,7 +480,7 @@ pub trait IconTrait<'a> {
     ///
     /// **See also:** [`from_theme()`]
     /// [`IconEngine`]
-    fn name(&self) -> String {
+    pub fn name(&self) -> String {
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).name)(obj_data);
@@ -529,14 +499,14 @@ pub trait IconTrait<'a> {
     ///
     /// **Overloads**
     /// Paints the icon into the rectangle QRect( *x,* *y,* *w,* *h).*
-    fn paint(
+    pub fn paint<P: PainterTrait<'a>, R: RectTrait<'a>>(
         &self,
-        painter: &PainterTrait,
-        rect: &RectTrait,
+        painter: &P,
+        rect: &R,
         alignment: Alignment,
         mode: Mode,
         state: State,
-    ) {
+    ) -> &Self {
         let (obj_painter_1, _funcs) = painter.get_painter_obj_funcs();
         let (obj_rect_2, _funcs) = rect.get_rect_obj_funcs();
         let enum_alignment_3 = alignment as i32;
@@ -554,6 +524,7 @@ pub trait IconTrait<'a> {
                 enum_state_5,
             );
         }
+        self
     }
     ///
     /// Uses the *painter* to paint the icon with specified *alignment,*
@@ -566,9 +537,9 @@ pub trait IconTrait<'a> {
     ///
     /// **Overloads**
     /// Paints the icon into the rectangle QRect( *x,* *y,* *w,* *h).*
-    fn paint_2(
+    pub fn paint_2<P: PainterTrait<'a>>(
         &self,
-        painter: &PainterTrait,
+        painter: &P,
         x: i32,
         y: i32,
         w: i32,
@@ -576,7 +547,7 @@ pub trait IconTrait<'a> {
         alignment: Alignment,
         mode: Mode,
         state: State,
-    ) {
+    ) -> &Self {
         let (obj_painter_1, _funcs) = painter.get_painter_obj_funcs();
         let enum_alignment_6 = alignment as i32;
         let enum_mode_7 = mode as i32;
@@ -596,6 +567,7 @@ pub trait IconTrait<'a> {
                 enum_state_8,
             );
         }
+        self
     }
     ///
     /// Returns `true` if the icon is empty; otherwise returns `false.`
@@ -604,25 +576,26 @@ pub trait IconTrait<'a> {
     ///
     /// Note: Even a non-null icon might not be able to create valid
     /// pixmaps, eg. if the file does not exist or cannot be read.
-    fn is_null(&self) -> bool {
+    pub fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_null)(obj_data);
             ret_val
         }
     }
-    fn is_detached(&self) -> bool {
+    pub fn is_detached(&self) -> bool {
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_detached)(obj_data);
             ret_val
         }
     }
-    fn detach(&self) {
+    pub fn detach(&self) -> &Self {
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
             ((*funcs).detach)(obj_data);
         }
+        self
     }
     ///
     /// Returns a number that identifies the contents of this QIcon
@@ -635,7 +608,7 @@ pub trait IconTrait<'a> {
     /// Cache keys are mostly useful in conjunction with caching.
     ///
     /// **See also:** [`Pixmap::cache_key`]
-    fn cache_key(&self) -> i64 {
+    pub fn cache_key(&self) -> i64 {
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).cache_key)(obj_data);
@@ -650,7 +623,7 @@ pub trait IconTrait<'a> {
     /// pixmaps.
     ///
     /// **See also:** [`add_file()`]
-    fn add_pixmap(&self, pixmap: &PixmapTrait, mode: Mode, state: State) {
+    pub fn add_pixmap<P: PixmapTrait<'a>>(&self, pixmap: &P, mode: Mode, state: State) -> &Self {
         let (obj_pixmap_1, _funcs) = pixmap.get_pixmap_obj_funcs();
         let enum_mode_2 = mode as i32;
         let enum_state_3 = state as i32;
@@ -659,6 +632,7 @@ pub trait IconTrait<'a> {
         unsafe {
             ((*funcs).add_pixmap)(obj_data, obj_pixmap_1, enum_mode_2, enum_state_3);
         }
+        self
     }
     /// Adds an image from the file with the given *fileName* to the
     /// icon, as a specialization for *size,* *mode* and *state.* The
@@ -691,7 +665,13 @@ pub trait IconTrait<'a> {
     ///
     /// **See also:** [`add_pixmap()`]
     /// [`Pixmap::device_pixel_ratio`]
-    fn add_file(&self, file_name: &str, size: &SizeTrait, mode: Mode, state: State) {
+    pub fn add_file<S: SizeTrait<'a>>(
+        &self,
+        file_name: &str,
+        size: &S,
+        mode: Mode,
+        state: State,
+    ) -> &Self {
         let str_in_file_name_1 = CString::new(file_name).unwrap();
         let (obj_size_2, _funcs) = size.get_size_obj_funcs();
         let enum_mode_3 = mode as i32;
@@ -707,16 +687,18 @@ pub trait IconTrait<'a> {
                 enum_state_4,
             );
         }
+        self
     }
     ///
     /// Indicate that this icon is a mask image(boolean *isMask),* and hence can
     /// potentially be modified based on where it's displayed.
     /// **See also:** [`is_mask()`]
-    fn set_is_mask(&self, is_mask: bool) {
+    pub fn set_is_mask(&self, is_mask: bool) -> &Self {
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
             ((*funcs).set_is_mask)(obj_data, is_mask);
         }
+        self
     }
     ///
     /// Returns `true` if this icon has been marked as a mask image.
@@ -724,26 +706,13 @@ pub trait IconTrait<'a> {
     /// menu icons on MacOS ).
     ///
     /// **See also:** [`set_is_mask()`]
-    fn is_mask(&self) -> bool {
+    pub fn is_mask(&self) -> bool {
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_mask)(obj_data);
             ret_val
         }
     }
-
-    #[inline]
-    fn get_icon_obj_funcs(&self) -> (*const RUBase, *const RUIconFuncs);
-}
-
-impl<'a> IconTrait<'a> for Icon<'a> {
-    #[inline]
-    fn get_icon_obj_funcs(&self) -> (*const RUBase, *const RUIconFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).icon_funcs) }
-    }
-}
-pub trait IconStaticTrait {
     ///
     /// Returns the QIcon corresponding to *name* in the current
     /// icon theme.
@@ -783,7 +752,7 @@ pub trait IconStaticTrait {
     /// If you want to provide a guaranteed fallback for platforms that
     /// do not support theme icons, you can use the second argument:
     ///
-    fn from_theme<'a>(name: &str) -> Icon<'a> {
+    pub fn from_theme(name: &str) -> Icon<'a> {
         let str_in_name_1 = CString::new(name).unwrap();
 
         let (obj_data, funcs) = unsafe {
@@ -843,7 +812,7 @@ pub trait IconStaticTrait {
     /// If you want to provide a guaranteed fallback for platforms that
     /// do not support theme icons, you can use the second argument:
     ///
-    fn from_theme_2<'a>(name: &str, fallback: &IconTrait<'a>) -> Icon<'a> {
+    pub fn from_theme_2<I: IconTrait<'a>>(name: &str, fallback: &I) -> Icon<'a> {
         let str_in_name_1 = CString::new(name).unwrap();
         let (obj_fallback_2, _funcs) = fallback.get_icon_obj_funcs();
 
@@ -872,7 +841,7 @@ pub trait IconStaticTrait {
     /// **See also:** [`theme_search_paths()`]
     /// [`from_theme()`]
     /// [`set_theme_name()`]
-    fn has_theme_icon<'a>(name: &str) -> bool {
+    pub fn has_theme_icon(name: &str) -> bool {
         let str_in_name_1 = CString::new(name).unwrap();
 
         let (obj_data, funcs) = unsafe {
@@ -896,7 +865,7 @@ pub trait IconStaticTrait {
     /// [`theme_search_paths()`]
     /// [`from_theme()`]
     /// [`has_theme_icon()`]
-    fn theme_name<'a>() -> String {
+    pub fn theme_name() -> String {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -918,7 +887,7 @@ pub trait IconStaticTrait {
     ///
     /// **See also:** [`theme_search_paths()`]
     /// [`theme_name()`]
-    fn set_theme_name<'a>(path: &str) {
+    pub fn set_theme_name(path: &str) {
         let str_in_path_1 = CString::new(path).unwrap();
 
         let (obj_data, funcs) = unsafe {
@@ -932,10 +901,19 @@ pub trait IconStaticTrait {
         }
     }
 }
+pub trait IconTrait<'a> {
+    #[inline]
+    #[doc(hidden)]
+    fn get_icon_obj_funcs(&self) -> (*const RUBase, *const RUIconFuncs);
+}
 
-impl<'a> IconStaticTrait for Icon<'a> {}
-
-impl<'a> IconStaticTrait for IconStatic<'a> {}
+impl<'a> IconTrait<'a> for Icon<'a> {
+    #[doc(hidden)]
+    fn get_icon_obj_funcs(&self) -> (*const RUBase, *const RUIconFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).icon_funcs) }
+    }
+}
 #[repr(u32)]
 pub enum Mode {
     Normal,

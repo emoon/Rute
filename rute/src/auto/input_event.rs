@@ -17,33 +17,27 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::event::*;
-#[allow(unused_imports)]
-use auto::event_ffi::*;
-#[allow(unused_imports)]
-use auto::input_event_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::KeyboardModifiers;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct InputEvent<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUInputEventAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> InputEvent<'a> {
-    pub fn new_from_rc(ffi_data: RUInputEvent) -> InputEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUInputEvent) -> InputEvent<'a> {
         InputEvent {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -52,7 +46,8 @@ impl<'a> InputEvent<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUInputEvent) -> InputEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUInputEvent) -> InputEvent<'a> {
         InputEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -61,7 +56,8 @@ impl<'a> InputEvent<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUInputEvent) -> InputEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUInputEvent) -> InputEvent<'a> {
         InputEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -69,14 +65,12 @@ impl<'a> InputEvent<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait InputEventTrait<'a> {
     ///
     /// Returns the keyboard modifier flags that existed immediately
     /// before the event occurred.
     ///
     /// **See also:** [`GuiApplication::keyboard_modifiers`]
-    fn modifiers(&self) -> KeyboardModifiers {
+    pub fn modifiers(&self) -> KeyboardModifiers {
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).modifiers)(obj_data);
@@ -84,38 +78,82 @@ pub trait InputEventTrait<'a> {
             ret_val
         }
     }
-    fn set_modifiers(&self, amodifiers: KeyboardModifiers) {
+    pub fn set_modifiers(&self, amodifiers: KeyboardModifiers) -> &Self {
         let enum_amodifiers_1 = amodifiers as i32;
 
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {
             ((*funcs).set_modifiers)(obj_data, enum_amodifiers_1);
         }
+        self
     }
     ///
     /// Returns the window system's timestamp for this event.
     /// It will normally be in milliseconds since some arbitrary point
     /// in time, such as the time when the system was started.
-    fn timestamp(&self) -> u64 {
+    pub fn timestamp(&self) -> u64 {
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).timestamp)(obj_data);
             ret_val
         }
     }
-    fn set_timestamp(&self, atimestamp: u64) {
+    pub fn set_timestamp(&self, atimestamp: u64) -> &Self {
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {
             ((*funcs).set_timestamp)(obj_data, atimestamp);
         }
+        self
     }
-
+    #[doc(hidden)]
+    pub fn spontaneous(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).spontaneous)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_accepted(&self, accepted: bool) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_accepted)(obj_data, accepted);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_accepted(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_accepted)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn accept(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).accept)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn ignore(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).ignore)(obj_data);
+        }
+        self
+    }
+}
+pub trait InputEventTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_input_event_obj_funcs(&self) -> (*const RUBase, *const RUInputEventFuncs);
 }
 
 impl<'a> EventTrait<'a> for InputEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).event_funcs) }
@@ -123,7 +161,7 @@ impl<'a> EventTrait<'a> for InputEvent<'a> {
 }
 
 impl<'a> InputEventTrait<'a> for InputEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_input_event_obj_funcs(&self) -> (*const RUBase, *const RUInputEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).input_event_funcs) }

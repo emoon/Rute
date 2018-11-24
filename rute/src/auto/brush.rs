@@ -17,41 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::brush_ffi::*;
-#[allow(unused_imports)]
-use auto::color::Color;
-#[allow(unused_imports)]
-use auto::color::ColorTrait;
-#[allow(unused_imports)]
-use auto::color_ffi::*;
-#[allow(unused_imports)]
-use auto::image::Image;
-#[allow(unused_imports)]
-use auto::image::ImageTrait;
-#[allow(unused_imports)]
-use auto::image_ffi::*;
-#[allow(unused_imports)]
-use auto::pixmap::Pixmap;
-#[allow(unused_imports)]
-use auto::pixmap::PixmapTrait;
-#[allow(unused_imports)]
-use auto::pixmap_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::BrushStyle;
-#[allow(unused_imports)]
-use auto::rute_enums::GlobalColor;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::transform::Transform;
-#[allow(unused_imports)]
-use auto::transform::TransformTrait;
-#[allow(unused_imports)]
-use auto::transform_ffi::*;
 ///
 /// A brush has a style, a color, a gradient and a texture.
 ///
@@ -117,9 +84,13 @@ use auto::transform_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Brush<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUBrushAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -144,7 +115,8 @@ impl<'a> Brush<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUBrush) -> Brush<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUBrush) -> Brush<'a> {
         Brush {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -153,7 +125,8 @@ impl<'a> Brush<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUBrush) -> Brush<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUBrush) -> Brush<'a> {
         Brush {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -162,7 +135,8 @@ impl<'a> Brush<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUBrush) -> Brush<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUBrush) -> Brush<'a> {
         Brush {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -170,24 +144,23 @@ impl<'a> Brush<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait BrushTrait<'a> {
     ///
     /// Swaps brush *other* with this brush. This operation is very
     /// fast and never fails.
-    fn swap(&self, other: &BrushTrait) {
+    pub fn swap<B: BrushTrait<'a>>(&self, other: &B) -> &Self {
         let (obj_other_1, _funcs) = other.get_brush_obj_funcs();
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
+        self
     }
     ///
     /// Returns the brush style.
     ///
     /// **See also:** [`set_style()`]
-    fn style(&self) -> BrushStyle {
+    pub fn style(&self) -> BrushStyle {
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).style)(obj_data);
@@ -199,13 +172,14 @@ pub trait BrushTrait<'a> {
     /// Sets the brush style to *style.*
     ///
     /// **See also:** [`style()`]
-    fn set_style(&self, arg0: BrushStyle) {
+    pub fn set_style(&self, arg0: BrushStyle) -> &Self {
         let enum_arg0_1 = arg0 as i32;
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             ((*funcs).set_style)(obj_data, enum_arg0_1);
         }
+        self
     }
     ///
     /// Sets *matrix* as an explicit transformation matrix on the
@@ -213,13 +187,14 @@ pub trait BrushTrait<'a> {
     /// QPainter transformation matrix to produce the final result.
     ///
     /// **See also:** [`transform()`]
-    fn set_transform(&self, arg0: &TransformTrait) {
+    pub fn set_transform<T: TransformTrait<'a>>(&self, arg0: &T) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_transform_obj_funcs();
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             ((*funcs).set_transform)(obj_data, obj_arg0_1);
         }
+        self
     }
     ///
     /// Returns the custom brush pattern, or a null pixmap if no custom brush pattern
@@ -234,7 +209,7 @@ pub trait BrushTrait<'a> {
     /// QImage.
     ///
     /// **See also:** [`set_texture_image()`]
-    fn texture(&self) -> Pixmap {
+    pub fn texture(&self) -> Pixmap {
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).texture)(obj_data);
@@ -269,13 +244,14 @@ pub trait BrushTrait<'a> {
     ///
     /// **See also:** [`texture_image()`]
     /// [`set_texture()`]
-    fn set_texture(&self, pixmap: &PixmapTrait) {
+    pub fn set_texture<P: PixmapTrait<'a>>(&self, pixmap: &P) -> &Self {
         let (obj_pixmap_1, _funcs) = pixmap.get_pixmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             ((*funcs).set_texture)(obj_data, obj_pixmap_1);
         }
+        self
     }
     ///
     /// Returns the custom brush pattern, or a null image if no custom
@@ -285,7 +261,7 @@ pub trait BrushTrait<'a> {
     /// QImage.
     ///
     /// **See also:** [`set_texture_image()`]
-    fn texture_image(&self) -> Image {
+    pub fn texture_image(&self) -> Image {
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).texture_image)(obj_data);
@@ -311,19 +287,20 @@ pub trait BrushTrait<'a> {
     ///
     /// **See also:** [`texture_image()`]
     /// [`set_texture()`]
-    fn set_texture_image(&self, image: &ImageTrait) {
+    pub fn set_texture_image<I: ImageTrait<'a>>(&self, image: &I) -> &Self {
         let (obj_image_1, _funcs) = image.get_image_obj_funcs();
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             ((*funcs).set_texture_image)(obj_data, obj_image_1);
         }
+        self
     }
     ///
     /// Returns the brush color.
     ///
     /// **See also:** [`set_color()`]
-    fn color(&self) -> Option<Color> {
+    pub fn color(&self) -> Option<Color> {
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).color)(obj_data);
@@ -351,13 +328,14 @@ pub trait BrushTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the brush color to the given *color.*
-    fn set_color(&self, color: &ColorTrait) {
+    pub fn set_color<C: ColorTrait<'a>>(&self, color: &C) -> &Self {
         let (obj_color_1, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             ((*funcs).set_color)(obj_data, obj_color_1);
         }
+        self
     }
     ///
     /// Sets the brush color to the given *color.*
@@ -370,13 +348,14 @@ pub trait BrushTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the brush color to the given *color.*
-    fn set_color_2(&self, color: GlobalColor) {
+    pub fn set_color_2(&self, color: GlobalColor) -> &Self {
         let enum_color_1 = color as i32;
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             ((*funcs).set_color_2)(obj_data, enum_color_1);
         }
+        self
     }
     ///
     /// Returns `true` if the brush is fully opaque otherwise false. A brush
@@ -386,27 +365,29 @@ pub trait BrushTrait<'a> {
     /// * Its texture() does not have an alpha channel and is not a QBitmap.
     /// * The colors in the gradient() all have an alpha component that is 255.
     /// * It is an extended radial gradient.
-    fn is_opaque(&self) -> bool {
+    pub fn is_opaque(&self) -> bool {
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_opaque)(obj_data);
             ret_val
         }
     }
-    fn is_detached(&self) -> bool {
+    pub fn is_detached(&self) -> bool {
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_detached)(obj_data);
             ret_val
         }
     }
-
+}
+pub trait BrushTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_brush_obj_funcs(&self) -> (*const RUBase, *const RUBrushFuncs);
 }
 
 impl<'a> BrushTrait<'a> for Brush<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_brush_obj_funcs(&self) -> (*const RUBase, *const RUBrushFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).brush_funcs) }

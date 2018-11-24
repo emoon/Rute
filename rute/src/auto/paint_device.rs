@@ -17,28 +17,26 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::paint_device_ffi::*;
-#[allow(unused_imports)]
-use auto::paint_engine::PaintEngine;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct PaintDevice<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUPaintDeviceAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> PaintDevice<'a> {
-    pub fn new_from_rc(ffi_data: RUPaintDevice) -> PaintDevice<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUPaintDevice) -> PaintDevice<'a> {
         PaintDevice {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -47,7 +45,8 @@ impl<'a> PaintDevice<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUPaintDevice) -> PaintDevice<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUPaintDevice) -> PaintDevice<'a> {
         PaintDevice {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -56,7 +55,8 @@ impl<'a> PaintDevice<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUPaintDevice) -> PaintDevice<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUPaintDevice) -> PaintDevice<'a> {
         PaintDevice {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -64,16 +64,14 @@ impl<'a> PaintDevice<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait PaintDeviceTrait<'a> {
-    fn painting_active(&self) -> bool {
+    pub fn painting_active(&self) -> bool {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).painting_active)(obj_data);
             ret_val
         }
     }
-    fn paint_engine(&self) -> Option<PaintEngine> {
+    pub fn paint_engine(&self) -> Option<PaintEngine> {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).paint_engine)(obj_data);
@@ -90,83 +88,85 @@ pub trait PaintDeviceTrait<'a> {
             Some(ret_val)
         }
     }
-    fn width(&self) -> i32 {
+    pub fn width(&self) -> i32 {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).width)(obj_data);
             ret_val
         }
     }
-    fn height(&self) -> i32 {
+    pub fn height(&self) -> i32 {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).height)(obj_data);
             ret_val
         }
     }
-    fn logical_dpi_x(&self) -> i32 {
+    pub fn logical_dpi_x(&self) -> i32 {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).logical_dpi_x)(obj_data);
             ret_val
         }
     }
-    fn logical_dpi_y(&self) -> i32 {
+    pub fn logical_dpi_y(&self) -> i32 {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).logical_dpi_y)(obj_data);
             ret_val
         }
     }
-    fn physical_dpi_x(&self) -> i32 {
+    pub fn physical_dpi_x(&self) -> i32 {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).physical_dpi_x)(obj_data);
             ret_val
         }
     }
-    fn physical_dpi_y(&self) -> i32 {
+    pub fn physical_dpi_y(&self) -> i32 {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).physical_dpi_y)(obj_data);
             ret_val
         }
     }
-    fn device_pixel_ratio(&self) -> i32 {
+    pub fn device_pixel_ratio(&self) -> i32 {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).device_pixel_ratio)(obj_data);
             ret_val
         }
     }
-    fn device_pixel_ratio_f(&self) -> f32 {
+    pub fn device_pixel_ratio_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).device_pixel_ratio_f)(obj_data);
             ret_val
         }
     }
-    fn color_count(&self) -> i32 {
+    pub fn color_count(&self) -> i32 {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).color_count)(obj_data);
             ret_val
         }
     }
-    fn depth(&self) -> i32 {
+    pub fn depth(&self) -> i32 {
         let (obj_data, funcs) = self.get_paint_device_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).depth)(obj_data);
             ret_val
         }
     }
-
+}
+pub trait PaintDeviceTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs);
 }
 
 impl<'a> PaintDeviceTrait<'a> for PaintDevice<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).paint_device_funcs) }

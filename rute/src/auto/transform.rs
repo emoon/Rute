@@ -17,71 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::line::Line;
-#[allow(unused_imports)]
-use auto::line::LineTrait;
-#[allow(unused_imports)]
-use auto::line_f::LineF;
-#[allow(unused_imports)]
-use auto::line_f::LineFTrait;
-#[allow(unused_imports)]
-use auto::line_f_ffi::*;
-#[allow(unused_imports)]
-use auto::line_ffi::*;
-#[allow(unused_imports)]
-use auto::matrix::Matrix;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point::PointTrait;
-#[allow(unused_imports)]
-use auto::point_f::PointF;
-#[allow(unused_imports)]
-use auto::point_f::PointFTrait;
-#[allow(unused_imports)]
-use auto::point_f_ffi::*;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::polygon::Polygon;
-#[allow(unused_imports)]
-use auto::polygon::PolygonTrait;
-#[allow(unused_imports)]
-use auto::polygon_f::PolygonF;
-#[allow(unused_imports)]
-use auto::polygon_f::PolygonFTrait;
-#[allow(unused_imports)]
-use auto::polygon_f_ffi::*;
-#[allow(unused_imports)]
-use auto::polygon_ffi::*;
-#[allow(unused_imports)]
-use auto::rect::Rect;
-#[allow(unused_imports)]
-use auto::rect::RectTrait;
-#[allow(unused_imports)]
-use auto::rect_f::RectF;
-#[allow(unused_imports)]
-use auto::rect_f::RectFTrait;
-#[allow(unused_imports)]
-use auto::rect_f_ffi::*;
-#[allow(unused_imports)]
-use auto::rect_ffi::*;
-#[allow(unused_imports)]
-use auto::region::Region;
-#[allow(unused_imports)]
-use auto::region::RegionTrait;
-#[allow(unused_imports)]
-use auto::region_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::Axis;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::transform_ffi::*;
 ///
 /// A transformation specifies how to translate, scale, shear, rotate
 /// or project the coordinate system, and is typically used when
@@ -205,9 +142,13 @@ use auto::transform_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Transform<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUTransformAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -232,7 +173,8 @@ impl<'a> Transform<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUTransform) -> Transform<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUTransform) -> Transform<'a> {
         Transform {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -241,7 +183,8 @@ impl<'a> Transform<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUTransform) -> Transform<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUTransform) -> Transform<'a> {
         Transform {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -250,7 +193,8 @@ impl<'a> Transform<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUTransform) -> Transform<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUTransform) -> Transform<'a> {
         Transform {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -258,17 +202,10 @@ impl<'a> Transform<'a> {
             _marker: PhantomData,
         }
     }
-}
-
-pub struct TransformStatic<'a> {
-    pub all_funcs: *const RUTransformAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait TransformTrait<'a> {
     ///
     /// Returns `true` if the matrix represent an affine transformation,
     /// otherwise returns `false.`
-    fn is_affine(&self) -> bool {
+    pub fn is_affine(&self) -> bool {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_affine)(obj_data);
@@ -280,7 +217,7 @@ pub trait TransformTrait<'a> {
     /// returns `false.`
     ///
     /// **See also:** [`reset()`]
-    fn is_identity(&self) -> bool {
+    pub fn is_identity(&self) -> bool {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_identity)(obj_data);
@@ -291,7 +228,7 @@ pub trait TransformTrait<'a> {
     /// Returns `true` if the matrix is invertible, otherwise returns `false.`
     ///
     /// **See also:** [`inverted()`]
-    fn is_invertible(&self) -> bool {
+    pub fn is_invertible(&self) -> bool {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_invertible)(obj_data);
@@ -303,7 +240,7 @@ pub trait TransformTrait<'a> {
     /// transformation, otherwise returns `false.`
     ///
     /// **See also:** [`reset()`]
-    fn is_scaling(&self) -> bool {
+    pub fn is_scaling(&self) -> bool {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_scaling)(obj_data);
@@ -317,7 +254,7 @@ pub trait TransformTrait<'a> {
     /// **Note**: A rotation transformation of 180 degrees and/or 360 degrees is treated as a scaling transformation.
     ///
     /// **See also:** [`reset()`]
-    fn is_rotating(&self) -> bool {
+    pub fn is_rotating(&self) -> bool {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_rotating)(obj_data);
@@ -329,7 +266,7 @@ pub trait TransformTrait<'a> {
     /// transformation, otherwise returns `false.`
     ///
     /// **See also:** [`reset()`]
-    fn is_translating(&self) -> bool {
+    pub fn is_translating(&self) -> bool {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_translating)(obj_data);
@@ -347,7 +284,7 @@ pub trait TransformTrait<'a> {
     /// Knowing the transformation type of a matrix is useful for optimization:
     /// you can often handle specific types more optimally than handling
     /// the generic case.
-    fn get_type(&self) -> TransformationType {
+    pub fn get_type(&self) -> TransformationType {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).get_type)(obj_data);
@@ -357,7 +294,7 @@ pub trait TransformTrait<'a> {
     }
     ///
     /// Returns the matrix's determinant.
-    fn determinant(&self) -> f32 {
+    pub fn determinant(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).determinant)(obj_data);
@@ -368,7 +305,7 @@ pub trait TransformTrait<'a> {
     /// Returns the matrix's determinant. Use determinant() instead.
     ///
     /// Returns the matrix's determinant.
-    fn det(&self) -> f32 {
+    pub fn det(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).det)(obj_data);
@@ -381,7 +318,7 @@ pub trait TransformTrait<'a> {
     /// **See also:** [`scale()`]
     /// {QTransform#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m11(&self) -> f32 {
+    pub fn m11(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m11)(obj_data);
@@ -394,7 +331,7 @@ pub trait TransformTrait<'a> {
     /// **See also:** [`shear()`]
     /// {QTransform#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m12(&self) -> f32 {
+    pub fn m12(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m12)(obj_data);
@@ -407,7 +344,7 @@ pub trait TransformTrait<'a> {
     /// **See also:** [`translate()`]
     /// {QTransform#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m13(&self) -> f32 {
+    pub fn m13(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m13)(obj_data);
@@ -420,7 +357,7 @@ pub trait TransformTrait<'a> {
     /// **See also:** [`shear()`]
     /// {QTransform#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m21(&self) -> f32 {
+    pub fn m21(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m21)(obj_data);
@@ -433,7 +370,7 @@ pub trait TransformTrait<'a> {
     /// **See also:** [`scale()`]
     /// {QTransform#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m22(&self) -> f32 {
+    pub fn m22(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m22)(obj_data);
@@ -446,7 +383,7 @@ pub trait TransformTrait<'a> {
     /// **See also:** [`translate()`]
     /// {QTransform#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m23(&self) -> f32 {
+    pub fn m23(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m23)(obj_data);
@@ -460,7 +397,7 @@ pub trait TransformTrait<'a> {
     /// [`translate()`]
     /// {QTransform#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m31(&self) -> f32 {
+    pub fn m31(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m31)(obj_data);
@@ -474,7 +411,7 @@ pub trait TransformTrait<'a> {
     /// [`translate()`]
     /// {QTransform#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m32(&self) -> f32 {
+    pub fn m32(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m32)(obj_data);
@@ -487,7 +424,7 @@ pub trait TransformTrait<'a> {
     /// **See also:** [`translate()`]
     /// {QTransform#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m33(&self) -> f32 {
+    pub fn m33(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m33)(obj_data);
@@ -501,7 +438,7 @@ pub trait TransformTrait<'a> {
     /// [`translate()`]
     /// {QTransform#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn dx(&self) -> f32 {
+    pub fn dx(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dx)(obj_data);
@@ -514,7 +451,7 @@ pub trait TransformTrait<'a> {
     /// **See also:** [`translate()`]
     /// {QTransform#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn dy(&self) -> f32 {
+    pub fn dy(&self) -> f32 {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dy)(obj_data);
@@ -523,7 +460,7 @@ pub trait TransformTrait<'a> {
     }
     ///
     /// Returns the adjoint of this matrix.
-    fn adjoint(&self) -> Transform {
+    pub fn adjoint(&self) -> Transform {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).adjoint)(obj_data);
@@ -542,7 +479,7 @@ pub trait TransformTrait<'a> {
     /// vertically, and returns a reference to the matrix.
     ///
     /// **See also:** [`set_matrix()`]
-    fn scale(&self, sx: f32, sy: f32) -> Option<Transform> {
+    pub fn scale(&self, sx: f32, sy: f32) -> Option<Transform> {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).scale)(obj_data, sx, sy);
@@ -564,7 +501,7 @@ pub trait TransformTrait<'a> {
     /// vertically, and returns a reference to the matrix.
     ///
     /// **See also:** [`set_matrix()`]
-    fn shear(&self, sh: f32, sv: f32) -> Option<Transform> {
+    pub fn shear(&self, sh: f32, sv: f32) -> Option<Transform> {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).shear)(obj_data, sh, sv);
@@ -603,7 +540,7 @@ pub trait TransformTrait<'a> {
     /// The angle is specified in radians.
     ///
     /// **See also:** [`set_matrix()`]
-    fn rotate(&self, a: f32, axis: Axis) -> Option<Transform> {
+    pub fn rotate(&self, a: f32, axis: Axis) -> Option<Transform> {
         let enum_axis_2 = axis as i32;
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
@@ -633,7 +570,7 @@ pub trait TransformTrait<'a> {
     /// The angle is specified in radians.
     ///
     /// **See also:** [`set_matrix()`]
-    fn rotate_radians(&self, a: f32, axis: Axis) -> Option<Transform> {
+    pub fn rotate_radians(&self, a: f32, axis: Axis) -> Option<Transform> {
         let enum_axis_2 = axis as i32;
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
@@ -653,6 +590,88 @@ pub trait TransformTrait<'a> {
         }
     }
     ///
+    /// Creates a transformation matrix, *trans,* that maps a unit square
+    /// to a four-sided polygon, *quad.* Returns `true` if the transformation
+    /// is constructed or false if such a transformation does not exist.
+    ///
+    /// **See also:** [`quad_to_square()`]
+    /// [`quad_to_quad()`]
+    pub fn square_to_quad<P: PolygonFTrait<'a>, T: TransformTrait<'a>>(
+        square: &P,
+        result: &T,
+    ) -> bool {
+        let (obj_square_1, _funcs) = square.get_polygon_f_obj_funcs();
+        let (obj_result_2, _funcs) = result.get_transform_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_transform)(::std::ptr::null()).all_funcs).transform_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).square_to_quad)(obj_data, obj_square_1, obj_result_2);
+            ret_val
+        }
+    }
+    ///
+    /// Creates a transformation matrix, *trans,* that maps a four-sided polygon,
+    /// *quad,* to a unit square. Returns `true` if the transformation is constructed
+    /// or false if such a transformation does not exist.
+    ///
+    /// **See also:** [`square_to_quad()`]
+    /// [`quad_to_quad()`]
+    pub fn quad_to_square<P: PolygonFTrait<'a>, T: TransformTrait<'a>>(
+        quad: &P,
+        result: &T,
+    ) -> bool {
+        let (obj_quad_1, _funcs) = quad.get_polygon_f_obj_funcs();
+        let (obj_result_2, _funcs) = result.get_transform_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_transform)(::std::ptr::null()).all_funcs).transform_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).quad_to_square)(obj_data, obj_quad_1, obj_result_2);
+            ret_val
+        }
+    }
+    ///
+    /// Creates a transformation matrix, *trans,* that maps a four-sided
+    /// polygon, *one,* to another four-sided polygon, *two.*
+    /// Returns `true` if the transformation is possible; otherwise returns
+    /// false.
+    ///
+    /// This is a convenience method combining quadToSquare() and
+    /// squareToQuad() methods. It allows the input quad to be
+    /// transformed into any other quad.
+    ///
+    /// **See also:** [`square_to_quad()`]
+    /// [`quad_to_square()`]
+    pub fn quad_to_quad<P: PolygonFTrait<'a>, T: TransformTrait<'a>>(
+        one: &P,
+        two: &P,
+        result: &T,
+    ) -> bool {
+        let (obj_one_1, _funcs) = one.get_polygon_f_obj_funcs();
+        let (obj_two_2, _funcs) = two.get_polygon_f_obj_funcs();
+        let (obj_result_3, _funcs) = result.get_transform_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_transform)(::std::ptr::null()).all_funcs).transform_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).quad_to_quad)(obj_data, obj_one_1, obj_two_2, obj_result_3);
+            ret_val
+        }
+    }
+    ///
     /// Resets the matrix to an identity matrix, i.e. all elements are set
     /// to zero, except `m11` and `m22` (specifying the scale) and `m33`
     /// which are set to 1.
@@ -661,11 +680,12 @@ pub trait TransformTrait<'a> {
     /// [`is_identity()`]
     /// {QTransform#Basic Matrix
     /// Operations}{Basic Matrix Operations}
-    fn reset(&self) {
+    pub fn reset(&self) -> &Self {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             ((*funcs).reset)(obj_data);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -758,7 +778,7 @@ pub trait TransformTrait<'a> {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    fn map(&self, p: &PointTrait) -> Point {
+    pub fn map<P: PointTrait<'a>>(&self, p: &P) -> Point {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
@@ -865,7 +885,7 @@ pub trait TransformTrait<'a> {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    fn map_2(&self, p: &PointFTrait) -> PointF {
+    pub fn map_2<P: PointFTrait<'a>>(&self, p: &P) -> PointF {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
@@ -972,7 +992,7 @@ pub trait TransformTrait<'a> {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    fn map_3(&self, l: &LineTrait) -> Line {
+    pub fn map_3<L: LineTrait<'a>>(&self, l: &L) -> Line {
         let (obj_l_1, _funcs) = l.get_line_obj_funcs();
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
@@ -1079,7 +1099,7 @@ pub trait TransformTrait<'a> {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    fn map_4(&self, l: &LineFTrait) -> LineF {
+    pub fn map_4<L: LineFTrait<'a>>(&self, l: &L) -> LineF {
         let (obj_l_1, _funcs) = l.get_line_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
@@ -1186,7 +1206,7 @@ pub trait TransformTrait<'a> {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    fn map_5(&self, a: &PolygonFTrait) -> PolygonF {
+    pub fn map_5<P: PolygonFTrait<'a>>(&self, a: &P) -> PolygonF {
         let (obj_a_1, _funcs) = a.get_polygon_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
@@ -1293,7 +1313,7 @@ pub trait TransformTrait<'a> {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    fn map_6(&self, a: &PolygonTrait) -> Polygon {
+    pub fn map_6<P: PolygonTrait<'a>>(&self, a: &P) -> Polygon {
         let (obj_a_1, _funcs) = a.get_polygon_obj_funcs();
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
@@ -1400,7 +1420,7 @@ pub trait TransformTrait<'a> {
     /// Maps the given coordinates *x* and *y* into the coordinate
     /// system defined by this matrix. The resulting values are put in * *tx* and * *ty,* respectively. Note that the transformed coordinates
     /// are rounded to the nearest integer.
-    fn map_7(&self, r: &RegionTrait) -> Region {
+    pub fn map_7<R: RegionTrait<'a>>(&self, r: &R) -> Region {
         let (obj_r_1, _funcs) = r.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
@@ -1522,7 +1542,7 @@ pub trait TransformTrait<'a> {
     /// **See also:** [`map_rect()`]
     /// {QTransform#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn map_to_polygon(&self, r: &RectTrait) -> Polygon {
+    pub fn map_to_polygon<R: RectTrait<'a>>(&self, r: &R) -> Polygon {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
@@ -1557,7 +1577,7 @@ pub trait TransformTrait<'a> {
     /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
     /// matrix. Note that the transformed coordinates are rounded to the
     /// nearest integer.
-    fn map_rect(&self, arg0: &RectTrait) -> Rect {
+    pub fn map_rect<R: RectTrait<'a>>(&self, arg0: &R) -> Rect {
         let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
@@ -1592,7 +1612,7 @@ pub trait TransformTrait<'a> {
     /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
     /// matrix. Note that the transformed coordinates are rounded to the
     /// nearest integer.
-    fn map_rect_2(&self, arg0: &RectFTrait) -> RectF {
+    pub fn map_rect_2<R: RectFTrait<'a>>(&self, arg0: &R) -> RectF {
         let (obj_arg0_1, _funcs) = arg0.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
@@ -1795,7 +1815,7 @@ pub trait TransformTrait<'a> {
     ///
     /// **Warning**: If a perspective transformation has been specified,
     /// then the conversion will cause loss of data.
-    fn to_affine(&self) -> Option<Matrix> {
+    pub fn to_affine(&self) -> Option<Matrix> {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).to_affine)(obj_data);
@@ -1812,101 +1832,12 @@ pub trait TransformTrait<'a> {
             Some(ret_val)
         }
     }
-
-    #[inline]
-    fn get_transform_obj_funcs(&self) -> (*const RUBase, *const RUTransformFuncs);
-}
-
-impl<'a> TransformTrait<'a> for Transform<'a> {
-    #[inline]
-    fn get_transform_obj_funcs(&self) -> (*const RUBase, *const RUTransformFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).transform_funcs) }
-    }
-}
-pub trait TransformStaticTrait {
-    ///
-    /// Creates a transformation matrix, *trans,* that maps a unit square
-    /// to a four-sided polygon, *quad.* Returns `true` if the transformation
-    /// is constructed or false if such a transformation does not exist.
-    ///
-    /// **See also:** [`quad_to_square()`]
-    /// [`quad_to_quad()`]
-    fn square_to_quad<'a>(square: &PolygonFTrait<'a>, result: &TransformTrait<'a>) -> bool {
-        let (obj_square_1, _funcs) = square.get_polygon_f_obj_funcs();
-        let (obj_result_2, _funcs) = result.get_transform_obj_funcs();
-
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_transform)(::std::ptr::null()).all_funcs).transform_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).square_to_quad)(obj_data, obj_square_1, obj_result_2);
-            ret_val
-        }
-    }
-    ///
-    /// Creates a transformation matrix, *trans,* that maps a four-sided polygon,
-    /// *quad,* to a unit square. Returns `true` if the transformation is constructed
-    /// or false if such a transformation does not exist.
-    ///
-    /// **See also:** [`square_to_quad()`]
-    /// [`quad_to_quad()`]
-    fn quad_to_square<'a>(quad: &PolygonFTrait<'a>, result: &TransformTrait<'a>) -> bool {
-        let (obj_quad_1, _funcs) = quad.get_polygon_f_obj_funcs();
-        let (obj_result_2, _funcs) = result.get_transform_obj_funcs();
-
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_transform)(::std::ptr::null()).all_funcs).transform_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).quad_to_square)(obj_data, obj_quad_1, obj_result_2);
-            ret_val
-        }
-    }
-    ///
-    /// Creates a transformation matrix, *trans,* that maps a four-sided
-    /// polygon, *one,* to another four-sided polygon, *two.*
-    /// Returns `true` if the transformation is possible; otherwise returns
-    /// false.
-    ///
-    /// This is a convenience method combining quadToSquare() and
-    /// squareToQuad() methods. It allows the input quad to be
-    /// transformed into any other quad.
-    ///
-    /// **See also:** [`square_to_quad()`]
-    /// [`quad_to_square()`]
-    fn quad_to_quad<'a>(
-        one: &PolygonFTrait<'a>,
-        two: &PolygonFTrait<'a>,
-        result: &TransformTrait<'a>,
-    ) -> bool {
-        let (obj_one_1, _funcs) = one.get_polygon_f_obj_funcs();
-        let (obj_two_2, _funcs) = two.get_polygon_f_obj_funcs();
-        let (obj_result_3, _funcs) = result.get_transform_obj_funcs();
-
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_transform)(::std::ptr::null()).all_funcs).transform_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).quad_to_quad)(obj_data, obj_one_1, obj_two_2, obj_result_3);
-            ret_val
-        }
-    }
     ///
     /// Creates a matrix which corresponds to a translation of *dx* along
     /// the x axis and *dy* along the y axis. This is the same as
     /// QTransform().translate(dx, dy) but slightly faster.
     ///
-    fn from_translate<'a>(dx: f32, dy: f32) -> Transform<'a> {
+    pub fn from_translate(dx: f32, dy: f32) -> Transform<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1930,7 +1861,7 @@ pub trait TransformStaticTrait {
     /// *sx* horizontally and *sy* vertically.
     /// This is the same as QTransform().scale(sx, sy) but slightly faster.
     ///
-    fn from_scale<'a>(dx: f32, dy: f32) -> Transform<'a> {
+    pub fn from_scale(dx: f32, dy: f32) -> Transform<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1950,10 +1881,19 @@ pub trait TransformStaticTrait {
         }
     }
 }
+pub trait TransformTrait<'a> {
+    #[inline]
+    #[doc(hidden)]
+    fn get_transform_obj_funcs(&self) -> (*const RUBase, *const RUTransformFuncs);
+}
 
-impl<'a> TransformStaticTrait for Transform<'a> {}
-
-impl<'a> TransformStaticTrait for TransformStatic<'a> {}
+impl<'a> TransformTrait<'a> for Transform<'a> {
+    #[doc(hidden)]
+    fn get_transform_obj_funcs(&self) -> (*const RUBase, *const RUTransformFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).transform_funcs) }
+    }
+}
 #[repr(u32)]
 pub enum TransformationType {
     TxNone,

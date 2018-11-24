@@ -17,15 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point_f_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// A point is specified by a x coordinate and an y coordinate which
 /// can be accessed using the x() and y() functions. The coordinates
@@ -55,9 +48,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct PointF<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUPointFAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -82,7 +79,8 @@ impl<'a> PointF<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUPointF) -> PointF<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUPointF) -> PointF<'a> {
         PointF {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -91,7 +89,8 @@ impl<'a> PointF<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUPointF) -> PointF<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUPointF) -> PointF<'a> {
         PointF {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -100,7 +99,8 @@ impl<'a> PointF<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUPointF) -> PointF<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUPointF) -> PointF<'a> {
         PointF {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -108,20 +108,13 @@ impl<'a> PointF<'a> {
             _marker: PhantomData,
         }
     }
-}
-
-pub struct PointFStatic<'a> {
-    pub all_funcs: *const RUPointFAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait PointFTrait<'a> {
     ///
     /// Returns the sum of the absolute values of x() and y(),
     /// traditionally known as the of the vector from
     /// the origin to the point.
     ///
     /// **See also:** QPoint::manhattanLength()
-    fn manhattan_length(&self) -> f32 {
+    pub fn manhattan_length(&self) -> f32 {
         let (obj_data, funcs) = self.get_point_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).manhattan_length)(obj_data);
@@ -131,7 +124,7 @@ pub trait PointFTrait<'a> {
     ///
     /// Returns `true` if both the x and y coordinates are set to 0.0 (ignoring
     /// the sign); otherwise returns `false.`
-    fn is_null(&self) -> bool {
+    pub fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_point_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_null)(obj_data);
@@ -143,7 +136,7 @@ pub trait PointFTrait<'a> {
     ///
     /// **See also:** setX()
     /// rx()
-    fn x(&self) -> f32 {
+    pub fn x(&self) -> f32 {
         let (obj_data, funcs) = self.get_point_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).x)(obj_data);
@@ -155,7 +148,7 @@ pub trait PointFTrait<'a> {
     ///
     /// **See also:** setY()
     /// ry()
-    fn y(&self) -> f32 {
+    pub fn y(&self) -> f32 {
         let (obj_data, funcs) = self.get_point_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).y)(obj_data);
@@ -167,22 +160,24 @@ pub trait PointFTrait<'a> {
     ///
     /// **See also:** x()
     /// setY()
-    fn set_x(&self, x: f32) {
+    pub fn set_x(&self, x: f32) -> &Self {
         let (obj_data, funcs) = self.get_point_f_obj_funcs();
         unsafe {
             ((*funcs).set_x)(obj_data, x);
         }
+        self
     }
     ///
     /// Sets the y coordinate of this point to the given *y* coordinate.
     ///
     /// **See also:** y()
     /// setX()
-    fn set_y(&self, y: f32) {
+    pub fn set_y(&self, y: f32) -> &Self {
         let (obj_data, funcs) = self.get_point_f_obj_funcs();
         unsafe {
             ((*funcs).set_y)(obj_data, y);
         }
+        self
     }
     ///
     /// Returns a reference to the x coordinate of this point.
@@ -191,7 +186,7 @@ pub trait PointFTrait<'a> {
     ///
     /// **See also:** x()
     /// setX()
-    fn rx(&self) -> f32 {
+    pub fn rx(&self) -> f32 {
         let (obj_data, funcs) = self.get_point_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rx)(obj_data);
@@ -205,7 +200,7 @@ pub trait PointFTrait<'a> {
     ///
     /// **See also:** y()
     /// setY()
-    fn ry(&self) -> f32 {
+    pub fn ry(&self) -> f32 {
         let (obj_data, funcs) = self.get_point_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).ry)(obj_data);
@@ -213,40 +208,8 @@ pub trait PointFTrait<'a> {
         }
     }
     ///
-    /// Rounds the coordinates of this point to the nearest integer, and
-    /// returns a QPoint object with the rounded coordinates.
-    ///
-    /// **See also:** QPointF()
-    fn to_point(&self) -> Point {
-        let (obj_data, funcs) = self.get_point_f_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).to_point)(obj_data);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Point::new_from_rc(t);
-            } else {
-                ret_val = Point::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-
-    #[inline]
-    fn get_point_f_obj_funcs(&self) -> (*const RUBase, *const RUPointFFuncs);
-}
-
-impl<'a> PointFTrait<'a> for PointF<'a> {
-    #[inline]
-    fn get_point_f_obj_funcs(&self) -> (*const RUBase, *const RUPointFFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).point_f_funcs) }
-    }
-}
-pub trait PointFStaticTrait {
-    ///
     /// Returns the dot product of *p1* and *p2.*
-    fn dot_product<'a>(p1: &PointFTrait<'a>, p2: &PointFTrait<'a>) -> f32 {
+    pub fn dot_product<P: PointFTrait<'a>>(p1: &P, p2: &P) -> f32 {
         let (obj_p1_1, _funcs) = p1.get_point_f_obj_funcs();
         let (obj_p2_2, _funcs) = p2.get_point_f_obj_funcs();
 
@@ -261,8 +224,36 @@ pub trait PointFStaticTrait {
             ret_val
         }
     }
+    ///
+    /// Rounds the coordinates of this point to the nearest integer, and
+    /// returns a QPoint object with the rounded coordinates.
+    ///
+    /// **See also:** QPointF()
+    pub fn to_point(&self) -> Point {
+        let (obj_data, funcs) = self.get_point_f_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).to_point)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+}
+pub trait PointFTrait<'a> {
+    #[inline]
+    #[doc(hidden)]
+    fn get_point_f_obj_funcs(&self) -> (*const RUBase, *const RUPointFFuncs);
 }
 
-impl<'a> PointFStaticTrait for PointF<'a> {}
-
-impl<'a> PointFStaticTrait for PointFStatic<'a> {}
+impl<'a> PointFTrait<'a> for PointF<'a> {
+    #[doc(hidden)]
+    fn get_point_f_obj_funcs(&self) -> (*const RUBase, *const RUPointFFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).point_f_funcs) }
+    }
+}

@@ -17,53 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::color::Color;
-#[allow(unused_imports)]
-use auto::color::ColorTrait;
-#[allow(unused_imports)]
-use auto::color_ffi::*;
-#[allow(unused_imports)]
-use auto::image_ffi::*;
-#[allow(unused_imports)]
-use auto::paint_device::*;
-#[allow(unused_imports)]
-use auto::paint_device_ffi::*;
-#[allow(unused_imports)]
-use auto::paint_engine::PaintEngine;
-#[allow(unused_imports)]
-use auto::pixel_format::PixelFormat;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point::PointTrait;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::rect::Rect;
-#[allow(unused_imports)]
-use auto::rect::RectTrait;
-#[allow(unused_imports)]
-use auto::rect_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::AspectRatioMode;
-#[allow(unused_imports)]
-use auto::rute_enums::GlobalColor;
-#[allow(unused_imports)]
-use auto::rute_enums::ImageConversionFlags;
-#[allow(unused_imports)]
-use auto::rute_enums::TransformationMode;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::size::Size;
-#[allow(unused_imports)]
-use auto::size::SizeTrait;
-#[allow(unused_imports)]
-use auto::size_ffi::*;
 ///
 /// Qt provides four classes for handling image data: QImage, QPixmap,
 /// QBitmap and QPicture. QImage is designed and optimized for I/O,
@@ -323,9 +278,13 @@ use auto::size_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Image<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUImageAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -350,7 +309,8 @@ impl<'a> Image<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUImage) -> Image<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUImage) -> Image<'a> {
         Image {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -359,7 +319,8 @@ impl<'a> Image<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUImage) -> Image<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUImage) -> Image<'a> {
         Image {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -368,7 +329,8 @@ impl<'a> Image<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUImage) -> Image<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUImage) -> Image<'a> {
         Image {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -376,49 +338,44 @@ impl<'a> Image<'a> {
             _marker: PhantomData,
         }
     }
-}
-
-pub struct ImageStatic<'a> {
-    pub all_funcs: *const RUImageAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait ImageTrait<'a> {
     ///
     /// Swaps image *other* with this image. This operation is very
     /// fast and never fails.
-    fn swap(&self, other: &ImageTrait) {
+    pub fn swap<I: ImageTrait<'a>>(&self, other: &I) -> &Self {
         let (obj_other_1, _funcs) = other.get_image_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
+        self
     }
     ///
     /// Returns `true` if it is a null image, otherwise returns `false.`
     ///
     /// A null image has all parameters set to zero and no allocated data.
-    fn is_null(&self) -> bool {
+    pub fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_null)(obj_data);
             ret_val
         }
     }
-    fn dev_type(&self) -> i32 {
+    pub fn dev_type(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dev_type)(obj_data);
             ret_val
         }
     }
-    fn detach(&self) {
+    pub fn detach(&self) -> &Self {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).detach)(obj_data);
         }
+        self
     }
-    fn is_detached(&self) -> bool {
+    pub fn is_detached(&self) -> bool {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_detached)(obj_data);
@@ -447,7 +404,7 @@ pub trait ImageTrait<'a> {
     /// copied.
     ///
     /// **See also:** [`q_image()`]
-    fn copy(&self, rect: &RectTrait) -> Image {
+    pub fn copy<R: RectTrait<'a>>(&self, rect: &R) -> Image {
         let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -485,7 +442,7 @@ pub trait ImageTrait<'a> {
     /// copied.
     ///
     /// **See also:** [`q_image()`]
-    fn copy_2(&self, x: i32, y: i32, w: i32, h: i32) -> Image {
+    pub fn copy_2(&self, x: i32, y: i32, w: i32, h: i32) -> Image {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).copy_2)(obj_data, x, y, w, h);
@@ -503,7 +460,7 @@ pub trait ImageTrait<'a> {
     /// Returns the format of the image.
     ///
     /// **See also:** {QImage#Image Formats}{Image Formats}
-    fn format(&self) -> Format {
+    pub fn format(&self) -> Format {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).format)(obj_data);
@@ -526,7 +483,7 @@ pub trait ImageTrait<'a> {
     /// Conversion from RGB formats to indexed formats is a slow operation
     /// and will use a straightforward nearest color approach, with no
     /// dithering.
-    fn convert_to_format(&self, f: Format, flags: ImageConversionFlags) -> Image {
+    pub fn convert_to_format(&self, f: Format, flags: ImageConversionFlags) -> Image {
         let enum_f_1 = f as i32;
         let enum_flags_2 = flags as i32;
 
@@ -558,7 +515,7 @@ pub trait ImageTrait<'a> {
     /// Conversion from RGB formats to indexed formats is a slow operation
     /// and will use a straightforward nearest color approach, with no
     /// dithering.
-    fn convert_to_format_2(&self, f: Format, flags: ImageConversionFlags) -> Image {
+    pub fn convert_to_format_2(&self, f: Format, flags: ImageConversionFlags) -> Image {
         let enum_f_1 = f as i32;
         let enum_flags_2 = flags as i32;
 
@@ -610,7 +567,7 @@ pub trait ImageTrait<'a> {
     ///
     /// **See also:** [`has_alpha_channel()`]
     /// [`convert_to_format()`]
-    fn reinterpret_as_format(&self, f: Format) -> bool {
+    pub fn reinterpret_as_format(&self, f: Format) -> bool {
         let enum_f_1 = f as i32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -623,7 +580,7 @@ pub trait ImageTrait<'a> {
     /// Returns the width of the image.
     ///
     /// **See also:** {QImage#Image Information}{Image Information}
-    fn width(&self) -> i32 {
+    pub fn width(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).width)(obj_data);
@@ -634,7 +591,7 @@ pub trait ImageTrait<'a> {
     /// Returns the height of the image.
     ///
     /// **See also:** {QImage#Image Information}{Image Information}
-    fn height(&self) -> i32 {
+    pub fn height(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).height)(obj_data);
@@ -653,7 +610,7 @@ pub trait ImageTrait<'a> {
     /// [`bits()`]
     /// {QImage#Image Information}{Image
     /// Information}
-    fn size(&self) -> Size {
+    pub fn size(&self) -> Size {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).size)(obj_data);
@@ -672,7 +629,7 @@ pub trait ImageTrait<'a> {
     /// image.
     ///
     /// **See also:** {QImage#Image Information}{Image Information}
-    fn rect(&self) -> Rect {
+    pub fn rect(&self) -> Rect {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rect)(obj_data);
@@ -699,7 +656,7 @@ pub trait ImageTrait<'a> {
     /// {QImage#Image Formats}{Image Formats}
     /// {QImage#Image Information}{Image Information}
     ///
-    fn depth(&self) -> i32 {
+    pub fn depth(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).depth)(obj_data);
@@ -715,7 +672,7 @@ pub trait ImageTrait<'a> {
     ///
     /// **See also:** [`set_color_count()`]
     /// {QImage#Image Information}{Image Information}
-    fn color_count(&self) -> i32 {
+    pub fn color_count(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).color_count)(obj_data);
@@ -733,7 +690,7 @@ pub trait ImageTrait<'a> {
     /// **See also:** [`depth()`]
     /// [`format()`]
     /// {QImage#Image Formats}{Image Formats}
-    fn bit_plane_count(&self) -> i32 {
+    pub fn bit_plane_count(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bit_plane_count)(obj_data);
@@ -810,11 +767,12 @@ pub trait ImageTrait<'a> {
     /// [`set_color()`]
     /// {QImage#Image
     /// Transformations}{Image Transformations}
-    fn set_color_count(&self, arg0: i32) {
+    pub fn set_color_count(&self, arg0: i32) -> &Self {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_color_count)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Returns `true` if all the colors in the image are shades of gray
@@ -824,7 +782,7 @@ pub trait ImageTrait<'a> {
     /// Note that this function is slow for images without color table.
     ///
     /// **See also:** [`is_grayscale()`]
-    fn all_gray(&self) -> bool {
+    pub fn all_gray(&self) -> bool {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).all_gray)(obj_data);
@@ -840,7 +798,7 @@ pub trait ImageTrait<'a> {
     ///
     /// **See also:** [`all_gray()`]
     /// {QImage#Image Formats}{Image Formats}
-    fn is_grayscale(&self) -> bool {
+    pub fn is_grayscale(&self) -> bool {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_grayscale)(obj_data);
@@ -906,7 +864,7 @@ pub trait ImageTrait<'a> {
     /// [`bits()`]
     /// {QImage#Image Information}{Image
     /// Information}
-    fn byte_count(&self) -> i32 {
+    pub fn byte_count(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).byte_count)(obj_data);
@@ -975,7 +933,7 @@ pub trait ImageTrait<'a> {
     /// This is equivalent to sizeInBytes() / height() if height() is non-zero.
     ///
     /// **See also:** [`scan_line()`]
-    fn bytes_per_line(&self) -> i32 {
+    pub fn bytes_per_line(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bytes_per_line)(obj_data);
@@ -992,7 +950,7 @@ pub trait ImageTrait<'a> {
     /// **Overloads**
     /// Returns `true` if QPoint( *x,* *y)* is a valid coordinate pair
     /// within the image; otherwise returns `false.`
-    fn valid(&self, x: i32, y: i32) -> bool {
+    pub fn valid(&self, x: i32, y: i32) -> bool {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).valid)(obj_data, x, y);
@@ -1009,7 +967,7 @@ pub trait ImageTrait<'a> {
     /// **Overloads**
     /// Returns `true` if QPoint( *x,* *y)* is a valid coordinate pair
     /// within the image; otherwise returns `false.`
-    fn valid_2(&self, pt: &PointTrait) -> bool {
+    pub fn valid_2<P: PointTrait<'a>>(&self, pt: &P) -> bool {
         let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -1030,7 +988,7 @@ pub trait ImageTrait<'a> {
     ///
     /// **Overloads**
     /// Returns the pixel index at ( *x,* *y).*
-    fn pixel_index(&self, x: i32, y: i32) -> i32 {
+    pub fn pixel_index(&self, x: i32, y: i32) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pixel_index)(obj_data, x, y);
@@ -1049,7 +1007,7 @@ pub trait ImageTrait<'a> {
     ///
     /// **Overloads**
     /// Returns the pixel index at ( *x,* *y).*
-    fn pixel_index_2(&self, pt: &PointTrait) -> i32 {
+    pub fn pixel_index_2<P: PointTrait<'a>>(&self, pt: &P) -> i32 {
         let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -1194,11 +1152,12 @@ pub trait ImageTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
-    fn set_pixel(&self, x: i32, y: i32, index_or_rgb: u32) {
+    pub fn set_pixel(&self, x: i32, y: i32, index_or_rgb: u32) -> &Self {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_pixel)(obj_data, x, y, index_or_rgb);
         }
+        self
     }
     ///
     /// Sets the pixel index or color at the given *position* to *index_or_rgb.*
@@ -1236,13 +1195,14 @@ pub trait ImageTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
-    fn set_pixel_2(&self, pt: &PointTrait, index_or_rgb: u32) {
+    pub fn set_pixel_2<P: PointTrait<'a>>(&self, pt: &P, index_or_rgb: u32) -> &Self {
         let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_pixel_2)(obj_data, obj_pt_1, index_or_rgb);
         }
+        self
     }
     ///
     /// Returns the color of the pixel at the given *position* as a QColor.
@@ -1262,7 +1222,7 @@ pub trait ImageTrait<'a> {
     ///
     /// **Overloads**
     /// Returns the color of the pixel at coordinates ( *x,* *y)* as a QColor.
-    fn pixel_color(&self, x: i32, y: i32) -> Color {
+    pub fn pixel_color(&self, x: i32, y: i32) -> Color {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pixel_color)(obj_data, x, y);
@@ -1294,7 +1254,7 @@ pub trait ImageTrait<'a> {
     ///
     /// **Overloads**
     /// Returns the color of the pixel at coordinates ( *x,* *y)* as a QColor.
-    fn pixel_color_2(&self, pt: &PointTrait) -> Color {
+    pub fn pixel_color_2<P: PointTrait<'a>>(&self, pt: &P) -> Color {
         let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -1327,13 +1287,14 @@ pub trait ImageTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
-    fn set_pixel_color(&self, x: i32, y: i32, c: &ColorTrait) {
+    pub fn set_pixel_color<C: ColorTrait<'a>>(&self, x: i32, y: i32, c: &C) -> &Self {
         let (obj_c_3, _funcs) = c.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_pixel_color)(obj_data, x, y, obj_c_3);
         }
+        self
     }
     ///
     /// Sets the color at the given *position* to *color.*
@@ -1352,7 +1313,7 @@ pub trait ImageTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the pixel color at ( *x,* *y)* to *color.*
-    fn set_pixel_color_2(&self, pt: &PointTrait, c: &ColorTrait) {
+    pub fn set_pixel_color_2<C: ColorTrait<'a>, P: PointTrait<'a>>(&self, pt: &P, c: &C) -> &Self {
         let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
         let (obj_c_2, _funcs) = c.get_color_obj_funcs();
 
@@ -1360,6 +1321,7 @@ pub trait ImageTrait<'a> {
         unsafe {
             ((*funcs).set_pixel_color_2)(obj_data, obj_pt_1, obj_c_2);
         }
+        self
     }
     ///
     /// Returns a list of the colors contained in the image's color table,
@@ -1379,7 +1341,7 @@ pub trait ImageTrait<'a> {
     ///
     /// **See also:** [`set_device_pixel_ratio()`]
     /// [`ImageReader`]
-    fn device_pixel_ratio(&self) -> f32 {
+    pub fn device_pixel_ratio(&self) -> f32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).device_pixel_ratio)(obj_data);
@@ -1407,11 +1369,12 @@ pub trait ImageTrait<'a> {
     /// ).
     ///
     /// **See also:** [`device_pixel_ratio()`]
-    fn set_device_pixel_ratio(&self, scale_factor: f32) {
+    pub fn set_device_pixel_ratio(&self, scale_factor: f32) -> &Self {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_device_pixel_ratio)(obj_data, scale_factor);
         }
+        self
     }
     ///
     /// Fills the entire image with the given *pixelValue.*
@@ -1445,11 +1408,12 @@ pub trait ImageTrait<'a> {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     ///
-    fn fill(&self, pixel: u32) {
+    pub fn fill(&self, pixel: u32) -> &Self {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).fill)(obj_data, pixel);
         }
+        self
     }
     ///
     /// Fills the entire image with the given *pixelValue.*
@@ -1483,13 +1447,14 @@ pub trait ImageTrait<'a> {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     ///
-    fn fill_2(&self, color: &ColorTrait) {
+    pub fn fill_2<C: ColorTrait<'a>>(&self, color: &C) -> &Self {
         let (obj_color_1, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).fill_2)(obj_data, obj_color_1);
         }
+        self
     }
     ///
     /// Fills the entire image with the given *pixelValue.*
@@ -1523,20 +1488,21 @@ pub trait ImageTrait<'a> {
     /// index corresponding the *color* in the color table if present; it
     /// will otherwise be filled with 0.
     ///
-    fn fill_3(&self, color: GlobalColor) {
+    pub fn fill_3(&self, color: GlobalColor) -> &Self {
         let enum_color_1 = color as i32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).fill_3)(obj_data, enum_color_1);
         }
+        self
     }
     ///
     /// Returns `true` if the image has a format that respects the alpha
     /// channel, otherwise returns `false.`
     ///
     /// **See also:** {QImage#Image Information}{Image Information}
-    fn has_alpha_channel(&self) -> bool {
+    pub fn has_alpha_channel(&self) -> bool {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).has_alpha_channel)(obj_data);
@@ -1560,13 +1526,14 @@ pub trait ImageTrait<'a> {
     /// **See also:** [`alpha_channel()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}, {QImage#Image Formats}{Image Formats}
-    fn set_alpha_channel(&self, alpha_channel: &ImageTrait) {
+    pub fn set_alpha_channel<I: ImageTrait<'a>>(&self, alpha_channel: &I) -> &Self {
         let (obj_alpha_channel_1, _funcs) = alpha_channel.get_image_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_alpha_channel)(obj_data, obj_alpha_channel_1);
         }
+        self
     }
     ///
     /// Returns the alpha channel of the image as a new grayscale QImage in which
@@ -1592,7 +1559,7 @@ pub trait ImageTrait<'a> {
     /// [`convert_to_format()`]
     /// {QPixmap#Pixmap Information}{Pixmap}
     /// {QImage#Image Transformations}{Image Transformations}
-    fn alpha_channel(&self) -> Image {
+    pub fn alpha_channel(&self) -> Image {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alpha_channel)(obj_data);
@@ -1623,7 +1590,7 @@ pub trait ImageTrait<'a> {
     /// **See also:** [`create_heuristic_mask()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}
-    fn create_alpha_mask(&self, flags: ImageConversionFlags) -> Image {
+    pub fn create_alpha_mask(&self, flags: ImageConversionFlags) -> Image {
         let enum_flags_1 = flags as i32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -1662,7 +1629,7 @@ pub trait ImageTrait<'a> {
     /// **See also:** [`create_alpha_mask()`]
     /// {QImage#Image Transformations}{Image
     /// Transformations}
-    fn create_heuristic_mask(&self, clip_tight: bool) -> Image {
+    pub fn create_heuristic_mask(&self, clip_tight: bool) -> Image {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).create_heuristic_mask)(obj_data, clip_tight);
@@ -1730,7 +1697,7 @@ pub trait ImageTrait<'a> {
     /// If the given *height* is 0 or negative, a null image is returned.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn scaled(
+    pub fn scaled(
         &self,
         w: i32,
         h: i32,
@@ -1799,9 +1766,9 @@ pub trait ImageTrait<'a> {
     /// If the given *height* is 0 or negative, a null image is returned.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn scaled_2(
+    pub fn scaled_2<S: SizeTrait<'a>>(
         &self,
-        s: &SizeTrait,
+        s: &S,
         aspect_mode: AspectRatioMode,
         mode: TransformationMode,
     ) -> Image {
@@ -1832,7 +1799,7 @@ pub trait ImageTrait<'a> {
     /// If the given *width* is 0 or negative, a null image is returned.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn scaled_to_width(&self, w: i32, mode: TransformationMode) -> Image {
+    pub fn scaled_to_width(&self, w: i32, mode: TransformationMode) -> Image {
         let enum_mode_2 = mode as i32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -1858,7 +1825,7 @@ pub trait ImageTrait<'a> {
     /// If the given *height* is 0 or negative, a null image is returned.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn scaled_to_height(&self, h: i32, mode: TransformationMode) -> Image {
+    pub fn scaled_to_height(&self, h: i32, mode: TransformationMode) -> Image {
         let enum_mode_2 = mode as i32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -1881,7 +1848,7 @@ pub trait ImageTrait<'a> {
     /// Note that the original image is not changed.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn mirrored(&self, horizontally: bool, vertically: bool) -> Image {
+    pub fn mirrored(&self, horizontally: bool, vertically: bool) -> Image {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).mirrored)(obj_data, horizontally, vertically);
@@ -1902,7 +1869,7 @@ pub trait ImageTrait<'a> {
     /// Note that the original image is not changed.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn mirrored_2(&self, horizontally: bool, vertically: bool) -> Option<Image> {
+    pub fn mirrored_2(&self, horizontally: bool, vertically: bool) -> Option<Image> {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).mirrored_2)(obj_data, horizontally, vertically);
@@ -1927,7 +1894,7 @@ pub trait ImageTrait<'a> {
     /// The original QImage is not changed.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn rgb_swapped(&self) -> Image {
+    pub fn rgb_swapped(&self) -> Image {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rgb_swapped)(obj_data);
@@ -1949,7 +1916,7 @@ pub trait ImageTrait<'a> {
     /// The original QImage is not changed.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn rgb_swapped_2(&self) -> Option<Image> {
+    pub fn rgb_swapped_2(&self) -> Option<Image> {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rgb_swapped_2)(obj_data);
@@ -1983,13 +1950,14 @@ pub trait ImageTrait<'a> {
     /// converted to ARGB32 to be inverted and then converted back.
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
-    fn invert_pixels(&self, arg0: InvertMode) {
+    pub fn invert_pixels(&self, arg0: InvertMode) -> &Self {
         let enum_arg0_1 = arg0 as i32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).invert_pixels)(obj_data, enum_arg0_1);
         }
+        self
     }
     ///
     /// Loads an image from the file with the given *fileName.* Returns `true` if
@@ -2167,14 +2135,14 @@ pub trait ImageTrait<'a> {
     /// refer to the same contents.
     ///
     /// The key will change when the image is altered.
-    fn cache_key(&self) -> i64 {
+    pub fn cache_key(&self) -> i64 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).cache_key)(obj_data);
             ret_val
         }
     }
-    fn paint_engine(&self) -> Option<PaintEngine> {
+    pub fn paint_engine(&self) -> Option<PaintEngine> {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).paint_engine)(obj_data);
@@ -2199,7 +2167,7 @@ pub trait ImageTrait<'a> {
     /// **See also:** [`set_dots_per_meter_x()`]
     /// {QImage#Image Information}{Image
     /// Information}
-    fn dots_per_meter_x(&self) -> i32 {
+    pub fn dots_per_meter_x(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dots_per_meter_x)(obj_data);
@@ -2214,7 +2182,7 @@ pub trait ImageTrait<'a> {
     /// **See also:** [`set_dots_per_meter_y()`]
     /// {QImage#Image Information}{Image
     /// Information}
-    fn dots_per_meter_y(&self) -> i32 {
+    pub fn dots_per_meter_y(&self) -> i32 {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dots_per_meter_y)(obj_data);
@@ -2233,11 +2201,12 @@ pub trait ImageTrait<'a> {
     ///
     /// **See also:** [`dots_per_meter_x()`]
     /// {QImage#Image Information}{Image Information}
-    fn set_dots_per_meter_x(&self, arg0: i32) {
+    pub fn set_dots_per_meter_x(&self, arg0: i32) -> &Self {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_dots_per_meter_x)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Sets the number of pixels that fit vertically in a physical meter,
@@ -2251,11 +2220,12 @@ pub trait ImageTrait<'a> {
     ///
     /// **See also:** [`dots_per_meter_y()`]
     /// {QImage#Image Information}{Image Information}
-    fn set_dots_per_meter_y(&self, arg0: i32) {
+    pub fn set_dots_per_meter_y(&self, arg0: i32) -> &Self {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_dots_per_meter_y)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Returns the number of pixels by which the image is intended to be
@@ -2263,7 +2233,7 @@ pub trait ImageTrait<'a> {
     ///
     /// **See also:** [`set_offset()`]
     /// {QImage#Image Information}{Image Information}
-    fn offset(&self) -> Point {
+    pub fn offset(&self) -> Point {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).offset)(obj_data);
@@ -2283,13 +2253,14 @@ pub trait ImageTrait<'a> {
     ///
     /// **See also:** [`offset()`]
     /// {QImage#Image Information}{Image Information}
-    fn set_offset(&self, arg0: &PointTrait) {
+    pub fn set_offset<P: PointTrait<'a>>(&self, arg0: &P) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             ((*funcs).set_offset)(obj_data, obj_arg0_1);
         }
+        self
     }
     ///
     /// Returns the text keys for this image.
@@ -2343,7 +2314,7 @@ pub trait ImageTrait<'a> {
     /// is always set using QString and UTF-8 representation.
     ///
     /// **See also:** [`text_keys()`]
-    fn text(&self, key: &str) -> String {
+    pub fn text(&self, key: &str) -> String {
         let str_in_key_1 = CString::new(key).unwrap();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
@@ -2383,7 +2354,7 @@ pub trait ImageTrait<'a> {
     /// The language the text is recorded in is no longer relevant since
     /// the text is always set using QString and UTF-8 representation.
     ///
-    fn set_text(&self, key: &str, value: &str) {
+    pub fn set_text(&self, key: &str, value: &str) -> &Self {
         let str_in_key_1 = CString::new(key).unwrap();
         let str_in_value_2 = CString::new(value).unwrap();
 
@@ -2391,10 +2362,11 @@ pub trait ImageTrait<'a> {
         unsafe {
             ((*funcs).set_text)(obj_data, str_in_key_1.as_ptr(), str_in_value_2.as_ptr());
         }
+        self
     }
     ///
     /// Returns the QImage::Format as a QPixelFormat
-    fn pixel_format(&self) -> PixelFormat {
+    pub fn pixel_format(&self) -> PixelFormat {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pixel_format)(obj_data);
@@ -2408,30 +2380,9 @@ pub trait ImageTrait<'a> {
             ret_val
         }
     }
-
-    #[inline]
-    fn get_image_obj_funcs(&self) -> (*const RUBase, *const RUImageFuncs);
-}
-
-impl<'a> PaintDeviceTrait<'a> for Image<'a> {
-    #[inline]
-    fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).paint_device_funcs) }
-    }
-}
-
-impl<'a> ImageTrait<'a> for Image<'a> {
-    #[inline]
-    fn get_image_obj_funcs(&self) -> (*const RUBase, *const RUImageFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).image_funcs) }
-    }
-}
-pub trait ImageStaticTrait {
     ///
     /// Converts *format* into a QPixelFormat
-    fn to_pixel_format<'a>(format: Format) -> PixelFormat<'a> {
+    pub fn to_pixel_format(format: Format) -> PixelFormat<'a> {
         let enum_format_1 = format as i32;
 
         let (obj_data, funcs) = unsafe {
@@ -2452,11 +2403,76 @@ pub trait ImageStaticTrait {
             ret_val
         }
     }
+    #[doc(hidden)]
+    pub fn painting_active(&self) -> bool {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).painting_active)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn logical_dpi_x(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).logical_dpi_x)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn logical_dpi_y(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).logical_dpi_y)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn physical_dpi_x(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).physical_dpi_x)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn physical_dpi_y(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).physical_dpi_y)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn device_pixel_ratio_f(&self) -> f32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).device_pixel_ratio_f)(obj_data);
+            ret_val
+        }
+    }
+}
+pub trait ImageTrait<'a> {
+    #[inline]
+    #[doc(hidden)]
+    fn get_image_obj_funcs(&self) -> (*const RUBase, *const RUImageFuncs);
 }
 
-impl<'a> ImageStaticTrait for Image<'a> {}
+impl<'a> PaintDeviceTrait<'a> for Image<'a> {
+    #[doc(hidden)]
+    fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).paint_device_funcs) }
+    }
+}
 
-impl<'a> ImageStaticTrait for ImageStatic<'a> {}
+impl<'a> ImageTrait<'a> for Image<'a> {
+    #[doc(hidden)]
+    fn get_image_obj_funcs(&self) -> (*const RUBase, *const RUImageFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).image_funcs) }
+    }
+}
 #[repr(u32)]
 pub enum InvertMode {
     InvertRgb,

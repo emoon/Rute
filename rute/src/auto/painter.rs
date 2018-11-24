@@ -17,135 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::brush::Brush;
-#[allow(unused_imports)]
-use auto::brush::BrushTrait;
-#[allow(unused_imports)]
-use auto::brush_ffi::*;
-#[allow(unused_imports)]
-use auto::color::Color;
-#[allow(unused_imports)]
-use auto::color::ColorTrait;
-#[allow(unused_imports)]
-use auto::color_ffi::*;
-#[allow(unused_imports)]
-use auto::font::Font;
-#[allow(unused_imports)]
-use auto::font::FontTrait;
-#[allow(unused_imports)]
-use auto::font_ffi::*;
-#[allow(unused_imports)]
-use auto::image::Image;
-#[allow(unused_imports)]
-use auto::image::ImageTrait;
-#[allow(unused_imports)]
-use auto::image_ffi::*;
-#[allow(unused_imports)]
-use auto::line::Line;
-#[allow(unused_imports)]
-use auto::line::LineTrait;
-#[allow(unused_imports)]
-use auto::line_f::LineF;
-#[allow(unused_imports)]
-use auto::line_f::LineFTrait;
-#[allow(unused_imports)]
-use auto::line_f_ffi::*;
-#[allow(unused_imports)]
-use auto::line_ffi::*;
-#[allow(unused_imports)]
-use auto::paint_device::PaintDevice;
-#[allow(unused_imports)]
-use auto::paint_device::PaintDeviceTrait;
-#[allow(unused_imports)]
-use auto::paint_device_ffi::*;
-#[allow(unused_imports)]
-use auto::paint_engine::PaintEngine;
-#[allow(unused_imports)]
-use auto::painter_ffi::*;
-#[allow(unused_imports)]
-use auto::pen::Pen;
-#[allow(unused_imports)]
-use auto::pen::PenTrait;
-#[allow(unused_imports)]
-use auto::pen_ffi::*;
-#[allow(unused_imports)]
-use auto::pixmap::Pixmap;
-#[allow(unused_imports)]
-use auto::pixmap::PixmapTrait;
-#[allow(unused_imports)]
-use auto::pixmap_ffi::*;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point::PointTrait;
-#[allow(unused_imports)]
-use auto::point_f::PointF;
-#[allow(unused_imports)]
-use auto::point_f::PointFTrait;
-#[allow(unused_imports)]
-use auto::point_f_ffi::*;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::polygon::Polygon;
-#[allow(unused_imports)]
-use auto::polygon::PolygonTrait;
-#[allow(unused_imports)]
-use auto::polygon_f::PolygonF;
-#[allow(unused_imports)]
-use auto::polygon_f::PolygonFTrait;
-#[allow(unused_imports)]
-use auto::polygon_f_ffi::*;
-#[allow(unused_imports)]
-use auto::polygon_ffi::*;
-#[allow(unused_imports)]
-use auto::rect::Rect;
-#[allow(unused_imports)]
-use auto::rect::RectTrait;
-#[allow(unused_imports)]
-use auto::rect_f::RectF;
-#[allow(unused_imports)]
-use auto::rect_f::RectFTrait;
-#[allow(unused_imports)]
-use auto::rect_f_ffi::*;
-#[allow(unused_imports)]
-use auto::rect_ffi::*;
-#[allow(unused_imports)]
-use auto::region::Region;
-#[allow(unused_imports)]
-use auto::region::RegionTrait;
-#[allow(unused_imports)]
-use auto::region_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::BGMode;
-#[allow(unused_imports)]
-use auto::rute_enums::BrushStyle;
-#[allow(unused_imports)]
-use auto::rute_enums::ClipOperation;
-#[allow(unused_imports)]
-use auto::rute_enums::FillRule;
-#[allow(unused_imports)]
-use auto::rute_enums::GlobalColor;
-#[allow(unused_imports)]
-use auto::rute_enums::ImageConversionFlags;
-#[allow(unused_imports)]
-use auto::rute_enums::LayoutDirection;
-#[allow(unused_imports)]
-use auto::rute_enums::PenStyle;
-#[allow(unused_imports)]
-use auto::rute_enums::SizeMode;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::transform::Transform;
-#[allow(unused_imports)]
-use auto::transform::TransformTrait;
-#[allow(unused_imports)]
-use auto::transform_ffi::*;
 ///
 /// QPainter provides highly optimized functions to do most of the
 /// drawing GUI programs require. It can draw everything from simple
@@ -522,9 +395,13 @@ use auto::transform_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Painter<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUPainterAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -549,7 +426,8 @@ impl<'a> Painter<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUPainter) -> Painter<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUPainter) -> Painter<'a> {
         Painter {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -558,7 +436,8 @@ impl<'a> Painter<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUPainter) -> Painter<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUPainter) -> Painter<'a> {
         Painter {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -567,7 +446,8 @@ impl<'a> Painter<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUPainter) -> Painter<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUPainter) -> Painter<'a> {
         Painter {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -575,19 +455,12 @@ impl<'a> Painter<'a> {
             _marker: PhantomData,
         }
     }
-}
-
-pub struct PainterStatic<'a> {
-    pub all_funcs: *const RUPainterAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait PainterTrait<'a> {
     ///
     /// Returns the paint device on which this painter is currently
     /// painting, or 0 if the painter is not active.
     ///
     /// **See also:** [`is_active()`]
-    fn device(&self) -> Option<PaintDevice> {
+    pub fn device(&self) -> Option<PaintDevice> {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).device)(obj_data);
@@ -648,7 +521,7 @@ pub trait PainterTrait<'a> {
     /// intermixing of painter commands and raw OpenGL commands:
     ///
     /// **See also:** [`end_native_painting()`]
-    fn begin(&self, arg0: &PaintDeviceTrait) -> bool {
+    pub fn begin<P: PaintDeviceTrait<'a>>(&self, arg0: &P) -> bool {
         let (obj_arg0_1, _funcs) = arg0.get_paint_device_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
@@ -672,7 +545,7 @@ pub trait PainterTrait<'a> {
     /// other painter commands.
     ///
     /// **See also:** [`begin_native_painting()`]
-    fn end(&self) -> bool {
+    pub fn end(&self) -> bool {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).end)(obj_data);
@@ -685,7 +558,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`begin()`]
     /// [`PaintDevice::painting_active`]
-    fn is_active(&self) -> bool {
+    pub fn is_active(&self) -> bool {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_active)(obj_data);
@@ -698,13 +571,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`begin()`]
     /// {QPainter#Settings}{Settings}
-    fn init_from(&self, device: &PaintDeviceTrait) {
+    pub fn init_from<P: PaintDeviceTrait<'a>>(&self, device: &P) -> &Self {
         let (obj_device_1, _funcs) = device.get_paint_device_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).init_from)(obj_data, obj_device_1);
         }
+        self
     }
     ///
     /// Sets the composition mode to the given *mode.*
@@ -714,20 +588,21 @@ pub trait PainterTrait<'a> {
     /// described in compositionMode().
     ///
     /// **See also:** [`composition_mode()`]
-    fn set_composition_mode(&self, mode: CompositionMode) {
+    pub fn set_composition_mode(&self, mode: CompositionMode) -> &Self {
         let enum_mode_1 = mode as i32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_composition_mode)(obj_data, enum_mode_1);
         }
+        self
     }
     ///
     /// Returns the current composition mode.
     ///
     /// **See also:** CompositionMode
     /// [`set_composition_mode()`]
-    fn composition_mode(&self) -> CompositionMode {
+    pub fn composition_mode(&self) -> CompositionMode {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).composition_mode)(obj_data);
@@ -755,7 +630,7 @@ pub trait PainterTrait<'a> {
     /// **See also:** [`set_font()`]
     /// [`draw_text()`]
     /// {QPainter#Settings}{Settings}
-    fn font(&self) -> Option<Font> {
+    pub fn font(&self) -> Option<Font> {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).font)(obj_data);
@@ -785,13 +660,14 @@ pub trait PainterTrait<'a> {
     /// **See also:** [`font()`]
     /// [`draw_text()`]
     /// {QPainter#Settings}{Settings}
-    fn set_font(&self, f: &FontTrait) {
+    pub fn set_font<F: FontTrait<'a>>(&self, f: &F) -> &Self {
         let (obj_f_1, _funcs) = f.get_font_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_font)(obj_data, obj_f_1);
         }
+        self
     }
     ///
     /// Returns the font info for the painter if the painter is
@@ -816,13 +692,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Sets the painter's pen to have the given *style,* width 1 and
     /// black color.
-    fn set_pen(&self, color: &ColorTrait) {
+    pub fn set_pen<C: ColorTrait<'a>>(&self, color: &C) -> &Self {
         let (obj_color_1, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_pen)(obj_data, obj_color_1);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -840,13 +717,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Sets the painter's pen to have the given *style,* width 1 and
     /// black color.
-    fn set_pen_2(&self, pen: &PenTrait) {
+    pub fn set_pen_2<P: PenTrait<'a>>(&self, pen: &P) -> &Self {
         let (obj_pen_1, _funcs) = pen.get_pen_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_pen_2)(obj_data, obj_pen_1);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -864,20 +742,21 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Sets the painter's pen to have the given *style,* width 1 and
     /// black color.
-    fn set_pen_3(&self, style: PenStyle) {
+    pub fn set_pen_3(&self, style: PenStyle) -> &Self {
         let enum_style_1 = style as i32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_pen_3)(obj_data, enum_style_1);
         }
+        self
     }
     ///
     /// Returns the painter's current pen.
     ///
     /// **See also:** [`set_pen()`]
     /// {QPainter#Settings}{Settings}
-    fn pen(&self) -> Option<Pen> {
+    pub fn pen(&self) -> Option<Pen> {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pen)(obj_data);
@@ -925,13 +804,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the painter's brush to black color and the specified *style.*
-    fn set_brush(&self, brush: &BrushTrait) {
+    pub fn set_brush<B: BrushTrait<'a>>(&self, brush: &B) -> &Self {
         let (obj_brush_1, _funcs) = brush.get_brush_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_brush)(obj_data, obj_brush_1);
         }
+        self
     }
     ///
     /// Sets the brush origin to *position.*
@@ -964,13 +844,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the painter's brush to black color and the specified *style.*
-    fn set_brush_2(&self, style: BrushStyle) {
+    pub fn set_brush_2(&self, style: BrushStyle) -> &Self {
         let enum_style_1 = style as i32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_brush_2)(obj_data, enum_style_1);
         }
+        self
     }
     ///
     /// Returns the currently set brush origin.
@@ -982,7 +863,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`Painter::set_brush`]
     /// {QPainter#Settings}{Settings}
-    fn brush(&self) -> Option<Brush> {
+    pub fn brush(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).brush)(obj_data);
@@ -1012,20 +893,21 @@ pub trait PainterTrait<'a> {
     /// **See also:** [`background_mode()`]
     /// [`set_background()`]
     /// {QPainter#Settings}{Settings}
-    fn set_background_mode(&self, mode: BGMode) {
+    pub fn set_background_mode(&self, mode: BGMode) -> &Self {
         let enum_mode_1 = mode as i32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_background_mode)(obj_data, enum_mode_1);
         }
+        self
     }
     ///
     /// Returns the current background mode.
     ///
     /// **See also:** [`set_background_mode()`]
     /// {QPainter#Settings}{Settings}
-    fn background_mode(&self) -> BGMode {
+    pub fn background_mode(&self) -> BGMode {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).background_mode)(obj_data);
@@ -1038,7 +920,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`set_brush_origin()`]
     /// {QPainter#Settings}{Settings}
-    fn brush_origin(&self) -> Point {
+    pub fn brush_origin(&self) -> Point {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).brush_origin)(obj_data);
@@ -1073,11 +955,12 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the brush's origin to point ( *x,* *y).*
-    fn set_brush_origin(&self, x: i32, y: i32) {
+    pub fn set_brush_origin(&self, x: i32, y: i32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_brush_origin)(obj_data, x, y);
         }
+        self
     }
     ///
     /// Sets the brush origin to *position.*
@@ -1100,13 +983,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the brush's origin to point ( *x,* *y).*
-    fn set_brush_origin_2(&self, arg0: &PointTrait) {
+    pub fn set_brush_origin_2<P: PointTrait<'a>>(&self, arg0: &P) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_brush_origin_2)(obj_data, obj_arg0_1);
         }
+        self
     }
     ///
     /// Sets the brush origin to *position.*
@@ -1129,13 +1013,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the brush's origin to point ( *x,* *y).*
-    fn set_brush_origin_3(&self, arg0: &PointFTrait) {
+    pub fn set_brush_origin_3<P: PointFTrait<'a>>(&self, arg0: &P) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_brush_origin_3)(obj_data, obj_arg0_1);
         }
+        self
     }
     ///
     /// Sets the background mode of the painter to the given *mode*
@@ -1160,13 +1045,14 @@ pub trait PainterTrait<'a> {
     /// **See also:** [`background()`]
     /// [`set_background_mode()`]
     /// {QPainter#Settings}{Settings}
-    fn set_background(&self, bg: &BrushTrait) {
+    pub fn set_background<B: BrushTrait<'a>>(&self, bg: &B) -> &Self {
         let (obj_bg_1, _funcs) = bg.get_brush_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_background)(obj_data, obj_bg_1);
         }
+        self
     }
     ///
     /// Returns the current background brush.
@@ -1178,7 +1064,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`set_background_mode()`]
     /// {QPainter#Settings}{Settings}
-    fn background(&self) -> Option<Brush> {
+    pub fn background(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).background)(obj_data);
@@ -1198,7 +1084,7 @@ pub trait PainterTrait<'a> {
     ///
     /// Returns the opacity of the painter. The default value is
     /// 1.
-    fn opacity(&self) -> f32 {
+    pub fn opacity(&self) -> f32 {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).opacity)(obj_data);
@@ -1212,11 +1098,12 @@ pub trait PainterTrait<'a> {
     ///
     /// Opacity set on the painter will apply to all drawing operations
     /// individually.
-    fn set_opacity(&self, opacity: f32) {
+    pub fn set_opacity(&self, opacity: f32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_opacity)(obj_data, opacity);
         }
+        self
     }
     ///
     /// Returns the currently set clip region. Note that the clip region
@@ -1230,7 +1117,7 @@ pub trait PainterTrait<'a> {
     /// **See also:** [`set_clip_region()`]
     /// [`clip_path()`]
     /// [`set_clipping()`]
-    fn clip_region(&self) -> Region {
+    pub fn clip_region(&self) -> Region {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).clip_region)(obj_data);
@@ -1261,7 +1148,7 @@ pub trait PainterTrait<'a> {
     ///
     /// Enables clipping, and sets the clip region to the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    fn set_clip_rect(&self, arg0: &RectFTrait, op: ClipOperation) {
+    pub fn set_clip_rect<R: RectFTrait<'a>>(&self, arg0: &R, op: ClipOperation) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_f_obj_funcs();
         let enum_op_2 = op as i32;
 
@@ -1269,6 +1156,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).set_clip_rect)(obj_data, obj_arg0_1, enum_op_2);
         }
+        self
     }
     ///
     /// Enables clipping, and sets the clip region to the given *rectangle* using the given clip *operation.* The default operation
@@ -1287,7 +1175,7 @@ pub trait PainterTrait<'a> {
     ///
     /// Enables clipping, and sets the clip region to the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    fn set_clip_rect_2(&self, arg0: &RectTrait, op: ClipOperation) {
+    pub fn set_clip_rect_2<R: RectTrait<'a>>(&self, arg0: &R, op: ClipOperation) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
         let enum_op_2 = op as i32;
 
@@ -1295,6 +1183,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).set_clip_rect_2)(obj_data, obj_arg0_1, enum_op_2);
         }
+        self
     }
     ///
     /// Enables clipping, and sets the clip region to the given *rectangle* using the given clip *operation.* The default operation
@@ -1313,13 +1202,14 @@ pub trait PainterTrait<'a> {
     ///
     /// Enables clipping, and sets the clip region to the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    fn set_clip_rect_3(&self, x: i32, y: i32, w: i32, h: i32, op: ClipOperation) {
+    pub fn set_clip_rect_3(&self, x: i32, y: i32, w: i32, h: i32, op: ClipOperation) -> &Self {
         let enum_op_5 = op as i32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_clip_rect_3)(obj_data, x, y, w, h, enum_op_5);
         }
+        self
     }
     ///
     /// Sets the clip region to the given *region* using the specified clip
@@ -1331,7 +1221,7 @@ pub trait PainterTrait<'a> {
     /// **See also:** [`clip_region()`]
     /// [`set_clip_rect()`]
     /// {QPainter#Clipping}{Clipping}
-    fn set_clip_region(&self, arg0: &RegionTrait, op: ClipOperation) {
+    pub fn set_clip_region<R: RegionTrait<'a>>(&self, arg0: &R, op: ClipOperation) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_region_obj_funcs();
         let enum_op_2 = op as i32;
 
@@ -1339,24 +1229,26 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).set_clip_region)(obj_data, obj_arg0_1, enum_op_2);
         }
+        self
     }
     ///
     /// Enables clipping if *enable* is true, or disables clipping if *enable* is false.
     ///
     /// **See also:** [`has_clipping()`]
     /// {QPainter#Clipping}{Clipping}
-    fn set_clipping(&self, enable: bool) {
+    pub fn set_clipping(&self, enable: bool) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_clipping)(obj_data, enable);
         }
+        self
     }
     ///
     /// Returns `true` if clipping has been set; otherwise returns `false.`
     ///
     /// **See also:** [`set_clipping()`]
     /// {QPainter#Clipping}{Clipping}
-    fn has_clipping(&self) -> bool {
+    pub fn has_clipping(&self) -> bool {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).has_clipping)(obj_data);
@@ -1374,7 +1266,7 @@ pub trait PainterTrait<'a> {
     /// [`set_clip_path()`]
     /// [`set_clip_region()`]
     ///
-    fn clip_bounding_rect(&self) -> RectF {
+    pub fn clip_bounding_rect(&self) -> RectF {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).clip_bounding_rect)(obj_data);
@@ -1394,11 +1286,12 @@ pub trait PainterTrait<'a> {
     /// function unwinds the stack.
     ///
     /// **See also:** [`restore()`]
-    fn save(&self) {
+    pub fn save(&self) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).save)(obj_data);
         }
+        self
     }
     ///
     /// Restores the current painter state (pops a saved state off the
@@ -1417,11 +1310,12 @@ pub trait PainterTrait<'a> {
     /// QWidget::render is strongly encouraged.
     ///
     /// **See also:** [`redirected()`]
-    fn restore(&self) {
+    pub fn restore(&self) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).restore)(obj_data);
         }
+        self
     }
     ///
     /// Sets the world transformation matrix.
@@ -1430,15 +1324,16 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`transform()`]
     /// [`set_world_transform()`]
-    fn set_transform(&self, transform: &TransformTrait, combine: bool) {
+    pub fn set_transform<T: TransformTrait<'a>>(&self, transform: &T, combine: bool) -> &Self {
         let (obj_transform_1, _funcs) = transform.get_transform_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_transform)(obj_data, obj_transform_1, combine);
         }
+        self
     }
-    fn device_transform(&self) -> Option<Transform> {
+    pub fn device_transform(&self) -> Option<Transform> {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).device_transform)(obj_data);
@@ -1487,11 +1382,12 @@ pub trait PainterTrait<'a> {
     /// and setWindow().
     ///
     /// **See also:** {Coordinate Transformations}
-    fn reset_transform(&self) {
+    pub fn reset_transform(&self) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).reset_transform)(obj_data);
         }
+        self
     }
     ///
     /// Sets the world transformation matrix.
@@ -1500,17 +1396,18 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`transform()`]
     /// [`set_transform()`]
-    fn set_world_transform(&self, matrix: &TransformTrait, combine: bool) {
+    pub fn set_world_transform<T: TransformTrait<'a>>(&self, matrix: &T, combine: bool) -> &Self {
         let (obj_matrix_1, _funcs) = matrix.get_transform_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_world_transform)(obj_data, obj_matrix_1, combine);
         }
+        self
     }
     ///
     /// Returns the world transformation matrix.
-    fn world_transform(&self) -> Option<Transform> {
+    pub fn world_transform(&self) -> Option<Transform> {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).world_transform)(obj_data);
@@ -1534,7 +1431,7 @@ pub trait PainterTrait<'a> {
     /// **See also:** [`set_world_transform()`]
     /// [`set_window()`]
     /// [`set_viewport()`]
-    fn combined_transform(&self) -> Transform {
+    pub fn combined_transform(&self) -> Transform {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).combined_transform)(obj_data);
@@ -1553,40 +1450,43 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`set_world_transform()`]
     /// {QPainter#Coordinate Transformations}{Coordinate Transformations}
-    fn scale(&self, sx: f32, sy: f32) {
+    pub fn scale(&self, sx: f32, sy: f32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).scale)(obj_data, sx, sy);
         }
+        self
     }
     ///
     /// Shears the coordinate system by ( *sh* , *sv* ).
     ///
     /// **See also:** [`set_world_transform()`]
     /// {QPainter#Coordinate Transformations}{Coordinate Transformations}
-    fn shear(&self, sh: f32, sv: f32) {
+    pub fn shear(&self, sh: f32, sv: f32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).shear)(obj_data, sh, sv);
         }
+        self
     }
     ///
     /// Rotates the coordinate system clockwise. The given *angle* parameter is in degrees.
     ///
     /// **See also:** [`set_world_transform()`]
     /// {QPainter#Coordinate Transformations}{Coordinate Transformations}
-    fn rotate(&self, a: f32) {
+    pub fn rotate(&self, a: f32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).rotate)(obj_data, a);
         }
+        self
     }
     ///
     /// Returns the window rectangle.
     ///
     /// **See also:** [`set_window()`]
     /// [`set_view_transform_enabled()`]
-    fn window(&self) -> Rect {
+    pub fn window(&self) -> Rect {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).window)(obj_data);
@@ -1618,13 +1518,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the painter's window to the rectangle beginning at ( *x,* *y)* and the given *width* and *height.*
-    fn set_window(&self, window: &RectTrait) {
+    pub fn set_window<R: RectTrait<'a>>(&self, window: &R) -> &Self {
         let (obj_window_1, _funcs) = window.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_window)(obj_data, obj_window_1);
         }
+        self
     }
     ///
     /// Sets the painter's window to the given *rectangle,* and enables
@@ -1644,18 +1545,19 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the painter's window to the rectangle beginning at ( *x,* *y)* and the given *width* and *height.*
-    fn set_window_2(&self, x: i32, y: i32, w: i32, h: i32) {
+    pub fn set_window_2(&self, x: i32, y: i32, w: i32, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_window_2)(obj_data, x, y, w, h);
         }
+        self
     }
     ///
     /// Returns the viewport rectangle.
     ///
     /// **See also:** [`set_viewport()`]
     /// [`set_view_transform_enabled()`]
-    fn viewport(&self) -> Rect {
+    pub fn viewport(&self) -> Rect {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).viewport)(obj_data);
@@ -1688,13 +1590,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Sets the painter's viewport rectangle to be the rectangle
     /// beginning at ( *x,* *y)* with the given *width* and *height.*
-    fn set_viewport(&self, viewport: &RectTrait) {
+    pub fn set_viewport<R: RectTrait<'a>>(&self, viewport: &R) -> &Self {
         let (obj_viewport_1, _funcs) = viewport.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_viewport)(obj_data, obj_viewport_1);
         }
+        self
     }
     ///
     /// Sets the painter's viewport rectangle to the given *rectangle,*
@@ -1715,11 +1618,12 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Sets the painter's viewport rectangle to be the rectangle
     /// beginning at ( *x,* *y)* with the given *width* and *height.*
-    fn set_viewport_2(&self, x: i32, y: i32, w: i32, h: i32) {
+    pub fn set_viewport_2(&self, x: i32, y: i32, w: i32, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_viewport_2)(obj_data, x, y, w, h);
         }
+        self
     }
     ///
     /// Enables view transformations if *enable* is true, or disables
@@ -1728,11 +1632,12 @@ pub trait PainterTrait<'a> {
     /// **See also:** [`view_transform_enabled()`]
     /// {Coordinate System#Window-Viewport
     /// Conversion}{Window-Viewport Conversion}
-    fn set_view_transform_enabled(&self, enable: bool) {
+    pub fn set_view_transform_enabled(&self, enable: bool) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_view_transform_enabled)(obj_data, enable);
         }
+        self
     }
     ///
     /// Returns `true` if view transformation is enabled; otherwise returns
@@ -1740,7 +1645,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`set_view_transform_enabled()`]
     /// [`world_transform()`]
-    fn view_transform_enabled(&self) -> bool {
+    pub fn view_transform_enabled(&self) -> bool {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).view_transform_enabled)(obj_data);
@@ -1774,13 +1679,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    fn draw_point(&self, pt: &PointFTrait) {
+    pub fn draw_point<P: PointFTrait<'a>>(&self, pt: &P) -> &Self {
         let (obj_pt_1, _funcs) = pt.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_point)(obj_data, obj_pt_1);
         }
+        self
     }
     ///
     /// Draws a single point at the given *position* using the current
@@ -1809,13 +1715,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    fn draw_point_2(&self, p: &PointTrait) {
+    pub fn draw_point_2<P: PointTrait<'a>>(&self, p: &P) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_point_2)(obj_data, obj_p_1);
         }
+        self
     }
     ///
     /// Draws a single point at the given *position* using the current
@@ -1844,11 +1751,12 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    fn draw_point_3(&self, x: i32, y: i32) {
+    pub fn draw_point_3(&self, x: i32, y: i32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_point_3)(obj_data, x, y);
         }
+        self
     }
     ///
     /// Draws the first *pointCount* points in the array *points* using
@@ -1865,13 +1773,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    fn draw_points(&self, points: &PointFTrait, point_count: i32) {
+    pub fn draw_points<P: PointFTrait<'a>>(&self, points: &P, point_count: i32) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_points)(obj_data, obj_points_1, point_count);
         }
+        self
     }
     ///
     /// Draws the first *pointCount* points in the array *points* using
@@ -1888,13 +1797,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    fn draw_points_2(&self, points: &PolygonFTrait) {
+    pub fn draw_points_2<P: PolygonFTrait<'a>>(&self, points: &P) -> &Self {
         let (obj_points_1, _funcs) = points.get_polygon_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_points_2)(obj_data, obj_points_1);
         }
+        self
     }
     ///
     /// Draws the first *pointCount* points in the array *points* using
@@ -1911,13 +1821,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    fn draw_points_3(&self, points: &PointTrait, point_count: i32) {
+    pub fn draw_points_3<P: PointTrait<'a>>(&self, points: &P, point_count: i32) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_points_3)(obj_data, obj_points_1, point_count);
         }
+        self
     }
     ///
     /// Draws the first *pointCount* points in the array *points* using
@@ -1934,13 +1845,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    fn draw_points_4(&self, points: &PolygonTrait) {
+    pub fn draw_points_4<P: PolygonTrait<'a>>(&self, points: &P) -> &Self {
         let (obj_points_1, _funcs) = points.get_polygon_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_points_4)(obj_data, obj_points_1);
         }
+        self
     }
     ///
     /// Draws a line defined by *line.*
@@ -2000,13 +1912,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    fn draw_line(&self, line: &LineFTrait) {
+    pub fn draw_line<L: LineFTrait<'a>>(&self, line: &L) -> &Self {
         let (obj_line_1, _funcs) = line.get_line_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_line)(obj_data, obj_line_1);
         }
+        self
     }
     ///
     /// Draws a line defined by *line.*
@@ -2066,13 +1979,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    fn draw_line_2(&self, line: &LineTrait) {
+    pub fn draw_line_2<L: LineTrait<'a>>(&self, line: &L) -> &Self {
         let (obj_line_1, _funcs) = line.get_line_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_line_2)(obj_data, obj_line_1);
         }
+        self
     }
     ///
     /// Draws a line defined by *line.*
@@ -2132,11 +2046,12 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    fn draw_line_3(&self, x1: i32, y1: i32, x2: i32, y2: i32) {
+    pub fn draw_line_3(&self, x1: i32, y1: i32, x2: i32, y2: i32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_line_3)(obj_data, x1, y1, x2, y2);
         }
+        self
     }
     ///
     /// Draws a line defined by *line.*
@@ -2196,7 +2111,7 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    fn draw_line_4(&self, p1: &PointTrait, p2: &PointTrait) {
+    pub fn draw_line_4<P: PointTrait<'a>>(&self, p1: &P, p2: &P) -> &Self {
         let (obj_p1_1, _funcs) = p1.get_point_obj_funcs();
         let (obj_p2_2, _funcs) = p2.get_point_obj_funcs();
 
@@ -2204,6 +2119,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_line_4)(obj_data, obj_p1_1, obj_p2_2);
         }
+        self
     }
     ///
     /// Draws a line defined by *line.*
@@ -2263,7 +2179,7 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    fn draw_line_5(&self, p1: &PointFTrait, p2: &PointFTrait) {
+    pub fn draw_line_5<P: PointFTrait<'a>>(&self, p1: &P, p2: &P) -> &Self {
         let (obj_p1_1, _funcs) = p1.get_point_f_obj_funcs();
         let (obj_p2_2, _funcs) = p2.get_point_f_obj_funcs();
 
@@ -2271,6 +2187,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_line_5)(obj_data, obj_p1_1, obj_p2_2);
         }
+        self
     }
     ///
     /// Draws the first *lineCount* lines in the array *lines*
@@ -2308,13 +2225,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    fn draw_lines(&self, lines: &LineFTrait, line_count: i32) {
+    pub fn draw_lines<L: LineFTrait<'a>>(&self, lines: &L, line_count: i32) -> &Self {
         let (obj_lines_1, _funcs) = lines.get_line_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_lines)(obj_data, obj_lines_1, line_count);
         }
+        self
     }
     ///
     /// Draws the first *lineCount* lines in the array *lines*
@@ -2388,13 +2306,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    fn draw_lines_3(&self, point_pairs: &PointFTrait, line_count: i32) {
+    pub fn draw_lines_3<P: PointFTrait<'a>>(&self, point_pairs: &P, line_count: i32) -> &Self {
         let (obj_point_pairs_1, _funcs) = point_pairs.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_lines_3)(obj_data, obj_point_pairs_1, line_count);
         }
+        self
     }
     ///
     /// Draws the first *lineCount* lines in the array *lines*
@@ -2540,13 +2459,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    fn draw_lines_7(&self, point_pairs: &PointTrait, line_count: i32) {
+    pub fn draw_lines_7<P: PointTrait<'a>>(&self, point_pairs: &P, line_count: i32) -> &Self {
         let (obj_point_pairs_1, _funcs) = point_pairs.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_lines_7)(obj_data, obj_point_pairs_1, line_count);
         }
+        self
     }
     ///
     /// Draws the first *lineCount* lines in the array *lines*
@@ -2619,13 +2539,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    fn draw_rect(&self, rect: &RectFTrait) {
+    pub fn draw_rect<R: RectFTrait<'a>>(&self, rect: &R) -> &Self {
         let (obj_rect_1, _funcs) = rect.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_rect)(obj_data, obj_rect_1);
         }
+        self
     }
     ///
     /// Draws the current *rectangle* with the current pen and brush.
@@ -2662,11 +2583,12 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    fn draw_rect_2(&self, x1: i32, y1: i32, w: i32, h: i32) {
+    pub fn draw_rect_2(&self, x1: i32, y1: i32, w: i32, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_rect_2)(obj_data, x1, y1, w, h);
         }
+        self
     }
     ///
     /// Draws the current *rectangle* with the current pen and brush.
@@ -2703,13 +2625,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    fn draw_rect_3(&self, rect: &RectTrait) {
+    pub fn draw_rect_3<R: RectTrait<'a>>(&self, rect: &R) -> &Self {
         let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_rect_3)(obj_data, obj_rect_1);
         }
+        self
     }
     ///
     /// Draws the first *rectCount* of the given *rectangles* using the
@@ -2726,13 +2649,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    fn draw_rects(&self, rects: &RectFTrait, rect_count: i32) {
+    pub fn draw_rects<R: RectFTrait<'a>>(&self, rects: &R, rect_count: i32) -> &Self {
         let (obj_rects_1, _funcs) = rects.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_rects)(obj_data, obj_rects_1, rect_count);
         }
+        self
     }
     ///
     /// Draws the first *rectCount* of the given *rectangles* using the
@@ -2764,13 +2688,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    fn draw_rects_3(&self, rects: &RectTrait, rect_count: i32) {
+    pub fn draw_rects_3<R: RectTrait<'a>>(&self, rects: &R, rect_count: i32) -> &Self {
         let (obj_rects_1, _funcs) = rects.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_rects_3)(obj_data, obj_rects_1, rect_count);
         }
+        self
     }
     ///
     /// Draws the first *rectCount* of the given *rectangles* using the
@@ -2814,13 +2739,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    fn draw_ellipse(&self, r: &RectFTrait) {
+    pub fn draw_ellipse<R: RectFTrait<'a>>(&self, r: &R) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_ellipse)(obj_data, obj_r_1);
         }
+        self
     }
     ///
     /// Draws the ellipse defined by the given *rectangle.*
@@ -2849,13 +2775,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    fn draw_ellipse_2(&self, r: &RectTrait) {
+    pub fn draw_ellipse_2<R: RectTrait<'a>>(&self, r: &R) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_ellipse_2)(obj_data, obj_r_1);
         }
+        self
     }
     ///
     /// Draws the ellipse defined by the given *rectangle.*
@@ -2884,11 +2811,12 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    fn draw_ellipse_3(&self, x: i32, y: i32, w: i32, h: i32) {
+    pub fn draw_ellipse_3(&self, x: i32, y: i32, w: i32, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_ellipse_3)(obj_data, x, y, w, h);
         }
+        self
     }
     ///
     /// Draws the ellipse defined by the given *rectangle.*
@@ -2917,13 +2845,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    fn draw_ellipse_4(&self, center: &PointFTrait, rx: f32, ry: f32) {
+    pub fn draw_ellipse_4<P: PointFTrait<'a>>(&self, center: &P, rx: f32, ry: f32) -> &Self {
         let (obj_center_1, _funcs) = center.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_ellipse_4)(obj_data, obj_center_1, rx, ry);
         }
+        self
     }
     ///
     /// Draws the ellipse defined by the given *rectangle.*
@@ -2952,13 +2881,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    fn draw_ellipse_5(&self, center: &PointTrait, rx: i32, ry: i32) {
+    pub fn draw_ellipse_5<P: PointTrait<'a>>(&self, center: &P, rx: i32, ry: i32) -> &Self {
         let (obj_center_1, _funcs) = center.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_ellipse_5)(obj_data, obj_center_1, rx, ry);
         }
+        self
     }
     ///
     /// Draws the polyline defined by the first *pointCount* points in *points* using the current pen.
@@ -2981,13 +2911,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the polyline defined by the given *points* using the
     /// current pen.
-    fn draw_polyline(&self, points: &PointFTrait, point_count: i32) {
+    pub fn draw_polyline<P: PointFTrait<'a>>(&self, points: &P, point_count: i32) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_polyline)(obj_data, obj_points_1, point_count);
         }
+        self
     }
     ///
     /// Draws the polyline defined by the first *pointCount* points in *points* using the current pen.
@@ -3010,13 +2941,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the polyline defined by the given *points* using the
     /// current pen.
-    fn draw_polyline_2(&self, polyline: &PolygonFTrait) {
+    pub fn draw_polyline_2<P: PolygonFTrait<'a>>(&self, polyline: &P) -> &Self {
         let (obj_polyline_1, _funcs) = polyline.get_polygon_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_polyline_2)(obj_data, obj_polyline_1);
         }
+        self
     }
     ///
     /// Draws the polyline defined by the first *pointCount* points in *points* using the current pen.
@@ -3039,13 +2971,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the polyline defined by the given *points* using the
     /// current pen.
-    fn draw_polyline_3(&self, points: &PointTrait, point_count: i32) {
+    pub fn draw_polyline_3<P: PointTrait<'a>>(&self, points: &P, point_count: i32) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_polyline_3)(obj_data, obj_points_1, point_count);
         }
+        self
     }
     ///
     /// Draws the polyline defined by the first *pointCount* points in *points* using the current pen.
@@ -3068,13 +3001,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the polyline defined by the given *points* using the
     /// current pen.
-    fn draw_polyline_4(&self, polygon: &PolygonTrait) {
+    pub fn draw_polyline_4<P: PolygonTrait<'a>>(&self, polygon: &P) -> &Self {
         let (obj_polygon_1, _funcs) = polygon.get_polygon_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_polyline_4)(obj_data, obj_polygon_1);
         }
+        self
     }
     ///
     /// Draws the polygon defined by the first *pointCount* points in the
@@ -3108,7 +3042,12 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the polygon defined by the given *points* using the fill
     /// rule *fillRule.*
-    fn draw_polygon(&self, points: &PointFTrait, point_count: i32, fill_rule: FillRule) {
+    pub fn draw_polygon<P: PointFTrait<'a>>(
+        &self,
+        points: &P,
+        point_count: i32,
+        fill_rule: FillRule,
+    ) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_f_obj_funcs();
         let enum_fill_rule_3 = fill_rule as i32;
 
@@ -3116,6 +3055,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_polygon)(obj_data, obj_points_1, point_count, enum_fill_rule_3);
         }
+        self
     }
     ///
     /// Draws the polygon defined by the first *pointCount* points in the
@@ -3149,7 +3089,7 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the polygon defined by the given *points* using the fill
     /// rule *fillRule.*
-    fn draw_polygon_2(&self, polygon: &PolygonFTrait, fill_rule: FillRule) {
+    pub fn draw_polygon_2<P: PolygonFTrait<'a>>(&self, polygon: &P, fill_rule: FillRule) -> &Self {
         let (obj_polygon_1, _funcs) = polygon.get_polygon_f_obj_funcs();
         let enum_fill_rule_2 = fill_rule as i32;
 
@@ -3157,6 +3097,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_polygon_2)(obj_data, obj_polygon_1, enum_fill_rule_2);
         }
+        self
     }
     ///
     /// Draws the polygon defined by the first *pointCount* points in the
@@ -3190,7 +3131,12 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the polygon defined by the given *points* using the fill
     /// rule *fillRule.*
-    fn draw_polygon_3(&self, points: &PointTrait, point_count: i32, fill_rule: FillRule) {
+    pub fn draw_polygon_3<P: PointTrait<'a>>(
+        &self,
+        points: &P,
+        point_count: i32,
+        fill_rule: FillRule,
+    ) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_obj_funcs();
         let enum_fill_rule_3 = fill_rule as i32;
 
@@ -3198,6 +3144,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_polygon_3)(obj_data, obj_points_1, point_count, enum_fill_rule_3);
         }
+        self
     }
     ///
     /// Draws the polygon defined by the first *pointCount* points in the
@@ -3231,7 +3178,7 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the polygon defined by the given *points* using the fill
     /// rule *fillRule.*
-    fn draw_polygon_4(&self, polygon: &PolygonTrait, fill_rule: FillRule) {
+    pub fn draw_polygon_4<P: PolygonTrait<'a>>(&self, polygon: &P, fill_rule: FillRule) -> &Self {
         let (obj_polygon_1, _funcs) = polygon.get_polygon_obj_funcs();
         let enum_fill_rule_2 = fill_rule as i32;
 
@@ -3239,6 +3186,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_polygon_4)(obj_data, obj_polygon_1, enum_fill_rule_2);
         }
+        self
     }
     ///
     /// Draws the convex polygon defined by the first *pointCount* points
@@ -3271,13 +3219,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the convex polygon defined by *polygon* using the current
     /// pen and brush.
-    fn draw_convex_polygon(&self, points: &PointFTrait, point_count: i32) {
+    pub fn draw_convex_polygon<P: PointFTrait<'a>>(&self, points: &P, point_count: i32) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_convex_polygon)(obj_data, obj_points_1, point_count);
         }
+        self
     }
     ///
     /// Draws the convex polygon defined by the first *pointCount* points
@@ -3310,13 +3259,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the convex polygon defined by *polygon* using the current
     /// pen and brush.
-    fn draw_convex_polygon_2(&self, polygon: &PolygonFTrait) {
+    pub fn draw_convex_polygon_2<P: PolygonFTrait<'a>>(&self, polygon: &P) -> &Self {
         let (obj_polygon_1, _funcs) = polygon.get_polygon_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_convex_polygon_2)(obj_data, obj_polygon_1);
         }
+        self
     }
     ///
     /// Draws the convex polygon defined by the first *pointCount* points
@@ -3349,13 +3299,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the convex polygon defined by *polygon* using the current
     /// pen and brush.
-    fn draw_convex_polygon_3(&self, points: &PointTrait, point_count: i32) {
+    pub fn draw_convex_polygon_3<P: PointTrait<'a>>(&self, points: &P, point_count: i32) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_convex_polygon_3)(obj_data, obj_points_1, point_count);
         }
+        self
     }
     ///
     /// Draws the convex polygon defined by the first *pointCount* points
@@ -3388,13 +3339,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the convex polygon defined by *polygon* using the current
     /// pen and brush.
-    fn draw_convex_polygon_4(&self, polygon: &PolygonTrait) {
+    pub fn draw_convex_polygon_4<P: PolygonTrait<'a>>(&self, polygon: &P) -> &Self {
         let (obj_polygon_1, _funcs) = polygon.get_polygon_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_convex_polygon_4)(obj_data, obj_polygon_1);
         }
+        self
     }
     ///
     /// Draws the arc defined by the given *rectangle,* *startAngle* and
@@ -3424,13 +3376,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the arc defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    fn draw_arc(&self, rect: &RectFTrait, a: i32, alen: i32) {
+    pub fn draw_arc<R: RectFTrait<'a>>(&self, rect: &R, a: i32, alen: i32) -> &Self {
         let (obj_rect_1, _funcs) = rect.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_arc)(obj_data, obj_rect_1, a, alen);
         }
+        self
     }
     ///
     /// Draws the arc defined by the given *rectangle,* *startAngle* and
@@ -3460,13 +3413,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the arc defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    fn draw_arc_2(&self, arg0: &RectTrait, a: i32, alen: i32) {
+    pub fn draw_arc_2<R: RectTrait<'a>>(&self, arg0: &R, a: i32, alen: i32) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_arc_2)(obj_data, obj_arg0_1, a, alen);
         }
+        self
     }
     ///
     /// Draws the arc defined by the given *rectangle,* *startAngle* and
@@ -3496,11 +3450,12 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the arc defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    fn draw_arc_3(&self, x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32) {
+    pub fn draw_arc_3(&self, x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_arc_3)(obj_data, x, y, w, h, a, alen);
         }
+        self
     }
     ///
     /// Draws a pie defined by the given *rectangle,* *startAngle* and *spanAngle.*
@@ -3531,13 +3486,14 @@ pub trait PainterTrait<'a> {
     /// Draws the pie defined by the rectangle beginning at ( *x,* *y)* with
     /// the specified *width* and *height,* and the given *startAngle* and
     /// *spanAngle.*
-    fn draw_pie(&self, rect: &RectFTrait, a: i32, alen: i32) {
+    pub fn draw_pie<R: RectFTrait<'a>>(&self, rect: &R, a: i32, alen: i32) -> &Self {
         let (obj_rect_1, _funcs) = rect.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_pie)(obj_data, obj_rect_1, a, alen);
         }
+        self
     }
     ///
     /// Draws a pie defined by the given *rectangle,* *startAngle* and *spanAngle.*
@@ -3568,11 +3524,12 @@ pub trait PainterTrait<'a> {
     /// Draws the pie defined by the rectangle beginning at ( *x,* *y)* with
     /// the specified *width* and *height,* and the given *startAngle* and
     /// *spanAngle.*
-    fn draw_pie_2(&self, x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32) {
+    pub fn draw_pie_2(&self, x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_pie_2)(obj_data, x, y, w, h, a, alen);
         }
+        self
     }
     ///
     /// Draws a pie defined by the given *rectangle,* *startAngle* and *spanAngle.*
@@ -3603,13 +3560,14 @@ pub trait PainterTrait<'a> {
     /// Draws the pie defined by the rectangle beginning at ( *x,* *y)* with
     /// the specified *width* and *height,* and the given *startAngle* and
     /// *spanAngle.*
-    fn draw_pie_3(&self, arg0: &RectTrait, a: i32, alen: i32) {
+    pub fn draw_pie_3<R: RectTrait<'a>>(&self, arg0: &R, a: i32, alen: i32) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_pie_3)(obj_data, obj_arg0_1, a, alen);
         }
+        self
     }
     ///
     /// Draws the chord defined by the given *rectangle,* *startAngle* and
@@ -3638,13 +3596,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the chord defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    fn draw_chord(&self, rect: &RectFTrait, a: i32, alen: i32) {
+    pub fn draw_chord<R: RectFTrait<'a>>(&self, rect: &R, a: i32, alen: i32) -> &Self {
         let (obj_rect_1, _funcs) = rect.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_chord)(obj_data, obj_rect_1, a, alen);
         }
+        self
     }
     ///
     /// Draws the chord defined by the given *rectangle,* *startAngle* and
@@ -3673,11 +3632,12 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the chord defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    fn draw_chord_2(&self, x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32) {
+    pub fn draw_chord_2(&self, x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_chord_2)(obj_data, x, y, w, h, a, alen);
         }
+        self
     }
     ///
     /// Draws the chord defined by the given *rectangle,* *startAngle* and
@@ -3706,13 +3666,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Draws the chord defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    fn draw_chord_3(&self, arg0: &RectTrait, a: i32, alen: i32) {
+    pub fn draw_chord_3<R: RectTrait<'a>>(&self, arg0: &R, a: i32, alen: i32) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_chord_3)(obj_data, obj_arg0_1, a, alen);
         }
+        self
     }
     ///
     /// Draws the given rectangle *rect* with rounded corners.
@@ -3741,7 +3702,13 @@ pub trait PainterTrait<'a> {
     /// Qt::SizeMode mode = Qt::AbsoluteSize);
     /// **Overloads**
     /// Draws the given rectangle *x,* *y,* *w,* *h* with rounded corners.
-    fn draw_rounded_rect(&self, rect: &RectFTrait, x_radius: f32, y_radius: f32, mode: SizeMode) {
+    pub fn draw_rounded_rect<R: RectFTrait<'a>>(
+        &self,
+        rect: &R,
+        x_radius: f32,
+        y_radius: f32,
+        mode: SizeMode,
+    ) -> &Self {
         let (obj_rect_1, _funcs) = rect.get_rect_f_obj_funcs();
         let enum_mode_4 = mode as i32;
 
@@ -3749,6 +3716,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_rounded_rect)(obj_data, obj_rect_1, x_radius, y_radius, enum_mode_4);
         }
+        self
     }
     ///
     /// Draws the given rectangle *rect* with rounded corners.
@@ -3777,7 +3745,7 @@ pub trait PainterTrait<'a> {
     /// Qt::SizeMode mode = Qt::AbsoluteSize);
     /// **Overloads**
     /// Draws the given rectangle *x,* *y,* *w,* *h* with rounded corners.
-    fn draw_rounded_rect_2(
+    pub fn draw_rounded_rect_2(
         &self,
         x: i32,
         y: i32,
@@ -3786,13 +3754,14 @@ pub trait PainterTrait<'a> {
         x_radius: f32,
         y_radius: f32,
         mode: SizeMode,
-    ) {
+    ) -> &Self {
         let enum_mode_7 = mode as i32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_rounded_rect_2)(obj_data, x, y, w, h, x_radius, y_radius, enum_mode_7);
         }
+        self
     }
     ///
     /// Draws the given rectangle *rect* with rounded corners.
@@ -3821,7 +3790,13 @@ pub trait PainterTrait<'a> {
     /// Qt::SizeMode mode = Qt::AbsoluteSize);
     /// **Overloads**
     /// Draws the given rectangle *x,* *y,* *w,* *h* with rounded corners.
-    fn draw_rounded_rect_3(&self, rect: &RectTrait, x_radius: f32, y_radius: f32, mode: SizeMode) {
+    pub fn draw_rounded_rect_3<R: RectTrait<'a>>(
+        &self,
+        rect: &R,
+        x_radius: f32,
+        y_radius: f32,
+        mode: SizeMode,
+    ) -> &Self {
         let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
         let enum_mode_4 = mode as i32;
 
@@ -3829,6 +3804,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_rounded_rect_3)(obj_data, obj_rect_1, x_radius, y_radius, enum_mode_4);
         }
+        self
     }
     ///
     /// Draws a rectangle *r* with rounded corners.
@@ -3846,13 +3822,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the rectangle *x,* *y,* *w,* *h* with rounded corners.
-    fn draw_round_rect(&self, r: &RectFTrait, xround: i32, yround: i32) {
+    pub fn draw_round_rect<R: RectFTrait<'a>>(&self, r: &R, xround: i32, yround: i32) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_round_rect)(obj_data, obj_r_1, xround, yround);
         }
+        self
     }
     ///
     /// Draws a rectangle *r* with rounded corners.
@@ -3870,11 +3847,12 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the rectangle *x,* *y,* *w,* *h* with rounded corners.
-    fn draw_round_rect_2(&self, x: i32, y: i32, w: i32, h: i32, arg0: i32, arg1: i32) {
+    pub fn draw_round_rect_2(&self, x: i32, y: i32, w: i32, h: i32, arg0: i32, arg1: i32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_round_rect_2)(obj_data, x, y, w, h, arg0, arg1);
         }
+        self
     }
     ///
     /// Draws a rectangle *r* with rounded corners.
@@ -3892,13 +3870,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **Overloads**
     /// Draws the rectangle *x,* *y,* *w,* *h* with rounded corners.
-    fn draw_round_rect_3(&self, r: &RectTrait, xround: i32, yround: i32) {
+    pub fn draw_round_rect_3<R: RectTrait<'a>>(&self, r: &R, xround: i32, yround: i32) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_round_rect_3)(obj_data, obj_r_1, xround, yround);
         }
+        self
     }
     ///
     /// Draws a tiled *pixmap,* inside the given *rectangle* with its
@@ -3922,7 +3901,12 @@ pub trait PainterTrait<'a> {
     ///
     /// ( *x* , *y* ) specifies the top-left point in the paint device
     /// that is to be drawn onto; with the given *width* and *height.* ( *sx* , *sy* ) specifies the top-left point in the *pixmap* that is to be drawn; this defaults to (0, 0).
-    fn draw_tiled_pixmap(&self, rect: &RectFTrait, pm: &PixmapTrait, offset: &PointFTrait) {
+    pub fn draw_tiled_pixmap<P: PixmapTrait<'a>, Q: PointFTrait<'a>, R: RectFTrait<'a>>(
+        &self,
+        rect: &R,
+        pm: &P,
+        offset: &Q,
+    ) -> &Self {
         let (obj_rect_1, _funcs) = rect.get_rect_f_obj_funcs();
         let (obj_pm_2, _funcs) = pm.get_pixmap_obj_funcs();
         let (obj_offset_3, _funcs) = offset.get_point_f_obj_funcs();
@@ -3931,6 +3915,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_tiled_pixmap)(obj_data, obj_rect_1, obj_pm_2, obj_offset_3);
         }
+        self
     }
     ///
     /// Draws a tiled *pixmap,* inside the given *rectangle* with its
@@ -3954,22 +3939,23 @@ pub trait PainterTrait<'a> {
     ///
     /// ( *x* , *y* ) specifies the top-left point in the paint device
     /// that is to be drawn onto; with the given *width* and *height.* ( *sx* , *sy* ) specifies the top-left point in the *pixmap* that is to be drawn; this defaults to (0, 0).
-    fn draw_tiled_pixmap_2(
+    pub fn draw_tiled_pixmap_2<P: PixmapTrait<'a>>(
         &self,
         x: i32,
         y: i32,
         w: i32,
         h: i32,
-        arg0: &PixmapTrait,
+        arg0: &P,
         sx: i32,
         sy: i32,
-    ) {
+    ) -> &Self {
         let (obj_arg0_5, _funcs) = arg0.get_pixmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_tiled_pixmap_2)(obj_data, x, y, w, h, obj_arg0_5, sx, sy);
         }
+        self
     }
     ///
     /// Draws a tiled *pixmap,* inside the given *rectangle* with its
@@ -3993,7 +3979,12 @@ pub trait PainterTrait<'a> {
     ///
     /// ( *x* , *y* ) specifies the top-left point in the paint device
     /// that is to be drawn onto; with the given *width* and *height.* ( *sx* , *sy* ) specifies the top-left point in the *pixmap* that is to be drawn; this defaults to (0, 0).
-    fn draw_tiled_pixmap_3(&self, arg0: &RectTrait, arg1: &PixmapTrait, arg2: &PointTrait) {
+    pub fn draw_tiled_pixmap_3<P: PixmapTrait<'a>, Q: PointTrait<'a>, R: RectTrait<'a>>(
+        &self,
+        arg0: &R,
+        arg1: &P,
+        arg2: &Q,
+    ) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
         let (obj_arg1_2, _funcs) = arg1.get_pixmap_obj_funcs();
         let (obj_arg2_3, _funcs) = arg2.get_point_obj_funcs();
@@ -4002,6 +3993,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_tiled_pixmap_3)(obj_data, obj_arg0_1, obj_arg1_2, obj_arg2_3);
         }
+        self
     }
     ///
     /// Replays the given *picture* at the given *point.*
@@ -4153,12 +4145,12 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`Painter::pixmap_fragment()`]
     /// [`Painter::pixmap_fragment_hint()`]
-    fn draw_pixmap(
+    pub fn draw_pixmap<P: PixmapTrait<'a>, R: RectFTrait<'a>>(
         &self,
-        target_rect: &RectFTrait,
-        pixmap: &PixmapTrait,
-        source_rect: &RectFTrait,
-    ) {
+        target_rect: &R,
+        pixmap: &P,
+        source_rect: &R,
+    ) -> &Self {
         let (obj_target_rect_1, _funcs) = target_rect.get_rect_f_obj_funcs();
         let (obj_pixmap_2, _funcs) = pixmap.get_pixmap_obj_funcs();
         let (obj_source_rect_3, _funcs) = source_rect.get_rect_f_obj_funcs();
@@ -4167,6 +4159,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_pixmap)(obj_data, obj_target_rect_1, obj_pixmap_2, obj_source_rect_3);
         }
+        self
     }
     ///
     /// Draws the rectangular portion *source* of the given *pixmap*
@@ -4258,12 +4251,12 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`Painter::pixmap_fragment()`]
     /// [`Painter::pixmap_fragment_hint()`]
-    fn draw_pixmap_2(
+    pub fn draw_pixmap_2<P: PixmapTrait<'a>, R: RectTrait<'a>>(
         &self,
-        target_rect: &RectTrait,
-        pixmap: &PixmapTrait,
-        source_rect: &RectTrait,
-    ) {
+        target_rect: &R,
+        pixmap: &P,
+        source_rect: &R,
+    ) -> &Self {
         let (obj_target_rect_1, _funcs) = target_rect.get_rect_obj_funcs();
         let (obj_pixmap_2, _funcs) = pixmap.get_pixmap_obj_funcs();
         let (obj_source_rect_3, _funcs) = source_rect.get_rect_obj_funcs();
@@ -4272,6 +4265,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_pixmap_2)(obj_data, obj_target_rect_1, obj_pixmap_2, obj_source_rect_3);
         }
+        self
     }
     ///
     /// Draws the rectangular portion *source* of the given *pixmap*
@@ -4363,24 +4357,25 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`Painter::pixmap_fragment()`]
     /// [`Painter::pixmap_fragment_hint()`]
-    fn draw_pixmap_3(
+    pub fn draw_pixmap_3<P: PixmapTrait<'a>>(
         &self,
         x: i32,
         y: i32,
         w: i32,
         h: i32,
-        pm: &PixmapTrait,
+        pm: &P,
         sx: i32,
         sy: i32,
         sw: i32,
         sh: i32,
-    ) {
+    ) -> &Self {
         let (obj_pm_5, _funcs) = pm.get_pixmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_pixmap_3)(obj_data, x, y, w, h, obj_pm_5, sx, sy, sw, sh);
         }
+        self
     }
     ///
     /// Draws the rectangular portion *source* of the given *pixmap*
@@ -4472,13 +4467,23 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`Painter::pixmap_fragment()`]
     /// [`Painter::pixmap_fragment_hint()`]
-    fn draw_pixmap_4(&self, x: i32, y: i32, pm: &PixmapTrait, sx: i32, sy: i32, sw: i32, sh: i32) {
+    pub fn draw_pixmap_4<P: PixmapTrait<'a>>(
+        &self,
+        x: i32,
+        y: i32,
+        pm: &P,
+        sx: i32,
+        sy: i32,
+        sw: i32,
+        sh: i32,
+    ) -> &Self {
         let (obj_pm_3, _funcs) = pm.get_pixmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_pixmap_4)(obj_data, x, y, obj_pm_3, sx, sy, sw, sh);
         }
+        self
     }
     ///
     /// Draws the rectangular portion *source* of the given *pixmap*
@@ -4570,7 +4575,12 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`Painter::pixmap_fragment()`]
     /// [`Painter::pixmap_fragment_hint()`]
-    fn draw_pixmap_5(&self, p: &PointFTrait, pm: &PixmapTrait, sr: &RectFTrait) {
+    pub fn draw_pixmap_5<Q: PixmapTrait<'a>, P: PointFTrait<'a>, R: RectFTrait<'a>>(
+        &self,
+        p: &P,
+        pm: &Q,
+        sr: &R,
+    ) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
         let (obj_pm_2, _funcs) = pm.get_pixmap_obj_funcs();
         let (obj_sr_3, _funcs) = sr.get_rect_f_obj_funcs();
@@ -4579,6 +4589,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_pixmap_5)(obj_data, obj_p_1, obj_pm_2, obj_sr_3);
         }
+        self
     }
     ///
     /// Draws the rectangular portion *source* of the given *pixmap*
@@ -4670,7 +4681,12 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`Painter::pixmap_fragment()`]
     /// [`Painter::pixmap_fragment_hint()`]
-    fn draw_pixmap_6(&self, p: &PointTrait, pm: &PixmapTrait, sr: &RectTrait) {
+    pub fn draw_pixmap_6<Q: PixmapTrait<'a>, P: PointTrait<'a>, R: RectTrait<'a>>(
+        &self,
+        p: &P,
+        pm: &Q,
+        sr: &R,
+    ) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
         let (obj_pm_2, _funcs) = pm.get_pixmap_obj_funcs();
         let (obj_sr_3, _funcs) = sr.get_rect_obj_funcs();
@@ -4679,6 +4695,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_pixmap_6)(obj_data, obj_p_1, obj_pm_2, obj_sr_3);
         }
+        self
     }
     ///
     /// Draws the rectangular portion *source* of the given *pixmap*
@@ -4770,7 +4787,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`Painter::pixmap_fragment()`]
     /// [`Painter::pixmap_fragment_hint()`]
-    fn draw_pixmap_7(&self, p: &PointFTrait, pm: &PixmapTrait) {
+    pub fn draw_pixmap_7<Q: PixmapTrait<'a>, P: PointFTrait<'a>>(&self, p: &P, pm: &Q) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
         let (obj_pm_2, _funcs) = pm.get_pixmap_obj_funcs();
 
@@ -4778,6 +4795,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_pixmap_7)(obj_data, obj_p_1, obj_pm_2);
         }
+        self
     }
     ///
     /// Draws the rectangular portion *source* of the given *pixmap*
@@ -4869,7 +4887,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`Painter::pixmap_fragment()`]
     /// [`Painter::pixmap_fragment_hint()`]
-    fn draw_pixmap_8(&self, p: &PointTrait, pm: &PixmapTrait) {
+    pub fn draw_pixmap_8<Q: PixmapTrait<'a>, P: PointTrait<'a>>(&self, p: &P, pm: &Q) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
         let (obj_pm_2, _funcs) = pm.get_pixmap_obj_funcs();
 
@@ -4877,6 +4895,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_pixmap_8)(obj_data, obj_p_1, obj_pm_2);
         }
+        self
     }
     ///
     /// Draws the rectangular portion *source* of the given *pixmap*
@@ -4968,13 +4987,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`Painter::pixmap_fragment()`]
     /// [`Painter::pixmap_fragment_hint()`]
-    fn draw_pixmap_9(&self, x: i32, y: i32, pm: &PixmapTrait) {
+    pub fn draw_pixmap_9<P: PixmapTrait<'a>>(&self, x: i32, y: i32, pm: &P) -> &Self {
         let (obj_pm_3, _funcs) = pm.get_pixmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_pixmap_9)(obj_data, x, y, obj_pm_3);
         }
+        self
     }
     ///
     /// Draws the rectangular portion *source* of the given *pixmap*
@@ -5066,7 +5086,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`Painter::pixmap_fragment()`]
     /// [`Painter::pixmap_fragment_hint()`]
-    fn draw_pixmap_10(&self, r: &RectTrait, pm: &PixmapTrait) {
+    pub fn draw_pixmap_10<P: PixmapTrait<'a>, R: RectTrait<'a>>(&self, r: &R, pm: &P) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
         let (obj_pm_2, _funcs) = pm.get_pixmap_obj_funcs();
 
@@ -5074,6 +5094,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_pixmap_10)(obj_data, obj_r_1, obj_pm_2);
         }
+        self
     }
     ///
     /// Draws the rectangular portion *source* of the given *pixmap*
@@ -5165,13 +5186,21 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`Painter::pixmap_fragment()`]
     /// [`Painter::pixmap_fragment_hint()`]
-    fn draw_pixmap_11(&self, x: i32, y: i32, w: i32, h: i32, pm: &PixmapTrait) {
+    pub fn draw_pixmap_11<P: PixmapTrait<'a>>(
+        &self,
+        x: i32,
+        y: i32,
+        w: i32,
+        h: i32,
+        pm: &P,
+    ) -> &Self {
         let (obj_pm_5, _funcs) = pm.get_pixmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_pixmap_11)(obj_data, x, y, w, h, obj_pm_5);
         }
+        self
     }
     ///
     /// Qt::ImageConversionFlags flags)
@@ -5239,13 +5268,13 @@ pub trait PainterTrait<'a> {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    fn draw_image(
+    pub fn draw_image<I: ImageTrait<'a>, R: RectFTrait<'a>>(
         &self,
-        target_rect: &RectFTrait,
-        image: &ImageTrait,
-        source_rect: &RectFTrait,
+        target_rect: &R,
+        image: &I,
+        source_rect: &R,
         flags: ImageConversionFlags,
-    ) {
+    ) -> &Self {
         let (obj_target_rect_1, _funcs) = target_rect.get_rect_f_obj_funcs();
         let (obj_image_2, _funcs) = image.get_image_obj_funcs();
         let (obj_source_rect_3, _funcs) = source_rect.get_rect_f_obj_funcs();
@@ -5261,6 +5290,7 @@ pub trait PainterTrait<'a> {
                 enum_flags_4,
             );
         }
+        self
     }
     ///
     /// Qt::ImageConversionFlags flags)
@@ -5328,13 +5358,13 @@ pub trait PainterTrait<'a> {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    fn draw_image_2(
+    pub fn draw_image_2<I: ImageTrait<'a>, R: RectTrait<'a>>(
         &self,
-        target_rect: &RectTrait,
-        image: &ImageTrait,
-        source_rect: &RectTrait,
+        target_rect: &R,
+        image: &I,
+        source_rect: &R,
         flags: ImageConversionFlags,
-    ) {
+    ) -> &Self {
         let (obj_target_rect_1, _funcs) = target_rect.get_rect_obj_funcs();
         let (obj_image_2, _funcs) = image.get_image_obj_funcs();
         let (obj_source_rect_3, _funcs) = source_rect.get_rect_obj_funcs();
@@ -5350,6 +5380,7 @@ pub trait PainterTrait<'a> {
                 enum_flags_4,
             );
         }
+        self
     }
     ///
     /// Qt::ImageConversionFlags flags)
@@ -5417,13 +5448,13 @@ pub trait PainterTrait<'a> {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    fn draw_image_3(
+    pub fn draw_image_3<I: ImageTrait<'a>, P: PointFTrait<'a>, R: RectFTrait<'a>>(
         &self,
-        p: &PointFTrait,
-        image: &ImageTrait,
-        sr: &RectFTrait,
+        p: &P,
+        image: &I,
+        sr: &R,
         flags: ImageConversionFlags,
-    ) {
+    ) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
         let (obj_image_2, _funcs) = image.get_image_obj_funcs();
         let (obj_sr_3, _funcs) = sr.get_rect_f_obj_funcs();
@@ -5433,6 +5464,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_image_3)(obj_data, obj_p_1, obj_image_2, obj_sr_3, enum_flags_4);
         }
+        self
     }
     ///
     /// Qt::ImageConversionFlags flags)
@@ -5500,13 +5532,13 @@ pub trait PainterTrait<'a> {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    fn draw_image_4(
+    pub fn draw_image_4<I: ImageTrait<'a>, P: PointTrait<'a>, R: RectTrait<'a>>(
         &self,
-        p: &PointTrait,
-        image: &ImageTrait,
-        sr: &RectTrait,
+        p: &P,
+        image: &I,
+        sr: &R,
         flags: ImageConversionFlags,
-    ) {
+    ) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
         let (obj_image_2, _funcs) = image.get_image_obj_funcs();
         let (obj_sr_3, _funcs) = sr.get_rect_obj_funcs();
@@ -5516,6 +5548,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_image_4)(obj_data, obj_p_1, obj_image_2, obj_sr_3, enum_flags_4);
         }
+        self
     }
     ///
     /// Qt::ImageConversionFlags flags)
@@ -5583,7 +5616,7 @@ pub trait PainterTrait<'a> {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    fn draw_image_5(&self, r: &RectFTrait, image: &ImageTrait) {
+    pub fn draw_image_5<I: ImageTrait<'a>, R: RectFTrait<'a>>(&self, r: &R, image: &I) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
         let (obj_image_2, _funcs) = image.get_image_obj_funcs();
 
@@ -5591,6 +5624,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_image_5)(obj_data, obj_r_1, obj_image_2);
         }
+        self
     }
     ///
     /// Qt::ImageConversionFlags flags)
@@ -5658,7 +5692,7 @@ pub trait PainterTrait<'a> {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    fn draw_image_6(&self, r: &RectTrait, image: &ImageTrait) {
+    pub fn draw_image_6<I: ImageTrait<'a>, R: RectTrait<'a>>(&self, r: &R, image: &I) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
         let (obj_image_2, _funcs) = image.get_image_obj_funcs();
 
@@ -5666,6 +5700,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_image_6)(obj_data, obj_r_1, obj_image_2);
         }
+        self
     }
     ///
     /// Qt::ImageConversionFlags flags)
@@ -5733,7 +5768,7 @@ pub trait PainterTrait<'a> {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    fn draw_image_7(&self, p: &PointFTrait, image: &ImageTrait) {
+    pub fn draw_image_7<I: ImageTrait<'a>, P: PointFTrait<'a>>(&self, p: &P, image: &I) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
         let (obj_image_2, _funcs) = image.get_image_obj_funcs();
 
@@ -5741,6 +5776,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_image_7)(obj_data, obj_p_1, obj_image_2);
         }
+        self
     }
     ///
     /// Qt::ImageConversionFlags flags)
@@ -5808,7 +5844,7 @@ pub trait PainterTrait<'a> {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    fn draw_image_8(&self, p: &PointTrait, image: &ImageTrait) {
+    pub fn draw_image_8<I: ImageTrait<'a>, P: PointTrait<'a>>(&self, p: &P, image: &I) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
         let (obj_image_2, _funcs) = image.get_image_obj_funcs();
 
@@ -5816,6 +5852,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_image_8)(obj_data, obj_p_1, obj_image_2);
         }
+        self
     }
     ///
     /// Qt::ImageConversionFlags flags)
@@ -5883,17 +5920,17 @@ pub trait PainterTrait<'a> {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    fn draw_image_9(
+    pub fn draw_image_9<I: ImageTrait<'a>>(
         &self,
         x: i32,
         y: i32,
-        image: &ImageTrait,
+        image: &I,
         sx: i32,
         sy: i32,
         sw: i32,
         sh: i32,
         flags: ImageConversionFlags,
-    ) {
+    ) -> &Self {
         let (obj_image_3, _funcs) = image.get_image_obj_funcs();
         let enum_flags_8 = flags as i32;
 
@@ -5901,6 +5938,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_image_9)(obj_data, x, y, obj_image_3, sx, sy, sw, sh, enum_flags_8);
         }
+        self
     }
     ///
     /// Sets the layout direction used by the painter when drawing text,
@@ -5913,13 +5951,14 @@ pub trait PainterTrait<'a> {
     /// [`layout_direction()`]
     /// [`draw_text()`]
     /// {QPainter#Settings}{Settings}
-    fn set_layout_direction(&self, direction: LayoutDirection) {
+    pub fn set_layout_direction(&self, direction: LayoutDirection) -> &Self {
         let enum_direction_1 = direction as i32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_layout_direction)(obj_data, enum_direction_1);
         }
+        self
     }
     ///
     /// Returns the layout direction used by the painter when drawing text.
@@ -5928,7 +5967,7 @@ pub trait PainterTrait<'a> {
     /// [`set_layout_direction()`]
     /// [`draw_text()`]
     /// {QPainter#Settings}{Settings}
-    fn layout_direction(&self) -> LayoutDirection {
+    pub fn layout_direction(&self) -> LayoutDirection {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).layout_direction)(obj_data);
@@ -6184,7 +6223,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`set_font()`]
     /// [`set_pen()`]
-    fn draw_text(&self, p: &PointFTrait, s: &str) {
+    pub fn draw_text<P: PointFTrait<'a>>(&self, p: &P, s: &str) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
         let str_in_s_2 = CString::new(s).unwrap();
 
@@ -6192,6 +6231,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_text)(obj_data, obj_p_1, str_in_s_2.as_ptr());
         }
+        self
     }
     ///
     /// Draws the given *text* with the currently defined text direction,
@@ -6346,7 +6386,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`set_font()`]
     /// [`set_pen()`]
-    fn draw_text_2(&self, p: &PointTrait, s: &str) {
+    pub fn draw_text_2<P: PointTrait<'a>>(&self, p: &P, s: &str) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
         let str_in_s_2 = CString::new(s).unwrap();
 
@@ -6354,6 +6394,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_text_2)(obj_data, obj_p_1, str_in_s_2.as_ptr());
         }
+        self
     }
     ///
     /// Draws the given *text* with the currently defined text direction,
@@ -6508,13 +6549,14 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`set_font()`]
     /// [`set_pen()`]
-    fn draw_text_3(&self, x: i32, y: i32, s: &str) {
+    pub fn draw_text_3(&self, x: i32, y: i32, s: &str) -> &Self {
         let str_in_s_3 = CString::new(s).unwrap();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).draw_text_3)(obj_data, x, y, str_in_s_3.as_ptr());
         }
+        self
     }
     ///
     /// Draws the given *text* with the currently defined text direction,
@@ -6669,7 +6711,13 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`set_font()`]
     /// [`set_pen()`]
-    fn draw_text_4(&self, p: &PointFTrait, str: &str, tf: i32, justification_padding: i32) {
+    pub fn draw_text_4<P: PointFTrait<'a>>(
+        &self,
+        p: &P,
+        str: &str,
+        tf: i32,
+        justification_padding: i32,
+    ) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
         let str_in_str_2 = CString::new(str).unwrap();
 
@@ -6683,6 +6731,7 @@ pub trait PainterTrait<'a> {
                 justification_padding,
             );
         }
+        self
     }
     ///
     /// Draws the given *text* with the currently defined text direction,
@@ -6837,7 +6886,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`set_font()`]
     /// [`set_pen()`]
-    fn draw_text_5(&self, r: &RectFTrait, flags: i32, text: &str, br: &RectFTrait) {
+    pub fn draw_text_5<R: RectFTrait<'a>>(&self, r: &R, flags: i32, text: &str, br: &R) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
         let str_in_text_3 = CString::new(text).unwrap();
         let (obj_br_4, _funcs) = br.get_rect_f_obj_funcs();
@@ -6846,6 +6895,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_text_5)(obj_data, obj_r_1, flags, str_in_text_3.as_ptr(), obj_br_4);
         }
+        self
     }
     ///
     /// Draws the given *text* with the currently defined text direction,
@@ -7000,7 +7050,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`set_font()`]
     /// [`set_pen()`]
-    fn draw_text_6(&self, r: &RectTrait, flags: i32, text: &str, br: &RectTrait) {
+    pub fn draw_text_6<R: RectTrait<'a>>(&self, r: &R, flags: i32, text: &str, br: &R) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
         let str_in_text_3 = CString::new(text).unwrap();
         let (obj_br_4, _funcs) = br.get_rect_obj_funcs();
@@ -7009,6 +7059,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).draw_text_6)(obj_data, obj_r_1, flags, str_in_text_3.as_ptr(), obj_br_4);
         }
+        self
     }
     ///
     /// Draws the given *text* with the currently defined text direction,
@@ -7163,7 +7214,16 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`set_font()`]
     /// [`set_pen()`]
-    fn draw_text_7(&self, x: i32, y: i32, w: i32, h: i32, flags: i32, text: &str, br: &RectTrait) {
+    pub fn draw_text_7<R: RectTrait<'a>>(
+        &self,
+        x: i32,
+        y: i32,
+        w: i32,
+        h: i32,
+        flags: i32,
+        text: &str,
+        br: &R,
+    ) -> &Self {
         let str_in_text_6 = CString::new(text).unwrap();
         let (obj_br_7, _funcs) = br.get_rect_obj_funcs();
 
@@ -7180,6 +7240,7 @@ pub trait PainterTrait<'a> {
                 obj_br_7,
             );
         }
+        self
     }
     ///
     /// Draws the given *text* with the currently defined text direction,
@@ -7386,7 +7447,7 @@ pub trait PainterTrait<'a> {
     /// description of general rich text properties.
     ///
     /// **See also:** [`TextOption`]
-    fn bounding_rect(&self, rect: &RectFTrait, flags: i32, text: &str) -> RectF {
+    pub fn bounding_rect<R: RectFTrait<'a>>(&self, rect: &R, flags: i32, text: &str) -> RectF {
         let (obj_rect_1, _funcs) = rect.get_rect_f_obj_funcs();
         let str_in_text_3 = CString::new(text).unwrap();
 
@@ -7456,7 +7517,7 @@ pub trait PainterTrait<'a> {
     /// description of general rich text properties.
     ///
     /// **See also:** [`TextOption`]
-    fn bounding_rect_2(&self, rect: &RectTrait, flags: i32, text: &str) -> Rect {
+    pub fn bounding_rect_2<R: RectTrait<'a>>(&self, rect: &R, flags: i32, text: &str) -> Rect {
         let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
         let str_in_text_3 = CString::new(text).unwrap();
 
@@ -7526,7 +7587,7 @@ pub trait PainterTrait<'a> {
     /// description of general rich text properties.
     ///
     /// **See also:** [`TextOption`]
-    fn bounding_rect_3(&self, x: i32, y: i32, w: i32, h: i32, flags: i32, text: &str) -> Rect {
+    pub fn bounding_rect_3(&self, x: i32, y: i32, w: i32, h: i32, flags: i32, text: &str) -> Rect {
         let str_in_text_6 = CString::new(text).unwrap();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
@@ -7645,7 +7706,7 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     ///
-    fn fill_rect(&self, arg0: &RectFTrait, arg1: &BrushTrait) {
+    pub fn fill_rect<B: BrushTrait<'a>, R: RectFTrait<'a>>(&self, arg0: &R, arg1: &B) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_f_obj_funcs();
         let (obj_arg1_2, _funcs) = arg1.get_brush_obj_funcs();
 
@@ -7653,6 +7714,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).fill_rect)(obj_data, obj_arg0_1, obj_arg1_2);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -7704,13 +7766,21 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     ///
-    fn fill_rect_2(&self, x: i32, y: i32, w: i32, h: i32, arg0: &BrushTrait) {
+    pub fn fill_rect_2<B: BrushTrait<'a>>(
+        &self,
+        x: i32,
+        y: i32,
+        w: i32,
+        h: i32,
+        arg0: &B,
+    ) -> &Self {
         let (obj_arg0_5, _funcs) = arg0.get_brush_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).fill_rect_2)(obj_data, x, y, w, h, obj_arg0_5);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -7762,7 +7832,7 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     ///
-    fn fill_rect_3(&self, arg0: &RectTrait, arg1: &BrushTrait) {
+    pub fn fill_rect_3<B: BrushTrait<'a>, R: RectTrait<'a>>(&self, arg0: &R, arg1: &B) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
         let (obj_arg1_2, _funcs) = arg1.get_brush_obj_funcs();
 
@@ -7770,6 +7840,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).fill_rect_3)(obj_data, obj_arg0_1, obj_arg1_2);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -7821,7 +7892,7 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     ///
-    fn fill_rect_4(&self, arg0: &RectFTrait, color: &ColorTrait) {
+    pub fn fill_rect_4<C: ColorTrait<'a>, R: RectFTrait<'a>>(&self, arg0: &R, color: &C) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_f_obj_funcs();
         let (obj_color_2, _funcs) = color.get_color_obj_funcs();
 
@@ -7829,6 +7900,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).fill_rect_4)(obj_data, obj_arg0_1, obj_color_2);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -7880,13 +7952,21 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     ///
-    fn fill_rect_5(&self, x: i32, y: i32, w: i32, h: i32, color: &ColorTrait) {
+    pub fn fill_rect_5<C: ColorTrait<'a>>(
+        &self,
+        x: i32,
+        y: i32,
+        w: i32,
+        h: i32,
+        color: &C,
+    ) -> &Self {
         let (obj_color_5, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).fill_rect_5)(obj_data, x, y, w, h, obj_color_5);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -7938,7 +8018,7 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     ///
-    fn fill_rect_6(&self, arg0: &RectTrait, color: &ColorTrait) {
+    pub fn fill_rect_6<C: ColorTrait<'a>, R: RectTrait<'a>>(&self, arg0: &R, color: &C) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
         let (obj_color_2, _funcs) = color.get_color_obj_funcs();
 
@@ -7946,6 +8026,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).fill_rect_6)(obj_data, obj_arg0_1, obj_color_2);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -7997,13 +8078,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     ///
-    fn fill_rect_7(&self, x: i32, y: i32, w: i32, h: i32, c: GlobalColor) {
+    pub fn fill_rect_7(&self, x: i32, y: i32, w: i32, h: i32, c: GlobalColor) -> &Self {
         let enum_c_5 = c as i32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).fill_rect_7)(obj_data, x, y, w, h, enum_c_5);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -8055,7 +8137,7 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     ///
-    fn fill_rect_8(&self, r: &RectTrait, c: GlobalColor) {
+    pub fn fill_rect_8<R: RectTrait<'a>>(&self, r: &R, c: GlobalColor) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
         let enum_c_2 = c as i32;
 
@@ -8063,6 +8145,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).fill_rect_8)(obj_data, obj_r_1, enum_c_2);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -8114,7 +8197,7 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     ///
-    fn fill_rect_9(&self, r: &RectFTrait, c: GlobalColor) {
+    pub fn fill_rect_9<R: RectFTrait<'a>>(&self, r: &R, c: GlobalColor) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
         let enum_c_2 = c as i32;
 
@@ -8122,6 +8205,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).fill_rect_9)(obj_data, obj_r_1, enum_c_2);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -8173,13 +8257,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     ///
-    fn fill_rect_10(&self, x: i32, y: i32, w: i32, h: i32, style: BrushStyle) {
+    pub fn fill_rect_10(&self, x: i32, y: i32, w: i32, h: i32, style: BrushStyle) -> &Self {
         let enum_style_5 = style as i32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).fill_rect_10)(obj_data, x, y, w, h, enum_style_5);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -8231,7 +8316,7 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     ///
-    fn fill_rect_11(&self, r: &RectTrait, style: BrushStyle) {
+    pub fn fill_rect_11<R: RectTrait<'a>>(&self, r: &R, style: BrushStyle) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
         let enum_style_2 = style as i32;
 
@@ -8239,6 +8324,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).fill_rect_11)(obj_data, obj_r_1, enum_style_2);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -8290,7 +8376,7 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     ///
-    fn fill_rect_12(&self, r: &RectFTrait, style: BrushStyle) {
+    pub fn fill_rect_12<R: RectFTrait<'a>>(&self, r: &R, style: BrushStyle) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
         let enum_style_2 = style as i32;
 
@@ -8298,6 +8384,7 @@ pub trait PainterTrait<'a> {
         unsafe {
             ((*funcs).fill_rect_12)(obj_data, obj_r_1, enum_style_2);
         }
+        self
     }
     ///
     /// Erases the area inside the given *rectangle.* Equivalent to
@@ -8311,13 +8398,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Erases the area inside the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    fn erase_rect(&self, arg0: &RectFTrait) {
+    pub fn erase_rect<R: RectFTrait<'a>>(&self, arg0: &R) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).erase_rect)(obj_data, obj_arg0_1);
         }
+        self
     }
     ///
     /// Erases the area inside the given *rectangle.* Equivalent to
@@ -8331,11 +8419,12 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Erases the area inside the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    fn erase_rect_2(&self, x: i32, y: i32, w: i32, h: i32) {
+    pub fn erase_rect_2(&self, x: i32, y: i32, w: i32, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).erase_rect_2)(obj_data, x, y, w, h);
         }
+        self
     }
     ///
     /// Erases the area inside the given *rectangle.* Equivalent to
@@ -8349,13 +8438,14 @@ pub trait PainterTrait<'a> {
     /// **Overloads**
     /// Erases the area inside the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    fn erase_rect_3(&self, arg0: &RectTrait) {
+    pub fn erase_rect_3<R: RectTrait<'a>>(&self, arg0: &R) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).erase_rect_3)(obj_data, obj_arg0_1);
         }
+        self
     }
     ///
     /// Sets the given render *hint* on the painter if *on* is true;
@@ -8373,13 +8463,14 @@ pub trait PainterTrait<'a> {
     /// [`render_hints()`]
     /// {QPainter#Rendering
     /// Quality}{Rendering Quality}
-    fn set_render_hint(&self, hint: RenderHint, on: bool) {
+    pub fn set_render_hint(&self, hint: RenderHint, on: bool) -> &Self {
         let enum_hint_1 = hint as i32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_render_hint)(obj_data, enum_hint_1, on);
         }
+        self
     }
     ///
     /// Sets the given render *hints* on the painter if *on* is true;
@@ -8389,13 +8480,14 @@ pub trait PainterTrait<'a> {
     /// [`render_hints()`]
     /// {QPainter#Rendering
     /// Quality}{Rendering Quality}
-    fn set_render_hints(&self, hints: RenderHints, on: bool) {
+    pub fn set_render_hints(&self, hints: RenderHints, on: bool) -> &Self {
         let enum_hints_1 = hints as i32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             ((*funcs).set_render_hints)(obj_data, enum_hints_1, on);
         }
+        self
     }
     ///
     /// Returns a flag that specifies the rendering hints that are set for
@@ -8403,7 +8495,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`test_render_hint()`]
     /// {QPainter#Rendering Quality}{Rendering Quality}
-    fn render_hints(&self) -> RenderHints {
+    pub fn render_hints(&self) -> RenderHints {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).render_hints)(obj_data);
@@ -8416,7 +8508,7 @@ pub trait PainterTrait<'a> {
     ///
     /// **See also:** [`render_hints()`]
     /// [`set_render_hint()`]
-    fn test_render_hint(&self, hint: RenderHint) -> bool {
+    pub fn test_render_hint(&self, hint: RenderHint) -> bool {
         let enum_hint_1 = hint as i32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
@@ -8430,7 +8522,7 @@ pub trait PainterTrait<'a> {
     /// on if the painter is active; otherwise 0.
     ///
     /// **See also:** [`is_active()`]
-    fn paint_engine(&self) -> Option<PaintEngine> {
+    pub fn paint_engine(&self) -> Option<PaintEngine> {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).paint_engine)(obj_data);
@@ -8447,60 +8539,6 @@ pub trait PainterTrait<'a> {
             Some(ret_val)
         }
     }
-    ///
-    /// Flushes the painting pipeline and prepares for the user issuing commands
-    /// directly to the underlying graphics context. Must be followed by a call to
-    /// endNativePainting().
-    ///
-    /// Note that only the states the underlying paint engine changes will be reset
-    /// to their respective default states. The states we reset may change from
-    /// release to release. The following states are currently reset in the OpenGL
-    /// 2 engine:
-    ///
-    /// * blending is disabled
-    /// * the depth, stencil and scissor tests are disabled
-    /// * the active texture unit is reset to 0
-    /// * the depth mask, depth function and the clear depth are reset to their default values
-    /// * the stencil mask, stencil operation and stencil function are reset to their default values
-    /// * the current color is reset to solid white
-    ///
-    /// If, for example, the OpenGL polygon mode is changed by the user inside a
-    /// beginNativePaint()/endNativePainting() block, it will not be reset to the
-    /// default state by endNativePainting(). Here is an example that shows
-    /// intermixing of painter commands and raw OpenGL commands:
-    ///
-    /// **See also:** [`end_native_painting()`]
-    fn begin_native_painting(&self) {
-        let (obj_data, funcs) = self.get_painter_obj_funcs();
-        unsafe {
-            ((*funcs).begin_native_painting)(obj_data);
-        }
-    }
-    ///
-    /// Restores the painter after manually issuing native painting commands. Lets
-    /// the painter restore any native state that it relies on before calling any
-    /// other painter commands.
-    ///
-    /// **See also:** [`begin_native_painting()`]
-    fn end_native_painting(&self) {
-        let (obj_data, funcs) = self.get_painter_obj_funcs();
-        unsafe {
-            ((*funcs).end_native_painting)(obj_data);
-        }
-    }
-
-    #[inline]
-    fn get_painter_obj_funcs(&self) -> (*const RUBase, *const RUPainterFuncs);
-}
-
-impl<'a> PainterTrait<'a> for Painter<'a> {
-    #[inline]
-    fn get_painter_obj_funcs(&self) -> (*const RUBase, *const RUPainterFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).painter_funcs) }
-    }
-}
-pub trait PainterStaticTrait {
     ///
     /// Please use QWidget::render() instead.
     ///
@@ -8519,10 +8557,10 @@ pub trait PainterStaticTrait {
     ///
     /// **See also:** [`redirected()`]
     /// [`restore_redirected()`]
-    fn set_redirected<'a>(
-        device: &PaintDeviceTrait<'a>,
-        replacement: &PaintDeviceTrait<'a>,
-        offset: &PointTrait<'a>,
+    pub fn set_redirected<P: PaintDeviceTrait<'a>, Q: PointTrait<'a>>(
+        device: &P,
+        replacement: &P,
+        offset: &Q,
     ) {
         let (obj_device_1, _funcs) = device.get_paint_device_obj_funcs();
         let (obj_replacement_2, _funcs) = replacement.get_paint_device_obj_funcs();
@@ -8551,9 +8589,9 @@ pub trait PainterStaticTrait {
     ///
     /// **See also:** [`set_redirected()`]
     /// [`restore_redirected()`]
-    fn redirected<'a>(
-        device: &PaintDeviceTrait<'a>,
-        offset: &PointTrait<'a>,
+    pub fn redirected<P: PaintDeviceTrait<'a>, Q: PointTrait<'a>>(
+        device: &P,
+        offset: &Q,
     ) -> Option<PaintDevice<'a>> {
         let (obj_device_1, _funcs) = device.get_paint_device_obj_funcs();
         let (obj_offset_2, _funcs) = offset.get_point_obj_funcs();
@@ -8591,7 +8629,7 @@ pub trait PainterStaticTrait {
     /// QWidget::render is strongly encouraged.
     ///
     /// **See also:** [`redirected()`]
-    fn restore_redirected<'a>(device: &PaintDeviceTrait<'a>) {
+    pub fn restore_redirected<P: PaintDeviceTrait<'a>>(device: &P) {
         let (obj_device_1, _funcs) = device.get_paint_device_obj_funcs();
 
         let (obj_data, funcs) = unsafe {
@@ -8604,11 +8642,63 @@ pub trait PainterStaticTrait {
             ((*funcs).restore_redirected)(obj_data, obj_device_1);
         }
     }
+    ///
+    /// Flushes the painting pipeline and prepares for the user issuing commands
+    /// directly to the underlying graphics context. Must be followed by a call to
+    /// endNativePainting().
+    ///
+    /// Note that only the states the underlying paint engine changes will be reset
+    /// to their respective default states. The states we reset may change from
+    /// release to release. The following states are currently reset in the OpenGL
+    /// 2 engine:
+    ///
+    /// * blending is disabled
+    /// * the depth, stencil and scissor tests are disabled
+    /// * the active texture unit is reset to 0
+    /// * the depth mask, depth function and the clear depth are reset to their default values
+    /// * the stencil mask, stencil operation and stencil function are reset to their default values
+    /// * the current color is reset to solid white
+    ///
+    /// If, for example, the OpenGL polygon mode is changed by the user inside a
+    /// beginNativePaint()/endNativePainting() block, it will not be reset to the
+    /// default state by endNativePainting(). Here is an example that shows
+    /// intermixing of painter commands and raw OpenGL commands:
+    ///
+    /// **See also:** [`end_native_painting()`]
+    pub fn begin_native_painting(&self) -> &Self {
+        let (obj_data, funcs) = self.get_painter_obj_funcs();
+        unsafe {
+            ((*funcs).begin_native_painting)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Restores the painter after manually issuing native painting commands. Lets
+    /// the painter restore any native state that it relies on before calling any
+    /// other painter commands.
+    ///
+    /// **See also:** [`begin_native_painting()`]
+    pub fn end_native_painting(&self) -> &Self {
+        let (obj_data, funcs) = self.get_painter_obj_funcs();
+        unsafe {
+            ((*funcs).end_native_painting)(obj_data);
+        }
+        self
+    }
+}
+pub trait PainterTrait<'a> {
+    #[inline]
+    #[doc(hidden)]
+    fn get_painter_obj_funcs(&self) -> (*const RUBase, *const RUPainterFuncs);
 }
 
-impl<'a> PainterStaticTrait for Painter<'a> {}
-
-impl<'a> PainterStaticTrait for PainterStatic<'a> {}
+impl<'a> PainterTrait<'a> for Painter<'a> {
+    #[doc(hidden)]
+    fn get_painter_obj_funcs(&self) -> (*const RUBase, *const RUPainterFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).painter_funcs) }
+    }
+}
 #[repr(u32)]
 pub enum RenderHint {
     Antialiasing,

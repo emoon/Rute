@@ -17,19 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::line_ffi::*;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point::PointTrait;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// A QLine describes a finite length line (or a line segment) on a
 /// two-dimensional surface. The start and end points of the line are
@@ -57,9 +46,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Line<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RULineAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -84,7 +77,8 @@ impl<'a> Line<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RULine) -> Line<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RULine) -> Line<'a> {
         Line {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -93,7 +87,8 @@ impl<'a> Line<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RULine) -> Line<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RULine) -> Line<'a> {
         Line {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -102,7 +97,8 @@ impl<'a> Line<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RULine) -> Line<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RULine) -> Line<'a> {
         Line {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -110,12 +106,10 @@ impl<'a> Line<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait LineTrait<'a> {
     ///
     /// Returns `true` if the line is not set up with valid start and end point;
     /// otherwise returns `false.`
-    fn is_null(&self) -> bool {
+    pub fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_null)(obj_data);
@@ -128,7 +122,7 @@ pub trait LineTrait<'a> {
     /// **See also:** [`x1()`]
     /// [`y1()`]
     /// [`p2()`]
-    fn p1(&self) -> Point {
+    pub fn p1(&self) -> Point {
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).p1)(obj_data);
@@ -148,7 +142,7 @@ pub trait LineTrait<'a> {
     /// **See also:** [`x2()`]
     /// [`y2()`]
     /// [`p1()`]
-    fn p2(&self) -> Point {
+    pub fn p2(&self) -> Point {
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).p2)(obj_data);
@@ -166,7 +160,7 @@ pub trait LineTrait<'a> {
     /// Returns the x-coordinate of the line's start point.
     ///
     /// **See also:** [`p1()`]
-    fn x1(&self) -> i32 {
+    pub fn x1(&self) -> i32 {
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).x1)(obj_data);
@@ -177,7 +171,7 @@ pub trait LineTrait<'a> {
     /// Returns the y-coordinate of the line's start point.
     ///
     /// **See also:** [`p1()`]
-    fn y1(&self) -> i32 {
+    pub fn y1(&self) -> i32 {
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).y1)(obj_data);
@@ -188,7 +182,7 @@ pub trait LineTrait<'a> {
     /// Returns the x-coordinate of the line's end point.
     ///
     /// **See also:** [`p2()`]
-    fn x2(&self) -> i32 {
+    pub fn x2(&self) -> i32 {
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).x2)(obj_data);
@@ -199,7 +193,7 @@ pub trait LineTrait<'a> {
     /// Returns the y-coordinate of the line's end point.
     ///
     /// **See also:** [`p2()`]
-    fn y2(&self) -> i32 {
+    pub fn y2(&self) -> i32 {
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).y2)(obj_data);
@@ -210,7 +204,7 @@ pub trait LineTrait<'a> {
     /// Returns the horizontal component of the line's vector.
     ///
     /// **See also:** [`dy()`]
-    fn dx(&self) -> i32 {
+    pub fn dx(&self) -> i32 {
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dx)(obj_data);
@@ -221,7 +215,7 @@ pub trait LineTrait<'a> {
     /// Returns the vertical component of the line's vector.
     ///
     /// **See also:** [`dx()`]
-    fn dy(&self) -> i32 {
+    pub fn dy(&self) -> i32 {
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dy)(obj_data);
@@ -231,7 +225,7 @@ pub trait LineTrait<'a> {
     ///
     /// Returns the center point of this line. This is equivalent to
     /// (p1() + p2()) / 2, except it will never overflow.
-    fn center(&self) -> Point {
+    pub fn center(&self) -> Point {
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).center)(obj_data);
@@ -250,26 +244,28 @@ pub trait LineTrait<'a> {
     ///
     /// **See also:** [`set_p2()`]
     /// [`p1()`]
-    fn set_p1(&self, p1: &PointTrait) {
+    pub fn set_p1<P: PointTrait<'a>>(&self, p1: &P) -> &Self {
         let (obj_p1_1, _funcs) = p1.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             ((*funcs).set_p1)(obj_data, obj_p1_1);
         }
+        self
     }
     ///
     /// Sets the end point of this line to *p2.*
     ///
     /// **See also:** [`set_p1()`]
     /// [`p2()`]
-    fn set_p2(&self, p2: &PointTrait) {
+    pub fn set_p2<P: PointTrait<'a>>(&self, p2: &P) -> &Self {
         let (obj_p2_1, _funcs) = p2.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             ((*funcs).set_p2)(obj_data, obj_p2_1);
         }
+        self
     }
     ///
     /// Sets the start point of this line to *p1* and the end point of this line to *p2.*
@@ -278,7 +274,7 @@ pub trait LineTrait<'a> {
     /// [`set_p2()`]
     /// [`p1()`]
     /// [`p2()`]
-    fn set_points(&self, p1: &PointTrait, p2: &PointTrait) {
+    pub fn set_points<P: PointTrait<'a>>(&self, p1: &P, p2: &P) -> &Self {
         let (obj_p1_1, _funcs) = p1.get_point_obj_funcs();
         let (obj_p2_2, _funcs) = p2.get_point_obj_funcs();
 
@@ -286,6 +282,7 @@ pub trait LineTrait<'a> {
         unsafe {
             ((*funcs).set_points)(obj_data, obj_p1_1, obj_p2_2);
         }
+        self
     }
     ///
     /// Sets this line to the start in *x1,* *y1* and end in *x2,* *y2.*
@@ -294,19 +291,22 @@ pub trait LineTrait<'a> {
     /// [`set_p2()`]
     /// [`p1()`]
     /// [`p2()`]
-    fn set_line(&self, x1: i32, y1: i32, x2: i32, y2: i32) {
+    pub fn set_line(&self, x1: i32, y1: i32, x2: i32, y2: i32) -> &Self {
         let (obj_data, funcs) = self.get_line_obj_funcs();
         unsafe {
             ((*funcs).set_line)(obj_data, x1, y1, x2, y2);
         }
+        self
     }
-
+}
+pub trait LineTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_line_obj_funcs(&self) -> (*const RUBase, *const RULineFuncs);
 }
 
 impl<'a> LineTrait<'a> for Line<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_line_obj_funcs(&self) -> (*const RUBase, *const RULineFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).line_funcs) }

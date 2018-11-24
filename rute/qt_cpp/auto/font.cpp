@@ -121,21 +121,6 @@ static void font_set_bold(struct RUBase* self_c, bool arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void font_set_style(struct RUBase* self_c, int style) {
-    WRFont* qt_value = (WRFont*)self_c;
-    qt_value->setStyle((QFont::Style)s_style_lookup[style]);
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static int font_style(struct RUBase* self_c) {
-    WRFont* qt_value = (WRFont*)self_c;
-    auto ret_value = qt_value->style();
-    return s_style_lookup[(int)ret_value];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static bool font_italic(struct RUBase* self_c) {
     WRFont* qt_value = (WRFont*)self_c;
     auto ret_value = qt_value->italic();
@@ -490,8 +475,6 @@ struct RUFontFuncs s_font_funcs = {
     font_set_weight,
     font_bold,
     font_set_bold,
-    font_set_style,
-    font_style,
     font_italic,
     font_set_italic,
     font_underline,

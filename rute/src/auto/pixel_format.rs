@@ -17,13 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::pixel_format_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// In Qt there is a often a need to represent the layout of the pixels in a
 /// graphics buffer. Internally QPixelFormat stores everything in a 64 bit
@@ -51,9 +46,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct PixelFormat<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUPixelFormatAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -78,7 +77,8 @@ impl<'a> PixelFormat<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUPixelFormat) -> PixelFormat<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUPixelFormat) -> PixelFormat<'a> {
         PixelFormat {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -87,7 +87,8 @@ impl<'a> PixelFormat<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUPixelFormat) -> PixelFormat<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUPixelFormat) -> PixelFormat<'a> {
         PixelFormat {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -96,7 +97,8 @@ impl<'a> PixelFormat<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUPixelFormat) -> PixelFormat<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUPixelFormat) -> PixelFormat<'a> {
         PixelFormat {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -104,11 +106,9 @@ impl<'a> PixelFormat<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait PixelFormatTrait<'a> {
     ///
     /// Accessor function for getting the colorModel.
-    fn color_model(&self) -> ColorModel {
+    pub fn color_model(&self) -> ColorModel {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).color_model)(obj_data);
@@ -119,7 +119,7 @@ pub trait PixelFormatTrait<'a> {
     ///
     /// Accessor function for getting the channelCount. Channel Count is deduced
     /// by color channels with a size > 0 and if the size of the alpha channel is > 0.
-    fn channel_count(&self) -> u8 {
+    pub fn channel_count(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).channel_count)(obj_data);
@@ -128,7 +128,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for the size of the red color channel.
-    fn red_size(&self) -> u8 {
+    pub fn red_size(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).red_size)(obj_data);
@@ -137,7 +137,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for the size of the green color channel.
-    fn green_size(&self) -> u8 {
+    pub fn green_size(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).green_size)(obj_data);
@@ -146,7 +146,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for the size of the blue color channel.
-    fn blue_size(&self) -> u8 {
+    pub fn blue_size(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).blue_size)(obj_data);
@@ -155,7 +155,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for the cyan color channel.
-    fn cyan_size(&self) -> u8 {
+    pub fn cyan_size(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).cyan_size)(obj_data);
@@ -164,7 +164,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for the megenta color channel.
-    fn magenta_size(&self) -> u8 {
+    pub fn magenta_size(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).magenta_size)(obj_data);
@@ -173,7 +173,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for the yellow color channel.
-    fn yellow_size(&self) -> u8 {
+    pub fn yellow_size(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).yellow_size)(obj_data);
@@ -182,7 +182,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for the black/key color channel.
-    fn black_size(&self) -> u8 {
+    pub fn black_size(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).black_size)(obj_data);
@@ -191,7 +191,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for the hue channel size.
-    fn hue_size(&self) -> u8 {
+    pub fn hue_size(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hue_size)(obj_data);
@@ -200,7 +200,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for the saturation channel size.
-    fn saturation_size(&self) -> u8 {
+    pub fn saturation_size(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).saturation_size)(obj_data);
@@ -209,7 +209,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for the lightness channel size.
-    fn lightness_size(&self) -> u8 {
+    pub fn lightness_size(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).lightness_size)(obj_data);
@@ -218,7 +218,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for the brightness channel size.
-    fn brightness_size(&self) -> u8 {
+    pub fn brightness_size(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).brightness_size)(obj_data);
@@ -227,7 +227,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for the alpha channel size.
-    fn alpha_size(&self) -> u8 {
+    pub fn alpha_size(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alpha_size)(obj_data);
@@ -237,7 +237,7 @@ pub trait PixelFormatTrait<'a> {
     ///
     /// Accessor function for the bits used per pixel. This function returns the
     /// sum of the color channels + the size of the alpha channel.
-    fn bits_per_pixel(&self) -> u8 {
+    pub fn bits_per_pixel(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bits_per_pixel)(obj_data);
@@ -246,7 +246,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for alphaUsage.
-    fn alpha_usage(&self) -> AlphaUsage {
+    pub fn alpha_usage(&self) -> AlphaUsage {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alpha_usage)(obj_data);
@@ -256,7 +256,7 @@ pub trait PixelFormatTrait<'a> {
     }
     ///
     /// Accessor function for alphaPosition.
-    fn alpha_position(&self) -> AlphaPosition {
+    pub fn alpha_position(&self) -> AlphaPosition {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alpha_position)(obj_data);
@@ -268,7 +268,7 @@ pub trait PixelFormatTrait<'a> {
     /// Accessor function for the AlphaPremultiplied enum. This indicates if the
     /// alpha channel is multiplied in to the color channels.
     ///
-    fn premultiplied(&self) -> AlphaPremultiplied {
+    pub fn premultiplied(&self) -> AlphaPremultiplied {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).premultiplied)(obj_data);
@@ -280,7 +280,7 @@ pub trait PixelFormatTrait<'a> {
     /// Accessor function for the type representation of a color channel or a pixel.
     ///
     /// **See also:** TypeInterpretation
-    fn type_interpretation(&self) -> TypeInterpretation {
+    pub fn type_interpretation(&self) -> TypeInterpretation {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).type_interpretation)(obj_data);
@@ -293,7 +293,7 @@ pub trait PixelFormatTrait<'a> {
     /// system. However, it can be useful to describe some YUV formats. This
     /// function should never return QPixelFormat::CurrentSystemEndian as this
     /// value is translated to a endian value in the constructor.
-    fn byte_order(&self) -> ByteOrder {
+    pub fn byte_order(&self) -> ByteOrder {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).byte_order)(obj_data);
@@ -305,7 +305,7 @@ pub trait PixelFormatTrait<'a> {
     /// Accessor function for the YUVLayout. It is difficult to describe the color
     /// channels of a YUV pixel format since YUV color model uses macro pixels.
     /// Instead the layout of the pixels are stored as an enum.
-    fn yuv_layout(&self) -> YUVLayout {
+    pub fn yuv_layout(&self) -> YUVLayout {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).yuv_layout)(obj_data);
@@ -313,20 +313,22 @@ pub trait PixelFormatTrait<'a> {
             ret_val
         }
     }
-    fn sub_enum(&self) -> u8 {
+    pub fn sub_enum(&self) -> u8 {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).sub_enum)(obj_data);
             ret_val
         }
     }
-
+}
+pub trait PixelFormatTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_pixel_format_obj_funcs(&self) -> (*const RUBase, *const RUPixelFormatFuncs);
 }
 
 impl<'a> PixelFormatTrait<'a> for PixelFormat<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_pixel_format_obj_funcs(&self) -> (*const RUBase, *const RUPixelFormatFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).pixel_format_funcs) }

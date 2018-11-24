@@ -17,6 +17,7 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
 use auto::rute_ffi::*;
 
@@ -36,7 +37,7 @@ pub fn rute_ffi_get() -> *const RuteFFI {
     }
 }
 
-pub unsafe extern "C" fn rute_object_delete_callback(data: *const c_void) {
+pub(crate) unsafe extern "C" fn rute_object_delete_callback(data: *const c_void) {
     let d = Rc::from_raw(data as *const Cell<Option<RUBase>>);
     d.set(None);
 }

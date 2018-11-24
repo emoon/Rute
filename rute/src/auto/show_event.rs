@@ -17,17 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::event::*;
-#[allow(unused_imports)]
-use auto::event_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::show_event_ffi::*;
 ///
 /// There are two kinds of show events: show events caused by the
 /// window system (spontaneous), and internal show events. Spontaneous (QEvent::spontaneous())
@@ -42,14 +33,19 @@ use auto::show_event_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct ShowEvent<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUShowEventAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> ShowEvent<'a> {
-    pub fn new_from_rc(ffi_data: RUShowEvent) -> ShowEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUShowEvent) -> ShowEvent<'a> {
         ShowEvent {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -58,7 +54,8 @@ impl<'a> ShowEvent<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUShowEvent) -> ShowEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUShowEvent) -> ShowEvent<'a> {
         ShowEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -67,7 +64,8 @@ impl<'a> ShowEvent<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUShowEvent) -> ShowEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUShowEvent) -> ShowEvent<'a> {
         ShowEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -75,14 +73,55 @@ impl<'a> ShowEvent<'a> {
             _marker: PhantomData,
         }
     }
+    #[doc(hidden)]
+    pub fn spontaneous(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).spontaneous)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_accepted(&self, accepted: bool) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_accepted)(obj_data, accepted);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_accepted(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_accepted)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn accept(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).accept)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn ignore(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).ignore)(obj_data);
+        }
+        self
+    }
 }
 pub trait ShowEventTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_show_event_obj_funcs(&self) -> (*const RUBase, *const RUShowEventFuncs);
 }
 
 impl<'a> EventTrait<'a> for ShowEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).event_funcs) }
@@ -90,7 +129,7 @@ impl<'a> EventTrait<'a> for ShowEvent<'a> {
 }
 
 impl<'a> ShowEventTrait<'a> for ShowEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_show_event_obj_funcs(&self) -> (*const RUBase, *const RUShowEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).show_event_funcs) }

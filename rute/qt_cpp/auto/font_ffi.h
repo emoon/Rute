@@ -31,8 +31,6 @@ typedef struct RUFontFuncs {
     void (*set_weight)(struct RUBase* self_c, int arg0);
     bool (*bold)(struct RUBase* self_c);
     void (*set_bold)(struct RUBase* self_c, bool arg0);
-    void (*set_style)(struct RUBase* self_c, int style);
-    int (*style)(struct RUBase* self_c);
     bool (*italic)(struct RUBase* self_c);
     void (*set_italic)(struct RUBase* self_c, bool b);
     bool (*underline)(struct RUBase* self_c);

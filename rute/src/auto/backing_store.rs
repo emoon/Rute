@@ -17,37 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::backing_store_ffi::*;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point::PointTrait;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::region::Region;
-#[allow(unused_imports)]
-use auto::region::RegionTrait;
-#[allow(unused_imports)]
-use auto::region_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::size::Size;
-#[allow(unused_imports)]
-use auto::size::SizeTrait;
-#[allow(unused_imports)]
-use auto::size_ffi::*;
-#[allow(unused_imports)]
-use auto::window::Window;
-#[allow(unused_imports)]
-use auto::window::WindowTrait;
-#[allow(unused_imports)]
-use auto::window_ffi::*;
 ///
 /// QBackingStore enables the use of QPainter to paint on a QWindow with type
 /// RasterSurface. The other way of rendering to a QWindow is through the use
@@ -67,14 +38,19 @@ use auto::window_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct BackingStore<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUBackingStoreAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> BackingStore<'a> {
-    pub fn new_from_rc(ffi_data: RUBackingStore) -> BackingStore<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUBackingStore) -> BackingStore<'a> {
         BackingStore {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -83,7 +59,8 @@ impl<'a> BackingStore<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUBackingStore) -> BackingStore<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUBackingStore) -> BackingStore<'a> {
         BackingStore {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -92,7 +69,8 @@ impl<'a> BackingStore<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUBackingStore) -> BackingStore<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUBackingStore) -> BackingStore<'a> {
         BackingStore {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -100,8 +78,6 @@ impl<'a> BackingStore<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait BackingStoreTrait<'a> {
     ///
     /// Returns a pointer to the top-level window associated with this
     /// surface.
@@ -125,7 +101,12 @@ pub trait BackingStoreTrait<'a> {
     /// You should call this function after ending painting with endPaint().
     ///
     /// **See also:** [`Window::transient_parent`]
-    fn flush(&self, region: &RegionTrait, window: &WindowTrait, offset: &PointTrait) {
+    pub fn flush<P: PointTrait<'a>, R: RegionTrait<'a>, W: WindowTrait<'a>>(
+        &self,
+        region: &R,
+        window: &W,
+        offset: &P,
+    ) -> &Self {
         let (obj_region_1, _funcs) = region.get_region_obj_funcs();
         let (obj_window_2, _funcs) = window.get_window_obj_funcs();
         let (obj_offset_3, _funcs) = offset.get_point_obj_funcs();
@@ -134,22 +115,24 @@ pub trait BackingStoreTrait<'a> {
         unsafe {
             ((*funcs).flush)(obj_data, obj_region_1, obj_window_2, obj_offset_3);
         }
+        self
     }
     ///
     /// Sets the size of the window surface to *size.*
     ///
     /// **See also:** [`size()`]
-    fn resize(&self, size: &SizeTrait) {
+    pub fn resize<S: SizeTrait<'a>>(&self, size: &S) -> &Self {
         let (obj_size_1, _funcs) = size.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_backing_store_obj_funcs();
         unsafe {
             ((*funcs).resize)(obj_data, obj_size_1);
         }
+        self
     }
     ///
     /// Returns the current size of the window surface.
-    fn size(&self) -> Size {
+    pub fn size(&self) -> Size {
         let (obj_data, funcs) = self.get_backing_store_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).size)(obj_data);
@@ -168,7 +151,7 @@ pub trait BackingStoreTrait<'a> {
     /// downward; both *dx* and *dy* may be negative.
     ///
     /// Returns `true` if the area was scrolled successfully; false otherwise.
-    fn scroll(&self, area: &RegionTrait, dx: i32, dy: i32) -> bool {
+    pub fn scroll<R: RegionTrait<'a>>(&self, area: &R, dx: i32, dy: i32) -> bool {
         let (obj_area_1, _funcs) = area.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_backing_store_obj_funcs();
@@ -185,13 +168,14 @@ pub trait BackingStoreTrait<'a> {
     ///
     /// **See also:** [`end_paint()`]
     /// [`paint_device()`]
-    fn begin_paint(&self, arg0: &RegionTrait) {
+    pub fn begin_paint<R: RegionTrait<'a>>(&self, arg0: &R) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_backing_store_obj_funcs();
         unsafe {
             ((*funcs).begin_paint)(obj_data, obj_arg0_1);
         }
+        self
     }
     ///
     /// Ends painting.
@@ -201,26 +185,28 @@ pub trait BackingStoreTrait<'a> {
     ///
     /// **See also:** [`begin_paint()`]
     /// [`paint_device()`]
-    fn end_paint(&self) {
+    pub fn end_paint(&self) -> &Self {
         let (obj_data, funcs) = self.get_backing_store_obj_funcs();
         unsafe {
             ((*funcs).end_paint)(obj_data);
         }
+        self
     }
     ///
     /// Set *region* as the static contents of this window.
-    fn set_static_contents(&self, region: &RegionTrait) {
+    pub fn set_static_contents<R: RegionTrait<'a>>(&self, region: &R) -> &Self {
         let (obj_region_1, _funcs) = region.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_backing_store_obj_funcs();
         unsafe {
             ((*funcs).set_static_contents)(obj_data, obj_region_1);
         }
+        self
     }
     ///
     /// Returns a QRegion representing the area of the window that
     /// has static contents.
-    fn static_contents(&self) -> Region {
+    pub fn static_contents(&self) -> Region {
         let (obj_data, funcs) = self.get_backing_store_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).static_contents)(obj_data);
@@ -236,20 +222,22 @@ pub trait BackingStoreTrait<'a> {
     }
     ///
     /// Returns a boolean indicating if this window has static contents or not.
-    fn has_static_contents(&self) -> bool {
+    pub fn has_static_contents(&self) -> bool {
         let (obj_data, funcs) = self.get_backing_store_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).has_static_contents)(obj_data);
             ret_val
         }
     }
-
+}
+pub trait BackingStoreTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_backing_store_obj_funcs(&self) -> (*const RUBase, *const RUBackingStoreFuncs);
 }
 
 impl<'a> BackingStoreTrait<'a> for BackingStore<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_backing_store_obj_funcs(&self) -> (*const RUBase, *const RUBackingStoreFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).backing_store_funcs) }

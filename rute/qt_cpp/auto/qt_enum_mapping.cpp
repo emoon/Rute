@@ -150,7 +150,6 @@ std::map<int, int> s_standard_pixmap_lookup;
 std::map<int, int> s_state_lookup;
 std::map<int, int> s_state_flag_lookup;
 std::map<int, int> s_stretch_lookup;
-std::map<int, int> s_style_lookup;
 std::map<int, int> s_style_hint_lookup;
 std::map<int, int> s_style_strategy_lookup;
 std::map<int, int> s_sub_control_lookup;
@@ -2623,16 +2622,6 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 10; ++i) {
         s_stretch_lookup[stretch_vals[i].key] = stretch_vals[i].val;
-    }
-
-    static KeyVal style_vals[] = {
-        {(int)QFont::StyleNormal, 0},
-        {(int)QFont::StyleItalic, 1},
-        {(int)QFont::StyleOblique, 2},
-    };
-
-    for (int i = 0; i < 3; ++i) {
-        s_style_lookup[style_vals[i].key] = style_vals[i].val;
     }
 
     static KeyVal style_hint_vals[] = {

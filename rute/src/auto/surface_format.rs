@@ -17,13 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::surface_format_ffi::*;
 ///
 /// The format includes the size of the color buffers, red, green, and blue;
 /// the size of the alpha buffer; the size of the depth and stencil buffers;
@@ -42,9 +37,13 @@ use auto::surface_format_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct SurfaceFormat<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUSurfaceFormatAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -69,7 +68,8 @@ impl<'a> SurfaceFormat<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUSurfaceFormat) -> SurfaceFormat<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUSurfaceFormat) -> SurfaceFormat<'a> {
         SurfaceFormat {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -78,7 +78,8 @@ impl<'a> SurfaceFormat<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUSurfaceFormat) -> SurfaceFormat<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUSurfaceFormat) -> SurfaceFormat<'a> {
         SurfaceFormat {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -87,7 +88,8 @@ impl<'a> SurfaceFormat<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUSurfaceFormat) -> SurfaceFormat<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUSurfaceFormat) -> SurfaceFormat<'a> {
         SurfaceFormat {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -95,28 +97,22 @@ impl<'a> SurfaceFormat<'a> {
             _marker: PhantomData,
         }
     }
-}
-
-pub struct SurfaceFormatStatic<'a> {
-    pub all_funcs: *const RUSurfaceFormatAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait SurfaceFormatTrait<'a> {
     ///
     /// Set the minimum depth buffer size to *size.*
     ///
     /// **See also:** [`depth_buffer_size()`]
-    fn set_depth_buffer_size(&self, size: i32) {
+    pub fn set_depth_buffer_size(&self, size: i32) -> &Self {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_depth_buffer_size)(obj_data, size);
         }
+        self
     }
     ///
     /// Returns the depth buffer size.
     ///
     /// **See also:** [`set_depth_buffer_size()`]
-    fn depth_buffer_size(&self) -> i32 {
+    pub fn depth_buffer_size(&self) -> i32 {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).depth_buffer_size)(obj_data);
@@ -127,17 +123,18 @@ pub trait SurfaceFormatTrait<'a> {
     /// Set the preferred stencil buffer size to *size* bits.
     ///
     /// **See also:** [`stencil_buffer_size()`]
-    fn set_stencil_buffer_size(&self, size: i32) {
+    pub fn set_stencil_buffer_size(&self, size: i32) -> &Self {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_stencil_buffer_size)(obj_data, size);
         }
+        self
     }
     ///
     /// Returns the stencil buffer size in bits.
     ///
     /// **See also:** [`set_stencil_buffer_size()`]
-    fn stencil_buffer_size(&self) -> i32 {
+    pub fn stencil_buffer_size(&self) -> i32 {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).stencil_buffer_size)(obj_data);
@@ -150,15 +147,16 @@ pub trait SurfaceFormatTrait<'a> {
     /// **Note**: On Mac OSX, be sure to set the buffer size of all color channels,
     /// otherwise this setting will have no effect. If one of the buffer sizes is not set,
     /// the current bit-depth of the screen is used.
-    fn set_red_buffer_size(&self, size: i32) {
+    pub fn set_red_buffer_size(&self, size: i32) -> &Self {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_red_buffer_size)(obj_data, size);
         }
+        self
     }
     ///
     /// Get the size in bits of the red channel of the color buffer.
-    fn red_buffer_size(&self) -> i32 {
+    pub fn red_buffer_size(&self) -> i32 {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).red_buffer_size)(obj_data);
@@ -171,15 +169,16 @@ pub trait SurfaceFormatTrait<'a> {
     /// **Note**: On Mac OSX, be sure to set the buffer size of all color channels,
     /// otherwise this setting will have no effect. If one of the buffer sizes is not set,
     /// the current bit-depth of the screen is used.
-    fn set_green_buffer_size(&self, size: i32) {
+    pub fn set_green_buffer_size(&self, size: i32) -> &Self {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_green_buffer_size)(obj_data, size);
         }
+        self
     }
     ///
     /// Get the size in bits of the green channel of the color buffer.
-    fn green_buffer_size(&self) -> i32 {
+    pub fn green_buffer_size(&self) -> i32 {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).green_buffer_size)(obj_data);
@@ -192,15 +191,16 @@ pub trait SurfaceFormatTrait<'a> {
     /// **Note**: On Mac OSX, be sure to set the buffer size of all color channels,
     /// otherwise this setting will have no effect. If one of the buffer sizes is not set,
     /// the current bit-depth of the screen is used.
-    fn set_blue_buffer_size(&self, size: i32) {
+    pub fn set_blue_buffer_size(&self, size: i32) -> &Self {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_blue_buffer_size)(obj_data, size);
         }
+        self
     }
     ///
     /// Get the size in bits of the blue channel of the color buffer.
-    fn blue_buffer_size(&self) -> i32 {
+    pub fn blue_buffer_size(&self) -> i32 {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).blue_buffer_size)(obj_data);
@@ -209,15 +209,16 @@ pub trait SurfaceFormatTrait<'a> {
     }
     ///
     /// Set the desired *size* in bits of the alpha channel of the color buffer.
-    fn set_alpha_buffer_size(&self, size: i32) {
+    pub fn set_alpha_buffer_size(&self, size: i32) -> &Self {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_alpha_buffer_size)(obj_data, size);
         }
+        self
     }
     ///
     /// Get the size in bits of the alpha channel of the color buffer.
-    fn alpha_buffer_size(&self) -> i32 {
+    pub fn alpha_buffer_size(&self) -> i32 {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alpha_buffer_size)(obj_data);
@@ -229,18 +230,19 @@ pub trait SurfaceFormatTrait<'a> {
     /// is enabled to *numSamples.* By default, multisampling is disabled.
     ///
     /// **See also:** [`samples()`]
-    fn set_samples(&self, num_samples: i32) {
+    pub fn set_samples(&self, num_samples: i32) -> &Self {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_samples)(obj_data, num_samples);
         }
+        self
     }
     ///
     /// Returns the number of samples per pixel when multisampling is
     /// enabled. By default, multisampling is disabled.
     ///
     /// **See also:** [`set_samples()`]
-    fn samples(&self) -> i32 {
+    pub fn samples(&self) -> i32 {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).samples)(obj_data);
@@ -253,19 +255,20 @@ pub trait SurfaceFormatTrait<'a> {
     /// The swap behavior specifies whether single, double, or triple
     /// buffering is desired. The default, DefaultSwapBehavior,
     /// gives the default swap behavior of the platform.
-    fn set_swap_behavior(&self, behavior: SwapBehavior) {
+    pub fn set_swap_behavior(&self, behavior: SwapBehavior) -> &Self {
         let enum_behavior_1 = behavior as i32;
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_swap_behavior)(obj_data, enum_behavior_1);
         }
+        self
     }
     ///
     /// Returns the configured swap behaviour.
     ///
     /// **See also:** [`set_swap_behavior()`]
-    fn swap_behavior(&self) -> SwapBehavior {
+    pub fn swap_behavior(&self) -> SwapBehavior {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).swap_behavior)(obj_data);
@@ -278,7 +281,7 @@ pub trait SurfaceFormatTrait<'a> {
     ///
     /// This means that the surface might be used with per pixel
     /// translucency effects.
-    fn has_alpha(&self) -> bool {
+    pub fn has_alpha(&self) -> bool {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).has_alpha)(obj_data);
@@ -290,20 +293,21 @@ pub trait SurfaceFormatTrait<'a> {
     ///
     /// This setting is ignored if the requested OpenGL version is
     /// less than 3.2.
-    fn set_profile(&self, profile: OpenGLContextProfile) {
+    pub fn set_profile(&self, profile: OpenGLContextProfile) -> &Self {
         let enum_profile_1 = profile as i32;
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_profile)(obj_data, enum_profile_1);
         }
+        self
     }
     ///
     /// Get the configured OpenGL context profile.
     ///
     /// This setting is ignored if the requested OpenGL version is
     /// less than 3.2.
-    fn profile(&self) -> OpenGLContextProfile {
+    pub fn profile(&self) -> OpenGLContextProfile {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).profile)(obj_data);
@@ -315,19 +319,20 @@ pub trait SurfaceFormatTrait<'a> {
     /// Sets the desired renderable *type.*
     ///
     /// Chooses between desktop OpenGL, OpenGL ES, and OpenVG.
-    fn set_renderable_type(&self, stype: RenderableType) {
+    pub fn set_renderable_type(&self, stype: RenderableType) -> &Self {
         let enum_stype_1 = stype as i32;
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_renderable_type)(obj_data, enum_stype_1);
         }
+        self
     }
     ///
     /// Gets the renderable type.
     ///
     /// Chooses between desktop OpenGL, OpenGL ES, and OpenVG.
-    fn renderable_type(&self) -> RenderableType {
+    pub fn renderable_type(&self) -> RenderableType {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).renderable_type)(obj_data);
@@ -337,17 +342,18 @@ pub trait SurfaceFormatTrait<'a> {
     }
     ///
     /// Sets the desired *major* OpenGL version.
-    fn set_major_version(&self, major_version: i32) {
+    pub fn set_major_version(&self, major_version: i32) -> &Self {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_major_version)(obj_data, major_version);
         }
+        self
     }
     ///
     /// Returns the major OpenGL version.
     ///
     /// The default version is 2.0.
-    fn major_version(&self) -> i32 {
+    pub fn major_version(&self) -> i32 {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).major_version)(obj_data);
@@ -358,15 +364,16 @@ pub trait SurfaceFormatTrait<'a> {
     /// Sets the desired *minor* OpenGL version.
     ///
     /// The default version is 2.0.
-    fn set_minor_version(&self, minor_version: i32) {
+    pub fn set_minor_version(&self, minor_version: i32) -> &Self {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_minor_version)(obj_data, minor_version);
         }
+        self
     }
     ///
     /// Returns the minor OpenGL version.
-    fn minor_version(&self) -> i32 {
+    pub fn minor_version(&self) -> i32 {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).minor_version)(obj_data);
@@ -377,18 +384,19 @@ pub trait SurfaceFormatTrait<'a> {
     /// Sets the desired *major* and *minor* OpenGL versions.
     ///
     /// The default version is 2.0.
-    fn set_version(&self, major: i32, minor: i32) {
+    pub fn set_version(&self, major: i32, minor: i32) -> &Self {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_version)(obj_data, major, minor);
         }
+        self
     }
     ///
     /// Returns `true` if stereo buffering is enabled; otherwise returns
     /// false. Stereo buffering is disabled by default.
     ///
     /// **See also:** [`set_stereo()`]
-    fn stereo(&self) -> bool {
+    pub fn stereo(&self) -> bool {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).stereo)(obj_data);
@@ -405,11 +413,12 @@ pub trait SurfaceFormatTrait<'a> {
     /// and right-eye images.
     ///
     /// **See also:** [`stereo()`]
-    fn set_stereo(&self, enable: bool) {
+    pub fn set_stereo(&self, enable: bool) -> &Self {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_stereo)(obj_data, enable);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -431,13 +440,14 @@ pub trait SurfaceFormatTrait<'a> {
     /// **See also:** [`set_options()`]
     /// [`options()`]
     /// [`test_option()`]
-    fn set_option(&self, opt: FormatOptions) {
+    pub fn set_option(&self, opt: FormatOptions) -> &Self {
         let enum_opt_1 = opt as i32;
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_option)(obj_data, enum_opt_1);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -451,7 +461,7 @@ pub trait SurfaceFormatTrait<'a> {
     /// Returns true if the format option *option* is set; otherwise returns false.
     ///
     /// **See also:** [`options()`]
-    fn test_option(&self, opt: FormatOptions) -> bool {
+    pub fn test_option(&self, opt: FormatOptions) -> bool {
         let enum_opt_1 = opt as i32;
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
@@ -465,13 +475,14 @@ pub trait SurfaceFormatTrait<'a> {
     ///
     /// **See also:** [`options()`]
     /// [`test_option()`]
-    fn set_options(&self, options: FormatOptions) {
+    pub fn set_options(&self, options: FormatOptions) -> &Self {
         let enum_options_1 = options as i32;
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_options)(obj_data, enum_options_1);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -493,13 +504,14 @@ pub trait SurfaceFormatTrait<'a> {
     /// **See also:** [`set_options()`]
     /// [`options()`]
     /// [`test_option()`]
-    fn set_option_2(&self, option: FormatOption, on: bool) {
+    pub fn set_option_2(&self, option: FormatOption, on: bool) -> &Self {
         let enum_option_1 = option as i32;
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_option_2)(obj_data, enum_option_1, on);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -513,7 +525,7 @@ pub trait SurfaceFormatTrait<'a> {
     /// Returns true if the format option *option* is set; otherwise returns false.
     ///
     /// **See also:** [`options()`]
-    fn test_option_2(&self, option: FormatOption) -> bool {
+    pub fn test_option_2(&self, option: FormatOption) -> bool {
         let enum_option_1 = option as i32;
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
@@ -528,7 +540,7 @@ pub trait SurfaceFormatTrait<'a> {
     /// **See also:** [`set_option()`]
     /// [`set_options()`]
     /// [`test_option()`]
-    fn options(&self) -> FormatOptions {
+    pub fn options(&self) -> FormatOptions {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).options)(obj_data);
@@ -540,7 +552,7 @@ pub trait SurfaceFormatTrait<'a> {
     /// Returns the swap interval.
     ///
     /// **See also:** [`set_swap_interval()`]
-    fn swap_interval(&self) -> i32 {
+    pub fn swap_interval(&self) -> i32 {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).swap_interval)(obj_data);
@@ -564,17 +576,18 @@ pub trait SurfaceFormatTrait<'a> {
     /// platform. In this case, the request will be silently ignored.
     ///
     /// **See also:** [`swap_interval()`]
-    fn set_swap_interval(&self, interval: i32) {
+    pub fn set_swap_interval(&self, interval: i32) -> &Self {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_swap_interval)(obj_data, interval);
         }
+        self
     }
     ///
     /// **Returns** the color space.
     ///
     /// **See also:** [`set_color_space()`]
-    fn color_space(&self) -> ColorSpace {
+    pub fn color_space(&self) -> ColorSpace {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).color_space)(obj_data);
@@ -600,27 +613,15 @@ pub trait SurfaceFormatTrait<'a> {
     /// standard linear operations.
     ///
     /// **See also:** [`color_space()`]
-    fn set_color_space(&self, color_space: ColorSpace) {
+    pub fn set_color_space(&self, color_space: ColorSpace) -> &Self {
         let enum_color_space_1 = color_space as i32;
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             ((*funcs).set_color_space)(obj_data, enum_color_space_1);
         }
+        self
     }
-
-    #[inline]
-    fn get_surface_format_obj_funcs(&self) -> (*const RUBase, *const RUSurfaceFormatFuncs);
-}
-
-impl<'a> SurfaceFormatTrait<'a> for SurfaceFormat<'a> {
-    #[inline]
-    fn get_surface_format_obj_funcs(&self) -> (*const RUBase, *const RUSurfaceFormatFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).surface_format_funcs) }
-    }
-}
-pub trait SurfaceFormatStaticTrait {
     ///
     /// Sets the global default surface *format.*
     ///
@@ -642,7 +643,7 @@ pub trait SurfaceFormatStaticTrait {
     /// afterwards.
     ///
     /// **See also:** [`default_format()`]
-    fn set_default_format<'a>(format: &SurfaceFormatTrait<'a>) {
+    pub fn set_default_format<S: SurfaceFormatTrait<'a>>(format: &S) {
         let (obj_format_1, _funcs) = format.get_surface_format_obj_funcs();
 
         let (obj_data, funcs) = unsafe {
@@ -662,7 +663,7 @@ pub trait SurfaceFormatStaticTrait {
     /// When setDefaultFormat() is not called, this is a default-constructed QSurfaceFormat.
     ///
     /// **See also:** [`set_default_format()`]
-    fn default_format<'a>() -> SurfaceFormat<'a> {
+    pub fn default_format() -> SurfaceFormat<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -683,10 +684,19 @@ pub trait SurfaceFormatStaticTrait {
         }
     }
 }
+pub trait SurfaceFormatTrait<'a> {
+    #[inline]
+    #[doc(hidden)]
+    fn get_surface_format_obj_funcs(&self) -> (*const RUBase, *const RUSurfaceFormatFuncs);
+}
 
-impl<'a> SurfaceFormatStaticTrait for SurfaceFormat<'a> {}
-
-impl<'a> SurfaceFormatStaticTrait for SurfaceFormatStatic<'a> {}
+impl<'a> SurfaceFormatTrait<'a> for SurfaceFormat<'a> {
+    #[doc(hidden)]
+    fn get_surface_format_obj_funcs(&self) -> (*const RUBase, *const RUSurfaceFormatFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).surface_format_funcs) }
+    }
+}
 #[repr(u32)]
 pub enum FormatOption {
     StereoBuffers,

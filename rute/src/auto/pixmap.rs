@@ -17,81 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::bitmap::Bitmap;
-#[allow(unused_imports)]
-use auto::bitmap::BitmapTrait;
-#[allow(unused_imports)]
-use auto::bitmap_ffi::*;
-#[allow(unused_imports)]
-use auto::color::Color;
-#[allow(unused_imports)]
-use auto::color::ColorTrait;
-#[allow(unused_imports)]
-use auto::color_ffi::*;
-#[allow(unused_imports)]
-use auto::image::Image;
-#[allow(unused_imports)]
-use auto::image::ImageTrait;
-#[allow(unused_imports)]
-use auto::image_ffi::*;
-#[allow(unused_imports)]
-use auto::object::Object;
-#[allow(unused_imports)]
-use auto::object::ObjectTrait;
-#[allow(unused_imports)]
-use auto::object_ffi::*;
-#[allow(unused_imports)]
-use auto::paint_device::PaintDevice;
-#[allow(unused_imports)]
-use auto::paint_device::PaintDeviceTrait;
-#[allow(unused_imports)]
-use auto::paint_device::*;
-#[allow(unused_imports)]
-use auto::paint_device_ffi::*;
-#[allow(unused_imports)]
-use auto::paint_device_ffi::*;
-#[allow(unused_imports)]
-use auto::paint_engine::PaintEngine;
-#[allow(unused_imports)]
-use auto::pixmap_ffi::*;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point::PointTrait;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::rect::Rect;
-#[allow(unused_imports)]
-use auto::rect::RectTrait;
-#[allow(unused_imports)]
-use auto::rect_ffi::*;
-#[allow(unused_imports)]
-use auto::region::Region;
-#[allow(unused_imports)]
-use auto::region::RegionTrait;
-#[allow(unused_imports)]
-use auto::region_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::AspectRatioMode;
-#[allow(unused_imports)]
-use auto::rute_enums::ImageConversionFlags;
-#[allow(unused_imports)]
-use auto::rute_enums::MaskMode;
-#[allow(unused_imports)]
-use auto::rute_enums::TransformationMode;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::size::Size;
-#[allow(unused_imports)]
-use auto::size::SizeTrait;
-#[allow(unused_imports)]
-use auto::size_ffi::*;
 ///
 /// Qt provides four classes for handling image data: QImage, QPixmap,
 /// QBitmap and QPicture. QImage is designed and optimized for I/O,
@@ -241,9 +168,13 @@ use auto::size_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Pixmap<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUPixmapAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -268,7 +199,8 @@ impl<'a> Pixmap<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUPixmap) -> Pixmap<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUPixmap) -> Pixmap<'a> {
         Pixmap {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -277,7 +209,8 @@ impl<'a> Pixmap<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUPixmap) -> Pixmap<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUPixmap) -> Pixmap<'a> {
         Pixmap {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -286,7 +219,8 @@ impl<'a> Pixmap<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUPixmap) -> Pixmap<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUPixmap) -> Pixmap<'a> {
         Pixmap {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -294,30 +228,24 @@ impl<'a> Pixmap<'a> {
             _marker: PhantomData,
         }
     }
-}
-
-pub struct PixmapStatic<'a> {
-    pub all_funcs: *const RUPixmapAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait PixmapTrait<'a> {
     ///
     /// Swaps pixmap *other* with this pixmap. This operation is very
     /// fast and never fails.
-    fn swap(&self, other: &PixmapTrait) {
+    pub fn swap<P: PixmapTrait<'a>>(&self, other: &P) -> &Self {
         let (obj_other_1, _funcs) = other.get_pixmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
+        self
     }
     ///
     /// Returns `true` if this is a null pixmap; otherwise returns `false.`
     ///
     /// A null pixmap has zero width, zero height and no contents. You
     /// cannot draw in a null pixmap.
-    fn is_null(&self) -> bool {
+    pub fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_null)(obj_data);
@@ -329,7 +257,7 @@ pub trait PixmapTrait<'a> {
     ///
     /// **See also:** [`size()`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
-    fn width(&self) -> i32 {
+    pub fn width(&self) -> i32 {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).width)(obj_data);
@@ -341,7 +269,7 @@ pub trait PixmapTrait<'a> {
     ///
     /// **See also:** [`size()`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
-    fn height(&self) -> i32 {
+    pub fn height(&self) -> i32 {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).height)(obj_data);
@@ -355,7 +283,7 @@ pub trait PixmapTrait<'a> {
     /// [`height()`]
     /// {QPixmap#Pixmap Information}{Pixmap
     /// Information}
-    fn size(&self) -> Size {
+    pub fn size(&self) -> Size {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).size)(obj_data);
@@ -373,7 +301,7 @@ pub trait PixmapTrait<'a> {
     /// Returns the pixmap's enclosing rectangle.
     ///
     /// **See also:** {QPixmap#Pixmap Information}{Pixmap Information}
-    fn rect(&self) -> Rect {
+    pub fn rect(&self) -> Rect {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rect)(obj_data);
@@ -396,10 +324,33 @@ pub trait PixmapTrait<'a> {
     /// **See also:** [`default_depth()`]
     /// {QPixmap#Pixmap Information}{Pixmap
     /// Information}
-    fn depth(&self) -> i32 {
+    pub fn depth(&self) -> i32 {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).depth)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Returns the default pixmap depth used by the application.
+    ///
+    /// On all platforms the depth of the primary screen will be returned.
+    ///
+    /// **Note**: QGuiApplication must be created before calling this function.
+    ///
+    /// **See also:** [`depth()`]
+    /// [`Colormap::depth`]
+    /// {QPixmap#Pixmap Information}{Pixmap Information}
+    ///
+    pub fn default_depth() -> i32 {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_pixmap)(::std::ptr::null()).all_funcs).pixmap_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).default_depth)(obj_data);
             ret_val
         }
     }
@@ -414,13 +365,14 @@ pub trait PixmapTrait<'a> {
     /// being painted on.
     ///
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fn fill(&self, fill_color: &ColorTrait) {
+    pub fn fill<C: ColorTrait<'a>>(&self, fill_color: &C) -> &Self {
         let (obj_fill_color_1, _funcs) = fill_color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             ((*funcs).fill)(obj_data, obj_fill_color_1);
         }
+        self
     }
     ///
     /// Use QPainter or the fill(QColor) overload instead.
@@ -433,7 +385,7 @@ pub trait PixmapTrait<'a> {
     /// being painted on.
     ///
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fn fill_2(&self, device: &PaintDeviceTrait, ofs: &PointTrait) {
+    pub fn fill_2<P: PaintDeviceTrait<'a>, Q: PointTrait<'a>>(&self, device: &P, ofs: &Q) -> &Self {
         let (obj_device_1, _funcs) = device.get_paint_device_obj_funcs();
         let (obj_ofs_2, _funcs) = ofs.get_point_obj_funcs();
 
@@ -441,6 +393,7 @@ pub trait PixmapTrait<'a> {
         unsafe {
             ((*funcs).fill_2)(obj_data, obj_device_1, obj_ofs_2);
         }
+        self
     }
     ///
     /// Use QPainter or the fill(QColor) overload instead.
@@ -453,13 +406,14 @@ pub trait PixmapTrait<'a> {
     /// being painted on.
     ///
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fn fill_3(&self, device: &PaintDeviceTrait, xofs: i32, yofs: i32) {
+    pub fn fill_3<P: PaintDeviceTrait<'a>>(&self, device: &P, xofs: i32, yofs: i32) -> &Self {
         let (obj_device_1, _funcs) = device.get_paint_device_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             ((*funcs).fill_3)(obj_data, obj_device_1, xofs, yofs);
         }
+        self
     }
     ///
     /// Extracts a bitmap mask from the pixmap's alpha channel.
@@ -469,7 +423,7 @@ pub trait PixmapTrait<'a> {
     ///
     /// **See also:** [`set_mask()`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
-    fn mask(&self) -> Bitmap {
+    pub fn mask(&self) -> Bitmap {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).mask)(obj_data);
@@ -500,13 +454,14 @@ pub trait PixmapTrait<'a> {
     /// **See also:** [`mask()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap Transformations}
     /// [`Bitmap`]
-    fn set_mask(&self, arg0: &BitmapTrait) {
+    pub fn set_mask<B: BitmapTrait<'a>>(&self, arg0: &B) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_bitmap_obj_funcs();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             ((*funcs).set_mask)(obj_data, obj_arg0_1);
         }
+        self
     }
     ///
     /// Returns the device pixel ratio for the pixmap. This is the
@@ -519,7 +474,7 @@ pub trait PixmapTrait<'a> {
     ///
     /// **See also:** [`set_device_pixel_ratio()`]
     /// [`ImageReader`]
-    fn device_pixel_ratio(&self) -> f32 {
+    pub fn device_pixel_ratio(&self) -> f32 {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).device_pixel_ratio)(obj_data);
@@ -547,11 +502,12 @@ pub trait PixmapTrait<'a> {
     /// ).
     ///
     /// **See also:** [`device_pixel_ratio()`]
-    fn set_device_pixel_ratio(&self, scale_factor: f32) {
+    pub fn set_device_pixel_ratio(&self, scale_factor: f32) -> &Self {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             ((*funcs).set_device_pixel_ratio)(obj_data, scale_factor);
         }
+        self
     }
     ///
     /// Returns `true` if this pixmap has an alpha channel, *or* has a
@@ -564,7 +520,7 @@ pub trait PixmapTrait<'a> {
     /// channel, otherwise returns `false.`
     ///
     /// **See also:** [`has_alpha()`]
-    fn has_alpha(&self) -> bool {
+    pub fn has_alpha(&self) -> bool {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).has_alpha)(obj_data);
@@ -576,7 +532,7 @@ pub trait PixmapTrait<'a> {
     /// channel, otherwise returns `false.`
     ///
     /// **See also:** [`has_alpha()`]
-    fn has_alpha_channel(&self) -> bool {
+    pub fn has_alpha_channel(&self) -> bool {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).has_alpha_channel)(obj_data);
@@ -600,7 +556,7 @@ pub trait PixmapTrait<'a> {
     ///
     /// **See also:** [`Image::create_heuristic_mask`]
     /// [`create_mask_from_color()`]
-    fn create_heuristic_mask(&self, clip_tight: bool) -> Bitmap {
+    pub fn create_heuristic_mask(&self, clip_tight: bool) -> Bitmap {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).create_heuristic_mask)(obj_data, clip_tight);
@@ -624,7 +580,11 @@ pub trait PixmapTrait<'a> {
     ///
     /// **See also:** [`create_heuristic_mask()`]
     /// [`Image::create_mask_from_color`]
-    fn create_mask_from_color(&self, mask_color: &ColorTrait, mode: MaskMode) -> Bitmap {
+    pub fn create_mask_from_color<C: ColorTrait<'a>>(
+        &self,
+        mask_color: &C,
+        mode: MaskMode,
+    ) -> Bitmap {
         let (obj_mask_color_1, _funcs) = mask_color.get_color_obj_funcs();
         let enum_mode_2 = mode as i32;
 
@@ -638,6 +598,126 @@ pub trait PixmapTrait<'a> {
                 ret_val = Bitmap::new_from_rc(t);
             } else {
                 ret_val = Bitmap::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// width, int height)
+    ///
+    /// Creates and returns a pixmap constructed by grabbing the contents
+    /// of the given *window* restricted by QRect( *x,* *y,* *width,*
+    /// *height).*
+    ///
+    /// The arguments ( *x* , *y* ) specify the offset in the window,
+    /// whereas ( *width* , *height* ) specify the area to be copied. If
+    /// *width* is negative, the function copies everything to the right
+    /// border of the window. If *height* is negative, the function
+    /// copies everything to the bottom of the window.
+    ///
+    /// The window system identifier ( `WId)` can be retrieved using the
+    /// QWidget::winId() function. The rationale for using a window
+    /// identifier and not a QWidget, is to enable grabbing of windows
+    /// that are not part of the application, window system frames, and so
+    /// on.
+    ///
+    /// The grabWindow() function grabs pixels from the screen, not from
+    /// the window, i.e. if there is another window partially or entirely
+    /// over the one you grab, you get pixels from the overlying window,
+    /// too. The mouse cursor is generally not grabbed.
+    ///
+    /// Note on X11 that if the given *window* doesn't have the same depth
+    /// as the root window, and another window partially or entirely
+    /// obscures the one you grab, you will *not* get pixels from the
+    /// overlying window. The contents of the obscured areas in the
+    /// pixmap will be undefined and uninitialized.
+    ///
+    /// On Windows Vista and above grabbing a layered window, which is
+    /// created by setting the Qt::WA_TranslucentBackground attribute, will
+    /// not work. Instead grabbing the desktop widget should work.
+    ///
+    /// **Warning**: In general, grabbing an area outside the screen is not
+    /// safe. This depends on the underlying window system.
+    ///
+    /// **Warning**: The function is deprecated in Qt 5.0 since there might be
+    /// platform plugins in which window system identifiers ( `WId)`
+    /// are local to a screen. Use QScreen::grabWindow() instead.
+    ///
+    /// **See also:** [`grab_widget()`]
+    /// {Screenshot Example}
+    /// **See also:** [`Screen`]
+    pub fn grab_window(arg0: u64, x: i32, y: i32, w: i32, h: i32) -> Pixmap<'a> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_pixmap)(::std::ptr::null()).all_funcs).pixmap_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).grab_window)(obj_data, arg0, x, y, w, h);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Pixmap::new_from_rc(t);
+            } else {
+                ret_val = Pixmap::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Use QWidget::grab() instead.
+    ///
+    /// Use QWidget::grab() instead.
+    pub fn grab_widget<O: ObjectTrait<'a>, R: RectTrait<'a>>(widget: &O, rect: &R) -> Pixmap<'a> {
+        let (obj_widget_1, _funcs) = widget.get_object_obj_funcs();
+        let (obj_rect_2, _funcs) = rect.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_pixmap)(::std::ptr::null()).all_funcs).pixmap_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).grab_widget)(obj_data, obj_widget_1, obj_rect_2);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Pixmap::new_from_rc(t);
+            } else {
+                ret_val = Pixmap::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Use QWidget::grab() instead.
+    ///
+    /// Use QWidget::grab() instead.
+    pub fn grab_widget_2<O: ObjectTrait<'a>>(
+        widget: &O,
+        x: i32,
+        y: i32,
+        w: i32,
+        h: i32,
+    ) -> Pixmap<'a> {
+        let (obj_widget_1, _funcs) = widget.get_object_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_pixmap)(::std::ptr::null()).all_funcs).pixmap_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).grab_widget_2)(obj_data, obj_widget_1, x, y, w, h);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Pixmap::new_from_rc(t);
+            } else {
+                ret_val = Pixmap::new_from_owned(t);
             }
             ret_val
         }
@@ -703,7 +783,7 @@ pub trait PixmapTrait<'a> {
     /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
-    fn scaled(
+    pub fn scaled(
         &self,
         w: i32,
         h: i32,
@@ -787,9 +867,9 @@ pub trait PixmapTrait<'a> {
     /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
-    fn scaled_2(
+    pub fn scaled_2<S: SizeTrait<'a>>(
         &self,
-        s: &SizeTrait,
+        s: &S,
         aspect_mode: AspectRatioMode,
         mode: TransformationMode,
     ) -> Pixmap {
@@ -823,7 +903,7 @@ pub trait PixmapTrait<'a> {
     /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
-    fn scaled_to_width(&self, w: i32, mode: TransformationMode) -> Pixmap {
+    pub fn scaled_to_width(&self, w: i32, mode: TransformationMode) -> Pixmap {
         let enum_mode_2 = mode as i32;
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
@@ -852,7 +932,7 @@ pub trait PixmapTrait<'a> {
     /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
-    fn scaled_to_height(&self, h: i32, mode: TransformationMode) -> Pixmap {
+    pub fn scaled_to_height(&self, h: i32, mode: TransformationMode) -> Pixmap {
         let enum_mode_2 = mode as i32;
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
@@ -884,7 +964,7 @@ pub trait PixmapTrait<'a> {
     ///
     /// **See also:** [`from_image()`]
     /// {QImage#Image Formats}{Image Formats}
-    fn to_image(&self) -> Image {
+    pub fn to_image(&self) -> Image {
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).to_image)(obj_data);
@@ -894,373 +974,6 @@ pub trait PixmapTrait<'a> {
                 ret_val = Image::new_from_rc(t);
             } else {
                 ret_val = Image::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
-    /// Replaces this pixmap's data with the given *image* using the
-    /// specified *flags* to control the conversion. The *flags*
-    /// argument is a bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
-    ///
-    /// Passing 0 for *flags* sets all the default options. Returns `true`
-    /// if the result is that this pixmap is not null.
-    ///
-    /// Note: this function was part of Qt 3 support in Qt 4.6 and earlier.
-    /// It has been promoted to official API status in 4.7 to support updating
-    /// the pixmap's image without creating a new QPixmap as fromImage() would.
-    ///
-    /// **See also:** [`from_image()`]
-    fn convert_from_image(&self, img: &ImageTrait, flags: ImageConversionFlags) -> bool {
-        let (obj_img_1, _funcs) = img.get_image_obj_funcs();
-        let enum_flags_2 = flags as i32;
-
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).convert_from_image)(obj_data, obj_img_1, enum_flags_2);
-            ret_val
-        }
-    }
-    ///
-    /// **Overloads**
-    /// Returns a deep copy of the subset of the pixmap that is specified
-    /// by the rectangle QRect( *x,* *y,* *width,* *height).*
-    ///
-    /// Returns a deep copy of the subset of the pixmap that is specified
-    /// by the given *rectangle.* For more information on deep copies,
-    /// see the [Implicit Data Sharing](Implicit%20Data%20Sharing)
-    /// documentation.
-    ///
-    /// If the given *rectangle* is empty, the whole image is copied.
-    ///
-    /// **See also:** [`operator()`]
-    /// [`q_pixmap()`]
-    /// {QPixmap#Pixmap
-    /// Transformations}{Pixmap Transformations}
-    fn copy(&self, x: i32, y: i32, width: i32, height: i32) -> Pixmap {
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).copy)(obj_data, x, y, width, height);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Pixmap::new_from_rc(t);
-            } else {
-                ret_val = Pixmap::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
-    /// **Overloads**
-    /// Returns a deep copy of the subset of the pixmap that is specified
-    /// by the rectangle QRect( *x,* *y,* *width,* *height).*
-    ///
-    /// Returns a deep copy of the subset of the pixmap that is specified
-    /// by the given *rectangle.* For more information on deep copies,
-    /// see the [Implicit Data Sharing](Implicit%20Data%20Sharing)
-    /// documentation.
-    ///
-    /// If the given *rectangle* is empty, the whole image is copied.
-    ///
-    /// **See also:** [`operator()`]
-    /// [`q_pixmap()`]
-    /// {QPixmap#Pixmap
-    /// Transformations}{Pixmap Transformations}
-    fn copy_2(&self, rect: &RectTrait) -> Pixmap {
-        let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
-
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).copy_2)(obj_data, obj_rect_1);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Pixmap::new_from_rc(t);
-            } else {
-                ret_val = Pixmap::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
-    /// This convenience function is equivalent to calling QPixmap::scroll( *dx,*
-    /// *dy,* QRect( *x,* *y,* *width,* *height),* *exposed).*
-    ///
-    /// **See also:** [`Widget::scroll`]
-    /// [`GraphicsItem::scroll`]
-    ///
-    /// Scrolls the area *rect* of this pixmap by ( *dx,* *dy).* The exposed
-    /// region is left unchanged. You can optionally pass a pointer to an empty
-    /// QRegion to get the region that is *exposed* by the scroll operation.
-    ///
-    /// You cannot scroll while there is an active painter on the pixmap.
-    ///
-    /// **See also:** [`Widget::scroll`]
-    /// [`GraphicsItem::scroll`]
-    fn scroll(
-        &self,
-        dx: i32,
-        dy: i32,
-        x: i32,
-        y: i32,
-        width: i32,
-        height: i32,
-        exposed: &RegionTrait,
-    ) {
-        let (obj_exposed_7, _funcs) = exposed.get_region_obj_funcs();
-
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            ((*funcs).scroll)(obj_data, dx, dy, x, y, width, height, obj_exposed_7);
-        }
-    }
-    ///
-    /// This convenience function is equivalent to calling QPixmap::scroll( *dx,*
-    /// *dy,* QRect( *x,* *y,* *width,* *height),* *exposed).*
-    ///
-    /// **See also:** [`Widget::scroll`]
-    /// [`GraphicsItem::scroll`]
-    ///
-    /// Scrolls the area *rect* of this pixmap by ( *dx,* *dy).* The exposed
-    /// region is left unchanged. You can optionally pass a pointer to an empty
-    /// QRegion to get the region that is *exposed* by the scroll operation.
-    ///
-    /// You cannot scroll while there is an active painter on the pixmap.
-    ///
-    /// **See also:** [`Widget::scroll`]
-    /// [`GraphicsItem::scroll`]
-    fn scroll_2(&self, dx: i32, dy: i32, rect: &RectTrait, exposed: &RegionTrait) {
-        let (obj_rect_3, _funcs) = rect.get_rect_obj_funcs();
-        let (obj_exposed_4, _funcs) = exposed.get_region_obj_funcs();
-
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            ((*funcs).scroll_2)(obj_data, dx, dy, obj_rect_3, obj_exposed_4);
-        }
-    }
-    ///
-    /// Returns a number that identifies this QPixmap. Distinct QPixmap
-    /// objects can only have the same cache key if they refer to the same
-    /// contents.
-    ///
-    /// The cacheKey() will change when the pixmap is altered.
-    fn cache_key(&self) -> i64 {
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).cache_key)(obj_data);
-            ret_val
-        }
-    }
-    fn is_detached(&self) -> bool {
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).is_detached)(obj_data);
-            ret_val
-        }
-    }
-    ///
-    /// Detaches the pixmap from shared pixmap data.
-    ///
-    /// A pixmap is automatically detached by Qt whenever its contents are
-    /// about to change. This is done in almost all QPixmap member
-    /// functions that modify the pixmap (fill(), fromImage(),
-    /// load(), etc.), and in QPainter::begin() on a pixmap.
-    ///
-    /// There are two exceptions in which detach() must be called
-    /// explicitly, that is when calling the handle() or the
-    /// x11PictureHandle() function (only available on X11). Otherwise,
-    /// any modifications done using system calls, will be performed on
-    /// the shared data.
-    ///
-    /// The detach() function returns immediately if there is just a
-    /// single reference or if the pixmap has not been initialized yet.
-    fn detach(&self) {
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            ((*funcs).detach)(obj_data);
-        }
-    }
-    ///
-    /// Returns `true` if this is a QBitmap; otherwise returns `false.`
-    fn is_q_bitmap(&self) -> bool {
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).is_q_bitmap)(obj_data);
-            ret_val
-        }
-    }
-    fn paint_engine(&self) -> Option<PaintEngine> {
-        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).paint_engine)(obj_data);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = PaintEngine::new_from_rc(t);
-            } else {
-                ret_val = PaintEngine::new_from_owned(t);
-            }
-            Some(ret_val)
-        }
-    }
-
-    #[inline]
-    fn get_pixmap_obj_funcs(&self) -> (*const RUBase, *const RUPixmapFuncs);
-}
-
-impl<'a> PaintDeviceTrait<'a> for Pixmap<'a> {
-    #[inline]
-    fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).paint_device_funcs) }
-    }
-}
-
-impl<'a> PixmapTrait<'a> for Pixmap<'a> {
-    #[inline]
-    fn get_pixmap_obj_funcs(&self) -> (*const RUBase, *const RUPixmapFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).pixmap_funcs) }
-    }
-}
-pub trait PixmapStaticTrait {
-    ///
-    /// Returns the default pixmap depth used by the application.
-    ///
-    /// On all platforms the depth of the primary screen will be returned.
-    ///
-    /// **Note**: QGuiApplication must be created before calling this function.
-    ///
-    /// **See also:** [`depth()`]
-    /// [`Colormap::depth`]
-    /// {QPixmap#Pixmap Information}{Pixmap Information}
-    ///
-    fn default_depth<'a>() -> i32 {
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_pixmap)(::std::ptr::null()).all_funcs).pixmap_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).default_depth)(obj_data);
-            ret_val
-        }
-    }
-    ///
-    /// width, int height)
-    ///
-    /// Creates and returns a pixmap constructed by grabbing the contents
-    /// of the given *window* restricted by QRect( *x,* *y,* *width,*
-    /// *height).*
-    ///
-    /// The arguments ( *x* , *y* ) specify the offset in the window,
-    /// whereas ( *width* , *height* ) specify the area to be copied. If
-    /// *width* is negative, the function copies everything to the right
-    /// border of the window. If *height* is negative, the function
-    /// copies everything to the bottom of the window.
-    ///
-    /// The window system identifier ( `WId)` can be retrieved using the
-    /// QWidget::winId() function. The rationale for using a window
-    /// identifier and not a QWidget, is to enable grabbing of windows
-    /// that are not part of the application, window system frames, and so
-    /// on.
-    ///
-    /// The grabWindow() function grabs pixels from the screen, not from
-    /// the window, i.e. if there is another window partially or entirely
-    /// over the one you grab, you get pixels from the overlying window,
-    /// too. The mouse cursor is generally not grabbed.
-    ///
-    /// Note on X11 that if the given *window* doesn't have the same depth
-    /// as the root window, and another window partially or entirely
-    /// obscures the one you grab, you will *not* get pixels from the
-    /// overlying window. The contents of the obscured areas in the
-    /// pixmap will be undefined and uninitialized.
-    ///
-    /// On Windows Vista and above grabbing a layered window, which is
-    /// created by setting the Qt::WA_TranslucentBackground attribute, will
-    /// not work. Instead grabbing the desktop widget should work.
-    ///
-    /// **Warning**: In general, grabbing an area outside the screen is not
-    /// safe. This depends on the underlying window system.
-    ///
-    /// **Warning**: The function is deprecated in Qt 5.0 since there might be
-    /// platform plugins in which window system identifiers ( `WId)`
-    /// are local to a screen. Use QScreen::grabWindow() instead.
-    ///
-    /// **See also:** [`grab_widget()`]
-    /// {Screenshot Example}
-    /// **See also:** [`Screen`]
-    fn grab_window<'a>(arg0: u64, x: i32, y: i32, w: i32, h: i32) -> Pixmap<'a> {
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_pixmap)(::std::ptr::null()).all_funcs).pixmap_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).grab_window)(obj_data, arg0, x, y, w, h);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Pixmap::new_from_rc(t);
-            } else {
-                ret_val = Pixmap::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
-    /// Use QWidget::grab() instead.
-    ///
-    /// Use QWidget::grab() instead.
-    fn grab_widget<'a>(widget: &ObjectTrait<'a>, rect: &RectTrait<'a>) -> Pixmap<'a> {
-        let (obj_widget_1, _funcs) = widget.get_object_obj_funcs();
-        let (obj_rect_2, _funcs) = rect.get_rect_obj_funcs();
-
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_pixmap)(::std::ptr::null()).all_funcs).pixmap_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).grab_widget)(obj_data, obj_widget_1, obj_rect_2);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Pixmap::new_from_rc(t);
-            } else {
-                ret_val = Pixmap::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
-    /// Use QWidget::grab() instead.
-    ///
-    /// Use QWidget::grab() instead.
-    fn grab_widget_2<'a>(widget: &ObjectTrait<'a>, x: i32, y: i32, w: i32, h: i32) -> Pixmap<'a> {
-        let (obj_widget_1, _funcs) = widget.get_object_obj_funcs();
-
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_pixmap)(::std::ptr::null()).all_funcs).pixmap_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).grab_widget_2)(obj_data, obj_widget_1, x, y, w, h);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Pixmap::new_from_rc(t);
-            } else {
-                ret_val = Pixmap::new_from_owned(t);
             }
             ret_val
         }
@@ -1293,7 +1006,7 @@ pub trait PixmapStaticTrait {
     /// **See also:** [`from_image()`]
     /// [`to_image()`]
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-    fn from_image<'a>(image: &ImageTrait<'a>, flags: ImageConversionFlags) -> Pixmap<'a> {
+    pub fn from_image<I: ImageTrait<'a>>(image: &I, flags: ImageConversionFlags) -> Pixmap<'a> {
         let (obj_image_1, _funcs) = image.get_image_obj_funcs();
         let enum_flags_2 = flags as i32;
 
@@ -1355,7 +1068,7 @@ pub trait PixmapStaticTrait {
     /// **See also:** [`from_image()`]
     /// [`to_image()`]
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-    fn from_image_2<'a>(image: &ImageTrait<'a>, flags: ImageConversionFlags) -> Pixmap<'a> {
+    pub fn from_image_2<I: ImageTrait<'a>>(image: &I, flags: ImageConversionFlags) -> Pixmap<'a> {
         let (obj_image_1, _funcs) = image.get_image_obj_funcs();
         let enum_flags_2 = flags as i32;
 
@@ -1377,8 +1090,303 @@ pub trait PixmapStaticTrait {
             ret_val
         }
     }
+    ///
+    /// Replaces this pixmap's data with the given *image* using the
+    /// specified *flags* to control the conversion. The *flags*
+    /// argument is a bitwise-OR of the [Qt::ImageConversionFlags](Qt::ImageConversionFlags)
+    ///
+    /// Passing 0 for *flags* sets all the default options. Returns `true`
+    /// if the result is that this pixmap is not null.
+    ///
+    /// Note: this function was part of Qt 3 support in Qt 4.6 and earlier.
+    /// It has been promoted to official API status in 4.7 to support updating
+    /// the pixmap's image without creating a new QPixmap as fromImage() would.
+    ///
+    /// **See also:** [`from_image()`]
+    pub fn convert_from_image<I: ImageTrait<'a>>(
+        &self,
+        img: &I,
+        flags: ImageConversionFlags,
+    ) -> bool {
+        let (obj_img_1, _funcs) = img.get_image_obj_funcs();
+        let enum_flags_2 = flags as i32;
+
+        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).convert_from_image)(obj_data, obj_img_1, enum_flags_2);
+            ret_val
+        }
+    }
+    ///
+    /// **Overloads**
+    /// Returns a deep copy of the subset of the pixmap that is specified
+    /// by the rectangle QRect( *x,* *y,* *width,* *height).*
+    ///
+    /// Returns a deep copy of the subset of the pixmap that is specified
+    /// by the given *rectangle.* For more information on deep copies,
+    /// see the [Implicit Data Sharing](Implicit%20Data%20Sharing)
+    /// documentation.
+    ///
+    /// If the given *rectangle* is empty, the whole image is copied.
+    ///
+    /// **See also:** [`operator()`]
+    /// [`q_pixmap()`]
+    /// {QPixmap#Pixmap
+    /// Transformations}{Pixmap Transformations}
+    pub fn copy(&self, x: i32, y: i32, width: i32, height: i32) -> Pixmap {
+        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).copy)(obj_data, x, y, width, height);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Pixmap::new_from_rc(t);
+            } else {
+                ret_val = Pixmap::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// **Overloads**
+    /// Returns a deep copy of the subset of the pixmap that is specified
+    /// by the rectangle QRect( *x,* *y,* *width,* *height).*
+    ///
+    /// Returns a deep copy of the subset of the pixmap that is specified
+    /// by the given *rectangle.* For more information on deep copies,
+    /// see the [Implicit Data Sharing](Implicit%20Data%20Sharing)
+    /// documentation.
+    ///
+    /// If the given *rectangle* is empty, the whole image is copied.
+    ///
+    /// **See also:** [`operator()`]
+    /// [`q_pixmap()`]
+    /// {QPixmap#Pixmap
+    /// Transformations}{Pixmap Transformations}
+    pub fn copy_2<R: RectTrait<'a>>(&self, rect: &R) -> Pixmap {
+        let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).copy_2)(obj_data, obj_rect_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Pixmap::new_from_rc(t);
+            } else {
+                ret_val = Pixmap::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// This convenience function is equivalent to calling QPixmap::scroll( *dx,*
+    /// *dy,* QRect( *x,* *y,* *width,* *height),* *exposed).*
+    ///
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
+    ///
+    /// Scrolls the area *rect* of this pixmap by ( *dx,* *dy).* The exposed
+    /// region is left unchanged. You can optionally pass a pointer to an empty
+    /// QRegion to get the region that is *exposed* by the scroll operation.
+    ///
+    /// You cannot scroll while there is an active painter on the pixmap.
+    ///
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
+    pub fn scroll<R: RegionTrait<'a>>(
+        &self,
+        dx: i32,
+        dy: i32,
+        x: i32,
+        y: i32,
+        width: i32,
+        height: i32,
+        exposed: &R,
+    ) -> &Self {
+        let (obj_exposed_7, _funcs) = exposed.get_region_obj_funcs();
+
+        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
+        unsafe {
+            ((*funcs).scroll)(obj_data, dx, dy, x, y, width, height, obj_exposed_7);
+        }
+        self
+    }
+    ///
+    /// This convenience function is equivalent to calling QPixmap::scroll( *dx,*
+    /// *dy,* QRect( *x,* *y,* *width,* *height),* *exposed).*
+    ///
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
+    ///
+    /// Scrolls the area *rect* of this pixmap by ( *dx,* *dy).* The exposed
+    /// region is left unchanged. You can optionally pass a pointer to an empty
+    /// QRegion to get the region that is *exposed* by the scroll operation.
+    ///
+    /// You cannot scroll while there is an active painter on the pixmap.
+    ///
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
+    pub fn scroll_2<R: RectTrait<'a>, S: RegionTrait<'a>>(
+        &self,
+        dx: i32,
+        dy: i32,
+        rect: &R,
+        exposed: &S,
+    ) -> &Self {
+        let (obj_rect_3, _funcs) = rect.get_rect_obj_funcs();
+        let (obj_exposed_4, _funcs) = exposed.get_region_obj_funcs();
+
+        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
+        unsafe {
+            ((*funcs).scroll_2)(obj_data, dx, dy, obj_rect_3, obj_exposed_4);
+        }
+        self
+    }
+    ///
+    /// Returns a number that identifies this QPixmap. Distinct QPixmap
+    /// objects can only have the same cache key if they refer to the same
+    /// contents.
+    ///
+    /// The cacheKey() will change when the pixmap is altered.
+    pub fn cache_key(&self) -> i64 {
+        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).cache_key)(obj_data);
+            ret_val
+        }
+    }
+    pub fn is_detached(&self) -> bool {
+        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_detached)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Detaches the pixmap from shared pixmap data.
+    ///
+    /// A pixmap is automatically detached by Qt whenever its contents are
+    /// about to change. This is done in almost all QPixmap member
+    /// functions that modify the pixmap (fill(), fromImage(),
+    /// load(), etc.), and in QPainter::begin() on a pixmap.
+    ///
+    /// There are two exceptions in which detach() must be called
+    /// explicitly, that is when calling the handle() or the
+    /// x11PictureHandle() function (only available on X11). Otherwise,
+    /// any modifications done using system calls, will be performed on
+    /// the shared data.
+    ///
+    /// The detach() function returns immediately if there is just a
+    /// single reference or if the pixmap has not been initialized yet.
+    pub fn detach(&self) -> &Self {
+        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
+        unsafe {
+            ((*funcs).detach)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Returns `true` if this is a QBitmap; otherwise returns `false.`
+    pub fn is_q_bitmap(&self) -> bool {
+        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_q_bitmap)(obj_data);
+            ret_val
+        }
+    }
+    pub fn paint_engine(&self) -> Option<PaintEngine> {
+        let (obj_data, funcs) = self.get_pixmap_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).paint_engine)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = PaintEngine::new_from_rc(t);
+            } else {
+                ret_val = PaintEngine::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn painting_active(&self) -> bool {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).painting_active)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn logical_dpi_x(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).logical_dpi_x)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn logical_dpi_y(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).logical_dpi_y)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn physical_dpi_x(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).physical_dpi_x)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn physical_dpi_y(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).physical_dpi_y)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn device_pixel_ratio_f(&self) -> f32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).device_pixel_ratio_f)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn color_count(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).color_count)(obj_data);
+            ret_val
+        }
+    }
+}
+pub trait PixmapTrait<'a> {
+    #[inline]
+    #[doc(hidden)]
+    fn get_pixmap_obj_funcs(&self) -> (*const RUBase, *const RUPixmapFuncs);
 }
 
-impl<'a> PixmapStaticTrait for Pixmap<'a> {}
+impl<'a> PaintDeviceTrait<'a> for Pixmap<'a> {
+    #[doc(hidden)]
+    fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).paint_device_funcs) }
+    }
+}
 
-impl<'a> PixmapStaticTrait for PixmapStatic<'a> {}
+impl<'a> PixmapTrait<'a> for Pixmap<'a> {
+    #[doc(hidden)]
+    fn get_pixmap_obj_funcs(&self) -> (*const RUBase, *const RUPixmapFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).pixmap_funcs) }
+    }
+}

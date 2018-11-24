@@ -17,23 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::context_menu_event_ffi::*;
-#[allow(unused_imports)]
-use auto::event::*;
-#[allow(unused_imports)]
-use auto::event_ffi::*;
-#[allow(unused_imports)]
-use auto::input_event::*;
-#[allow(unused_imports)]
-use auto::input_event_ffi::*;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// Context menu events are sent to widgets when a user performs
 /// an action associated with opening a context menu.
@@ -53,14 +38,19 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct ContextMenuEvent<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUContextMenuEventAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> ContextMenuEvent<'a> {
-    pub fn new_from_rc(ffi_data: RUContextMenuEvent) -> ContextMenuEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUContextMenuEvent) -> ContextMenuEvent<'a> {
         ContextMenuEvent {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -69,7 +59,8 @@ impl<'a> ContextMenuEvent<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUContextMenuEvent) -> ContextMenuEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUContextMenuEvent) -> ContextMenuEvent<'a> {
         ContextMenuEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -78,7 +69,8 @@ impl<'a> ContextMenuEvent<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUContextMenuEvent) -> ContextMenuEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUContextMenuEvent) -> ContextMenuEvent<'a> {
         ContextMenuEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -86,15 +78,13 @@ impl<'a> ContextMenuEvent<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait ContextMenuEventTrait<'a> {
     ///
     /// Returns the x position of the mouse pointer, relative to the
     /// widget that received the event.
     ///
     /// **See also:** [`y()`]
     /// [`pos()`]
-    fn x(&self) -> i32 {
+    pub fn x(&self) -> i32 {
         let (obj_data, funcs) = self.get_context_menu_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).x)(obj_data);
@@ -107,7 +97,7 @@ pub trait ContextMenuEventTrait<'a> {
     ///
     /// **See also:** [`x()`]
     /// [`pos()`]
-    fn y(&self) -> i32 {
+    pub fn y(&self) -> i32 {
         let (obj_data, funcs) = self.get_context_menu_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).y)(obj_data);
@@ -120,7 +110,7 @@ pub trait ContextMenuEventTrait<'a> {
     ///
     /// **See also:** [`global_y()`]
     /// [`global_pos()`]
-    fn global_x(&self) -> i32 {
+    pub fn global_x(&self) -> i32 {
         let (obj_data, funcs) = self.get_context_menu_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).global_x)(obj_data);
@@ -133,7 +123,7 @@ pub trait ContextMenuEventTrait<'a> {
     ///
     /// **See also:** [`global_x()`]
     /// [`global_pos()`]
-    fn global_y(&self) -> i32 {
+    pub fn global_y(&self) -> i32 {
         let (obj_data, funcs) = self.get_context_menu_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).global_y)(obj_data);
@@ -147,7 +137,7 @@ pub trait ContextMenuEventTrait<'a> {
     /// **See also:** [`x()`]
     /// [`y()`]
     /// [`global_pos()`]
-    fn pos(&self) -> Option<Point> {
+    pub fn pos(&self) -> Option<Point> {
         let (obj_data, funcs) = self.get_context_menu_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pos)(obj_data);
@@ -171,7 +161,7 @@ pub trait ContextMenuEventTrait<'a> {
     /// **See also:** [`x()`]
     /// [`y()`]
     /// [`pos()`]
-    fn global_pos(&self) -> Option<Point> {
+    pub fn global_pos(&self) -> Option<Point> {
         let (obj_data, funcs) = self.get_context_menu_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).global_pos)(obj_data);
@@ -190,7 +180,7 @@ pub trait ContextMenuEventTrait<'a> {
     }
     ///
     /// Returns the reason for this context event.
-    fn reason(&self) -> Reason {
+    pub fn reason(&self) -> Reason {
         let (obj_data, funcs) = self.get_context_menu_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).reason)(obj_data);
@@ -198,13 +188,90 @@ pub trait ContextMenuEventTrait<'a> {
             ret_val
         }
     }
+    #[doc(hidden)]
+    pub fn modifiers(&self) -> KeyboardModifiers {
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).modifiers)(obj_data);
+            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_modifiers(&self, amodifiers: KeyboardModifiers) -> &Self {
+        let enum_amodifiers_1 = amodifiers as i32;
 
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_modifiers)(obj_data, enum_amodifiers_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn timestamp(&self) -> u64 {
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).timestamp)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_timestamp(&self, atimestamp: u64) -> &Self {
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_timestamp)(obj_data, atimestamp);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn spontaneous(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).spontaneous)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_accepted(&self, accepted: bool) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_accepted)(obj_data, accepted);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_accepted(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_accepted)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn accept(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).accept)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn ignore(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).ignore)(obj_data);
+        }
+        self
+    }
+}
+pub trait ContextMenuEventTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_context_menu_event_obj_funcs(&self) -> (*const RUBase, *const RUContextMenuEventFuncs);
 }
 
 impl<'a> EventTrait<'a> for ContextMenuEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).event_funcs) }
@@ -212,7 +279,7 @@ impl<'a> EventTrait<'a> for ContextMenuEvent<'a> {
 }
 
 impl<'a> InputEventTrait<'a> for ContextMenuEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_input_event_obj_funcs(&self) -> (*const RUBase, *const RUInputEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).input_event_funcs) }
@@ -220,7 +287,7 @@ impl<'a> InputEventTrait<'a> for ContextMenuEvent<'a> {
 }
 
 impl<'a> ContextMenuEventTrait<'a> for ContextMenuEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_context_menu_event_obj_funcs(&self) -> (*const RUBase, *const RUContextMenuEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).context_menu_event_funcs) }

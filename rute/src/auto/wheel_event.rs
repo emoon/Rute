@@ -17,33 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::event::*;
-#[allow(unused_imports)]
-use auto::event_ffi::*;
-#[allow(unused_imports)]
-use auto::input_event::*;
-#[allow(unused_imports)]
-use auto::input_event_ffi::*;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point_f::PointF;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::MouseButtons;
-#[allow(unused_imports)]
-use auto::rute_enums::MouseEventSource;
-#[allow(unused_imports)]
-use auto::rute_enums::Orientation;
-#[allow(unused_imports)]
-use auto::rute_enums::ScrollPhase;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::wheel_event_ffi::*;
 ///
 /// Wheel events are sent to the widget under the mouse cursor, but
 /// if that widget does not handle the event they are sent to the
@@ -75,14 +50,19 @@ use auto::wheel_event_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct WheelEvent<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUWheelEventAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> WheelEvent<'a> {
-    pub fn new_from_rc(ffi_data: RUWheelEvent) -> WheelEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUWheelEvent) -> WheelEvent<'a> {
         WheelEvent {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -91,7 +71,8 @@ impl<'a> WheelEvent<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUWheelEvent) -> WheelEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUWheelEvent) -> WheelEvent<'a> {
         WheelEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -100,7 +81,8 @@ impl<'a> WheelEvent<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUWheelEvent) -> WheelEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUWheelEvent) -> WheelEvent<'a> {
         WheelEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -108,8 +90,6 @@ impl<'a> WheelEvent<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait WheelEventTrait<'a> {
     ///
     /// Returns the scrolling distance in pixels on screen. This value is
     /// provided on platforms that support high-resolution pixel-based
@@ -123,7 +103,7 @@ pub trait WheelEventTrait<'a> {
     /// * scrolling is about to begin, but the distance did not yet change (Qt::ScrollBegin),
     /// * or scrolling has ended and the distance did not change anymore (Qt::ScrollEnd).
     /// **Note**: On X11 this value is driver specific and unreliable, use angleDelta() instead
-    fn pixel_delta(&self) -> Point {
+    pub fn pixel_delta(&self) -> Point {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pixel_delta)(obj_data);
@@ -158,7 +138,7 @@ pub trait WheelEventTrait<'a> {
     /// , the delta may be null when:
     /// * scrolling is about to begin, but the distance did not yet change (Qt::ScrollBegin),
     /// * or scrolling has ended and the distance did not change anymore (Qt::ScrollEnd).
-    fn angle_delta(&self) -> Point {
+    pub fn angle_delta(&self) -> Point {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).angle_delta)(obj_data);
@@ -174,7 +154,7 @@ pub trait WheelEventTrait<'a> {
     }
     ///
     /// This function has been deprecated, use pixelDelta() or angleDelta() instead.
-    fn delta(&self) -> i32 {
+    pub fn delta(&self) -> i32 {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).delta)(obj_data);
@@ -185,7 +165,7 @@ pub trait WheelEventTrait<'a> {
     /// Returns the wheel's orientation.
     ///
     /// Use angleDelta() instead.
-    fn orientation(&self) -> Orientation {
+    pub fn orientation(&self) -> Orientation {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).orientation)(obj_data);
@@ -211,7 +191,7 @@ pub trait WheelEventTrait<'a> {
     /// use globalPosF() instead of this function.
     ///
     /// **See also:** [`global_pos_f()`]
-    fn pos(&self) -> Point {
+    pub fn pos(&self) -> Point {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pos)(obj_data);
@@ -242,7 +222,7 @@ pub trait WheelEventTrait<'a> {
     /// cursor position returned by QCursor::pos().
     ///
     /// **See also:** [`pos_f()`]
-    fn global_pos(&self) -> Point {
+    pub fn global_pos(&self) -> Point {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).global_pos)(obj_data);
@@ -262,7 +242,7 @@ pub trait WheelEventTrait<'a> {
     ///
     /// **See also:** [`y()`]
     /// [`pos()`]
-    fn x(&self) -> i32 {
+    pub fn x(&self) -> i32 {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).x)(obj_data);
@@ -275,7 +255,7 @@ pub trait WheelEventTrait<'a> {
     ///
     /// **See also:** [`x()`]
     /// [`pos()`]
-    fn y(&self) -> i32 {
+    pub fn y(&self) -> i32 {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).y)(obj_data);
@@ -288,7 +268,7 @@ pub trait WheelEventTrait<'a> {
     ///
     /// **See also:** [`global_y()`]
     /// [`global_pos()`]
-    fn global_x(&self) -> i32 {
+    pub fn global_x(&self) -> i32 {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).global_x)(obj_data);
@@ -301,7 +281,7 @@ pub trait WheelEventTrait<'a> {
     ///
     /// **See also:** [`global_x()`]
     /// [`global_pos()`]
-    fn global_y(&self) -> i32 {
+    pub fn global_y(&self) -> i32 {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).global_y)(obj_data);
@@ -316,7 +296,7 @@ pub trait WheelEventTrait<'a> {
     /// use globalPosF() instead of this function.
     ///
     /// **See also:** [`global_pos_f()`]
-    fn pos_f(&self) -> Option<PointF> {
+    pub fn pos_f(&self) -> Option<PointF> {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pos_f)(obj_data);
@@ -341,7 +321,7 @@ pub trait WheelEventTrait<'a> {
     /// cursor position returned by QCursor::pos().
     ///
     /// **See also:** [`pos_f()`]
-    fn global_pos_f(&self) -> Option<PointF> {
+    pub fn global_pos_f(&self) -> Option<PointF> {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).global_pos_f)(obj_data);
@@ -360,7 +340,7 @@ pub trait WheelEventTrait<'a> {
     }
     ///
     /// Returns the mouse state when the event occurred.
-    fn buttons(&self) -> MouseButtons {
+    pub fn buttons(&self) -> MouseButtons {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).buttons)(obj_data);
@@ -373,7 +353,7 @@ pub trait WheelEventTrait<'a> {
     ///
     /// **Note**: The Qt::ScrollBegin and Qt::ScrollEnd phases are currently
     /// supported only on MacOS .
-    fn phase(&self) -> ScrollPhase {
+    pub fn phase(&self) -> ScrollPhase {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).phase)(obj_data);
@@ -402,7 +382,7 @@ pub trait WheelEventTrait<'a> {
     /// **Note**: Many platforms provide no such information. On such platforms
     /// [inverted](inverted)
     /// always returns false.
-    fn inverted(&self) -> bool {
+    pub fn inverted(&self) -> bool {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).inverted)(obj_data);
@@ -421,7 +401,7 @@ pub trait WheelEventTrait<'a> {
     /// is returned always.
     ///
     /// **See also:** [`t::mouse_event_source()`]
-    fn source(&self) -> MouseEventSource {
+    pub fn source(&self) -> MouseEventSource {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).source)(obj_data);
@@ -429,13 +409,90 @@ pub trait WheelEventTrait<'a> {
             ret_val
         }
     }
+    #[doc(hidden)]
+    pub fn modifiers(&self) -> KeyboardModifiers {
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).modifiers)(obj_data);
+            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_modifiers(&self, amodifiers: KeyboardModifiers) -> &Self {
+        let enum_amodifiers_1 = amodifiers as i32;
 
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_modifiers)(obj_data, enum_amodifiers_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn timestamp(&self) -> u64 {
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).timestamp)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_timestamp(&self, atimestamp: u64) -> &Self {
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_timestamp)(obj_data, atimestamp);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn spontaneous(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).spontaneous)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_accepted(&self, accepted: bool) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_accepted)(obj_data, accepted);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_accepted(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_accepted)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn accept(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).accept)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn ignore(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).ignore)(obj_data);
+        }
+        self
+    }
+}
+pub trait WheelEventTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_wheel_event_obj_funcs(&self) -> (*const RUBase, *const RUWheelEventFuncs);
 }
 
 impl<'a> EventTrait<'a> for WheelEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).event_funcs) }
@@ -443,7 +500,7 @@ impl<'a> EventTrait<'a> for WheelEvent<'a> {
 }
 
 impl<'a> InputEventTrait<'a> for WheelEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_input_event_obj_funcs(&self) -> (*const RUBase, *const RUInputEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).input_event_funcs) }
@@ -451,7 +508,7 @@ impl<'a> InputEventTrait<'a> for WheelEvent<'a> {
 }
 
 impl<'a> WheelEventTrait<'a> for WheelEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_wheel_event_obj_funcs(&self) -> (*const RUBase, *const RUWheelEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).wheel_event_funcs) }

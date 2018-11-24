@@ -17,21 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::line::Line;
-#[allow(unused_imports)]
-use auto::line_f_ffi::*;
-#[allow(unused_imports)]
-use auto::point_f::PointF;
-#[allow(unused_imports)]
-use auto::point_f::PointFTrait;
-#[allow(unused_imports)]
-use auto::point_f_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// A QLineF describes a finite length line (or line segment) on a
 /// two-dimensional surface. QLineF defines the start and end points
@@ -81,9 +68,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct LineF<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RULineFAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -108,7 +99,8 @@ impl<'a> LineF<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RULineF) -> LineF<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RULineF) -> LineF<'a> {
         LineF {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -117,7 +109,8 @@ impl<'a> LineF<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RULineF) -> LineF<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RULineF) -> LineF<'a> {
         LineF {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -126,7 +119,8 @@ impl<'a> LineF<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RULineF) -> LineF<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RULineF) -> LineF<'a> {
         LineF {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -134,17 +128,36 @@ impl<'a> LineF<'a> {
             _marker: PhantomData,
         }
     }
-}
-
-pub struct LineFStatic<'a> {
-    pub all_funcs: *const RULineFAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait LineFTrait<'a> {
+    ///
+    /// Returns a QLineF with the given *length* and *angle.*
+    ///
+    /// The first point of the line will be on the origin.
+    ///
+    /// Positive values for the angles mean counter-clockwise while negative values
+    /// mean the clockwise direction. Zero degrees is at the 3 o'clock position.
+    pub fn from_polar(length: f32, angle: f32) -> LineF<'a> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_line_f)(::std::ptr::null()).all_funcs).line_f_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).from_polar)(obj_data, length, angle);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = LineF::new_from_rc(t);
+            } else {
+                ret_val = LineF::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
     ///
     /// Returns `true` if the line is not set up with valid start and end point;
     /// otherwise returns `false.`
-    fn is_null(&self) -> bool {
+    pub fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_null)(obj_data);
@@ -157,7 +170,7 @@ pub trait LineFTrait<'a> {
     /// **See also:** [`x1()`]
     /// [`y1()`]
     /// [`p2()`]
-    fn p1(&self) -> PointF {
+    pub fn p1(&self) -> PointF {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).p1)(obj_data);
@@ -177,7 +190,7 @@ pub trait LineFTrait<'a> {
     /// **See also:** [`x2()`]
     /// [`y2()`]
     /// [`p1()`]
-    fn p2(&self) -> PointF {
+    pub fn p2(&self) -> PointF {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).p2)(obj_data);
@@ -195,7 +208,7 @@ pub trait LineFTrait<'a> {
     /// Returns the x-coordinate of the line's start point.
     ///
     /// **See also:** [`p1()`]
-    fn x1(&self) -> f32 {
+    pub fn x1(&self) -> f32 {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).x1)(obj_data);
@@ -206,7 +219,7 @@ pub trait LineFTrait<'a> {
     /// Returns the y-coordinate of the line's start point.
     ///
     /// **See also:** [`p1()`]
-    fn y1(&self) -> f32 {
+    pub fn y1(&self) -> f32 {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).y1)(obj_data);
@@ -217,7 +230,7 @@ pub trait LineFTrait<'a> {
     /// Returns the x-coordinate of the line's end point.
     ///
     /// **See also:** [`p2()`]
-    fn x2(&self) -> f32 {
+    pub fn x2(&self) -> f32 {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).x2)(obj_data);
@@ -228,7 +241,7 @@ pub trait LineFTrait<'a> {
     /// Returns the y-coordinate of the line's end point.
     ///
     /// **See also:** [`p2()`]
-    fn y2(&self) -> f32 {
+    pub fn y2(&self) -> f32 {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).y2)(obj_data);
@@ -240,7 +253,7 @@ pub trait LineFTrait<'a> {
     ///
     /// **See also:** [`dy()`]
     /// [`point_at()`]
-    fn dx(&self) -> f32 {
+    pub fn dx(&self) -> f32 {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dx)(obj_data);
@@ -252,7 +265,7 @@ pub trait LineFTrait<'a> {
     ///
     /// **See also:** [`dx()`]
     /// [`point_at()`]
-    fn dy(&self) -> f32 {
+    pub fn dy(&self) -> f32 {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dy)(obj_data);
@@ -263,7 +276,7 @@ pub trait LineFTrait<'a> {
     /// Returns the length of the line.
     ///
     /// **See also:** [`set_length()`]
-    fn length(&self) -> f32 {
+    pub fn length(&self) -> f32 {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).length)(obj_data);
@@ -279,11 +292,12 @@ pub trait LineFTrait<'a> {
     ///
     /// **See also:** [`length()`]
     /// [`is_null()`]
-    fn set_length(&self, len: f32) {
+    pub fn set_length(&self, len: f32) -> &Self {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             ((*funcs).set_length)(obj_data, len);
         }
+        self
     }
     ///
     /// Returns the angle of the line in degrees.
@@ -318,7 +332,7 @@ pub trait LineFTrait<'a> {
     /// the same direction; otherwise it returns 180.
     ///
     /// **See also:** [`intersect()`]
-    fn angle(&self) -> f32 {
+    pub fn angle(&self) -> f32 {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).angle)(obj_data);
@@ -334,11 +348,12 @@ pub trait LineFTrait<'a> {
     /// mean the clockwise direction. Zero degrees is at the 3 o'clock position.
     ///
     /// **See also:** [`angle()`]
-    fn set_angle(&self, angle: f32) {
+    pub fn set_angle(&self, angle: f32) -> &Self {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             ((*funcs).set_angle)(obj_data, angle);
         }
+        self
     }
     ///
     /// Returns the angle (in degrees) from this line to the given *line,* taking the direction of the lines into account. If the lines
@@ -351,7 +366,7 @@ pub trait LineFTrait<'a> {
     /// going counter-clockwise.
     ///
     /// **See also:** [`intersect()`]
-    fn angle_to(&self, l: &LineFTrait) -> f32 {
+    pub fn angle_to<L: LineFTrait<'a>>(&self, l: &L) -> f32 {
         let (obj_l_1, _funcs) = l.get_line_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
@@ -365,7 +380,7 @@ pub trait LineFTrait<'a> {
     /// same point as *this* line with a length of 1.0.
     ///
     /// **See also:** [`normal_vector()`]
-    fn unit_vector(&self) -> LineF {
+    pub fn unit_vector(&self) -> LineF {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).unit_vector)(obj_data);
@@ -386,7 +401,7 @@ pub trait LineFTrait<'a> {
     /// ![qlinef-normalvector.png](qlinef-normalvector.png)
     ///
     /// **See also:** [`unit_vector()`]
-    fn normal_vector(&self) -> LineF {
+    pub fn normal_vector(&self) -> LineF {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).normal_vector)(obj_data);
@@ -407,7 +422,11 @@ pub trait LineFTrait<'a> {
     /// The actual intersection point is extracted to *intersectionPoint*
     /// (if the pointer is valid). If the lines are parallel, the
     /// intersection point is undefined.
-    fn intersect(&self, l: &LineFTrait, intersection_point: &PointFTrait) -> IntersectType {
+    pub fn intersect<L: LineFTrait<'a>, P: PointFTrait<'a>>(
+        &self,
+        l: &L,
+        intersection_point: &P,
+    ) -> IntersectType {
         let (obj_l_1, _funcs) = l.get_line_f_obj_funcs();
         let (obj_intersection_point_2, _funcs) = intersection_point.get_point_f_obj_funcs();
 
@@ -451,7 +470,7 @@ pub trait LineFTrait<'a> {
     /// the same direction; otherwise it returns 180.
     ///
     /// **See also:** [`intersect()`]
-    fn angle_2(&self, l: &LineFTrait) -> f32 {
+    pub fn angle_2<L: LineFTrait<'a>>(&self, l: &L) -> f32 {
         let (obj_l_1, _funcs) = l.get_line_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
@@ -466,7 +485,7 @@ pub trait LineFTrait<'a> {
     ///
     /// **See also:** [`dx()`]
     /// [`dy()`]
-    fn point_at(&self, t: f32) -> PointF {
+    pub fn point_at(&self, t: f32) -> PointF {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).point_at)(obj_data, t);
@@ -483,7 +502,7 @@ pub trait LineFTrait<'a> {
     ///
     /// Returns the center point of this line. This is equivalent to
     /// 0.5 * p1() + 0.5 * p2().
-    fn center(&self) -> PointF {
+    pub fn center(&self) -> PointF {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).center)(obj_data);
@@ -502,26 +521,28 @@ pub trait LineFTrait<'a> {
     ///
     /// **See also:** [`set_p2()`]
     /// [`p1()`]
-    fn set_p1(&self, p1: &PointFTrait) {
+    pub fn set_p1<P: PointFTrait<'a>>(&self, p1: &P) -> &Self {
         let (obj_p1_1, _funcs) = p1.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             ((*funcs).set_p1)(obj_data, obj_p1_1);
         }
+        self
     }
     ///
     /// Sets the end point of this line to *p2.*
     ///
     /// **See also:** [`set_p1()`]
     /// [`p2()`]
-    fn set_p2(&self, p2: &PointFTrait) {
+    pub fn set_p2<P: PointFTrait<'a>>(&self, p2: &P) -> &Self {
         let (obj_p2_1, _funcs) = p2.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             ((*funcs).set_p2)(obj_data, obj_p2_1);
         }
+        self
     }
     ///
     /// Sets the start point of this line to *p1* and the end point of this line to *p2.*
@@ -530,7 +551,7 @@ pub trait LineFTrait<'a> {
     /// [`set_p2()`]
     /// [`p1()`]
     /// [`p2()`]
-    fn set_points(&self, p1: &PointFTrait, p2: &PointFTrait) {
+    pub fn set_points<P: PointFTrait<'a>>(&self, p1: &P, p2: &P) -> &Self {
         let (obj_p1_1, _funcs) = p1.get_point_f_obj_funcs();
         let (obj_p2_2, _funcs) = p2.get_point_f_obj_funcs();
 
@@ -538,6 +559,7 @@ pub trait LineFTrait<'a> {
         unsafe {
             ((*funcs).set_points)(obj_data, obj_p1_1, obj_p2_2);
         }
+        self
     }
     ///
     /// Sets this line to the start in *x1,* *y1* and end in *x2,* *y2.*
@@ -546,11 +568,12 @@ pub trait LineFTrait<'a> {
     /// [`set_p2()`]
     /// [`p1()`]
     /// [`p2()`]
-    fn set_line(&self, x1: f32, y1: f32, x2: f32, y2: f32) {
+    pub fn set_line(&self, x1: f32, y1: f32, x2: f32, y2: f32) -> &Self {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             ((*funcs).set_line)(obj_data, x1, y1, x2, y2);
         }
+        self
     }
     ///
     /// Returns an integer based copy of this line.
@@ -559,7 +582,7 @@ pub trait LineFTrait<'a> {
     /// the nearest integer.
     ///
     /// **See also:** [`q_line_f()`]
-    fn to_line(&self) -> Line {
+    pub fn to_line(&self) -> Line {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).to_line)(obj_data);
@@ -573,50 +596,20 @@ pub trait LineFTrait<'a> {
             ret_val
         }
     }
-
+}
+pub trait LineFTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_line_f_obj_funcs(&self) -> (*const RUBase, *const RULineFFuncs);
 }
 
 impl<'a> LineFTrait<'a> for LineF<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_line_f_obj_funcs(&self) -> (*const RUBase, *const RULineFFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).line_f_funcs) }
     }
 }
-pub trait LineFStaticTrait {
-    ///
-    /// Returns a QLineF with the given *length* and *angle.*
-    ///
-    /// The first point of the line will be on the origin.
-    ///
-    /// Positive values for the angles mean counter-clockwise while negative values
-    /// mean the clockwise direction. Zero degrees is at the 3 o'clock position.
-    fn from_polar<'a>(length: f32, angle: f32) -> LineF<'a> {
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_line_f)(::std::ptr::null()).all_funcs).line_f_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).from_polar)(obj_data, length, angle);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = LineF::new_from_rc(t);
-            } else {
-                ret_val = LineF::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-}
-
-impl<'a> LineFStaticTrait for LineF<'a> {}
-
-impl<'a> LineFStaticTrait for LineFStatic<'a> {}
 #[repr(u32)]
 pub enum IntersectType {
     NoIntersection,

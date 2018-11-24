@@ -17,25 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::brush::Brush;
-#[allow(unused_imports)]
-use auto::brush::BrushTrait;
-#[allow(unused_imports)]
-use auto::brush_ffi::*;
-#[allow(unused_imports)]
-use auto::color::Color;
-#[allow(unused_imports)]
-use auto::color::ColorTrait;
-#[allow(unused_imports)]
-use auto::color_ffi::*;
-#[allow(unused_imports)]
-use auto::palette_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// A palette consists of three color groups: *Active,* *Disabled,*
 /// and *Inactive.* All widgets in Qt contain a palette and
@@ -97,9 +80,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Palette<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUPaletteAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -124,7 +111,8 @@ impl<'a> Palette<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUPalette) -> Palette<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUPalette) -> Palette<'a> {
         Palette {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -133,7 +121,8 @@ impl<'a> Palette<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUPalette) -> Palette<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUPalette) -> Palette<'a> {
         Palette {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -142,7 +131,8 @@ impl<'a> Palette<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUPalette) -> Palette<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUPalette) -> Palette<'a> {
         Palette {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -150,22 +140,21 @@ impl<'a> Palette<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait PaletteTrait<'a> {
     ///
     /// Swaps this palette instance with *other.* This function is very
     /// fast and never fails.
-    fn swap(&self, other: &PaletteTrait) {
+    pub fn swap<P: PaletteTrait<'a>>(&self, other: &P) -> &Self {
         let (obj_other_1, _funcs) = other.get_palette_obj_funcs();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
+        self
     }
     ///
     /// Returns the palette's current color group.
-    fn current_color_group(&self) -> ColorGroup {
+    pub fn current_color_group(&self) -> ColorGroup {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).current_color_group)(obj_data);
@@ -175,13 +164,14 @@ pub trait PaletteTrait<'a> {
     }
     ///
     /// Set the palette's current color group to *cg.*
-    fn set_current_color_group(&self, cg: ColorGroup) {
+    pub fn set_current_color_group(&self, cg: ColorGroup) -> &Self {
         let enum_cg_1 = cg as i32;
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             ((*funcs).set_current_color_group)(obj_data, enum_cg_1);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -197,7 +187,7 @@ pub trait PaletteTrait<'a> {
     /// **See also:** [`brush()`]
     /// [`set_color()`]
     /// ColorRole
-    fn color(&self, cg: ColorGroup, cr: ColorRole) -> Option<Color> {
+    pub fn color(&self, cg: ColorGroup, cr: ColorRole) -> Option<Color> {
         let enum_cg_1 = cg as i32;
         let enum_cr_2 = cr as i32;
 
@@ -232,7 +222,7 @@ pub trait PaletteTrait<'a> {
     /// **See also:** [`color()`]
     /// [`set_brush()`]
     /// ColorRole
-    fn brush(&self, cg: ColorGroup, cr: ColorRole) -> Option<Brush> {
+    pub fn brush(&self, cg: ColorGroup, cr: ColorRole) -> Option<Brush> {
         let enum_cg_1 = cg as i32;
         let enum_cr_2 = cr as i32;
 
@@ -272,7 +262,7 @@ pub trait PaletteTrait<'a> {
     /// plain colors for *windowText,* *button,* *light,* *dark,* *mid,* *text,* *bright_text,* *base* and *window.*
     ///
     /// **See also:** [`Brush`]
-    fn set_color(&self, cg: ColorGroup, cr: ColorRole, color: &ColorTrait) {
+    pub fn set_color<C: ColorTrait<'a>>(&self, cg: ColorGroup, cr: ColorRole, color: &C) -> &Self {
         let enum_cg_1 = cg as i32;
         let enum_cr_2 = cr as i32;
         let (obj_color_3, _funcs) = color.get_color_obj_funcs();
@@ -281,6 +271,7 @@ pub trait PaletteTrait<'a> {
         unsafe {
             ((*funcs).set_color)(obj_data, enum_cg_1, enum_cr_2, obj_color_3);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -302,7 +293,7 @@ pub trait PaletteTrait<'a> {
     /// plain colors for *windowText,* *button,* *light,* *dark,* *mid,* *text,* *bright_text,* *base* and *window.*
     ///
     /// **See also:** [`Brush`]
-    fn set_color_2(&self, cr: ColorRole, color: &ColorTrait) {
+    pub fn set_color_2<C: ColorTrait<'a>>(&self, cr: ColorRole, color: &C) -> &Self {
         let enum_cr_1 = cr as i32;
         let (obj_color_2, _funcs) = color.get_color_obj_funcs();
 
@@ -310,6 +301,7 @@ pub trait PaletteTrait<'a> {
         unsafe {
             ((*funcs).set_color_2)(obj_data, enum_cr_1, obj_color_2);
         }
+        self
     }
     ///
     /// Sets the brush for the given color *role* to the specified *brush* for all groups in the palette.
@@ -325,7 +317,7 @@ pub trait PaletteTrait<'a> {
     /// **See also:** [`brush()`]
     /// [`set_color()`]
     /// ColorRole
-    fn set_brush(&self, cr: ColorRole, brush: &BrushTrait) {
+    pub fn set_brush<B: BrushTrait<'a>>(&self, cr: ColorRole, brush: &B) -> &Self {
         let enum_cr_1 = cr as i32;
         let (obj_brush_2, _funcs) = brush.get_brush_obj_funcs();
 
@@ -333,13 +325,14 @@ pub trait PaletteTrait<'a> {
         unsafe {
             ((*funcs).set_brush)(obj_data, enum_cr_1, obj_brush_2);
         }
+        self
     }
     ///
     /// Returns `true` if the ColorGroup *cg* and ColorRole *cr* has been
     /// set previously on this palette; otherwise returns `false.`
     ///
     /// **See also:** [`set_brush()`]
-    fn is_brush_set(&self, cg: ColorGroup, cr: ColorRole) -> bool {
+    pub fn is_brush_set(&self, cg: ColorGroup, cr: ColorRole) -> bool {
         let enum_cg_1 = cg as i32;
         let enum_cr_2 = cr as i32;
 
@@ -363,7 +356,12 @@ pub trait PaletteTrait<'a> {
     /// **See also:** [`brush()`]
     /// [`set_color()`]
     /// ColorRole
-    fn set_brush_2(&self, cg: ColorGroup, cr: ColorRole, brush: &BrushTrait) {
+    pub fn set_brush_2<B: BrushTrait<'a>>(
+        &self,
+        cg: ColorGroup,
+        cr: ColorRole,
+        brush: &B,
+    ) -> &Self {
         let enum_cg_1 = cg as i32;
         let enum_cr_2 = cr as i32;
         let (obj_brush_3, _funcs) = brush.get_brush_obj_funcs();
@@ -372,25 +370,26 @@ pub trait PaletteTrait<'a> {
         unsafe {
             ((*funcs).set_brush_2)(obj_data, enum_cg_1, enum_cr_2, obj_brush_3);
         }
+        self
     }
     ///
     /// Sets a the group at *cg.* You can pass either brushes, pixmaps or
     /// plain colors for *windowText,* *button,* *light,* *dark,* *mid,* *text,* *bright_text,* *base* and *window.*
     ///
     /// **See also:** [`Brush`]
-    fn set_color_group(
+    pub fn set_color_group<B: BrushTrait<'a>>(
         &self,
         cr: ColorGroup,
-        window_text: &BrushTrait,
-        button: &BrushTrait,
-        light: &BrushTrait,
-        dark: &BrushTrait,
-        mid: &BrushTrait,
-        text: &BrushTrait,
-        bright_text: &BrushTrait,
-        base: &BrushTrait,
-        window: &BrushTrait,
-    ) {
+        window_text: &B,
+        button: &B,
+        light: &B,
+        dark: &B,
+        mid: &B,
+        text: &B,
+        bright_text: &B,
+        base: &B,
+        window: &B,
+    ) -> &Self {
         let enum_cr_1 = cr as i32;
         let (obj_window_text_2, _funcs) = window_text.get_brush_obj_funcs();
         let (obj_button_3, _funcs) = button.get_brush_obj_funcs();
@@ -418,11 +417,12 @@ pub trait PaletteTrait<'a> {
                 obj_window_10,
             );
         }
+        self
     }
     ///
     /// Returns `true` (usually quickly) if color group *cg1* is equal to
     /// *cg2;* otherwise returns `false.`
-    fn is_equal(&self, cr1: ColorGroup, cr2: ColorGroup) -> bool {
+    pub fn is_equal(&self, cr1: ColorGroup, cr2: ColorGroup) -> bool {
         let enum_cr1_1 = cr1 as i32;
         let enum_cr2_2 = cr2 as i32;
 
@@ -446,7 +446,7 @@ pub trait PaletteTrait<'a> {
     /// **See also:** [`brush()`]
     /// [`set_color()`]
     /// ColorRole
-    fn color_2(&self, cr: ColorRole) -> Option<Color> {
+    pub fn color_2(&self, cr: ColorRole) -> Option<Color> {
         let enum_cr_1 = cr as i32;
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
@@ -480,7 +480,7 @@ pub trait PaletteTrait<'a> {
     /// **See also:** [`color()`]
     /// [`set_brush()`]
     /// ColorRole
-    fn brush_2(&self, cr: ColorRole) -> Option<Brush> {
+    pub fn brush_2(&self, cr: ColorRole) -> Option<Brush> {
         let enum_cr_1 = cr as i32;
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
@@ -501,7 +501,7 @@ pub trait PaletteTrait<'a> {
     }
     ///
     /// Use windowText() instead.
-    fn foreground(&self) -> Option<Brush> {
+    pub fn foreground(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).foreground)(obj_data);
@@ -524,7 +524,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn window_text(&self) -> Option<Brush> {
+    pub fn window_text(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).window_text)(obj_data);
@@ -551,7 +551,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn button(&self) -> Option<Brush> {
+    pub fn button(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).button)(obj_data);
@@ -573,7 +573,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn light(&self) -> Option<Brush> {
+    pub fn light(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).light)(obj_data);
@@ -595,7 +595,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn dark(&self) -> Option<Brush> {
+    pub fn dark(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dark)(obj_data);
@@ -622,7 +622,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn mid(&self) -> Option<Brush> {
+    pub fn mid(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).mid)(obj_data);
@@ -644,7 +644,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn text(&self) -> Option<Brush> {
+    pub fn text(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).text)(obj_data);
@@ -666,7 +666,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn base(&self) -> Option<Brush> {
+    pub fn base(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).base)(obj_data);
@@ -688,7 +688,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn alternate_base(&self) -> Option<Brush> {
+    pub fn alternate_base(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alternate_base)(obj_data);
@@ -714,7 +714,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn tool_tip_base(&self) -> Option<Brush> {
+    pub fn tool_tip_base(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).tool_tip_base)(obj_data);
@@ -740,7 +740,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn tool_tip_text(&self) -> Option<Brush> {
+    pub fn tool_tip_text(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).tool_tip_text)(obj_data);
@@ -759,7 +759,7 @@ pub trait PaletteTrait<'a> {
     }
     ///
     /// Use window() instead.
-    fn background(&self) -> Option<Brush> {
+    pub fn background(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).background)(obj_data);
@@ -788,7 +788,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn window(&self) -> Option<Brush> {
+    pub fn window(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).window)(obj_data);
@@ -810,7 +810,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn midlight(&self) -> Option<Brush> {
+    pub fn midlight(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).midlight)(obj_data);
@@ -832,7 +832,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn bright_text(&self) -> Option<Brush> {
+    pub fn bright_text(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bright_text)(obj_data);
@@ -854,7 +854,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn button_text(&self) -> Option<Brush> {
+    pub fn button_text(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).button_text)(obj_data);
@@ -876,7 +876,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn shadow(&self) -> Option<Brush> {
+    pub fn shadow(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).shadow)(obj_data);
@@ -903,7 +903,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn highlight(&self) -> Option<Brush> {
+    pub fn highlight(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).highlight)(obj_data);
@@ -925,7 +925,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn highlighted_text(&self) -> Option<Brush> {
+    pub fn highlighted_text(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).highlighted_text)(obj_data);
@@ -952,7 +952,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn link(&self) -> Option<Brush> {
+    pub fn link(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).link)(obj_data);
@@ -974,7 +974,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** ColorRole
     /// [`brush()`]
-    fn link_visited(&self) -> Option<Brush> {
+    pub fn link_visited(&self) -> Option<Brush> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).link_visited)(obj_data);
@@ -999,7 +999,7 @@ pub trait PaletteTrait<'a> {
     ///
     /// **See also:** [`operator()`]
     /// [`operator()`]
-    fn is_copy_of(&self, p: &PaletteTrait) -> bool {
+    pub fn is_copy_of<P: PaletteTrait<'a>>(&self, p: &P) -> bool {
         let (obj_p_1, _funcs) = p.get_palette_obj_funcs();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
@@ -1014,7 +1014,7 @@ pub trait PaletteTrait<'a> {
     /// they refer to the same contents.
     ///
     /// The cacheKey() will change when the palette is altered.
-    fn cache_key(&self) -> i64 {
+    pub fn cache_key(&self) -> i64 {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).cache_key)(obj_data);
@@ -1023,7 +1023,7 @@ pub trait PaletteTrait<'a> {
     }
     ///
     /// Returns a new QPalette that has attributes copied from *other.*
-    fn resolve(&self, arg0: &PaletteTrait) -> Palette {
+    pub fn resolve<P: PaletteTrait<'a>>(&self, arg0: &P) -> Palette {
         let (obj_arg0_1, _funcs) = arg0.get_palette_obj_funcs();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
@@ -1041,7 +1041,7 @@ pub trait PaletteTrait<'a> {
     }
     ///
     /// Returns a new QPalette that has attributes copied from *other.*
-    fn resolve_2(&self) -> u32 {
+    pub fn resolve_2(&self) -> u32 {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).resolve_2)(obj_data);
@@ -1050,19 +1050,22 @@ pub trait PaletteTrait<'a> {
     }
     ///
     /// Returns a new QPalette that has attributes copied from *other.*
-    fn resolve_3(&self, mask: u32) {
+    pub fn resolve_3(&self, mask: u32) -> &Self {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             ((*funcs).resolve_3)(obj_data, mask);
         }
+        self
     }
-
+}
+pub trait PaletteTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_palette_obj_funcs(&self) -> (*const RUBase, *const RUPaletteFuncs);
 }
 
 impl<'a> PaletteTrait<'a> for Palette<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_palette_obj_funcs(&self) -> (*const RUBase, *const RUPaletteFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).palette_funcs) }

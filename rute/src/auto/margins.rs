@@ -17,13 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::margins_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// QMargin defines a set of four margins; left, top, right and bottom,
 /// that describe the size of the borders surrounding a rectangle.
@@ -36,9 +31,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Margins<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUMarginsAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -63,7 +62,8 @@ impl<'a> Margins<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUMargins) -> Margins<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUMargins) -> Margins<'a> {
         Margins {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -72,7 +72,8 @@ impl<'a> Margins<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUMargins) -> Margins<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUMargins) -> Margins<'a> {
         Margins {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -81,7 +82,8 @@ impl<'a> Margins<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUMargins) -> Margins<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUMargins) -> Margins<'a> {
         Margins {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -89,12 +91,10 @@ impl<'a> Margins<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait MarginsTrait<'a> {
     ///
     /// Returns `true` if all margins are is 0; otherwise returns
     /// false.
-    fn is_null(&self) -> bool {
+    pub fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_null)(obj_data);
@@ -105,7 +105,7 @@ pub trait MarginsTrait<'a> {
     /// Returns the left margin.
     ///
     /// **See also:** setLeft()
-    fn left(&self) -> i32 {
+    pub fn left(&self) -> i32 {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).left)(obj_data);
@@ -116,7 +116,7 @@ pub trait MarginsTrait<'a> {
     /// Returns the top margin.
     ///
     /// **See also:** setTop()
-    fn top(&self) -> i32 {
+    pub fn top(&self) -> i32 {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).top)(obj_data);
@@ -125,7 +125,7 @@ pub trait MarginsTrait<'a> {
     }
     ///
     /// Returns the right margin.
-    fn right(&self) -> i32 {
+    pub fn right(&self) -> i32 {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).right)(obj_data);
@@ -134,7 +134,7 @@ pub trait MarginsTrait<'a> {
     }
     ///
     /// Returns the bottom margin.
-    fn bottom(&self) -> i32 {
+    pub fn bottom(&self) -> i32 {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bottom)(obj_data);
@@ -143,43 +143,49 @@ pub trait MarginsTrait<'a> {
     }
     ///
     /// Sets the left margin to *left.*
-    fn set_left(&self, left: i32) {
+    pub fn set_left(&self, left: i32) -> &Self {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             ((*funcs).set_left)(obj_data, left);
         }
+        self
     }
     ///
     /// Sets the Top margin to *Top.*
-    fn set_top(&self, top: i32) {
+    pub fn set_top(&self, top: i32) -> &Self {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             ((*funcs).set_top)(obj_data, top);
         }
+        self
     }
     ///
     /// Sets the right margin to *right.*
-    fn set_right(&self, right: i32) {
+    pub fn set_right(&self, right: i32) -> &Self {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             ((*funcs).set_right)(obj_data, right);
         }
+        self
     }
     ///
     /// Sets the bottom margin to *bottom.*
-    fn set_bottom(&self, bottom: i32) {
+    pub fn set_bottom(&self, bottom: i32) -> &Self {
         let (obj_data, funcs) = self.get_margins_obj_funcs();
         unsafe {
             ((*funcs).set_bottom)(obj_data, bottom);
         }
+        self
     }
-
+}
+pub trait MarginsTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_margins_obj_funcs(&self) -> (*const RUBase, *const RUMarginsFuncs);
 }
 
 impl<'a> MarginsTrait<'a> for Margins<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_margins_obj_funcs(&self) -> (*const RUBase, *const RUMarginsFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).margins_funcs) }

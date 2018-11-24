@@ -17,35 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::brush::Brush;
-#[allow(unused_imports)]
-use auto::font::Font;
-#[allow(unused_imports)]
-use auto::paint_engine::DirtyFlags;
-#[allow(unused_imports)]
-use auto::paint_engine_state_ffi::*;
-#[allow(unused_imports)]
-use auto::painter::CompositionMode;
-#[allow(unused_imports)]
-use auto::painter::Painter;
-#[allow(unused_imports)]
-use auto::painter::RenderHints;
-#[allow(unused_imports)]
-use auto::pen::Pen;
-#[allow(unused_imports)]
-use auto::point_f::PointF;
-#[allow(unused_imports)]
-use auto::region::Region;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::BGMode;
-#[allow(unused_imports)]
-use auto::rute_enums::ClipOperation;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// QPaintEngineState records which properties that have changed since
 /// the last time the paint engine was updated, as well as their
@@ -106,9 +79,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct PaintEngineState<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUPaintEngineStateAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -133,7 +110,8 @@ impl<'a> PaintEngineState<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUPaintEngineState) -> PaintEngineState<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUPaintEngineState) -> PaintEngineState<'a> {
         PaintEngineState {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -142,7 +120,8 @@ impl<'a> PaintEngineState<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUPaintEngineState) -> PaintEngineState<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUPaintEngineState) -> PaintEngineState<'a> {
         PaintEngineState {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -151,7 +130,8 @@ impl<'a> PaintEngineState<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUPaintEngineState) -> PaintEngineState<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUPaintEngineState) -> PaintEngineState<'a> {
         PaintEngineState {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -159,15 +139,13 @@ impl<'a> PaintEngineState<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait PaintEngineStateTrait<'a> {
     ///
     /// Returns a combination of flags identifying the set of properties
     /// that need to be updated when updating the paint engine's state
     /// (i.e. during a call to the QPaintEngine::updateState() function).
     ///
     /// **See also:** QPaintEngine::updateState()
-    fn state(&self) -> DirtyFlags {
+    pub fn state(&self) -> DirtyFlags {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).state)(obj_data);
@@ -187,7 +165,7 @@ pub trait PaintEngineStateTrait<'a> {
     /// Returns whether the coordinate of the stroke have been specified
     /// as bounded by the current rendering operation and have to be
     /// resolved (about the currently rendered primitive).
-    fn pen(&self) -> Pen {
+    pub fn pen(&self) -> Pen {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pen)(obj_data);
@@ -221,7 +199,7 @@ pub trait PaintEngineStateTrait<'a> {
     /// Returns whether the coordinate of the fill have been specified
     /// as bounded by the current rendering operation and have to be
     /// resolved (about the currently rendered primitive).
-    fn brush(&self) -> Brush {
+    pub fn brush(&self) -> Brush {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).brush)(obj_data);
@@ -243,7 +221,7 @@ pub trait PaintEngineStateTrait<'a> {
     ///
     /// **See also:** state()
     /// QPaintEngine::updateState()
-    fn brush_origin(&self) -> PointF {
+    pub fn brush_origin(&self) -> PointF {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).brush_origin)(obj_data);
@@ -265,7 +243,7 @@ pub trait PaintEngineStateTrait<'a> {
     ///
     /// **See also:** state()
     /// QPaintEngine::updateState()
-    fn background_brush(&self) -> Brush {
+    pub fn background_brush(&self) -> Brush {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).background_brush)(obj_data);
@@ -288,7 +266,7 @@ pub trait PaintEngineStateTrait<'a> {
     ///
     /// **See also:** state()
     /// QPaintEngine::updateState()
-    fn background_mode(&self) -> BGMode {
+    pub fn background_mode(&self) -> BGMode {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).background_mode)(obj_data);
@@ -305,7 +283,7 @@ pub trait PaintEngineStateTrait<'a> {
     ///
     /// **See also:** state()
     /// QPaintEngine::updateState()
-    fn font(&self) -> Font {
+    pub fn font(&self) -> Font {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).font)(obj_data);
@@ -329,7 +307,7 @@ pub trait PaintEngineStateTrait<'a> {
     ///
     /// **See also:** state()
     /// QPaintEngine::updateState()
-    fn clip_operation(&self) -> ClipOperation {
+    pub fn clip_operation(&self) -> ClipOperation {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).clip_operation)(obj_data);
@@ -345,7 +323,7 @@ pub trait PaintEngineStateTrait<'a> {
     ///
     /// **See also:** state()
     /// QPaintEngine::updateState()
-    fn clip_region(&self) -> Region {
+    pub fn clip_region(&self) -> Region {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).clip_region)(obj_data);
@@ -369,7 +347,7 @@ pub trait PaintEngineStateTrait<'a> {
     ///
     /// **See also:** state()
     /// QPaintEngine::updateState()
-    fn is_clip_enabled(&self) -> bool {
+    pub fn is_clip_enabled(&self) -> bool {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_clip_enabled)(obj_data);
@@ -385,7 +363,7 @@ pub trait PaintEngineStateTrait<'a> {
     ///
     /// **See also:** state()
     /// QPaintEngine::updateState()
-    fn render_hints(&self) -> RenderHints {
+    pub fn render_hints(&self) -> RenderHints {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).render_hints)(obj_data);
@@ -402,7 +380,7 @@ pub trait PaintEngineStateTrait<'a> {
     ///
     /// **See also:** state()
     /// QPaintEngine::updateState()
-    fn composition_mode(&self) -> CompositionMode {
+    pub fn composition_mode(&self) -> CompositionMode {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).composition_mode)(obj_data);
@@ -412,7 +390,7 @@ pub trait PaintEngineStateTrait<'a> {
     }
     ///
     /// Returns the opacity in the current paint engine state.
-    fn opacity(&self) -> f32 {
+    pub fn opacity(&self) -> f32 {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).opacity)(obj_data);
@@ -422,7 +400,7 @@ pub trait PaintEngineStateTrait<'a> {
     ///
     /// Returns a pointer to the painter currently updating the paint
     /// engine.
-    fn painter(&self) -> Option<Painter> {
+    pub fn painter(&self) -> Option<Painter> {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).painter)(obj_data);
@@ -443,7 +421,7 @@ pub trait PaintEngineStateTrait<'a> {
     /// Returns whether the coordinate of the fill have been specified
     /// as bounded by the current rendering operation and have to be
     /// resolved (about the currently rendered primitive).
-    fn brush_needs_resolving(&self) -> bool {
+    pub fn brush_needs_resolving(&self) -> bool {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).brush_needs_resolving)(obj_data);
@@ -454,20 +432,22 @@ pub trait PaintEngineStateTrait<'a> {
     /// Returns whether the coordinate of the stroke have been specified
     /// as bounded by the current rendering operation and have to be
     /// resolved (about the currently rendered primitive).
-    fn pen_needs_resolving(&self) -> bool {
+    pub fn pen_needs_resolving(&self) -> bool {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pen_needs_resolving)(obj_data);
             ret_val
         }
     }
-
+}
+pub trait PaintEngineStateTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_paint_engine_state_obj_funcs(&self) -> (*const RUBase, *const RUPaintEngineStateFuncs);
 }
 
 impl<'a> PaintEngineStateTrait<'a> for PaintEngineState<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_paint_engine_state_obj_funcs(&self) -> (*const RUBase, *const RUPaintEngineStateFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).paint_engine_state_funcs) }

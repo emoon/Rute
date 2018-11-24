@@ -17,29 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::event::*;
-#[allow(unused_imports)]
-use auto::event_ffi::*;
-#[allow(unused_imports)]
-use auto::input_event::*;
-#[allow(unused_imports)]
-use auto::input_event_ffi::*;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point_f::PointF;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::MouseButton;
-#[allow(unused_imports)]
-use auto::rute_enums::MouseButtons;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::tablet_event_ffi::*;
 ///
 /// *Tablet events* are generated from tablet peripherals such as Wacom
 /// tablets and various other brands, and electromagnetic stylus devices
@@ -125,14 +104,19 @@ use auto::tablet_event_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct TabletEvent<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUTabletEventAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> TabletEvent<'a> {
-    pub fn new_from_rc(ffi_data: RUTabletEvent) -> TabletEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUTabletEvent) -> TabletEvent<'a> {
         TabletEvent {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -141,7 +125,8 @@ impl<'a> TabletEvent<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUTabletEvent) -> TabletEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUTabletEvent) -> TabletEvent<'a> {
         TabletEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -150,7 +135,8 @@ impl<'a> TabletEvent<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUTabletEvent) -> TabletEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUTabletEvent) -> TabletEvent<'a> {
         TabletEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -158,8 +144,6 @@ impl<'a> TabletEvent<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait TabletEventTrait<'a> {
     ///
     /// Returns the position of the device, relative to the widget that
     /// received the event.
@@ -178,7 +162,7 @@ pub trait TabletEventTrait<'a> {
     /// globalPosF() instead of this function.
     ///
     /// **See also:** [`global_pos_f()`]
-    fn pos(&self) -> Point {
+    pub fn pos(&self) -> Point {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pos)(obj_data);
@@ -210,7 +194,7 @@ pub trait TabletEventTrait<'a> {
     /// QCursor::pos().
     ///
     /// **See also:** [`pos_f()`]
-    fn global_pos(&self) -> Point {
+    pub fn global_pos(&self) -> Point {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).global_pos)(obj_data);
@@ -232,7 +216,7 @@ pub trait TabletEventTrait<'a> {
     /// globalPosF() instead of this function.
     ///
     /// **See also:** [`global_pos_f()`]
-    fn pos_f(&self) -> Option<PointF> {
+    pub fn pos_f(&self) -> Option<PointF> {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pos_f)(obj_data);
@@ -257,7 +241,7 @@ pub trait TabletEventTrait<'a> {
     /// QCursor::pos().
     ///
     /// **See also:** [`pos_f()`]
-    fn global_pos_f(&self) -> Option<PointF> {
+    pub fn global_pos_f(&self) -> Option<PointF> {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).global_pos_f)(obj_data);
@@ -289,7 +273,7 @@ pub trait TabletEventTrait<'a> {
     ///
     /// **See also:** [`y()`]
     /// [`pos()`]
-    fn x(&self) -> i32 {
+    pub fn x(&self) -> i32 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).x)(obj_data);
@@ -309,7 +293,7 @@ pub trait TabletEventTrait<'a> {
     ///
     /// **See also:** [`x()`]
     /// [`pos()`]
-    fn y(&self) -> i32 {
+    pub fn y(&self) -> i32 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).y)(obj_data);
@@ -323,7 +307,7 @@ pub trait TabletEventTrait<'a> {
     /// **See also:** [`global_y()`]
     /// [`global_pos()`]
     /// [`hi_res_global_x()`]
-    fn global_x(&self) -> i32 {
+    pub fn global_x(&self) -> i32 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).global_x)(obj_data);
@@ -337,7 +321,7 @@ pub trait TabletEventTrait<'a> {
     /// **See also:** [`global_x()`]
     /// [`global_pos()`]
     /// [`hi_res_global_y()`]
-    fn global_y(&self) -> i32 {
+    pub fn global_y(&self) -> i32 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).global_y)(obj_data);
@@ -346,7 +330,7 @@ pub trait TabletEventTrait<'a> {
     }
     ///
     /// The high precision x position of the tablet device.
-    fn hi_res_global_x(&self) -> f32 {
+    pub fn hi_res_global_x(&self) -> f32 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hi_res_global_x)(obj_data);
@@ -355,7 +339,7 @@ pub trait TabletEventTrait<'a> {
     }
     ///
     /// The high precision y position of the tablet device.
-    fn hi_res_global_y(&self) -> f32 {
+    pub fn hi_res_global_y(&self) -> f32 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hi_res_global_y)(obj_data);
@@ -366,7 +350,7 @@ pub trait TabletEventTrait<'a> {
     /// Returns the type of device that generated the event.
     ///
     /// **See also:** TabletDevice
-    fn device(&self) -> TabletDevice {
+    pub fn device(&self) -> TabletDevice {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).device)(obj_data);
@@ -376,7 +360,7 @@ pub trait TabletEventTrait<'a> {
     }
     ///
     /// Returns the type of point that generated the event.
-    fn pointer_type(&self) -> PointerType {
+    pub fn pointer_type(&self) -> PointerType {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pointer_type)(obj_data);
@@ -403,7 +387,7 @@ pub trait TabletEventTrait<'a> {
     /// the eraser-end versus the pen-end of the stylus on some OS's.
     ///
     /// **See also:** [`pointer_type()`]
-    fn unique_id(&self) -> i64 {
+    pub fn unique_id(&self) -> i64 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).unique_id)(obj_data);
@@ -415,7 +399,7 @@ pub trait TabletEventTrait<'a> {
     /// on the tablet, 1.0 indicates the maximum amount of pressure for the stylus.
     ///
     /// **See also:** [`tangential_pressure()`]
-    fn pressure(&self) -> f32 {
+    pub fn pressure(&self) -> f32 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pressure)(obj_data);
@@ -428,7 +412,7 @@ pub trait TabletEventTrait<'a> {
     /// always zero. This is **not** the same as pressure.
     ///
     /// **See also:** [`pressure()`]
-    fn z(&self) -> i32 {
+    pub fn z(&self) -> i32 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).z)(obj_data);
@@ -443,7 +427,7 @@ pub trait TabletEventTrait<'a> {
     /// tangential pressure, this value is always 0.0.
     ///
     /// **See also:** [`pressure()`]
-    fn tangential_pressure(&self) -> f32 {
+    pub fn tangential_pressure(&self) -> f32 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).tangential_pressure)(obj_data);
@@ -457,7 +441,7 @@ pub trait TabletEventTrait<'a> {
     /// turned to the left. This can be given by a 4D Mouse or a rotation-capable
     /// stylus (such as the Wacom Art Pen or the Apple Pencil). If the device does
     /// not support rotation, this value is always 0.0.
-    fn rotation(&self) -> f32 {
+    pub fn rotation(&self) -> f32 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rotation)(obj_data);
@@ -473,7 +457,7 @@ pub trait TabletEventTrait<'a> {
     /// ![qtabletevent-tilt.png](qtabletevent-tilt.png)
     ///
     /// **See also:** [`y_tilt()`]
-    fn x_tilt(&self) -> i32 {
+    pub fn x_tilt(&self) -> i32 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).x_tilt)(obj_data);
@@ -487,7 +471,7 @@ pub trait TabletEventTrait<'a> {
     /// within the range -60 to +60 degrees.
     ///
     /// **See also:** [`x_tilt()`]
-    fn y_tilt(&self) -> i32 {
+    pub fn y_tilt(&self) -> i32 {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).y_tilt)(obj_data);
@@ -519,7 +503,7 @@ pub trait TabletEventTrait<'a> {
     ///
     /// **See also:** [`button()`]
     /// [`t::mouse_button()`]
-    fn button(&self) -> MouseButton {
+    pub fn button(&self) -> MouseButton {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).button)(obj_data);
@@ -541,7 +525,7 @@ pub trait TabletEventTrait<'a> {
     ///
     /// **See also:** [`button()`]
     /// [`t::mouse_button()`]
-    fn buttons(&self) -> MouseButtons {
+    pub fn buttons(&self) -> MouseButtons {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).buttons)(obj_data);
@@ -549,13 +533,90 @@ pub trait TabletEventTrait<'a> {
             ret_val
         }
     }
+    #[doc(hidden)]
+    pub fn modifiers(&self) -> KeyboardModifiers {
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).modifiers)(obj_data);
+            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_modifiers(&self, amodifiers: KeyboardModifiers) -> &Self {
+        let enum_amodifiers_1 = amodifiers as i32;
 
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_modifiers)(obj_data, enum_amodifiers_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn timestamp(&self) -> u64 {
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).timestamp)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_timestamp(&self, atimestamp: u64) -> &Self {
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_timestamp)(obj_data, atimestamp);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn spontaneous(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).spontaneous)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_accepted(&self, accepted: bool) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_accepted)(obj_data, accepted);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_accepted(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_accepted)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn accept(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).accept)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn ignore(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).ignore)(obj_data);
+        }
+        self
+    }
+}
+pub trait TabletEventTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_tablet_event_obj_funcs(&self) -> (*const RUBase, *const RUTabletEventFuncs);
 }
 
 impl<'a> EventTrait<'a> for TabletEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).event_funcs) }
@@ -563,7 +624,7 @@ impl<'a> EventTrait<'a> for TabletEvent<'a> {
 }
 
 impl<'a> InputEventTrait<'a> for TabletEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_input_event_obj_funcs(&self) -> (*const RUBase, *const RUInputEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).input_event_funcs) }
@@ -571,7 +632,7 @@ impl<'a> InputEventTrait<'a> for TabletEvent<'a> {
 }
 
 impl<'a> TabletEventTrait<'a> for TabletEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_tablet_event_obj_funcs(&self) -> (*const RUBase, *const RUTabletEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).tablet_event_funcs) }

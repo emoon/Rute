@@ -17,149 +17,668 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::cursor::Cursor;
-#[allow(unused_imports)]
-use auto::cursor::CursorTrait;
-#[allow(unused_imports)]
-use auto::cursor_ffi::*;
-#[allow(unused_imports)]
-use auto::expose_event::ExposeEvent;
-#[allow(unused_imports)]
-use auto::expose_event::ExposeEventTrait;
-#[allow(unused_imports)]
-use auto::expose_event_ffi::*;
-#[allow(unused_imports)]
-use auto::focus_event::FocusEvent;
-#[allow(unused_imports)]
-use auto::focus_event::FocusEventTrait;
-#[allow(unused_imports)]
-use auto::focus_event_ffi::*;
-#[allow(unused_imports)]
-use auto::hide_event::HideEvent;
-#[allow(unused_imports)]
-use auto::hide_event::HideEventTrait;
-#[allow(unused_imports)]
-use auto::hide_event_ffi::*;
-#[allow(unused_imports)]
-use auto::icon::Icon;
-#[allow(unused_imports)]
-use auto::icon::IconTrait;
-#[allow(unused_imports)]
-use auto::icon_ffi::*;
-#[allow(unused_imports)]
-use auto::key_event::KeyEvent;
-#[allow(unused_imports)]
-use auto::key_event::KeyEventTrait;
-#[allow(unused_imports)]
-use auto::key_event_ffi::*;
-#[allow(unused_imports)]
-use auto::margins::Margins;
-#[allow(unused_imports)]
-use auto::mouse_event::MouseEvent;
-#[allow(unused_imports)]
-use auto::mouse_event::MouseEventTrait;
-#[allow(unused_imports)]
-use auto::mouse_event_ffi::*;
-#[allow(unused_imports)]
-use auto::move_event::MoveEvent;
-#[allow(unused_imports)]
-use auto::move_event::MoveEventTrait;
-#[allow(unused_imports)]
-use auto::move_event_ffi::*;
-#[allow(unused_imports)]
-use auto::object::Object;
-#[allow(unused_imports)]
-use auto::object::ObjectTrait;
-#[allow(unused_imports)]
-use auto::object::*;
-#[allow(unused_imports)]
-use auto::object_ffi::*;
-#[allow(unused_imports)]
-use auto::object_ffi::*;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point::PointTrait;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::region::Region;
-#[allow(unused_imports)]
-use auto::region::RegionTrait;
-#[allow(unused_imports)]
-use auto::region_ffi::*;
-#[allow(unused_imports)]
-use auto::resize_event::ResizeEvent;
-#[allow(unused_imports)]
-use auto::resize_event::ResizeEventTrait;
-#[allow(unused_imports)]
-use auto::resize_event_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::ScreenOrientation;
-#[allow(unused_imports)]
-use auto::rute_enums::WindowFlags;
-#[allow(unused_imports)]
-use auto::rute_enums::WindowModality;
-#[allow(unused_imports)]
-use auto::rute_enums::WindowState;
-#[allow(unused_imports)]
-use auto::rute_enums::WindowStates;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::screen::Screen;
-#[allow(unused_imports)]
-use auto::screen::ScreenTrait;
-#[allow(unused_imports)]
-use auto::screen_ffi::*;
-#[allow(unused_imports)]
-use auto::show_event::ShowEvent;
-#[allow(unused_imports)]
-use auto::show_event::ShowEventTrait;
-#[allow(unused_imports)]
-use auto::show_event_ffi::*;
-#[allow(unused_imports)]
-use auto::size::Size;
-#[allow(unused_imports)]
-use auto::size::SizeTrait;
-#[allow(unused_imports)]
-use auto::size_ffi::*;
-#[allow(unused_imports)]
-use auto::surface::SurfaceType;
-#[allow(unused_imports)]
-use auto::surface::*;
-#[allow(unused_imports)]
-use auto::surface_ffi::*;
-#[allow(unused_imports)]
-use auto::surface_format::SurfaceFormat;
-#[allow(unused_imports)]
-use auto::surface_format::SurfaceFormatTrait;
-#[allow(unused_imports)]
-use auto::surface_format_ffi::*;
-#[allow(unused_imports)]
-use auto::tablet_event::TabletEvent;
-#[allow(unused_imports)]
-use auto::tablet_event::TabletEventTrait;
-#[allow(unused_imports)]
-use auto::tablet_event_ffi::*;
-#[allow(unused_imports)]
-use auto::touch_event::TouchEvent;
-#[allow(unused_imports)]
-use auto::touch_event::TouchEventTrait;
-#[allow(unused_imports)]
-use auto::touch_event_ffi::*;
-#[allow(unused_imports)]
-use auto::wheel_event::WheelEvent;
-#[allow(unused_imports)]
-use auto::wheel_event::WheelEventTrait;
-#[allow(unused_imports)]
-use auto::wheel_event_ffi::*;
-#[allow(unused_imports)]
-use auto::window_ffi::*;
+pub(crate) unsafe extern "C" fn window_screen_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    screen: *const RUBase,
+) {
+    let f: &&(Fn(&T, &ScreenTrait) + 'static) = transmute(func);
+    let obj_screen_0 = Screen::new_from_temporary(*(screen as *const RUScreen));
+    let data = self_c as *const T;
+    f(&*data, &obj_screen_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_screen_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    screen: *const RUBase,
+) {
+    let f: &&(Fn(&ScreenTrait) + 'static) = transmute(func);
+    let obj_screen_0 = Screen::new_from_temporary(*(screen as *const RUScreen));
+    f(&obj_screen_0);
+}
+
+pub(crate) unsafe extern "C" fn window_window_title_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    title: *const ::std::os::raw::c_char,
+) {
+    let f: &&(Fn(&T, &str) + 'static) = transmute(func);
+    let str_in_title_0 = CStr::from_ptr(title);
+
+    let data = self_c as *const T;
+    f(&*data, str_in_title_0.to_str().unwrap());
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_window_title_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    title: *const ::std::os::raw::c_char,
+) {
+    let f: &&(Fn(&str) + 'static) = transmute(func);
+    let str_in_title_0 = CStr::from_ptr(title);
+
+    f(str_in_title_0.to_str().unwrap());
+}
+
+pub(crate) unsafe extern "C" fn window_x_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, arg);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_x_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(i32) + 'static) = transmute(func);
+
+    f(arg);
+}
+
+pub(crate) unsafe extern "C" fn window_y_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, arg);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_y_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(i32) + 'static) = transmute(func);
+
+    f(arg);
+}
+
+pub(crate) unsafe extern "C" fn window_width_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, arg);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_width_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(i32) + 'static) = transmute(func);
+
+    f(arg);
+}
+
+pub(crate) unsafe extern "C" fn window_height_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, arg);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_height_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(i32) + 'static) = transmute(func);
+
+    f(arg);
+}
+
+pub(crate) unsafe extern "C" fn window_minimum_width_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, arg);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_minimum_width_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(i32) + 'static) = transmute(func);
+
+    f(arg);
+}
+
+pub(crate) unsafe extern "C" fn window_minimum_height_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, arg);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_minimum_height_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(i32) + 'static) = transmute(func);
+
+    f(arg);
+}
+
+pub(crate) unsafe extern "C" fn window_maximum_width_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, arg);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_maximum_width_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(i32) + 'static) = transmute(func);
+
+    f(arg);
+}
+
+pub(crate) unsafe extern "C" fn window_maximum_height_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, arg);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_maximum_height_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: i32,
+) {
+    let f: &&(Fn(i32) + 'static) = transmute(func);
+
+    f(arg);
+}
+
+pub(crate) unsafe extern "C" fn window_visible_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: bool,
+) {
+    let f: &&(Fn(&T, bool) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, arg);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_visible_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg: bool,
+) {
+    let f: &&(Fn(bool) + 'static) = transmute(func);
+
+    f(arg);
+}
+
+pub(crate) unsafe extern "C" fn window_active_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+) {
+    let f: &&(Fn(&T) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_active_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+) {
+    let f: &&(Fn() + 'static) = transmute(func);
+
+    f();
+}
+
+pub(crate) unsafe extern "C" fn window_focus_object_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    object: *const RUBase,
+) {
+    let f: &&(Fn(&T, &ObjectTrait) + 'static) = transmute(func);
+    let obj_object_0 = Object::new_from_temporary(*(object as *const RUObject));
+    let data = self_c as *const T;
+    f(&*data, &obj_object_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_focus_object_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    object: *const RUBase,
+) {
+    let f: &&(Fn(&ObjectTrait) + 'static) = transmute(func);
+    let obj_object_0 = Object::new_from_temporary(*(object as *const RUObject));
+    f(&obj_object_0);
+}
+
+pub(crate) unsafe extern "C" fn window_opacity_changed_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    opacity: f32,
+) {
+    let f: &&(Fn(&T, f32) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data, opacity);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_opacity_changed_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    opacity: f32,
+) {
+    let f: &&(Fn(f32) + 'static) = transmute(func);
+
+    f(opacity);
+}
+
+pub(crate) unsafe extern "C" fn window_expose_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &ExposeEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = ExposeEvent::new_from_temporary(*(arg0 as *const RUExposeEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_expose_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&ExposeEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = ExposeEvent::new_from_temporary(*(arg0 as *const RUExposeEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_resize_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &ResizeEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = ResizeEvent::new_from_temporary(*(arg0 as *const RUResizeEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_resize_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&ResizeEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = ResizeEvent::new_from_temporary(*(arg0 as *const RUResizeEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_move_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &MoveEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = MoveEvent::new_from_temporary(*(arg0 as *const RUMoveEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_move_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&MoveEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = MoveEvent::new_from_temporary(*(arg0 as *const RUMoveEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_focus_in_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &FocusEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = FocusEvent::new_from_temporary(*(arg0 as *const RUFocusEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_focus_in_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&FocusEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = FocusEvent::new_from_temporary(*(arg0 as *const RUFocusEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_focus_out_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &FocusEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = FocusEvent::new_from_temporary(*(arg0 as *const RUFocusEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_focus_out_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&FocusEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = FocusEvent::new_from_temporary(*(arg0 as *const RUFocusEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_show_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &ShowEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = ShowEvent::new_from_temporary(*(arg0 as *const RUShowEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_show_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&ShowEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = ShowEvent::new_from_temporary(*(arg0 as *const RUShowEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_hide_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &HideEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = HideEvent::new_from_temporary(*(arg0 as *const RUHideEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_hide_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&HideEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = HideEvent::new_from_temporary(*(arg0 as *const RUHideEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_key_press_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &KeyEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = KeyEvent::new_from_temporary(*(arg0 as *const RUKeyEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_key_press_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&KeyEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = KeyEvent::new_from_temporary(*(arg0 as *const RUKeyEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_key_release_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &KeyEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = KeyEvent::new_from_temporary(*(arg0 as *const RUKeyEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_key_release_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&KeyEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = KeyEvent::new_from_temporary(*(arg0 as *const RUKeyEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_mouse_press_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_mouse_press_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_mouse_release_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_mouse_release_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_mouse_double_click_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_mouse_double_click_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_mouse_move_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_mouse_move_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_wheel_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &WheelEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = WheelEvent::new_from_temporary(*(arg0 as *const RUWheelEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_wheel_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&WheelEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = WheelEvent::new_from_temporary(*(arg0 as *const RUWheelEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_touch_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &TouchEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = TouchEvent::new_from_temporary(*(arg0 as *const RUTouchEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_touch_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&TouchEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = TouchEvent::new_from_temporary(*(arg0 as *const RUTouchEvent));
+    f(&obj_arg0_0);
+}
+
+pub(crate) unsafe extern "C" fn window_tablet_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&T, &TabletEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = TabletEvent::new_from_temporary(*(arg0 as *const RUTabletEvent));
+    let data = self_c as *const T;
+    f(&*data, &obj_arg0_0);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn window_tablet_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: *const RUBase,
+) {
+    let f: &&(Fn(&TabletEventTrait) + 'static) = transmute(func);
+    let obj_arg0_0 = TabletEvent::new_from_temporary(*(arg0 as *const RUTabletEvent));
+    f(&obj_arg0_0);
+}
+
 ///
 /// A window that is supplied a parent becomes a native child window of
 /// their parent window.
@@ -237,9 +756,13 @@ use auto::window_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Window<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUWindowAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -264,7 +787,8 @@ impl<'a> Window<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUWindow) -> Window<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUWindow) -> Window<'a> {
         Window {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -273,7 +797,8 @@ impl<'a> Window<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUWindow) -> Window<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUWindow) -> Window<'a> {
         Window {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -282,7 +807,8 @@ impl<'a> Window<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUWindow) -> Window<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUWindow) -> Window<'a> {
         Window {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -290,1864 +816,6 @@ impl<'a> Window<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn set_screen_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &ScreenTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &ScreenTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_screen_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_screen_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_screen_changed_event<F>(&self, func: F)
-    where
-        F: Fn(&ScreenTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&ScreenTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_screen_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_screen_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_window_title_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &str) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &str) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_window_title_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_window_title_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_window_title_changed_event<F>(&self, func: F)
-    where
-        F: Fn(&str) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&str) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_window_title_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_window_title_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_x_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_x_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_x_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_x_changed_event<F>(&self, func: F)
-    where
-        F: Fn(i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_x_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_x_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_y_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_y_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_y_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_y_changed_event<F>(&self, func: F)
-    where
-        F: Fn(i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_y_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_y_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_width_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_width_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_width_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_width_changed_event<F>(&self, func: F)
-    where
-        F: Fn(i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_width_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_width_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_height_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_height_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_height_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_height_changed_event<F>(&self, func: F)
-    where
-        F: Fn(i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_height_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_height_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_minimum_width_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_minimum_width_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_minimum_width_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_minimum_width_changed_event<F>(&self, func: F)
-    where
-        F: Fn(i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_minimum_width_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_minimum_width_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_minimum_height_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_minimum_height_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_minimum_height_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_minimum_height_changed_event<F>(&self, func: F)
-    where
-        F: Fn(i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_minimum_height_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_minimum_height_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_maximum_width_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_maximum_width_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_maximum_width_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_maximum_width_changed_event<F>(&self, func: F)
-    where
-        F: Fn(i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_maximum_width_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_maximum_width_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_maximum_height_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, i32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_maximum_height_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_maximum_height_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_maximum_height_changed_event<F>(&self, func: F)
-    where
-        F: Fn(i32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_maximum_height_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_maximum_height_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_visible_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, bool) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, bool) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_visible_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_visible_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_visible_changed_event<F>(&self, func: F)
-    where
-        F: Fn(bool) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(bool) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_visible_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_visible_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_active_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_active_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_active_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_active_changed_event<F>(&self, func: F)
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_active_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_active_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_focus_object_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &ObjectTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &ObjectTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_focus_object_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_focus_object_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_focus_object_changed_event<F>(&self, func: F)
-    where
-        F: Fn(&ObjectTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&ObjectTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_focus_object_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_focus_object_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_opacity_changed_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, f32) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, f32) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_opacity_changed_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_opacity_changed_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_opacity_changed_event<F>(&self, func: F)
-    where
-        F: Fn(f32) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(f32) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_opacity_changed_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_opacity_changed_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_expose_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &ExposeEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &ExposeEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_expose_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_expose_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_expose_event<F>(&self, func: F)
-    where
-        F: Fn(&ExposeEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&ExposeEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_expose_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_expose_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_resize_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &ResizeEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &ResizeEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_resize_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_resize_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_resize_event<F>(&self, func: F)
-    where
-        F: Fn(&ResizeEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&ResizeEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_resize_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_resize_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_move_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &MoveEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &MoveEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_move_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_move_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_move_event<F>(&self, func: F)
-    where
-        F: Fn(&MoveEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&MoveEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_move_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_move_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_focus_in_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &FocusEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &FocusEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_focus_in_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_focus_in_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_focus_in_event<F>(&self, func: F)
-    where
-        F: Fn(&FocusEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&FocusEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_focus_in_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_focus_in_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_focus_out_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &FocusEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &FocusEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_focus_out_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_focus_out_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_focus_out_event<F>(&self, func: F)
-    where
-        F: Fn(&FocusEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&FocusEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_focus_out_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_focus_out_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_show_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &ShowEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &ShowEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_show_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_show_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_show_event<F>(&self, func: F)
-    where
-        F: Fn(&ShowEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&ShowEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_show_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_show_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_hide_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &HideEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &HideEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_hide_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_hide_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_hide_event<F>(&self, func: F)
-    where
-        F: Fn(&HideEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&HideEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_hide_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_hide_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_key_press_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &KeyEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &KeyEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_key_press_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_key_press_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_key_press_event<F>(&self, func: F)
-    where
-        F: Fn(&KeyEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&KeyEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_key_press_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_key_press_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_key_release_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &KeyEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &KeyEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_key_release_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_key_release_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_key_release_event<F>(&self, func: F)
-    where
-        F: Fn(&KeyEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&KeyEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_key_release_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_key_release_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_mouse_press_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &MouseEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_mouse_press_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_mouse_press_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_mouse_press_event<F>(&self, func: F)
-    where
-        F: Fn(&MouseEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_mouse_press_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_mouse_press_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_mouse_release_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &MouseEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_mouse_release_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_mouse_release_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_mouse_release_event<F>(&self, func: F)
-    where
-        F: Fn(&MouseEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_mouse_release_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_mouse_release_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_mouse_double_click_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &MouseEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_mouse_double_click_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_mouse_double_click_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_mouse_double_click_event<F>(&self, func: F)
-    where
-        F: Fn(&MouseEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_mouse_double_click_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_mouse_double_click_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_mouse_move_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &MouseEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_mouse_move_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_mouse_move_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_mouse_move_event<F>(&self, func: F)
-    where
-        F: Fn(&MouseEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_mouse_move_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_mouse_move_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_wheel_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &WheelEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &WheelEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_wheel_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_wheel_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_wheel_event<F>(&self, func: F)
-    where
-        F: Fn(&WheelEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&WheelEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_wheel_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_wheel_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_touch_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &TouchEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &TouchEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_touch_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_touch_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_touch_event<F>(&self, func: F)
-    where
-        F: Fn(&TouchEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&TouchEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_touch_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_touch_trampoline as usize),
-            );
-        }
-    }
-
-    pub fn set_tablet_event_ud<F, T>(&self, data: &'a T, func: F)
-    where
-        F: Fn(&T, &TabletEventTrait) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &TabletEventTrait) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_tablet_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(window_tablet_trampoline_ud::<T> as usize),
-            );
-        }
-    }
-
-    pub fn set_tablet_event<F>(&self, func: F)
-    where
-        F: Fn(&TabletEventTrait) + 'a,
-    {
-        let (obj_data, funcs) = self.get_window_obj_funcs();
-        let f: Box<Box<Fn(&TabletEventTrait) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_tablet_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(window_tablet_trampoline as usize),
-            );
-        }
-    }
-}
-
-pub struct WindowStatic<'a> {
-    pub all_funcs: *const RUWindowAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-///
-/// This signal is emitted when a window's *screen* changes, either
-/// by being set explicitly with setScreen(), or automatically when
-/// the window's screen is removed.
-
-unsafe extern "C" fn window_screen_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    screen: *const RUBase,
-) {
-    let f: &&(Fn(&T, &ScreenTrait) + 'static) = transmute(func);
-    let obj_screen_0 = Screen::new_from_temporary(*(screen as *const RUScreen));
-    let data = self_c as *const T;
-    f(&*data, &obj_screen_0);
-}
-
-unsafe extern "C" fn window_screen_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    screen: *const RUBase,
-) {
-    let f: &&(Fn(&ScreenTrait) + 'static) = transmute(func);
-    let obj_screen_0 = Screen::new_from_temporary(*(screen as *const RUScreen));
-    f(&obj_screen_0);
-}
-
-///
-///
-/// This signal is emitted when the *windowState* changes, either
-/// by being set explicitly with setWindowStates(), or automatically when
-/// the user clicks one of the titlebar buttons or by other means.
-
-unsafe extern "C" fn window_window_title_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    title: *const ::std::os::raw::c_char,
-) {
-    let f: &&(Fn(&T, &str) + 'static) = transmute(func);
-    let str_in_title_0 = CStr::from_ptr(title);
-
-    let data = self_c as *const T;
-    f(&*data, str_in_title_0.to_str().unwrap());
-}
-
-unsafe extern "C" fn window_window_title_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    title: *const ::std::os::raw::c_char,
-) {
-    let f: &&(Fn(&str) + 'static) = transmute(func);
-    let str_in_title_0 = CStr::from_ptr(title);
-
-    f(str_in_title_0.to_str().unwrap());
-}
-
-unsafe extern "C" fn window_x_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, arg);
-}
-
-unsafe extern "C" fn window_x_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(i32) + 'static) = transmute(func);
-
-    f(arg);
-}
-
-unsafe extern "C" fn window_y_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, arg);
-}
-
-unsafe extern "C" fn window_y_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(i32) + 'static) = transmute(func);
-
-    f(arg);
-}
-
-unsafe extern "C" fn window_width_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, arg);
-}
-
-unsafe extern "C" fn window_width_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(i32) + 'static) = transmute(func);
-
-    f(arg);
-}
-
-unsafe extern "C" fn window_height_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, arg);
-}
-
-unsafe extern "C" fn window_height_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(i32) + 'static) = transmute(func);
-
-    f(arg);
-}
-
-unsafe extern "C" fn window_minimum_width_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, arg);
-}
-
-unsafe extern "C" fn window_minimum_width_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(i32) + 'static) = transmute(func);
-
-    f(arg);
-}
-
-unsafe extern "C" fn window_minimum_height_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, arg);
-}
-
-unsafe extern "C" fn window_minimum_height_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(i32) + 'static) = transmute(func);
-
-    f(arg);
-}
-
-unsafe extern "C" fn window_maximum_width_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, arg);
-}
-
-unsafe extern "C" fn window_maximum_width_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(i32) + 'static) = transmute(func);
-
-    f(arg);
-}
-
-unsafe extern "C" fn window_maximum_height_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(&T, i32) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, arg);
-}
-
-unsafe extern "C" fn window_maximum_height_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: i32,
-) {
-    let f: &&(Fn(i32) + 'static) = transmute(func);
-
-    f(arg);
-}
-
-unsafe extern "C" fn window_visible_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: bool,
-) {
-    let f: &&(Fn(&T, bool) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, arg);
-}
-
-unsafe extern "C" fn window_visible_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg: bool,
-) {
-    let f: &&(Fn(bool) + 'static) = transmute(func);
-
-    f(arg);
-}
-
-unsafe extern "C" fn window_active_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-unsafe extern "C" fn window_active_changed_trampoline(self_c: *const c_void, func: *const c_void) {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-///
-/// This signal is emitted when the final receiver of events tied to focus
-/// is changed to *object.*
-///
-/// **See also:** [`focus_object()`]
-
-unsafe extern "C" fn window_focus_object_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    object: *const RUBase,
-) {
-    let f: &&(Fn(&T, &ObjectTrait) + 'static) = transmute(func);
-    let obj_object_0 = Object::new_from_temporary(*(object as *const RUObject));
-    let data = self_c as *const T;
-    f(&*data, &obj_object_0);
-}
-
-unsafe extern "C" fn window_focus_object_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    object: *const RUBase,
-) {
-    let f: &&(Fn(&ObjectTrait) + 'static) = transmute(func);
-    let obj_object_0 = Object::new_from_temporary(*(object as *const RUObject));
-    f(&obj_object_0);
-}
-
-unsafe extern "C" fn window_opacity_changed_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    opacity: f32,
-) {
-    let f: &&(Fn(&T, f32) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data, opacity);
-}
-
-unsafe extern "C" fn window_opacity_changed_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    opacity: f32,
-) {
-    let f: &&(Fn(f32) + 'static) = transmute(func);
-
-    f(opacity);
-}
-
-///
-/// The expose event ( *ev)* is sent by the window system whenever the window's
-/// exposure on screen changes.
-///
-/// The application can start rendering into the window with QBackingStore
-/// and QOpenGLContext as soon as it gets an exposeEvent() such that
-/// isExposed() is true.
-///
-/// If the window is moved off screen, is made totally obscured by another
-/// window, iconified or similar, this function might be called and the
-/// value of isExposed() might change to false. When this happens,
-/// an application should stop its rendering as it is no longer visible
-/// to the user.
-///
-/// A resize event will always be sent before the expose event the first time
-/// a window is shown.
-///
-/// **See also:** [`is_exposed()`]
-
-unsafe extern "C" fn window_expose_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &ExposeEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = ExposeEvent::new_from_temporary(*(arg0 as *const RUExposeEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_expose_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&ExposeEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = ExposeEvent::new_from_temporary(*(arg0 as *const RUExposeEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle resize events ( *ev).*
-///
-/// The resize event is called whenever the window is resized in the windowing system,
-/// either directly through the windowing system acknowledging a setGeometry() or resize() request,
-/// or indirectly through the user resizing the window manually.
-
-unsafe extern "C" fn window_resize_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &ResizeEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = ResizeEvent::new_from_temporary(*(arg0 as *const RUResizeEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_resize_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&ResizeEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = ResizeEvent::new_from_temporary(*(arg0 as *const RUResizeEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle window move events ( *ev).*
-
-unsafe extern "C" fn window_move_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &MoveEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = MoveEvent::new_from_temporary(*(arg0 as *const RUMoveEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_move_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&MoveEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = MoveEvent::new_from_temporary(*(arg0 as *const RUMoveEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle focus in events ( *ev).*
-///
-/// Focus in events are sent when the window receives keyboard focus.
-///
-/// **See also:** [`focus_out_event()`]
-
-unsafe extern "C" fn window_focus_in_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &FocusEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = FocusEvent::new_from_temporary(*(arg0 as *const RUFocusEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_focus_in_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&FocusEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = FocusEvent::new_from_temporary(*(arg0 as *const RUFocusEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle focus out events ( *ev).*
-///
-/// Focus out events are sent when the window loses keyboard focus.
-///
-/// **See also:** [`focus_in_event()`]
-
-unsafe extern "C" fn window_focus_out_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &FocusEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = FocusEvent::new_from_temporary(*(arg0 as *const RUFocusEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_focus_out_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&FocusEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = FocusEvent::new_from_temporary(*(arg0 as *const RUFocusEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle show events ( *ev).*
-///
-/// The function is called when the window has requested becoming visible.
-///
-/// If the window is successfully shown by the windowing system, this will
-/// be followed by a resize and an expose event.
-
-unsafe extern "C" fn window_show_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &ShowEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = ShowEvent::new_from_temporary(*(arg0 as *const RUShowEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_show_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&ShowEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = ShowEvent::new_from_temporary(*(arg0 as *const RUShowEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle hide events ( *ev).*
-///
-/// The function is called when the window has requested being hidden in the
-/// windowing system.
-
-unsafe extern "C" fn window_hide_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &HideEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = HideEvent::new_from_temporary(*(arg0 as *const RUHideEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_hide_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&HideEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = HideEvent::new_from_temporary(*(arg0 as *const RUHideEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle key press events ( *ev).*
-///
-/// **See also:** [`key_release_event()`]
-
-unsafe extern "C" fn window_key_press_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &KeyEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = KeyEvent::new_from_temporary(*(arg0 as *const RUKeyEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_key_press_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&KeyEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = KeyEvent::new_from_temporary(*(arg0 as *const RUKeyEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle key release events ( *ev).*
-///
-/// **See also:** [`key_press_event()`]
-
-unsafe extern "C" fn window_key_release_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &KeyEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = KeyEvent::new_from_temporary(*(arg0 as *const RUKeyEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_key_release_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&KeyEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = KeyEvent::new_from_temporary(*(arg0 as *const RUKeyEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle mouse press events ( *ev).*
-///
-/// **See also:** [`mouse_release_event()`]
-
-unsafe extern "C" fn window_mouse_press_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_mouse_press_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle mouse release events ( *ev).*
-///
-/// **See also:** [`mouse_press_event()`]
-
-unsafe extern "C" fn window_mouse_release_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_mouse_release_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle mouse double click events ( *ev).*
-///
-/// **See also:** [`mouse_press_event()`]
-/// [`StyleHints::mouse_double_click_interval`]
-
-unsafe extern "C" fn window_mouse_double_click_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_mouse_double_click_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle mouse move events ( *ev).*
-
-unsafe extern "C" fn window_mouse_move_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_mouse_move_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = MouseEvent::new_from_temporary(*(arg0 as *const RUMouseEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle mouse wheel or other wheel events ( *ev).*
-
-unsafe extern "C" fn window_wheel_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &WheelEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = WheelEvent::new_from_temporary(*(arg0 as *const RUWheelEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_wheel_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&WheelEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = WheelEvent::new_from_temporary(*(arg0 as *const RUWheelEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle touch events ( *ev).*
-
-unsafe extern "C" fn window_touch_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &TouchEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = TouchEvent::new_from_temporary(*(arg0 as *const RUTouchEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_touch_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&TouchEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = TouchEvent::new_from_temporary(*(arg0 as *const RUTouchEvent));
-    f(&obj_arg0_0);
-}
-
-///
-/// Override this to handle tablet press, move, and release events ( *ev).*
-///
-/// Proximity enter and leave events are not sent to windows, they are
-/// delivered to the application instance.
-
-unsafe extern "C" fn window_tablet_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&T, &TabletEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = TabletEvent::new_from_temporary(*(arg0 as *const RUTabletEvent));
-    let data = self_c as *const T;
-    f(&*data, &obj_arg0_0);
-}
-
-unsafe extern "C" fn window_tablet_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    arg0: *const RUBase,
-) {
-    let f: &&(Fn(&TabletEventTrait) + 'static) = transmute(func);
-    let obj_arg0_0 = TabletEvent::new_from_temporary(*(arg0 as *const RUTabletEvent));
-    f(&obj_arg0_0);
-}
-
-pub trait WindowTrait<'a> {
     ///
     /// Sets the *surfaceType* of the window.
     ///
@@ -2163,19 +831,20 @@ pub trait WindowTrait<'a> {
     /// [`OpenGLContext`]
     /// [`create()`]
     /// [`destroy()`]
-    fn set_object_surface_type(&self, surface_type: SurfaceType) {
+    pub fn set_object_surface_type(&self, surface_type: SurfaceType) -> &Self {
         let enum_surface_type_1 = surface_type as i32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_object_surface_type)(obj_data, enum_surface_type_1);
         }
+        self
     }
     ///
     /// Returns the surface type of the window.
     ///
     /// **See also:** [`set_surface_type()`]
-    fn surface_type(&self) -> SurfaceType {
+    pub fn surface_type(&self) -> SurfaceType {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).surface_type)(obj_data);
@@ -2183,7 +852,7 @@ pub trait WindowTrait<'a> {
             ret_val
         }
     }
-    fn is_visible(&self) -> bool {
+    pub fn is_visible(&self) -> bool {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_visible)(obj_data);
@@ -2199,7 +868,7 @@ pub trait WindowTrait<'a> {
     /// the platform.
     /// When reading the visibility property you will always get the actual state,
     /// never AutomaticVisibility.
-    fn visibility(&self) -> Visibility {
+    pub fn visibility(&self) -> Visibility {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).visibility)(obj_data);
@@ -2207,13 +876,14 @@ pub trait WindowTrait<'a> {
             ret_val
         }
     }
-    fn set_visibility(&self, v: Visibility) {
+    pub fn set_visibility(&self, v: Visibility) -> &Self {
         let enum_v_1 = v as i32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_visibility)(obj_data, enum_v_1);
         }
+        self
     }
     ///
     /// Allocates the platform resources associated with the window.
@@ -2228,11 +898,12 @@ pub trait WindowTrait<'a> {
     /// Call destroy() to free the platform resources if necessary.
     ///
     /// **See also:** [`destroy()`]
-    fn create(&self) {
+    pub fn create(&self) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).create)(obj_data);
         }
+        self
     }
     ///
     /// Returns the window's platform id.
@@ -2241,7 +912,7 @@ pub trait WindowTrait<'a> {
     /// will uniquely represent the window inside the corresponding screen.
     ///
     /// **See also:** [`screen()`]
-    fn win_id(&self) -> u64 {
+    pub fn win_id(&self) -> u64 {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).win_id)(obj_data);
@@ -2260,7 +931,7 @@ pub trait WindowTrait<'a> {
     /// Returns the parent window, if any.
     ///
     /// A window without a parent is known as a top level window.
-    fn parent(&self, mode: AncestorMode) -> Option<Window> {
+    pub fn parent(&self, mode: AncestorMode) -> Option<Window> {
         let enum_mode_1 = mode as i32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
@@ -2291,7 +962,7 @@ pub trait WindowTrait<'a> {
     /// Returns the parent window, if any.
     ///
     /// A window without a parent is known as a top level window.
-    fn parent_2(&self) -> Option<Window> {
+    pub fn parent_2(&self) -> Option<Window> {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).parent_2)(obj_data);
@@ -2316,17 +987,18 @@ pub trait WindowTrait<'a> {
     ///
     /// If *parent* is a window created by fromWinId(), then the current window
     /// will be embedded inside *parent,* if the platform supports it.
-    fn set_parent(&self, parent: &WindowTrait) {
+    pub fn set_parent<W: WindowTrait<'a>>(&self, parent: &W) -> &Self {
         let (obj_parent_1, _funcs) = parent.get_window_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_parent)(obj_data, obj_parent_1);
         }
+        self
     }
     ///
     /// Returns whether the window is top level, i.e. has no parent window.
-    fn is_top_level(&self) -> bool {
+    pub fn is_top_level(&self) -> bool {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_top_level)(obj_data);
@@ -2339,7 +1011,7 @@ pub trait WindowTrait<'a> {
     /// A modal window prevents other windows from getting any input.
     ///
     /// **See also:** [`Window::modality()`]
-    fn is_modal(&self) -> bool {
+    pub fn is_modal(&self) -> bool {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_modal)(obj_data);
@@ -2355,7 +1027,7 @@ pub trait WindowTrait<'a> {
     /// **See also:** [`t::window_modality()`]
     ///
     /// This signal is emitted when the Qwindow::modality property changes to *modality.*
-    fn modality(&self) -> WindowModality {
+    pub fn modality(&self) -> WindowModality {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).modality)(obj_data);
@@ -2363,13 +1035,14 @@ pub trait WindowTrait<'a> {
             ret_val
         }
     }
-    fn set_modality(&self, modality: WindowModality) {
+    pub fn set_modality(&self, modality: WindowModality) -> &Self {
         let enum_modality_1 = modality as i32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_modality)(obj_data, enum_modality_1);
         }
+        self
     }
     ///
     /// Sets the window's surface *format.*
@@ -2398,13 +1071,14 @@ pub trait WindowTrait<'a> {
     /// **See also:** [`create()`]
     /// [`destroy()`]
     /// [`SurfaceFormat::set_default_format`]
-    fn set_object_format(&self, format: &SurfaceFormatTrait) {
+    pub fn set_object_format<S: SurfaceFormatTrait<'a>>(&self, format: &S) -> &Self {
         let (obj_format_1, _funcs) = format.get_surface_format_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_object_format)(obj_data, obj_format_1);
         }
+        self
     }
     ///
     /// Returns the actual format of this window.
@@ -2424,7 +1098,7 @@ pub trait WindowTrait<'a> {
     /// **See also:** [`create()`]
     /// [`requested_format()`]
     /// [`OpenGLContext::format`]
-    fn format(&self) -> SurfaceFormat {
+    pub fn format(&self) -> SurfaceFormat {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).format)(obj_data);
@@ -2448,7 +1122,7 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`set_format()`]
     /// [`format()`]
-    fn requested_format(&self) -> SurfaceFormat {
+    pub fn requested_format(&self) -> SurfaceFormat {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).requested_format)(obj_data);
@@ -2462,13 +1136,14 @@ pub trait WindowTrait<'a> {
             ret_val
         }
     }
-    fn set_flags(&self, flags: WindowFlags) {
+    pub fn set_flags(&self, flags: WindowFlags) -> &Self {
         let enum_flags_1 = flags as i32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_flags)(obj_data, enum_flags_1);
         }
+        self
     }
     ///
     /// The window flags control the window's appearance in the windowing system,
@@ -2479,7 +1154,7 @@ pub trait WindowTrait<'a> {
     /// if the requested flags could not be fulfilled.
     ///
     /// **See also:** [`set_flag()`]
-    fn flags(&self) -> WindowFlags {
+    pub fn flags(&self) -> WindowFlags {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).flags)(obj_data);
@@ -2509,7 +1184,7 @@ pub trait WindowTrait<'a> {
     /// such as in the task switcher.
     ///
     /// **See also:** [`flags()`]
-    fn title(&self) -> String {
+    pub fn title(&self) -> String {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).title)(obj_data);
@@ -2517,11 +1192,12 @@ pub trait WindowTrait<'a> {
             ret_val
         }
     }
-    fn set_opacity(&self, level: f32) {
+    pub fn set_opacity(&self, level: f32) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_opacity)(obj_data, level);
         }
+        self
     }
     ///
     /// If the windowing system supports window opacity, this can be used to fade the
@@ -2532,7 +1208,7 @@ pub trait WindowTrait<'a> {
     /// translucency between the two extremes.
     ///
     /// The default value is 1.0.
-    fn opacity(&self) -> f32 {
+    pub fn opacity(&self) -> f32 {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).opacity)(obj_data);
@@ -2548,20 +1224,21 @@ pub trait WindowTrait<'a> {
     /// The window manager may or may not choose to display any areas of the window
     /// not included in the mask, thus it is the application's responsibility to
     /// clear to transparent the areas that are not part of the mask.
-    fn set_mask(&self, region: &RegionTrait) {
+    pub fn set_mask<R: RegionTrait<'a>>(&self, region: &R) -> &Self {
         let (obj_region_1, _funcs) = region.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_mask)(obj_data, obj_region_1);
         }
+        self
     }
     ///
     /// Returns the mask set on the window.
     ///
     /// The mask is a hint to the windowing system that the application does not
     /// want to receive mouse or touch input outside the given region.
-    fn mask(&self) -> Region {
+    pub fn mask(&self) -> Region {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).mask)(obj_data);
@@ -2582,20 +1259,21 @@ pub trait WindowTrait<'a> {
     /// that are in the same parent / transient parent chain as the focus window.
     ///
     /// To get the window that currently has focus, use QGuiApplication::focusWindow().
-    fn is_active(&self) -> bool {
+    pub fn is_active(&self) -> bool {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_active)(obj_data);
             ret_val
         }
     }
-    fn report_content_orientation_change(&self, orientation: ScreenOrientation) {
+    pub fn report_content_orientation_change(&self, orientation: ScreenOrientation) -> &Self {
         let enum_orientation_1 = orientation as i32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).report_content_orientation_change)(obj_data, enum_orientation_1);
         }
+        self
     }
     ///
     /// This is a hint to the window manager in case it needs to display
@@ -2612,7 +1290,7 @@ pub trait WindowTrait<'a> {
     /// to compute the necessary transform.
     ///
     /// The default value is Qt::PrimaryOrientation
-    fn content_orientation(&self) -> ScreenOrientation {
+    pub fn content_orientation(&self) -> ScreenOrientation {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).content_orientation)(obj_data);
@@ -2631,7 +1309,7 @@ pub trait WindowTrait<'a> {
     /// called, the function will fall back to the associated QScreen's device pixel ratio.
     ///
     /// **See also:** [`Screen::device_pixel_ratio`]
-    fn device_pixel_ratio(&self) -> f32 {
+    pub fn device_pixel_ratio(&self) -> f32 {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).device_pixel_ratio)(obj_data);
@@ -2652,7 +1330,7 @@ pub trait WindowTrait<'a> {
     /// This signal is emitted when the *windowState* changes, either
     /// by being set explicitly with setWindowStates(), or automatically when
     /// the user clicks one of the titlebar buttons or by other means.
-    fn window_state(&self) -> WindowState {
+    pub fn window_state(&self) -> WindowState {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).window_state)(obj_data);
@@ -2667,7 +1345,7 @@ pub trait WindowTrait<'a> {
     /// the maximized state.
     ///
     /// **See also:** [`set_window_states()`]
-    fn window_states(&self) -> WindowStates {
+    pub fn window_states(&self) -> WindowStates {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).window_states)(obj_data);
@@ -2701,13 +1379,14 @@ pub trait WindowTrait<'a> {
     /// [`show_full_screen()`]
     /// [`show_minimized()`]
     /// [`show_maximized()`]
-    fn set_window_state(&self, state: WindowState) {
+    pub fn set_window_state(&self, state: WindowState) -> &Self {
         let enum_state_1 = state as i32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_window_state)(obj_data, enum_state_1);
         }
+        self
     }
     ///
     /// The window *state* represents whether the window appears in the
@@ -2724,13 +1403,14 @@ pub trait WindowTrait<'a> {
     /// [`show_full_screen()`]
     /// [`show_minimized()`]
     /// [`show_maximized()`]
-    fn set_window_states(&self, states: WindowStates) {
+    pub fn set_window_states(&self, states: WindowStates) -> &Self {
         let enum_states_1 = states as i32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_window_states)(obj_data, enum_states_1);
         }
+        self
     }
     ///
     /// Sets the transient *parent*
@@ -2745,18 +1425,19 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`transient_parent()`]
     /// [`parent()`]
-    fn set_transient_parent(&self, parent: &WindowTrait) {
+    pub fn set_transient_parent<W: WindowTrait<'a>>(&self, parent: &W) -> &Self {
         let (obj_parent_1, _funcs) = parent.get_window_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_transient_parent)(obj_data, obj_parent_1);
         }
+        self
     }
     ///
     /// Returns `true` if the window is an ancestor of the given *child.* If *mode*
     /// is IncludeTransients, then transient parents are also considered ancestors.
-    fn is_ancestor_of(&self, child: &WindowTrait, mode: AncestorMode) -> bool {
+    pub fn is_ancestor_of<W: WindowTrait<'a>>(&self, child: &W, mode: AncestorMode) -> bool {
         let (obj_child_1, _funcs) = child.get_window_obj_funcs();
         let enum_mode_2 = mode as i32;
 
@@ -2776,7 +1457,7 @@ pub trait WindowTrait<'a> {
     /// An exposeEvent() is sent every time this value changes.
     ///
     /// **See also:** [`expose_event()`]
-    fn is_exposed(&self) -> bool {
+    pub fn is_exposed(&self) -> bool {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_exposed)(obj_data);
@@ -2784,7 +1465,7 @@ pub trait WindowTrait<'a> {
         }
     }
     ///
-    fn minimum_width(&self) -> i32 {
+    pub fn minimum_width(&self) -> i32 {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).minimum_width)(obj_data);
@@ -2792,7 +1473,7 @@ pub trait WindowTrait<'a> {
         }
     }
     ///
-    fn minimum_height(&self) -> i32 {
+    pub fn minimum_height(&self) -> i32 {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).minimum_height)(obj_data);
@@ -2800,7 +1481,7 @@ pub trait WindowTrait<'a> {
         }
     }
     ///
-    fn maximum_width(&self) -> i32 {
+    pub fn maximum_width(&self) -> i32 {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).maximum_width)(obj_data);
@@ -2808,7 +1489,7 @@ pub trait WindowTrait<'a> {
         }
     }
     ///
-    fn maximum_height(&self) -> i32 {
+    pub fn maximum_height(&self) -> i32 {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).maximum_height)(obj_data);
@@ -2819,7 +1500,7 @@ pub trait WindowTrait<'a> {
     /// Returns the minimum size of the window.
     ///
     /// **See also:** [`set_minimum_size()`]
-    fn minimum_size(&self) -> Size {
+    pub fn minimum_size(&self) -> Size {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).minimum_size)(obj_data);
@@ -2837,7 +1518,7 @@ pub trait WindowTrait<'a> {
     /// Returns the maximum size of the window.
     ///
     /// **See also:** [`set_maximum_size()`]
-    fn maximum_size(&self) -> Size {
+    pub fn maximum_size(&self) -> Size {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).maximum_size)(obj_data);
@@ -2855,7 +1536,7 @@ pub trait WindowTrait<'a> {
     /// Returns the base size of the window.
     ///
     /// **See also:** [`set_base_size()`]
-    fn base_size(&self) -> Size {
+    pub fn base_size(&self) -> Size {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).base_size)(obj_data);
@@ -2873,7 +1554,7 @@ pub trait WindowTrait<'a> {
     /// Returns the size increment of the window.
     ///
     /// **See also:** [`set_size_increment()`]
-    fn size_increment(&self) -> Size {
+    pub fn size_increment(&self) -> Size {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).size_increment)(obj_data);
@@ -2894,13 +1575,14 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`set_maximum_size()`]
     /// [`minimum_size()`]
-    fn set_minimum_size(&self, size: &SizeTrait) {
+    pub fn set_minimum_size<S: SizeTrait<'a>>(&self, size: &S) -> &Self {
         let (obj_size_1, _funcs) = size.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_minimum_size)(obj_data, obj_size_1);
         }
+        self
     }
     ///
     /// Sets the maximum size of the window.
@@ -2909,13 +1591,14 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`set_minimum_size()`]
     /// [`maximum_size()`]
-    fn set_maximum_size(&self, size: &SizeTrait) {
+    pub fn set_maximum_size<S: SizeTrait<'a>>(&self, size: &S) -> &Self {
         let (obj_size_1, _funcs) = size.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_maximum_size)(obj_data, obj_size_1);
         }
+        self
     }
     ///
     /// Sets the base *size* of the window.
@@ -2927,13 +1610,14 @@ pub trait WindowTrait<'a> {
     /// [`set_maximum_size()`]
     /// [`set_size_increment()`]
     /// [`base_size()`]
-    fn set_base_size(&self, size: &SizeTrait) {
+    pub fn set_base_size<S: SizeTrait<'a>>(&self, size: &S) -> &Self {
         let (obj_size_1, _funcs) = size.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_base_size)(obj_data, obj_size_1);
         }
+        self
     }
     ///
     /// Sets the size increment ( *size)* of the window.
@@ -2950,20 +1634,21 @@ pub trait WindowTrait<'a> {
     /// **See also:** [`set_base_size()`]
     /// [`set_minimum_size()`]
     /// [`set_maximum_size()`]
-    fn set_size_increment(&self, size: &SizeTrait) {
+    pub fn set_size_increment<S: SizeTrait<'a>>(&self, size: &S) -> &Self {
         let (obj_size_1, _funcs) = size.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_size_increment)(obj_data, obj_size_1);
         }
+        self
     }
     ///
     /// Returns the window frame margins surrounding the window.
     ///
     /// **See also:** [`geometry()`]
     /// [`frame_geometry()`]
-    fn frame_margins(&self) -> Margins {
+    pub fn frame_margins(&self) -> Margins {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).frame_margins)(obj_data);
@@ -2984,7 +1669,7 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`geometry()`]
     /// [`frame_geometry()`]
-    fn frame_position(&self) -> Point {
+    pub fn frame_position(&self) -> Point {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).frame_position)(obj_data);
@@ -3005,16 +1690,17 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`set_geometry()`]
     /// [`frame_geometry()`]
-    fn set_frame_position(&self, point: &PointTrait) {
+    pub fn set_frame_position<P: PointTrait<'a>>(&self, point: &P) -> &Self {
         let (obj_point_1, _funcs) = point.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_frame_position)(obj_data, obj_point_1);
         }
+        self
     }
     ///
-    fn width(&self) -> i32 {
+    pub fn width(&self) -> i32 {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).width)(obj_data);
@@ -3022,7 +1708,7 @@ pub trait WindowTrait<'a> {
         }
     }
     ///
-    fn height(&self) -> i32 {
+    pub fn height(&self) -> i32 {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).height)(obj_data);
@@ -3030,7 +1716,7 @@ pub trait WindowTrait<'a> {
         }
     }
     ///
-    fn x(&self) -> i32 {
+    pub fn x(&self) -> i32 {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).x)(obj_data);
@@ -3038,7 +1724,7 @@ pub trait WindowTrait<'a> {
         }
     }
     ///
-    fn y(&self) -> i32 {
+    pub fn y(&self) -> i32 {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).y)(obj_data);
@@ -3051,7 +1737,7 @@ pub trait WindowTrait<'a> {
     /// **See also:** [`set_size_increment()`]
     ///
     /// **See also:** [`resize()`]
-    fn size(&self) -> Size {
+    pub fn size(&self) -> Size {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).size)(obj_data);
@@ -3067,7 +1753,7 @@ pub trait WindowTrait<'a> {
     }
     ///
     /// **See also:** [`set_position()`]
-    fn position(&self) -> Point {
+    pub fn position(&self) -> Point {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).position)(obj_data);
@@ -3093,13 +1779,14 @@ pub trait WindowTrait<'a> {
     /// The position is in relation to the virtualGeometry() of its screen.
     ///
     /// **See also:** [`position()`]
-    fn set_position(&self, pt: &PointTrait) {
+    pub fn set_position<P: PointTrait<'a>>(&self, pt: &P) -> &Self {
         let (obj_pt_1, _funcs) = pt.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_position)(obj_data, obj_pt_1);
         }
+        self
     }
     ///
     /// *pt*
@@ -3113,11 +1800,12 @@ pub trait WindowTrait<'a> {
     /// The position is in relation to the virtualGeometry() of its screen.
     ///
     /// **See also:** [`position()`]
-    fn set_position_2(&self, posx: i32, posy: i32) {
+    pub fn set_position_2(&self, posx: i32, posy: i32) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_position_2)(obj_data, posx, posy);
         }
+        self
     }
     ///
     /// set the size of the window, excluding any window frame, to a QSize
@@ -3136,13 +1824,14 @@ pub trait WindowTrait<'a> {
     /// The resize event is called whenever the window is resized in the windowing system,
     /// either directly through the windowing system acknowledging a setGeometry() or resize() request,
     /// or indirectly through the user resizing the window manually.
-    fn resize(&self, new_size: &SizeTrait) {
+    pub fn resize<S: SizeTrait<'a>>(&self, new_size: &S) -> &Self {
         let (obj_new_size_1, _funcs) = new_size.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).resize)(obj_data, obj_new_size_1);
         }
+        self
     }
     ///
     /// set the size of the window, excluding any window frame, to a QSize
@@ -3161,27 +1850,29 @@ pub trait WindowTrait<'a> {
     /// The resize event is called whenever the window is resized in the windowing system,
     /// either directly through the windowing system acknowledging a setGeometry() or resize() request,
     /// or indirectly through the user resizing the window manually.
-    fn resize_2(&self, w: i32, h: i32) {
+    pub fn resize_2(&self, w: i32, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).resize_2)(obj_data, w, h);
         }
+        self
     }
     ///
     /// The windowing system might use *filePath* to display the
     /// path of the document this window is representing in the tile bar.
     ///
-    fn set_file_path(&self, file_path: &str) {
+    pub fn set_file_path(&self, file_path: &str) -> &Self {
         let str_in_file_path_1 = CString::new(file_path).unwrap();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_file_path)(obj_data, str_in_file_path_1.as_ptr());
         }
+        self
     }
     ///
     /// **See also:** [`set_file_path()`]
-    fn file_path(&self) -> String {
+    pub fn file_path(&self) -> String {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).file_path)(obj_data);
@@ -3199,17 +1890,18 @@ pub trait WindowTrait<'a> {
     /// documents, and will only show up if a file path is also set.
     ///
     /// **See also:** [`set_file_path()`]
-    fn set_icon(&self, icon: &IconTrait) {
+    pub fn set_icon<I: IconTrait<'a>>(&self, icon: &I) -> &Self {
         let (obj_icon_1, _funcs) = icon.get_icon_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_icon)(obj_data, obj_icon_1);
         }
+        self
     }
     ///
     /// **See also:** [`set_icon()`]
-    fn icon(&self) -> Icon {
+    pub fn icon(&self) -> Icon {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).icon)(obj_data);
@@ -3232,7 +1924,7 @@ pub trait WindowTrait<'a> {
     /// to grab that.
     ///
     /// **See also:** [`set_mouse_grab_enabled()`]
-    fn set_keyboard_grab_enabled(&self, grab: bool) -> bool {
+    pub fn set_keyboard_grab_enabled(&self, grab: bool) -> bool {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).set_keyboard_grab_enabled)(obj_data, grab);
@@ -3247,7 +1939,7 @@ pub trait WindowTrait<'a> {
     /// Use setKeyboardGrabEnabled() if you want to grab that.
     ///
     /// **See also:** [`set_keyboard_grab_enabled()`]
-    fn set_mouse_grab_enabled(&self, grab: bool) -> bool {
+    pub fn set_mouse_grab_enabled(&self, grab: bool) -> bool {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).set_mouse_grab_enabled)(obj_data, grab);
@@ -3265,7 +1957,7 @@ pub trait WindowTrait<'a> {
     /// This signal is emitted when a window's *screen* changes, either
     /// by being set explicitly with setScreen(), or automatically when
     /// the window's screen is removed.
-    fn screen(&self) -> Option<Screen> {
+    pub fn screen(&self) -> Option<Screen> {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).screen)(obj_data);
@@ -3295,13 +1987,14 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`screen()`]
     /// [`Screen::virtual_siblings`]
-    fn set_screen(&self, screen: &ScreenTrait) {
+    pub fn set_screen<S: ScreenTrait<'a>>(&self, screen: &S) -> &Self {
         let (obj_screen_1, _funcs) = screen.get_screen_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_screen)(obj_data, obj_screen_1);
         }
+        self
     }
     ///
     /// This signal is emitted when the final receiver of events tied to focus
@@ -3311,7 +2004,7 @@ pub trait WindowTrait<'a> {
     ///
     /// Returns the QObject that will be the final receiver of events tied focus, such
     /// as key events.
-    fn focus_object(&self) -> Option<Object> {
+    pub fn focus_object(&self) -> Option<Object> {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).focus_object)(obj_data);
@@ -3334,7 +2027,7 @@ pub trait WindowTrait<'a> {
     /// the global coordinates of the top-left pixel of the window.
     ///
     /// **See also:** [`map_from_global()`]
-    fn map_to_global(&self, pos: &PointTrait) -> Point {
+    pub fn map_to_global<P: PointTrait<'a>>(&self, pos: &P) -> Point {
         let (obj_pos_1, _funcs) = pos.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
@@ -3355,7 +2048,7 @@ pub trait WindowTrait<'a> {
     /// coordinates.
     ///
     /// **See also:** [`map_to_global()`]
-    fn map_from_global(&self, pos: &PointTrait) -> Point {
+    pub fn map_from_global<P: PointTrait<'a>>(&self, pos: &P) -> Point {
         let (obj_pos_1, _funcs) = pos.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
@@ -3374,7 +2067,7 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`set_cursor()`]
     /// [`unset_cursor()`]
-    fn cursor(&self) -> Cursor {
+    pub fn cursor(&self) -> Cursor {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).cursor)(obj_data);
@@ -3406,19 +2099,64 @@ pub trait WindowTrait<'a> {
     /// QGuiApplication::setOverrideCursor().
     ///
     /// **See also:** [`GuiApplication::set_override_cursor`]
-    fn set_cursor(&self, arg0: &CursorTrait) {
+    pub fn set_cursor<C: CursorTrait<'a>>(&self, arg0: &C) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_cursor_obj_funcs();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_cursor)(obj_data, obj_arg0_1);
         }
+        self
     }
     ///
-    fn unset_cursor(&self) {
+    pub fn unset_cursor(&self) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).unset_cursor)(obj_data);
+        }
+        self
+    }
+    ///
+    /// Creates a local representation of a window created by another process or by
+    /// using native libraries below Qt.
+    ///
+    /// Given the handle *id* to a native window, this method creates a QWindow
+    /// object which can be used to represent the window when invoking methods like
+    /// setParent() and setTransientParent().
+    ///
+    /// This can be used, on platforms which support it, to embed a QWindow inside a
+    /// native window, or to embed a native window inside a QWindow.
+    ///
+    /// If foreign windows are not supported or embedding the native window
+    /// failed in the platform plugin, this function returns 0.
+    ///
+    /// **Note**: The resulting QWindow should not be used to manipulate the underlying
+    /// native window (besides re-parenting), or to observe state changes of the
+    /// native window. Any support for these kind of operations is incidental, highly
+    /// platform dependent and untested.
+    ///
+    /// **See also:** [`set_parent()`]
+    /// **See also:** [`set_transient_parent()`]
+    pub fn from_win_id(id: u64) -> Option<Window<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_window)(::std::ptr::null()).all_funcs).window_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).from_win_id)(obj_data, id);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Window::new_from_rc(t);
+            } else {
+                ret_val = Window::new_from_owned(t);
+            }
+            Some(ret_val)
         }
     }
     ///
@@ -3427,17 +2165,19 @@ pub trait WindowTrait<'a> {
     /// **See also:** [`is_active()`]
     /// [`GuiApplication::focus_window`]
     /// [`WindowsWindowFunctions::set_window_activation_behavior`]
-    fn request_activate(&self) {
+    pub fn request_activate(&self) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).request_activate)(obj_data);
         }
+        self
     }
-    fn set_visible(&self, visible: bool) {
+    pub fn set_visible(&self, visible: bool) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_visible)(obj_data, visible);
         }
+        self
     }
     ///
     /// Shows the window.
@@ -3490,11 +2230,12 @@ pub trait WindowTrait<'a> {
     ///
     /// If the window is successfully shown by the windowing system, this will
     /// be followed by a resize and an expose event.
-    fn show(&self) {
+    pub fn show(&self) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).show)(obj_data);
         }
+        self
     }
     ///
     /// Hides the window.
@@ -3508,11 +2249,12 @@ pub trait WindowTrait<'a> {
     ///
     /// The function is called when the window has requested being hidden in the
     /// windowing system.
-    fn hide(&self) {
+    pub fn hide(&self) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).hide)(obj_data);
         }
+        self
     }
     ///
     /// Shows the window as minimized.
@@ -3522,11 +2264,12 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`set_window_states()`]
     /// [`set_visible()`]
-    fn show_minimized(&self) {
+    pub fn show_minimized(&self) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).show_minimized)(obj_data);
         }
+        self
     }
     ///
     /// Shows the window as maximized.
@@ -3536,11 +2279,12 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`set_window_states()`]
     /// [`set_visible()`]
-    fn show_maximized(&self) {
+    pub fn show_maximized(&self) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).show_maximized)(obj_data);
         }
+        self
     }
     ///
     /// Shows the window as fullscreen.
@@ -3550,11 +2294,12 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`set_window_states()`]
     /// [`set_visible()`]
-    fn show_full_screen(&self) {
+    pub fn show_full_screen(&self) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).show_full_screen)(obj_data);
         }
+        self
     }
     ///
     /// Shows the window as normal, i.e. neither maximized, minimized, nor fullscreen.
@@ -3564,11 +2309,12 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`set_window_states()`]
     /// [`set_visible()`]
-    fn show_normal(&self) {
+    pub fn show_normal(&self) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).show_normal)(obj_data);
         }
+        self
     }
     ///
     /// Close the window.
@@ -3579,7 +2325,7 @@ pub trait WindowTrait<'a> {
     ///
     /// **See also:** [`destroy()`]
     /// [`GuiApplication::quit_on_last_window_closed`]
-    fn close(&self) -> bool {
+    pub fn close(&self) -> bool {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).close)(obj_data);
@@ -3590,77 +2336,88 @@ pub trait WindowTrait<'a> {
     /// Raise the window in the windowing system.
     ///
     /// Requests that the window be raised to appear above other windows.
-    fn raise(&self) {
+    pub fn raise(&self) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).raise)(obj_data);
         }
+        self
     }
     ///
     /// Lower the window in the windowing system.
     ///
     /// Requests that the window be lowered to appear below other windows.
-    fn lower(&self) {
+    pub fn lower(&self) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).lower)(obj_data);
         }
+        self
     }
-    fn set_title(&self, arg0: &str) {
+    pub fn set_title(&self, arg0: &str) -> &Self {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_title)(obj_data, str_in_arg0_1.as_ptr());
         }
+        self
     }
-    fn set_x(&self, arg: i32) {
+    pub fn set_x(&self, arg: i32) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_x)(obj_data, arg);
         }
+        self
     }
-    fn set_y(&self, arg: i32) {
+    pub fn set_y(&self, arg: i32) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_y)(obj_data, arg);
         }
+        self
     }
-    fn set_width(&self, arg: i32) {
+    pub fn set_width(&self, arg: i32) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_width)(obj_data, arg);
         }
+        self
     }
-    fn set_height(&self, arg: i32) {
+    pub fn set_height(&self, arg: i32) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_height)(obj_data, arg);
         }
+        self
     }
-    fn set_minimum_width(&self, w: i32) {
+    pub fn set_minimum_width(&self, w: i32) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_minimum_width)(obj_data, w);
         }
+        self
     }
-    fn set_minimum_height(&self, h: i32) {
+    pub fn set_minimum_height(&self, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_minimum_height)(obj_data, h);
         }
+        self
     }
-    fn set_maximum_width(&self, w: i32) {
+    pub fn set_maximum_width(&self, w: i32) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_maximum_width)(obj_data, w);
         }
+        self
     }
-    fn set_maximum_height(&self, h: i32) {
+    pub fn set_maximum_height(&self, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).set_maximum_height)(obj_data, h);
         }
+        self
     }
     ///
     /// Causes an alert to be shown for *msec* miliseconds. If *msec* is `0` (the
@@ -3670,11 +2427,12 @@ pub trait WindowTrait<'a> {
     /// In alert state, the window indicates that it demands attention, for example by
     /// flashing or bouncing the taskbar entry.
     ///
-    fn alert(&self, msec: i32) {
+    pub fn alert(&self, msec: i32) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).alert)(obj_data, msec);
         }
+        self
     }
     ///
     /// Schedules a QEvent::UpdateRequest event to be delivered to this window.
@@ -3699,19 +2457,1497 @@ pub trait WindowTrait<'a> {
     /// this function relies on QEvent::Timer events. Filtering them away would
     /// therefore break the delivery of the update events.
     ///
-    fn request_update(&self) {
+    pub fn request_update(&self) -> &Self {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             ((*funcs).request_update)(obj_data);
         }
+        self
+    }
+    ///
+    /// This signal is emitted when a window's *screen* changes, either
+    /// by being set explicitly with setScreen(), or automatically when
+    /// the window's screen is removed.
+    pub fn set_screen_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ScreenTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ScreenTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_screen_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_screen_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
     }
 
+    pub fn set_screen_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ScreenTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&ScreenTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_screen_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_screen_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    ///
+    /// This signal is emitted when the *windowState* changes, either
+    /// by being set explicitly with setWindowStates(), or automatically when
+    /// the user clicks one of the titlebar buttons or by other means.
+    pub fn set_window_title_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &str) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &str) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_window_title_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_window_title_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_window_title_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&str) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&str) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_window_title_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_window_title_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_x_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, i32) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_x_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_x_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_x_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(i32) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_x_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_x_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_y_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, i32) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_y_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_y_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_y_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(i32) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_y_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_y_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_width_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, i32) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_width_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_width_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_width_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(i32) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_width_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_width_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_height_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, i32) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_height_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_height_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_height_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(i32) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_height_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_height_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_minimum_width_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, i32) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_minimum_width_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_minimum_width_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_minimum_width_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(i32) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_minimum_width_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_minimum_width_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_minimum_height_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, i32) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_minimum_height_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_minimum_height_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_minimum_height_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(i32) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_minimum_height_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_minimum_height_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_maximum_width_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, i32) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_maximum_width_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_maximum_width_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_maximum_width_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(i32) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_maximum_width_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_maximum_width_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_maximum_height_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, i32) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, i32) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_maximum_height_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_maximum_height_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_maximum_height_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(i32) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(i32) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_maximum_height_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_maximum_height_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_visible_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, bool) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, bool) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_visible_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_visible_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_visible_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(bool) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(bool) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_visible_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_visible_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_active_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_active_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_active_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_active_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_active_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_active_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// This signal is emitted when the final receiver of events tied to focus
+    /// is changed to *object.*
+    ///
+    /// **See also:** [`focus_object()`]
+    pub fn set_focus_object_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ObjectTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ObjectTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_focus_object_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_focus_object_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_focus_object_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ObjectTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&ObjectTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_focus_object_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_focus_object_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_opacity_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, f32) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, f32) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_opacity_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_opacity_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_opacity_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(f32) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(f32) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_opacity_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_opacity_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// The expose event ( *ev)* is sent by the window system whenever the window's
+    /// exposure on screen changes.
+    ///
+    /// The application can start rendering into the window with QBackingStore
+    /// and QOpenGLContext as soon as it gets an exposeEvent() such that
+    /// isExposed() is true.
+    ///
+    /// If the window is moved off screen, is made totally obscured by another
+    /// window, iconified or similar, this function might be called and the
+    /// value of isExposed() might change to false. When this happens,
+    /// an application should stop its rendering as it is no longer visible
+    /// to the user.
+    ///
+    /// A resize event will always be sent before the expose event the first time
+    /// a window is shown.
+    ///
+    /// **See also:** [`is_exposed()`]
+    pub fn set_expose_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ExposeEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ExposeEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_expose_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_expose_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_expose_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ExposeEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&ExposeEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_expose_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_expose_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle resize events ( *ev).*
+    ///
+    /// The resize event is called whenever the window is resized in the windowing system,
+    /// either directly through the windowing system acknowledging a setGeometry() or resize() request,
+    /// or indirectly through the user resizing the window manually.
+    pub fn set_resize_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ResizeEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ResizeEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_resize_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_resize_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_resize_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ResizeEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&ResizeEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_resize_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_resize_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle window move events ( *ev).*
+    pub fn set_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MoveEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MoveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_move_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_move_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_move_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MoveEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&MoveEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_move_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_move_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle focus in events ( *ev).*
+    ///
+    /// Focus in events are sent when the window receives keyboard focus.
+    ///
+    /// **See also:** [`focus_out_event()`]
+    pub fn set_focus_in_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &FocusEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &FocusEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_focus_in_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_focus_in_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_focus_in_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&FocusEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&FocusEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_focus_in_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_focus_in_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle focus out events ( *ev).*
+    ///
+    /// Focus out events are sent when the window loses keyboard focus.
+    ///
+    /// **See also:** [`focus_in_event()`]
+    pub fn set_focus_out_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &FocusEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &FocusEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_focus_out_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_focus_out_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_focus_out_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&FocusEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&FocusEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_focus_out_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_focus_out_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle show events ( *ev).*
+    ///
+    /// The function is called when the window has requested becoming visible.
+    ///
+    /// If the window is successfully shown by the windowing system, this will
+    /// be followed by a resize and an expose event.
+    pub fn set_show_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ShowEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ShowEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_show_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_show_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_show_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ShowEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&ShowEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_show_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_show_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle hide events ( *ev).*
+    ///
+    /// The function is called when the window has requested being hidden in the
+    /// windowing system.
+    pub fn set_hide_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &HideEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &HideEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_hide_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_hide_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_hide_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&HideEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&HideEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_hide_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_hide_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle key press events ( *ev).*
+    ///
+    /// **See also:** [`key_release_event()`]
+    pub fn set_key_press_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &KeyEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &KeyEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_key_press_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_key_press_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_key_press_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&KeyEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&KeyEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_key_press_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_key_press_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle key release events ( *ev).*
+    ///
+    /// **See also:** [`key_press_event()`]
+    pub fn set_key_release_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &KeyEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &KeyEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_key_release_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_key_release_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_key_release_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&KeyEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&KeyEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_key_release_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_key_release_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle mouse press events ( *ev).*
+    ///
+    /// **See also:** [`mouse_release_event()`]
+    pub fn set_mouse_press_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MouseEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_mouse_press_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_mouse_press_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_press_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MouseEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_mouse_press_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_mouse_press_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle mouse release events ( *ev).*
+    ///
+    /// **See also:** [`mouse_press_event()`]
+    pub fn set_mouse_release_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MouseEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_mouse_release_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_mouse_release_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_release_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MouseEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_mouse_release_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_mouse_release_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle mouse double click events ( *ev).*
+    ///
+    /// **See also:** [`mouse_press_event()`]
+    /// [`StyleHints::mouse_double_click_interval`]
+    pub fn set_mouse_double_click_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MouseEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_mouse_double_click_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_mouse_double_click_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_double_click_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MouseEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_mouse_double_click_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_mouse_double_click_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle mouse move events ( *ev).*
+    pub fn set_mouse_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MouseEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_mouse_move_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_mouse_move_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_move_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MouseEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_mouse_move_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_mouse_move_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle mouse wheel or other wheel events ( *ev).*
+    pub fn set_wheel_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &WheelEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &WheelEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_wheel_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_wheel_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_wheel_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&WheelEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&WheelEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_wheel_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_wheel_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle touch events ( *ev).*
+    pub fn set_touch_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &TouchEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &TouchEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_touch_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_touch_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_touch_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&TouchEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&TouchEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_touch_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_touch_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    ///
+    /// Override this to handle tablet press, move, and release events ( *ev).*
+    ///
+    /// Proximity enter and leave events are not sent to windows, they are
+    /// delivered to the application instance.
+    pub fn set_tablet_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &TabletEventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &TabletEventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_tablet_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(window_tablet_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_tablet_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&TabletEventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_window_obj_funcs();
+        let f: Box<Box<Fn(&TabletEventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_tablet_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(window_tablet_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn surface_class(&self) -> SurfaceClass {
+        let (obj_data, funcs) = self.get_surface_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).surface_class)(obj_data);
+            let ret_val = { transmute::<i32, SurfaceClass>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn object_name(&self) -> String {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).object_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_object_name(&self, name: &str) -> &Self {
+        let str_in_name_1 = CString::new(name).unwrap();
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).set_object_name)(obj_data, str_in_name_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_widget_type(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_widget_type)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_window_type(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_window_type)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn signals_blocked(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).signals_blocked)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn block_signals(&self, b: bool) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).block_signals)(obj_data, b);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
+        let enum_timer_type_2 = timer_type as i32;
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).start_timer)(obj_data, interval, enum_timer_type_2);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
+        let enum_timer_type_2 = timer_type as i32;
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).start_timer_2)(obj_data, time, enum_timer_type_2);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn kill_timer(&self, id: i32) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).kill_timer)(obj_data, id);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn install_event_filter<O: ObjectTrait<'a>>(&self, filter_obj: &O) -> &Self {
+        let (obj_filter_obj_1, _funcs) = filter_obj.get_object_obj_funcs();
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).install_event_filter)(obj_data, obj_filter_obj_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_tree(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_tree)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_info(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_info)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_tree_2(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_tree_2)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_info_2(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_info_2)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn delete_later(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).delete_later)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_custom_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &EventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_custom_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(object_custom_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_custom_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&EventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_custom_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(object_custom_trampoline as usize),
+            );
+        }
+
+        self
+    }
+}
+pub trait WindowTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_window_obj_funcs(&self) -> (*const RUBase, *const RUWindowFuncs);
 }
 
 impl<'a> ObjectTrait<'a> for Window<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_object_obj_funcs(&self) -> (*const RUBase, *const RUObjectFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).object_funcs) }
@@ -3719,7 +3955,7 @@ impl<'a> ObjectTrait<'a> for Window<'a> {
 }
 
 impl<'a> SurfaceTrait<'a> for Window<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_surface_obj_funcs(&self) -> (*const RUBase, *const RUSurfaceFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).surface_funcs) }
@@ -3727,61 +3963,12 @@ impl<'a> SurfaceTrait<'a> for Window<'a> {
 }
 
 impl<'a> WindowTrait<'a> for Window<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_window_obj_funcs(&self) -> (*const RUBase, *const RUWindowFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).window_funcs) }
     }
 }
-pub trait WindowStaticTrait {
-    ///
-    /// Creates a local representation of a window created by another process or by
-    /// using native libraries below Qt.
-    ///
-    /// Given the handle *id* to a native window, this method creates a QWindow
-    /// object which can be used to represent the window when invoking methods like
-    /// setParent() and setTransientParent().
-    ///
-    /// This can be used, on platforms which support it, to embed a QWindow inside a
-    /// native window, or to embed a native window inside a QWindow.
-    ///
-    /// If foreign windows are not supported or embedding the native window
-    /// failed in the platform plugin, this function returns 0.
-    ///
-    /// **Note**: The resulting QWindow should not be used to manipulate the underlying
-    /// native window (besides re-parenting), or to observe state changes of the
-    /// native window. Any support for these kind of operations is incidental, highly
-    /// platform dependent and untested.
-    ///
-    /// **See also:** [`set_parent()`]
-    /// **See also:** [`set_transient_parent()`]
-    fn from_win_id<'a>(id: u64) -> Option<Window<'a>> {
-        let (obj_data, funcs) = unsafe {
-            (
-                ::std::ptr::null(),
-                (*((*rute_ffi_get()).get_window)(::std::ptr::null()).all_funcs).window_funcs,
-            )
-        };
-        unsafe {
-            let ret_val = ((*funcs).from_win_id)(obj_data, id);
-            if ret_val.qt_data == ::std::ptr::null() {
-                return None;
-            }
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Window::new_from_rc(t);
-            } else {
-                ret_val = Window::new_from_owned(t);
-            }
-            Some(ret_val)
-        }
-    }
-}
-
-impl<'a> WindowStaticTrait for Window<'a> {}
-
-impl<'a> WindowStaticTrait for WindowStatic<'a> {}
 #[repr(u32)]
 pub enum Visibility {
     Hidden,

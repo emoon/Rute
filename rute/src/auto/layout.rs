@@ -17,49 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::layout_ffi::*;
-#[allow(unused_imports)]
-use auto::layout_item::LayoutItem;
-#[allow(unused_imports)]
-use auto::layout_item::LayoutItemTrait;
-#[allow(unused_imports)]
-use auto::layout_item::*;
-#[allow(unused_imports)]
-use auto::layout_item_ffi::*;
-#[allow(unused_imports)]
-use auto::layout_item_ffi::*;
-#[allow(unused_imports)]
-use auto::margins::Margins;
-#[allow(unused_imports)]
-use auto::margins::MarginsTrait;
-#[allow(unused_imports)]
-use auto::margins_ffi::*;
-#[allow(unused_imports)]
-use auto::object::*;
-#[allow(unused_imports)]
-use auto::object_ffi::*;
-#[allow(unused_imports)]
-use auto::rect::Rect;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::Alignment;
-#[allow(unused_imports)]
-use auto::rute_enums::FindChildOptions;
-#[allow(unused_imports)]
-use auto::rute_enums::Orientations;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::size::Size;
-#[allow(unused_imports)]
-use auto::widget::Widget;
-#[allow(unused_imports)]
-use auto::widget::WidgetTrait;
-#[allow(unused_imports)]
-use auto::widget_ffi::*;
 ///
 /// This is an abstract base class inherited by the concrete classes
 /// QBoxLayout, QGridLayout, QFormLayout, and QStackedLayout.
@@ -93,14 +52,19 @@ use auto::widget_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Layout<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RULayoutAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> Layout<'a> {
-    pub fn new_from_rc(ffi_data: RULayout) -> Layout<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RULayout) -> Layout<'a> {
         Layout {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -109,7 +73,8 @@ impl<'a> Layout<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RULayout) -> Layout<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RULayout) -> Layout<'a> {
         Layout {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -118,7 +83,8 @@ impl<'a> Layout<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RULayout) -> Layout<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RULayout) -> Layout<'a> {
         Layout {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -126,15 +92,13 @@ impl<'a> Layout<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait LayoutTrait<'a> {
     ///
     /// Use setContentsMargins() and getContentsMargins() instead.
     ///
     /// **See also:** [`contents_rect()`]
     /// spacing
     ///
-    fn margin(&self) -> i32 {
+    pub fn margin(&self) -> i32 {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).margin)(obj_data);
@@ -157,7 +121,7 @@ pub trait LayoutTrait<'a> {
     /// [`get_contents_margins()`]
     /// [`Style::layout_spacing`]
     /// [`Style::pixel_metric`]
-    fn spacing(&self) -> i32 {
+    pub fn spacing(&self) -> i32 {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).spacing)(obj_data);
@@ -165,17 +129,19 @@ pub trait LayoutTrait<'a> {
         }
     }
     ///
-    fn set_margin(&self, arg0: i32) {
+    pub fn set_margin(&self, arg0: i32) -> &Self {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             ((*funcs).set_margin)(obj_data, arg0);
         }
+        self
     }
-    fn set_spacing(&self, arg0: i32) {
+    pub fn set_spacing(&self, arg0: i32) -> &Self {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             ((*funcs).set_spacing)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Sets the *left,* *top,* *right,* and *bottom* margins to use
@@ -197,11 +163,12 @@ pub trait LayoutTrait<'a> {
     /// most platforms, the margin is 11 pixels in all directions.
     ///
     /// **See also:** [`contents_margins()`]
-    fn set_contents_margins(&self, left: i32, top: i32, right: i32, bottom: i32) {
+    pub fn set_contents_margins(&self, left: i32, top: i32, right: i32, bottom: i32) -> &Self {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             ((*funcs).set_contents_margins)(obj_data, left, top, right, bottom);
         }
+        self
     }
     ///
     /// Sets the *left,* *top,* *right,* and *bottom* margins to use
@@ -223,13 +190,14 @@ pub trait LayoutTrait<'a> {
     /// most platforms, the margin is 11 pixels in all directions.
     ///
     /// **See also:** [`contents_margins()`]
-    fn set_contents_margins_2(&self, margins: &MarginsTrait) {
+    pub fn set_contents_margins_2<M: MarginsTrait<'a>>(&self, margins: &M) -> &Self {
         let (obj_margins_1, _funcs) = margins.get_margins_obj_funcs();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             ((*funcs).set_contents_margins_2)(obj_data, obj_margins_1);
         }
+        self
     }
     ///
     /// Extracts the left, top, right, and bottom margins used around the
@@ -244,7 +212,7 @@ pub trait LayoutTrait<'a> {
     /// {QStyle::}{PM_LayoutTopMargin}
     /// {QStyle::}{PM_LayoutRightMargin}
     /// {QStyle::}{PM_LayoutBottomMargin}
-    fn contents_margins(&self) -> Margins {
+    pub fn contents_margins(&self) -> Margins {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).contents_margins)(obj_data);
@@ -264,7 +232,7 @@ pub trait LayoutTrait<'a> {
     ///
     /// **See also:** [`set_contents_margins()`]
     /// [`get_contents_margins()`]
-    fn contents_rect(&self) -> Rect {
+    pub fn contents_rect(&self) -> Rect {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).contents_rect)(obj_data);
@@ -287,7 +255,7 @@ pub trait LayoutTrait<'a> {
     /// Sets the alignment for the layout *l* to *alignment* and
     /// returns `true` if *l* is found in this layout (not including child
     /// layouts); otherwise returns `false.`
-    fn set_alignment(&self, w: &WidgetTrait, alignment: Alignment) -> bool {
+    pub fn set_alignment<W: WidgetTrait<'a>>(&self, w: &W, alignment: Alignment) -> bool {
         let (obj_w_1, _funcs) = w.get_widget_obj_funcs();
         let enum_alignment_2 = alignment as i32;
 
@@ -306,7 +274,7 @@ pub trait LayoutTrait<'a> {
     /// Sets the alignment for the layout *l* to *alignment* and
     /// returns `true` if *l* is found in this layout (not including child
     /// layouts); otherwise returns `false.`
-    fn set_alignment_2(&self, l: &LayoutTrait, alignment: Alignment) -> bool {
+    pub fn set_alignment_2<L: LayoutTrait<'a>>(&self, l: &L, alignment: Alignment) -> bool {
         let (obj_l_1, _funcs) = l.get_layout_obj_funcs();
         let enum_alignment_2 = alignment as i32;
 
@@ -320,18 +288,19 @@ pub trait LayoutTrait<'a> {
     /// Tells the geometry manager to place the menu bar *widget* at the
     /// top of parentWidget(), outside QWidget::contentsMargins(). All
     /// child widgets are placed below the bottom edge of the menu bar.
-    fn set_menu_bar(&self, w: &WidgetTrait) {
+    pub fn set_menu_bar<W: WidgetTrait<'a>>(&self, w: &W) -> &Self {
         let (obj_w_1, _funcs) = w.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             ((*funcs).set_menu_bar)(obj_data, obj_w_1);
         }
+        self
     }
     ///
     /// Returns the menu bar set for this layout, or 0 if no menu bar is
     /// set.
-    fn menu_bar(&self) -> Option<Widget> {
+    pub fn menu_bar(&self) -> Option<Widget> {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).menu_bar)(obj_data);
@@ -356,7 +325,7 @@ pub trait LayoutTrait<'a> {
     /// widget of the parent layout.
     ///
     /// **See also:** [`parent()`]
-    fn parent_widget(&self) -> Option<Widget> {
+    pub fn parent_widget(&self) -> Option<Widget> {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).parent_widget)(obj_data);
@@ -374,11 +343,12 @@ pub trait LayoutTrait<'a> {
         }
     }
     ///
-    fn invalidate(&self) {
+    pub fn invalidate(&self) -> &Self {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             ((*funcs).invalidate)(obj_data);
         }
+        self
     }
     ///
     /// Redoes the layout for parentWidget() if necessary.
@@ -389,7 +359,7 @@ pub trait LayoutTrait<'a> {
     ///
     /// **See also:** [`update()`]
     /// [`Widget::update_geometry`]
-    fn activate(&self) -> bool {
+    pub fn activate(&self) -> bool {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).activate)(obj_data);
@@ -404,22 +374,24 @@ pub trait LayoutTrait<'a> {
     ///
     /// **See also:** [`activate()`]
     /// [`invalidate()`]
-    fn update(&self) {
+    pub fn update(&self) -> &Self {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             ((*funcs).update)(obj_data);
         }
+        self
     }
     ///
     /// Adds widget *w* to this layout in a manner specific to the
     /// layout. This function uses addItem().
-    fn add_widget(&self, w: &WidgetTrait) {
+    pub fn add_widget<W: WidgetTrait<'a>>(&self, w: &W) -> &Self {
         let (obj_w_1, _funcs) = w.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             ((*funcs).add_widget)(obj_data, obj_w_1);
         }
+        self
     }
     ///
     /// Implemented in subclasses to add an *item.* How it is added is
@@ -435,13 +407,14 @@ pub trait LayoutTrait<'a> {
     /// **See also:** [`add_widget()`]
     /// [`BoxLayout::add_layout`]
     /// [`GridLayout::add_layout`]
-    fn add_item(&self, arg0: &LayoutItemTrait) {
+    pub fn add_item<L: LayoutItemTrait<'a>>(&self, arg0: &L) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_layout_item_obj_funcs();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             ((*funcs).add_item)(obj_data, obj_arg0_1);
         }
+        self
     }
     ///
     /// Removes the widget *widget* from the layout. After this call, it
@@ -455,13 +428,14 @@ pub trait LayoutTrait<'a> {
     /// **See also:** [`remove_item()`]
     /// [`Widget::set_geometry`]
     /// [`add_widget()`]
-    fn remove_widget(&self, w: &WidgetTrait) {
+    pub fn remove_widget<W: WidgetTrait<'a>>(&self, w: &W) -> &Self {
         let (obj_w_1, _funcs) = w.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             ((*funcs).remove_widget)(obj_data, obj_w_1);
         }
+        self
     }
     ///
     /// Removes the layout item *item* from the layout. It is the
@@ -472,13 +446,14 @@ pub trait LayoutTrait<'a> {
     ///
     /// **See also:** [`remove_widget()`]
     /// [`add_item()`]
-    fn remove_item(&self, arg0: &LayoutItemTrait) {
+    pub fn remove_item<L: LayoutItemTrait<'a>>(&self, arg0: &L) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_layout_item_obj_funcs();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             ((*funcs).remove_item)(obj_data, obj_arg0_1);
         }
+        self
     }
     ///
     /// Returns whether this layout can make use of more space than
@@ -492,7 +467,7 @@ pub trait LayoutTrait<'a> {
     ///
     ///
     /// **See also:** [`size_hint()`]
-    fn expanding_directions(&self) -> Orientations {
+    pub fn expanding_directions(&self) -> Orientations {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).expanding_directions)(obj_data);
@@ -509,7 +484,7 @@ pub trait LayoutTrait<'a> {
     /// QWidget::setContentsMargins() or menuBar().
     ///
     /// The default implementation allows unlimited resizing.
-    fn minimum_size(&self) -> Size {
+    pub fn minimum_size(&self) -> Size {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).minimum_size)(obj_data);
@@ -532,7 +507,7 @@ pub trait LayoutTrait<'a> {
     /// QWidget::setContentsMargins() or menuBar().
     ///
     /// The default implementation allows unlimited resizing.
-    fn maximum_size(&self) -> Size {
+    pub fn maximum_size(&self) -> Size {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).maximum_size)(obj_data);
@@ -555,7 +530,7 @@ pub trait LayoutTrait<'a> {
     ///
     /// **See also:** [`count()`]
     /// [`take_at()`]
-    fn item_at(&self, index: i32) -> Option<LayoutItem> {
+    pub fn item_at(&self, index: i32) -> Option<LayoutItem> {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).item_at)(obj_data, index);
@@ -583,7 +558,7 @@ pub trait LayoutTrait<'a> {
     ///
     /// **See also:** [`item_at()`]
     /// [`count()`]
-    fn take_at(&self, index: i32) -> Option<LayoutItem> {
+    pub fn take_at(&self, index: i32) -> Option<LayoutItem> {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).take_at)(obj_data, index);
@@ -607,7 +582,7 @@ pub trait LayoutTrait<'a> {
     /// Returns the index of *widget,* or -1 if *widget* is not found.
     ///
     /// The default implementation iterates over all items using itemAt()
-    fn index_of(&self, arg0: &WidgetTrait) -> i32 {
+    pub fn index_of<W: WidgetTrait<'a>>(&self, arg0: &W) -> i32 {
         let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
@@ -621,7 +596,7 @@ pub trait LayoutTrait<'a> {
     /// in the layout.
     ///
     /// **See also:** [`item_at()`]
-    fn count(&self) -> i32 {
+    pub fn count(&self) -> i32 {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).count)(obj_data);
@@ -629,7 +604,7 @@ pub trait LayoutTrait<'a> {
         }
     }
     ///
-    fn is_empty(&self) -> bool {
+    pub fn is_empty(&self) -> bool {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_empty)(obj_data);
@@ -655,10 +630,10 @@ pub trait LayoutTrait<'a> {
     /// custom layouts.
     ///
     /// **See also:** [`index_of()`]
-    fn replace_widget(
+    pub fn replace_widget<W: WidgetTrait<'a>>(
         &self,
-        from: &WidgetTrait,
-        to: &WidgetTrait,
+        from: &W,
+        to: &W,
         options: FindChildOptions,
     ) -> Option<LayoutItem> {
         let (obj_from_1, _funcs) = from.get_widget_obj_funcs();
@@ -681,14 +656,14 @@ pub trait LayoutTrait<'a> {
             Some(ret_val)
         }
     }
-    fn total_height_for_width(&self, w: i32) -> i32 {
+    pub fn total_height_for_width(&self, w: i32) -> i32 {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).total_height_for_width)(obj_data, w);
             ret_val
         }
     }
-    fn total_minimum_size(&self) -> Size {
+    pub fn total_minimum_size(&self) -> Size {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).total_minimum_size)(obj_data);
@@ -702,7 +677,7 @@ pub trait LayoutTrait<'a> {
             ret_val
         }
     }
-    fn total_maximum_size(&self) -> Size {
+    pub fn total_maximum_size(&self) -> Size {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).total_maximum_size)(obj_data);
@@ -716,7 +691,7 @@ pub trait LayoutTrait<'a> {
             ret_val
         }
     }
-    fn total_size_hint(&self) -> Size {
+    pub fn total_size_hint(&self) -> Size {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).total_size_hint)(obj_data);
@@ -731,7 +706,7 @@ pub trait LayoutTrait<'a> {
         }
     }
     ///
-    fn layout(&self) -> Option<Layout> {
+    pub fn layout(&self) -> Option<Layout> {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).layout)(obj_data);
@@ -757,30 +732,315 @@ pub trait LayoutTrait<'a> {
     /// By default all layouts are enabled.
     ///
     /// **See also:** [`is_enabled()`]
-    fn set_enabled(&self, arg0: bool) {
+    pub fn set_enabled(&self, arg0: bool) -> &Self {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             ((*funcs).set_enabled)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Returns `true` if the layout is enabled; otherwise returns `false.`
     ///
     /// **See also:** [`set_enabled()`]
-    fn is_enabled(&self) -> bool {
+    pub fn is_enabled(&self) -> bool {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_enabled)(obj_data);
             ret_val
         }
     }
+    #[doc(hidden)]
+    pub fn size_hint(&self) -> Size {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).size_hint)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn has_height_for_width(&self) -> bool {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).has_height_for_width)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn height_for_width(&self, arg0: i32) -> i32 {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).height_for_width)(obj_data, arg0);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn minimum_height_for_width(&self, arg0: i32) -> i32 {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).minimum_height_for_width)(obj_data, arg0);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn widget(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).widget)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn spacer_item(&self) -> Option<SpacerItem> {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).spacer_item)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = SpacerItem::new_from_rc(t);
+            } else {
+                ret_val = SpacerItem::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn alignment(&self) -> Alignment {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).alignment)(obj_data);
+            let ret_val = { transmute::<i32, Alignment>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn object_name(&self) -> String {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).object_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_object_name(&self, name: &str) -> &Self {
+        let str_in_name_1 = CString::new(name).unwrap();
 
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).set_object_name)(obj_data, str_in_name_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_widget_type(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_widget_type)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_window_type(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_window_type)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn signals_blocked(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).signals_blocked)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn block_signals(&self, b: bool) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).block_signals)(obj_data, b);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
+        let enum_timer_type_2 = timer_type as i32;
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).start_timer)(obj_data, interval, enum_timer_type_2);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
+        let enum_timer_type_2 = timer_type as i32;
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).start_timer_2)(obj_data, time, enum_timer_type_2);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn kill_timer(&self, id: i32) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).kill_timer)(obj_data, id);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_parent<O: ObjectTrait<'a>>(&self, parent: &O) -> &Self {
+        let (obj_parent_1, _funcs) = parent.get_object_obj_funcs();
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).set_parent)(obj_data, obj_parent_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn install_event_filter<O: ObjectTrait<'a>>(&self, filter_obj: &O) -> &Self {
+        let (obj_filter_obj_1, _funcs) = filter_obj.get_object_obj_funcs();
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).install_event_filter)(obj_data, obj_filter_obj_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_tree(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_tree)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_info(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_info)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_tree_2(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_tree_2)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_info_2(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_info_2)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn parent(&self) -> Option<Object> {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).parent)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Object::new_from_rc(t);
+            } else {
+                ret_val = Object::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn delete_later(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).delete_later)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_custom_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &EventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_custom_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(object_custom_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_custom_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&EventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_custom_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(object_custom_trampoline as usize),
+            );
+        }
+
+        self
+    }
+}
+pub trait LayoutTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_layout_obj_funcs(&self) -> (*const RUBase, *const RULayoutFuncs);
 }
 
 impl<'a> ObjectTrait<'a> for Layout<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_object_obj_funcs(&self) -> (*const RUBase, *const RUObjectFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).object_funcs) }
@@ -788,7 +1048,7 @@ impl<'a> ObjectTrait<'a> for Layout<'a> {
 }
 
 impl<'a> LayoutItemTrait<'a> for Layout<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_layout_item_obj_funcs(&self) -> (*const RUBase, *const RULayoutItemFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).layout_item_funcs) }
@@ -796,7 +1056,7 @@ impl<'a> LayoutItemTrait<'a> for Layout<'a> {
 }
 
 impl<'a> LayoutTrait<'a> for Layout<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_layout_obj_funcs(&self) -> (*const RUBase, *const RULayoutFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).layout_funcs) }

@@ -17,55 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::application::Application;
-#[allow(unused_imports)]
-use auto::application::ApplicationTrait;
-#[allow(unused_imports)]
-use auto::application_ffi::*;
-#[allow(unused_imports)]
-use auto::object::*;
-#[allow(unused_imports)]
-use auto::object_ffi::*;
-#[allow(unused_imports)]
-use auto::painter::Painter;
-#[allow(unused_imports)]
-use auto::painter::PainterTrait;
-#[allow(unused_imports)]
-use auto::painter_ffi::*;
-#[allow(unused_imports)]
-use auto::palette::ColorRole;
-#[allow(unused_imports)]
-use auto::palette::Palette;
-#[allow(unused_imports)]
-use auto::palette::PaletteTrait;
-#[allow(unused_imports)]
-use auto::palette_ffi::*;
-#[allow(unused_imports)]
-use auto::pixmap::Pixmap;
-#[allow(unused_imports)]
-use auto::pixmap::PixmapTrait;
-#[allow(unused_imports)]
-use auto::pixmap_ffi::*;
-#[allow(unused_imports)]
-use auto::rect::Rect;
-#[allow(unused_imports)]
-use auto::rect::RectTrait;
-#[allow(unused_imports)]
-use auto::rect_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::style_ffi::*;
-#[allow(unused_imports)]
-use auto::widget::Widget;
-#[allow(unused_imports)]
-use auto::widget::WidgetTrait;
-#[allow(unused_imports)]
-use auto::widget_ffi::*;
 ///
 /// Qt contains a set of QStyle subclasses that emulate the styles of
 /// the different platforms supported by Qt (QWindowsStyle,
@@ -292,14 +245,19 @@ use auto::widget_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Style<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUStyleAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> Style<'a> {
-    pub fn new_from_rc(ffi_data: RUStyle) -> Style<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUStyle) -> Style<'a> {
         Style {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -308,7 +266,8 @@ impl<'a> Style<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUStyle) -> Style<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUStyle) -> Style<'a> {
         Style {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -317,7 +276,8 @@ impl<'a> Style<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUStyle) -> Style<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUStyle) -> Style<'a> {
         Style {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -325,8 +285,6 @@ impl<'a> Style<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait StyleTrait<'a> {
     ///
     /// Initializes the appearance of the given *widget.*
     ///
@@ -359,13 +317,14 @@ pub trait StyleTrait<'a> {
     ///
     /// **See also:** [`Palette`]
     /// [`Application::set_palette`]
-    fn polish(&self, widget: &WidgetTrait) {
+    pub fn polish<W: WidgetTrait<'a>>(&self, widget: &W) -> &Self {
         let (obj_widget_1, _funcs) = widget.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_style_obj_funcs();
         unsafe {
             ((*funcs).polish)(obj_data, obj_widget_1);
         }
+        self
     }
     ///
     /// Uninitialize the given *widget* 's appearance.
@@ -384,13 +343,14 @@ pub trait StyleTrait<'a> {
     ///
     /// **Overloads**
     /// Uninitialize the given *application.*
-    fn unpolish(&self, widget: &WidgetTrait) {
+    pub fn unpolish<W: WidgetTrait<'a>>(&self, widget: &W) -> &Self {
         let (obj_widget_1, _funcs) = widget.get_widget_obj_funcs();
 
         let (obj_data, funcs) = self.get_style_obj_funcs();
         unsafe {
             ((*funcs).unpolish)(obj_data, obj_widget_1);
         }
+        self
     }
     ///
     /// Initializes the appearance of the given *widget.*
@@ -424,13 +384,14 @@ pub trait StyleTrait<'a> {
     ///
     /// **See also:** [`Palette`]
     /// [`Application::set_palette`]
-    fn polish_2(&self, application: &ApplicationTrait) {
+    pub fn polish_2<A: ApplicationTrait<'a>>(&self, application: &A) -> &Self {
         let (obj_application_1, _funcs) = application.get_application_obj_funcs();
 
         let (obj_data, funcs) = self.get_style_obj_funcs();
         unsafe {
             ((*funcs).polish_2)(obj_data, obj_application_1);
         }
+        self
     }
     ///
     /// Uninitialize the given *widget* 's appearance.
@@ -449,13 +410,14 @@ pub trait StyleTrait<'a> {
     ///
     /// **Overloads**
     /// Uninitialize the given *application.*
-    fn unpolish_2(&self, application: &ApplicationTrait) {
+    pub fn unpolish_2<A: ApplicationTrait<'a>>(&self, application: &A) -> &Self {
         let (obj_application_1, _funcs) = application.get_application_obj_funcs();
 
         let (obj_data, funcs) = self.get_style_obj_funcs();
         unsafe {
             ((*funcs).unpolish_2)(obj_data, obj_application_1);
         }
+        self
     }
     ///
     /// Initializes the appearance of the given *widget.*
@@ -489,13 +451,14 @@ pub trait StyleTrait<'a> {
     ///
     /// **See also:** [`Palette`]
     /// [`Application::set_palette`]
-    fn polish_3(&self, palette: &PaletteTrait) {
+    pub fn polish_3<P: PaletteTrait<'a>>(&self, palette: &P) -> &Self {
         let (obj_palette_1, _funcs) = palette.get_palette_obj_funcs();
 
         let (obj_data, funcs) = self.get_style_obj_funcs();
         unsafe {
             ((*funcs).polish_3)(obj_data, obj_palette_1);
         }
+        self
     }
     ///
     /// Returns the area within the given *rectangle* in which to draw
@@ -514,7 +477,12 @@ pub trait StyleTrait<'a> {
     ///
     /// Returns the area within the given *rectangle* in which to draw
     /// the specified *pixmap* according to the defined *alignment.*
-    fn item_pixmap_rect(&self, r: &RectTrait, flags: i32, pixmap: &PixmapTrait) -> Rect {
+    pub fn item_pixmap_rect<P: PixmapTrait<'a>, R: RectTrait<'a>>(
+        &self,
+        r: &R,
+        flags: i32,
+        pixmap: &P,
+    ) -> Rect {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
         let (obj_pixmap_3, _funcs) = pixmap.get_pixmap_obj_funcs();
 
@@ -544,16 +512,16 @@ pub trait StyleTrait<'a> {
     ///
     /// **See also:** [`t::alignment()`]
     /// [`draw_item_pixmap()`]
-    fn draw_item_text(
+    pub fn draw_item_text<P: PainterTrait<'a>, Q: PaletteTrait<'a>, R: RectTrait<'a>>(
         &self,
-        painter: &PainterTrait,
-        rect: &RectTrait,
+        painter: &P,
+        rect: &R,
         flags: i32,
-        pal: &PaletteTrait,
+        pal: &Q,
         enabled: bool,
         text: &str,
         text_role: ColorRole,
-    ) {
+    ) -> &Self {
         let (obj_painter_1, _funcs) = painter.get_painter_obj_funcs();
         let (obj_rect_2, _funcs) = rect.get_rect_obj_funcs();
         let (obj_pal_4, _funcs) = pal.get_palette_obj_funcs();
@@ -573,6 +541,7 @@ pub trait StyleTrait<'a> {
                 enum_text_role_7,
             );
         }
+        self
     }
     ///
     /// const QPixmap &pixmap) const
@@ -581,13 +550,13 @@ pub trait StyleTrait<'a> {
     /// to the specified *alignment,* using the provided *painter.*
     ///
     /// **See also:** [`draw_item_text()`]
-    fn draw_item_pixmap(
+    pub fn draw_item_pixmap<P: PainterTrait<'a>, Q: PixmapTrait<'a>, R: RectTrait<'a>>(
         &self,
-        painter: &PainterTrait,
-        rect: &RectTrait,
+        painter: &P,
+        rect: &R,
         alignment: i32,
-        pixmap: &PixmapTrait,
-    ) {
+        pixmap: &Q,
+    ) -> &Self {
         let (obj_painter_1, _funcs) = painter.get_painter_obj_funcs();
         let (obj_rect_2, _funcs) = rect.get_rect_obj_funcs();
         let (obj_pixmap_4, _funcs) = pixmap.get_pixmap_obj_funcs();
@@ -602,6 +571,7 @@ pub trait StyleTrait<'a> {
                 obj_pixmap_4,
             );
         }
+        self
     }
     ///
     /// Returns the style's standard palette.
@@ -613,7 +583,7 @@ pub trait StyleTrait<'a> {
     /// the palette with QApplication::setPalette().
     ///
     /// **See also:** [`Application::set_palette`]
-    fn standard_palette(&self) -> Palette {
+    pub fn standard_palette(&self) -> Palette {
         let (obj_data, funcs) = self.get_style_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).standard_palette)(obj_data);
@@ -1050,7 +1020,7 @@ pub trait StyleTrait<'a> {
     /// By default most styles will return themselves. However
     /// when a proxy style is in use, it will allow the style to
     /// call back into its proxy.
-    fn proxy(&self) -> Option<Style> {
+    pub fn proxy(&self) -> Option<Style> {
         let (obj_data, funcs) = self.get_style_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).proxy)(obj_data);
@@ -1067,13 +1037,213 @@ pub trait StyleTrait<'a> {
             Some(ret_val)
         }
     }
+    #[doc(hidden)]
+    pub fn object_name(&self) -> String {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).object_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_object_name(&self, name: &str) -> &Self {
+        let str_in_name_1 = CString::new(name).unwrap();
 
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).set_object_name)(obj_data, str_in_name_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_widget_type(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_widget_type)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_window_type(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_window_type)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn signals_blocked(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).signals_blocked)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn block_signals(&self, b: bool) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).block_signals)(obj_data, b);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
+        let enum_timer_type_2 = timer_type as i32;
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).start_timer)(obj_data, interval, enum_timer_type_2);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
+        let enum_timer_type_2 = timer_type as i32;
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).start_timer_2)(obj_data, time, enum_timer_type_2);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn kill_timer(&self, id: i32) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).kill_timer)(obj_data, id);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_parent<O: ObjectTrait<'a>>(&self, parent: &O) -> &Self {
+        let (obj_parent_1, _funcs) = parent.get_object_obj_funcs();
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).set_parent)(obj_data, obj_parent_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn install_event_filter<O: ObjectTrait<'a>>(&self, filter_obj: &O) -> &Self {
+        let (obj_filter_obj_1, _funcs) = filter_obj.get_object_obj_funcs();
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).install_event_filter)(obj_data, obj_filter_obj_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_tree(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_tree)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_info(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_info)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_tree_2(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_tree_2)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_info_2(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_info_2)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn parent(&self) -> Option<Object> {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).parent)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Object::new_from_rc(t);
+            } else {
+                ret_val = Object::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn delete_later(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).delete_later)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_custom_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &EventTrait) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_custom_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(object_custom_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_custom_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&EventTrait) + 'a,
+    {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_custom_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(object_custom_trampoline as usize),
+            );
+        }
+
+        self
+    }
+}
+pub trait StyleTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_style_obj_funcs(&self) -> (*const RUBase, *const RUStyleFuncs);
 }
 
 impl<'a> ObjectTrait<'a> for Style<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_object_obj_funcs(&self) -> (*const RUBase, *const RUObjectFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).object_funcs) }
@@ -1081,7 +1251,7 @@ impl<'a> ObjectTrait<'a> for Style<'a> {
 }
 
 impl<'a> StyleTrait<'a> for Style<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_style_obj_funcs(&self) -> (*const RUBase, *const RUStyleFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).style_funcs) }

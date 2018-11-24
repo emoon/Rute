@@ -64,14 +64,6 @@ static bool font_info_italic(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int font_info_style(struct RUBase* self_c) {
-    QFontInfo* qt_value = (QFontInfo*)self_c;
-    auto ret_value = qt_value->style();
-    return s_style_lookup[(int)ret_value];
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 static int font_info_weight(struct RUBase* self_c) {
     QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->weight();
@@ -144,7 +136,6 @@ struct RUFontInfoFuncs s_font_info_funcs = {
     font_info_point_size,
     font_info_point_size_f,
     font_info_italic,
-    font_info_style,
     font_info_weight,
     font_info_bold,
     font_info_underline,

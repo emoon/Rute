@@ -17,25 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::layout_item::*;
-#[allow(unused_imports)]
-use auto::layout_item_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::Orientations;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::size::Size;
-#[allow(unused_imports)]
-use auto::size_policy::Policy;
-#[allow(unused_imports)]
-use auto::size_policy::SizePolicy;
-#[allow(unused_imports)]
-use auto::spacer_item_ffi::*;
 ///
 /// Normally, you don't need to use this class directly. Qt's
 /// built-in layout managers provide the following functions for
@@ -63,14 +46,19 @@ use auto::spacer_item_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct SpacerItem<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUSpacerItemAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> SpacerItem<'a> {
-    pub fn new_from_rc(ffi_data: RUSpacerItem) -> SpacerItem<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUSpacerItem) -> SpacerItem<'a> {
         SpacerItem {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -79,7 +67,8 @@ impl<'a> SpacerItem<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUSpacerItem) -> SpacerItem<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUSpacerItem) -> SpacerItem<'a> {
         SpacerItem {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -88,7 +77,8 @@ impl<'a> SpacerItem<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUSpacerItem) -> SpacerItem<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUSpacerItem) -> SpacerItem<'a> {
         SpacerItem {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -96,8 +86,6 @@ impl<'a> SpacerItem<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait SpacerItemTrait<'a> {
     ///
     /// Changes this spacer item to have preferred width *w,* preferred
     /// height *h,* horizontal size policy *hPolicy* and vertical size
@@ -111,7 +99,7 @@ pub trait SpacerItemTrait<'a> {
     /// spacer item's new size to take effect.
     ///
     /// **See also:** [`SpacerItem::invalidate`]
-    fn change_size(&self, w: i32, h: i32, h_data: Policy, v_data: Policy) {
+    pub fn change_size(&self, w: i32, h: i32, h_data: Policy, v_data: Policy) -> &Self {
         let enum_h_data_3 = h_data as i32;
         let enum_v_data_4 = v_data as i32;
 
@@ -119,9 +107,10 @@ pub trait SpacerItemTrait<'a> {
         unsafe {
             ((*funcs).change_size)(obj_data, w, h, enum_h_data_3, enum_v_data_4);
         }
+        self
     }
     ///
-    fn size_hint(&self) -> Size {
+    pub fn size_hint(&self) -> Size {
         let (obj_data, funcs) = self.get_spacer_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).size_hint)(obj_data);
@@ -136,7 +125,7 @@ pub trait SpacerItemTrait<'a> {
         }
     }
     ///
-    fn minimum_size(&self) -> Size {
+    pub fn minimum_size(&self) -> Size {
         let (obj_data, funcs) = self.get_spacer_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).minimum_size)(obj_data);
@@ -151,7 +140,7 @@ pub trait SpacerItemTrait<'a> {
         }
     }
     ///
-    fn maximum_size(&self) -> Size {
+    pub fn maximum_size(&self) -> Size {
         let (obj_data, funcs) = self.get_spacer_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).maximum_size)(obj_data);
@@ -166,7 +155,7 @@ pub trait SpacerItemTrait<'a> {
         }
     }
     ///
-    fn expanding_directions(&self) -> Orientations {
+    pub fn expanding_directions(&self) -> Orientations {
         let (obj_data, funcs) = self.get_spacer_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).expanding_directions)(obj_data);
@@ -176,7 +165,7 @@ pub trait SpacerItemTrait<'a> {
     }
     ///
     /// Returns `true.`
-    fn is_empty(&self) -> bool {
+    pub fn is_empty(&self) -> bool {
         let (obj_data, funcs) = self.get_spacer_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_empty)(obj_data);
@@ -185,7 +174,7 @@ pub trait SpacerItemTrait<'a> {
     }
     ///
     /// Returns a pointer to this object.
-    fn spacer_item(&self) -> Option<SpacerItem> {
+    pub fn spacer_item(&self) -> Option<SpacerItem> {
         let (obj_data, funcs) = self.get_spacer_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).spacer_item)(obj_data);
@@ -204,7 +193,7 @@ pub trait SpacerItemTrait<'a> {
     }
     ///
     /// Returns the size policy of this item.
-    fn size_policy(&self) -> SizePolicy {
+    pub fn size_policy(&self) -> SizePolicy {
         let (obj_data, funcs) = self.get_spacer_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).size_policy)(obj_data);
@@ -218,13 +207,102 @@ pub trait SpacerItemTrait<'a> {
             ret_val
         }
     }
+    #[doc(hidden)]
+    pub fn has_height_for_width(&self) -> bool {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).has_height_for_width)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn height_for_width(&self, arg0: i32) -> i32 {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).height_for_width)(obj_data, arg0);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn minimum_height_for_width(&self, arg0: i32) -> i32 {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).minimum_height_for_width)(obj_data, arg0);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn invalidate(&self) -> &Self {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            ((*funcs).invalidate)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn widget(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).widget)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn layout(&self) -> Option<Layout> {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).layout)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Layout::new_from_rc(t);
+            } else {
+                ret_val = Layout::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn alignment(&self) -> Alignment {
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).alignment)(obj_data);
+            let ret_val = { transmute::<i32, Alignment>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_alignment(&self, a: Alignment) -> &Self {
+        let enum_a_1 = a as i32;
 
+        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
+        unsafe {
+            ((*funcs).set_alignment)(obj_data, enum_a_1);
+        }
+        self
+    }
+}
+pub trait SpacerItemTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_spacer_item_obj_funcs(&self) -> (*const RUBase, *const RUSpacerItemFuncs);
 }
 
 impl<'a> LayoutItemTrait<'a> for SpacerItem<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_layout_item_obj_funcs(&self) -> (*const RUBase, *const RULayoutItemFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).layout_item_funcs) }
@@ -232,7 +310,7 @@ impl<'a> LayoutItemTrait<'a> for SpacerItem<'a> {
 }
 
 impl<'a> SpacerItemTrait<'a> for SpacerItem<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_spacer_item_obj_funcs(&self) -> (*const RUBase, *const RUSpacerItemFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).spacer_item_funcs) }

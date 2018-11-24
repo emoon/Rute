@@ -21,7 +21,6 @@ typedef struct RUFontInfoFuncs {
     int (*point_size)(struct RUBase* self_c);
     float (*point_size_f)(struct RUBase* self_c);
     bool (*italic)(struct RUBase* self_c);
-    int (*style)(struct RUBase* self_c);
     int (*weight)(struct RUBase* self_c);
     bool (*bold)(struct RUBase* self_c);
     bool (*underline)(struct RUBase* self_c);

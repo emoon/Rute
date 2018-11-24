@@ -17,15 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::AspectRatioMode;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::size_ffi::*;
 ///
 /// A size is specified by a width() and a height(). It can be set in
 /// the constructor and changed using the setWidth(), setHeight(), or
@@ -56,9 +49,13 @@ use auto::size_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Size<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUSizeAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -83,7 +80,8 @@ impl<'a> Size<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUSize) -> Size<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUSize) -> Size<'a> {
         Size {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -92,7 +90,8 @@ impl<'a> Size<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUSize) -> Size<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUSize) -> Size<'a> {
         Size {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -101,7 +100,8 @@ impl<'a> Size<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUSize) -> Size<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUSize) -> Size<'a> {
         Size {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -109,15 +109,13 @@ impl<'a> Size<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait SizeTrait<'a> {
     ///
     /// Returns `true` if both the width and height is 0; otherwise returns
     /// false.
     ///
     /// **See also:** [`is_valid()`]
     /// [`is_empty()`]
-    fn is_null(&self) -> bool {
+    pub fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_null)(obj_data);
@@ -130,7 +128,7 @@ pub trait SizeTrait<'a> {
     ///
     /// **See also:** [`is_null()`]
     /// [`is_valid()`]
-    fn is_empty(&self) -> bool {
+    pub fn is_empty(&self) -> bool {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_empty)(obj_data);
@@ -143,7 +141,7 @@ pub trait SizeTrait<'a> {
     ///
     /// **See also:** [`is_null()`]
     /// [`is_empty()`]
-    fn is_valid(&self) -> bool {
+    pub fn is_valid(&self) -> bool {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_valid)(obj_data);
@@ -155,7 +153,7 @@ pub trait SizeTrait<'a> {
     ///
     /// **See also:** [`height()`]
     /// [`set_width()`]
-    fn width(&self) -> i32 {
+    pub fn width(&self) -> i32 {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).width)(obj_data);
@@ -167,7 +165,7 @@ pub trait SizeTrait<'a> {
     ///
     /// **See also:** [`width()`]
     /// [`set_height()`]
-    fn height(&self) -> i32 {
+    pub fn height(&self) -> i32 {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).height)(obj_data);
@@ -180,11 +178,12 @@ pub trait SizeTrait<'a> {
     /// **See also:** [`rwidth()`]
     /// [`width()`]
     /// [`set_height()`]
-    fn set_width(&self, w: i32) {
+    pub fn set_width(&self, w: i32) -> &Self {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
             ((*funcs).set_width)(obj_data, w);
         }
+        self
     }
     ///
     /// Sets the height to the given *height.*
@@ -192,11 +191,12 @@ pub trait SizeTrait<'a> {
     /// **See also:** [`rheight()`]
     /// [`height()`]
     /// [`set_width()`]
-    fn set_height(&self, h: i32) {
+    pub fn set_height(&self, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
             ((*funcs).set_height)(obj_data, h);
         }
+        self
     }
     ///
     /// Scales the size to a rectangle with the given *width* and *height,* according to the specified *mode:*
@@ -222,13 +222,14 @@ pub trait SizeTrait<'a> {
     /// **Overloads**
     /// Return a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
-    fn scale(&self, w: i32, h: i32, mode: AspectRatioMode) {
+    pub fn scale(&self, w: i32, h: i32, mode: AspectRatioMode) -> &Self {
         let enum_mode_3 = mode as i32;
 
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
             ((*funcs).scale)(obj_data, w, h, enum_mode_3);
         }
+        self
     }
     ///
     /// Scales the size to a rectangle with the given *width* and *height,* according to the specified *mode:*
@@ -254,7 +255,7 @@ pub trait SizeTrait<'a> {
     /// **Overloads**
     /// Return a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
-    fn scale_2(&self, s: &SizeTrait, mode: AspectRatioMode) {
+    pub fn scale_2<S: SizeTrait<'a>>(&self, s: &S, mode: AspectRatioMode) -> &Self {
         let (obj_s_1, _funcs) = s.get_size_obj_funcs();
         let enum_mode_2 = mode as i32;
 
@@ -262,6 +263,7 @@ pub trait SizeTrait<'a> {
         unsafe {
             ((*funcs).scale_2)(obj_data, obj_s_1, enum_mode_2);
         }
+        self
     }
     ///
     /// Return a size scaled to a rectangle with the given *width* and *height,* according to the specified *mode.*
@@ -271,7 +273,7 @@ pub trait SizeTrait<'a> {
     /// **Overloads**
     /// Return a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
-    fn scaled(&self, w: i32, h: i32, mode: AspectRatioMode) -> Size {
+    pub fn scaled(&self, w: i32, h: i32, mode: AspectRatioMode) -> Size {
         let enum_mode_3 = mode as i32;
 
         let (obj_data, funcs) = self.get_size_obj_funcs();
@@ -295,7 +297,7 @@ pub trait SizeTrait<'a> {
     /// **Overloads**
     /// Return a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
-    fn scaled_2(&self, s: &SizeTrait, mode: AspectRatioMode) -> Size {
+    pub fn scaled_2<S: SizeTrait<'a>>(&self, s: &S, mode: AspectRatioMode) -> Size {
         let (obj_s_1, _funcs) = s.get_size_obj_funcs();
         let enum_mode_2 = mode as i32;
 
@@ -318,7 +320,7 @@ pub trait SizeTrait<'a> {
     ///
     /// **See also:** [`bounded_to()`]
     /// [`scale()`]
-    fn expanded_to(&self, arg0: &SizeTrait) -> Size {
+    pub fn expanded_to<S: SizeTrait<'a>>(&self, arg0: &S) -> Size {
         let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_size_obj_funcs();
@@ -340,7 +342,7 @@ pub trait SizeTrait<'a> {
     ///
     /// **See also:** [`expanded_to()`]
     /// [`scale()`]
-    fn bounded_to(&self, arg0: &SizeTrait) -> Size {
+    pub fn bounded_to<S: SizeTrait<'a>>(&self, arg0: &S) -> Size {
         let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
 
         let (obj_data, funcs) = self.get_size_obj_funcs();
@@ -364,7 +366,7 @@ pub trait SizeTrait<'a> {
     ///
     /// **See also:** [`rheight()`]
     /// [`set_width()`]
-    fn rwidth(&self) -> i32 {
+    pub fn rwidth(&self) -> i32 {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rwidth)(obj_data);
@@ -379,20 +381,22 @@ pub trait SizeTrait<'a> {
     ///
     /// **See also:** [`rwidth()`]
     /// [`set_height()`]
-    fn rheight(&self) -> i32 {
+    pub fn rheight(&self) -> i32 {
         let (obj_data, funcs) = self.get_size_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rheight)(obj_data);
             ret_val
         }
     }
-
+}
+pub trait SizeTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_size_obj_funcs(&self) -> (*const RUBase, *const RUSizeFuncs);
 }
 
 impl<'a> SizeTrait<'a> for Size<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_size_obj_funcs(&self) -> (*const RUBase, *const RUSizeFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).size_funcs) }

@@ -17,27 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::event::*;
-#[allow(unused_imports)]
-use auto::event_ffi::*;
-#[allow(unused_imports)]
-use auto::input_event::*;
-#[allow(unused_imports)]
-use auto::input_event_ffi::*;
-#[allow(unused_imports)]
-use auto::object::Object;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::TouchPointStates;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::touch_event_ffi::*;
-#[allow(unused_imports)]
-use auto::window::Window;
 ///
 /// # Enabling Touch Events
 ///
@@ -141,14 +122,19 @@ use auto::window::Window;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct TouchEvent<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUTouchEventAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> TouchEvent<'a> {
-    pub fn new_from_rc(ffi_data: RUTouchEvent) -> TouchEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUTouchEvent) -> TouchEvent<'a> {
         TouchEvent {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -157,7 +143,8 @@ impl<'a> TouchEvent<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUTouchEvent) -> TouchEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUTouchEvent) -> TouchEvent<'a> {
         TouchEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -166,7 +153,8 @@ impl<'a> TouchEvent<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUTouchEvent) -> TouchEvent<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUTouchEvent) -> TouchEvent<'a> {
         TouchEvent {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -174,14 +162,12 @@ impl<'a> TouchEvent<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait TouchEventTrait<'a> {
     ///
     /// Returns the window on which the event occurred. Useful for doing
     /// global-local mapping on data like rawScreenPositions() which,
     /// for performance reasons, only stores the global positions in the
     /// touch event.
-    fn window(&self) -> Option<Window> {
+    pub fn window(&self) -> Option<Window> {
         let (obj_data, funcs) = self.get_touch_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).window)(obj_data);
@@ -201,7 +187,7 @@ pub trait TouchEventTrait<'a> {
     ///
     /// Returns the target object within the window on which the event occurred.
     /// This is typically a QWidget or a QQuickItem. May be 0 when no specific target is available.
-    fn target(&self) -> Option<Object> {
+    pub fn target(&self) -> Option<Object> {
         let (obj_data, funcs) = self.get_touch_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).target)(obj_data);
@@ -220,7 +206,7 @@ pub trait TouchEventTrait<'a> {
     }
     ///
     /// Returns a bitwise OR of all the touch point states for this event.
-    fn touch_point_states(&self) -> TouchPointStates {
+    pub fn touch_point_states(&self) -> TouchPointStates {
         let (obj_data, funcs) = self.get_touch_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).touch_point_states)(obj_data);
@@ -228,13 +214,90 @@ pub trait TouchEventTrait<'a> {
             ret_val
         }
     }
+    #[doc(hidden)]
+    pub fn modifiers(&self) -> KeyboardModifiers {
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).modifiers)(obj_data);
+            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_modifiers(&self, amodifiers: KeyboardModifiers) -> &Self {
+        let enum_amodifiers_1 = amodifiers as i32;
 
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_modifiers)(obj_data, enum_amodifiers_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn timestamp(&self) -> u64 {
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).timestamp)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_timestamp(&self, atimestamp: u64) -> &Self {
+        let (obj_data, funcs) = self.get_input_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_timestamp)(obj_data, atimestamp);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn spontaneous(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).spontaneous)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_accepted(&self, accepted: bool) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).set_accepted)(obj_data, accepted);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_accepted(&self) -> bool {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_accepted)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn accept(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).accept)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn ignore(&self) -> &Self {
+        let (obj_data, funcs) = self.get_event_obj_funcs();
+        unsafe {
+            ((*funcs).ignore)(obj_data);
+        }
+        self
+    }
+}
+pub trait TouchEventTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_touch_event_obj_funcs(&self) -> (*const RUBase, *const RUTouchEventFuncs);
 }
 
 impl<'a> EventTrait<'a> for TouchEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).event_funcs) }
@@ -242,7 +305,7 @@ impl<'a> EventTrait<'a> for TouchEvent<'a> {
 }
 
 impl<'a> InputEventTrait<'a> for TouchEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_input_event_obj_funcs(&self) -> (*const RUBase, *const RUInputEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).input_event_funcs) }
@@ -250,7 +313,7 @@ impl<'a> InputEventTrait<'a> for TouchEvent<'a> {
 }
 
 impl<'a> TouchEventTrait<'a> for TouchEvent<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_touch_event_obj_funcs(&self) -> (*const RUBase, *const RUTouchEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).touch_event_funcs) }

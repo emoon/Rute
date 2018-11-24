@@ -17,15 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::Orientations;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::size_policy_ffi::*;
 ///
 /// The size policy of a widget is an expression of its willingness to
 /// be resized in various ways, and affects how the widget is treated
@@ -77,9 +70,13 @@ use auto::size_policy_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct SizePolicy<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUSizePolicyAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -104,7 +101,8 @@ impl<'a> SizePolicy<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUSizePolicy) -> SizePolicy<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUSizePolicy) -> SizePolicy<'a> {
         SizePolicy {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -113,7 +111,8 @@ impl<'a> SizePolicy<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUSizePolicy) -> SizePolicy<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUSizePolicy) -> SizePolicy<'a> {
         SizePolicy {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -122,7 +121,8 @@ impl<'a> SizePolicy<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUSizePolicy) -> SizePolicy<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUSizePolicy) -> SizePolicy<'a> {
         SizePolicy {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -130,15 +130,13 @@ impl<'a> SizePolicy<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait SizePolicyTrait<'a> {
     ///
     /// Returns the horizontal component of the size policy.
     ///
     /// **See also:** [`set_horizontal_policy()`]
     /// [`vertical_policy()`]
     /// [`horizontal_stretch()`]
-    fn horizontal_policy(&self) -> Policy {
+    pub fn horizontal_policy(&self) -> Policy {
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).horizontal_policy)(obj_data);
@@ -152,7 +150,7 @@ pub trait SizePolicyTrait<'a> {
     /// **See also:** [`set_vertical_policy()`]
     /// [`horizontal_policy()`]
     /// [`vertical_stretch()`]
-    fn vertical_policy(&self) -> Policy {
+    pub fn vertical_policy(&self) -> Policy {
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).vertical_policy)(obj_data);
@@ -166,13 +164,14 @@ pub trait SizePolicyTrait<'a> {
     /// **See also:** [`horizontal_policy()`]
     /// [`set_vertical_policy()`]
     /// [`set_horizontal_stretch()`]
-    fn set_horizontal_policy(&self, d: Policy) {
+    pub fn set_horizontal_policy(&self, d: Policy) -> &Self {
         let enum_d_1 = d as i32;
 
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             ((*funcs).set_horizontal_policy)(obj_data, enum_d_1);
         }
+        self
     }
     ///
     /// Sets the vertical component to the given *policy.*
@@ -180,13 +179,14 @@ pub trait SizePolicyTrait<'a> {
     /// **See also:** [`vertical_policy()`]
     /// [`set_horizontal_policy()`]
     /// [`set_vertical_stretch()`]
-    fn set_vertical_policy(&self, d: Policy) {
+    pub fn set_vertical_policy(&self, d: Policy) -> &Self {
         let enum_d_1 = d as i32;
 
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             ((*funcs).set_vertical_policy)(obj_data, enum_d_1);
         }
+        self
     }
     ///
     /// Returns whether a widget can make use of more space than the
@@ -202,7 +202,7 @@ pub trait SizePolicyTrait<'a> {
     ///
     /// **See also:** [`horizontal_policy()`]
     /// [`vertical_policy()`]
-    fn expanding_directions(&self) -> Orientations {
+    pub fn expanding_directions(&self) -> Orientations {
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).expanding_directions)(obj_data);
@@ -216,18 +216,19 @@ pub trait SizePolicyTrait<'a> {
     ///
     /// **See also:** [`has_height_for_width()`]
     /// [`set_width_for_height()`]
-    fn set_height_for_width(&self, b: bool) {
+    pub fn set_height_for_width(&self, b: bool) -> &Self {
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             ((*funcs).set_height_for_width)(obj_data, b);
         }
+        self
     }
     ///
     /// Returns `true` if the widget's preferred height depends on its
     /// width; otherwise returns `false.`
     ///
     /// **See also:** [`set_height_for_width()`]
-    fn has_height_for_width(&self) -> bool {
+    pub fn has_height_for_width(&self) -> bool {
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).has_height_for_width)(obj_data);
@@ -244,18 +245,19 @@ pub trait SizePolicyTrait<'a> {
     ///
     /// **See also:** [`has_width_for_height()`]
     /// [`set_height_for_width()`]
-    fn set_width_for_height(&self, b: bool) {
+    pub fn set_width_for_height(&self, b: bool) -> &Self {
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             ((*funcs).set_width_for_height)(obj_data, b);
         }
+        self
     }
     ///
     /// Returns `true` if the widget's width depends on its
     /// height; otherwise returns `false.`
     ///
     /// **See also:** [`set_width_for_height()`]
-    fn has_width_for_height(&self) -> bool {
+    pub fn has_width_for_height(&self) -> bool {
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).has_width_for_height)(obj_data);
@@ -267,7 +269,7 @@ pub trait SizePolicyTrait<'a> {
     /// This is `false` by default.
     ///
     /// **See also:** [`set_retain_size_when_hidden()`]
-    fn retain_size_when_hidden(&self) -> bool {
+    pub fn retain_size_when_hidden(&self) -> bool {
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).retain_size_when_hidden)(obj_data);
@@ -279,19 +281,22 @@ pub trait SizePolicyTrait<'a> {
     /// If *retainSize* is `true,` the layout will not be changed by hiding the widget.
     ///
     /// **See also:** [`retain_size_when_hidden()`]
-    fn set_retain_size_when_hidden(&self, retain_size: bool) {
+    pub fn set_retain_size_when_hidden(&self, retain_size: bool) -> &Self {
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             ((*funcs).set_retain_size_when_hidden)(obj_data, retain_size);
         }
+        self
     }
-
+}
+pub trait SizePolicyTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_size_policy_obj_funcs(&self) -> (*const RUBase, *const RUSizePolicyFuncs);
 }
 
 impl<'a> SizePolicyTrait<'a> for SizePolicy<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_size_policy_obj_funcs(&self) -> (*const RUBase, *const RUSizePolicyFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).size_policy_funcs) }

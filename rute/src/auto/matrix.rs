@@ -17,67 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::line::Line;
-#[allow(unused_imports)]
-use auto::line::LineTrait;
-#[allow(unused_imports)]
-use auto::line_f::LineF;
-#[allow(unused_imports)]
-use auto::line_f::LineFTrait;
-#[allow(unused_imports)]
-use auto::line_f_ffi::*;
-#[allow(unused_imports)]
-use auto::line_ffi::*;
-#[allow(unused_imports)]
-use auto::matrix_ffi::*;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point::PointTrait;
-#[allow(unused_imports)]
-use auto::point_f::PointF;
-#[allow(unused_imports)]
-use auto::point_f::PointFTrait;
-#[allow(unused_imports)]
-use auto::point_f_ffi::*;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::polygon::Polygon;
-#[allow(unused_imports)]
-use auto::polygon::PolygonTrait;
-#[allow(unused_imports)]
-use auto::polygon_f::PolygonF;
-#[allow(unused_imports)]
-use auto::polygon_f::PolygonFTrait;
-#[allow(unused_imports)]
-use auto::polygon_f_ffi::*;
-#[allow(unused_imports)]
-use auto::polygon_ffi::*;
-#[allow(unused_imports)]
-use auto::rect::Rect;
-#[allow(unused_imports)]
-use auto::rect::RectTrait;
-#[allow(unused_imports)]
-use auto::rect_f::RectF;
-#[allow(unused_imports)]
-use auto::rect_f::RectFTrait;
-#[allow(unused_imports)]
-use auto::rect_f_ffi::*;
-#[allow(unused_imports)]
-use auto::rect_ffi::*;
-#[allow(unused_imports)]
-use auto::region::Region;
-#[allow(unused_imports)]
-use auto::region::RegionTrait;
-#[allow(unused_imports)]
-use auto::region_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// A matrix specifies how to translate, scale, shear or rotate the
 /// coordinate system, and is typically used when rendering graphics.
@@ -192,9 +133,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Matrix<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUMatrixAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -219,7 +164,8 @@ impl<'a> Matrix<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUMatrix) -> Matrix<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUMatrix) -> Matrix<'a> {
         Matrix {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -228,7 +174,8 @@ impl<'a> Matrix<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUMatrix) -> Matrix<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUMatrix) -> Matrix<'a> {
         Matrix {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -237,7 +184,8 @@ impl<'a> Matrix<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUMatrix) -> Matrix<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUMatrix) -> Matrix<'a> {
         Matrix {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -245,15 +193,13 @@ impl<'a> Matrix<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait MatrixTrait<'a> {
     ///
     /// Returns the horizontal scaling factor.
     ///
     /// **See also:** [`scale()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m11(&self) -> f32 {
+    pub fn m11(&self) -> f32 {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m11)(obj_data);
@@ -266,7 +212,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`shear()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m12(&self) -> f32 {
+    pub fn m12(&self) -> f32 {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m12)(obj_data);
@@ -279,7 +225,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`shear()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m21(&self) -> f32 {
+    pub fn m21(&self) -> f32 {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m21)(obj_data);
@@ -292,7 +238,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`scale()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn m22(&self) -> f32 {
+    pub fn m22(&self) -> f32 {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).m22)(obj_data);
@@ -305,7 +251,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`translate()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn dx(&self) -> f32 {
+    pub fn dx(&self) -> f32 {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dx)(obj_data);
@@ -318,7 +264,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`translate()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn dy(&self) -> f32 {
+    pub fn dy(&self) -> f32 {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dy)(obj_data);
@@ -524,7 +470,7 @@ pub trait MatrixTrait<'a> {
     /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
     /// matrix. Note that the transformed coordinates are rounded to the
     /// nearest integer.
-    fn map_rect(&self, arg0: &RectTrait) -> Rect {
+    pub fn map_rect<R: RectTrait<'a>>(&self, arg0: &R) -> Rect {
         let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
@@ -559,7 +505,7 @@ pub trait MatrixTrait<'a> {
     /// Creates and returns a QRect object that is a copy of the given *rectangle,* mapped into the coordinate system defined by this
     /// matrix. Note that the transformed coordinates are rounded to the
     /// nearest integer.
-    fn map_rect_2(&self, arg0: &RectFTrait) -> RectF {
+    pub fn map_rect_2<R: RectFTrait<'a>>(&self, arg0: &R) -> RectF {
         let (obj_arg0_1, _funcs) = arg0.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
@@ -665,7 +611,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`map_rect()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn map_3(&self, p: &PointTrait) -> Point {
+    pub fn map_3<P: PointTrait<'a>>(&self, p: &P) -> Point {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
@@ -771,7 +717,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`map_rect()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn map_4(&self, p: &PointFTrait) -> PointF {
+    pub fn map_4<P: PointFTrait<'a>>(&self, p: &P) -> PointF {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
@@ -877,7 +823,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`map_rect()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn map_5(&self, l: &LineTrait) -> Line {
+    pub fn map_5<L: LineTrait<'a>>(&self, l: &L) -> Line {
         let (obj_l_1, _funcs) = l.get_line_obj_funcs();
 
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
@@ -983,7 +929,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`map_rect()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn map_6(&self, l: &LineFTrait) -> LineF {
+    pub fn map_6<L: LineFTrait<'a>>(&self, l: &L) -> LineF {
         let (obj_l_1, _funcs) = l.get_line_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
@@ -1089,7 +1035,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`map_rect()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn map_7(&self, a: &PolygonFTrait) -> PolygonF {
+    pub fn map_7<P: PolygonFTrait<'a>>(&self, a: &P) -> PolygonF {
         let (obj_a_1, _funcs) = a.get_polygon_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
@@ -1195,7 +1141,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`map_rect()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn map_8(&self, a: &PolygonTrait) -> Polygon {
+    pub fn map_8<P: PolygonTrait<'a>>(&self, a: &P) -> Polygon {
         let (obj_a_1, _funcs) = a.get_polygon_obj_funcs();
 
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
@@ -1301,7 +1247,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`map_rect()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn map_9(&self, r: &RegionTrait) -> Region {
+    pub fn map_9<R: RegionTrait<'a>>(&self, r: &R) -> Region {
         let (obj_r_1, _funcs) = r.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
@@ -1422,7 +1368,7 @@ pub trait MatrixTrait<'a> {
     /// **See also:** [`map_rect()`]
     /// {QMatrix#Basic Matrix Operations}{Basic Matrix
     /// Operations}
-    fn map_to_polygon(&self, r: &RectTrait) -> Polygon {
+    pub fn map_to_polygon<R: RectTrait<'a>>(&self, r: &R) -> Polygon {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
@@ -1447,18 +1393,19 @@ pub trait MatrixTrait<'a> {
     /// [`is_identity()`]
     /// {QMatrix#Basic Matrix
     /// Operations}{Basic Matrix Operations}
-    fn reset(&self) {
+    pub fn reset(&self) -> &Self {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             ((*funcs).reset)(obj_data);
         }
+        self
     }
     ///
     /// Returns `true` if the matrix is the identity matrix, otherwise
     /// returns `false.`
     ///
     /// **See also:** [`reset()`]
-    fn is_identity(&self) -> bool {
+    pub fn is_identity(&self) -> bool {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_identity)(obj_data);
@@ -1470,7 +1417,7 @@ pub trait MatrixTrait<'a> {
     /// vertically, and returns a reference to the matrix.
     ///
     /// **See also:** [`set_matrix()`]
-    fn scale(&self, sx: f32, sy: f32) -> Option<Matrix> {
+    pub fn scale(&self, sx: f32, sy: f32) -> Option<Matrix> {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).scale)(obj_data, sx, sy);
@@ -1492,7 +1439,7 @@ pub trait MatrixTrait<'a> {
     /// vertically, and returns a reference to the matrix.
     ///
     /// **See also:** [`set_matrix()`]
-    fn shear(&self, sh: f32, sv: f32) -> Option<Matrix> {
+    pub fn shear(&self, sh: f32, sv: f32) -> Option<Matrix> {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).shear)(obj_data, sh, sv);
@@ -1520,7 +1467,7 @@ pub trait MatrixTrait<'a> {
     /// Returns a reference to the matrix.
     ///
     /// **See also:** [`set_matrix()`]
-    fn rotate(&self, a: f32) -> Option<Matrix> {
+    pub fn rotate(&self, a: f32) -> Option<Matrix> {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).rotate)(obj_data, a);
@@ -1541,7 +1488,7 @@ pub trait MatrixTrait<'a> {
     /// Returns `true` if the matrix is invertible, otherwise returns `false.`
     ///
     /// **See also:** [`inverted()`]
-    fn is_invertible(&self) -> bool {
+    pub fn is_invertible(&self) -> bool {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_invertible)(obj_data);
@@ -1550,20 +1497,22 @@ pub trait MatrixTrait<'a> {
     }
     ///
     /// Returns the matrix's determinant.
-    fn determinant(&self) -> f32 {
+    pub fn determinant(&self) -> f32 {
         let (obj_data, funcs) = self.get_matrix_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).determinant)(obj_data);
             ret_val
         }
     }
-
+}
+pub trait MatrixTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_matrix_obj_funcs(&self) -> (*const RUBase, *const RUMatrixFuncs);
 }
 
 impl<'a> MatrixTrait<'a> for Matrix<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_matrix_obj_funcs(&self) -> (*const RUBase, *const RUMatrixFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).matrix_funcs) }

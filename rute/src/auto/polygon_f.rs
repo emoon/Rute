@@ -17,25 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::point_f::PointF;
-#[allow(unused_imports)]
-use auto::point_f::PointFTrait;
-#[allow(unused_imports)]
-use auto::point_f_ffi::*;
-#[allow(unused_imports)]
-use auto::polygon::Polygon;
-#[allow(unused_imports)]
-use auto::polygon_f_ffi::*;
-#[allow(unused_imports)]
-use auto::rect_f::RectF;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::FillRule;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// A QPolygonF is a QVector<QPointF>. The easiest way to add points
 /// to a QPolygonF is to use its streaming operator, as illustrated
@@ -63,9 +46,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct PolygonF<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUPolygonFAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -90,7 +77,8 @@ impl<'a> PolygonF<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUPolygonF) -> PolygonF<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUPolygonF) -> PolygonF<'a> {
         PolygonF {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -99,7 +87,8 @@ impl<'a> PolygonF<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUPolygonF) -> PolygonF<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUPolygonF) -> PolygonF<'a> {
         PolygonF {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -108,7 +97,8 @@ impl<'a> PolygonF<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUPolygonF) -> PolygonF<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUPolygonF) -> PolygonF<'a> {
         PolygonF {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -116,25 +106,24 @@ impl<'a> PolygonF<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait PolygonFTrait<'a> {
     ///
     /// Swaps polygon *other* with this polygon. This operation is very
     /// fast and never fails.
-    fn swap(&self, other: &PolygonFTrait) {
+    pub fn swap<P: PolygonFTrait<'a>>(&self, other: &P) -> &Self {
         let (obj_other_1, _funcs) = other.get_polygon_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_polygon_f_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
+        self
     }
     ///
     /// Creates and returns a QPolygon by converting each QPointF to a
     /// QPoint.
     ///
     /// **See also:** QPointF::toPoint()
-    fn to_polygon(&self) -> Polygon {
+    pub fn to_polygon(&self) -> Polygon {
         let (obj_data, funcs) = self.get_polygon_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).to_polygon)(obj_data);
@@ -155,7 +144,7 @@ pub trait PolygonFTrait<'a> {
     ///
     /// **See also:** QVector::first()
     /// QVector::last()
-    fn is_closed(&self) -> bool {
+    pub fn is_closed(&self) -> bool {
         let (obj_data, funcs) = self.get_polygon_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_closed)(obj_data);
@@ -167,7 +156,7 @@ pub trait PolygonFTrait<'a> {
     /// if the polygon is empty.
     ///
     /// **See also:** QVector::isEmpty()
-    fn bounding_rect(&self) -> RectF {
+    pub fn bounding_rect(&self) -> RectF {
         let (obj_data, funcs) = self.get_polygon_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bounding_rect)(obj_data);
@@ -184,7 +173,7 @@ pub trait PolygonFTrait<'a> {
     ///
     /// Returns `true` if the given *point* is inside the polygon according to
     /// the specified *fillRule;* otherwise returns `false.`
-    fn contains_point(&self, pt: &PointFTrait, fill_rule: FillRule) -> bool {
+    pub fn contains_point<P: PointFTrait<'a>>(&self, pt: &P, fill_rule: FillRule) -> bool {
         let (obj_pt_1, _funcs) = pt.get_point_f_obj_funcs();
         let enum_fill_rule_2 = fill_rule as i32;
 
@@ -202,7 +191,7 @@ pub trait PolygonFTrait<'a> {
     ///
     /// **See also:** intersected()
     /// subtracted()
-    fn united(&self, r: &PolygonFTrait) -> PolygonF {
+    pub fn united<P: PolygonFTrait<'a>>(&self, r: &P) -> PolygonF {
         let (obj_r_1, _funcs) = r.get_polygon_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_polygon_f_obj_funcs();
@@ -225,7 +214,7 @@ pub trait PolygonFTrait<'a> {
     /// areas. Non-closed polygons will be treated as implicitly closed.
     ///
     /// **See also:** intersects()
-    fn intersected(&self, r: &PolygonFTrait) -> PolygonF {
+    pub fn intersected<P: PolygonFTrait<'a>>(&self, r: &P) -> PolygonF {
         let (obj_r_1, _funcs) = r.get_polygon_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_polygon_f_obj_funcs();
@@ -249,7 +238,7 @@ pub trait PolygonFTrait<'a> {
     /// areas. Non-closed polygons will be treated as implicitly closed.
     ///
     /// **See also:** intersected()
-    fn intersects(&self, r: &PolygonFTrait) -> bool {
+    pub fn intersects<P: PolygonFTrait<'a>>(&self, r: &P) -> bool {
         let (obj_r_1, _funcs) = r.get_polygon_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_polygon_f_obj_funcs();
@@ -258,13 +247,15 @@ pub trait PolygonFTrait<'a> {
             ret_val
         }
     }
-
+}
+pub trait PolygonFTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_polygon_f_obj_funcs(&self) -> (*const RUBase, *const RUPolygonFFuncs);
 }
 
 impl<'a> PolygonFTrait<'a> for PolygonF<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_polygon_f_obj_funcs(&self) -> (*const RUBase, *const RUPolygonFFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).polygon_f_funcs) }

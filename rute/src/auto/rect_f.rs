@@ -17,27 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::point_f::PointF;
-#[allow(unused_imports)]
-use auto::point_f::PointFTrait;
-#[allow(unused_imports)]
-use auto::point_f_ffi::*;
-#[allow(unused_imports)]
-use auto::rect::Rect;
-#[allow(unused_imports)]
-use auto::rect_f_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::size_f::SizeF;
-#[allow(unused_imports)]
-use auto::size_f::SizeFTrait;
-#[allow(unused_imports)]
-use auto::size_f_ffi::*;
 ///
 /// A rectangle is normally expressed as a top-left corner and a
 /// size. The size (width and height) of a QRectF is always equivalent
@@ -168,9 +149,13 @@ use auto::size_f_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct RectF<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RURectFAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -195,7 +180,8 @@ impl<'a> RectF<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RURectF) -> RectF<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RURectF) -> RectF<'a> {
         RectF {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -204,7 +190,8 @@ impl<'a> RectF<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RURectF) -> RectF<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RURectF) -> RectF<'a> {
         RectF {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -213,7 +200,8 @@ impl<'a> RectF<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RURectF) -> RectF<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RURectF) -> RectF<'a> {
         RectF {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -221,8 +209,6 @@ impl<'a> RectF<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait RectFTrait<'a> {
     ///
     /// Returns `true` if the rectangle is a null rectangle, otherwise returns `false.`
     ///
@@ -231,7 +217,7 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`is_empty()`]
     /// [`is_valid()`]
-    fn is_null(&self) -> bool {
+    pub fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_null)(obj_data);
@@ -250,7 +236,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`is_null()`]
     /// [`is_valid()`]
     /// [`normalized()`]
-    fn is_empty(&self) -> bool {
+    pub fn is_empty(&self) -> bool {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_empty)(obj_data);
@@ -268,7 +254,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`is_null()`]
     /// [`is_empty()`]
     /// [`normalized()`]
-    fn is_valid(&self) -> bool {
+    pub fn is_valid(&self) -> bool {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_valid)(obj_data);
@@ -284,7 +270,7 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`is_valid()`]
     /// [`is_empty()`]
-    fn normalized(&self) -> RectF {
+    pub fn normalized(&self) -> RectF {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).normalized)(obj_data);
@@ -305,7 +291,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_left()`]
     /// [`top_left()`]
     /// [`bottom_left()`]
-    fn left(&self) -> f32 {
+    pub fn left(&self) -> f32 {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).left)(obj_data);
@@ -331,7 +317,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_top_right()`]
     /// [`top()`]
     /// [`right()`]
-    fn top(&self) -> f32 {
+    pub fn top(&self) -> f32 {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).top)(obj_data);
@@ -344,7 +330,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_right()`]
     /// [`top_right()`]
     /// [`bottom_right()`]
-    fn right(&self) -> f32 {
+    pub fn right(&self) -> f32 {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).right)(obj_data);
@@ -369,7 +355,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_bottom_left()`]
     /// [`bottom()`]
     /// [`left()`]
-    fn bottom(&self) -> f32 {
+    pub fn bottom(&self) -> f32 {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bottom)(obj_data);
@@ -383,7 +369,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_x()`]
     /// [`y()`]
     /// [`top_left()`]
-    fn x(&self) -> f32 {
+    pub fn x(&self) -> f32 {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).x)(obj_data);
@@ -397,7 +383,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_y()`]
     /// [`x()`]
     /// [`top_left()`]
-    fn y(&self) -> f32 {
+    pub fn y(&self) -> f32 {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).y)(obj_data);
@@ -413,11 +399,12 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`left()`]
     /// [`move_left()`]
-    fn set_left(&self, pos: f32) {
+    pub fn set_left(&self, pos: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_left)(obj_data, pos);
         }
+        self
     }
     ///
     /// Sets the top edge of the rectangle to the given *y* coordinate. May
@@ -440,11 +427,12 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`top_right()`]
     /// [`move_top_right()`]
-    fn set_top(&self, pos: f32) {
+    pub fn set_top(&self, pos: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_top)(obj_data, pos);
         }
+        self
     }
     ///
     /// Sets the right edge of the rectangle to the given *x*
@@ -453,11 +441,12 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`right()`]
     /// [`move_right()`]
-    fn set_right(&self, pos: f32) {
+    pub fn set_right(&self, pos: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_right)(obj_data, pos);
         }
+        self
     }
     ///
     /// Sets the bottom edge of the rectangle to the given *y*
@@ -478,11 +467,12 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`bottom_left()`]
     /// [`move_bottom_left()`]
-    fn set_bottom(&self, pos: f32) {
+    pub fn set_bottom(&self, pos: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_bottom)(obj_data, pos);
         }
+        self
     }
     ///
     /// Sets the left edge of the rectangle to the given *x*
@@ -494,11 +484,12 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`x()`]
     /// [`set_y()`]
     /// [`set_top_left()`]
-    fn set_x(&self, pos: f32) {
+    pub fn set_x(&self, pos: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_x)(obj_data, pos);
         }
+        self
     }
     ///
     /// Sets the top edge of the rectangle to the given *y*
@@ -510,11 +501,12 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`y()`]
     /// [`set_x()`]
     /// [`set_top_left()`]
-    fn set_y(&self, pos: f32) {
+    pub fn set_y(&self, pos: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_y)(obj_data, pos);
         }
+        self
     }
     ///
     /// Returns the position of the rectangle's top-left corner.
@@ -522,7 +514,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_top_left()`]
     /// [`top()`]
     /// [`left()`]
-    fn top_left(&self) -> PointF {
+    pub fn top_left(&self) -> PointF {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).top_left)(obj_data);
@@ -542,7 +534,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_bottom_right()`]
     /// [`bottom()`]
     /// [`right()`]
-    fn bottom_right(&self) -> PointF {
+    pub fn bottom_right(&self) -> PointF {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bottom_right)(obj_data);
@@ -562,7 +554,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_top_right()`]
     /// [`top()`]
     /// [`right()`]
-    fn top_right(&self) -> PointF {
+    pub fn top_right(&self) -> PointF {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).top_right)(obj_data);
@@ -582,7 +574,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_bottom_left()`]
     /// [`bottom()`]
     /// [`left()`]
-    fn bottom_left(&self) -> PointF {
+    pub fn bottom_left(&self) -> PointF {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bottom_left)(obj_data);
@@ -600,7 +592,7 @@ pub trait RectFTrait<'a> {
     /// Returns the center point of the rectangle.
     ///
     /// **See also:** [`move_center()`]
-    fn center(&self) -> PointF {
+    pub fn center(&self) -> PointF {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).center)(obj_data);
@@ -620,13 +612,14 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`top_left()`]
     /// [`move_top_left()`]
-    fn set_top_left(&self, p: &PointFTrait) {
+    pub fn set_top_left<P: PointFTrait<'a>>(&self, p: &P) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_top_left)(obj_data, obj_p_1);
         }
+        self
     }
     ///
     /// Set the bottom-right corner of the rectangle to the given *position.* May change the size, but will never change the
@@ -634,13 +627,14 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`bottom_right()`]
     /// [`move_bottom_right()`]
-    fn set_bottom_right(&self, p: &PointFTrait) {
+    pub fn set_bottom_right<P: PointFTrait<'a>>(&self, p: &P) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_bottom_right)(obj_data, obj_p_1);
         }
+        self
     }
     ///
     /// Set the top-right corner of the rectangle to the given *position.* May change the size, but will never change the
@@ -648,13 +642,14 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`top_right()`]
     /// [`move_top_right()`]
-    fn set_top_right(&self, p: &PointFTrait) {
+    pub fn set_top_right<P: PointFTrait<'a>>(&self, p: &P) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_top_right)(obj_data, obj_p_1);
         }
+        self
     }
     ///
     /// Set the bottom-left corner of the rectangle to the given *position.* May change the size, but will never change the
@@ -662,13 +657,14 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`bottom_left()`]
     /// [`move_bottom_left()`]
-    fn set_bottom_left(&self, p: &PointFTrait) {
+    pub fn set_bottom_left<P: PointFTrait<'a>>(&self, p: &P) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_bottom_left)(obj_data, obj_p_1);
         }
+        self
     }
     ///
     /// Moves the rectangle horizontally, leaving the rectangle's left
@@ -678,11 +674,12 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`left()`]
     /// [`set_left()`]
     /// [`move_right()`]
-    fn move_left(&self, pos: f32) {
+    pub fn move_left(&self, pos: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).move_left)(obj_data, pos);
         }
+        self
     }
     ///
     /// Moves the rectangle vertically, leaving the rectangle's top line
@@ -704,11 +701,12 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_top_right()`]
     /// [`move_top()`]
     /// [`move_right()`]
-    fn move_top(&self, pos: f32) {
+    pub fn move_top(&self, pos: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).move_top)(obj_data, pos);
         }
+        self
     }
     ///
     /// Moves the rectangle horizontally, leaving the rectangle's right
@@ -718,11 +716,12 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`right()`]
     /// [`set_right()`]
     /// [`move_left()`]
-    fn move_right(&self, pos: f32) {
+    pub fn move_right(&self, pos: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).move_right)(obj_data, pos);
         }
+        self
     }
     ///
     /// Moves the rectangle vertically, leaving the rectangle's bottom
@@ -746,11 +745,12 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_bottom_left()`]
     /// [`move_bottom()`]
     /// [`move_left()`]
-    fn move_bottom(&self, pos: f32) {
+    pub fn move_bottom(&self, pos: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).move_bottom)(obj_data, pos);
         }
+        self
     }
     ///
     /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
@@ -758,13 +758,14 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_top_left()`]
     /// [`move_top()`]
     /// [`move_left()`]
-    fn move_top_left(&self, p: &PointFTrait) {
+    pub fn move_top_left<P: PointFTrait<'a>>(&self, p: &P) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).move_top_left)(obj_data, obj_p_1);
         }
+        self
     }
     ///
     /// Moves the rectangle, leaving the bottom-right corner at the given
@@ -773,13 +774,14 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_bottom_right()`]
     /// [`move_bottom()`]
     /// [`move_right()`]
-    fn move_bottom_right(&self, p: &PointFTrait) {
+    pub fn move_bottom_right<P: PointFTrait<'a>>(&self, p: &P) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).move_bottom_right)(obj_data, obj_p_1);
         }
+        self
     }
     ///
     /// Moves the rectangle, leaving the top-right corner at the given
@@ -788,13 +790,14 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_top_right()`]
     /// [`move_top()`]
     /// [`move_right()`]
-    fn move_top_right(&self, p: &PointFTrait) {
+    pub fn move_top_right<P: PointFTrait<'a>>(&self, p: &P) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).move_top_right)(obj_data, obj_p_1);
         }
+        self
     }
     ///
     /// Moves the rectangle, leaving the bottom-left corner at the given
@@ -803,25 +806,27 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_bottom_left()`]
     /// [`move_bottom()`]
     /// [`move_left()`]
-    fn move_bottom_left(&self, p: &PointFTrait) {
+    pub fn move_bottom_left<P: PointFTrait<'a>>(&self, p: &P) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).move_bottom_left)(obj_data, obj_p_1);
         }
+        self
     }
     ///
     /// Moves the rectangle, leaving the center point at the given *position.* The rectangle's size is unchanged.
     ///
     /// **See also:** [`center()`]
-    fn move_center(&self, p: &PointFTrait) {
+    pub fn move_center<P: PointFTrait<'a>>(&self, p: &P) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).move_center)(obj_data, obj_p_1);
         }
+        self
     }
     ///
     /// Moves the rectangle vertically, leaving the rectangle's top line
@@ -852,11 +857,12 @@ pub trait RectFTrait<'a> {
     ///
     /// **Overloads**
     /// Moves the rectangle, leaving the top-left corner at the given *position.*
-    fn move_to(&self, x: f32, y: f32) {
+    pub fn move_to(&self, x: f32, y: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).move_to)(obj_data, x, y);
         }
+        self
     }
     ///
     /// Moves the rectangle vertically, leaving the rectangle's top line
@@ -887,13 +893,14 @@ pub trait RectFTrait<'a> {
     ///
     /// **Overloads**
     /// Moves the rectangle, leaving the top-left corner at the given *position.*
-    fn move_to_2(&self, p: &PointFTrait) {
+    pub fn move_to_2<P: PointFTrait<'a>>(&self, p: &P) -> &Self {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).move_to_2)(obj_data, obj_p_1);
         }
+        self
     }
     ///
     /// Sets the coordinates of the rectangle's top-left corner to ( *x,*
@@ -901,11 +908,12 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`get_rect()`]
     /// [`set_coords()`]
-    fn set_rect(&self, x: f32, y: f32, w: f32, h: f32) {
+    pub fn set_rect(&self, x: f32, y: f32, w: f32, h: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_rect)(obj_data, x, y, w, h);
         }
+        self
     }
     ///
     /// Sets the coordinates of the rectangle's top-left corner to ( *x1,*
@@ -914,11 +922,12 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`get_coords()`]
     /// [`set_rect()`]
-    fn set_coords(&self, x1: f32, y1: f32, x2: f32, y2: f32) {
+    pub fn set_coords(&self, x1: f32, y1: f32, x2: f32, y2: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_coords)(obj_data, x1, y1, x2, y2);
         }
+        self
     }
     ///
     /// Returns a new rectangle with *dx1,* *dy1,* *dx2* and *dy2*
@@ -931,18 +940,19 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`adjusted()`]
     /// [`set_rect()`]
-    fn adjust(&self, x1: f32, y1: f32, x2: f32, y2: f32) {
+    pub fn adjust(&self, x1: f32, y1: f32, x2: f32, y2: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).adjust)(obj_data, x1, y1, x2, y2);
         }
+        self
     }
     ///
     /// Returns a new rectangle with *dx1,* *dy1,* *dx2* and *dy2*
     /// added respectively to the existing coordinates of this rectangle.
     ///
     /// **See also:** [`adjust()`]
-    fn adjusted(&self, x1: f32, y1: f32, x2: f32, y2: f32) -> RectF {
+    pub fn adjusted(&self, x1: f32, y1: f32, x2: f32, y2: f32) -> RectF {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).adjusted)(obj_data, x1, y1, x2, y2);
@@ -962,7 +972,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_size()`]
     /// [`width()`]
     /// [`height()`]
-    fn size(&self) -> SizeF {
+    pub fn size(&self) -> SizeF {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).size)(obj_data);
@@ -982,7 +992,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_width()`]
     /// [`height()`]
     /// [`size()`]
-    fn width(&self) -> f32 {
+    pub fn width(&self) -> f32 {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).width)(obj_data);
@@ -995,7 +1005,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`set_height()`]
     /// [`width()`]
     /// [`size()`]
-    fn height(&self) -> f32 {
+    pub fn height(&self) -> f32 {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).height)(obj_data);
@@ -1008,11 +1018,12 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`width()`]
     /// [`set_size()`]
-    fn set_width(&self, w: f32) {
+    pub fn set_width(&self, w: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_width)(obj_data, w);
         }
+        self
     }
     ///
     /// Sets the height of the rectangle to the given *height.* The bottom
@@ -1020,11 +1031,12 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`height()`]
     /// [`set_size()`]
-    fn set_height(&self, h: f32) {
+    pub fn set_height(&self, h: f32) -> &Self {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_height)(obj_data, h);
         }
+        self
     }
     ///
     /// Sets the size of the rectangle to the given *size.* The top-left
@@ -1033,13 +1045,14 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`size()`]
     /// [`set_width()`]
     /// [`set_height()`]
-    fn set_size(&self, s: &SizeFTrait) {
+    pub fn set_size<S: SizeFTrait<'a>>(&self, s: &S) -> &Self {
         let (obj_s_1, _funcs) = s.get_size_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             ((*funcs).set_size)(obj_data, obj_s_1);
         }
+        self
     }
     ///
     /// Returns `true` if the given *point* is inside or on the edge of the
@@ -1054,7 +1067,7 @@ pub trait RectFTrait<'a> {
     /// **Overloads**
     /// Returns `true` if the given *rectangle* is inside this rectangle;
     /// otherwise returns `false.`
-    fn contains(&self, r: &RectFTrait) -> bool {
+    pub fn contains<R: RectFTrait<'a>>(&self, r: &R) -> bool {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
@@ -1076,7 +1089,7 @@ pub trait RectFTrait<'a> {
     /// **Overloads**
     /// Returns `true` if the given *rectangle* is inside this rectangle;
     /// otherwise returns `false.`
-    fn contains_2(&self, p: &PointFTrait) -> bool {
+    pub fn contains_2<P: PointFTrait<'a>>(&self, p: &P) -> bool {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
@@ -1098,7 +1111,7 @@ pub trait RectFTrait<'a> {
     /// **Overloads**
     /// Returns `true` if the given *rectangle* is inside this rectangle;
     /// otherwise returns `false.`
-    fn contains_3(&self, x: f32, y: f32) -> bool {
+    pub fn contains_3(&self, x: f32, y: f32) -> bool {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).contains_3)(obj_data, x, y);
@@ -1111,7 +1124,7 @@ pub trait RectFTrait<'a> {
     /// ![qrect-unite.png](qrect-unite.png)
     ///
     /// **See also:** [`intersected()`]
-    fn united(&self, other: &RectFTrait) -> RectF {
+    pub fn united<R: RectFTrait<'a>>(&self, other: &R) -> RectF {
         let (obj_other_1, _funcs) = other.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
@@ -1135,7 +1148,7 @@ pub trait RectFTrait<'a> {
     /// **See also:** [`intersects()`]
     /// [`united()`]
     /// [`operator()`]
-    fn intersected(&self, other: &RectFTrait) -> RectF {
+    pub fn intersected<R: RectFTrait<'a>>(&self, other: &R) -> RectF {
         let (obj_other_1, _funcs) = other.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
@@ -1159,7 +1172,7 @@ pub trait RectFTrait<'a> {
     /// function.
     ///
     /// **See also:** [`contains()`]
-    fn intersects(&self, r: &RectFTrait) -> bool {
+    pub fn intersects<R: RectFTrait<'a>>(&self, r: &R) -> bool {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
@@ -1185,7 +1198,7 @@ pub trait RectFTrait<'a> {
     ///
     /// **See also:** [`q_rect_f()`]
     /// [`to_aligned_rect()`]
-    fn to_rect(&self) -> Rect {
+    pub fn to_rect(&self) -> Rect {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).to_rect)(obj_data);
@@ -1205,7 +1218,7 @@ pub trait RectFTrait<'a> {
     /// rectangle.
     ///
     /// **See also:** [`to_rect()`]
-    fn to_aligned_rect(&self) -> Rect {
+    pub fn to_aligned_rect(&self) -> Rect {
         let (obj_data, funcs) = self.get_rect_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).to_aligned_rect)(obj_data);
@@ -1219,13 +1232,15 @@ pub trait RectFTrait<'a> {
             ret_val
         }
     }
-
+}
+pub trait RectFTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_rect_f_obj_funcs(&self) -> (*const RUBase, *const RURectFFuncs);
 }
 
 impl<'a> RectFTrait<'a> for RectF<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_rect_f_obj_funcs(&self) -> (*const RUBase, *const RURectFFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).rect_f_funcs) }

@@ -17,13 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::color_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// A color is normally specified in terms of RGB (red, green, and
 /// blue) components, but it is also possible to specify it in terms
@@ -213,9 +208,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Color<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUColorAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -240,7 +239,8 @@ impl<'a> Color<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUColor) -> Color<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUColor) -> Color<'a> {
         Color {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -249,7 +249,8 @@ impl<'a> Color<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUColor) -> Color<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUColor) -> Color<'a> {
         Color {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -258,7 +259,8 @@ impl<'a> Color<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUColor) -> Color<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUColor) -> Color<'a> {
         Color {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -266,13 +268,6 @@ impl<'a> Color<'a> {
             _marker: PhantomData,
         }
     }
-}
-
-pub struct ColorStatic<'a> {
-    pub all_funcs: *const RUColorAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait ColorTrait<'a> {
     ///
     /// Returns `true` if the color is valid; otherwise returns `false.`
     ///
@@ -287,7 +282,7 @@ pub trait ColorTrait<'a> {
     /// **Overloads**
     ///
     /// **Overloads**
-    fn is_valid(&self) -> bool {
+    pub fn is_valid(&self) -> bool {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_valid)(obj_data);
@@ -304,7 +299,7 @@ pub trait ColorTrait<'a> {
     ///
     /// **See also:** [`set_named_color()`]
     /// NameFormat
-    fn name(&self) -> String {
+    pub fn name(&self) -> String {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).name)(obj_data);
@@ -322,7 +317,7 @@ pub trait ColorTrait<'a> {
     ///
     /// **See also:** [`set_named_color()`]
     /// NameFormat
-    fn name_2(&self, format: NameFormat) -> String {
+    pub fn name_2(&self, format: NameFormat) -> String {
         let enum_format_1 = format as i32;
 
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -354,13 +349,14 @@ pub trait ColorTrait<'a> {
     /// **Overloads**
     ///
     /// **Overloads**
-    fn set_named_color(&self, name: &str) {
+    pub fn set_named_color(&self, name: &str) -> &Self {
         let str_in_name_1 = CString::new(name).unwrap();
 
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_named_color)(obj_data, str_in_name_1.as_ptr());
         }
+        self
     }
     ///
     /// Sets the RGB value of this QColor to *name,* which may be in one
@@ -411,7 +407,7 @@ pub trait ColorTrait<'a> {
     ///
     /// **See also:** Spec
     /// [`convert_to()`]
-    fn spec(&self) -> Spec {
+    pub fn spec(&self) -> Spec {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).spec)(obj_data);
@@ -431,7 +427,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`set_alpha_f()`]
     /// [`alpha()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
-    fn alpha(&self) -> i32 {
+    pub fn alpha(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alpha)(obj_data);
@@ -453,11 +449,12 @@ pub trait ColorTrait<'a> {
     /// [`alpha()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     ///
-    fn set_alpha(&self, alpha: i32) {
+    pub fn set_alpha(&self, alpha: i32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_alpha)(obj_data, alpha);
         }
+        self
     }
     ///
     /// Returns the alpha color component of this color.
@@ -465,7 +462,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`set_alpha_f()`]
     /// [`alpha()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
-    fn alpha_f(&self) -> f32 {
+    pub fn alpha_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alpha_f)(obj_data);
@@ -480,11 +477,12 @@ pub trait ColorTrait<'a> {
     /// [`alpha()`]
     /// {QColor#Alpha-Blended Drawing}{Alpha-Blended Drawing}
     ///
-    fn set_alpha_f(&self, alpha: f32) {
+    pub fn set_alpha_f(&self, alpha: f32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_alpha_f)(obj_data, alpha);
         }
+        self
     }
     ///
     /// Returns the red color component of this color.
@@ -498,7 +496,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`set_red_f()`]
     /// [`red()`]
     /// [`get_rgb_f()`]
-    fn red(&self) -> i32 {
+    pub fn red(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).red)(obj_data);
@@ -517,7 +515,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`set_green_f()`]
     /// [`green()`]
     /// [`get_rgb_f()`]
-    fn green(&self) -> i32 {
+    pub fn green(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).green)(obj_data);
@@ -536,7 +534,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`set_blue_f()`]
     /// [`blue()`]
     /// [`get_rgb_f()`]
-    fn blue(&self) -> i32 {
+    pub fn blue(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).blue)(obj_data);
@@ -557,11 +555,12 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`red_f()`]
     /// [`red()`]
     /// [`set_rgb_f()`]
-    fn set_red(&self, red: i32) {
+    pub fn set_red(&self, red: i32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_red)(obj_data, red);
         }
+        self
     }
     ///
     /// Sets the green color component of this color to *green.* Integer
@@ -577,11 +576,12 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`green_f()`]
     /// [`green()`]
     /// [`set_rgb_f()`]
-    fn set_green(&self, green: i32) {
+    pub fn set_green(&self, green: i32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_green)(obj_data, green);
         }
+        self
     }
     ///
     /// Sets the blue color component of this color to *blue.* Integer components
@@ -597,11 +597,12 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`blue_f()`]
     /// [`blue()`]
     /// [`set_rgb_f()`]
-    fn set_blue(&self, blue: i32) {
+    pub fn set_blue(&self, blue: i32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_blue)(obj_data, blue);
         }
+        self
     }
     ///
     /// Returns the red color component of this color.
@@ -609,7 +610,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`set_red_f()`]
     /// [`red()`]
     /// [`get_rgb_f()`]
-    fn red_f(&self) -> f32 {
+    pub fn red_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).red_f)(obj_data);
@@ -622,7 +623,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`set_green_f()`]
     /// [`green()`]
     /// [`get_rgb_f()`]
-    fn green_f(&self) -> f32 {
+    pub fn green_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).green_f)(obj_data);
@@ -635,7 +636,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`set_blue_f()`]
     /// [`blue()`]
     /// [`get_rgb_f()`]
-    fn blue_f(&self) -> f32 {
+    pub fn blue_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).blue_f)(obj_data);
@@ -649,11 +650,12 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`red_f()`]
     /// [`red()`]
     /// [`set_rgb_f()`]
-    fn set_red_f(&self, red: f32) {
+    pub fn set_red_f(&self, red: f32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_red_f)(obj_data, red);
         }
+        self
     }
     ///
     /// Sets the green color component of this color to *green.* Float components
@@ -662,11 +664,12 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`green_f()`]
     /// [`green()`]
     /// [`set_rgb_f()`]
-    fn set_green_f(&self, green: f32) {
+    pub fn set_green_f(&self, green: f32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_green_f)(obj_data, green);
         }
+        self
     }
     ///
     /// Sets the blue color component of this color to *blue.* Float components
@@ -675,11 +678,12 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`blue_f()`]
     /// [`blue()`]
     /// [`set_rgb_f()`]
-    fn set_blue_f(&self, blue: f32) {
+    pub fn set_blue_f(&self, blue: f32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_blue_f)(obj_data, blue);
         }
+        self
     }
     ///
     /// Sets the contents pointed to by *r,* *g,* *b,* and *a,* to the red,
@@ -732,11 +736,12 @@ pub trait ColorTrait<'a> {
     ///
     /// **Overloads**
     /// Sets the RGB value to *rgb.* The alpha value is set to opaque.
-    fn set_rgb(&self, r: i32, g: i32, b: i32, a: i32) {
+    pub fn set_rgb(&self, r: i32, g: i32, b: i32, a: i32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_rgb)(obj_data, r, g, b, a);
         }
+        self
     }
     ///
     /// Sets the contents pointed to by *r,* *g,* *b,* and *a,* to the red,
@@ -757,11 +762,12 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`rgb()`]
     /// [`get_rgb_f()`]
     /// [`set_rgb()`]
-    fn set_rgb_f(&self, r: f32, g: f32, b: f32, a: f32) {
+    pub fn set_rgb_f(&self, r: f32, g: f32, b: f32, a: f32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_rgb_f)(obj_data, r, g, b, a);
         }
+        self
     }
     ///
     /// Returns the RGB value of the color, including its alpha.
@@ -860,7 +866,7 @@ pub trait ColorTrait<'a> {
     /// [`hue()`]
     /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn hue(&self) -> i32 {
+    pub fn hue(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hue)(obj_data);
@@ -887,7 +893,7 @@ pub trait ColorTrait<'a> {
     /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
-    fn saturation(&self) -> i32 {
+    pub fn saturation(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).saturation)(obj_data);
@@ -907,7 +913,7 @@ pub trait ColorTrait<'a> {
     /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
-    fn hsv_hue(&self) -> i32 {
+    pub fn hsv_hue(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hsv_hue)(obj_data);
@@ -926,7 +932,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`saturation()`]
     /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn hsv_saturation(&self) -> i32 {
+    pub fn hsv_saturation(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hsv_saturation)(obj_data);
@@ -945,7 +951,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`value()`]
     /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn value(&self) -> i32 {
+    pub fn value(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).value)(obj_data);
@@ -961,7 +967,7 @@ pub trait ColorTrait<'a> {
     /// [`hue()`]
     /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn hue_f(&self) -> f32 {
+    pub fn hue_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hue_f)(obj_data);
@@ -978,7 +984,7 @@ pub trait ColorTrait<'a> {
     /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
-    fn saturation_f(&self) -> f32 {
+    pub fn saturation_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).saturation_f)(obj_data);
@@ -992,7 +998,7 @@ pub trait ColorTrait<'a> {
     /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color
     /// Model}
-    fn hsv_hue_f(&self) -> f32 {
+    pub fn hsv_hue_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hsv_hue_f)(obj_data);
@@ -1005,7 +1011,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`saturation()`]
     /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn hsv_saturation_f(&self) -> f32 {
+    pub fn hsv_saturation_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hsv_saturation_f)(obj_data);
@@ -1018,7 +1024,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`value()`]
     /// [`get_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn value_f(&self) -> f32 {
+    pub fn value_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).value_f)(obj_data);
@@ -1044,11 +1050,12 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`get_hsv()`]
     /// [`set_hsv_f()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn set_hsv(&self, h: i32, s: i32, v: i32, a: i32) {
+    pub fn set_hsv(&self, h: i32, s: i32, v: i32, a: i32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_hsv)(obj_data, h, s, v, a);
         }
+        self
     }
     ///
     /// Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is
@@ -1059,11 +1066,12 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`get_hsv_f()`]
     /// [`set_hsv()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn set_hsv_f(&self, h: f32, s: f32, v: f32, a: f32) {
+    pub fn set_hsv_f(&self, h: f32, s: f32, v: f32, a: f32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_hsv_f)(obj_data, h, s, v, a);
         }
+        self
     }
     ///
     /// Returns the cyan color component of this color.
@@ -1077,7 +1085,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`cyan()`]
     /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn cyan(&self) -> i32 {
+    pub fn cyan(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).cyan)(obj_data);
@@ -1096,7 +1104,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`magenta()`]
     /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn magenta(&self) -> i32 {
+    pub fn magenta(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).magenta)(obj_data);
@@ -1115,7 +1123,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`yellow()`]
     /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn yellow(&self) -> i32 {
+    pub fn yellow(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).yellow)(obj_data);
@@ -1135,7 +1143,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`black()`]
     /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn black(&self) -> i32 {
+    pub fn black(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).black)(obj_data);
@@ -1148,7 +1156,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`cyan()`]
     /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn cyan_f(&self) -> f32 {
+    pub fn cyan_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).cyan_f)(obj_data);
@@ -1161,7 +1169,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`magenta()`]
     /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn magenta_f(&self) -> f32 {
+    pub fn magenta_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).magenta_f)(obj_data);
@@ -1174,7 +1182,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`yellow()`]
     /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn yellow_f(&self) -> f32 {
+    pub fn yellow_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).yellow_f)(obj_data);
@@ -1187,7 +1195,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`black()`]
     /// [`get_cmyk_f()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn black_f(&self) -> f32 {
+    pub fn black_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).black_f)(obj_data);
@@ -1213,11 +1221,12 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`get_cmyk_f()`]
     /// [`set_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn set_cmyk(&self, c: i32, m: i32, y: i32, k: i32, a: i32) {
+    pub fn set_cmyk(&self, c: i32, m: i32, y: i32, k: i32, a: i32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_cmyk)(obj_data, c, m, y, k, a);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -1229,11 +1238,12 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`get_cmyk_f()`]
     /// [`set_cmyk()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn set_cmyk_f(&self, c: f32, m: f32, y: f32, k: f32, a: f32) {
+    pub fn set_cmyk_f(&self, c: f32, m: f32, y: f32, k: f32, a: f32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_cmyk_f)(obj_data, c, m, y, k, a);
         }
+        self
     }
     ///
     /// Returns the hue color component of this color.
@@ -1245,7 +1255,7 @@ pub trait ColorTrait<'a> {
     ///
     /// **See also:** [`hue()`]
     /// [`get_hsl_f()`]
-    fn hsl_hue(&self) -> i32 {
+    pub fn hsl_hue(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hsl_hue)(obj_data);
@@ -1263,7 +1273,7 @@ pub trait ColorTrait<'a> {
     ///
     /// **See also:** [`saturation_f()`]
     /// [`get_hsl_f()`]
-    fn hsl_saturation(&self) -> i32 {
+    pub fn hsl_saturation(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hsl_saturation)(obj_data);
@@ -1280,7 +1290,7 @@ pub trait ColorTrait<'a> {
     ///
     /// **See also:** [`value()`]
     /// [`get_hsl_f()`]
-    fn lightness(&self) -> i32 {
+    pub fn lightness(&self) -> i32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).lightness)(obj_data);
@@ -1292,7 +1302,7 @@ pub trait ColorTrait<'a> {
     ///
     /// **See also:** [`hue()`]
     /// [`get_hsl_f()`]
-    fn hsl_hue_f(&self) -> f32 {
+    pub fn hsl_hue_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hsl_hue_f)(obj_data);
@@ -1304,7 +1314,7 @@ pub trait ColorTrait<'a> {
     ///
     /// **See also:** [`saturation_f()`]
     /// [`get_hsl_f()`]
-    fn hsl_saturation_f(&self) -> f32 {
+    pub fn hsl_saturation_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hsl_saturation_f)(obj_data);
@@ -1316,7 +1326,7 @@ pub trait ColorTrait<'a> {
     ///
     /// **See also:** [`value()`]
     /// [`get_hsl_f()`]
-    fn lightness_f(&self) -> f32 {
+    pub fn lightness_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).lightness_f)(obj_data);
@@ -1340,11 +1350,12 @@ pub trait ColorTrait<'a> {
     ///
     /// **See also:** [`get_hsl()`]
     /// [`set_hsl_f()`]
-    fn set_hsl(&self, h: i32, s: i32, l: i32, a: i32) {
+    pub fn set_hsl(&self, h: i32, s: i32, l: i32, a: i32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_hsl)(obj_data, h, s, l, a);
         }
+        self
     }
     ///
     /// Sets a HSL color lightness; *h* is the hue, *s* is the saturation, *l* is
@@ -1354,11 +1365,12 @@ pub trait ColorTrait<'a> {
     ///
     /// **See also:** [`get_hsl_f()`]
     /// [`set_hsl()`]
-    fn set_hsl_f(&self, h: f32, s: f32, l: f32, a: f32) {
+    pub fn set_hsl_f(&self, h: f32, s: f32, l: f32, a: f32) -> &Self {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             ((*funcs).set_hsl_f)(obj_data, h, s, l, a);
         }
+        self
     }
     ///
     /// Create and returns an RGB QColor based on this color.
@@ -1366,7 +1378,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`from_rgb()`]
     /// [`convert_to()`]
     /// [`is_valid()`]
-    fn to_rgb(&self) -> Color {
+    pub fn to_rgb(&self) -> Color {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).to_rgb)(obj_data);
@@ -1387,7 +1399,7 @@ pub trait ColorTrait<'a> {
     /// [`convert_to()`]
     /// [`is_valid()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn to_hsv(&self) -> Color {
+    pub fn to_hsv(&self) -> Color {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).to_hsv)(obj_data);
@@ -1408,7 +1420,7 @@ pub trait ColorTrait<'a> {
     /// [`convert_to()`]
     /// [`is_valid()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn to_cmyk(&self) -> Color {
+    pub fn to_cmyk(&self) -> Color {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).to_cmyk)(obj_data);
@@ -1428,7 +1440,7 @@ pub trait ColorTrait<'a> {
     /// **See also:** [`from_hsl()`]
     /// [`convert_to()`]
     /// [`is_valid()`]
-    fn to_hsl(&self) -> Color {
+    pub fn to_hsl(&self) -> Color {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).to_hsl)(obj_data);
@@ -1450,7 +1462,7 @@ pub trait ColorTrait<'a> {
     /// [`to_hsv()`]
     /// [`to_rgb()`]
     /// [`is_valid()`]
-    fn convert_to(&self, color_spec: Spec) -> Color {
+    pub fn convert_to(&self, color_spec: Spec) -> Color {
         let enum_color_spec_1 = color_spec as i32;
 
         let (obj_data, funcs) = self.get_color_obj_funcs();
@@ -1467,145 +1479,6 @@ pub trait ColorTrait<'a> {
         }
     }
     ///
-    /// Returns the lightness color component of this color.
-    ///
-    /// **See also:** [`lightness_f()`]
-    /// [`get_hsl()`]
-    ///
-    /// Returns the lightness color component of this color.
-    ///
-    /// **See also:** [`value()`]
-    /// [`get_hsl_f()`]
-    ///
-    /// Returns a lighter (or darker) color, but does not change this object.
-    ///
-    /// If the *factor* is greater than 100, this functions returns a lighter
-    /// color. Setting *factor* to 150 returns a color that is 50% brighter. If
-    /// the *factor* is less than 100, the return color is darker, but we
-    /// recommend using the darker() function for this purpose. If the *factor*
-    /// is 0 or negative, the return value is unspecified.
-    ///
-    /// The function converts the current RGB color to HSV, multiplies the value
-    /// (V) component by *factor* and converts the color back to RGB.
-    ///
-    /// **See also:** [`darker()`]
-    /// [`is_valid()`]
-    ///
-    /// Use lighter( *factor)* instead.
-    fn light(&self, f: i32) -> Color {
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).light)(obj_data, f);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Color::new_from_rc(t);
-            } else {
-                ret_val = Color::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
-    /// Returns a lighter (or darker) color, but does not change this object.
-    ///
-    /// If the *factor* is greater than 100, this functions returns a lighter
-    /// color. Setting *factor* to 150 returns a color that is 50% brighter. If
-    /// the *factor* is less than 100, the return color is darker, but we
-    /// recommend using the darker() function for this purpose. If the *factor*
-    /// is 0 or negative, the return value is unspecified.
-    ///
-    /// The function converts the current RGB color to HSV, multiplies the value
-    /// (V) component by *factor* and converts the color back to RGB.
-    ///
-    /// **See also:** [`darker()`]
-    /// [`is_valid()`]
-    fn lighter(&self, f: i32) -> Color {
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).lighter)(obj_data, f);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Color::new_from_rc(t);
-            } else {
-                ret_val = Color::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
-    /// Returns a darker (or lighter) color, but does not change this object.
-    ///
-    /// If the *factor* is greater than 100, this functions returns a darker
-    /// color. Setting *factor* to 300 returns a color that has one-third the
-    /// brightness. If the *factor* is less than 100, the return color is lighter,
-    /// but we recommend using the lighter() function for this purpose. If the
-    /// *factor* is 0 or negative, the return value is unspecified.
-    ///
-    /// The function converts the current RGB color to HSV, divides the value (V)
-    /// component by *factor* and converts the color back to RGB.
-    ///
-    /// **See also:** [`lighter()`]
-    /// [`is_valid()`]
-    ///
-    /// Use darker( *factor)* instead.
-    fn dark(&self, f: i32) -> Color {
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).dark)(obj_data, f);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Color::new_from_rc(t);
-            } else {
-                ret_val = Color::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
-    /// Returns a darker (or lighter) color, but does not change this object.
-    ///
-    /// If the *factor* is greater than 100, this functions returns a darker
-    /// color. Setting *factor* to 300 returns a color that has one-third the
-    /// brightness. If the *factor* is less than 100, the return color is lighter,
-    /// but we recommend using the lighter() function for this purpose. If the
-    /// *factor* is 0 or negative, the return value is unspecified.
-    ///
-    /// The function converts the current RGB color to HSV, divides the value (V)
-    /// component by *factor* and converts the color back to RGB.
-    ///
-    /// **See also:** [`lighter()`]
-    /// [`is_valid()`]
-    fn darker(&self, f: i32) -> Color {
-        let (obj_data, funcs) = self.get_color_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).darker)(obj_data, f);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Color::new_from_rc(t);
-            } else {
-                ret_val = Color::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-
-    #[inline]
-    fn get_color_obj_funcs(&self) -> (*const RUBase, *const RUColorFuncs);
-}
-
-impl<'a> ColorTrait<'a> for Color<'a> {
-    #[inline]
-    fn get_color_obj_funcs(&self) -> (*const RUBase, *const RUColorFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).color_funcs) }
-    }
-}
-pub trait ColorStaticTrait {
-    ///
     /// Static convenience function that returns a QColor constructed from the
     /// given QRgb value *rgb.*
     ///
@@ -1754,7 +1627,7 @@ pub trait ColorStaticTrait {
     /// [`from_rgb_f()`]
     /// [`to_rgb()`]
     /// [`is_valid()`]
-    fn from_rgb_2<'a>(r: i32, g: i32, b: i32, a: i32) -> Color<'a> {
+    pub fn from_rgb_2(r: i32, g: i32, b: i32, a: i32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1784,7 +1657,7 @@ pub trait ColorStaticTrait {
     /// [`from_rgba64()`]
     /// [`to_rgb()`]
     /// [`is_valid()`]
-    fn from_rgb_f<'a>(r: f32, g: f32, b: f32, a: f32) -> Color<'a> {
+    pub fn from_rgb_f(r: f32, g: f32, b: f32, a: f32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1820,7 +1693,7 @@ pub trait ColorStaticTrait {
     /// [`from_rgb_f()`]
     /// [`to_rgb()`]
     /// [`is_valid()`]
-    fn from_rgba64<'a>(r: u16, g: u16, b: u16, a: u16) -> Color<'a> {
+    pub fn from_rgba64(r: u16, g: u16, b: u16, a: u16) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1880,7 +1753,7 @@ pub trait ColorStaticTrait {
     /// [`from_hsv()`]
     /// [`is_valid()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn from_hsv<'a>(h: i32, s: i32, v: i32, a: i32) -> Color<'a> {
+    pub fn from_hsv(h: i32, s: i32, v: i32, a: i32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1911,7 +1784,7 @@ pub trait ColorStaticTrait {
     /// [`from_hsv()`]
     /// [`is_valid()`]
     /// {QColor#The HSV Color Model}{The HSV Color Model}
-    fn from_hsv_f<'a>(h: f32, s: f32, v: f32, a: f32) -> Color<'a> {
+    pub fn from_hsv_f(h: f32, s: f32, v: f32, a: f32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1953,7 +1826,7 @@ pub trait ColorStaticTrait {
     /// [`from_cmyk()`]
     /// [`is_valid()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn from_cmyk<'a>(c: i32, m: i32, y: i32, k: i32, a: i32) -> Color<'a> {
+    pub fn from_cmyk(c: i32, m: i32, y: i32, k: i32, a: i32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1984,7 +1857,7 @@ pub trait ColorStaticTrait {
     /// [`from_cmyk()`]
     /// [`is_valid()`]
     /// {QColor#The CMYK Color Model}{The CMYK Color Model}
-    fn from_cmyk_f<'a>(c: f32, m: f32, y: f32, k: f32, a: f32) -> Color<'a> {
+    pub fn from_cmyk_f(c: f32, m: f32, y: f32, k: f32, a: f32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -2025,7 +1898,7 @@ pub trait ColorStaticTrait {
     /// **See also:** [`to_hsl()`]
     /// [`from_hsl()`]
     /// [`is_valid()`]
-    fn from_hsl<'a>(h: i32, s: i32, l: i32, a: i32) -> Color<'a> {
+    pub fn from_hsl(h: i32, s: i32, l: i32, a: i32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -2055,7 +1928,7 @@ pub trait ColorStaticTrait {
     /// **See also:** [`to_hsl()`]
     /// [`from_hsl()`]
     /// [`is_valid()`]
-    fn from_hsl_f<'a>(h: f32, s: f32, l: f32, a: f32) -> Color<'a> {
+    pub fn from_hsl_f(h: f32, s: f32, l: f32, a: f32) -> Color<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -2064,6 +1937,132 @@ pub trait ColorStaticTrait {
         };
         unsafe {
             let ret_val = ((*funcs).from_hsl_f)(obj_data, h, s, l, a);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Color::new_from_rc(t);
+            } else {
+                ret_val = Color::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns the lightness color component of this color.
+    ///
+    /// **See also:** [`lightness_f()`]
+    /// [`get_hsl()`]
+    ///
+    /// Returns the lightness color component of this color.
+    ///
+    /// **See also:** [`value()`]
+    /// [`get_hsl_f()`]
+    ///
+    /// Returns a lighter (or darker) color, but does not change this object.
+    ///
+    /// If the *factor* is greater than 100, this functions returns a lighter
+    /// color. Setting *factor* to 150 returns a color that is 50% brighter. If
+    /// the *factor* is less than 100, the return color is darker, but we
+    /// recommend using the darker() function for this purpose. If the *factor*
+    /// is 0 or negative, the return value is unspecified.
+    ///
+    /// The function converts the current RGB color to HSV, multiplies the value
+    /// (V) component by *factor* and converts the color back to RGB.
+    ///
+    /// **See also:** [`darker()`]
+    /// [`is_valid()`]
+    ///
+    /// Use lighter( *factor)* instead.
+    pub fn light(&self, f: i32) -> Color {
+        let (obj_data, funcs) = self.get_color_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).light)(obj_data, f);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Color::new_from_rc(t);
+            } else {
+                ret_val = Color::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns a lighter (or darker) color, but does not change this object.
+    ///
+    /// If the *factor* is greater than 100, this functions returns a lighter
+    /// color. Setting *factor* to 150 returns a color that is 50% brighter. If
+    /// the *factor* is less than 100, the return color is darker, but we
+    /// recommend using the darker() function for this purpose. If the *factor*
+    /// is 0 or negative, the return value is unspecified.
+    ///
+    /// The function converts the current RGB color to HSV, multiplies the value
+    /// (V) component by *factor* and converts the color back to RGB.
+    ///
+    /// **See also:** [`darker()`]
+    /// [`is_valid()`]
+    pub fn lighter(&self, f: i32) -> Color {
+        let (obj_data, funcs) = self.get_color_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).lighter)(obj_data, f);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Color::new_from_rc(t);
+            } else {
+                ret_val = Color::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns a darker (or lighter) color, but does not change this object.
+    ///
+    /// If the *factor* is greater than 100, this functions returns a darker
+    /// color. Setting *factor* to 300 returns a color that has one-third the
+    /// brightness. If the *factor* is less than 100, the return color is lighter,
+    /// but we recommend using the lighter() function for this purpose. If the
+    /// *factor* is 0 or negative, the return value is unspecified.
+    ///
+    /// The function converts the current RGB color to HSV, divides the value (V)
+    /// component by *factor* and converts the color back to RGB.
+    ///
+    /// **See also:** [`lighter()`]
+    /// [`is_valid()`]
+    ///
+    /// Use darker( *factor)* instead.
+    pub fn dark(&self, f: i32) -> Color {
+        let (obj_data, funcs) = self.get_color_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).dark)(obj_data, f);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Color::new_from_rc(t);
+            } else {
+                ret_val = Color::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns a darker (or lighter) color, but does not change this object.
+    ///
+    /// If the *factor* is greater than 100, this functions returns a darker
+    /// color. Setting *factor* to 300 returns a color that has one-third the
+    /// brightness. If the *factor* is less than 100, the return color is lighter,
+    /// but we recommend using the lighter() function for this purpose. If the
+    /// *factor* is 0 or negative, the return value is unspecified.
+    ///
+    /// The function converts the current RGB color to HSV, divides the value (V)
+    /// component by *factor* and converts the color back to RGB.
+    ///
+    /// **See also:** [`lighter()`]
+    /// [`is_valid()`]
+    pub fn darker(&self, f: i32) -> Color {
+        let (obj_data, funcs) = self.get_color_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).darker)(obj_data, f);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -2086,7 +2085,7 @@ pub trait ColorStaticTrait {
     /// **Overloads**
     ///
     /// **Overloads**
-    fn is_valid_color<'a>(name: &str) -> bool {
+    pub fn is_valid_color(name: &str) -> bool {
         let str_in_name_1 = CString::new(name).unwrap();
 
         let (obj_data, funcs) = unsafe {
@@ -2101,10 +2100,19 @@ pub trait ColorStaticTrait {
         }
     }
 }
+pub trait ColorTrait<'a> {
+    #[inline]
+    #[doc(hidden)]
+    fn get_color_obj_funcs(&self) -> (*const RUBase, *const RUColorFuncs);
+}
 
-impl<'a> ColorStaticTrait for Color<'a> {}
-
-impl<'a> ColorStaticTrait for ColorStatic<'a> {}
+impl<'a> ColorTrait<'a> for Color<'a> {
+    #[doc(hidden)]
+    fn get_color_obj_funcs(&self) -> (*const RUBase, *const RUColorFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).color_funcs) }
+    }
+}
 #[repr(u32)]
 pub enum Spec {
     Invalid,

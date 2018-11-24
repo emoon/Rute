@@ -13,7 +13,6 @@ pub struct RUFontInfoFuncs {
     pub point_size: extern "C" fn(self_c: *const RUBase) -> i32,
     pub point_size_f: extern "C" fn(self_c: *const RUBase) -> f32,
     pub italic: extern "C" fn(self_c: *const RUBase) -> bool,
-    pub style: extern "C" fn(self_c: *const RUBase) -> i32,
     pub weight: extern "C" fn(self_c: *const RUBase) -> i32,
     pub bold: extern "C" fn(self_c: *const RUBase) -> bool,
     pub underline: extern "C" fn(self_c: *const RUBase) -> bool,

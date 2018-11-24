@@ -17,31 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::brush::Brush;
-#[allow(unused_imports)]
-use auto::brush::BrushTrait;
-#[allow(unused_imports)]
-use auto::brush_ffi::*;
-#[allow(unused_imports)]
-use auto::color::Color;
-#[allow(unused_imports)]
-use auto::color::ColorTrait;
-#[allow(unused_imports)]
-use auto::color_ffi::*;
-#[allow(unused_imports)]
-use auto::pen_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::PenCapStyle;
-#[allow(unused_imports)]
-use auto::rute_enums::PenJoinStyle;
-#[allow(unused_imports)]
-use auto::rute_enums::PenStyle;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// A pen has a style(), width(), brush(), capStyle() and joinStyle().
 ///
@@ -201,9 +178,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Pen<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUPenAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -228,7 +209,8 @@ impl<'a> Pen<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUPen) -> Pen<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUPen) -> Pen<'a> {
         Pen {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -237,7 +219,8 @@ impl<'a> Pen<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUPen) -> Pen<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUPen) -> Pen<'a> {
         Pen {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -246,7 +229,8 @@ impl<'a> Pen<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUPen) -> Pen<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUPen) -> Pen<'a> {
         Pen {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -254,25 +238,24 @@ impl<'a> Pen<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait PenTrait<'a> {
     ///
     /// Swaps pen *other* with this pen. This operation is very
     /// fast and never fails.
-    fn swap(&self, other: &PenTrait) {
+    pub fn swap<P: PenTrait<'a>>(&self, other: &P) -> &Self {
         let (obj_other_1, _funcs) = other.get_pen_obj_funcs();
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
+        self
     }
     ///
     /// Returns the pen style.
     ///
     /// **See also:** [`set_style()`]
     /// {QPen#Pen Style}{Pen Style}
-    fn style(&self) -> PenStyle {
+    pub fn style(&self) -> PenStyle {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).style)(obj_data);
@@ -293,19 +276,20 @@ pub trait PenTrait<'a> {
     ///
     /// **See also:** [`style()`]
     /// {QPen#Pen Style}{Pen Style}
-    fn set_style(&self, arg0: PenStyle) {
+    pub fn set_style(&self, arg0: PenStyle) -> &Self {
         let enum_arg0_1 = arg0 as i32;
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_style)(obj_data, enum_arg0_1);
         }
+        self
     }
     ///
     /// Returns the dash offset for the pen.
     ///
     /// **See also:** [`set_dash_offset()`]
-    fn dash_offset(&self) -> f32 {
+    pub fn dash_offset(&self) -> f32 {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).dash_offset)(obj_data);
@@ -322,11 +306,12 @@ pub trait PenTrait<'a> {
     /// * For example, a pattern where each stroke is four units long, followed by a gap of two units, will begin with the stroke when drawn as a line. However, if the dash offset is set to 4.0, any line drawn will begin with the gap. Values of the offset up to 4.0 will cause part of the stroke to be drawn first, and values of the offset between 4.0 and 6.0 will cause the line to begin with part of the gap.
     ///
     /// **Note**: This implicitly converts the style of the pen to Qt::CustomDashLine.
-    fn set_dash_offset(&self, doffset: f32) {
+    pub fn set_dash_offset(&self, doffset: f32) -> &Self {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_dash_offset)(obj_data, doffset);
         }
+        self
     }
     ///
     /// Returns the miter limit of the pen. The miter limit is only
@@ -334,7 +319,7 @@ pub trait PenTrait<'a> {
     ///
     /// **See also:** [`set_miter_limit()`]
     /// {QPen#Join Style}{Join Style}
-    fn miter_limit(&self) -> f32 {
+    pub fn miter_limit(&self) -> f32 {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).miter_limit)(obj_data);
@@ -358,18 +343,19 @@ pub trait PenTrait<'a> {
     /// **See also:** [`miter_limit()`]
     /// [`set_join_style()`]
     /// {QPen#Join Style}{Join Style}
-    fn set_miter_limit(&self, limit: f32) {
+    pub fn set_miter_limit(&self, limit: f32) -> &Self {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_miter_limit)(obj_data, limit);
         }
+        self
     }
     ///
     /// Returns the pen width with floating point precision.
     ///
     /// **See also:** [`set_width_f()`]
     /// [`width()`]
-    fn width_f(&self) -> f32 {
+    pub fn width_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).width_f)(obj_data);
@@ -389,11 +375,12 @@ pub trait PenTrait<'a> {
     ///
     /// **See also:** [`set_width()`]
     /// [`width_f()`]
-    fn set_width_f(&self, width: f32) {
+    pub fn set_width_f(&self, width: f32) -> &Self {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_width_f)(obj_data, width);
         }
+        self
     }
     ///
     /// Returns the pen width with integer precision.
@@ -405,7 +392,7 @@ pub trait PenTrait<'a> {
     ///
     /// **See also:** [`set_width_f()`]
     /// [`width()`]
-    fn width(&self) -> i32 {
+    pub fn width(&self) -> i32 {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).width)(obj_data);
@@ -438,18 +425,19 @@ pub trait PenTrait<'a> {
     ///
     /// **See also:** [`set_width()`]
     /// [`width_f()`]
-    fn set_width(&self, width: i32) {
+    pub fn set_width(&self, width: i32) -> &Self {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_width)(obj_data, width);
         }
+        self
     }
     ///
     /// Returns the color of this pen's brush.
     ///
     /// **See also:** [`brush()`]
     /// [`set_color()`]
-    fn color(&self) -> Color {
+    pub fn color(&self) -> Color {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).color)(obj_data);
@@ -468,17 +456,18 @@ pub trait PenTrait<'a> {
     ///
     /// **See also:** [`set_brush()`]
     /// [`color()`]
-    fn set_color(&self, color: &ColorTrait) {
+    pub fn set_color<C: ColorTrait<'a>>(&self, color: &C) -> &Self {
         let (obj_color_1, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_color)(obj_data, obj_color_1);
         }
+        self
     }
     ///
     /// Returns the brush used to fill strokes generated with this pen.
-    fn brush(&self) -> Brush {
+    pub fn brush(&self) -> Brush {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).brush)(obj_data);
@@ -498,20 +487,21 @@ pub trait PenTrait<'a> {
     ///
     /// **See also:** [`brush()`]
     /// [`set_color()`]
-    fn set_brush(&self, brush: &BrushTrait) {
+    pub fn set_brush<B: BrushTrait<'a>>(&self, brush: &B) -> &Self {
         let (obj_brush_1, _funcs) = brush.get_brush_obj_funcs();
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_brush)(obj_data, obj_brush_1);
         }
+        self
     }
     ///
     /// Returns `true` if the pen has a solid fill, otherwise false.
     ///
     /// **See also:** [`style()`]
     /// [`dash_pattern()`]
-    fn is_solid(&self) -> bool {
+    pub fn is_solid(&self) -> bool {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_solid)(obj_data);
@@ -523,7 +513,7 @@ pub trait PenTrait<'a> {
     ///
     /// **See also:** [`set_cap_style()`]
     /// {QPen#Cap Style}{Cap Style}
-    fn cap_style(&self) -> PenCapStyle {
+    pub fn cap_style(&self) -> PenCapStyle {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).cap_style)(obj_data);
@@ -537,20 +527,21 @@ pub trait PenTrait<'a> {
     ///
     /// **See also:** [`cap_style()`]
     /// {QPen#Cap Style}{Cap Style}
-    fn set_cap_style(&self, pcs: PenCapStyle) {
+    pub fn set_cap_style(&self, pcs: PenCapStyle) -> &Self {
         let enum_pcs_1 = pcs as i32;
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_cap_style)(obj_data, enum_pcs_1);
         }
+        self
     }
     ///
     /// Returns the pen's join style.
     ///
     /// **See also:** [`set_join_style()`]
     /// {QPen#Join Style}{Join Style}
-    fn join_style(&self) -> PenJoinStyle {
+    pub fn join_style(&self) -> PenJoinStyle {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).join_style)(obj_data);
@@ -564,13 +555,14 @@ pub trait PenTrait<'a> {
     ///
     /// **See also:** [`join_style()`]
     /// {QPen#Join Style}{Join Style}
-    fn set_join_style(&self, pcs: PenJoinStyle) {
+    pub fn set_join_style(&self, pcs: PenJoinStyle) -> &Self {
         let enum_pcs_1 = pcs as i32;
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_join_style)(obj_data, enum_pcs_1);
         }
+        self
     }
     ///
     /// Returns `true` if the pen is cosmetic; otherwise returns `false.`
@@ -584,7 +576,7 @@ pub trait PenTrait<'a> {
     ///
     /// **See also:** [`set_cosmetic()`]
     /// [`width_f()`]
-    fn is_cosmetic(&self) -> bool {
+    pub fn is_cosmetic(&self) -> bool {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_cosmetic)(obj_data);
@@ -596,26 +588,29 @@ pub trait PenTrait<'a> {
     /// *cosmetic.*
     ///
     /// **See also:** [`is_cosmetic()`]
-    fn set_cosmetic(&self, cosmetic: bool) {
+    pub fn set_cosmetic(&self, cosmetic: bool) -> &Self {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             ((*funcs).set_cosmetic)(obj_data, cosmetic);
         }
+        self
     }
-    fn is_detached(&self) -> bool {
+    pub fn is_detached(&self) -> bool {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_detached)(obj_data);
             ret_val
         }
     }
-
+}
+pub trait PenTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_pen_obj_funcs(&self) -> (*const RUBase, *const RUPenFuncs);
 }
 
 impl<'a> PenTrait<'a> for Pen<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_pen_obj_funcs(&self) -> (*const RUBase, *const RUPenFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).pen_funcs) }

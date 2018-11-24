@@ -17,31 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::bitmap::Bitmap;
-#[allow(unused_imports)]
-use auto::cursor_ffi::*;
-#[allow(unused_imports)]
-use auto::pixmap::Pixmap;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point::PointTrait;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::CursorShape;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::screen::Screen;
-#[allow(unused_imports)]
-use auto::screen::ScreenTrait;
-#[allow(unused_imports)]
-use auto::screen_ffi::*;
 ///
 /// This class is mainly used to create mouse cursors that are
 /// associated with particular widgets and to get and set the position
@@ -179,9 +156,13 @@ use auto::screen_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Cursor<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUCursorAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -206,7 +187,8 @@ impl<'a> Cursor<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUCursor) -> Cursor<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUCursor) -> Cursor<'a> {
         Cursor {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -215,7 +197,8 @@ impl<'a> Cursor<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUCursor) -> Cursor<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUCursor) -> Cursor<'a> {
         Cursor {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -224,7 +207,8 @@ impl<'a> Cursor<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUCursor) -> Cursor<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUCursor) -> Cursor<'a> {
         Cursor {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -232,22 +216,16 @@ impl<'a> Cursor<'a> {
             _marker: PhantomData,
         }
     }
-}
-
-pub struct CursorStatic<'a> {
-    pub all_funcs: *const RUCursorAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait CursorTrait<'a> {
     ///
     /// Swaps this cursor with the *other* cursor.
-    fn swap(&self, other: &CursorTrait) {
+    pub fn swap<C: CursorTrait<'a>>(&self, other: &C) -> &Self {
         let (obj_other_1, _funcs) = other.get_cursor_obj_funcs();
 
         let (obj_data, funcs) = self.get_cursor_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
+        self
     }
     ///
     /// Returns the cursor shape identifier. The return value is one of
@@ -255,7 +233,7 @@ pub trait CursorTrait<'a> {
     /// enum values (cast to an int).
     ///
     /// **See also:** [`set_shape()`]
-    fn shape(&self) -> CursorShape {
+    pub fn shape(&self) -> CursorShape {
         let (obj_data, funcs) = self.get_cursor_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).shape)(obj_data);
@@ -270,18 +248,19 @@ pub trait CursorTrait<'a> {
     /// for the list of cursor shapes.
     ///
     /// **See also:** [`shape()`]
-    fn set_shape(&self, new_shape: CursorShape) {
+    pub fn set_shape(&self, new_shape: CursorShape) -> &Self {
         let enum_new_shape_1 = new_shape as i32;
 
         let (obj_data, funcs) = self.get_cursor_obj_funcs();
         unsafe {
             ((*funcs).set_shape)(obj_data, enum_new_shape_1);
         }
+        self
     }
     ///
     /// Returns the cursor bitmap, or 0 if it is one of the standard
     /// cursors.
-    fn bitmap(&self) -> Option<Bitmap> {
+    pub fn bitmap(&self) -> Option<Bitmap> {
         let (obj_data, funcs) = self.get_cursor_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bitmap)(obj_data);
@@ -301,7 +280,7 @@ pub trait CursorTrait<'a> {
     ///
     /// Returns the cursor bitmap mask, or 0 if it is one of the standard
     /// cursors.
-    fn mask(&self) -> Option<Bitmap> {
+    pub fn mask(&self) -> Option<Bitmap> {
         let (obj_data, funcs) = self.get_cursor_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).mask)(obj_data);
@@ -321,7 +300,7 @@ pub trait CursorTrait<'a> {
     ///
     /// Returns the cursor pixmap. This is only valid if the cursor is a
     /// pixmap cursor.
-    fn pixmap(&self) -> Pixmap {
+    pub fn pixmap(&self) -> Pixmap {
         let (obj_data, funcs) = self.get_cursor_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pixmap)(obj_data);
@@ -338,7 +317,7 @@ pub trait CursorTrait<'a> {
     ///
     /// Returns the cursor hot spot, or (0, 0) if it is one of the
     /// standard cursors.
-    fn hot_spot(&self) -> Point {
+    pub fn hot_spot(&self) -> Point {
         let (obj_data, funcs) = self.get_cursor_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hot_spot)(obj_data);
@@ -352,19 +331,6 @@ pub trait CursorTrait<'a> {
             ret_val
         }
     }
-
-    #[inline]
-    fn get_cursor_obj_funcs(&self) -> (*const RUBase, *const RUCursorFuncs);
-}
-
-impl<'a> CursorTrait<'a> for Cursor<'a> {
-    #[inline]
-    fn get_cursor_obj_funcs(&self) -> (*const RUBase, *const RUCursorFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).cursor_funcs) }
-    }
-}
-pub trait CursorStaticTrait {
     ///
     /// Returns the position of the cursor (hot spot) of the *screen*
     /// in global screen coordinates.
@@ -393,7 +359,7 @@ pub trait CursorStaticTrait {
     /// [`Widget::map_from_global`]
     /// [`Widget::map_to_global`]
     /// [`GuiApplication::primary_screen`]
-    fn pos<'a>() -> Point<'a> {
+    pub fn pos() -> Point<'a> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -440,7 +406,7 @@ pub trait CursorStaticTrait {
     /// [`Widget::map_from_global`]
     /// [`Widget::map_to_global`]
     /// [`GuiApplication::primary_screen`]
-    fn pos_2<'a>(screen: &ScreenTrait<'a>) -> Point<'a> {
+    pub fn pos_2<S: ScreenTrait<'a>>(screen: &S) -> Point<'a> {
         let (obj_screen_1, _funcs) = screen.get_screen_obj_funcs();
 
         let (obj_data, funcs) = unsafe {
@@ -500,7 +466,7 @@ pub trait CursorStaticTrait {
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position of the
     /// *screen* at point *p.*
-    fn set_pos<'a>(x: i32, y: i32) {
+    pub fn set_pos(x: i32, y: i32) {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -550,7 +516,7 @@ pub trait CursorStaticTrait {
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position of the
     /// *screen* at point *p.*
-    fn set_pos_2<'a>(screen: &ScreenTrait<'a>, x: i32, y: i32) {
+    pub fn set_pos_2<S: ScreenTrait<'a>>(screen: &S, x: i32, y: i32) {
         let (obj_screen_1, _funcs) = screen.get_screen_obj_funcs();
 
         let (obj_data, funcs) = unsafe {
@@ -602,7 +568,7 @@ pub trait CursorStaticTrait {
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position of the
     /// *screen* at point *p.*
-    fn set_pos_3<'a>(p: &PointTrait<'a>) {
+    pub fn set_pos_3<P: PointTrait<'a>>(p: &P) {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
 
         let (obj_data, funcs) = unsafe {
@@ -654,7 +620,7 @@ pub trait CursorStaticTrait {
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position of the
     /// *screen* at point *p.*
-    fn set_pos_4<'a>(screen: &ScreenTrait<'a>, p: &PointTrait<'a>) {
+    pub fn set_pos_4<P: PointTrait<'a>, S: ScreenTrait<'a>>(screen: &S, p: &P) {
         let (obj_screen_1, _funcs) = screen.get_screen_obj_funcs();
         let (obj_p_2, _funcs) = p.get_point_obj_funcs();
 
@@ -669,7 +635,16 @@ pub trait CursorStaticTrait {
         }
     }
 }
+pub trait CursorTrait<'a> {
+    #[inline]
+    #[doc(hidden)]
+    fn get_cursor_obj_funcs(&self) -> (*const RUBase, *const RUCursorFuncs);
+}
 
-impl<'a> CursorStaticTrait for Cursor<'a> {}
-
-impl<'a> CursorStaticTrait for CursorStatic<'a> {}
+impl<'a> CursorTrait<'a> for Cursor<'a> {
+    #[doc(hidden)]
+    fn get_cursor_obj_funcs(&self) -> (*const RUBase, *const RUCursorFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).cursor_funcs) }
+    }
+}

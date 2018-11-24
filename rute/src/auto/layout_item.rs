@@ -17,25 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::layout::Layout;
-#[allow(unused_imports)]
-use auto::layout_item_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::Alignment;
-#[allow(unused_imports)]
-use auto::rute_enums::Orientations;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::size::Size;
-#[allow(unused_imports)]
-use auto::spacer_item::SpacerItem;
-#[allow(unused_imports)]
-use auto::widget::Widget;
 ///
 /// This is used by custom layouts.
 ///
@@ -65,14 +48,19 @@ use auto::widget::Widget;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct LayoutItem<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RULayoutItemAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> LayoutItem<'a> {
-    pub fn new_from_rc(ffi_data: RULayoutItem) -> LayoutItem<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RULayoutItem) -> LayoutItem<'a> {
         LayoutItem {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -81,7 +69,8 @@ impl<'a> LayoutItem<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RULayoutItem) -> LayoutItem<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RULayoutItem) -> LayoutItem<'a> {
         LayoutItem {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -90,7 +79,8 @@ impl<'a> LayoutItem<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RULayoutItem) -> LayoutItem<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RULayoutItem) -> LayoutItem<'a> {
         LayoutItem {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -98,11 +88,9 @@ impl<'a> LayoutItem<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait LayoutItemTrait<'a> {
     ///
     /// Implemented in subclasses to return the preferred size of this item.
-    fn size_hint(&self) -> Size {
+    pub fn size_hint(&self) -> Size {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).size_hint)(obj_data);
@@ -118,7 +106,7 @@ pub trait LayoutItemTrait<'a> {
     }
     ///
     /// Implemented in subclasses to return the minimum size of this item.
-    fn minimum_size(&self) -> Size {
+    pub fn minimum_size(&self) -> Size {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).minimum_size)(obj_data);
@@ -134,7 +122,7 @@ pub trait LayoutItemTrait<'a> {
     }
     ///
     /// Implemented in subclasses to return the maximum size of this item.
-    fn maximum_size(&self) -> Size {
+    pub fn maximum_size(&self) -> Size {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).maximum_size)(obj_data);
@@ -153,7 +141,7 @@ pub trait LayoutItemTrait<'a> {
     /// sizeHint(). A value of Qt::Vertical or Qt::Horizontal means that
     /// it wants to grow in only one dimension, whereas Qt::Vertical |
     /// Qt::Horizontal means that it wants to grow in both dimensions.
-    fn expanding_directions(&self) -> Orientations {
+    pub fn expanding_directions(&self) -> Orientations {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).expanding_directions)(obj_data);
@@ -164,7 +152,7 @@ pub trait LayoutItemTrait<'a> {
     ///
     /// Implemented in subclasses to return whether this item is empty,
     /// i.e. whether it contains any widgets.
-    fn is_empty(&self) -> bool {
+    pub fn is_empty(&self) -> bool {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_empty)(obj_data);
@@ -181,7 +169,7 @@ pub trait LayoutItemTrait<'a> {
     ///
     /// **See also:** [`height_for_width()`]
     /// [`Widget::height_for_width`]
-    fn has_height_for_width(&self) -> bool {
+    pub fn has_height_for_width(&self) -> bool {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).has_height_for_width)(obj_data);
@@ -204,7 +192,7 @@ pub trait LayoutItemTrait<'a> {
     /// exponential time.
     ///
     /// **See also:** [`has_height_for_width()`]
-    fn height_for_width(&self, arg0: i32) -> i32 {
+    pub fn height_for_width(&self, arg0: i32) -> i32 {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).height_for_width)(obj_data, arg0);
@@ -214,7 +202,7 @@ pub trait LayoutItemTrait<'a> {
     ///
     /// Returns the minimum height this widget needs for the given width,
     /// *w.* The default implementation simply returns heightForWidth( *w).*
-    fn minimum_height_for_width(&self, arg0: i32) -> i32 {
+    pub fn minimum_height_for_width(&self, arg0: i32) -> i32 {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).minimum_height_for_width)(obj_data, arg0);
@@ -223,11 +211,12 @@ pub trait LayoutItemTrait<'a> {
     }
     ///
     /// Invalidates any cached information in this layout item.
-    fn invalidate(&self) {
+    pub fn invalidate(&self) -> &Self {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             ((*funcs).invalidate)(obj_data);
         }
+        self
     }
     ///
     /// If this item manages a QWidget, returns that widget. Otherwise,
@@ -239,7 +228,7 @@ pub trait LayoutItemTrait<'a> {
     ///
     /// **See also:** [`layout()`]
     /// [`spacer_item()`]
-    fn widget(&self) -> Option<Widget> {
+    pub fn widget(&self) -> Option<Widget> {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).widget)(obj_data);
@@ -262,7 +251,7 @@ pub trait LayoutItemTrait<'a> {
     ///
     /// **See also:** [`spacer_item()`]
     /// [`widget()`]
-    fn layout(&self) -> Option<Layout> {
+    pub fn layout(&self) -> Option<Layout> {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).layout)(obj_data);
@@ -285,7 +274,7 @@ pub trait LayoutItemTrait<'a> {
     ///
     /// **See also:** [`layout()`]
     /// [`widget()`]
-    fn spacer_item(&self) -> Option<SpacerItem> {
+    pub fn spacer_item(&self) -> Option<SpacerItem> {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).spacer_item)(obj_data);
@@ -304,7 +293,7 @@ pub trait LayoutItemTrait<'a> {
     }
     ///
     /// Returns the alignment of this item.
-    fn alignment(&self) -> Alignment {
+    pub fn alignment(&self) -> Alignment {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alignment)(obj_data);
@@ -319,21 +308,24 @@ pub trait LayoutItemTrait<'a> {
     /// where it would have a visual effect. Except for QSpacerItem, which provides
     /// blank space for layouts, all public Qt classes that inherit QLayoutItem
     /// support item alignment.
-    fn set_alignment(&self, a: Alignment) {
+    pub fn set_alignment(&self, a: Alignment) -> &Self {
         let enum_a_1 = a as i32;
 
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             ((*funcs).set_alignment)(obj_data, enum_a_1);
         }
+        self
     }
-
+}
+pub trait LayoutItemTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_layout_item_obj_funcs(&self) -> (*const RUBase, *const RULayoutItemFuncs);
 }
 
 impl<'a> LayoutItemTrait<'a> for LayoutItem<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_layout_item_obj_funcs(&self) -> (*const RUBase, *const RULayoutItemFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).layout_item_funcs) }

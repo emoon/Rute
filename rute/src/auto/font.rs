@@ -17,13 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::font_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// When you create a QFont object you specify various attributes that
 /// you want the font to have. Qt will use the font with the specified
@@ -160,9 +155,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Font<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUFontAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -187,7 +186,8 @@ impl<'a> Font<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUFont) -> Font<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUFont) -> Font<'a> {
         Font {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -196,7 +196,8 @@ impl<'a> Font<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUFont) -> Font<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUFont) -> Font<'a> {
         Font {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -205,7 +206,8 @@ impl<'a> Font<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUFont) -> Font<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUFont) -> Font<'a> {
         Font {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -213,23 +215,17 @@ impl<'a> Font<'a> {
             _marker: PhantomData,
         }
     }
-}
-
-pub struct FontStatic<'a> {
-    pub all_funcs: *const RUFontAllFuncs,
-    pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-}
-pub trait FontTrait<'a> {
     ///
     /// Swaps this font instance with *other.* This function is very fast
     /// and never fails.
-    fn swap(&self, other: &FontTrait) {
+    pub fn swap<F: FontTrait<'a>>(&self, other: &F) -> &Self {
         let (obj_other_1, _funcs) = other.get_font_obj_funcs();
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
+        self
     }
     ///
     /// Returns the requested font family name, i.e. the name set in the
@@ -238,7 +234,7 @@ pub trait FontTrait<'a> {
     /// **See also:** [`set_family()`]
     /// [`substitutes()`]
     /// [`substitute()`]
-    fn family(&self) -> String {
+    pub fn family(&self) -> String {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).family)(obj_data);
@@ -261,13 +257,14 @@ pub trait FontTrait<'a> {
     /// **See also:** [`family()`]
     /// [`set_style_hint()`]
     /// [`FontInfo`]
-    fn set_family(&self, arg0: &str) {
+    pub fn set_family(&self, arg0: &str) -> &Self {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_family)(obj_data, str_in_arg0_1.as_ptr());
         }
+        self
     }
     ///
     /// Returns the requested font style name. This can be used to match the
@@ -276,7 +273,7 @@ pub trait FontTrait<'a> {
     ///
     /// **See also:** [`set_family()`]
     /// [`set_style()`]
-    fn style_name(&self) -> String {
+    pub fn style_name(&self) -> String {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).style_name)(obj_data);
@@ -296,13 +293,14 @@ pub trait FontTrait<'a> {
     /// matching by style properties
     ///
     /// **See also:** [`style_name()`]
-    fn set_style_name(&self, arg0: &str) {
+    pub fn set_style_name(&self, arg0: &str) -> &Self {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_style_name)(obj_data, str_in_arg0_1.as_ptr());
         }
+        self
     }
     ///
     /// Returns the point size of the font. Returns -1 if the font size
@@ -319,7 +317,7 @@ pub trait FontTrait<'a> {
     /// [`pixel_size()`]
     /// [`FontInfo::point_size`]
     /// [`FontInfo::pixel_size`]
-    fn point_size(&self) -> i32 {
+    pub fn point_size(&self) -> i32 {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).point_size)(obj_data);
@@ -340,11 +338,12 @@ pub trait FontTrait<'a> {
     /// **See also:** [`point_size_f()`]
     /// [`set_point_size()`]
     /// [`set_pixel_size()`]
-    fn set_point_size(&self, arg0: i32) {
+    pub fn set_point_size(&self, arg0: i32) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_point_size)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Returns the point size of the font. Returns -1 if the font size was
@@ -355,7 +354,7 @@ pub trait FontTrait<'a> {
     /// [`pixel_size()`]
     /// [`FontInfo::point_size`]
     /// [`FontInfo::pixel_size`]
-    fn point_size_f(&self) -> f32 {
+    pub fn point_size_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).point_size_f)(obj_data);
@@ -370,11 +369,12 @@ pub trait FontTrait<'a> {
     /// **See also:** [`point_size_f()`]
     /// [`set_point_size()`]
     /// [`set_pixel_size()`]
-    fn set_point_size_f(&self, arg0: f32) {
+    pub fn set_point_size_f(&self, arg0: f32) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_point_size_f)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Returns the pixel size of the font if it was set with
@@ -385,7 +385,7 @@ pub trait FontTrait<'a> {
     /// [`point_size()`]
     /// [`FontInfo::point_size`]
     /// [`FontInfo::pixel_size`]
-    fn pixel_size(&self) -> i32 {
+    pub fn pixel_size(&self) -> i32 {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pixel_size)(obj_data);
@@ -400,11 +400,12 @@ pub trait FontTrait<'a> {
     /// in a device independent manner.
     ///
     /// **See also:** [`pixel_size()`]
-    fn set_pixel_size(&self, arg0: i32) {
+    pub fn set_pixel_size(&self, arg0: i32) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_pixel_size)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Returns the weight of the font, using the same scale as the
@@ -414,7 +415,7 @@ pub trait FontTrait<'a> {
     /// **See also:** [`set_weight()`]
     /// Weight
     /// [`FontInfo`]
-    fn weight(&self) -> i32 {
+    pub fn weight(&self) -> i32 {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).weight)(obj_data);
@@ -430,11 +431,12 @@ pub trait FontTrait<'a> {
     ///
     /// **See also:** [`weight()`]
     /// [`FontInfo`]
-    fn set_weight(&self, arg0: i32) {
+    pub fn set_weight(&self, arg0: i32) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_weight)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Returns `true` if weight() is a value greater than
@@ -444,7 +446,7 @@ pub trait FontTrait<'a> {
     /// **See also:** [`weight()`]
     /// [`set_bold()`]
     /// [`FontInfo::bold`]
-    fn bold(&self) -> bool {
+    pub fn bold(&self) -> bool {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bold)(obj_data);
@@ -465,11 +467,12 @@ pub trait FontTrait<'a> {
     ///
     /// **See also:** [`bold()`]
     /// [`set_weight()`]
-    fn set_bold(&self, arg0: bool) {
+    pub fn set_bold(&self, arg0: bool) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_bold)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Sets the style name of the font to *styleName.* When set, other style properties
@@ -507,14 +510,6 @@ pub trait FontTrait<'a> {
     /// Sets the style strategy for the font to *s.*
     ///
     /// **See also:** [`Font::style_strategy()`]
-    fn set_style(&self, style: Style) {
-        let enum_style_1 = style as i32;
-
-        let (obj_data, funcs) = self.get_font_obj_funcs();
-        unsafe {
-            ((*funcs).set_style)(obj_data, enum_style_1);
-        }
-    }
     ///
     /// Returns the requested font style name. This can be used to match the
     /// font with irregular styles (that can't be normalized in other style
@@ -547,20 +542,12 @@ pub trait FontTrait<'a> {
     /// **See also:** [`set_style_hint()`]
     /// [`Font::style_strategy()`]
     /// [`FontInfo::style_hint`]
-    fn style(&self) -> Style {
-        let (obj_data, funcs) = self.get_font_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).style)(obj_data);
-            let ret_val = { transmute::<i32, Style>(ret_val) };
-            ret_val
-        }
-    }
     ///
     /// Returns `true` if the style() of the font is not QFont::StyleNormal
     ///
     /// **See also:** [`set_italic()`]
     /// [`style()`]
-    fn italic(&self) -> bool {
+    pub fn italic(&self) -> bool {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).italic)(obj_data);
@@ -577,17 +564,18 @@ pub trait FontTrait<'a> {
     ///
     /// **See also:** [`italic()`]
     /// [`FontInfo`]
-    fn set_italic(&self, b: bool) {
+    pub fn set_italic(&self, b: bool) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_italic)(obj_data, b);
         }
+        self
     }
     ///
     /// Returns `true` if underline has been set; otherwise returns `false.`
     ///
     /// **See also:** [`set_underline()`]
-    fn underline(&self) -> bool {
+    pub fn underline(&self) -> bool {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).underline)(obj_data);
@@ -600,17 +588,18 @@ pub trait FontTrait<'a> {
     ///
     /// **See also:** [`underline()`]
     /// [`FontInfo`]
-    fn set_underline(&self, arg0: bool) {
+    pub fn set_underline(&self, arg0: bool) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_underline)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Returns `true` if overline has been set; otherwise returns `false.`
     ///
     /// **See also:** [`set_overline()`]
-    fn overline(&self) -> bool {
+    pub fn overline(&self) -> bool {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).overline)(obj_data);
@@ -622,18 +611,19 @@ pub trait FontTrait<'a> {
     ///
     /// **See also:** [`overline()`]
     /// [`FontInfo`]
-    fn set_overline(&self, arg0: bool) {
+    pub fn set_overline(&self, arg0: bool) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_overline)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Returns `true` if fixed pitch has been set; otherwise returns `false.`
     ///
     /// **See also:** [`set_fixed_pitch()`]
     /// [`FontInfo::fixed_pitch`]
-    fn fixed_pitch(&self) -> bool {
+    pub fn fixed_pitch(&self) -> bool {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).fixed_pitch)(obj_data);
@@ -646,17 +636,18 @@ pub trait FontTrait<'a> {
     ///
     /// **See also:** [`fixed_pitch()`]
     /// [`FontInfo`]
-    fn set_fixed_pitch(&self, arg0: bool) {
+    pub fn set_fixed_pitch(&self, arg0: bool) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_fixed_pitch)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Returns `true` if kerning should be used when drawing text with this font.
     ///
     /// **See also:** [`set_kerning()`]
-    fn kerning(&self) -> bool {
+    pub fn kerning(&self) -> bool {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).kerning)(obj_data);
@@ -674,11 +665,12 @@ pub trait FontTrait<'a> {
     ///
     /// **See also:** [`kerning()`]
     /// [`FontMetrics`]
-    fn set_kerning(&self, arg0: bool) {
+    pub fn set_kerning(&self, arg0: bool) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_kerning)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Returns the StyleHint.
@@ -691,7 +683,7 @@ pub trait FontTrait<'a> {
     /// **See also:** [`set_style_hint()`]
     /// [`Font::style_strategy()`]
     /// [`FontInfo::style_hint`]
-    fn style_hint(&self) -> StyleHint {
+    pub fn style_hint(&self) -> StyleHint {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).style_hint)(obj_data);
@@ -714,7 +706,7 @@ pub trait FontTrait<'a> {
     /// StyleStrategy
     /// [`style_strategy()`]
     /// [`FontInfo`]
-    fn set_style_hint(&self, arg0: StyleHint, arg1: StyleStrategy) {
+    pub fn set_style_hint(&self, arg0: StyleHint, arg1: StyleStrategy) -> &Self {
         let enum_arg0_1 = arg0 as i32;
         let enum_arg1_2 = arg1 as i32;
 
@@ -722,6 +714,7 @@ pub trait FontTrait<'a> {
         unsafe {
             ((*funcs).set_style_hint)(obj_data, enum_arg0_1, enum_arg1_2);
         }
+        self
     }
     ///
     /// Returns the letter spacing for the font.
@@ -735,7 +728,7 @@ pub trait FontTrait<'a> {
     /// **See also:** [`letter_spacing()`]
     /// [`set_letter_spacing()`]
     /// [`set_word_spacing()`]
-    fn letter_spacing(&self) -> f32 {
+    pub fn letter_spacing(&self) -> f32 {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).letter_spacing)(obj_data);
@@ -748,7 +741,7 @@ pub trait FontTrait<'a> {
     /// **See also:** [`letter_spacing()`]
     /// [`set_letter_spacing()`]
     /// [`set_word_spacing()`]
-    fn letter_spacing_type(&self) -> SpacingType {
+    pub fn letter_spacing_type(&self) -> SpacingType {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).letter_spacing_type)(obj_data);
@@ -768,20 +761,21 @@ pub trait FontTrait<'a> {
     /// **See also:** [`letter_spacing()`]
     /// [`letter_spacing_type()`]
     /// [`set_word_spacing()`]
-    fn set_letter_spacing(&self, stype: SpacingType, spacing: f32) {
+    pub fn set_letter_spacing(&self, stype: SpacingType, spacing: f32) -> &Self {
         let enum_stype_1 = stype as i32;
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_letter_spacing)(obj_data, enum_stype_1, spacing);
         }
+        self
     }
     ///
     /// Returns the word spacing for the font.
     ///
     /// **See also:** [`set_word_spacing()`]
     /// [`set_letter_spacing()`]
-    fn word_spacing(&self) -> f32 {
+    pub fn word_spacing(&self) -> f32 {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).word_spacing)(obj_data);
@@ -801,11 +795,12 @@ pub trait FontTrait<'a> {
     ///
     /// **See also:** [`word_spacing()`]
     /// [`set_letter_spacing()`]
-    fn set_word_spacing(&self, spacing: f32) {
+    pub fn set_word_spacing(&self, spacing: f32) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_word_spacing)(obj_data, spacing);
         }
+        self
     }
     ///
     /// Sets the capitalization of the text in this font to *caps.*
@@ -813,19 +808,20 @@ pub trait FontTrait<'a> {
     /// A font's capitalization makes the text appear in the selected capitalization mode.
     ///
     /// **See also:** [`capitalization()`]
-    fn set_capitalization(&self, arg0: Capitalization) {
+    pub fn set_capitalization(&self, arg0: Capitalization) -> &Self {
         let enum_arg0_1 = arg0 as i32;
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_capitalization)(obj_data, enum_arg0_1);
         }
+        self
     }
     ///
     /// Returns the current capitalization type of the font.
     ///
     /// **See also:** [`set_capitalization()`]
-    fn capitalization(&self) -> Capitalization {
+    pub fn capitalization(&self) -> Capitalization {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).capitalization)(obj_data);
@@ -840,17 +836,18 @@ pub trait FontTrait<'a> {
     /// more details.
     ///
     /// The default hinting preference is QFont::PreferDefaultHinting.
-    fn set_hinting_preference(&self, hinting_preference: HintingPreference) {
+    pub fn set_hinting_preference(&self, hinting_preference: HintingPreference) -> &Self {
         let enum_hinting_preference_1 = hinting_preference as i32;
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_hinting_preference)(obj_data, enum_hinting_preference_1);
         }
+        self
     }
     ///
     /// Returns the currently preferred hinting level for glyphs rendered with this font.
-    fn hinting_preference(&self) -> HintingPreference {
+    pub fn hinting_preference(&self) -> HintingPreference {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hinting_preference)(obj_data);
@@ -863,7 +860,7 @@ pub trait FontTrait<'a> {
     /// returns `false.`
     ///
     /// **See also:** [`set_raw_mode()`]
-    fn raw_mode(&self) -> bool {
+    pub fn raw_mode(&self) -> bool {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).raw_mode)(obj_data);
@@ -885,18 +882,19 @@ pub trait FontTrait<'a> {
     /// **Warning**: Enabling raw mode has no effect since Qt 5.0.
     ///
     /// **See also:** [`raw_mode()`]
-    fn set_raw_mode(&self, arg0: bool) {
+    pub fn set_raw_mode(&self, arg0: bool) -> &Self {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_raw_mode)(obj_data, arg0);
         }
+        self
     }
     ///
     /// Returns `true` if a window system font exactly matching the settings
     /// of this font is available.
     ///
     /// **See also:** [`FontInfo`]
-    fn exact_match(&self) -> bool {
+    pub fn exact_match(&self) -> bool {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).exact_match)(obj_data);
@@ -910,7 +908,7 @@ pub trait FontTrait<'a> {
     ///
     /// **See also:** [`operator()`]
     /// [`operator()`]
-    fn is_copy_of(&self, arg0: &FontTrait) -> bool {
+    pub fn is_copy_of<F: FontTrait<'a>>(&self, arg0: &F) -> bool {
         let (obj_arg0_1, _funcs) = arg0.get_font_obj_funcs();
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
@@ -931,13 +929,14 @@ pub trait FontTrait<'a> {
     ///
     /// **See also:** [`raw_name()`]
     /// [`set_family()`]
-    fn set_raw_name(&self, arg0: &str) {
+    pub fn set_raw_name(&self, arg0: &str) -> &Self {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             ((*funcs).set_raw_name)(obj_data, str_in_arg0_1.as_ptr());
         }
+        self
     }
     ///
     /// Returns the name of the font within the underlying window system.
@@ -947,7 +946,7 @@ pub trait FontTrait<'a> {
     /// Using the return value of this function is usually *not* *portable.*
     ///
     /// **See also:** [`set_raw_name()`]
-    fn raw_name(&self) -> String {
+    pub fn raw_name(&self) -> String {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).raw_name)(obj_data);
@@ -960,7 +959,7 @@ pub trait FontTrait<'a> {
     /// typically used as the key for a cache or dictionary of fonts.
     ///
     /// **See also:** [`Map`]
-    fn key(&self) -> String {
+    pub fn key(&self) -> String {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).key)(obj_data);
@@ -968,115 +967,6 @@ pub trait FontTrait<'a> {
             ret_val
         }
     }
-    ///
-    /// Returns the family name that corresponds to the current style
-    /// hint.
-    ///
-    /// **See also:** StyleHint
-    /// [`style_hint()`]
-    /// [`set_style_hint()`]
-    fn default_family(&self) -> String {
-        let (obj_data, funcs) = self.get_font_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).default_family)(obj_data);
-            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
-            ret_val
-        }
-    }
-    ///
-    /// Returns the font family name.
-    ///
-    /// The current implementation tries a wide variety of common fonts,
-    /// returning the first one it finds. Is is possible that no family is
-    /// found in which case an empty string is returned.
-    ///
-    /// **See also:** [`last_resort_font()`]
-    fn last_resort_family(&self) -> String {
-        let (obj_data, funcs) = self.get_font_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).last_resort_family)(obj_data);
-            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
-            ret_val
-        }
-    }
-    ///
-    /// Returns a font name for the font matching algorithm.
-    /// This is used if the last resort family is not available. It will
-    /// always return a name, if necessary returning something like
-    /// or .
-    ///
-    /// The current implementation tries a wide variety of common fonts,
-    /// returning the first one it finds. The implementation may change
-    /// at any time, but this function will always return a string
-    /// containing something.
-    ///
-    /// It is theoretically possible that there really isn't a
-    /// lastResortFont() in which case Qt will abort with an error
-    /// message. We have not been able to identify a case where this
-    /// happens. Please [report it as a bug](bughowto.html)
-    /// if
-    /// it does, preferably with a list of the fonts you have installed.
-    ///
-    /// **See also:** [`last_resort_family()`]
-    fn last_resort_font(&self) -> String {
-        let (obj_data, funcs) = self.get_font_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).last_resort_font)(obj_data);
-            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
-            ret_val
-        }
-    }
-    ///
-    /// Returns a new QFont that has attributes copied from *other* that
-    /// have not been previously set on this font.
-    fn resolve(&self, arg0: &FontTrait) -> Font {
-        let (obj_arg0_1, _funcs) = arg0.get_font_obj_funcs();
-
-        let (obj_data, funcs) = self.get_font_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).resolve)(obj_data, obj_arg0_1);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = Font::new_from_rc(t);
-            } else {
-                ret_val = Font::new_from_owned(t);
-            }
-            ret_val
-        }
-    }
-    ///
-    /// Returns a new QFont that has attributes copied from *other* that
-    /// have not been previously set on this font.
-    fn resolve_2(&self) -> u64 {
-        let (obj_data, funcs) = self.get_font_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).resolve_2)(obj_data);
-            ret_val
-        }
-    }
-    ///
-    /// Returns a new QFont that has attributes copied from *other* that
-    /// have not been previously set on this font.
-    fn resolve_3(&self, mask: u64) {
-        let (obj_data, funcs) = self.get_font_obj_funcs();
-        unsafe {
-            ((*funcs).resolve_3)(obj_data, mask);
-        }
-    }
-
-    #[inline]
-    fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs);
-}
-
-impl<'a> FontTrait<'a> for Font<'a> {
-    #[inline]
-    fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs) {
-        let obj = self.data.get().unwrap();
-        unsafe { (obj, (*self.all_funcs).font_funcs) }
-    }
-}
-pub trait FontStaticTrait {
     ///
     /// Returns the first family name to be used whenever *familyName* is
     /// specified. The lookup is case insensitive.
@@ -1101,7 +991,7 @@ pub trait FontStaticTrait {
     /// [`insert_substitutions()`]
     /// [`insert_substitution()`]
     /// [`remove_substitutions()`]
-    fn substitute<'a>(arg0: &str) -> String {
+    pub fn substitute(arg0: &str) -> String {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
 
         let (obj_data, funcs) = unsafe {
@@ -1133,7 +1023,7 @@ pub trait FontStaticTrait {
     /// [`remove_substitutions()`]
     /// [`substitutions()`]
     /// [`substitute()`]
-    fn insert_substitution<'a>(arg0: &str, arg1: &str) {
+    pub fn insert_substitution(arg0: &str, arg1: &str) {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
         let str_in_arg1_2 = CString::new(arg1).unwrap();
 
@@ -1158,7 +1048,7 @@ pub trait FontStaticTrait {
     /// [`insert_substitution()`]
     /// [`substitutions()`]
     /// [`substitute()`]
-    fn remove_substitutions<'a>(arg0: &str) {
+    pub fn remove_substitutions(arg0: &str) {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
 
         let (obj_data, funcs) = unsafe {
@@ -1171,7 +1061,7 @@ pub trait FontStaticTrait {
             ((*funcs).remove_substitutions)(obj_data, str_in_arg0_1.as_ptr());
         }
     }
-    fn initialize<'a>() {
+    pub fn initialize() {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1182,7 +1072,7 @@ pub trait FontStaticTrait {
             ((*funcs).initialize)(obj_data);
         }
     }
-    fn cleanup<'a>() {
+    pub fn cleanup() {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1193,7 +1083,7 @@ pub trait FontStaticTrait {
             ((*funcs).cleanup)(obj_data);
         }
     }
-    fn cache_statistics<'a>() {
+    pub fn cache_statistics() {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -1204,11 +1094,117 @@ pub trait FontStaticTrait {
             ((*funcs).cache_statistics)(obj_data);
         }
     }
+    ///
+    /// Returns the family name that corresponds to the current style
+    /// hint.
+    ///
+    /// **See also:** StyleHint
+    /// [`style_hint()`]
+    /// [`set_style_hint()`]
+    pub fn default_family(&self) -> String {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).default_family)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// Returns the font family name.
+    ///
+    /// The current implementation tries a wide variety of common fonts,
+    /// returning the first one it finds. Is is possible that no family is
+    /// found in which case an empty string is returned.
+    ///
+    /// **See also:** [`last_resort_font()`]
+    pub fn last_resort_family(&self) -> String {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).last_resort_family)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// Returns a font name for the font matching algorithm.
+    /// This is used if the last resort family is not available. It will
+    /// always return a name, if necessary returning something like
+    /// or .
+    ///
+    /// The current implementation tries a wide variety of common fonts,
+    /// returning the first one it finds. The implementation may change
+    /// at any time, but this function will always return a string
+    /// containing something.
+    ///
+    /// It is theoretically possible that there really isn't a
+    /// lastResortFont() in which case Qt will abort with an error
+    /// message. We have not been able to identify a case where this
+    /// happens. Please [report it as a bug](bughowto.html)
+    /// if
+    /// it does, preferably with a list of the fonts you have installed.
+    ///
+    /// **See also:** [`last_resort_family()`]
+    pub fn last_resort_font(&self) -> String {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).last_resort_font)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    ///
+    /// Returns a new QFont that has attributes copied from *other* that
+    /// have not been previously set on this font.
+    pub fn resolve<F: FontTrait<'a>>(&self, arg0: &F) -> Font {
+        let (obj_arg0_1, _funcs) = arg0.get_font_obj_funcs();
+
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).resolve)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Font::new_from_rc(t);
+            } else {
+                ret_val = Font::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns a new QFont that has attributes copied from *other* that
+    /// have not been previously set on this font.
+    pub fn resolve_2(&self) -> u64 {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).resolve_2)(obj_data);
+            ret_val
+        }
+    }
+    ///
+    /// Returns a new QFont that has attributes copied from *other* that
+    /// have not been previously set on this font.
+    pub fn resolve_3(&self, mask: u64) -> &Self {
+        let (obj_data, funcs) = self.get_font_obj_funcs();
+        unsafe {
+            ((*funcs).resolve_3)(obj_data, mask);
+        }
+        self
+    }
+}
+pub trait FontTrait<'a> {
+    #[inline]
+    #[doc(hidden)]
+    fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs);
 }
 
-impl<'a> FontStaticTrait for Font<'a> {}
-
-impl<'a> FontStaticTrait for FontStatic<'a> {}
+impl<'a> FontTrait<'a> for Font<'a> {
+    #[doc(hidden)]
+    fn get_font_obj_funcs(&self) -> (*const RUBase, *const RUFontFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).font_funcs) }
+    }
+}
 #[repr(u32)]
 pub enum StyleHint {
     Helvetica,
@@ -1263,13 +1259,6 @@ pub enum Weight {
     Bold,
     ExtraBold,
     Black,
-}
-
-#[repr(u32)]
-pub enum Style {
-    StyleNormal,
-    StyleItalic,
-    StyleOblique,
 }
 
 #[repr(u32)]

@@ -122,7 +122,6 @@ extern std::map<int, int> s_standard_pixmap_lookup;
 extern std::map<int, int> s_state_lookup;
 extern std::map<int, int> s_state_flag_lookup;
 extern std::map<int, int> s_stretch_lookup;
-extern std::map<int, int> s_style_lookup;
 extern std::map<int, int> s_style_hint_lookup;
 extern std::map<int, int> s_style_strategy_lookup;
 extern std::map<int, int> s_sub_control_lookup;

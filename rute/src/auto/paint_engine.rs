@@ -17,81 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::image::Image;
-#[allow(unused_imports)]
-use auto::image::ImageTrait;
-#[allow(unused_imports)]
-use auto::image_ffi::*;
-#[allow(unused_imports)]
-use auto::line::Line;
-#[allow(unused_imports)]
-use auto::line::LineTrait;
-#[allow(unused_imports)]
-use auto::line_f::LineF;
-#[allow(unused_imports)]
-use auto::line_f::LineFTrait;
-#[allow(unused_imports)]
-use auto::line_f_ffi::*;
-#[allow(unused_imports)]
-use auto::line_ffi::*;
-#[allow(unused_imports)]
-use auto::paint_device::PaintDevice;
-#[allow(unused_imports)]
-use auto::paint_device::PaintDeviceTrait;
-#[allow(unused_imports)]
-use auto::paint_device_ffi::*;
-#[allow(unused_imports)]
-use auto::paint_engine_ffi::*;
-#[allow(unused_imports)]
-use auto::paint_engine_state::PaintEngineState;
-#[allow(unused_imports)]
-use auto::paint_engine_state::PaintEngineStateTrait;
-#[allow(unused_imports)]
-use auto::paint_engine_state_ffi::*;
-#[allow(unused_imports)]
-use auto::pixmap::Pixmap;
-#[allow(unused_imports)]
-use auto::pixmap::PixmapTrait;
-#[allow(unused_imports)]
-use auto::pixmap_ffi::*;
-#[allow(unused_imports)]
-use auto::point::Point;
-#[allow(unused_imports)]
-use auto::point::PointTrait;
-#[allow(unused_imports)]
-use auto::point_f::PointF;
-#[allow(unused_imports)]
-use auto::point_f::PointFTrait;
-#[allow(unused_imports)]
-use auto::point_f_ffi::*;
-#[allow(unused_imports)]
-use auto::point_ffi::*;
-#[allow(unused_imports)]
-use auto::rect::Rect;
-#[allow(unused_imports)]
-use auto::rect::RectTrait;
-#[allow(unused_imports)]
-use auto::rect_f::RectF;
-#[allow(unused_imports)]
-use auto::rect_f::RectFTrait;
-#[allow(unused_imports)]
-use auto::rect_f_ffi::*;
-#[allow(unused_imports)]
-use auto::rect_ffi::*;
-#[allow(unused_imports)]
-use auto::region::Region;
-#[allow(unused_imports)]
-use auto::region::RegionTrait;
-#[allow(unused_imports)]
-use auto::region_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_enums::ImageConversionFlags;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// Qt provides several premade implementations of QPaintEngine for the
 /// different painter backends we support. The primary paint engine
@@ -120,14 +47,19 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct PaintEngine<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUPaintEngineAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> PaintEngine<'a> {
-    pub fn new_from_rc(ffi_data: RUPaintEngine) -> PaintEngine<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUPaintEngine) -> PaintEngine<'a> {
         PaintEngine {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -136,7 +68,8 @@ impl<'a> PaintEngine<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUPaintEngine) -> PaintEngine<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUPaintEngine) -> PaintEngine<'a> {
         PaintEngine {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -145,7 +78,8 @@ impl<'a> PaintEngine<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUPaintEngine) -> PaintEngine<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUPaintEngine) -> PaintEngine<'a> {
         PaintEngine {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -153,14 +87,12 @@ impl<'a> PaintEngine<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait PaintEngineTrait<'a> {
     ///
     /// Returns `true` if the paint engine is actively drawing; otherwise
     /// returns `false.`
     ///
     /// **See also:** [`set_active()`]
-    fn is_active(&self) -> bool {
+    pub fn is_active(&self) -> bool {
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_active)(obj_data);
@@ -171,11 +103,12 @@ pub trait PaintEngineTrait<'a> {
     /// Sets the active state of the paint engine to *state.*
     ///
     /// **See also:** [`is_active()`]
-    fn set_active(&self, new_state: bool) {
+    pub fn set_active(&self, new_state: bool) -> &Self {
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).set_active)(obj_data, new_state);
         }
+        self
     }
     ///
     /// Reimplement this function to initialise your paint engine when
@@ -184,7 +117,7 @@ pub trait PaintEngineTrait<'a> {
     ///
     /// **See also:** [`end()`]
     /// [`is_active()`]
-    fn begin(&self, pdev: &PaintDeviceTrait) -> bool {
+    pub fn begin<P: PaintDeviceTrait<'a>>(&self, pdev: &P) -> bool {
         let (obj_pdev_1, _funcs) = pdev.get_paint_device_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
@@ -200,7 +133,7 @@ pub trait PaintEngineTrait<'a> {
     ///
     /// **See also:** [`begin()`]
     /// [`is_active()`]
-    fn end(&self) -> bool {
+    pub fn end(&self) -> bool {
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).end)(obj_data);
@@ -219,13 +152,14 @@ pub trait PaintEngineTrait<'a> {
     /// the given properties.
     ///
     /// **See also:** [`PaintEngineState`]
-    fn update_state(&self, state: &PaintEngineStateTrait) {
+    pub fn update_state<P: PaintEngineStateTrait<'a>>(&self, state: &P) -> &Self {
         let (obj_state_1, _funcs) = state.get_paint_engine_state_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).update_state)(obj_data, obj_state_1);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -235,13 +169,14 @@ pub trait PaintEngineTrait<'a> {
     ///
     /// Draws the first *rectCount* rectangles in the buffer *rects.* The default implementation of this function calls drawPath()
     /// or drawPolygon() depending on the feature set of the paint engine.
-    fn draw_rects(&self, rects: &RectTrait, rect_count: i32) {
+    pub fn draw_rects<R: RectTrait<'a>>(&self, rects: &R, rect_count: i32) -> &Self {
         let (obj_rects_1, _funcs) = rects.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).draw_rects)(obj_data, obj_rects_1, rect_count);
         }
+        self
     }
     ///
     /// **Overloads**
@@ -251,13 +186,14 @@ pub trait PaintEngineTrait<'a> {
     ///
     /// Draws the first *rectCount* rectangles in the buffer *rects.* The default implementation of this function calls drawPath()
     /// or drawPolygon() depending on the feature set of the paint engine.
-    fn draw_rects_2(&self, rects: &RectFTrait, rect_count: i32) {
+    pub fn draw_rects_2<R: RectFTrait<'a>>(&self, rects: &R, rect_count: i32) -> &Self {
         let (obj_rects_1, _funcs) = rects.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).draw_rects_2)(obj_data, obj_rects_1, rect_count);
         }
+        self
     }
     ///
     /// The default implementation splits the list of lines in *lines*
@@ -268,13 +204,14 @@ pub trait PaintEngineTrait<'a> {
     /// The default implementation converts the first *lineCount* lines
     /// in *lines* to a QLineF and calls the floating point version of
     /// this function.
-    fn draw_lines(&self, lines: &LineTrait, line_count: i32) {
+    pub fn draw_lines<L: LineTrait<'a>>(&self, lines: &L, line_count: i32) -> &Self {
         let (obj_lines_1, _funcs) = lines.get_line_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).draw_lines)(obj_data, obj_lines_1, line_count);
         }
+        self
     }
     ///
     /// The default implementation splits the list of lines in *lines*
@@ -285,13 +222,14 @@ pub trait PaintEngineTrait<'a> {
     /// The default implementation converts the first *lineCount* lines
     /// in *lines* to a QLineF and calls the floating point version of
     /// this function.
-    fn draw_lines_2(&self, lines: &LineFTrait, line_count: i32) {
+    pub fn draw_lines_2<L: LineFTrait<'a>>(&self, lines: &L, line_count: i32) -> &Self {
         let (obj_lines_1, _funcs) = lines.get_line_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).draw_lines_2)(obj_data, obj_lines_1, line_count);
         }
+        self
     }
     ///
     /// Reimplement this function to draw the largest ellipse that can be
@@ -301,13 +239,14 @@ pub trait PaintEngineTrait<'a> {
     ///
     /// The default implementation of this function calls the floating
     /// point version of this function
-    fn draw_ellipse(&self, r: &RectFTrait) {
+    pub fn draw_ellipse<R: RectFTrait<'a>>(&self, r: &R) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).draw_ellipse)(obj_data, obj_r_1);
         }
+        self
     }
     ///
     /// Reimplement this function to draw the largest ellipse that can be
@@ -317,13 +256,14 @@ pub trait PaintEngineTrait<'a> {
     ///
     /// The default implementation of this function calls the floating
     /// point version of this function
-    fn draw_ellipse_2(&self, r: &RectTrait) {
+    pub fn draw_ellipse_2<R: RectTrait<'a>>(&self, r: &R) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).draw_ellipse_2)(obj_data, obj_r_1);
         }
+        self
     }
     ///
     /// The default implementation ignores the *path* and does nothing.
@@ -335,13 +275,14 @@ pub trait PaintEngineTrait<'a> {
     /// The default implementation converts the first *pointCount* QPoints in *points*
     /// to QPointFs and calls the floating point version of drawPoints.
     ///
-    fn draw_points(&self, points: &PointFTrait, point_count: i32) {
+    pub fn draw_points<P: PointFTrait<'a>>(&self, points: &P, point_count: i32) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_f_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).draw_points)(obj_data, obj_points_1, point_count);
         }
+        self
     }
     ///
     /// Draws the first *pointCount* points in the buffer *points*
@@ -351,13 +292,14 @@ pub trait PaintEngineTrait<'a> {
     /// The default implementation converts the first *pointCount* QPoints in *points*
     /// to QPointFs and calls the floating point version of drawPoints.
     ///
-    fn draw_points_2(&self, points: &PointTrait, point_count: i32) {
+    pub fn draw_points_2<P: PointTrait<'a>>(&self, points: &P, point_count: i32) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).draw_points_2)(obj_data, obj_points_1, point_count);
         }
+        self
     }
     ///
     /// PolygonDrawMode mode)
@@ -372,7 +314,12 @@ pub trait PaintEngineTrait<'a> {
     /// *pointCount* first points in *points,* using mode *mode.*
     ///
     /// **Note**: At least one of the drawPolygon() functions must be reimplemented.
-    fn draw_polygon(&self, points: &PointFTrait, point_count: i32, mode: PolygonDrawMode) {
+    pub fn draw_polygon<P: PointFTrait<'a>>(
+        &self,
+        points: &P,
+        point_count: i32,
+        mode: PolygonDrawMode,
+    ) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_f_obj_funcs();
         let enum_mode_3 = mode as i32;
 
@@ -380,6 +327,7 @@ pub trait PaintEngineTrait<'a> {
         unsafe {
             ((*funcs).draw_polygon)(obj_data, obj_points_1, point_count, enum_mode_3);
         }
+        self
     }
     ///
     /// PolygonDrawMode mode)
@@ -394,7 +342,12 @@ pub trait PaintEngineTrait<'a> {
     /// *pointCount* first points in *points,* using mode *mode.*
     ///
     /// **Note**: At least one of the drawPolygon() functions must be reimplemented.
-    fn draw_polygon_2(&self, points: &PointTrait, point_count: i32, mode: PolygonDrawMode) {
+    pub fn draw_polygon_2<P: PointTrait<'a>>(
+        &self,
+        points: &P,
+        point_count: i32,
+        mode: PolygonDrawMode,
+    ) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_obj_funcs();
         let enum_mode_3 = mode as i32;
 
@@ -402,13 +355,19 @@ pub trait PaintEngineTrait<'a> {
         unsafe {
             ((*funcs).draw_polygon_2)(obj_data, obj_points_1, point_count, enum_mode_3);
         }
+        self
     }
     ///
     /// &pm, const QRectF &sr)
     ///
     /// Reimplement this function to draw the part of the *pm*
     /// specified by the *sr* rectangle in the given *r.*
-    fn draw_pixmap(&self, r: &RectFTrait, pm: &PixmapTrait, sr: &RectFTrait) {
+    pub fn draw_pixmap<P: PixmapTrait<'a>, R: RectFTrait<'a>>(
+        &self,
+        r: &R,
+        pm: &P,
+        sr: &R,
+    ) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
         let (obj_pm_2, _funcs) = pm.get_pixmap_obj_funcs();
         let (obj_sr_3, _funcs) = sr.get_rect_f_obj_funcs();
@@ -417,6 +376,7 @@ pub trait PaintEngineTrait<'a> {
         unsafe {
             ((*funcs).draw_pixmap)(obj_data, obj_r_1, obj_pm_2, obj_sr_3);
         }
+        self
     }
     ///
     /// This function draws the text item *textItem* at position *p.* The
@@ -425,7 +385,12 @@ pub trait PaintEngineTrait<'a> {
     ///
     /// Reimplement this function to draw the *pixmap* in the given *rect,* starting at the given *p.* The pixmap will be
     /// drawn repeatedly until the *rect* is filled.
-    fn draw_tiled_pixmap(&self, r: &RectFTrait, pixmap: &PixmapTrait, s: &PointFTrait) {
+    pub fn draw_tiled_pixmap<P: PixmapTrait<'a>, Q: PointFTrait<'a>, R: RectFTrait<'a>>(
+        &self,
+        r: &R,
+        pixmap: &P,
+        s: &Q,
+    ) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
         let (obj_pixmap_2, _funcs) = pixmap.get_pixmap_obj_funcs();
         let (obj_s_3, _funcs) = s.get_point_f_obj_funcs();
@@ -434,6 +399,7 @@ pub trait PaintEngineTrait<'a> {
         unsafe {
             ((*funcs).draw_tiled_pixmap)(obj_data, obj_r_1, obj_pixmap_2, obj_s_3);
         }
+        self
     }
     ///
     /// &image, const QRectF &sr, Qt::ImageConversionFlags flags)
@@ -441,13 +407,13 @@ pub trait PaintEngineTrait<'a> {
     /// Reimplement this function to draw the part of the *image*
     /// specified by the *sr* rectangle in the given *rectangle* using
     /// the given conversion flags *flags,* to convert it to a pixmap.
-    fn draw_image(
+    pub fn draw_image<I: ImageTrait<'a>, R: RectFTrait<'a>>(
         &self,
-        r: &RectFTrait,
-        pm: &ImageTrait,
-        sr: &RectFTrait,
+        r: &R,
+        pm: &I,
+        sr: &R,
         flags: ImageConversionFlags,
-    ) {
+    ) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
         let (obj_pm_2, _funcs) = pm.get_image_obj_funcs();
         let (obj_sr_3, _funcs) = sr.get_rect_f_obj_funcs();
@@ -457,19 +423,21 @@ pub trait PaintEngineTrait<'a> {
         unsafe {
             ((*funcs).draw_image)(obj_data, obj_r_1, obj_pm_2, obj_sr_3, enum_flags_4);
         }
+        self
     }
-    fn set_paint_device(&self, device: &PaintDeviceTrait) {
+    pub fn set_paint_device<P: PaintDeviceTrait<'a>>(&self, device: &P) -> &Self {
         let (obj_device_1, _funcs) = device.get_paint_device_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).set_paint_device)(obj_data, obj_device_1);
         }
+        self
     }
     ///
     /// Returns the device that this engine is painting on, if painting is
     /// active; otherwise returns 0.
-    fn paint_device(&self) -> Option<PaintDevice> {
+    pub fn paint_device(&self) -> Option<PaintDevice> {
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).paint_device)(obj_data);
@@ -486,15 +454,16 @@ pub trait PaintEngineTrait<'a> {
             Some(ret_val)
         }
     }
-    fn set_system_clip(&self, base_clip: &RegionTrait) {
+    pub fn set_system_clip<R: RegionTrait<'a>>(&self, base_clip: &R) -> &Self {
         let (obj_base_clip_1, _funcs) = base_clip.get_region_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).set_system_clip)(obj_data, obj_base_clip_1);
         }
+        self
     }
-    fn system_clip(&self) -> Region {
+    pub fn system_clip(&self) -> Region {
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).system_clip)(obj_data);
@@ -508,15 +477,16 @@ pub trait PaintEngineTrait<'a> {
             ret_val
         }
     }
-    fn set_system_rect(&self, rect: &RectTrait) {
+    pub fn set_system_rect<R: RectTrait<'a>>(&self, rect: &R) -> &Self {
         let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             ((*funcs).set_system_rect)(obj_data, obj_rect_1);
         }
+        self
     }
-    fn system_rect(&self) -> Rect {
+    pub fn system_rect(&self) -> Rect {
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).system_rect)(obj_data);
@@ -530,7 +500,7 @@ pub trait PaintEngineTrait<'a> {
             ret_val
         }
     }
-    fn coordinate_offset(&self) -> Point {
+    pub fn coordinate_offset(&self) -> Point {
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).coordinate_offset)(obj_data);
@@ -544,13 +514,15 @@ pub trait PaintEngineTrait<'a> {
             ret_val
         }
     }
-
+}
+pub trait PaintEngineTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_paint_engine_obj_funcs(&self) -> (*const RUBase, *const RUPaintEngineFuncs);
 }
 
 impl<'a> PaintEngineTrait<'a> for PaintEngine<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_paint_engine_obj_funcs(&self) -> (*const RUBase, *const RUPaintEngineFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).paint_engine_funcs) }

@@ -17,17 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::font::Style;
-#[allow(unused_imports)]
-use auto::font_info_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
-#[allow(unused_imports)]
-use auto::style::StyleHint;
 ///
 /// The QFontInfo class provides the same access functions as QFont,
 /// e.g. family(), pointSize(), italic(), weight(), fixedPitch(),
@@ -54,14 +45,19 @@ use auto::style::StyleHint;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct FontInfo<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUFontInfoAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> FontInfo<'a> {
-    pub fn new_from_rc(ffi_data: RUFontInfo) -> FontInfo<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUFontInfo) -> FontInfo<'a> {
         FontInfo {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -70,7 +66,8 @@ impl<'a> FontInfo<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUFontInfo) -> FontInfo<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUFontInfo) -> FontInfo<'a> {
         FontInfo {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -79,7 +76,8 @@ impl<'a> FontInfo<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUFontInfo) -> FontInfo<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUFontInfo) -> FontInfo<'a> {
         FontInfo {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -87,24 +85,23 @@ impl<'a> FontInfo<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait FontInfoTrait<'a> {
     ///
     /// Swaps this font info instance with *other.* This function is very
     /// fast and never fails.
-    fn swap(&self, other: &FontInfoTrait) {
+    pub fn swap<F: FontInfoTrait<'a>>(&self, other: &F) -> &Self {
         let (obj_other_1, _funcs) = other.get_font_info_obj_funcs();
 
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             ((*funcs).swap)(obj_data, obj_other_1);
         }
+        self
     }
     ///
     /// Returns the family name of the matched window system font.
     ///
     /// **See also:** QFont::family()
-    fn family(&self) -> String {
+    pub fn family(&self) -> String {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).family)(obj_data);
@@ -117,7 +114,7 @@ pub trait FontInfoTrait<'a> {
     /// systems that support it.
     ///
     /// **See also:** QFont::styleName()
-    fn style_name(&self) -> String {
+    pub fn style_name(&self) -> String {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).style_name)(obj_data);
@@ -129,7 +126,7 @@ pub trait FontInfoTrait<'a> {
     /// Returns the pixel size of the matched window system font.
     ///
     /// **See also:** QFont::pointSize()
-    fn pixel_size(&self) -> i32 {
+    pub fn pixel_size(&self) -> i32 {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pixel_size)(obj_data);
@@ -145,7 +142,7 @@ pub trait FontInfoTrait<'a> {
     /// Returns the point size of the matched window system font.
     ///
     /// **See also:** QFont::pointSizeF()
-    fn point_size(&self) -> i32 {
+    pub fn point_size(&self) -> i32 {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).point_size)(obj_data);
@@ -156,7 +153,7 @@ pub trait FontInfoTrait<'a> {
     /// Returns the point size of the matched window system font.
     ///
     /// **See also:** QFont::pointSizeF()
-    fn point_size_f(&self) -> f32 {
+    pub fn point_size_f(&self) -> f32 {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).point_size_f)(obj_data);
@@ -167,7 +164,7 @@ pub trait FontInfoTrait<'a> {
     /// Returns the italic value of the matched window system font.
     ///
     /// **See also:** QFont::italic()
-    fn italic(&self) -> bool {
+    pub fn italic(&self) -> bool {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).italic)(obj_data);
@@ -190,20 +187,12 @@ pub trait FontInfoTrait<'a> {
     ///
     /// **See also:** QFont::styleHint()
     /// QFont::StyleHint
-    fn style(&self) -> Style {
-        let (obj_data, funcs) = self.get_font_info_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).style)(obj_data);
-            let ret_val = { transmute::<i32, Style>(ret_val) };
-            ret_val
-        }
-    }
     ///
     /// Returns the weight of the matched window system font.
     ///
     /// **See also:** QFont::weight()
     /// bold()
-    fn weight(&self) -> i32 {
+    pub fn weight(&self) -> i32 {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).weight)(obj_data);
@@ -216,21 +205,21 @@ pub trait FontInfoTrait<'a> {
     ///
     /// **See also:** weight()
     /// QFont::bold()
-    fn bold(&self) -> bool {
+    pub fn bold(&self) -> bool {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bold)(obj_data);
             ret_val
         }
     }
-    fn underline(&self) -> bool {
+    pub fn underline(&self) -> bool {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).underline)(obj_data);
             ret_val
         }
     }
-    fn overline(&self) -> bool {
+    pub fn overline(&self) -> bool {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).overline)(obj_data);
@@ -241,7 +230,7 @@ pub trait FontInfoTrait<'a> {
     /// Returns the fixed pitch value of the matched window system font.
     ///
     /// **See also:** QFont::fixedPitch()
-    fn fixed_pitch(&self) -> bool {
+    pub fn fixed_pitch(&self) -> bool {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).fixed_pitch)(obj_data);
@@ -255,7 +244,7 @@ pub trait FontInfoTrait<'a> {
     ///
     /// **See also:** QFont::styleHint()
     /// QFont::StyleHint
-    fn style_hint(&self) -> StyleHint {
+    pub fn style_hint(&self) -> StyleHint {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).style_hint)(obj_data);
@@ -272,7 +261,7 @@ pub trait FontInfoTrait<'a> {
     /// actually used.
     ///
     /// **See also:** QFont::rawMode()
-    fn raw_mode(&self) -> bool {
+    pub fn raw_mode(&self) -> bool {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).raw_mode)(obj_data);
@@ -284,20 +273,22 @@ pub trait FontInfoTrait<'a> {
     /// as the one specified by the font; otherwise returns `false.`
     ///
     /// **See also:** QFont::exactMatch()
-    fn exact_match(&self) -> bool {
+    pub fn exact_match(&self) -> bool {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).exact_match)(obj_data);
             ret_val
         }
     }
-
+}
+pub trait FontInfoTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_font_info_obj_funcs(&self) -> (*const RUBase, *const RUFontInfoFuncs);
 }
 
 impl<'a> FontInfoTrait<'a> for FontInfo<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_font_info_obj_funcs(&self) -> (*const RUBase, *const RUFontInfoFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).font_info_funcs) }

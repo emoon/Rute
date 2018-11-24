@@ -17,19 +17,8 @@ use std::ffi::{CStr, CString};
 use rute_ffi_base::*;
 
 // Auto-generated imports
+use auto::*;
 
-#[allow(unused_imports)]
-use auto::color::Color;
-#[allow(unused_imports)]
-use auto::color::ColorTrait;
-#[allow(unused_imports)]
-use auto::color_ffi::*;
-#[allow(unused_imports)]
-use auto::gradient_ffi::*;
-#[allow(unused_imports)]
-use auto::rute::*;
-#[allow(unused_imports)]
-use auto::rute_ffi::*;
 ///
 /// Qt currently supports three types of gradient fills:
 ///
@@ -113,9 +102,13 @@ use auto::rute_ffi::*;
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Gradient<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUGradientAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -140,7 +133,8 @@ impl<'a> Gradient<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUGradient) -> Gradient<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUGradient) -> Gradient<'a> {
         Gradient {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -149,7 +143,8 @@ impl<'a> Gradient<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUGradient) -> Gradient<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUGradient) -> Gradient<'a> {
         Gradient {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -158,7 +153,8 @@ impl<'a> Gradient<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUGradient) -> Gradient<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUGradient) -> Gradient<'a> {
         Gradient {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -166,10 +162,8 @@ impl<'a> Gradient<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait GradientTrait<'a> {
     /// Returns the type of gradient.
-    fn get_type(&self) -> Type {
+    pub fn get_type(&self) -> Type {
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).get_type)(obj_data);
@@ -185,20 +179,21 @@ pub trait GradientTrait<'a> {
     /// gradients.
     ///
     /// **See also:** spread()
-    fn set_spread(&self, spread: Spread) {
+    pub fn set_spread(&self, spread: Spread) -> &Self {
         let enum_spread_1 = spread as i32;
 
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             ((*funcs).set_spread)(obj_data, enum_spread_1);
         }
+        self
     }
     ///
     /// Returns the spread method use by this gradient. The default is
     /// PadSpread.
     ///
     /// **See also:** setSpread()
-    fn spread(&self) -> Spread {
+    pub fn spread(&self) -> Spread {
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).spread)(obj_data);
@@ -211,18 +206,19 @@ pub trait GradientTrait<'a> {
     ///
     /// **See also:** setStops()
     /// stops()
-    fn set_color_at(&self, pos: f32, color: &ColorTrait) {
+    pub fn set_color_at<C: ColorTrait<'a>>(&self, pos: f32, color: &C) -> &Self {
         let (obj_color_2, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             ((*funcs).set_color_at)(obj_data, pos, obj_color_2);
         }
+        self
     }
     ///
     /// Returns the coordinate mode of this gradient. The default mode is
     /// LogicalMode.
-    fn coordinate_mode(&self) -> CoordinateMode {
+    pub fn coordinate_mode(&self) -> CoordinateMode {
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).coordinate_mode)(obj_data);
@@ -233,15 +229,16 @@ pub trait GradientTrait<'a> {
     ///
     /// Sets the coordinate mode of this gradient to *mode.* The default
     /// mode is LogicalMode.
-    fn set_coordinate_mode(&self, mode: CoordinateMode) {
+    pub fn set_coordinate_mode(&self, mode: CoordinateMode) -> &Self {
         let enum_mode_1 = mode as i32;
 
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             ((*funcs).set_coordinate_mode)(obj_data, enum_mode_1);
         }
+        self
     }
-    fn interpolation_mode(&self) -> InterpolationMode {
+    pub fn interpolation_mode(&self) -> InterpolationMode {
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).interpolation_mode)(obj_data);
@@ -249,21 +246,24 @@ pub trait GradientTrait<'a> {
             ret_val
         }
     }
-    fn set_interpolation_mode(&self, mode: InterpolationMode) {
+    pub fn set_interpolation_mode(&self, mode: InterpolationMode) -> &Self {
         let enum_mode_1 = mode as i32;
 
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             ((*funcs).set_interpolation_mode)(obj_data, enum_mode_1);
         }
+        self
     }
-
+}
+pub trait GradientTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_gradient_obj_funcs(&self) -> (*const RUBase, *const RUGradientFuncs);
 }
 
 impl<'a> GradientTrait<'a> for Gradient<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_gradient_obj_funcs(&self) -> (*const RUBase, *const RUGradientFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).gradient_funcs) }
