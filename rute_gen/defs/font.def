@@ -330,7 +330,7 @@ struct Font {
     /// Sets the style strategy for the font to *s.*
     ///
     /// **See also:** [`Font::style_strategy()`]
-    set_style(style: Font::Style),
+    //set_style(style: Font::Style),
     ///
     /// Returns the requested font style name. This can be used to match the
     /// font with irregular styles (that can't be normalized in other style
@@ -363,7 +363,7 @@ struct Font {
     /// **See also:** [`set_style_hint()`]
     /// [`Font::style_strategy()`]
     /// [`FontInfo::style_hint`]
-    style() -> Font::Style,
+    //style() -> Font::Style,
     ///
     /// Returns `true` if the style() of the font is not QFont::StyleNormal
     ///
@@ -831,16 +831,6 @@ enum Weight {
     ExtraBold,
     /// 87
     Black,
-}
-
-[org_name(QFont)]
-enum Style {
-    /// Normal glyphs used in unstyled text.
-    StyleNormal,
-    /// Italic glyphs that are specifically designed for
-    StyleItalic,
-    /// Glyphs with an italic appearance that are typically
-    StyleOblique,
 }
 
 [org_name(QFont)]
