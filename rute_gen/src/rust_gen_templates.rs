@@ -18,7 +18,8 @@ use std::ffi::{CString, CStr};
 use rute_ffi_base::*;
 
 // Auto-generated imports
-\n\n";
+use auto::*;
+\n";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -42,7 +43,7 @@ pub fn rute_ffi_get() -> *const RuteFFI {
     }
 }
 
-pub unsafe extern \"C\" fn rute_object_delete_callback(data: *const c_void) {
+pub(crate) unsafe extern \"C\" fn rute_object_delete_callback(data: *const c_void) {
     let d = Rc::from_raw(data as *const Cell<Option<RUBase>>);
     d.set(None);
 }
@@ -65,9 +66,13 @@ impl Rute {
 
 pub static RUST_STRUCT_IMPL_TEMPLATE: &str = "#[derive(Clone)]
 pub struct {{struct_name}}<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RU{{struct_name}}AllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -103,7 +108,8 @@ impl <'a>{{struct_name}}<'a> {
     {% endif %}
     }
 {%- endif %}
-    pub fn new_from_rc(ffi_data: RU{{struct_name}}) -> {{struct_name}}<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RU{{struct_name}}) -> {{struct_name}}<'a> {
         {{struct_name}} {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -112,7 +118,8 @@ impl <'a>{{struct_name}}<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RU{{struct_name}}) -> {{struct_name}}<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RU{{struct_name}}) -> {{struct_name}}<'a> {
         {{struct_name}} {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -121,7 +128,8 @@ impl <'a>{{struct_name}}<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RU{{struct_name}}) -> {{struct_name}}<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RU{{struct_name}}) -> {{struct_name}}<'a> {
         {{struct_name}} {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -154,7 +162,7 @@ impl<'a> Drop for {{type_name}}<'a> {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_FUNC_IMPL_TEMPLATE: &str =
-"    fn {{func_name_header}}{{function_def}} {
+"    pub fn {{func_name_header}}{{function_def}} {
 {{ body_setup }}
     {%- if static_func %}
         let (obj_data, funcs) = unsafe {
@@ -196,6 +204,7 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str =
             ((*funcs).{{func_name}})({{function_args}});
         }
     {%- unless static_func %}
+        self
     {%- endunless %}
     {%- endif %}
     }
@@ -205,6 +214,7 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str =
 
 pub static RUST_IMPL_TRAIT_END_TEMPLATE: &str = "
     #[inline]
+    #[doc(hidden)]
     fn get_{{type_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{type_name}}Funcs);
 }
 ";
@@ -213,7 +223,7 @@ pub static RUST_IMPL_TRAIT_END_TEMPLATE: &str = "
 
 pub static RUST_IMPL_TRAIT_TEMPLATE: &str = "
 impl<'a> {{trait_name}}Trait<'a> for {{target_name}}<'a> {
-    #[inline]
+    #[doc(hidden)]
     fn get_{{target_name_snake}}_obj_funcs(&self) -> (*const RUBase, *const RU{{type_name}}Funcs) {
         let obj = self.data.get().unwrap();
         unsafe {
@@ -232,14 +242,15 @@ impl<'a> {{trait_name}}Trait for {{target_name}}<'a> {}
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static RUST_CALLBACK_TRAMPOLINE_TEMPLATE: &str = "
-unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline_ud<T>{{function_arguments}} {
+pub(crate) unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline_ud<T>{{function_arguments}} {
     let f: &&(Fn(&T, {{function_arg_types}}) + 'static) = transmute(func);
     {{body_setup}}
     let data = self_c as *const T;
     f(&*data, {{function_params}});
 }
 
-unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline{{function_arguments}} {
+#[allow(unused_variables)]
+pub(crate) unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline{{function_arguments}} {
     let f: &&(Fn({{function_arg_types}}) + 'static) = transmute(func);
     {{body_setup}}
     f({{function_params}});
@@ -258,8 +269,8 @@ pub struct {{type_name}}Static<'a> {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pub static RUST_CALLBACK_TEMPLATE: &str = "
-    {{visibility}} fn set_{{event_name}}_event_ud<F, T>(&self, data: &'a T, func: F)
+pub static RUST_CALLBACK_TEMPLATE: &str =
+"   pub fn set_{{event_name}}_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
         F: Fn(&T, {{function_arg_types}}) + 'a,
         T: 'a,
@@ -277,9 +288,11 @@ pub static RUST_CALLBACK_TEMPLATE: &str = "
                 transmute({{widget_snake_name}}_{{event_name}}_trampoline_ud::<T> as usize),
             );
         }
+
+        self
     }
 
-    {{visibility}} fn set_{{event_name}}_event<F>(&self, func: F)
+    pub fn set_{{event_name}}_event<F>(&self, func: F) -> &Self
     where
         F: Fn({{function_arg_types}}) + 'a,
     {
@@ -294,5 +307,7 @@ pub static RUST_CALLBACK_TEMPLATE: &str = "
                 transmute({{widget_snake_name}}_{{event_name}}_trampoline as usize),
             );
         }
+
+        self
     }
 ";

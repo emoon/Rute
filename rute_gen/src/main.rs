@@ -89,10 +89,12 @@ fn run_clang_format(filename: &str) {
 fn main() {
     let wd = WalkDir::new("defs");
     // temporary set to one thread during debugging
+    /*
 	rayon::ThreadPoolBuilder::new()
         .num_threads(1)
         .build_global()
         .unwrap();
+    */
 
     //let qt_gen = QtGenerator::new();
 
@@ -237,7 +239,7 @@ fn main() {
 
             // Generate the Rust high-level code
             println!("    Generating Rust: {}", rust_target);
-            RustGenerator::new().generate(&rust_target, &api_def).unwrap();
+            RustGenerator::new().generate(&rust_target, &api_def, &api_defs_read).unwrap();
 
             // Generate the Qt wrapping
             println!("    Generating Qt C++ wrapper: {}.cpp/h", qt_cpp_target);

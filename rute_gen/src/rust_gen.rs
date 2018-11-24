@@ -369,7 +369,6 @@ impl RustGenerator {
         // Check if we have any generic types, then we need to start with constructing the labels
         // for it
 
-        /*
         for arg in &func.function_args[1..] {
             gen_labels.get(&arg.type_name);
         }
@@ -381,9 +380,11 @@ impl RustGenerator {
 
             func_imp.push('<');
 
+            /*
             if func.func_type == FunctionType::Static {
                 func_imp.push_str("'a, ");
             }
+            */
 
             for (i, (name, label)) in gen_labels.lookup.iter().enumerate() {
                 func_imp.push_str(&format!("{}: {}<'a>", *label as u8 as char, get_trait_name(&name)));
@@ -395,7 +396,6 @@ impl RustGenerator {
 
             func_imp.push('>');
         }
-        */
 
         if is_static_func {
             func_imp.push_str("(");
@@ -404,15 +404,13 @@ impl RustGenerator {
         }
 
         for (index, arg) in func.function_args[1..].iter().enumerate() {
-            /*
             if let Some(label) = gen_labels.get(&arg.type_name) {
                 temp_str.clear();
                 temp_str.push('&');
                 temp_str.push(label);
             } else {
-            */
-            self.generate_arg_type(&mut temp_str, &arg, IsReturnArg::No, is_static_func);
-            //}
+                self.generate_arg_type(&mut temp_str, &arg, IsReturnArg::No, is_static_func);
+            }
 
             if !(is_static_func && index == 0) {
                 func_imp.push_str(", ");
@@ -434,11 +432,9 @@ impl RustGenerator {
         // If we don't have any return value we alwayes return self
         //
         if func.return_val.is_none() {
-            /*
             if !is_static_func {
                 func_imp.push_str(" -> &Self");
             }
-            */
         //func_imp.push_str(" -> &");
         //func_imp.push_str(struct_name);
         //func_imp.push_str("<'a>");
@@ -463,19 +459,18 @@ impl RustGenerator {
     ///
     /// Generates the implementations for the structs
     ///
-    fn generate_struct_impl<W: Write>(&self, f: &mut W, sdef: &Struct) -> io::Result<()> {
-        // Generate all the trampoline functions
-        sdef.functions
-            .iter()
-            .filter(|f| f.func_type == FunctionType::Signal || f.func_type == FunctionType::Event)
-            .try_for_each(|func| {
-                f.write_all(func.doc_comments.as_bytes())?;
-                let res =
-                    self.generate_callback(&func, &sdef.name, &self.callback_trampoline_template);
-                f.write_all(res.as_bytes())
-            })?;
+    fn generate_trait_impl<W: Write>(&self, dest: &mut W, sdef: &Struct) -> io::Result<()> {
+        writeln!(dest, "pub trait {}Trait<'a> {{", sdef.name)?;
 
-        self.generate_trait_impl(f, &sdef.name, FunctionType::Regular, &sdef, true)?;
+        let mut template_data = Object::new();
+        template_data.insert("type_name".into(), Value::scalar(&sdef.name));
+        template_data.insert(
+            "type_name_snake".into(),
+            Value::scalar(sdef.name.to_snake_case()),
+        );
+
+        let out = self.trait_impl_end_template.render(&template_data).unwrap();
+        dest.write_all(out.as_bytes());
 
         for name in &sdef.full_inherit {
             let mut template_data = Object::new();
@@ -492,43 +487,7 @@ impl RustGenerator {
             );
 
             let out = self.trait_impl_template.render(&template_data).unwrap();
-            f.write_all(out.as_bytes())?;
-        }
-
-        if sdef.has_static_functions() {
-            let static_name = &format!("{}Static", sdef.name);
-            self.generate_trait_impl(f, static_name, FunctionType::Static, &sdef, false)?;
-
-            // implement the static trait for the regular one as well
-
-            let mut template_data = Object::new();
-            template_data.insert("trait_name".into(), Value::scalar(static_name));
-            template_data.insert("target_name".into(), Value::scalar(&sdef.name));
-            template_data.insert("type_name".into(), Value::scalar(&sdef.name));
-            template_data.insert(
-                "target_name_snake".into(),
-                Value::scalar(static_name.to_snake_case()),
-            );
-            template_data.insert(
-                "target_name_snake_org".into(),
-                Value::scalar(sdef.name.to_snake_case()),
-            );
-
-            let out = self
-                .impl_trait_static_template
-                .render(&template_data)
-                .unwrap();
-            f.write_all(out.as_bytes())?;
-
-            // Implement the static trait for the static type
-
-            template_data.insert("target_name".into(), Value::scalar(static_name));
-
-            let out = self
-                .impl_trait_static_template
-                .render(&template_data)
-                .unwrap();
-            f.write_all(out.as_bytes())?;
+            dest.write_all(out.as_bytes())?;
         }
 
         Ok(())
@@ -542,14 +501,6 @@ impl RustGenerator {
         //let mut function_params = String::with_capacity(128);
         let mut function_arg_types = String::with_capacity(128);
         let mut temp_str = String::with_capacity(128);
-
-        // As events are stored in the regular struct (and not trait) we need to mark them as
-        // public to the outside
-        if func.func_type == FunctionType::Event {
-            template_data.insert("visibility".into(), Value::scalar("pub"));
-        } else {
-            template_data.insert("visibility".into(), Value::scalar("pub"));
-        }
 
         let ffi_func_def = func.rust_func_def(
             true,
@@ -636,7 +587,7 @@ impl RustGenerator {
         if !has_generic_params && is_static_func {
             template_data.insert(
                 "func_name_header".into(),
-                Value::scalar(format!("{}<'a>", func.name)),
+                Value::scalar(format!("{}", func.name)),
             );
         } else {
             template_data.insert("func_name_header".into(), Value::scalar(&func.name));
@@ -745,6 +696,37 @@ impl RustGenerator {
         self.rust_func_template.render(&template_data).unwrap()
     }
 
+    fn find_api_def<'a>(name: &str, api_defs: &'a [ApiDef]) -> Option<&'a Struct> {
+        api_defs
+            .iter()
+            .flat_map(|api_def| api_def.class_structs.iter())
+            .find(|s| s.name == name)
+    }
+
+    fn generate_functions(&self, dest: &mut String, sdef: &Struct,
+            gen_comments: bool, func_names_lookup: &mut HashSet<String>) {
+        sdef.functions
+            .iter()
+            .for_each(|f| {
+                let res;
+                if !func_names_lookup.contains(&f.name) {
+                    if gen_comments {
+                        dest.push_str(&f.doc_comments);
+                    } else {
+                        dest.push_str("    #[doc(hidden)]\n");
+                    }
+
+                    if f.func_type == FunctionType::Event || f.func_type == FunctionType::Signal {
+                        res = self.generate_callback(&f, &sdef.name, &self.callback_template);
+                    } else {
+                        res = self.generate_function(&f, &sdef.name, &sdef.name);
+                    }
+                    dest.push_str(&res);
+                    func_names_lookup.insert(f.name.clone());
+                }
+            });
+    }
+
     ///
     /// Generate the structs. The structs will be generated in this style
     ///
@@ -753,8 +735,18 @@ impl RustGenerator {
     ///     _marker: PhantomData<::std::cell::Cell<&'a ()>>,
     /// }
     ///
-    fn generate_structs<W: Write>(&self, dest: &mut W, api_def: &ApiDef) -> io::Result<()> {
+    fn generate_structs<W: Write>(&self, dest: &mut W, api_def: &ApiDef, api_defs: &[ApiDef]) -> io::Result<()> {
+        // generate the trampoline functions
         for sdef in &api_def.class_structs {
+            sdef.functions
+                .iter()
+                .filter(|f| f.func_type == FunctionType::Signal || f.func_type == FunctionType::Event)
+                .try_for_each(|func| {
+                    let res =
+                        self.generate_callback(&func, &sdef.name, &self.callback_trampoline_template);
+                    dest.write_all(res.as_bytes())
+            })?;
+
             let mut template_data = Object::new();
             template_data.insert("struct_name".into(), Value::scalar(&sdef.name));
             template_data.insert(
@@ -770,15 +762,36 @@ impl RustGenerator {
                 Value::scalar(sdef.should_have_create_func()),
             );
 
-            let mut event_funcs = String::with_capacity(4096);
+            let mut event_funcs = String::with_capacity(512*1024);
 
+            //println!("-----------------------------------------------------");
+            //println!("struct name {}", sdef.name);
+
+            let mut func_lookup = HashSet::new();
+
+            // Reverse order to start with highest inheritance to lowest
+            for inh in sdef.full_inherit.iter().rev() {
+                //println!("  {}", inh);
+                if let Some(ref def) = Self::find_api_def(&inh, api_defs) {
+                    self.generate_functions(&mut event_funcs, def, def.name == sdef.name,
+                        &mut func_lookup);
+                }
+            }
+
+            /*
             sdef.functions
                 .iter()
-                .filter(|f| f.func_type == FunctionType::Event || f.func_type == FunctionType::Signal)
                 .for_each(|f| {
-                    let res = self.generate_callback(&f, &sdef.name, &self.callback_template);
+                    let res;
+                    event_funcs.push_str(&f.doc_comments);
+                    if f.func_type == FunctionType::Event || f.func_type == FunctionType::Signal {
+                        res = self.generate_callback(&f, &sdef.name, &self.callback_template);
+                    } else {
+                        res = self.generate_function(&f, &sdef.name, &sdef.name);
+                    }
                     event_funcs.push_str(&res);
                 });
+            */
 
             template_data.insert("event_funcs".into(), Value::scalar(event_funcs));
 
@@ -793,12 +806,13 @@ impl RustGenerator {
     ///
     /// Generates the implementations for the structs
     ///
-    fn generate_structs_impl<W: Write>(&self, f: &mut W, api_def: &ApiDef) -> io::Result<()> {
+    fn generate_traits_impl<W: Write>(&self, f: &mut W, api_def: &ApiDef) -> io::Result<()> {
         api_def.class_structs.iter().try_for_each(|s| {
-            self.generate_struct_impl(f, s)?;
+            self.generate_trait_impl(f, s)?;
 
             // Implement drop for structs that needs it
 
+            /*
             if s.should_generate_drop() {
                 let mut template_data = Object::new();
 
@@ -812,62 +826,10 @@ impl RustGenerator {
 
                 f.write_all(output.as_bytes())?;
             }
+            */
 
             Ok(())
         })
-    }
-    ///
-    /// Generate trait implementation
-    ///
-    fn generate_trait_impl<W: Write>(
-        &self,
-        dest: &mut W,
-        name: &str,
-        func_type: FunctionType,
-        sdef: &Struct,
-        should_have_lifetime: bool,
-    ) -> io::Result<()> {
-        let struct_name = format!("{}Trait", name);
-        if should_have_lifetime {
-            writeln!(dest, "pub trait {}<'a> {{", struct_name)?;
-        } else {
-            writeln!(dest, "pub trait {} {{", struct_name)?;
-        }
-
-        sdef.functions
-            .iter()
-            .filter(|f| f.func_type == func_type)
-            .for_each(|f| {
-                dest.write_all(f.doc_comments.as_bytes()).unwrap();
-                let res = self.generate_function(&f, name, &sdef.name);
-                dest.write_all(res.as_bytes()).unwrap();
-            });
-
-        if func_type != FunctionType::Static {
-            // generate the event functions in the not static trait
-            /*
-            sdef.functions
-                .iter()
-                .filter(|f| f.func_type == FunctionType::Signal)
-                .try_for_each(|f| {
-                    dest.write_all(f.doc_comments.as_bytes()).unwrap();
-                    let res = self.generate_callback(&f, name, &self.callback_template);
-                    dest.write_all(res.as_bytes())
-                })?;
-            */
-
-            let mut template_data = Object::new();
-            template_data.insert("type_name".into(), Value::scalar(&sdef.name));
-            template_data.insert(
-                "type_name_snake".into(),
-                Value::scalar(name.to_snake_case()),
-            );
-
-            let out = self.trait_impl_end_template.render(&template_data).unwrap();
-            dest.write_all(out.as_bytes())
-        } else {
-            dest.write_all(b"}\n")
-        }
     }
 
     ///
@@ -924,28 +886,6 @@ impl RustGenerator {
         writeln!(dest, "pub use rute_ffi::*;")?;
         writeln!(dest, "pub use rute_enums::*;")?;
         writeln!(dest, "pub use rute::*;")
-    }
-
-    ///
-    /// Generate the structs with static only functions. The structs will be generated in this style
-    ///
-    /// pub struct ApplicationStatic<'a> {
-    ///     pub all_funcs: *const RUApplicationAllFuncs,
-    ///     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
-    /// }
-    ///
-    fn generate_static_structs<W: Write>(&self, dest: &mut W, api_def: &ApiDef) -> io::Result<()> {
-        api_def
-            .class_structs
-            .iter()
-            .filter(|s| s.has_static_functions())
-            .try_for_each(|sdef| {
-                let mut template_data = Object::new();
-                template_data.insert("type_name".into(), Value::scalar(&sdef.name));
-
-                let out = self.static_struct_template.render(&template_data).unwrap();
-                dest.write_all(out.as_bytes())
-            })
     }
 
     fn gen_mod_regular(var: &Variable) -> Vec<String> {
@@ -1066,23 +1006,20 @@ impl RustGenerator {
         Ok(())
     }
 
-    pub fn generate(&self, filename: &str, api_def: &ApiDef) -> io::Result<()> {
+    pub fn generate(&self, filename: &str, api_def: &ApiDef, api_defs: &[ApiDef]) -> io::Result<()> {
         let mut dest = BufWriter::new(File::create(filename)?);
 
         // write header
         dest.write_all(HEADER)?;
 
         // As we may need types/enums/etc from other types we need to generate that
-        self.generate_mod_usage(&mut dest, api_def)?;
+        //self.generate_mod_usage(&mut dest, api_def)?;
 
         // write all the structs
-        self.generate_structs(&mut dest, api_def)?;
-
-        // write all the structs with static functions
-        self.generate_static_structs(&mut dest, api_def)?;
+        self.generate_structs(&mut dest, api_def, api_defs)?;
 
         // Generate the implementations for the structs
-        self.generate_structs_impl(&mut dest, api_def)?;
+        self.generate_traits_impl(&mut dest, api_def)?;
 
         // generate the enums
         Self::generate_enums(&mut dest, api_def)
