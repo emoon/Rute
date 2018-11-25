@@ -1,0 +1,342 @@
+///
+/// *Tablet events* are generated from tablet peripherals such as Wacom
+/// tablets and various other brands, and electromagnetic stylus devices
+/// included with some types of tablet computers. (It is not the same as
+/// [QTouchEvent](QTouchEvent)
+/// which a touchscreen generates, even when a passive stylus is
+/// used on a touchscreen.)
+///
+/// Tablet events are similar to mouse events; for example, the [x(),](x(),)
+/// [y(),](y(),)
+///
+/// [pos(),](pos(),)
+/// [globalX(),](globalX(),)
+/// [globalY(),](globalY(),)
+/// and [globalPos()](globalPos())
+/// accessors provide
+/// the cursor position, and you can see which [buttons()](buttons())
+/// are pressed
+/// (pressing the stylus tip against the tablet surface is equivalent to a left
+/// mouse button). But tablet events also pass through some extra information
+/// that the tablet device driver provides; for example, you might want to do
+/// subpixel rendering with higher resolution coordinates ( [hiResGlobalX()](hiResGlobalX())
+///
+/// and [hiResGlobalY()),](hiResGlobalY()),)
+/// adjust color brightness based on the [pressure()](pressure())
+///
+/// of the tool against the tablet surface, use different brushes depending on
+/// the type of tool in use ( [device()),](device()),)
+/// modulate the brush shape in some way
+/// according to the X-axis and Y-axis tilt of the tool with respect to the
+/// tablet surface ( [xTilt()](xTilt())
+/// and [yTilt()),](yTilt()),)
+/// and use a virtual eraser
+/// instead of a brush if the user switches to the other end of a double-ended
+/// stylus ( [pointerType()).](pointerType()).)
+///
+/// Every event contains an accept flag that indicates whether the receiver
+/// wants the event. You should call QTabletEvent::accept() if you handle the
+/// tablet event; otherwise it will be sent to the parent widget. The exception
+/// are TabletEnterProximity and TabletLeaveProximity events: these are only
+/// sent to QApplication and do not check whether or not they are accepted.
+///
+/// The QWidget::setEnabled() function can be used to enable or disable
+/// mouse, tablet and keyboard events for a widget.
+///
+/// The event handler QWidget::tabletEvent() receives TabletPress,
+/// TabletRelease and TabletMove events. Qt will first send a
+/// tablet event, then if it is not accepted by any widget, it will send a
+/// mouse event. This allows users of applications that are not designed for
+/// tablets to use a tablet like a mouse. However high-resolution drawing
+/// applications should handle the tablet events, because they can occur at a
+/// higher frequency, which is a benefit for smooth and accurate drawing.
+/// If the tablet events are rejected, the synthetic mouse events may be
+/// compressed for efficiency.
+///
+/// New in Qt 5.4: QTabletEvent includes all information available from the
+/// device, including [QTabletEvent::buttons().](QTabletEvent::buttons().)
+/// Previously it was not
+/// possible to accept all tablet events and also know which stylus buttons
+/// were pressed.
+///
+/// Note that pressing the stylus button while the stylus hovers over the
+/// tablet will generate a button press on some types of tablets, while on
+/// other types it will be necessary to press the stylus against the tablet
+/// surface in order to register the simultaneous stylus button press.
+///
+/// # Notes for X11 Users
+///
+/// If the tablet is configured in xorg.conf to use the Wacom driver, there
+/// will be separate XInput for the stylus, eraser, and (optionally)
+/// cursor and touchpad. Qt recognizes these by their names. Otherwise, if the
+/// tablet is configured to use the evdev driver, there will be only one device
+/// and applications may not be able to distinguish the stylus from the eraser.
+///
+/// # Notes for Windows Users
+///
+/// Tablet support currently requires the WACOM windows driver providing the DLL
+/// `wintab32.dll` to be installed. It is contained in older packages,
+/// for example `pentablet_5.3.5-3.exe` .
+///
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[attributes(NoCreate, NoWrapClass)]
+struct TabletEvent : InputEvent {
+    ///
+    /// Returns the position of the device, relative to the widget that
+    /// received the event.
+    ///
+    /// If you move widgets around in response to mouse events, use
+    /// globalPos() instead of this function.
+    ///
+    /// **See also:** [`x()`]
+    /// [`y()`]
+    /// [`global_pos()`]
+    ///
+    /// Returns the position of the device, relative to the widget that
+    /// received the event.
+    ///
+    /// If you move widgets around in response to mouse events, use
+    /// globalPosF() instead of this function.
+    ///
+    /// **See also:** [`global_pos_f()`]
+    pos() -> Point,
+    ///
+    /// Returns the global position of the device *at the time of the
+    /// event* . This is important on asynchronous windows systems like X11;
+    /// whenever you move your widgets around in response to mouse events,
+    /// globalPos() can differ significantly from the current position
+    /// QCursor::pos().
+    ///
+    /// **See also:** [`global_x()`]
+    /// [`global_y()`]
+    /// [`hi_res_global_pos()`]
+    ///
+    /// Returns the global position of the device *at the time of the
+    /// event* . This is important on asynchronous windows systems like X11;
+    /// whenever you move your widgets around in response to mouse events,
+    /// globalPosF() can differ significantly from the current position
+    /// QCursor::pos().
+    ///
+    /// **See also:** [`pos_f()`]
+    global_pos() -> Point,
+    ///
+    /// Returns the position of the device, relative to the widget that
+    /// received the event.
+    ///
+    /// If you move widgets around in response to mouse events, use
+    /// globalPosF() instead of this function.
+    ///
+    /// **See also:** [`global_pos_f()`]
+    pos_f() -> PointF?,
+    ///
+    /// Returns the global position of the device *at the time of the
+    /// event* . This is important on asynchronous windows systems like X11;
+    /// whenever you move your widgets around in response to mouse events,
+    /// globalPosF() can differ significantly from the current position
+    /// QCursor::pos().
+    ///
+    /// **See also:** [`pos_f()`]
+    global_pos_f() -> PointF?,
+    ///
+    /// Returns the angle between the device (a pen, for example) and the
+    /// perpendicular in the direction of the x axis.
+    /// Positive values are towards the tablet's physical right. The angle
+    /// is in the range -60 to +60 degrees.
+    ///
+    /// ![qtabletevent-tilt.png](qtabletevent-tilt.png)
+    ///
+    /// **See also:** [`y_tilt()`]
+    ///
+    /// Returns the x position of the device, relative to the widget that
+    /// received the event.
+    ///
+    /// **See also:** [`y()`]
+    /// [`pos()`]
+    x() -> i32,
+    ///
+    /// Returns the angle between the device (a pen, for example) and the
+    /// perpendicular in the direction of the y axis.
+    /// Positive values are towards the bottom of the tablet. The angle is
+    /// within the range -60 to +60 degrees.
+    ///
+    /// **See also:** [`x_tilt()`]
+    ///
+    /// Returns the y position of the device, relative to the widget that
+    /// received the event.
+    ///
+    /// **See also:** [`x()`]
+    /// [`pos()`]
+    y() -> i32,
+    ///
+    /// Returns the global x position of the mouse pointer at the time of
+    /// the event.
+    ///
+    /// **See also:** [`global_y()`]
+    /// [`global_pos()`]
+    /// [`hi_res_global_x()`]
+    global_x() -> i32,
+    ///
+    /// Returns the global y position of the tablet device at the time of
+    /// the event.
+    ///
+    /// **See also:** [`global_x()`]
+    /// [`global_pos()`]
+    /// [`hi_res_global_y()`]
+    global_y() -> i32,
+    ///
+    /// The high precision x position of the tablet device.
+    hi_res_global_x() -> f32,
+    ///
+    /// The high precision y position of the tablet device.
+    hi_res_global_y() -> f32,
+    ///
+    /// Returns the type of device that generated the event.
+    ///
+    /// **See also:** TabletDevice
+    device() -> TabletEvent::TabletDevice,
+    ///
+    /// Returns the type of point that generated the event.
+    pointer_type() -> TabletEvent::PointerType,
+    ///
+    /// Returns a unique ID for the current device, making it possible
+    /// to differentiate between multiple devices being used at the same
+    /// time on the tablet.
+    ///
+    /// Support of this feature is dependent on the tablet.
+    ///
+    /// Values for the same device may vary from OS to OS.
+    ///
+    /// Later versions of the Wacom driver for Linux will now report
+    /// the ID information. If you have a tablet that supports unique ID
+    /// and are not getting the information on Linux, consider upgrading
+    /// your driver.
+    ///
+    /// As of Qt 4.2, the unique ID is the same regardless of the orientation
+    /// of the pen. Earlier versions would report a different value when using
+    /// the eraser-end versus the pen-end of the stylus on some OS's.
+    ///
+    /// **See also:** [`pointer_type()`]
+    unique_id() -> i64,
+    ///
+    /// Returns the pressure for the device. 0.0 indicates that the stylus is not
+    /// on the tablet, 1.0 indicates the maximum amount of pressure for the stylus.
+    ///
+    /// **See also:** [`tangential_pressure()`]
+    pressure() -> f32,
+    ///
+    /// Returns the z position of the device. Typically this is represented by a
+    /// wheel on a 4D Mouse. If the device does not support a Z-axis, this value is
+    /// always zero. This is **not** the same as pressure.
+    ///
+    /// **See also:** [`pressure()`]
+    z() -> i32,
+    ///
+    /// Returns the tangential pressure for the device. This is typically given by a finger
+    /// wheel on an airbrush tool. The range is from -1.0 to 1.0. 0.0 indicates a
+    /// neutral position. Current airbrushes can only move in the positive
+    /// direction from the neutrual position. If the device does not support
+    /// tangential pressure, this value is always 0.0.
+    ///
+    /// **See also:** [`pressure()`]
+    tangential_pressure() -> f32,
+    ///
+    /// Returns the rotation of the current tool in degrees, where zero means the
+    /// tip of the stylus is pointing towards the top of the tablet, a positive
+    /// value means it's turned to the right, and a negative value means it's
+    /// turned to the left. This can be given by a 4D Mouse or a rotation-capable
+    /// stylus (such as the Wacom Art Pen or the Apple Pencil). If the device does
+    /// not support rotation, this value is always 0.0.
+    rotation() -> f32,
+    ///
+    /// Returns the angle between the device (a pen, for example) and the
+    /// perpendicular in the direction of the x axis.
+    /// Positive values are towards the tablet's physical right. The angle
+    /// is in the range -60 to +60 degrees.
+    ///
+    /// ![qtabletevent-tilt.png](qtabletevent-tilt.png)
+    ///
+    /// **See also:** [`y_tilt()`]
+    x_tilt() -> i32,
+    ///
+    /// Returns the angle between the device (a pen, for example) and the
+    /// perpendicular in the direction of the y axis.
+    /// Positive values are towards the bottom of the tablet. The angle is
+    /// within the range -60 to +60 degrees.
+    ///
+    /// **See also:** [`x_tilt()`]
+    y_tilt() -> i32,
+    ///
+    /// Returns the button that caused the event.
+    ///
+    /// Note that the returned value is always Qt::NoButton for [TabletMove,](TabletMove,)
+    ///
+    /// [TabletEnterProximity](TabletEnterProximity)
+    /// and [TabletLeaveProximity](TabletLeaveProximity)
+    /// events.
+    ///
+    /// **See also:** [`buttons()`]
+    /// [`t::mouse_button()`]
+    ///
+    /// Returns the button state when the event was generated. The button state is
+    /// a combination of buttons from the [Qt::MouseButton](Qt::MouseButton)
+    /// enum using the OR
+    /// operator. For [TabletMove](TabletMove)
+    /// events, this is all buttons that are pressed
+    /// down. For [TabletPress](TabletPress)
+    /// events this includes the button that caused the
+    /// event. For [TabletRelease](TabletRelease)
+    /// events this excludes the button that caused the
+    /// event.
+    ///
+    /// **See also:** [`button()`]
+    /// [`t::mouse_button()`]
+    button() -> Rute::MouseButton,
+    ///
+    /// Returns the button state when the event was generated. The button state is
+    /// a combination of buttons from the [Qt::MouseButton](Qt::MouseButton)
+    /// enum using the OR
+    /// operator. For [TabletMove](TabletMove)
+    /// events, this is all buttons that are pressed
+    /// down. For [TabletPress](TabletPress)
+    /// events this includes the button that caused the
+    /// event. For [TabletRelease](TabletRelease)
+    /// events this excludes the button that caused the
+    /// event.
+    ///
+    /// **See also:** [`button()`]
+    /// [`t::mouse_button()`]
+    buttons() -> Rute::MouseButtons,
+}
+
+[org_name(QTabletEvent)]
+enum TabletDevice {
+    /// No device, or an unknown device.
+    NoDevice,
+    /// A Puck (a device that is similar to a flat mouse with a transparent circle with cross-hairs).
+    Puck,
+    /// A Stylus.
+    Stylus,
+    /// An airbrush
+    Airbrush,
+    /// A 4D Mouse.
+    FourDMouse,
+    XFreeEraser,
+    /// A special stylus that also knows about rotation (a 6D stylus).
+    RotationStylus,
+}
+
+[org_name(QTabletEvent)]
+enum PointerType {
+    /// An unknown device.
+    UnknownPointer,
+    /// Tip end of a stylus-like device (the narrow end of the pen).
+    Pen,
+    /// Any puck-like device.
+    Cursor,
+    /// Eraser end of a stylus-like device (the broad end of the pen).
+    Eraser,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -88,94 +88,11 @@
 /// 
 /// **See also:** {View Classes}
 /// {Model/View Programming}
-/// QAbstractItemModel
+/// [`AbstractItemModel`]
 /// {Chart Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QAbstractItemView)]
-enum SelectionMode {
-    NoSelection,
-    SingleSelection,
-    MultiSelection,
-    ExtendedSelection,
-    ContiguousSelection,
-}
-
-[org_name(QAbstractItemView)]
-enum SelectionBehavior {
-    SelectItems,
-    SelectRows,
-    SelectColumns,
-}
-
-[org_name(QAbstractItemView)]
-enum ScrollHint {
-    EnsureVisible,
-    PositionAtTop,
-    PositionAtBottom,
-    PositionAtCenter,
-}
-
-[org_name(QAbstractItemView)]
-enum EditTrigger {
-    NoEditTriggers,
-    CurrentChanged,
-    DoubleClicked,
-    SelectedClicked,
-    EditKeyPressed,
-    AnyKeyPressed,
-    AllEditTriggers,
-}
-
-[org_name(QAbstractItemView)]
-enum ScrollMode {
-    ScrollPerItem,
-    ScrollPerPixel,
-}
-
-[org_name(QAbstractItemView)]
-enum DragDropMode {
-    NoDragDrop,
-    DragOnly,
-    DropOnly,
-    DragDrop,
-    InternalMove,
-}
-
-[org_name(QAbstractItemView)]
-enum CursorAction {
-    MoveUp,
-    MoveDown,
-    MoveLeft,
-    MoveRight,
-    MoveHome,
-    MoveEnd,
-    MovePageUp,
-    MovePageDown,
-    MoveNext,
-    MovePrevious,
-}
-
-[org_name(QAbstractItemView)]
-enum State {
-    NoState,
-    DraggingState,
-    DragSelectingState,
-    EditingState,
-    ExpandingState,
-    CollapsingState,
-    AnimatingState,
-}
-
-[org_name(QAbstractItemView)]
-enum DropIndicatorPosition {
-    OnItem,
-    AboveItem,
-    BelowItem,
-    OnViewport,
-}
-
 struct AbstractItemView : AbstractScrollArea {
     /// 
     /// Sets the *model* for the view to present.
@@ -193,8 +110,8 @@ struct AbstractItemView : AbstractScrollArea {
     /// The view *does not* take ownership of the model unless it is the model's
     /// parent object because the model may be shared between many different views.
     /// 
-    /// **See also:** selectionModel()
-    /// setSelectionModel()
+    /// **See also:** [`selection_model()`]
+    /// [`set_selection_model()`]
     [event] set_model(model: *AbstractItemModelType),
     /// 
     /// Returns the model that this view is presenting.
@@ -211,15 +128,15 @@ struct AbstractItemView : AbstractScrollArea {
     /// parent, or if the parent is a long-lived object, it may be preferable to call its
     /// deleteLater() function to explicitly delete it.
     /// 
-    /// **See also:** selectionModel()
-    /// setModel()
-    /// clearSelection()
+    /// **See also:** [`selection_model()`]
+    /// [`set_model()`]
+    /// [`clear_selection()`]
     [event] set_selection_model(selection_model: *ItemSelectionModelType),
     /// 
     /// Returns the current selection model.
     /// 
-    /// **See also:** setSelectionModel()
-    /// selectedIndexes()
+    /// **See also:** [`set_selection_model()`]
+    /// [`selected_indexes()`]
     selection_model() -> ItemSelectionModel?,
     /// 
     /// Sets the item delegate for this view and its model to *delegate.*
@@ -235,7 +152,7 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// signal, and attempt to access, modify or close an editor that has already been closed.
     /// 
-    /// **See also:** itemDelegate()
+    /// **See also:** [`item_delegate()`]
     /// 
     /// Sets the given item *delegate* used by this view and model for the given
     /// *row.* All items on *row* will be drawn and managed by *delegate*
@@ -254,9 +171,9 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// signal, and attempt to access, modify or close an editor that has already been closed.
     /// 
-    /// **See also:** itemDelegateForRow()
-    /// setItemDelegateForColumn()
-    /// itemDelegate()
+    /// **See also:** [`item_delegate_for_row()`]
+    /// [`set_item_delegate_for_column()`]
+    /// [`item_delegate()`]
     /// 
     /// Sets the given item *delegate* used by this view and model for the given
     /// *column.* All items on *column* will be drawn and managed by *delegate*
@@ -274,30 +191,30 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// signal, and attempt to access, modify or close an editor that has already been closed.
     /// 
-    /// **See also:** itemDelegateForColumn()
-    /// setItemDelegateForRow()
-    /// itemDelegate()
+    /// **See also:** [`item_delegate_for_column()`]
+    /// [`set_item_delegate_for_row()`]
+    /// [`item_delegate()`]
     set_item_delegate(delegate: *AbstractItemDelegateType),
     /// 
     /// Returns the item delegate used by this view and model. This is
     /// either one set with setItemDelegate(), or the default one.
     /// 
-    /// **See also:** setItemDelegate()
+    /// **See also:** [`set_item_delegate()`]
     /// 
     /// Returns the item delegate used by this view and model for the given *row,*
     /// or 0 if no delegate has been assigned. You can call itemDelegate() to get a
     /// pointer to the current delegate for a given index.
     /// 
-    /// **See also:** setItemDelegateForRow()
-    /// itemDelegateForColumn()
-    /// setItemDelegate()
+    /// **See also:** [`set_item_delegate_for_row()`]
+    /// [`item_delegate_for_column()`]
+    /// [`set_item_delegate()`]
     /// 
     /// Returns the item delegate used by this view and model for the given *column.* You can call itemDelegate() to get a pointer to the current delegate
     /// for a given index.
     /// 
-    /// **See also:** setItemDelegateForColumn()
-    /// itemDelegateForRow()
-    /// itemDelegate()
+    /// **See also:** [`set_item_delegate_for_column()`]
+    /// [`item_delegate_for_row()`]
+    /// [`item_delegate()`]
     /// 
     /// Returns the item delegate used by this view and model for
     /// the given *index.*
@@ -314,15 +231,15 @@ struct AbstractItemView : AbstractScrollArea {
     /// parent, or if the parent is a long-lived object, it may be preferable to call its
     /// deleteLater() function to explicitly delete it.
     /// 
-    /// **See also:** selectionModel()
-    /// setModel()
-    /// clearSelection()
+    /// **See also:** [`selection_model()`]
+    /// [`set_model()`]
+    /// [`clear_selection()`]
     set_selection_mode(mode: AbstractItemView::SelectionMode),
     /// 
     /// Returns the current selection model.
     /// 
-    /// **See also:** setSelectionModel()
-    /// selectedIndexes()
+    /// **See also:** [`set_selection_model()`]
+    /// [`selected_indexes()`]
     /// 
     /// This property controls whether the user can select one or many items
     /// and, in many-item selections, whether the selection must be a
@@ -342,13 +259,13 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// Returns the model index of the current item.
     /// 
-    /// **See also:** setCurrentIndex()
+    /// **See also:** [`set_current_index()`]
     current_index() -> ModelIndex,
     /// 
     /// Returns the model index of the model's root item. The root item is
     /// the parent item to the view's toplevel items. The root can be invalid.
     /// 
-    /// **See also:** setRootIndex()
+    /// **See also:** [`set_root_index()`]
     root_index() -> ModelIndex,
     set_edit_triggers(triggers: AbstractItemView::EditTriggers),
     /// 
@@ -461,8 +378,8 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// In the base class this is a pure virtual function.
     /// 
-    /// **See also:** indexAt()
-    /// visualRegionForSelection()
+    /// **See also:** [`index_at()`]
+    /// [`visual_region_for_selection()`]
     [event] visual_rect(index: &ModelIndexType) -> Rect,
     /// 
     /// Scrolls the view if necessary to ensure that the item at *index*
@@ -472,27 +389,27 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// Scrolls the view to the top.
     /// 
-    /// **See also:** scrollTo()
-    /// scrollToBottom()
+    /// **See also:** [`scroll_to()`]
+    /// [`scroll_to_bottom()`]
     /// 
     /// Scrolls the view to the bottom.
     /// 
-    /// **See also:** scrollTo()
-    /// scrollToTop()
+    /// **See also:** [`scroll_to()`]
+    /// [`scroll_to_top()`]
     [event] scroll_to(index: &ModelIndexType, hint: AbstractItemView::ScrollHint),
     /// 
     /// Returns the model index of the item at the viewport coordinates *point.*
     /// 
     /// In the base class this is a pure virtual function.
     /// 
-    /// **See also:** visualRect()
+    /// **See also:** [`visual_rect()`]
     [event] index_at(point: &PointType) -> ModelIndex,
     /// 
     /// Returns the size hint for the item with the specified *index* or
     /// an invalid size for invalid indexes.
     /// 
-    /// **See also:** sizeHintForRow()
-    /// sizeHintForColumn()
+    /// **See also:** [`size_hint_for_row()`]
+    /// [`size_hint_for_column()`]
     size_hint_for_index(index: &ModelIndexType) -> Size,
     /// 
     /// Returns the height size hint for the specified *row* or -1 if
@@ -508,7 +425,7 @@ struct AbstractItemView : AbstractScrollArea {
     /// size hint for a header section based on the contents of the given
     /// *row.*
     /// 
-    /// **See also:** sizeHintForColumn()
+    /// **See also:** [`size_hint_for_column()`]
     [event] size_hint_for_row(row: i32) -> i32,
     /// 
     /// Returns the width size hint for the specified *column* or -1 if there is no model.
@@ -516,26 +433,26 @@ struct AbstractItemView : AbstractScrollArea {
     /// This function is used in views with a horizontal header to find the size hint for
     /// a header section based on the contents of the given *column.*
     /// 
-    /// **See also:** sizeHintForRow()
+    /// **See also:** [`size_hint_for_row()`]
     [event] size_hint_for_column(column: i32) -> i32,
     /// 
     /// Opens a persistent editor on the item at the given *index.*
     /// If no editor exists, the delegate will create a new editor.
     /// 
-    /// **See also:** closePersistentEditor()
-    /// isPersistentEditorOpen()
+    /// **See also:** [`close_persistent_editor()`]
+    /// [`is_persistent_editor_open()`]
     open_persistent_editor(index: &ModelIndexType),
     /// 
     /// Closes the persistent editor for the item at the given *index.*
     /// 
-    /// **See also:** openPersistentEditor()
-    /// isPersistentEditorOpen()
+    /// **See also:** [`open_persistent_editor()`]
+    /// [`is_persistent_editor_open()`]
     close_persistent_editor(index: &ModelIndexType),
     /// 
     /// Returns whether a persistent editor is open for the item at index *index.*
     /// 
-    /// **See also:** openPersistentEditor()
-    /// closePersistentEditor()
+    /// **See also:** [`open_persistent_editor()`]
+    /// [`close_persistent_editor()`]
     is_persistent_editor_open(index: &ModelIndexType) -> bool,
     /// 
     /// Sets the given *widget* on the item at the given *index,* passing the
@@ -581,18 +498,18 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// signal, and attempt to access, modify or close an editor that has already been closed.
     /// 
-    /// **See also:** itemDelegateForRow()
-    /// setItemDelegateForColumn()
-    /// itemDelegate()
+    /// **See also:** [`item_delegate_for_row()`]
+    /// [`set_item_delegate_for_column()`]
+    /// [`item_delegate()`]
     set_item_delegate_for_row(row: i32, delegate: *AbstractItemDelegateType),
     /// 
     /// Returns the item delegate used by this view and model for the given *row,*
     /// or 0 if no delegate has been assigned. You can call itemDelegate() to get a
     /// pointer to the current delegate for a given index.
     /// 
-    /// **See also:** setItemDelegateForRow()
-    /// itemDelegateForColumn()
-    /// setItemDelegate()
+    /// **See also:** [`set_item_delegate_for_row()`]
+    /// [`item_delegate_for_column()`]
+    /// [`set_item_delegate()`]
     item_delegate_for_row(row: i32) -> AbstractItemDelegate?,
     /// 
     /// Sets the given item *delegate* used by this view and model for the given
@@ -611,42 +528,43 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// signal, and attempt to access, modify or close an editor that has already been closed.
     /// 
-    /// **See also:** itemDelegateForColumn()
-    /// setItemDelegateForRow()
-    /// itemDelegate()
+    /// **See also:** [`item_delegate_for_column()`]
+    /// [`set_item_delegate_for_row()`]
+    /// [`item_delegate()`]
     set_item_delegate_for_column(column: i32, delegate: *AbstractItemDelegateType),
     /// 
     /// Returns the item delegate used by this view and model for the given *column.* You can call itemDelegate() to get a pointer to the current delegate
     /// for a given index.
     /// 
-    /// **See also:** setItemDelegateForColumn()
-    /// itemDelegateForRow()
-    /// itemDelegate()
+    /// **See also:** [`set_item_delegate_for_column()`]
+    /// [`item_delegate_for_row()`]
+    /// [`item_delegate()`]
     item_delegate_for_column(column: i32) -> AbstractItemDelegate?,
     /// 
     /// Returns the item delegate used by this view and model. This is
     /// either one set with setItemDelegate(), or the default one.
     /// 
-    /// **See also:** setItemDelegate()
+    /// **See also:** [`set_item_delegate()`]
     /// 
     /// Returns the item delegate used by this view and model for the given *row,*
     /// or 0 if no delegate has been assigned. You can call itemDelegate() to get a
     /// pointer to the current delegate for a given index.
     /// 
-    /// **See also:** setItemDelegateForRow()
-    /// itemDelegateForColumn()
-    /// setItemDelegate()
+    /// **See also:** [`set_item_delegate_for_row()`]
+    /// [`item_delegate_for_column()`]
+    /// [`set_item_delegate()`]
     /// 
     /// Returns the item delegate used by this view and model for the given *column.* You can call itemDelegate() to get a pointer to the current delegate
     /// for a given index.
     /// 
-    /// **See also:** setItemDelegateForColumn()
-    /// itemDelegateForRow()
-    /// itemDelegate()
+    /// **See also:** [`set_item_delegate_for_column()`]
+    /// [`item_delegate_for_row()`]
+    /// [`item_delegate()`]
     /// 
     /// Returns the item delegate used by this view and model for
     /// the given *index.*
-    item_delegate(index: &ModelIndexType) -> AbstractItemDelegate?,
+    [org_name(itemDelegate)]
+    item_delegate_2(index: &ModelIndexType) -> AbstractItemDelegate?,
     /// 
     [event] input_method_query(query: Rute::InputMethodQuery) -> Variant,
     /// 
@@ -661,7 +579,7 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// Sets the root item to the item at the given *index.*
     /// 
-    /// **See also:** rootIndex()
+    /// **See also:** [`root_index()`]
     [event] set_root_index(index: &ModelIndexType),
     [event] do_items_layout(),
     /// 
@@ -669,9 +587,9 @@ struct AbstractItemView : AbstractScrollArea {
     /// This function will use the selection behavior
     /// set on the view when selecting.
     /// 
-    /// **See also:** setSelection()
-    /// selectedIndexes()
-    /// clearSelection()
+    /// **See also:** [`set_selection()`]
+    /// [`selected_indexes()`]
+    /// [`clear_selection()`]
     [event] select_all(),
     /// 
     /// Starts editing the item corresponding to the given *index* if it is
@@ -683,7 +601,7 @@ struct AbstractItemView : AbstractScrollArea {
     /// behavior, call setCurrentIndex() before this function with the same model
     /// index.
     /// 
-    /// **See also:** QModelIndex::flags()
+    /// **See also:** [`ModelIndex::flags`]
     /// 
     /// This property is a selection of flags defined by
     /// [EditTrigger](EditTrigger)
@@ -702,17 +620,17 @@ struct AbstractItemView : AbstractScrollArea {
     /// Editing can be forced by specifying the *trigger* to be
     /// QAbstractItemView::AllEditTriggers.
     /// 
-    /// **See also:** closeEditor()
+    /// **See also:** [`close_editor()`]
     /// 
     /// This function is called when the given *editor* has been destroyed.
     /// 
-    /// **See also:** closeEditor()
+    /// **See also:** [`close_editor()`]
     edit(index: &ModelIndexType),
     /// 
     /// Deselects all selected items. The current index will not be changed.
     /// 
-    /// **See also:** setSelection()
-    /// selectAll()
+    /// **See also:** [`set_selection()`]
+    /// [`select_all()`]
     clear_selection(),
     /// 
     /// Sets the current item to be the item at *index.*
@@ -727,21 +645,21 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// `selectionModel()->setCurrentIndex(index, QItemSelectionModel::NoUpdate);`
     /// 
-    /// **See also:** currentIndex()
-    /// currentChanged()
+    /// **See also:** [`current_index()`]
+    /// [`current_changed()`]
     /// selectionMode
     set_current_index(index: &ModelIndexType),
     /// 
     /// Scrolls the view to the top.
     /// 
-    /// **See also:** scrollTo()
-    /// scrollToBottom()
+    /// **See also:** [`scroll_to()`]
+    /// [`scroll_to_bottom()`]
     scroll_to_top(),
     /// 
     /// Scrolls the view to the bottom.
     /// 
-    /// **See also:** scrollTo()
-    /// scrollToTop()
+    /// **See also:** [`scroll_to()`]
+    /// [`scroll_to_top()`]
     scroll_to_bottom(),
     /// 
     /// Updates the geometry of the child widgets of the view.
@@ -763,20 +681,20 @@ struct AbstractItemView : AbstractScrollArea {
     /// base class implementation calls fetchMore() on the model to check
     /// for more data.
     /// 
-    /// **See also:** rowsAboutToBeRemoved()
+    /// **See also:** [`rows_about_to_be_removed()`]
     [event] rows_inserted(parent: &ModelIndexType, start: i32, end: i32),
     /// 
     /// This slot is called when rows are about to be removed. The deleted rows are
     /// those under the given *parent* from *start* to *end* inclusive.
     /// 
-    /// **See also:** rowsInserted()
+    /// **See also:** [`rows_inserted()`]
     [event] rows_about_to_be_removed(parent: &ModelIndexType, start: i32, end: i32),
     /// 
     /// This slot is called when the selection is changed. The previous
     /// selection (which may be empty), is specified by *deselected,* and the
     /// new selection by *selected.*
     /// 
-    /// **See also:** setSelection()
+    /// **See also:** [`set_selection()`]
     [event] selection_changed(selected: &ItemSelectionType, deselected: &ItemSelectionType),
     /// 
     /// This slot is called when a new item becomes the current item.
@@ -797,13 +715,13 @@ struct AbstractItemView : AbstractScrollArea {
     /// operation. For example, the hint may indicate that the next item in
     /// the view should be opened for editing.
     /// 
-    /// **See also:** edit()
-    /// commitData()
+    /// **See also:** [`edit()`]
+    /// [`commit_data()`]
     [event] close_editor(editor: *WidgetType, hint: AbstractItemDelegate::EndEditHint),
     /// 
     /// Commit the data in the *editor* to the model.
     /// 
-    /// **See also:** closeEditor()
+    /// **See also:** [`close_editor()`]
     [event] commit_data(editor: *WidgetType),
     /// 
     /// This signal is emitted when a mouse button is pressed. The item
@@ -813,28 +731,28 @@ struct AbstractItemView : AbstractScrollArea {
     /// Use the QApplication::mouseButtons() function to get the state
     /// of the mouse buttons.
     /// 
-    /// **See also:** activated()
-    /// clicked()
-    /// doubleClicked()
-    /// entered()
+    /// **See also:** [`activated()`]
+    /// [`clicked()`]
+    /// [`double_clicked()`]
+    /// [`entered()`]
     [signal] pressed(index: &ModelIndexType),
     /// 
     /// This signal is emitted when a mouse button is left-clicked. The item
     /// the mouse was clicked on is specified by *index.* The signal is
     /// only emitted when the index is valid.
     /// 
-    /// **See also:** activated()
-    /// doubleClicked()
-    /// entered()
-    /// pressed()
+    /// **See also:** [`activated()`]
+    /// [`double_clicked()`]
+    /// [`entered()`]
+    /// [`pressed()`]
     [signal] clicked(index: &ModelIndexType),
     /// 
     /// This signal is emitted when a mouse button is double-clicked. The
     /// item the mouse was double-clicked on is specified by *index.*
     /// The signal is only emitted when the index is valid.
     /// 
-    /// **See also:** clicked()
-    /// activated()
+    /// **See also:** [`clicked()`]
+    /// [`activated()`]
     [signal] double_clicked(index: &ModelIndexType),
     /// 
     /// This signal is emitted when the item specified by *index* is
@@ -842,27 +760,27 @@ struct AbstractItemView : AbstractScrollArea {
     /// platform; e.g., by single- or double-clicking the item, or by
     /// pressing the Return or Enter key when the item is current.
     /// 
-    /// **See also:** clicked()
-    /// doubleClicked()
-    /// entered()
-    /// pressed()
+    /// **See also:** [`clicked()`]
+    /// [`double_clicked()`]
+    /// [`entered()`]
+    /// [`pressed()`]
     [signal] activated(index: &ModelIndexType),
     /// 
     /// This signal is emitted when the mouse cursor enters the item
     /// specified by *index.*
     /// Mouse tracking needs to be enabled for this feature to work.
     /// 
-    /// **See also:** viewportEntered()
-    /// activated()
-    /// clicked()
-    /// doubleClicked()
-    /// pressed()
+    /// **See also:** [`viewport_entered()`]
+    /// [`activated()`]
+    /// [`clicked()`]
+    /// [`double_clicked()`]
+    /// [`pressed()`]
     [signal] entered(index: &ModelIndexType),
     /// 
     /// This signal is emitted when the mouse cursor enters the viewport.
     /// Mouse tracking needs to be enabled for this feature to work.
     /// 
-    /// **See also:** entered()
+    /// **See also:** [`entered()`]
     [signal] viewport_entered(),
     [signal] icon_size_changed(size: &SizeType),
     /// 
@@ -874,14 +792,14 @@ struct AbstractItemView : AbstractScrollArea {
     /// Note that if the view has a horizontal header, the item steps
     /// will be ignored and the header section size will be used instead.
     /// 
-    /// **See also:** horizontalStepsPerItem()
-    /// setVerticalStepsPerItem()
+    /// **See also:** [`horizontal_steps_per_item()`]
+    /// [`set_vertical_steps_per_item()`]
     set_horizontal_steps_per_item(steps: i32),
     /// 
     /// Returns the horizontal scroll bar's steps per item.
     /// 
-    /// **See also:** setHorizontalStepsPerItem()
-    /// verticalStepsPerItem()
+    /// **See also:** [`set_horizontal_steps_per_item()`]
+    /// [`vertical_steps_per_item()`]
     horizontal_steps_per_item() -> i32,
     /// 
     /// Sets the vertical scroll bar's steps per item to *steps.*
@@ -892,14 +810,14 @@ struct AbstractItemView : AbstractScrollArea {
     /// Note that if the view has a vertical header, the item steps
     /// will be ignored and the header section size will be used instead.
     /// 
-    /// **See also:** verticalStepsPerItem()
-    /// setHorizontalStepsPerItem()
+    /// **See also:** [`vertical_steps_per_item()`]
+    /// [`set_horizontal_steps_per_item()`]
     set_vertical_steps_per_item(steps: i32),
     /// 
     /// Returns the vertical scroll bar's steps per item.
     /// 
-    /// **See also:** setVerticalStepsPerItem()
-    /// horizontalStepsPerItem()
+    /// **See also:** [`set_vertical_steps_per_item()`]
+    /// [`horizontal_steps_per_item()`]
     vertical_steps_per_item() -> i32,
     /// 
     /// Returns a QModelIndex object pointing to the next object in the view,
@@ -913,14 +831,14 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// In the base class this is a pure virtual function.
     /// 
-    /// **See also:** verticalOffset()
+    /// **See also:** [`vertical_offset()`]
     [event] horizontal_offset() -> i32,
     /// 
     /// Returns the vertical offset of the view.
     /// 
     /// In the base class this is a pure virtual function.
     /// 
-    /// **See also:** horizontalOffset()
+    /// **See also:** [`horizontal_offset()`]
     [event] vertical_offset() -> i32,
     /// 
     /// Returns `true` if the item referred to by the given *index* is hidden in the view,
@@ -940,8 +858,8 @@ struct AbstractItemView : AbstractScrollArea {
     /// is either an empty QModelIndex or a QItemSelection that contains
     /// all items that are contained in *rect.*
     /// 
-    /// **See also:** selectionCommand()
-    /// selectedIndexes()
+    /// **See also:** [`selection_command()`]
+    /// [`selected_indexes()`]
     /// 
     /// Sets the current selection model to the given *selectionModel.*
     /// 
@@ -954,9 +872,9 @@ struct AbstractItemView : AbstractScrollArea {
     /// parent, or if the parent is a long-lived object, it may be preferable to call its
     /// deleteLater() function to explicitly delete it.
     /// 
-    /// **See also:** selectionModel()
-    /// setModel()
-    /// clearSelection()
+    /// **See also:** [`selection_model()`]
+    /// [`set_model()`]
+    /// [`clear_selection()`]
     [event] set_selection(rect: &RectType, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Returns the region from the viewport of the items in the given
@@ -964,15 +882,15 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// In the base class this is a pure virtual function.
     /// 
-    /// **See also:** visualRect()
-    /// selectedIndexes()
+    /// **See also:** [`visual_rect()`]
+    /// [`selected_indexes()`]
     [event] visual_region_for_selection(selection: &ItemSelectionType) -> Region,
     /// 
     /// This convenience function returns a list of all selected and
     /// non-hidden item indexes in the view. The list contains no
     /// duplicates, and is not sorted.
     /// 
-    /// **See also:** QItemSelectionModel::selectedIndexes()
+    /// **See also:** [`ItemSelectionModel::selected_indexes`]
     [event] selected_indexes() -> [ModelIndex],
     /// 
     /// Starts editing the item corresponding to the given *index* if it is
@@ -984,7 +902,7 @@ struct AbstractItemView : AbstractScrollArea {
     /// behavior, call setCurrentIndex() before this function with the same model
     /// index.
     /// 
-    /// **See also:** QModelIndex::flags()
+    /// **See also:** [`ModelIndex::flags`]
     /// 
     /// This property is a selection of flags defined by
     /// [EditTrigger](EditTrigger)
@@ -1003,12 +921,13 @@ struct AbstractItemView : AbstractScrollArea {
     /// Editing can be forced by specifying the *trigger* to be
     /// QAbstractItemView::AllEditTriggers.
     /// 
-    /// **See also:** closeEditor()
+    /// **See also:** [`close_editor()`]
     /// 
     /// This function is called when the given *editor* has been destroyed.
     /// 
-    /// **See also:** closeEditor()
-    [event] edit(index: &ModelIndexType, trigger: AbstractItemView::EditTrigger, event: *EventType) -> bool,
+    /// **See also:** [`close_editor()`]
+    [org_name(edit)]
+    [event] edit_2(index: &ModelIndexType, trigger: AbstractItemView::EditTrigger, event: *EventType) -> bool,
     /// 
     /// Returns the SelectionFlags to be used when updating a selection with
     /// to include the *index* specified. The *event* is a user input event,
@@ -1016,7 +935,7 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// Reimplement this function to define your own selection behavior.
     /// 
-    /// **See also:** setSelection()
+    /// **See also:** [`set_selection()`]
     [event] selection_command(index: &ModelIndexType, event: *EventType) -> ItemSelectionModel::SelectionFlags,
     /// 
     /// Starts a drag by calling drag->exec() using the given *supportedActions.*
@@ -1028,12 +947,12 @@ struct AbstractItemView : AbstractScrollArea {
     /// 
     /// Returns the item view's state.
     /// 
-    /// **See also:** setState()
+    /// **See also:** [`set_state()`]
     state() -> AbstractItemView::State,
     /// 
     /// Sets the item view's state to the given *state.*
     /// 
-    /// **See also:** state()
+    /// **See also:** [`state()`]
     set_state(state: AbstractItemView::State),
     /// 
     /// Schedules a layout of the items in the view to be executed when the
@@ -1042,21 +961,21 @@ struct AbstractItemView : AbstractScrollArea {
     /// Even if scheduleDelayedItemsLayout() is called multiple times before
     /// events are processed, the view will only do the layout once.
     /// 
-    /// **See also:** executeDelayedItemsLayout()
+    /// **See also:** [`execute_delayed_items_layout()`]
     schedule_delayed_items_layout(),
     /// 
     /// Executes the scheduled layouts without waiting for the event processing
     /// to begin.
     /// 
-    /// **See also:** scheduleDelayedItemsLayout()
+    /// **See also:** [`schedule_delayed_items_layout()`]
     execute_delayed_items_layout(),
     /// 
     /// Marks the given *region* as dirty and schedules it to be updated.
     /// You only need to call this function if you are implementing
     /// your own view subclass.
     /// 
-    /// **See also:** scrollDirtyRegion()
-    /// dirtyRegionOffset()
+    /// **See also:** [`scroll_dirty_region()`]
+    /// [`dirty_region_offset()`]
     set_dirty_region(region: &RegionType),
     /// 
     /// Prepares the view for scrolling by ( *dx* , *dy* ) pixels by moving the dirty regions in the
@@ -1066,9 +985,9 @@ struct AbstractItemView : AbstractScrollArea {
     /// If you implement scrollContentsBy() in a subclass of QAbstractItemView, call this function
     /// before you call QWidget::scroll() on the viewport. Alternatively, just call update().
     /// 
-    /// **See also:** scrollContentsBy()
-    /// dirtyRegionOffset()
-    /// setDirtyRegion()
+    /// **See also:** [`scroll_contents_by()`]
+    /// [`dirty_region_offset()`]
+    /// [`set_dirty_region()`]
     scroll_dirty_region(dx: i32, dy: i32),
     /// 
     /// Returns the offset of the dirty regions in the view.
@@ -1077,8 +996,8 @@ struct AbstractItemView : AbstractScrollArea {
     /// QAbstractItemView, you should translate the area given by the paint event with
     /// the offset returned from this function.
     /// 
-    /// **See also:** scrollDirtyRegion()
-    /// setDirtyRegion()
+    /// **See also:** [`scroll_dirty_region()`]
+    /// [`set_dirty_region()`]
     dirty_region_offset() -> Point,
     start_auto_scroll(),
     stop_auto_scroll(),
@@ -1121,8 +1040,8 @@ struct AbstractItemView : AbstractScrollArea {
     /// the widget. If the drag is over a valid dropping place (e.g. over an item that
     /// accepts drops), the event is accepted; otherwise it is ignored.
     /// 
-    /// **See also:** dropEvent()
-    /// startDrag()
+    /// **See also:** [`drop_event()`]
+    /// [`start_drag()`]
     [event] drag_enter_event(event: *DragEnterEventType),
     /// 
     /// This function is called continuously with the given *event* during a drag and
@@ -1130,8 +1049,8 @@ struct AbstractItemView : AbstractScrollArea {
     /// the user drags a selection to view's right or bottom edge. In this case, the
     /// event will be accepted; otherwise it will be ignored.
     /// 
-    /// **See also:** dropEvent()
-    /// startDrag()
+    /// **See also:** [`drop_event()`]
+    /// [`start_drag()`]
     [event] drag_move_event(event: *DragMoveEventType),
     /// 
     /// This function is called when the item being dragged leaves the view.
@@ -1142,21 +1061,21 @@ struct AbstractItemView : AbstractScrollArea {
     /// the widget. If the model accepts the even position the drop event is accepted;
     /// otherwise it is ignored.
     /// 
-    /// **See also:** startDrag()
+    /// **See also:** [`start_drag()`]
     [event] drop_event(event: *DropEventType),
     /// 
     /// This function is called with the given *event* when the widget obtains the focus.
     /// By default, the event is ignored.
     /// 
-    /// **See also:** setFocus()
-    /// focusOutEvent()
+    /// **See also:** [`set_focus()`]
+    /// [`focus_out_event()`]
     [event] focus_in_event(event: *FocusEventType),
     /// 
     /// This function is called with the given *event* when the widget
     /// loses the focus. By default, the event is ignored.
     /// 
-    /// **See also:** clearFocus()
-    /// focusInEvent()
+    /// **See also:** [`clear_focus()`]
+    /// [`focus_in_event()`]
     [event] focus_out_event(event: *FocusEventType),
     /// 
     /// This function is called with the given *event* when a key event is sent to
@@ -1167,22 +1086,22 @@ struct AbstractItemView : AbstractScrollArea {
     /// This function is where editing is initiated by key press, e.g. if F2 is
     /// pressed.
     /// 
-    /// **See also:** edit()
-    /// moveCursor()
-    /// keyboardSearch()
+    /// **See also:** [`edit()`]
+    /// [`move_cursor()`]
+    /// [`keyboard_search()`]
     /// tabKeyNavigation
     [event] key_press_event(event: *KeyEventType),
     /// 
     /// This function is called with the given *event* when a resize event is sent to
     /// the widget.
     /// 
-    /// **See also:** QWidget::resizeEvent()
+    /// **See also:** [`Widget::resize_event`]
     [event] resize_event(event: *ResizeEventType),
     /// 
     /// This function is called with the given *event* when a timer event is sent
     /// to the widget.
     /// 
-    /// **See also:** QObject::timerEvent()
+    /// **See also:** [`Object::timer_event`]
     [event] timer_event(event: *TimerEventType),
     /// 
     [event] input_method_event(event: *InputMethodEventType),
@@ -1193,6 +1112,136 @@ struct AbstractItemView : AbstractScrollArea {
     drop_indicator_position() -> AbstractItemView::DropIndicatorPosition,
     /// 
     [event] viewport_size_hint() -> Size,
+}
+
+[org_name(QAbstractItemView)]
+enum SelectionMode {
+    /// Items cannot be selected. The most commonly used modes are SingleSelection and ExtendedSelection.
+    NoSelection,
+    /// When the user selects an item, any already-selected item becomes unselected. It is possible for the user to deselect the selected item.
+    SingleSelection,
+    /// When the user selects an item in the usual way, the selection status of that item is toggled and the other items are left alone. Multiple items can be toggled by dragging the mouse over them.
+    MultiSelection,
+    /// When the user selects an item in the usual way, the selection is cleared and the new item selected. However, if the user presses the Ctrl key when clicking on an item, the clicked item gets toggled and all other items are left untouched. If the user presses the Shift key while clicking on an item, all items between the current item and the clicked item are selected or unselected, depending on the state of the clicked item. Multiple items can be selected by dragging the mouse over them.
+    ExtendedSelection,
+    /// When the user selects an item in the usual way, the selection is cleared and the new item selected. However, if the user presses the Shift key while clicking on an item, all items between the current item and the clicked item are selected or unselected, depending on the state of the clicked item.
+    ContiguousSelection,
+}
+
+[org_name(QAbstractItemView)]
+enum SelectionBehavior {
+    /// Selecting single items.
+    SelectItems,
+    /// Selecting only rows.
+    SelectRows,
+    /// Selecting only columns.
+    SelectColumns,
+}
+
+[org_name(QAbstractItemView)]
+enum ScrollHint {
+    /// Scroll to ensure that the item is visible.
+    EnsureVisible,
+    /// Scroll to position the item at the top of the viewport.
+    PositionAtTop,
+    /// Scroll to position the item at the bottom of the viewport.
+    PositionAtBottom,
+    /// Scroll to position the item at the center of the viewport.
+    PositionAtCenter,
+}
+
+[org_name(QAbstractItemView)]
+enum EditTrigger {
+    /// No editing possible.
+    NoEditTriggers,
+    /// Editing start whenever current item changes.
+    CurrentChanged,
+    /// Editing starts when an item is double clicked.
+    DoubleClicked,
+    /// Editing starts when clicking on an already selected item.
+    SelectedClicked,
+    /// Editing starts when the platform edit key has been pressed over an item.
+    EditKeyPressed,
+    /// Editing starts when any key is pressed over an item.
+    AnyKeyPressed,
+    /// Editing starts for all above actions.
+    AllEditTriggers,
+}
+
+[org_name(QAbstractItemView)]
+enum ScrollMode {
+    /// The view will scroll the contents one item at a time.
+    ScrollPerItem,
+    /// The view will scroll the contents one pixel at a time.
+    ScrollPerPixel,
+}
+
+[org_name(QAbstractItemView)]
+enum DragDropMode {
+    /// Does not support dragging or dropping.
+    NoDragDrop,
+    /// The view supports dragging of its own items
+    DragOnly,
+    /// The view accepts drops
+    DropOnly,
+    /// The view supports both dragging and dropping
+    DragDrop,
+    /// The view accepts move ( **not copy** ) operations only from itself. Note that the model used needs to provide support for drag and drop operations.
+    InternalMove,
+}
+
+[org_name(QAbstractItemView)]
+enum CursorAction {
+    /// Move to the item above the current item.
+    MoveUp,
+    /// Move to the item below the current item.
+    MoveDown,
+    /// Move to the item left of the current item.
+    MoveLeft,
+    /// Move to the item right of the current item.
+    MoveRight,
+    /// Move to the top-left corner item.
+    MoveHome,
+    /// Move to the bottom-right corner item.
+    MoveEnd,
+    /// Move one page up above the current item.
+    MovePageUp,
+    /// Move one page down below the current item.
+    MovePageDown,
+    /// Move to the item after the current item.
+    MoveNext,
+    /// Move to the item before the current item.
+    MovePrevious,
+}
+
+[org_name(QAbstractItemView)]
+enum State {
+    /// The is the default state.
+    NoState,
+    /// The user is dragging items.
+    DraggingState,
+    /// The user is selecting items.
+    DragSelectingState,
+    /// The user is editing an item in a widget editor.
+    EditingState,
+    /// The user is opening a branch of items.
+    ExpandingState,
+    /// The user is closing a branch of items.
+    CollapsingState,
+    /// The item view is performing an animation.
+    AnimatingState,
+}
+
+[org_name(QAbstractItemView)]
+enum DropIndicatorPosition {
+    /// The item will be dropped on the index.
+    OnItem,
+    /// The item will be dropped above the index.
+    AboveItem,
+    /// The item will be dropped below the index.
+    BelowItem,
+    /// The item will be dropped onto a region of the viewport with no items. The way each view handles items dropped onto the viewport depends on the behavior of the underlying model in use.
+    OnViewport,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

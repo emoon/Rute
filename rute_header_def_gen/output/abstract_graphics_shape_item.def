@@ -6,13 +6,13 @@
 /// You can subclass this item to provide a simple base implementation of
 /// accessors for the item's pen and brush.
 /// 
-/// **See also:** QGraphicsRectItem
-/// QGraphicsEllipseItem
-/// QGraphicsPathItem
-/// QGraphicsPolygonItem
-/// QGraphicsTextItem
-/// QGraphicsLineItem
-/// QGraphicsPixmapItem
+/// **See also:** [`GraphicsRectItem`]
+/// [`GraphicsEllipseItem`]
+/// [`GraphicsPathItem`]
+/// [`GraphicsPolygonItem`]
+/// [`GraphicsTextItem`]
+/// [`GraphicsLineItem`]
+/// [`GraphicsPixmapItem`]
 /// {Graphics View Framework}
 /// # Licence
 ///
@@ -27,12 +27,12 @@ struct AbstractGraphicsShapeItem : GraphicsItem {
     /// 
     /// The pen is used to draw the item's outline.
     /// 
-    /// **See also:** pen()
+    /// **See also:** [`pen()`]
     set_pen(pen: &PenType),
     /// 
     /// Returns the item's brush, or an empty brush if no brush has been set.
     /// 
-    /// **See also:** setBrush()
+    /// **See also:** [`set_brush()`]
     brush() -> Brush,
     /// 
     /// Sets the item's brush to *brush.*
@@ -42,7 +42,7 @@ struct AbstractGraphicsShapeItem : GraphicsItem {
     /// If you use a brush with a QGradient, the gradient
     /// is relative to the item's coordinate system.
     /// 
-    /// **See also:** brush()
+    /// **See also:** [`brush()`]
     set_brush(brush: &BrushType),
     /// 
     [event] is_obscured_by(item: *GraphicsItemType) -> bool,

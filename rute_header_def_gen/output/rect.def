@@ -144,12 +144,11 @@
 /// Operations on a QRect that could potentially result in values outside this
 /// range will result in undefined behavior.
 /// 
-/// **See also:** QRectF
-/// QRegion
+/// **See also:** [`RectF`]
+/// [`Region`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct Rect {
     /// 
     /// Returns `true` if the rectangle is a null rectangle, otherwise
@@ -159,8 +158,8 @@ struct Rect {
     /// right() == left() - 1 and bottom() == top() - 1). A null rectangle
     /// is also empty, and hence is not valid.
     /// 
-    /// **See also:** isEmpty()
-    /// isValid()
+    /// **See also:** [`is_empty()`]
+    /// [`is_valid()`]
     is_null() -> bool,
     /// 
     /// Returns `true` if the rectangle is empty, otherwise returns `false.`
@@ -171,9 +170,9 @@ struct Rect {
     /// Use the normalized() function to retrieve a rectangle where the
     /// corners are swapped.
     /// 
-    /// **See also:** isNull()
-    /// isValid()
-    /// normalized()
+    /// **See also:** [`is_null()`]
+    /// [`is_valid()`]
+    /// [`normalized()`]
     is_empty() -> bool,
     /// 
     /// Returns `true` if the rectangle is valid, otherwise returns `false.`
@@ -183,40 +182,40 @@ struct Rect {
     /// not defined for invalid rectangles. A valid rectangle is not empty
     /// (i.e., isValid() == !isEmpty()).
     /// 
-    /// **See also:** isNull()
-    /// isEmpty()
-    /// normalized()
+    /// **See also:** [`is_null()`]
+    /// [`is_empty()`]
+    /// [`normalized()`]
     is_valid() -> bool,
     /// 
     /// Returns the x-coordinate of the rectangle's left edge. Equivalent
     /// to x().
     /// 
-    /// **See also:** setLeft()
-    /// topLeft()
-    /// bottomLeft()
+    /// **See also:** [`set_left()`]
+    /// [`top_left()`]
+    /// [`bottom_left()`]
     left() -> i32,
     /// 
     /// Returns the y-coordinate of the rectangle's top edge.
     /// Equivalent to y().
     /// 
-    /// **See also:** setTop()
-    /// topLeft()
-    /// topRight()
+    /// **See also:** [`set_top()`]
+    /// [`top_left()`]
+    /// [`top_right()`]
     /// 
     /// Returns the position of the rectangle's top-left corner.
     /// 
-    /// **See also:** setTopLeft()
-    /// top()
-    /// left()
+    /// **See also:** [`set_top_left()`]
+    /// [`top()`]
+    /// [`left()`]
     /// 
     /// Returns the position of the rectangle's top-right corner.
     /// 
     /// Note that for historical reasons this function returns
     /// QPoint(left() + width() -1, top()).
     /// 
-    /// **See also:** setTopRight()
-    /// top()
-    /// right()
+    /// **See also:** [`set_top_right()`]
+    /// [`top()`]
+    /// [`right()`]
     top() -> i32,
     /// 
     /// Returns the x-coordinate of the rectangle's right edge.
@@ -224,9 +223,9 @@ struct Rect {
     /// Note that for historical reasons this function returns left() +
     /// width() - 1; use x() + width() to retrieve the true x-coordinate.
     /// 
-    /// **See also:** setRight()
-    /// topRight()
-    /// bottomRight()
+    /// **See also:** [`set_right()`]
+    /// [`top_right()`]
+    /// [`bottom_right()`]
     right() -> i32,
     /// 
     /// Returns the y-coordinate of the rectangle's bottom edge.
@@ -234,26 +233,26 @@ struct Rect {
     /// Note that for historical reasons this function returns top() +
     /// height() - 1; use y() + height() to retrieve the true y-coordinate.
     /// 
-    /// **See also:** setBottom()
-    /// bottomLeft()
-    /// bottomRight()
+    /// **See also:** [`set_bottom()`]
+    /// [`bottom_left()`]
+    /// [`bottom_right()`]
     /// 
     /// Returns the position of the rectangle's bottom-right corner.
     /// 
     /// Note that for historical reasons this function returns
     /// QPoint(left() + width() -1, top() + height() - 1).
     /// 
-    /// **See also:** setBottomRight()
-    /// bottom()
-    /// right()
+    /// **See also:** [`set_bottom_right()`]
+    /// [`bottom()`]
+    /// [`right()`]
     /// 
     /// Returns the position of the rectangle's bottom-left corner. Note
     /// that for historical reasons this function returns QPoint(left(),
     /// top() + height() - 1).
     /// 
-    /// **See also:** setBottomLeft()
-    /// bottom()
-    /// left()
+    /// **See also:** [`set_bottom_left()`]
+    /// [`bottom()`]
+    /// [`left()`]
     bottom() -> i32,
     /// 
     /// Returns a normalized rectangle; i.e., a rectangle that has a
@@ -262,22 +261,22 @@ struct Rect {
     /// If width() < 0 the function swaps the left and right corners, and
     /// it swaps the top and bottom corners if height() < 0.
     /// 
-    /// **See also:** isValid()
-    /// isEmpty()
+    /// **See also:** [`is_valid()`]
+    /// [`is_empty()`]
     normalized() -> Rect,
     /// 
     /// Returns the x-coordinate of the rectangle's left edge. Equivalent to left().
     /// 
-    /// **See also:** setX()
-    /// y()
-    /// topLeft()
+    /// **See also:** [`set_x()`]
+    /// [`y()`]
+    /// [`top_left()`]
     x() -> i32,
     /// 
     /// Returns the y-coordinate of the rectangle's top edge. Equivalent to top().
     /// 
-    /// **See also:** setY()
-    /// x()
-    /// topLeft()
+    /// **See also:** [`set_y()`]
+    /// [`x()`]
+    /// [`top_left()`]
     y() -> i32,
     /// 
     /// Sets the left edge of the rectangle to the given *x*
@@ -286,8 +285,8 @@ struct Rect {
     /// 
     /// Equivalent to setX().
     /// 
-    /// **See also:** left()
-    /// moveLeft()
+    /// **See also:** [`left()`]
+    /// [`move_left()`]
     set_left(pos: i32),
     /// 
     /// Sets the top edge of the rectangle to the given *y*
@@ -296,49 +295,49 @@ struct Rect {
     /// 
     /// Equivalent to setY().
     /// 
-    /// **See also:** top()
-    /// moveTop()
+    /// **See also:** [`top()`]
+    /// [`move_top()`]
     /// 
     /// Set the top-left corner of the rectangle to the given *position.* May change the size, but will never change the
     /// bottom-right corner of the rectangle.
     /// 
-    /// **See also:** topLeft()
-    /// moveTopLeft()
+    /// **See also:** [`top_left()`]
+    /// [`move_top_left()`]
     /// 
     /// Set the top-right corner of the rectangle to the given *position.* May change the size, but will never change the
     /// bottom-left corner of the rectangle.
     /// 
-    /// **See also:** topRight()
-    /// moveTopRight()
+    /// **See also:** [`top_right()`]
+    /// [`move_top_right()`]
     set_top(pos: i32),
     /// 
     /// Sets the right edge of the rectangle to the given *x*
     /// coordinate. May change the width, but will never change the left
     /// edge of the rectangle.
     /// 
-    /// **See also:** right()
-    /// moveRight()
+    /// **See also:** [`right()`]
+    /// [`move_right()`]
     set_right(pos: i32),
     /// 
     /// Set the bottom-right corner of the rectangle to the given *position.* May change the size, but will never change the
     /// top-left corner of the rectangle.
     /// 
-    /// **See also:** bottomRight()
-    /// moveBottomRight()
+    /// **See also:** [`bottom_right()`]
+    /// [`move_bottom_right()`]
     /// 
     /// Set the bottom-left corner of the rectangle to the given *position.* May change the size, but will never change the
     /// top-right corner of the rectangle.
     /// 
-    /// **See also:** bottomLeft()
-    /// moveBottomLeft()
+    /// **See also:** [`bottom_left()`]
+    /// [`move_bottom_left()`]
     set_bottom(pos: i32),
     /// 
     /// Sets the bottom edge of the rectangle to the given *y*
     /// coordinate. May change the height, but will never change the top
     /// edge of the rectangle.
     /// 
-    /// **See also:** bottom()
-    /// moveBottom()
+    /// **See also:** [`bottom()`]
+    /// [`move_bottom()`]
     /// */
     /// 
     /// /*!
@@ -349,9 +348,9 @@ struct Rect {
     /// 
     /// Equivalent to setLeft().
     /// 
-    /// **See also:** x()
-    /// setY()
-    /// setTopLeft()
+    /// **See also:** [`x()`]
+    /// [`set_y()`]
+    /// [`set_top_left()`]
     set_x(x: i32),
     /// 
     /// Sets the top edge of the rectangle to the given *y*
@@ -360,44 +359,44 @@ struct Rect {
     /// 
     /// Equivalent to setTop().
     /// 
-    /// **See also:** y()
-    /// setX()
-    /// setTopLeft()
+    /// **See also:** [`y()`]
+    /// [`set_x()`]
+    /// [`set_top_left()`]
     set_y(y: i32),
     /// 
     /// Set the top-left corner of the rectangle to the given *position.* May change the size, but will never change the
     /// bottom-right corner of the rectangle.
     /// 
-    /// **See also:** topLeft()
-    /// moveTopLeft()
+    /// **See also:** [`top_left()`]
+    /// [`move_top_left()`]
     set_top_left(p: &PointType),
     /// 
     /// Set the bottom-right corner of the rectangle to the given *position.* May change the size, but will never change the
     /// top-left corner of the rectangle.
     /// 
-    /// **See also:** bottomRight()
-    /// moveBottomRight()
+    /// **See also:** [`bottom_right()`]
+    /// [`move_bottom_right()`]
     set_bottom_right(p: &PointType),
     /// 
     /// Set the top-right corner of the rectangle to the given *position.* May change the size, but will never change the
     /// bottom-left corner of the rectangle.
     /// 
-    /// **See also:** topRight()
-    /// moveTopRight()
+    /// **See also:** [`top_right()`]
+    /// [`move_top_right()`]
     set_top_right(p: &PointType),
     /// 
     /// Set the bottom-left corner of the rectangle to the given *position.* May change the size, but will never change the
     /// top-right corner of the rectangle.
     /// 
-    /// **See also:** bottomLeft()
-    /// moveBottomLeft()
+    /// **See also:** [`bottom_left()`]
+    /// [`move_bottom_left()`]
     set_bottom_left(p: &PointType),
     /// 
     /// Returns the position of the rectangle's top-left corner.
     /// 
-    /// **See also:** setTopLeft()
-    /// top()
-    /// left()
+    /// **See also:** [`set_top_left()`]
+    /// [`top()`]
+    /// [`left()`]
     top_left() -> Point,
     /// 
     /// Returns the position of the rectangle's bottom-right corner.
@@ -405,9 +404,9 @@ struct Rect {
     /// Note that for historical reasons this function returns
     /// QPoint(left() + width() -1, top() + height() - 1).
     /// 
-    /// **See also:** setBottomRight()
-    /// bottom()
-    /// right()
+    /// **See also:** [`set_bottom_right()`]
+    /// [`bottom()`]
+    /// [`right()`]
     bottom_right() -> Point,
     /// 
     /// Returns the position of the rectangle's top-right corner.
@@ -415,145 +414,145 @@ struct Rect {
     /// Note that for historical reasons this function returns
     /// QPoint(left() + width() -1, top()).
     /// 
-    /// **See also:** setTopRight()
-    /// top()
-    /// right()
+    /// **See also:** [`set_top_right()`]
+    /// [`top()`]
+    /// [`right()`]
     top_right() -> Point,
     /// 
     /// Returns the position of the rectangle's bottom-left corner. Note
     /// that for historical reasons this function returns QPoint(left(),
     /// top() + height() - 1).
     /// 
-    /// **See also:** setBottomLeft()
-    /// bottom()
-    /// left()
+    /// **See also:** [`set_bottom_left()`]
+    /// [`bottom()`]
+    /// [`left()`]
     bottom_left() -> Point,
     /// 
     /// Returns the center point of the rectangle.
     /// 
-    /// **See also:** moveCenter()
+    /// **See also:** [`move_center()`]
     center() -> Point,
     /// 
     /// Moves the rectangle horizontally, leaving the rectangle's left
     /// edge at the given *x* coordinate. The rectangle's size is
     /// unchanged.
     /// 
-    /// **See also:** left()
-    /// setLeft()
-    /// moveRight()
+    /// **See also:** [`left()`]
+    /// [`set_left()`]
+    /// [`move_right()`]
     move_left(pos: i32),
     /// 
     /// Moves the rectangle vertically, leaving the rectangle's top edge
     /// at the given *y* coordinate. The rectangle's size is unchanged.
     /// 
-    /// **See also:** top()
-    /// setTop()
-    /// moveBottom()
+    /// **See also:** [`top()`]
+    /// [`set_top()`]
+    /// [`move_bottom()`]
     /// 
     /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** setTopLeft()
-    /// moveTop()
-    /// moveLeft()
+    /// **See also:** [`set_top_left()`]
+    /// [`move_top()`]
+    /// [`move_left()`]
     /// 
     /// Moves the rectangle, leaving the top-right corner at the given *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** setTopRight()
-    /// moveTop()
-    /// moveRight()
+    /// **See also:** [`set_top_right()`]
+    /// [`move_top()`]
+    /// [`move_right()`]
     move_top(pos: i32),
     /// 
     /// Moves the rectangle horizontally, leaving the rectangle's right
     /// edge at the given *x* coordinate. The rectangle's size is
     /// unchanged.
     /// 
-    /// **See also:** right()
-    /// setRight()
-    /// moveLeft()
+    /// **See also:** [`right()`]
+    /// [`set_right()`]
+    /// [`move_left()`]
     move_right(pos: i32),
     /// 
     /// Moves the rectangle vertically, leaving the rectangle's bottom
     /// edge at the given *y* coordinate. The rectangle's size is
     /// unchanged.
     /// 
-    /// **See also:** bottom()
-    /// setBottom()
-    /// moveTop()
+    /// **See also:** [`bottom()`]
+    /// [`set_bottom()`]
+    /// [`move_top()`]
     /// 
     /// Moves the rectangle, leaving the bottom-right corner at the given
     /// *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** setBottomRight()
-    /// moveRight()
-    /// moveBottom()
+    /// **See also:** [`set_bottom_right()`]
+    /// [`move_right()`]
+    /// [`move_bottom()`]
     /// 
     /// Moves the rectangle, leaving the bottom-left corner at the given
     /// *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** setBottomLeft()
-    /// moveBottom()
-    /// moveLeft()
+    /// **See also:** [`set_bottom_left()`]
+    /// [`move_bottom()`]
+    /// [`move_left()`]
     move_bottom(pos: i32),
     /// 
     /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** setTopLeft()
-    /// moveTop()
-    /// moveLeft()
+    /// **See also:** [`set_top_left()`]
+    /// [`move_top()`]
+    /// [`move_left()`]
     move_top_left(p: &PointType),
     /// 
     /// Moves the rectangle, leaving the bottom-right corner at the given
     /// *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** setBottomRight()
-    /// moveRight()
-    /// moveBottom()
+    /// **See also:** [`set_bottom_right()`]
+    /// [`move_right()`]
+    /// [`move_bottom()`]
     move_bottom_right(p: &PointType),
     /// 
     /// Moves the rectangle, leaving the top-right corner at the given *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** setTopRight()
-    /// moveTop()
-    /// moveRight()
+    /// **See also:** [`set_top_right()`]
+    /// [`move_top()`]
+    /// [`move_right()`]
     move_top_right(p: &PointType),
     /// 
     /// Moves the rectangle, leaving the bottom-left corner at the given
     /// *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** setBottomLeft()
-    /// moveBottom()
-    /// moveLeft()
+    /// **See also:** [`set_bottom_left()`]
+    /// [`move_bottom()`]
+    /// [`move_left()`]
     move_bottom_left(p: &PointType),
     /// 
     /// Moves the rectangle, leaving the center point at the given *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** center()
+    /// **See also:** [`center()`]
     move_center(p: &PointType),
     /// 
     /// Moves the rectangle vertically, leaving the rectangle's top edge
     /// at the given *y* coordinate. The rectangle's size is unchanged.
     /// 
-    /// **See also:** top()
-    /// setTop()
-    /// moveBottom()
+    /// **See also:** [`top()`]
+    /// [`set_top()`]
+    /// [`move_bottom()`]
     /// 
     /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** setTopLeft()
-    /// moveTop()
-    /// moveLeft()
+    /// **See also:** [`set_top_left()`]
+    /// [`move_top()`]
+    /// [`move_left()`]
     /// 
     /// Moves the rectangle, leaving the top-right corner at the given *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** setTopRight()
-    /// moveTop()
-    /// moveRight()
+    /// **See also:** [`set_top_right()`]
+    /// [`move_top()`]
+    /// [`move_right()`]
     /// 
     /// Moves the rectangle, leaving the top-left corner at the given
     /// position ( *x,* *y).* The rectangle's size is unchanged.
     /// 
-    /// **See also:** translate()
-    /// moveTopLeft()
+    /// **See also:** [`translate()`]
+    /// [`move_top_left()`]
     /// 
     /// Moves the rectangle, leaving the top-left corner at the given *position.*
     move_to(x: i32, t: i32),
@@ -561,120 +560,121 @@ struct Rect {
     /// Moves the rectangle vertically, leaving the rectangle's top edge
     /// at the given *y* coordinate. The rectangle's size is unchanged.
     /// 
-    /// **See also:** top()
-    /// setTop()
-    /// moveBottom()
+    /// **See also:** [`top()`]
+    /// [`set_top()`]
+    /// [`move_bottom()`]
     /// 
     /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** setTopLeft()
-    /// moveTop()
-    /// moveLeft()
+    /// **See also:** [`set_top_left()`]
+    /// [`move_top()`]
+    /// [`move_left()`]
     /// 
     /// Moves the rectangle, leaving the top-right corner at the given *position.* The rectangle's size is unchanged.
     /// 
-    /// **See also:** setTopRight()
-    /// moveTop()
-    /// moveRight()
+    /// **See also:** [`set_top_right()`]
+    /// [`move_top()`]
+    /// [`move_right()`]
     /// 
     /// Moves the rectangle, leaving the top-left corner at the given
     /// position ( *x,* *y).* The rectangle's size is unchanged.
     /// 
-    /// **See also:** translate()
-    /// moveTopLeft()
+    /// **See also:** [`translate()`]
+    /// [`move_top_left()`]
     /// 
     /// Moves the rectangle, leaving the top-left corner at the given *position.*
-    move_to(p: &PointType),
+    [org_name(moveTo)]
+    move_to_2(p: &PointType),
     /// 
     /// Sets the coordinates of the rectangle's top-left corner to ( *x* ,
     /// *y* ), and its size to the given *width* and *height.*
     /// 
-    /// **See also:** getRect()
-    /// setCoords()
+    /// **See also:** [`get_rect()`]
+    /// [`set_coords()`]
     set_rect(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// Extracts the position of the rectangle's top-left corner to * *x*
     /// and * *y,* and its dimensions to * *width* and * *height.*
     /// 
-    /// **See also:** setRect()
-    /// getCoords()
+    /// **See also:** [`set_rect()`]
+    /// [`get_coords()`]
     get_rect(x: *i32, y: *i32, w: *i32, h: *i32),
     /// 
     /// Sets the coordinates of the rectangle's top-left corner to ( *x1,*
     /// *y1),* and the coordinates of its bottom-right corner to ( *x2,*
     /// *y2).*
     /// 
-    /// **See also:** getCoords()
-    /// setRect()
+    /// **See also:** [`get_coords()`]
+    /// [`set_rect()`]
     set_coords(x1: i32, y1: i32, x2: i32, y2: i32),
     /// 
     /// Extracts the position of the rectangle's top-left corner to * *x1*
     /// and * *y1,* and the position of the bottom-right corner to * *x2*
     /// and * *y2.*
     /// 
-    /// **See also:** setCoords()
-    /// getRect()
+    /// **See also:** [`set_coords()`]
+    /// [`get_rect()`]
     get_coords(x1: *i32, y1: *i32, x2: *i32, y2: *i32),
     /// 
     /// Returns a new rectangle with *dx1,* *dy1,* *dx2* and *dy2*
     /// added respectively to the existing coordinates of this rectangle.
     /// 
-    /// **See also:** adjust()
+    /// **See also:** [`adjust()`]
     /// 
     /// Adds *dx1,* *dy1,* *dx2* and *dy2* respectively to the
     /// existing coordinates of the rectangle.
     /// 
-    /// **See also:** adjusted()
-    /// setRect()
+    /// **See also:** [`adjusted()`]
+    /// [`set_rect()`]
     adjust(x1: i32, y1: i32, x2: i32, y2: i32),
     /// 
     /// Returns a new rectangle with *dx1,* *dy1,* *dx2* and *dy2*
     /// added respectively to the existing coordinates of this rectangle.
     /// 
-    /// **See also:** adjust()
+    /// **See also:** [`adjust()`]
     adjusted(x1: i32, y1: i32, x2: i32, y2: i32) -> Rect,
     /// 
     /// Returns the size of the rectangle.
     /// 
-    /// **See also:** setSize()
-    /// width()
-    /// height()
+    /// **See also:** [`set_size()`]
+    /// [`width()`]
+    /// [`height()`]
     size() -> Size,
     /// 
     /// Returns the width of the rectangle.
     /// 
-    /// **See also:** setWidth()
-    /// height()
-    /// size()
+    /// **See also:** [`set_width()`]
+    /// [`height()`]
+    /// [`size()`]
     width() -> i32,
     /// 
     /// Returns the height of the rectangle.
     /// 
-    /// **See also:** setHeight()
-    /// width()
-    /// size()
+    /// **See also:** [`set_height()`]
+    /// [`width()`]
+    /// [`size()`]
     height() -> i32,
     /// 
     /// Sets the width of the rectangle to the given *width.* The right
     /// edge is changed, but not the left one.
     /// 
-    /// **See also:** width()
-    /// setSize()
+    /// **See also:** [`width()`]
+    /// [`set_size()`]
     set_width(w: i32),
     /// 
     /// Sets the height of the rectangle to the given *height.* The bottom
     /// edge is changed, but not the top one.
     /// 
-    /// **See also:** height()
-    /// setSize()
+    /// **See also:** [`height()`]
+    /// [`set_size()`]
     set_height(h: i32),
     /// 
     /// Sets the size of the rectangle to the given *size.* The top-left
     /// corner is not moved.
     /// 
-    /// **See also:** size()
-    /// setWidth()
-    /// setHeight()
+    /// **See also:** [`size()`]
+    /// [`set_width()`]
+    /// [`set_height()`]
     set_size(s: &SizeType),
     /// 
     /// Returns `true` if the given *point* is inside or on the edge of
@@ -682,7 +682,7 @@ struct Rect {
     /// function only returns `true` if the given *point* is *inside* the
     /// rectangle (i.e., not on the edge).
     /// 
-    /// **See also:** intersects()
+    /// **See also:** [`intersects()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the point ( *x,* *y)* is inside or on the edge of
@@ -706,7 +706,7 @@ struct Rect {
     /// function only returns `true` if the given *point* is *inside* the
     /// rectangle (i.e., not on the edge).
     /// 
-    /// **See also:** intersects()
+    /// **See also:** [`intersects()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the point ( *x,* *y)* is inside or on the edge of
@@ -723,14 +723,15 @@ struct Rect {
     /// otherwise returns `false.` If *proper* is true, this function only
     /// returns `true` if the *rectangle* is entirely inside this
     /// rectangle (not on the edge).
-    contains(p: &PointType, proper: bool) -> bool,
+    [org_name(contains)]
+    contains_2(p: &PointType, proper: bool) -> bool,
     /// 
     /// Returns `true` if the given *point* is inside or on the edge of
     /// the rectangle, otherwise returns `false.` If *proper* is true, this
     /// function only returns `true` if the given *point* is *inside* the
     /// rectangle (i.e., not on the edge).
     /// 
-    /// **See also:** intersects()
+    /// **See also:** [`intersects()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the point ( *x,* *y)* is inside or on the edge of
@@ -747,14 +748,15 @@ struct Rect {
     /// otherwise returns `false.` If *proper* is true, this function only
     /// returns `true` if the *rectangle* is entirely inside this
     /// rectangle (not on the edge).
-    contains(x: i32, y: i32) -> bool,
+    [org_name(contains)]
+    contains_3(x: i32, y: i32) -> bool,
     /// 
     /// Returns `true` if the given *point* is inside or on the edge of
     /// the rectangle, otherwise returns `false.` If *proper* is true, this
     /// function only returns `true` if the given *point* is *inside* the
     /// rectangle (i.e., not on the edge).
     /// 
-    /// **See also:** intersects()
+    /// **See also:** [`intersects()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the point ( *x,* *y)* is inside or on the edge of
@@ -771,22 +773,23 @@ struct Rect {
     /// otherwise returns `false.` If *proper* is true, this function only
     /// returns `true` if the *rectangle* is entirely inside this
     /// rectangle (not on the edge).
-    contains(x: i32, y: i32, proper: bool) -> bool,
+    [org_name(contains)]
+    contains_4(x: i32, y: i32, proper: bool) -> bool,
     /// 
     /// Returns the bounding rectangle of this rectangle and the given *rectangle.*
     /// 
     /// ![qrect-unite.png](qrect-unite.png)
     /// 
-    /// **See also:** intersected()
+    /// **See also:** [`intersected()`]
     united(other: &RectType) -> Rect,
     /// 
     /// Returns the intersection of this rectangle and the given *rectangle.* Note that `r.intersected(s)` is equivalent to `r & s` .
     /// 
     /// ![qrect-intersect.png](qrect-intersect.png)
     /// 
-    /// **See also:** intersects()
-    /// united()
-    /// operator&=()
+    /// **See also:** [`intersects()`]
+    /// [`united()`]
+    /// [`operator()`]
     intersected(other: &RectType) -> Rect,
     /// 
     /// Returns `true` if this rectangle intersects with the given *rectangle* (i.e., there is at least one pixel that is within both
@@ -795,22 +798,21 @@ struct Rect {
     /// The intersection rectangle can be retrieved using the intersected()
     /// function.
     /// 
-    /// **See also:** contains()
+    /// **See also:** [`contains()`]
     intersects(r: &RectType) -> bool,
     /// 
     /// Returns a rectangle grown by the *margins.*
     /// 
-    /// **See also:** operator+=()
-    /// marginsRemoved()
-    /// operator-=()
+    /// **See also:** [`operator()`]
+    /// [`margins_removed()`]
+    /// [`operator()`]
     /// 
     margins_added(margins: &MarginsType) -> Rect,
     /// 
     /// Removes the *margins* from the rectangle, shrinking it.
     /// 
-    /// **See also:** marginsAdded()
-    /// operator+=()
-    /// operator-=()
+    /// **See also:** [`margins_added()`]
+    /// [`operator()`]
     /// 
     margins_removed(margins: &MarginsType) -> Rect,
 }

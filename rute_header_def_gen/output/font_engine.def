@@ -1,0 +1,157 @@
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct FontEngine {
+    type() -> FontEngine::Type,
+    [event] properties() -> FontEngine::Properties,
+    [event] get_unscaled_glyph(glyph: i32, path: *PainterPathType, metrics: *i32),
+    /// 
+    /// Returns `true` if the font table idetified by *tag* exists in the font;
+    /// returns `false` otherwise.
+    /// 
+    /// If *buffer* is NULL, stores the size of the buffer required for the font table data,
+    /// in bytes, in *length.* If *buffer* is not NULL and the capacity
+    /// of the buffer, passed in *length,* is sufficient to store the font table data,
+    /// also copies the font table data to *buffer.*
+    /// 
+    /// Note: returning `false` when the font table exists could lead to an undefined behavior.
+    get_sfnt_table(tag: uint) -> ByteArray,
+    /// 
+    /// Returns `true` if the font table idetified by *tag* exists in the font;
+    /// returns `false` otherwise.
+    /// 
+    /// If *buffer* is NULL, stores the size of the buffer required for the font table data,
+    /// in bytes, in *length.* If *buffer* is not NULL and the capacity
+    /// of the buffer, passed in *length,* is sufficient to store the font table data,
+    /// also copies the font table data to *buffer.*
+    /// 
+    /// Note: returning `false` when the font table exists could lead to an undefined behavior.
+    [event] get_sfnt_table_data(tag: uint, buffer: *uchar, length: *uint) -> bool,
+    [event] face_id() -> FontEngine::FaceId,
+    [event] synthesized() -> i32,
+    [event] supports_sub_pixel_positions() -> bool,
+    sub_pixel_position_for_x(x: i32) -> i32,
+    em_square_size() -> i32,
+    glyph_index(ucs4: uint) -> i32,
+    [event] recalc_advances(arg0: *GlyphLayoutType, arg1: FontEngine::ShaperFlags),
+    [event] do_kerning(arg0: *GlyphLayoutType, arg1: FontEngine::ShaperFlags),
+    [event] add_glyphs_to_path(glyphs: *i32, positions: *i32, nglyphs: i32, path: *PainterPathType, flags: i32),
+    get_glyph_positions(glyphs: &GlyphLayoutType, matrix: &TransformType, flags: i32, glyphs_out: &i32, positions: &i32),
+    [event] add_outline_to_path(arg0: f32, arg1: f32, arg2: &GlyphLayoutType, arg3: *PainterPathType, flags: i32),
+    add_bitmap_font_to_path(x: f32, y: f32, arg0: &GlyphLayoutType, arg1: *PainterPathType, arg2: i32),
+    [event] alpha_map_for_glyph(arg0: i32) -> Image,
+    [org_name(alphaMapForGlyph)]
+    [event] alpha_map_for_glyph_2(glyph: i32, sub_pixel_position: i32) -> Image,
+    [org_name(alphaMapForGlyph)]
+    [event] alpha_map_for_glyph_3(glyph_t: i32, t: &TransformType) -> Image,
+    [org_name(alphaMapForGlyph)]
+    [event] alpha_map_for_glyph_4(glyph_t: i32, sub_pixel_position: i32, t: &TransformType) -> Image,
+    [event] alpha_rgb_map_for_glyph(glyph_t: i32, sub_pixel_position: i32, t: &TransformType) -> Image,
+    [event] bitmap_for_glyph(glyph_t: i32, sub_pixel_position: i32, t: &TransformType) -> Image,
+    [event] locked_alpha_map_for_glyph(glyph: i32, sub_pixel_position: i32, needed_format: FontEngine::GlyphFormat, t: &TransformType, offset: *PointType) -> Image?,
+    [event] unlock_alpha_map_for_glyph(),
+    [event] has_internal_caching() -> bool,
+    alpha_map_bounding_box(glyph: i32, q_fixed: i32, matrix: &TransformType, arg0: FontEngine::GlyphFormat) -> i32,
+    [event] remove_glyph_from_cache(arg0: i32),
+    bounding_box(glyphs: &GlyphLayoutType) -> i32,
+    [org_name(boundingBox)]
+    bounding_box_2(glyph: i32) -> i32,
+    [org_name(boundingBox)]
+    bounding_box_3(glyph: i32, matrix: &TransformType) -> i32,
+    tight_bounding_box(glyphs: &GlyphLayoutType) -> i32,
+    ascent() -> i32,
+    cap_height() -> i32,
+    descent() -> i32,
+    leading() -> i32,
+    x_height() -> i32,
+    average_char_width() -> i32,
+    line_thickness() -> i32,
+    underline_position() -> i32,
+    [event] max_char_width() -> f32,
+    [event] min_left_bearing() -> f32,
+    [event] min_right_bearing() -> f32,
+    [event] get_glyph_bearings(glyph: i32, left_bearing: *f32, right_bearing: *f32),
+    can_render(ucs4: uint) -> bool,
+    [org_name(canRender)]
+    [event] can_render_2(str: *CharType, len: i32) -> bool,
+    [event] supports_transformation(transform: &TransformType) -> bool,
+    [event] glyph_count() -> i32,
+    [event] glyph_margin(format: FontEngine::GlyphFormat) -> i32,
+    [event] clone_with_size(arg0: f32) -> FontEngine?,
+    [event] handle() -> Rute::HANDLE,
+    harfbuzz_font(),
+    harfbuzz_face(),
+    supports_script(script: Char::Script) -> bool,
+    [static] script_requires_open_type(script: Char::Script) -> bool,
+    [event] get_point_in_outline(glyph: i32, flags: i32, point: u32, xpos: *i32, ypos: *i32, n_points: *u32) -> i32,
+    clear_glyph_cache(key: *void),
+    set_glyph_cache(key: *void, data: *FontEngineGlyphCacheType),
+    glyph_cache(key: *void, format: FontEngine::GlyphFormat, transform: &TransformType) -> FontEngineGlyphCache?,
+    [static] get_c_map(table: *uchar, table_size: uint, is_symbol_font: *bool, cmap_size: *i32) -> uchar?,
+    [static] get_true_type_glyph_index(cmap: *uchar, cmap_size: i32, unicode: uint) -> u32,
+    [static] convert_to_postscript_font_family_name(font_family: &ByteArrayType) -> ByteArray,
+    [event] has_unreliable_glyph_outline() -> bool,
+    [event] expects_gamma_corrected_blending() -> bool,
+    [event] set_default_hint_style(arg0: FontEngine::HintStyle),
+    load_kerning_pairs(scaling_factor: i32),
+    user_data() -> Variant,
+    last_right_bearing(glyphs: &GlyphLayoutType, round: bool) -> i32,
+    set_user_data(user_data: &VariantType),
+    calculated_cap_height() -> i32,
+}
+
+[org_name(QFontEngine)]
+enum Type {
+    Box,
+    Multi,
+    Win,
+    Mac,
+    Freetype,
+    QPF1,
+    QPF2,
+    Proxy,
+    DirectWrite,
+    TestFontEngine,
+}
+
+[org_name(QFontEngine)]
+enum GlyphFormat {
+    Format_None,
+    Format_Render,
+    Format_Mono,
+    Format_A8,
+    Format_A32,
+    Format_ARGB,
+}
+
+[org_name(QFontEngine)]
+enum ShaperFlag {
+    DesignMetrics,
+    GlyphIndicesOnly,
+}
+
+[org_name(QFontEngine)]
+enum SynthesizedFlags {
+    SynthesizedItalic,
+    SynthesizedBold,
+    SynthesizedStretch,
+}
+
+[org_name(QFontEngine)]
+enum HintStyle {
+    HintNone,
+    HintLight,
+    HintMedium,
+    HintFull,
+}
+
+[org_name(QFontEngine)]
+enum SubpixelAntialiasingType {
+    Subpixel_None,
+    Subpixel_RGB,
+    Subpixel_BGR,
+    Subpixel_VRGB,
+    Subpixel_VBGR,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

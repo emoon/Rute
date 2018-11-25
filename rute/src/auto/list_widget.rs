@@ -19,11 +19,16 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 #[derive(Clone)]
 pub struct ListWidget<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUListWidgetAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -48,7 +53,8 @@ impl<'a> ListWidget<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RUListWidget) -> ListWidget<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUListWidget) -> ListWidget<'a> {
         ListWidget {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -57,7 +63,8 @@ impl<'a> ListWidget<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUListWidget) -> ListWidget<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUListWidget) -> ListWidget<'a> {
         ListWidget {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -66,7 +73,8 @@ impl<'a> ListWidget<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUListWidget) -> ListWidget<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUListWidget) -> ListWidget<'a> {
         ListWidget {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -74,9 +82,7 @@ impl<'a> ListWidget<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait ListWidgetType<'a> {
-    fn add_item(&self, label: &str) -> &Self {
+    pub fn add_item(&self, label: &str) -> &Self {
         let str_in_label_1 = CString::new(label).unwrap();
 
         let (obj_data, funcs) = self.get_list_widget_obj_funcs();
@@ -85,29 +91,3775 @@ pub trait ListWidgetType<'a> {
         }
         self
     }
-
-    fn clear(&self) -> &Self {
+    pub fn clear(&self) -> &Self {
         let (obj_data, funcs) = self.get_list_widget_obj_funcs();
         unsafe {
             ((*funcs).clear)(obj_data);
         }
         self
     }
+    #[doc(hidden)]
+    pub fn win_id(&self) -> u64 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).win_id)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn create_win_id(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).create_win_id)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn internal_win_id(&self) -> u64 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).internal_win_id)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn effective_win_id(&self) -> u64 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).effective_win_id)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn style(&self) -> Option<Style> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).style)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Style::new_from_rc(t);
+            } else {
+                ret_val = Style::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_style<S: StyleTrait<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_style_obj_funcs();
 
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_style)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_top_level(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_top_level)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_window(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_window)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_modal(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_modal)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn window_modality(&self) -> WindowModality {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_modality)(obj_data);
+            let ret_val = { transmute::<i32, WindowModality>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_window_modality(&self, window_modality: WindowModality) -> &Self {
+        let enum_window_modality_1 = window_modality as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_modality)(obj_data, enum_window_modality_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_enabled(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_enabled)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_enabled_to<W: WidgetTrait<'a>>(&self, arg0: &W) -> bool {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_enabled_to)(obj_data, obj_arg0_1);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_enabled(&self, arg0: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_enabled)(obj_data, arg0);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_disabled(&self, arg0: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_disabled)(obj_data, arg0);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_window_modified(&self, arg0: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_modified)(obj_data, arg0);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn x(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).x)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn y(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).y)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn pos(&self) -> Point {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).pos)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn frame_size(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).frame_size)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn size(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).size)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn width(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).width)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn height(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).height)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn rect(&self) -> Rect {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).rect)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Rect::new_from_rc(t);
+            } else {
+                ret_val = Rect::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn children_rect(&self) -> Rect {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).children_rect)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Rect::new_from_rc(t);
+            } else {
+                ret_val = Rect::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn children_region(&self) -> Region {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).children_region)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Region::new_from_rc(t);
+            } else {
+                ret_val = Region::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn minimum_size(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).minimum_size)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn maximum_size(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).maximum_size)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn minimum_width(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).minimum_width)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn minimum_height(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).minimum_height)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn maximum_width(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).maximum_width)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn maximum_height(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).maximum_height)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_minimum_size<S: SizeTrait<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_minimum_size)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_minimum_size_2(&self, minw: i32, minh: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_minimum_size_2)(obj_data, minw, minh);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_maximum_size<S: SizeTrait<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_maximum_size)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_maximum_size_2(&self, maxw: i32, maxh: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_maximum_size_2)(obj_data, maxw, maxh);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_minimum_width(&self, minw: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_minimum_width)(obj_data, minw);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_minimum_height(&self, minh: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_minimum_height)(obj_data, minh);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_maximum_width(&self, maxw: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_maximum_width)(obj_data, maxw);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_maximum_height(&self, maxh: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_maximum_height)(obj_data, maxh);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn size_increment(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).size_increment)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_size_increment<S: SizeTrait<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_size_increment)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_size_increment_2(&self, w: i32, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_size_increment_2)(obj_data, w, h);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn base_size(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).base_size)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_base_size<S: SizeTrait<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_base_size)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_base_size_2(&self, basew: i32, baseh: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_base_size_2)(obj_data, basew, baseh);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_fixed_size<S: SizeTrait<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_fixed_size)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_fixed_size_2(&self, w: i32, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_fixed_size_2)(obj_data, w, h);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_fixed_width(&self, w: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_fixed_width)(obj_data, w);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_fixed_height(&self, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_fixed_height)(obj_data, h);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn map_to_global<P: PointTrait<'a>>(&self, arg0: &P) -> Point {
+        let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).map_to_global)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn map_from_global<P: PointTrait<'a>>(&self, arg0: &P) -> Point {
+        let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).map_from_global)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn map_to_parent<P: PointTrait<'a>>(&self, arg0: &P) -> Point {
+        let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).map_to_parent)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn map_from_parent<P: PointTrait<'a>>(&self, arg0: &P) -> Point {
+        let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).map_from_parent)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn map_to<P: PointTrait<'a>, W: WidgetTrait<'a>>(&self, arg0: &W, arg1: &P) -> Point {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+        let (obj_arg1_2, _funcs) = arg1.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).map_to)(obj_data, obj_arg0_1, obj_arg1_2);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn map_from<P: PointTrait<'a>, W: WidgetTrait<'a>>(&self, arg0: &W, arg1: &P) -> Point {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+        let (obj_arg1_2, _funcs) = arg1.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).map_from)(obj_data, obj_arg0_1, obj_arg1_2);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn window(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn native_parent_widget(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).native_parent_widget)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn palette(&self) -> Option<Palette> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).palette)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Palette::new_from_rc(t);
+            } else {
+                ret_val = Palette::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_palette<P: PaletteTrait<'a>>(&self, arg0: &P) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_palette_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_palette)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_background_role(&self, arg0: ColorRole) -> &Self {
+        let enum_arg0_1 = arg0 as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_background_role)(obj_data, enum_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn background_role(&self) -> ColorRole {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).background_role)(obj_data);
+            let ret_val = { transmute::<i32, ColorRole>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_foreground_role(&self, arg0: ColorRole) -> &Self {
+        let enum_arg0_1 = arg0 as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_foreground_role)(obj_data, enum_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn foreground_role(&self) -> ColorRole {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).foreground_role)(obj_data);
+            let ret_val = { transmute::<i32, ColorRole>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn font(&self) -> Option<Font> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).font)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Font::new_from_rc(t);
+            } else {
+                ret_val = Font::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_font<F: FontTrait<'a>>(&self, arg0: &F) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_font_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_font)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn cursor(&self) -> Cursor {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).cursor)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Cursor::new_from_rc(t);
+            } else {
+                ret_val = Cursor::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_cursor<C: CursorTrait<'a>>(&self, arg0: &C) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_cursor_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_cursor)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn unset_cursor(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).unset_cursor)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_mouse_tracking(&self, enable: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_mouse_tracking)(obj_data, enable);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn has_mouse_tracking(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).has_mouse_tracking)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn under_mouse(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).under_mouse)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_tablet_tracking(&self, enable: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_tablet_tracking)(obj_data, enable);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn has_tablet_tracking(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).has_tablet_tracking)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_mask<B: BitmapTrait<'a>>(&self, arg0: &B) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_bitmap_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_mask)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_mask_2<R: RegionTrait<'a>>(&self, arg0: &R) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_region_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_mask_2)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn mask(&self) -> Region {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).mask)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Region::new_from_rc(t);
+            } else {
+                ret_val = Region::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn clear_mask(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).clear_mask)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn render<P: PaintDeviceTrait<'a>, Q: PointTrait<'a>, R: RegionTrait<'a>>(
+        &self,
+        target: &P,
+        target_offset: &Q,
+        source_region: &R,
+        render_flags: RenderFlags,
+    ) -> &Self {
+        let (obj_target_1, _funcs) = target.get_paint_device_obj_funcs();
+        let (obj_target_offset_2, _funcs) = target_offset.get_point_obj_funcs();
+        let (obj_source_region_3, _funcs) = source_region.get_region_obj_funcs();
+        let enum_render_flags_4 = render_flags as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).render)(
+                obj_data,
+                obj_target_1,
+                obj_target_offset_2,
+                obj_source_region_3,
+                enum_render_flags_4,
+            );
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn render_2<P: PainterTrait<'a>, Q: PointTrait<'a>, R: RegionTrait<'a>>(
+        &self,
+        painter: &P,
+        target_offset: &Q,
+        source_region: &R,
+        render_flags: RenderFlags,
+    ) -> &Self {
+        let (obj_painter_1, _funcs) = painter.get_painter_obj_funcs();
+        let (obj_target_offset_2, _funcs) = target_offset.get_point_obj_funcs();
+        let (obj_source_region_3, _funcs) = source_region.get_region_obj_funcs();
+        let enum_render_flags_4 = render_flags as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).render_2)(
+                obj_data,
+                obj_painter_1,
+                obj_target_offset_2,
+                obj_source_region_3,
+                enum_render_flags_4,
+            );
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn grab<R: RectTrait<'a>>(&self, rectangle: &R) -> Pixmap {
+        let (obj_rectangle_1, _funcs) = rectangle.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).grab)(obj_data, obj_rectangle_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Pixmap::new_from_rc(t);
+            } else {
+                ret_val = Pixmap::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn grab_gesture(&self, gtype: GestureType, flags: GestureFlags) -> &Self {
+        let enum_gtype_1 = gtype as i32;
+        let enum_flags_2 = flags as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).grab_gesture)(obj_data, enum_gtype_1, enum_flags_2);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn ungrab_gesture(&self, gtype: GestureType) -> &Self {
+        let enum_gtype_1 = gtype as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).ungrab_gesture)(obj_data, enum_gtype_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_window_title(&self, arg0: &str) -> &Self {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_title)(obj_data, str_in_arg0_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_style_sheet(&self, style_sheet: &str) -> &Self {
+        let str_in_style_sheet_1 = CString::new(style_sheet).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_style_sheet)(obj_data, str_in_style_sheet_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn style_sheet(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).style_sheet)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn window_title(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_title)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_window_icon<I: IconTrait<'a>>(&self, icon: &I) -> &Self {
+        let (obj_icon_1, _funcs) = icon.get_icon_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_icon)(obj_data, obj_icon_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn window_icon(&self) -> Icon {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_icon)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Icon::new_from_rc(t);
+            } else {
+                ret_val = Icon::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_window_icon_text(&self, arg0: &str) -> &Self {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_icon_text)(obj_data, str_in_arg0_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn window_icon_text(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_icon_text)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_window_role(&self, arg0: &str) -> &Self {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_role)(obj_data, str_in_arg0_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn window_role(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_role)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_window_file_path(&self, file_path: &str) -> &Self {
+        let str_in_file_path_1 = CString::new(file_path).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_file_path)(obj_data, str_in_file_path_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn window_file_path(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_file_path)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_window_opacity(&self, level: f32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_opacity)(obj_data, level);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn window_opacity(&self) -> f32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_opacity)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_window_modified(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_window_modified)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_tool_tip(&self, arg0: &str) -> &Self {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_tool_tip)(obj_data, str_in_arg0_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn tool_tip(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).tool_tip)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_tool_tip_duration(&self, msec: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_tool_tip_duration)(obj_data, msec);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn tool_tip_duration(&self) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).tool_tip_duration)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_status_tip(&self, arg0: &str) -> &Self {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_status_tip)(obj_data, str_in_arg0_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn status_tip(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).status_tip)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_whats_this(&self, arg0: &str) -> &Self {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_whats_this)(obj_data, str_in_arg0_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn whats_this(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).whats_this)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn accessible_name(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).accessible_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_accessible_name(&self, name: &str) -> &Self {
+        let str_in_name_1 = CString::new(name).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_accessible_name)(obj_data, str_in_name_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn accessible_description(&self) -> String {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).accessible_description)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_accessible_description(&self, description: &str) -> &Self {
+        let str_in_description_1 = CString::new(description).unwrap();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_accessible_description)(obj_data, str_in_description_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_layout_direction(&self, direction: LayoutDirection) -> &Self {
+        let enum_direction_1 = direction as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_layout_direction)(obj_data, enum_direction_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn layout_direction(&self) -> LayoutDirection {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).layout_direction)(obj_data);
+            let ret_val = { transmute::<i32, LayoutDirection>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn unset_layout_direction(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).unset_layout_direction)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_right_to_left(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_right_to_left)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_left_to_right(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_left_to_right)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_focus(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_focus)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_active_window(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_active_window)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn activate_window(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).activate_window)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn clear_focus(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).clear_focus)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_focus_2(&self, reason: FocusReason) -> &Self {
+        let enum_reason_1 = reason as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_focus_2)(obj_data, enum_reason_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn focus_policy(&self) -> FocusPolicy {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).focus_policy)(obj_data);
+            let ret_val = { transmute::<i32, FocusPolicy>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_focus_policy(&self, policy: FocusPolicy) -> &Self {
+        let enum_policy_1 = policy as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_focus_policy)(obj_data, enum_policy_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn has_focus(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).has_focus)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_tab_order<W: WidgetTrait<'a>>(arg0: &W, arg1: &W) {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+        let (obj_arg1_2, _funcs) = arg1.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_widget)(::std::ptr::null()).all_funcs).widget_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_tab_order)(obj_data, obj_arg0_1, obj_arg1_2);
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_focus_proxy<W: WidgetTrait<'a>>(&self, arg0: &W) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_focus_proxy)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn focus_proxy(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).focus_proxy)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn context_menu_policy(&self) -> ContextMenuPolicy {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).context_menu_policy)(obj_data);
+            let ret_val = { transmute::<i32, ContextMenuPolicy>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_context_menu_policy(&self, policy: ContextMenuPolicy) -> &Self {
+        let enum_policy_1 = policy as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_context_menu_policy)(obj_data, enum_policy_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn grab_mouse(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).grab_mouse)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn grab_mouse_2<C: CursorTrait<'a>>(&self, arg0: &C) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_cursor_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).grab_mouse_2)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn release_mouse(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).release_mouse)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn grab_keyboard(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).grab_keyboard)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn release_keyboard(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).release_keyboard)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn grab_shortcut<K: KeySequenceTrait<'a>>(&self, key: &K, context: ShortcutContext) -> i32 {
+        let (obj_key_1, _funcs) = key.get_key_sequence_obj_funcs();
+        let enum_context_2 = context as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).grab_shortcut)(obj_data, obj_key_1, enum_context_2);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn release_shortcut(&self, id: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).release_shortcut)(obj_data, id);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_shortcut_enabled(&self, id: i32, enable: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_shortcut_enabled)(obj_data, id, enable);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_shortcut_auto_repeat(&self, id: i32, enable: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_shortcut_auto_repeat)(obj_data, id, enable);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn mouse_grabber() -> Option<Widget<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_widget)(::std::ptr::null()).all_funcs).widget_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).mouse_grabber)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn keyboard_grabber() -> Option<Widget<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_widget)(::std::ptr::null()).all_funcs).widget_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).keyboard_grabber)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn updates_enabled(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).updates_enabled)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_updates_enabled(&self, enable: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_updates_enabled)(obj_data, enable);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn update(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).update)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn repaint(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).repaint)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn update_2(&self, x: i32, y: i32, w: i32, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).update_2)(obj_data, x, y, w, h);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn update_3<R: RectTrait<'a>>(&self, arg0: &R) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).update_3)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn update_4<R: RegionTrait<'a>>(&self, arg0: &R) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_region_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).update_4)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn repaint_2(&self, x: i32, y: i32, w: i32, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).repaint_2)(obj_data, x, y, w, h);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn repaint_3<R: RectTrait<'a>>(&self, arg0: &R) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).repaint_3)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn repaint_4<R: RegionTrait<'a>>(&self, arg0: &R) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_region_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).repaint_4)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_hidden(&self, hidden: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_hidden)(obj_data, hidden);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn show(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).show)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn hide(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).hide)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn show_minimized(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).show_minimized)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn show_maximized(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).show_maximized)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn show_full_screen(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).show_full_screen)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn show_normal(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).show_normal)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn close(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).close)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn raise(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).raise)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn lower(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).lower)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn stack_under<W: WidgetTrait<'a>>(&self, arg0: &W) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).stack_under)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn move_widget(&self, x: i32, y: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).move_widget)(obj_data, x, y);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn move_2<P: PointTrait<'a>>(&self, arg0: &P) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).move_2)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn resize(&self, w: i32, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).resize)(obj_data, w, h);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn resize_2<S: SizeTrait<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_size_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).resize_2)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn adjust_size(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).adjust_size)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_visible(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_visible)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_visible_to<W: WidgetTrait<'a>>(&self, arg0: &W) -> bool {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_visible_to)(obj_data, obj_arg0_1);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_hidden(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_hidden)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_minimized(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_minimized)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_maximized(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_maximized)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_full_screen(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_full_screen)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn window_state(&self) -> WindowStates {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_state)(obj_data);
+            let ret_val = { transmute::<i32, WindowStates>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_window_state(&self, state: WindowStates) -> &Self {
+        let enum_state_1 = state as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_state)(obj_data, enum_state_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn override_window_state(&self, state: WindowStates) -> &Self {
+        let enum_state_1 = state as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).override_window_state)(obj_data, enum_state_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn size_hint(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).size_hint)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn minimum_size_hint(&self) -> Size {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).minimum_size_hint)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn size_policy(&self) -> SizePolicy {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).size_policy)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = SizePolicy::new_from_rc(t);
+            } else {
+                ret_val = SizePolicy::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_size_policy<S: SizePolicyTrait<'a>>(&self, arg0: &S) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_size_policy_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_size_policy)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_size_policy_2(&self, horizontal: Policy, vertical: Policy) -> &Self {
+        let enum_horizontal_1 = horizontal as i32;
+        let enum_vertical_2 = vertical as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_size_policy_2)(obj_data, enum_horizontal_1, enum_vertical_2);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn height_for_width(&self, arg0: i32) -> i32 {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).height_for_width)(obj_data, arg0);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn has_height_for_width(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).has_height_for_width)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn visible_region(&self) -> Region {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).visible_region)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Region::new_from_rc(t);
+            } else {
+                ret_val = Region::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_contents_margins(&self, left: i32, top: i32, right: i32, bottom: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_contents_margins)(obj_data, left, top, right, bottom);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_contents_margins_2<M: MarginsTrait<'a>>(&self, margins: &M) -> &Self {
+        let (obj_margins_1, _funcs) = margins.get_margins_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_contents_margins_2)(obj_data, obj_margins_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn contents_margins(&self) -> Margins {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).contents_margins)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Margins::new_from_rc(t);
+            } else {
+                ret_val = Margins::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn contents_rect(&self) -> Rect {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).contents_rect)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Rect::new_from_rc(t);
+            } else {
+                ret_val = Rect::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn layout(&self) -> Option<Layout> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).layout)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Layout::new_from_rc(t);
+            } else {
+                ret_val = Layout::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_layout<L: LayoutTrait<'a>>(&self, arg0: &L) -> &Self {
+        let (obj_arg0_1, _funcs) = arg0.get_layout_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_layout)(obj_data, obj_arg0_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_parent<W: WidgetTrait<'a>>(&self, parent: &W) -> &Self {
+        let (obj_parent_1, _funcs) = parent.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_parent)(obj_data, obj_parent_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_parent_2<W: WidgetTrait<'a>>(&self, parent: &W, f: WindowFlags) -> &Self {
+        let (obj_parent_1, _funcs) = parent.get_widget_obj_funcs();
+        let enum_f_2 = f as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_parent_2)(obj_data, obj_parent_1, enum_f_2);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn scroll(&self, dx: i32, dy: i32) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).scroll)(obj_data, dx, dy);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn scroll_2<R: RectTrait<'a>>(&self, dx: i32, dy: i32, arg0: &R) -> &Self {
+        let (obj_arg0_3, _funcs) = arg0.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).scroll_2)(obj_data, dx, dy, obj_arg0_3);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn focus_widget(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).focus_widget)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn next_in_focus_chain(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).next_in_focus_chain)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn previous_in_focus_chain(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).previous_in_focus_chain)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn accept_drops(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).accept_drops)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_accept_drops(&self, on: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_accept_drops)(obj_data, on);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn parent_widget(&self) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).parent_widget)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_window_flags(&self, gtype: WindowFlags) -> &Self {
+        let enum_gtype_1 = gtype as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_window_flags)(obj_data, enum_gtype_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn window_flags(&self) -> WindowFlags {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_flags)(obj_data);
+            let ret_val = { transmute::<i32, WindowFlags>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn override_window_flags(&self, wtype: WindowFlags) -> &Self {
+        let enum_wtype_1 = wtype as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).override_window_flags)(obj_data, enum_wtype_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn find(arg0: u64) -> Option<Widget<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_widget)(::std::ptr::null()).all_funcs).widget_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).find)(obj_data, arg0);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn child_at(&self, x: i32, y: i32) -> Option<Widget> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).child_at)(obj_data, x, y);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn child_at_2<P: PointTrait<'a>>(&self, p: &P) -> Option<Widget> {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).child_at_2)(obj_data, obj_p_1);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn paint_engine(&self) -> Option<PaintEngine> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).paint_engine)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = PaintEngine::new_from_rc(t);
+            } else {
+                ret_val = PaintEngine::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn ensure_polished(&self) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).ensure_polished)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_ancestor_of<W: WidgetTrait<'a>>(&self, child: &W) -> bool {
+        let (obj_child_1, _funcs) = child.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_ancestor_of)(obj_data, obj_child_1);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn auto_fill_background(&self) -> bool {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).auto_fill_background)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_auto_fill_background(&self, enabled: bool) -> &Self {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_auto_fill_background)(obj_data, enabled);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn backing_store(&self) -> Option<BackingStore> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).backing_store)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = BackingStore::new_from_rc(t);
+            } else {
+                ret_val = BackingStore::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn window_handle(&self) -> Option<Window> {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).window_handle)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Window::new_from_rc(t);
+            } else {
+                ret_val = Window::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn create_window_container<A: WidgetTrait<'a>, W: WindowTrait<'a>>(
+        window: &W,
+        parent: &A,
+        flags: WindowFlags,
+    ) -> Option<Widget<'a>> {
+        let (obj_window_1, _funcs) = window.get_window_obj_funcs();
+        let (obj_parent_2, _funcs) = parent.get_widget_obj_funcs();
+        let enum_flags_3 = flags as i32;
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_widget)(::std::ptr::null()).all_funcs).widget_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).create_window_container)(
+                obj_data,
+                obj_window_1,
+                obj_parent_2,
+                enum_flags_3,
+            );
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_window_title_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &str) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &str) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_window_title_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_window_title_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_window_title_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&str) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&str) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_window_title_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_window_title_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_window_icon_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &Icon) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &Icon) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_window_icon_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_window_icon_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_window_icon_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&Icon) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&Icon) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_window_icon_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_window_icon_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_window_icon_text_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &str) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &str) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_window_icon_text_changed_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_window_icon_text_changed_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_window_icon_text_changed_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&str) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&str) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_window_icon_text_changed_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_window_icon_text_changed_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_custom_context_menu_requested_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &Point) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &Point) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_custom_context_menu_requested_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_custom_context_menu_requested_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_custom_context_menu_requested_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&Point) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&Point) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_custom_context_menu_requested_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_custom_context_menu_requested_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_mouse_press_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MouseEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MouseEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_mouse_press_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_press_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_press_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MouseEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&MouseEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_mouse_press_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_press_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_mouse_release_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MouseEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MouseEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_mouse_release_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_release_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_release_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MouseEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&MouseEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_mouse_release_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_release_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_mouse_double_click_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MouseEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MouseEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_mouse_double_click_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_double_click_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_double_click_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MouseEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&MouseEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_mouse_double_click_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_double_click_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_mouse_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MouseEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MouseEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_mouse_move_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_move_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_mouse_move_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MouseEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&MouseEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_mouse_move_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_mouse_move_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_wheel_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &WheelEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &WheelEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_wheel_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_wheel_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_wheel_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&WheelEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&WheelEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_wheel_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_wheel_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_key_press_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &KeyEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &KeyEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_key_press_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_key_press_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_key_press_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&KeyEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&KeyEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_key_press_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_key_press_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_key_release_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &KeyEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &KeyEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_key_release_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_key_release_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_key_release_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&KeyEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&KeyEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_key_release_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_key_release_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_focus_in_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &FocusEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &FocusEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_focus_in_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_focus_in_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_focus_in_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&FocusEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&FocusEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_focus_in_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_focus_in_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_focus_out_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &FocusEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &FocusEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_focus_out_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_focus_out_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_focus_out_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&FocusEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&FocusEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_focus_out_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_focus_out_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_enter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &Event) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_enter_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_enter_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_enter_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&Event) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_enter_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_enter_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_leave_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &Event) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_leave_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_leave_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_leave_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&Event) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_leave_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_leave_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_paint_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &PaintEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &PaintEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_paint_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_paint_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_paint_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&PaintEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&PaintEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_paint_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_paint_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &MoveEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &MoveEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_move_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_move_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_move_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&MoveEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&MoveEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_move_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_move_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_resize_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ResizeEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ResizeEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_resize_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_resize_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_resize_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ResizeEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&ResizeEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_resize_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_resize_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_close_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &CloseEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &CloseEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_close_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_close_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_close_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&CloseEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&CloseEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_close_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_close_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_context_menu_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ContextMenuEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ContextMenuEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_context_menu_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_context_menu_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_context_menu_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ContextMenuEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&ContextMenuEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_context_menu_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_context_menu_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_tablet_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &TabletEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &TabletEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_tablet_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_tablet_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_tablet_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&TabletEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&TabletEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_tablet_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_tablet_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_drag_enter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &DragEnterEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &DragEnterEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_drag_enter_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_drag_enter_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_drag_enter_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&DragEnterEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&DragEnterEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_drag_enter_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_drag_enter_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_drag_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &DragMoveEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &DragMoveEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_drag_move_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_drag_move_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_drag_move_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&DragMoveEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&DragMoveEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_drag_move_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_drag_move_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_drag_leave_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &DragLeaveEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &DragLeaveEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_drag_leave_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_drag_leave_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_drag_leave_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&DragLeaveEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&DragLeaveEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_drag_leave_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_drag_leave_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_drop_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &DropEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &DropEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_drop_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_drop_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_drop_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&DropEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&DropEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_drop_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_drop_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_show_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &ShowEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &ShowEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_show_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_show_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_show_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&ShowEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&ShowEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_show_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_show_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_hide_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &HideEvent) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &HideEvent) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_hide_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_hide_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_hide_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&HideEvent) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&HideEvent) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_hide_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_hide_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_change_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &Event) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_change_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(widget_change_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_change_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&Event) + 'a,
+    {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_change_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(widget_change_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
+    pub fn input_method_hints(&self) -> InputMethodHints {
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).input_method_hints)(obj_data);
+            let ret_val = { transmute::<i32, InputMethodHints>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_input_method_hints(&self, hints: InputMethodHints) -> &Self {
+        let enum_hints_1 = hints as i32;
+
+        let (obj_data, funcs) = self.get_widget_obj_funcs();
+        unsafe {
+            ((*funcs).set_input_method_hints)(obj_data, enum_hints_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn painting_active(&self) -> bool {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).painting_active)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn logical_dpi_x(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).logical_dpi_x)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn logical_dpi_y(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).logical_dpi_y)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn physical_dpi_x(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).physical_dpi_x)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn physical_dpi_y(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).physical_dpi_y)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn device_pixel_ratio(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).device_pixel_ratio)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn device_pixel_ratio_f(&self) -> f32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).device_pixel_ratio_f)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn color_count(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).color_count)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn depth(&self) -> i32 {
+        let (obj_data, funcs) = self.get_paint_device_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).depth)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn object_name(&self) -> String {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).object_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_object_name(&self, name: &str) -> &Self {
+        let str_in_name_1 = CString::new(name).unwrap();
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).set_object_name)(obj_data, str_in_name_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_widget_type(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_widget_type)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_window_type(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_window_type)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn signals_blocked(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).signals_blocked)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn block_signals(&self, b: bool) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).block_signals)(obj_data, b);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
+        let enum_timer_type_2 = timer_type as i32;
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).start_timer)(obj_data, interval, enum_timer_type_2);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
+        let enum_timer_type_2 = timer_type as i32;
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).start_timer_2)(obj_data, time, enum_timer_type_2);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn kill_timer(&self, id: i32) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).kill_timer)(obj_data, id);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn install_event_filter<O: ObjectTrait<'a>>(&self, filter_obj: &O) -> &Self {
+        let (obj_filter_obj_1, _funcs) = filter_obj.get_object_obj_funcs();
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).install_event_filter)(obj_data, obj_filter_obj_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_tree(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_tree)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_info(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_info)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_tree_2(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_tree_2)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_info_2(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_info_2)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn parent(&self) -> Option<Object> {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).parent)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Object::new_from_rc(t);
+            } else {
+                ret_val = Object::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn delete_later(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).delete_later)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_custom_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &Event) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_custom_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(object_custom_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_custom_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&Event) + 'a,
+    {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_custom_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(object_custom_trampoline as usize),
+            );
+        }
+
+        self
+    }
+}
+pub trait ListWidgetTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_list_widget_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetFuncs);
 }
 
-impl<'a> WidgetType<'a> for ListWidget<'a> {
-    #[inline]
+impl<'a> ObjectTrait<'a> for ListWidget<'a> {
+    #[doc(hidden)]
+    fn get_object_obj_funcs(&self) -> (*const RUBase, *const RUObjectFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).object_funcs) }
+    }
+}
+
+impl<'a> PaintDeviceTrait<'a> for ListWidget<'a> {
+    #[doc(hidden)]
+    fn get_paint_device_obj_funcs(&self) -> (*const RUBase, *const RUPaintDeviceFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).paint_device_funcs) }
+    }
+}
+
+impl<'a> WidgetTrait<'a> for ListWidget<'a> {
+    #[doc(hidden)]
     fn get_widget_obj_funcs(&self) -> (*const RUBase, *const RUWidgetFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).widget_funcs) }
     }
 }
 
-impl<'a> ListWidgetType<'a> for ListWidget<'a> {
-    #[inline]
+impl<'a> ListWidgetTrait<'a> for ListWidget<'a> {
+    #[doc(hidden)]
     fn get_list_widget_obj_funcs(&self) -> (*const RUBase, *const RUListWidgetFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).list_widget_funcs) }

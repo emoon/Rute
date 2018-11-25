@@ -37,9 +37,9 @@
 /// QGraphicsTransform can be used together with QGraphicsItem::setTransform(),
 /// QGraphicsItem::setRotation(), and QGraphicsItem::setScale().
 /// 
-/// **See also:** QGraphicsItem::transform()
-/// QGraphicsScale
-/// QGraphicsRotation
+/// **See also:** [`GraphicsItem::transform`]
+/// [`GraphicsScale`]
+/// [`GraphicsRotation`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -49,8 +49,8 @@ struct GraphicsTransform : Object {
     /// 
     /// It applies this transformation to *matrix.*
     /// 
-    /// **See also:** QGraphicsItem::transform()
-    /// QMatrix4x4::toTransform()
+    /// **See also:** [`GraphicsItem::transform`]
+    /// [`Matrix4x4::to_transform`]
     [event] apply_to(matrix: *Matrix4x4Type),
     /// 
     /// Notifies that this transform operation has changed its parameters in such a
@@ -60,7 +60,7 @@ struct GraphicsTransform : Object {
     /// function every time you change a parameter, to let QGraphicsItem know that
     /// its transformation needs to be updated.
     /// 
-    /// **See also:** applyTo()
+    /// **See also:** [`apply_to()`]
     update(),
 }
 

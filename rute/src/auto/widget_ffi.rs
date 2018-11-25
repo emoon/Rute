@@ -2,24 +2,413 @@
 use rute_ffi_base::*;
 
 #[allow(unused_imports)]
+use auto::backing_store_ffi::RUBackingStore;
+#[allow(unused_imports)]
+use auto::cursor_ffi::RUCursor;
+#[allow(unused_imports)]
+use auto::font_ffi::RUFont;
+#[allow(unused_imports)]
+use auto::icon_ffi::RUIcon;
+#[allow(unused_imports)]
+use auto::layout_ffi::RULayout;
+#[allow(unused_imports)]
+use auto::margins_ffi::RUMargins;
+#[allow(unused_imports)]
+use auto::object_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_device_ffi::*;
+#[allow(unused_imports)]
+use auto::paint_engine_ffi::RUPaintEngine;
+#[allow(unused_imports)]
+use auto::palette_ffi::RUPalette;
+#[allow(unused_imports)]
+use auto::pixmap_ffi::RUPixmap;
+#[allow(unused_imports)]
+use auto::point_ffi::RUPoint;
+#[allow(unused_imports)]
+use auto::rect_ffi::RURect;
+#[allow(unused_imports)]
+use auto::region_ffi::RURegion;
+#[allow(unused_imports)]
+use auto::size_ffi::RUSize;
+#[allow(unused_imports)]
+use auto::size_policy_ffi::RUSizePolicy;
+#[allow(unused_imports)]
+use auto::style_ffi::RUStyle;
+#[allow(unused_imports)]
+use auto::window_ffi::RUWindow;
+#[allow(unused_imports)]
 use std::os::raw::c_void;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
-    pub show: extern "C" fn(self_c: *const RUBase),
-    pub hide: extern "C" fn(self_c: *const RUBase),
+    pub win_id: extern "C" fn(self_c: *const RUBase) -> u64,
+    pub create_win_id: extern "C" fn(self_c: *const RUBase),
+    pub internal_win_id: extern "C" fn(self_c: *const RUBase) -> u64,
+    pub effective_win_id: extern "C" fn(self_c: *const RUBase) -> u64,
+    pub style: extern "C" fn(self_c: *const RUBase) -> RUStyle,
+    pub set_style: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub is_top_level: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub is_window: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub is_modal: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub window_modality: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub set_window_modality: extern "C" fn(self_c: *const RUBase, window_modality: i32),
+    pub is_enabled: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub is_enabled_to: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase) -> bool,
+    pub set_enabled: extern "C" fn(self_c: *const RUBase, arg0: bool),
+    pub set_disabled: extern "C" fn(self_c: *const RUBase, arg0: bool),
+    pub set_window_modified: extern "C" fn(self_c: *const RUBase, arg0: bool),
+    pub x: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub y: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub pos: extern "C" fn(self_c: *const RUBase) -> RUPoint,
+    pub frame_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
+    pub size: extern "C" fn(self_c: *const RUBase) -> RUSize,
+    pub width: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub height: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub rect: extern "C" fn(self_c: *const RUBase) -> RURect,
+    pub children_rect: extern "C" fn(self_c: *const RUBase) -> RURect,
+    pub children_region: extern "C" fn(self_c: *const RUBase) -> RURegion,
+    pub minimum_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
+    pub maximum_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
+    pub minimum_width: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub minimum_height: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub maximum_width: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub maximum_height: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub set_minimum_size: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub set_minimum_size_2: extern "C" fn(self_c: *const RUBase, minw: i32, minh: i32),
+    pub set_maximum_size: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub set_maximum_size_2: extern "C" fn(self_c: *const RUBase, maxw: i32, maxh: i32),
+    pub set_minimum_width: extern "C" fn(self_c: *const RUBase, minw: i32),
+    pub set_minimum_height: extern "C" fn(self_c: *const RUBase, minh: i32),
+    pub set_maximum_width: extern "C" fn(self_c: *const RUBase, maxw: i32),
+    pub set_maximum_height: extern "C" fn(self_c: *const RUBase, maxh: i32),
+    pub size_increment: extern "C" fn(self_c: *const RUBase) -> RUSize,
+    pub set_size_increment: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub set_size_increment_2: extern "C" fn(self_c: *const RUBase, w: i32, h: i32),
+    pub base_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
+    pub set_base_size: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub set_base_size_2: extern "C" fn(self_c: *const RUBase, basew: i32, baseh: i32),
+    pub set_fixed_size: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub set_fixed_size_2: extern "C" fn(self_c: *const RUBase, w: i32, h: i32),
     pub set_fixed_width: extern "C" fn(self_c: *const RUBase, w: i32),
     pub set_fixed_height: extern "C" fn(self_c: *const RUBase, h: i32),
-    pub resize: extern "C" fn(self_c: *const RUBase, width: i32, height: i32),
-    pub set_parent: extern "C" fn(self_c: *const RUBase, parent: *const RUBase),
+    pub map_to_global: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase) -> RUPoint,
+    pub map_from_global: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase) -> RUPoint,
+    pub map_to_parent: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase) -> RUPoint,
+    pub map_from_parent: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase) -> RUPoint,
+    pub map_to:
+        extern "C" fn(self_c: *const RUBase, arg0: *const RUBase, arg1: *const RUBase) -> RUPoint,
+    pub map_from:
+        extern "C" fn(self_c: *const RUBase, arg0: *const RUBase, arg1: *const RUBase) -> RUPoint,
+    pub window: extern "C" fn(self_c: *const RUBase) -> RUWidget,
+    pub native_parent_widget: extern "C" fn(self_c: *const RUBase) -> RUWidget,
+    pub palette: extern "C" fn(self_c: *const RUBase) -> RUPalette,
+    pub set_palette: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub set_background_role: extern "C" fn(self_c: *const RUBase, arg0: i32),
+    pub background_role: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub set_foreground_role: extern "C" fn(self_c: *const RUBase, arg0: i32),
+    pub foreground_role: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub font: extern "C" fn(self_c: *const RUBase) -> RUFont,
+    pub set_font: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub cursor: extern "C" fn(self_c: *const RUBase) -> RUCursor,
+    pub set_cursor: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub unset_cursor: extern "C" fn(self_c: *const RUBase),
+    pub set_mouse_tracking: extern "C" fn(self_c: *const RUBase, enable: bool),
+    pub has_mouse_tracking: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub under_mouse: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub set_tablet_tracking: extern "C" fn(self_c: *const RUBase, enable: bool),
+    pub has_tablet_tracking: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub set_mask: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub set_mask_2: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub mask: extern "C" fn(self_c: *const RUBase) -> RURegion,
+    pub clear_mask: extern "C" fn(self_c: *const RUBase),
+    pub render: extern "C" fn(
+        self_c: *const RUBase,
+        target: *const RUBase,
+        target_offset: *const RUBase,
+        source_region: *const RUBase,
+        render_flags: i32,
+    ),
+    pub render_2: extern "C" fn(
+        self_c: *const RUBase,
+        painter: *const RUBase,
+        target_offset: *const RUBase,
+        source_region: *const RUBase,
+        render_flags: i32,
+    ),
+    pub grab: extern "C" fn(self_c: *const RUBase, rectangle: *const RUBase) -> RUPixmap,
+    pub grab_gesture: extern "C" fn(self_c: *const RUBase, gtype: i32, flags: i32),
+    pub ungrab_gesture: extern "C" fn(self_c: *const RUBase, gtype: i32),
+    pub set_window_title: extern "C" fn(self_c: *const RUBase, arg0: *const ::std::os::raw::c_char),
+    pub set_style_sheet:
+        extern "C" fn(self_c: *const RUBase, style_sheet: *const ::std::os::raw::c_char),
+    pub style_sheet: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
+    pub window_title: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
+    pub set_window_icon: extern "C" fn(self_c: *const RUBase, icon: *const RUBase),
+    pub window_icon: extern "C" fn(self_c: *const RUBase) -> RUIcon,
+    pub set_window_icon_text:
+        extern "C" fn(self_c: *const RUBase, arg0: *const ::std::os::raw::c_char),
+    pub window_icon_text: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
+    pub set_window_role: extern "C" fn(self_c: *const RUBase, arg0: *const ::std::os::raw::c_char),
+    pub window_role: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
+    pub set_window_file_path:
+        extern "C" fn(self_c: *const RUBase, file_path: *const ::std::os::raw::c_char),
+    pub window_file_path: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
+    pub set_window_opacity: extern "C" fn(self_c: *const RUBase, level: f32),
+    pub window_opacity: extern "C" fn(self_c: *const RUBase) -> f32,
+    pub is_window_modified: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub set_tool_tip: extern "C" fn(self_c: *const RUBase, arg0: *const ::std::os::raw::c_char),
+    pub tool_tip: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
+    pub set_tool_tip_duration: extern "C" fn(self_c: *const RUBase, msec: i32),
+    pub tool_tip_duration: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub set_status_tip: extern "C" fn(self_c: *const RUBase, arg0: *const ::std::os::raw::c_char),
+    pub status_tip: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
+    pub set_whats_this: extern "C" fn(self_c: *const RUBase, arg0: *const ::std::os::raw::c_char),
+    pub whats_this: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
+    pub accessible_name: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
+    pub set_accessible_name:
+        extern "C" fn(self_c: *const RUBase, name: *const ::std::os::raw::c_char),
+    pub accessible_description:
+        extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
+    pub set_accessible_description:
+        extern "C" fn(self_c: *const RUBase, description: *const ::std::os::raw::c_char),
+    pub set_layout_direction: extern "C" fn(self_c: *const RUBase, direction: i32),
+    pub layout_direction: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub unset_layout_direction: extern "C" fn(self_c: *const RUBase),
+    pub is_right_to_left: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub is_left_to_right: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub set_focus: extern "C" fn(self_c: *const RUBase),
+    pub is_active_window: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub activate_window: extern "C" fn(self_c: *const RUBase),
+    pub clear_focus: extern "C" fn(self_c: *const RUBase),
+    pub set_focus_2: extern "C" fn(self_c: *const RUBase, reason: i32),
+    pub focus_policy: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub set_focus_policy: extern "C" fn(self_c: *const RUBase, policy: i32),
+    pub has_focus: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub set_tab_order:
+        extern "C" fn(self_c: *const RUBase, arg0: *const RUBase, arg1: *const RUBase),
+    pub set_focus_proxy: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub focus_proxy: extern "C" fn(self_c: *const RUBase) -> RUWidget,
+    pub context_menu_policy: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub set_context_menu_policy: extern "C" fn(self_c: *const RUBase, policy: i32),
+    pub grab_mouse: extern "C" fn(self_c: *const RUBase),
+    pub grab_mouse_2: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub release_mouse: extern "C" fn(self_c: *const RUBase),
+    pub grab_keyboard: extern "C" fn(self_c: *const RUBase),
+    pub release_keyboard: extern "C" fn(self_c: *const RUBase),
+    pub grab_shortcut:
+        extern "C" fn(self_c: *const RUBase, key: *const RUBase, context: i32) -> i32,
+    pub release_shortcut: extern "C" fn(self_c: *const RUBase, id: i32),
+    pub set_shortcut_enabled: extern "C" fn(self_c: *const RUBase, id: i32, enable: bool),
+    pub set_shortcut_auto_repeat: extern "C" fn(self_c: *const RUBase, id: i32, enable: bool),
+    pub mouse_grabber: extern "C" fn(self_c: *const RUBase) -> RUWidget,
+    pub keyboard_grabber: extern "C" fn(self_c: *const RUBase) -> RUWidget,
+    pub updates_enabled: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub set_updates_enabled: extern "C" fn(self_c: *const RUBase, enable: bool),
     pub update: extern "C" fn(self_c: *const RUBase),
+    pub repaint: extern "C" fn(self_c: *const RUBase),
+    pub update_2: extern "C" fn(self_c: *const RUBase, x: i32, y: i32, w: i32, h: i32),
+    pub update_3: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub update_4: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub repaint_2: extern "C" fn(self_c: *const RUBase, x: i32, y: i32, w: i32, h: i32),
+    pub repaint_3: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub repaint_4: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub set_hidden: extern "C" fn(self_c: *const RUBase, hidden: bool),
+    pub show: extern "C" fn(self_c: *const RUBase),
+    pub hide: extern "C" fn(self_c: *const RUBase),
+    pub show_minimized: extern "C" fn(self_c: *const RUBase),
+    pub show_maximized: extern "C" fn(self_c: *const RUBase),
+    pub show_full_screen: extern "C" fn(self_c: *const RUBase),
+    pub show_normal: extern "C" fn(self_c: *const RUBase),
+    pub close: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub raise: extern "C" fn(self_c: *const RUBase),
+    pub lower: extern "C" fn(self_c: *const RUBase),
+    pub stack_under: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub move_widget: extern "C" fn(self_c: *const RUBase, x: i32, y: i32),
+    pub move_2: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub resize: extern "C" fn(self_c: *const RUBase, w: i32, h: i32),
+    pub resize_2: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub adjust_size: extern "C" fn(self_c: *const RUBase),
+    pub is_visible: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub is_visible_to: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase) -> bool,
+    pub is_hidden: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub is_minimized: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub is_maximized: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub is_full_screen: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub window_state: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub set_window_state: extern "C" fn(self_c: *const RUBase, state: i32),
+    pub override_window_state: extern "C" fn(self_c: *const RUBase, state: i32),
+    pub size_hint: extern "C" fn(self_c: *const RUBase) -> RUSize,
+    pub minimum_size_hint: extern "C" fn(self_c: *const RUBase) -> RUSize,
+    pub size_policy: extern "C" fn(self_c: *const RUBase) -> RUSizePolicy,
+    pub set_size_policy: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub set_size_policy_2: extern "C" fn(self_c: *const RUBase, horizontal: i32, vertical: i32),
+    pub height_for_width: extern "C" fn(self_c: *const RUBase, arg0: i32) -> i32,
+    pub has_height_for_width: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub visible_region: extern "C" fn(self_c: *const RUBase) -> RURegion,
+    pub set_contents_margins:
+        extern "C" fn(self_c: *const RUBase, left: i32, top: i32, right: i32, bottom: i32),
+    pub set_contents_margins_2: extern "C" fn(self_c: *const RUBase, margins: *const RUBase),
+    pub contents_margins: extern "C" fn(self_c: *const RUBase) -> RUMargins,
+    pub contents_rect: extern "C" fn(self_c: *const RUBase) -> RURect,
+    pub layout: extern "C" fn(self_c: *const RUBase) -> RULayout,
+    pub set_layout: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub set_parent: extern "C" fn(self_c: *const RUBase, parent: *const RUBase),
+    pub set_parent_2: extern "C" fn(self_c: *const RUBase, parent: *const RUBase, f: i32),
+    pub scroll: extern "C" fn(self_c: *const RUBase, dx: i32, dy: i32),
+    pub scroll_2: extern "C" fn(self_c: *const RUBase, dx: i32, dy: i32, arg0: *const RUBase),
+    pub focus_widget: extern "C" fn(self_c: *const RUBase) -> RUWidget,
+    pub next_in_focus_chain: extern "C" fn(self_c: *const RUBase) -> RUWidget,
+    pub previous_in_focus_chain: extern "C" fn(self_c: *const RUBase) -> RUWidget,
+    pub accept_drops: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub set_accept_drops: extern "C" fn(self_c: *const RUBase, on: bool),
+    pub parent_widget: extern "C" fn(self_c: *const RUBase) -> RUWidget,
+    pub set_window_flags: extern "C" fn(self_c: *const RUBase, gtype: i32),
+    pub window_flags: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub override_window_flags: extern "C" fn(self_c: *const RUBase, wtype: i32),
+    pub find: extern "C" fn(self_c: *const RUBase, arg0: u64) -> RUWidget,
+    pub child_at: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) -> RUWidget,
+    pub child_at_2: extern "C" fn(self_c: *const RUBase, p: *const RUBase) -> RUWidget,
+    pub paint_engine: extern "C" fn(self_c: *const RUBase) -> RUPaintEngine,
+    pub ensure_polished: extern "C" fn(self_c: *const RUBase),
+    pub is_ancestor_of: extern "C" fn(self_c: *const RUBase, child: *const RUBase) -> bool,
+    pub auto_fill_background: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub set_auto_fill_background: extern "C" fn(self_c: *const RUBase, enabled: bool),
+    pub backing_store: extern "C" fn(self_c: *const RUBase) -> RUBackingStore,
+    pub window_handle: extern "C" fn(self_c: *const RUBase) -> RUWindow,
+    pub create_window_container: extern "C" fn(
+        self_c: *const RUBase,
+        window: *const RUBase,
+        parent: *const RUBase,
+        flags: i32,
+    ) -> RUWidget,
     pub set_window_title_changed_event: extern "C" fn(
         object: *const RUBase,
         user_data: *const c_void,
         trampoline_func: *const c_void,
         callback: *const c_void,
     ),
+
+    pub set_window_icon_changed_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub set_window_icon_text_changed_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub set_custom_context_menu_requested_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub set_mouse_press_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_mouse_press_event: extern "C" fn(object: *const RUBase),
+
+    pub set_mouse_release_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_mouse_release_event: extern "C" fn(object: *const RUBase),
+
+    pub set_mouse_double_click_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_mouse_double_click_event: extern "C" fn(object: *const RUBase),
+
+    pub set_mouse_move_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_mouse_move_event: extern "C" fn(object: *const RUBase),
+
+    pub set_wheel_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_wheel_event: extern "C" fn(object: *const RUBase),
+
+    pub set_key_press_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_key_press_event: extern "C" fn(object: *const RUBase),
+
+    pub set_key_release_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_key_release_event: extern "C" fn(object: *const RUBase),
+
+    pub set_focus_in_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_focus_in_event: extern "C" fn(object: *const RUBase),
+
+    pub set_focus_out_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_focus_out_event: extern "C" fn(object: *const RUBase),
+
+    pub set_enter_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_enter_event: extern "C" fn(object: *const RUBase),
+
+    pub set_leave_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_leave_event: extern "C" fn(object: *const RUBase),
 
     pub set_paint_event: extern "C" fn(
         object: *const RUBase,
@@ -29,11 +418,124 @@ pub struct RUWidgetFuncs {
     ),
 
     pub remove_paint_event: extern "C" fn(object: *const RUBase),
+
+    pub set_move_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_move_event: extern "C" fn(object: *const RUBase),
+
+    pub set_resize_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_resize_event: extern "C" fn(object: *const RUBase),
+
+    pub set_close_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_close_event: extern "C" fn(object: *const RUBase),
+
+    pub set_context_menu_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_context_menu_event: extern "C" fn(object: *const RUBase),
+
+    pub set_tablet_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_tablet_event: extern "C" fn(object: *const RUBase),
+
+    pub set_drag_enter_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_drag_enter_event: extern "C" fn(object: *const RUBase),
+
+    pub set_drag_move_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_drag_move_event: extern "C" fn(object: *const RUBase),
+
+    pub set_drag_leave_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_drag_leave_event: extern "C" fn(object: *const RUBase),
+
+    pub set_drop_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_drop_event: extern "C" fn(object: *const RUBase),
+
+    pub set_show_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_show_event: extern "C" fn(object: *const RUBase),
+
+    pub set_hide_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_hide_event: extern "C" fn(object: *const RUBase),
+
+    pub set_change_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_change_event: extern "C" fn(object: *const RUBase),
+
+    pub input_method_hints: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub set_input_method_hints: extern "C" fn(self_c: *const RUBase, hints: i32),
 }
 
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUWidgetAllFuncs {
+    pub object_funcs: *const RUObjectFuncs,
+    pub paint_device_funcs: *const RUPaintDeviceFuncs,
     pub widget_funcs: *const RUWidgetFuncs,
 }
 

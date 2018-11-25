@@ -222,16 +222,10 @@
 /// [GroupPopType](QOpenGLDebugMessage::)
 /// ).
 /// 
-/// **See also:** QOpenGLDebugMessage
+/// **See also:** [`OpenGLDebugMessage`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QOpenGLDebugLogger)]
-enum LoggingMode {
-    AsynchronousLogging,
-    SynchronousLogging,
-}
-
 struct OpenGLDebugLogger : Object {
     /// 
     /// Initializes the object in the current OpenGL context. The context must
@@ -246,23 +240,23 @@ struct OpenGLDebugLogger : Object {
     /// 
     /// Returns `true` if the logger is successfully initialized; false otherwise.
     /// 
-    /// **See also:** QOpenGLContext
+    /// **See also:** [`OpenGLContext`]
     initialize() -> bool,
     /// 
     /// Returns `true` if this object is currently logging, false otherwise.
     /// 
-    /// **See also:** startLogging()
+    /// **See also:** [`start_logging()`]
     is_logging() -> bool,
     /// 
     /// Note that logging must have been started or the value of this property
     /// will be meaningless.
     /// 
-    /// **See also:** startLogging()
-    /// isLogging()
+    /// **See also:** [`start_logging()`]
+    /// [`is_logging()`]
     /// 
     /// Returns the logging mode of the object.
     /// 
-    /// **See also:** startLogging()
+    /// **See also:** [`start_logging()`]
     logging_mode() -> OpenGLDebugLogger::LoggingMode,
     /// 
     /// Returns the maximum supported length, in bytes, for the text of the messages
@@ -293,10 +287,10 @@ struct OpenGLDebugLogger : Object {
     /// 
     /// **Note**: The object must be initialized before managing debug groups.
     /// 
-    /// **See also:** popGroup()
-    /// enableMessages()
-    /// disableMessages()
-    push_group(name: String, id: i32, source: OpenGLDebugMessage::Source),
+    /// **See also:** [`pop_group()`]
+    /// [`enable_messages()`]
+    /// [`disable_messages()`]
+    push_group(name: String, id: GLuint, source: OpenGLDebugMessage::Source),
     /// 
     /// Pops the topmost debug group from the debug groups stack. If the group is
     /// successfully popped, OpenGL will automatically log a message with message,
@@ -309,83 +303,85 @@ struct OpenGLDebugLogger : Object {
     /// 
     /// **Note**: The object must be initialized before managing debug groups.
     /// 
-    /// **See also:** pushGroup()
+    /// **See also:** [`push_group()`]
     pop_group(),
     /// 
     /// Enables the logging of messages from the given *sources,* of the given *types* and with the given *severities* and any message id.
     /// 
     /// The logging will be enabled in the current control group.
     /// 
-    /// **See also:** disableMessages()
-    /// pushGroup()
-    /// popGroup()
+    /// **See also:** [`disable_messages()`]
+    /// [`push_group()`]
+    /// [`pop_group()`]
     /// 
     /// Enables the logging of messages with the given *ids,* from the given *sources* and of the given *types* and any severity.
     /// 
     /// The logging will be enabled in the current control group.
     /// 
-    /// **See also:** disableMessages()
-    /// pushGroup()
-    /// popGroup()
+    /// **See also:** [`disable_messages()`]
+    /// [`push_group()`]
+    /// [`pop_group()`]
     enable_messages(sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types, severities: OpenGLDebugMessage::Severities),
     /// 
     /// Enables the logging of messages from the given *sources,* of the given *types* and with the given *severities* and any message id.
     /// 
     /// The logging will be enabled in the current control group.
     /// 
-    /// **See also:** disableMessages()
-    /// pushGroup()
-    /// popGroup()
+    /// **See also:** [`disable_messages()`]
+    /// [`push_group()`]
+    /// [`pop_group()`]
     /// 
     /// Enables the logging of messages with the given *ids,* from the given *sources* and of the given *types* and any severity.
     /// 
     /// The logging will be enabled in the current control group.
     /// 
-    /// **See also:** disableMessages()
-    /// pushGroup()
-    /// popGroup()
-    enable_messages(ids: &i32, sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types),
+    /// **See also:** [`disable_messages()`]
+    /// [`push_group()`]
+    /// [`pop_group()`]
+    [org_name(enableMessages)]
+    enable_messages_2(ids: [GLuint], sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types),
     /// 
     /// Disables the logging of messages with the given *sources,* of the given *types* and with the given *severities* and any message id.
     /// 
     /// The logging will be disabled in the current control group.
     /// 
-    /// **See also:** enableMessages()
-    /// pushGroup()
-    /// popGroup()
+    /// **See also:** [`enable_messages()`]
+    /// [`push_group()`]
+    /// [`pop_group()`]
     /// 
     /// Disables the logging of messages with the given *ids,* from the given *sources* and of the given *types* and any severity.
     /// 
     /// The logging will be disabled in the current control group.
     /// 
-    /// **See also:** enableMessages()
-    /// pushGroup()
-    /// popGroup()
+    /// **See also:** [`enable_messages()`]
+    /// [`push_group()`]
+    /// [`pop_group()`]
     disable_messages(sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types, severities: OpenGLDebugMessage::Severities),
     /// 
     /// Disables the logging of messages with the given *sources,* of the given *types* and with the given *severities* and any message id.
     /// 
     /// The logging will be disabled in the current control group.
     /// 
-    /// **See also:** enableMessages()
-    /// pushGroup()
-    /// popGroup()
+    /// **See also:** [`enable_messages()`]
+    /// [`push_group()`]
+    /// [`pop_group()`]
     /// 
     /// Disables the logging of messages with the given *ids,* from the given *sources* and of the given *types* and any severity.
     /// 
     /// The logging will be disabled in the current control group.
     /// 
-    /// **See also:** enableMessages()
-    /// pushGroup()
-    /// popGroup()
-    disable_messages(ids: &i32, sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types),
+    /// **See also:** [`enable_messages()`]
+    /// [`push_group()`]
+    /// [`pop_group()`]
+    [org_name(disableMessages)]
+    disable_messages_2(ids: [GLuint], sources: OpenGLDebugMessage::Sources, types: OpenGLDebugMessage::Types),
     /// 
     /// Reads all the available messages in the OpenGL internal debug log and
     /// returns them. Moreover, this function will clear the internal debug log,
     /// so that subsequent invocations will not return messages that were
     /// already returned.
     /// 
-    /// **See also:** startLogging()
+    /// **See also:** [`start_logging()`]
     logged_messages() -> [OpenGLDebugMessage],
     /// 
     /// Inserts the message *debugMessage* into the OpenGL debug log. This provides
@@ -398,7 +394,7 @@ struct OpenGLDebugLogger : Object {
     /// 
     /// **Note**: The object must be initialized before logging can happen.
     /// 
-    /// **See also:** initialize()
+    /// **See also:** [`initialize()`]
     log_message(debug_message: &OpenGLDebugMessageType),
     /// 
     /// Starts logging messages coming from the OpenGL server. When a new message
@@ -420,13 +416,13 @@ struct OpenGLDebugLogger : Object {
     /// 
     /// **Note**: The object must be initialized before logging can happen.
     /// 
-    /// **See also:** stopLogging()
-    /// initialize()
+    /// **See also:** [`stop_logging()`]
+    /// [`initialize()`]
     start_logging(logging_mode: OpenGLDebugLogger::LoggingMode),
     /// 
     /// Stops logging messages from the OpenGL server.
     /// 
-    /// **See also:** startLogging()
+    /// **See also:** [`start_logging()`]
     stop_logging(),
     /// 
     /// This signal is emitted when a debug message (wrapped by the *debugMessage*
@@ -447,8 +443,16 @@ struct OpenGLDebugLogger : Object {
     /// 
     /// **Note**: Logging must have been started, or this signal will not be emitted.
     /// 
-    /// **See also:** startLogging()
+    /// **See also:** [`start_logging()`]
     [signal] message_logged(debug_message: &OpenGLDebugMessageType),
+}
+
+[org_name(QOpenGLDebugLogger)]
+enum LoggingMode {
+    /// Messages from the OpenGL server are logged asynchronously. This means that messages can be logged some time after the corresponding OpenGL actions that caused them, and even be received in an out-of-order fashion, depending on the OpenGL implementation. This mode has a very low performance penalty, as OpenGL implementations are heavily threaded and asynchronous by nature.
+    AsynchronousLogging,
+    /// Messages from the OpenGL server are logged synchronously and sequentially. This has a severe performance hit, as OpenGL implementations are very asynchronous by nature; but it's very useful to debug OpenGL problems, as OpenGL guarantees that the messages generated by a OpenGL command will be logged before the corresponding command execution has returned. Therefore, you can install a breakpoint on the messageLogged() signal and see in the backtrace which OpenGL command caused it; the only caveat is that if you are using OpenGL from multiple threads you may need to force direct connection when connecting to the messageLogged() signal.
+    SynchronousLogging,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

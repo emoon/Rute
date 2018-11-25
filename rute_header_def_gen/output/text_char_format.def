@@ -15,42 +15,13 @@
 /// setAnchorHref() and setAnchorNames() functions are used to specify the
 /// information about the hyperlink's destination and the anchor's name.
 /// 
-/// **See also:** QTextFormat
-/// QTextBlockFormat
-/// QTextTableFormat
-/// QTextListFormat
+/// **See also:** [`TextFormat`]
+/// [`TextBlockFormat`]
+/// [`TextTableFormat`]
+/// [`TextListFormat`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTextCharFormat)]
-enum VerticalAlignment {
-    AlignNormal,
-    AlignSuperScript,
-    AlignSubScript,
-    AlignMiddle,
-    AlignTop,
-    AlignBottom,
-    AlignBaseline,
-}
-
-[org_name(QTextCharFormat)]
-enum UnderlineStyle {
-    NoUnderline,
-    SingleUnderline,
-    DashUnderline,
-    DotLine,
-    DashDotLine,
-    DashDotDotLine,
-    WaveUnderline,
-    SpellCheckUnderline,
-}
-
-[org_name(QTextCharFormat)]
-enum FontPropertiesInheritanceBehavior {
-    FontPropertiesSpecifiedOnly,
-    FontPropertiesAll,
-}
-
 struct TextCharFormat : TextFormat {
     /// 
     /// Returns `true` if this character format is valid; otherwise returns
@@ -59,49 +30,49 @@ struct TextCharFormat : TextFormat {
     /// 
     /// Sets the text format's font *family.*
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// Sets the text format's font *size.*
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// Sets the text format's font weight to *weight.*
     /// 
-    /// **See also:** setFont()
-    /// QFont::Weight
+    /// **See also:** [`set_font()`]
+    /// [`Font::weight()`]
     /// 
     /// If *italic* is true, sets the text format's font to be italic; otherwise
     /// the font will be non-italic.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// If *underline* is true, sets the text format's font to be underlined;
     /// otherwise it is displayed non-underlined.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// If *overline* is true, sets the text format's font to be overlined;
     /// otherwise the font is displayed non-overlined.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// If *strikeOut* is true, sets the text format's font with strike-out
     /// enabled (with a horizontal line through it); otherwise it is displayed
     /// without strikeout.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// Sets the font style *hint* and *strategy.*
     /// 
     /// Qt does not support style hints on X11 since this information is not provided by the window system.
     /// 
-    /// **See also:** setFont()
-    /// **See also:** QFont::setStyleHint()
+    /// **See also:** [`set_font()`]
+    /// **See also:** [`Font::set_style_hint`]
     /// 
     /// Sets the font style *strategy.*
     /// 
-    /// **See also:** setFont()
-    /// **See also:** QFont::setStyleStrategy()
+    /// **See also:** [`set_font()`]
+    /// **See also:** [`Font::set_style_strategy`]
     /// 
     /// Enables kerning for this font if *enable* is true; otherwise disables it.
     /// 
@@ -109,22 +80,22 @@ struct TextCharFormat : TextFormat {
     /// Latin text. In other words, the assumption that width('a') + width('b')
     /// is equal to width("ab") is not neccesairly true.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// If *fixedPitch* is true, sets the text format's font to be fixed pitch;
     /// otherwise a non-fixed pitch font is used.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// Sets the hinting preference of the text format's font to be *hintingPreference.*
     /// 
-    /// **See also:** setFont()
-    /// QFont::setHintingPreference()
+    /// **See also:** [`set_font()`]
+    /// [`Font::set_hinting_preference`]
     /// 
     /// **Overloads**
     /// Sets the text format's *font.*
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     /// 
     /// Sets the text format's *font.*
     /// 
@@ -134,19 +105,19 @@ struct TextCharFormat : TextFormat {
     /// has not been explicitly set is ignored and the respective property value
     /// remains unchanged.
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     /// 
     /// Sets the capitalization of the text that apppears in this font to *capitalization.*
     /// 
     /// A font's capitalization makes the text appear in the selected capitalization mode.
     /// 
-    /// **See also:** fontCapitalization()
+    /// **See also:** [`font_capitalization()`]
     /// 
     /// Sets the letter spacing type of this format to *letterSpacingType.*
     /// 
-    /// **See also:** fontLetterSpacingType()
-    /// **See also:** setFontLetterSpacing()
-    /// **See also:** fontLetterSpacing()
+    /// **See also:** [`font_letter_spacing_type()`]
+    /// **See also:** [`set_font_letter_spacing()`]
+    /// **See also:** [`font_letter_spacing()`]
     /// 
     /// Sets the letter spacing of this format to the given *spacing.* The meaning of the value
     /// depends on the font letter spacing type.
@@ -154,13 +125,13 @@ struct TextCharFormat : TextFormat {
     /// For percentage spacing a value of 100 indicates default spacing; a value of 200 doubles the
     /// amount of space a letter takes.
     /// 
-    /// **See also:** fontLetterSpacing()
-    /// **See also:** setFontLetterSpacingType()
-    /// **See also:** fontLetterSpacingType()
+    /// **See also:** [`font_letter_spacing()`]
+    /// **See also:** [`set_font_letter_spacing_type()`]
+    /// **See also:** [`font_letter_spacing_type()`]
     /// 
     /// Sets the word spacing of this format to the given *spacing,* in pixels.
     /// 
-    /// **See also:** fontWordSpacing()
+    /// **See also:** [`font_word_spacing()`]
     /// 
     /// Sets the stretch factor for the font to *factor.*
     /// 
@@ -168,54 +139,54 @@ struct TextCharFormat : TextFormat {
     /// 
     /// The stretch factor is only applied to outline fonts. The stretch factor is ignored for bitmap fonts.
     /// 
-    /// **See also:** fontStretch()
+    /// **See also:** [`font_stretch()`]
     set_font(font: &FontType, behavior: TextCharFormat::FontPropertiesInheritanceBehavior),
     /// 
     /// Sets the text format's font *family.*
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// Sets the text format's font *size.*
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// Sets the text format's font weight to *weight.*
     /// 
-    /// **See also:** setFont()
-    /// QFont::Weight
+    /// **See also:** [`set_font()`]
+    /// [`Font::weight()`]
     /// 
     /// If *italic* is true, sets the text format's font to be italic; otherwise
     /// the font will be non-italic.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// If *underline* is true, sets the text format's font to be underlined;
     /// otherwise it is displayed non-underlined.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// If *overline* is true, sets the text format's font to be overlined;
     /// otherwise the font is displayed non-overlined.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// If *strikeOut* is true, sets the text format's font with strike-out
     /// enabled (with a horizontal line through it); otherwise it is displayed
     /// without strikeout.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// Sets the font style *hint* and *strategy.*
     /// 
     /// Qt does not support style hints on X11 since this information is not provided by the window system.
     /// 
-    /// **See also:** setFont()
-    /// **See also:** QFont::setStyleHint()
+    /// **See also:** [`set_font()`]
+    /// **See also:** [`Font::set_style_hint`]
     /// 
     /// Sets the font style *strategy.*
     /// 
-    /// **See also:** setFont()
-    /// **See also:** QFont::setStyleStrategy()
+    /// **See also:** [`set_font()`]
+    /// **See also:** [`Font::set_style_strategy`]
     /// 
     /// Enables kerning for this font if *enable* is true; otherwise disables it.
     /// 
@@ -223,22 +194,22 @@ struct TextCharFormat : TextFormat {
     /// Latin text. In other words, the assumption that width('a') + width('b')
     /// is equal to width("ab") is not neccesairly true.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// If *fixedPitch* is true, sets the text format's font to be fixed pitch;
     /// otherwise a non-fixed pitch font is used.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// Sets the hinting preference of the text format's font to be *hintingPreference.*
     /// 
-    /// **See also:** setFont()
-    /// QFont::setHintingPreference()
+    /// **See also:** [`set_font()`]
+    /// [`Font::set_hinting_preference`]
     /// 
     /// **Overloads**
     /// Sets the text format's *font.*
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     /// 
     /// Sets the text format's *font.*
     /// 
@@ -248,19 +219,19 @@ struct TextCharFormat : TextFormat {
     /// has not been explicitly set is ignored and the respective property value
     /// remains unchanged.
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     /// 
     /// Sets the capitalization of the text that apppears in this font to *capitalization.*
     /// 
     /// A font's capitalization makes the text appear in the selected capitalization mode.
     /// 
-    /// **See also:** fontCapitalization()
+    /// **See also:** [`font_capitalization()`]
     /// 
     /// Sets the letter spacing type of this format to *letterSpacingType.*
     /// 
-    /// **See also:** fontLetterSpacingType()
-    /// **See also:** setFontLetterSpacing()
-    /// **See also:** fontLetterSpacing()
+    /// **See also:** [`font_letter_spacing_type()`]
+    /// **See also:** [`set_font_letter_spacing()`]
+    /// **See also:** [`font_letter_spacing()`]
     /// 
     /// Sets the letter spacing of this format to the given *spacing.* The meaning of the value
     /// depends on the font letter spacing type.
@@ -268,13 +239,13 @@ struct TextCharFormat : TextFormat {
     /// For percentage spacing a value of 100 indicates default spacing; a value of 200 doubles the
     /// amount of space a letter takes.
     /// 
-    /// **See also:** fontLetterSpacing()
-    /// **See also:** setFontLetterSpacingType()
-    /// **See also:** fontLetterSpacingType()
+    /// **See also:** [`font_letter_spacing()`]
+    /// **See also:** [`set_font_letter_spacing_type()`]
+    /// **See also:** [`font_letter_spacing_type()`]
     /// 
     /// Sets the word spacing of this format to the given *spacing,* in pixels.
     /// 
-    /// **See also:** fontWordSpacing()
+    /// **See also:** [`font_word_spacing()`]
     /// 
     /// Sets the stretch factor for the font to *factor.*
     /// 
@@ -282,66 +253,67 @@ struct TextCharFormat : TextFormat {
     /// 
     /// The stretch factor is only applied to outline fonts. The stretch factor is ignored for bitmap fonts.
     /// 
-    /// **See also:** fontStretch()
-    set_font(font: &FontType),
+    /// **See also:** [`font_stretch()`]
+    [org_name(setFont)]
+    set_font_2(font: &FontType),
     /// 
     /// Returns the text format's font family.
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     /// 
     /// Returns the font size used to display text in this format.
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     /// 
     /// Returns the text format's font weight.
     /// 
-    /// **See also:** font()
-    /// QFont::Weight
+    /// **See also:** [`font()`]
+    /// [`Font::weight()`]
     /// 
     /// Returns `true` if the text format's font is italic; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     /// 
     /// Returns `true` if the text format's font is underlined; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     /// 
     /// Returns `true` if the text format's font is overlined; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     /// 
     /// Returns `true` if the text format's font is struck out (has a horizontal line
     /// drawn through it); otherwise returns `false.`
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     /// 
     /// Returns the font style hint.
     /// 
-    /// **See also:** setFontStyleHint()
-    /// font()
+    /// **See also:** [`set_font_style_hint()`]
+    /// [`font()`]
     /// 
     /// Returns the current font style strategy.
     /// 
-    /// **See also:** setFontStyleStrategy()
-    /// **See also:** font()
+    /// **See also:** [`set_font_style_strategy()`]
+    /// **See also:** [`font()`]
     /// 
     /// Returns `true` if the font kerning is enabled.
     /// 
-    /// **See also:** setFontKerning()
-    /// **See also:** font()
+    /// **See also:** [`set_font_kerning()`]
+    /// **See also:** [`font()`]
     /// 
     /// Returns `true` if the text format's font is fixed pitch; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     /// 
     /// Returns the hinting preference set for this text format.
     /// 
-    /// **See also:** font()
-    /// QFont::hintingPreference()
+    /// **See also:** [`font()`]
+    /// [`Font::hinting_preference`]
     /// 
     /// Returns the font for this character format.
     /// 
@@ -349,71 +321,71 @@ struct TextCharFormat : TextFormat {
     /// 
     /// Returns the letter spacing type of this format..
     /// 
-    /// **See also:** setFontLetterSpacingType()
-    /// **See also:** setFontLetterSpacing()
-    /// **See also:** fontLetterSpacing()
+    /// **See also:** [`set_font_letter_spacing_type()`]
+    /// **See also:** [`set_font_letter_spacing()`]
+    /// **See also:** [`font_letter_spacing()`]
     /// 
     /// Returns the current letter spacing.
     /// 
-    /// **See also:** setFontLetterSpacing()
-    /// **See also:** setFontLetterSpacingType()
-    /// **See also:** fontLetterSpacingType()
+    /// **See also:** [`set_font_letter_spacing()`]
+    /// **See also:** [`set_font_letter_spacing_type()`]
+    /// **See also:** [`font_letter_spacing_type()`]
     /// 
     /// Returns the current word spacing value.
     /// 
     /// Returns the current font stretching.
-    /// **See also:** setFontStretch()
+    /// **See also:** [`set_font_stretch()`]
     font() -> Font,
     /// 
     /// Sets the text format's font *family.*
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     set_font_family(family: String),
     /// 
     /// Returns the text format's font family.
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     font_family() -> String,
     /// 
     /// Sets the text format's font *size.*
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     set_font_point_size(size: f32),
     /// 
     /// Returns the font size used to display text in this format.
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     font_point_size() -> f32,
     /// 
     /// Sets the text format's font weight to *weight.*
     /// 
-    /// **See also:** setFont()
-    /// QFont::Weight
+    /// **See also:** [`set_font()`]
+    /// [`Font::weight()`]
     set_font_weight(weight: i32),
     /// 
     /// Returns the text format's font weight.
     /// 
-    /// **See also:** font()
-    /// QFont::Weight
+    /// **See also:** [`font()`]
+    /// [`Font::weight()`]
     font_weight() -> i32,
     /// 
     /// If *italic* is true, sets the text format's font to be italic; otherwise
     /// the font will be non-italic.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     set_font_italic(italic: bool),
     /// 
     /// Returns `true` if the text format's font is italic; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     font_italic() -> bool,
     /// 
     /// Sets the capitalization of the text that apppears in this font to *capitalization.*
     /// 
     /// A font's capitalization makes the text appear in the selected capitalization mode.
     /// 
-    /// **See also:** fontCapitalization()
+    /// **See also:** [`font_capitalization()`]
     set_font_capitalization(capitalization: Font::Capitalization),
     /// 
     /// Returns the current capitalization type of the font.
@@ -421,23 +393,23 @@ struct TextCharFormat : TextFormat {
     /// 
     /// Sets the letter spacing type of this format to *letterSpacingType.*
     /// 
-    /// **See also:** fontLetterSpacingType()
-    /// **See also:** setFontLetterSpacing()
-    /// **See also:** fontLetterSpacing()
+    /// **See also:** [`font_letter_spacing_type()`]
+    /// **See also:** [`set_font_letter_spacing()`]
+    /// **See also:** [`font_letter_spacing()`]
     set_font_letter_spacing_type(letter_spacing_type: Font::SpacingType),
     /// 
     /// Returns the letter spacing type of this format..
     /// 
-    /// **See also:** setFontLetterSpacingType()
-    /// **See also:** setFontLetterSpacing()
-    /// **See also:** fontLetterSpacing()
+    /// **See also:** [`set_font_letter_spacing_type()`]
+    /// **See also:** [`set_font_letter_spacing()`]
+    /// **See also:** [`font_letter_spacing()`]
     font_letter_spacing_type() -> Font::SpacingType,
     /// 
     /// Sets the letter spacing type of this format to *letterSpacingType.*
     /// 
-    /// **See also:** fontLetterSpacingType()
-    /// **See also:** setFontLetterSpacing()
-    /// **See also:** fontLetterSpacing()
+    /// **See also:** [`font_letter_spacing_type()`]
+    /// **See also:** [`set_font_letter_spacing()`]
+    /// **See also:** [`font_letter_spacing()`]
     /// 
     /// Sets the letter spacing of this format to the given *spacing.* The meaning of the value
     /// depends on the font letter spacing type.
@@ -445,27 +417,27 @@ struct TextCharFormat : TextFormat {
     /// For percentage spacing a value of 100 indicates default spacing; a value of 200 doubles the
     /// amount of space a letter takes.
     /// 
-    /// **See also:** fontLetterSpacing()
-    /// **See also:** setFontLetterSpacingType()
-    /// **See also:** fontLetterSpacingType()
+    /// **See also:** [`font_letter_spacing()`]
+    /// **See also:** [`set_font_letter_spacing_type()`]
+    /// **See also:** [`font_letter_spacing_type()`]
     set_font_letter_spacing(spacing: f32),
     /// 
     /// Returns the letter spacing type of this format..
     /// 
-    /// **See also:** setFontLetterSpacingType()
-    /// **See also:** setFontLetterSpacing()
-    /// **See also:** fontLetterSpacing()
+    /// **See also:** [`set_font_letter_spacing_type()`]
+    /// **See also:** [`set_font_letter_spacing()`]
+    /// **See also:** [`font_letter_spacing()`]
     /// 
     /// Returns the current letter spacing.
     /// 
-    /// **See also:** setFontLetterSpacing()
-    /// **See also:** setFontLetterSpacingType()
-    /// **See also:** fontLetterSpacingType()
+    /// **See also:** [`set_font_letter_spacing()`]
+    /// **See also:** [`set_font_letter_spacing_type()`]
+    /// **See also:** [`font_letter_spacing_type()`]
     font_letter_spacing() -> f32,
     /// 
     /// Sets the word spacing of this format to the given *spacing,* in pixels.
     /// 
-    /// **See also:** fontWordSpacing()
+    /// **See also:** [`font_word_spacing()`]
     set_font_word_spacing(spacing: f32),
     /// 
     /// Returns the current word spacing value.
@@ -474,74 +446,74 @@ struct TextCharFormat : TextFormat {
     /// If *underline* is true, sets the text format's font to be underlined;
     /// otherwise it is displayed non-underlined.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     set_font_underline(underline: bool),
     /// 
     /// Returns `true` if the text format's font is underlined; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     font_underline() -> bool,
     /// 
     /// If *overline* is true, sets the text format's font to be overlined;
     /// otherwise the font is displayed non-overlined.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     set_font_overline(overline: bool),
     /// 
     /// Returns `true` if the text format's font is overlined; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     font_overline() -> bool,
     /// 
     /// Sets the underline color used for the characters with this format to
     /// the *color* specified.
     /// 
-    /// **See also:** underlineColor()
+    /// **See also:** [`underline_color()`]
     set_underline_color(color: &ColorType),
     /// 
     /// Returns the color used to underline the characters with this format.
     /// 
-    /// **See also:** setUnderlineColor()
+    /// **See also:** [`set_underline_color()`]
     underline_color() -> Color,
     /// 
     /// If *fixedPitch* is true, sets the text format's font to be fixed pitch;
     /// otherwise a non-fixed pitch font is used.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     set_font_fixed_pitch(fixed_pitch: bool),
     /// 
     /// Returns `true` if the text format's font is fixed pitch; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     font_fixed_pitch() -> bool,
     /// 
     /// Sets the font style *hint* and *strategy.*
     /// 
     /// Qt does not support style hints on X11 since this information is not provided by the window system.
     /// 
-    /// **See also:** setFont()
-    /// **See also:** QFont::setStyleHint()
+    /// **See also:** [`set_font()`]
+    /// **See also:** [`Font::set_style_hint`]
     set_font_style_hint(hint: Font::StyleHint, strategy: Font::StyleStrategy),
     /// 
     /// Returns the font style hint.
     /// 
-    /// **See also:** setFontStyleHint()
-    /// font()
+    /// **See also:** [`set_font_style_hint()`]
+    /// [`font()`]
     font_style_hint() -> Font::StyleHint,
     /// 
     /// Sets the hinting preference of the text format's font to be *hintingPreference.*
     /// 
-    /// **See also:** setFont()
-    /// QFont::setHintingPreference()
+    /// **See also:** [`set_font()`]
+    /// [`Font::set_hinting_preference`]
     set_font_hinting_preference(hinting_preference: Font::HintingPreference),
     /// 
     /// Returns the hinting preference set for this text format.
     /// 
-    /// **See also:** font()
-    /// QFont::hintingPreference()
+    /// **See also:** [`font()`]
+    /// [`Font::hinting_preference`]
     font_hinting_preference() -> Font::HintingPreference,
     /// 
     /// Enables kerning for this font if *enable* is true; otherwise disables it.
@@ -550,13 +522,13 @@ struct TextCharFormat : TextFormat {
     /// Latin text. In other words, the assumption that width('a') + width('b')
     /// is equal to width("ab") is not neccesairly true.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     set_font_kerning(enable: bool),
     /// 
     /// Returns `true` if the font kerning is enabled.
     /// 
-    /// **See also:** setFontKerning()
-    /// **See also:** font()
+    /// **See also:** [`set_font_kerning()`]
+    /// **See also:** [`font()`]
     font_kerning() -> bool,
     /// 
     /// Sets the style of underlining the text to *style.*
@@ -568,12 +540,12 @@ struct TextCharFormat : TextFormat {
     /// Sets the vertical alignment used for the characters with this format to
     /// the *alignment* specified.
     /// 
-    /// **See also:** verticalAlignment()
+    /// **See also:** [`vertical_alignment()`]
     set_vertical_alignment(alignment: TextCharFormat::VerticalAlignment),
     /// 
     /// Returns the vertical alignment used for characters with this format.
     /// 
-    /// **See also:** setVerticalAlignment()
+    /// **See also:** [`set_vertical_alignment()`]
     vertical_alignment() -> TextCharFormat::VerticalAlignment,
     /// 
     /// Sets the pen used to draw the outlines of characters to the given *pen.*
@@ -597,7 +569,7 @@ struct TextCharFormat : TextFormat {
     /// has a valid anchor defined. Use setAnchorHref(), and optionally
     /// setAnchorNames() to create a hypertext link.
     /// 
-    /// **See also:** isAnchor()
+    /// **See also:** [`is_anchor()`]
     /// 
     /// Sets the hypertext link for the text format to the given *value.*
     /// This is typically a URL like .
@@ -621,9 +593,9 @@ struct TextCharFormat : TextFormat {
     /// Returns `true` if the text is formatted as an anchor; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** setAnchor()
-    /// setAnchorHref()
-    /// setAnchorNames()
+    /// **See also:** [`set_anchor()`]
+    /// [`set_anchor_href()`]
+    /// [`set_anchor_names()`]
     is_anchor() -> bool,
     /// 
     /// Sets the hypertext link for the text format to the given *value.*
@@ -674,6 +646,52 @@ struct TextCharFormat : TextFormat {
     table_cell_row_span() -> i32,
     set_table_cell_column_span(table_cell_column_span: i32),
     table_cell_column_span() -> i32,
+}
+
+[org_name(QTextCharFormat)]
+enum VerticalAlignment {
+    /// Adjacent characters are positioned in the standard way for text in the writing system in use.
+    AlignNormal,
+    /// Characters are placed above the base line for normal text.
+    AlignSuperScript,
+    /// Characters are placed below the base line for normal text.
+    AlignSubScript,
+    /// The center of the object is vertically aligned with the base line. Currently, this is only implemented for inline objects.
+    AlignMiddle,
+    /// The top edge of the object is vertically aligned with the base line.
+    AlignTop,
+    /// The bottom edge of the object is vertically aligned with the base line.
+    AlignBottom,
+    /// The base lines of the characters are aligned.
+    AlignBaseline,
+}
+
+[org_name(QTextCharFormat)]
+enum UnderlineStyle {
+    /// Text is draw without any underlining decoration.
+    NoUnderline,
+    /// A line is drawn using Qt::SolidLine.
+    SingleUnderline,
+    /// Dashes are drawn using Qt::DashLine.
+    DashUnderline,
+    /// Dots are drawn using Qt::DotLine;
+    DotLine,
+    /// Dashs and dots are drawn using Qt::DashDotLine.
+    DashDotLine,
+    /// Underlines draw drawn using Qt::DashDotDotLine.
+    DashDotDotLine,
+    /// The text is underlined using a wave shaped line.
+    WaveUnderline,
+    /// The underline is drawn depending on the SpellCheckUnderlineStyle theme hint of QPlatformTheme. By default this is mapped to WaveUnderline, on MacOS it is mapped to DotLine.
+    SpellCheckUnderline,
+}
+
+[org_name(QTextCharFormat)]
+enum FontPropertiesInheritanceBehavior {
+    /// If a property is not explicitly set, do not change the text format's property value.
+    FontPropertiesSpecifiedOnly,
+    /// If a property is not explicitly set, override the text format's property with a default value.
+    FontPropertiesAll,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

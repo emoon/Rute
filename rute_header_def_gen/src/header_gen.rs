@@ -1,5 +1,6 @@
 use clang::*;
 use heck::SnakeCase;
+use qdoc_parser::{QDocEntry, QDocFile, QDocItem};
 use rayon::prelude::*;
 use std::borrow::Cow;
 use std::collections::HashMap;
@@ -10,7 +11,6 @@ use std::io::{BufReader, BufWriter, SeekFrom, Write};
 use std::path::PathBuf;
 use std::sync::RwLock;
 use walkdir::WalkDir;
-use qdoc_parser::{QDocEntry, QDocFile, QDocItem};
 
 use walkdir;
 
@@ -285,11 +285,12 @@ fn print_doc_comments<W: Write>(dest: &mut W, text: &str, indent: usize) {
 /// Print a functio/method definition
 ///
 fn print_func<W: Write>(
-	dest: &mut W, 
-	entry: &Entity, 
-	class_name: &str, 
-	docs: &HashMap<String, QDocFile>, 
-	func_type: AccessLevel
+    name_count_lookup: &mut HashMap<String, usize>,
+    dest: &mut W,
+    entry: &Entity,
+    class_name: &str,
+    docs: &HashMap<String, QDocFile>,
+    func_type: AccessLevel,
 ) {
     let name = match entry.get_name() {
         Some(name) => name,
@@ -308,33 +309,49 @@ fn print_func<W: Write>(
     }
 
     let full_name = format!("{}::{}", class_name, name);
+    //println!("full name {}", full_name);
 
     // So this is slow. Better would be to setup the names so we could
     // just use a hash table to match it but as this is something
     // we do very infrequent (generating the base line from Qt)
     // having this taking a bit longer than needed isn't the end of the world.
 
-	for (_, f) in docs {
-		for entry in &f.0 {
-			match entry.data {
-				QDocItem::Function(ref name) => {
-					if name.contains(&full_name) {
-						print_doc_comments(dest, &entry.formatted_rustdoc(), 4);
-					}
-				}
+    for (_, f) in docs {
+        for entry in &f.0 {
+            match entry.data {
+                QDocItem::Function(ref name) => {
+                    if name.contains(&full_name) {
+                        print_doc_comments(dest, &entry.formatted_rustdoc(), 4);
+                    }
+                }
 
-				QDocItem::Property(ref name) => {
-					if name.contains(&full_name) {
-						print_doc_comments(dest, &entry.formatted_rustdoc(), 4);
-					}
-				}
+                QDocItem::Property(ref name) => {
+                    if name.contains(&full_name) {
+                        print_doc_comments(dest, &entry.formatted_rustdoc(), 4);
+                    }
+                }
 
-				_ => (),
-			}
-		}
-	}
+                _ => (),
+            }
+        }
+    }
 
-    // check if we have any doc for this 
+    let mut name_count: usize = 0;
+
+    if let Some(count) = name_count_lookup.get_mut(&name) {
+        name_count = *count;
+        *count += 1;
+    }
+
+    if !name_count_lookup.contains_key(&name) {
+        name_count_lookup.insert(name.to_owned(), 2);
+    }
+
+    if name_count > 0 {
+        writeln!(dest, "    [org_name({})]", name);
+    }
+
+    // check if we have any doc for this
 
     if func_type == AccessLevel::Signal {
         write!(dest, "    [signal] ");
@@ -346,7 +363,15 @@ fn print_func<W: Write>(
         write!(dest, "    ");
     }
 
-    write!(dest, "{}", name.to_snake_case());
+    // If we have multiple instances of the same name
+    // we just add _1, _2, etc to the names. These will be renamed (manually) later
+
+
+    if name_count > 0 {
+        write!(dest, "{}_{}", name.to_snake_case(), name_count);
+    } else {
+        write!(dest, "{}", name.to_snake_case());
+    }
 
     if let Some(args) = entry.get_arguments() {
         if args.is_empty() {
@@ -385,11 +410,30 @@ fn print_func<W: Write>(
 ///
 /// Print enums
 ///
-fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_class_name: &str) {
+fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_class_name: &str, docs: &HashMap<String, QDocFile>) {
+    let mut hash_lookup = HashMap::new();
+
     writeln!(dest, "[org_name({})]", org_class_name);
 
     if let Some(enum_name) = entry.get_display_name() {
         writeln!(dest, "enum {} {{", enum_name);
+        let full_enum_name = format!("{}::{}", org_class_name, enum_name);
+
+        for (_, f) in docs {
+            for entry in &f.0 {
+                match entry.data {
+                    QDocItem::Enum(ref enum_def) => {
+                        if full_enum_name == enum_def.name {
+                            hash_lookup = enum_def.data.clone();
+                        }
+                    }
+
+                    _ => (),
+                }
+            }
+        }
+
+
     } else {
         writeln!(dest, "enum {}FixMeEnums {{", struct_name);
     }
@@ -397,7 +441,12 @@ fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_cl
     for entry in entry.get_children() {
         match entry.get_kind() {
             EntityKind::EnumConstantDecl => {
-                writeln!(dest, "    {},", entry.get_display_name().unwrap());
+                let name = entry.get_display_name().unwrap();
+                if let Some(data) = hash_lookup.get(&name) {
+                    writeln!(dest,"    /// {}", data);
+                }
+
+                writeln!(dest, "    {},", name);
             }
 
             _ => (),
@@ -454,7 +503,7 @@ fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFil
         }
     }
 
-    if method_count == 0 && enum_count == 0 {
+    if method_count == 0 && enum_count == 0 && base_classes.is_empty() {
         return;
     }
 
@@ -463,26 +512,26 @@ fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFil
     let filename = format!("{}/{}.def", target_path, typename.to_snake_case());
     let mut dest = BufWriter::with_capacity(16 * 1024, File::create(filename).unwrap());
 
-	//println!("type name {}", typename);
+    //println!("type name {}", typename);
 
     // Check if we have some filedata to output
-	
-	for (_, f) in docs {
-		for entry in &f.0 {
-			match entry.data {
-				QDocItem::Class(ref class_name) => {
-					if &name == class_name {
-						println!("found class name");
-						print_doc_comments(&mut dest, &entry.formatted_rustdoc(), 0);
-					}
-				}
 
-				_ => (),
-			}
-		}
-	}
+    for (_, f) in docs {
+        for entry in &f.0 {
+            match entry.data {
+                QDocItem::Class(ref class_name) => {
+                    if &name == class_name {
+                        //println!("found class name");
+                        print_doc_comments(&mut dest, &entry.formatted_rustdoc(), 0);
+                    }
+                }
 
-	/*
+                _ => (),
+            }
+        }
+    }
+
+    /*
     if let Some(class_doc) = doc_lookups.class_name.get(name.as_str()) {
         for tag in &class_doc.tags {
             writeln!(dest, "/// {}", tag);
@@ -490,28 +539,15 @@ fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFil
     }
     */
 
-    // Always add the licence info 
-	writeln!(dest, "/// # Licence");
-	writeln!(dest, "///");
+    // Always add the licence info
+    writeln!(dest, "/// # Licence");
+    writeln!(dest, "///");
     writeln!(dest, "/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.");
-
-    // print all enums for the class
-
-    for field in entry.get_children() {
-        match field.get_kind() {
-            EntityKind::EnumDecl => print_enums(&mut dest, &field, &name[1..], &name),
-            _ => (),
-        }
-    }
-
-    if method_count == 0 {
-        return;
-    }
 
     // Print class and the inharitance
 
     if base_classes.is_empty() {
-        writeln!(dest, "\nstruct {} {{", &name[1..]);
+        writeln!(dest, "struct {} {{", &name[1..]);
     } else {
         if base_classes.len() > 1 {
             write!(dest, "struct {} : {}", &name[1..], &base_classes[0][7..]);
@@ -526,13 +562,14 @@ fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFil
     }
 
     let mut access_level = AccessLevel::Public;
+    let mut name_lookup = HashMap::new();
 
     // Find methods and print them
 
     for field in entry.get_children() {
         match field.get_kind() {
             EntityKind::Method => {
-                print_func(&mut dest, &field, &name, docs, access_level);
+                print_func(&mut name_lookup,&mut dest, &field, &name, docs, access_level);
             }
 
             EntityKind::AccessSpecifier => {
@@ -543,7 +580,17 @@ fn print_class(target_path: &str, entry: &Entity, docs: &HashMap<String, QDocFil
         }
     }
 
-    writeln!(dest, "}}\n\n// vim: syntax=rust expandtab ts=4 sw=4");
+    writeln!(dest, "}}\n");
+
+    // print all enums for the class
+    for field in entry.get_children() {
+        match field.get_kind() {
+            EntityKind::EnumDecl => print_enums(&mut dest, &field, &name[1..], &name, docs),
+            _ => (),
+        }
+    }
+
+    writeln!(dest, "// vim: syntax=rust expandtab ts=4 sw=4");
 }
 
 fn is_header_file(entry: &walkdir::DirEntry) -> bool {
@@ -585,8 +632,8 @@ impl Generator {
     ///
     pub fn generate(
         output_directory: &str,
-        paths: &[&'static str],
-        compile_args: &[&'static str],
+        paths: Vec<String>,
+        compile_args: Vec<String>,
         docs: &HashMap<String, QDocFile>,
     ) {
         // Acquire an instance of `Clang`
@@ -596,90 +643,101 @@ impl Generator {
         let mut header_files: Vec<PathBuf> = Vec::new();
 
         for p in paths {
-            add_process_path(&mut header_files, p);
+            add_process_path(&mut header_files, &p);
         }
 
         // Process all files in parallel using Rayon
         header_files.par_iter().for_each(|filename| {
-                println!("Processing filename {:?}", filename);
+            println!("Processing filename {:?}", filename);
 
-                // Create a new `Index`
-                let index = Index::new(&clang, false, false);
+            // Create a new `Index`
+            let index = Index::new(&clang, false, false);
 
-                // Parse a source file into a translation unit
-                let tu = index
-                    .parser(&filename)
-                    .arguments(&compile_args)
-                    .parse()
-                    .unwrap();
+            // Parse a source file into a translation unit
+            let tu = index
+                .parser(&filename)
+                .arguments(&compile_args)
+                .parse()
+                .unwrap();
 
-                // Get the structs in this translation unit
-                let structs = tu
-                    .get_entity()
-                    .get_children()
-                    .into_iter()
-                    .filter(|e| e.get_kind() == EntityKind::ClassDecl)
-                    .collect::<Vec<_>>();
+            // Use this to figure out if something doesn't work correctly
 
-                for struct_ in structs {
-                    if let Some(name) = struct_.get_name() {
-                        let t = name.to_owned();
-                        {
-                            let data = lock.read().unwrap();
+            // Get the structs in this translation unit
+            let structs = tu
+                .get_entity()
+                .get_children()
+                .into_iter()
+                .filter(|e| e.get_kind() == EntityKind::ClassDecl)
+                .collect::<Vec<_>>();
 
-                            if data.contains(&t) || struct_.get_children().is_empty() {
-                                continue;
-                            }
+            for struct_ in structs {
+                if let Some(name) = struct_.get_name() {
+                    let t = name.to_owned();
+                    {
+                        let data = lock.read().unwrap();
+
+                        if data.contains(&t) || struct_.get_children().is_empty() {
+                            continue;
                         }
-
-                        {
-                            let mut w = lock.write().unwrap();
-                            w.insert(t);
-                        }
-
-                        print_class(output_directory, &struct_, docs);
                     }
+
+                    {
+                        let mut w = lock.write().unwrap();
+                        w.insert(t);
+                    }
+
+                    //println!("name {}", name);
+
+                    print_class(output_directory, &struct_, docs);
                 }
+            }
 
-                // This is somewhat of a hack to get the global Qt enums
+            // This is somewhat of a hack to get the global Qt enums
 
-                if filename.file_name().unwrap().to_str().unwrap().contains("qnamespace") {
-                    let mut enums = Vec::new();
+            if filename
+                .file_name()
+                .unwrap()
+                .to_str()
+                .unwrap()
+                .contains("qnamespace")
+            {
+                let mut enums = Vec::new();
 
-                    for e in tu.get_entity().get_children() {
-                        match e.get_kind() {
-                            EntityKind::Namespace => {
-                                if let Some(name) = e.get_display_name() {
-                                    if name != "Qt" {
-                                        continue;
-                                    }
+                for e in tu.get_entity().get_children() {
+                    match e.get_kind() {
+                        EntityKind::Namespace => {
+                            if let Some(name) = e.get_display_name() {
+                                if name != "Qt" {
+                                    continue;
+                                }
 
-                                    for t in e.get_children() {
-                                        if t.get_kind() == EntityKind::EnumDecl {
-                                            enums.push(t);
-                                        }
+                                for t in e.get_children() {
+                                    if t.get_kind() == EntityKind::EnumDecl {
+                                        enums.push(t);
                                     }
                                 }
                             }
-
-                            _ => (),
                         }
-                    }
 
-                    // Create enums for the file. We don't need to lock the type here as we take all the enums
-                    // that isn't in any class and write to output with the same filename
-
-                    if !enums.is_empty() {
-                        let base_name = filename.file_name().unwrap().to_str().unwrap();
-                        let base_name = &base_name[..base_name.len() - 2];
-                        let target_filename = format!("{}/{}.def", output_directory, &base_name);
-                        let mut dest = BufWriter::with_capacity(16 * 1024, File::create(target_filename).unwrap());
-
-                        for enum_def in enums {
-                            print_enums(&mut dest, &enum_def, &base_name, "Qt");
-                        }
+                        _ => (),
                     }
                 }
+
+                // Create enums for the file. We don't need to lock the type here as we take all the enums
+                // that isn't in any class and write to output with the same filename
+
+                if !enums.is_empty() {
+                    let base_name = filename.file_name().unwrap().to_str().unwrap();
+                    let base_name = &base_name[..base_name.len() - 2];
+                    let target_filename = format!("{}/{}.def", output_directory, &base_name);
+                    let mut dest =
+                        BufWriter::with_capacity(16 * 1024, File::create(target_filename).unwrap());
+
+                    for enum_def in enums {
+                        print_enums(&mut dest, &enum_def, &base_name, "Qt", docs);
+                    }
+                }
+            }
         });
     }
 }

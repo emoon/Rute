@@ -21,24 +21,17 @@
 /// 
 /// **Note**: QDirModel requires an instance of [QApplication.](QApplication.)
 /// 
-/// **See also:** nameFilters()
-/// setFilter()
-/// filter()
-/// QListView
-/// QTreeView
-/// QFileSystemModel
+/// **See also:** [`name_filters()`]
+/// [`set_filter()`]
+/// [`filter()`]
+/// [`ListView`]
+/// [`TreeView`]
+/// [`FileSystemModel`]
 /// {Dir View Example}
 /// {Model Classes}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QDirModel)]
-enum Roles {
-    FileIconRole,
-    FilePathRole,
-    FileNameRole,
-}
-
 struct DirModel : AbstractItemModel {
     /// 
     /// Returns the model item index for the item in the *parent* with the
@@ -67,7 +60,7 @@ struct DirModel : AbstractItemModel {
     /// the data referenced by the *value.* Returns `true` if successful;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** Qt::ItemDataRole
+    /// **See also:** [`t::item_data_role()`]
     [event] set_data(index: &ModelIndexType, value: &VariantType, role: i32) -> bool,
     /// 
     /// Returns the data stored under the given *role* for the specified *section*
@@ -80,7 +73,7 @@ struct DirModel : AbstractItemModel {
     /// 
     /// Returns the item flags for the given *index* in the model.
     /// 
-    /// **See also:** Qt::ItemFlags
+    /// **See also:** [`t::item_flags()`]
     [event] flags(index: &ModelIndexType) -> Rute::ItemFlags,
     /// 
     /// Sort the model items in the *column* using the *order* given.
@@ -89,7 +82,7 @@ struct DirModel : AbstractItemModel {
     /// 
     /// Returns the sorting method used for the directory model.
     /// 
-    /// **See also:** QDir::SortFlags
+    /// **See also:** [`Dir::sort_flags()`]
     [event] sort(column: i32, order: Rute::SortOrder),
     /// 
     /// Returns a list of MIME types that can be used to describe a list of items
@@ -110,12 +103,12 @@ struct DirModel : AbstractItemModel {
     /// 
     /// Returns `true` if the drop was successful, and false otherwise.
     /// 
-    /// **See also:** supportedDropActions()
+    /// **See also:** [`supported_drop_actions()`]
     [event] drop_mime_data(data: *MimeDataType, action: Rute::DropAction, row: i32, column: i32, parent: &ModelIndexType) -> bool,
     /// 
     /// Returns the drop actions supported by this model.
     /// 
-    /// **See also:** Qt::DropActions
+    /// **See also:** [`t::drop_actions()`]
     [event] supported_drop_actions() -> Rute::DropActions,
     /// 
     /// Sets the *provider* of file icons for the directory model.
@@ -136,22 +129,22 @@ struct DirModel : AbstractItemModel {
     /// Note that the filter you set should always include the QDir::AllDirs enum value,
     /// otherwise QDirModel won't be able to read the directory structure.
     /// 
-    /// **See also:** QDir::Filters
+    /// **See also:** [`Dir::filters()`]
     set_filter(filters: Dir::Filters),
     /// 
     /// Returns the filter specification for the directory model.
     /// 
-    /// **See also:** QDir::Filters
+    /// **See also:** [`Dir::filters()`]
     filter() -> Dir::Filters,
     /// 
     /// Sets the directory model's sorting order to that specified by *sort.*
     /// 
-    /// **See also:** QDir::SortFlags
+    /// **See also:** [`Dir::sort_flags()`]
     set_sorting(sort: Dir::SortFlags),
     /// 
     /// Returns the sorting method used for the directory model.
     /// 
-    /// **See also:** QDir::SortFlags
+    /// **See also:** [`Dir::sort_flags()`]
     sorting() -> Dir::SortFlags,
     set_resolve_symlinks(enable: bool),
     /// 
@@ -176,7 +169,8 @@ struct DirModel : AbstractItemModel {
     /// 
     /// **Overloads**
     /// Returns the model item index for the given *path.*
-    index(path: String, column: i32) -> ModelIndex,
+    [org_name(index)]
+    index_2(path: String, column: i32) -> ModelIndex,
     /// 
     /// Returns `true` if the model item *index* represents a directory;
     /// otherwise returns `false.`
@@ -193,7 +187,7 @@ struct DirModel : AbstractItemModel {
     /// **Warning**: This function deletes directories from the file system; it does
     /// **not** move them to a location where they can be recovered.
     /// 
-    /// **See also:** remove()
+    /// **See also:** [`remove()`]
     rmdir(index: &ModelIndexType) -> bool,
     /// 
     /// Removes the model item *index* from the directory model and **deletes the
@@ -203,7 +197,7 @@ struct DirModel : AbstractItemModel {
     /// **Warning**: This function deletes files from the file system; it does **not**
     /// move them to a location where they can be recovered.
     /// 
-    /// **See also:** rmdir()
+    /// **See also:** [`rmdir()`]
     remove(index: &ModelIndexType) -> bool,
     /// 
     /// Returns the path of the item stored in the model under the
@@ -227,7 +221,7 @@ struct DirModel : AbstractItemModel {
     /// information about the symbolic link itself, regardless of whether
     /// resolveSymlinks is enabled or not.
     /// 
-    /// **See also:** QFileInfo::symLinkTarget()
+    /// **See also:** [`FileInfo::sym_link_target`]
     file_info(index: &ModelIndexType) -> FileInfo,
     /// 
     /// QDirModel caches file information. This function updates the
@@ -235,6 +229,16 @@ struct DirModel : AbstractItemModel {
     /// model is updated; the default value will update the model from
     /// root directory of the file system (the entire model).
     refresh(parent: &ModelIndexType),
+}
+
+[org_name(QDirModel)]
+enum Roles {
+    /// 
+    FileIconRole,
+    /// 
+    FilePathRole,
+    /// 
+    FileNameRole,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

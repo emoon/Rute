@@ -70,7 +70,7 @@ static void size_scale(struct RUBase* self_c, int w, int h, int mode) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void size_scale_by_size(struct RUBase* self_c, struct RUBase* s, int mode) {
+static void size_scale_2(struct RUBase* self_c, struct RUBase* s, int mode) {
     WRSize* qt_value = (WRSize*)self_c;
     qt_value->scale(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
 }
@@ -91,7 +91,7 @@ static struct RUSize size_scaled(struct RUBase* self_c, int w, int h, int mode) 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUSize size_scaled_by_size(struct RUBase* self_c, struct RUBase* s, int mode) {
+static struct RUSize size_scaled_2(struct RUBase* self_c, struct RUBase* s, int mode) {
     WRSize* qt_value = (WRSize*)self_c;
     auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
     WRSize* new_val = new WRSize();
@@ -133,6 +133,22 @@ static struct RUSize size_bounded_to(struct RUBase* self_c, struct RUBase* arg0)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static int size_rwidth(struct RUBase* self_c) {
+    WRSize* qt_value = (WRSize*)self_c;
+    auto ret_value = qt_value->rwidth();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int size_rheight(struct RUBase* self_c) {
+    WRSize* qt_value = (WRSize*)self_c;
+    auto ret_value = qt_value->rheight();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUSize create_size(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
@@ -161,11 +177,13 @@ struct RUSizeFuncs s_size_funcs = {
     size_set_width,
     size_set_height,
     size_scale,
-    size_scale_by_size,
+    size_scale_2,
     size_scaled,
-    size_scaled_by_size,
+    size_scaled_2,
     size_expanded_to,
     size_bounded_to,
+    size_rwidth,
+    size_rheight,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -33,11 +33,10 @@
 /// Please refer to the QRegularExpression documentation for more information
 /// about the Qt regular expression classes.
 /// 
-/// **See also:** QRegularExpression
+/// **See also:** [`RegularExpression`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct RegularExpressionMatch {
     /// 
     /// Swaps the match result *other* with this match result. This
@@ -47,34 +46,34 @@ struct RegularExpressionMatch {
     /// Returns the QRegularExpression object whose match() function returned this
     /// object.
     /// 
-    /// **See also:** QRegularExpression::match()
-    /// matchType()
-    /// matchOptions()
+    /// **See also:** [`RegularExpression::match`]
+    /// [`match_type()`]
+    /// [`match_options()`]
     regular_expression() -> RegularExpression,
     /// 
     /// Returns the match type that was used to get this QRegularExpressionMatch
     /// object, that is, the match type that was passed to
     /// QRegularExpression::match() or QRegularExpression::globalMatch().
     /// 
-    /// **See also:** QRegularExpression::match()
-    /// regularExpression()
-    /// matchOptions()
+    /// **See also:** [`RegularExpression::match`]
+    /// [`regular_expression()`]
+    /// [`match_options()`]
     match_type() -> RegularExpression::MatchType,
     /// 
     /// Returns the match options that were used to get this
     /// QRegularExpressionMatch object, that is, the match options that were passed
     /// to QRegularExpression::match() or QRegularExpression::globalMatch().
     /// 
-    /// **See also:** QRegularExpression::match()
-    /// regularExpression()
-    /// matchType()
+    /// **See also:** [`RegularExpression::match`]
+    /// [`regular_expression()`]
+    /// [`match_type()`]
     match_options() -> RegularExpression::MatchOptions,
     /// 
     /// Returns `true` if the regular expression matched against the subject string,
     /// or false otherwise.
     /// 
-    /// **See also:** QRegularExpression::match()
-    /// hasPartialMatch()
+    /// **See also:** [`RegularExpression::match`]
+    /// [`has_partial_match()`]
     has_match() -> bool,
     /// 
     /// Returns `true` if the regular expression partially matched against the
@@ -84,17 +83,17 @@ struct RegularExpressionMatch {
     /// can yield a partial match. Still, if such a match succeeds totally, this
     /// function will return false, while hasMatch() will return true.
     /// 
-    /// **See also:** QRegularExpression::match()
-    /// QRegularExpression::MatchType
-    /// hasMatch()
+    /// **See also:** [`RegularExpression::match`]
+    /// [`RegularExpression::match_type()`]
+    /// [`has_match()`]
     has_partial_match() -> bool,
     /// 
     /// Returns `true` if the match object was obtained as a result from the
     /// QRegularExpression::match() function invoked on a valid QRegularExpression
     /// object; returns `false` if the QRegularExpression was invalid.
     /// 
-    /// **See also:** QRegularExpression::match()
-    /// QRegularExpression::isValid()
+    /// **See also:** [`RegularExpression::match`]
+    /// [`RegularExpression::is_valid`]
     is_valid() -> bool,
     /// 
     /// Returns the index of the last capturing group that captured something,
@@ -106,10 +105,10 @@ struct RegularExpressionMatch {
     /// 
     /// If the regular expression did not match, this function returns -1.
     /// 
-    /// **See also:** captured()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
+    /// **See also:** [`captured()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
     last_captured_index() -> i32,
     /// 
     /// Returns the substring captured by the *nth* capturing group.
@@ -117,99 +116,99 @@ struct RegularExpressionMatch {
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QString.
     /// 
-    /// **See also:** capturedRef()
-    /// capturedView()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QString::isNull()
+    /// **See also:** [`captured_ref()`]
+    /// [`captured_view()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`String::is_null`]
     /// 
     /// Returns a reference to the substring captured by the *nth* capturing group.
     /// 
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a view of the substring captured by the *nth* capturing group.
     /// 
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QStringView.
     /// 
-    /// **See also:** captured()
-    /// capturedRef()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringView::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_ref()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringView::is_null`]
     /// 
     /// Returns the substring captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QString.
     /// 
-    /// **See also:** capturedRef()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QString::isNull()
+    /// **See also:** [`captured_ref()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`String::is_null`]
     /// 
     /// Returns a reference to the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns the substring captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QString.
     /// 
-    /// **See also:** capturedRef()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QString::isNull()
+    /// **See also:** [`captured_ref()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`String::is_null`]
     /// 
     /// Returns a reference to the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a view of the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringView.
     /// 
-    /// **See also:** captured()
-    /// capturedRef()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_ref()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a list of all strings captured by capturing groups, in the order
     /// the groups themselves appear in the pattern string.
@@ -219,34 +218,34 @@ struct RegularExpressionMatch {
     /// If the *nth* capturing group did not capture a string or doesn't exist,
     /// returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the *nth* capturing group.
     /// 
     /// **Note**: This function returns 0 if the *nth* capturing group did not capture
     /// a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the *nth* capturing group. If the *nth* capturing group did not capture a string or doesn't exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string corresponding to the starting
     /// position of the substring captured by the capturing group named *name.*
     /// If the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the capturing group named
     /// *name.*
@@ -254,27 +253,27 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the capturing group named *name* did not
     /// capture a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the capturing group named *name.* If
     /// the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string corresponding to the starting
     /// position of the substring captured by the capturing group named *name.*
     /// If the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the capturing group named
     /// *name.*
@@ -282,18 +281,18 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the capturing group named *name* did not
     /// capture a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the capturing group named *name.* If
     /// the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     captured(nth: i32) -> String,
     /// 
     /// Returns a reference to the substring captured by the *nth* capturing group.
@@ -301,37 +300,37 @@ struct RegularExpressionMatch {
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a reference to the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a reference to the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     captured_ref(nth: i32) -> StringRef,
     /// 
     /// Returns a view of the substring captured by the *nth* capturing group.
@@ -339,25 +338,25 @@ struct RegularExpressionMatch {
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QStringView.
     /// 
-    /// **See also:** captured()
-    /// capturedRef()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringView::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_ref()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringView::is_null`]
     /// 
     /// Returns a view of the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringView.
     /// 
-    /// **See also:** captured()
-    /// capturedRef()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_ref()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     captured_view(nth: i32) -> StringView,
     /// 
     /// Returns the substring captured by the *nth* capturing group.
@@ -365,99 +364,99 @@ struct RegularExpressionMatch {
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QString.
     /// 
-    /// **See also:** capturedRef()
-    /// capturedView()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QString::isNull()
+    /// **See also:** [`captured_ref()`]
+    /// [`captured_view()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`String::is_null`]
     /// 
     /// Returns a reference to the substring captured by the *nth* capturing group.
     /// 
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a view of the substring captured by the *nth* capturing group.
     /// 
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QStringView.
     /// 
-    /// **See also:** captured()
-    /// capturedRef()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringView::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_ref()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringView::is_null`]
     /// 
     /// Returns the substring captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QString.
     /// 
-    /// **See also:** capturedRef()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QString::isNull()
+    /// **See also:** [`captured_ref()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`String::is_null`]
     /// 
     /// Returns a reference to the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns the substring captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QString.
     /// 
-    /// **See also:** capturedRef()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QString::isNull()
+    /// **See also:** [`captured_ref()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`String::is_null`]
     /// 
     /// Returns a reference to the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a view of the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringView.
     /// 
-    /// **See also:** captured()
-    /// capturedRef()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_ref()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a list of all strings captured by capturing groups, in the order
     /// the groups themselves appear in the pattern string.
@@ -467,34 +466,34 @@ struct RegularExpressionMatch {
     /// If the *nth* capturing group did not capture a string or doesn't exist,
     /// returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the *nth* capturing group.
     /// 
     /// **Note**: This function returns 0 if the *nth* capturing group did not capture
     /// a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the *nth* capturing group. If the *nth* capturing group did not capture a string or doesn't exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string corresponding to the starting
     /// position of the substring captured by the capturing group named *name.*
     /// If the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the capturing group named
     /// *name.*
@@ -502,27 +501,27 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the capturing group named *name* did not
     /// capture a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the capturing group named *name.* If
     /// the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string corresponding to the starting
     /// position of the substring captured by the capturing group named *name.*
     /// If the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the capturing group named
     /// *name.*
@@ -530,156 +529,158 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the capturing group named *name* did not
     /// capture a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the capturing group named *name.* If
     /// the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
-    captured(name: String) -> String,
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
+    [org_name(captured)]
+    captured_2(name: String) -> String,
     /// 
     /// Returns a reference to the substring captured by the *nth* capturing group.
     /// 
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a reference to the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a reference to the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
-    captured_ref(name: String) -> StringRef,
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
+    [org_name(capturedRef)]
+    captured_ref_2(name: String) -> StringRef,
     /// 
     /// Returns the substring captured by the *nth* capturing group.
     /// 
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QString.
     /// 
-    /// **See also:** capturedRef()
-    /// capturedView()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QString::isNull()
+    /// **See also:** [`captured_ref()`]
+    /// [`captured_view()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`String::is_null`]
     /// 
     /// Returns a reference to the substring captured by the *nth* capturing group.
     /// 
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a view of the substring captured by the *nth* capturing group.
     /// 
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QStringView.
     /// 
-    /// **See also:** captured()
-    /// capturedRef()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringView::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_ref()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringView::is_null`]
     /// 
     /// Returns the substring captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QString.
     /// 
-    /// **See also:** capturedRef()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QString::isNull()
+    /// **See also:** [`captured_ref()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`String::is_null`]
     /// 
     /// Returns a reference to the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns the substring captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QString.
     /// 
-    /// **See also:** capturedRef()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QString::isNull()
+    /// **See also:** [`captured_ref()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`String::is_null`]
     /// 
     /// Returns a reference to the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a view of the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringView.
     /// 
-    /// **See also:** captured()
-    /// capturedRef()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_ref()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a list of all strings captured by capturing groups, in the order
     /// the groups themselves appear in the pattern string.
@@ -689,34 +690,34 @@ struct RegularExpressionMatch {
     /// If the *nth* capturing group did not capture a string or doesn't exist,
     /// returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the *nth* capturing group.
     /// 
     /// **Note**: This function returns 0 if the *nth* capturing group did not capture
     /// a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the *nth* capturing group. If the *nth* capturing group did not capture a string or doesn't exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string corresponding to the starting
     /// position of the substring captured by the capturing group named *name.*
     /// If the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the capturing group named
     /// *name.*
@@ -724,27 +725,27 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the capturing group named *name* did not
     /// capture a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the capturing group named *name.* If
     /// the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string corresponding to the starting
     /// position of the substring captured by the capturing group named *name.*
     /// If the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the capturing group named
     /// *name.*
@@ -752,83 +753,86 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the capturing group named *name* did not
     /// capture a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the capturing group named *name.* If
     /// the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
-    captured(name: StringViewType) -> String,
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
+    [org_name(captured)]
+    captured_3(name: StringViewType) -> String,
     /// 
     /// Returns a reference to the substring captured by the *nth* capturing group.
     /// 
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a reference to the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
     /// 
     /// Returns a reference to the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringRef.
     /// 
-    /// **See also:** captured()
-    /// capturedView()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
-    captured_ref(name: StringViewType) -> StringRef,
+    /// **See also:** [`captured()`]
+    /// [`captured_view()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
+    [org_name(capturedRef)]
+    captured_ref_3(name: StringViewType) -> StringRef,
     /// 
     /// Returns a view of the substring captured by the *nth* capturing group.
     /// 
     /// If the *nth* capturing group did not capture a string, or if there is no
     /// such capturing group, returns a null QStringView.
     /// 
-    /// **See also:** captured()
-    /// capturedRef()
-    /// lastCapturedIndex()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringView::isNull()
+    /// **See also:** [`captured()`]
+    /// [`captured_ref()`]
+    /// [`last_captured_index()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringView::is_null`]
     /// 
     /// Returns a view of the string captured by the capturing group named *name.*
     /// 
     /// If the named capturing group *name* did not capture a string, or if
     /// there is no capturing group named *name,* returns a null QStringView.
     /// 
-    /// **See also:** captured()
-    /// capturedRef()
-    /// capturedStart()
-    /// capturedEnd()
-    /// capturedLength()
-    /// QStringRef::isNull()
-    captured_view(name: StringViewType) -> StringView,
+    /// **See also:** [`captured()`]
+    /// [`captured_ref()`]
+    /// [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`StringRef::is_null`]
+    [org_name(capturedView)]
+    captured_view_2(name: StringViewType) -> StringView,
     /// 
     /// Returns a list of all strings captured by capturing groups, in the order
     /// the groups themselves appear in the pattern string.
@@ -839,27 +843,27 @@ struct RegularExpressionMatch {
     /// If the *nth* capturing group did not capture a string or doesn't exist,
     /// returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string corresponding to the starting
     /// position of the substring captured by the capturing group named *name.*
     /// If the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string corresponding to the starting
     /// position of the substring captured by the capturing group named *name.*
     /// If the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     captured_start(nth: i32) -> i32,
     /// 
     /// Returns the length of the substring captured by the *nth* capturing group.
@@ -867,9 +871,9 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the *nth* capturing group did not capture
     /// a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the capturing group named
     /// *name.*
@@ -877,9 +881,9 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the capturing group named *name* did not
     /// capture a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the capturing group named
     /// *name.*
@@ -887,35 +891,35 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the capturing group named *name* did not
     /// capture a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     captured_length(nth: i32) -> i32,
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the *nth* capturing group. If the *nth* capturing group did not capture a string or doesn't exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the capturing group named *name.* If
     /// the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the capturing group named *name.* If
     /// the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     captured_end(nth: i32) -> i32,
     /// 
     /// Returns the offset inside the subject string corresponding to the
@@ -923,37 +927,38 @@ struct RegularExpressionMatch {
     /// If the *nth* capturing group did not capture a string or doesn't exist,
     /// returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string corresponding to the starting
     /// position of the substring captured by the capturing group named *name.*
     /// If the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string corresponding to the starting
     /// position of the substring captured by the capturing group named *name.*
     /// If the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
-    captured_start(name: String) -> i32,
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
+    [org_name(capturedStart)]
+    captured_start_2(name: String) -> i32,
     /// 
     /// Returns the length of the substring captured by the *nth* capturing group.
     /// 
     /// **Note**: This function returns 0 if the *nth* capturing group did not capture
     /// a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the capturing group named
     /// *name.*
@@ -961,9 +966,9 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the capturing group named *name* did not
     /// capture a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the capturing group named
     /// *name.*
@@ -971,73 +976,76 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the capturing group named *name* did not
     /// capture a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
-    captured_length(name: String) -> i32,
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
+    [org_name(capturedLength)]
+    captured_length_2(name: String) -> i32,
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the *nth* capturing group. If the *nth* capturing group did not capture a string or doesn't exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the capturing group named *name.* If
     /// the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the capturing group named *name.* If
     /// the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
-    captured_end(name: String) -> i32,
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
+    [org_name(capturedEnd)]
+    captured_end_2(name: String) -> i32,
     /// 
     /// Returns the offset inside the subject string corresponding to the
     /// starting position of the substring captured by the *nth* capturing group.
     /// If the *nth* capturing group did not capture a string or doesn't exist,
     /// returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string corresponding to the starting
     /// position of the substring captured by the capturing group named *name.*
     /// If the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string corresponding to the starting
     /// position of the substring captured by the capturing group named *name.*
     /// If the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedEnd()
-    /// capturedLength()
-    /// captured()
-    captured_start(name: StringViewType) -> i32,
+    /// **See also:** [`captured_end()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
+    [org_name(capturedStart)]
+    captured_start_3(name: StringViewType) -> i32,
     /// 
     /// Returns the length of the substring captured by the *nth* capturing group.
     /// 
     /// **Note**: This function returns 0 if the *nth* capturing group did not capture
     /// a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the capturing group named
     /// *name.*
@@ -1045,9 +1053,9 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the capturing group named *name* did not
     /// capture a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
     /// 
     /// Returns the length of the substring captured by the capturing group named
     /// *name.*
@@ -1055,36 +1063,38 @@ struct RegularExpressionMatch {
     /// **Note**: This function returns 0 if the capturing group named *name* did not
     /// capture a string or doesn't exist.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedEnd()
-    /// captured()
-    captured_length(name: StringViewType) -> i32,
+    /// **See also:** [`captured_start()`]
+    /// [`captured_end()`]
+    /// [`captured()`]
+    [org_name(capturedLength)]
+    captured_length_3(name: StringViewType) -> i32,
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the *nth* capturing group. If the *nth* capturing group did not capture a string or doesn't exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the capturing group named *name.* If
     /// the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
     /// 
     /// Returns the offset inside the subject string immediately after the ending
     /// position of the substring captured by the capturing group named *name.* If
     /// the capturing group named *name* did not capture a string or doesn't
     /// exist, returns -1.
     /// 
-    /// **See also:** capturedStart()
-    /// capturedLength()
-    /// captured()
-    captured_end(name: StringViewType) -> i32,
+    /// **See also:** [`captured_start()`]
+    /// [`captured_length()`]
+    /// [`captured()`]
+    [org_name(capturedEnd)]
+    captured_end_3(name: StringViewType) -> i32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

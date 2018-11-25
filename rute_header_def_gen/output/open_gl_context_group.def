@@ -3,7 +3,7 @@
 /// instances. Its purpose is to identify all the contexts that are sharing
 /// resources.
 /// 
-/// **See also:** QOpenGLContext::shareGroup()
+/// **See also:** [`OpenGLContext::share_group`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -14,7 +14,7 @@ struct OpenGLContextGroup : Object {
     /// 
     /// Returns the QOpenGLContextGroup corresponding to the current context.
     /// 
-    /// **See also:** QOpenGLContext::currentContext()
+    /// **See also:** [`OpenGLContext::current_context`]
     [static] current_context_group() -> OpenGLContextGroup?,
 }
 

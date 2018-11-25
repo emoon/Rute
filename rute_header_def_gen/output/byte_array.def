@@ -151,20 +151,11 @@
 /// s since they represent
 /// characters using Unicode.
 /// 
-/// **See also:** QString
-/// QBitArray
+/// **See also:** [`String`]
+/// [`BitArray`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QByteArray)]
-enum Base64Option {
-    Base64Encoding,
-    Base64UrlEncoding,
-    KeepTrailingEquals,
-    OmitTrailingEquals,
-}
-
-
 struct ByteArray {
     /// 
     /// Swaps byte array *other* with this byte array. This operation is very
@@ -185,15 +176,15 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** isEmpty()
-    /// resize()
+    /// **See also:** [`is_empty()`]
+    /// [`resize()`]
     size() -> i32,
     /// 
     /// Returns `true` if the byte array has size 0; otherwise returns `false.`
     /// 
     /// Example:
     /// 
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     is_empty() -> bool,
     /// 
     /// Sets the size of the byte array to *size* bytes.
@@ -205,8 +196,8 @@ struct ByteArray {
     /// If *size* is less than the current size, bytes are removed from
     /// the end.
     /// 
-    /// **See also:** size()
-    /// truncate()
+    /// **See also:** [`size()`]
+    /// [`truncate()`]
     resize(size: i32),
     /// 
     /// Sets every byte in the byte array to character *ch.* If *size*
@@ -215,7 +206,7 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** resize()
+    /// **See also:** [`resize()`]
     fill(c: char, size: i32) -> ByteArray?,
     /// 
     /// Returns the maximum number of bytes that can be stored in the
@@ -226,8 +217,8 @@ struct ByteArray {
     /// ever need to call this function. If you want to know how many
     /// bytes are in the byte array, call size().
     /// 
-    /// **See also:** reserve()
-    /// squeeze()
+    /// **See also:** [`reserve()`]
+    /// [`squeeze()`]
     capacity() -> i32,
     /// 
     /// Attempts to allocate memory for at least *size* bytes. If you
@@ -241,8 +232,8 @@ struct ByteArray {
     /// ever need to call this function. If you want to change the size
     /// of the byte array, call resize().
     /// 
-    /// **See also:** squeeze()
-    /// capacity()
+    /// **See also:** [`squeeze()`]
+    /// [`capacity()`]
     reserve(size: i32),
     /// 
     /// Releases any memory not required to store the array's data.
@@ -251,8 +242,8 @@ struct ByteArray {
     /// tuning QByteArray's memory usage. In general, you will rarely
     /// ever need to call this function.
     /// 
-    /// **See also:** reserve()
-    /// capacity()
+    /// **See also:** [`reserve()`]
+    /// [`capacity()`]
     squeeze(),
     /// 
     /// Returns a pointer to the data stored in the byte array. The
@@ -281,8 +272,8 @@ struct ByteArray {
     /// but most functions that take `char *` arguments assume that the
     /// data ends at the first '\\0' they encounter.
     /// 
-    /// **See also:** constData()
-    /// operator[]()
+    /// **See also:** [`const_data()`]
+    /// [`operator()`]
     /// 
     /// **Overloads**
     data() -> char?,
@@ -313,11 +304,12 @@ struct ByteArray {
     /// but most functions that take `char *` arguments assume that the
     /// data ends at the first '\\0' they encounter.
     /// 
-    /// **See also:** constData()
-    /// operator[]()
+    /// **See also:** [`const_data()`]
+    /// [`operator()`]
     /// 
     /// **Overloads**
-    data() -> char?,
+    [org_name(data)]
+    data_2() -> char?,
     /// 
     /// Returns a pointer to the data stored in the byte array. The pointer can be
     /// used to access the bytes that compose the array. The data is
@@ -332,9 +324,9 @@ struct ByteArray {
     /// but most functions that take `char *` arguments assume that the
     /// data ends at the first '\\0' they encounter.
     /// 
-    /// **See also:** data()
-    /// operator[]()
-    /// fromRawData()
+    /// **See also:** [`data()`]
+    /// [`operator()`]
+    /// [`from_raw_data()`]
     const_data() -> char?,
     detach(),
     is_detached() -> bool,
@@ -342,8 +334,8 @@ struct ByteArray {
     /// 
     /// Clears the contents of the byte array and makes it null.
     /// 
-    /// **See also:** resize()
-    /// isNull()
+    /// **See also:** [`resize()`]
+    /// [`is_null()`]
     clear(),
     /// 
     /// Returns the character at index position *i* in the byte array.
@@ -351,7 +343,7 @@ struct ByteArray {
     /// *i* must be a valid index position in the byte array (i.e., 0 <=
     /// *i* < size()).
     /// 
-    /// **See also:** operator[]()
+    /// **See also:** [`operator()`]
     at(i: i32) -> char,
     /// 
     /// Returns the first character in the byte array.
@@ -362,9 +354,9 @@ struct ByteArray {
     /// **Warning**: Calling this function on an empty byte array constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** back()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`back()`]
+    /// [`at()`]
+    /// [`operator()`]
     /// 
     /// Returns a reference to the first character in the byte array.
     /// Same as `operator[](0)` .
@@ -374,9 +366,9 @@ struct ByteArray {
     /// **Warning**: Calling this function on an empty byte array constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** back()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`back()`]
+    /// [`at()`]
+    /// [`operator()`]
     front() -> char,
     /// 
     /// Returns the first character in the byte array.
@@ -387,9 +379,9 @@ struct ByteArray {
     /// **Warning**: Calling this function on an empty byte array constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** back()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`back()`]
+    /// [`at()`]
+    /// [`operator()`]
     /// 
     /// Returns a reference to the first character in the byte array.
     /// Same as `operator[](0)` .
@@ -399,10 +391,11 @@ struct ByteArray {
     /// **Warning**: Calling this function on an empty byte array constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** back()
-    /// at()
-    /// operator[]()
-    front() -> ByteRef,
+    /// **See also:** [`back()`]
+    /// [`at()`]
+    /// [`operator()`]
+    [org_name(front)]
+    front_2() -> ByteRef,
     /// 
     /// Returns the last character in the byte array.
     /// Same as `at(size() - 1)` .
@@ -412,9 +405,9 @@ struct ByteArray {
     /// **Warning**: Calling this function on an empty byte array constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** front()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`front()`]
+    /// [`at()`]
+    /// [`operator()`]
     /// 
     /// Returns a reference to the last character in the byte array.
     /// Same as `operator[](size() - 1)` .
@@ -424,9 +417,9 @@ struct ByteArray {
     /// **Warning**: Calling this function on an empty byte array constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** front()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`front()`]
+    /// [`at()`]
+    /// [`operator()`]
     back() -> char,
     /// 
     /// Returns the last character in the byte array.
@@ -437,9 +430,9 @@ struct ByteArray {
     /// **Warning**: Calling this function on an empty byte array constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** front()
-    /// at()
-    /// operator[]()
+    /// **See also:** [`front()`]
+    /// [`at()`]
+    /// [`operator()`]
     /// 
     /// Returns a reference to the last character in the byte array.
     /// Same as `operator[](size() - 1)` .
@@ -449,10 +442,11 @@ struct ByteArray {
     /// **Warning**: Calling this function on an empty byte array constitutes
     /// undefined behavior.
     /// 
-    /// **See also:** front()
-    /// at()
-    /// operator[]()
-    back() -> ByteRef,
+    /// **See also:** [`front()`]
+    /// [`at()`]
+    /// [`operator()`]
+    [org_name(back)]
+    back_2() -> ByteRef,
     /// 
     /// Returns the index position of the first occurrence of the byte
     /// array *ba* in this byte array, searching forward from index
@@ -460,9 +454,9 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads**
     /// Returns the index position of the first occurrence of the string
@@ -488,8 +482,8 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
     index_of(c: char, from: i32) -> i32,
     /// 
     /// Returns the index position of the first occurrence of the byte
@@ -498,9 +492,9 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads**
     /// Returns the index position of the first occurrence of the string
@@ -526,9 +520,10 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    index_of(c: *char, from: i32) -> i32,
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    [org_name(indexOf)]
+    index_of_2(c: *char, from: i32) -> i32,
     /// 
     /// Returns the index position of the first occurrence of the byte
     /// array *ba* in this byte array, searching forward from index
@@ -536,9 +531,9 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads**
     /// Returns the index position of the first occurrence of the string
@@ -564,9 +559,10 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    index_of(a: &ByteArrayType, from: i32) -> i32,
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    [org_name(indexOf)]
+    index_of_3(a: &ByteArrayType, from: i32) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the byte
     /// array *ba* in this byte array, searching backward from index
@@ -575,9 +571,9 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads**
     /// Returns the index position of the last occurrence of the string *str* in the byte array, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the
@@ -600,8 +596,8 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
     last_index_of(c: char, from: i32) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the byte
@@ -611,9 +607,9 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads**
     /// Returns the index position of the last occurrence of the string *str* in the byte array, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the
@@ -636,9 +632,10 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    last_index_of(c: *char, from: i32) -> i32,
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    [org_name(lastIndexOf)]
+    last_index_of_2(c: *char, from: i32) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the byte
     /// array *ba* in this byte array, searching backward from index
@@ -647,9 +644,9 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads**
     /// Returns the index position of the last occurrence of the string *str* in the byte array, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the
@@ -672,15 +669,16 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    last_index_of(a: &ByteArrayType, from: i32) -> i32,
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    [org_name(lastIndexOf)]
+    last_index_of_3(a: &ByteArrayType, from: i32) -> i32,
     /// 
     /// Returns `true` if the byte array contains an occurrence of the byte
     /// array *ba;* otherwise returns `false.`
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the byte array contains the string *str;*
@@ -694,8 +692,8 @@ struct ByteArray {
     /// Returns `true` if the byte array contains an occurrence of the byte
     /// array *ba;* otherwise returns `false.`
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the byte array contains the string *str;*
@@ -704,13 +702,14 @@ struct ByteArray {
     /// **Overloads**
     /// Returns `true` if the byte array contains the character *ch;*
     /// otherwise returns `false.`
-    contains(a: *char) -> bool,
+    [org_name(contains)]
+    contains_2(a: *char) -> bool,
     /// 
     /// Returns `true` if the byte array contains an occurrence of the byte
     /// array *ba;* otherwise returns `false.`
     /// 
-    /// **See also:** indexOf()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`count()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the byte array contains the string *str;*
@@ -719,13 +718,14 @@ struct ByteArray {
     /// **Overloads**
     /// Returns `true` if the byte array contains the character *ch;*
     /// otherwise returns `false.`
-    contains(a: &ByteArrayType) -> bool,
+    [org_name(contains)]
+    contains_3(a: &ByteArrayType) -> bool,
     /// 
     /// Returns the number of (potentially overlapping) occurrences of
     /// byte array *ba* in this byte array.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads**
     /// Returns the number of (potentially overlapping) occurrences of
@@ -735,8 +735,8 @@ struct ByteArray {
     /// Returns the number of occurrences of character *ch* in the byte
     /// array.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads**
     /// Same as size().
@@ -745,8 +745,8 @@ struct ByteArray {
     /// Returns the number of (potentially overlapping) occurrences of
     /// byte array *ba* in this byte array.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads**
     /// Returns the number of (potentially overlapping) occurrences of
@@ -756,18 +756,19 @@ struct ByteArray {
     /// Returns the number of occurrences of character *ch* in the byte
     /// array.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads**
     /// Same as size().
-    count(a: *char) -> i32,
+    [org_name(count)]
+    count_2(a: *char) -> i32,
     /// 
     /// Returns the number of (potentially overlapping) occurrences of
     /// byte array *ba* in this byte array.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads**
     /// Returns the number of (potentially overlapping) occurrences of
@@ -777,12 +778,13 @@ struct ByteArray {
     /// Returns the number of occurrences of character *ch* in the byte
     /// array.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads**
     /// Same as size().
-    count(a: &ByteArrayType) -> i32,
+    [org_name(count)]
+    count_3(a: &ByteArrayType) -> i32,
     /// 
     /// Returns a byte array that contains the leftmost *len* bytes of
     /// this byte array.
@@ -792,12 +794,12 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** startsWith()
-    /// right()
-    /// mid()
-    /// chopped()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`starts_with()`]
+    /// [`right()`]
+    /// [`mid()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     /// 
     /// Returns a byte array of size *width* that contains this byte
     /// array padded by the *fill* character.
@@ -812,7 +814,7 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** rightJustified()
+    /// **See also:** [`right_justified()`]
     left(len: i32) -> ByteArray,
     /// 
     /// Returns a byte array that contains the rightmost *len* bytes of
@@ -823,12 +825,12 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** endsWith()
-    /// left()
-    /// mid()
-    /// chopped()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`ends_with()`]
+    /// [`left()`]
+    /// [`mid()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     /// 
     /// Returns a byte array of size *width* that contains the *fill*
     /// character followed by this byte array.
@@ -843,7 +845,7 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** leftJustified()
+    /// **See also:** [`left_justified()`]
     right(len: i32) -> ByteArray,
     /// 
     /// Returns a byte array containing *len* bytes from this byte array,
@@ -854,11 +856,11 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** left()
-    /// right()
-    /// chopped()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`left()`]
+    /// [`right()`]
+    /// [`chopped()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     mid(index: i32, len: i32) -> ByteArray,
     /// 
     /// Returns a byte array that contains the leftmost size() - *len* bytes of
@@ -866,12 +868,12 @@ struct ByteArray {
     /// 
     /// **Note**: The behavior is undefined if *len* is negative or greater than size().
     /// 
-    /// **See also:** endsWith()
-    /// left()
-    /// right()
-    /// mid()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`ends_with()`]
+    /// [`left()`]
+    /// [`right()`]
+    /// [`mid()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     chopped(len: i32) -> ByteArray,
     /// 
     /// Returns `true` if this byte array starts with byte array *ba;*
@@ -879,8 +881,8 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** endsWith()
-    /// left()
+    /// **See also:** [`ends_with()`]
+    /// [`left()`]
     /// **Overloads**
     /// Returns `true` if this byte array starts with string *str;*
     /// otherwise returns `false.`
@@ -894,38 +896,40 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** endsWith()
-    /// left()
+    /// **See also:** [`ends_with()`]
+    /// [`left()`]
     /// **Overloads**
     /// Returns `true` if this byte array starts with string *str;*
     /// otherwise returns `false.`
     /// **Overloads**
     /// Returns `true` if this byte array starts with character *ch;*
     /// otherwise returns `false.`
-    starts_with(c: char) -> bool,
+    [org_name(startsWith)]
+    starts_with_2(c: char) -> bool,
     /// 
     /// Returns `true` if this byte array starts with byte array *ba;*
     /// otherwise returns `false.`
     /// 
     /// Example:
     /// 
-    /// **See also:** endsWith()
-    /// left()
+    /// **See also:** [`ends_with()`]
+    /// [`left()`]
     /// **Overloads**
     /// Returns `true` if this byte array starts with string *str;*
     /// otherwise returns `false.`
     /// **Overloads**
     /// Returns `true` if this byte array starts with character *ch;*
     /// otherwise returns `false.`
-    starts_with(c: *char) -> bool,
+    [org_name(startsWith)]
+    starts_with_3(c: *char) -> bool,
     /// 
     /// Returns `true` if this byte array ends with byte array *ba;*
     /// otherwise returns `false.`
     /// 
     /// Example:
     /// 
-    /// **See also:** startsWith()
-    /// right()
+    /// **See also:** [`starts_with()`]
+    /// [`right()`]
     /// **Overloads**
     /// Returns `true` if this byte array ends with string *str;* otherwise
     /// returns `false.`
@@ -939,30 +943,32 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** startsWith()
-    /// right()
+    /// **See also:** [`starts_with()`]
+    /// [`right()`]
     /// **Overloads**
     /// Returns `true` if this byte array ends with string *str;* otherwise
     /// returns `false.`
     /// **Overloads**
     /// Returns `true` if this byte array ends with character *ch;*
     /// otherwise returns `false.`
-    ends_with(c: char) -> bool,
+    [org_name(endsWith)]
+    ends_with_2(c: char) -> bool,
     /// 
     /// Returns `true` if this byte array ends with byte array *ba;*
     /// otherwise returns `false.`
     /// 
     /// Example:
     /// 
-    /// **See also:** startsWith()
-    /// right()
+    /// **See also:** [`starts_with()`]
+    /// [`right()`]
     /// **Overloads**
     /// Returns `true` if this byte array ends with string *str;* otherwise
     /// returns `false.`
     /// **Overloads**
     /// Returns `true` if this byte array ends with character *ch;*
     /// otherwise returns `false.`
-    ends_with(c: *char) -> bool,
+    [org_name(endsWith)]
+    ends_with_3(c: *char) -> bool,
     /// 
     /// Removes *n* bytes from the end of the byte array.
     /// 
@@ -971,21 +977,21 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** truncate()
-    /// resize()
-    /// left()
+    /// **See also:** [`truncate()`]
+    /// [`resize()`]
+    /// [`left()`]
     /// 
     /// Returns a byte array that contains the leftmost size() - *len* bytes of
     /// this byte array.
     /// 
     /// **Note**: The behavior is undefined if *len* is negative or greater than size().
     /// 
-    /// **See also:** endsWith()
-    /// left()
-    /// right()
-    /// mid()
-    /// chop()
-    /// truncate()
+    /// **See also:** [`ends_with()`]
+    /// [`left()`]
+    /// [`right()`]
+    /// [`mid()`]
+    /// [`chop()`]
+    /// [`truncate()`]
     chop(n: i32),
     /// 
     /// Returns a lowercase copy of the byte array. The bytearray is
@@ -993,7 +999,7 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** toUpper()
+    /// **See also:** [`to_upper()`]
     /// {8-bit Character Comparisons}
     to_lower() -> ByteArray,
     /// 
@@ -1002,16 +1008,17 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** toUpper()
+    /// **See also:** [`to_upper()`]
     /// {8-bit Character Comparisons}
-    to_lower() -> ByteArray,
+    [org_name(toLower)]
+    to_lower_2() -> ByteArray,
     /// 
     /// Returns an uppercase copy of the byte array. The bytearray is
     /// interpreted as a Latin-1 encoded string.
     /// 
     /// Example:
     /// 
-    /// **See also:** toLower()
+    /// **See also:** [`to_lower()`]
     /// {8-bit Character Comparisons}
     to_upper() -> ByteArray,
     /// 
@@ -1020,9 +1027,10 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** toLower()
+    /// **See also:** [`to_lower()`]
     /// {8-bit Character Comparisons}
-    to_upper() -> ByteArray,
+    [org_name(toUpper)]
+    to_upper_2() -> ByteArray,
     /// 
     /// Returns a byte array that has whitespace removed from the start
     /// and the end, and which has each sequence of internal whitespace
@@ -1035,7 +1043,7 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** trimmed()
+    /// **See also:** [`trimmed()`]
     simplified() -> ByteArray,
     /// 
     /// Returns a byte array that has whitespace removed from the start
@@ -1049,8 +1057,9 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** trimmed()
-    simplified() -> ByteArray,
+    /// **See also:** [`trimmed()`]
+    [org_name(simplified)]
+    simplified_2() -> ByteArray,
     /// 
     /// Returns a byte array of size *width* that contains this byte
     /// array padded by the *fill* character.
@@ -1065,7 +1074,7 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** rightJustified()
+    /// **See also:** [`right_justified()`]
     left_justified(width: i32, fill: char, truncate: bool) -> ByteArray,
     /// 
     /// Returns a byte array of size *width* that contains the *fill*
@@ -1081,7 +1090,7 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** leftJustified()
+    /// **See also:** [`left_justified()`]
     right_justified(width: i32, fill: char, truncate: bool) -> ByteArray,
     /// 
     /// Prepends the byte array *ba* to this byte array and returns a
@@ -1104,8 +1113,8 @@ struct ByteArray {
     /// data is performed, taking [linear time](linear%20time)
     /// 
     /// 
-    /// **See also:** append()
-    /// insert()
+    /// **See also:** [`append()`]
+    /// [`insert()`]
     /// 
     /// **Overloads**
     /// Prepends the string *str* to this byte array.
@@ -1140,8 +1149,8 @@ struct ByteArray {
     /// data is performed, taking [linear time](linear%20time)
     /// 
     /// 
-    /// **See also:** append()
-    /// insert()
+    /// **See also:** [`append()`]
+    /// [`insert()`]
     /// 
     /// **Overloads**
     /// Prepends the string *str* to this byte array.
@@ -1154,7 +1163,8 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Prepends the character *ch* to this byte array.
-    prepend(count: i32, c: char) -> ByteArray?,
+    [org_name(prepend)]
+    prepend_2(count: i32, c: char) -> ByteArray?,
     /// 
     /// Prepends the byte array *ba* to this byte array and returns a
     /// reference to this byte array.
@@ -1176,8 +1186,8 @@ struct ByteArray {
     /// data is performed, taking [linear time](linear%20time)
     /// 
     /// 
-    /// **See also:** append()
-    /// insert()
+    /// **See also:** [`append()`]
+    /// [`insert()`]
     /// 
     /// **Overloads**
     /// Prepends the string *str* to this byte array.
@@ -1190,7 +1200,8 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Prepends the character *ch* to this byte array.
-    prepend(s: *char) -> ByteArray?,
+    [org_name(prepend)]
+    prepend_3(s: *char) -> ByteArray?,
     /// 
     /// Prepends the byte array *ba* to this byte array and returns a
     /// reference to this byte array.
@@ -1212,8 +1223,8 @@ struct ByteArray {
     /// data is performed, taking [linear time](linear%20time)
     /// 
     /// 
-    /// **See also:** append()
-    /// insert()
+    /// **See also:** [`append()`]
+    /// [`insert()`]
     /// 
     /// **Overloads**
     /// Prepends the string *str* to this byte array.
@@ -1226,7 +1237,8 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Prepends the character *ch* to this byte array.
-    prepend(s: *char, len: i32) -> ByteArray?,
+    [org_name(prepend)]
+    prepend_4(s: *char, len: i32) -> ByteArray?,
     /// 
     /// Prepends the byte array *ba* to this byte array and returns a
     /// reference to this byte array.
@@ -1248,8 +1260,8 @@ struct ByteArray {
     /// data is performed, taking [linear time](linear%20time)
     /// 
     /// 
-    /// **See also:** append()
-    /// insert()
+    /// **See also:** [`append()`]
+    /// [`insert()`]
     /// 
     /// **Overloads**
     /// Prepends the string *str* to this byte array.
@@ -1262,7 +1274,8 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Prepends the character *ch* to this byte array.
-    prepend(a: &ByteArrayType) -> ByteArray?,
+    [org_name(prepend)]
+    prepend_5(a: &ByteArrayType) -> ByteArray?,
     /// 
     /// Appends the byte array *ba* onto the end of this byte array.
     /// 
@@ -1287,9 +1300,9 @@ struct ByteArray {
     /// because QByteArray preallocates extra space at the end of the data
     /// so that it may grow without reallocating for each append operation.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads**
     /// Appends the string *str* to this byte array. The Unicode data is
@@ -1345,9 +1358,9 @@ struct ByteArray {
     /// because QByteArray preallocates extra space at the end of the data
     /// so that it may grow without reallocating for each append operation.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads**
     /// Appends the string *str* to this byte array. The Unicode data is
@@ -1378,7 +1391,8 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Appends the character *ch* to this byte array.
-    append(count: i32, c: char) -> ByteArray?,
+    [org_name(append)]
+    append_2(count: i32, c: char) -> ByteArray?,
     /// 
     /// Appends the byte array *ba* onto the end of this byte array.
     /// 
@@ -1403,9 +1417,9 @@ struct ByteArray {
     /// because QByteArray preallocates extra space at the end of the data
     /// so that it may grow without reallocating for each append operation.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads**
     /// Appends the string *str* to this byte array. The Unicode data is
@@ -1436,7 +1450,8 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Appends the character *ch* to this byte array.
-    append(s: *char) -> ByteArray?,
+    [org_name(append)]
+    append_3(s: *char) -> ByteArray?,
     /// 
     /// Appends the byte array *ba* onto the end of this byte array.
     /// 
@@ -1461,9 +1476,9 @@ struct ByteArray {
     /// because QByteArray preallocates extra space at the end of the data
     /// so that it may grow without reallocating for each append operation.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads**
     /// Appends the string *str* to this byte array. The Unicode data is
@@ -1494,7 +1509,8 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Appends the character *ch* to this byte array.
-    append(s: *char, len: i32) -> ByteArray?,
+    [org_name(append)]
+    append_4(s: *char, len: i32) -> ByteArray?,
     /// 
     /// Appends the byte array *ba* onto the end of this byte array.
     /// 
@@ -1519,9 +1535,9 @@ struct ByteArray {
     /// because QByteArray preallocates extra space at the end of the data
     /// so that it may grow without reallocating for each append operation.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads**
     /// Appends the string *str* to this byte array. The Unicode data is
@@ -1552,17 +1568,18 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Appends the character *ch* to this byte array.
-    append(a: &ByteArrayType) -> ByteArray?,
+    [org_name(append)]
+    append_5(a: &ByteArrayType) -> ByteArray?,
     /// 
     /// Inserts the byte array *ba* at index position *i* and returns a
     /// reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Inserts the string *str* at index position *i* in the byte
@@ -1607,10 +1624,10 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Inserts the string *str* at index position *i* in the byte
@@ -1648,17 +1665,18 @@ struct ByteArray {
     /// byte array.
     /// 
     /// If *i* is greater than size(), the array is first extended using resize().
-    insert(i: i32, count: i32, c: char) -> ByteArray?,
+    [org_name(insert)]
+    insert_2(i: i32, count: i32, c: char) -> ByteArray?,
     /// 
     /// Inserts the byte array *ba* at index position *i* and returns a
     /// reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Inserts the string *str* at index position *i* in the byte
@@ -1696,17 +1714,18 @@ struct ByteArray {
     /// byte array.
     /// 
     /// If *i* is greater than size(), the array is first extended using resize().
-    insert(i: i32, s: *char) -> ByteArray?,
+    [org_name(insert)]
+    insert_3(i: i32, s: *char) -> ByteArray?,
     /// 
     /// Inserts the byte array *ba* at index position *i* and returns a
     /// reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Inserts the string *str* at index position *i* in the byte
@@ -1744,17 +1763,18 @@ struct ByteArray {
     /// byte array.
     /// 
     /// If *i* is greater than size(), the array is first extended using resize().
-    insert(i: i32, s: *char, len: i32) -> ByteArray?,
+    [org_name(insert)]
+    insert_4(i: i32, s: *char, len: i32) -> ByteArray?,
     /// 
     /// Inserts the byte array *ba* at index position *i* and returns a
     /// reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Inserts the string *str* at index position *i* in the byte
@@ -1792,7 +1812,8 @@ struct ByteArray {
     /// byte array.
     /// 
     /// If *i* is greater than size(), the array is first extended using resize().
-    insert(i: i32, a: &ByteArrayType) -> ByteArray?,
+    [org_name(insert)]
+    insert_5(i: i32, a: &ByteArrayType) -> ByteArray?,
     /// 
     /// Removes *len* bytes from the array, starting at index position *pos,* and returns a reference to the array.
     /// 
@@ -1802,8 +1823,8 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// replace()
+    /// **See also:** [`insert()`]
+    /// [`replace()`]
     remove(index: i32, len: i32) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
@@ -1811,8 +1832,8 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -1889,8 +1910,8 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -1960,15 +1981,16 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(index: i32, len: i32, s: *char, alen: i32) -> ByteArray?,
+    [org_name(replace)]
+    replace_2(index: i32, len: i32, s: *char, alen: i32) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
     /// array *after,* and returns a reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -2038,15 +2060,16 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(index: i32, len: i32, s: &ByteArrayType) -> ByteArray?,
+    [org_name(replace)]
+    replace_3(index: i32, len: i32, s: &ByteArrayType) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
     /// array *after,* and returns a reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -2116,15 +2139,16 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(before: char, after: *char) -> ByteArray?,
+    [org_name(replace)]
+    replace_4(before: char, after: *char) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
     /// array *after,* and returns a reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -2194,15 +2218,16 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(before: char, after: &ByteArrayType) -> ByteArray?,
+    [org_name(replace)]
+    replace_5(before: char, after: &ByteArrayType) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
     /// array *after,* and returns a reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -2272,15 +2297,16 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(before: *char, after: *char) -> ByteArray?,
+    [org_name(replace)]
+    replace_6(before: *char, after: *char) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
     /// array *after,* and returns a reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -2350,15 +2376,16 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(before: *char, bsize: i32, after: *char, asize: i32) -> ByteArray?,
+    [org_name(replace)]
+    replace_7(before: *char, bsize: i32, after: *char, asize: i32) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
     /// array *after,* and returns a reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -2428,15 +2455,16 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(before: &ByteArrayType, after: &ByteArrayType) -> ByteArray?,
+    [org_name(replace)]
+    replace_8(before: &ByteArrayType, after: &ByteArrayType) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
     /// array *after,* and returns a reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -2506,15 +2534,16 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(before: &ByteArrayType, after: *char) -> ByteArray?,
+    [org_name(replace)]
+    replace_9(before: &ByteArrayType, after: *char) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
     /// array *after,* and returns a reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -2584,15 +2613,16 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(before: *char, after: &ByteArrayType) -> ByteArray?,
+    [org_name(replace)]
+    replace_10(before: *char, after: &ByteArrayType) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
     /// array *after,* and returns a reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -2662,7 +2692,8 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(before: char, after: char) -> ByteArray?,
+    [org_name(replace)]
+    replace_11(before: char, after: char) -> ByteArray?,
     /// 
     /// Splits the byte array into subarrays wherever *sep* occurs, and
     /// returns the list of those arrays. If *sep* does not match
@@ -2706,9 +2737,9 @@ struct ByteArray {
     /// because QByteArray preallocates extra space at the end of the data
     /// so that it may grow without reallocating for each append operation.
     /// 
-    /// **See also:** operator+=()
-    /// prepend()
-    /// insert()
+    /// **See also:** [`operator()`]
+    /// [`prepend()`]
+    /// [`insert()`]
     /// 
     /// **Overloads**
     /// Appends the string *str* to this byte array. The Unicode data is
@@ -2739,17 +2770,18 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Appends the character *ch* to this byte array.
-    append(s: String) -> ByteArray?,
+    [org_name(append)]
+    append_6(s: String) -> ByteArray?,
     /// 
     /// Inserts the byte array *ba* at index position *i* and returns a
     /// reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** append()
-    /// prepend()
-    /// replace()
-    /// remove()
+    /// **See also:** [`append()`]
+    /// [`prepend()`]
+    /// [`replace()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Inserts the string *str* at index position *i* in the byte
@@ -2787,15 +2819,16 @@ struct ByteArray {
     /// byte array.
     /// 
     /// If *i* is greater than size(), the array is first extended using resize().
-    insert(i: i32, s: String) -> ByteArray?,
+    [org_name(insert)]
+    insert_6(i: i32, s: String) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
     /// array *after,* and returns a reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -2865,15 +2898,16 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(before: String, after: *char) -> ByteArray?,
+    [org_name(replace)]
+    replace_12(before: String, after: *char) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
     /// array *after,* and returns a reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -2943,15 +2977,16 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(c: char, after: String) -> ByteArray?,
+    [org_name(replace)]
+    replace_13(c: char, after: String) -> ByteArray?,
     /// 
     /// Replaces *len* bytes from index position *pos* with the byte
     /// array *after,* and returns a reference to this byte array.
     /// 
     /// Example:
     /// 
-    /// **See also:** insert()
-    /// remove()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
     /// 
     /// **Overloads**
     /// Replaces *len* bytes from index position *pos* with the zero terminated
@@ -3021,7 +3056,8 @@ struct ByteArray {
     /// **Overloads**
     /// Replaces every occurrence of the character *before* with the
     /// character *after.*
-    replace(before: String, after: &ByteArrayType) -> ByteArray?,
+    [org_name(replace)]
+    replace_14(before: String, after: &ByteArrayType) -> ByteArray?,
     /// 
     /// Returns the index position of the first occurrence of the byte
     /// array *ba* in this byte array, searching forward from index
@@ -3029,9 +3065,9 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads**
     /// Returns the index position of the first occurrence of the string
@@ -3057,9 +3093,10 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** lastIndexOf()
-    /// contains()
-    index_of(s: String, from: i32) -> i32,
+    /// **See also:** [`last_index_of()`]
+    /// [`contains()`]
+    [org_name(indexOf)]
+    index_of_4(s: String, from: i32) -> i32,
     /// 
     /// Returns the index position of the last occurrence of the byte
     /// array *ba* in this byte array, searching backward from index
@@ -3068,9 +3105,9 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    /// count()
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    /// [`count()`]
     /// 
     /// **Overloads**
     /// Returns the index position of the last occurrence of the string *str* in the byte array, searching backward from index position *from.* If *from* is -1 (the default), the search starts at the
@@ -3093,9 +3130,10 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** indexOf()
-    /// contains()
-    last_index_of(s: String, from: i32) -> i32,
+    /// **See also:** [`index_of()`]
+    /// [`contains()`]
+    [org_name(lastIndexOf)]
+    last_index_of_4(s: String, from: i32) -> i32,
     /// 
     /// Returns the byte array converted to a `short` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
     /// 
@@ -3112,7 +3150,7 @@ struct ByteArray {
     /// **Note**: The conversion of the number is performed in the default C locale,
     /// irrespective of the user's locale.
     /// 
-    /// **See also:** number()
+    /// **See also:** [`number()`]
     to_short(ok: *bool, base: i32) -> short,
     /// 
     /// Returns the byte array converted to an `unsigned short` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -3130,7 +3168,7 @@ struct ByteArray {
     /// **Note**: The conversion of the number is performed in the default C locale,
     /// irrespective of the user's locale.
     /// 
-    /// **See also:** number()
+    /// **See also:** [`number()`]
     to_u_short(ok: *bool, base: i32) -> ushort,
     /// 
     /// Returns the byte array converted to an `int` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -3148,7 +3186,7 @@ struct ByteArray {
     /// **Note**: The conversion of the number is performed in the default C locale,
     /// irrespective of the user's locale.
     /// 
-    /// **See also:** number()
+    /// **See also:** [`number()`]
     to_int(ok: *bool, base: i32) -> i32,
     /// 
     /// Returns the byte array converted to an `unsigned int` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -3166,7 +3204,7 @@ struct ByteArray {
     /// **Note**: The conversion of the number is performed in the default C locale,
     /// irrespective of the user's locale.
     /// 
-    /// **See also:** number()
+    /// **See also:** [`number()`]
     to_u_int(ok: *bool, base: i32) -> uint,
     /// 
     /// Returns the byte array converted to a `long long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -3184,7 +3222,7 @@ struct ByteArray {
     /// **Note**: The conversion of the number is performed in the default C locale,
     /// irrespective of the user's locale.
     /// 
-    /// **See also:** number()
+    /// **See also:** [`number()`]
     /// 
     /// Returns the byte array converted to a `long` int using base *base,* which is 10 by default and must be between 2 and 36, or 0.
     /// 
@@ -3201,7 +3239,7 @@ struct ByteArray {
     /// **Note**: The conversion of the number is performed in the default C locale,
     /// irrespective of the user's locale.
     /// 
-    /// **See also:** number()
+    /// **See also:** [`number()`]
     to_long(ok: *bool, base: i32) -> long,
     /// 
     /// Returns the byte array converted to an `unsigned long long`
@@ -3221,7 +3259,7 @@ struct ByteArray {
     /// **Note**: The conversion of the number is performed in the default C locale,
     /// irrespective of the user's locale.
     /// 
-    /// **See also:** number()
+    /// **See also:** [`number()`]
     /// 
     /// Returns the byte array converted to an `unsigned long int` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
     /// 
@@ -3238,7 +3276,7 @@ struct ByteArray {
     /// **Note**: The conversion of the number is performed in the default C locale,
     /// irrespective of the user's locale.
     /// 
-    /// **See also:** number()
+    /// **See also:** [`number()`]
     to_u_long(ok: *bool, base: i32) -> ulong,
     /// 
     /// Returns the byte array converted to a `long long` using base *base,* which is 10 by default and must be between 2 and 36, or 0.
@@ -3256,7 +3294,7 @@ struct ByteArray {
     /// **Note**: The conversion of the number is performed in the default C locale,
     /// irrespective of the user's locale.
     /// 
-    /// **See also:** number()
+    /// **See also:** [`number()`]
     to_long_long(ok: *bool, base: i32) -> i64,
     /// 
     /// Returns the byte array converted to an `unsigned long long`
@@ -3276,7 +3314,7 @@ struct ByteArray {
     /// **Note**: The conversion of the number is performed in the default C locale,
     /// irrespective of the user's locale.
     /// 
-    /// **See also:** number()
+    /// **See also:** [`number()`]
     to_u_long_long(ok: *bool, base: i32) -> qulonglong,
     /// 
     /// Returns the byte array converted to a `float` value.
@@ -3289,7 +3327,7 @@ struct ByteArray {
     /// **Note**: The conversion of the number is performed in the default C locale,
     /// irrespective of the user's locale.
     /// 
-    /// **See also:** number()
+    /// **See also:** [`number()`]
     to_float(ok: *bool) -> f32,
     /// 
     /// Returns the byte array converted to a `double` value.
@@ -3302,7 +3340,7 @@ struct ByteArray {
     /// **Note**: The conversion of the number is performed in the default C locale,
     /// irrespective of the user's locale.
     /// 
-    /// **See also:** number()
+    /// **See also:** [`number()`]
     to_double(ok: *bool) -> double,
     /// 
     /// Returns a copy of the byte array, encoded as Base64.
@@ -3310,7 +3348,7 @@ struct ByteArray {
     /// The algorithm used to encode Base64-encoded data is defined in [RFC 4648](RFC%204648)
     /// 
     /// 
-    /// **See also:** fromBase64()
+    /// **See also:** [`from_base64()`]
     /// 
     /// **Overloads**
     /// Returns a copy of the byte array, encoded using the options *options.*
@@ -3318,7 +3356,7 @@ struct ByteArray {
     /// The algorithm used to encode Base64-encoded data is defined in [RFC 4648](RFC%204648)
     /// 
     /// 
-    /// **See also:** fromBase64()
+    /// **See also:** [`from_base64()`]
     to_base64(options: ByteArray::Base64Options) -> ByteArray,
     /// 
     /// Returns a copy of the byte array, encoded as Base64.
@@ -3326,7 +3364,7 @@ struct ByteArray {
     /// The algorithm used to encode Base64-encoded data is defined in [RFC 4648](RFC%204648)
     /// 
     /// 
-    /// **See also:** fromBase64()
+    /// **See also:** [`from_base64()`]
     /// 
     /// **Overloads**
     /// Returns a copy of the byte array, encoded using the options *options.*
@@ -3334,13 +3372,14 @@ struct ByteArray {
     /// The algorithm used to encode Base64-encoded data is defined in [RFC 4648](RFC%204648)
     /// 
     /// 
-    /// **See also:** fromBase64()
-    to_base64() -> ByteArray,
+    /// **See also:** [`from_base64()`]
+    [org_name(toBase64)]
+    to_base64_2() -> ByteArray,
     /// 
     /// Returns a hex encoded copy of the byte array. The hex encoding uses the numbers 0-9 and
     /// the letters a-f.
     /// 
-    /// **See also:** fromHex()
+    /// **See also:** [`from_hex()`]
     /// **Overloads**
     /// Returns a hex encoded copy of the byte array. The hex encoding uses the numbers 0-9 and
     /// the letters a-f.
@@ -3354,13 +3393,13 @@ struct ByteArray {
     /// macAddress.toHex(0);   // returns "123456abcdef"
     /// ```
     /// 
-    /// **See also:** fromHex()
+    /// **See also:** [`from_hex()`]
     to_hex() -> ByteArray,
     /// 
     /// Returns a hex encoded copy of the byte array. The hex encoding uses the numbers 0-9 and
     /// the letters a-f.
     /// 
-    /// **See also:** fromHex()
+    /// **See also:** [`from_hex()`]
     /// **Overloads**
     /// Returns a hex encoded copy of the byte array. The hex encoding uses the numbers 0-9 and
     /// the letters a-f.
@@ -3374,8 +3413,9 @@ struct ByteArray {
     /// macAddress.toHex(0);   // returns "123456abcdef"
     /// ```
     /// 
-    /// **See also:** fromHex()
-    to_hex(separator: char) -> ByteArray,
+    /// **See also:** [`from_hex()`]
+    [org_name(toHex)]
+    to_hex_2(separator: char) -> ByteArray,
     /// 
     /// Returns a URI/URL-style percent-encoded copy of this byte array. The
     /// *percent* parameter allows you to override the default '%'
@@ -3399,8 +3439,8 @@ struct ByteArray {
     /// 
     /// The hex encoding uses the numbers 0-9 and the uppercase letters A-F.
     /// 
-    /// **See also:** fromPercentEncoding()
-    /// QUrl::toPercentEncoding()
+    /// **See also:** [`from_percent_encoding()`]
+    /// [`Url::to_percent_encoding`]
     to_percent_encoding(exclude: &ByteArrayType, include: &ByteArrayType, percent: char) -> ByteArray,
     /// 
     /// Sets the byte array to the printed value of *n* in base *base* (10
@@ -3413,23 +3453,23 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** number()
-    /// toInt()
+    /// **See also:** [`number()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toShort()
+    /// **See also:** [`to_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUShort()
+    /// **See also:** [`to_u_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3458,7 +3498,7 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
+    /// **See also:** [`to_double()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3468,7 +3508,7 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toFloat()
+    /// **See also:** [`to_float()`]
     set_num(arg0: short, base: i32) -> ByteArray?,
     /// 
     /// Sets the byte array to the printed value of *n* in base *base* (10
@@ -3481,23 +3521,23 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** number()
-    /// toInt()
+    /// **See also:** [`number()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toShort()
+    /// **See also:** [`to_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUShort()
+    /// **See also:** [`to_u_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3526,7 +3566,7 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
+    /// **See also:** [`to_double()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3536,8 +3576,9 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toFloat()
-    set_num(arg0: ushort, base: i32) -> ByteArray?,
+    /// **See also:** [`to_float()`]
+    [org_name(setNum)]
+    set_num_2(arg0: ushort, base: i32) -> ByteArray?,
     /// 
     /// Sets the byte array to the printed value of *n* in base *base* (10
     /// by default) and returns a reference to the byte array. The *base* can
@@ -3549,23 +3590,23 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** number()
-    /// toInt()
+    /// **See also:** [`number()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toShort()
+    /// **See also:** [`to_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUShort()
+    /// **See also:** [`to_u_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3594,7 +3635,7 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
+    /// **See also:** [`to_double()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3604,8 +3645,9 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toFloat()
-    set_num(arg0: i32, base: i32) -> ByteArray?,
+    /// **See also:** [`to_float()`]
+    [org_name(setNum)]
+    set_num_3(arg0: i32, base: i32) -> ByteArray?,
     /// 
     /// Sets the byte array to the printed value of *n* in base *base* (10
     /// by default) and returns a reference to the byte array. The *base* can
@@ -3617,23 +3659,23 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** number()
-    /// toInt()
+    /// **See also:** [`number()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toShort()
+    /// **See also:** [`to_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUShort()
+    /// **See also:** [`to_u_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3662,7 +3704,7 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
+    /// **See also:** [`to_double()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3672,8 +3714,9 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toFloat()
-    set_num(arg0: uint, base: i32) -> ByteArray?,
+    /// **See also:** [`to_float()`]
+    [org_name(setNum)]
+    set_num_4(arg0: uint, base: i32) -> ByteArray?,
     /// 
     /// Sets the byte array to the printed value of *n* in base *base* (10
     /// by default) and returns a reference to the byte array. The *base* can
@@ -3685,23 +3728,23 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** number()
-    /// toInt()
+    /// **See also:** [`number()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toShort()
+    /// **See also:** [`to_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUShort()
+    /// **See also:** [`to_u_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3730,7 +3773,7 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
+    /// **See also:** [`to_double()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3740,8 +3783,9 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toFloat()
-    set_num(arg0: i64, base: i32) -> ByteArray?,
+    /// **See also:** [`to_float()`]
+    [org_name(setNum)]
+    set_num_5(arg0: i64, base: i32) -> ByteArray?,
     /// 
     /// Sets the byte array to the printed value of *n* in base *base* (10
     /// by default) and returns a reference to the byte array. The *base* can
@@ -3753,23 +3797,23 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** number()
-    /// toInt()
+    /// **See also:** [`number()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toShort()
+    /// **See also:** [`to_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUShort()
+    /// **See also:** [`to_u_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3798,7 +3842,7 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
+    /// **See also:** [`to_double()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3808,8 +3852,9 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toFloat()
-    set_num(arg0: qulonglong, base: i32) -> ByteArray?,
+    /// **See also:** [`to_float()`]
+    [org_name(setNum)]
+    set_num_6(arg0: qulonglong, base: i32) -> ByteArray?,
     /// 
     /// Sets the byte array to the printed value of *n* in base *base* (10
     /// by default) and returns a reference to the byte array. The *base* can
@@ -3821,23 +3866,23 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** number()
-    /// toInt()
+    /// **See also:** [`number()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toShort()
+    /// **See also:** [`to_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUShort()
+    /// **See also:** [`to_u_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3866,7 +3911,7 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
+    /// **See also:** [`to_double()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3876,8 +3921,9 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toFloat()
-    set_num(arg0: f32, f: char, prec: i32) -> ByteArray?,
+    /// **See also:** [`to_float()`]
+    [org_name(setNum)]
+    set_num_7(arg0: f32, f: char, prec: i32) -> ByteArray?,
     /// 
     /// Sets the byte array to the printed value of *n* in base *base* (10
     /// by default) and returns a reference to the byte array. The *base* can
@@ -3889,23 +3935,23 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** number()
-    /// toInt()
+    /// **See also:** [`number()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toShort()
+    /// **See also:** [`to_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUShort()
+    /// **See also:** [`to_u_short()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3934,7 +3980,7 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
+    /// **See also:** [`to_double()`]
     /// 
     /// **Overloads**
     /// Sets the byte array to the printed value of *n,* formatted in format
@@ -3944,8 +3990,9 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toFloat()
-    set_num(arg0: double, f: char, prec: i32) -> ByteArray?,
+    /// **See also:** [`to_float()`]
+    [org_name(setNum)]
+    set_num_8(arg0: double, f: char, prec: i32) -> ByteArray?,
     /// 
     /// Resets the QByteArray to use the first *size* bytes of the
     /// *data* array. The bytes are *not* copied. The QByteArray will
@@ -3956,9 +4003,9 @@ struct ByteArray {
     /// This function can be used instead of fromRawData() to re-use
     /// existing QByteArray objects to save memory re-allocations.
     /// 
-    /// **See also:** fromRawData()
-    /// data()
-    /// constData()
+    /// **See also:** [`from_raw_data()`]
+    /// [`data()`]
+    /// [`const_data()`]
     set_raw_data(a: *char, n: uint) -> ByteArray?,
     /// 
     /// Returns a byte array containing the string equivalent of the
@@ -3970,17 +4017,17 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** setNum()
-    /// toInt()
+    /// **See also:** [`set_num()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Returns a byte array that contains the printed value of *n,*
@@ -4009,7 +4056,7 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
+    /// **See also:** [`to_double()`]
     [static] number(arg0: i32, base: i32) -> ByteArray,
     /// 
     /// Returns a byte array containing the string equivalent of the
@@ -4021,17 +4068,17 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** setNum()
-    /// toInt()
+    /// **See also:** [`set_num()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Returns a byte array that contains the printed value of *n,*
@@ -4060,8 +4107,9 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
-    [static] number(arg0: uint, base: i32) -> ByteArray,
+    /// **See also:** [`to_double()`]
+    [org_name(number)]
+    [static] number_2(arg0: uint, base: i32) -> ByteArray,
     /// 
     /// Returns a byte array containing the string equivalent of the
     /// number *n* to base *base* (10 by default). The *base* can be
@@ -4072,17 +4120,17 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** setNum()
-    /// toInt()
+    /// **See also:** [`set_num()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Returns a byte array that contains the printed value of *n,*
@@ -4111,8 +4159,9 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
-    [static] number(arg0: i64, base: i32) -> ByteArray,
+    /// **See also:** [`to_double()`]
+    [org_name(number)]
+    [static] number_3(arg0: i64, base: i32) -> ByteArray,
     /// 
     /// Returns a byte array containing the string equivalent of the
     /// number *n* to base *base* (10 by default). The *base* can be
@@ -4123,17 +4172,17 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** setNum()
-    /// toInt()
+    /// **See also:** [`set_num()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Returns a byte array that contains the printed value of *n,*
@@ -4162,8 +4211,9 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
-    [static] number(arg0: qulonglong, base: i32) -> ByteArray,
+    /// **See also:** [`to_double()`]
+    [org_name(number)]
+    [static] number_4(arg0: qulonglong, base: i32) -> ByteArray,
     /// 
     /// Returns a byte array containing the string equivalent of the
     /// number *n* to base *base* (10 by default). The *base* can be
@@ -4174,17 +4224,17 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** setNum()
-    /// toInt()
+    /// **See also:** [`set_num()`]
+    /// [`to_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toUInt()
+    /// **See also:** [`to_u_int()`]
     /// 
     /// **Overloads**
-    /// **See also:** toLongLong()
+    /// **See also:** [`to_long_long()`]
     /// 
     /// **Overloads**
-    /// **See also:** toULongLong()
+    /// **See also:** [`to_u_long_long()`]
     /// 
     /// **Overloads**
     /// Returns a byte array that contains the printed value of *n,*
@@ -4213,8 +4263,9 @@ struct ByteArray {
     /// **Note**: The format of the number is not localized; the default C locale
     /// is used irrespective of the user's locale.
     /// 
-    /// **See also:** toDouble()
-    [static] number(arg0: double, f: char, prec: i32) -> ByteArray,
+    /// **See also:** [`to_double()`]
+    [org_name(number)]
+    [static] number_5(arg0: double, f: char, prec: i32) -> ByteArray,
     /// 
     /// Constructs a QByteArray that uses the first *size* bytes of the
     /// *data* array. The bytes are *not* copied. The QByteArray will
@@ -4246,9 +4297,9 @@ struct ByteArray {
     /// accepting a `const char *` expected to be '\\0'-terminated will
     /// fail.
     /// 
-    /// **See also:** setRawData()
-    /// data()
-    /// constData()
+    /// **See also:** [`set_raw_data()`]
+    /// [`data()`]
+    /// [`const_data()`]
     [static] from_raw_data(arg0: *char, size: i32) -> ByteArray,
     /// 
     /// Returns a decoded copy of the Base64 array *base64.* Input is not checked
@@ -4260,7 +4311,7 @@ struct ByteArray {
     /// The algorithm used to decode Base64-encoded data is defined in [RFC 4648](RFC%204648)
     /// 
     /// 
-    /// **See also:** toBase64()
+    /// **See also:** [`to_base64()`]
     /// 
     /// **Overloads**
     /// Returns a decoded copy of the Base64 array *base64,* using the alphabet
@@ -4273,7 +4324,7 @@ struct ByteArray {
     /// The algorithm used to decode Base64-encoded data is defined in [RFC 4648](RFC%204648)
     /// 
     /// 
-    /// **See also:** toBase64()
+    /// **See also:** [`to_base64()`]
     [static] from_base64(base64: &ByteArrayType, options: ByteArray::Base64Options) -> ByteArray,
     /// 
     /// Returns a decoded copy of the Base64 array *base64.* Input is not checked
@@ -4285,7 +4336,7 @@ struct ByteArray {
     /// The algorithm used to decode Base64-encoded data is defined in [RFC 4648](RFC%204648)
     /// 
     /// 
-    /// **See also:** toBase64()
+    /// **See also:** [`to_base64()`]
     /// 
     /// **Overloads**
     /// Returns a decoded copy of the Base64 array *base64,* using the alphabet
@@ -4298,8 +4349,9 @@ struct ByteArray {
     /// The algorithm used to decode Base64-encoded data is defined in [RFC 4648](RFC%204648)
     /// 
     /// 
-    /// **See also:** toBase64()
-    [static] from_base64(base64: &ByteArrayType) -> ByteArray,
+    /// **See also:** [`to_base64()`]
+    [org_name(fromBase64)]
+    [static] from_base64_2(base64: &ByteArrayType) -> ByteArray,
     /// 
     /// Returns a decoded copy of the hex encoded array *hexEncoded.* Input is not checked
     /// for validity; invalid characters in the input are skipped, enabling the
@@ -4307,7 +4359,7 @@ struct ByteArray {
     /// 
     /// For example:
     /// 
-    /// **See also:** toHex()
+    /// **See also:** [`to_hex()`]
     [static] from_hex(hex_encoded: &ByteArrayType) -> ByteArray,
     /// 
     /// Returns a decoded copy of the URI/URL-style percent-encoded *input.*
@@ -4324,16 +4376,16 @@ struct ByteArray {
     /// which is not a valid hexadecimal number) the output will be invalid as
     /// well. As an example: the sequence could be decoded to 'W'.
     /// 
-    /// **See also:** toPercentEncoding()
-    /// QUrl::fromPercentEncoding()
+    /// **See also:** [`to_percent_encoding()`]
+    /// [`Url::from_percent_encoding`]
     [static] from_percent_encoding(pct_encoded: &ByteArrayType, percent: char) -> ByteArray,
     /// 
     /// Returns an [STL-style iterator](STL-style%20iterators)
     /// pointing to the first character in
     /// the byte-array.
     /// 
-    /// **See also:** constBegin()
-    /// end()
+    /// **See also:** [`const_begin()`]
+    /// [`end()`]
     /// 
     /// **Overloads** begin()
     begin() -> ByteArray::iterator,
@@ -4342,34 +4394,35 @@ struct ByteArray {
     /// pointing to the first character in
     /// the byte-array.
     /// 
-    /// **See also:** constBegin()
-    /// end()
+    /// **See also:** [`const_begin()`]
+    /// [`end()`]
     /// 
     /// **Overloads** begin()
-    begin() -> ByteArray::const_iterator,
+    [org_name(begin)]
+    begin_2() -> ByteArray::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the first character
     /// in the byte-array.
     /// 
-    /// **See also:** begin()
-    /// cend()
+    /// **See also:** [`begin()`]
+    /// [`cend()`]
     cbegin() -> ByteArray::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the first character
     /// in the byte-array.
     /// 
-    /// **See also:** begin()
-    /// constEnd()
+    /// **See also:** [`begin()`]
+    /// [`const_end()`]
     const_begin() -> ByteArray::const_iterator,
     /// 
     /// Returns an [STL-style iterator](STL-style%20iterators)
     /// pointing to the imaginary character
     /// after the last character in the byte-array.
     /// 
-    /// **See also:** begin()
-    /// constEnd()
+    /// **See also:** [`begin()`]
+    /// [`const_end()`]
     /// 
     /// **Overloads** end()
     /// 
@@ -4378,8 +4431,8 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** startsWith()
-    /// right()
+    /// **See also:** [`starts_with()`]
+    /// [`right()`]
     /// **Overloads**
     /// Returns `true` if this byte array ends with string *str;* otherwise
     /// returns `false.`
@@ -4392,8 +4445,8 @@ struct ByteArray {
     /// pointing to the imaginary character
     /// after the last character in the byte-array.
     /// 
-    /// **See also:** begin()
-    /// constEnd()
+    /// **See also:** [`begin()`]
+    /// [`const_end()`]
     /// 
     /// **Overloads** end()
     /// 
@@ -4402,39 +4455,40 @@ struct ByteArray {
     /// 
     /// Example:
     /// 
-    /// **See also:** startsWith()
-    /// right()
+    /// **See also:** [`starts_with()`]
+    /// [`right()`]
     /// **Overloads**
     /// Returns `true` if this byte array ends with string *str;* otherwise
     /// returns `false.`
     /// **Overloads**
     /// Returns `true` if this byte array ends with character *ch;*
     /// otherwise returns `false.`
-    end() -> ByteArray::const_iterator,
+    [org_name(end)]
+    end_2() -> ByteArray::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the imaginary
     /// character after the last character in the list.
     /// 
-    /// **See also:** cbegin()
-    /// end()
+    /// **See also:** [`cbegin()`]
+    /// [`end()`]
     cend() -> ByteArray::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the imaginary
     /// character after the last character in the list.
     /// 
-    /// **See also:** constBegin()
-    /// end()
+    /// **See also:** [`const_begin()`]
+    /// [`end()`]
     const_end() -> ByteArray::const_iterator,
     /// 
     /// Returns a [STL-style](STL-style%20iterators)
     /// reverse iterator pointing to the first
     /// character in the byte-array, in reverse order.
     /// 
-    /// **See also:** begin()
-    /// crbegin()
-    /// rend()
+    /// **See also:** [`begin()`]
+    /// [`crbegin()`]
+    /// [`rend()`]
     /// **Overloads**
     rbegin() -> ByteArray::reverse_iterator,
     /// 
@@ -4442,9 +4496,9 @@ struct ByteArray {
     /// reverse iterator pointing to one past
     /// the last character in the byte-array, in reverse order.
     /// 
-    /// **See also:** end()
-    /// crend()
-    /// rbegin()
+    /// **See also:** [`end()`]
+    /// [`crend()`]
+    /// [`rbegin()`]
     /// **Overloads**
     rend() -> ByteArray::reverse_iterator,
     /// 
@@ -4452,38 +4506,40 @@ struct ByteArray {
     /// reverse iterator pointing to the first
     /// character in the byte-array, in reverse order.
     /// 
-    /// **See also:** begin()
-    /// crbegin()
-    /// rend()
+    /// **See also:** [`begin()`]
+    /// [`crbegin()`]
+    /// [`rend()`]
     /// **Overloads**
-    rbegin() -> ByteArray::const_reverse_iterator,
+    [org_name(rbegin)]
+    rbegin_2() -> ByteArray::const_reverse_iterator,
     /// 
     /// Returns a [STL-style](STL-style%20iterators)
     /// reverse iterator pointing to one past
     /// the last character in the byte-array, in reverse order.
     /// 
-    /// **See also:** end()
-    /// crend()
-    /// rbegin()
+    /// **See also:** [`end()`]
+    /// [`crend()`]
+    /// [`rbegin()`]
     /// **Overloads**
-    rend() -> ByteArray::const_reverse_iterator,
+    [org_name(rend)]
+    rend_2() -> ByteArray::const_reverse_iterator,
     /// 
     /// Returns a const [STL-style](STL-style%20iterators)
     /// reverse iterator pointing to the first
     /// character in the byte-array, in reverse order.
     /// 
-    /// **See also:** begin()
-    /// rbegin()
-    /// rend()
+    /// **See also:** [`begin()`]
+    /// [`rbegin()`]
+    /// [`rend()`]
     crbegin() -> ByteArray::const_reverse_iterator,
     /// 
     /// Returns a const [STL-style](STL-style%20iterators)
     /// reverse iterator pointing to one
     /// past the last character in the byte-array, in reverse order.
     /// 
-    /// **See also:** end()
-    /// rend()
-    /// rbegin()
+    /// **See also:** [`end()`]
+    /// [`rend()`]
+    /// [`rbegin()`]
     crend() -> ByteArray::const_reverse_iterator,
     /// 
     /// This function is provided for STL compatibility. It is equivalent
@@ -4504,7 +4560,8 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Same as append( *ch).*
-    push_back(c: *char),
+    [org_name(push_back)]
+    push_back_2(c: *char),
     /// 
     /// This function is provided for STL compatibility. It is equivalent
     /// to append( *other).*
@@ -4514,7 +4571,8 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Same as append( *ch).*
-    push_back(a: &ByteArrayType),
+    [org_name(push_back)]
+    push_back_3(a: &ByteArrayType),
     /// 
     /// This function is provided for STL compatibility. It is equivalent
     /// to prepend( *other).*
@@ -4534,7 +4592,8 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Same as prepend( *ch).*
-    push_front(c: *char),
+    [org_name(push_front)]
+    push_front_2(c: *char),
     /// 
     /// This function is provided for STL compatibility. It is equivalent
     /// to prepend( *other).*
@@ -4544,7 +4603,8 @@ struct ByteArray {
     /// 
     /// **Overloads**
     /// Same as prepend( *ch).*
-    push_front(a: &ByteArrayType),
+    [org_name(push_front)]
+    push_front_3(a: &ByteArrayType),
     /// 
     /// This function is provided for STL compatibility. It is equivalent to
     /// squeeze().
@@ -4553,8 +4613,8 @@ struct ByteArray {
     /// Returns the number of (potentially overlapping) occurrences of
     /// byte array *ba* in this byte array.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads**
     /// Returns the number of (potentially overlapping) occurrences of
@@ -4564,12 +4624,13 @@ struct ByteArray {
     /// Returns the number of occurrences of character *ch* in the byte
     /// array.
     /// 
-    /// **See also:** contains()
-    /// indexOf()
+    /// **See also:** [`contains()`]
+    /// [`index_of()`]
     /// 
     /// **Overloads**
     /// Same as size().
-    count() -> i32,
+    [org_name(count)]
+    count_4() -> i32,
     /// 
     /// Same as size().
     length() -> i32,
@@ -4583,8 +4644,20 @@ struct ByteArray {
     /// matters is whether or not a byte array contains any data,
     /// and this can be determined using isEmpty().
     /// 
-    /// **See also:** isEmpty()
+    /// **See also:** [`is_empty()`]
     is_null() -> bool,
+}
+
+[org_name(QByteArray)]
+enum Base64Option {
+    /// (default) The regular Base64 alphabet, called simply "base64"
+    Base64Encoding,
+    /// An alternate alphabet, called "base64url", which replaces two characters in the alphabet to be more friendly to URLs.
+    Base64UrlEncoding,
+    /// (default) Keeps the trailing padding equal signs at the end of the encoded data, so the data is always a size multiple of four.
+    KeepTrailingEquals,
+    /// Omits adding the padding equal signs at the end of the encoded data. QByteArray::fromBase64() ignores the KeepTrailingEquals and OmitTrailingEquals options and will not flag errors in case they are missing or if there are too many of them.
+    OmitTrailingEquals,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

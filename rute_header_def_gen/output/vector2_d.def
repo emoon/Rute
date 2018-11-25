@@ -2,13 +2,12 @@
 /// The QVector2D class can also be used to represent vertices in 2D space.
 /// We therefore do not need to provide a separate vertex class.
 /// 
-/// **See also:** QVector3D
-/// QVector4D
-/// QQuaternion
+/// **See also:** [`Vector3D`]
+/// [`Vector4D`]
+/// [`Quaternion`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct Vector2D {
     /// 
     /// Returns `true` if the x and y coordinates are set to 0.0,
@@ -17,45 +16,45 @@ struct Vector2D {
     /// 
     /// Returns the x coordinate of this point.
     /// 
-    /// **See also:** setX()
-    /// y()
+    /// **See also:** [`set_x()`]
+    /// [`y()`]
     x() -> f32,
     /// 
     /// Returns the y coordinate of this point.
     /// 
-    /// **See also:** setY()
-    /// x()
+    /// **See also:** [`set_y()`]
+    /// [`x()`]
     y() -> f32,
     /// 
     /// Sets the x coordinate of this point to the given *x* coordinate.
     /// 
-    /// **See also:** x()
-    /// setY()
+    /// **See also:** [`x()`]
+    /// [`set_y()`]
     set_x(x: f32),
     /// 
     /// Sets the y coordinate of this point to the given *y* coordinate.
     /// 
-    /// **See also:** y()
-    /// setX()
+    /// **See also:** [`y()`]
+    /// [`set_x()`]
     set_y(y: f32),
     /// 
     /// Returns the length of the vector from the origin.
     /// 
-    /// **See also:** lengthSquared()
-    /// normalized()
+    /// **See also:** [`length_squared()`]
+    /// [`normalized()`]
     /// 
     /// Returns the squared length of the vector from the origin.
     /// This is equivalent to the dot product of the vector with itself.
     /// 
-    /// **See also:** length()
-    /// dotProduct()
+    /// **See also:** [`length()`]
+    /// [`dot_product()`]
     length() -> f32,
     /// 
     /// Returns the squared length of the vector from the origin.
     /// This is equivalent to the dot product of the vector with itself.
     /// 
-    /// **See also:** length()
-    /// dotProduct()
+    /// **See also:** [`length()`]
+    /// [`dot_product()`]
     length_squared() -> f32,
     /// 
     /// Returns the normalized unit vector form of this vector.
@@ -64,8 +63,8 @@ struct Vector2D {
     /// of the vector is very close to 1, then the vector will be returned as-is.
     /// Otherwise the normalized form of the vector of length 1 will be returned.
     /// 
-    /// **See also:** length()
-    /// normalize()
+    /// **See also:** [`length()`]
+    /// [`normalize()`]
     normalized() -> Vector2D,
     /// 
     /// Returns the normalized unit vector form of this vector.
@@ -74,20 +73,20 @@ struct Vector2D {
     /// of the vector is very close to 1, then the vector will be returned as-is.
     /// Otherwise the normalized form of the vector of length 1 will be returned.
     /// 
-    /// **See also:** length()
-    /// normalize()
+    /// **See also:** [`length()`]
+    /// [`normalize()`]
     /// 
     /// Normalizes the currect vector in place. Nothing happens if this
     /// vector is a null vector or the length of the vector is very close to 1.
     /// 
-    /// **See also:** length()
-    /// normalized()
+    /// **See also:** [`length()`]
+    /// [`normalized()`]
     normalize(),
     /// 
     /// Returns the distance from this vertex to a point defined by
     /// the vertex *point.*
     /// 
-    /// **See also:** distanceToLine()
+    /// **See also:** [`distance_to_line()`]
     distance_to_point(point: &Vector2DType) -> f32,
     /// 
     /// Returns the distance that this vertex is from a line defined
@@ -96,7 +95,7 @@ struct Vector2D {
     /// If *direction* is a null vector, then it does not define a line.
     /// In that case, the distance from *point* to this vertex is returned.
     /// 
-    /// **See also:** distanceToPoint()
+    /// **See also:** [`distance_to_point()`]
     distance_to_line(point: &Vector2DType, direction: &Vector2DType) -> f32,
     /// 
     /// Returns the dot product of *v1* and *v2.*
@@ -104,31 +103,31 @@ struct Vector2D {
     /// 
     /// Returns the 3D form of this 2D vector, with the z coordinate set to zero.
     /// 
-    /// **See also:** toVector4D()
-    /// toPoint()
+    /// **See also:** [`to_vector4_d()`]
+    /// [`to_point()`]
     to_vector3_d() -> Vector3D,
     /// 
     /// Returns the 4D form of this 2D vector, with the z and w coordinates set to zero.
     /// 
-    /// **See also:** toVector3D()
-    /// toPoint()
+    /// **See also:** [`to_vector3_d()`]
+    /// [`to_point()`]
     to_vector4_d() -> Vector4D,
     /// 
     /// Returns the QPoint form of this 2D vector.
     /// 
-    /// **See also:** toPointF()
-    /// toVector3D()
+    /// **See also:** [`to_point_f()`]
+    /// [`to_vector3_d()`]
     /// 
     /// Returns the QPointF form of this 2D vector.
     /// 
-    /// **See also:** toPoint()
-    /// toVector3D()
+    /// **See also:** [`to_point()`]
+    /// [`to_vector3_d()`]
     to_point() -> Point,
     /// 
     /// Returns the QPointF form of this 2D vector.
     /// 
-    /// **See also:** toPoint()
-    /// toVector3D()
+    /// **See also:** [`to_point()`]
+    /// [`to_vector3_d()`]
     to_point_f() -> PointF,
 }
 

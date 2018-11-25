@@ -71,13 +71,17 @@ struct EnumTypeHandler;
 impl TypeHandlerTrait for EnumTypeHandler {
     fn replace_arg(&self, arg: &Variable, _is_return_value: IsReturnArg) -> String {
         let mut base_name = arg.type_name.as_str();
+        let mut prefix_char = "";
 
         if arg.type_name == "Rute" {
             base_name = "Qt";
+        } else {
+            prefix_char = "Q";
         }
 
         format!(
-            "({}::{})s_{}_lookup[{}]",
+            "({}{}::{})s_{}_lookup[{}]",
+            prefix_char,
             base_name,
             arg.enum_sub_type,
             arg.enum_sub_type.to_snake_case(),
@@ -225,7 +229,10 @@ fn generate_includes<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()> {
         .filter(|s| s.name != "StaticFuncs")
     {
         f.write_fmt(format_args!("#include <{}>\n", sdef.qt_name))?;
-        f.write_fmt(format_args!("#include \"{}_ffi.h\"\n", sdef.name.to_snake_case()))?;
+        f.write_fmt(format_args!(
+            "#include \"{}_ffi.h\"\n",
+            sdef.name.to_snake_case()
+        ))?;
     }
 
     f.write_all(b"\n")
@@ -643,14 +650,8 @@ impl QtGenerator {
     ) -> io::Result<()> {
         let mut object = Object::new();
 
-        object.insert(
-            "type_name".into(),
-            Value::scalar(sdef.name.to_snake_case())
-        );
-        object.insert(
-            "event_type_snake".into(),
-            Value::scalar(&func.name)
-        );
+        object.insert("type_name".into(), Value::scalar(sdef.name.to_snake_case()));
+        object.insert("event_type_snake".into(), Value::scalar(&func.name));
         object.insert("event_type".into(), Value::scalar(&sdef.name));
         object.insert(
             "event_name".into(),
@@ -1079,6 +1080,10 @@ impl QtGenerator {
                 });
 
             template_data.insert("events".into(), Value::scalar(events));
+            template_data.insert(
+                "supports_clone".into(),
+                Value::scalar(sdef.supports_cpp_clone()),
+            );
 
             let res = self.wrapper_template.render(&template_data).unwrap();
             f.write_all(res.as_bytes())?;
@@ -1245,25 +1250,35 @@ impl QtGenerator {
 
         for api_def in api_defs {
             for enum_def in &api_def.enums {
-                enums.insert(enum_def.name.clone(), enum_def);
+                enums.insert(
+                    (enum_def.name.clone(), enum_def.flags_name.clone()),
+                    enum_def,
+                );
             }
-        }
-
-        let mut enum_org_names = BTreeMap::new();
-
-        for (_, enum_def) in &enums {
-            enum_org_names.insert(&enum_def.original_class_name, ());
         }
 
         dest.write_all(b"#pragma once\n")?;
         dest.write_all(AUTO_GEN_HEADER)?;
         dest.write_all(b"#include <map>\n\n")?;
 
-        for (name, _) in &enums {
+        for ((name, _), _) in &enums {
             dest.write_fmt(format_args!(
                 "extern std::map<int, int> s_{}_lookup;\n",
                 name.to_snake_case()
             ))?;
+        }
+
+        writeln!(dest, "")?;
+
+        // forwarding define because sometimes Qt uses a macro for this
+        for ((name, flags_name), _) in &enums {
+            if !flags_name.is_empty() {
+                dest.write_fmt(format_args!(
+                    "#define s_{}_lookup s_{}_lookup\n",
+                    flags_name.to_snake_case(),
+                    name.to_snake_case()
+                ))?;
+            }
         }
 
         Ok(())
@@ -1346,6 +1361,7 @@ impl QtGenerator {
     }
 }
 
+/*
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1487,3 +1503,4 @@ mod tests {
     #[test]
     fn test_generate_qt_func_def() {}
 }
+*/

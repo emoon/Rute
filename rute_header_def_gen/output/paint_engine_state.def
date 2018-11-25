@@ -52,18 +52,17 @@
 /// you will have to use this class directly is when implementing your
 /// own paint engine.
 /// 
-/// **See also:** QPaintEngine
+/// **See also:** [`PaintEngine`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct PaintEngineState {
     /// 
     /// Returns a combination of flags identifying the set of properties
     /// that need to be updated when updating the paint engine's state
     /// (i.e. during a call to the QPaintEngine::updateState() function).
     /// 
-    /// **See also:** QPaintEngine::updateState()
+    /// **See also:** [`PaintEngine::update_state`]
     state() -> PaintEngine::DirtyFlags,
     /// 
     /// Returns the pen in the current paint engine state.
@@ -71,8 +70,8 @@ struct PaintEngineState {
     /// This variable should only be used when the state() returns a
     /// combination which includes the QPaintEngine::DirtyPen flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     /// 
     /// Returns whether the coordinate of the stroke have been specified
     /// as bounded by the current rendering operation and have to be
@@ -84,16 +83,16 @@ struct PaintEngineState {
     /// This variable should only be used when the state() returns a
     /// combination which includes the QPaintEngine::DirtyBrush flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     /// 
     /// Returns the brush origin in the current paint engine state.
     /// 
     /// This variable should only be used when the state() returns a
     /// combination which includes the QPaintEngine::DirtyBrushOrigin flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     /// 
     /// Returns whether the coordinate of the fill have been specified
     /// as bounded by the current rendering operation and have to be
@@ -105,8 +104,8 @@ struct PaintEngineState {
     /// This variable should only be used when the state() returns a
     /// combination which includes the QPaintEngine::DirtyBrushOrigin flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     brush_origin() -> PointF,
     /// 
     /// Returns the background brush in the current paint engine state.
@@ -114,8 +113,8 @@ struct PaintEngineState {
     /// This variable should only be used when the state() returns a
     /// combination which includes the QPaintEngine::DirtyBackground flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     background_brush() -> Brush,
     /// 
     /// Returns the background mode in the current paint engine
@@ -124,8 +123,8 @@ struct PaintEngineState {
     /// This variable should only be used when the state() returns a
     /// combination which includes the QPaintEngine::DirtyBackgroundMode flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     background_mode() -> Rute::BGMode,
     /// 
     /// Returns the font in the current paint engine
@@ -134,8 +133,8 @@ struct PaintEngineState {
     /// This variable should only be used when the state() returns a
     /// combination which includes the QPaintEngine::DirtyFont flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     font() -> Font,
     /// 
     /// Returns the clip operation in the current paint engine
@@ -145,8 +144,8 @@ struct PaintEngineState {
     /// combination which includes either the QPaintEngine::DirtyClipPath
     /// or the QPaintEngine::DirtyClipRegion flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     clip_operation() -> Rute::ClipOperation,
     /// 
     /// Returns the clip region in the current paint engine state.
@@ -154,8 +153,8 @@ struct PaintEngineState {
     /// This variable should only be used when the state() returns a
     /// combination which includes the QPaintEngine::DirtyClipRegion flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     clip_region() -> Region,
     /// 
     /// Returns the clip path in the current paint engine state.
@@ -163,8 +162,8 @@ struct PaintEngineState {
     /// This variable should only be used when the state() returns a
     /// combination which includes the QPaintEngine::DirtyClipPath flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     clip_path() -> PainterPath,
     /// 
     /// Returns whether clipping is enabled or not in the current paint
@@ -174,8 +173,8 @@ struct PaintEngineState {
     /// combination which includes the QPaintEngine::DirtyClipEnabled
     /// flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     is_clip_enabled() -> bool,
     /// 
     /// Returns the render hints in the current paint engine state.
@@ -184,8 +183,8 @@ struct PaintEngineState {
     /// combination which includes the QPaintEngine::DirtyHints
     /// flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     render_hints() -> Painter::RenderHints,
     /// 
     /// Returns the composition mode in the current paint engine state.
@@ -194,8 +193,8 @@ struct PaintEngineState {
     /// combination which includes the QPaintEngine::DirtyCompositionMode
     /// flag.
     /// 
-    /// **See also:** state()
-    /// QPaintEngine::updateState()
+    /// **See also:** [`state()`]
+    /// [`PaintEngine::update_state`]
     composition_mode() -> Painter::CompositionMode,
     /// 
     /// Returns the opacity in the current paint engine state.

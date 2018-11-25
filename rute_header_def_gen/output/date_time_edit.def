@@ -26,28 +26,13 @@
 /// calendar pop-up by calling the setCalendarWidget() function. The existing
 /// calendar widget can be retrieved with calendarWidget().
 /// 
-/// **See also:** QDateEdit
-/// QTimeEdit
-/// QDate
-/// QTime
+/// **See also:** [`DateEdit`]
+/// [`TimeEdit`]
+/// [`Date`]
+/// [`Time`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QDateTimeEdit)]
-enum Section {
-    NoSection,
-    AmPmSection,
-    MSecSection,
-    SecondSection,
-    MinuteSection,
-    HourSection,
-    DaySection,
-    MonthSection,
-    YearSection,
-    TimeSections_Mask,
-    DateSections_Mask,
-}
-
 struct DateTimeEdit : AbstractSpinBox {
     /// 
     /// This signal is emitted whenever the date or time is changed. The
@@ -67,8 +52,8 @@ struct DateTimeEdit : AbstractSpinBox {
     /// This virtual function is used by the datetime edit whenever it
     /// needs to interpret text entered by the user as a value.
     /// 
-    /// **See also:** textFromDateTime()
-    /// validate()
+    /// **See also:** [`text_from_date_time()`]
+    /// [`validate()`]
     date_time() -> DateTime,
     /// 
     /// This signal is emitted whenever the date or time is changed. The
@@ -98,8 +83,8 @@ struct DateTimeEdit : AbstractSpinBox {
     /// This virtual function is used by the datetime edit whenever it
     /// needs to interpret text entered by the user as a value.
     /// 
-    /// **See also:** textFromDateTime()
-    /// validate()
+    /// **See also:** [`text_from_date_time()`]
+    /// [`validate()`]
     date() -> Date,
     /// 
     /// This signal is emitted whenever the time is changed. The new time
@@ -125,19 +110,19 @@ struct DateTimeEdit : AbstractSpinBox {
     /// By default, this property contains a date that refers to September 14,
     /// 1752 and a time of 00:00:00 and 0 milliseconds.
     /// 
-    /// **See also:** maximumDateTime()
-    /// minimumTime()
-    /// maximumTime()
-    /// minimumDate()
-    /// maximumDate()
-    /// setDateTimeRange()
-    /// setDateRange()
-    /// setTimeRange()
-    /// clearMaximumDateTime()
-    /// clearMinimumDate()
-    /// clearMaximumDate()
-    /// clearMinimumTime()
-    /// clearMaximumTime()
+    /// **See also:** [`maximum_date_time()`]
+    /// [`minimum_time()`]
+    /// [`maximum_time()`]
+    /// [`minimum_date()`]
+    /// [`maximum_date()`]
+    /// [`set_date_time_range()`]
+    /// [`set_date_range()`]
+    /// [`set_time_range()`]
+    /// [`clear_maximum_date_time()`]
+    /// [`clear_minimum_date()`]
+    /// [`clear_maximum_date()`]
+    /// [`clear_minimum_time()`]
+    /// [`clear_maximum_time()`]
     minimum_date_time() -> DateTime,
     clear_minimum_date_time(),
     set_minimum_date_time(dt: &DateTimeType),
@@ -153,19 +138,19 @@ struct DateTimeEdit : AbstractSpinBox {
     /// By default, this property contains a date that refers to 31 December,
     /// 9999 and a time of 23:59:59 and 999 milliseconds.
     /// 
-    /// **See also:** minimumDateTime()
-    /// minimumTime()
-    /// maximumTime()
-    /// minimumDate()
-    /// maximumDate()
-    /// setDateTimeRange()
-    /// setDateRange()
-    /// setTimeRange()
-    /// clearMinimumDateTime()
-    /// clearMinimumDate()
-    /// clearMaximumDate()
-    /// clearMinimumTime()
-    /// clearMaximumTime()
+    /// **See also:** [`minimum_date_time()`]
+    /// [`minimum_time()`]
+    /// [`maximum_time()`]
+    /// [`minimum_date()`]
+    /// [`maximum_date()`]
+    /// [`set_date_time_range()`]
+    /// [`set_date_range()`]
+    /// [`set_time_range()`]
+    /// [`clear_minimum_date_time()`]
+    /// [`clear_minimum_date()`]
+    /// [`clear_maximum_date()`]
+    /// [`clear_minimum_time()`]
+    /// [`clear_maximum_time()`]
     maximum_date_time() -> DateTime,
     clear_maximum_date_time(),
     set_maximum_date_time(dt: &DateTimeType),
@@ -178,15 +163,15 @@ struct DateTimeEdit : AbstractSpinBox {
     /// If either *min* or *max* are not valid, this function does
     /// nothing.
     /// 
-    /// **See also:** setMinimumDate()
-    /// maximumDate()
-    /// setMaximumDate()
-    /// clearMinimumDate()
-    /// setMinimumTime()
-    /// maximumTime()
-    /// setMaximumTime()
-    /// clearMinimumTime()
-    /// QDateTime::isValid()
+    /// **See also:** [`set_minimum_date()`]
+    /// [`maximum_date()`]
+    /// [`set_maximum_date()`]
+    /// [`clear_minimum_date()`]
+    /// [`set_minimum_time()`]
+    /// [`maximum_time()`]
+    /// [`set_maximum_time()`]
+    /// [`clear_minimum_time()`]
+    /// [`DateTime::is_valid`]
     set_date_time_range(min: &DateTimeType, max: &DateTimeType),
     /// 
     /// When setting this property the [maximumDateTime()](maximumDateTime())
@@ -200,19 +185,19 @@ struct DateTimeEdit : AbstractSpinBox {
     /// By default, this property contains a date that refers to September 14,
     /// 1752 and a time of 00:00:00 and 0 milliseconds.
     /// 
-    /// **See also:** maximumDateTime()
-    /// minimumTime()
-    /// maximumTime()
-    /// minimumDate()
-    /// maximumDate()
-    /// setDateTimeRange()
-    /// setDateRange()
-    /// setTimeRange()
-    /// clearMaximumDateTime()
-    /// clearMinimumDate()
-    /// clearMaximumDate()
-    /// clearMinimumTime()
-    /// clearMaximumTime()
+    /// **See also:** [`maximum_date_time()`]
+    /// [`minimum_time()`]
+    /// [`maximum_time()`]
+    /// [`minimum_date()`]
+    /// [`maximum_date()`]
+    /// [`set_date_time_range()`]
+    /// [`set_date_range()`]
+    /// [`set_time_range()`]
+    /// [`clear_maximum_date_time()`]
+    /// [`clear_minimum_date()`]
+    /// [`clear_maximum_date()`]
+    /// [`clear_minimum_time()`]
+    /// [`clear_maximum_time()`]
     /// 
     /// When setting this property the [maximumDate](maximumDate)
     /// is adjusted if
@@ -223,9 +208,9 @@ struct DateTimeEdit : AbstractSpinBox {
     /// The minimum date must be at least the first day in year 100, otherwise
     /// setMinimumDate() has no effect.
     /// 
-    /// **See also:** minimumTime()
-    /// maximumTime()
-    /// setDateRange()
+    /// **See also:** [`minimum_time()`]
+    /// [`maximum_time()`]
+    /// [`set_date_range()`]
     minimum_date() -> Date,
     set_minimum_date(min: &DateType),
     clear_minimum_date(),
@@ -241,19 +226,19 @@ struct DateTimeEdit : AbstractSpinBox {
     /// By default, this property contains a date that refers to 31 December,
     /// 9999 and a time of 23:59:59 and 999 milliseconds.
     /// 
-    /// **See also:** minimumDateTime()
-    /// minimumTime()
-    /// maximumTime()
-    /// minimumDate()
-    /// maximumDate()
-    /// setDateTimeRange()
-    /// setDateRange()
-    /// setTimeRange()
-    /// clearMinimumDateTime()
-    /// clearMinimumDate()
-    /// clearMaximumDate()
-    /// clearMinimumTime()
-    /// clearMaximumTime()
+    /// **See also:** [`minimum_date_time()`]
+    /// [`minimum_time()`]
+    /// [`maximum_time()`]
+    /// [`minimum_date()`]
+    /// [`maximum_date()`]
+    /// [`set_date_time_range()`]
+    /// [`set_date_range()`]
+    /// [`set_time_range()`]
+    /// [`clear_minimum_date_time()`]
+    /// [`clear_minimum_date()`]
+    /// [`clear_maximum_date()`]
+    /// [`clear_minimum_time()`]
+    /// [`clear_maximum_time()`]
     /// 
     /// When setting this property the [minimumDate](minimumDate)
     /// is adjusted if
@@ -265,7 +250,7 @@ struct DateTimeEdit : AbstractSpinBox {
     /// **See also:** minimumDate
     /// minimumTime
     /// maximumTime
-    /// setDateRange()
+    /// [`set_date_range()`]
     maximum_date() -> Date,
     set_maximum_date(max: &DateType),
     clear_maximum_date(),
@@ -278,15 +263,15 @@ struct DateTimeEdit : AbstractSpinBox {
     /// If either *min* or *max* are not valid, this function does
     /// nothing.
     /// 
-    /// **See also:** setMinimumDate()
-    /// maximumDate()
-    /// setMaximumDate()
-    /// clearMinimumDate()
-    /// setMinimumTime()
-    /// maximumTime()
-    /// setMaximumTime()
-    /// clearMinimumTime()
-    /// QDate::isValid()
+    /// **See also:** [`set_minimum_date()`]
+    /// [`maximum_date()`]
+    /// [`set_maximum_date()`]
+    /// [`clear_minimum_date()`]
+    /// [`set_minimum_time()`]
+    /// [`maximum_time()`]
+    /// [`set_maximum_time()`]
+    /// [`clear_minimum_time()`]
+    /// [`Date::is_valid`]
     set_date_range(min: &DateType, max: &DateType),
     /// 
     /// When setting this property the [maximumTime](maximumTime)
@@ -299,7 +284,7 @@ struct DateTimeEdit : AbstractSpinBox {
     /// **See also:** maximumTime
     /// minimumDate
     /// maximumDate
-    /// setTimeRange()
+    /// [`set_time_range()`]
     minimum_time() -> Time,
     set_minimum_time(min: &TimeType),
     clear_minimum_time(),
@@ -314,7 +299,7 @@ struct DateTimeEdit : AbstractSpinBox {
     /// **See also:** minimumTime
     /// minimumDate
     /// maximumDate
-    /// setTimeRange()
+    /// [`set_time_range()`]
     maximum_time() -> Time,
     set_maximum_time(max: &TimeType),
     clear_maximum_time(),
@@ -327,15 +312,15 @@ struct DateTimeEdit : AbstractSpinBox {
     /// If either *min* or *max* are not valid, this function does
     /// nothing.
     /// 
-    /// **See also:** setMinimumDate()
-    /// maximumDate()
-    /// setMaximumDate()
-    /// clearMinimumDate()
-    /// setMinimumTime()
-    /// maximumTime()
-    /// setMaximumTime()
-    /// clearMinimumTime()
-    /// QTime::isValid()
+    /// **See also:** [`set_minimum_date()`]
+    /// [`maximum_date()`]
+    /// [`set_maximum_date()`]
+    /// [`clear_minimum_date()`]
+    /// [`set_minimum_time()`]
+    /// [`maximum_time()`]
+    /// [`set_maximum_time()`]
+    /// [`clear_minimum_time()`]
+    /// [`Time::is_valid`]
     set_time_range(min: &TimeType, max: &TimeType),
     /// 
     /// Returns a bit set of the displayed sections for this format.
@@ -349,7 +334,7 @@ struct DateTimeEdit : AbstractSpinBox {
     /// cursorPosition is 3, currentSectionIndex is 0, and so on.
     /// 
     /// *setCurrentSection()*
-    /// **See also:** currentSection()
+    /// **See also:** [`current_section()`]
     current_section() -> DateTimeEdit::Section,
     /// 
     /// Returns the Section at *index.*
@@ -365,7 +350,7 @@ struct DateTimeEdit : AbstractSpinBox {
     /// cursorPosition is 3, currentSectionIndex is 0, and so on.
     /// 
     /// *setCurrentSection()*
-    /// **See also:** currentSection()
+    /// **See also:** [`current_section()`]
     current_section_index() -> i32,
     set_current_section_index(index: i32),
     /// 
@@ -387,12 +372,12 @@ struct DateTimeEdit : AbstractSpinBox {
     /// Otherwise, this function will move the cursor and the current section
     /// to the selected section.
     /// 
-    /// **See also:** currentSection()
+    /// **See also:** [`current_section()`]
     set_selected_section(section: DateTimeEdit::Section),
     /// 
     /// Returns the text from the given *section.*
     /// 
-    /// **See also:** currentSection()
+    /// **See also:** [`current_section()`]
     section_text(section: DateTimeEdit::Section) -> String,
     /// 
     /// This format is described in QDateTime::toString() and QDateTime::fromString()
@@ -414,15 +399,15 @@ struct DateTimeEdit : AbstractSpinBox {
     /// 
     /// If you specify an invalid format the format will not be set.
     /// 
-    /// **See also:** QDateTime::toString()
-    /// displayedSections()
+    /// **See also:** [`DateTime::to_string`]
+    /// [`displayed_sections()`]
     display_format() -> String,
     set_display_format(format: String),
     /// 
     /// The calendar pop-up will be shown upon clicking the arrow button.
     /// This property is valid only if there is a valid date display format.
     /// 
-    /// **See also:** setDisplayFormat()
+    /// **See also:** [`set_display_format()`]
     calendar_popup() -> bool,
     set_calendar_popup(enable: bool),
     /// 
@@ -457,15 +442,15 @@ struct DateTimeEdit : AbstractSpinBox {
     /// If either *min* or *max* are not valid, this function does
     /// nothing.
     /// 
-    /// **See also:** setMinimumDate()
-    /// maximumDate()
-    /// setMaximumDate()
-    /// clearMinimumDate()
-    /// setMinimumTime()
-    /// maximumTime()
-    /// setMaximumTime()
-    /// clearMinimumTime()
-    /// QDateTime::isValid()
+    /// **See also:** [`set_minimum_date()`]
+    /// [`maximum_date()`]
+    /// [`set_maximum_date()`]
+    /// [`clear_minimum_date()`]
+    /// [`set_minimum_time()`]
+    /// [`maximum_time()`]
+    /// [`set_maximum_time()`]
+    /// [`clear_minimum_time()`]
+    /// [`DateTime::is_valid`]
     set_date_time(date_time: &DateTimeType),
     /// 
     /// Convenience function to set minimum and maximum date time with one
@@ -476,15 +461,15 @@ struct DateTimeEdit : AbstractSpinBox {
     /// If either *min* or *max* are not valid, this function does
     /// nothing.
     /// 
-    /// **See also:** setMinimumDate()
-    /// maximumDate()
-    /// setMaximumDate()
-    /// clearMinimumDate()
-    /// setMinimumTime()
-    /// maximumTime()
-    /// setMaximumTime()
-    /// clearMinimumTime()
-    /// QDateTime::isValid()
+    /// **See also:** [`set_minimum_date()`]
+    /// [`maximum_date()`]
+    /// [`set_maximum_date()`]
+    /// [`clear_minimum_date()`]
+    /// [`set_minimum_time()`]
+    /// [`maximum_time()`]
+    /// [`set_maximum_time()`]
+    /// [`clear_minimum_time()`]
+    /// [`DateTime::is_valid`]
     /// 
     /// Convenience function to set minimum and maximum date with one
     /// function call.
@@ -494,15 +479,15 @@ struct DateTimeEdit : AbstractSpinBox {
     /// If either *min* or *max* are not valid, this function does
     /// nothing.
     /// 
-    /// **See also:** setMinimumDate()
-    /// maximumDate()
-    /// setMaximumDate()
-    /// clearMinimumDate()
-    /// setMinimumTime()
-    /// maximumTime()
-    /// setMaximumTime()
-    /// clearMinimumTime()
-    /// QDate::isValid()
+    /// **See also:** [`set_minimum_date()`]
+    /// [`maximum_date()`]
+    /// [`set_maximum_date()`]
+    /// [`clear_minimum_date()`]
+    /// [`set_minimum_time()`]
+    /// [`maximum_time()`]
+    /// [`set_maximum_time()`]
+    /// [`clear_minimum_time()`]
+    /// [`Date::is_valid`]
     set_date(date: &DateType),
     /// 
     /// Convenience function to set minimum and maximum time with one
@@ -513,15 +498,15 @@ struct DateTimeEdit : AbstractSpinBox {
     /// If either *min* or *max* are not valid, this function does
     /// nothing.
     /// 
-    /// **See also:** setMinimumDate()
-    /// maximumDate()
-    /// setMaximumDate()
-    /// clearMinimumDate()
-    /// setMinimumTime()
-    /// maximumTime()
-    /// setMaximumTime()
-    /// clearMinimumTime()
-    /// QTime::isValid()
+    /// **See also:** [`set_minimum_date()`]
+    /// [`maximum_date()`]
+    /// [`set_maximum_date()`]
+    /// [`clear_minimum_date()`]
+    /// [`set_minimum_time()`]
+    /// [`maximum_time()`]
+    /// [`set_maximum_time()`]
+    /// [`clear_minimum_time()`]
+    /// [`Time::is_valid`]
     set_time(time: &TimeType),
     /// 
     [event] key_press_event(event: *KeyEventType),
@@ -540,8 +525,8 @@ struct DateTimeEdit : AbstractSpinBox {
     /// This virtual function is used by the datetime edit whenever it
     /// needs to interpret text entered by the user as a value.
     /// 
-    /// **See also:** textFromDateTime()
-    /// validate()
+    /// **See also:** [`text_from_date_time()`]
+    /// [`validate()`]
     [event] date_time_from_text(text: String) -> DateTime,
     /// 
     /// This virtual function is used by the date time edit whenever it
@@ -549,8 +534,8 @@ struct DateTimeEdit : AbstractSpinBox {
     /// 
     /// If you reimplement this, you may also need to reimplement validate().
     /// 
-    /// **See also:** dateTimeFromText()
-    /// validate()
+    /// **See also:** [`date_time_from_text()`]
+    /// [`validate()`]
     [event] text_from_date_time(dt: &DateTimeType) -> String,
     /// 
     [event] step_enabled() -> AbstractSpinBox::StepEnabled,
@@ -563,8 +548,32 @@ struct DateTimeEdit : AbstractSpinBox {
     /// is useful for subclasses when they need a QStyleOptionSpinBox, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionSpinBoxType),
+}
+
+[org_name(QDateTimeEdit)]
+enum Section {
+    /// 
+    NoSection,
+    /// 
+    AmPmSection,
+    /// 
+    MSecSection,
+    /// 
+    SecondSection,
+    /// 
+    MinuteSection,
+    /// 
+    HourSection,
+    /// 
+    DaySection,
+    /// 
+    MonthSection,
+    /// 
+    YearSection,
+    TimeSections_Mask,
+    DateSections_Mask,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

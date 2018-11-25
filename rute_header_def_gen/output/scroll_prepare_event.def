@@ -6,8 +6,8 @@
 /// It is not guaranteed that a QScrollEvent will be sent after an acceepted
 /// QScrollPrepareEvent, e.g. in a case where the maximum content position is (0,0).
 /// 
-/// **See also:** QScrollEvent
-/// QScroller
+/// **See also:** [`ScrollEvent`]
+/// [`Scroller`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -18,7 +18,7 @@ struct ScrollPrepareEvent : Event {
     /// 
     /// Returns size of the area that is to be scrolled as set by setViewportSize
     /// 
-    /// **See also:** setViewportSize()
+    /// **See also:** [`set_viewport_size()`]
     viewport_size() -> SizeF,
     /// 
     /// Returns the range of coordinates for the content as set by setContentPosRange().
@@ -31,21 +31,21 @@ struct ScrollPrepareEvent : Event {
     /// 
     /// Sets the size of the area that is to be scrolled to *size.*
     /// 
-    /// **See also:** viewportSize()
+    /// **See also:** [`viewport_size()`]
     set_viewport_size(size: &SizeFType),
     /// 
     /// Sets the range of content coordinates to *rect.*
     /// 
-    /// **See also:** contentPosRange()
+    /// **See also:** [`content_pos_range()`]
     set_content_pos_range(rect: &RectFType),
     /// 
     /// Sets the range of content coordinates to *rect.*
     /// 
-    /// **See also:** contentPosRange()
+    /// **See also:** [`content_pos_range()`]
     /// 
     /// Sets the current content position to *pos.*
     /// 
-    /// **See also:** contentPos()
+    /// **See also:** [`content_pos()`]
     set_content_pos(pos: &PointFType),
 }
 

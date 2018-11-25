@@ -54,9 +54,9 @@
 /// * Miscellaneous
 /// * startingUp(), closingDown().
 /// 
-/// **See also:** QCoreApplication
-/// QAbstractEventDispatcher
-/// QEventLoop
+/// **See also:** [`CoreApplication`]
+/// [`AbstractEventDispatcher`]
+/// [`EventLoop`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -89,19 +89,19 @@ struct GuiApplication : CoreApplication {
     /// 
     /// The list is empty if there are no windows.
     /// 
-    /// **See also:** topLevelWindows()
+    /// **See also:** [`top_level_windows()`]
     [static] all_windows() -> WindowList,
     /// 
     /// Returns a list of the top-level windows in the application.
     /// 
-    /// **See also:** allWindows()
+    /// **See also:** [`all_windows()`]
     [static] top_level_windows() -> WindowList,
     /// 
     /// Returns the top level window at the given position *pos,* if any.
     [static] top_level_at(pos: &PointType) -> Window?,
     [static] set_window_icon(icon: &IconType),
     /// 
-    /// **See also:** QWindow::setIcon()
+    /// **See also:** [`Window::set_icon`]
     /// {Setting the Application Icon}
     [static] window_icon() -> Icon,
     /// 
@@ -144,8 +144,8 @@ struct GuiApplication : CoreApplication {
     /// Modal window are organized in a stack. This function returns the modal
     /// window at the top of the stack.
     /// 
-    /// **See also:** Qt::WindowModality
-    /// QWindow::setModality()
+    /// **See also:** [`t::window_modality()`]
+    /// [`Window::set_modality`]
     [static] modal_window() -> Window?,
     /// 
     /// Returns the QWindow that receives events tied to focus,
@@ -154,13 +154,13 @@ struct GuiApplication : CoreApplication {
     /// This signal is emitted when the focused window changes.
     /// *focusWindow* is the new focused window.
     /// 
-    /// **See also:** focusWindow()
+    /// **See also:** [`focus_window()`]
     [static] focus_window() -> Window?,
     /// 
     /// This signal is emitted when final receiver of events tied to focus is changed.
     /// *focusObject* is the new receiver.
     /// 
-    /// **See also:** focusObject()
+    /// **See also:** [`focus_object()`]
     /// 
     /// Returns the QObject in currently active window that will be final receiver of events
     /// tied to focus, such as key events.
@@ -170,7 +170,7 @@ struct GuiApplication : CoreApplication {
     /// 
     /// The primaryScreenChanged signal was introduced in Qt 5.6.
     /// 
-    /// **See also:** screens()
+    /// **See also:** [`screens()`]
     [static] primary_screen() -> Screen?,
     /// 
     /// Returns a list of all the screens associated with the
@@ -192,7 +192,7 @@ struct GuiApplication : CoreApplication {
     /// Use this function only when you don't know which window you are targeting.
     /// If you do know the target window, use QWindow::devicePixelRatio() instead.
     /// 
-    /// **See also:** QWindow::devicePixelRatio()
+    /// **See also:** [`Window::device_pixel_ratio`]
     device_pixel_ratio() -> f32,
     /// 
     /// Returns the active application override cursor.
@@ -200,8 +200,8 @@ struct GuiApplication : CoreApplication {
     /// This function returns 0 if no application cursor has been defined (i.e. the
     /// internal cursor stack is empty).
     /// 
-    /// **See also:** setOverrideCursor()
-    /// restoreOverrideCursor()
+    /// **See also:** [`set_override_cursor()`]
+    /// [`restore_override_cursor()`]
     [static] override_cursor() -> Cursor?,
     /// 
     /// Sets the application override cursor to *cursor.*
@@ -223,20 +223,20 @@ struct GuiApplication : CoreApplication {
     /// 
     /// Example:
     /// 
-    /// **See also:** overrideCursor()
-    /// restoreOverrideCursor()
-    /// changeOverrideCursor()
-    /// QWidget::setCursor()
+    /// **See also:** [`override_cursor()`]
+    /// [`restore_override_cursor()`]
+    /// [`change_override_cursor()`]
+    /// [`Widget::set_cursor`]
     [static] set_override_cursor(arg0: &CursorType),
     /// 
     /// Changes the currently active application override cursor to *cursor.*
     /// 
     /// This function has no effect if setOverrideCursor() was not called.
     /// 
-    /// **See also:** setOverrideCursor()
-    /// overrideCursor()
-    /// restoreOverrideCursor()
-    /// QWidget::setCursor()
+    /// **See also:** [`set_override_cursor()`]
+    /// [`override_cursor()`]
+    /// [`restore_override_cursor()`]
+    /// [`Widget::set_cursor`]
     [static] change_override_cursor(arg0: &CursorType),
     /// 
     /// Undoes the last setOverrideCursor().
@@ -245,29 +245,29 @@ struct GuiApplication : CoreApplication {
     /// restoreOverrideCursor() will activate the first cursor set. Calling this
     /// function a second time restores the original widgets' cursors.
     /// 
-    /// **See also:** setOverrideCursor()
-    /// overrideCursor()
+    /// **See also:** [`set_override_cursor()`]
+    /// [`override_cursor()`]
     [static] restore_override_cursor(),
     /// 
     /// This signal is emitted when the *font* of the application changes.
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     /// 
     /// Returns the default application font.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     /// 
     /// This signal is emitted when application fonts are loaded or removed.
     /// 
-    /// **See also:** QFontDatabase::addApplicationFont()
-    /// QFontDatabase::addApplicationFontFromData()
-    /// QFontDatabase::removeAllApplicationFonts()
-    /// QFontDatabase::removeApplicationFont()
+    /// **See also:** [`FontDatabase::add_application_font`]
+    /// [`FontDatabase::add_application_font_from_data`]
+    /// [`FontDatabase::remove_all_application_fonts`]
+    /// [`FontDatabase::remove_application_font`]
     [static] font() -> Font,
     /// 
     /// Changes the default application font to *font.*
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     [static] set_font(arg0: &FontType),
     /// 
     /// Returns the object for interacting with the clipboard.
@@ -275,16 +275,16 @@ struct GuiApplication : CoreApplication {
     /// 
     /// This signal is emitted when the *palette* of the application changes.
     /// 
-    /// **See also:** palette()
+    /// **See also:** [`palette()`]
     /// 
     /// Returns the default application palette.
     /// 
-    /// **See also:** setPalette()
+    /// **See also:** [`set_palette()`]
     [static] palette() -> Palette,
     /// 
     /// Changes the default application palette to *pal.*
     /// 
-    /// **See also:** palette()
+    /// **See also:** [`palette()`]
     [static] set_palette(pal: &PaletteType),
     /// 
     /// Returns the current state of the modifier keys on the keyboard. The current
@@ -297,8 +297,8 @@ struct GuiApplication : CoreApplication {
     /// one of the above events. If no keys are being held Qt::NoModifier is
     /// returned.
     /// 
-    /// **See also:** mouseButtons()
-    /// queryKeyboardModifiers()
+    /// **See also:** [`mouse_buttons()`]
+    /// [`query_keyboard_modifiers()`]
     [static] keyboard_modifiers() -> Rute::KeyboardModifiers,
     /// 
     /// Queries and returns the state of the modifier keys on the keyboard.
@@ -312,7 +312,7 @@ struct GuiApplication : CoreApplication {
     /// the state of the modifiers as they were when the currently processed
     /// event was received.
     /// 
-    /// **See also:** keyboardModifiers()
+    /// **See also:** [`keyboard_modifiers()`]
     [static] query_keyboard_modifiers() -> Rute::KeyboardModifiers,
     /// 
     /// Returns the current state of the buttons on the mouse. The current state is
@@ -325,7 +325,7 @@ struct GuiApplication : CoreApplication {
     /// reported in one of the above events. If no mouse buttons are being held
     /// Qt::NoButton is returned.
     /// 
-    /// **See also:** keyboardModifiers()
+    /// **See also:** [`keyboard_modifiers()`]
     [static] mouse_buttons() -> Rute::MouseButtons,
     [static] set_layout_direction(direction: Rute::LayoutDirection),
     /// 
@@ -334,23 +334,23 @@ struct GuiApplication : CoreApplication {
     /// 
     /// The notifier signal was introduced in Qt 5.4.
     /// 
-    /// **See also:** QWidget::layoutDirection
-    /// isLeftToRight()
-    /// isRightToLeft()
+    /// **See also:** [`Widget::layout_direction()`]
+    /// [`is_left_to_right()`]
+    /// [`is_right_to_left()`]
     [static] layout_direction() -> Rute::LayoutDirection,
     /// 
     /// Returns `true` if the application's layout direction is
     /// Qt::RightToLeft; otherwise returns `false.`
     /// 
-    /// **See also:** layoutDirection()
-    /// isLeftToRight()
+    /// **See also:** [`layout_direction()`]
+    /// [`is_left_to_right()`]
     [static] is_right_to_left() -> bool,
     /// 
     /// Returns `true` if the application's layout direction is
     /// Qt::LeftToRight; otherwise returns `false.`
     /// 
-    /// **See also:** layoutDirection()
-    /// isRightToLeft()
+    /// **See also:** [`layout_direction()`]
+    /// [`is_right_to_left()`]
     [static] is_left_to_right() -> bool,
     /// 
     /// Returns the application's style hints.
@@ -360,7 +360,7 @@ struct GuiApplication : CoreApplication {
     /// 
     /// The hints can be used to integrate tighter with the underlying platform.
     /// 
-    /// **See also:** QStyleHints
+    /// **See also:** [`StyleHints`]
     [static] style_hints() -> StyleHints?,
     /// 
     /// Sets whether Qt should use the system's standard colors, fonts, etc., to
@@ -369,13 +369,13 @@ struct GuiApplication : CoreApplication {
     /// This function must be called before creating the QGuiApplication object, like
     /// this:
     /// 
-    /// **See also:** desktopSettingsAware()
+    /// **See also:** [`desktop_settings_aware()`]
     [static] set_desktop_settings_aware(on: bool),
     /// 
     /// Returns `true` if Qt is set to use the system's standard colors, fonts, etc.;
     /// otherwise returns `false.` The default is `true.`
     /// 
-    /// **See also:** setDesktopSettingsAware()
+    /// **See also:** [`set_desktop_settings_aware()`]
     [static] desktop_settings_aware() -> bool,
     /// 
     /// returns the input method.
@@ -384,7 +384,7 @@ struct GuiApplication : CoreApplication {
     /// the virtual keyboard. It also provides information about the position of the
     /// current focused input element.
     /// 
-    /// **See also:** QInputMethod
+    /// **See also:** [`InputMethod`]
     [static] input_method() -> InputMethod?,
     /// 
     /// Returns the platform's native interface, for platform specific
@@ -400,8 +400,8 @@ struct GuiApplication : CoreApplication {
     /// If this property is `true,` the applications quits when the last visible
     /// primary window (i.e. window with no parent) is closed.
     /// 
-    /// **See also:** quit()
-    /// QWindow::close()
+    /// **See also:** [`quit()`]
+    /// [`Window::close`]
     [static] quit_on_last_window_closed() -> bool,
     /// 
     /// Returns the current state of the application.
@@ -412,7 +412,7 @@ struct GuiApplication : CoreApplication {
     /// 
     /// This signal is emitted when the *state* of the application changes.
     /// 
-    /// **See also:** applicationState()
+    /// **See also:** [`application_state()`]
     [static] application_state() -> Rute::ApplicationState,
     /// 
     /// Enters the main event loop and waits until exit() is called, and then
@@ -436,10 +436,10 @@ struct GuiApplication : CoreApplication {
     /// QApplication::exec() call may not return.
     /// 
     /// **See also:** quitOnLastWindowClosed
-    /// quit()
-    /// exit()
-    /// processEvents()
-    /// QCoreApplication::exec()
+    /// [`quit()`]
+    /// [`exit()`]
+    /// [`process_events()`]
+    /// [`CoreApplication::exec`]
     [static] exec() -> i32,
     /// 
     [event] notify(arg0: *ObjectType, arg1: *EventType) -> bool,
@@ -448,9 +448,9 @@ struct GuiApplication : CoreApplication {
     /// [session](Session%20Management)
     /// ; otherwise returns `false.`
     /// 
-    /// **See also:** sessionId()
-    /// commitDataRequest()
-    /// saveStateRequest()
+    /// **See also:** [`session_id()`]
+    /// [`commit_data_request()`]
+    /// [`save_state_request()`]
     is_session_restored() -> bool,
     /// 
     /// Returns the current [session's](Session%20Management)
@@ -461,10 +461,10 @@ struct GuiApplication : CoreApplication {
     /// identifier is guaranteed to be unique both for different applications
     /// and for different instances of the same application.
     /// 
-    /// **See also:** isSessionRestored()
-    /// sessionKey()
-    /// commitDataRequest()
-    /// saveStateRequest()
+    /// **See also:** [`is_session_restored()`]
+    /// [`session_key()`]
+    /// [`commit_data_request()`]
+    /// [`save_state_request()`]
     session_id() -> String,
     /// 
     /// Returns the session key in the current [session](Session%20Management)
@@ -476,10 +476,10 @@ struct GuiApplication : CoreApplication {
     /// The session key changes every time the session is saved. If the shutdown process
     /// is cancelled, another session key will be used when shutting down again.
     /// 
-    /// **See also:** isSessionRestored()
-    /// sessionId()
-    /// commitDataRequest()
-    /// saveStateRequest()
+    /// **See also:** [`is_session_restored()`]
+    /// [`session_id()`]
+    /// [`commit_data_request()`]
+    /// [`save_state_request()`]
     session_key() -> String,
     /// 
     /// Returns `true` if the application is currently saving the
@@ -489,9 +489,9 @@ struct GuiApplication : CoreApplication {
     /// This is `true` when commitDataRequest() and saveStateRequest() are emitted,
     /// but also when the windows are closed afterwards by session management.
     /// 
-    /// **See also:** sessionId()
-    /// commitDataRequest()
-    /// saveStateRequest()
+    /// **See also:** [`session_id()`]
+    /// [`commit_data_request()`]
+    /// [`save_state_request()`]
     is_saving_session() -> bool,
     /// 
     /// Returns whether QGuiApplication will use fallback session management.
@@ -517,17 +517,17 @@ struct GuiApplication : CoreApplication {
     /// management protocol. That violation of protocol may prevent the platform
     /// session manager from saving application state.
     /// 
-    /// **See also:** setFallbackSessionManagementEnabled()
-    /// QSessionManager::allowsInteraction()
-    /// saveStateRequest()
-    /// commitDataRequest()
+    /// **See also:** [`set_fallback_session_management_enabled()`]
+    /// [`SessionManager::allows_interaction`]
+    /// [`save_state_request()`]
+    /// [`commit_data_request()`]
     /// {Session Management}
     [static] is_fallback_session_management_enabled() -> bool,
     /// 
     /// Sets whether QGuiApplication will use fallback session management to
     /// *enabled.*
     /// 
-    /// **See also:** isFallbackSessionManagementEnabled()
+    /// **See also:** [`is_fallback_session_management_enabled()`]
     [static] set_fallback_session_management_enabled(arg0: bool),
     /// 
     /// Function that can be used to sync Qt state with the Window Systems state.
@@ -541,27 +541,27 @@ struct GuiApplication : CoreApplication {
     /// 
     /// This signal is emitted when application fonts are loaded or removed.
     /// 
-    /// **See also:** QFontDatabase::addApplicationFont()
-    /// QFontDatabase::addApplicationFontFromData()
-    /// QFontDatabase::removeAllApplicationFonts()
-    /// QFontDatabase::removeApplicationFont()
+    /// **See also:** [`FontDatabase::add_application_font`]
+    /// [`FontDatabase::add_application_font_from_data`]
+    /// [`FontDatabase::remove_all_application_fonts`]
+    /// [`FontDatabase::remove_application_font`]
     [signal] font_database_changed(),
     /// 
     /// This signal is emitted whenever a new screen *screen* has been added to the system.
     /// 
-    /// **See also:** screens()
+    /// **See also:** [`screens()`]
     /// primaryScreen
-    /// screenRemoved()
+    /// [`screen_removed()`]
     [signal] screen_added(screen: *ScreenType),
     /// 
     /// This signal is emitted whenever a *screen* is removed from the system. It
     /// provides an opportunity to manage the windows on the screen before Qt falls back
     /// to moving them to the primary screen.
     /// 
-    /// **See also:** screens()
-    /// screenAdded()
-    /// QObject::destroyed()
-    /// QWindow::setScreen()
+    /// **See also:** [`screens()`]
+    /// [`screen_added()`]
+    /// [`Object::destroyed`]
+    /// [`Window::set_screen`]
     /// 
     [signal] screen_removed(screen: *ScreenType),
     [signal] primary_screen_changed(screen: *ScreenType),
@@ -573,25 +573,25 @@ struct GuiApplication : CoreApplication {
     /// can be turned off by setting [quitOnLastWindowClosed](quitOnLastWindowClosed)
     /// to `false.`
     /// 
-    /// **See also:** QWindow::close()
-    /// QWindow::isTopLevel()
+    /// **See also:** [`Window::close`]
+    /// [`Window::is_top_level`]
     [signal] last_window_closed(),
     /// 
     /// This signal is emitted when final receiver of events tied to focus is changed.
     /// *focusObject* is the new receiver.
     /// 
-    /// **See also:** focusObject()
+    /// **See also:** [`focus_object()`]
     [signal] focus_object_changed(focus_object: *ObjectType),
     /// 
     /// This signal is emitted when the focused window changes.
     /// *focusWindow* is the new focused window.
     /// 
-    /// **See also:** focusWindow()
+    /// **See also:** [`focus_window()`]
     [signal] focus_window_changed(focus_window: *WindowType),
     /// 
     /// This signal is emitted when the *state* of the application changes.
     /// 
-    /// **See also:** applicationState()
+    /// **See also:** [`application_state()`]
     [signal] application_state_changed(state: Rute::ApplicationState),
     [signal] layout_direction_changed(direction: Rute::LayoutDirection),
     /// 
@@ -615,10 +615,10 @@ struct GuiApplication : CoreApplication {
     /// 
     /// **Note**: You should use Qt::DirectConnection when connecting to this signal.
     /// 
-    /// **See also:** setFallbackSessionManagementEnabled()
-    /// isSessionRestored()
-    /// sessionId()
-    /// saveStateRequest()
+    /// **See also:** [`set_fallback_session_management_enabled()`]
+    /// [`is_session_restored()`]
+    /// [`session_id()`]
+    /// [`save_state_request()`]
     /// {Session Management}
     [signal] commit_data_request(session_manager: &SessionManagerType),
     /// 
@@ -644,21 +644,21 @@ struct GuiApplication : CoreApplication {
     /// 
     /// **Note**: You should use Qt::DirectConnection when connecting to this signal.
     /// 
-    /// **See also:** isSessionRestored()
-    /// sessionId()
-    /// commitDataRequest()
+    /// **See also:** [`is_session_restored()`]
+    /// [`session_id()`]
+    /// [`commit_data_request()`]
     /// {Session Management}
     [signal] save_state_request(session_manager: &SessionManagerType),
     /// 
     /// This signal is emitted when the *palette* of the application changes.
     /// 
-    /// **See also:** palette()
+    /// **See also:** [`palette()`]
     [signal] palette_changed(pal: &PaletteType),
     [signal] application_display_name_changed(),
     /// 
     /// This signal is emitted when the *font* of the application changes.
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     [signal] font_changed(font: &FontType),
     /// 
     [event] event(arg0: *EventType) -> bool,

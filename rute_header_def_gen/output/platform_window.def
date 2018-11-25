@@ -1,7 +1,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct PlatformWindow {
     /// 
     /// Called as part of QWindow::create(), after constructing
@@ -45,7 +44,7 @@ struct PlatformWindow {
     /// **Note**: : The current screen will always be returned for child windows since
     /// they should never signal screen changes.
     /// 
-    /// **See also:** QWindowSystemInterface::handleWindowScreenChanged()
+    /// **See also:** [`WindowSystemInterface::handle_window_screen_changed`]
     screen() -> PlatformScreen?,
     /// 
     /// Returns the actual surface format of the window.
@@ -93,7 +92,7 @@ struct PlatformWindow {
     /// The implementation might want to append the application display name to
     /// the window title, like Windows and Linux do.
     /// 
-    /// **See also:** QGuiApplication::applicationDisplayName()
+    /// **See also:** [`GuiApplication::application_display_name`]
     [event] set_window_title(title: String),
     /// 
     /// Reimplement to set the window file path to *filePath*
@@ -178,14 +177,14 @@ struct PlatformWindow {
     /// additional content like popups, dialogs, status bars, or similar
     /// in relation to the window.
     /// 
-    /// **See also:** QWindow::reportContentOrientationChange()
+    /// **See also:** [`Window::report_content_orientation_change`]
     [event] handle_content_orientation_change(orientation: Rute::ScreenOrientation),
     /// 
     /// Reimplement this function in subclass to return the device pixel ratio
     /// for the window. This is the ratio between physical pixels
     /// and device-independent pixels.
     /// 
-    /// **See also:** QPlatformWindow::devicePixelRatio();
+    /// **See also:** [`PlatformWindow::device_pixel_ratio()`]
     [event] device_pixel_ratio() -> f32,
     [event] set_keyboard_grab_enabled(grab: bool) -> bool,
     [event] set_mouse_grab_enabled(grab: bool) -> bool,
@@ -225,13 +224,13 @@ struct PlatformWindow {
     /// Reimplement this method to set whether the window demands attention
     /// (for example, by flashing the taskbar icon) depending on *enabled.*
     /// 
-    /// **See also:** isAlertState()
+    /// **See also:** [`is_alert_state()`]
     [event] set_alert_state(enabled: bool),
     /// 
     /// Reimplement this method return whether the window is in
     /// an alert state.
     /// 
-    /// **See also:** setAlertState()
+    /// **See also:** [`set_alert_state()`]
     [event] is_alert_state() -> bool,
     /// 
     /// Invalidates the window's surface by releasing its surface buffers.

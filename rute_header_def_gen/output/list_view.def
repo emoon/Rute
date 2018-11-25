@@ -53,43 +53,12 @@
 /// 
 /// **See also:** {View Classes}
 /// {Item Views Puzzle Example}
-/// QTreeView
-/// QTableView
-/// QListWidget
+/// [`TreeView`]
+/// [`TableView`]
+/// [`ListWidget`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QListView)]
-enum Movement {
-    Static,
-    Free,
-    Snap,
-}
-
-[org_name(QListView)]
-enum Flow {
-    LeftToRight,
-    TopToBottom,
-}
-
-[org_name(QListView)]
-enum ResizeMode {
-    Fixed,
-    Adjust,
-}
-
-[org_name(QListView)]
-enum LayoutMode {
-    SinglePass,
-    Batched,
-}
-
-[org_name(QListView)]
-enum ViewMode {
-    ListMode,
-    IconMode,
-}
-
 struct ListView : AbstractItemView {
     set_movement(movement: ListView::Movement),
     /// 
@@ -325,7 +294,7 @@ struct ListView : AbstractItemView {
     /// Returns the rectangle of the item at position *index* in the
     /// model. The rectangle is in contents coordinates.
     /// 
-    /// **See also:** visualRect()
+    /// **See also:** [`visual_rect()`]
     rect_for_index(index: &ModelIndexType) -> Rect,
     /// 
     /// Sets the contents position of the item at *index* in the model to the given
@@ -349,6 +318,49 @@ struct ListView : AbstractItemView {
     [event] current_changed(current: &ModelIndexType, previous: &ModelIndexType),
     /// 
     [event] viewport_size_hint() -> Size,
+}
+
+[org_name(QListView)]
+enum Movement {
+    /// The items cannot be moved by the user.
+    Static,
+    /// The items can be moved freely by the user.
+    Free,
+    /// The items snap to the specified grid when moved; see setGridSize().
+    Snap,
+}
+
+[org_name(QListView)]
+enum Flow {
+    /// The items are laid out in the view from the left to the right.
+    LeftToRight,
+    /// The items are laid out in the view from the top to the bottom.
+    TopToBottom,
+}
+
+[org_name(QListView)]
+enum ResizeMode {
+    /// The items will only be laid out the first time the view is shown.
+    Fixed,
+    /// The items will be laid out every time the view is resized.
+    Adjust,
+}
+
+[org_name(QListView)]
+enum LayoutMode {
+    /// The items are laid out all at once.
+    SinglePass,
+    /// The items are laid out in batches of [batchSize](batchSize)
+ items.
+    Batched,
+}
+
+[org_name(QListView)]
+enum ViewMode {
+    /// The items are laid out using TopToBottom flow, with Small size and Static movement
+    ListMode,
+    /// The items are laid out using LeftToRight flow, with Large size and Free movement
+    IconMode,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

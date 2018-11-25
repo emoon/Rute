@@ -11,46 +11,68 @@
 /// the [Styles](widgets/styles)
 /// example.
 /// 
-/// **See also:** QStyleOption
+/// **See also:** [`StyleOption`]
 /// {model-view-programming.html}{Model/View
 /// Programming}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct StyleOptionViewItem : StyleOption {
+}
+
 [org_name(QStyleOptionViewItem)]
 enum StyleOptionType {
+    /// The type of style option provided ( [SO_ViewItem](SO_ViewItem)
+ for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
     Type,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum StyleOptionVersion {
+    /// 4 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
     Version,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum Position {
+    /// On the left of the text.
     Left,
+    /// On the right of the text.
     Right,
+    /// Above the text.
     Top,
+    /// Below the text.
     Bottom,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum ViewItemFeature {
+    /// Indicates a normal item.
     None,
+    /// Indicates an item with wrapped text.
     WrapText,
+    /// Indicates that the item's background is rendered using alternateBase.
     Alternate,
+    /// Indicates that the item has a check state indicator.
     HasCheckIndicator,
+    /// Indicates that the item has a display role.
     HasDisplay,
+    /// Indicates that the item has a decoration role.
     HasDecoration,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum ViewItemPosition {
+    /// The ViewItemPosition is unknown and should be disregarded.
     Invalid,
+    /// The item appears at the beginning of the row.
     Beginning,
+    /// The item appears in the middle of the row.
     Middle,
+    /// The item appears at the end of the row.
     End,
+    /// The item is the only one on the row, and is therefore both at the beginning and the end.
     OnlyOne,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

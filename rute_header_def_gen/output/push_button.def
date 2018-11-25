@@ -84,9 +84,9 @@
 /// and other API, and QPushButton provides GUI logic.
 /// See QAbstractButton for more information about the API.
 /// 
-/// **See also:** QToolButton
-/// QRadioButton
-/// QCheckBox
+/// **See also:** [`ToolButton`]
+/// [`RadioButton`]
+/// [`CheckBox`]
 /// {fowler}{GUI Design Handbook: Push Button}
 /// # Licence
 ///
@@ -128,13 +128,13 @@ struct PushButton : AbstractButton {
     /// A push button with popup menus shown in the [Fusion widget style](Qt%20Widget%20Gallery)
     /// 
     /// 
-    /// **See also:** menu()
+    /// **See also:** [`menu()`]
     set_menu(menu: *MenuType),
     /// 
     /// Returns the button's associated popup menu or 0 if no popup menu
     /// has been set.
     /// 
-    /// **See also:** setMenu()
+    /// **See also:** [`set_menu()`]
     menu() -> Menu?,
     set_flat(arg0: bool),
     is_flat() -> bool,
@@ -158,7 +158,7 @@ struct PushButton : AbstractButton {
     /// for subclasses when they need a QStyleOptionButton, but don't want to fill
     /// in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionButtonType),
 }
 

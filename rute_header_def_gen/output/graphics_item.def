@@ -188,100 +188,12 @@
 /// functionality is completely untouched by Qt itself; it is provided for the
 /// user's convenience.
 /// 
-/// **See also:** QGraphicsScene
-/// QGraphicsView
+/// **See also:** [`GraphicsScene`]
+/// [`GraphicsView`]
 /// {Graphics View Framework}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsItem)]
-enum GraphicsItemFlag {
-    ItemIsMovable,
-    ItemIsSelectable,
-    ItemIsFocusable,
-    ItemClipsToShape,
-    ItemClipsChildrenToShape,
-    ItemIgnoresTransformations,
-    ItemIgnoresParentOpacity,
-    ItemDoesntPropagateOpacityToChildren,
-    ItemStacksBehindParent,
-    ItemUsesExtendedStyleOption,
-    ItemHasNoContents,
-    ItemSendsGeometryChanges,
-    ItemAcceptsInputMethod,
-    ItemNegativeZStacksBehindParent,
-    ItemIsPanel,
-    ItemIsFocusScope,
-    ItemSendsScenePositionChanges,
-    ItemStopsClickFocusPropagation,
-    ItemStopsFocusHandling,
-    ItemContainsChildrenInShape,
-}
-
-[org_name(QGraphicsItem)]
-enum GraphicsItemChange {
-    ItemPositionChange,
-    ItemMatrixChange,
-    ItemVisibleChange,
-    ItemEnabledChange,
-    ItemSelectedChange,
-    ItemParentChange,
-    ItemChildAddedChange,
-    ItemChildRemovedChange,
-    ItemTransformChange,
-    ItemPositionHasChanged,
-    ItemTransformHasChanged,
-    ItemSceneChange,
-    ItemVisibleHasChanged,
-    ItemEnabledHasChanged,
-    ItemSelectedHasChanged,
-    ItemParentHasChanged,
-    ItemSceneHasChanged,
-    ItemCursorChange,
-    ItemCursorHasChanged,
-    ItemToolTipChange,
-    ItemToolTipHasChanged,
-    ItemFlagsChange,
-    ItemFlagsHaveChanged,
-    ItemZValueChange,
-    ItemZValueHasChanged,
-    ItemOpacityChange,
-    ItemOpacityHasChanged,
-    ItemScenePositionHasChanged,
-    ItemRotationChange,
-    ItemRotationHasChanged,
-    ItemScaleChange,
-    ItemScaleHasChanged,
-    ItemTransformOriginPointChange,
-    ItemTransformOriginPointHasChanged,
-}
-
-[org_name(QGraphicsItem)]
-enum CacheMode {
-    NoCache,
-    ItemCoordinateCache,
-    DeviceCoordinateCache,
-}
-
-[org_name(QGraphicsItem)]
-enum PanelModality {
-    NonModal,
-    PanelModal,
-    SceneModal,
-}
-
-[org_name(QGraphicsItem)]
-enum GraphicsItemFixMeEnums {
-    Type,
-    UserType,
-}
-
-[org_name(QGraphicsItem)]
-enum Extension {
-    UserExtension,
-}
-
-
 struct GraphicsItem {
     /// 
     /// Returns the current scene for the item, or 0 if the item is not stored in
@@ -292,15 +204,15 @@ struct GraphicsItem {
     /// Returns the item's position in scene coordinates. This is
     /// equivalent to calling `mapToScene(0,` 0).
     /// 
-    /// **See also:** pos()
-    /// sceneTransform()
+    /// **See also:** [`pos()`]
+    /// [`scene_transform()`]
     /// {The Graphics View Coordinate System}
     /// 
     /// Use sceneTransform() instead.
     /// 
-    /// **See also:** transform()
-    /// setTransform()
-    /// scenePos()
+    /// **See also:** [`transform()`]
+    /// [`set_transform()`]
+    /// [`scene_pos()`]
     /// {The Graphics View Coordinate System}
     /// 
     /// Returns this item's scene transformation matrix. This matrix can be used
@@ -313,16 +225,16 @@ struct GraphicsItem {
     /// Unlike transform(), which returns only an item's local transformation, this
     /// function includes the item's (and any parents') position, and all the transfomation properties.
     /// 
-    /// **See also:** transform()
-    /// setTransform()
-    /// scenePos()
+    /// **See also:** [`transform()`]
+    /// [`set_transform()`]
+    /// [`scene_pos()`]
     /// {The Graphics View Coordinate System}
     /// {Transformations}
     /// 
     /// Returns the bounding rect of this item in scene coordinates, by combining
     /// sceneTransform() with boundingRect().
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     /// {The Graphics View Coordinate System}
     /// 
     /// Filters events for the item *watched.* *event* is the filtered
@@ -338,7 +250,7 @@ struct GraphicsItem {
     /// item, or return false to indicate that the event should be propagated
     /// further by the event system.
     /// 
-    /// **See also:** installSceneEventFilter()
+    /// **See also:** [`install_scene_event_filter()`]
     /// 
     /// This virtual function receives events to this item. Reimplement
     /// this function to intercept events before they are dispatched to
@@ -357,29 +269,29 @@ struct GraphicsItem {
     /// Returns a pointer to this item's parent item. If this item does not have a
     /// parent, 0 is returned.
     /// 
-    /// **See also:** setParentItem()
-    /// childItems()
+    /// **See also:** [`set_parent_item()`]
+    /// [`child_items()`]
     parent_item() -> GraphicsItem?,
     /// 
     /// Returns this item's top-level item. The top-level item is the item's
     /// topmost ancestor item whose parent is 0. If an item has no parent, its own
     /// pointer is returned (i.e., a top-level item is its own top-level item).
     /// 
-    /// **See also:** parentItem()
+    /// **See also:** [`parent_item()`]
     top_level_item() -> GraphicsItem?,
     /// 
     /// Returns a pointer to the item's parent, cast to a QGraphicsObject. returns 0 if the parent item
     /// is not a QGraphicsObject.
     /// 
-    /// **See also:** parentItem()
-    /// childItems()
+    /// **See also:** [`parent_item()`]
+    /// [`child_items()`]
     parent_object() -> GraphicsObject?,
     /// 
     /// Returns a pointer to the item's parent widget. The item's parent widget is
     /// the closest parent item that is a widget.
     /// 
-    /// **See also:** parentItem()
-    /// childItems()
+    /// **See also:** [`parent_item()`]
+    /// [`child_items()`]
     parent_widget() -> GraphicsWidget?,
     /// 
     /// Returns a pointer to the item's top level widget (i.e., the item's
@@ -392,14 +304,14 @@ struct GraphicsItem {
     /// the item is a window, it will return itself. Otherwise it will return the
     /// closest ancestor that is a window.
     /// 
-    /// **See also:** QGraphicsWidget::isWindow()
+    /// **See also:** [`GraphicsWidget::is_window`]
     window() -> GraphicsWidget?,
     /// 
     /// Returns the item's panel, or 0 if this item does not have a panel. If the
     /// item is a panel, it will return itself. Otherwise it will return the
     /// closest ancestor that is a panel.
     /// 
-    /// **See also:** isPanel()
+    /// **See also:** [`is_panel()`]
     /// ItemIsPanel
     /// 
     /// Returns the modality for this item.
@@ -416,8 +328,8 @@ struct GraphicsItem {
     /// The behavior when calling this function on an item that is an ancestor of
     /// *newParent* is undefined.
     /// 
-    /// **See also:** parentItem()
-    /// childItems()
+    /// **See also:** [`parent_item()`]
+    /// [`child_items()`]
     set_parent_item(parent: *GraphicsItemType),
     /// 
     /// Returns a list of this item's children.
@@ -425,8 +337,8 @@ struct GraphicsItem {
     /// The items are sorted by stacking order. This takes into account both the
     /// items' insertion order and their Z-values.
     /// 
-    /// **See also:** setParentItem()
-    /// zValue()
+    /// **See also:** [`set_parent_item()`]
+    /// [`z_value()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     child_items() -> [GraphicsItem?],
     /// 
@@ -437,12 +349,12 @@ struct GraphicsItem {
     /// Returns `true` if the item is a QGraphicsWidget window, otherwise returns
     /// false.
     /// 
-    /// **See also:** QGraphicsWidget::windowFlags()
+    /// **See also:** [`GraphicsWidget::window_flags`]
     is_window() -> bool,
     /// 
     /// Returns `true` if the item is a panel; otherwise returns `false.`
     /// 
-    /// **See also:** QGraphicsItem::panel()
+    /// **See also:** [`GraphicsItem::panel`]
     /// ItemIsPanel
     is_panel() -> bool,
     /// 
@@ -458,21 +370,22 @@ struct GraphicsItem {
     /// 
     /// Return the graphics item cast to a QGraphicsObject, if the class is actually a
     /// graphics object, 0 otherwise.
-    to_graphics_object() -> GraphicsObject?,
+    [org_name(toGraphicsObject)]
+    to_graphics_object_2() -> GraphicsObject?,
     /// 
     /// Returns a pointer to this item's item group, or 0 if this item is not
     /// member of a group.
     /// 
-    /// **See also:** QGraphicsItemGroup
-    /// QGraphicsScene::createItemGroup()
+    /// **See also:** [`GraphicsItemGroup`]
+    /// [`GraphicsScene::create_item_group`]
     group() -> GraphicsItemGroup?,
     /// 
     /// Adds this item to the item group *group.* If *group* is 0, this item is
     /// removed from any current group and added as a child of the previous
     /// group's parent.
     /// 
-    /// **See also:** group()
-    /// QGraphicsScene::createItemGroup()
+    /// **See also:** [`group()`]
+    /// [`GraphicsScene::create_item_group`]
     set_group(group: *GraphicsItemGroupType),
     /// 
     /// Returns this item's flags. The flags describe what configurable features
@@ -481,15 +394,15 @@ struct GraphicsItem {
     /// 
     /// By default, no flags are enabled.
     /// 
-    /// **See also:** setFlags()
-    /// setFlag()
+    /// **See also:** [`set_flags()`]
+    /// [`set_flag()`]
     flags() -> GraphicsItem::GraphicsItemFlags,
     /// 
     /// If *enabled* is true, the item flag *flag* is enabled; otherwise, it is
     /// disabled.
     /// 
-    /// **See also:** flags()
-    /// setFlags()
+    /// **See also:** [`flags()`]
+    /// [`set_flags()`]
     /// 
     /// Sets the item flags to *flags.* All flags in *flags* are enabled; all
     /// flags not in *flags* are disabled.
@@ -503,8 +416,8 @@ struct GraphicsItem {
     /// ItemSendsGeometryChanges flag by default in order to track position
     /// changes.)
     /// 
-    /// **See also:** flags()
-    /// setFlag()
+    /// **See also:** [`flags()`]
+    /// [`set_flag()`]
     set_flag(flag: GraphicsItem::GraphicsItemFlag, enabled: bool),
     /// 
     /// Sets the item flags to *flags.* All flags in *flags* are enabled; all
@@ -519,14 +432,14 @@ struct GraphicsItem {
     /// ItemSendsGeometryChanges flag by default in order to track position
     /// changes.)
     /// 
-    /// **See also:** flags()
-    /// setFlag()
+    /// **See also:** [`flags()`]
+    /// [`set_flag()`]
     set_flags(flags: GraphicsItem::GraphicsItemFlags),
     /// 
     /// Returns the cache mode for this item. The default mode is NoCache (i.e.,
     /// cache is disabled and all painting is immediate).
     /// 
-    /// **See also:** setCacheMode()
+    /// **See also:** [`set_cache_mode()`]
     cache_mode() -> GraphicsItem::CacheMode,
     /// 
     /// Sets the item's cache mode to *mode.*
@@ -562,7 +475,7 @@ struct GraphicsItem {
     /// was no update() call (that is, exactly as if there were no caching enabled).
     /// 
     /// **See also:** CacheMode
-    /// QPixmapCache::setCacheLimit()
+    /// [`PixmapCache::set_cache_limit`]
     set_cache_mode(mode: GraphicsItem::CacheMode, cache_size: &SizeType),
     /// 
     /// Returns the modality for this item.
@@ -579,23 +492,23 @@ struct GraphicsItem {
     /// 
     /// This function always returns `false` for items not in a scene.
     /// 
-    /// **See also:** panelModality()
-    /// setPanelModality()
+    /// **See also:** [`panel_modality()`]
+    /// [`set_panel_modality()`]
     /// PanelModality
     is_blocked_by_modal_panel(blocking_panel: *GraphicsItemType) -> bool,
     /// 
     /// Returns the item's tool tip, or an empty QString if no tool tip has been
     /// set.
     /// 
-    /// **See also:** setToolTip()
-    /// QToolTip
+    /// **See also:** [`set_tool_tip()`]
+    /// [`ToolTip`]
     tool_tip() -> String,
     /// 
     /// Sets the item's tool tip to *toolTip.* If *toolTip* is empty, the item's
     /// tool tip is cleared.
     /// 
-    /// **See also:** toolTip()
-    /// QToolTip
+    /// **See also:** [`tool_tip()`]
+    /// [`ToolTip`]
     set_tool_tip(tool_tip: String),
     /// 
     /// Returns the current cursor shape for the item. The mouse cursor
@@ -608,11 +521,11 @@ struct GraphicsItem {
     /// 
     /// If no cursor has been set, the cursor of the item beneath is used.
     /// 
-    /// **See also:** setCursor()
-    /// hasCursor()
-    /// unsetCursor()
-    /// QWidget::cursor
-    /// QApplication::overrideCursor()
+    /// **See also:** [`set_cursor()`]
+    /// [`has_cursor()`]
+    /// [`unset_cursor()`]
+    /// [`Widget::cursor()`]
+    /// [`Application::override_cursor`]
     cursor() -> Cursor,
     /// 
     /// Sets the current cursor shape for the item to *cursor.* The mouse cursor
@@ -625,11 +538,11 @@ struct GraphicsItem {
     /// 
     /// If no cursor has been set, the cursor of the item beneath is used.
     /// 
-    /// **See also:** cursor()
-    /// hasCursor()
-    /// unsetCursor()
-    /// QWidget::cursor
-    /// QApplication::overrideCursor()
+    /// **See also:** [`cursor()`]
+    /// [`has_cursor()`]
+    /// [`unset_cursor()`]
+    /// [`Widget::cursor()`]
+    /// [`Application::override_cursor`]
     set_cursor(cursor: &CursorType),
     /// 
     /// Returns `true` if this item has a cursor set; otherwise, false is returned.
@@ -637,13 +550,13 @@ struct GraphicsItem {
     /// By default, items don't have any cursor set. cursor() will return a
     /// standard pointing arrow cursor.
     /// 
-    /// **See also:** unsetCursor()
+    /// **See also:** [`unset_cursor()`]
     has_cursor() -> bool,
     /// 
     /// Clears the cursor from this item.
     /// 
-    /// **See also:** hasCursor()
-    /// setCursor()
+    /// **See also:** [`has_cursor()`]
+    /// [`set_cursor()`]
     unset_cursor(),
     /// 
     /// Returns `true` if the item is visible; otherwise, false is returned.
@@ -651,7 +564,7 @@ struct GraphicsItem {
     /// Note that the item's general visibility is unrelated to whether or not it
     /// is actually being visualized by a QGraphicsView.
     /// 
-    /// **See also:** setVisible()
+    /// **See also:** [`set_visible()`]
     /// 
     /// Returns `true` if the item is visible to *parent;* otherwise, false is
     /// returned. *parent* can be 0, in which case this function will return
@@ -662,8 +575,8 @@ struct GraphicsItem {
     /// any ancestor is hidden, the item itself will be implicitly hidden, in which
     /// case this function will return false.
     /// 
-    /// **See also:** isVisible()
-    /// setVisible()
+    /// **See also:** [`is_visible()`]
+    /// [`set_visible()`]
     is_visible() -> bool,
     /// 
     /// Returns `true` if the item is visible to *parent;* otherwise, false is
@@ -675,8 +588,8 @@ struct GraphicsItem {
     /// any ancestor is hidden, the item itself will be implicitly hidden, in which
     /// case this function will return false.
     /// 
-    /// **See also:** isVisible()
-    /// setVisible()
+    /// **See also:** [`is_visible()`]
+    /// [`set_visible()`]
     is_visible_to(parent: *GraphicsItemType) -> bool,
     /// 
     /// If *visible* is true, the item is made visible. Otherwise, the item is
@@ -708,31 +621,31 @@ struct GraphicsItem {
     /// through it, it will not be included in the items returned by
     /// QGraphicsView::items(), and so on. However, the item will retain the focus.
     /// 
-    /// **See also:** isVisible()
-    /// show()
-    /// hide()
-    /// setOpacity()
+    /// **See also:** [`is_visible()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`set_opacity()`]
     set_visible(visible: bool),
     /// 
     /// Hides the item (items are visible by default).
     /// 
     /// This convenience function is equivalent to calling `setVisible(false).`
     /// 
-    /// **See also:** show()
-    /// setVisible()
+    /// **See also:** [`show()`]
+    /// [`set_visible()`]
     hide(),
     /// 
     /// Shows the item (items are visible by default).
     /// 
     /// This convenience function is equivalent to calling `setVisible(true).`
     /// 
-    /// **See also:** hide()
-    /// setVisible()
+    /// **See also:** [`hide()`]
+    /// [`set_visible()`]
     show(),
     /// 
     /// Returns `true` if the item is enabled; otherwise, false is returned.
     /// 
-    /// **See also:** setEnabled()
+    /// **See also:** [`set_enabled()`]
     is_enabled() -> bool,
     /// 
     /// If *enabled* is true, the item is enabled; otherwise, it is disabled.
@@ -759,7 +672,7 @@ struct GraphicsItem {
     /// before they are delivered to items; this mechanism disregards the item's
     /// enabled state.
     /// 
-    /// **See also:** isEnabled()
+    /// **See also:** [`is_enabled()`]
     set_enabled(enabled: bool),
     /// 
     /// Returns `true` if this item is selected; otherwise, false is returned.
@@ -768,8 +681,8 @@ struct GraphicsItem {
     /// 
     /// Items are not selected by default.
     /// 
-    /// **See also:** setSelected()
-    /// QGraphicsScene::setSelectionArea()
+    /// **See also:** [`set_selected()`]
+    /// [`GraphicsScene::set_selection_area`]
     is_selected() -> bool,
     /// 
     /// If *selected* is true and this item is selectable, this item is selected;
@@ -793,22 +706,22 @@ struct GraphicsItem {
     /// function for all visible, enabled, and selectable items within a specified
     /// area on the scene.
     /// 
-    /// **See also:** isSelected()
-    /// QGraphicsScene::selectedItems()
+    /// **See also:** [`is_selected()`]
+    /// [`GraphicsScene::selected_items`]
     set_selected(selected: bool),
     /// 
     /// Returns `true` if this item can accept drag and drop events; otherwise,
     /// returns `false.` By default, items do not accept drag and drop events; items
     /// are transparent to drag and drop.
     /// 
-    /// **See also:** setAcceptDrops()
+    /// **See also:** [`set_accept_drops()`]
     accept_drops() -> bool,
     /// 
     /// If *on* is true, this item will accept drag and drop events; otherwise,
     /// it is transparent for drag and drop events. By default, items do not
     /// accept drag and drop events.
     /// 
-    /// **See also:** acceptDrops()
+    /// **See also:** [`accept_drops()`]
     set_accept_drops(on: bool),
     /// 
     /// Returns this item's local opacity, which is between 0.0 (transparent) and
@@ -824,8 +737,8 @@ struct GraphicsItem {
     /// 
     /// The default opacity is 1.0; fully opaque.
     /// 
-    /// **See also:** setOpacity()
-    /// paint()
+    /// **See also:** [`set_opacity()`]
+    /// [`paint()`]
     /// ItemIgnoresParentOpacity
     /// ItemDoesntPropagateOpacityToChildren
     opacity() -> f32,
@@ -835,9 +748,9 @@ struct GraphicsItem {
     /// local opacity, and its parent and ancestors' opacities. The effective
     /// opacity decides how the item is rendered.
     /// 
-    /// **See also:** opacity()
-    /// setOpacity()
-    /// paint()
+    /// **See also:** [`opacity()`]
+    /// [`set_opacity()`]
+    /// [`paint()`]
     /// ItemIgnoresParentOpacity
     /// ItemDoesntPropagateOpacityToChildren
     effective_opacity() -> f32,
@@ -863,9 +776,9 @@ struct GraphicsItem {
     /// (according to isVisible()), but the item will be treated like an invisible
     /// one. See the documentation of setVisible() for more information.
     /// 
-    /// **See also:** opacity()
-    /// effectiveOpacity()
-    /// setVisible()
+    /// **See also:** [`opacity()`]
+    /// [`effective_opacity()`]
+    /// [`set_visible()`]
     set_opacity(opacity: f32),
     graphics_effect() -> GraphicsEffect?,
     /// 
@@ -892,8 +805,8 @@ struct GraphicsItem {
     /// QGraphicsScene will forward the mouse events to the first item
     /// beneath it that does.
     /// 
-    /// **See also:** setAcceptedMouseButtons()
-    /// mousePressEvent()
+    /// **See also:** [`set_accepted_mouse_buttons()`]
+    /// [`mouse_press_event()`]
     accepted_mouse_buttons() -> Rute::MouseButtons,
     /// 
     /// Sets the mouse *buttons* that this item accepts mouse events for.
@@ -907,15 +820,15 @@ struct GraphicsItem {
     /// To disable mouse events for an item (i.e., make it transparent for mouse
     /// events), call setAcceptedMouseButtons(0).
     /// 
-    /// **See also:** acceptedMouseButtons()
-    /// mousePressEvent()
+    /// **See also:** [`accepted_mouse_buttons()`]
+    /// [`mouse_press_event()`]
     set_accepted_mouse_buttons(buttons: Rute::MouseButtons),
     /// 
     /// Returns `true` if an item accepts hover events
     /// (QGraphicsSceneHoverEvent); otherwise, returns `false.` By default,
     /// items do not accept hover events.
     /// 
-    /// **See also:** setAcceptedMouseButtons()
+    /// **See also:** [`set_accepted_mouse_buttons()`]
     accept_hover_events() -> bool,
     /// 
     /// If *enabled* is true, this item will accept hover events;
@@ -943,17 +856,17 @@ struct GraphicsItem {
     /// A QGraphicsWidget with window decorations will accept hover events
     /// regardless of the value of acceptHoverEvents().
     /// 
-    /// **See also:** acceptHoverEvents()
-    /// hoverEnterEvent()
-    /// hoverMoveEvent()
-    /// hoverLeaveEvent()
+    /// **See also:** [`accept_hover_events()`]
+    /// [`hover_enter_event()`]
+    /// [`hover_move_event()`]
+    /// [`hover_leave_event()`]
     set_accept_hover_events(enabled: bool),
     /// 
     /// Returns `true` if an item accepts [touch events](QTouchEvent)
     /// 
     /// otherwise, returns `false.` By default, items do not accept touch events.
     /// 
-    /// **See also:** setAcceptTouchEvents()
+    /// **See also:** [`set_accept_touch_events()`]
     accept_touch_events() -> bool,
     /// 
     /// If *enabled* is true, this item will accept [touch events](QTouchEvent)
@@ -968,7 +881,7 @@ struct GraphicsItem {
     /// 
     /// The default value is false; child events are not filtered.
     /// 
-    /// **See also:** setFiltersChildEvents()
+    /// **See also:** [`set_filters_child_events()`]
     filters_child_events() -> bool,
     /// 
     /// If *enabled* is true, this item is set to filter all events for
@@ -977,7 +890,7 @@ struct GraphicsItem {
     /// is false, this item will only handle its own events. The default
     /// value is false.
     /// 
-    /// **See also:** filtersChildEvents()
+    /// **See also:** [`filters_child_events()`]
     set_filters_child_events(enabled: bool),
     /// 
     /// Returns `true` if this item handles child events (i.e., all events
@@ -992,7 +905,7 @@ struct GraphicsItem {
     /// The exception for this is if the item is a QGraphicsItemGroup, then
     /// it defaults to return true.
     /// 
-    /// **See also:** setHandlesChildEvents()
+    /// **See also:** [`set_handles_child_events()`]
     handles_child_events() -> bool,
     /// 
     /// If *enabled* is true, this item is set to handle all events for
@@ -1010,7 +923,7 @@ struct GraphicsItem {
     /// does not receive hover enter and hover leave events on behalf of
     /// its child.
     /// 
-    /// **See also:** handlesChildEvents()
+    /// **See also:** [`handles_child_events()`]
     set_handles_child_events(enabled: bool),
     /// 
     /// Returns `true` if this item is active; otherwise returns `false.`
@@ -1024,10 +937,10 @@ struct GraphicsItem {
     /// 
     /// Only active items can gain input focus.
     /// 
-    /// **See also:** QGraphicsScene::isActive()
-    /// QGraphicsScene::activePanel()
-    /// panel()
-    /// isPanel()
+    /// **See also:** [`GraphicsScene::is_active`]
+    /// [`GraphicsScene::active_panel`]
+    /// [`panel()`]
+    /// [`is_panel()`]
     is_active() -> bool,
     /// 
     /// If *active* is true, and the scene is active, this item's panel will be
@@ -1039,19 +952,19 @@ struct GraphicsItem {
     /// either added to the scene or the scene is activated. Otherwise, the item
     /// will stay inactive independent of the scene's activated state.
     /// 
-    /// **See also:** isPanel()
-    /// QGraphicsScene::setActivePanel()
-    /// QGraphicsScene::isActive()
+    /// **See also:** [`is_panel()`]
+    /// [`GraphicsScene::set_active_panel`]
+    /// [`GraphicsScene::is_active`]
     set_active(active: bool),
     /// 
     /// Returns `true` if this item is active, and it or its [focus
     /// proxy](focusProxy())
     /// has keyboard input focus; otherwise, returns `false.`
     /// 
-    /// **See also:** focusItem()
-    /// setFocus()
-    /// QGraphicsScene::setFocusItem()
-    /// isActive()
+    /// **See also:** [`focus_item()`]
+    /// [`set_focus()`]
+    /// [`GraphicsScene::set_focus_item`]
+    /// [`is_active()`]
     has_focus() -> bool,
     /// 
     /// Gives keyboard input focus to this item. The *focusReason* argument will
@@ -1073,10 +986,10 @@ struct GraphicsItem {
     /// already has focus, that item will first receive a [focus out event](focusOutEvent())
     /// indicating that it has lost input focus.
     /// 
-    /// **See also:** clearFocus()
-    /// hasFocus()
-    /// focusItem()
-    /// focusProxy()
+    /// **See also:** [`clear_focus()`]
+    /// [`has_focus()`]
+    /// [`focus_item()`]
+    /// [`focus_proxy()`]
     /// 
     /// Sets the item's focus proxy to *item.*
     /// 
@@ -1092,9 +1005,9 @@ struct GraphicsItem {
     /// The focus proxy *item* must belong to the same scene as
     /// this item.
     /// 
-    /// **See also:** focusProxy()
-    /// setFocus()
-    /// hasFocus()
+    /// **See also:** [`focus_proxy()`]
+    /// [`set_focus()`]
+    /// [`has_focus()`]
     set_focus(focus_reason: Rute::FocusReason),
     /// 
     /// Takes keyboard input focus from the item.
@@ -1106,17 +1019,17 @@ struct GraphicsItem {
     /// Only items that set the ItemIsFocusable flag, or widgets that set an
     /// appropriate focus policy, can accept keyboard focus.
     /// 
-    /// **See also:** setFocus()
-    /// hasFocus()
-    /// QGraphicsWidget::focusPolicy
+    /// **See also:** [`set_focus()`]
+    /// [`has_focus()`]
+    /// [`GraphicsWidget::focus_policy()`]
     clear_focus(),
     /// 
     /// Returns this item's focus proxy, or 0 if this item has no
     /// focus proxy.
     /// 
-    /// **See also:** setFocusProxy()
-    /// setFocus()
-    /// hasFocus()
+    /// **See also:** [`set_focus_proxy()`]
+    /// [`set_focus()`]
+    /// [`has_focus()`]
     focus_proxy() -> GraphicsItem?,
     /// 
     /// Sets the item's focus proxy to *item.*
@@ -1133,18 +1046,18 @@ struct GraphicsItem {
     /// The focus proxy *item* must belong to the same scene as
     /// this item.
     /// 
-    /// **See also:** focusProxy()
-    /// setFocus()
-    /// hasFocus()
+    /// **See also:** [`focus_proxy()`]
+    /// [`set_focus()`]
+    /// [`has_focus()`]
     set_focus_proxy(item: *GraphicsItemType),
     /// 
     /// If this item, a child or descendant of this item currently has input
     /// focus, this function will return a pointer to that item. If
     /// no descendant has input focus, 0 is returned.
     /// 
-    /// **See also:** hasFocus()
-    /// setFocus()
-    /// QWidget::focusWidget()
+    /// **See also:** [`has_focus()`]
+    /// [`set_focus()`]
+    /// [`Widget::focus_widget`]
     focus_item() -> GraphicsItem?,
     focus_scope_item() -> GraphicsItem?,
     /// 
@@ -1175,15 +1088,15 @@ struct GraphicsItem {
     /// 
     /// Keyboard events are not affected.
     /// 
-    /// **See also:** QGraphicsScene::mouseGrabberItem()
-    /// ungrabMouse()
-    /// grabKeyboard()
+    /// **See also:** [`GraphicsScene::mouse_grabber_item`]
+    /// [`ungrab_mouse()`]
+    /// [`grab_keyboard()`]
     grab_mouse(),
     /// 
     /// Releases the mouse grab.
     /// 
-    /// **See also:** grabMouse()
-    /// ungrabKeyboard()
+    /// **See also:** [`grab_mouse()`]
+    /// [`ungrab_keyboard()`]
     ungrab_mouse(),
     /// 
     /// Grabs the keyboard input.
@@ -1213,15 +1126,15 @@ struct GraphicsItem {
     /// 
     /// Keyboard events are not affected.
     /// 
-    /// **See also:** ungrabKeyboard()
-    /// grabMouse()
-    /// setFocus()
+    /// **See also:** [`ungrab_keyboard()`]
+    /// [`grab_mouse()`]
+    /// [`set_focus()`]
     grab_keyboard(),
     /// 
     /// Releases the keyboard grab.
     /// 
-    /// **See also:** grabKeyboard()
-    /// ungrabMouse()
+    /// **See also:** [`grab_keyboard()`]
+    /// [`ungrab_mouse()`]
     ungrab_keyboard(),
     /// 
     /// Returns the position of the item in parent coordinates. If the item has no
@@ -1234,42 +1147,42 @@ struct GraphicsItem {
     /// For convenience, you can also call scenePos() to determine the
     /// item's position in scene coordinates, regardless of its parent.
     /// 
-    /// **See also:** x()
-    /// y()
-    /// setPos()
-    /// transform()
+    /// **See also:** [`x()`]
+    /// [`y()`]
+    /// [`set_pos()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate System}
     pos() -> PointF,
     /// 
     /// This convenience function is equivalent to calling pos().x().
     /// 
-    /// **See also:** y()
+    /// **See also:** [`y()`]
     x() -> f32,
     /// 
     /// Set's the *x* coordinate of the item's position. Equivalent to
     /// calling setPos(x, y()).
     /// 
-    /// **See also:** x()
-    /// setPos()
+    /// **See also:** [`x()`]
+    /// [`set_pos()`]
     set_x(x: f32),
     /// 
     /// This convenience function is equivalent to calling pos().y().
     /// 
-    /// **See also:** x()
+    /// **See also:** [`x()`]
     y() -> f32,
     /// 
     /// Set's the *y* coordinate of the item's position. Equivalent to
     /// calling setPos(x(), y).
     /// 
-    /// **See also:** x()
-    /// setPos()
+    /// **See also:** [`x()`]
+    /// [`set_pos()`]
     set_y(y: f32),
     /// 
     /// Returns the item's position in scene coordinates. This is
     /// equivalent to calling `mapToScene(0,` 0).
     /// 
-    /// **See also:** pos()
-    /// sceneTransform()
+    /// **See also:** [`pos()`]
+    /// [`scene_transform()`]
     /// {The Graphics View Coordinate System}
     scene_pos() -> PointF,
     /// 
@@ -1280,8 +1193,8 @@ struct GraphicsItem {
     /// The position of the item describes its origin (local coordinate
     /// (0, 0)) in parent coordinates.
     /// 
-    /// **See also:** pos()
-    /// scenePos()
+    /// **See also:** [`pos()`]
+    /// [`scene_pos()`]
     /// {The Graphics View Coordinate System}
     /// 
     /// **Overloads**
@@ -1295,13 +1208,14 @@ struct GraphicsItem {
     /// The position of the item describes its origin (local coordinate
     /// (0, 0)) in parent coordinates.
     /// 
-    /// **See also:** pos()
-    /// scenePos()
+    /// **See also:** [`pos()`]
+    /// [`scene_pos()`]
     /// {The Graphics View Coordinate System}
     /// 
     /// **Overloads**
     /// This convenience function is equivalent to calling setPos(QPointF( *x,* *y)).*
-    set_pos(x: f32, y: f32),
+    [org_name(setPos)]
+    set_pos_2(x: f32, y: f32),
     /// 
     /// Moves the item by *dx* points horizontally, and *dy* point
     /// vertically. This function is equivalent to calling setPos(pos() +
@@ -1318,7 +1232,7 @@ struct GraphicsItem {
     /// 
     /// If this item is not viewed by a QGraphicsView, this function does nothing.
     /// 
-    /// **See also:** QGraphicsView::ensureVisible()
+    /// **See also:** [`GraphicsView::ensure_visible`]
     /// 
     /// int xmargin = 50, int ymargin = 50)
     /// 
@@ -1336,13 +1250,14 @@ struct GraphicsItem {
     /// 
     /// If this item is not viewed by a QGraphicsView, this function does nothing.
     /// 
-    /// **See also:** QGraphicsView::ensureVisible()
+    /// **See also:** [`GraphicsView::ensure_visible`]
     /// 
     /// int xmargin = 50, int ymargin = 50)
     /// 
     /// This convenience function is equivalent to calling
     /// ensureVisible(QRectF( *x,* *y,* *w,* *h),* *xmargin,* *ymargin).*
-    ensure_visible(x: f32, y: f32, w: f32, h: f32, xmargin: i32, ymargin: i32),
+    [org_name(ensureVisible)]
+    ensure_visible_2(x: f32, y: f32, w: f32, h: f32, xmargin: i32, ymargin: i32),
     /// 
     /// Returns this item's scene transformation matrix. This matrix can be used
     /// to map coordinates and geometrical shapes from this item's local
@@ -1354,9 +1269,9 @@ struct GraphicsItem {
     /// Unlike transform(), which returns only an item's local transformation, this
     /// function includes the item's (and any parents') position, and all the transfomation properties.
     /// 
-    /// **See also:** transform()
-    /// setTransform()
-    /// scenePos()
+    /// **See also:** [`transform()`]
+    /// [`set_transform()`]
+    /// [`scene_pos()`]
     /// {The Graphics View Coordinate System}
     /// {Transformations}
     scene_transform() -> Transform,
@@ -1375,9 +1290,9 @@ struct GraphicsItem {
     /// accurate coordinate mapping (and collision detection) for untransformable
     /// items.
     /// 
-    /// **See also:** transform()
-    /// setTransform()
-    /// scenePos()
+    /// **See also:** [`transform()`]
+    /// [`set_transform()`]
+    /// [`scene_pos()`]
     /// {The Graphics View Coordinate
     /// System}, itemTransform()
     device_transform(viewport_transform: &TransformType) -> Transform,
@@ -1394,9 +1309,9 @@ struct GraphicsItem {
     /// **Note**: In rare circumstances, there is no transform that maps between two
     /// items.
     /// 
-    /// **See also:** mapToItem()
-    /// mapFromItem()
-    /// deviceTransform()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_from_item()`]
+    /// [`device_transform()`]
     item_transform(other: *GraphicsItemType, ok: *bool) -> Transform,
     /// 
     /// Sets a list of graphics *transformations* (QGraphicsTransform) that
@@ -1414,20 +1329,20 @@ struct GraphicsItem {
     /// The transformations are combined with the item's rotation(), scale() and
     /// transform() to map the item's coordinate system to the parent item.
     /// 
-    /// **See also:** scale()
-    /// setTransformOriginPoint()
+    /// **See also:** [`scale()`]
+    /// [`set_transform_origin_point()`]
     /// {Transformations}
     /// 
     /// Sets the *origin* point for the transformation in item coordinates.
     /// 
-    /// **See also:** transformOriginPoint()
+    /// **See also:** [`transform_origin_point()`]
     /// {Transformations}
     /// 
     /// **Overloads**
     /// Sets the origin point for the transformation in item coordinates.
     /// This is equivalent to calling setTransformOriginPoint(QPointF( *x,* *y)).*
     /// 
-    /// **See also:** setTransformOriginPoint()
+    /// **See also:** [`set_transform_origin_point()`]
     /// {Transformations}
     /// 
     /// Sets the item's current transformation matrix to *matrix.*
@@ -1446,10 +1361,10 @@ struct GraphicsItem {
     /// and transformations() into a combined transformation that maps the item's
     /// coordinate system to its parent.
     /// 
-    /// **See also:** transform()
-    /// setRotation()
-    /// setScale()
-    /// setTransformOriginPoint()
+    /// **See also:** [`transform()`]
+    /// [`set_rotation()`]
+    /// [`set_scale()`]
+    /// [`set_transform_origin_point()`]
     /// {The Graphics View Coordinate System}
     /// {Transformations}
     set_transform(matrix: &TransformType, combine: bool),
@@ -1458,8 +1373,8 @@ struct GraphicsItem {
     /// all the transformation properties to their default values.
     /// This is equivalent to calling `setTransform(QTransform()).`
     /// 
-    /// **See also:** setTransform()
-    /// transform()
+    /// **See also:** [`set_transform()`]
+    /// [`transform()`]
     reset_transform(),
     /// 
     /// Sets the clockwise rotation *angle,* in degrees, around the Z axis. The
@@ -1476,8 +1391,8 @@ struct GraphicsItem {
     /// The rotation is combined with the item's scale(), transform() and
     /// transformations() to map the item's coordinate system to the parent item.
     /// 
-    /// **See also:** rotation()
-    /// setTransformOriginPoint()
+    /// **See also:** [`rotation()`]
+    /// [`set_transform_origin_point()`]
     /// {Transformations}
     set_rotation(angle: f32),
     /// 
@@ -1487,8 +1402,8 @@ struct GraphicsItem {
     /// The rotation is combined with the item's scale(), transform() and
     /// transformations() to map the item's coordinate system to the parent item.
     /// 
-    /// **See also:** setRotation()
-    /// transformOriginPoint()
+    /// **See also:** [`set_rotation()`]
+    /// [`transform_origin_point()`]
     /// {Transformations}
     rotation() -> f32,
     /// 
@@ -1504,8 +1419,8 @@ struct GraphicsItem {
     /// The scale is combined with the item's rotation(), transform() and
     /// transformations() to map the item's coordinate system to the parent item.
     /// 
-    /// **See also:** scale()
-    /// setTransformOriginPoint()
+    /// **See also:** [`scale()`]
+    /// [`set_transform_origin_point()`]
     /// {Transformations Example}
     set_scale(scale: f32),
     /// 
@@ -1515,8 +1430,8 @@ struct GraphicsItem {
     /// The scale is combined with the item's rotation(), transform() and
     /// transformations() to map the item's coordinate system to the parent item.
     /// 
-    /// **See also:** setScale()
-    /// rotation()
+    /// **See also:** [`set_scale()`]
+    /// [`rotation()`]
     /// {Transformations}
     /// 
     /// Use
@@ -1533,8 +1448,8 @@ struct GraphicsItem {
     /// 
     /// Example:
     /// 
-    /// **See also:** setTransform()
-    /// transform()
+    /// **See also:** [`set_transform()`]
+    /// [`transform()`]
     scale() -> f32,
     /// 
     /// Sets a list of graphics *transformations* (QGraphicsTransform) that
@@ -1552,36 +1467,37 @@ struct GraphicsItem {
     /// The transformations are combined with the item's rotation(), scale() and
     /// transform() to map the item's coordinate system to the parent item.
     /// 
-    /// **See also:** scale()
-    /// setTransformOriginPoint()
+    /// **See also:** [`scale()`]
+    /// [`set_transform_origin_point()`]
     /// {Transformations}
     set_transformations(transformations: [*GraphicsTransformType]),
     /// 
     /// Sets the *origin* point for the transformation in item coordinates.
     /// 
-    /// **See also:** transformOriginPoint()
+    /// **See also:** [`transform_origin_point()`]
     /// {Transformations}
     /// 
     /// **Overloads**
     /// Sets the origin point for the transformation in item coordinates.
     /// This is equivalent to calling setTransformOriginPoint(QPointF( *x,* *y)).*
     /// 
-    /// **See also:** setTransformOriginPoint()
+    /// **See also:** [`set_transform_origin_point()`]
     /// {Transformations}
     set_transform_origin_point(origin: &PointFType),
     /// 
     /// Sets the *origin* point for the transformation in item coordinates.
     /// 
-    /// **See also:** transformOriginPoint()
+    /// **See also:** [`transform_origin_point()`]
     /// {Transformations}
     /// 
     /// **Overloads**
     /// Sets the origin point for the transformation in item coordinates.
     /// This is equivalent to calling setTransformOriginPoint(QPointF( *x,* *y)).*
     /// 
-    /// **See also:** setTransformOriginPoint()
+    /// **See also:** [`set_transform_origin_point()`]
     /// {Transformations}
-    set_transform_origin_point(ax: f32, ay: f32),
+    [org_name(setTransformOriginPoint)]
+    set_transform_origin_point_2(ax: f32, ay: f32),
     /// 
     /// This virtual function is called twice for all items by the
     /// QGraphicsScene::advance() slot. In the first phase, all items are called
@@ -1596,8 +1512,8 @@ struct GraphicsItem {
     /// multiple-inherit from QObject and QGraphicsItem and use the [Animation Framework](The%20Animation%0A%20%20%20%20Framework)
     /// 
     /// 
-    /// **See also:** QGraphicsScene::advance()
-    /// QTimeLine
+    /// **See also:** [`GraphicsScene::advance`]
+    /// [`TimeLine`]
     [event] advance(phase: i32),
     /// 
     /// Returns the Z-value of the item. The Z-value affects the stacking order of
@@ -1605,9 +1521,9 @@ struct GraphicsItem {
     /// 
     /// The default Z-value is 0.
     /// 
-    /// **See also:** setZValue()
+    /// **See also:** [`set_z_value()`]
     /// {QGraphicsItem#Sorting}{Sorting}
-    /// stackBefore()
+    /// [`stack_before()`]
     /// ItemStacksBehindParent
     z_value() -> f32,
     /// 
@@ -1622,9 +1538,9 @@ struct GraphicsItem {
     /// 
     /// The default Z-value is 0.
     /// 
-    /// **See also:** zValue()
+    /// **See also:** [`z_value()`]
     /// {QGraphicsItem#Sorting}{Sorting}
-    /// stackBefore()
+    /// [`stack_before()`]
     /// ItemStacksBehindParent
     set_z_value(z: f32),
     /// 
@@ -1639,7 +1555,7 @@ struct GraphicsItem {
     /// top. When the Z values are the same, the insertion order will decide the
     /// stacking order.
     /// 
-    /// **See also:** setZValue()
+    /// **See also:** [`set_z_value()`]
     /// ItemStacksBehindParent
     /// {QGraphicsItem#Sorting}{Sorting}
     stack_before(sibling: *GraphicsItemType),
@@ -1668,9 +1584,9 @@ struct GraphicsItem {
     /// 
     /// Example:
     /// 
-    /// **See also:** boundingRegion()
-    /// shape()
-    /// contains()
+    /// **See also:** [`bounding_region()`]
+    /// [`shape()`]
+    /// [`contains()`]
     /// {The Graphics View Coordinate
     /// System}, prepareGeometryChange()
     [event] bounding_rect() -> RectF,
@@ -1689,14 +1605,14 @@ struct GraphicsItem {
     /// This function is linear in complexity; it determines the size of the
     /// returned bounding rect by iterating through all descendants.
     /// 
-    /// **See also:** boundingRect()
-    /// sceneBoundingRect()
+    /// **See also:** [`bounding_rect()`]
+    /// [`scene_bounding_rect()`]
     children_bounding_rect() -> RectF,
     /// 
     /// Returns the bounding rect of this item in scene coordinates, by combining
     /// sceneTransform() with boundingRect().
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     /// {The Graphics View Coordinate System}
     scene_bounding_rect() -> RectF,
     /// 
@@ -1717,10 +1633,10 @@ struct GraphicsItem {
     /// This function is called by the default implementations of contains() and
     /// collidesWithPath().
     /// 
-    /// **See also:** boundingRect()
-    /// contains()
-    /// prepareGeometryChange()
-    /// QPainterPathStroker
+    /// **See also:** [`bounding_rect()`]
+    /// [`contains()`]
+    /// [`prepare_geometry_change()`]
+    /// [`PainterPathStroker`]
     [event] shape() -> PainterPath,
     /// 
     /// Returns `true` if this item is clipped. An item is clipped if it has either
@@ -1732,9 +1648,9 @@ struct GraphicsItem {
     /// Clipping affects the item's appearance (i.e., painting), as well as mouse
     /// and hover event delivery.
     /// 
-    /// **See also:** clipPath()
-    /// shape()
-    /// setFlags()
+    /// **See also:** [`clip_path()`]
+    /// [`shape()`]
+    /// [`set_flags()`]
     is_clipped() -> bool,
     /// 
     /// Returns this item's clip path, or an empty QPainterPath if this item is
@@ -1752,9 +1668,9 @@ struct GraphicsItem {
     /// always draw inside boundingRect() or shape() boundaries, clipping is not
     /// necessary).
     /// 
-    /// **See also:** isClipped()
-    /// shape()
-    /// setFlags()
+    /// **See also:** [`is_clipped()`]
+    /// [`shape()`]
+    /// [`set_flags()`]
     clip_path() -> PainterPath,
     /// 
     /// Returns `true` if this item contains *point,* which is in local
@@ -1766,9 +1682,9 @@ struct GraphicsItem {
     /// By default, this function calls shape(), but you can reimplement it in a
     /// subclass to provide a (perhaps more efficient) implementation.
     /// 
-    /// **See also:** shape()
-    /// boundingRect()
-    /// collidesWithPath()
+    /// **See also:** [`shape()`]
+    /// [`bounding_rect()`]
+    /// [`collides_with_path()`]
     [event] contains(point: &PointFType) -> bool,
     /// 
     /// Returns `true` if this item collides with *other;* otherwise
@@ -1796,8 +1712,8 @@ struct GraphicsItem {
     /// boundingRect() on *other,* the returned coordinates must be mapped to
     /// this item's coordinate system before any intersection can take place.
     /// 
-    /// **See also:** contains()
-    /// shape()
+    /// **See also:** [`contains()`]
+    /// [`shape()`]
     [event] collides_with_item(other: *GraphicsItemType, mode: Rute::ItemSelectionMode) -> bool,
     /// 
     /// Returns `true` if this item collides with *path.*
@@ -1810,9 +1726,9 @@ struct GraphicsItem {
     /// bounding rectangle (depending on *mode)* is contained within *path,* and not whether *path* is contained within the items shape
     /// or bounding rectangle.
     /// 
-    /// **See also:** collidesWithItem()
-    /// contains()
-    /// shape()
+    /// **See also:** [`collides_with_item()`]
+    /// [`contains()`]
+    /// [`shape()`]
     [event] collides_with_path(path: &PainterPathType, mode: Rute::ItemSelectionMode) -> bool,
     /// 
     /// Returns a list of all items that collide with this item.
@@ -1822,14 +1738,14 @@ struct GraphicsItem {
     /// or bounding rectangle is checked against this item's shape. The
     /// default value for *mode* is Qt::IntersectsItemShape.
     /// 
-    /// **See also:** collidesWithItem()
+    /// **See also:** [`collides_with_item()`]
     colliding_items(mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
     /// 
     /// **Overloads**
     /// Returns `true` if *rect* is completely obscured by the opaque shape of any
     /// of colliding items above it (i.e., with a higher Z value than this item).
     /// 
-    /// **See also:** opaqueArea()
+    /// **See also:** [`opaque_area()`]
     /// 
     /// **Overloads**
     /// This convenience function is equivalent to calling isObscured(QRectF( *x,* *y,* *w,* *h)).*
@@ -1844,15 +1760,15 @@ struct GraphicsItem {
     /// You can reimplement this function to provide a custom algorithm for
     /// determining whether this item is obscured by *item.*
     /// 
-    /// **See also:** opaqueArea()
-    /// isObscured()
+    /// **See also:** [`opaque_area()`]
+    /// [`is_obscured()`]
     is_obscured(rect: &RectFType) -> bool,
     /// 
     /// **Overloads**
     /// Returns `true` if *rect* is completely obscured by the opaque shape of any
     /// of colliding items above it (i.e., with a higher Z value than this item).
     /// 
-    /// **See also:** opaqueArea()
+    /// **See also:** [`opaque_area()`]
     /// 
     /// **Overloads**
     /// This convenience function is equivalent to calling isObscured(QRectF( *x,* *y,* *w,* *h)).*
@@ -1867,9 +1783,10 @@ struct GraphicsItem {
     /// You can reimplement this function to provide a custom algorithm for
     /// determining whether this item is obscured by *item.*
     /// 
-    /// **See also:** opaqueArea()
-    /// isObscured()
-    is_obscured(x: f32, y: f32, w: f32, h: f32) -> bool,
+    /// **See also:** [`opaque_area()`]
+    /// [`is_obscured()`]
+    [org_name(isObscured)]
+    is_obscured_2(x: f32, y: f32, w: f32, h: f32) -> bool,
     /// 
     /// Returns `true` if this item's bounding rect is completely obscured by the
     /// opaque shape of *item.*
@@ -1881,8 +1798,8 @@ struct GraphicsItem {
     /// You can reimplement this function to provide a custom algorithm for
     /// determining whether this item is obscured by *item.*
     /// 
-    /// **See also:** opaqueArea()
-    /// isObscured()
+    /// **See also:** [`opaque_area()`]
+    /// [`is_obscured()`]
     [event] is_obscured_by(item: *GraphicsItemType) -> bool,
     /// 
     /// This virtual function returns a shape representing the area where this
@@ -1895,9 +1812,9 @@ struct GraphicsItem {
     /// The default implementation returns an empty QPainterPath, indicating that
     /// this item is completely transparent and does not obscure any other items.
     /// 
-    /// **See also:** isObscuredBy()
-    /// isObscured()
-    /// shape()
+    /// **See also:** [`is_obscured_by()`]
+    /// [`is_obscured()`]
+    /// [`shape()`]
     [event] opaque_area() -> PainterPath,
     /// 
     /// Returns the bounding region for this item. The coordinate space of the
@@ -1918,20 +1835,20 @@ struct GraphicsItem {
     /// device coordinates. If you want this function to return a QRegion in scene
     /// coordinates, you can pass sceneTransform() as an argument.
     /// 
-    /// **See also:** boundingRegionGranularity()
+    /// **See also:** [`bounding_region_granularity()`]
     /// 
     /// Returns the item's bounding region granularity; a value between and
     /// including 0 and 1. The default value is 0 (i.e., the lowest granularity,
     /// where the bounding region corresponds to the item's bounding rectangle).
     /// 
-    /// **See also:** setBoundingRegionGranularity()
+    /// **See also:** [`set_bounding_region_granularity()`]
     bounding_region(item_to_device_transform: &TransformType) -> Region,
     /// 
     /// Returns the item's bounding region granularity; a value between and
     /// including 0 and 1. The default value is 0 (i.e., the lowest granularity,
     /// where the bounding region corresponds to the item's bounding rectangle).
     /// 
-    /// **See also:** setBoundingRegionGranularity()
+    /// **See also:** [`set_bounding_region_granularity()`]
     bounding_region_granularity() -> f32,
     /// 
     /// Sets the bounding region granularity to *granularity;* a value between
@@ -1949,7 +1866,7 @@ struct GraphicsItem {
     /// 0.25 will provide a region where each chunk corresponds to 4x4 device
     /// units / pixels).
     /// 
-    /// **See also:** boundingRegionGranularity()
+    /// **See also:** [`bounding_region_granularity()`]
     set_bounding_region_granularity(granularity: f32),
     /// 
     /// QStyleOptionGraphicsItem *option, QWidget *widget = 0) = 0
@@ -1989,8 +1906,8 @@ struct GraphicsItem {
     /// even without any explicit call to update(). See the documentation of
     /// setCacheMode() for more details.
     /// 
-    /// **See also:** setCacheMode()
-    /// QPen::width()
+    /// **See also:** [`set_cache_mode()`]
+    /// [`Pen::width`]
     /// {Item Coordinates}
     /// ItemUsesExtendedStyleOption
     [event] paint(painter: *PainterType, option: *StyleOptionGraphicsItemType, widget: *WidgetType),
@@ -2010,15 +1927,15 @@ struct GraphicsItem {
     /// If the item is invisible (i.e., isVisible() returns `false),` this function
     /// does nothing.
     /// 
-    /// **See also:** paint()
-    /// boundingRect()
+    /// **See also:** [`paint()`]
+    /// [`bounding_rect()`]
     /// 
     /// **Overloads**
     /// This convenience function is equivalent to calling update(QRectF( *x,* *y,* *width,* *height)).*
     /// 
     /// Updates the item's micro focus.
     /// 
-    /// **See also:** QInputMethod
+    /// **See also:** [`InputMethod`]
     update(rect: &RectFType),
     /// 
     /// Schedules a redraw of the area covered by *rect* in this item. You can
@@ -2036,16 +1953,17 @@ struct GraphicsItem {
     /// If the item is invisible (i.e., isVisible() returns `false),` this function
     /// does nothing.
     /// 
-    /// **See also:** paint()
-    /// boundingRect()
+    /// **See also:** [`paint()`]
+    /// [`bounding_rect()`]
     /// 
     /// **Overloads**
     /// This convenience function is equivalent to calling update(QRectF( *x,* *y,* *width,* *height)).*
     /// 
     /// Updates the item's micro focus.
     /// 
-    /// **See also:** QInputMethod
-    update(x: f32, y: f32, width: f32, height: f32),
+    /// **See also:** [`InputMethod`]
+    [org_name(update)]
+    update_2(x: f32, y: f32, width: f32, height: f32),
     /// 
     /// Scrolls the contents of *rect* by *dx,* *dy.* If *rect* is a null rect
     /// (the default), the item's bounding rect is scrolled.
@@ -2068,18 +1986,18 @@ struct GraphicsItem {
     /// by other items, you can map the *rect* to viewport coordinates and scroll the
     /// viewport.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     scroll(dx: f32, dy: f32, rect: &RectFType),
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to *item's* coordinate system, and returns the mapped coordinate.
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// transform()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`transform()`]
+    /// [`map_from_item()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2092,10 +2010,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2106,10 +2024,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2118,10 +2036,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     map_to_item(item: *GraphicsItemType, point: &PointFType) -> PointF,
@@ -2130,10 +2048,10 @@ struct GraphicsItem {
     /// parent's coordinate system, and returns the mapped coordinate. If the item
     /// has no parent, *point* will be mapped to the scene's coordinate system.
     /// 
-    /// **See also:** mapToItem()
-    /// mapToScene()
-    /// transform()
-    /// mapFromParent()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_to_scene()`]
+    /// [`transform()`]
+    /// [`map_from_parent()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2145,9 +2063,9 @@ struct GraphicsItem {
     /// polygon. If the item has no parent, *rect* will be mapped to the scene's
     /// coordinate system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -2158,9 +2076,9 @@ struct GraphicsItem {
     /// item has no parent, *polygon* will be mapped to the scene's coordinate
     /// system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -2169,9 +2087,9 @@ struct GraphicsItem {
     /// item has no parent, *path* will be mapped to the scene's coordinate
     /// system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     map_to_parent(point: &PointFType) -> PointF,
@@ -2179,10 +2097,10 @@ struct GraphicsItem {
     /// Maps the point *point,* which is in this item's coordinate system, to the
     /// scene's coordinate system, and returns the mapped coordinate.
     /// 
-    /// **See also:** mapToItem()
-    /// mapToParent()
-    /// transform()
-    /// mapFromScene()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_to_parent()`]
+    /// [`transform()`]
+    /// [`map_from_scene()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2192,9 +2110,9 @@ struct GraphicsItem {
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped rectangle as a polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -2203,18 +2121,18 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
     /// Maps the path *path,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     map_to_scene(point: &PointFType) -> PointF,
@@ -2223,11 +2141,11 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// transform()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`transform()`]
+    /// [`map_from_item()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2240,10 +2158,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2254,10 +2172,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2266,22 +2184,23 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
-    map_to_item(item: *GraphicsItemType, rect: &RectFType) -> PolygonF,
+    [org_name(mapToItem)]
+    map_to_item_2(item: *GraphicsItemType, rect: &RectFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to its
     /// parent's coordinate system, and returns the mapped coordinate. If the item
     /// has no parent, *point* will be mapped to the scene's coordinate system.
     /// 
-    /// **See also:** mapToItem()
-    /// mapToScene()
-    /// transform()
-    /// mapFromParent()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_to_scene()`]
+    /// [`transform()`]
+    /// [`map_from_parent()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2293,9 +2212,9 @@ struct GraphicsItem {
     /// polygon. If the item has no parent, *rect* will be mapped to the scene's
     /// coordinate system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -2306,9 +2225,9 @@ struct GraphicsItem {
     /// item has no parent, *polygon* will be mapped to the scene's coordinate
     /// system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -2317,20 +2236,21 @@ struct GraphicsItem {
     /// item has no parent, *path* will be mapped to the scene's coordinate
     /// system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_to_parent(rect: &RectFType) -> PolygonF,
+    [org_name(mapToParent)]
+    map_to_parent_2(rect: &RectFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to the
     /// scene's coordinate system, and returns the mapped coordinate.
     /// 
-    /// **See also:** mapToItem()
-    /// mapToParent()
-    /// transform()
-    /// mapFromScene()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_to_parent()`]
+    /// [`transform()`]
+    /// [`map_from_scene()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2340,9 +2260,9 @@ struct GraphicsItem {
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped rectangle as a polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -2351,21 +2271,22 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
     /// Maps the path *path,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_to_scene(rect: &RectFType) -> PolygonF,
+    [org_name(mapToScene)]
+    map_to_scene_2(rect: &RectFType) -> PolygonF,
     /// 
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// *item's* coordinate system, and returns the mapped rectangle as a new
@@ -2373,10 +2294,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapRectToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2387,10 +2308,10 @@ struct GraphicsItem {
     /// its parent's coordinate system, and returns the mapped rectangle as a new
     /// rectangle (i.e., the bounding rectangle of the resulting polygon).
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2401,10 +2322,10 @@ struct GraphicsItem {
     /// the scene coordinate system, and returns the mapped rectangle as a new
     /// rectangle (i.e., the bounding rectangle of the resulting polygon).
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2415,11 +2336,11 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// transform()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`transform()`]
+    /// [`map_from_item()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2432,10 +2353,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2446,10 +2367,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2458,22 +2379,23 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
-    map_to_item(item: *GraphicsItemType, polygon: &PolygonFType) -> PolygonF,
+    [org_name(mapToItem)]
+    map_to_item_3(item: *GraphicsItemType, polygon: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to its
     /// parent's coordinate system, and returns the mapped coordinate. If the item
     /// has no parent, *point* will be mapped to the scene's coordinate system.
     /// 
-    /// **See also:** mapToItem()
-    /// mapToScene()
-    /// transform()
-    /// mapFromParent()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_to_scene()`]
+    /// [`transform()`]
+    /// [`map_from_parent()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2485,9 +2407,9 @@ struct GraphicsItem {
     /// polygon. If the item has no parent, *rect* will be mapped to the scene's
     /// coordinate system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -2498,9 +2420,9 @@ struct GraphicsItem {
     /// item has no parent, *polygon* will be mapped to the scene's coordinate
     /// system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -2509,20 +2431,21 @@ struct GraphicsItem {
     /// item has no parent, *path* will be mapped to the scene's coordinate
     /// system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_to_parent(polygon: &PolygonFType) -> PolygonF,
+    [org_name(mapToParent)]
+    map_to_parent_3(polygon: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to the
     /// scene's coordinate system, and returns the mapped coordinate.
     /// 
-    /// **See also:** mapToItem()
-    /// mapToParent()
-    /// transform()
-    /// mapFromScene()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_to_parent()`]
+    /// [`transform()`]
+    /// [`map_from_scene()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2532,9 +2455,9 @@ struct GraphicsItem {
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped rectangle as a polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -2543,31 +2466,32 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
     /// Maps the path *path,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_to_scene(polygon: &PolygonFType) -> PolygonF,
+    [org_name(mapToScene)]
+    map_to_scene_3(polygon: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to *item's* coordinate system, and returns the mapped coordinate.
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// transform()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`transform()`]
+    /// [`map_from_item()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2580,10 +2504,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2594,10 +2518,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2606,22 +2530,23 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
-    map_to_item(item: *GraphicsItemType, path: &PainterPathType) -> PainterPath,
+    [org_name(mapToItem)]
+    map_to_item_4(item: *GraphicsItemType, path: &PainterPathType) -> PainterPath,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to its
     /// parent's coordinate system, and returns the mapped coordinate. If the item
     /// has no parent, *point* will be mapped to the scene's coordinate system.
     /// 
-    /// **See also:** mapToItem()
-    /// mapToScene()
-    /// transform()
-    /// mapFromParent()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_to_scene()`]
+    /// [`transform()`]
+    /// [`map_from_parent()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2633,9 +2558,9 @@ struct GraphicsItem {
     /// polygon. If the item has no parent, *rect* will be mapped to the scene's
     /// coordinate system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -2646,9 +2571,9 @@ struct GraphicsItem {
     /// item has no parent, *polygon* will be mapped to the scene's coordinate
     /// system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -2657,20 +2582,21 @@ struct GraphicsItem {
     /// item has no parent, *path* will be mapped to the scene's coordinate
     /// system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_to_parent(path: &PainterPathType) -> PainterPath,
+    [org_name(mapToParent)]
+    map_to_parent_4(path: &PainterPathType) -> PainterPath,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to the
     /// scene's coordinate system, and returns the mapped coordinate.
     /// 
-    /// **See also:** mapToItem()
-    /// mapToParent()
-    /// transform()
-    /// mapFromScene()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_to_parent()`]
+    /// [`transform()`]
+    /// [`map_from_scene()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2680,9 +2606,9 @@ struct GraphicsItem {
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped rectangle as a polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -2691,32 +2617,33 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
     /// Maps the path *path,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_to_scene(path: &PainterPathType) -> PainterPath,
+    [org_name(mapToScene)]
+    map_to_scene_4(path: &PainterPathType) -> PainterPath,
     /// 
     /// Maps the point *point,* which is in *item's* coordinate system, to this
     /// item's coordinate system, and returns the mapped coordinate.
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapFromParent()
-    /// mapFromScene()
-    /// transform()
-    /// mapToItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_scene()`]
+    /// [`transform()`]
+    /// [`map_to_item()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2730,10 +2657,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene()
     /// 
-    /// **See also:** itemTransform()
-    /// mapToItem()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -2744,10 +2671,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToItem()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2756,10 +2683,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapFromParent()
-    /// mapFromScene()
-    /// mapToItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_scene()`]
+    /// [`map_to_item()`]
     /// {The
     /// Graphics View Coordinate System}
     map_from_item(item: *GraphicsItemType, point: &PointFType) -> PointF,
@@ -2768,10 +2695,10 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped
     /// coordinate.
     /// 
-    /// **See also:** mapFromItem()
-    /// mapFromScene()
-    /// transform()
-    /// mapToParent()
+    /// **See also:** [`map_from_item()`]
+    /// [`map_from_scene()`]
+    /// [`transform()`]
+    /// [`map_to_parent()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2783,9 +2710,9 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapFromItem()
-    /// transform()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_from_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -2794,18 +2721,18 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// transform()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
     /// Maps the path *path,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapFromScene()
-    /// mapFromItem()
-    /// mapToParent()
+    /// **See also:** [`map_from_scene()`]
+    /// [`map_from_item()`]
+    /// [`map_to_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     map_from_parent(point: &PointFType) -> PointF,
@@ -2814,10 +2741,10 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped
     /// coordinate.
     /// 
-    /// **See also:** mapFromItem()
-    /// mapFromParent()
-    /// transform()
-    /// mapToScene()
+    /// **See also:** [`map_from_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
+    /// [`map_to_scene()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2828,9 +2755,9 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a polygon.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromItem()
-    /// transform()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -2839,18 +2766,18 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
     /// Maps the path *path,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapFromParent()
-    /// mapFromItem()
-    /// mapToScene()
+    /// **See also:** [`map_from_parent()`]
+    /// [`map_from_item()`]
+    /// [`map_to_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     map_from_scene(point: &PointFType) -> PointF,
@@ -2860,11 +2787,11 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapFromParent()
-    /// mapFromScene()
-    /// transform()
-    /// mapToItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_scene()`]
+    /// [`transform()`]
+    /// [`map_to_item()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2878,10 +2805,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene()
     /// 
-    /// **See also:** itemTransform()
-    /// mapToItem()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -2892,10 +2819,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToItem()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -2904,22 +2831,23 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapFromParent()
-    /// mapFromScene()
-    /// mapToItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_scene()`]
+    /// [`map_to_item()`]
     /// {The
     /// Graphics View Coordinate System}
-    map_from_item(item: *GraphicsItemType, rect: &RectFType) -> PolygonF,
+    [org_name(mapFromItem)]
+    map_from_item_2(item: *GraphicsItemType, rect: &RectFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped
     /// coordinate.
     /// 
-    /// **See also:** mapFromItem()
-    /// mapFromScene()
-    /// transform()
-    /// mapToParent()
+    /// **See also:** [`map_from_item()`]
+    /// [`map_from_scene()`]
+    /// [`transform()`]
+    /// [`map_to_parent()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2931,9 +2859,9 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapFromItem()
-    /// transform()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_from_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -2942,30 +2870,31 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// transform()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
     /// Maps the path *path,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapFromScene()
-    /// mapFromItem()
-    /// mapToParent()
+    /// **See also:** [`map_from_scene()`]
+    /// [`map_from_item()`]
+    /// [`map_to_parent()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_from_parent(rect: &RectFType) -> PolygonF,
+    [org_name(mapFromParent)]
+    map_from_parent_2(rect: &RectFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped
     /// coordinate.
     /// 
-    /// **See also:** mapFromItem()
-    /// mapFromParent()
-    /// transform()
-    /// mapToScene()
+    /// **See also:** [`map_from_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
+    /// [`map_to_scene()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -2976,9 +2905,9 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a polygon.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromItem()
-    /// transform()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -2987,21 +2916,22 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
     /// Maps the path *path,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapFromParent()
-    /// mapFromItem()
-    /// mapToScene()
+    /// **See also:** [`map_from_parent()`]
+    /// [`map_from_item()`]
+    /// [`map_to_scene()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_from_scene(rect: &RectFType) -> PolygonF,
+    [org_name(mapFromScene)]
+    map_from_scene_2(rect: &RectFType) -> PolygonF,
     /// 
     /// Maps the rectangle *rect,* which is in *item's* coordinate system, to
     /// this item's coordinate system, and returns the mapped rectangle as a new
@@ -3009,10 +2939,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapRectFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -3024,10 +2954,10 @@ struct GraphicsItem {
     /// as a new rectangle (i.e., the bounding rectangle of the resulting
     /// polygon).
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -3038,10 +2968,10 @@ struct GraphicsItem {
     /// coordinate system, and returns the mapped rectangle as a new rectangle
     /// (i.e., the bounding rectangle of the resulting polygon).
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -3053,11 +2983,11 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapFromParent()
-    /// mapFromScene()
-    /// transform()
-    /// mapToItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_scene()`]
+    /// [`transform()`]
+    /// [`map_to_item()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3071,10 +3001,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene()
     /// 
-    /// **See also:** itemTransform()
-    /// mapToItem()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -3085,10 +3015,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToItem()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -3097,22 +3027,23 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapFromParent()
-    /// mapFromScene()
-    /// mapToItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_scene()`]
+    /// [`map_to_item()`]
     /// {The
     /// Graphics View Coordinate System}
-    map_from_item(item: *GraphicsItemType, polygon: &PolygonFType) -> PolygonF,
+    [org_name(mapFromItem)]
+    map_from_item_3(item: *GraphicsItemType, polygon: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped
     /// coordinate.
     /// 
-    /// **See also:** mapFromItem()
-    /// mapFromScene()
-    /// transform()
-    /// mapToParent()
+    /// **See also:** [`map_from_item()`]
+    /// [`map_from_scene()`]
+    /// [`transform()`]
+    /// [`map_to_parent()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3124,9 +3055,9 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapFromItem()
-    /// transform()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_from_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -3135,30 +3066,31 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// transform()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
     /// Maps the path *path,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapFromScene()
-    /// mapFromItem()
-    /// mapToParent()
+    /// **See also:** [`map_from_scene()`]
+    /// [`map_from_item()`]
+    /// [`map_to_parent()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_from_parent(polygon: &PolygonFType) -> PolygonF,
+    [org_name(mapFromParent)]
+    map_from_parent_3(polygon: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped
     /// coordinate.
     /// 
-    /// **See also:** mapFromItem()
-    /// mapFromParent()
-    /// transform()
-    /// mapToScene()
+    /// **See also:** [`map_from_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
+    /// [`map_to_scene()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3169,9 +3101,9 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a polygon.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromItem()
-    /// transform()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -3180,32 +3112,33 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
     /// Maps the path *path,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapFromParent()
-    /// mapFromItem()
-    /// mapToScene()
+    /// **See also:** [`map_from_parent()`]
+    /// [`map_from_item()`]
+    /// [`map_to_scene()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_from_scene(polygon: &PolygonFType) -> PolygonF,
+    [org_name(mapFromScene)]
+    map_from_scene_3(polygon: &PolygonFType) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in *item's* coordinate system, to this
     /// item's coordinate system, and returns the mapped coordinate.
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapFromParent()
-    /// mapFromScene()
-    /// transform()
-    /// mapToItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_scene()`]
+    /// [`transform()`]
+    /// [`map_to_item()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3219,10 +3152,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene()
     /// 
-    /// **See also:** itemTransform()
-    /// mapToItem()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -3233,10 +3166,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToItem()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -3245,22 +3178,23 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapFromParent()
-    /// mapFromScene()
-    /// mapToItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_scene()`]
+    /// [`map_to_item()`]
     /// {The
     /// Graphics View Coordinate System}
-    map_from_item(item: *GraphicsItemType, path: &PainterPathType) -> PainterPath,
+    [org_name(mapFromItem)]
+    map_from_item_4(item: *GraphicsItemType, path: &PainterPathType) -> PainterPath,
     /// 
     /// Maps the point *point,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped
     /// coordinate.
     /// 
-    /// **See also:** mapFromItem()
-    /// mapFromScene()
-    /// transform()
-    /// mapToParent()
+    /// **See also:** [`map_from_item()`]
+    /// [`map_from_scene()`]
+    /// [`transform()`]
+    /// [`map_to_parent()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3272,9 +3206,9 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapFromItem()
-    /// transform()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_from_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -3283,30 +3217,31 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// transform()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
     /// Maps the path *path,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapFromScene()
-    /// mapFromItem()
-    /// mapToParent()
+    /// **See also:** [`map_from_scene()`]
+    /// [`map_from_item()`]
+    /// [`map_to_parent()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_from_parent(path: &PainterPathType) -> PainterPath,
+    [org_name(mapFromParent)]
+    map_from_parent_4(path: &PainterPathType) -> PainterPath,
     /// 
     /// Maps the point *point,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped
     /// coordinate.
     /// 
-    /// **See also:** mapFromItem()
-    /// mapFromParent()
-    /// transform()
-    /// mapToScene()
+    /// **See also:** [`map_from_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
+    /// [`map_to_scene()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3317,9 +3252,9 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a polygon.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromItem()
-    /// transform()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -3328,31 +3263,32 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
     /// Maps the path *path,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapFromParent()
-    /// mapFromItem()
-    /// mapToScene()
+    /// **See also:** [`map_from_parent()`]
+    /// [`map_from_item()`]
+    /// [`map_to_scene()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_from_scene(path: &PainterPathType) -> PainterPath,
+    [org_name(mapFromScene)]
+    map_from_scene_4(path: &PainterPathType) -> PainterPath,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to *item's* coordinate system, and returns the mapped coordinate.
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// transform()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`transform()`]
+    /// [`map_from_item()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3365,10 +3301,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -3379,10 +3315,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -3391,22 +3327,23 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
-    map_to_item(item: *GraphicsItemType, x: f32, y: f32) -> PointF,
+    [org_name(mapToItem)]
+    map_to_item_5(item: *GraphicsItemType, x: f32, y: f32) -> PointF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to its
     /// parent's coordinate system, and returns the mapped coordinate. If the item
     /// has no parent, *point* will be mapped to the scene's coordinate system.
     /// 
-    /// **See also:** mapToItem()
-    /// mapToScene()
-    /// transform()
-    /// mapFromParent()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_to_scene()`]
+    /// [`transform()`]
+    /// [`map_from_parent()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3418,9 +3355,9 @@ struct GraphicsItem {
     /// polygon. If the item has no parent, *rect* will be mapped to the scene's
     /// coordinate system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -3431,9 +3368,9 @@ struct GraphicsItem {
     /// item has no parent, *polygon* will be mapped to the scene's coordinate
     /// system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -3442,20 +3379,21 @@ struct GraphicsItem {
     /// item has no parent, *path* will be mapped to the scene's coordinate
     /// system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_to_parent(x: f32, y: f32) -> PointF,
+    [org_name(mapToParent)]
+    map_to_parent_5(x: f32, y: f32) -> PointF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to the
     /// scene's coordinate system, and returns the mapped coordinate.
     /// 
-    /// **See also:** mapToItem()
-    /// mapToParent()
-    /// transform()
-    /// mapFromScene()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_to_parent()`]
+    /// [`transform()`]
+    /// [`map_from_scene()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3465,9 +3403,9 @@ struct GraphicsItem {
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped rectangle as a polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -3476,31 +3414,32 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
     /// Maps the path *path,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_to_scene(x: f32, y: f32) -> PointF,
+    [org_name(mapToScene)]
+    map_to_scene_5(x: f32, y: f32) -> PointF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to *item's* coordinate system, and returns the mapped coordinate.
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// transform()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`transform()`]
+    /// [`map_from_item()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3513,10 +3452,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -3527,10 +3466,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -3539,22 +3478,23 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
-    map_to_item(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> PolygonF,
+    [org_name(mapToItem)]
+    map_to_item_6(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to its
     /// parent's coordinate system, and returns the mapped coordinate. If the item
     /// has no parent, *point* will be mapped to the scene's coordinate system.
     /// 
-    /// **See also:** mapToItem()
-    /// mapToScene()
-    /// transform()
-    /// mapFromParent()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_to_scene()`]
+    /// [`transform()`]
+    /// [`map_from_parent()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3566,9 +3506,9 @@ struct GraphicsItem {
     /// polygon. If the item has no parent, *rect* will be mapped to the scene's
     /// coordinate system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -3579,9 +3519,9 @@ struct GraphicsItem {
     /// item has no parent, *polygon* will be mapped to the scene's coordinate
     /// system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -3590,20 +3530,21 @@ struct GraphicsItem {
     /// item has no parent, *path* will be mapped to the scene's coordinate
     /// system.
     /// 
-    /// **See also:** mapToScene()
-    /// mapToItem()
-    /// mapFromParent()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_to_parent(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
+    [org_name(mapToParent)]
+    map_to_parent_6(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's coordinate system, to the
     /// scene's coordinate system, and returns the mapped coordinate.
     /// 
-    /// **See also:** mapToItem()
-    /// mapToParent()
-    /// transform()
-    /// mapFromScene()
+    /// **See also:** [`map_to_item()`]
+    /// [`map_to_parent()`]
+    /// [`transform()`]
+    /// [`map_from_scene()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3613,9 +3554,9 @@ struct GraphicsItem {
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped rectangle as a polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
@@ -3624,21 +3565,22 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
     /// 
     /// Maps the path *path,* which is in this item's coordinate system, to
     /// the scene's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// mapFromScene()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`map_from_scene()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_to_scene(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
+    [org_name(mapToScene)]
+    map_to_scene_6(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
     /// 
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// *item's* coordinate system, and returns the mapped rectangle as a new
@@ -3646,54 +3588,57 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapRectToScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
     /// This convenience function is equivalent to calling mapRectToItem(item, QRectF( *x,* *y,* *w,* *h)).*
-    map_rect_to_item(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> RectF,
+    [org_name(mapRectToItem)]
+    map_rect_to_item_2(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> RectF,
     /// 
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// its parent's coordinate system, and returns the mapped rectangle as a new
     /// rectangle (i.e., the bounding rectangle of the resulting polygon).
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
     /// This convenience function is equivalent to calling mapRectToParent(QRectF( *x,* *y,* *w,* *h)).*
-    map_rect_to_parent(x: f32, y: f32, w: f32, h: f32) -> RectF,
+    [org_name(mapRectToParent)]
+    map_rect_to_parent_2(x: f32, y: f32, w: f32, h: f32) -> RectF,
     /// 
     /// Maps the rectangle *rect,* which is in this item's coordinate system, to
     /// the scene coordinate system, and returns the mapped rectangle as a new
     /// rectangle (i.e., the bounding rectangle of the resulting polygon).
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
     /// This convenience function is equivalent to calling mapRectToScene(QRectF( *x,* *y,* *w,* *h)).*
-    map_rect_to_scene(x: f32, y: f32, w: f32, h: f32) -> RectF,
+    [org_name(mapRectToScene)]
+    map_rect_to_scene_2(x: f32, y: f32, w: f32, h: f32) -> RectF,
     /// 
     /// Maps the point *point,* which is in *item's* coordinate system, to this
     /// item's coordinate system, and returns the mapped coordinate.
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapFromParent()
-    /// mapFromScene()
-    /// transform()
-    /// mapToItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_scene()`]
+    /// [`transform()`]
+    /// [`map_to_item()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3707,10 +3652,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene()
     /// 
-    /// **See also:** itemTransform()
-    /// mapToItem()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -3721,10 +3666,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToItem()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -3733,22 +3678,23 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapFromParent()
-    /// mapFromScene()
-    /// mapToItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_scene()`]
+    /// [`map_to_item()`]
     /// {The
     /// Graphics View Coordinate System}
-    map_from_item(item: *GraphicsItemType, x: f32, y: f32) -> PointF,
+    [org_name(mapFromItem)]
+    map_from_item_5(item: *GraphicsItemType, x: f32, y: f32) -> PointF,
     /// 
     /// Maps the point *point,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped
     /// coordinate.
     /// 
-    /// **See also:** mapFromItem()
-    /// mapFromScene()
-    /// transform()
-    /// mapToParent()
+    /// **See also:** [`map_from_item()`]
+    /// [`map_from_scene()`]
+    /// [`transform()`]
+    /// [`map_to_parent()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3760,9 +3706,9 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapFromItem()
-    /// transform()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_from_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -3771,30 +3717,31 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// transform()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
     /// Maps the path *path,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapFromScene()
-    /// mapFromItem()
-    /// mapToParent()
+    /// **See also:** [`map_from_scene()`]
+    /// [`map_from_item()`]
+    /// [`map_to_parent()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_from_parent(x: f32, y: f32) -> PointF,
+    [org_name(mapFromParent)]
+    map_from_parent_5(x: f32, y: f32) -> PointF,
     /// 
     /// Maps the point *point,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped
     /// coordinate.
     /// 
-    /// **See also:** mapFromItem()
-    /// mapFromParent()
-    /// transform()
-    /// mapToScene()
+    /// **See also:** [`map_from_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
+    /// [`map_to_scene()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3805,9 +3752,9 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a polygon.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromItem()
-    /// transform()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -3816,32 +3763,33 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
     /// Maps the path *path,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapFromParent()
-    /// mapFromItem()
-    /// mapToScene()
+    /// **See also:** [`map_from_parent()`]
+    /// [`map_from_item()`]
+    /// [`map_to_scene()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_from_scene(x: f32, y: f32) -> PointF,
+    [org_name(mapFromScene)]
+    map_from_scene_5(x: f32, y: f32) -> PointF,
     /// 
     /// Maps the point *point,* which is in *item's* coordinate system, to this
     /// item's coordinate system, and returns the mapped coordinate.
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapFromParent()
-    /// mapFromScene()
-    /// transform()
-    /// mapToItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_scene()`]
+    /// [`transform()`]
+    /// [`map_to_item()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3855,10 +3803,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene()
     /// 
-    /// **See also:** itemTransform()
-    /// mapToItem()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -3869,10 +3817,10 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToItem()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
@@ -3881,22 +3829,23 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapFromParent()
-    /// mapFromScene()
-    /// mapToItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_scene()`]
+    /// [`map_to_item()`]
     /// {The
     /// Graphics View Coordinate System}
-    map_from_item(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> PolygonF,
+    [org_name(mapFromItem)]
+    map_from_item_6(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped
     /// coordinate.
     /// 
-    /// **See also:** mapFromItem()
-    /// mapFromScene()
-    /// transform()
-    /// mapToParent()
+    /// **See also:** [`map_from_item()`]
+    /// [`map_from_scene()`]
+    /// [`transform()`]
+    /// [`map_to_parent()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3908,9 +3857,9 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapFromItem()
-    /// transform()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_from_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -3919,30 +3868,31 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToParent()
-    /// mapToItem()
-    /// transform()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_to_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
     /// Maps the path *path,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapFromScene()
-    /// mapFromItem()
-    /// mapToParent()
+    /// **See also:** [`map_from_scene()`]
+    /// [`map_from_item()`]
+    /// [`map_to_parent()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_from_parent(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
+    [org_name(mapFromParent)]
+    map_from_parent_6(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
     /// 
     /// Maps the point *point,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped
     /// coordinate.
     /// 
-    /// **See also:** mapFromItem()
-    /// mapFromParent()
-    /// transform()
-    /// mapToScene()
+    /// **See also:** [`map_from_item()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
+    /// [`map_to_scene()`]
     /// {The Graphics
     /// View Coordinate System}
     /// 
@@ -3953,9 +3903,9 @@ struct GraphicsItem {
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a polygon.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromItem()
-    /// transform()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_item()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
@@ -3964,21 +3914,22 @@ struct GraphicsItem {
     /// Maps the polygon *polygon,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped polygon.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromParent()
-    /// transform()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_parent()`]
+    /// [`transform()`]
     /// {The Graphics View Coordinate
     /// System}
     /// 
     /// Maps the path *path,* which is in this item's scene's coordinate
     /// system, to this item's coordinate system, and returns the mapped path.
     /// 
-    /// **See also:** mapFromParent()
-    /// mapFromItem()
-    /// mapToScene()
+    /// **See also:** [`map_from_parent()`]
+    /// [`map_from_item()`]
+    /// [`map_to_scene()`]
     /// {The Graphics View
     /// Coordinate System}
-    map_from_scene(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
+    [org_name(mapFromScene)]
+    map_from_scene_6(x: f32, y: f32, w: f32, h: f32) -> PolygonF,
     /// 
     /// Maps the rectangle *rect,* which is in *item's* coordinate system, to
     /// this item's coordinate system, and returns the mapped rectangle as a new
@@ -3986,62 +3937,65 @@ struct GraphicsItem {
     /// 
     /// If *item* is 0, this function returns the same as mapRectFromScene().
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
     /// This convenience function is equivalent to calling mapRectFromItem(item, QRectF( *x,* *y,* *w,* *h)).*
-    map_rect_from_item(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> RectF,
+    [org_name(mapRectFromItem)]
+    map_rect_from_item_2(item: *GraphicsItemType, x: f32, y: f32, w: f32, h: f32) -> RectF,
     /// 
     /// Maps the rectangle *rect,* which is in this item's parent's coordinate
     /// system, to this item's coordinate system, and returns the mapped rectangle
     /// as a new rectangle (i.e., the bounding rectangle of the resulting
     /// polygon).
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
     /// This convenience function is equivalent to calling mapRectFromParent(QRectF( *x,* *y,* *w,* *h)).*
-    map_rect_from_parent(x: f32, y: f32, w: f32, h: f32) -> RectF,
+    [org_name(mapRectFromParent)]
+    map_rect_from_parent_2(x: f32, y: f32, w: f32, h: f32) -> RectF,
     /// 
     /// Maps the rectangle *rect,* which is in scene coordinates, to this item's
     /// coordinate system, and returns the mapped rectangle as a new rectangle
     /// (i.e., the bounding rectangle of the resulting polygon).
     /// 
-    /// **See also:** itemTransform()
-    /// mapToParent()
-    /// mapToScene()
-    /// mapFromItem()
+    /// **See also:** [`item_transform()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_scene()`]
+    /// [`map_from_item()`]
     /// {The
     /// Graphics View Coordinate System}
     /// 
     /// This convenience function is equivalent to calling mapRectFromScene(QRectF( *x,* *y,* *w,* *h)).*
-    map_rect_from_scene(x: f32, y: f32, w: f32, h: f32) -> RectF,
+    [org_name(mapRectFromScene)]
+    map_rect_from_scene_2(x: f32, y: f32, w: f32, h: f32) -> RectF,
     /// 
     /// Returns `true` if this item is an ancestor of *child* (i.e., if this item
     /// is *child's* parent, or one of *child's* parent's ancestors).
     /// 
-    /// **See also:** parentItem()
+    /// **See also:** [`parent_item()`]
     is_ancestor_of(child: *GraphicsItemType) -> bool,
     /// 
     /// Returns the closest common ancestor item of this item and *other,* or 0
     /// if either *other* is 0, or there is no common ancestor.
     /// 
-    /// **See also:** isAncestorOf()
+    /// **See also:** [`is_ancestor_of()`]
     common_ancestor_item(other: *GraphicsItemType) -> GraphicsItem?,
     /// 
     /// Returns `true` if this item is currently under the mouse cursor in one of
     /// the views; otherwise, false is returned.
     /// 
-    /// **See also:** QGraphicsScene::views()
-    /// QCursor::pos()
+    /// **See also:** [`GraphicsScene::views`]
+    /// [`Cursor::pos`]
     is_under_mouse() -> bool,
     /// 
     /// Returns this item's custom data for the key *key* as a QVariant.
@@ -4052,7 +4006,7 @@ struct GraphicsItem {
     /// Qt does not use this feature for storing data; it is provided solely
     /// for the convenience of the user.
     /// 
-    /// **See also:** setData()
+    /// **See also:** [`set_data()`]
     data(key: i32) -> Variant,
     /// 
     /// Sets this item's custom data for the key *key* to *value.*
@@ -4061,7 +4015,7 @@ struct GraphicsItem {
     /// item. Qt does not use this feature for storing data; it is provided solely
     /// for the convenience of the user.
     /// 
-    /// **See also:** data()
+    /// **See also:** [`data()`]
     set_data(key: i32, value: &VariantType),
     /// 
     /// Returns the current input method hints of this item.
@@ -4073,14 +4027,14 @@ struct GraphicsItem {
     /// 
     /// The effect may vary between input method implementations.
     /// 
-    /// **See also:** setInputMethodHints()
-    /// inputMethodQuery()
+    /// **See also:** [`set_input_method_hints()`]
+    /// [`input_method_query()`]
     input_method_hints() -> Rute::InputMethodHints,
     /// 
     /// Sets the current input method hints of this item to *hints.*
     /// 
-    /// **See also:** inputMethodHints()
-    /// inputMethodQuery()
+    /// **See also:** [`input_method_hints()`]
+    /// [`input_method_query()`]
     set_input_method_hints(hints: Rute::InputMethodHints),
     /// 
     /// Returns the type of an item as an int. All standard graphicsitem classes
@@ -4112,19 +4066,19 @@ struct GraphicsItem {
     /// Items must belong to a scene for scene event filters to be installed and
     /// used.
     /// 
-    /// **See also:** removeSceneEventFilter()
-    /// sceneEventFilter()
-    /// sceneEvent()
+    /// **See also:** [`remove_scene_event_filter()`]
+    /// [`scene_event_filter()`]
+    /// [`scene_event()`]
     install_scene_event_filter(filter_item: *GraphicsItemType),
     /// 
     /// Removes an event filter on this item from *filterItem.*
     /// 
-    /// **See also:** installSceneEventFilter()
+    /// **See also:** [`install_scene_event_filter()`]
     remove_scene_event_filter(filter_item: *GraphicsItemType),
     /// 
     /// Updates the item's micro focus.
     /// 
-    /// **See also:** QInputMethod
+    /// **See also:** [`InputMethod`]
     update_micro_focus(),
     /// 
     /// Filters events for the item *watched.* *event* is the filtered
@@ -4140,7 +4094,7 @@ struct GraphicsItem {
     /// item, or return false to indicate that the event should be propagated
     /// further by the event system.
     /// 
-    /// **See also:** installSceneEventFilter()
+    /// **See also:** [`install_scene_event_filter()`]
     [event] scene_event_filter(watched: *GraphicsItemType, event: *EventType) -> bool,
     /// 
     /// Filters events for the item *watched.* *event* is the filtered
@@ -4156,7 +4110,7 @@ struct GraphicsItem {
     /// item, or return false to indicate that the event should be propagated
     /// further by the event system.
     /// 
-    /// **See also:** installSceneEventFilter()
+    /// **See also:** [`install_scene_event_filter()`]
     /// 
     /// This virtual function receives events to this item. Reimplement
     /// this function to intercept events before they are dispatched to
@@ -4185,7 +4139,7 @@ struct GraphicsItem {
     /// 
     /// The default implementation ignores the event.
     /// 
-    /// **See also:** sceneEvent()
+    /// **See also:** [`scene_event()`]
     [event] context_menu_event(event: *GraphicsSceneContextMenuEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to receive
@@ -4206,9 +4160,9 @@ struct GraphicsItem {
     /// 
     /// The default implementation does nothing.
     /// 
-    /// **See also:** dropEvent()
-    /// dragMoveEvent()
-    /// dragLeaveEvent()
+    /// **See also:** [`drop_event()`]
+    /// [`drag_move_event()`]
+    /// [`drag_leave_event()`]
     [event] drag_enter_event(event: *GraphicsSceneDragDropEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to receive
@@ -4224,9 +4178,9 @@ struct GraphicsItem {
     /// 
     /// The default implementation does nothing.
     /// 
-    /// **See also:** dragEnterEvent()
-    /// dropEvent()
-    /// dragMoveEvent()
+    /// **See also:** [`drag_enter_event()`]
+    /// [`drop_event()`]
+    /// [`drag_move_event()`]
     [event] drag_leave_event(event: *GraphicsSceneDragDropEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to receive
@@ -4245,9 +4199,9 @@ struct GraphicsItem {
     /// 
     /// The default implementation does nothing.
     /// 
-    /// **See also:** dropEvent()
-    /// dragEnterEvent()
-    /// dragLeaveEvent()
+    /// **See also:** [`drop_event()`]
+    /// [`drag_enter_event()`]
+    /// [`drag_leave_event()`]
     [event] drag_move_event(event: *GraphicsSceneDragDropEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to receive
@@ -4261,26 +4215,26 @@ struct GraphicsItem {
     /// 
     /// The default implementation does nothing.
     /// 
-    /// **See also:** dragEnterEvent()
-    /// dragMoveEvent()
-    /// dragLeaveEvent()
+    /// **See also:** [`drag_enter_event()`]
+    /// [`drag_move_event()`]
+    /// [`drag_leave_event()`]
     [event] drop_event(event: *GraphicsSceneDragDropEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to receive
     /// focus in events for this item. The default implementation calls
     /// ensureVisible().
     /// 
-    /// **See also:** focusOutEvent()
-    /// sceneEvent()
-    /// setFocus()
+    /// **See also:** [`focus_out_event()`]
+    /// [`scene_event()`]
+    /// [`set_focus()`]
     [event] focus_in_event(event: *FocusEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to receive
     /// focus out events for this item. The default implementation does nothing.
     /// 
-    /// **See also:** focusInEvent()
-    /// sceneEvent()
-    /// setFocus()
+    /// **See also:** [`focus_in_event()`]
+    /// [`scene_event()`]
+    /// [`set_focus()`]
     [event] focus_out_event(event: *FocusEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to receive
@@ -4289,10 +4243,10 @@ struct GraphicsItem {
     /// 
     /// Calling QEvent::ignore() or QEvent::accept() on *event* has no effect.
     /// 
-    /// **See also:** hoverMoveEvent()
-    /// hoverLeaveEvent()
-    /// sceneEvent()
-    /// setAcceptHoverEvents()
+    /// **See also:** [`hover_move_event()`]
+    /// [`hover_leave_event()`]
+    /// [`scene_event()`]
+    /// [`set_accept_hover_events()`]
     [event] hover_enter_event(event: *GraphicsSceneHoverEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to receive
@@ -4300,10 +4254,10 @@ struct GraphicsItem {
     /// 
     /// Calling QEvent::ignore() or QEvent::accept() on *event* has no effect.
     /// 
-    /// **See also:** hoverEnterEvent()
-    /// hoverLeaveEvent()
-    /// sceneEvent()
-    /// setAcceptHoverEvents()
+    /// **See also:** [`hover_enter_event()`]
+    /// [`hover_leave_event()`]
+    /// [`scene_event()`]
+    /// [`set_accept_hover_events()`]
     [event] hover_move_event(event: *GraphicsSceneHoverEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to receive
@@ -4312,10 +4266,10 @@ struct GraphicsItem {
     /// 
     /// Calling QEvent::ignore() or QEvent::accept() on *event* has no effect.
     /// 
-    /// **See also:** hoverEnterEvent()
-    /// hoverMoveEvent()
-    /// sceneEvent()
-    /// setAcceptHoverEvents()
+    /// **See also:** [`hover_enter_event()`]
+    /// [`hover_move_event()`]
+    /// [`scene_event()`]
+    /// [`set_accept_hover_events()`]
     [event] hover_leave_event(event: *GraphicsSceneHoverEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to
@@ -4326,10 +4280,10 @@ struct GraphicsItem {
     /// Note that key events are only received for items that set the
     /// ItemIsFocusable flag, and that have keyboard input focus.
     /// 
-    /// **See also:** keyReleaseEvent()
-    /// setFocus()
-    /// QGraphicsScene::setFocusItem()
-    /// sceneEvent()
+    /// **See also:** [`key_release_event()`]
+    /// [`set_focus()`]
+    /// [`GraphicsScene::set_focus_item`]
+    /// [`scene_event()`]
     [event] key_press_event(event: *KeyEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to receive
@@ -4340,10 +4294,10 @@ struct GraphicsItem {
     /// Note that key events are only received for items that set the
     /// ItemIsFocusable flag, and that have keyboard input focus.
     /// 
-    /// **See also:** keyPressEvent()
-    /// setFocus()
-    /// QGraphicsScene::setFocusItem()
-    /// sceneEvent()
+    /// **See also:** [`key_press_event()`]
+    /// [`set_focus()`]
+    /// [`GraphicsScene::set_focus_item`]
+    /// [`scene_event()`]
     [event] key_release_event(event: *KeyEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to
@@ -4378,10 +4332,10 @@ struct GraphicsItem {
     /// [selectable](QGraphicsItem::ItemIsSelectable)
     /// 
     /// 
-    /// **See also:** mouseMoveEvent()
-    /// mouseReleaseEvent()
-    /// mouseDoubleClickEvent()
-    /// sceneEvent()
+    /// **See also:** [`mouse_move_event()`]
+    /// [`mouse_release_event()`]
+    /// [`mouse_double_click_event()`]
+    /// [`scene_event()`]
     [event] mouse_press_event(event: *GraphicsSceneMouseEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to
@@ -4401,10 +4355,10 @@ struct GraphicsItem {
     /// is that receives mouse events. See the mousePressEvent()
     /// description for details.
     /// 
-    /// **See also:** mousePressEvent()
-    /// mouseReleaseEvent()
-    /// mouseDoubleClickEvent()
-    /// sceneEvent()
+    /// **See also:** [`mouse_press_event()`]
+    /// [`mouse_release_event()`]
+    /// [`mouse_double_click_event()`]
+    /// [`scene_event()`]
     [event] mouse_move_event(event: *GraphicsSceneMouseEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to
@@ -4422,10 +4376,10 @@ struct GraphicsItem {
     /// is that receives mouse events. See the mousePressEvent()
     /// description for details.
     /// 
-    /// **See also:** mousePressEvent()
-    /// mouseMoveEvent()
-    /// mouseDoubleClickEvent()
-    /// sceneEvent()
+    /// **See also:** [`mouse_press_event()`]
+    /// [`mouse_move_event()`]
+    /// [`mouse_double_click_event()`]
+    /// [`scene_event()`]
     [event] mouse_release_event(event: *GraphicsSceneMouseEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to
@@ -4451,10 +4405,10 @@ struct GraphicsItem {
     /// ignored in this case, and that stops the generation of double
     /// clicks).
     /// 
-    /// **See also:** mousePressEvent()
-    /// mouseMoveEvent()
-    /// mouseReleaseEvent()
-    /// sceneEvent()
+    /// **See also:** [`mouse_press_event()`]
+    /// [`mouse_move_event()`]
+    /// [`mouse_release_event()`]
+    /// [`scene_event()`]
     [event] mouse_double_click_event(event: *GraphicsSceneMouseEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to receive
@@ -4468,15 +4422,15 @@ struct GraphicsItem {
     /// 
     /// The default implementation ignores the event.
     /// 
-    /// **See also:** sceneEvent()
+    /// **See also:** [`scene_event()`]
     [event] wheel_event(event: *GraphicsSceneWheelEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented to receive
     /// input method events for this item. The default implementation ignores the
     /// event.
     /// 
-    /// **See also:** inputMethodQuery()
-    /// sceneEvent()
+    /// **See also:** [`input_method_query()`]
+    /// [`scene_event()`]
     [event] input_method_event(event: *InputMethodEventType),
     /// 
     /// This method is only relevant for input items. It is used by the
@@ -4485,8 +4439,8 @@ struct GraphicsItem {
     /// surrounding text and reconversions. *query* specifies which
     /// property is queried.
     /// 
-    /// **See also:** inputMethodEvent()
-    /// QInputMethodEvent
+    /// **See also:** [`input_method_event()`]
+    /// [`InputMethodEvent`]
     [event] input_method_query(query: Rute::InputMethodQuery) -> Variant,
     /// 
     /// This virtual function is called by QGraphicsItem to notify custom items
@@ -4511,6 +4465,154 @@ struct GraphicsItem {
     [event] extension(variant: &VariantType) -> Variant,
     add_to_index(),
     remove_from_index(),
+}
+
+[org_name(QGraphicsItem)]
+enum GraphicsItemFlag {
+    /// The item supports interactive movement using the mouse. By clicking on the item and then dragging, the item will move together with the mouse cursor. If the item has children, all children are also moved. If the item is part of a selection, all selected items are also moved. This feature is provided as a convenience through the base implementation of QGraphicsItem's mouse event handlers.
+    ItemIsMovable,
+    /// The item supports selection. Enabling this feature will enable setSelected() to toggle selection for the item. It will also let the item be selected automatically as a result of calling QGraphicsScene::setSelectionArea(), by clicking on an item, or by using rubber band selection in QGraphicsView.
+    ItemIsSelectable,
+    /// The item supports keyboard input focus (i.e., it is an input item). Enabling this flag will allow the item to accept focus, which again allows the delivery of key events to QGraphicsItem::keyPressEvent() and QGraphicsItem::keyReleaseEvent().
+    ItemIsFocusable,
+    /// The item clips to its own shape. The item cannot draw or receive mouse, tablet, drag and drop or hover events outside its shape. It is disabled by default. This behavior is enforced by QGraphicsView::drawItems() or QGraphicsScene::drawItems(). This flag was introduced in Qt 4.3.
+    ItemClipsToShape,
+    /// The item clips the painting of all its descendants to its own shape. Items that are either direct or indirect children of this item cannot draw outside this item's shape. By default, this flag is disabled; children can draw anywhere. This behavior is enforced by QGraphicsView::drawItems() or QGraphicsScene::drawItems(). This flag was introduced in Qt 4.3.
+    ItemClipsChildrenToShape,
+    /// The item ignores inherited transformations (i.e., its position is still anchored to its parent, but the parent or view rotation, zoom or shear transformations are ignored). This flag is useful for keeping text label items horizontal and unscaled, so they will still be readable if the view is transformed. When set, the item's view geometry and scene geometry will be maintained separately. You must call deviceTransform() to map coordinates and detect collisions in the view. By default, this flag is disabled. This flag was introduced in Qt 4.3.
+    ItemIgnoresTransformations,
+    /// The item ignores its parent's opacity. The item's effective opacity is the same as its own; it does not combine with the parent's opacity. This flags allows your item to keep its absolute opacity even if the parent is semitransparent. This flag was introduced in Qt 4.5.
+    ItemIgnoresParentOpacity,
+    /// The item doesn't propagate its opacity to its children. This flag allows you to create a semitransparent item that does not affect the opacity of its children. This flag was introduced in Qt 4.5.
+    ItemDoesntPropagateOpacityToChildren,
+    /// The item is stacked behind its parent. By default, child items are stacked on top of the parent item. But setting this flag, the child will be stacked behind it. This flag is useful for drop shadow effects and for decoration objects that follow the parent item's geometry without drawing on top of it. This flag was introduced in Qt 4.5.
+    ItemStacksBehindParent,
+    /// The item makes use of either [exposedRect](QStyleOptionGraphicsItem::)
+ or [matrix](QStyleOptionGraphicsItem::)
+ in QStyleOptionGraphicsItem. By default, the [exposedRect](QStyleOptionGraphicsItem::)
+ is initialized to the item's boundingRect() and the [matrix](QStyleOptionGraphicsItem::)
+ is untransformed. You can enable this flag for the style options to be set up with more fine-grained values. Note that QStyleOptionGraphicsItem::levelOfDetail is unaffected by this flag and always initialized to 1. Use QStyleOptionGraphicsItem::levelOfDetailFromTransform() if you need a higher value. This flag was introduced in Qt 4.6.
+    ItemUsesExtendedStyleOption,
+    /// The item does not paint anything (i.e., calling paint() on the item has no effect). You should set this flag on items that do not need to be painted to ensure that Graphics View avoids unnecessary painting preparations. This flag was introduced in Qt 4.6.
+    ItemHasNoContents,
+    /// The item enables itemChange() notifications for ItemPositionChange, ItemPositionHasChanged, ItemMatrixChange, ItemTransformChange, ItemTransformHasChanged, ItemRotationChange, ItemRotationHasChanged, ItemScaleChange, ItemScaleHasChanged, ItemTransformOriginPointChange, and ItemTransformOriginPointHasChanged. For performance reasons, these notifications are disabled by default. You must enable this flag to receive notifications for position and transform changes. This flag was introduced in Qt 4.6.
+    ItemSendsGeometryChanges,
+    /// The item supports input methods typically used for Asian languages. This flag was introduced in Qt 4.6.
+    ItemAcceptsInputMethod,
+    /// The item automatically stacks behind it's parent if it's z-value is negative. This flag enables setZValue() to toggle ItemStacksBehindParent. This flag was introduced in Qt 4.6.
+    ItemNegativeZStacksBehindParent,
+    /// The item is a panel. A panel provides activation and contained focus handling. Only one panel can be active at a time (see QGraphicsItem::isActive()). When no panel is active, QGraphicsScene activates all non-panel items. Window items (i.e., QGraphicsItem::isWindow() returns `true)` are panels. This flag was introduced in Qt 4.6.
+    ItemIsPanel,
+    ItemIsFocusScope,
+    /// The item enables itemChange() notifications for ItemScenePositionHasChanged. For performance reasons, these notifications are disabled by default. You must enable this flag to receive notifications for scene position changes. This flag was introduced in Qt 4.6.
+    ItemSendsScenePositionChanges,
+    ItemStopsClickFocusPropagation,
+    ItemStopsFocusHandling,
+    /// This flag indicates that all of the item's direct or indirect children only draw within the item's shape. Unlike ItemClipsChildrenToShape, this restriction is not enforced. Set ItemContainsChildrenInShape when you manually assure that drawing is bound to the item's shape and want to avoid the cost associated with enforcing the clip. Setting this flag enables more efficient drawing and collision detection. The flag is disabled by default.
+    ItemContainsChildrenInShape,
+}
+
+[org_name(QGraphicsItem)]
+enum GraphicsItemChange {
+    /// The item's position changes. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and when the item's local position changes, relative to its parent (i.e., as a result of calling setPos() or moveBy()). The value argument is the new position (i.e., a QPointF). You can call pos() to get the original position. Do not call setPos() or moveBy() in itemChange() as this notification is delivered; instead, you can return the new, adjusted position from itemChange(). After this notification, QGraphicsItem immediately sends the ItemPositionHasChanged notification if the position changed.
+    ItemPositionChange,
+    /// The item's affine transformation matrix is changing. This value is obsolete; you can use ItemTransformChange instead.
+    ItemMatrixChange,
+    /// The item's visible state changes. If the item is presently visible, it will become invisible, and vice verca. The value argument is the new visible state (i.e., true or false). Do not call setVisible() in itemChange() as this notification is delivered; instead, you can return the new visible state from itemChange().
+    ItemVisibleChange,
+    /// The item's enabled state changes. If the item is presently enabled, it will become disabled, and vice verca. The value argument is the new enabled state (i.e., true or false). Do not call setEnabled() in itemChange() as this notification is delivered. Instead, you can return the new state from itemChange().
+    ItemEnabledChange,
+    /// The item's selected state changes. If the item is presently selected, it will become unselected, and vice verca. The value argument is the new selected state (i.e., true or false). Do not call setSelected() in itemChange() as this notification is delivered; instead, you can return the new selected state from itemChange().
+    ItemSelectedChange,
+    /// The item's parent changes. The value argument is the new parent item (i.e., a QGraphicsItem pointer). Do not call setParentItem() in itemChange() as this notification is delivered; instead, you can return the new parent from itemChange().
+    ItemParentChange,
+    /// A child is added to this item. The value argument is the new child item (i.e., a QGraphicsItem pointer). Do not pass this item to any item's setParentItem() function as this notification is delivered. The return value is unused; you cannot adjust anything in this notification. Note that the new child might not be fully constructed when this notification is sent; calling pure virtual functions on the child can lead to a crash.
+    ItemChildAddedChange,
+    /// A child is removed from this item. The value argument is the child item that is about to be removed (i.e., a QGraphicsItem pointer). The return value is unused; you cannot adjust anything in this notification.
+    ItemChildRemovedChange,
+    /// The item's transformation matrix changes. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and when the item's local transformation matrix changes (i.e., as a result of calling setTransform(). The value argument is the new matrix (i.e., a QTransform); to get the old matrix, call transform(). Do not call setTransform() or set any of the transformation properties in itemChange() as this notification is delivered; instead, you can return the new matrix from itemChange(). This notification is not sent if you change the transformation properties.
+    ItemTransformChange,
+    /// The item's position has changed. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and after the item's local position, relative to its parent, has changed. The value argument is the new position (the same as pos()), and QGraphicsItem ignores the return value for this notification (i.e., a read-only notification).
+    ItemPositionHasChanged,
+    /// The item's transformation matrix has changed either because setTransform is called, or one of the transformation properties is changed. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and after the item's local transformation matrix has changed. The value argument is the new matrix (same as transform()), and QGraphicsItem ignores the return value for this notification (i.e., a read-only notification).
+    ItemTransformHasChanged,
+    /// The item is moved to a new scene. This notification is also sent when the item is added to its initial scene, and when it is removed. The item's scene() is the old scene (or 0 if the item has not been added to a scene yet). The value argument is the new scene (i.e., a QGraphicsScene pointer), or a null pointer if the item is removed from a scene. Do not override this change by passing this item to QGraphicsScene::addItem() as this notification is delivered; instead, you can return the new scene from itemChange(). Use this feature with caution; objecting to a scene change can quickly lead to unwanted recursion.
+    ItemSceneChange,
+    /// The item's visible state has changed. The value argument is the new visible state (i.e., true or false). Do not call setVisible() in itemChange() as this notification is delivered. The return value is ignored.
+    ItemVisibleHasChanged,
+    /// The item's enabled state has changed. The value argument is the new enabled state (i.e., true or false). Do not call setEnabled() in itemChange() as this notification is delivered. The return value is ignored.
+    ItemEnabledHasChanged,
+    /// The item's selected state has changed. The value argument is the new selected state (i.e., true or false). Do not call setSelected() in itemChange() as this notification is delivered. The return value is ignored.
+    ItemSelectedHasChanged,
+    /// The item's parent has changed. The value argument is the new parent (i.e., a pointer to a QGraphicsItem). Do not call setParentItem() in itemChange() as this notification is delivered. The return value is ignored.
+    ItemParentHasChanged,
+    /// The item's scene has changed. The item's scene() is the new scene. This notification is also sent when the item is added to its initial scene, and when it is removed.The value argument is the new scene (i.e., a pointer to a QGraphicsScene). Do not call setScene() in itemChange() as this notification is delivered. The return value is ignored.
+    ItemSceneHasChanged,
+    /// The item's cursor changes. The value argument is the new cursor (i.e., a QCursor). Do not call setCursor() in itemChange() as this notification is delivered. Instead, you can return a new cursor from itemChange().
+    ItemCursorChange,
+    /// The item's cursor has changed. The value argument is the new cursor (i.e., a QCursor). Do not call setCursor() as this notification is delivered. The return value is ignored.
+    ItemCursorHasChanged,
+    /// The item's tooltip changes. The value argument is the new tooltip (i.e., a QToolTip). Do not call setToolTip() in itemChange() as this notification is delivered. Instead, you can return a new tooltip from itemChange().
+    ItemToolTipChange,
+    /// The item's tooltip has changed. The value argument is the new tooltip (i.e., a QToolTip). Do not call setToolTip() as this notification is delivered. The return value is ignored.
+    ItemToolTipHasChanged,
+    /// The item's flags change. The value argument is the new flags (i.e., a quint32). Do not call setFlags() in itemChange() as this notification is delivered. Instead, you can return the new flags from itemChange().
+    ItemFlagsChange,
+    /// The item's flags have changed. The value argument is the new flags (i.e., a quint32). Do not call setFlags() in itemChange() as this notification is delivered. The return value is ignored.
+    ItemFlagsHaveChanged,
+    /// The item's Z-value changes. The value argument is the new Z-value (i.e., a double). Do not call setZValue() in itemChange() as this notification is delivered. Instead, you can return a new Z-value from itemChange().
+    ItemZValueChange,
+    /// The item's Z-value has changed. The value argument is the new Z-value (i.e., a double). Do not call setZValue() as this notification is delivered. The return value is ignored.
+    ItemZValueHasChanged,
+    /// The item's opacity changes. The value argument is the new opacity (i.e., a double). Do not call setOpacity() in itemChange() as this notification is delivered. Instead, you can return a new opacity from itemChange().
+    ItemOpacityChange,
+    /// The item's opacity has changed. The value argument is the new opacity (i.e., a double). Do not call setOpacity() as this notification is delivered. The return value is ignored.
+    ItemOpacityHasChanged,
+    /// The item's scene position has changed. This notification is sent if the ItemSendsScenePositionChanges flag is enabled, and after the item's scene position has changed (i.e., the position or transformation of the item itself or the position or transformation of any ancestor has changed). The value argument is the new scene position (the same as scenePos()), and QGraphicsItem ignores the return value for this notification (i.e., a read-only notification).
+    ItemScenePositionHasChanged,
+    /// The item's rotation property changes. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and when the item's rotation property changes (i.e., as a result of calling setRotation()). The value argument is the new rotation (i.e., a double); to get the old rotation, call rotation(). Do not call setRotation() in itemChange() as this notification is delivered; instead, you can return the new rotation from itemChange().
+    ItemRotationChange,
+    /// The item's rotation property has changed. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and after the item's rotation property has changed. The value argument is the new rotation (i.e., a double), and QGraphicsItem ignores the return value for this notification (i.e., a read-only notification). Do not call setRotation() in itemChange() as this notification is delivered.
+    ItemRotationHasChanged,
+    /// The item's scale property changes. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and when the item's scale property changes (i.e., as a result of calling setScale()). The value argument is the new scale (i.e., a double); to get the old scale, call scale(). Do not call setScale() in itemChange() as this notification is delivered; instead, you can return the new scale from itemChange().
+    ItemScaleChange,
+    /// The item's scale property has changed. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and after the item's scale property has changed. The value argument is the new scale (i.e., a double), and QGraphicsItem ignores the return value for this notification (i.e., a read-only notification). Do not call setScale() in itemChange() as this notification is delivered.
+    ItemScaleHasChanged,
+    /// The item's transform origin point property changes. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and when the item's transform origin point property changes (i.e., as a result of calling setTransformOriginPoint()). The value argument is the new origin point (i.e., a QPointF); to get the old origin point, call transformOriginPoint(). Do not call setTransformOriginPoint() in itemChange() as this notification is delivered; instead, you can return the new transform origin point from itemChange().
+    ItemTransformOriginPointChange,
+    /// The item's transform origin point property has changed. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and after the item's transform origin point property has changed. The value argument is the new origin point (i.e., a QPointF), and QGraphicsItem ignores the return value for this notification (i.e., a read-only notification). Do not call setTransformOriginPoint() in itemChange() as this notification is delivered.
+    ItemTransformOriginPointHasChanged,
+}
+
+[org_name(QGraphicsItem)]
+enum CacheMode {
+    /// The default; all item caching is disabled. QGraphicsItem::paint() is called every time the item needs redrawing.
+    NoCache,
+    /// Caching is enabled for the item's logical (local) coordinate system. QGraphicsItem creates an off-screen pixel buffer with a configurable size / resolution that you can pass to QGraphicsItem::setCacheMode(). Rendering quality will typically degrade, depending on the resolution of the cache and the item transformation. The first time the item is redrawn, it will render itself into the cache, and the cache is then reused for every subsequent expose. The cache is also reused as the item is transformed. To adjust the resolution of the cache, you can call setCacheMode() again.
+    ItemCoordinateCache,
+    /// Caching is enabled at the paint device level, in device coordinates. This mode is for items that can move, but are not rotated, scaled or sheared. If the item is transformed directly or indirectly, the cache will be regenerated automatically. Unlike ItemCoordinateCacheMode, DeviceCoordinateCache always renders at maximum quality.
+    DeviceCoordinateCache,
+}
+
+[org_name(QGraphicsItem)]
+enum PanelModality {
+    /// The panel is not modal and does not block input to other panels. This is the default value for panels.
+    NonModal,
+    /// The panel is modal to a single item hierarchy and blocks input to its parent pane, all grandparent panels, and all siblings of its parent and grandparent panels.
+    PanelModal,
+    /// The window is modal to the entire scene and blocks input to all panels.
+    SceneModal,
+}
+
+[org_name(QGraphicsItem)]
+enum GraphicsItemFixMeEnums {
+    Type,
+    UserType,
+}
+
+[org_name(QGraphicsItem)]
+enum Extension {
+    UserExtension,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

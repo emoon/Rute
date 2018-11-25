@@ -56,32 +56,12 @@
 /// properties are used to determine the rendering of individual cells
 /// in the widget.
 /// 
-/// **See also:** QDate
-/// QDateEdit
-/// QTextCharFormat
+/// **See also:** [`Date`]
+/// [`DateEdit`]
+/// [`TextCharFormat`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QCalendarWidget)]
-enum HorizontalHeaderFormat {
-    NoHorizontalHeader,
-    SingleLetterDayNames,
-    ShortDayNames,
-    LongDayNames,
-}
-
-[org_name(QCalendarWidget)]
-enum VerticalHeaderFormat {
-    NoVerticalHeader,
-    ISOWeekNumbers,
-}
-
-[org_name(QCalendarWidget)]
-enum SelectionMode {
-    NoSelection,
-    SingleSelection,
-}
-
 struct CalendarWidget : Widget {
     /// 
     [event] size_hint() -> Size,
@@ -92,21 +72,21 @@ struct CalendarWidget : Widget {
     /// minimumDate and maximumDate properties. By default, the selected
     /// date is the current date.
     /// 
-    /// **See also:** setDateRange()
+    /// **See also:** [`set_date_range()`]
     selected_date() -> Date,
     /// 
     /// Returns the year of the currently displayed month. Months are
     /// numbered from 1 to 12.
     /// 
-    /// **See also:** monthShown()
-    /// setCurrentPage()
+    /// **See also:** [`month_shown()`]
+    /// [`set_current_page()`]
     year_shown() -> i32,
     /// 
     /// Returns the currently displayed month. Months are numbered from 1 to
     /// 12.
     /// 
-    /// **See also:** yearShown()
-    /// setCurrentPage()
+    /// **See also:** [`year_shown()`]
+    /// [`set_current_page()`]
     month_shown() -> i32,
     /// 
     /// The user will not be able to select a date that is before the
@@ -124,7 +104,7 @@ struct CalendarWidget : Widget {
     /// the provided date is not a valid QDate object, the
     /// setMinimumDate() function does nothing.
     /// 
-    /// **See also:** setDateRange()
+    /// **See also:** [`set_date_range()`]
     minimum_date() -> Date,
     set_minimum_date(date: &DateType),
     /// 
@@ -143,7 +123,7 @@ struct CalendarWidget : Widget {
     /// the provided date is not a valid QDate object, the
     /// setMaximumDate() function does nothing.
     /// 
-    /// **See also:** setDateRange()
+    /// **See also:** [`set_date_range()`]
     maximum_date() -> Date,
     set_maximum_date(date: &DateType),
     /// 
@@ -187,14 +167,14 @@ struct CalendarWidget : Widget {
     /// 
     /// Returns the text char format for rendering of day in the week *dayOfWeek.*
     /// 
-    /// **See also:** headerTextFormat()
+    /// **See also:** [`header_text_format()`]
     weekday_text_format(day_of_week: Rute::DayOfWeek) -> TextCharFormat,
     /// 
     /// Sets the text char format for rendering of day in the week *dayOfWeek* to *format.*
     /// The format will take precedence over the header format in case of foreground
     /// and background color. Other text formatting information is taken from the headers format.
     /// 
-    /// **See also:** setHeaderTextFormat()
+    /// **See also:** [`set_header_text_format()`]
     set_weekday_text_format(day_of_week: Rute::DayOfWeek, format: &TextCharFormatType),
     /// 
     /// Returns a QMap from QDate to QTextCharFormat showing all dates
@@ -209,7 +189,8 @@ struct CalendarWidget : Widget {
     /// 
     /// Returns a QTextCharFormat for *date.* The char format can be be
     /// empty if the date is not renderd specially.
-    date_text_format(date: &DateType) -> TextCharFormat,
+    [org_name(dateTextFormat)]
+    date_text_format_2(date: &DateType) -> TextCharFormat,
     /// 
     /// Sets the format used to render the given *date* to that specified by *format.*
     /// 
@@ -245,18 +226,18 @@ struct CalendarWidget : Widget {
     /// Updates the cell specified by the given *date* unless updates
     /// are disabled or the cell is hidden.
     /// 
-    /// **See also:** updateCells()
-    /// yearShown()
-    /// monthShown()
+    /// **See also:** [`update_cells()`]
+    /// [`year_shown()`]
+    /// [`month_shown()`]
     /// 
     /// Updates all visible cells unless updates are disabled.
     /// 
-    /// **See also:** updateCell()
+    /// **See also:** [`update_cell()`]
     update_cell(date: &DateType),
     /// 
     /// Updates all visible cells unless updates are disabled.
     /// 
-    /// **See also:** updateCell()
+    /// **See also:** [`update_cell()`]
     update_cells(),
     set_selected_date(date: &DateType),
     /// 
@@ -271,8 +252,8 @@ struct CalendarWidget : Widget {
     /// If either the *min* or *max* parameters are not valid QDate
     /// objects, this function does nothing.
     /// 
-    /// **See also:** setMinimumDate()
-    /// setMaximumDate()
+    /// **See also:** [`set_minimum_date()`]
+    /// [`set_maximum_date()`]
     set_date_range(min: &DateType, max: &DateType),
     /// 
     /// Displays the given *month* of the given *year* without changing
@@ -282,12 +263,12 @@ struct CalendarWidget : Widget {
     /// The currently displayed month and year can be retrieved using the
     /// monthShown() and yearShown() functions respectively.
     /// 
-    /// **See also:** yearShown()
-    /// monthShown()
-    /// showPreviousMonth()
-    /// showNextMonth()
-    /// showPreviousYear()
-    /// showNextYear()
+    /// **See also:** [`year_shown()`]
+    /// [`month_shown()`]
+    /// [`show_previous_month()`]
+    /// [`show_next_month()`]
+    /// [`show_previous_year()`]
+    /// [`show_next_year()`]
     set_current_page(year: i32, month: i32),
     set_grid_visible(show: bool),
     set_navigation_bar_visible(visible: bool),
@@ -295,47 +276,47 @@ struct CalendarWidget : Widget {
     /// Shows the next month relative to the currently displayed
     /// month. Note that the selected date is not changed.
     /// 
-    /// **See also:** showPreviousMonth()
-    /// setCurrentPage()
-    /// setSelectedDate()
+    /// **See also:** [`show_previous_month()`]
+    /// [`set_current_page()`]
+    /// [`set_selected_date()`]
     show_next_month(),
     /// 
     /// Shows the previous month relative to the currently displayed
     /// month. Note that the selected date is not changed.
     /// 
-    /// **See also:** showNextMonth()
-    /// setCurrentPage()
-    /// setSelectedDate()
+    /// **See also:** [`show_next_month()`]
+    /// [`set_current_page()`]
+    /// [`set_selected_date()`]
     show_previous_month(),
     /// 
     /// Shows the currently displayed month in the *next* year relative
     /// to the currently displayed year. Note that the selected date is
     /// not changed.
     /// 
-    /// **See also:** showPreviousYear()
-    /// setCurrentPage()
-    /// setSelectedDate()
+    /// **See also:** [`show_previous_year()`]
+    /// [`set_current_page()`]
+    /// [`set_selected_date()`]
     show_next_year(),
     /// 
     /// Shows the currently displayed month in the *previous* year
     /// relative to the currently displayed year. Note that the selected
     /// date is not changed.
     /// 
-    /// **See also:** showNextYear()
-    /// setCurrentPage()
-    /// setSelectedDate()
+    /// **See also:** [`show_next_year()`]
+    /// [`set_current_page()`]
+    /// [`set_selected_date()`]
     show_previous_year(),
     /// 
     /// Shows the month of the selected date.
     /// 
-    /// **See also:** selectedDate()
-    /// setCurrentPage()
+    /// **See also:** [`selected_date()`]
+    /// [`set_current_page()`]
     show_selected_date(),
     /// 
     /// Shows the month of the today's date.
     /// 
-    /// **See also:** selectedDate()
-    /// setCurrentPage()
+    /// **See also:** [`selected_date()`]
+    /// [`set_current_page()`]
     show_today(),
     /// 
     /// This signal is emitted when the currently selected date is
@@ -344,7 +325,7 @@ struct CalendarWidget : Widget {
     /// The currently selected date can be changed by the user using the
     /// mouse or keyboard, or by the programmer using setSelectedDate().
     /// 
-    /// **See also:** selectedDate()
+    /// **See also:** [`selected_date()`]
     [signal] selection_changed(),
     /// 
     /// This signal is emitted when a mouse button is clicked. The date
@@ -363,8 +344,37 @@ struct CalendarWidget : Widget {
     /// This signal is emitted when the currently shown month is changed.
     /// The new *year* and *month* are passed as parameters.
     /// 
-    /// **See also:** setCurrentPage()
+    /// **See also:** [`set_current_page()`]
     [signal] current_page_changed(year: i32, month: i32),
+}
+
+[org_name(QCalendarWidget)]
+enum HorizontalHeaderFormat {
+    /// The header is hidden.
+    NoHorizontalHeader,
+    /// The header displays a single letter abbreviation for day names (e.g. M for Monday).
+    SingleLetterDayNames,
+    /// The header displays a short abbreviation for day names (e.g. Mon for Monday).
+    ShortDayNames,
+    /// The header displays complete day names (e.g. Monday).
+    LongDayNames,
+}
+
+[org_name(QCalendarWidget)]
+enum VerticalHeaderFormat {
+    /// The header is hidden.
+    NoVerticalHeader,
+    /// The header displays ISO week numbers as described by [QDate::weekNumber().](QDate::weekNumber().)
+
+    ISOWeekNumbers,
+}
+
+[org_name(QCalendarWidget)]
+enum SelectionMode {
+    /// Dates cannot be selected.
+    NoSelection,
+    /// Single dates can be selected.
+    SingleSelection,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

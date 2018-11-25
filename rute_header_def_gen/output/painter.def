@@ -364,79 +364,21 @@
 /// cases where expensive operations are ok to use, for instance when
 /// the result is cached in a QPixmap.
 /// 
-/// **See also:** QPaintDevice
-/// QPaintEngine
+/// **See also:** [`PaintDevice`]
+/// [`PaintEngine`]
 /// {Qt SVG}
 /// {Basic Drawing Example}
 /// {Drawing Utility Functions}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QPainter)]
-enum RenderHint {
-    Antialiasing,
-    TextAntialiasing,
-    SmoothPixmapTransform,
-    HighQualityAntialiasing,
-    NonCosmeticDefaultPen,
-    Qt4CompatiblePainting,
-}
-
-[org_name(QPainter)]
-enum PixmapFragmentHint {
-    OpaqueHint,
-}
-
-[org_name(QPainter)]
-enum CompositionMode {
-    CompositionMode_SourceOver,
-    CompositionMode_DestinationOver,
-    CompositionMode_Clear,
-    CompositionMode_Source,
-    CompositionMode_Destination,
-    CompositionMode_SourceIn,
-    CompositionMode_DestinationIn,
-    CompositionMode_SourceOut,
-    CompositionMode_DestinationOut,
-    CompositionMode_SourceAtop,
-    CompositionMode_DestinationAtop,
-    CompositionMode_Xor,
-    CompositionMode_Plus,
-    CompositionMode_Multiply,
-    CompositionMode_Screen,
-    CompositionMode_Overlay,
-    CompositionMode_Darken,
-    CompositionMode_Lighten,
-    CompositionMode_ColorDodge,
-    CompositionMode_ColorBurn,
-    CompositionMode_HardLight,
-    CompositionMode_SoftLight,
-    CompositionMode_Difference,
-    CompositionMode_Exclusion,
-    RasterOp_SourceOrDestination,
-    RasterOp_SourceAndDestination,
-    RasterOp_SourceXorDestination,
-    RasterOp_NotSourceAndNotDestination,
-    RasterOp_NotSourceOrNotDestination,
-    RasterOp_NotSourceXorDestination,
-    RasterOp_NotSource,
-    RasterOp_NotSourceAndDestination,
-    RasterOp_SourceAndNotDestination,
-    RasterOp_NotSourceOrDestination,
-    RasterOp_SourceOrNotDestination,
-    RasterOp_ClearDestination,
-    RasterOp_SetDestination,
-    RasterOp_NotDestination,
-}
-
-
 struct Painter {
     qt_check_for_qgadget_macro(),
     /// 
     /// Returns the paint device on which this painter is currently
     /// painting, or 0 if the painter is not active.
     /// 
-    /// **See also:** isActive()
+    /// **See also:** [`is_active()`]
     device() -> PaintDevice?,
     /// 
     /// Begins painting the paint *device* and returns `true` if
@@ -457,8 +399,8 @@ struct Painter {
     /// **Warning**: Painting on a QImage with the format
     /// QImage::Format_Indexed8 is not supported.
     /// 
-    /// **See also:** end()
-    /// QPainter()
+    /// **See also:** [`end()`]
+    /// [`q_painter()`]
     /// 
     /// Flushes the painting pipeline and prepares for the user issuing commands
     /// directly to the underlying graphics context. Must be followed by a call to
@@ -481,7 +423,7 @@ struct Painter {
     /// default state by endNativePainting(). Here is an example that shows
     /// intermixing of painter commands and raw OpenGL commands:
     /// 
-    /// **See also:** endNativePainting()
+    /// **See also:** [`end_native_painting()`]
     begin(arg0: *PaintDeviceType) -> bool,
     /// 
     /// Ends painting. Any resources used while painting are released. You
@@ -490,27 +432,27 @@ struct Painter {
     /// 
     /// Returns `true` if the painter is no longer active; otherwise returns `false.`
     /// 
-    /// **See also:** begin()
-    /// isActive()
+    /// **See also:** [`begin()`]
+    /// [`is_active()`]
     /// 
     /// Restores the painter after manually issuing native painting commands. Lets
     /// the painter restore any native state that it relies on before calling any
     /// other painter commands.
     /// 
-    /// **See also:** beginNativePainting()
+    /// **See also:** [`begin_native_painting()`]
     end() -> bool,
     /// 
     /// Returns `true` if begin() has been called and end() has not yet been
     /// called; otherwise returns `false.`
     /// 
-    /// **See also:** begin()
-    /// QPaintDevice::paintingActive()
+    /// **See also:** [`begin()`]
+    /// [`PaintDevice::painting_active`]
     is_active() -> bool,
     /// 
     /// Initializes the painters pen, background and font to the same as
     /// the given *device.*
     /// 
-    /// **See also:** begin()
+    /// **See also:** [`begin()`]
     /// {QPainter#Settings}{Settings}
     init_from(device: *PaintDeviceType),
     /// 
@@ -520,33 +462,33 @@ struct Painter {
     /// composition modes. The RasterOp modes are supported for X11 as
     /// described in compositionMode().
     /// 
-    /// **See also:** compositionMode()
+    /// **See also:** [`composition_mode()`]
     set_composition_mode(mode: Painter::CompositionMode),
     /// 
     /// Returns the current composition mode.
     /// 
     /// **See also:** CompositionMode
-    /// setCompositionMode()
+    /// [`set_composition_mode()`]
     composition_mode() -> Painter::CompositionMode,
     /// 
     /// Returns the font metrics for the painter if the painter is
     /// active. Otherwise, the return value is undefined.
     /// 
-    /// **See also:** font()
-    /// isActive()
+    /// **See also:** [`font()`]
+    /// [`is_active()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// Returns the font info for the painter if the painter is
     /// active. Otherwise, the return value is undefined.
     /// 
-    /// **See also:** font()
-    /// isActive()
+    /// **See also:** [`font()`]
+    /// [`is_active()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// Returns the currently set font used for drawing text.
     /// 
-    /// **See also:** setFont()
-    /// drawText()
+    /// **See also:** [`set_font()`]
+    /// [`draw_text()`]
     /// {QPainter#Settings}{Settings}
     font() -> Font?,
     /// 
@@ -559,16 +501,16 @@ struct Painter {
     /// font() will return what you set using setFont() and fontInfo() returns the
     /// font actually being used (which may be the same).
     /// 
-    /// **See also:** font()
-    /// drawText()
+    /// **See also:** [`font()`]
+    /// [`draw_text()`]
     /// {QPainter#Settings}{Settings}
     set_font(f: &FontType),
     /// 
     /// Returns the font info for the painter if the painter is
     /// active. Otherwise, the return value is undefined.
     /// 
-    /// **See also:** font()
-    /// isActive()
+    /// **See also:** [`font()`]
+    /// [`is_active()`]
     /// {QPainter#Settings}{Settings}
     font_info() -> FontInfo,
     /// 
@@ -581,7 +523,7 @@ struct Painter {
     /// The *pen* defines how to draw lines and outlines, and it also
     /// defines the text color.
     /// 
-    /// **See also:** pen()
+    /// **See also:** [`pen()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// **Overloads**
@@ -598,13 +540,14 @@ struct Painter {
     /// The *pen* defines how to draw lines and outlines, and it also
     /// defines the text color.
     /// 
-    /// **See also:** pen()
+    /// **See also:** [`pen()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// **Overloads**
     /// Sets the painter's pen to have the given *style,* width 1 and
     /// black color.
-    set_pen(pen: &PenType),
+    [org_name(setPen)]
+    set_pen_2(pen: &PenType),
     /// 
     /// **Overloads**
     /// Sets the painter's pen to have style Qt::SolidLine, width 1 and the
@@ -615,17 +558,18 @@ struct Painter {
     /// The *pen* defines how to draw lines and outlines, and it also
     /// defines the text color.
     /// 
-    /// **See also:** pen()
+    /// **See also:** [`pen()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// **Overloads**
     /// Sets the painter's pen to have the given *style,* width 1 and
     /// black color.
-    set_pen(style: Rute::PenStyle),
+    [org_name(setPen)]
+    set_pen_3(style: Rute::PenStyle),
     /// 
     /// Returns the painter's current pen.
     /// 
-    /// **See also:** setPen()
+    /// **See also:** [`set_pen()`]
     /// {QPainter#Settings}{Settings}
     pen() -> Pen?,
     /// 
@@ -641,7 +585,7 @@ struct Painter {
     /// property to
     /// true.
     /// 
-    /// **See also:** brushOrigin()
+    /// **See also:** [`brush_origin()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// **Overloads**
@@ -654,7 +598,7 @@ struct Painter {
     /// 
     /// The painter's brush defines how shapes are filled.
     /// 
-    /// **See also:** brush()
+    /// **See also:** [`brush()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// **Overloads**
@@ -673,7 +617,7 @@ struct Painter {
     /// property to
     /// true.
     /// 
-    /// **See also:** brushOrigin()
+    /// **See also:** [`brush_origin()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// **Overloads**
@@ -686,21 +630,22 @@ struct Painter {
     /// 
     /// The painter's brush defines how shapes are filled.
     /// 
-    /// **See also:** brush()
+    /// **See also:** [`brush()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// **Overloads**
     /// Sets the painter's brush to black color and the specified *style.*
-    set_brush(style: Rute::BrushStyle),
+    [org_name(setBrush)]
+    set_brush_2(style: Rute::BrushStyle),
     /// 
     /// Returns the currently set brush origin.
     /// 
-    /// **See also:** setBrushOrigin()
+    /// **See also:** [`set_brush_origin()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// Returns the painter's current brush.
     /// 
-    /// **See also:** QPainter::setBrush()
+    /// **See also:** [`Painter::set_brush`]
     /// {QPainter#Settings}{Settings}
     brush() -> Brush?,
     /// 
@@ -713,20 +658,20 @@ struct Painter {
     /// Note that in order to draw a bitmap or pixmap transparently, you
     /// must use QPixmap::setMask().
     /// 
-    /// **See also:** backgroundMode()
-    /// setBackground()
+    /// **See also:** [`background_mode()`]
+    /// [`set_background()`]
     /// {QPainter#Settings}{Settings}
     set_background_mode(mode: Rute::BGMode),
     /// 
     /// Returns the current background mode.
     /// 
-    /// **See also:** setBackgroundMode()
+    /// **See also:** [`set_background_mode()`]
     /// {QPainter#Settings}{Settings}
     background_mode() -> Rute::BGMode,
     /// 
     /// Returns the currently set brush origin.
     /// 
-    /// **See also:** setBrushOrigin()
+    /// **See also:** [`set_brush_origin()`]
     /// {QPainter#Settings}{Settings}
     brush_origin() -> Point,
     /// 
@@ -742,7 +687,7 @@ struct Painter {
     /// property to
     /// true.
     /// 
-    /// **See also:** brushOrigin()
+    /// **See also:** [`brush_origin()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// **Overloads**
@@ -764,7 +709,7 @@ struct Painter {
     /// property to
     /// true.
     /// 
-    /// **See also:** brushOrigin()
+    /// **See also:** [`brush_origin()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// **Overloads**
@@ -772,7 +717,8 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Sets the brush's origin to point ( *x,* *y).*
-    set_brush_origin(arg0: &PointType),
+    [org_name(setBrushOrigin)]
+    set_brush_origin_2(arg0: &PointType),
     /// 
     /// Sets the brush origin to *position.*
     /// 
@@ -786,7 +732,7 @@ struct Painter {
     /// property to
     /// true.
     /// 
-    /// **See also:** brushOrigin()
+    /// **See also:** [`brush_origin()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// **Overloads**
@@ -794,7 +740,8 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Sets the brush's origin to point ( *x,* *y).*
-    set_brush_origin(arg0: &PointFType),
+    [org_name(setBrushOrigin)]
+    set_brush_origin_3(arg0: &PointFType),
     /// 
     /// Sets the background mode of the painter to the given *mode*
     /// 
@@ -805,8 +752,8 @@ struct Painter {
     /// Note that in order to draw a bitmap or pixmap transparently, you
     /// must use QPixmap::setMask().
     /// 
-    /// **See also:** backgroundMode()
-    /// setBackground()
+    /// **See also:** [`background_mode()`]
+    /// [`set_background()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// Sets the background brush of the painter to the given *brush.*
@@ -815,19 +762,19 @@ struct Painter {
     /// opaque text, stippled lines and bitmaps. The background brush has
     /// no effect in transparent background mode (which is the default).
     /// 
-    /// **See also:** background()
-    /// setBackgroundMode()
+    /// **See also:** [`background()`]
+    /// [`set_background_mode()`]
     /// {QPainter#Settings}{Settings}
     set_background(bg: &BrushType),
     /// 
     /// Returns the current background brush.
     /// 
-    /// **See also:** setBackground()
+    /// **See also:** [`set_background()`]
     /// {QPainter#Settings}{Settings}
     /// 
     /// Returns the current background mode.
     /// 
-    /// **See also:** setBackgroundMode()
+    /// **See also:** [`set_background_mode()`]
     /// {QPainter#Settings}{Settings}
     background() -> Brush?,
     /// 
@@ -851,9 +798,9 @@ struct Painter {
     /// recreated on demand and transformed to the current logical
     /// coordinate system. This is potentially an expensive operation.
     /// 
-    /// **See also:** setClipRegion()
-    /// clipPath()
-    /// setClipping()
+    /// **See also:** [`set_clip_region()`]
+    /// [`clip_path()`]
+    /// [`set_clipping()`]
     clip_region() -> Region,
     /// 
     /// Returns the current clip path in logical coordinates.
@@ -863,9 +810,9 @@ struct Painter {
     /// recreated on demand and transformed to the current logical
     /// coordinate system. This is potentially an expensive operation.
     /// 
-    /// **See also:** setClipPath()
-    /// clipRegion()
-    /// setClipping()
+    /// **See also:** [`set_clip_path()`]
+    /// [`clip_region()`]
+    /// [`set_clipping()`]
     clip_path() -> PainterPath,
     /// 
     /// Enables clipping, and sets the clip region to the given *rectangle* using the given clip *operation.* The default operation
@@ -874,8 +821,8 @@ struct Painter {
     /// Note that the clip rectangle is specified in logical (painter)
     /// coordinates.
     /// 
-    /// **See also:** clipRegion()
-    /// setClipping()
+    /// **See also:** [`clip_region()`]
+    /// [`set_clipping()`]
     /// {QPainter#Clipping}{Clipping}
     /// 
     /// **Overloads**
@@ -892,8 +839,8 @@ struct Painter {
     /// Note that the clip rectangle is specified in logical (painter)
     /// coordinates.
     /// 
-    /// **See also:** clipRegion()
-    /// setClipping()
+    /// **See also:** [`clip_region()`]
+    /// [`set_clipping()`]
     /// {QPainter#Clipping}{Clipping}
     /// 
     /// **Overloads**
@@ -902,7 +849,8 @@ struct Painter {
     /// 
     /// Enables clipping, and sets the clip region to the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    set_clip_rect(arg0: &RectType, op: Rute::ClipOperation),
+    [org_name(setClipRect)]
+    set_clip_rect_2(arg0: &RectType, op: Rute::ClipOperation),
     /// 
     /// Enables clipping, and sets the clip region to the given *rectangle* using the given clip *operation.* The default operation
     /// is to replace the current clip rectangle.
@@ -910,8 +858,8 @@ struct Painter {
     /// Note that the clip rectangle is specified in logical (painter)
     /// coordinates.
     /// 
-    /// **See also:** clipRegion()
-    /// setClipping()
+    /// **See also:** [`clip_region()`]
+    /// [`set_clipping()`]
     /// {QPainter#Clipping}{Clipping}
     /// 
     /// **Overloads**
@@ -920,7 +868,8 @@ struct Painter {
     /// 
     /// Enables clipping, and sets the clip region to the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    set_clip_rect(x: i32, y: i32, w: i32, h: i32, op: Rute::ClipOperation),
+    [org_name(setClipRect)]
+    set_clip_rect_3(x: i32, y: i32, w: i32, h: i32, op: Rute::ClipOperation),
     /// 
     /// Sets the clip region to the given *region* using the specified clip
     /// *operation.* The default clip operation is to replace the current
@@ -928,8 +877,8 @@ struct Painter {
     /// 
     /// Note that the clip region is given in logical coordinates.
     /// 
-    /// **See also:** clipRegion()
-    /// setClipRect()
+    /// **See also:** [`clip_region()`]
+    /// [`set_clip_rect()`]
     /// {QPainter#Clipping}{Clipping}
     set_clip_region(arg0: &RegionType, op: Rute::ClipOperation),
     /// 
@@ -939,21 +888,21 @@ struct Painter {
     /// Note that the clip path is specified in logical (painter)
     /// coordinates.
     /// 
-    /// **See also:** clipPath()
-    /// clipRegion()
+    /// **See also:** [`clip_path()`]
+    /// [`clip_region()`]
     /// {QPainter#Clipping}{Clipping}
     /// 
     set_clip_path(path: &PainterPathType, op: Rute::ClipOperation),
     /// 
     /// Enables clipping if *enable* is true, or disables clipping if *enable* is false.
     /// 
-    /// **See also:** hasClipping()
+    /// **See also:** [`has_clipping()`]
     /// {QPainter#Clipping}{Clipping}
     set_clipping(enable: bool),
     /// 
     /// Returns `true` if clipping has been set; otherwise returns `false.`
     /// 
-    /// **See also:** setClipping()
+    /// **See also:** [`set_clipping()`]
     /// {QPainter#Clipping}{Clipping}
     has_clipping() -> bool,
     /// 
@@ -963,9 +912,9 @@ struct Painter {
     /// 
     /// The bounding rectangle is not guaranteed to be tight.
     /// 
-    /// **See also:** setClipRect()
-    /// setClipPath()
-    /// setClipRegion()
+    /// **See also:** [`set_clip_rect()`]
+    /// [`set_clip_path()`]
+    /// [`set_clip_region()`]
     /// 
     clip_bounding_rect() -> RectF,
     /// 
@@ -973,13 +922,13 @@ struct Painter {
     /// save() must be followed by a corresponding restore(); the end()
     /// function unwinds the stack.
     /// 
-    /// **See also:** restore()
+    /// **See also:** [`restore()`]
     save(),
     /// 
     /// Restores the current painter state (pops a saved state off the
     /// stack).
     /// 
-    /// **See also:** save()
+    /// **See also:** [`save()`]
     /// 
     /// Using QWidget::render() obsoletes the use of this function.
     /// 
@@ -991,15 +940,15 @@ struct Painter {
     /// a mutex for a short period. This can impact performance. Use of
     /// QWidget::render is strongly encouraged.
     /// 
-    /// **See also:** redirected()
+    /// **See also:** [`redirected()`]
     restore(),
     /// 
     /// Sets the world transformation matrix.
     /// If *combine* is true, the specified *transform* is combined with
     /// the current matrix; otherwise it replaces the current matrix.
     /// 
-    /// **See also:** transform()
-    /// setWorldTransform()
+    /// **See also:** [`transform()`]
+    /// [`set_world_transform()`]
     set_transform(transform: &TransformType, combine: bool),
     device_transform() -> Transform?,
     /// 
@@ -1014,8 +963,8 @@ struct Painter {
     /// determine whether the platform performs the transformations or
     /// not.
     /// 
-    /// **See also:** worldTransform()
-    /// QPaintEngine::hasFeature()
+    /// **See also:** [`world_transform()`]
+    /// [`PaintEngine::has_feature`]
     /// */
     /// 
     /// const QTransform & QPainter::deviceTransform() const
@@ -1040,8 +989,8 @@ struct Painter {
     /// If *combine* is true, the specified *matrix* is combined with the current matrix;
     /// otherwise it replaces the current matrix.
     /// 
-    /// **See also:** transform()
-    /// setTransform()
+    /// **See also:** [`transform()`]
+    /// [`set_transform()`]
     set_world_transform(matrix: &TransformType, combine: bool),
     /// 
     /// Returns the world transformation matrix.
@@ -1050,33 +999,33 @@ struct Painter {
     /// Returns the transformation matrix combining the current
     /// window/viewport and world transformation.
     /// 
-    /// **See also:** setWorldTransform()
-    /// setWindow()
-    /// setViewport()
+    /// **See also:** [`set_world_transform()`]
+    /// [`set_window()`]
+    /// [`set_viewport()`]
     combined_transform() -> Transform,
     /// 
     /// Scales the coordinate system by ( *sx* , *sy* ).
     /// 
-    /// **See also:** setWorldTransform()
+    /// **See also:** [`set_world_transform()`]
     /// {QPainter#Coordinate Transformations}{Coordinate Transformations}
     scale(sx: f32, sy: f32),
     /// 
     /// Shears the coordinate system by ( *sh* , *sv* ).
     /// 
-    /// **See also:** setWorldTransform()
+    /// **See also:** [`set_world_transform()`]
     /// {QPainter#Coordinate Transformations}{Coordinate Transformations}
     shear(sh: f32, sv: f32),
     /// 
     /// Rotates the coordinate system clockwise. The given *angle* parameter is in degrees.
     /// 
-    /// **See also:** setWorldTransform()
+    /// **See also:** [`set_world_transform()`]
     /// {QPainter#Coordinate Transformations}{Coordinate Transformations}
     rotate(a: f32),
     /// 
     /// Returns the window rectangle.
     /// 
-    /// **See also:** setWindow()
-    /// setViewTransformEnabled()
+    /// **See also:** [`set_window()`]
+    /// [`set_view_transform_enabled()`]
     window() -> Rect,
     /// 
     /// Sets the painter's window to the given *rectangle,* and enables
@@ -1089,8 +1038,8 @@ struct Painter {
     /// The default window rectangle is the same as the device's
     /// rectangle.
     /// 
-    /// **See also:** window()
-    /// viewTransformEnabled()
+    /// **See also:** [`window()`]
+    /// [`view_transform_enabled()`]
     /// {Coordinate
     /// System#Window-Viewport Conversion}{Window-Viewport Conversion}
     /// 
@@ -1108,19 +1057,20 @@ struct Painter {
     /// The default window rectangle is the same as the device's
     /// rectangle.
     /// 
-    /// **See also:** window()
-    /// viewTransformEnabled()
+    /// **See also:** [`window()`]
+    /// [`view_transform_enabled()`]
     /// {Coordinate
     /// System#Window-Viewport Conversion}{Window-Viewport Conversion}
     /// 
     /// **Overloads**
     /// Sets the painter's window to the rectangle beginning at ( *x,* *y)* and the given *width* and *height.*
-    set_window(x: i32, y: i32, w: i32, h: i32),
+    [org_name(setWindow)]
+    set_window_2(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// Returns the viewport rectangle.
     /// 
-    /// **See also:** setViewport()
-    /// setViewTransformEnabled()
+    /// **See also:** [`set_viewport()`]
+    /// [`set_view_transform_enabled()`]
     viewport() -> Rect,
     /// 
     /// Sets the painter's viewport rectangle to the given *rectangle,*
@@ -1133,8 +1083,8 @@ struct Painter {
     /// The default viewport rectangle is the same as the device's
     /// rectangle.
     /// 
-    /// **See also:** viewport()
-    /// viewTransformEnabled()
+    /// **See also:** [`viewport()`]
+    /// [`view_transform_enabled()`]
     /// {Coordinate
     /// System#Window-Viewport Conversion}{Window-Viewport Conversion}
     /// 
@@ -1153,20 +1103,21 @@ struct Painter {
     /// The default viewport rectangle is the same as the device's
     /// rectangle.
     /// 
-    /// **See also:** viewport()
-    /// viewTransformEnabled()
+    /// **See also:** [`viewport()`]
+    /// [`view_transform_enabled()`]
     /// {Coordinate
     /// System#Window-Viewport Conversion}{Window-Viewport Conversion}
     /// 
     /// **Overloads**
     /// Sets the painter's viewport rectangle to be the rectangle
     /// beginning at ( *x,* *y)* with the given *width* and *height.*
-    set_viewport(x: i32, y: i32, w: i32, h: i32),
+    [org_name(setViewport)]
+    set_viewport_2(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// Enables view transformations if *enable* is true, or disables
     /// view transformations if *enable* is false.
     /// 
-    /// **See also:** viewTransformEnabled()
+    /// **See also:** [`view_transform_enabled()`]
     /// {Coordinate System#Window-Viewport
     /// Conversion}{Window-Viewport Conversion}
     set_view_transform_enabled(enable: bool),
@@ -1174,8 +1125,8 @@ struct Painter {
     /// Returns `true` if view transformation is enabled; otherwise returns
     /// false.
     /// 
-    /// **See also:** setViewTransformEnabled()
-    /// worldTransform()
+    /// **See also:** [`set_view_transform_enabled()`]
+    /// [`world_transform()`]
     view_transform_enabled() -> bool,
     /// 
     /// Fills the given *path* using the given *brush.* The outline is
@@ -1185,7 +1136,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawPath()
+    /// **See also:** [`draw_path()`]
     fill_path(path: &PainterPathType, brush: &BrushType),
     /// 
     /// Draws the given painter *path* using the current pen for outline
@@ -1253,7 +1204,8 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    draw_point(p: &PointType),
+    [org_name(drawPoint)]
+    draw_point_2(p: &PointType),
     /// 
     /// Draws a single point at the given *position* using the current
     /// pen's color.
@@ -1281,7 +1233,8 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    draw_point(x: i32, y: i32),
+    [org_name(drawPoint)]
+    draw_point_3(x: i32, y: i32),
     /// 
     /// Draws the first *pointCount* points in the array *points* using
     /// the current pen's color.
@@ -1313,7 +1266,8 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    draw_points(points: &PolygonFType),
+    [org_name(drawPoints)]
+    draw_points_2(points: &PolygonFType),
     /// 
     /// Draws the first *pointCount* points in the array *points* using
     /// the current pen's color.
@@ -1329,7 +1283,8 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    draw_points(points: *PointType, point_count: i32),
+    [org_name(drawPoints)]
+    draw_points_3(points: *PointType, point_count: i32),
     /// 
     /// Draws the first *pointCount* points in the array *points* using
     /// the current pen's color.
@@ -1345,7 +1300,8 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the points in the vector *points.*
-    draw_points(points: &PolygonType),
+    [org_name(drawPoints)]
+    draw_points_4(points: &PolygonType),
     /// 
     /// Draws a line defined by *line.*
     /// 
@@ -1353,8 +1309,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawLines()
-    /// drawPolyline()
+    /// **See also:** [`draw_lines()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -1372,8 +1328,8 @@ struct Painter {
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
     /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
     /// 
     /// **Overloads**
     /// Draws the first *lineCount* lines in the array *lines*
@@ -1412,8 +1368,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawLines()
-    /// drawPolyline()
+    /// **See also:** [`draw_lines()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -1431,8 +1387,8 @@ struct Painter {
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
     /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
     /// 
     /// **Overloads**
     /// Draws the first *lineCount* lines in the array *lines*
@@ -1463,7 +1419,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_line(line: &LineType),
+    [org_name(drawLine)]
+    draw_line_2(line: &LineType),
     /// 
     /// Draws a line defined by *line.*
     /// 
@@ -1471,8 +1428,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawLines()
-    /// drawPolyline()
+    /// **See also:** [`draw_lines()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -1490,8 +1447,8 @@ struct Painter {
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
     /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
     /// 
     /// **Overloads**
     /// Draws the first *lineCount* lines in the array *lines*
@@ -1522,7 +1479,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_line(x1: i32, y1: i32, x2: i32, y2: i32),
+    [org_name(drawLine)]
+    draw_line_3(x1: i32, y1: i32, x2: i32, y2: i32),
     /// 
     /// Draws a line defined by *line.*
     /// 
@@ -1530,8 +1488,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawLines()
-    /// drawPolyline()
+    /// **See also:** [`draw_lines()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -1549,8 +1507,8 @@ struct Painter {
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
     /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
     /// 
     /// **Overloads**
     /// Draws the first *lineCount* lines in the array *lines*
@@ -1581,7 +1539,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_line(p1: &PointType, p2: &PointType),
+    [org_name(drawLine)]
+    draw_line_4(p1: &PointType, p2: &PointType),
     /// 
     /// Draws a line defined by *line.*
     /// 
@@ -1589,8 +1548,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawLines()
-    /// drawPolyline()
+    /// **See also:** [`draw_lines()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -1608,8 +1567,8 @@ struct Painter {
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
     /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
     /// 
     /// **Overloads**
     /// Draws the first *lineCount* lines in the array *lines*
@@ -1640,13 +1599,14 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_line(p1: &PointFType, p2: &PointFType),
+    [org_name(drawLine)]
+    draw_line_5(p1: &PointFType, p2: &PointFType),
     /// 
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
     /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
     /// 
     /// **Overloads**
     /// Draws the first *lineCount* lines in the array *lines*
@@ -1682,8 +1642,8 @@ struct Painter {
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
     /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
     /// 
     /// **Overloads**
     /// Draws the first *lineCount* lines in the array *lines*
@@ -1714,50 +1674,14 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_lines(lines: [LineFType]),
+    [org_name(drawLines)]
+    draw_lines_2(lines: [LineFType]),
     /// 
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
     /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
-    /// 
-    /// **Overloads**
-    /// Draws the first *lineCount* lines in the array *lines*
-    /// using the current pen.
-    /// 
-    /// **Overloads**
-    /// Draws the first *lineCount* lines in the array *pointPairs*
-    /// using the current pen. The lines are specified as pairs of points
-    /// so the number of entries in *pointPairs* must be at least *lineCount* * 2.
-    /// 
-    /// **Overloads**
-    /// Draws the first *lineCount* lines in the array *pointPairs*
-    /// using the current pen.
-    /// 
-    /// **Overloads**
-    /// Draws a line for each pair of points in the vector *pointPairs*
-    /// using the current pen. If there is an odd number of points in the
-    /// array, the last point will be ignored.
-    /// 
-    /// **Overloads**
-    /// Draws a line for each pair of points in the vector *pointPairs*
-    /// using the current pen.
-    /// 
-    /// **Overloads**
-    /// Draws the set of lines defined by the list *lines* using the
-    /// current pen and brush.
-    /// 
-    /// **Overloads**
-    /// Draws the set of lines defined by the list *lines* using the
-    /// current pen and brush.
-    draw_lines(point_pairs: *PointFType, line_count: i32),
-    /// 
-    /// Draws the first *lineCount* lines in the array *lines*
-    /// using the current pen.
-    /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
     /// 
     /// **Overloads**
     /// Draws the first *lineCount* lines in the array *lines*
@@ -1788,50 +1712,14 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_lines(point_pairs: [PointFType]),
+    [org_name(drawLines)]
+    draw_lines_3(point_pairs: *PointFType, line_count: i32),
     /// 
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
     /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
-    /// 
-    /// **Overloads**
-    /// Draws the first *lineCount* lines in the array *lines*
-    /// using the current pen.
-    /// 
-    /// **Overloads**
-    /// Draws the first *lineCount* lines in the array *pointPairs*
-    /// using the current pen. The lines are specified as pairs of points
-    /// so the number of entries in *pointPairs* must be at least *lineCount* * 2.
-    /// 
-    /// **Overloads**
-    /// Draws the first *lineCount* lines in the array *pointPairs*
-    /// using the current pen.
-    /// 
-    /// **Overloads**
-    /// Draws a line for each pair of points in the vector *pointPairs*
-    /// using the current pen. If there is an odd number of points in the
-    /// array, the last point will be ignored.
-    /// 
-    /// **Overloads**
-    /// Draws a line for each pair of points in the vector *pointPairs*
-    /// using the current pen.
-    /// 
-    /// **Overloads**
-    /// Draws the set of lines defined by the list *lines* using the
-    /// current pen and brush.
-    /// 
-    /// **Overloads**
-    /// Draws the set of lines defined by the list *lines* using the
-    /// current pen and brush.
-    draw_lines(lines: *LineType, line_count: i32),
-    /// 
-    /// Draws the first *lineCount* lines in the array *lines*
-    /// using the current pen.
-    /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
     /// 
     /// **Overloads**
     /// Draws the first *lineCount* lines in the array *lines*
@@ -1862,50 +1750,14 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_lines(lines: [LineType]),
+    [org_name(drawLines)]
+    draw_lines_4(point_pairs: [PointFType]),
     /// 
     /// Draws the first *lineCount* lines in the array *lines*
     /// using the current pen.
     /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
-    /// 
-    /// **Overloads**
-    /// Draws the first *lineCount* lines in the array *lines*
-    /// using the current pen.
-    /// 
-    /// **Overloads**
-    /// Draws the first *lineCount* lines in the array *pointPairs*
-    /// using the current pen. The lines are specified as pairs of points
-    /// so the number of entries in *pointPairs* must be at least *lineCount* * 2.
-    /// 
-    /// **Overloads**
-    /// Draws the first *lineCount* lines in the array *pointPairs*
-    /// using the current pen.
-    /// 
-    /// **Overloads**
-    /// Draws a line for each pair of points in the vector *pointPairs*
-    /// using the current pen. If there is an odd number of points in the
-    /// array, the last point will be ignored.
-    /// 
-    /// **Overloads**
-    /// Draws a line for each pair of points in the vector *pointPairs*
-    /// using the current pen.
-    /// 
-    /// **Overloads**
-    /// Draws the set of lines defined by the list *lines* using the
-    /// current pen and brush.
-    /// 
-    /// **Overloads**
-    /// Draws the set of lines defined by the list *lines* using the
-    /// current pen and brush.
-    draw_lines(point_pairs: *PointType, line_count: i32),
-    /// 
-    /// Draws the first *lineCount* lines in the array *lines*
-    /// using the current pen.
-    /// 
-    /// **See also:** drawLine()
-    /// drawPolyline()
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
     /// 
     /// **Overloads**
     /// Draws the first *lineCount* lines in the array *lines*
@@ -1936,7 +1788,122 @@ struct Painter {
     /// **Overloads**
     /// Draws the set of lines defined by the list *lines* using the
     /// current pen and brush.
-    draw_lines(point_pairs: [PointType]),
+    [org_name(drawLines)]
+    draw_lines_5(lines: *LineType, line_count: i32),
+    /// 
+    /// Draws the first *lineCount* lines in the array *lines*
+    /// using the current pen.
+    /// 
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
+    /// 
+    /// **Overloads**
+    /// Draws the first *lineCount* lines in the array *lines*
+    /// using the current pen.
+    /// 
+    /// **Overloads**
+    /// Draws the first *lineCount* lines in the array *pointPairs*
+    /// using the current pen. The lines are specified as pairs of points
+    /// so the number of entries in *pointPairs* must be at least *lineCount* * 2.
+    /// 
+    /// **Overloads**
+    /// Draws the first *lineCount* lines in the array *pointPairs*
+    /// using the current pen.
+    /// 
+    /// **Overloads**
+    /// Draws a line for each pair of points in the vector *pointPairs*
+    /// using the current pen. If there is an odd number of points in the
+    /// array, the last point will be ignored.
+    /// 
+    /// **Overloads**
+    /// Draws a line for each pair of points in the vector *pointPairs*
+    /// using the current pen.
+    /// 
+    /// **Overloads**
+    /// Draws the set of lines defined by the list *lines* using the
+    /// current pen and brush.
+    /// 
+    /// **Overloads**
+    /// Draws the set of lines defined by the list *lines* using the
+    /// current pen and brush.
+    [org_name(drawLines)]
+    draw_lines_6(lines: [LineType]),
+    /// 
+    /// Draws the first *lineCount* lines in the array *lines*
+    /// using the current pen.
+    /// 
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
+    /// 
+    /// **Overloads**
+    /// Draws the first *lineCount* lines in the array *lines*
+    /// using the current pen.
+    /// 
+    /// **Overloads**
+    /// Draws the first *lineCount* lines in the array *pointPairs*
+    /// using the current pen. The lines are specified as pairs of points
+    /// so the number of entries in *pointPairs* must be at least *lineCount* * 2.
+    /// 
+    /// **Overloads**
+    /// Draws the first *lineCount* lines in the array *pointPairs*
+    /// using the current pen.
+    /// 
+    /// **Overloads**
+    /// Draws a line for each pair of points in the vector *pointPairs*
+    /// using the current pen. If there is an odd number of points in the
+    /// array, the last point will be ignored.
+    /// 
+    /// **Overloads**
+    /// Draws a line for each pair of points in the vector *pointPairs*
+    /// using the current pen.
+    /// 
+    /// **Overloads**
+    /// Draws the set of lines defined by the list *lines* using the
+    /// current pen and brush.
+    /// 
+    /// **Overloads**
+    /// Draws the set of lines defined by the list *lines* using the
+    /// current pen and brush.
+    [org_name(drawLines)]
+    draw_lines_7(point_pairs: *PointType, line_count: i32),
+    /// 
+    /// Draws the first *lineCount* lines in the array *lines*
+    /// using the current pen.
+    /// 
+    /// **See also:** [`draw_line()`]
+    /// [`draw_polyline()`]
+    /// 
+    /// **Overloads**
+    /// Draws the first *lineCount* lines in the array *lines*
+    /// using the current pen.
+    /// 
+    /// **Overloads**
+    /// Draws the first *lineCount* lines in the array *pointPairs*
+    /// using the current pen. The lines are specified as pairs of points
+    /// so the number of entries in *pointPairs* must be at least *lineCount* * 2.
+    /// 
+    /// **Overloads**
+    /// Draws the first *lineCount* lines in the array *pointPairs*
+    /// using the current pen.
+    /// 
+    /// **Overloads**
+    /// Draws a line for each pair of points in the vector *pointPairs*
+    /// using the current pen. If there is an odd number of points in the
+    /// array, the last point will be ignored.
+    /// 
+    /// **Overloads**
+    /// Draws a line for each pair of points in the vector *pointPairs*
+    /// using the current pen.
+    /// 
+    /// **Overloads**
+    /// Draws the set of lines defined by the list *lines* using the
+    /// current pen and brush.
+    /// 
+    /// **Overloads**
+    /// Draws the set of lines defined by the list *lines* using the
+    /// current pen and brush.
+    [org_name(drawLines)]
+    draw_lines_8(point_pairs: [PointType]),
     /// 
     /// Draws the current *rectangle* with the current pen and brush.
     /// 
@@ -1947,8 +1914,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawRects()
-    /// drawPolygon()
+    /// **See also:** [`draw_rects()`]
+    /// [`draw_polygon()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -1961,7 +1928,7 @@ struct Painter {
     /// Draws the first *rectCount* of the given *rectangles* using the
     /// current pen and brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Draws the first *rectCount* of the given *rectangles* using the
@@ -1983,8 +1950,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawRects()
-    /// drawPolygon()
+    /// **See also:** [`draw_rects()`]
+    /// [`draw_polygon()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -1997,7 +1964,7 @@ struct Painter {
     /// Draws the first *rectCount* of the given *rectangles* using the
     /// current pen and brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Draws the first *rectCount* of the given *rectangles* using the
@@ -2008,7 +1975,8 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    draw_rect(x1: i32, y1: i32, w: i32, h: i32),
+    [org_name(drawRect)]
+    draw_rect_2(x1: i32, y1: i32, w: i32, h: i32),
     /// 
     /// Draws the current *rectangle* with the current pen and brush.
     /// 
@@ -2019,8 +1987,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawRects()
-    /// drawPolygon()
+    /// **See also:** [`draw_rects()`]
+    /// [`draw_polygon()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2033,7 +2001,7 @@ struct Painter {
     /// Draws the first *rectCount* of the given *rectangles* using the
     /// current pen and brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Draws the first *rectCount* of the given *rectangles* using the
@@ -2044,12 +2012,13 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    draw_rect(rect: &RectType),
+    [org_name(drawRect)]
+    draw_rect_3(rect: &RectType),
     /// 
     /// Draws the first *rectCount* of the given *rectangles* using the
     /// current pen and brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Draws the first *rectCount* of the given *rectangles* using the
@@ -2065,7 +2034,7 @@ struct Painter {
     /// Draws the first *rectCount* of the given *rectangles* using the
     /// current pen and brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Draws the first *rectCount* of the given *rectangles* using the
@@ -2076,28 +2045,13 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    draw_rects(rectangles: [RectFType]),
+    [org_name(drawRects)]
+    draw_rects_2(rectangles: [RectFType]),
     /// 
     /// Draws the first *rectCount* of the given *rectangles* using the
     /// current pen and brush.
     /// 
-    /// **See also:** drawRect()
-    /// 
-    /// **Overloads**
-    /// Draws the first *rectCount* of the given *rectangles* using the
-    /// current pen and brush.
-    /// 
-    /// **Overloads**
-    /// Draws the given *rectangles* using the current pen and brush.
-    /// 
-    /// **Overloads**
-    /// Draws the given *rectangles* using the current pen and brush.
-    draw_rects(rects: *RectType, rect_count: i32),
-    /// 
-    /// Draws the first *rectCount* of the given *rectangles* using the
-    /// current pen and brush.
-    /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Draws the first *rectCount* of the given *rectangles* using the
@@ -2108,7 +2062,25 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the given *rectangles* using the current pen and brush.
-    draw_rects(rectangles: [RectType]),
+    [org_name(drawRects)]
+    draw_rects_3(rects: *RectType, rect_count: i32),
+    /// 
+    /// Draws the first *rectCount* of the given *rectangles* using the
+    /// current pen and brush.
+    /// 
+    /// **See also:** [`draw_rect()`]
+    /// 
+    /// **Overloads**
+    /// Draws the first *rectCount* of the given *rectangles* using the
+    /// current pen and brush.
+    /// 
+    /// **Overloads**
+    /// Draws the given *rectangles* using the current pen and brush.
+    /// 
+    /// **Overloads**
+    /// Draws the given *rectangles* using the current pen and brush.
+    [org_name(drawRects)]
+    draw_rects_4(rectangles: [RectType]),
     /// 
     /// Draws the ellipse defined by the given *rectangle.*
     /// 
@@ -2121,7 +2093,7 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPie()
+    /// **See also:** [`draw_pie()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2149,7 +2121,7 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPie()
+    /// **See also:** [`draw_pie()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2164,7 +2136,8 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    draw_ellipse(r: &RectType),
+    [org_name(drawEllipse)]
+    draw_ellipse_2(r: &RectType),
     /// 
     /// Draws the ellipse defined by the given *rectangle.*
     /// 
@@ -2177,7 +2150,7 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPie()
+    /// **See also:** [`draw_pie()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2192,7 +2165,8 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    draw_ellipse(x: i32, y: i32, w: i32, h: i32),
+    [org_name(drawEllipse)]
+    draw_ellipse_3(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// Draws the ellipse defined by the given *rectangle.*
     /// 
@@ -2205,7 +2179,7 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPie()
+    /// **See also:** [`draw_pie()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2220,7 +2194,8 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    draw_ellipse(center: &PointFType, rx: f32, ry: f32),
+    [org_name(drawEllipse)]
+    draw_ellipse_4(center: &PointFType, rx: f32, ry: f32),
     /// 
     /// Draws the ellipse defined by the given *rectangle.*
     /// 
@@ -2233,7 +2208,7 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPie()
+    /// **See also:** [`draw_pie()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2248,7 +2223,8 @@ struct Painter {
     /// 
     /// **Overloads**
     /// Draws the ellipse positioned at *center* with radii *rx* and *ry* .
-    draw_ellipse(center: &PointType, rx: i32, ry: i32),
+    [org_name(drawEllipse)]
+    draw_ellipse_5(center: &PointType, rx: i32, ry: i32),
     /// 
     /// Draws the polyline defined by the first *pointCount* points in *points* using the current pen.
     /// 
@@ -2256,8 +2232,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawLines()
-    /// drawPolygon()
+    /// **See also:** [`draw_lines()`]
+    /// [`draw_polygon()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2278,8 +2254,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawLines()
-    /// drawPolygon()
+    /// **See also:** [`draw_lines()`]
+    /// [`draw_polygon()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2292,7 +2268,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the polyline defined by the given *points* using the
     /// current pen.
-    draw_polyline(polyline: &PolygonFType),
+    [org_name(drawPolyline)]
+    draw_polyline_2(polyline: &PolygonFType),
     /// 
     /// Draws the polyline defined by the first *pointCount* points in *points* using the current pen.
     /// 
@@ -2300,8 +2277,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawLines()
-    /// drawPolygon()
+    /// **See also:** [`draw_lines()`]
+    /// [`draw_polygon()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2314,7 +2291,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the polyline defined by the given *points* using the
     /// current pen.
-    draw_polyline(points: *PointType, point_count: i32),
+    [org_name(drawPolyline)]
+    draw_polyline_3(points: *PointType, point_count: i32),
     /// 
     /// Draws the polyline defined by the first *pointCount* points in *points* using the current pen.
     /// 
@@ -2322,8 +2300,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawLines()
-    /// drawPolygon()
+    /// **See also:** [`draw_lines()`]
+    /// [`draw_polygon()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2336,7 +2314,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the polyline defined by the given *points* using the
     /// current pen.
-    draw_polyline(polygon: &PolygonType),
+    [org_name(drawPolyline)]
+    draw_polyline_4(polygon: &PolygonType),
     /// 
     /// Draws the polygon defined by the first *pointCount* points in the
     /// array *points* using the current pen and brush.
@@ -2355,8 +2334,8 @@ struct Painter {
     /// for a more detailed description of these fill
     /// rules.
     /// 
-    /// **See also:** drawConvexPolygon()
-    /// drawPolyline()
+    /// **See also:** [`draw_convex_polygon()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// **Overloads**
     /// Draws the polygon defined by the first *pointCount* points in the
@@ -2388,8 +2367,8 @@ struct Painter {
     /// for a more detailed description of these fill
     /// rules.
     /// 
-    /// **See also:** drawConvexPolygon()
-    /// drawPolyline()
+    /// **See also:** [`draw_convex_polygon()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// **Overloads**
     /// Draws the polygon defined by the first *pointCount* points in the
@@ -2402,7 +2381,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the polygon defined by the given *points* using the fill
     /// rule *fillRule.*
-    draw_polygon(polygon: &PolygonFType, fill_rule: Rute::FillRule),
+    [org_name(drawPolygon)]
+    draw_polygon_2(polygon: &PolygonFType, fill_rule: Rute::FillRule),
     /// 
     /// Draws the polygon defined by the first *pointCount* points in the
     /// array *points* using the current pen and brush.
@@ -2421,8 +2401,8 @@ struct Painter {
     /// for a more detailed description of these fill
     /// rules.
     /// 
-    /// **See also:** drawConvexPolygon()
-    /// drawPolyline()
+    /// **See also:** [`draw_convex_polygon()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// **Overloads**
     /// Draws the polygon defined by the first *pointCount* points in the
@@ -2435,7 +2415,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the polygon defined by the given *points* using the fill
     /// rule *fillRule.*
-    draw_polygon(points: *PointType, point_count: i32, fill_rule: Rute::FillRule),
+    [org_name(drawPolygon)]
+    draw_polygon_3(points: *PointType, point_count: i32, fill_rule: Rute::FillRule),
     /// 
     /// Draws the polygon defined by the first *pointCount* points in the
     /// array *points* using the current pen and brush.
@@ -2454,8 +2435,8 @@ struct Painter {
     /// for a more detailed description of these fill
     /// rules.
     /// 
-    /// **See also:** drawConvexPolygon()
-    /// drawPolyline()
+    /// **See also:** [`draw_convex_polygon()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// **Overloads**
     /// Draws the polygon defined by the first *pointCount* points in the
@@ -2468,7 +2449,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the polygon defined by the given *points* using the fill
     /// rule *fillRule.*
-    draw_polygon(polygon: &PolygonType, fill_rule: Rute::FillRule),
+    [org_name(drawPolygon)]
+    draw_polygon_4(polygon: &PolygonType, fill_rule: Rute::FillRule),
     /// 
     /// Draws the convex polygon defined by the first *pointCount* points
     /// in the array *points* using the current pen.
@@ -2485,8 +2467,8 @@ struct Painter {
     /// On some platforms (e.g. X11), the drawConvexPolygon() function can
     /// be faster than the drawPolygon() function.
     /// 
-    /// **See also:** drawPolygon()
-    /// drawPolyline()
+    /// **See also:** [`draw_polygon()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2517,8 +2499,8 @@ struct Painter {
     /// On some platforms (e.g. X11), the drawConvexPolygon() function can
     /// be faster than the drawPolygon() function.
     /// 
-    /// **See also:** drawPolygon()
-    /// drawPolyline()
+    /// **See also:** [`draw_polygon()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2532,7 +2514,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the convex polygon defined by *polygon* using the current
     /// pen and brush.
-    draw_convex_polygon(polygon: &PolygonFType),
+    [org_name(drawConvexPolygon)]
+    draw_convex_polygon_2(polygon: &PolygonFType),
     /// 
     /// Draws the convex polygon defined by the first *pointCount* points
     /// in the array *points* using the current pen.
@@ -2549,8 +2532,8 @@ struct Painter {
     /// On some platforms (e.g. X11), the drawConvexPolygon() function can
     /// be faster than the drawPolygon() function.
     /// 
-    /// **See also:** drawPolygon()
-    /// drawPolyline()
+    /// **See also:** [`draw_polygon()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2564,7 +2547,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the convex polygon defined by *polygon* using the current
     /// pen and brush.
-    draw_convex_polygon(points: *PointType, point_count: i32),
+    [org_name(drawConvexPolygon)]
+    draw_convex_polygon_3(points: *PointType, point_count: i32),
     /// 
     /// Draws the convex polygon defined by the first *pointCount* points
     /// in the array *points* using the current pen.
@@ -2581,8 +2565,8 @@ struct Painter {
     /// On some platforms (e.g. X11), the drawConvexPolygon() function can
     /// be faster than the drawPolygon() function.
     /// 
-    /// **See also:** drawPolygon()
-    /// drawPolyline()
+    /// **See also:** [`draw_polygon()`]
+    /// [`draw_polyline()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2596,7 +2580,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the convex polygon defined by *polygon* using the current
     /// pen and brush.
-    draw_convex_polygon(polygon: &PolygonType),
+    [org_name(drawConvexPolygon)]
+    draw_convex_polygon_4(polygon: &PolygonType),
     /// 
     /// Draws the arc defined by the given *rectangle,* *startAngle* and
     /// *spanAngle.*
@@ -2611,8 +2596,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPie()
-    /// drawChord()
+    /// **See also:** [`draw_pie()`]
+    /// [`draw_chord()`]
     /// {Coordinate System}
     /// int spanAngle)
     /// 
@@ -2640,8 +2625,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPie()
-    /// drawChord()
+    /// **See also:** [`draw_pie()`]
+    /// [`draw_chord()`]
     /// {Coordinate System}
     /// int spanAngle)
     /// 
@@ -2654,7 +2639,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the arc defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    draw_arc(arg0: &RectType, a: i32, alen: i32),
+    [org_name(drawArc)]
+    draw_arc_2(arg0: &RectType, a: i32, alen: i32),
     /// 
     /// Draws the arc defined by the given *rectangle,* *startAngle* and
     /// *spanAngle.*
@@ -2669,8 +2655,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPie()
-    /// drawChord()
+    /// **See also:** [`draw_pie()`]
+    /// [`draw_chord()`]
     /// {Coordinate System}
     /// int spanAngle)
     /// 
@@ -2683,7 +2669,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the arc defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    draw_arc(x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32),
+    [org_name(drawArc)]
+    draw_arc_3(x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32),
     /// 
     /// Draws a pie defined by the given *rectangle,* *startAngle* and *spanAngle.*
     /// 
@@ -2699,8 +2686,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawEllipse()
-    /// drawChord()
+    /// **See also:** [`draw_ellipse()`]
+    /// [`draw_chord()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2729,8 +2716,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawEllipse()
-    /// drawChord()
+    /// **See also:** [`draw_ellipse()`]
+    /// [`draw_chord()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2743,7 +2730,8 @@ struct Painter {
     /// Draws the pie defined by the rectangle beginning at ( *x,* *y)* with
     /// the specified *width* and *height,* and the given *startAngle* and
     /// *spanAngle.*
-    draw_pie(x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32),
+    [org_name(drawPie)]
+    draw_pie_2(x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32),
     /// 
     /// Draws a pie defined by the given *rectangle,* *startAngle* and *spanAngle.*
     /// 
@@ -2759,8 +2747,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawEllipse()
-    /// drawChord()
+    /// **See also:** [`draw_ellipse()`]
+    /// [`draw_chord()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2773,7 +2761,8 @@ struct Painter {
     /// Draws the pie defined by the rectangle beginning at ( *x,* *y)* with
     /// the specified *width* and *height,* and the given *startAngle* and
     /// *spanAngle.*
-    draw_pie(arg0: &RectType, a: i32, alen: i32),
+    [org_name(drawPie)]
+    draw_pie_3(arg0: &RectType, a: i32, alen: i32),
     /// 
     /// Draws the chord defined by the given *rectangle,* *startAngle* and
     /// *spanAngle.* The chord is filled with the current brush().
@@ -2788,8 +2777,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawArc()
-    /// drawPie()
+    /// **See also:** [`draw_arc()`]
+    /// [`draw_pie()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2816,8 +2805,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawArc()
-    /// drawPie()
+    /// **See also:** [`draw_arc()`]
+    /// [`draw_pie()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2829,7 +2818,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the chord defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    draw_chord(x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32),
+    [org_name(drawChord)]
+    draw_chord_2(x: i32, y: i32, w: i32, h: i32, a: i32, alen: i32),
     /// 
     /// Draws the chord defined by the given *rectangle,* *startAngle* and
     /// *spanAngle.* The chord is filled with the current brush().
@@ -2844,8 +2834,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawArc()
-    /// drawPie()
+    /// **See also:** [`draw_arc()`]
+    /// [`draw_pie()`]
     /// {Coordinate System}
     /// 
     /// **Overloads**
@@ -2857,7 +2847,8 @@ struct Painter {
     /// **Overloads**
     /// Draws the chord defined by the rectangle beginning at ( *x,* *y)*
     /// with the specified *width* and *height,* and the given *startAngle* and *spanAngle.*
-    draw_chord(arg0: &RectType, a: i32, alen: i32),
+    [org_name(drawChord)]
+    draw_chord_3(arg0: &RectType, a: i32, alen: i32),
     /// 
     /// Draws the given rectangle *rect* with rounded corners.
     /// 
@@ -2875,8 +2866,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawRect()
-    /// QPen
+    /// **See also:** [`draw_rect()`]
+    /// [`Pen`]
     /// 
     /// Qt::SizeMode mode = Qt::AbsoluteSize);
     /// **Overloads**
@@ -2903,8 +2894,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawRect()
-    /// QPen
+    /// **See also:** [`draw_rect()`]
+    /// [`Pen`]
     /// 
     /// Qt::SizeMode mode = Qt::AbsoluteSize);
     /// **Overloads**
@@ -2913,7 +2904,8 @@ struct Painter {
     /// Qt::SizeMode mode = Qt::AbsoluteSize);
     /// **Overloads**
     /// Draws the given rectangle *x,* *y,* *w,* *h* with rounded corners.
-    draw_rounded_rect(x: i32, y: i32, w: i32, h: i32, x_radius: f32, y_radius: f32, mode: Rute::SizeMode),
+    [org_name(drawRoundedRect)]
+    draw_rounded_rect_2(x: i32, y: i32, w: i32, h: i32, x_radius: f32, y_radius: f32, mode: Rute::SizeMode),
     /// 
     /// Draws the given rectangle *rect* with rounded corners.
     /// 
@@ -2931,8 +2923,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawRect()
-    /// QPen
+    /// **See also:** [`draw_rect()`]
+    /// [`Pen`]
     /// 
     /// Qt::SizeMode mode = Qt::AbsoluteSize);
     /// **Overloads**
@@ -2941,7 +2933,8 @@ struct Painter {
     /// Qt::SizeMode mode = Qt::AbsoluteSize);
     /// **Overloads**
     /// Draws the given rectangle *x,* *y,* *w,* *h* with rounded corners.
-    draw_rounded_rect(rect: &RectType, x_radius: f32, y_radius: f32, mode: Rute::SizeMode),
+    [org_name(drawRoundedRect)]
+    draw_rounded_rect_3(rect: &RectType, x_radius: f32, y_radius: f32, mode: Rute::SizeMode),
     /// 
     /// Draws a rectangle *r* with rounded corners.
     /// 
@@ -2951,7 +2944,7 @@ struct Painter {
     /// A filled rectangle has a size of r.size(). A stroked rectangle
     /// has a size of r.size() plus the pen width.
     /// 
-    /// **See also:** drawRoundedRect()
+    /// **See also:** [`draw_rounded_rect()`]
     /// 
     /// **Overloads**
     /// Draws the rectangle *r* with rounded corners.
@@ -2968,14 +2961,15 @@ struct Painter {
     /// A filled rectangle has a size of r.size(). A stroked rectangle
     /// has a size of r.size() plus the pen width.
     /// 
-    /// **See also:** drawRoundedRect()
+    /// **See also:** [`draw_rounded_rect()`]
     /// 
     /// **Overloads**
     /// Draws the rectangle *r* with rounded corners.
     /// 
     /// **Overloads**
     /// Draws the rectangle *x,* *y,* *w,* *h* with rounded corners.
-    draw_round_rect(x: i32, y: i32, w: i32, h: i32, arg0: i32, arg1: i32),
+    [org_name(drawRoundRect)]
+    draw_round_rect_2(x: i32, y: i32, w: i32, h: i32, arg0: i32, arg1: i32),
     /// 
     /// Draws a rectangle *r* with rounded corners.
     /// 
@@ -2985,14 +2979,15 @@ struct Painter {
     /// A filled rectangle has a size of r.size(). A stroked rectangle
     /// has a size of r.size() plus the pen width.
     /// 
-    /// **See also:** drawRoundedRect()
+    /// **See also:** [`draw_rounded_rect()`]
     /// 
     /// **Overloads**
     /// Draws the rectangle *r* with rounded corners.
     /// 
     /// **Overloads**
     /// Draws the rectangle *x,* *y,* *w,* *h* with rounded corners.
-    draw_round_rect(r: &RectType, xround: i32, yround: i32),
+    [org_name(drawRoundRect)]
+    draw_round_rect_3(r: &RectType, xround: i32, yround: i32),
     /// 
     /// Draws a tiled *pixmap,* inside the given *rectangle* with its
     /// origin at the given *position.*
@@ -3002,7 +2997,7 @@ struct Painter {
     /// potentially much more efficient depending on the underlying window
     /// system.
     /// 
-    /// **See also:** drawPixmap()
+    /// **See also:** [`draw_pixmap()`]
     /// 
     /// const QPoint &position = QPoint())
     /// **Overloads**
@@ -3025,7 +3020,7 @@ struct Painter {
     /// potentially much more efficient depending on the underlying window
     /// system.
     /// 
-    /// **See also:** drawPixmap()
+    /// **See also:** [`draw_pixmap()`]
     /// 
     /// const QPoint &position = QPoint())
     /// **Overloads**
@@ -3038,7 +3033,8 @@ struct Painter {
     /// 
     /// ( *x* , *y* ) specifies the top-left point in the paint device
     /// that is to be drawn onto; with the given *width* and *height.* ( *sx* , *sy* ) specifies the top-left point in the *pixmap* that is to be drawn; this defaults to (0, 0).
-    draw_tiled_pixmap(x: i32, y: i32, w: i32, h: i32, arg0: &PixmapType, sx: i32, sy: i32),
+    [org_name(drawTiledPixmap)]
+    draw_tiled_pixmap_2(x: i32, y: i32, w: i32, h: i32, arg0: &PixmapType, sx: i32, sy: i32),
     /// 
     /// Draws a tiled *pixmap,* inside the given *rectangle* with its
     /// origin at the given *position.*
@@ -3048,7 +3044,7 @@ struct Painter {
     /// potentially much more efficient depending on the underlying window
     /// system.
     /// 
-    /// **See also:** drawPixmap()
+    /// **See also:** [`draw_pixmap()`]
     /// 
     /// const QPoint &position = QPoint())
     /// **Overloads**
@@ -3061,7 +3057,8 @@ struct Painter {
     /// 
     /// ( *x* , *y* ) specifies the top-left point in the paint device
     /// that is to be drawn onto; with the given *width* and *height.* ( *sx* , *sy* ) specifies the top-left point in the *pixmap* that is to be drawn; this defaults to (0, 0).
-    draw_tiled_pixmap(arg0: &RectType, arg1: &PixmapType, arg2: &PointType),
+    [org_name(drawTiledPixmap)]
+    draw_tiled_pixmap_3(arg0: &RectType, arg1: &PixmapType, arg2: &PointType),
     /// 
     /// Replays the given *picture* at the given *point.*
     /// 
@@ -3075,7 +3072,7 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** QPicture::play()
+    /// **See also:** [`Picture::play`]
     /// 
     /// **Overloads**
     /// Replays the given *picture* at the given *point.*
@@ -3096,14 +3093,15 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** QPicture::play()
+    /// **See also:** [`Picture::play`]
     /// 
     /// **Overloads**
     /// Replays the given *picture* at the given *point.*
     /// 
     /// **Overloads**
     /// Draws the given *picture* at point ( *x,* *y).*
-    draw_picture(x: i32, y: i32, picture: &PictureType),
+    [org_name(drawPicture)]
+    draw_picture_2(x: i32, y: i32, picture: &PictureType),
     /// 
     /// Replays the given *picture* at the given *point.*
     /// 
@@ -3117,14 +3115,15 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** QPicture::play()
+    /// **See also:** [`Picture::play`]
     /// 
     /// **Overloads**
     /// Replays the given *picture* at the given *point.*
     /// 
     /// **Overloads**
     /// Draws the given *picture* at point ( *x,* *y).*
-    draw_picture(p: &PointType, picture: &PictureType),
+    [org_name(drawPicture)]
+    draw_picture_3(p: &PointType, picture: &PictureType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3143,8 +3142,8 @@ struct Painter {
     /// transparent. Drawing bitmaps with gradient or texture colors is
     /// not supported.
     /// 
-    /// **See also:** drawImage()
-    /// QPixmap::devicePixelRatio()
+    /// **See also:** [`draw_image()`]
+    /// [`Pixmap::device_pixel_ratio`]
     /// 
     /// const QRect &source)
     /// **Overloads**
@@ -3213,8 +3212,8 @@ struct Painter {
     /// This function is potentially faster than multiple calls to drawPixmap(),
     /// since the backend can optimize state changes.
     /// 
-    /// **See also:** QPainter::PixmapFragment
-    /// QPainter::PixmapFragmentHint
+    /// **See also:** [`Painter::pixmap_fragment()`]
+    /// [`Painter::pixmap_fragment_hint()`]
     draw_pixmap(target_rect: &RectFType, pixmap: &PixmapType, source_rect: &RectFType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
@@ -3234,8 +3233,8 @@ struct Painter {
     /// transparent. Drawing bitmaps with gradient or texture colors is
     /// not supported.
     /// 
-    /// **See also:** drawImage()
-    /// QPixmap::devicePixelRatio()
+    /// **See also:** [`draw_image()`]
+    /// [`Pixmap::device_pixel_ratio`]
     /// 
     /// const QRect &source)
     /// **Overloads**
@@ -3304,9 +3303,10 @@ struct Painter {
     /// This function is potentially faster than multiple calls to drawPixmap(),
     /// since the backend can optimize state changes.
     /// 
-    /// **See also:** QPainter::PixmapFragment
-    /// QPainter::PixmapFragmentHint
-    draw_pixmap(target_rect: &RectType, pixmap: &PixmapType, source_rect: &RectType),
+    /// **See also:** [`Painter::pixmap_fragment()`]
+    /// [`Painter::pixmap_fragment_hint()`]
+    [org_name(drawPixmap)]
+    draw_pixmap_2(target_rect: &RectType, pixmap: &PixmapType, source_rect: &RectType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3325,8 +3325,8 @@ struct Painter {
     /// transparent. Drawing bitmaps with gradient or texture colors is
     /// not supported.
     /// 
-    /// **See also:** drawImage()
-    /// QPixmap::devicePixelRatio()
+    /// **See also:** [`draw_image()`]
+    /// [`Pixmap::device_pixel_ratio`]
     /// 
     /// const QRect &source)
     /// **Overloads**
@@ -3395,9 +3395,10 @@ struct Painter {
     /// This function is potentially faster than multiple calls to drawPixmap(),
     /// since the backend can optimize state changes.
     /// 
-    /// **See also:** QPainter::PixmapFragment
-    /// QPainter::PixmapFragmentHint
-    draw_pixmap(x: i32, y: i32, w: i32, h: i32, pm: &PixmapType, sx: i32, sy: i32, sw: i32, sh: i32),
+    /// **See also:** [`Painter::pixmap_fragment()`]
+    /// [`Painter::pixmap_fragment_hint()`]
+    [org_name(drawPixmap)]
+    draw_pixmap_3(x: i32, y: i32, w: i32, h: i32, pm: &PixmapType, sx: i32, sy: i32, sw: i32, sh: i32),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3416,8 +3417,8 @@ struct Painter {
     /// transparent. Drawing bitmaps with gradient or texture colors is
     /// not supported.
     /// 
-    /// **See also:** drawImage()
-    /// QPixmap::devicePixelRatio()
+    /// **See also:** [`draw_image()`]
+    /// [`Pixmap::device_pixel_ratio`]
     /// 
     /// const QRect &source)
     /// **Overloads**
@@ -3486,9 +3487,10 @@ struct Painter {
     /// This function is potentially faster than multiple calls to drawPixmap(),
     /// since the backend can optimize state changes.
     /// 
-    /// **See also:** QPainter::PixmapFragment
-    /// QPainter::PixmapFragmentHint
-    draw_pixmap(x: i32, y: i32, pm: &PixmapType, sx: i32, sy: i32, sw: i32, sh: i32),
+    /// **See also:** [`Painter::pixmap_fragment()`]
+    /// [`Painter::pixmap_fragment_hint()`]
+    [org_name(drawPixmap)]
+    draw_pixmap_4(x: i32, y: i32, pm: &PixmapType, sx: i32, sy: i32, sw: i32, sh: i32),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3507,8 +3509,8 @@ struct Painter {
     /// transparent. Drawing bitmaps with gradient or texture colors is
     /// not supported.
     /// 
-    /// **See also:** drawImage()
-    /// QPixmap::devicePixelRatio()
+    /// **See also:** [`draw_image()`]
+    /// [`Pixmap::device_pixel_ratio`]
     /// 
     /// const QRect &source)
     /// **Overloads**
@@ -3577,9 +3579,10 @@ struct Painter {
     /// This function is potentially faster than multiple calls to drawPixmap(),
     /// since the backend can optimize state changes.
     /// 
-    /// **See also:** QPainter::PixmapFragment
-    /// QPainter::PixmapFragmentHint
-    draw_pixmap(p: &PointFType, pm: &PixmapType, sr: &RectFType),
+    /// **See also:** [`Painter::pixmap_fragment()`]
+    /// [`Painter::pixmap_fragment_hint()`]
+    [org_name(drawPixmap)]
+    draw_pixmap_5(p: &PointFType, pm: &PixmapType, sr: &RectFType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3598,8 +3601,8 @@ struct Painter {
     /// transparent. Drawing bitmaps with gradient or texture colors is
     /// not supported.
     /// 
-    /// **See also:** drawImage()
-    /// QPixmap::devicePixelRatio()
+    /// **See also:** [`draw_image()`]
+    /// [`Pixmap::device_pixel_ratio`]
     /// 
     /// const QRect &source)
     /// **Overloads**
@@ -3668,9 +3671,10 @@ struct Painter {
     /// This function is potentially faster than multiple calls to drawPixmap(),
     /// since the backend can optimize state changes.
     /// 
-    /// **See also:** QPainter::PixmapFragment
-    /// QPainter::PixmapFragmentHint
-    draw_pixmap(p: &PointType, pm: &PixmapType, sr: &RectType),
+    /// **See also:** [`Painter::pixmap_fragment()`]
+    /// [`Painter::pixmap_fragment_hint()`]
+    [org_name(drawPixmap)]
+    draw_pixmap_6(p: &PointType, pm: &PixmapType, sr: &RectType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3689,8 +3693,8 @@ struct Painter {
     /// transparent. Drawing bitmaps with gradient or texture colors is
     /// not supported.
     /// 
-    /// **See also:** drawImage()
-    /// QPixmap::devicePixelRatio()
+    /// **See also:** [`draw_image()`]
+    /// [`Pixmap::device_pixel_ratio`]
     /// 
     /// const QRect &source)
     /// **Overloads**
@@ -3759,9 +3763,10 @@ struct Painter {
     /// This function is potentially faster than multiple calls to drawPixmap(),
     /// since the backend can optimize state changes.
     /// 
-    /// **See also:** QPainter::PixmapFragment
-    /// QPainter::PixmapFragmentHint
-    draw_pixmap(p: &PointFType, pm: &PixmapType),
+    /// **See also:** [`Painter::pixmap_fragment()`]
+    /// [`Painter::pixmap_fragment_hint()`]
+    [org_name(drawPixmap)]
+    draw_pixmap_7(p: &PointFType, pm: &PixmapType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3780,8 +3785,8 @@ struct Painter {
     /// transparent. Drawing bitmaps with gradient or texture colors is
     /// not supported.
     /// 
-    /// **See also:** drawImage()
-    /// QPixmap::devicePixelRatio()
+    /// **See also:** [`draw_image()`]
+    /// [`Pixmap::device_pixel_ratio`]
     /// 
     /// const QRect &source)
     /// **Overloads**
@@ -3850,9 +3855,10 @@ struct Painter {
     /// This function is potentially faster than multiple calls to drawPixmap(),
     /// since the backend can optimize state changes.
     /// 
-    /// **See also:** QPainter::PixmapFragment
-    /// QPainter::PixmapFragmentHint
-    draw_pixmap(p: &PointType, pm: &PixmapType),
+    /// **See also:** [`Painter::pixmap_fragment()`]
+    /// [`Painter::pixmap_fragment_hint()`]
+    [org_name(drawPixmap)]
+    draw_pixmap_8(p: &PointType, pm: &PixmapType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3871,8 +3877,8 @@ struct Painter {
     /// transparent. Drawing bitmaps with gradient or texture colors is
     /// not supported.
     /// 
-    /// **See also:** drawImage()
-    /// QPixmap::devicePixelRatio()
+    /// **See also:** [`draw_image()`]
+    /// [`Pixmap::device_pixel_ratio`]
     /// 
     /// const QRect &source)
     /// **Overloads**
@@ -3941,9 +3947,10 @@ struct Painter {
     /// This function is potentially faster than multiple calls to drawPixmap(),
     /// since the backend can optimize state changes.
     /// 
-    /// **See also:** QPainter::PixmapFragment
-    /// QPainter::PixmapFragmentHint
-    draw_pixmap(x: i32, y: i32, pm: &PixmapType),
+    /// **See also:** [`Painter::pixmap_fragment()`]
+    /// [`Painter::pixmap_fragment_hint()`]
+    [org_name(drawPixmap)]
+    draw_pixmap_9(x: i32, y: i32, pm: &PixmapType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -3962,8 +3969,8 @@ struct Painter {
     /// transparent. Drawing bitmaps with gradient or texture colors is
     /// not supported.
     /// 
-    /// **See also:** drawImage()
-    /// QPixmap::devicePixelRatio()
+    /// **See also:** [`draw_image()`]
+    /// [`Pixmap::device_pixel_ratio`]
     /// 
     /// const QRect &source)
     /// **Overloads**
@@ -4032,9 +4039,10 @@ struct Painter {
     /// This function is potentially faster than multiple calls to drawPixmap(),
     /// since the backend can optimize state changes.
     /// 
-    /// **See also:** QPainter::PixmapFragment
-    /// QPainter::PixmapFragmentHint
-    draw_pixmap(r: &RectType, pm: &PixmapType),
+    /// **See also:** [`Painter::pixmap_fragment()`]
+    /// [`Painter::pixmap_fragment_hint()`]
+    [org_name(drawPixmap)]
+    draw_pixmap_10(r: &RectType, pm: &PixmapType),
     /// 
     /// Draws the rectangular portion *source* of the given *pixmap*
     /// into the given *target* in the paint device.
@@ -4053,8 +4061,8 @@ struct Painter {
     /// transparent. Drawing bitmaps with gradient or texture colors is
     /// not supported.
     /// 
-    /// **See also:** drawImage()
-    /// QPixmap::devicePixelRatio()
+    /// **See also:** [`draw_image()`]
+    /// [`Pixmap::device_pixel_ratio`]
     /// 
     /// const QRect &source)
     /// **Overloads**
@@ -4123,9 +4131,10 @@ struct Painter {
     /// This function is potentially faster than multiple calls to drawPixmap(),
     /// since the backend can optimize state changes.
     /// 
-    /// **See also:** QPainter::PixmapFragment
-    /// QPainter::PixmapFragmentHint
-    draw_pixmap(x: i32, y: i32, w: i32, h: i32, pm: &PixmapType),
+    /// **See also:** [`Painter::pixmap_fragment()`]
+    /// [`Painter::pixmap_fragment_hint()`]
+    [org_name(drawPixmap)]
+    draw_pixmap_11(x: i32, y: i32, w: i32, h: i32, pm: &PixmapType),
     /// 
     /// This function is used to draw *pixmap,* or a sub-rectangle of *pixmap,*
     /// at multiple positions with different scale, rotation and opacity. *fragments* is an array of *fragmentCount* elements specifying the
@@ -4135,8 +4144,8 @@ struct Painter {
     /// This function is potentially faster than multiple calls to drawPixmap(),
     /// since the backend can optimize state changes.
     /// 
-    /// **See also:** QPainter::PixmapFragment
-    /// QPainter::PixmapFragmentHint
+    /// **See also:** [`Painter::pixmap_fragment()`]
+    /// [`Painter::pixmap_fragment_hint()`]
     draw_pixmap_fragments(fragments: onst QPainter::PixmapFragment *, fragment_count: i32, pixmap: &PixmapType, hints: Painter::PixmapFragmentHints),
     /// 
     /// Qt::ImageConversionFlags flags)
@@ -4155,8 +4164,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPixmap()
-    /// QImage::devicePixelRatio()
+    /// **See also:** [`draw_pixmap()`]
+    /// [`Image::device_pixel_ratio`]
     /// 
     /// Qt::ImageConversionFlags flags)
     /// **Overloads**
@@ -4222,8 +4231,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPixmap()
-    /// QImage::devicePixelRatio()
+    /// **See also:** [`draw_pixmap()`]
+    /// [`Image::device_pixel_ratio`]
     /// 
     /// Qt::ImageConversionFlags flags)
     /// **Overloads**
@@ -4271,7 +4280,8 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(target_rect: &RectType, image: &ImageType, source_rect: &RectType, flags: Rute::ImageConversionFlags),
+    [org_name(drawImage)]
+    draw_image_2(target_rect: &RectType, image: &ImageType, source_rect: &RectType, flags: Rute::ImageConversionFlags),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4289,8 +4299,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPixmap()
-    /// QImage::devicePixelRatio()
+    /// **See also:** [`draw_pixmap()`]
+    /// [`Image::device_pixel_ratio`]
     /// 
     /// Qt::ImageConversionFlags flags)
     /// **Overloads**
@@ -4338,7 +4348,8 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(p: &PointFType, image: &ImageType, sr: &RectFType, flags: Rute::ImageConversionFlags),
+    [org_name(drawImage)]
+    draw_image_3(p: &PointFType, image: &ImageType, sr: &RectFType, flags: Rute::ImageConversionFlags),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4356,8 +4367,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPixmap()
-    /// QImage::devicePixelRatio()
+    /// **See also:** [`draw_pixmap()`]
+    /// [`Image::device_pixel_ratio`]
     /// 
     /// Qt::ImageConversionFlags flags)
     /// **Overloads**
@@ -4405,7 +4416,8 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(p: &PointType, image: &ImageType, sr: &RectType, flags: Rute::ImageConversionFlags),
+    [org_name(drawImage)]
+    draw_image_4(p: &PointType, image: &ImageType, sr: &RectType, flags: Rute::ImageConversionFlags),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4423,8 +4435,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPixmap()
-    /// QImage::devicePixelRatio()
+    /// **See also:** [`draw_pixmap()`]
+    /// [`Image::device_pixel_ratio`]
     /// 
     /// Qt::ImageConversionFlags flags)
     /// **Overloads**
@@ -4472,7 +4484,8 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(r: &RectFType, image: &ImageType),
+    [org_name(drawImage)]
+    draw_image_5(r: &RectFType, image: &ImageType),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4490,8 +4503,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPixmap()
-    /// QImage::devicePixelRatio()
+    /// **See also:** [`draw_pixmap()`]
+    /// [`Image::device_pixel_ratio`]
     /// 
     /// Qt::ImageConversionFlags flags)
     /// **Overloads**
@@ -4539,7 +4552,8 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(r: &RectType, image: &ImageType),
+    [org_name(drawImage)]
+    draw_image_6(r: &RectType, image: &ImageType),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4557,8 +4571,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPixmap()
-    /// QImage::devicePixelRatio()
+    /// **See also:** [`draw_pixmap()`]
+    /// [`Image::device_pixel_ratio`]
     /// 
     /// Qt::ImageConversionFlags flags)
     /// **Overloads**
@@ -4606,7 +4620,8 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(p: &PointFType, image: &ImageType),
+    [org_name(drawImage)]
+    draw_image_7(p: &PointFType, image: &ImageType),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4624,8 +4639,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPixmap()
-    /// QImage::devicePixelRatio()
+    /// **See also:** [`draw_pixmap()`]
+    /// [`Image::device_pixel_ratio`]
     /// 
     /// Qt::ImageConversionFlags flags)
     /// **Overloads**
@@ -4673,7 +4688,8 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(p: &PointType, image: &ImageType),
+    [org_name(drawImage)]
+    draw_image_8(p: &PointType, image: &ImageType),
     /// 
     /// Qt::ImageConversionFlags flags)
     /// 
@@ -4691,8 +4707,8 @@ struct Painter {
     /// 
     /// 
     /// 
-    /// **See also:** drawPixmap()
-    /// QImage::devicePixelRatio()
+    /// **See also:** [`draw_pixmap()`]
+    /// [`Image::device_pixel_ratio`]
     /// 
     /// Qt::ImageConversionFlags flags)
     /// **Overloads**
@@ -4740,7 +4756,8 @@ struct Painter {
     /// ( *sw* , *sh* ) specifies the size of the image that is to be drawn.
     /// The default, (0, 0) (and negative) means all the way to the
     /// bottom-right of the image.
-    draw_image(x: i32, y: i32, image: &ImageType, sx: i32, sy: i32, sw: i32, sh: i32, flags: Rute::ImageConversionFlags),
+    [org_name(drawImage)]
+    draw_image_9(x: i32, y: i32, image: &ImageType, sx: i32, sy: i32, sw: i32, sh: i32, flags: Rute::ImageConversionFlags),
     /// 
     /// Sets the layout direction used by the painter when drawing text,
     /// to the specified *direction.*
@@ -4748,17 +4765,17 @@ struct Painter {
     /// The default is Qt::LayoutDirectionAuto, which will implicitly determine the
     /// direction from the text drawn.
     /// 
-    /// **See also:** QTextOption::setTextDirection()
-    /// layoutDirection()
-    /// drawText()
+    /// **See also:** [`TextOption::set_text_direction`]
+    /// [`layout_direction()`]
+    /// [`draw_text()`]
     /// {QPainter#Settings}{Settings}
     set_layout_direction(direction: Rute::LayoutDirection),
     /// 
     /// Returns the layout direction used by the painter when drawing text.
     /// 
-    /// **See also:** QTextOption::textDirection()
-    /// setLayoutDirection()
-    /// drawText()
+    /// **See also:** [`TextOption::text_direction`]
+    /// [`set_layout_direction()`]
+    /// [`draw_text()`]
     /// {QPainter#Settings}{Settings}
     layout_direction() -> Rute::LayoutDirection,
     /// 
@@ -4766,9 +4783,9 @@ struct Painter {
     /// edge of the baseline for the string of glyphs. The glyphs will be retrieved from the font
     /// selected on *glyphs* and at offsets given by the positions in *glyphs.*
     /// 
-    /// **See also:** QGlyphRun::setRawFont()
-    /// QGlyphRun::setPositions()
-    /// QGlyphRun::setGlyphIndexes()
+    /// **See also:** [`GlyphRun::set_raw_font`]
+    /// [`GlyphRun::set_positions`]
+    /// [`GlyphRun::set_glyph_indexes`]
     draw_glyph_run(position: &PointFType, glyph_run: &GlyphRunType),
     /// 
     /// **Overloads**
@@ -4798,7 +4815,7 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the top of the font.
     /// 
-    /// **See also:** QStaticText
+    /// **See also:** [`StaticText`]
     draw_static_text(top_left_position: &PointFType, static_text: &StaticTextType),
     /// 
     /// **Overloads**
@@ -4828,8 +4845,9 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the top of the font.
     /// 
-    /// **See also:** QStaticText
-    draw_static_text(top_left_position: &PointType, static_text: &StaticTextType),
+    /// **See also:** [`StaticText`]
+    [org_name(drawStaticText)]
+    draw_static_text_2(top_left_position: &PointType, static_text: &StaticTextType),
     /// 
     /// **Overloads**
     /// Draws the *staticText* at the *topLeftPosition.*
@@ -4858,8 +4876,9 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the top of the font.
     /// 
-    /// **See also:** QStaticText
-    draw_static_text(left: i32, top: i32, static_text: &StaticTextType),
+    /// **See also:** [`StaticText`]
+    [org_name(drawStaticText)]
+    draw_static_text_3(left: i32, top: i32, static_text: &StaticTextType),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -4874,8 +4893,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* with the currently defined text direction,
@@ -4885,8 +4904,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* within the provided *rectangle.*
@@ -4922,10 +4941,10 @@ struct Painter {
     /// * Qt::TextWordWrap
     /// * Qt::TextIncludeTrailingSpaces
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// boundingRect()
-    /// layoutDirection()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`bounding_rect()`]
+    /// [`layout_direction()`]
     /// 
     /// By default, QPainter draws text anti-aliased.
     /// 
@@ -4948,8 +4967,8 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* at position ( *x* , *y* ), using the painter's
@@ -4959,8 +4978,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QString &text, QRect *boundingRect)
     /// 
@@ -4997,10 +5016,10 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the top of the font.
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// setFont()
-    /// setPen()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QTextOption &option)
     /// **Overloads**
@@ -5011,8 +5030,8 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     draw_text(p: &PointFType, s: String),
     /// 
     /// Draws the given *text* with the currently defined text direction,
@@ -5028,8 +5047,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* with the currently defined text direction,
@@ -5039,8 +5058,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* within the provided *rectangle.*
@@ -5076,10 +5095,10 @@ struct Painter {
     /// * Qt::TextWordWrap
     /// * Qt::TextIncludeTrailingSpaces
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// boundingRect()
-    /// layoutDirection()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`bounding_rect()`]
+    /// [`layout_direction()`]
     /// 
     /// By default, QPainter draws text anti-aliased.
     /// 
@@ -5102,8 +5121,8 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* at position ( *x* , *y* ), using the painter's
@@ -5113,8 +5132,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QString &text, QRect *boundingRect)
     /// 
@@ -5151,10 +5170,10 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the top of the font.
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// setFont()
-    /// setPen()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QTextOption &option)
     /// **Overloads**
@@ -5165,9 +5184,10 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
-    draw_text(p: &PointType, s: String),
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
+    [org_name(drawText)]
+    draw_text_2(p: &PointType, s: String),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -5182,8 +5202,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* with the currently defined text direction,
@@ -5193,8 +5213,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* within the provided *rectangle.*
@@ -5230,10 +5250,10 @@ struct Painter {
     /// * Qt::TextWordWrap
     /// * Qt::TextIncludeTrailingSpaces
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// boundingRect()
-    /// layoutDirection()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`bounding_rect()`]
+    /// [`layout_direction()`]
     /// 
     /// By default, QPainter draws text anti-aliased.
     /// 
@@ -5256,8 +5276,8 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* at position ( *x* , *y* ), using the painter's
@@ -5267,8 +5287,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QString &text, QRect *boundingRect)
     /// 
@@ -5305,10 +5325,10 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the top of the font.
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// setFont()
-    /// setPen()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QTextOption &option)
     /// **Overloads**
@@ -5319,9 +5339,10 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
-    draw_text(x: i32, y: i32, s: String),
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
+    [org_name(drawText)]
+    draw_text_3(x: i32, y: i32, s: String),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -5336,8 +5357,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* with the currently defined text direction,
@@ -5347,8 +5368,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* within the provided *rectangle.*
@@ -5384,10 +5405,10 @@ struct Painter {
     /// * Qt::TextWordWrap
     /// * Qt::TextIncludeTrailingSpaces
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// boundingRect()
-    /// layoutDirection()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`bounding_rect()`]
+    /// [`layout_direction()`]
     /// 
     /// By default, QPainter draws text anti-aliased.
     /// 
@@ -5410,8 +5431,8 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* at position ( *x* , *y* ), using the painter's
@@ -5421,8 +5442,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QString &text, QRect *boundingRect)
     /// 
@@ -5459,10 +5480,10 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the top of the font.
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// setFont()
-    /// setPen()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QTextOption &option)
     /// **Overloads**
@@ -5473,9 +5494,10 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
-    draw_text(p: &PointFType, str: String, tf: i32, justification_padding: i32),
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
+    [org_name(drawText)]
+    draw_text_4(p: &PointFType, str: String, tf: i32, justification_padding: i32),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -5490,8 +5512,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* with the currently defined text direction,
@@ -5501,8 +5523,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* within the provided *rectangle.*
@@ -5538,10 +5560,10 @@ struct Painter {
     /// * Qt::TextWordWrap
     /// * Qt::TextIncludeTrailingSpaces
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// boundingRect()
-    /// layoutDirection()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`bounding_rect()`]
+    /// [`layout_direction()`]
     /// 
     /// By default, QPainter draws text anti-aliased.
     /// 
@@ -5564,8 +5586,8 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* at position ( *x* , *y* ), using the painter's
@@ -5575,8 +5597,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QString &text, QRect *boundingRect)
     /// 
@@ -5613,10 +5635,10 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the top of the font.
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// setFont()
-    /// setPen()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QTextOption &option)
     /// **Overloads**
@@ -5627,9 +5649,10 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
-    draw_text(r: &RectFType, flags: i32, text: String, br: *RectFType),
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
+    [org_name(drawText)]
+    draw_text_5(r: &RectFType, flags: i32, text: String, br: *RectFType),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -5644,8 +5667,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* with the currently defined text direction,
@@ -5655,8 +5678,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* within the provided *rectangle.*
@@ -5692,10 +5715,10 @@ struct Painter {
     /// * Qt::TextWordWrap
     /// * Qt::TextIncludeTrailingSpaces
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// boundingRect()
-    /// layoutDirection()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`bounding_rect()`]
+    /// [`layout_direction()`]
     /// 
     /// By default, QPainter draws text anti-aliased.
     /// 
@@ -5718,8 +5741,8 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* at position ( *x* , *y* ), using the painter's
@@ -5729,8 +5752,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QString &text, QRect *boundingRect)
     /// 
@@ -5767,10 +5790,10 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the top of the font.
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// setFont()
-    /// setPen()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QTextOption &option)
     /// **Overloads**
@@ -5781,9 +5804,10 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
-    draw_text(r: &RectType, flags: i32, text: String, br: *RectType),
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
+    [org_name(drawText)]
+    draw_text_6(r: &RectType, flags: i32, text: String, br: *RectType),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -5798,8 +5822,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* with the currently defined text direction,
@@ -5809,8 +5833,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* within the provided *rectangle.*
@@ -5846,10 +5870,10 @@ struct Painter {
     /// * Qt::TextWordWrap
     /// * Qt::TextIncludeTrailingSpaces
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// boundingRect()
-    /// layoutDirection()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`bounding_rect()`]
+    /// [`layout_direction()`]
     /// 
     /// By default, QPainter draws text anti-aliased.
     /// 
@@ -5872,8 +5896,8 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* at position ( *x* , *y* ), using the painter's
@@ -5883,8 +5907,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QString &text, QRect *boundingRect)
     /// 
@@ -5921,10 +5945,10 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the top of the font.
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// setFont()
-    /// setPen()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QTextOption &option)
     /// **Overloads**
@@ -5935,9 +5959,10 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
-    draw_text(x: i32, y: i32, w: i32, h: i32, flags: i32, text: String, br: *RectType),
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
+    [org_name(drawText)]
+    draw_text_7(x: i32, y: i32, w: i32, h: i32, flags: i32, text: String, br: *RectType),
     /// 
     /// Draws the given *text* with the currently defined text direction,
     /// beginning at the given *position.*
@@ -5952,8 +5977,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* with the currently defined text direction,
@@ -5963,8 +5988,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* within the provided *rectangle.*
@@ -6000,10 +6025,10 @@ struct Painter {
     /// * Qt::TextWordWrap
     /// * Qt::TextIncludeTrailingSpaces
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// boundingRect()
-    /// layoutDirection()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`bounding_rect()`]
+    /// [`layout_direction()`]
     /// 
     /// By default, QPainter draws text anti-aliased.
     /// 
@@ -6026,8 +6051,8 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// **Overloads**
     /// Draws the given *text* at position ( *x* , *y* ), using the painter's
@@ -6037,8 +6062,8 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the baseline of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QString &text, QRect *boundingRect)
     /// 
@@ -6075,10 +6100,10 @@ struct Painter {
     /// 
     /// **Note**: The y-position is used as the top of the font.
     /// 
-    /// **See also:** Qt::AlignmentFlag
-    /// Qt::TextFlag
-    /// setFont()
-    /// setPen()
+    /// **See also:** [`t::alignment_flag()`]
+    /// [`t::text_flag()`]
+    /// [`set_font()`]
+    /// [`set_pen()`]
     /// 
     /// const QTextOption &option)
     /// **Overloads**
@@ -6089,9 +6114,10 @@ struct Painter {
     /// 
     /// **Note**: The y-coordinate of *rectangle* is used as the top of the font.
     /// 
-    /// **See also:** setFont()
-    /// setPen()
-    draw_text(r: &RectFType, text: String, o: &TextOptionType),
+    /// **See also:** [`set_font()`]
+    /// [`set_pen()`]
+    [org_name(drawText)]
+    draw_text_8(r: &RectFType, text: String, o: &TextOptionType),
     /// 
     /// Returns the bounding rectangle of the *text* as it will appear
     /// when drawn inside the given *rectangle* with the specified *flags* using the currently set font(); i.e the function tells you
@@ -6118,9 +6144,9 @@ struct Painter {
     /// If several of the horizontal or several of the vertical alignment
     /// flags are set, the resulting alignment is undefined.
     /// 
-    /// **See also:** drawText()
-    /// Qt::Alignment
-    /// Qt::TextFlag
+    /// **See also:** [`draw_text()`]
+    /// [`t::alignment()`]
+    /// [`t::text_flag()`]
     /// 
     /// const QString &text)
     /// 
@@ -6143,7 +6169,7 @@ struct Painter {
     /// an *option* argument. The QTextOption class provides a
     /// description of general rich text properties.
     /// 
-    /// **See also:** QTextOption
+    /// **See also:** [`TextOption`]
     bounding_rect(rect: &RectFType, flags: i32, text: String) -> RectF,
     /// 
     /// Returns the bounding rectangle of the *text* as it will appear
@@ -6171,9 +6197,9 @@ struct Painter {
     /// If several of the horizontal or several of the vertical alignment
     /// flags are set, the resulting alignment is undefined.
     /// 
-    /// **See also:** drawText()
-    /// Qt::Alignment
-    /// Qt::TextFlag
+    /// **See also:** [`draw_text()`]
+    /// [`t::alignment()`]
+    /// [`t::text_flag()`]
     /// 
     /// const QString &text)
     /// 
@@ -6196,8 +6222,9 @@ struct Painter {
     /// an *option* argument. The QTextOption class provides a
     /// description of general rich text properties.
     /// 
-    /// **See also:** QTextOption
-    bounding_rect(rect: &RectType, flags: i32, text: String) -> Rect,
+    /// **See also:** [`TextOption`]
+    [org_name(boundingRect)]
+    bounding_rect_2(rect: &RectType, flags: i32, text: String) -> Rect,
     /// 
     /// Returns the bounding rectangle of the *text* as it will appear
     /// when drawn inside the given *rectangle* with the specified *flags* using the currently set font(); i.e the function tells you
@@ -6224,9 +6251,9 @@ struct Painter {
     /// If several of the horizontal or several of the vertical alignment
     /// flags are set, the resulting alignment is undefined.
     /// 
-    /// **See also:** drawText()
-    /// Qt::Alignment
-    /// Qt::TextFlag
+    /// **See also:** [`draw_text()`]
+    /// [`t::alignment()`]
+    /// [`t::text_flag()`]
     /// 
     /// const QString &text)
     /// 
@@ -6249,8 +6276,9 @@ struct Painter {
     /// an *option* argument. The QTextOption class provides a
     /// description of general rich text properties.
     /// 
-    /// **See also:** QTextOption
-    bounding_rect(x: i32, y: i32, w: i32, h: i32, flags: i32, text: String) -> Rect,
+    /// **See also:** [`TextOption`]
+    [org_name(boundingRect)]
+    bounding_rect_3(x: i32, y: i32, w: i32, h: i32, flags: i32, text: String) -> Rect,
     /// 
     /// Returns the bounding rectangle of the *text* as it will appear
     /// when drawn inside the given *rectangle* with the specified *flags* using the currently set font(); i.e the function tells you
@@ -6277,9 +6305,9 @@ struct Painter {
     /// If several of the horizontal or several of the vertical alignment
     /// flags are set, the resulting alignment is undefined.
     /// 
-    /// **See also:** drawText()
-    /// Qt::Alignment
-    /// Qt::TextFlag
+    /// **See also:** [`draw_text()`]
+    /// [`t::alignment()`]
+    /// [`t::text_flag()`]
     /// 
     /// const QString &text)
     /// 
@@ -6302,11 +6330,14 @@ struct Painter {
     /// an *option* argument. The QTextOption class provides a
     /// description of general rich text properties.
     /// 
-    /// **See also:** QTextOption
-    bounding_rect(rect: &RectFType, text: String, o: &TextOptionType) -> RectF,
+    /// **See also:** [`TextOption`]
+    [org_name(boundingRect)]
+    bounding_rect_4(rect: &RectFType, text: String, o: &TextOptionType) -> RectF,
     draw_text_item(p: &PointFType, ti: &TextItemType),
-    draw_text_item(x: i32, y: i32, ti: &TextItemType),
-    draw_text_item(p: &PointType, ti: &TextItemType),
+    [org_name(drawTextItem)]
+    draw_text_item_2(x: i32, y: i32, ti: &TextItemType),
+    [org_name(drawTextItem)]
+    draw_text_item_3(p: &PointType, ti: &TextItemType),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6326,7 +6357,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *brush.*
@@ -6377,7 +6408,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *brush.*
@@ -6408,7 +6439,8 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(x: i32, y: i32, w: i32, h: i32, arg0: &BrushType),
+    [org_name(fillRect)]
+    fill_rect_2(x: i32, y: i32, w: i32, h: i32, arg0: &BrushType),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6428,7 +6460,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *brush.*
@@ -6459,7 +6491,8 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(arg0: &RectType, arg1: &BrushType),
+    [org_name(fillRect)]
+    fill_rect_3(arg0: &RectType, arg1: &BrushType),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6479,7 +6512,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *brush.*
@@ -6510,7 +6543,8 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(arg0: &RectFType, color: &ColorType),
+    [org_name(fillRect)]
+    fill_rect_4(arg0: &RectFType, color: &ColorType),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6530,7 +6564,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *brush.*
@@ -6561,7 +6595,8 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(x: i32, y: i32, w: i32, h: i32, color: &ColorType),
+    [org_name(fillRect)]
+    fill_rect_5(x: i32, y: i32, w: i32, h: i32, color: &ColorType),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6581,7 +6616,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *brush.*
@@ -6612,7 +6647,8 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(arg0: &RectType, color: &ColorType),
+    [org_name(fillRect)]
+    fill_rect_6(arg0: &RectType, color: &ColorType),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6632,7 +6668,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *brush.*
@@ -6663,7 +6699,8 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(x: i32, y: i32, w: i32, h: i32, c: Rute::GlobalColor),
+    [org_name(fillRect)]
+    fill_rect_7(x: i32, y: i32, w: i32, h: i32, c: Rute::GlobalColor),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6683,7 +6720,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *brush.*
@@ -6714,7 +6751,8 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(r: &RectType, c: Rute::GlobalColor),
+    [org_name(fillRect)]
+    fill_rect_8(r: &RectType, c: Rute::GlobalColor),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6734,7 +6772,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *brush.*
@@ -6765,7 +6803,8 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(r: &RectFType, c: Rute::GlobalColor),
+    [org_name(fillRect)]
+    fill_rect_9(r: &RectFType, c: Rute::GlobalColor),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6785,7 +6824,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *brush.*
@@ -6816,7 +6855,8 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(x: i32, y: i32, w: i32, h: i32, style: Rute::BrushStyle),
+    [org_name(fillRect)]
+    fill_rect_10(x: i32, y: i32, w: i32, h: i32, style: Rute::BrushStyle),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6836,7 +6876,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *brush.*
@@ -6867,7 +6907,8 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(r: &RectType, style: Rute::BrushStyle),
+    [org_name(fillRect)]
+    fill_rect_11(r: &RectType, style: Rute::BrushStyle),
     /// 
     /// **Overloads**
     /// Fills the rectangle beginning at ( *x* , *y* ) with the given *width* and *height,* using the brush *style* specified.
@@ -6887,7 +6928,7 @@ struct Painter {
     /// QBrush constructor (taking a QColor argument) will automatically
     /// create a solid pattern brush.
     /// 
-    /// **See also:** drawRect()
+    /// **See also:** [`draw_rect()`]
     /// 
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *brush.*
@@ -6918,12 +6959,13 @@ struct Painter {
     /// **Overloads**
     /// Fills the given *rectangle* with the specified *color.*
     /// 
-    fill_rect(r: &RectFType, style: Rute::BrushStyle),
+    [org_name(fillRect)]
+    fill_rect_12(r: &RectFType, style: Rute::BrushStyle),
     /// 
     /// Erases the area inside the given *rectangle.* Equivalent to
     /// calling
     /// 
-    /// **See also:** fillRect()
+    /// **See also:** [`fill_rect()`]
     /// 
     /// **Overloads**
     /// Erases the area inside the given *rectangle.*
@@ -6936,7 +6978,7 @@ struct Painter {
     /// Erases the area inside the given *rectangle.* Equivalent to
     /// calling
     /// 
-    /// **See also:** fillRect()
+    /// **See also:** [`fill_rect()`]
     /// 
     /// **Overloads**
     /// Erases the area inside the given *rectangle.*
@@ -6944,12 +6986,13 @@ struct Painter {
     /// **Overloads**
     /// Erases the area inside the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    erase_rect(x: i32, y: i32, w: i32, h: i32),
+    [org_name(eraseRect)]
+    erase_rect_2(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// Erases the area inside the given *rectangle.* Equivalent to
     /// calling
     /// 
-    /// **See also:** fillRect()
+    /// **See also:** [`fill_rect()`]
     /// 
     /// **Overloads**
     /// Erases the area inside the given *rectangle.*
@@ -6957,21 +7000,22 @@ struct Painter {
     /// **Overloads**
     /// Erases the area inside the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
-    erase_rect(arg0: &RectType),
+    [org_name(eraseRect)]
+    erase_rect_3(arg0: &RectType),
     /// 
     /// Sets the given render *hint* on the painter if *on* is true;
     /// otherwise clears the render hint.
     /// 
-    /// **See also:** setRenderHints()
-    /// renderHints()
+    /// **See also:** [`set_render_hints()`]
+    /// [`render_hints()`]
     /// {QPainter#Rendering
     /// Quality}{Rendering Quality}
     /// 
     /// Sets the given render *hints* on the painter if *on* is true;
     /// otherwise clears the render hints.
     /// 
-    /// **See also:** setRenderHint()
-    /// renderHints()
+    /// **See also:** [`set_render_hint()`]
+    /// [`render_hints()`]
     /// {QPainter#Rendering
     /// Quality}{Rendering Quality}
     set_render_hint(hint: Painter::RenderHint, on: bool),
@@ -6979,8 +7023,8 @@ struct Painter {
     /// Sets the given render *hints* on the painter if *on* is true;
     /// otherwise clears the render hints.
     /// 
-    /// **See also:** setRenderHint()
-    /// renderHints()
+    /// **See also:** [`set_render_hint()`]
+    /// [`render_hints()`]
     /// {QPainter#Rendering
     /// Quality}{Rendering Quality}
     set_render_hints(hints: Painter::RenderHints, on: bool),
@@ -6988,20 +7032,20 @@ struct Painter {
     /// Returns a flag that specifies the rendering hints that are set for
     /// this painter.
     /// 
-    /// **See also:** testRenderHint()
+    /// **See also:** [`test_render_hint()`]
     /// {QPainter#Rendering Quality}{Rendering Quality}
     render_hints() -> Painter::RenderHints,
     /// 
     /// Returns `true` if *hint* is set; otherwise returns `false.`
     /// 
-    /// **See also:** renderHints()
-    /// setRenderHint()
+    /// **See also:** [`render_hints()`]
+    /// [`set_render_hint()`]
     test_render_hint(hint: Painter::RenderHint) -> bool,
     /// 
     /// Returns the paint engine that the painter is currently operating
     /// on if the painter is active; otherwise 0.
     /// 
-    /// **See also:** isActive()
+    /// **See also:** [`is_active()`]
     paint_engine() -> PaintEngine?,
     /// 
     /// Please use QWidget::render() instead.
@@ -7019,8 +7063,8 @@ struct Painter {
     /// a mutex for a short period. This can impact performance. Use of
     /// QWidget::render is strongly encouraged.
     /// 
-    /// **See also:** redirected()
-    /// restoreRedirected()
+    /// **See also:** [`redirected()`]
+    /// [`restore_redirected()`]
     [static] set_redirected(device: *PaintDeviceType, replacement: *PaintDeviceType, offset: &PointType),
     /// 
     /// Using QWidget::render() obsoletes the use of this function.
@@ -7033,8 +7077,8 @@ struct Painter {
     /// a mutex for a short period. This can impact performance. Use of
     /// QWidget::render is strongly encouraged.
     /// 
-    /// **See also:** setRedirected()
-    /// restoreRedirected()
+    /// **See also:** [`set_redirected()`]
+    /// [`restore_redirected()`]
     [static] redirected(device: *PaintDeviceType, offset: *PointType) -> PaintDevice?,
     /// 
     /// Using QWidget::render() obsoletes the use of this function.
@@ -7047,7 +7091,7 @@ struct Painter {
     /// a mutex for a short period. This can impact performance. Use of
     /// QWidget::render is strongly encouraged.
     /// 
-    /// **See also:** redirected()
+    /// **See also:** [`redirected()`]
     [static] restore_redirected(device: *PaintDeviceType),
     /// 
     /// Flushes the painting pipeline and prepares for the user issuing commands
@@ -7071,15 +7115,117 @@ struct Painter {
     /// default state by endNativePainting(). Here is an example that shows
     /// intermixing of painter commands and raw OpenGL commands:
     /// 
-    /// **See also:** endNativePainting()
+    /// **See also:** [`end_native_painting()`]
     begin_native_painting(),
     /// 
     /// Restores the painter after manually issuing native painting commands. Lets
     /// the painter restore any native state that it relies on before calling any
     /// other painter commands.
     /// 
-    /// **See also:** beginNativePainting()
+    /// **See also:** [`begin_native_painting()`]
     end_native_painting(),
+}
+
+[org_name(QPainter)]
+enum RenderHint {
+    /// Indicates that the engine should antialias edges of primitives if possible.
+    Antialiasing,
+    /// Indicates that the engine should antialias text if possible. To forcibly disable antialiasing for text, do not use this hint. Instead, set QFont::NoAntialias on your font's style strategy.
+    TextAntialiasing,
+    /// Indicates that the engine should use a smooth pixmap transformation algorithm (such as bilinear) rather than nearest neighbor.
+    SmoothPixmapTransform,
+    /// This value is obsolete and will be ignored, use the Antialiasing render hint instead.
+    HighQualityAntialiasing,
+    /// This value is obsolete, the default for QPen is now non-cosmetic.
+    NonCosmeticDefaultPen,
+    /// Compatibility hint telling the engine to use the same X11 based fill rules as in Qt 4, where aliased rendering is offset by slightly less than half a pixel. Also will treat default constructed pens as cosmetic. Potentially useful when porting a Qt 4 application to Qt 5.
+    Qt4CompatiblePainting,
+}
+
+[org_name(QPainter)]
+enum PixmapFragmentHint {
+    /// Indicates that the pixmap fragments to be drawn are opaque. Opaque fragments are potentially faster to draw.
+    OpaqueHint,
+}
+
+[org_name(QPainter)]
+enum CompositionMode {
+    /// This is the default mode. The alpha of the source is used to blend the pixel on top of the destination.
+    CompositionMode_SourceOver,
+    /// The alpha of the destination is used to blend it on top of the source pixels. This mode is the inverse of CompositionMode_SourceOver.
+    CompositionMode_DestinationOver,
+    /// The pixels in the destination are cleared (set to fully transparent) independent of the source.
+    CompositionMode_Clear,
+    /// The output is the source pixel. (This means a basic copy operation and is identical to SourceOver when the source pixel is opaque).
+    CompositionMode_Source,
+    /// The output is the destination pixel. This means that the blending has no effect. This mode is the inverse of CompositionMode_Source.
+    CompositionMode_Destination,
+    /// The output is the source, where the alpha is reduced by that of the destination.
+    CompositionMode_SourceIn,
+    /// The output is the destination, where the alpha is reduced by that of the source. This mode is the inverse of CompositionMode_SourceIn.
+    CompositionMode_DestinationIn,
+    /// The output is the source, where the alpha is reduced by the inverse of destination.
+    CompositionMode_SourceOut,
+    /// The output is the destination, where the alpha is reduced by the inverse of the source. This mode is the inverse of CompositionMode_SourceOut.
+    CompositionMode_DestinationOut,
+    /// The source pixel is blended on top of the destination, with the alpha of the source pixel reduced by the alpha of the destination pixel.
+    CompositionMode_SourceAtop,
+    /// The destination pixel is blended on top of the source, with the alpha of the destination pixel is reduced by the alpha of the destination pixel. This mode is the inverse of CompositionMode_SourceAtop.
+    CompositionMode_DestinationAtop,
+    /// The source, whose alpha is reduced with the inverse of the destination alpha, is merged with the destination, whose alpha is reduced by the inverse of the source alpha. CompositionMode_Xor is not the same as the bitwise Xor.
+    CompositionMode_Xor,
+    /// Both the alpha and color of the source and destination pixels are added together.
+    CompositionMode_Plus,
+    /// The output is the source color multiplied by the destination. Multiplying a color with white leaves the color unchanged, while multiplying a color with black produces black.
+    CompositionMode_Multiply,
+    /// The source and destination colors are inverted and then multiplied. Screening a color with white produces white, whereas screening a color with black leaves the color unchanged.
+    CompositionMode_Screen,
+    /// Multiplies or screens the colors depending on the destination color. The destination color is mixed with the source color to reflect the lightness or darkness of the destination.
+    CompositionMode_Overlay,
+    /// The darker of the source and destination colors is selected.
+    CompositionMode_Darken,
+    /// The lighter of the source and destination colors is selected.
+    CompositionMode_Lighten,
+    /// The destination color is brightened to reflect the source color. A black source color leaves the destination color unchanged.
+    CompositionMode_ColorDodge,
+    /// The destination color is darkened to reflect the source color. A white source color leaves the destination color unchanged.
+    CompositionMode_ColorBurn,
+    /// Multiplies or screens the colors depending on the source color. A light source color will lighten the destination color, whereas a dark source color will darken the destination color.
+    CompositionMode_HardLight,
+    /// Darkens or lightens the colors depending on the source color. Similar to CompositionMode_HardLight.
+    CompositionMode_SoftLight,
+    /// Subtracts the darker of the colors from the lighter. Painting with white inverts the destination color, whereas painting with black leaves the destination color unchanged.
+    CompositionMode_Difference,
+    /// Similar to CompositionMode_Difference, but with a lower contrast. Painting with white inverts the destination color, whereas painting with black leaves the destination color unchanged.
+    CompositionMode_Exclusion,
+    /// Does a bitwise OR operation on the source and destination pixels (src OR dst).
+    RasterOp_SourceOrDestination,
+    /// Does a bitwise AND operation on the source and destination pixels (src AND dst).
+    RasterOp_SourceAndDestination,
+    /// Does a bitwise XOR operation on the source and destination pixels (src XOR dst).
+    RasterOp_SourceXorDestination,
+    /// Does a bitwise NOR operation on the source and destination pixels ((NOT src) AND (NOT dst)).
+    RasterOp_NotSourceAndNotDestination,
+    /// Does a bitwise NAND operation on the source and destination pixels ((NOT src) OR (NOT dst)).
+    RasterOp_NotSourceOrNotDestination,
+    /// Does a bitwise operation where the source pixels are inverted and then XOR'ed with the destination ((NOT src) XOR dst).
+    RasterOp_NotSourceXorDestination,
+    /// Does a bitwise operation where the source pixels are inverted (NOT src).
+    RasterOp_NotSource,
+    /// Does a bitwise operation where the source is inverted and then AND'ed with the destination ((NOT src) AND dst).
+    RasterOp_NotSourceAndDestination,
+    /// Does a bitwise operation where the source is AND'ed with the inverted destination pixels (src AND (NOT dst)).
+    RasterOp_SourceAndNotDestination,
+    /// Does a bitwise operation where the source is inverted and then OR'ed with the destination ((NOT src) OR dst).
+    RasterOp_NotSourceOrDestination,
+    /// Does a bitwise operation where the source is OR'ed with the inverted destination pixels (src OR (NOT dst)).
+    RasterOp_SourceOrNotDestination,
+    /// The pixels in the destination are cleared (set to 0) independent of the source.
+    RasterOp_ClearDestination,
+    /// The pixels in the destination are set (set to 1) independent of the source.
+    RasterOp_SetDestination,
+    /// Does a bitwise operation where the destination pixels are inverted (NOT dst).
+    RasterOp_NotDestination,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -51,29 +51,19 @@
 /// This can be disabled by setting the environment variable
 /// `QT_HIGHDPI_DISABLE_2X_IMAGE_LOADING.`
 /// 
-/// **See also:** QImageWriter
-/// QImageIOHandler
-/// QImageIOPlugin
-/// QMimeDatabase
-/// **See also:** QImage::devicePixelRatio()
-/// QPixmap::devicePixelRatio()
-/// QIcon
-/// QPainter::drawPixmap()
-/// QPainter::drawImage()
-/// Qt::AA_UseHighDpiPixmaps
+/// **See also:** [`ImageWriter`]
+/// [`ImageIOHandler`]
+/// [`ImageIOPlugin`]
+/// [`MimeDatabase`]
+/// **See also:** [`Image::device_pixel_ratio`]
+/// [`Pixmap::device_pixel_ratio`]
+/// [`Icon`]
+/// [`Painter::draw_pixmap`]
+/// [`Painter::draw_image`]
+/// [`t::aa_use_high_dpi_pixmaps()`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QImageReader)]
-enum ImageReaderError {
-    UnknownError,
-    FileNotFoundError,
-    DeviceError,
-    UnsupportedFormatError,
-    InvalidDataError,
-}
-
-
 struct ImageReader {
     /// 
     /// Sets the format QImageReader will use when reading images, to *format.* *format* is a case insensitive text string. Example:
@@ -81,7 +71,7 @@ struct ImageReader {
     /// You can call supportedImageFormats() for the full list of formats
     /// QImageReader supports.
     /// 
-    /// **See also:** format()
+    /// **See also:** [`format()`]
     set_format(format: &ByteArrayType),
     /// 
     /// Returns the format QImageReader uses for reading images.
@@ -93,8 +83,8 @@ struct ImageReader {
     /// image there, or the image has already been read), or if the format is
     /// unsupported, this function returns an empty QByteArray().
     /// 
-    /// **See also:** setFormat()
-    /// supportedImageFormats()
+    /// **See also:** [`set_format()`]
+    /// [`supported_image_formats()`]
     format() -> ByteArray,
     /// 
     /// If *enabled* is true, image format autodetection is enabled; otherwise,
@@ -117,14 +107,14 @@ struct ImageReader {
     /// plugins and built-in handlers based on the format string (i.e., no file
     /// name extensions are tested).
     /// 
-    /// **See also:** QImageIOHandler::canRead()
-    /// QImageIOPlugin::capabilities()
+    /// **See also:** [`ImageIOHandler::can_read`]
+    /// [`ImageIOPlugin::capabilities`]
     set_auto_detect_image_format(enabled: bool),
     /// 
     /// Returns `true` if image format autodetection is enabled on this image
     /// reader; otherwise returns `false.` By default, autodetection is enabled.
     /// 
-    /// **See also:** setAutoDetectImageFormat()
+    /// **See also:** [`set_auto_detect_image_format()`]
     auto_detect_image_format() -> bool,
     /// 
     /// If *ignored* is set to true, then the image reader will ignore
@@ -137,14 +127,14 @@ struct ImageReader {
     /// 
     /// This also disables auto detecting the image format.
     /// 
-    /// **See also:** decideFormatFromContent()
+    /// **See also:** [`decide_format_from_content()`]
     set_decide_format_from_content(ignored: bool),
     /// 
     /// Returns whether the image reader should decide which plugin to use
     /// only based on the contents of the datastream rather than on the file
     /// extension.
     /// 
-    /// **See also:** setDecideFormatFromContent()
+    /// **See also:** [`set_decide_format_from_content()`]
     decide_format_from_content() -> bool,
     /// 
     /// Sets QImageReader's device to *device.* If a device has already
@@ -158,8 +148,8 @@ struct ImageReader {
     /// QProcess, QTcpSocket and QUdpSocket, where more logic is required
     /// to open the device.
     /// 
-    /// **See also:** device()
-    /// setFileName()
+    /// **See also:** [`device()`]
+    /// [`set_file_name()`]
     set_device(device: *IODeviceType),
     /// 
     /// Returns the device currently assigned to QImageReader, or 0 if no
@@ -174,9 +164,9 @@ struct ImageReader {
     /// QImageReader will cycle through all supported extensions until it finds
     /// a matching file.
     /// 
-    /// **See also:** fileName()
-    /// setDevice()
-    /// supportedImageFormats()
+    /// **See also:** [`file_name()`]
+    /// [`set_device()`]
+    /// [`supported_image_formats()`]
     set_file_name(file_name: String),
     /// 
     /// If the currently assigned device is a QFile, or if setFileName()
@@ -185,8 +175,8 @@ struct ImageReader {
     /// assigned or the device is not a QFile), an empty QString is
     /// returned.
     /// 
-    /// **See also:** setFileName()
-    /// setDevice()
+    /// **See also:** [`set_file_name()`]
+    /// [`set_device()`]
     file_name() -> String,
     /// 
     /// Returns the size of the image, without actually reading the image
@@ -196,9 +186,9 @@ struct ImageReader {
     /// an invalid size. Qt's built-in image handlers all support this feature,
     /// but custom image format plugins are not required to do so.
     /// 
-    /// **See also:** QImageIOHandler::ImageOption
-    /// QImageIOHandler::option()
-    /// QImageIOHandler::supportsOption()
+    /// **See also:** [`ImageIOHandler::image_option()`]
+    /// [`ImageIOHandler::option`]
+    /// [`ImageIOHandler::supports_option`]
     size() -> Size,
     /// 
     /// Returns the format of the image, without actually reading the image
@@ -209,9 +199,9 @@ struct ImageReader {
     /// If the image format does not support this feature, this function returns
     /// an invalid format.
     /// 
-    /// **See also:** QImageIOHandler::ImageOption
-    /// QImageIOHandler::option()
-    /// QImageIOHandler::supportsOption()
+    /// **See also:** [`ImageIOHandler::image_option()`]
+    /// [`ImageIOHandler::option`]
+    /// [`ImageIOHandler::supports_option`]
     /// 
     /// If supported, this function returns the image format of the file
     /// *fileName.* Otherwise, an empty string is returned.
@@ -219,7 +209,7 @@ struct ImageReader {
     /// If supported, this function returns the image format of the device
     /// *device.* Otherwise, an empty string is returned.
     /// 
-    /// **See also:** QImageReader::autoDetectImageFormat()
+    /// **See also:** [`ImageReader::auto_detect_image_format`]
     image_format() -> Image::Format,
     /// 
     /// Returns the text keys for this image. You can use
@@ -229,9 +219,9 @@ struct ImageReader {
     /// Support for this option is implemented through
     /// QImageIOHandler::Description.
     /// 
-    /// **See also:** text()
-    /// QImageWriter::setText()
-    /// QImage::textKeys()
+    /// **See also:** [`text()`]
+    /// [`ImageWriter::set_text`]
+    /// [`Image::text_keys`]
     text_keys() -> [String],
     /// 
     /// Returns the text keys for this image. You can use
@@ -241,33 +231,33 @@ struct ImageReader {
     /// Support for this option is implemented through
     /// QImageIOHandler::Description.
     /// 
-    /// **See also:** text()
-    /// QImageWriter::setText()
-    /// QImage::textKeys()
+    /// **See also:** [`text()`]
+    /// [`ImageWriter::set_text`]
+    /// [`Image::text_keys`]
     /// 
     /// Returns the image text associated with *key.*
     /// 
     /// Support for this option is implemented through
     /// QImageIOHandler::Description.
     /// 
-    /// **See also:** textKeys()
-    /// QImageWriter::setText()
+    /// **See also:** [`text_keys()`]
+    /// [`ImageWriter::set_text`]
     text(key: String) -> String,
     /// 
     /// Sets the image clip rect (also known as the ROI, or Region Of
     /// Interest) to *rect.* The coordinates of *rect* are relative to
     /// the untransformed image size, as returned by size().
     /// 
-    /// **See also:** clipRect()
-    /// setScaledSize()
-    /// setScaledClipRect()
+    /// **See also:** [`clip_rect()`]
+    /// [`set_scaled_size()`]
+    /// [`set_scaled_clip_rect()`]
     set_clip_rect(rect: &RectType),
     /// 
     /// Returns the clip rect (also known as the ROI, or Region Of
     /// Interest) of the image. If no clip rect has been set, an invalid
     /// QRect is returned.
     /// 
-    /// **See also:** setClipRect()
+    /// **See also:** [`set_clip_rect()`]
     clip_rect() -> Rect,
     /// 
     /// Sets the scaled size of the image to *size.* The scaling is
@@ -277,14 +267,14 @@ struct ImageReader {
     /// support scaling), QImageReader will use QImage::scale() with
     /// Qt::SmoothScaling.
     /// 
-    /// **See also:** scaledSize()
-    /// setClipRect()
-    /// setScaledClipRect()
+    /// **See also:** [`scaled_size()`]
+    /// [`set_clip_rect()`]
+    /// [`set_scaled_clip_rect()`]
     set_scaled_size(size: &SizeType),
     /// 
     /// Returns the scaled size of the image.
     /// 
-    /// **See also:** setScaledSize()
+    /// **See also:** [`set_scaled_size()`]
     scaled_size() -> Size,
     /// 
     /// Sets the quality setting of the image format to *quality.*
@@ -302,62 +292,62 @@ struct ImageReader {
     /// the format supports a quality range from 0 (low visual quality) to
     /// 100 (high visual quality).
     /// 
-    /// **See also:** quality() setScaledSize()
+    /// **See also:** [`quality_set_scaled_size()`]
     set_quality(quality: i32),
     /// 
     /// Returns the quality setting of the image format.
     /// 
-    /// **See also:** setQuality()
+    /// **See also:** [`set_quality()`]
     quality() -> i32,
     /// 
     /// Sets the scaled clip rect to *rect.* The scaled clip rect is the
     /// clip rect (also known as ROI, or Region Of Interest) that is
     /// applied after the image has been scaled.
     /// 
-    /// **See also:** scaledClipRect()
-    /// setScaledSize()
+    /// **See also:** [`scaled_clip_rect()`]
+    /// [`set_scaled_size()`]
     set_scaled_clip_rect(rect: &RectType),
     /// 
     /// Returns the scaled clip rect of the image.
     /// 
-    /// **See also:** setScaledClipRect()
+    /// **See also:** [`set_scaled_clip_rect()`]
     scaled_clip_rect() -> Rect,
     /// 
     /// Sets the background color to *color.*
     /// Image formats that support this operation are expected to
     /// initialize the background to *color* before reading an image.
     /// 
-    /// **See also:** backgroundColor()
-    /// read()
+    /// **See also:** [`background_color()`]
+    /// [`read()`]
     set_background_color(color: &ColorType),
     /// 
     /// Returns the background color that's used when reading an image.
     /// If the image format does not support setting the background color
     /// an invalid color is returned.
     /// 
-    /// **See also:** setBackgroundColor()
-    /// read()
+    /// **See also:** [`set_background_color()`]
+    /// [`read()`]
     background_color() -> Color,
     /// 
     /// Returns `true` if the image format supports animation;
     /// otherwise, false is returned.
     /// 
-    /// **See also:** QMovie::supportedFormats()
+    /// **See also:** [`Movie::supported_formats`]
     supports_animation() -> bool,
     /// 
     /// Determines that images returned by read() should have transformation metadata automatically
     /// applied if *enabled* is `true.`
     /// 
-    /// **See also:** autoTransform()
-    /// transformation()
-    /// read()
+    /// **See also:** [`auto_transform()`]
+    /// [`transformation()`]
+    /// [`read()`]
     set_auto_transform(enabled: bool),
     /// 
     /// Returns `true` if the image handler will apply transformation metadata on read().
     /// 
-    /// **See also:** setAutoTransform()
-    /// transformation()
-    /// read()
+    /// **See also:** [`set_auto_transform()`]
+    /// [`transformation()`]
+    /// [`read()`]
     auto_transform() -> bool,
     /// 
     /// This is an image format specific function that forces images with
@@ -366,14 +356,14 @@ struct ImageReader {
     /// 
     /// To gamma correct to a standard PC color-space, set gamma to `1/2.2.`
     /// 
-    /// **See also:** gamma()
+    /// **See also:** [`gamma()`]
     set_gamma(gamma: f32),
     /// 
     /// Returns the gamma level of the decoded image. If setGamma() has been
     /// called and gamma correction is supported it will return the gamma set.
     /// If gamma level is not supported by the image format, `0.0` is returned.
     /// 
-    /// **See also:** setGamma()
+    /// **See also:** [`set_gamma()`]
     gamma() -> f32,
     /// 
     /// Returns the subtype of the image.
@@ -396,9 +386,9 @@ struct ImageReader {
     /// For images that support animation, canRead() returns `false` when
     /// all frames have been read.
     /// 
-    /// **See also:** read()
-    /// supportedImageFormats()
-    /// QMimeDatabase
+    /// **See also:** [`read()`]
+    /// [`supported_image_formats()`]
+    /// [`MimeDatabase`]
     can_read() -> bool,
     /// 
     /// Reads an image from the device. On success, the image that was
@@ -410,10 +400,10 @@ struct ImageReader {
     /// repeatedly will return the next frame. When all frames have been
     /// read, a null image will be returned.
     /// 
-    /// **See also:** canRead()
-    /// supportedImageFormats()
-    /// supportsAnimation()
-    /// QMovie
+    /// **See also:** [`can_read()`]
+    /// [`supported_image_formats()`]
+    /// [`supports_animation()`]
+    /// [`Movie`]
     /// 
     /// **Overloads**
     /// Reads an image from the device into *image,* which must point to a
@@ -429,10 +419,10 @@ struct ImageReader {
     /// return the next frame. When all frames have been read, a null image will
     /// be returned.
     /// 
-    /// **See also:** canRead()
-    /// supportedImageFormats()
-    /// supportsAnimation()
-    /// QMovie
+    /// **See also:** [`can_read()`]
+    /// [`supported_image_formats()`]
+    /// [`supports_animation()`]
+    /// [`Movie`]
     read() -> Image,
     /// 
     /// Reads an image from the device. On success, the image that was
@@ -444,10 +434,10 @@ struct ImageReader {
     /// repeatedly will return the next frame. When all frames have been
     /// read, a null image will be returned.
     /// 
-    /// **See also:** canRead()
-    /// supportedImageFormats()
-    /// supportsAnimation()
-    /// QMovie
+    /// **See also:** [`can_read()`]
+    /// [`supported_image_formats()`]
+    /// [`supports_animation()`]
+    /// [`Movie`]
     /// 
     /// **Overloads**
     /// Reads an image from the device into *image,* which must point to a
@@ -463,11 +453,12 @@ struct ImageReader {
     /// return the next frame. When all frames have been read, a null image will
     /// be returned.
     /// 
-    /// **See also:** canRead()
-    /// supportedImageFormats()
-    /// supportsAnimation()
-    /// QMovie
-    read(image: *ImageType) -> bool,
+    /// **See also:** [`can_read()`]
+    /// [`supported_image_formats()`]
+    /// [`supports_animation()`]
+    /// [`Movie`]
+    [org_name(read)]
+    read_2(image: *ImageType) -> bool,
     /// 
     /// For image formats that support animation, this function steps over the
     /// current image, returning true if successful or false if there is no
@@ -477,8 +468,8 @@ struct ImageReader {
     /// image, but the image handler may have a more efficient way of implementing
     /// this operation.
     /// 
-    /// **See also:** jumpToImage()
-    /// QImageIOHandler::jumpToNextImage()
+    /// **See also:** [`jump_to_image()`]
+    /// [`ImageIOHandler::jump_to_next_image`]
     jump_to_next_image() -> bool,
     /// 
     /// For image formats that support animation, this function skips to the image
@@ -487,8 +478,8 @@ struct ImageReader {
     /// 
     /// The next call to read() will attempt to read this image.
     /// 
-    /// **See also:** jumpToNextImage()
-    /// QImageIOHandler::jumpToImage()
+    /// **See also:** [`jump_to_next_image()`]
+    /// [`ImageIOHandler::jump_to_image`]
     jump_to_image(image_number: i32) -> bool,
     /// 
     /// For image formats that support animation, this function returns the number
@@ -496,9 +487,9 @@ struct ImageReader {
     /// either mean the animation should loop forever, or that an error occurred.
     /// If an error occurred, canRead() will return false.
     /// 
-    /// **See also:** supportsAnimation()
-    /// QImageIOHandler::loopCount()
-    /// canRead()
+    /// **See also:** [`supports_animation()`]
+    /// [`ImageIOHandler::loop_count`]
+    /// [`can_read()`]
     loop_count() -> i32,
     /// 
     /// For image formats that support animation, this function returns the total
@@ -507,9 +498,9 @@ struct ImageReader {
     /// 
     /// This function returns -1 if an error occurred.
     /// 
-    /// **See also:** supportsAnimation()
-    /// QImageIOHandler::imageCount()
-    /// canRead()
+    /// **See also:** [`supports_animation()`]
+    /// [`ImageIOHandler::image_count`]
+    /// [`can_read()`]
     image_count() -> i32,
     /// 
     /// For image formats that support animation, this function returns the number
@@ -518,9 +509,9 @@ struct ImageReader {
     /// 
     /// This function returns -1 if an error occurred.
     /// 
-    /// **See also:** supportsAnimation()
-    /// QImageIOHandler::nextImageDelay()
-    /// canRead()
+    /// **See also:** [`supports_animation()`]
+    /// [`ImageIOHandler::next_image_delay`]
+    /// [`can_read()`]
     next_image_delay() -> i32,
     /// 
     /// For image formats that support animation, this function returns the
@@ -529,27 +520,27 @@ struct ImageReader {
     /// 
     /// This function returns -1 if an error occurred.
     /// 
-    /// **See also:** supportsAnimation()
-    /// QImageIOHandler::currentImageNumber()
-    /// canRead()
+    /// **See also:** [`supports_animation()`]
+    /// [`ImageIOHandler::current_image_number`]
+    /// [`can_read()`]
     current_image_number() -> i32,
     /// 
     /// For image formats that support animation, this function returns
     /// the rect for the current frame. Otherwise, a null rect is returned.
     /// 
-    /// **See also:** supportsAnimation()
-    /// QImageIOHandler::currentImageRect()
+    /// **See also:** [`supports_animation()`]
+    /// [`ImageIOHandler::current_image_rect`]
     current_image_rect() -> Rect,
     /// 
     /// Returns the type of error that occurred last.
     /// 
     /// **See also:** ImageReaderError
-    /// errorString()
+    /// [`error_string()`]
     /// 
     /// Returns a human readable description of the last error that
     /// occurred.
     /// 
-    /// **See also:** error()
+    /// **See also:** [`error()`]
     error() -> ImageReader::ImageReaderError,
     /// 
     /// Returns `true` if the reader supports *option;* otherwise returns
@@ -561,7 +552,7 @@ struct ImageReader {
     /// (see text()), and the BMP format allows you to determine the image's size
     /// without loading the whole image into memory (see size()).
     /// 
-    /// **See also:** QImageWriter::supportsOption()
+    /// **See also:** [`ImageWriter::supports_option`]
     supports_option(option: ImageIOHandler::ImageOption) -> bool,
     /// 
     /// Returns the format of the image, without actually reading the image
@@ -572,9 +563,9 @@ struct ImageReader {
     /// If the image format does not support this feature, this function returns
     /// an invalid format.
     /// 
-    /// **See also:** QImageIOHandler::ImageOption
-    /// QImageIOHandler::option()
-    /// QImageIOHandler::supportsOption()
+    /// **See also:** [`ImageIOHandler::image_option()`]
+    /// [`ImageIOHandler::option`]
+    /// [`ImageIOHandler::supports_option`]
     /// 
     /// If supported, this function returns the image format of the file
     /// *fileName.* Otherwise, an empty string is returned.
@@ -582,8 +573,9 @@ struct ImageReader {
     /// If supported, this function returns the image format of the device
     /// *device.* Otherwise, an empty string is returned.
     /// 
-    /// **See also:** QImageReader::autoDetectImageFormat()
-    [static] image_format(file_name: String) -> ByteArray,
+    /// **See also:** [`ImageReader::auto_detect_image_format`]
+    [org_name(imageFormat)]
+    [static] image_format_2(file_name: String) -> ByteArray,
     /// 
     /// Returns the format of the image, without actually reading the image
     /// contents. The format describes the image format [QImageReader::read()](QImageReader::read())
@@ -593,9 +585,9 @@ struct ImageReader {
     /// If the image format does not support this feature, this function returns
     /// an invalid format.
     /// 
-    /// **See also:** QImageIOHandler::ImageOption
-    /// QImageIOHandler::option()
-    /// QImageIOHandler::supportsOption()
+    /// **See also:** [`ImageIOHandler::image_option()`]
+    /// [`ImageIOHandler::option`]
+    /// [`ImageIOHandler::supports_option`]
     /// 
     /// If supported, this function returns the image format of the file
     /// *fileName.* Otherwise, an empty string is returned.
@@ -603,8 +595,9 @@ struct ImageReader {
     /// If supported, this function returns the image format of the device
     /// *device.* Otherwise, an empty string is returned.
     /// 
-    /// **See also:** QImageReader::autoDetectImageFormat()
-    [static] image_format(device: *IODeviceType) -> ByteArray,
+    /// **See also:** [`ImageReader::auto_detect_image_format`]
+    [org_name(imageFormat)]
+    [static] image_format_3(device: *IODeviceType) -> ByteArray,
     /// 
     /// Returns the list of image formats supported by QImageReader.
     /// 
@@ -652,9 +645,9 @@ struct ImageReader {
     /// Note that the QApplication instance must be created before this function is
     /// called.
     /// 
-    /// **See also:** setFormat()
-    /// QImageWriter::supportedImageFormats()
-    /// QImageIOPlugin
+    /// **See also:** [`set_format()`]
+    /// [`ImageWriter::supported_image_formats`]
+    /// [`ImageIOPlugin`]
     [static] supported_image_formats() -> [ByteArray],
     /// 
     /// Returns the list of MIME types supported by QImageReader.
@@ -662,9 +655,23 @@ struct ImageReader {
     /// Note that the QApplication instance must be created before this function is
     /// called.
     /// 
-    /// **See also:** supportedImageFormats()
-    /// QImageWriter::supportedMimeTypes()
+    /// **See also:** [`supported_image_formats()`]
+    /// [`ImageWriter::supported_mime_types`]
     [static] supported_mime_types() -> [ByteArray],
+}
+
+[org_name(QImageReader)]
+enum ImageReaderError {
+    /// An unknown error occurred. If you get this value after calling read(), it is most likely caused by a bug in QImageReader.
+    UnknownError,
+    /// QImageReader was used with a file name, but not file was found with that name. This can also happen if the file name contained no extension, and the file with the correct extension is not supported by Qt.
+    FileNotFoundError,
+    /// QImageReader encountered a device error when reading the image. You can consult your particular device for more details on what went wrong.
+    DeviceError,
+    /// Qt does not support the requested image format.
+    UnsupportedFormatError,
+    /// The image data was invalid, and QImageReader was unable to read an image from it. The can happen if the image file is damaged.
+    InvalidDataError,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

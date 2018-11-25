@@ -6,7 +6,7 @@ struct AccessibleBridgePlugin : Object {
     /// Creates and returns the QAccessibleBridge object corresponding to
     /// the given *key.* Keys are case sensitive.
     /// 
-    /// **See also:** keys()
+    /// **See also:** [`keys()`]
     [event] create(key: String) -> AccessibleBridge?,
 }
 

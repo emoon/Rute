@@ -43,8 +43,8 @@
 /// **Note**:
 /// 
 /// **See also:** {Model Classes}
-/// QAbstractItemModel
-/// QAbstractListModel
+/// [`AbstractItemModel`]
+/// [`AbstractListModel`]
 /// {Pixelator Example}
 /// # Licence
 ///
@@ -53,7 +53,7 @@ struct AbstractTableModel : AbstractItemModel {
     /// 
     /// Returns the index of the data in *row* and *column* with *parent.*
     /// 
-    /// **See also:** parent()
+    /// **See also:** [`parent()`]
     [event] index(row: i32, column: i32, parent: &ModelIndexType) -> ModelIndex,
     /// 
     [event] sibling(row: i32, column: i32, idx: &ModelIndexType) -> ModelIndex,

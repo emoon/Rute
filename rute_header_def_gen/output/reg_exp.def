@@ -469,32 +469,14 @@
 /// the position in the string where the match was made (or -1 if
 /// there was no match).
 /// 
-/// **See also:** QString
-/// QStringList
-/// QRegExpValidator
-/// QSortFilterProxyModel
+/// **See also:** [`String`]
+/// [`StringList`]
+/// [`RegExpValidator`]
+/// [`SortFilterProxyModel`]
 /// {tools/regexp}{Regular Expression Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QRegExp)]
-enum PatternSyntax {
-    RegExp,
-    Wildcard,
-    FixedString,
-    RegExp2,
-    WildcardUnix,
-    W3CXmlSchema11,
-}
-
-[org_name(QRegExp)]
-enum CaretMode {
-    CaretAtZero,
-    CaretAtOffset,
-    CaretWontMatch,
-}
-
-
 struct RegExp {
     /// 
     /// Swaps regular expression *other* with this regular
@@ -525,28 +507,28 @@ struct RegExp {
     /// of the wildcard flag, for example ***.html** is a valid
     /// wildcard regexp but an invalid full regexp.
     /// 
-    /// **See also:** errorString()
+    /// **See also:** [`error_string()`]
     is_valid() -> bool,
     /// 
     /// Returns the pattern string of the regular expression. The pattern
     /// has either regular expression syntax or wildcard syntax, depending
     /// on patternSyntax().
     /// 
-    /// **See also:** patternSyntax()
-    /// caseSensitivity()
+    /// **See also:** [`pattern_syntax()`]
+    /// [`case_sensitivity()`]
     /// 
     /// Returns the syntax used by the regular expression. The default is
     /// QRegExp::RegExp.
     /// 
-    /// **See also:** pattern()
-    /// caseSensitivity()
+    /// **See also:** [`pattern()`]
+    /// [`case_sensitivity()`]
     pattern() -> String,
     /// 
     /// Sets the pattern string to *pattern.* The case sensitivity,
     /// wildcard, and minimal matching options are not changed.
     /// 
-    /// **See also:** setPatternSyntax()
-    /// setCaseSensitivity()
+    /// **See also:** [`set_pattern_syntax()`]
+    /// [`set_case_sensitivity()`]
     /// 
     /// Sets the syntax mode for the regular expression. The default is
     /// QRegExp::RegExp.
@@ -561,17 +543,17 @@ struct RegExp {
     /// is interpreted as a plain string. Special characters (e.g.,
     /// backslash) don't need to be escaped then.
     /// 
-    /// **See also:** setPattern()
-    /// setCaseSensitivity()
-    /// escape()
+    /// **See also:** [`set_pattern()`]
+    /// [`set_case_sensitivity()`]
+    /// [`escape()`]
     set_pattern(pattern: String),
     /// 
     /// Returns Qt::CaseSensitive if the regexp is matched case
     /// sensitively; otherwise returns Qt::CaseInsensitive.
     /// 
-    /// **See also:** patternSyntax()
-    /// pattern()
-    /// isMinimal()
+    /// **See also:** [`pattern_syntax()`]
+    /// [`pattern()`]
+    /// [`is_minimal()`]
     case_sensitivity() -> Rute::CaseSensitivity,
     /// 
     /// Sets case sensitive matching to *cs.*
@@ -579,16 +561,16 @@ struct RegExp {
     /// If *cs* is Qt::CaseSensitive, **\\.txt$** matches
     /// `readme.txt` but not `README.TXT` .
     /// 
-    /// **See also:** setPatternSyntax()
-    /// setPattern()
-    /// setMinimal()
+    /// **See also:** [`set_pattern_syntax()`]
+    /// [`set_pattern()`]
+    /// [`set_minimal()`]
     set_case_sensitivity(cs: Rute::CaseSensitivity),
     /// 
     /// Returns the syntax used by the regular expression. The default is
     /// QRegExp::RegExp.
     /// 
-    /// **See also:** pattern()
-    /// caseSensitivity()
+    /// **See also:** [`pattern()`]
+    /// [`case_sensitivity()`]
     pattern_syntax() -> RegExp::PatternSyntax,
     /// 
     /// Sets the syntax mode for the regular expression. The default is
@@ -604,16 +586,16 @@ struct RegExp {
     /// is interpreted as a plain string. Special characters (e.g.,
     /// backslash) don't need to be escaped then.
     /// 
-    /// **See also:** setPattern()
-    /// setCaseSensitivity()
-    /// escape()
+    /// **See also:** [`set_pattern()`]
+    /// [`set_case_sensitivity()`]
+    /// [`escape()`]
     set_pattern_syntax(syntax: RegExp::PatternSyntax),
     /// 
     /// Returns `true` if minimal (non-greedy) matching is enabled;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** caseSensitivity()
-    /// setMinimal()
+    /// **See also:** [`case_sensitivity()`]
+    /// [`set_minimal()`]
     is_minimal() -> bool,
     /// 
     /// Enables or disables minimal matching. If *minimal* is false,
@@ -626,7 +608,7 @@ struct RegExp {
     /// **<b>[^<]*\</b>** instead, although this will still fail for
     /// nested tags.
     /// 
-    /// **See also:** setCaseSensitivity()
+    /// **See also:** [`set_case_sensitivity()`]
     set_minimal(minimal: bool),
     /// 
     /// Returns `true` if *str* is matched exactly by this regular
@@ -645,8 +627,8 @@ struct RegExp {
     /// Although const, this function sets matchedLength(),
     /// capturedTexts(), and pos().
     /// 
-    /// **See also:** indexIn()
-    /// lastIndexIn()
+    /// **See also:** [`index_in()`]
+    /// [`last_index_in()`]
     exact_match(str: String) -> bool,
     /// 
     /// Attempts to find a match in *str* from position *offset* (0 by
@@ -672,8 +654,8 @@ struct RegExp {
     /// and want to test a string against the whole wildcard expression,
     /// use exactMatch() instead of this function.
     /// 
-    /// **See also:** lastIndexIn()
-    /// exactMatch()
+    /// **See also:** [`last_index_in()`]
+    /// [`exact_match()`]
     index_in(str: String, offset: i32, caret_mode: RegExp::CaretMode) -> i32,
     /// 
     /// Attempts to find a match backwards in *str* from position *offset.* If *offset* is -1 (the default), the search starts at the
@@ -691,16 +673,16 @@ struct RegExp {
     /// **Warning**: Searching backwards is much slower than searching
     /// forwards.
     /// 
-    /// **See also:** indexIn()
-    /// exactMatch()
+    /// **See also:** [`index_in()`]
+    /// [`exact_match()`]
     last_index_in(str: String, offset: i32, caret_mode: RegExp::CaretMode) -> i32,
     /// 
     /// Returns the length of the last matched string, or -1 if there was
     /// no match.
     /// 
-    /// **See also:** exactMatch()
-    /// indexIn()
-    /// lastIndexIn()
+    /// **See also:** [`exact_match()`]
+    /// [`index_in()`]
+    /// [`last_index_in()`]
     matched_length() -> i32,
     /// 
     /// Returns the number of captures contained in the regular expression.
@@ -738,8 +720,8 @@ struct RegExp {
     /// capturedTexts()[2] is the text of the second and so on
     /// (corresponding to $1, $2, etc., in some other regexp languages).
     /// 
-    /// **See also:** cap()
-    /// pos()
+    /// **See also:** [`cap()`]
+    /// [`pos()`]
     captured_texts() -> [String],
     /// 
     /// Returns a list of the captured text strings.
@@ -774,9 +756,10 @@ struct RegExp {
     /// capturedTexts()[2] is the text of the second and so on
     /// (corresponding to $1, $2, etc., in some other regexp languages).
     /// 
-    /// **See also:** cap()
-    /// pos()
-    captured_texts() -> [String],
+    /// **See also:** [`cap()`]
+    /// [`pos()`]
+    [org_name(capturedTexts)]
+    captured_texts_2() -> [String],
     /// 
     /// Returns the number of captures contained in the regular expression.
     /// 
@@ -812,8 +795,8 @@ struct RegExp {
     /// capturedTexts()[2] is the text of the second and so on
     /// (corresponding to $1, $2, etc., in some other regexp languages).
     /// 
-    /// **See also:** cap()
-    /// pos()
+    /// **See also:** [`cap()`]
+    /// [`pos()`]
     /// 
     /// Returns the text captured by the *nth* subexpression. The entire
     /// match has index 0 and the parenthesized subexpressions have
@@ -825,8 +808,8 @@ struct RegExp {
     /// Thus cap(1) is the text of the first capturing parentheses, cap(2)
     /// is the text of the second, and so on.
     /// 
-    /// **See also:** capturedTexts()
-    /// pos()
+    /// **See also:** [`captured_texts()`]
+    /// [`pos()`]
     cap(nth: i32) -> String,
     /// 
     /// Returns the number of captures contained in the regular expression.
@@ -863,8 +846,8 @@ struct RegExp {
     /// capturedTexts()[2] is the text of the second and so on
     /// (corresponding to $1, $2, etc., in some other regexp languages).
     /// 
-    /// **See also:** cap()
-    /// pos()
+    /// **See also:** [`cap()`]
+    /// [`pos()`]
     /// 
     /// Returns the text captured by the *nth* subexpression. The entire
     /// match has index 0 and the parenthesized subexpressions have
@@ -876,9 +859,10 @@ struct RegExp {
     /// Thus cap(1) is the text of the first capturing parentheses, cap(2)
     /// is the text of the second, and so on.
     /// 
-    /// **See also:** capturedTexts()
-    /// pos()
-    cap(nth: i32) -> String,
+    /// **See also:** [`captured_texts()`]
+    /// [`pos()`]
+    [org_name(cap)]
+    cap_2(nth: i32) -> String,
     /// 
     /// Returns the position of the *nth* captured text in the searched
     /// string. If *nth* is 0 (the default), pos() returns the position
@@ -890,8 +874,8 @@ struct RegExp {
     /// cap(4) would return an empty string, pos(4) returns -1.) This is
     /// a feature of the implementation.
     /// 
-    /// **See also:** cap()
-    /// capturedTexts()
+    /// **See also:** [`cap()`]
+    /// [`captured_texts()`]
     pos(nth: i32) -> i32,
     /// 
     /// Returns the position of the *nth* captured text in the searched
@@ -904,9 +888,10 @@ struct RegExp {
     /// cap(4) would return an empty string, pos(4) returns -1.) This is
     /// a feature of the implementation.
     /// 
-    /// **See also:** cap()
-    /// capturedTexts()
-    pos(nth: i32) -> i32,
+    /// **See also:** [`cap()`]
+    /// [`captured_texts()`]
+    [org_name(pos)]
+    pos_2(nth: i32) -> i32,
     /// 
     /// Returns the string *str* with every regexp special character
     /// escaped with a backslash. The special characters are $, (,), *, +,
@@ -916,8 +901,36 @@ struct RegExp {
     /// 
     /// This function is useful to construct regexp patterns dynamically:
     /// 
-    /// **See also:** setPatternSyntax()
+    /// **See also:** [`set_pattern_syntax()`]
     [static] escape(str: String) -> String,
+}
+
+[org_name(QRegExp)]
+enum PatternSyntax {
+    /// A rich Perl-like pattern matching syntax. This is the default.
+    RegExp,
+    /// This provides a simple pattern matching syntax similar to that used by shells (command interpreters) for "file globbing". See [QRegExp wildcard matching](QRegExp%20wildcard%20matching)
+ .
+    Wildcard,
+    /// The pattern is a fixed string. This is equivalent to using the RegExp pattern on a string in which all metacharacters are escaped using escape().
+    FixedString,
+    /// Like RegExp, but with [greedy quantifiers](greedy%20quantifiers)
+ . (Introduced in Qt 4.2.)
+    RegExp2,
+    /// This is similar to Wildcard but with the behavior of a Unix shell. The wildcard characters can be escaped with the character "\\".
+    WildcardUnix,
+    /// The pattern is a regular expression as defined by the W3C XML Schema 1.1 specification.
+    W3CXmlSchema11,
+}
+
+[org_name(QRegExp)]
+enum CaretMode {
+    /// The caret corresponds to index 0 in the searched string.
+    CaretAtZero,
+    /// The caret corresponds to the start offset of the search.
+    CaretAtOffset,
+    /// The caret never matches.
+    CaretWontMatch,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

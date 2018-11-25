@@ -138,10 +138,10 @@
 /// **Note**: When using the native X11 graphics system, the pixmap
 /// becomes invalid when the QApplication instance is destroyed.
 /// 
-/// **See also:** QBitmap
-/// QImage
-/// QImageReader
-/// QImageWriter
+/// **See also:** [`Bitmap`]
+/// [`Image`]
+/// [`ImageReader`]
+/// [`ImageWriter`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -160,20 +160,20 @@ struct Pixmap : PaintDevice {
     /// 
     /// Returns the width of the pixmap.
     /// 
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
     width() -> i32,
     /// 
     /// Returns the height of the pixmap.
     /// 
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
     height() -> i32,
     /// 
     /// Returns the size of the pixmap.
     /// 
-    /// **See also:** width()
-    /// height()
+    /// **See also:** [`width()`]
+    /// [`height()`]
     /// {QPixmap#Pixmap Information}{Pixmap
     /// Information}
     size() -> Size,
@@ -188,7 +188,7 @@ struct Pixmap : PaintDevice {
     /// The pixmap depth is also called bits per pixel (bpp) or bit planes
     /// of a pixmap. A null pixmap has depth 0.
     /// 
-    /// **See also:** defaultDepth()
+    /// **See also:** [`default_depth()`]
     /// {QPixmap#Pixmap Information}{Pixmap
     /// Information}
     depth() -> i32,
@@ -199,8 +199,8 @@ struct Pixmap : PaintDevice {
     /// 
     /// **Note**: QGuiApplication must be created before calling this function.
     /// 
-    /// **See also:** depth()
-    /// QColormap::depth()
+    /// **See also:** [`depth()`]
+    /// [`Colormap::depth`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
     /// 
     [static] default_depth() -> i32,
@@ -227,7 +227,8 @@ struct Pixmap : PaintDevice {
     /// being painted on.
     /// 
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fill(device: *PaintDeviceType, ofs: &PointType),
+    [org_name(fill)]
+    fill_2(device: *PaintDeviceType, ofs: &PointType),
     /// 
     /// Use QPainter or the fill(QColor) overload instead.
     /// 
@@ -239,14 +240,15 @@ struct Pixmap : PaintDevice {
     /// being painted on.
     /// 
     /// **See also:** {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    fill(device: *PaintDeviceType, xofs: i32, yofs: i32),
+    [org_name(fill)]
+    fill_3(device: *PaintDeviceType, xofs: i32, yofs: i32),
     /// 
     /// Extracts a bitmap mask from the pixmap's alpha channel.
     /// 
     /// **Warning**: This is potentially an expensive operation. The mask of
     /// the pixmap is extracted dynamically from the pixeldata.
     /// 
-    /// **See also:** setMask()
+    /// **See also:** [`set_mask()`]
     /// {QPixmap#Pixmap Information}{Pixmap Information}
     mask() -> Bitmap,
     /// 
@@ -263,9 +265,9 @@ struct Pixmap : PaintDevice {
     /// 
     /// **Warning**: This is potentially an expensive operation.
     /// 
-    /// **See also:** mask()
+    /// **See also:** [`mask()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap Transformations}
-    /// QBitmap
+    /// [`Bitmap`]
     set_mask(arg0: &BitmapType),
     /// 
     /// Returns the device pixel ratio for the pixmap. This is the
@@ -276,8 +278,8 @@ struct Pixmap : PaintDevice {
     /// 
     /// The default value is 1.0.
     /// 
-    /// **See also:** setDevicePixelRatio()
-    /// QImageReader
+    /// **See also:** [`set_device_pixel_ratio()`]
+    /// [`ImageReader`]
     device_pixel_ratio() -> f32,
     /// 
     /// Sets the device pixel ratio for the pixmap. This is the
@@ -299,25 +301,25 @@ struct Pixmap : PaintDevice {
     /// (see [Drawing High Resolution Versions of Pixmaps and Images](Drawing%20High%20Resolution%20Versions%20of%20Pixmaps%20and%20Images)
     /// ).
     /// 
-    /// **See also:** devicePixelRatio()
+    /// **See also:** [`device_pixel_ratio()`]
     set_device_pixel_ratio(scale_factor: f32),
     /// 
     /// Returns `true` if this pixmap has an alpha channel, *or* has a
     /// mask, otherwise returns `false.`
     /// 
-    /// **See also:** hasAlphaChannel()
-    /// mask()
+    /// **See also:** [`has_alpha_channel()`]
+    /// [`mask()`]
     /// 
     /// Returns `true` if the pixmap has a format that respects the alpha
     /// channel, otherwise returns `false.`
     /// 
-    /// **See also:** hasAlpha()
+    /// **See also:** [`has_alpha()`]
     has_alpha() -> bool,
     /// 
     /// Returns `true` if the pixmap has a format that respects the alpha
     /// channel, otherwise returns `false.`
     /// 
-    /// **See also:** hasAlpha()
+    /// **See also:** [`has_alpha()`]
     has_alpha_channel() -> bool,
     /// 
     /// Creates and returns a heuristic mask for this pixmap.
@@ -334,8 +336,8 @@ struct Pixmap : PaintDevice {
     /// This function is slow because it involves converting to/from a
     /// QImage, and non-trivial computations.
     /// 
-    /// **See also:** QImage::createHeuristicMask()
-    /// createMaskFromColor()
+    /// **See also:** [`Image::create_heuristic_mask`]
+    /// [`create_mask_from_color()`]
     create_heuristic_mask(clip_tight: bool) -> Bitmap,
     /// 
     /// Creates and returns a mask for this pixmap based on the given *maskColor.* If the *mode* is Qt::MaskInColor, all pixels matching the
@@ -345,8 +347,8 @@ struct Pixmap : PaintDevice {
     /// This function is slow because it involves converting to/from a
     /// QImage.
     /// 
-    /// **See also:** createHeuristicMask()
-    /// QImage::createMaskFromColor()
+    /// **See also:** [`create_heuristic_mask()`]
+    /// [`Image::create_mask_from_color`]
     create_mask_from_color(mask_color: &ColorType, mode: Rute::MaskMode) -> Bitmap,
     /// 
     /// width, int height)
@@ -389,9 +391,9 @@ struct Pixmap : PaintDevice {
     /// platform plugins in which window system identifiers ( `WId)`
     /// are local to a screen. Use QScreen::grabWindow() instead.
     /// 
-    /// **See also:** grabWidget()
+    /// **See also:** [`grab_widget()`]
     /// {Screenshot Example}
-    /// **See also:** QScreen
+    /// **See also:** [`Screen`]
     [static] grab_window(arg0: WId, x: i32, y: i32, w: i32, h: i32) -> Pixmap,
     /// 
     /// Use QWidget::grab() instead.
@@ -402,7 +404,8 @@ struct Pixmap : PaintDevice {
     /// Use QWidget::grab() instead.
     /// 
     /// Use QWidget::grab() instead.
-    [static] grab_widget(widget: *ObjectType, x: i32, y: i32, w: i32, h: i32) -> Pixmap,
+    [org_name(grabWidget)]
+    [static] grab_widget_2(widget: *ObjectType, x: i32, y: i32, w: i32, h: i32) -> Pixmap,
     /// 
     /// Qt::AspectRatioMode aspectRatioMode, Qt::TransformationMode
     /// transformMode) const
@@ -434,7 +437,7 @@ struct Pixmap : PaintDevice {
     /// the case when the painter is for instance based on OpenGL or when
     /// the scale factor changes rapidly.
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     /// 
@@ -448,7 +451,7 @@ struct Pixmap : PaintDevice {
     /// 
     /// If *width* is 0 or negative, a null pixmap is returned.
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     /// 
@@ -461,7 +464,7 @@ struct Pixmap : PaintDevice {
     /// 
     /// If *height* is 0 or negative, a null pixmap is returned.
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     scaled(w: i32, h: i32, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Pixmap,
@@ -496,7 +499,7 @@ struct Pixmap : PaintDevice {
     /// the case when the painter is for instance based on OpenGL or when
     /// the scale factor changes rapidly.
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     /// 
@@ -510,7 +513,7 @@ struct Pixmap : PaintDevice {
     /// 
     /// If *width* is 0 or negative, a null pixmap is returned.
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     /// 
@@ -523,10 +526,11 @@ struct Pixmap : PaintDevice {
     /// 
     /// If *height* is 0 or negative, a null pixmap is returned.
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
-    scaled(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Pixmap,
+    [org_name(scaled)]
+    scaled_2(s: &SizeType, aspect_mode: Rute::AspectRatioMode, mode: Rute::TransformationMode) -> Pixmap,
     /// 
     /// mode) const
     /// 
@@ -537,7 +541,7 @@ struct Pixmap : PaintDevice {
     /// 
     /// If *width* is 0 or negative, a null pixmap is returned.
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     scaled_to_width(w: i32, mode: Rute::TransformationMode) -> Pixmap,
@@ -551,7 +555,7 @@ struct Pixmap : PaintDevice {
     /// 
     /// If *height* is 0 or negative, a null pixmap is returned.
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// {QPixmap#Pixmap Transformations}{Pixmap
     /// Transformations}
     scaled_to_height(h: i32, mode: Rute::TransformationMode) -> Pixmap,
@@ -569,7 +573,7 @@ struct Pixmap : PaintDevice {
     /// Note that for the moment, alpha masks on monochrome images are
     /// ignored.
     /// 
-    /// **See also:** fromImage()
+    /// **See also:** [`from_image()`]
     /// {QImage#Image Formats}{Image Formats}
     to_image() -> Image,
     /// 
@@ -582,8 +586,8 @@ struct Pixmap : PaintDevice {
     /// the color table. If this is too expensive an operation, you can
     /// use QBitmap::fromImage() instead.
     /// 
-    /// **See also:** fromImageReader()
-    /// toImage()
+    /// **See also:** [`from_image_reader()`]
+    /// [`to_image()`]
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
     /// 
     /// **Overloads**
@@ -597,8 +601,8 @@ struct Pixmap : PaintDevice {
     /// On some systems, reading an image directly to QPixmap can use less memory than
     /// reading a QImage to convert it to QPixmap.
     /// 
-    /// **See also:** fromImage()
-    /// toImage()
+    /// **See also:** [`from_image()`]
+    /// [`to_image()`]
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
     [static] from_image(image: &ImageType, flags: Rute::ImageConversionFlags) -> Pixmap,
     /// 
@@ -610,8 +614,8 @@ struct Pixmap : PaintDevice {
     /// On some systems, reading an image directly to QPixmap can use less memory than
     /// reading a QImage to convert it to QPixmap.
     /// 
-    /// **See also:** fromImage()
-    /// toImage()
+    /// **See also:** [`from_image()`]
+    /// [`to_image()`]
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
     [static] from_image_reader(image_reader: *ImageReaderType, flags: Rute::ImageConversionFlags) -> Pixmap,
     /// 
@@ -624,8 +628,8 @@ struct Pixmap : PaintDevice {
     /// the color table. If this is too expensive an operation, you can
     /// use QBitmap::fromImage() instead.
     /// 
-    /// **See also:** fromImageReader()
-    /// toImage()
+    /// **See also:** [`from_image_reader()`]
+    /// [`to_image()`]
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
     /// 
     /// **Overloads**
@@ -639,10 +643,11 @@ struct Pixmap : PaintDevice {
     /// On some systems, reading an image directly to QPixmap can use less memory than
     /// reading a QImage to convert it to QPixmap.
     /// 
-    /// **See also:** fromImage()
-    /// toImage()
+    /// **See also:** [`from_image()`]
+    /// [`to_image()`]
     /// {QPixmap#Pixmap Conversion}{Pixmap Conversion}
-    [static] from_image(image: &ImageType, flags: Rute::ImageConversionFlags) -> Pixmap,
+    [org_name(fromImage)]
+    [static] from_image_2(image: &ImageType, flags: Rute::ImageConversionFlags) -> Pixmap,
     /// 
     /// Loads a pixmap from the file with the given *fileName.* Returns
     /// true if the pixmap was successfully loaded; otherwise invalidates
@@ -666,7 +671,7 @@ struct Pixmap : PaintDevice {
     /// when loaded from a file; the key used is internal and can not
     /// be acquired.
     /// 
-    /// **See also:** loadFromData()
+    /// **See also:** [`load_from_data()`]
     /// {QPixmap#Reading and Writing Image
     /// Files}{Reading and Writing Image Files}
     /// 
@@ -680,7 +685,7 @@ struct Pixmap : PaintDevice {
     /// result (e.g. converting from 32-bit to 8-bit), use the *flags* to
     /// control the conversion.
     /// 
-    /// **See also:** load()
+    /// **See also:** [`load()`]
     /// {QPixmap#Reading and Writing Image Files}{Reading and
     /// Writing Image Files}
     /// 
@@ -698,7 +703,7 @@ struct Pixmap : PaintDevice {
     /// result (e.g. converting from 32-bit to 8-bit), use the *flags* to
     /// control the conversion.
     /// 
-    /// **See also:** load()
+    /// **See also:** [`load()`]
     /// {QPixmap#Reading and Writing Image Files}{Reading and
     /// Writing Image Files}
     /// 
@@ -716,13 +721,14 @@ struct Pixmap : PaintDevice {
     /// result (e.g. converting from 32-bit to 8-bit), use the *flags* to
     /// control the conversion.
     /// 
-    /// **See also:** load()
+    /// **See also:** [`load()`]
     /// {QPixmap#Reading and Writing Image Files}{Reading and
     /// Writing Image Files}
     /// 
     /// **Overloads**
     /// Loads a pixmap from the binary *data* using the specified *format* and conversion *flags.*
-    load_from_data(data: &ByteArrayType, format: *char, flags: Rute::ImageConversionFlags) -> bool,
+    [org_name(loadFromData)]
+    load_from_data_2(data: &ByteArrayType, format: *char, flags: Rute::ImageConversionFlags) -> bool,
     /// 
     /// Saves the pixmap to the file with the given *fileName* using the
     /// specified image file *format* and *quality* factor. Returns `true`
@@ -764,7 +770,8 @@ struct Pixmap : PaintDevice {
     /// specified image file *format* and *quality* factor. This can be
     /// used, for example, to save a pixmap directly into a QByteArray:
     /// 
-    save(device: *IODeviceType, format: *char, quality: i32) -> bool,
+    [org_name(save)]
+    save_2(device: *IODeviceType, format: *char, quality: i32) -> bool,
     /// 
     /// Replaces this pixmap's data with the given *image* using the
     /// specified *flags* to control the conversion. The *flags*
@@ -777,7 +784,7 @@ struct Pixmap : PaintDevice {
     /// It has been promoted to official API status in 4.7 to support updating
     /// the pixmap's image without creating a new QPixmap as fromImage() would.
     /// 
-    /// **See also:** fromImage()
+    /// **See also:** [`from_image()`]
     convert_from_image(img: &ImageType, flags: Rute::ImageConversionFlags) -> bool,
     /// 
     /// **Overloads**
@@ -791,8 +798,8 @@ struct Pixmap : PaintDevice {
     /// 
     /// If the given *rectangle* is empty, the whole image is copied.
     /// 
-    /// **See also:** operator=()
-    /// QPixmap()
+    /// **See also:** [`operator()`]
+    /// [`q_pixmap()`]
     /// {QPixmap#Pixmap
     /// Transformations}{Pixmap Transformations}
     copy(x: i32, y: i32, width: i32, height: i32) -> Pixmap,
@@ -808,17 +815,18 @@ struct Pixmap : PaintDevice {
     /// 
     /// If the given *rectangle* is empty, the whole image is copied.
     /// 
-    /// **See also:** operator=()
-    /// QPixmap()
+    /// **See also:** [`operator()`]
+    /// [`q_pixmap()`]
     /// {QPixmap#Pixmap
     /// Transformations}{Pixmap Transformations}
-    copy(rect: &RectType) -> Pixmap,
+    [org_name(copy)]
+    copy_2(rect: &RectType) -> Pixmap,
     /// 
     /// This convenience function is equivalent to calling QPixmap::scroll( *dx,*
     /// *dy,* QRect( *x,* *y,* *width,* *height),* *exposed).*
     /// 
-    /// **See also:** QWidget::scroll()
-    /// QGraphicsItem::scroll()
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
     /// 
     /// Scrolls the area *rect* of this pixmap by ( *dx,* *dy).* The exposed
     /// region is left unchanged. You can optionally pass a pointer to an empty
@@ -826,15 +834,15 @@ struct Pixmap : PaintDevice {
     /// 
     /// You cannot scroll while there is an active painter on the pixmap.
     /// 
-    /// **See also:** QWidget::scroll()
-    /// QGraphicsItem::scroll()
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
     scroll(dx: i32, dy: i32, x: i32, y: i32, width: i32, height: i32, exposed: *RegionType),
     /// 
     /// This convenience function is equivalent to calling QPixmap::scroll( *dx,*
     /// *dy,* QRect( *x,* *y,* *width,* *height),* *exposed).*
     /// 
-    /// **See also:** QWidget::scroll()
-    /// QGraphicsItem::scroll()
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
     /// 
     /// Scrolls the area *rect* of this pixmap by ( *dx,* *dy).* The exposed
     /// region is left unchanged. You can optionally pass a pointer to an empty
@@ -842,9 +850,10 @@ struct Pixmap : PaintDevice {
     /// 
     /// You cannot scroll while there is an active painter on the pixmap.
     /// 
-    /// **See also:** QWidget::scroll()
-    /// QGraphicsItem::scroll()
-    scroll(dx: i32, dy: i32, rect: &RectType, exposed: *RegionType),
+    /// **See also:** [`Widget::scroll`]
+    /// [`GraphicsItem::scroll`]
+    [org_name(scroll)]
+    scroll_2(dx: i32, dy: i32, rect: &RectType, exposed: *RegionType),
     /// 
     /// Returns a number that identifies this QPixmap. Distinct QPixmap
     /// objects can only have the same cache key if they refer to the same

@@ -11,47 +11,35 @@
 /// * data()
 /// * constData()
 /// 
-/// **See also:** QVector3D
-/// QGenericMatrix
+/// **See also:** [`Vector3D`]
+/// [`GenericMatrix`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QMatrix4x4)]
-enum Matrix4x4FixMeEnums {
-    Identity,
-    Translation,
-    Scale,
-    Rotation2D,
-    Rotation,
-    Perspective,
-    General,
-}
-
-
 struct Matrix4x4 {
     /// 
     /// Returns the elements of column *index* as a 4D vector.
     /// 
-    /// **See also:** setColumn()
-    /// row()
+    /// **See also:** [`set_column()`]
+    /// [`row()`]
     column(index: i32) -> Vector4D,
     /// 
     /// Sets the elements of column *index* to the components of *value.*
     /// 
-    /// **See also:** column()
-    /// setRow()
+    /// **See also:** [`column()`]
+    /// [`set_row()`]
     set_column(index: i32, value: &Vector4DType),
     /// 
     /// Returns the elements of row *index* as a 4D vector.
     /// 
-    /// **See also:** setRow()
-    /// column()
+    /// **See also:** [`set_row()`]
+    /// [`column()`]
     row(index: i32) -> Vector4D,
     /// 
     /// Sets the elements of row *index* to the components of *value.*
     /// 
-    /// **See also:** row()
-    /// setColumn()
+    /// **See also:** [`row()`]
+    /// [`set_column()`]
     set_row(index: i32, value: &Vector4DType),
     /// 
     /// Returns `true` if this matrix is affine matrix; false otherwise.
@@ -59,17 +47,17 @@ struct Matrix4x4 {
     /// An affine matrix is a 4x4 matrix with row 3 equal to (0, 0, 0, 1),
     /// e.g. no projective coefficients.
     /// 
-    /// **See also:** isIdentity()
+    /// **See also:** [`is_identity()`]
     is_affine() -> bool,
     /// 
     /// Returns `true` if this matrix is the identity; false otherwise.
     /// 
-    /// **See also:** setToIdentity()
+    /// **See also:** [`set_to_identity()`]
     is_identity() -> bool,
     /// 
     /// Sets this matrix to the identity.
     /// 
-    /// **See also:** isIdentity()
+    /// **See also:** [`is_identity()`]
     set_to_identity(),
     /// 
     /// Fills all elements of this matrx with *value.*
@@ -87,211 +75,216 @@ struct Matrix4x4 {
     /// matrix, then this function will quickly invert the matrix
     /// using optimized routines.
     /// 
-    /// **See also:** determinant()
-    /// normalMatrix()
+    /// **See also:** [`determinant()`]
+    /// [`normal_matrix()`]
     inverted(invertible: *bool) -> Matrix4x4,
     /// 
     /// Multiplies this matrix by another that scales coordinates by
     /// the components of *vector.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that scales coordinates by the
     /// components *x,* and *y.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that scales coordinates by the
     /// components *x,* *y,* and *z.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that scales coordinates by the
     /// given *factor.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     scale(vector: &Vector3DType),
     /// 
     /// Multiples this matrix by another that rotates coordinates through
     /// *angle* degrees about *vector.*
     /// 
-    /// **See also:** scale()
-    /// translate()
+    /// **See also:** [`scale()`]
+    /// [`translate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that rotates coordinates through
     /// *angle* degrees about the vector ( *x,* *y,* *z).*
     /// 
-    /// **See also:** scale()
-    /// translate()
+    /// **See also:** [`scale()`]
+    /// [`translate()`]
     /// 
     /// Multiples this matrix by another that rotates coordinates according
     /// to a specified *quaternion.* The *quaternion* is assumed to have
     /// been normalized.
     /// 
-    /// **See also:** scale()
-    /// translate()
-    /// QQuaternion
+    /// **See also:** [`scale()`]
+    /// [`translate()`]
+    /// [`Quaternion`]
     rotate(angle: f32, vector: &Vector3DType),
     /// 
     /// Multiplies this matrix by another that scales coordinates by
     /// the components of *vector.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that scales coordinates by the
     /// components *x,* and *y.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that scales coordinates by the
     /// components *x,* *y,* and *z.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that scales coordinates by the
     /// given *factor.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
-    scale(x: f32, y: f32),
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
+    [org_name(scale)]
+    scale_2(x: f32, y: f32),
     /// 
     /// Multiplies this matrix by another that scales coordinates by
     /// the components of *vector.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that scales coordinates by the
     /// components *x,* and *y.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that scales coordinates by the
     /// components *x,* *y,* and *z.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that scales coordinates by the
     /// given *factor.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
-    scale(x: f32, y: f32, z: f32),
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
+    [org_name(scale)]
+    scale_3(x: f32, y: f32, z: f32),
     /// 
     /// Multiplies this matrix by another that scales coordinates by
     /// the components of *vector.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that scales coordinates by the
     /// components *x,* and *y.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that scales coordinates by the
     /// components *x,* *y,* and *z.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that scales coordinates by the
     /// given *factor.*
     /// 
-    /// **See also:** translate()
-    /// rotate()
-    scale(factor: f32),
+    /// **See also:** [`translate()`]
+    /// [`rotate()`]
+    [org_name(scale)]
+    scale_4(factor: f32),
     /// 
     /// Multiples this matrix by another that rotates coordinates through
     /// *angle* degrees about *vector.*
     /// 
-    /// **See also:** scale()
-    /// translate()
+    /// **See also:** [`scale()`]
+    /// [`translate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that rotates coordinates through
     /// *angle* degrees about the vector ( *x,* *y,* *z).*
     /// 
-    /// **See also:** scale()
-    /// translate()
+    /// **See also:** [`scale()`]
+    /// [`translate()`]
     /// 
     /// Multiples this matrix by another that rotates coordinates according
     /// to a specified *quaternion.* The *quaternion* is assumed to have
     /// been normalized.
     /// 
-    /// **See also:** scale()
-    /// translate()
-    /// QQuaternion
-    rotate(angle: f32, x: f32, y: f32, z: f32),
+    /// **See also:** [`scale()`]
+    /// [`translate()`]
+    /// [`Quaternion`]
+    [org_name(rotate)]
+    rotate_2(angle: f32, x: f32, y: f32, z: f32),
     /// 
     /// Multiples this matrix by another that rotates coordinates through
     /// *angle* degrees about *vector.*
     /// 
-    /// **See also:** scale()
-    /// translate()
+    /// **See also:** [`scale()`]
+    /// [`translate()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that rotates coordinates through
     /// *angle* degrees about the vector ( *x,* *y,* *z).*
     /// 
-    /// **See also:** scale()
-    /// translate()
+    /// **See also:** [`scale()`]
+    /// [`translate()`]
     /// 
     /// Multiples this matrix by another that rotates coordinates according
     /// to a specified *quaternion.* The *quaternion* is assumed to have
     /// been normalized.
     /// 
-    /// **See also:** scale()
-    /// translate()
-    /// QQuaternion
-    rotate(quaternion: &QuaternionType),
+    /// **See also:** [`scale()`]
+    /// [`translate()`]
+    /// [`Quaternion`]
+    [org_name(rotate)]
+    rotate_3(quaternion: &QuaternionType),
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that applies an orthographic
     /// projection for a window with boundaries specified by *rect.*
     /// The near and far clipping planes will be -1 and 1 respectively.
     /// 
-    /// **See also:** frustum()
-    /// perspective()
+    /// **See also:** [`frustum()`]
+    /// [`perspective()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that applies an orthographic
     /// projection for a window with boundaries specified by *rect.*
     /// The near and far clipping planes will be -1 and 1 respectively.
     /// 
-    /// **See also:** frustum()
-    /// perspective()
+    /// **See also:** [`frustum()`]
+    /// [`perspective()`]
     /// 
     /// Multiplies this matrix by another that applies an orthographic
     /// projection for a window with lower-left corner ( *left,* *bottom),*
     /// upper-right corner ( *right,* *top),* and the specified *nearPlane*
     /// and *farPlane* clipping planes.
     /// 
-    /// **See also:** frustum()
-    /// perspective()
+    /// **See also:** [`frustum()`]
+    /// [`perspective()`]
     ortho(rect: &RectType),
     /// 
     /// **Overloads**
@@ -299,58 +292,60 @@ struct Matrix4x4 {
     /// projection for a window with boundaries specified by *rect.*
     /// The near and far clipping planes will be -1 and 1 respectively.
     /// 
-    /// **See also:** frustum()
-    /// perspective()
+    /// **See also:** [`frustum()`]
+    /// [`perspective()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that applies an orthographic
     /// projection for a window with boundaries specified by *rect.*
     /// The near and far clipping planes will be -1 and 1 respectively.
     /// 
-    /// **See also:** frustum()
-    /// perspective()
+    /// **See also:** [`frustum()`]
+    /// [`perspective()`]
     /// 
     /// Multiplies this matrix by another that applies an orthographic
     /// projection for a window with lower-left corner ( *left,* *bottom),*
     /// upper-right corner ( *right,* *top),* and the specified *nearPlane*
     /// and *farPlane* clipping planes.
     /// 
-    /// **See also:** frustum()
-    /// perspective()
-    ortho(rect: &RectFType),
+    /// **See also:** [`frustum()`]
+    /// [`perspective()`]
+    [org_name(ortho)]
+    ortho_2(rect: &RectFType),
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that applies an orthographic
     /// projection for a window with boundaries specified by *rect.*
     /// The near and far clipping planes will be -1 and 1 respectively.
     /// 
-    /// **See also:** frustum()
-    /// perspective()
+    /// **See also:** [`frustum()`]
+    /// [`perspective()`]
     /// 
     /// **Overloads**
     /// Multiplies this matrix by another that applies an orthographic
     /// projection for a window with boundaries specified by *rect.*
     /// The near and far clipping planes will be -1 and 1 respectively.
     /// 
-    /// **See also:** frustum()
-    /// perspective()
+    /// **See also:** [`frustum()`]
+    /// [`perspective()`]
     /// 
     /// Multiplies this matrix by another that applies an orthographic
     /// projection for a window with lower-left corner ( *left,* *bottom),*
     /// upper-right corner ( *right,* *top),* and the specified *nearPlane*
     /// and *farPlane* clipping planes.
     /// 
-    /// **See also:** frustum()
-    /// perspective()
-    ortho(left: f32, right: f32, bottom: f32, top: f32, near_plane: f32, far_plane: f32),
+    /// **See also:** [`frustum()`]
+    /// [`perspective()`]
+    [org_name(ortho)]
+    ortho_3(left: f32, right: f32, bottom: f32, top: f32, near_plane: f32, far_plane: f32),
     /// 
     /// Multiplies this matrix by another that applies a perspective
     /// frustum projection for a window with lower-left corner ( *left,* *bottom),*
     /// upper-right corner ( *right,* *top),* and the specified *nearPlane*
     /// and *farPlane* clipping planes.
     /// 
-    /// **See also:** ortho()
-    /// perspective()
+    /// **See also:** [`ortho()`]
+    /// [`perspective()`]
     frustum(left: f32, right: f32, bottom: f32, top: f32, near_plane: f32, far_plane: f32),
     /// 
     /// Multiplies this matrix by another that applies a perspective
@@ -360,8 +355,8 @@ struct Matrix4x4 {
     /// The projection will have the specified *nearPlane* and *farPlane* clipping
     /// planes which are the distances from the viewer to the corresponding planes.
     /// 
-    /// **See also:** ortho()
-    /// frustum()
+    /// **See also:** [`ortho()`]
+    /// [`frustum()`]
     perspective(vertical_angle: f32, aspect_ratio: f32, near_plane: f32, far_plane: f32),
     /// 
     /// Multiplies this matrix by a viewing matrix derived from an eye
@@ -401,14 +396,15 @@ struct Matrix4x4 {
     /// 
     /// This matches the transform used by the fixed function OpenGL viewport
     /// transform controlled by the functions glViewport() and glDepthRange().
-    viewport(left: f32, bottom: f32, width: f32, height: f32, near_plane: f32, far_plane: f32),
+    [org_name(viewport)]
+    viewport_2(left: f32, bottom: f32, width: f32, height: f32, near_plane: f32, far_plane: f32),
     /// 
     /// Flips between right-handed and left-handed coordinate systems
     /// by multiplying the y and z co-ordinates by -1. This is normally
     /// used to create a left-handed orthographic view without scaling
     /// the viewport as ortho() does.
     /// 
-    /// **See also:** ortho()
+    /// **See also:** [`ortho()`]
     flip_coordinates(),
     /// 
     /// Retrieves the 16 items in this matrix and copies them to *values*
@@ -419,7 +415,7 @@ struct Matrix4x4 {
     /// corresponds to this matrix. It is assumed that this matrix
     /// only contains 2D affine transformation elements.
     /// 
-    /// **See also:** toTransform()
+    /// **See also:** [`to_transform()`]
     to_affine() -> Matrix,
     /// 
     /// Returns the conventional Qt 2D transformation matrix that
@@ -430,7 +426,7 @@ struct Matrix4x4 {
     /// for implementing orthographic projections where the z co-ordinate
     /// should be dropped rather than projected.
     /// 
-    /// **See also:** toAffine()
+    /// **See also:** [`to_affine()`]
     /// 
     /// Returns the conventional Qt 2D transformation matrix that
     /// corresponds to this matrix.
@@ -446,7 +442,7 @@ struct Matrix4x4 {
     /// orthographic projections where the z co-ordinate should
     /// be dropped rather than projected.
     /// 
-    /// **See also:** toAffine()
+    /// **See also:** [`to_affine()`]
     to_transform() -> Transform,
     /// 
     /// Returns the conventional Qt 2D transformation matrix that
@@ -457,7 +453,7 @@ struct Matrix4x4 {
     /// for implementing orthographic projections where the z co-ordinate
     /// should be dropped rather than projected.
     /// 
-    /// **See also:** toAffine()
+    /// **See also:** [`to_affine()`]
     /// 
     /// Returns the conventional Qt 2D transformation matrix that
     /// corresponds to this matrix.
@@ -473,181 +469,185 @@ struct Matrix4x4 {
     /// orthographic projections where the z co-ordinate should
     /// be dropped rather than projected.
     /// 
-    /// **See also:** toAffine()
-    to_transform(distance_to_plane: f32) -> Transform,
+    /// **See also:** [`to_affine()`]
+    [org_name(toTransform)]
+    to_transform_2(distance_to_plane: f32) -> Transform,
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
+    /// **See also:** [`map_rect()`]
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
+    /// **See also:** [`map_rect()`]
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
-    /// mapVector()
+    /// **See also:** [`map_rect()`]
+    /// [`map_vector()`]
     /// 
     /// Maps *vector* by multiplying the top 3x3 portion of this matrix
     /// by *vector.* The translation and projection components of
     /// this matrix are ignored.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
+    /// **See also:** [`map_rect()`]
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
     /// of *rect* and then forming a new rectangle from the results.
     /// The returned rectangle will be an ordinary 2D rectangle
     /// with sides parallel to the horizontal and vertical axes.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
     /// of *rect* and then forming a new rectangle from the results.
     /// The returned rectangle will be an ordinary 2D rectangle
     /// with sides parallel to the horizontal and vertical axes.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     map(point: &PointType) -> Point,
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
+    /// **See also:** [`map_rect()`]
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
+    /// **See also:** [`map_rect()`]
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
-    /// mapVector()
+    /// **See also:** [`map_rect()`]
+    /// [`map_vector()`]
     /// 
     /// Maps *vector* by multiplying the top 3x3 portion of this matrix
     /// by *vector.* The translation and projection components of
     /// this matrix are ignored.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
+    /// **See also:** [`map_rect()`]
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
     /// of *rect* and then forming a new rectangle from the results.
     /// The returned rectangle will be an ordinary 2D rectangle
     /// with sides parallel to the horizontal and vertical axes.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
     /// of *rect* and then forming a new rectangle from the results.
     /// The returned rectangle will be an ordinary 2D rectangle
     /// with sides parallel to the horizontal and vertical axes.
     /// 
-    /// **See also:** map()
-    map(point: &PointFType) -> PointF,
+    /// **See also:** [`map()`]
+    [org_name(map)]
+    map_2(point: &PointFType) -> PointF,
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
+    /// **See also:** [`map_rect()`]
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
+    /// **See also:** [`map_rect()`]
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
-    /// mapVector()
+    /// **See also:** [`map_rect()`]
+    /// [`map_vector()`]
     /// 
     /// Maps *vector* by multiplying the top 3x3 portion of this matrix
     /// by *vector.* The translation and projection components of
     /// this matrix are ignored.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
+    /// **See also:** [`map_rect()`]
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
     /// of *rect* and then forming a new rectangle from the results.
     /// The returned rectangle will be an ordinary 2D rectangle
     /// with sides parallel to the horizontal and vertical axes.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
     /// of *rect* and then forming a new rectangle from the results.
     /// The returned rectangle will be an ordinary 2D rectangle
     /// with sides parallel to the horizontal and vertical axes.
     /// 
-    /// **See also:** map()
-    map(point: &Vector3DType) -> Vector3D,
+    /// **See also:** [`map()`]
+    [org_name(map)]
+    map_3(point: &Vector3DType) -> Vector3D,
     /// 
     /// Maps *vector* by multiplying the top 3x3 portion of this matrix
     /// by *vector.* The translation and projection components of
     /// this matrix are ignored.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     map_vector(vector: &Vector3DType) -> Vector3D,
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
+    /// **See also:** [`map_rect()`]
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
+    /// **See also:** [`map_rect()`]
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
-    /// mapVector()
+    /// **See also:** [`map_rect()`]
+    /// [`map_vector()`]
     /// 
     /// Maps *vector* by multiplying the top 3x3 portion of this matrix
     /// by *vector.* The translation and projection components of
     /// this matrix are ignored.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     /// 
     /// Maps *point* by multiplying this matrix by *point.*
     /// 
-    /// **See also:** mapRect()
+    /// **See also:** [`map_rect()`]
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
     /// of *rect* and then forming a new rectangle from the results.
     /// The returned rectangle will be an ordinary 2D rectangle
     /// with sides parallel to the horizontal and vertical axes.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
     /// of *rect* and then forming a new rectangle from the results.
     /// The returned rectangle will be an ordinary 2D rectangle
     /// with sides parallel to the horizontal and vertical axes.
     /// 
-    /// **See also:** map()
-    map(point: &Vector4DType) -> Vector4D,
+    /// **See also:** [`map()`]
+    [org_name(map)]
+    map_4(point: &Vector4DType) -> Vector4D,
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
     /// of *rect* and then forming a new rectangle from the results.
     /// The returned rectangle will be an ordinary 2D rectangle
     /// with sides parallel to the horizontal and vertical axes.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
     /// of *rect* and then forming a new rectangle from the results.
     /// The returned rectangle will be an ordinary 2D rectangle
     /// with sides parallel to the horizontal and vertical axes.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     map_rect(rect: &RectType) -> Rect,
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
@@ -655,42 +655,44 @@ struct Matrix4x4 {
     /// The returned rectangle will be an ordinary 2D rectangle
     /// with sides parallel to the horizontal and vertical axes.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     /// 
     /// Maps *rect* by multiplying this matrix by the corners
     /// of *rect* and then forming a new rectangle from the results.
     /// The returned rectangle will be an ordinary 2D rectangle
     /// with sides parallel to the horizontal and vertical axes.
     /// 
-    /// **See also:** map()
-    map_rect(rect: &RectFType) -> RectF,
+    /// **See also:** [`map()`]
+    [org_name(mapRect)]
+    map_rect_2(rect: &RectFType) -> RectF,
     /// 
     /// Returns a pointer to the raw data of this matrix.
     /// 
-    /// **See also:** constData()
-    /// optimize()
+    /// **See also:** [`const_data()`]
+    /// [`optimize()`]
     /// 
     /// Returns a constant pointer to the raw data of this matrix.
     /// This raw data is stored in column-major format.
     /// 
-    /// **See also:** constData()
+    /// **See also:** [`const_data()`]
     data() -> f32?,
     /// 
     /// Returns a pointer to the raw data of this matrix.
     /// 
-    /// **See also:** constData()
-    /// optimize()
+    /// **See also:** [`const_data()`]
+    /// [`optimize()`]
     /// 
     /// Returns a constant pointer to the raw data of this matrix.
     /// This raw data is stored in column-major format.
     /// 
-    /// **See also:** constData()
-    data() -> f32?,
+    /// **See also:** [`const_data()`]
+    [org_name(data)]
+    data_2() -> f32?,
     /// 
     /// Returns a constant pointer to the raw data of this matrix.
     /// This raw data is stored in column-major format.
     /// 
-    /// **See also:** data()
+    /// **See also:** [`data()`]
     const_data() -> f32?,
     /// 
     /// Optimize the usage of this matrix from its current elements.
@@ -711,9 +713,20 @@ struct Matrix4x4 {
     /// the elements appear to conform to one of the known optimized types.
     /// 
     /// **See also:** {QLoggingCategory::operator()}{operator()()}
-    /// data()
-    /// translate()
+    /// [`data()`]
+    /// [`translate()`]
     optimize(),
+}
+
+[org_name(QMatrix4x4)]
+enum Matrix4x4FixMeEnums {
+    Identity,
+    Translation,
+    Scale,
+    Rotation2D,
+    Rotation,
+    Perspective,
+    General,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

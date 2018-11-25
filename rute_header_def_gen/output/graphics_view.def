@@ -72,49 +72,12 @@
 /// 
 /// ![graphicsview-view.png](graphicsview-view.png)
 /// 
-/// **See also:** QGraphicsScene
-/// QGraphicsItem
-/// QGraphicsSceneEvent
+/// **See also:** [`GraphicsScene`]
+/// [`GraphicsItem`]
+/// [`GraphicsSceneEvent`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsView)]
-enum ViewportAnchor {
-    NoAnchor,
-    AnchorViewCenter,
-    AnchorUnderMouse,
-}
-
-[org_name(QGraphicsView)]
-enum CacheModeFlag {
-    CacheNone,
-    CacheBackground,
-}
-
-[org_name(QGraphicsView)]
-enum DragMode {
-    NoDrag,
-    ScrollHandDrag,
-    RubberBandDrag,
-}
-
-[org_name(QGraphicsView)]
-enum ViewportUpdateMode {
-    FullViewportUpdate,
-    MinimalViewportUpdate,
-    SmartViewportUpdate,
-    NoViewportUpdate,
-    BoundingRectViewportUpdate,
-}
-
-[org_name(QGraphicsView)]
-enum OptimizationFlag {
-    DontClipPainter,
-    DontSavePainterState,
-    DontAdjustForAntialiasing,
-    IndirectPainting,
-}
-
 struct GraphicsView : AbstractScrollArea {
     /// 
     [event] size_hint() -> Size,
@@ -188,7 +151,7 @@ struct GraphicsView : AbstractScrollArea {
     /// 
     /// By default, no optimization flags are enabled.
     /// 
-    /// **See also:** setOptimizationFlag()
+    /// **See also:** [`set_optimization_flag()`]
     optimization_flags() -> GraphicsView::OptimizationFlags,
     /// 
     /// Enables *flag* if *enabled* is true; otherwise disables *flag.*
@@ -215,8 +178,8 @@ struct GraphicsView : AbstractScrollArea {
     /// intersects with or is contained by the rubber band are selected.
     /// 
     /// **See also:** dragMode
-    /// items()
-    /// rubberBandRect()
+    /// [`items()`]
+    /// [`rubber_band_rect()`]
     rubber_band_selection_mode() -> Rute::ItemSelectionMode,
     set_rubber_band_selection_mode(mode: Rute::ItemSelectionMode),
     /// 
@@ -228,7 +191,7 @@ struct GraphicsView : AbstractScrollArea {
     /// contain negative values.
     /// 
     /// **See also:** rubberBandSelectionMode
-    /// rubberBandChanged()
+    /// [`rubber_band_changed()`]
     rubber_band_rect() -> Rect,
     /// 
     /// QGraphicsView can cache pre-rendered content in a QPixmap, which is then
@@ -243,8 +206,8 @@ struct GraphicsView : AbstractScrollArea {
     /// 
     /// By default, nothing is cached.
     /// 
-    /// **See also:** resetCachedContent()
-    /// QPixmapCache
+    /// **See also:** [`reset_cached_content()`]
+    /// [`PixmapCache`]
     cache_mode() -> GraphicsView::CacheMode,
     set_cache_mode(mode: GraphicsView::CacheMode),
     /// 
@@ -259,7 +222,7 @@ struct GraphicsView : AbstractScrollArea {
     /// or QGraphicsView::drawBackground() to draw a custom background, and need
     /// to trigger a full redraw.
     /// 
-    /// **See also:** cacheMode()
+    /// **See also:** [`cache_mode()`]
     reset_cached_content(),
     is_interactive() -> bool,
     set_interactive(allowed: bool),
@@ -267,7 +230,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns a pointer to the scene that is currently visualized in the
     /// view. If no scene is currently visualized, 0 is returned.
     /// 
-    /// **See also:** setScene()
+    /// **See also:** [`set_scene()`]
     /// 
     /// The scene rectangle defines the extent of the scene, and in the view's case,
     /// this means the area of the scene that you can navigate using the scroll
@@ -286,7 +249,7 @@ struct GraphicsView : AbstractScrollArea {
     /// By default, this property contains a rectangle at the origin with zero
     /// width and height.
     /// 
-    /// **See also:** QGraphicsScene::sceneRect
+    /// **See also:** [`GraphicsScene::scene_rect()`]
     scene() -> GraphicsScene?,
     /// 
     /// Sets the current scene to *scene.* If *scene* is already being
@@ -316,23 +279,24 @@ struct GraphicsView : AbstractScrollArea {
     /// By default, this property contains a rectangle at the origin with zero
     /// width and height.
     /// 
-    /// **See also:** QGraphicsScene::sceneRect
+    /// **See also:** [`GraphicsScene::scene_rect()`]
     scene_rect() -> RectF,
     set_scene_rect(rect: &RectFType),
-    set_scene_rect(x: f32, y: f32, w: f32, h: f32),
+    [org_name(setSceneRect)]
+    set_scene_rect_2(x: f32, y: f32, w: f32, h: f32),
     /// 
     /// Returns a matrix that maps scene coordinates to viewport coordinates.
     /// 
-    /// **See also:** mapToScene()
-    /// mapFromScene()
+    /// **See also:** [`map_to_scene()`]
+    /// [`map_from_scene()`]
     viewport_transform() -> Transform,
     /// 
     /// Returns `true` if the view is transformed (i.e., a non-identity transform
     /// has been assigned, or the scrollbars are adjusted).
     /// 
-    /// **See also:** setTransform()
-    /// horizontalScrollBar()
-    /// verticalScrollBar()
+    /// **See also:** [`set_transform()`]
+    /// [`horizontal_scroll_bar()`]
+    /// [`vertical_scroll_bar()`]
     is_transformed() -> bool,
     /// 
     /// Sets the view's current transformation matrix to *matrix.*
@@ -356,44 +320,44 @@ struct GraphicsView : AbstractScrollArea {
     /// a view coordiate to a floating point scene coordinate, or mapFromScene()
     /// to map from floating point scene coordinates to view coordinates.
     /// 
-    /// **See also:** transform()
-    /// rotate()
-    /// scale()
-    /// shear()
-    /// translate()
+    /// **See also:** [`transform()`]
+    /// [`rotate()`]
+    /// [`scale()`]
+    /// [`shear()`]
+    /// [`translate()`]
     set_transform(matrix: &TransformType, combine: bool),
     /// 
     /// Resets the view transformation to the identity matrix.
     /// 
-    /// **See also:** transform()
-    /// setTransform()
+    /// **See also:** [`transform()`]
+    /// [`set_transform()`]
     reset_transform(),
     /// 
     /// Rotates the current view transformation *angle* degrees clockwise.
     /// 
-    /// **See also:** setTransform()
-    /// transform()
-    /// scale()
-    /// shear()
-    /// translate()
+    /// **See also:** [`set_transform()`]
+    /// [`transform()`]
+    /// [`scale()`]
+    /// [`shear()`]
+    /// [`translate()`]
     rotate(angle: f32),
     /// 
     /// Scales the current view transformation by ( *sx,* *sy).*
     /// 
-    /// **See also:** setTransform()
-    /// transform()
-    /// rotate()
-    /// shear()
-    /// translate()
+    /// **See also:** [`set_transform()`]
+    /// [`transform()`]
+    /// [`rotate()`]
+    /// [`shear()`]
+    /// [`translate()`]
     scale(sx: f32, sy: f32),
     /// 
     /// Shears the current view transformation by ( *sh,* *sv).*
     /// 
-    /// **See also:** setTransform()
-    /// transform()
-    /// rotate()
-    /// scale()
-    /// translate()
+    /// **See also:** [`set_transform()`]
+    /// [`transform()`]
+    /// [`rotate()`]
+    /// [`scale()`]
+    /// [`translate()`]
     shear(sh: f32, sv: f32),
     /// 
     /// Scrolls the contents of the viewport to ensure that the scene
@@ -405,7 +369,7 @@ struct GraphicsView : AbstractScrollArea {
     /// **Note**: If the item is close to or outside the border, it will be visible
     /// in the view, but not centered.
     /// 
-    /// **See also:** ensureVisible()
+    /// **See also:** [`ensure_visible()`]
     /// 
     /// **Overloads**
     /// This function is provided for convenience. It's equivalent to calling
@@ -415,7 +379,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Scrolls the contents of the viewport to ensure that *item*
     /// is centered in the view.
     /// 
-    /// **See also:** ensureVisible()
+    /// **See also:** [`ensure_visible()`]
     center_on(pos: &PointFType),
     /// 
     /// Scrolls the contents of the viewport to ensure that the scene
@@ -427,7 +391,7 @@ struct GraphicsView : AbstractScrollArea {
     /// **Note**: If the item is close to or outside the border, it will be visible
     /// in the view, but not centered.
     /// 
-    /// **See also:** ensureVisible()
+    /// **See also:** [`ensure_visible()`]
     /// 
     /// **Overloads**
     /// This function is provided for convenience. It's equivalent to calling
@@ -437,8 +401,9 @@ struct GraphicsView : AbstractScrollArea {
     /// Scrolls the contents of the viewport to ensure that *item*
     /// is centered in the view.
     /// 
-    /// **See also:** ensureVisible()
-    center_on(x: f32, y: f32),
+    /// **See also:** [`ensure_visible()`]
+    [org_name(centerOn)]
+    center_on_2(x: f32, y: f32),
     /// 
     /// Scrolls the contents of the viewport to ensure that the scene
     /// coordinate *pos,* is centered in the view.
@@ -449,7 +414,7 @@ struct GraphicsView : AbstractScrollArea {
     /// **Note**: If the item is close to or outside the border, it will be visible
     /// in the view, but not centered.
     /// 
-    /// **See also:** ensureVisible()
+    /// **See also:** [`ensure_visible()`]
     /// 
     /// **Overloads**
     /// This function is provided for convenience. It's equivalent to calling
@@ -459,15 +424,16 @@ struct GraphicsView : AbstractScrollArea {
     /// Scrolls the contents of the viewport to ensure that *item*
     /// is centered in the view.
     /// 
-    /// **See also:** ensureVisible()
-    center_on(item: *GraphicsItemType),
+    /// **See also:** [`ensure_visible()`]
+    [org_name(centerOn)]
+    center_on_3(item: *GraphicsItemType),
     /// 
     /// Scrolls the contents of the viewport so that the scene rectangle *rect*
     /// is visible, with margins specified in pixels by *xmargin* and *ymargin.* If the specified rect cannot be reached, the contents are
     /// scrolled to the nearest valid position. The default value for both margins
     /// is 50 pixels.
     /// 
-    /// **See also:** centerOn()
+    /// **See also:** [`center_on()`]
     /// 
     /// int xmargin, int ymargin)
     /// **Overloads**
@@ -480,7 +446,7 @@ struct GraphicsView : AbstractScrollArea {
     /// the specified point cannot be reached, the contents are scrolled to the
     /// nearest valid position. The default value for both margins is 50 pixels.
     /// 
-    /// **See also:** centerOn()
+    /// **See also:** [`center_on()`]
     ensure_visible(rect: &RectFType, xmargin: i32, ymargin: i32),
     /// 
     /// Scrolls the contents of the viewport so that the scene rectangle *rect*
@@ -488,7 +454,7 @@ struct GraphicsView : AbstractScrollArea {
     /// scrolled to the nearest valid position. The default value for both margins
     /// is 50 pixels.
     /// 
-    /// **See also:** centerOn()
+    /// **See also:** [`center_on()`]
     /// 
     /// int xmargin, int ymargin)
     /// **Overloads**
@@ -501,15 +467,16 @@ struct GraphicsView : AbstractScrollArea {
     /// the specified point cannot be reached, the contents are scrolled to the
     /// nearest valid position. The default value for both margins is 50 pixels.
     /// 
-    /// **See also:** centerOn()
-    ensure_visible(x: f32, y: f32, w: f32, h: f32, xmargin: i32, ymargin: i32),
+    /// **See also:** [`center_on()`]
+    [org_name(ensureVisible)]
+    ensure_visible_2(x: f32, y: f32, w: f32, h: f32, xmargin: i32, ymargin: i32),
     /// 
     /// Scrolls the contents of the viewport so that the scene rectangle *rect*
     /// is visible, with margins specified in pixels by *xmargin* and *ymargin.* If the specified rect cannot be reached, the contents are
     /// scrolled to the nearest valid position. The default value for both margins
     /// is 50 pixels.
     /// 
-    /// **See also:** centerOn()
+    /// **See also:** [`center_on()`]
     /// 
     /// int xmargin, int ymargin)
     /// **Overloads**
@@ -522,8 +489,9 @@ struct GraphicsView : AbstractScrollArea {
     /// the specified point cannot be reached, the contents are scrolled to the
     /// nearest valid position. The default value for both margins is 50 pixels.
     /// 
-    /// **See also:** centerOn()
-    ensure_visible(item: *GraphicsItemType, xmargin: i32, ymargin: i32),
+    /// **See also:** [`center_on()`]
+    [org_name(ensureVisible)]
+    ensure_visible_3(item: *GraphicsItemType, xmargin: i32, ymargin: i32),
     /// 
     /// Scales the view matrix and scrolls the scroll bars to ensure that the
     /// scene rectangle *rect* fits inside the viewport. *rect* must be inside
@@ -546,9 +514,9 @@ struct GraphicsView : AbstractScrollArea {
     /// If *rect* is empty, or if the viewport is too small, this
     /// function will do nothing.
     /// 
-    /// **See also:** setTransform()
-    /// ensureVisible()
-    /// centerOn()
+    /// **See also:** [`set_transform()`]
+    /// [`ensure_visible()`]
+    /// [`center_on()`]
     /// 
     /// Qt::AspectRatioMode aspectRatioMode = Qt::IgnoreAspectRatio)
     /// 
@@ -556,15 +524,15 @@ struct GraphicsView : AbstractScrollArea {
     /// This convenience function is equivalent to calling
     /// fitInView(QRectF( *x,* *y,* *w,* *h),* *aspectRatioMode).*
     /// 
-    /// **See also:** ensureVisible()
-    /// centerOn()
+    /// **See also:** [`ensure_visible()`]
+    /// [`center_on()`]
     /// 
     /// **Overloads**
     /// Ensures that *item* fits tightly inside the view, scaling the view
     /// according to *aspectRatioMode.*
     /// 
-    /// **See also:** ensureVisible()
-    /// centerOn()
+    /// **See also:** [`ensure_visible()`]
+    /// [`center_on()`]
     fit_in_view(rect: &RectFType, aspect_radio_mode: Rute::AspectRatioMode),
     /// 
     /// Scales the view matrix and scrolls the scroll bars to ensure that the
@@ -588,9 +556,9 @@ struct GraphicsView : AbstractScrollArea {
     /// If *rect* is empty, or if the viewport is too small, this
     /// function will do nothing.
     /// 
-    /// **See also:** setTransform()
-    /// ensureVisible()
-    /// centerOn()
+    /// **See also:** [`set_transform()`]
+    /// [`ensure_visible()`]
+    /// [`center_on()`]
     /// 
     /// Qt::AspectRatioMode aspectRatioMode = Qt::IgnoreAspectRatio)
     /// 
@@ -598,16 +566,17 @@ struct GraphicsView : AbstractScrollArea {
     /// This convenience function is equivalent to calling
     /// fitInView(QRectF( *x,* *y,* *w,* *h),* *aspectRatioMode).*
     /// 
-    /// **See also:** ensureVisible()
-    /// centerOn()
+    /// **See also:** [`ensure_visible()`]
+    /// [`center_on()`]
     /// 
     /// **Overloads**
     /// Ensures that *item* fits tightly inside the view, scaling the view
     /// according to *aspectRatioMode.*
     /// 
-    /// **See also:** ensureVisible()
-    /// centerOn()
-    fit_in_view(x: f32, y: f32, w: f32, h: f32, aspect_radio_mode: Rute::AspectRatioMode),
+    /// **See also:** [`ensure_visible()`]
+    /// [`center_on()`]
+    [org_name(fitInView)]
+    fit_in_view_2(x: f32, y: f32, w: f32, h: f32, aspect_radio_mode: Rute::AspectRatioMode),
     /// 
     /// Scales the view matrix and scrolls the scroll bars to ensure that the
     /// scene rectangle *rect* fits inside the viewport. *rect* must be inside
@@ -630,9 +599,9 @@ struct GraphicsView : AbstractScrollArea {
     /// If *rect* is empty, or if the viewport is too small, this
     /// function will do nothing.
     /// 
-    /// **See also:** setTransform()
-    /// ensureVisible()
-    /// centerOn()
+    /// **See also:** [`set_transform()`]
+    /// [`ensure_visible()`]
+    /// [`center_on()`]
     /// 
     /// Qt::AspectRatioMode aspectRatioMode = Qt::IgnoreAspectRatio)
     /// 
@@ -640,16 +609,17 @@ struct GraphicsView : AbstractScrollArea {
     /// This convenience function is equivalent to calling
     /// fitInView(QRectF( *x,* *y,* *w,* *h),* *aspectRatioMode).*
     /// 
-    /// **See also:** ensureVisible()
-    /// centerOn()
+    /// **See also:** [`ensure_visible()`]
+    /// [`center_on()`]
     /// 
     /// **Overloads**
     /// Ensures that *item* fits tightly inside the view, scaling the view
     /// according to *aspectRatioMode.*
     /// 
-    /// **See also:** ensureVisible()
-    /// centerOn()
-    fit_in_view(item: *GraphicsItemType, aspect_radio_mode: Rute::AspectRatioMode),
+    /// **See also:** [`ensure_visible()`]
+    /// [`center_on()`]
+    [org_name(fitInView)]
+    fit_in_view_3(item: *GraphicsItemType, aspect_radio_mode: Rute::AspectRatioMode),
     /// 
     /// These hints are
     /// used to initialize QPainter before each visible item is drawn. QPainter
@@ -674,14 +644,14 @@ struct GraphicsView : AbstractScrollArea {
     /// The source rect contents will be transformed according to *aspectRatioMode* to fit into the target rect. By default, the aspect ratio
     /// is kept, and *source* is scaled to fit in *target.*
     /// 
-    /// **See also:** QGraphicsScene::render()
+    /// **See also:** [`GraphicsScene::render`]
     render(painter: *PainterType, target: &RectFType, source: &RectType, aspect_ratio_mode: Rute::AspectRatioMode),
     /// 
     /// Returns a list of all the items in the associated scene, in descending
     /// stacking order (i.e., the first item in the returned list is the uppermost
     /// item).
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// Returns a list of all the items at the position *pos* in the view. The
@@ -692,7 +662,7 @@ struct GraphicsView : AbstractScrollArea {
     /// a subclass in QGraphicsView. *pos* is in untransformed viewport
     /// coordinates, just like QMouseEvent::pos().
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This function is provided for convenience. It's equivalent to calling
@@ -709,9 +679,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted in descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -727,9 +697,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted by descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -740,9 +710,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The default value for *mode* is Qt::IntersectsItemShape; all items whose
     /// exact shape intersects with or is contained by *path* are returned.
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     items() -> [GraphicsItem?],
     /// 
@@ -750,7 +720,7 @@ struct GraphicsView : AbstractScrollArea {
     /// stacking order (i.e., the first item in the returned list is the uppermost
     /// item).
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// Returns a list of all the items at the position *pos* in the view. The
@@ -761,7 +731,7 @@ struct GraphicsView : AbstractScrollArea {
     /// a subclass in QGraphicsView. *pos* is in untransformed viewport
     /// coordinates, just like QMouseEvent::pos().
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This function is provided for convenience. It's equivalent to calling
@@ -778,9 +748,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted in descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -796,9 +766,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted by descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -809,17 +779,18 @@ struct GraphicsView : AbstractScrollArea {
     /// The default value for *mode* is Qt::IntersectsItemShape; all items whose
     /// exact shape intersects with or is contained by *path* are returned.
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
-    items(pos: &PointType) -> [GraphicsItem?],
+    [org_name(items)]
+    items_2(pos: &PointType) -> [GraphicsItem?],
     /// 
     /// Returns a list of all the items in the associated scene, in descending
     /// stacking order (i.e., the first item in the returned list is the uppermost
     /// item).
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// Returns a list of all the items at the position *pos* in the view. The
@@ -830,7 +801,7 @@ struct GraphicsView : AbstractScrollArea {
     /// a subclass in QGraphicsView. *pos* is in untransformed viewport
     /// coordinates, just like QMouseEvent::pos().
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This function is provided for convenience. It's equivalent to calling
@@ -847,9 +818,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted in descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -865,9 +836,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted by descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -878,17 +849,18 @@ struct GraphicsView : AbstractScrollArea {
     /// The default value for *mode* is Qt::IntersectsItemShape; all items whose
     /// exact shape intersects with or is contained by *path* are returned.
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
-    items(x: i32, y: i32) -> [GraphicsItem?],
+    [org_name(items)]
+    items_3(x: i32, y: i32) -> [GraphicsItem?],
     /// 
     /// Returns a list of all the items in the associated scene, in descending
     /// stacking order (i.e., the first item in the returned list is the uppermost
     /// item).
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// Returns a list of all the items at the position *pos* in the view. The
@@ -899,7 +871,7 @@ struct GraphicsView : AbstractScrollArea {
     /// a subclass in QGraphicsView. *pos* is in untransformed viewport
     /// coordinates, just like QMouseEvent::pos().
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This function is provided for convenience. It's equivalent to calling
@@ -916,9 +888,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted in descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -934,9 +906,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted by descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -947,17 +919,18 @@ struct GraphicsView : AbstractScrollArea {
     /// The default value for *mode* is Qt::IntersectsItemShape; all items whose
     /// exact shape intersects with or is contained by *path* are returned.
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
-    items(rect: &RectType, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
+    [org_name(items)]
+    items_4(rect: &RectType, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
     /// 
     /// Returns a list of all the items in the associated scene, in descending
     /// stacking order (i.e., the first item in the returned list is the uppermost
     /// item).
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// Returns a list of all the items at the position *pos* in the view. The
@@ -968,7 +941,7 @@ struct GraphicsView : AbstractScrollArea {
     /// a subclass in QGraphicsView. *pos* is in untransformed viewport
     /// coordinates, just like QMouseEvent::pos().
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This function is provided for convenience. It's equivalent to calling
@@ -985,9 +958,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted in descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -1003,9 +976,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted by descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -1016,17 +989,18 @@ struct GraphicsView : AbstractScrollArea {
     /// The default value for *mode* is Qt::IntersectsItemShape; all items whose
     /// exact shape intersects with or is contained by *path* are returned.
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
-    items(x: i32, y: i32, w: i32, h: i32, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
+    [org_name(items)]
+    items_5(x: i32, y: i32, w: i32, h: i32, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
     /// 
     /// Returns a list of all the items in the associated scene, in descending
     /// stacking order (i.e., the first item in the returned list is the uppermost
     /// item).
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// Returns a list of all the items at the position *pos* in the view. The
@@ -1037,7 +1011,7 @@ struct GraphicsView : AbstractScrollArea {
     /// a subclass in QGraphicsView. *pos* is in untransformed viewport
     /// coordinates, just like QMouseEvent::pos().
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This function is provided for convenience. It's equivalent to calling
@@ -1054,9 +1028,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted in descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -1072,9 +1046,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted by descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -1085,17 +1059,18 @@ struct GraphicsView : AbstractScrollArea {
     /// The default value for *mode* is Qt::IntersectsItemShape; all items whose
     /// exact shape intersects with or is contained by *path* are returned.
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
-    items(polygon: &PolygonType, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
+    [org_name(items)]
+    items_6(polygon: &PolygonType, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
     /// 
     /// Returns a list of all the items in the associated scene, in descending
     /// stacking order (i.e., the first item in the returned list is the uppermost
     /// item).
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// Returns a list of all the items at the position *pos* in the view. The
@@ -1106,7 +1081,7 @@ struct GraphicsView : AbstractScrollArea {
     /// a subclass in QGraphicsView. *pos* is in untransformed viewport
     /// coordinates, just like QMouseEvent::pos().
     /// 
-    /// **See also:** QGraphicsScene::items()
+    /// **See also:** [`GraphicsScene::items`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This function is provided for convenience. It's equivalent to calling
@@ -1123,9 +1098,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted in descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// This convenience function is equivalent to calling items(QRectF( *x,* *y,* *w,* *h),* *mode).*
@@ -1141,9 +1116,9 @@ struct GraphicsView : AbstractScrollArea {
     /// The items are sorted by descending stacking order (i.e., the first item in
     /// the returned list is the uppermost item).
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -1154,11 +1129,12 @@ struct GraphicsView : AbstractScrollArea {
     /// The default value for *mode* is Qt::IntersectsItemShape; all items whose
     /// exact shape intersects with or is contained by *path* are returned.
     /// 
-    /// **See also:** itemAt()
-    /// items()
-    /// mapToScene()
+    /// **See also:** [`item_at()`]
+    /// [`items()`]
+    /// [`map_to_scene()`]
     /// {QGraphicsItem#Sorting}{Sorting}
-    items(path: &PainterPathType, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
+    [org_name(items)]
+    items_7(path: &PainterPathType, mode: Rute::ItemSelectionMode) -> [GraphicsItem?],
     /// 
     /// Returns the item at position *pos,* which is in viewport coordinates.
     /// If there are several items at this position, this function returns
@@ -1166,7 +1142,7 @@ struct GraphicsView : AbstractScrollArea {
     /// 
     /// Example:
     /// 
-    /// **See also:** items()
+    /// **See also:** [`items()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
@@ -1180,13 +1156,14 @@ struct GraphicsView : AbstractScrollArea {
     /// 
     /// Example:
     /// 
-    /// **See also:** items()
+    /// **See also:** [`items()`]
     /// {QGraphicsItem#Sorting}{Sorting}
     /// 
     /// **Overloads**
     /// This function is provided for convenience. It's equivalent to
     /// calling itemAt(QPoint( *x,* *y)).*
-    item_at(x: i32, y: i32) -> GraphicsItem?,
+    [org_name(itemAt)]
+    item_at_2(x: i32, y: i32) -> GraphicsItem?,
     /// 
     /// Returns the viewport coordinate *point* mapped to scene coordinates.
     /// 
@@ -1194,7 +1171,7 @@ struct GraphicsView : AbstractScrollArea {
     /// *point* instead of the point itself. To do this, you can call
     /// mapToScene(QRect( *point,* QSize(2, 2))).
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to calling
     /// mapToScene(QPoint( *x,* *y)).*
@@ -1202,7 +1179,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the viewport rectangle *rect* mapped to a scene coordinate
     /// polygon.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to calling
     /// mapToScene(QRect( *x,* *y,* *w,* *h)).*
@@ -1210,12 +1187,12 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the viewport polygon *polygon* mapped to a scene coordinate
     /// polygon.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// Returns the viewport painter path *path* mapped to a scene coordinate
     /// painter path.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     map_to_scene(point: &PointType) -> PointF,
     /// 
     /// Returns the viewport coordinate *point* mapped to scene coordinates.
@@ -1224,7 +1201,7 @@ struct GraphicsView : AbstractScrollArea {
     /// *point* instead of the point itself. To do this, you can call
     /// mapToScene(QRect( *point,* QSize(2, 2))).
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to calling
     /// mapToScene(QPoint( *x,* *y)).*
@@ -1232,7 +1209,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the viewport rectangle *rect* mapped to a scene coordinate
     /// polygon.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to calling
     /// mapToScene(QRect( *x,* *y,* *w,* *h)).*
@@ -1240,13 +1217,14 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the viewport polygon *polygon* mapped to a scene coordinate
     /// polygon.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// Returns the viewport painter path *path* mapped to a scene coordinate
     /// painter path.
     /// 
-    /// **See also:** mapFromScene()
-    map_to_scene(rect: &RectType) -> PolygonF,
+    /// **See also:** [`map_from_scene()`]
+    [org_name(mapToScene)]
+    map_to_scene_2(rect: &RectType) -> PolygonF,
     /// 
     /// Returns the viewport coordinate *point* mapped to scene coordinates.
     /// 
@@ -1254,7 +1232,7 @@ struct GraphicsView : AbstractScrollArea {
     /// *point* instead of the point itself. To do this, you can call
     /// mapToScene(QRect( *point,* QSize(2, 2))).
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to calling
     /// mapToScene(QPoint( *x,* *y)).*
@@ -1262,7 +1240,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the viewport rectangle *rect* mapped to a scene coordinate
     /// polygon.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to calling
     /// mapToScene(QRect( *x,* *y,* *w,* *h)).*
@@ -1270,13 +1248,14 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the viewport polygon *polygon* mapped to a scene coordinate
     /// polygon.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// Returns the viewport painter path *path* mapped to a scene coordinate
     /// painter path.
     /// 
-    /// **See also:** mapFromScene()
-    map_to_scene(polygon: &PolygonType) -> PolygonF,
+    /// **See also:** [`map_from_scene()`]
+    [org_name(mapToScene)]
+    map_to_scene_3(polygon: &PolygonType) -> PolygonF,
     /// 
     /// Returns the viewport coordinate *point* mapped to scene coordinates.
     /// 
@@ -1284,7 +1263,7 @@ struct GraphicsView : AbstractScrollArea {
     /// *point* instead of the point itself. To do this, you can call
     /// mapToScene(QRect( *point,* QSize(2, 2))).
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to calling
     /// mapToScene(QPoint( *x,* *y)).*
@@ -1292,7 +1271,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the viewport rectangle *rect* mapped to a scene coordinate
     /// polygon.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to calling
     /// mapToScene(QRect( *x,* *y,* *w,* *h)).*
@@ -1300,17 +1279,18 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the viewport polygon *polygon* mapped to a scene coordinate
     /// polygon.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// Returns the viewport painter path *path* mapped to a scene coordinate
     /// painter path.
     /// 
-    /// **See also:** mapFromScene()
-    map_to_scene(path: &PainterPathType) -> PainterPath,
+    /// **See also:** [`map_from_scene()`]
+    [org_name(mapToScene)]
+    map_to_scene_4(path: &PainterPathType) -> PainterPath,
     /// 
     /// Returns the scene coordinate *point* to viewport coordinates.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to
     /// calling mapFromScene(QPointF( *x,* *y)).*
@@ -1318,7 +1298,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the scene rectangle *rect* to a viewport coordinate
     /// polygon.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to
     /// calling mapFromScene(QRectF( *x,* *y,* *w,* *h)).*
@@ -1326,17 +1306,17 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the scene coordinate polygon *polygon* to a viewport coordinate
     /// polygon.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// Returns the scene coordinate painter path *path* to a viewport coordinate
     /// painter path.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     map_from_scene(point: &PointFType) -> Point,
     /// 
     /// Returns the scene coordinate *point* to viewport coordinates.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to
     /// calling mapFromScene(QPointF( *x,* *y)).*
@@ -1344,7 +1324,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the scene rectangle *rect* to a viewport coordinate
     /// polygon.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to
     /// calling mapFromScene(QRectF( *x,* *y,* *w,* *h)).*
@@ -1352,17 +1332,18 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the scene coordinate polygon *polygon* to a viewport coordinate
     /// polygon.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// Returns the scene coordinate painter path *path* to a viewport coordinate
     /// painter path.
     /// 
-    /// **See also:** mapToScene()
-    map_from_scene(rect: &RectFType) -> Polygon,
+    /// **See also:** [`map_to_scene()`]
+    [org_name(mapFromScene)]
+    map_from_scene_2(rect: &RectFType) -> Polygon,
     /// 
     /// Returns the scene coordinate *point* to viewport coordinates.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to
     /// calling mapFromScene(QPointF( *x,* *y)).*
@@ -1370,7 +1351,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the scene rectangle *rect* to a viewport coordinate
     /// polygon.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to
     /// calling mapFromScene(QRectF( *x,* *y,* *w,* *h)).*
@@ -1378,17 +1359,18 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the scene coordinate polygon *polygon* to a viewport coordinate
     /// polygon.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// Returns the scene coordinate painter path *path* to a viewport coordinate
     /// painter path.
     /// 
-    /// **See also:** mapToScene()
-    map_from_scene(polygon: &PolygonFType) -> Polygon,
+    /// **See also:** [`map_to_scene()`]
+    [org_name(mapFromScene)]
+    map_from_scene_3(polygon: &PolygonFType) -> Polygon,
     /// 
     /// Returns the scene coordinate *point* to viewport coordinates.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to
     /// calling mapFromScene(QPointF( *x,* *y)).*
@@ -1396,7 +1378,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the scene rectangle *rect* to a viewport coordinate
     /// polygon.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to
     /// calling mapFromScene(QRectF( *x,* *y,* *w,* *h)).*
@@ -1404,13 +1386,14 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the scene coordinate polygon *polygon* to a viewport coordinate
     /// polygon.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// Returns the scene coordinate painter path *path* to a viewport coordinate
     /// painter path.
     /// 
-    /// **See also:** mapToScene()
-    map_from_scene(path: &PainterPathType) -> PainterPath,
+    /// **See also:** [`map_to_scene()`]
+    [org_name(mapFromScene)]
+    map_from_scene_4(path: &PainterPathType) -> PainterPath,
     /// 
     /// Returns the viewport coordinate *point* mapped to scene coordinates.
     /// 
@@ -1418,7 +1401,7 @@ struct GraphicsView : AbstractScrollArea {
     /// *point* instead of the point itself. To do this, you can call
     /// mapToScene(QRect( *point,* QSize(2, 2))).
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to calling
     /// mapToScene(QPoint( *x,* *y)).*
@@ -1426,7 +1409,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the viewport rectangle *rect* mapped to a scene coordinate
     /// polygon.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to calling
     /// mapToScene(QRect( *x,* *y,* *w,* *h)).*
@@ -1434,13 +1417,14 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the viewport polygon *polygon* mapped to a scene coordinate
     /// polygon.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// Returns the viewport painter path *path* mapped to a scene coordinate
     /// painter path.
     /// 
-    /// **See also:** mapFromScene()
-    map_to_scene(x: i32, y: i32) -> PointF,
+    /// **See also:** [`map_from_scene()`]
+    [org_name(mapToScene)]
+    map_to_scene_5(x: i32, y: i32) -> PointF,
     /// 
     /// Returns the viewport coordinate *point* mapped to scene coordinates.
     /// 
@@ -1448,7 +1432,7 @@ struct GraphicsView : AbstractScrollArea {
     /// *point* instead of the point itself. To do this, you can call
     /// mapToScene(QRect( *point,* QSize(2, 2))).
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to calling
     /// mapToScene(QPoint( *x,* *y)).*
@@ -1456,7 +1440,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the viewport rectangle *rect* mapped to a scene coordinate
     /// polygon.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to calling
     /// mapToScene(QRect( *x,* *y,* *w,* *h)).*
@@ -1464,17 +1448,18 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the viewport polygon *polygon* mapped to a scene coordinate
     /// polygon.
     /// 
-    /// **See also:** mapFromScene()
+    /// **See also:** [`map_from_scene()`]
     /// 
     /// Returns the viewport painter path *path* mapped to a scene coordinate
     /// painter path.
     /// 
-    /// **See also:** mapFromScene()
-    map_to_scene(x: i32, y: i32, w: i32, h: i32) -> PolygonF,
+    /// **See also:** [`map_from_scene()`]
+    [org_name(mapToScene)]
+    map_to_scene_6(x: i32, y: i32, w: i32, h: i32) -> PolygonF,
     /// 
     /// Returns the scene coordinate *point* to viewport coordinates.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to
     /// calling mapFromScene(QPointF( *x,* *y)).*
@@ -1482,7 +1467,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the scene rectangle *rect* to a viewport coordinate
     /// polygon.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to
     /// calling mapFromScene(QRectF( *x,* *y,* *w,* *h)).*
@@ -1490,17 +1475,18 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the scene coordinate polygon *polygon* to a viewport coordinate
     /// polygon.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// Returns the scene coordinate painter path *path* to a viewport coordinate
     /// painter path.
     /// 
-    /// **See also:** mapToScene()
-    map_from_scene(x: f32, y: f32) -> Point,
+    /// **See also:** [`map_to_scene()`]
+    [org_name(mapFromScene)]
+    map_from_scene_5(x: f32, y: f32) -> Point,
     /// 
     /// Returns the scene coordinate *point* to viewport coordinates.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to
     /// calling mapFromScene(QPointF( *x,* *y)).*
@@ -1508,7 +1494,7 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the scene rectangle *rect* to a viewport coordinate
     /// polygon.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// This function is provided for convenience. It's equivalent to
     /// calling mapFromScene(QRectF( *x,* *y,* *w,* *h)).*
@@ -1516,13 +1502,14 @@ struct GraphicsView : AbstractScrollArea {
     /// Returns the scene coordinate polygon *polygon* to a viewport coordinate
     /// polygon.
     /// 
-    /// **See also:** mapToScene()
+    /// **See also:** [`map_to_scene()`]
     /// 
     /// Returns the scene coordinate painter path *path* to a viewport coordinate
     /// painter path.
     /// 
-    /// **See also:** mapToScene()
-    map_from_scene(x: f32, y: f32, w: f32, h: f32) -> Polygon,
+    /// **See also:** [`map_to_scene()`]
+    [org_name(mapFromScene)]
+    map_from_scene_6(x: f32, y: f32, w: f32, h: f32) -> Polygon,
     /// 
     [event] input_method_query(query: Rute::InputMethodQuery) -> Variant,
     /// 
@@ -1533,7 +1520,7 @@ struct GraphicsView : AbstractScrollArea {
     /// 
     /// By default, this property contains a brush with the Qt::NoBrush pattern.
     /// 
-    /// **See also:** QGraphicsScene::backgroundBrush
+    /// **See also:** [`GraphicsScene::background_brush()`]
     /// foregroundBrush
     background_brush() -> Brush,
     set_background_brush(brush: &BrushType),
@@ -1545,21 +1532,21 @@ struct GraphicsView : AbstractScrollArea {
     /// 
     /// By default, this property contains a brush with the Qt::NoBrush pattern.
     /// 
-    /// **See also:** QGraphicsScene::foregroundBrush
+    /// **See also:** [`GraphicsScene::foreground_brush()`]
     /// backgroundBrush
     foreground_brush() -> Brush,
     set_foreground_brush(brush: &BrushType),
     /// 
     /// Schedules an update of the scene rectangles *rects.*
     /// 
-    /// **See also:** QGraphicsScene::changed()
+    /// **See also:** [`GraphicsScene::changed`]
     /// 
     /// Notifies QGraphicsView that the scene's scene rect has changed. *rect*
     /// is the new scene rect. If the view already has an explicitly set scene
     /// rect, this function does nothing.
     /// 
     /// **See also:** sceneRect
-    /// QGraphicsScene::sceneRectChanged()
+    /// [`GraphicsScene::scene_rect_changed`]
     update_scene(rects: [RectFType]),
     /// 
     /// Invalidates and schedules a redraw of *layers* inside *rect.* *rect* is
@@ -1575,8 +1562,8 @@ struct GraphicsView : AbstractScrollArea {
     /// QGraphicsView::CacheBackground). This function is equivalent to calling update() if any
     /// layer but QGraphicsScene::BackgroundLayer is passed.
     /// 
-    /// **See also:** QGraphicsScene::invalidate()
-    /// update()
+    /// **See also:** [`GraphicsScene::invalidate`]
+    /// [`update()`]
     invalidate_scene(rect: &RectFType, layers: GraphicsScene::SceneLayers),
     /// 
     /// Notifies QGraphicsView that the scene's scene rect has changed. *rect*
@@ -1584,7 +1571,7 @@ struct GraphicsView : AbstractScrollArea {
     /// rect, this function does nothing.
     /// 
     /// **See also:** sceneRect
-    /// QGraphicsScene::sceneRectChanged()
+    /// [`GraphicsScene::scene_rect_changed`]
     update_scene_rect(rect: &RectFType),
     /// 
     /// This signal is emitted when the rubber band rect is changed. The viewport Rect is specified by *rubberBandRect.*
@@ -1592,14 +1579,14 @@ struct GraphicsView : AbstractScrollArea {
     /// 
     /// When rubberband selection ends this signal will be emitted with null vales.
     /// 
-    /// **See also:** rubberBandRect()
+    /// **See also:** [`rubber_band_rect()`]
     [signal] rubber_band_changed(viewport_rect: RectType, from_scene_point: PointFType, to_scene_point: PointFType),
     /// 
     /// This slot is called by QAbstractScrollArea after setViewport() has been
     /// called. Reimplement this function in a subclass of QGraphicsView to
     /// initialize the new viewport *widget* before it is used.
     /// 
-    /// **See also:** setViewport()
+    /// **See also:** [`set_viewport()`]
     [event] setup_viewport(widget: *WidgetType),
     /// 
     [event] event(event: *EventType) -> bool,
@@ -1660,8 +1647,8 @@ struct GraphicsView : AbstractScrollArea {
     /// If no such brush is defined (the default), the scene's drawBackground()
     /// function is called instead.
     /// 
-    /// **See also:** drawForeground()
-    /// QGraphicsScene::drawBackground()
+    /// **See also:** [`draw_foreground()`]
+    /// [`GraphicsScene::draw_background`]
     [event] draw_background(painter: *PainterType, rect: &RectFType),
     /// 
     /// Draws the foreground of the scene using *painter,* after the background
@@ -1678,8 +1665,8 @@ struct GraphicsView : AbstractScrollArea {
     /// If no such brush is defined (the default), the scene's drawForeground()
     /// function is called instead.
     /// 
-    /// **See also:** drawBackground()
-    /// QGraphicsScene::drawForeground()
+    /// **See also:** [`draw_background()`]
+    /// [`GraphicsScene::draw_foreground`]
     [event] draw_foreground(painter: *PainterType, rect: &RectFType),
     /// 
     /// Draws the items *items* in the scene using *painter,* after the
@@ -1694,10 +1681,65 @@ struct GraphicsView : AbstractScrollArea {
     /// the QGraphicsView::IndirectPainting flag is given as an Optimization
     /// flag.
     /// 
-    /// **See also:** drawForeground()
-    /// drawBackground()
-    /// QGraphicsScene::drawItems()
+    /// **See also:** [`draw_foreground()`]
+    /// [`draw_background()`]
+    /// [`GraphicsScene::draw_items`]
     [event] draw_items(painter: *PainterType, num_items: i32, items: *GraphicsItemType, options: StyleOptionGraphicsItemType),
+}
+
+[org_name(QGraphicsView)]
+enum ViewportAnchor {
+    /// No anchor, i.e. the view leaves the scene's position unchanged.
+    NoAnchor,
+    /// The scene point at the center of the view is used as the anchor.
+    AnchorViewCenter,
+    /// The point under the mouse is used as the anchor.
+    AnchorUnderMouse,
+}
+
+[org_name(QGraphicsView)]
+enum CacheModeFlag {
+    /// All painting is done directly onto the viewport.
+    CacheNone,
+    /// The background is cached. This affects both custom backgrounds, and backgrounds based on the backgroundBrush property. When this flag is enabled, QGraphicsView will allocate one pixmap with the full size of the viewport.
+    CacheBackground,
+}
+
+[org_name(QGraphicsView)]
+enum DragMode {
+    /// Nothing happens; the mouse event is ignored.
+    NoDrag,
+    /// The cursor changes into a pointing hand, and dragging the mouse around will scroll the scrolbars. This mode works both in [interactive](QGraphicsView::interactive)
+ and non-interactive mode.
+    ScrollHandDrag,
+    /// A rubber band will appear. Dragging the mouse will set the rubber band geometry, and all items covered by the rubber band are selected. This mode is disabled for non-interactive views.
+    RubberBandDrag,
+}
+
+[org_name(QGraphicsView)]
+enum ViewportUpdateMode {
+    /// When any visible part of the scene changes or is reexposed, QGraphicsView will update the entire viewport. This approach is fastest when QGraphicsView spends more time figuring out what to draw than it would spend drawing (e.g., when very many small items are repeatedly updated). This is the preferred update mode for viewports that do not support partial updates, such as QGLWidget, and for viewports that need to disable scroll optimization.
+    FullViewportUpdate,
+    /// QGraphicsView will determine the minimal viewport region that requires a redraw, minimizing the time spent drawing by avoiding a redraw of areas that have not changed. This is QGraphicsView's default mode. Although this approach provides the best performance in general, if there are many small visible changes on the scene, QGraphicsView might end up spending more time finding the minimal approach than it will spend drawing.
+    MinimalViewportUpdate,
+    /// QGraphicsView will attempt to find an optimal update mode by analyzing the areas that require a redraw.
+    SmartViewportUpdate,
+    /// QGraphicsView will never update its viewport when the scene changes; the user is expected to control all updates. This mode disables all (potentially slow) item visibility testing in QGraphicsView, and is suitable for scenes that either require a fixed frame rate, or where the viewport is otherwise updated externally.
+    NoViewportUpdate,
+    /// The bounding rectangle of all changes in the viewport will be redrawn. This mode has the advantage that QGraphicsView searches only one region for changes, minimizing time spent determining what needs redrawing. The disadvantage is that areas that have not changed also need to be redrawn.
+    BoundingRectViewportUpdate,
+}
+
+[org_name(QGraphicsView)]
+enum OptimizationFlag {
+    /// This value is obsolete and has no effect.
+    DontClipPainter,
+    /// When rendering, QGraphicsView protects the painter state (see QPainter::save()) when rendering the background or foreground, and when rendering each item. This allows you to leave the painter in an altered state (i.e., you can call QPainter::setPen() or QPainter::setBrush() without restoring the state after painting). However, if the items consistently do restore the state, you should enable this flag to prevent QGraphicsView from doing the same.
+    DontSavePainterState,
+    /// Disables QGraphicsView's antialiasing auto-adjustment of exposed areas. Items that render antialiased lines on the boundaries of their QGraphicsItem::boundingRect() can end up rendering parts of the line outside. To prevent rendering artifacts, QGraphicsView expands all exposed regions by 2 pixels in all directions. If you enable this flag, QGraphicsView will no longer perform these adjustments, minimizing the areas that require redrawing, which improves performance. A common side effect is that items that do draw with antialiasing can leave painting traces behind on the scene as they are moved.
+    DontAdjustForAntialiasing,
+    /// Since Qt 4.6, restore the old painting algorithm that calls QGraphicsView::drawItems() and QGraphicsScene::drawItems(). To be used only for compatibility with old code.
+    IndirectPainting,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

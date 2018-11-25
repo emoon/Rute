@@ -93,29 +93,15 @@
 /// Any other key sequence that represents a valid character, will
 /// cause the character to be inserted into the line edit.
 /// 
-/// **See also:** QTextEdit
-/// QLabel
-/// QComboBox
+/// **See also:** [`TextEdit`]
+/// [`Label`]
+/// [`ComboBox`]
 /// {fowler}{GUI Design Handbook: Field
 /// Entry}
 /// {Line Edits Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QLineEdit)]
-enum ActionPosition {
-    LeadingPosition,
-    TrailingPosition,
-}
-
-[org_name(QLineEdit)]
-enum EchoMode {
-    Normal,
-    NoEcho,
-    Password,
-    PasswordEchoOnEdit,
-}
-
 struct LineEdit : Widget {
     /// 
     /// This signal is emitted whenever the text changes. The *text*
@@ -140,12 +126,12 @@ struct LineEdit : Widget {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** insert()
-    /// clear()
+    /// **See also:** [`insert()`]
+    /// [`clear()`]
     /// 
     /// Returns the widget's text margins.
     /// 
-    /// **See also:** setTextMargins()
+    /// **See also:** [`set_text_margins()`]
     text() -> String,
     /// 
     /// If [echoMode](echoMode)
@@ -162,8 +148,8 @@ struct LineEdit : Widget {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** setEchoMode()
-    /// text()
+    /// **See also:** [`set_echo_mode()`]
+    /// [`text()`]
     /// EchoMode
     display_text() -> String,
     /// 
@@ -177,7 +163,7 @@ struct LineEdit : Widget {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     placeholder_text() -> String,
     set_placeholder_text(arg0: String),
     /// 
@@ -217,7 +203,7 @@ struct LineEdit : Widget {
     /// By default, this property is set to [Normal.](Normal.)
     /// 
     /// **See also:** EchoMode
-    /// displayText()
+    /// [`display_text()`]
     echo_mode() -> LineEdit::EchoMode,
     set_echo_mode(arg0: LineEdit::EchoMode),
     is_read_only() -> bool,
@@ -231,17 +217,17 @@ struct LineEdit : Widget {
     /// The initial setting is to have no input validator (i.e. any input
     /// is accepted up to maxLength()).
     /// 
-    /// **See also:** validator()
-    /// hasAcceptableInput()
-    /// QIntValidator
-    /// QDoubleValidator
-    /// QRegExpValidator
+    /// **See also:** [`validator()`]
+    /// [`has_acceptable_input()`]
+    /// [`IntValidator`]
+    /// [`DoubleValidator`]
+    /// [`RegExpValidator`]
     set_validator(arg0: *ValidatorType),
     /// 
     /// Returns a pointer to the current input validator, or 0 if no
     /// validator has been set.
     /// 
-    /// **See also:** setValidator()
+    /// **See also:** [`set_validator()`]
     validator() -> Validator?,
     /// 
     /// Sets this line edit to provide auto completions from the completer, *c.*
@@ -255,7 +241,7 @@ struct LineEdit : Widget {
     /// If *c* == 0, setCompleter() removes the current completer, effectively
     /// disabling auto completion.
     /// 
-    /// **See also:** QCompleter
+    /// **See also:** [`Completer`]
     set_completer(completer: *CompleterType),
     /// 
     /// Returns the current QCompleter that provides completions.
@@ -275,8 +261,8 @@ struct LineEdit : Widget {
     /// This signal is emitted whenever the cursor moves. The previous
     /// position is given by *oldPos,* and the new position by *newPos.*
     /// 
-    /// **See also:** setCursorPosition()
-    /// cursorPosition()
+    /// **See also:** [`set_cursor_position()`]
+    /// [`cursor_position()`]
     /// 
     /// Setting the cursor position causes a repaint when appropriate.
     /// 
@@ -295,33 +281,33 @@ struct LineEdit : Widget {
     /// 
     /// By default, this property contains a combination of Qt::AlignLeft and Qt::AlignVCenter.
     /// 
-    /// **See also:** Qt::Alignment
+    /// **See also:** [`t::alignment()`]
     alignment() -> Rute::Alignment,
     /// 
     /// Moves the cursor forward *steps* characters. If *mark* is true
     /// each character moved over is added to the selection; if *mark* is
     /// false the selection is cleared.
     /// 
-    /// **See also:** cursorBackward()
+    /// **See also:** [`cursor_backward()`]
     cursor_forward(mark: bool, steps: i32),
     /// 
     /// Moves the cursor back *steps* characters. If *mark* is true each
     /// character moved over is added to the selection; if *mark* is
     /// false the selection is cleared.
     /// 
-    /// **See also:** cursorForward()
+    /// **See also:** [`cursor_forward()`]
     cursor_backward(mark: bool, steps: i32),
     /// 
     /// Moves the cursor one word forward. If *mark* is true, the word is
     /// also selected.
     /// 
-    /// **See also:** cursorWordBackward()
+    /// **See also:** [`cursor_word_backward()`]
     cursor_word_forward(mark: bool),
     /// 
     /// Moves the cursor one word backward. If *mark* is true, the word
     /// is also selected.
     /// 
-    /// **See also:** cursorWordForward()
+    /// **See also:** [`cursor_word_forward()`]
     cursor_word_backward(mark: bool),
     /// 
     /// If no text is selected, deletes the character to the left of the
@@ -329,14 +315,14 @@ struct LineEdit : Widget {
     /// text is selected, the cursor is moved to the beginning of the
     /// selected text and the selected text is deleted.
     /// 
-    /// **See also:** del()
+    /// **See also:** [`del()`]
     backspace(),
     /// 
     /// If no text is selected, deletes the character to the right of the
     /// text cursor. If any text is selected, the cursor is moved to the
     /// beginning of the selected text and the selected text is deleted.
     /// 
-    /// **See also:** backspace()
+    /// **See also:** [`backspace()`]
     del(),
     /// 
     /// Moves the text cursor to the beginning of the line unless it is
@@ -344,7 +330,7 @@ struct LineEdit : Widget {
     /// first position; otherwise, any selected text is unselected if the
     /// cursor is moved.
     /// 
-    /// **See also:** end()
+    /// **See also:** [`end()`]
     home(mark: bool),
     /// 
     /// Moves the text cursor to the end of the line unless it is already
@@ -352,7 +338,7 @@ struct LineEdit : Widget {
     /// position; otherwise, any selected text is unselected if the cursor
     /// is moved.
     /// 
-    /// **See also:** home()
+    /// **See also:** [`home()`]
     end(mark: bool),
     is_modified() -> bool,
     set_modified(arg0: bool),
@@ -360,9 +346,9 @@ struct LineEdit : Widget {
     /// Selects text from position *start* and for *length* characters.
     /// Negative lengths are allowed.
     /// 
-    /// **See also:** deselect()
-    /// selectAll()
-    /// selectedText()
+    /// **See also:** [`deselect()`]
+    /// [`select_all()`]
+    /// [`selected_text()`]
     set_selection(arg0: i32, arg1: i32),
     /// 
     /// hasSelectedText() returns `true` if some or all of the text has been
@@ -370,7 +356,7 @@ struct LineEdit : Widget {
     /// 
     /// By default, this property is `false.`
     /// 
-    /// **See also:** selectedText()
+    /// **See also:** [`selected_text()`]
     has_selected_text() -> bool,
     /// 
     /// If there is no selected text this property's value is
@@ -378,30 +364,30 @@ struct LineEdit : Widget {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** hasSelectedText()
+    /// **See also:** [`has_selected_text()`]
     selected_text() -> String,
     /// 
     /// Returns the index of the first selected character in the
     /// line edit or -1 if no text is selected.
     /// 
-    /// **See also:** selectedText()
-    /// **See also:** selectionEnd()
-    /// **See also:** selectionLength()
+    /// **See also:** [`selected_text()`]
+    /// **See also:** [`selection_end()`]
+    /// **See also:** [`selection_length()`]
     selection_start() -> i32,
     /// 
     /// Returns the index of the character directly after the selection
     /// in the line edit or -1 if no text is selected.
     /// 
-    /// **See also:** selectedText()
-    /// **See also:** selectionStart()
-    /// **See also:** selectionLength()
+    /// **See also:** [`selected_text()`]
+    /// **See also:** [`selection_start()`]
+    /// **See also:** [`selection_length()`]
     selection_end() -> i32,
     /// 
     /// Returns the length of the selection.
     /// 
-    /// **See also:** selectedText()
-    /// **See also:** selectionStart()
-    /// **See also:** selectionEnd()
+    /// **See also:** [`selected_text()`]
+    /// **See also:** [`selection_start()`]
+    /// **See also:** [`selection_end()`]
     selection_length() -> i32,
     is_undo_available() -> bool,
     is_redo_available() -> bool,
@@ -521,16 +507,17 @@ struct LineEdit : Widget {
     /// Sets the *margins* around the text inside the frame.
     /// 
     /// See also textMargins().
-    set_text_margins(margins: &MarginsType),
+    [org_name(setTextMargins)]
+    set_text_margins_2(margins: &MarginsType),
     /// 
     /// Returns the widget's text margins for *left,* *top,* *right,* and *bottom.*
     /// 
-    /// **See also:** setTextMargins()
+    /// **See also:** [`set_text_margins()`]
     get_text_margins(left: *i32, top: *i32, right: *i32, bottom: *i32),
     /// 
     /// Returns the widget's text margins.
     /// 
-    /// **See also:** setTextMargins()
+    /// **See also:** [`set_text_margins()`]
     text_margins() -> Margins,
     /// 
     /// **Overloads**
@@ -549,7 +536,8 @@ struct LineEdit : Widget {
     /// **Overloads**
     /// Creates a new action with the given *icon* at the *position.*
     /// 
-    add_action(icon: &IconType, position: LineEdit::ActionPosition) -> Action?,
+    [org_name(addAction)]
+    add_action_2(icon: &IconType, position: LineEdit::ActionPosition) -> Action?,
     /// 
     /// Sets the margins around the text inside the frame to have the
     /// sizes *left,* *top,* *right,* and *bottom.*
@@ -565,13 +553,13 @@ struct LineEdit : Widget {
     /// some text, otherwise the line edit does not show a clear button (the
     /// default).
     /// 
-    /// **See also:** addAction()
-    /// removeAction()
+    /// **See also:** [`add_action()`]
+    /// [`remove_action()`]
     /// 
     /// Clears the contents of the line edit.
     /// 
-    /// **See also:** setText()
-    /// insert()
+    /// **See also:** [`set_text()`]
+    /// [`insert()`]
     clear(),
     /// 
     /// Selects all the text (i.e. highlights it) and moves the cursor to
@@ -579,8 +567,8 @@ struct LineEdit : Widget {
     /// because if the user types before clicking on the widget, the
     /// selected text will be deleted.
     /// 
-    /// **See also:** setSelection()
-    /// deselect()
+    /// **See also:** [`set_selection()`]
+    /// [`deselect()`]
     select_all(),
     /// 
     /// Undo becomes available once the user has modified the text in the line edit.
@@ -608,16 +596,16 @@ struct LineEdit : Widget {
     /// If the current validator disallows deleting the selected text,
     /// cut() will copy without deleting.
     /// 
-    /// **See also:** copy()
-    /// paste()
-    /// setValidator()
+    /// **See also:** [`copy()`]
+    /// [`paste()`]
+    /// [`set_validator()`]
     cut(),
     /// 
     /// Copies the selected text to the clipboard, if there is any, and if
     /// echoMode() is [Normal.](Normal.)
     /// 
-    /// **See also:** cut()
-    /// paste()
+    /// **See also:** [`cut()`]
+    /// [`paste()`]
     copy(),
     /// 
     /// Inserts the clipboard's text at the cursor position, deleting any
@@ -628,22 +616,22 @@ struct LineEdit : Widget {
     /// [validator](setValidator())
     /// , nothing happens.
     /// 
-    /// **See also:** copy()
-    /// cut()
+    /// **See also:** [`copy()`]
+    /// [`cut()`]
     paste(),
     /// 
     /// Deselects any selected text.
     /// 
-    /// **See also:** setSelection()
-    /// selectAll()
+    /// **See also:** [`set_selection()`]
+    /// [`select_all()`]
     deselect(),
     /// 
     /// Deletes any selected text, inserts *newText,* and validates the
     /// result. If it is valid, it sets it as the new contents of the line
     /// edit.
     /// 
-    /// **See also:** setText()
-    /// clear()
+    /// **See also:** [`set_text()`]
+    /// [`clear()`]
     insert(arg0: String),
     /// This function creates the standard context menu which is shown
     /// when the user clicks on the line edit with the right mouse
@@ -668,8 +656,8 @@ struct LineEdit : Widget {
     /// This signal is emitted whenever the cursor moves. The previous
     /// position is given by *oldPos,* and the new position by *newPos.*
     /// 
-    /// **See also:** setCursorPosition()
-    /// cursorPosition()
+    /// **See also:** [`set_cursor_position()`]
+    /// [`cursor_position()`]
     [signal] cursor_position_changed(arg0: i32, arg1: i32),
     /// 
     /// This signal is emitted when the Return or Enter key is pressed.
@@ -688,8 +676,8 @@ struct LineEdit : Widget {
     /// 
     /// This signal is emitted whenever the selection changes.
     /// 
-    /// **See also:** hasSelectedText()
-    /// selectedText()
+    /// **See also:** [`has_selected_text()`]
+    /// [`selected_text()`]
     [signal] selection_changed(),
     /// 
     [event] mouse_press_event(arg0: *MouseEventType),
@@ -740,7 +728,7 @@ struct LineEdit : Widget {
     /// The *event* parameter is used to obtain the position where
     /// the mouse cursor was when the event was generated.
     /// 
-    /// **See also:** setContextMenuPolicy()
+    /// **See also:** [`set_context_menu_policy()`]
     [event] context_menu_event(arg0: *ContextMenuEventType),
     /// 
     [event] input_method_event(arg0: *InputMethodEventType),
@@ -749,17 +737,38 @@ struct LineEdit : Widget {
     /// is useful for subclasses when they need a QStyleOptionFrame, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionFrameType),
     /// 
     [event] input_method_query(arg0: Rute::InputMethodQuery) -> Variant,
     /// 
-    input_method_query(property: Rute::InputMethodQuery, argument: VariantType) -> Variant,
+    [org_name(inputMethodQuery)]
+    input_method_query_2(property: Rute::InputMethodQuery, argument: VariantType) -> Variant,
     /// 
     [event] event(arg0: *EventType) -> bool,
     /// 
     /// Returns a rectangle that includes the lineedit cursor.
     cursor_rect() -> Rect,
+}
+
+[org_name(QLineEdit)]
+enum ActionPosition {
+    /// The widget is displayed to the left of the text when using layout direction `Qt::LeftToRight` or to the right when using `Qt::RightToLeft,` respectively.
+    LeadingPosition,
+    /// The widget is displayed to the right of the text when using layout direction `Qt::LeftToRight` or to the left when using `Qt::RightToLeft,` respectively.
+    TrailingPosition,
+}
+
+[org_name(QLineEdit)]
+enum EchoMode {
+    /// Display characters as they are entered. This is the default.
+    Normal,
+    /// Do not display anything. This may be appropriate for passwords where even the length of the password should be kept secret.
+    NoEcho,
+    /// Display platform-dependent password mask characters instead of the characters actually entered.
+    Password,
+    /// Display characters as they are entered while editing otherwise display characters as with `Password.`
+    PasswordEchoOnEdit,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

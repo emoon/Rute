@@ -33,29 +33,22 @@
 /// The QTextLayout itself can be positioned with setPosition(); it has a
 /// boundingRect(), and a minimumWidth() and a maximumWidth().
 /// 
-/// **See also:** QStaticText
+/// **See also:** [`StaticText`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTextLayout)]
-enum CursorMode {
-    SkipCharacters,
-    SkipWords,
-}
-
-
 struct TextLayout {
     /// 
     /// Sets the layout's font to the given *font.* The layout is
     /// invalidated and must be laid out again.
     /// 
-    /// **See also:** font()
+    /// **See also:** [`font()`]
     set_font(f: &FontType),
     /// 
     /// Returns the current font that is used for the layout, or a default
     /// font if none is set.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     font() -> Font,
     set_raw_font(raw_font: &RawFontType),
     /// 
@@ -65,57 +58,57 @@ struct TextLayout {
     /// Notice that when using this QTextLayout as part of a QTextDocument this
     /// method will have no effect.
     /// 
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     /// 
     /// Sets the text option structure that controls the layout process to the
     /// given *option.*
     /// 
-    /// **See also:** textOption()
+    /// **See also:** [`text_option()`]
     set_text(string: String),
     /// 
     /// Returns the layout's text.
     /// 
-    /// **See also:** setText()
+    /// **See also:** [`set_text()`]
     /// 
     /// Returns the current text option used to control the layout process.
     /// 
-    /// **See also:** setTextOption()
+    /// **See also:** [`set_text_option()`]
     text() -> String,
     /// 
     /// Sets the text option structure that controls the layout process to the
     /// given *option.*
     /// 
-    /// **See also:** textOption()
+    /// **See also:** [`text_option()`]
     set_text_option(option: &TextOptionType),
     /// 
     /// Returns the current text option used to control the layout process.
     /// 
-    /// **See also:** setTextOption()
+    /// **See also:** [`set_text_option()`]
     text_option() -> TextOption?,
     /// 
     /// Sets the *position* and *text* of the area in the layout that is
     /// processed before editing occurs. The layout is
     /// invalidated and must be laid out again.
     /// 
-    /// **See also:** preeditAreaPosition()
-    /// preeditAreaText()
+    /// **See also:** [`preedit_area_position()`]
+    /// [`preedit_area_text()`]
     set_preedit_area(position: i32, text: String),
     /// 
     /// Returns the position of the area in the text layout that will be
     /// processed before editing occurs.
     /// 
-    /// **See also:** preeditAreaText()
+    /// **See also:** [`preedit_area_text()`]
     preedit_area_position() -> i32,
     /// 
     /// Returns the text that is inserted in the layout before editing occurs.
     /// 
-    /// **See also:** preeditAreaPosition()
+    /// **See also:** [`preedit_area_position()`]
     preedit_area_text() -> String,
     /// 
     set_additional_formats(overrides: onst QList<QTextLayout::FormatRange> &),
     /// 
-    /// **See also:** setAdditionalFormats()
-    /// clearAdditionalFormats()
+    /// **See also:** [`set_additional_formats()`]
+    /// [`clear_additional_formats()`]
     additional_formats() -> List<QTextLayout::FormatRange>,
     /// 
     clear_additional_formats(),
@@ -123,20 +116,20 @@ struct TextLayout {
     /// Sets the additional formats supported by the text layout to *formats.*
     /// The formats are applied with preedit area text in place.
     /// 
-    /// **See also:** formats()
-    /// clearFormats()
+    /// **See also:** [`formats()`]
+    /// [`clear_formats()`]
     set_formats(overrides: onst QVector<QTextLayout::FormatRange> &),
     /// 
     /// Returns the list of additional formats supported by the text layout.
     /// 
-    /// **See also:** setFormats()
-    /// clearFormats()
+    /// **See also:** [`set_formats()`]
+    /// [`clear_formats()`]
     formats() -> Vector<QTextLayout::FormatRange>,
     /// 
     /// Clears the list of additional formats supported by the text layout.
     /// 
-    /// **See also:** formats()
-    /// setFormats()
+    /// **See also:** [`formats()`]
+    /// [`set_formats()`]
     clear_formats(),
     /// 
     /// Enables caching of the complete layout information if *enable* is
@@ -146,13 +139,13 @@ struct TextLayout {
     /// want to draw the laid out text directly afterwards enabling caching
     /// might speed up drawing significantly.
     /// 
-    /// **See also:** cacheEnabled()
+    /// **See also:** [`cache_enabled()`]
     set_cache_enabled(enable: bool),
     /// 
     /// Returns `true` if the complete layout information is cached; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** setCacheEnabled()
+    /// **See also:** [`set_cache_enabled()`]
     cache_enabled() -> bool,
     /// 
     /// Sets the visual cursor movement style to the given *style.* If the
@@ -160,13 +153,13 @@ struct TextLayout {
     /// in QTextDocument, this option is for widgets like QLineEdit or custom
     /// widgets without a QTextDocument. Default value is Qt::LogicalMoveStyle.
     /// 
-    /// **See also:** cursorMoveStyle()
+    /// **See also:** [`cursor_move_style()`]
     set_cursor_move_style(style: Rute::CursorMoveStyle),
     /// 
     /// The cursor movement style of this QTextLayout. The default is
     /// Qt::LogicalMoveStyle.
     /// 
-    /// **See also:** setCursorMoveStyle()
+    /// **See also:** [`set_cursor_move_style()`]
     cursor_move_style() -> Rute::CursorMoveStyle,
     /// 
     /// Begins the layout process.
@@ -174,12 +167,12 @@ struct TextLayout {
     /// **Warning**: This will invalidate the layout, so all existing QTextLine objects
     /// that refer to the previous contents should now be discarded.
     /// 
-    /// **See also:** endLayout()
+    /// **See also:** [`end_layout()`]
     begin_layout(),
     /// 
     /// Ends the layout process.
     /// 
-    /// **See also:** beginLayout()
+    /// **See also:** [`begin_layout()`]
     end_layout(),
     /// 
     /// Clears the line information in the layout. After having called
@@ -207,19 +200,19 @@ struct TextLayout {
     /// 
     /// Returns the number of lines in this text layout.
     /// 
-    /// **See also:** lineAt()
+    /// **See also:** [`line_at()`]
     line_count() -> i32,
     /// 
     /// Returns the *i* -th line of text in this text layout.
     /// 
-    /// **See also:** lineCount()
-    /// lineForTextPosition()
+    /// **See also:** [`line_count()`]
+    /// [`line_for_text_position()`]
     line_at(i: i32) -> TextLine,
     /// 
     /// Returns the line that contains the cursor position specified by *pos.*
     /// 
-    /// **See also:** isValidCursorPosition()
-    /// lineAt()
+    /// **See also:** [`is_valid_cursor_position()`]
+    /// [`line_at()`]
     line_for_text_position(pos: i32) -> TextLine,
     /// 
     /// Returns `true` if position *pos* is a valid cursor position.
@@ -241,32 +234,32 @@ struct TextLayout {
     /// respects the given cursor *mode.*
     /// Returns value of *oldPos,* if *oldPos* is not a valid cursor position.
     /// 
-    /// **See also:** isValidCursorPosition()
-    /// previousCursorPosition()
+    /// **See also:** [`is_valid_cursor_position()`]
+    /// [`previous_cursor_position()`]
     next_cursor_position(old_pos: i32, mode: TextLayout::CursorMode) -> i32,
     /// 
     /// Returns the first valid cursor position before *oldPos* that
     /// respects the given cursor *mode.*
     /// Returns value of *oldPos,* if *oldPos* is not a valid cursor position.
     /// 
-    /// **See also:** isValidCursorPosition()
-    /// nextCursorPosition()
+    /// **See also:** [`is_valid_cursor_position()`]
+    /// [`next_cursor_position()`]
     previous_cursor_position(old_pos: i32, mode: TextLayout::CursorMode) -> i32,
     /// 
     /// Returns the cursor position to the left of *oldPos,* next to it.
     /// It's dependent on the visual position of characters, after bi-directional
     /// reordering.
     /// 
-    /// **See also:** rightCursorPosition()
-    /// previousCursorPosition()
+    /// **See also:** [`right_cursor_position()`]
+    /// [`previous_cursor_position()`]
     left_cursor_position(old_pos: i32) -> i32,
     /// 
     /// Returns the cursor position to the right of *oldPos,* next to it.
     /// It's dependent on the visual position of characters, after bi-directional
     /// reordering.
     /// 
-    /// **See also:** leftCursorPosition()
-    /// nextCursorPosition()
+    /// **See also:** [`left_cursor_position()`]
+    /// [`next_cursor_position()`]
     right_cursor_position(old_pos: i32) -> i32,
     /// 
     /// Draws the whole layout on the painter *p* at the position specified by *pos.*
@@ -301,17 +294,18 @@ struct TextLayout {
     /// Draws a text cursor with the current pen and the specified *width* at the given *position* using the
     /// *painter* specified.
     /// The corresponding position within the text is specified by *cursorPosition.*
-    draw_cursor(p: *PainterType, pos: &PointFType, cursor_position: i32, width: i32),
+    [org_name(drawCursor)]
+    draw_cursor_2(p: *PainterType, pos: &PointFType, cursor_position: i32, width: i32),
     /// 
     /// The global position of the layout. This is independent of the
     /// bounding rectangle and of the layout process.
     /// 
-    /// **See also:** setPosition()
+    /// **See also:** [`set_position()`]
     position() -> PointF,
     /// 
     /// Moves the text layout to point *p.*
     /// 
-    /// **See also:** position()
+    /// **See also:** [`position()`]
     set_position(p: &PointFType),
     /// 
     /// The smallest rectangle that contains all the lines in the layout.
@@ -323,7 +317,7 @@ struct TextLayout {
     /// **Warning**: This function only returns a valid value after the layout
     /// has been done.
     /// 
-    /// **See also:** maximumWidth()
+    /// **See also:** [`maximum_width()`]
     minimum_width() -> f32,
     /// 
     /// The maximum width the layout could expand to; this is essentially
@@ -332,11 +326,19 @@ struct TextLayout {
     /// **Warning**: This function only returns a valid value after the layout
     /// has been done.
     /// 
-    /// **See also:** minimumWidth()
+    /// **See also:** [`minimum_width()`]
     maximum_width() -> f32,
     glyph_runs(from: i32, length: i32) -> [GlyphRun],
     engine() -> TextEngine?,
     set_flags(flags: i32),
+}
+
+[org_name(QTextLayout)]
+enum CursorMode {
+    /// 
+    SkipCharacters,
+    /// 
+    SkipWords,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

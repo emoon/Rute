@@ -10,43 +10,38 @@
 /// implementation of boundingRect(), shape(), and contains(). The paint()
 /// function draws the line using the item's associated pen.
 /// 
-/// **See also:** QGraphicsPathItem
-/// QGraphicsRectItem
-/// QGraphicsEllipseItem
-/// QGraphicsTextItem
-/// QGraphicsPolygonItem
-/// QGraphicsPixmapItem
+/// **See also:** [`GraphicsPathItem`]
+/// [`GraphicsRectItem`]
+/// [`GraphicsEllipseItem`]
+/// [`GraphicsTextItem`]
+/// [`GraphicsPolygonItem`]
+/// [`GraphicsPixmapItem`]
 /// {Graphics View Framework}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsLineItem)]
-enum GraphicsLineItemFixMeEnums {
-    Type,
-}
-
 struct GraphicsLineItem : GraphicsItem {
     /// 
     /// Returns the item's pen, or a black solid 0-width pen if no pen has
     /// been set.
     /// 
-    /// **See also:** setPen()
+    /// **See also:** [`set_pen()`]
     pen() -> Pen,
     /// 
     /// Sets the item's pen to *pen.* If no pen is set, the line will be painted
     /// using a black solid 0-width pen.
     /// 
-    /// **See also:** pen()
+    /// **See also:** [`pen()`]
     set_pen(pen: &PenType),
     /// 
     /// Returns the item's line, or a null line if no line has been set.
     /// 
-    /// **See also:** setLine()
+    /// **See also:** [`set_line()`]
     line() -> LineF,
     /// 
     /// Sets the item's line to be the given *line.*
     /// 
-    /// **See also:** line()
+    /// **See also:** [`line()`]
     /// 
     /// **Overloads**
     /// Sets the item's line to be the line between ( *x1,* *y1)* and ( *x2,* *y2).*
@@ -56,13 +51,14 @@ struct GraphicsLineItem : GraphicsItem {
     /// 
     /// Sets the item's line to be the given *line.*
     /// 
-    /// **See also:** line()
+    /// **See also:** [`line()`]
     /// 
     /// **Overloads**
     /// Sets the item's line to be the line between ( *x1,* *y1)* and ( *x2,* *y2).*
     /// 
     /// This is the same as calling `setLine(QLineF(x1, y1, x2, y2))` .
-    set_line(x1: f32, y1: f32, x2: f32, y2: f32),
+    [org_name(setLine)]
+    set_line_2(x1: f32, y1: f32, x2: f32, y2: f32),
     /// 
     [event] bounding_rect() -> RectF,
     /// 
@@ -80,6 +76,11 @@ struct GraphicsLineItem : GraphicsItem {
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
     [event] extension(variant: &VariantType) -> Variant,
+}
+
+[org_name(QGraphicsLineItem)]
+enum GraphicsLineItemFixMeEnums {
+    Type,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

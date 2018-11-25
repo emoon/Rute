@@ -1,0 +1,44 @@
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct FontEngineMulti : FontEngine {
+    glyph_index(ucs4: uint) -> i32,
+    bounding_box(glyphs: &GlyphLayoutType) -> i32,
+    [org_name(boundingBox)]
+    bounding_box_2(glyph: i32) -> i32,
+    [event] recalc_advances(arg0: *GlyphLayoutType, arg1: FontEngine::ShaperFlags),
+    [event] do_kerning(arg0: *GlyphLayoutType, arg1: FontEngine::ShaperFlags),
+    [event] add_outline_to_path(arg0: f32, arg1: f32, arg2: &GlyphLayoutType, arg3: *PainterPathType, flags: i32),
+    [event] get_glyph_bearings(glyph: i32, left_bearing: *f32, right_bearing: *f32),
+    ascent() -> i32,
+    cap_height() -> i32,
+    descent() -> i32,
+    leading() -> i32,
+    x_height() -> i32,
+    average_char_width() -> i32,
+    [event] alpha_map_for_glyph(arg0: i32) -> Image,
+    [org_name(alphaMapForGlyph)]
+    [event] alpha_map_for_glyph_2(glyph: i32, sub_pixel_position: i32) -> Image,
+    [org_name(alphaMapForGlyph)]
+    [event] alpha_map_for_glyph_3(glyph_t: i32, t: &TransformType) -> Image,
+    [org_name(alphaMapForGlyph)]
+    [event] alpha_map_for_glyph_4(glyph_t: i32, sub_pixel_position: i32, t: &TransformType) -> Image,
+    [event] alpha_rgb_map_for_glyph(glyph_t: i32, sub_pixel_position: i32, t: &TransformType) -> Image,
+    line_thickness() -> i32,
+    underline_position() -> i32,
+    [event] max_char_width() -> f32,
+    [event] min_left_bearing() -> f32,
+    [event] min_right_bearing() -> f32,
+    [event] can_render(string: *CharType, len: i32) -> bool,
+    fallback_family_count() -> i32,
+    fallback_family_at(at: i32) -> String,
+    set_fallback_families_list(fallback_families: &[String]),
+    engine(at: i32) -> FontEngine?,
+    ensure_engine_at(at: i32),
+    [static] create_multi_font_engine(fe: *FontEngineType, script: i32) -> FontEngine?,
+    [event] ensure_fallback_families_queried(),
+    [event] should_load_font_engine_for_character(at: i32, ucs4: uint) -> bool,
+    [event] load_engine(at: i32) -> FontEngine?,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

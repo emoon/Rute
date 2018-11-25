@@ -32,26 +32,25 @@
 /// explains how to use QPixmapCache to speed up
 /// applications by caching the results of painting.
 /// 
-/// **See also:** QCache
-/// QPixmap
+/// **See also:** [`Cache`]
+/// [`Pixmap`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct PixmapCache {
     /// 
     /// Returns the cache limit (in kilobytes).
     /// 
     /// The default cache limit is 10240 KB.
     /// 
-    /// **See also:** setCacheLimit()
+    /// **See also:** [`set_cache_limit()`]
     [static] cache_limit() -> i32,
     /// 
     /// Sets the cache limit to *n* kilobytes.
     /// 
     /// The default setting is 10240 KB.
     /// 
-    /// **See also:** cacheLimit()
+    /// **See also:** [`cache_limit()`]
     [static] set_cache_limit(arg0: i32),
     /// 
     /// **Overloads**
@@ -106,7 +105,8 @@ struct PixmapCache {
     /// the pixmap is not found, it means that the *key* is no longer valid,
     /// so it will be released for the next insertion.
     /// 
-    [static] find(key: String, pixmap: &PixmapType) -> bool,
+    [org_name(find)]
+    [static] find_2(key: String, pixmap: &PixmapType) -> bool,
     /// 
     /// **Overloads**
     /// Returns the pixmap associated with the *key* in the cache, or
@@ -133,7 +133,8 @@ struct PixmapCache {
     /// the pixmap is not found, it means that the *key* is no longer valid,
     /// so it will be released for the next insertion.
     /// 
-    [static] find(key: String, pixmap: *PixmapType) -> bool,
+    [org_name(find)]
+    [static] find_3(key: String, pixmap: *PixmapType) -> bool,
     /// 
     /// **Overloads**
     /// Returns the pixmap associated with the *key* in the cache, or
@@ -160,7 +161,8 @@ struct PixmapCache {
     /// the pixmap is not found, it means that the *key* is no longer valid,
     /// so it will be released for the next insertion.
     /// 
-    [static] find(key: onst QPixmapCache::Key &, pixmap: *PixmapType) -> bool,
+    [org_name(find)]
+    [static] find_4(key: onst QPixmapCache::Key &, pixmap: *PixmapType) -> bool,
     /// 
     /// Inserts a copy of the pixmap *pixmap* associated with the *key* into
     /// the cache.
@@ -178,7 +180,7 @@ struct PixmapCache {
     /// The function returns `true` if the object was inserted into the
     /// cache; otherwise it returns `false.`
     /// 
-    /// **See also:** setCacheLimit()
+    /// **See also:** [`set_cache_limit()`]
     /// 
     /// Inserts a copy of the given *pixmap* into the cache and returns a key
     /// that can be used to retrieve it.
@@ -190,8 +192,8 @@ struct PixmapCache {
     /// The oldest pixmaps (least recently accessed in the cache) are
     /// deleted when more space is needed.
     /// 
-    /// **See also:** setCacheLimit()
-    /// replace()
+    /// **See also:** [`set_cache_limit()`]
+    /// [`replace()`]
     /// 
     [static] insert(key: String, pixmap: &PixmapType) -> bool,
     /// 
@@ -211,7 +213,7 @@ struct PixmapCache {
     /// The function returns `true` if the object was inserted into the
     /// cache; otherwise it returns `false.`
     /// 
-    /// **See also:** setCacheLimit()
+    /// **See also:** [`set_cache_limit()`]
     /// 
     /// Inserts a copy of the given *pixmap* into the cache and returns a key
     /// that can be used to retrieve it.
@@ -223,17 +225,18 @@ struct PixmapCache {
     /// The oldest pixmaps (least recently accessed in the cache) are
     /// deleted when more space is needed.
     /// 
-    /// **See also:** setCacheLimit()
-    /// replace()
+    /// **See also:** [`set_cache_limit()`]
+    /// [`replace()`]
     /// 
-    [static] insert(pixmap: &PixmapType) -> PixmapCache::Key,
+    [org_name(insert)]
+    [static] insert_2(pixmap: &PixmapType) -> PixmapCache::Key,
     /// 
     /// Replaces the pixmap associated with the given *key* with the *pixmap*
     /// specified. Returns `true` if the *pixmap* has been correctly inserted into
     /// the cache; otherwise returns `false.`
     /// 
-    /// **See also:** setCacheLimit()
-    /// insert()
+    /// **See also:** [`set_cache_limit()`]
+    /// [`insert()`]
     /// 
     [static] replace(key: onst QPixmapCache::Key &, pixmap: &PixmapType) -> bool,
     /// 
@@ -249,7 +252,8 @@ struct PixmapCache {
     /// Removes the pixmap associated with *key* from the cache and releases
     /// the key for a future insertion.
     /// 
-    [static] remove(key: onst QPixmapCache::Key &),
+    [org_name(remove)]
+    [static] remove_2(key: onst QPixmapCache::Key &),
     /// 
     /// Removes all pixmaps from the cache.
     [static] clear(),

@@ -69,17 +69,10 @@
 /// entire contents of the area is not suitable for being drawn on a
 /// QWidget or if you do not want smooth scrolling.
 /// 
-/// **See also:** QScrollArea
+/// **See also:** [`ScrollArea`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QAbstractScrollArea)]
-enum SizeAdjustPolicy {
-    AdjustIgnored,
-    AdjustToContentsOnFirstShow,
-    AdjustToContents,
-}
-
 struct AbstractScrollArea : Frame {
     /// 
     /// The default policy is Qt::ScrollBarAsNeeded.
@@ -95,7 +88,7 @@ struct AbstractScrollArea : Frame {
     /// Returns the vertical scroll bar.
     /// 
     /// **See also:** verticalScrollBarPolicy
-    /// horizontalScrollBar()
+    /// [`horizontal_scroll_bar()`]
     vertical_scroll_bar() -> ScrollBar?,
     /// 
     /// Replaces the existing vertical scroll bar with *scrollBar,* and sets all
@@ -106,8 +99,8 @@ struct AbstractScrollArea : Frame {
     /// default. You can call this function to replace the default vertical
     /// scroll bar with your own custom scroll bar.
     /// 
-    /// **See also:** verticalScrollBar()
-    /// setHorizontalScrollBar()
+    /// **See also:** [`vertical_scroll_bar()`]
+    /// [`set_horizontal_scroll_bar()`]
     set_vertical_scroll_bar(scrollbar: *ScrollBarType),
     /// 
     /// The default policy is Qt::ScrollBarAsNeeded.
@@ -123,7 +116,7 @@ struct AbstractScrollArea : Frame {
     /// Returns the horizontal scroll bar.
     /// 
     /// **See also:** horizontalScrollBarPolicy
-    /// verticalScrollBar()
+    /// [`vertical_scroll_bar()`]
     horizontal_scroll_bar() -> ScrollBar?,
     /// 
     /// Replaces the existing horizontal scroll bar with *scrollBar,* and sets all
@@ -134,8 +127,8 @@ struct AbstractScrollArea : Frame {
     /// default. You can call this function to replace the default horizontal
     /// scroll bar with your own custom scroll bar.
     /// 
-    /// **See also:** horizontalScrollBar()
-    /// setVerticalScrollBar()
+    /// **See also:** [`horizontal_scroll_bar()`]
+    /// [`set_vertical_scroll_bar()`]
     set_horizontal_scroll_bar(scrollbar: *ScrollBarType),
     /// 
     /// Returns the widget in the corner between the two scroll bars.
@@ -196,13 +189,13 @@ struct AbstractScrollArea : Frame {
     /// QStyle::pixelMetric(QStyle::PM_ScrollBarExtent) and set the
     /// width to this value.
     /// 
-    /// **See also:** scrollBarWidgets()
+    /// **See also:** [`scroll_bar_widgets()`]
     add_scroll_bar_widget(widget: *WidgetType, alignment: Rute::Alignment),
     /// 
     /// Returns a list of the currently set scroll bar widgets. *alignment*
     /// can be any combination of the four location flags.
     /// 
-    /// **See also:** addScrollBarWidget()
+    /// **See also:** [`add_scroll_bar_widget()`]
     scroll_bar_widgets(alignment: Rute::Alignment) -> WidgetList,
     /// 
     /// Returns the viewport widget.
@@ -210,12 +203,12 @@ struct AbstractScrollArea : Frame {
     /// Use the QScrollArea::widget() function to retrieve the contents of
     /// the viewport widget.
     /// 
-    /// **See also:** QScrollArea::widget()
+    /// **See also:** [`ScrollArea::widget`]
     /// 
     /// Returns the margins around the scrolling area.
     /// By default all the margins are zero.
     /// 
-    /// **See also:** setViewportMargins()
+    /// **See also:** [`set_viewport_margins()`]
     /// 
     /// The main event handler for the scrolling area (the viewport() widget).
     /// It handles the *event* specified, and can be called by subclasses to
@@ -245,7 +238,7 @@ struct AbstractScrollArea : Frame {
     /// If *widget* is 0, QAbstractScrollArea will assign a new QWidget instance
     /// for the viewport.
     /// 
-    /// **See also:** viewport()
+    /// **See also:** [`viewport()`]
     /// 
     /// Sets the margins around the scrolling area to *left,* *top,* *right* and *bottom.* This is useful for applications such as
     /// spreadsheets with rows and columns. The marginal space is
@@ -257,7 +250,7 @@ struct AbstractScrollArea : Frame {
     /// they should not call this function.
     /// 
     /// By default all margins are zero.
-    /// **See also:** viewportMargins()
+    /// **See also:** [`viewport_margins()`]
     /// 
     /// Sets *margins* around the scrolling area. This is useful for
     /// applications such as spreadsheets with rows and columns.
@@ -265,7 +258,7 @@ struct AbstractScrollArea : Frame {
     /// area.
     /// 
     /// By default all margins are zero.
-    /// **See also:** viewportMargins()
+    /// **See also:** [`viewport_margins()`]
     set_viewport(widget: *WidgetType),
     /// 
     /// Returns the size of the viewport as if the scroll bars had no valid
@@ -283,7 +276,7 @@ struct AbstractScrollArea : Frame {
     /// subclass of QAbstractScrollArea to initialize the new *viewport*
     /// before it is used.
     /// 
-    /// **See also:** setViewport()
+    /// **See also:** [`set_viewport()`]
     [event] setup_viewport(viewport: *WidgetType),
     /// 
     /// This property holds the policy describing how the size of the scroll area changes when the
@@ -304,7 +297,7 @@ struct AbstractScrollArea : Frame {
     /// they should not call this function.
     /// 
     /// By default all margins are zero.
-    /// **See also:** viewportMargins()
+    /// **See also:** [`viewport_margins()`]
     /// 
     /// Sets *margins* around the scrolling area. This is useful for
     /// applications such as spreadsheets with rows and columns.
@@ -312,7 +305,7 @@ struct AbstractScrollArea : Frame {
     /// area.
     /// 
     /// By default all margins are zero.
-    /// **See also:** viewportMargins()
+    /// **See also:** [`viewport_margins()`]
     set_viewport_margins(left: i32, top: i32, right: i32, bottom: i32),
     /// 
     /// Sets the margins around the scrolling area to *left,* *top,* *right* and *bottom.* This is useful for applications such as
@@ -325,7 +318,7 @@ struct AbstractScrollArea : Frame {
     /// they should not call this function.
     /// 
     /// By default all margins are zero.
-    /// **See also:** viewportMargins()
+    /// **See also:** [`viewport_margins()`]
     /// 
     /// Sets *margins* around the scrolling area. This is useful for
     /// applications such as spreadsheets with rows and columns.
@@ -333,13 +326,14 @@ struct AbstractScrollArea : Frame {
     /// area.
     /// 
     /// By default all margins are zero.
-    /// **See also:** viewportMargins()
-    set_viewport_margins(margins: &MarginsType),
+    /// **See also:** [`viewport_margins()`]
+    [org_name(setViewportMargins)]
+    set_viewport_margins_2(margins: &MarginsType),
     /// 
     /// Returns the margins around the scrolling area.
     /// By default all the margins are zero.
     /// 
-    /// **See also:** setViewportMargins()
+    /// **See also:** [`set_viewport_margins()`]
     viewport_margins() -> Margins,
     [event] event_filter(arg0: *ObjectType, arg1: *EventType) -> bool,
     /// 
@@ -348,7 +342,7 @@ struct AbstractScrollArea : Frame {
     /// object that may need to be cast to the appropriate class depending on its
     /// type.
     /// 
-    /// **See also:** QEvent::type()
+    /// **See also:** [`Event::type`]
     [event] event(arg0: *EventType) -> bool,
     /// 
     /// The main event handler for the scrolling area (the viewport() widget).
@@ -377,7 +371,7 @@ struct AbstractScrollArea : Frame {
     /// QResizeEvent::size() function, and the old size through
     /// QResizeEvent::oldSize().
     /// 
-    /// **See also:** QWidget::resizeEvent()
+    /// **See also:** [`Widget::resize_event`]
     [event] resize_event(arg0: *ResizeEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
@@ -385,35 +379,35 @@ struct AbstractScrollArea : Frame {
     /// 
     /// **Note**: If you open a painter, make sure to open it on the viewport().
     /// 
-    /// **See also:** QWidget::paintEvent()
+    /// **See also:** [`Widget::paint_event`]
     [event] paint_event(arg0: *PaintEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
     /// mouse press events for the viewport() widget. The event is passed
     /// in *e.*
     /// 
-    /// **See also:** QWidget::mousePressEvent()
+    /// **See also:** [`Widget::mouse_press_event`]
     [event] mouse_press_event(arg0: *MouseEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
     /// mouse release events for the viewport() widget. The event is
     /// passed in *e.*
     /// 
-    /// **See also:** QWidget::mouseReleaseEvent()
+    /// **See also:** [`Widget::mouse_release_event`]
     [event] mouse_release_event(arg0: *MouseEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
     /// mouse double click events for the viewport() widget. The event is
     /// passed in *e.*
     /// 
-    /// **See also:** QWidget::mouseDoubleClickEvent()
+    /// **See also:** [`Widget::mouse_double_click_event`]
     [event] mouse_double_click_event(arg0: *MouseEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
     /// mouse move events for the viewport() widget. The event is passed
     /// in *e.*
     /// 
-    /// **See also:** QWidget::mouseMoveEvent()
+    /// **See also:** [`Widget::mouse_move_event`]
     [event] mouse_move_event(arg0: *MouseEventType),
     [event] wheel_event(arg0: *WheelEventType),
     /// 
@@ -421,31 +415,31 @@ struct AbstractScrollArea : Frame {
     /// context menu events for the viewport() widget. The event is passed
     /// in *e.*
     /// 
-    /// **See also:** QWidget::contextMenuEvent()
+    /// **See also:** [`Widget::context_menu_event`]
     [event] context_menu_event(arg0: *ContextMenuEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
     /// drag enter events (passed in *event),* for the viewport() widget.
     /// 
-    /// **See also:** QWidget::dragEnterEvent()
+    /// **See also:** [`Widget::drag_enter_event`]
     [event] drag_enter_event(arg0: *DragEnterEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
     /// drag move events (passed in *event),* for the viewport() widget.
     /// 
-    /// **See also:** QWidget::dragMoveEvent()
+    /// **See also:** [`Widget::drag_move_event`]
     [event] drag_move_event(arg0: *DragMoveEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
     /// drag leave events (passed in *event),* for the viewport() widget.
     /// 
-    /// **See also:** QWidget::dragLeaveEvent()
+    /// **See also:** [`Widget::drag_leave_event`]
     [event] drag_leave_event(arg0: *DragLeaveEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
     /// drop events (passed in *event),* for the viewport() widget.
     /// 
-    /// **See also:** QWidget::dropEvent()
+    /// **See also:** [`Widget::drop_event`]
     [event] drop_event(arg0: *DropEventType),
     /// 
     /// This function is called with key event *e* when key presses
@@ -475,6 +469,16 @@ struct AbstractScrollArea : Frame {
     /// The default implementation returns viewport()->sizeHint().
     /// Note that the size is just the viewport's size, without any scroll bars visible.
     [event] viewport_size_hint() -> Size,
+}
+
+[org_name(QAbstractScrollArea)]
+enum SizeAdjustPolicy {
+    /// The scroll area will behave like before - and not do any adjust.
+    AdjustIgnored,
+    /// The scroll area will adjust to its viewport the first time it is shown.
+    AdjustToContentsOnFirstShow,
+    /// The scroll area will always adjust to the viewport
+    AdjustToContents,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

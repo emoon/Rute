@@ -43,13 +43,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QDebug)]
-enum Latin1Content {
-    ContainsBinary,
-    ContainsLatin1,
-}
-
-
 struct Debug {
     put_ucs4(ucs4: uint),
     put_byte_array(begin: *char, length: size_t, content: Debug::Latin1Content),
@@ -60,8 +53,8 @@ struct Debug {
     /// 
     /// Resets the stream formatting options, bringing it back to its original constructed state.
     /// 
-    /// **See also:** space()
-    /// quote()
+    /// **See also:** [`space()`]
+    /// [`quote()`]
     reset_format() -> Debug?,
     /// 
     /// Writes a space character to the debug stream and returns a reference to
@@ -70,21 +63,21 @@ struct Debug {
     /// The stream remembers that automatic insertion of spaces is
     /// enabled for future writes.
     /// 
-    /// **See also:** nospace()
-    /// maybeSpace()
+    /// **See also:** [`nospace()`]
+    /// [`maybe_space()`]
     space() -> Debug?,
     /// 
     /// Disables automatic insertion of spaces and returns a reference to the stream.
     /// 
-    /// **See also:** space()
-    /// maybeSpace()
+    /// **See also:** [`space()`]
+    /// [`maybe_space()`]
     nospace() -> Debug?,
     /// 
     /// Writes a space character to the debug stream, depending on the current
     /// setting for automatic insertion of spaces, and returns a reference to the stream.
     /// 
-    /// **See also:** space()
-    /// nospace()
+    /// **See also:** [`space()`]
+    /// [`nospace()`]
     maybe_space() -> Debug?,
     /// 
     /// Returns the verbosity of the debug stream.
@@ -95,26 +88,26 @@ struct Debug {
     /// 
     /// The allowed range is from 0 to 7. The default value is 2.
     /// 
-    /// **See also:** setVerbosity()
+    /// **See also:** [`set_verbosity()`]
     verbosity() -> i32,
     /// 
     /// Sets the verbosity of the stream to *verbosityLevel.*
     /// 
     /// The allowed range is from 0 to 7. The default value is 2.
     /// 
-    /// **See also:** verbosity()
+    /// **See also:** [`verbosity()`]
     set_verbosity(verbosity_level: i32),
     /// 
     /// Returns `true` if this QDebug instance will automatically insert spaces
     /// between writes.
     /// 
-    /// **See also:** QDebugStateSaver
+    /// **See also:** [`DebugStateSaver`]
     auto_insert_spaces() -> bool,
     /// 
     /// Enables automatic insertion of spaces between writes if *b* is true; otherwise
     /// automatic insertion of spaces is disabled.
     /// 
-    /// **See also:** QDebugStateSaver
+    /// **See also:** [`DebugStateSaver`]
     set_auto_insert_spaces(b: bool),
     /// 
     /// Enables automatic insertion of quotation characters around QChar, QString and QByteArray
@@ -122,8 +115,8 @@ struct Debug {
     /// 
     /// Quoting is enabled by default.
     /// 
-    /// **See also:** noquote()
-    /// maybeQuote()
+    /// **See also:** [`noquote()`]
+    /// [`maybe_quote()`]
     quote() -> Debug?,
     /// 
     /// Disables automatic insertion of quotation characters around QChar, QString and QByteArray
@@ -132,8 +125,8 @@ struct Debug {
     /// When quoting is disabled, these types are printed without quotation
     /// characters and without escaping of non-printable characters.
     /// 
-    /// **See also:** quote()
-    /// maybeQuote()
+    /// **See also:** [`quote()`]
+    /// [`maybe_quote()`]
     noquote() -> Debug?,
     /// 
     /// Writes a character *c* to the debug stream, depending on the
@@ -141,9 +134,15 @@ struct Debug {
     /// 
     /// The default character is a double quote `"` .
     /// 
-    /// **See also:** quote()
-    /// noquote()
+    /// **See also:** [`quote()`]
+    /// [`noquote()`]
     maybe_quote(c: char) -> Debug?,
+}
+
+[org_name(QDebug)]
+enum Latin1Content {
+    ContainsBinary,
+    ContainsLatin1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

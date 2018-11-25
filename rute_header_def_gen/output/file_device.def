@@ -6,66 +6,11 @@
 /// as QTemporaryFile, by providing all the operations that can be done on files that have
 /// been opened by QFile or QTemporaryFile.
 /// 
-/// **See also:** QFile
-/// QTemporaryFile
+/// **See also:** [`File`]
+/// [`TemporaryFile`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QFileDevice)]
-enum FileError {
-    NoError,
-    ReadError,
-    WriteError,
-    FatalError,
-    ResourceError,
-    OpenError,
-    AbortError,
-    TimeOutError,
-    UnspecifiedError,
-    RemoveError,
-    RenameError,
-    PositionError,
-    ResizeError,
-    PermissionsError,
-    CopyError,
-}
-
-[org_name(QFileDevice)]
-enum FileTime {
-    FileAccessTime,
-    FileBirthTime,
-    FileMetadataChangeTime,
-    FileModificationTime,
-}
-
-[org_name(QFileDevice)]
-enum Permission {
-    ReadOwner,
-    WriteOwner,
-    ExeOwner,
-    ReadUser,
-    WriteUser,
-    ExeUser,
-    ReadGroup,
-    WriteGroup,
-    ExeGroup,
-    ReadOther,
-    WriteOther,
-    ExeOther,
-}
-
-[org_name(QFileDevice)]
-enum FileHandleFlag {
-    AutoCloseHandle,
-    DontCloseHandle,
-}
-
-[org_name(QFileDevice)]
-enum MemoryMapFlags {
-    NoOptions,
-    MapPrivateOption,
-}
-
 struct FileDevice : IODevice {
     /// 
     /// Returns the file error status.
@@ -74,17 +19,17 @@ struct FileDevice : IODevice {
     /// returns `false,` or a read/write operation returns -1, this function can
     /// be called to find out the reason why the operation failed.
     /// 
-    /// **See also:** unsetError()
+    /// **See also:** [`unset_error()`]
     error() -> FileDevice::FileError,
     /// 
     /// Sets the file's error to QFileDevice::NoError.
     /// 
-    /// **See also:** error()
+    /// **See also:** [`error()`]
     unset_error(),
     /// 
     /// Calls QFileDevice::flush() and closes the file. Errors from flush are ignored.
     /// 
-    /// **See also:** QIODevice::close()
+    /// **See also:** [`IODevice::close`]
     [event] close(),
     /// 
     /// Returns `true` if the file can only be manipulated sequentially;
@@ -92,7 +37,7 @@ struct FileDevice : IODevice {
     /// 
     /// Most files support random-access, but some special files may not.
     /// 
-    /// **See also:** QIODevice::isSequential()
+    /// **See also:** [`IODevice::is_sequential`]
     [event] is_sequential() -> bool,
     /// 
     /// Returns the file handle of the file.
@@ -104,7 +49,7 @@ struct FileDevice : IODevice {
     /// 
     /// If the file is not open, or there is an error, handle() returns -1.
     /// 
-    /// **See also:** QSocketNotifier
+    /// **See also:** [`SocketNotifier`]
     handle() -> i32,
     /// 
     /// Returns the name of the file.
@@ -153,13 +98,13 @@ struct FileDevice : IODevice {
     /// 
     /// **Warning**: This function can fail if the file doesn't exist.
     /// 
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     [event] resize(sz: i64) -> bool,
     /// 
     /// Returns the complete OR-ed together combination of
     /// QFile::Permission for the file.
     /// 
-    /// **See also:** setPermissions()
+    /// **See also:** [`set_permissions()`]
     [event] permissions() -> FileDevice::Permissions,
     /// 
     /// Sets the permissions for the file to the *permissions* specified.
@@ -169,7 +114,7 @@ struct FileDevice : IODevice {
     /// **Warning**: This function does not manipulate ACLs, which may limit its
     /// effectiveness.
     /// 
-    /// **See also:** permissions()
+    /// **See also:** [`permissions()`]
     [event] set_permissions(permission_spec: FileDevice::Permissions) -> bool,
     /// 
     /// Maps *size* bytes of the file into memory starting at *offset.* A file
@@ -186,23 +131,23 @@ struct FileDevice : IODevice {
     /// 
     /// Returns a pointer to the memory or 0 if there is an error.
     /// 
-    /// **See also:** unmap()
+    /// **See also:** [`unmap()`]
     map(offset: i64, size: i64, flags: FileDevice::MemoryMapFlags) -> uchar?,
     /// 
     /// Unmaps the memory *address.*
     /// 
     /// Returns `true` if the unmap succeeds; false otherwise.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     unmap(address: *uchar) -> bool,
     /// 
     /// Returns the file time specified by *time.*
     /// If the time cannot be determined return QDateTime() (an invalid
     /// date time).
     /// 
-    /// **See also:** setFileTime()
+    /// **See also:** [`set_file_time()`]
     /// FileTime
-    /// QDateTime::isValid()
+    /// [`DateTime::is_valid`]
     file_time(time: FileDevice::FileTime) -> DateTime,
     /// 
     /// Sets the file time specified by *fileTime* to *newDate,* returning true
@@ -210,7 +155,7 @@ struct FileDevice : IODevice {
     /// 
     /// **Note**: The file must be open to use this function.
     /// 
-    /// **See also:** fileTime()
+    /// **See also:** [`file_time()`]
     /// FileTime
     set_file_time(new_date: &DateTimeType, file_time: FileDevice::FileTime) -> bool,
     /// 
@@ -219,6 +164,96 @@ struct FileDevice : IODevice {
     [event] write_data(data: *char, len: i64) -> i64,
     /// 
     [event] read_line_data(data: *char, maxlen: i64) -> i64,
+}
+
+[org_name(QFileDevice)]
+enum FileError {
+    /// No error occurred.
+    NoError,
+    /// An error occurred when reading from the file.
+    ReadError,
+    /// An error occurred when writing to the file.
+    WriteError,
+    /// A fatal error occurred.
+    FatalError,
+    /// Out of resources (e.g., too many open files, out of memory, etc.)
+    ResourceError,
+    /// The file could not be opened.
+    OpenError,
+    /// The operation was aborted.
+    AbortError,
+    /// A timeout occurred.
+    TimeOutError,
+    /// An unspecified error occurred.
+    UnspecifiedError,
+    /// The file could not be removed.
+    RemoveError,
+    /// The file could not be renamed.
+    RenameError,
+    /// The position in the file could not be changed.
+    PositionError,
+    /// The file could not be resized.
+    ResizeError,
+    /// The file could not be accessed.
+    PermissionsError,
+    /// The file could not be copied.
+    CopyError,
+}
+
+[org_name(QFileDevice)]
+enum FileTime {
+    /// When the file was most recently accessed (e.g. read or written to).
+    FileAccessTime,
+    /// When the file was created (may not be not supported on UNIX).
+    FileBirthTime,
+    /// When the file's metadata was last changed.
+    FileMetadataChangeTime,
+    /// When the file was most recently modified.
+    FileModificationTime,
+}
+
+[org_name(QFileDevice)]
+enum Permission {
+    /// The file is readable by the owner of the file.
+    ReadOwner,
+    /// The file is writable by the owner of the file.
+    WriteOwner,
+    /// The file is executable by the owner of the file.
+    ExeOwner,
+    /// The file is readable by the user.
+    ReadUser,
+    /// The file is writable by the user.
+    WriteUser,
+    /// The file is executable by the user.
+    ExeUser,
+    /// The file is readable by the group.
+    ReadGroup,
+    /// The file is writable by the group.
+    WriteGroup,
+    /// The file is executable by the group.
+    ExeGroup,
+    /// The file is readable by anyone.
+    ReadOther,
+    /// The file is writable by anyone.
+    WriteOther,
+    /// The file is executable by anyone. **Warning**: Because of differences in the platforms supported by Qt, the semantics of ReadUser, WriteUser and ExeUser are platform-dependent: On Unix, the rights of the owner of the file are returned and on Windows the rights of the current user are returned. This behavior might change in a future Qt version.
+    ExeOther,
+}
+
+[org_name(QFileDevice)]
+enum FileHandleFlag {
+    /// The file handle passed into open() should be closed by close(), the default behavior is that close just flushes the file and the application is responsible for closing the file handle. When opening a file by name, this flag is ignored as Qt always owns the file handle and must close it.
+    AutoCloseHandle,
+    /// If not explicitly closed, the underlying file handle is left open when the QFile object is destroyed.
+    DontCloseHandle,
+}
+
+[org_name(QFileDevice)]
+enum MemoryMapFlags {
+    /// No options.
+    NoOptions,
+    /// The mapped memory will be private, so any modifications will not be visible to other processes and will not be written to disk. Any such modifications will be lost when the memory is unmapped. It is unspecified whether modifications made to the file made after the mapping is created will be visible through the mapped memory. This enum value was introduced in Qt 5.4.
+    MapPrivateOption,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

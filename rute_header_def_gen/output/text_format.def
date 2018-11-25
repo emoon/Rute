@@ -33,120 +33,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTextFormat)]
-enum FormatType {
-    InvalidFormat,
-    BlockFormat,
-    CharFormat,
-    ListFormat,
-    TableFormat,
-    FrameFormat,
-    UserFormat,
-}
-
-[org_name(QTextFormat)]
-enum Property {
-    ObjectIndex,
-    CssFloat,
-    LayoutDirection,
-    OutlinePen,
-    BackgroundBrush,
-    ForegroundBrush,
-    BackgroundImageUrl,
-    BlockAlignment,
-    BlockTopMargin,
-    BlockBottomMargin,
-    BlockLeftMargin,
-    BlockRightMargin,
-    TextIndent,
-    TabPositions,
-    BlockIndent,
-    LineHeight,
-    LineHeightType,
-    BlockNonBreakableLines,
-    BlockTrailingHorizontalRulerWidth,
-    FirstFontProperty,
-    FontCapitalization,
-    FontLetterSpacingType,
-    FontLetterSpacing,
-    FontWordSpacing,
-    FontStretch,
-    FontStyleHint,
-    FontStyleStrategy,
-    FontKerning,
-    FontHintingPreference,
-    FontFamily,
-    FontPointSize,
-    FontSizeAdjustment,
-    FontSizeIncrement,
-    FontWeight,
-    FontItalic,
-    FontUnderline,
-    FontOverline,
-    FontStrikeOut,
-    FontFixedPitch,
-    FontPixelSize,
-    LastFontProperty,
-    TextUnderlineColor,
-    TextVerticalAlignment,
-    TextOutline,
-    TextUnderlineStyle,
-    TextToolTip,
-    IsAnchor,
-    AnchorHref,
-    AnchorName,
-    ObjectType,
-    ListStyle,
-    ListIndent,
-    ListNumberPrefix,
-    ListNumberSuffix,
-    FrameBorder,
-    FrameMargin,
-    FramePadding,
-    FrameWidth,
-    FrameHeight,
-    FrameTopMargin,
-    FrameBottomMargin,
-    FrameLeftMargin,
-    FrameRightMargin,
-    FrameBorderBrush,
-    FrameBorderStyle,
-    TableColumns,
-    TableColumnWidthConstraints,
-    TableCellSpacing,
-    TableCellPadding,
-    TableHeaderRowCount,
-    TableCellRowSpan,
-    TableCellColumnSpan,
-    TableCellTopPadding,
-    TableCellBottomPadding,
-    TableCellLeftPadding,
-    TableCellRightPadding,
-    ImageName,
-    ImageWidth,
-    ImageHeight,
-    FullWidthSelection,
-    PageBreakPolicy,
-    UserProperty,
-}
-
-[org_name(QTextFormat)]
-enum ObjectTypes {
-    NoObject,
-    ImageObject,
-    TableObject,
-    TableCellObject,
-    UserObject,
-}
-
-[org_name(QTextFormat)]
-enum PageBreakFlag {
-    PageBreak_Auto,
-    PageBreak_AlwaysBefore,
-    PageBreak_AlwaysAfter,
-}
-
-
 struct TextFormat {
     qt_check_for_qgadget_macro(),
     /// 
@@ -164,8 +50,8 @@ struct TextFormat {
     /// 
     /// Returns true if the format does not store any properties; false otherwise.
     /// 
-    /// **See also:** propertyCount()
-    /// properties()
+    /// **See also:** [`property_count()`]
+    /// [`properties()`]
     is_empty() -> bool,
     /// 
     /// Returns the type of this format.
@@ -175,12 +61,12 @@ struct TextFormat {
     /// 
     /// Returns the index of the format object, or -1 if the format object is invalid.
     /// 
-    /// **See also:** setObjectIndex()
+    /// **See also:** [`set_object_index()`]
     object_index() -> i32,
     /// 
     /// Sets the format object's object *index.*
     /// 
-    /// **See also:** objectIndex()
+    /// **See also:** [`object_index()`]
     set_object_index(object: i32),
     /// 
     /// Returns the property specified by the given *propertyId.*
@@ -196,7 +82,7 @@ struct TextFormat {
     /// 
     /// Sets the value of the property given by *propertyId* to *value.*
     /// 
-    /// **See also:** lengthVectorProperty()
+    /// **See also:** [`length_vector_property()`]
     /// Property
     set_property(property_id: i32, value: &VariantType),
     /// 
@@ -207,33 +93,33 @@ struct TextFormat {
     /// 
     /// Returns `true` if the text format has a property with the given *propertyId;* otherwise returns `false.`
     /// 
-    /// **See also:** properties()
+    /// **See also:** [`properties()`]
     /// Property
     has_property(property_id: i32) -> bool,
     /// 
     /// Returns the value of the property specified by *propertyId.* If the
     /// property isn't of QTextFormat::Bool type, false is returned instead.
     /// 
-    /// **See also:** setProperty()
-    /// intProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// colorProperty()
-    /// lengthProperty()
-    /// lengthVectorProperty()
+    /// **See also:** [`set_property()`]
+    /// [`int_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`color_property()`]
+    /// [`length_property()`]
+    /// [`length_vector_property()`]
     /// Property
     bool_property(property_id: i32) -> bool,
     /// 
     /// Returns the value of the property specified by *propertyId.* If the
     /// property is not of QTextFormat::Integer type, 0 is returned instead.
     /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// colorProperty()
-    /// lengthProperty()
-    /// lengthVectorProperty()
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`color_property()`]
+    /// [`length_property()`]
+    /// [`length_vector_property()`]
     /// Property
     int_property(property_id: i32) -> i32,
     /// 
@@ -241,13 +127,13 @@ struct TextFormat {
     /// property isn't of QVariant::Double or QMetaType::Float type, 0 is
     /// returned instead.
     /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// intProperty()
-    /// stringProperty()
-    /// colorProperty()
-    /// lengthProperty()
-    /// lengthVectorProperty()
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`int_property()`]
+    /// [`string_property()`]
+    /// [`color_property()`]
+    /// [`length_property()`]
+    /// [`length_vector_property()`]
     /// Property
     double_property(property_id: i32) -> f32,
     /// 
@@ -255,13 +141,13 @@ struct TextFormat {
     /// property isn't of QVariant::Color type, an invalid color is
     /// returned instead.
     /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// intProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// lengthProperty()
-    /// lengthVectorProperty()
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`int_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`length_property()`]
+    /// [`length_vector_property()`]
     /// Property
     color_property(property_id: i32) -> Color,
     /// 
@@ -269,13 +155,13 @@ struct TextFormat {
     /// property isn't of QVariant::Pen type, Qt::NoPen is
     /// returned instead.
     /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// intProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// lengthProperty()
-    /// lengthVectorProperty()
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`int_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`length_property()`]
+    /// [`length_vector_property()`]
     /// Property
     pen_property(property_id: i32) -> Pen,
     /// 
@@ -283,25 +169,25 @@ struct TextFormat {
     /// property isn't of QVariant::Brush type, Qt::NoBrush is
     /// returned instead.
     /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// intProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// lengthProperty()
-    /// lengthVectorProperty()
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`int_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`length_property()`]
+    /// [`length_vector_property()`]
     /// Property
     brush_property(property_id: i32) -> Brush,
     /// 
     /// Returns the value of the property given by *propertyId.*
     /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// intProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// colorProperty()
-    /// lengthVectorProperty()
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`int_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`color_property()`]
+    /// [`length_vector_property()`]
     /// Property
     length_property(property_id: i32) -> TextLength,
     /// 
@@ -309,13 +195,13 @@ struct TextFormat {
     /// property isn't of QTextFormat::LengthVector type, an empty length
     /// vector is returned instead.
     /// 
-    /// **See also:** setProperty()
-    /// boolProperty()
-    /// intProperty()
-    /// doubleProperty()
-    /// stringProperty()
-    /// colorProperty()
-    /// lengthProperty()
+    /// **See also:** [`set_property()`]
+    /// [`bool_property()`]
+    /// [`int_property()`]
+    /// [`double_property()`]
+    /// [`string_property()`]
+    /// [`color_property()`]
+    /// [`length_property()`]
     /// Property
     length_vector_property(property_id: i32) -> [TextLength],
     /// 
@@ -325,9 +211,10 @@ struct TextFormat {
     /// 
     /// Sets the value of the property given by *propertyId* to *value.*
     /// 
-    /// **See also:** lengthVectorProperty()
+    /// **See also:** [`length_vector_property()`]
     /// Property
-    set_property(property_id: i32, lengths: [TextLengthType]),
+    [org_name(setProperty)]
+    set_property_2(property_id: i32, lengths: [TextLengthType]),
     /// 
     /// Returns a map with all properties of this text format.
     properties() -> Map<int,,
@@ -338,13 +225,13 @@ struct TextFormat {
     /// Sets the text format's object type to *type.*
     /// 
     /// **See also:** ObjectTypes
-    /// objectType()
+    /// [`object_type()`]
     set_object_type(type: i32),
     /// 
     /// Returns the text format's object type.
     /// 
     /// **See also:** ObjectTypes
-    /// setObjectType()
+    /// [`set_object_type()`]
     object_type() -> i32,
     /// 
     /// Returns `true` if this text format is a `CharFormat;` otherwise
@@ -398,60 +285,267 @@ struct TextFormat {
     /// 
     /// Sets the document's layout direction to the specified *direction.*
     /// 
-    /// **See also:** layoutDirection()
+    /// **See also:** [`layout_direction()`]
     set_layout_direction(direction: Rute::LayoutDirection),
     /// 
     /// Returns the document's layout direction.
     /// 
-    /// **See also:** setLayoutDirection()
+    /// **See also:** [`set_layout_direction()`]
     layout_direction() -> Rute::LayoutDirection,
     /// 
     /// Sets the brush use to paint the document's background to the
     /// *brush* specified.
     /// 
-    /// **See also:** background()
-    /// clearBackground()
-    /// setForeground()
+    /// **See also:** [`background()`]
+    /// [`clear_background()`]
+    /// [`set_foreground()`]
     set_background(brush: &BrushType),
     /// 
     /// Returns the brush used to paint the document's background.
     /// 
-    /// **See also:** setBackground()
-    /// clearBackground()
-    /// foreground()
+    /// **See also:** [`set_background()`]
+    /// [`clear_background()`]
+    /// [`foreground()`]
     background() -> Brush,
     /// 
     /// Clears the brush used to paint the document's background. The default
     /// brush will be used.
     /// 
-    /// **See also:** background()
-    /// setBackground()
-    /// clearForeground()
+    /// **See also:** [`background()`]
+    /// [`set_background()`]
+    /// [`clear_foreground()`]
     clear_background(),
     /// 
     /// Sets the foreground brush to the specified *brush.* The foreground
     /// brush is mostly used to render text.
     /// 
-    /// **See also:** foreground()
-    /// clearForeground()
-    /// setBackground()
+    /// **See also:** [`foreground()`]
+    /// [`clear_foreground()`]
+    /// [`set_background()`]
     set_foreground(brush: &BrushType),
     /// 
     /// Returns the brush used to render foreground details, such as text,
     /// frame outlines, and table borders.
     /// 
-    /// **See also:** setForeground()
-    /// clearForeground()
-    /// background()
+    /// **See also:** [`set_foreground()`]
+    /// [`clear_foreground()`]
+    /// [`background()`]
     foreground() -> Brush,
     /// 
     /// Clears the brush used to paint the document's foreground. The default
     /// brush will be used.
     /// 
-    /// **See also:** foreground()
-    /// setForeground()
-    /// clearBackground()
+    /// **See also:** [`foreground()`]
+    /// [`set_foreground()`]
+    /// [`clear_background()`]
     clear_foreground(),
+}
+
+[org_name(QTextFormat)]
+enum FormatType {
+    /// An invalid format as created by the default constructor
+    InvalidFormat,
+    /// The object formats a text block
+    BlockFormat,
+    /// The object formats a single character
+    CharFormat,
+    /// The object formats a list
+    ListFormat,
+    TableFormat,
+    /// The object formats a frame
+    FrameFormat,
+    /// 
+    UserFormat,
+}
+
+[org_name(QTextFormat)]
+enum Property {
+    /// The index of the formatted object. See objectIndex(). Paragraph and character properties
+    ObjectIndex,
+    /// How a frame is located relative to the surrounding text
+    CssFloat,
+    /// The layout direction of the text in the document (Qt::LayoutDirection).
+    LayoutDirection,
+    /// 
+    OutlinePen,
+    /// 
+    BackgroundBrush,
+    /// 
+    ForegroundBrush,
+    /// 
+    BackgroundImageUrl,
+    /// 
+    BlockAlignment,
+    /// 
+    BlockTopMargin,
+    /// 
+    BlockBottomMargin,
+    /// 
+    BlockLeftMargin,
+    /// 
+    BlockRightMargin,
+    /// 
+    TextIndent,
+    /// Specifies the tab positions. The tab positions are structs of QTextOption::Tab which are stored in a QList (internally, in a QList<QVariant>).
+    TabPositions,
+    /// 
+    BlockIndent,
+    /// 
+    LineHeight,
+    /// 
+    LineHeightType,
+    /// 
+    BlockNonBreakableLines,
+    /// The width of a horizontal ruler element. Character properties
+    BlockTrailingHorizontalRulerWidth,
+    FirstFontProperty,
+    /// Specifies the capitalization type that is to be applied to the text.
+    FontCapitalization,
+    /// Specifies the meaning of the FontLetterSpacing property. The default is QFont::PercentageSpacing.
+    FontLetterSpacingType,
+    /// Changes the default spacing between individual letters in the font. The value is specified as a percentage or absolute value, depending on FontLetterSpacingType. The default value is 100%.
+    FontLetterSpacing,
+    /// Changes the default spacing between individual words. A positive value increases the word spacing by the corresponding pixels; a negative value decreases the spacing.
+    FontWordSpacing,
+    /// Corresponds to the QFont::Stretch property
+    FontStretch,
+    /// Corresponds to the QFont::StyleHint property
+    FontStyleHint,
+    /// Corresponds to the QFont::StyleStrategy property
+    FontStyleStrategy,
+    /// Specifies whether the font has kerning turned on.
+    FontKerning,
+    /// Controls the use of hinting according to values of the QFont::HintingPreference enum.
+    FontHintingPreference,
+    /// 
+    FontFamily,
+    /// 
+    FontPointSize,
+    /// Specifies the change in size given to the fontsize already set using FontPointSize or FontPixelSize.
+    FontSizeAdjustment,
+    FontSizeIncrement,
+    /// 
+    FontWeight,
+    /// 
+    FontItalic,
+    /// *This property has been deprecated.* Use QTextFormat::TextUnderlineStyle instead.
+    FontUnderline,
+    /// 
+    FontOverline,
+    /// 
+    FontStrikeOut,
+    /// 
+    FontFixedPitch,
+    /// 
+    FontPixelSize,
+    LastFontProperty,
+    /// 
+    TextUnderlineColor,
+    /// 
+    TextVerticalAlignment,
+    /// 
+    TextOutline,
+    /// 
+    TextUnderlineStyle,
+    /// Specifies the (optional) tool tip to be displayed for a fragment of text.
+    TextToolTip,
+    /// 
+    IsAnchor,
+    /// 
+    AnchorHref,
+    /// 
+    AnchorName,
+    /// 
+    ObjectType,
+    /// Specifies the style used for the items in a list, described by values of the QTextListFormat::Style enum.
+    ListStyle,
+    /// Specifies the amount of indentation used for a list.
+    ListIndent,
+    /// Defines the text which is prepended to item numbers in numeric lists.
+    ListNumberPrefix,
+    /// Defines the text which is appended to item numbers in numeric lists. Table and frame properties
+    ListNumberSuffix,
+    /// 
+    FrameBorder,
+    /// 
+    FrameMargin,
+    /// 
+    FramePadding,
+    /// 
+    FrameWidth,
+    /// 
+    FrameHeight,
+    /// 
+    FrameTopMargin,
+    /// 
+    FrameBottomMargin,
+    /// 
+    FrameLeftMargin,
+    /// 
+    FrameRightMargin,
+    /// 
+    FrameBorderBrush,
+    /// See the [BorderStyle](QTextFrameFormat::BorderStyle)
+ enum.
+    FrameBorderStyle,
+    /// 
+    TableColumns,
+    /// 
+    TableColumnWidthConstraints,
+    /// 
+    TableCellSpacing,
+    /// 
+    TableCellPadding,
+    /// 
+    TableHeaderRowCount,
+    /// 
+    TableCellRowSpan,
+    /// 
+    TableCellColumnSpan,
+    /// 
+    TableCellTopPadding,
+    /// 
+    TableCellBottomPadding,
+    /// 
+    TableCellLeftPadding,
+    /// 
+    TableCellRightPadding,
+    /// 
+    ImageName,
+    /// 
+    ImageWidth,
+    /// 
+    ImageHeight,
+    /// When set on the characterFormat of a selection, the whole width of the text will be shown selected. Page break properties
+    FullWidthSelection,
+    /// Specifies how pages are broken. See the PageBreakFlag enum.
+    PageBreakPolicy,
+    /// 
+    UserProperty,
+}
+
+[org_name(QTextFormat)]
+enum ObjectTypes {
+    /// 
+    NoObject,
+    /// 
+    ImageObject,
+    /// 
+    TableObject,
+    /// 
+    TableCellObject,
+    /// The first object that can be used for application-specific purposes.
+    UserObject,
+}
+
+[org_name(QTextFormat)]
+enum PageBreakFlag {
+    /// The page break is determined automatically depending on the available space on the current page
+    PageBreak_Auto,
+    /// The page is always broken before the paragraph/table
+    PageBreak_AlwaysBefore,
+    /// A new page is always started after the paragraph/table
+    PageBreak_AlwaysAfter,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -34,22 +34,13 @@
 /// editorEvent().
 /// 
 /// **See also:** {model-view-programming}{Model/View Programming}
-/// QItemDelegate
+/// [`ItemDelegate`]
 /// {Pixelator Example}
-/// QStyledItemDelegate
-/// QStyle
+/// [`StyledItemDelegate`]
+/// [`Style`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QAbstractItemDelegate)]
-enum EndEditHint {
-    NoHint,
-    EditNextItem,
-    EditPreviousItem,
-    SubmitModelCache,
-    RevertModelCache,
-}
-
 struct AbstractItemDelegate : Object {
     /// 
     /// This pure abstract function must be reimplemented if you want to
@@ -86,9 +77,9 @@ struct AbstractItemDelegate : Object {
     /// [setAutoFillBackground()](QWidget::)
     /// ).
     /// 
-    /// **See also:** destroyEditor()
-    /// setModelData()
-    /// setEditorData()
+    /// **See also:** [`destroy_editor()`]
+    /// [`set_model_data()`]
+    /// [`set_editor_data()`]
     [event] create_editor(parent: *WidgetType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> Widget?,
     /// 
     /// Sets the contents of the given *editor* to the data for the item
@@ -98,7 +89,7 @@ struct AbstractItemDelegate : Object {
     /// The base implementation does nothing. If you want custom editing
     /// you will need to reimplement this function.
     /// 
-    /// **See also:** setModelData()
+    /// **See also:** [`set_model_data()`]
     [event] set_editor_data(editor: *WidgetType, index: &ModelIndexType),
     /// 
     /// Sets the data for the item at the given *index* in the *model*
@@ -107,7 +98,7 @@ struct AbstractItemDelegate : Object {
     /// The base implementation does nothing. If you want custom editing
     /// you will need to reimplement this function.
     /// 
-    /// **See also:** setEditorData()
+    /// **See also:** [`set_editor_data()`]
     [event] set_model_data(editor: *WidgetType, model: *AbstractItemModelType, index: &ModelIndexType),
     /// 
     /// When editing of an item starts, this function is called with the
@@ -141,7 +132,7 @@ struct AbstractItemDelegate : Object {
     /// For QEvent::ToolTip and QEvent::WhatsThis events that were handled successfully,
     /// the relevant popup may be shown depending on the user's system configuration.
     /// 
-    /// **See also:** QHelpEvent
+    /// **See also:** [`HelpEvent`]
     [event] help_event(event: *HelpEventType, view: *AbstractItemViewType, option: &StyleOptionViewItemType, index: &ModelIndexType) -> bool,
     [event] painting_roles() -> [i32],
     /// 
@@ -166,6 +157,20 @@ struct AbstractItemDelegate : Object {
     /// 
     /// Views automatically connect to this signal and relayout items as necessary.
     [signal] size_hint_changed(arg0: &ModelIndexType),
+}
+
+[org_name(QAbstractItemDelegate)]
+enum EndEditHint {
+    /// There is no recommended action to be performed. These hints let the delegate influence the behavior of the view:
+    NoHint,
+    /// The view should use the delegate to open an editor on the next item in the view.
+    EditNextItem,
+    /// The view should use the delegate to open an editor on the previous item in the view. Note that custom views may interpret the concepts of next and previous differently. The following hints are most useful when models are used that cache data, such as those that manipulate data locally in order to increase performance or conserve network bandwidth.
+    EditPreviousItem,
+    /// If the model caches data, it should write out cached data to the underlying data store.
+    SubmitModelCache,
+    /// If the model caches data, it should discard cached data and replace it with data from the underlying data store. Although models and views should respond to these hints in appropriate ways, custom components may ignore any or all of them if they are not relevant.
+    RevertModelCache,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

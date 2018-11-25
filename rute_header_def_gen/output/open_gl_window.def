@@ -57,13 +57,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QOpenGLWindow)]
-enum UpdateBehavior {
-    NoPartialUpdate,
-    PartialUpdateBlit,
-    PartialUpdateBlend,
-}
-
 struct OpenGLWindow : PaintDeviceWindow {
     /// 
     /// **Returns** the update behavior for this QOpenGLWindow.
@@ -91,10 +84,10 @@ struct OpenGLWindow : PaintDeviceWindow {
     /// cleanup operations in the destructor will always work, as long as
     /// this function is called first.
     /// 
-    /// **See also:** QOpenGLContext
-    /// context()
-    /// paintGL()
-    /// doneCurrent()
+    /// **See also:** [`OpenGLContext`]
+    /// [`context()`]
+    /// [`paint_gl()`]
+    /// [`done_current()`]
     make_current(),
     /// 
     /// Releases the context.
@@ -103,7 +96,7 @@ struct OpenGLWindow : PaintDeviceWindow {
     /// will make sure the context is bound and released properly when invoking
     /// paintGL().
     /// 
-    /// **See also:** makeCurrent()
+    /// **See also:** [`make_current()`]
     done_current(),
     /// 
     /// **Returns** The QOpenGLContext used by this window or `0` if not yet initialized.
@@ -120,7 +113,7 @@ struct OpenGLWindow : PaintDeviceWindow {
     /// 
     /// Otherwise the value of the ID of the framebuffer object or `0` if not
     /// yet initialized.
-    default_framebuffer_object() -> i32,
+    default_framebuffer_object() -> GLuint,
     /// 
     /// Returns a 32-bit RGB image of the framebuffer.
     /// 
@@ -155,8 +148,8 @@ struct OpenGLWindow : PaintDeviceWindow {
     /// partial update mode is used, is not yet available at this stage, so avoid
     /// issuing draw calls from here. Defer such calls to paintGL() instead.
     /// 
-    /// **See also:** paintGL()
-    /// resizeGL()
+    /// **See also:** [`paint_gl()`]
+    /// [`resize_gl()`]
     [event] initialize_gl(),
     /// 
     /// This virtual function is called whenever the widget has been resized.
@@ -172,8 +165,8 @@ struct OpenGLWindow : PaintDeviceWindow {
     /// **Note**: Scheduling updates from here is not necessary. The windowing systems
     /// will send expose events that trigger an update automatically.
     /// 
-    /// **See also:** initializeGL()
-    /// paintGL()
+    /// **See also:** [`initialize_gl()`]
+    /// [`paint_gl()`]
     [event] resize_gl(w: i32, h: i32),
     /// 
     /// This virtual function is called whenever the window contents needs to be
@@ -192,10 +185,10 @@ struct OpenGLWindow : PaintDeviceWindow {
     /// blitted or blended over the content drawn directly to the window in
     /// paintUnderGL().
     /// 
-    /// **See also:** initializeGL()
-    /// resizeGL()
-    /// paintUnderGL()
-    /// paintOverGL()
+    /// **See also:** [`initialize_gl()`]
+    /// [`resize_gl()`]
+    /// [`paint_under_gl()`]
+    /// [`paint_over_gl()`]
     /// UpdateBehavior
     [event] paint_gl(),
     /// 
@@ -216,8 +209,8 @@ struct OpenGLWindow : PaintDeviceWindow {
     /// paintGL() onto the default framebuffer after each invocation of paintGL(),
     /// thus overwriting all drawing generated in this function.
     /// 
-    /// **See also:** paintGL()
-    /// paintOverGL()
+    /// **See also:** [`paint_gl()`]
+    /// [`paint_over_gl()`]
     /// UpdateBehavior
     [event] paint_under_gl(),
     /// 
@@ -232,21 +225,31 @@ struct OpenGLWindow : PaintDeviceWindow {
     /// after paintGL() has returned and the blit (PartialUpdateBlit) or quad drawing
     /// (PartialUpdateBlend) has been done.
     /// 
-    /// **See also:** paintGL()
-    /// paintUnderGL()
+    /// **See also:** [`paint_gl()`]
+    /// [`paint_under_gl()`]
     /// UpdateBehavior
     [event] paint_over_gl(),
     /// 
     /// Paint *event* handler. Calls paintGL().
     /// 
-    /// **See also:** paintGL()
+    /// **See also:** [`paint_gl()`]
     [event] paint_event(event: *PaintEventType),
     /// 
     /// Resize *event* handler. Calls resizeGL().
     /// 
-    /// **See also:** resizeGL()
+    /// **See also:** [`resize_gl()`]
     [event] resize_event(event: *ResizeEventType),
     [event] redirected(arg0: *PointType) -> PaintDevice?,
+}
+
+[org_name(QOpenGLWindow)]
+enum UpdateBehavior {
+    /// Indicates that the entire window surface will redrawn on each update and so no additional framebuffers are needed. This is the setting used in most cases and is equivalent to how drawing directly via QWindow would function.
+    NoPartialUpdate,
+    /// Indicates that the drawing performed in paintGL() does not cover the entire window. In this case an extra framebuffer object is created under the hood, and rendering performed in paintGL() will target this framebuffer. This framebuffer is then blitted onto the window surface's default framebuffer after each paint. This allows having QPainter-based drawing code in paintGL() which only repaints a smaller area at a time, because, unlike NoPartialUpdate, the previous content is preserved.
+    PartialUpdateBlit,
+    /// Similar to PartialUpdateBlit, but instead of using framebuffer blits, the contents of the extra framebuffer is rendered by drawing a textured quad with blending enabled. This, unlike PartialUpdateBlit, allows alpha blended content and works even when the glBlitFramebuffer is not available. Performance-wise this setting is likely to be somewhat slower than PartialUpdateBlit.
+    PartialUpdateBlend,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

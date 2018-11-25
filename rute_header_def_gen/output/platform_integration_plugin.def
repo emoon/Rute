@@ -3,7 +3,8 @@
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 struct PlatformIntegrationPlugin : Object {
     [event] create(key: String, param_list: &[String]) -> PlatformIntegration?,
-    [event] create(key: String, param_list: &[String], argc: &i32, argv: *char) -> PlatformIntegration?,
+    [org_name(create)]
+    [event] create_2(key: String, param_list: &[String], argc: &i32, argv: *char) -> PlatformIntegration?,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

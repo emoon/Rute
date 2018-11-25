@@ -32,20 +32,13 @@
 /// call the base class constructor with a new type value equal to or greater
 /// than [UserType.](UserType.)
 /// 
-/// **See also:** QTableWidget
+/// **See also:** [`TableWidget`]
 /// {Model/View Programming}
-/// QListWidgetItem
-/// QTreeWidgetItem
+/// [`ListWidgetItem`]
+/// [`TreeWidgetItem`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTableWidgetItem)]
-enum ItemType {
-    Type,
-    UserType,
-}
-
-
 struct TableWidgetItem {
     /// 
     /// Creates a copy of the item.
@@ -57,134 +50,134 @@ struct TableWidgetItem {
     /// Returns the row of the item in the table.
     /// If the item is not in a table, this function will return -1.
     /// 
-    /// **See also:** column()
+    /// **See also:** [`column()`]
     row() -> i32,
     /// 
     /// Returns the column of the item in the table.
     /// If the item is not in a table, this function will return -1.
     /// 
-    /// **See also:** row()
+    /// **See also:** [`row()`]
     column() -> i32,
     /// 
     /// Sets the selected state of the item to *select.*
     /// 
-    /// **See also:** isSelected()
+    /// **See also:** [`is_selected()`]
     set_selected(select: bool),
     /// 
     /// Returns `true` if the item is selected, otherwise returns `false.`
     /// 
-    /// **See also:** setSelected()
+    /// **See also:** [`set_selected()`]
     is_selected() -> bool,
     /// 
     /// Returns the flags used to describe the item. These determine whether
     /// the item can be checked, edited, and selected.
     /// 
-    /// **See also:** setFlags()
+    /// **See also:** [`set_flags()`]
     flags() -> Rute::ItemFlags,
     /// 
     /// Sets the flags for the item to the given *flags.* These determine whether
     /// the item can be selected or modified.
     /// 
-    /// **See also:** flags()
+    /// **See also:** [`flags()`]
     set_flags(flags: Rute::ItemFlags),
     /// 
     /// Returns the item's text.
     /// 
-    /// **See also:** setText()
+    /// **See also:** [`set_text()`]
     /// 
     /// This function is deprecated. Use foreground() instead.
     /// 
     /// Returns the text alignment for the item's text.
     /// 
-    /// **See also:** Qt::Alignment
+    /// **See also:** [`t::alignment()`]
     text() -> String,
     /// 
     /// Sets the item's text to the *text* specified.
     /// 
-    /// **See also:** text()
-    /// setFont()
-    /// setForeground()
+    /// **See also:** [`text()`]
+    /// [`set_font()`]
+    /// [`set_foreground()`]
     /// 
     /// This function is deprecated. Use setForeground() instead.
     /// 
     /// Sets the text alignment for the item's text to the *alignment*
     /// specified.
     /// 
-    /// **See also:** Qt::Alignment
+    /// **See also:** [`t::alignment()`]
     set_text(text: String),
     /// 
     /// Returns the item's icon.
     /// 
-    /// **See also:** setIcon()
+    /// **See also:** [`set_icon()`]
     /// {QAbstractItemView::iconSize}{iconSize}
     icon() -> Icon,
     /// 
     /// Sets the item's icon to the *icon* specified.
     /// 
-    /// **See also:** icon()
-    /// setText()
+    /// **See also:** [`icon()`]
+    /// [`set_text()`]
     /// {QAbstractItemView::iconSize}{iconSize}
     set_icon(icon: &IconType),
     /// 
     /// Returns the item's status tip.
     /// 
-    /// **See also:** setStatusTip()
+    /// **See also:** [`set_status_tip()`]
     status_tip() -> String,
     /// 
     /// Sets the status tip for the table item to the text specified by
     /// *statusTip.* QTableWidget mouse tracking needs to be enabled for this
     /// feature to work.
     /// 
-    /// **See also:** statusTip()
-    /// setToolTip()
-    /// setWhatsThis()
+    /// **See also:** [`status_tip()`]
+    /// [`set_tool_tip()`]
+    /// [`set_whats_this()`]
     set_status_tip(status_tip: String),
     /// 
     /// Returns the item's tooltip.
     /// 
-    /// **See also:** setToolTip()
+    /// **See also:** [`set_tool_tip()`]
     tool_tip() -> String,
     /// 
     /// Sets the item's tooltip to the string specified by *toolTip.*
     /// 
-    /// **See also:** toolTip()
-    /// setStatusTip()
-    /// setWhatsThis()
+    /// **See also:** [`tool_tip()`]
+    /// [`set_status_tip()`]
+    /// [`set_whats_this()`]
     set_tool_tip(tool_tip: String),
     /// 
     /// Returns the item's help.
     /// 
-    /// **See also:** setWhatsThis()
+    /// **See also:** [`set_whats_this()`]
     whats_this() -> String,
     /// 
     /// Sets the item's help to the string specified by *whatsThis.*
     /// 
-    /// **See also:** whatsThis()
-    /// setStatusTip()
-    /// setToolTip()
+    /// **See also:** [`whats_this()`]
+    /// [`set_status_tip()`]
+    /// [`set_tool_tip()`]
     set_whats_this(whats_this: String),
     /// 
     /// Returns the font used to render the item's text.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     font() -> Font,
     /// 
     /// Sets the font used to display the item's text to the given *font.*
     /// 
-    /// **See also:** font()
-    /// setText()
-    /// setForeground()
+    /// **See also:** [`font()`]
+    /// [`set_text()`]
+    /// [`set_foreground()`]
     set_font(font: &FontType),
     /// 
     /// Returns the text alignment for the item's text.
     /// 
-    /// **See also:** Qt::Alignment
+    /// **See also:** [`t::alignment()`]
     text_alignment() -> i32,
     /// 
     /// Sets the text alignment for the item's text to the *alignment*
     /// specified.
     /// 
-    /// **See also:** Qt::Alignment
+    /// **See also:** [`t::alignment()`]
     set_text_alignment(alignment: i32),
     /// 
     /// This function is deprecated. Use background() instead.
@@ -197,14 +190,14 @@ struct TableWidgetItem {
     /// 
     /// Returns the brush used to render the item's background.
     /// 
-    /// **See also:** foreground()
+    /// **See also:** [`foreground()`]
     background() -> Brush,
     /// 
     /// This function is deprecated. Use setBackground() instead.
     /// 
     /// Sets the item's background brush to the specified *brush.*
     /// 
-    /// **See also:** setForeground()
+    /// **See also:** [`set_foreground()`]
     set_background(brush: &BrushType),
     /// 
     /// This function is deprecated. Use foreground() instead.
@@ -215,17 +208,17 @@ struct TableWidgetItem {
     /// 
     /// Returns the brush used to render the item's foreground (e.g. text).
     /// 
-    /// **See also:** background()
+    /// **See also:** [`background()`]
     foreground() -> Brush,
     /// 
     /// Sets the item's foreground brush to the specified *brush.*
     /// 
-    /// **See also:** setBackground()
+    /// **See also:** [`set_background()`]
     set_foreground(brush: &BrushType),
     /// 
     /// Returns the checked state of the table item.
     /// 
-    /// **See also:** flags()
+    /// **See also:** [`flags()`]
     check_state() -> Rute::CheckState,
     /// 
     /// Sets the check state of the table item to be *state.*
@@ -247,22 +240,30 @@ struct TableWidgetItem {
     /// **Note**: The default implementation treats Qt::EditRole and Qt::DisplayRole as
     /// referring to the same data.
     /// 
-    /// **See also:** Qt::ItemDataRole
-    /// data()
+    /// **See also:** [`t::item_data_role()`]
+    /// [`data()`]
     [event] set_data(role: i32, value: &VariantType),
     /// 
     /// Reads the item from stream *in.*
     /// 
-    /// **See also:** write()
+    /// **See also:** [`write()`]
     [event] read(in: &DataStreamType),
     /// 
     /// Writes the item to stream *out.*
     /// 
-    /// **See also:** read()
+    /// **See also:** [`read()`]
     [event] write(out: &DataStreamType),
     /// 
     /// Returns the type passed to the QTableWidgetItem constructor.
     type() -> i32,
+}
+
+[org_name(QTableWidgetItem)]
+enum ItemType {
+    /// The default type for table widget items.
+    Type,
+    /// The minimum value for custom types. Values below UserType are reserved by Qt. You can define new user types in QTableWidgetItem subclasses to ensure that custom items are treated specially.
+    UserType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

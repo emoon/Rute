@@ -37,40 +37,17 @@
 /// values. Before changing them you can experiment with the `plot` example in
 /// the `scroller` examples directory.
 /// 
-/// **See also:** QScrollEvent
-/// QScrollPrepareEvent
-/// QScrollerProperties
+/// **See also:** [`ScrollEvent`]
+/// [`ScrollPrepareEvent`]
+/// [`ScrollerProperties`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QScroller)]
-enum State {
-    Inactive,
-    Pressed,
-    Dragging,
-    Scrolling,
-}
-
-[org_name(QScroller)]
-enum ScrollerGestureType {
-    TouchGesture,
-    LeftMouseButtonGesture,
-    RightMouseButtonGesture,
-    MiddleMouseButtonGesture,
-}
-
-[org_name(QScroller)]
-enum Input {
-    InputPress,
-    InputMove,
-    InputRelease,
-}
-
 struct Scroller : Object {
     /// 
     /// Returns `true` if a QScroller object was already created for *target;* `false` otherwise.
     /// 
-    /// **See also:** scroller()
+    /// **See also:** [`scroller()`]
     [static] has_scroller(target: *ObjectType) -> bool,
     /// 
     /// Returns the scroller for the given *target.*
@@ -78,8 +55,8 @@ struct Scroller : Object {
     /// If no QScroller exists for the *target,* one will implicitly be created.
     /// At no point more than one QScroller will be active on an object.
     /// 
-    /// **See also:** hasScroller()
-    /// target()
+    /// **See also:** [`has_scroller()`]
+    /// [`target()`]
     /// 
     /// **Overloads**  This is the const version of scroller().
     /// 
@@ -95,8 +72,8 @@ struct Scroller : Object {
     /// If no QScroller exists for the *target,* one will implicitly be created.
     /// At no point more than one QScroller will be active on an object.
     /// 
-    /// **See also:** hasScroller()
-    /// target()
+    /// **See also:** [`has_scroller()`]
+    /// [`target()`]
     /// 
     /// **Overloads**  This is the const version of scroller().
     /// 
@@ -105,7 +82,8 @@ struct Scroller : Object {
     /// 
     /// **See also:** scrollerProperties
     /// 
-    [static] scroller(target: *ObjectType) -> Scroller?,
+    [org_name(scroller)]
+    [static] scroller_2(target: *ObjectType) -> Scroller?,
     /// 
     /// Registers a custom scroll gesture recognizer, grabs it for the *target* and returns the resulting gesture type. If *scrollGestureType* is
     /// set to TouchGesture the gesture triggers on touch events. If it is set to
@@ -124,22 +102,22 @@ struct Scroller : Object {
     /// internal states of the widget that received the original mouse press
     /// are consistent.
     /// 
-    /// **See also:** ungrabGesture()
-    /// grabbedGesture()
+    /// **See also:** [`ungrab_gesture()`]
+    /// [`grabbed_gesture()`]
     [static] grab_gesture(target: *ObjectType, gesture_type: Scroller::ScrollerGestureType) -> Rute::GestureType,
     /// 
     /// Returns the gesture type currently grabbed for the *target* or 0 if no
     /// gesture is grabbed.
     /// 
-    /// **See also:** grabGesture()
-    /// ungrabGesture()
+    /// **See also:** [`grab_gesture()`]
+    /// [`ungrab_gesture()`]
     [static] grabbed_gesture(target: *ObjectType) -> Rute::GestureType,
     /// 
     /// Ungrabs the gesture for the *target.*
     /// Does nothing if no gesture is grabbed.
     /// 
-    /// **See also:** grabGesture()
-    /// grabbedGesture()
+    /// **See also:** [`grab_gesture()`]
+    /// [`grabbed_gesture()`]
     [static] ungrab_gesture(target: *ObjectType),
     /// 
     /// Returns an application wide list of currently active QScroller objects.
@@ -148,15 +126,15 @@ struct Scroller : Object {
     [static] active_scrollers() -> [Scroller?],
     /// 
     /// Returns the target object of this scroller.
-    /// **See also:** hasScroller()
-    /// scroller()
+    /// **See also:** [`has_scroller()`]
+    /// [`scroller()`]
     target() -> Object?,
     /// 
     /// QScroller emits this signal whenever the state changes. *newState* is the new State.
     /// 
     /// **See also:** state
     /// 
-    /// **See also:** QScroller::State
+    /// **See also:** [`Scroller::state()`]
     state() -> Scroller::State,
     /// 
     /// This function is used by gesture recognizers to inform the scroller about a new input event.
@@ -179,7 +157,7 @@ struct Scroller : Object {
     /// 
     /// The velocity is reported for both the x and y axis separately by using a QPointF.
     /// 
-    /// **See also:** pixelPerMeter()
+    /// **See also:** [`pixel_per_meter()`]
     velocity() -> PointF,
     /// 
     /// Returns the estimated final position for the current scroll movement.
@@ -188,8 +166,8 @@ struct Scroller : Object {
     /// 
     /// The target position is in pixel.
     /// 
-    /// **See also:** pixelPerMeter()
-    /// scrollTo()
+    /// **See also:** [`pixel_per_meter()`]
+    /// [`scroll_to()`]
     final_position() -> PointF,
     /// 
     /// Returns the pixel per meter metric for the scrolled widget.
@@ -228,7 +206,8 @@ struct Scroller : Object {
     /// This overwrites all previously set snap positions and also a previously
     /// set snapping interval.
     /// Snapping can be deactivated by setting an interval of 0.0
-    set_snap_positions_x(first: f32, interval: f32),
+    [org_name(setSnapPositionsX)]
+    set_snap_positions_x_2(first: f32, interval: f32),
     /// Set the snap positions for the vertical axis to a list of *positions.*
     /// This overwrites all previously set snap positions and also a previously
     /// set snapping interval.
@@ -248,7 +227,8 @@ struct Scroller : Object {
     /// This overwrites all previously set snap positions and also a previously
     /// set snapping interval.
     /// Snapping can be deactivated by setting an interval of 0.0
-    set_snap_positions_y(first: f32, interval: f32),
+    [org_name(setSnapPositionsY)]
+    set_snap_positions_y_2(first: f32, interval: f32),
     set_scroller_properties(prop: &ScrollerPropertiesType),
     /// 
     /// Starts scrolling the widget so that point *pos* is at the top-left position in
@@ -262,7 +242,7 @@ struct Scroller : Object {
     /// 
     /// *pos* is given in viewport coordinates.
     /// 
-    /// **See also:** ensureVisible()
+    /// **See also:** [`ensure_visible()`]
     /// **Overloads**
     /// This version will reach its destination position in *scrollTime* milliseconds.
     scroll_to(pos: &PointFType),
@@ -278,10 +258,11 @@ struct Scroller : Object {
     /// 
     /// *pos* is given in viewport coordinates.
     /// 
-    /// **See also:** ensureVisible()
+    /// **See also:** [`ensure_visible()`]
     /// **Overloads**
     /// This version will reach its destination position in *scrollTime* milliseconds.
-    scroll_to(pos: &PointFType, scroll_time: i32),
+    [org_name(scrollTo)]
+    scroll_to_2(pos: &PointFType, scroll_time: i32),
     /// 
     /// Starts scrolling so that the rectangle *rect* is visible inside the
     /// viewport with additional margins specified in pixels by *xmargin* and *ymargin* around
@@ -295,7 +276,7 @@ struct Scroller : Object {
     /// 
     /// This function performs the actual scrolling by calling scrollTo().
     /// 
-    /// **See also:** scrollTo()
+    /// **See also:** [`scroll_to()`]
     /// **Overloads**
     /// This version will reach its destination position in *scrollTime* milliseconds.
     ensure_visible(rect: &RectFType, xmargin: f32, ymargin: f32),
@@ -312,10 +293,11 @@ struct Scroller : Object {
     /// 
     /// This function performs the actual scrolling by calling scrollTo().
     /// 
-    /// **See also:** scrollTo()
+    /// **See also:** [`scroll_to()`]
     /// **Overloads**
     /// This version will reach its destination position in *scrollTime* milliseconds.
-    ensure_visible(rect: &RectFType, xmargin: f32, ymargin: f32, scroll_time: i32),
+    [org_name(ensureVisible)]
+    ensure_visible_2(rect: &RectFType, xmargin: f32, ymargin: f32, scroll_time: i32),
     /// This function resends the QScrollPrepareEvent.
     /// Calling resendPrepareEvent triggers a QScrollPrepareEvent from the scroller.
     /// This allows the receiver to re-set content position and content size while
@@ -334,6 +316,40 @@ struct Scroller : Object {
     /// 
     /// **See also:** scrollerProperties
     [signal] scroller_properties_changed(arg0: &ScrollerPropertiesType),
+}
+
+[org_name(QScroller)]
+enum State {
+    /// The scroller is not scrolling and nothing is pressed.
+    Inactive,
+    /// A touch event was received or the mouse button was pressed but the scroll area is currently not dragged.
+    Pressed,
+    /// The scroll area is currently following the touch point or mouse.
+    Dragging,
+    /// The scroll area is moving on it's own.
+    Scrolling,
+}
+
+[org_name(QScroller)]
+enum ScrollerGestureType {
+    /// The gesture recognizer will only trigger on touch events. Specifically it will react on single touch points when using a touch screen and dual touch points when using a touchpad.
+    TouchGesture,
+    /// The gesture recognizer will only trigger on left mouse button events.
+    LeftMouseButtonGesture,
+    /// The gesture recognizer will only trigger on right mouse button events.
+    RightMouseButtonGesture,
+    /// The gesture recognizer will only trigger on middle mouse button events.
+    MiddleMouseButtonGesture,
+}
+
+[org_name(QScroller)]
+enum Input {
+    /// The user pressed the input device (e.g. QEvent::MouseButtonPress, QEvent::GraphicsSceneMousePress, QEvent::TouchBegin)
+    InputPress,
+    /// The user moved the input device (e.g. QEvent::MouseMove, QEvent::GraphicsSceneMouseMove, QEvent::TouchUpdate)
+    InputMove,
+    /// The user released the input device (e.g. QEvent::MouseButtonRelease, QEvent::GraphicsSceneMouseRelease, QEvent::TouchEnd)
+    InputRelease,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

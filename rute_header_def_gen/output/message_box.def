@@ -220,75 +220,20 @@
 /// When an escape button can't be determined using these rules,
 /// pressing **Esc** has no effect.
 /// 
-/// **See also:** QDialogButtonBox
+/// **See also:** [`DialogButtonBox`]
 /// {fowler}{GUI Design Handbook: Message Box}
 /// {Standard Dialogs Example}
 /// {Application Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QMessageBox)]
-enum Icon {
-    NoIcon,
-    Information,
-    Warning,
-    Critical,
-    Question,
-}
-
-[org_name(QMessageBox)]
-enum ButtonRole {
-    InvalidRole,
-    AcceptRole,
-    RejectRole,
-    DestructiveRole,
-    ActionRole,
-    HelpRole,
-    YesRole,
-    NoRole,
-    ResetRole,
-    ApplyRole,
-    NRoles,
-}
-
-[org_name(QMessageBox)]
-enum StandardButton {
-    NoButton,
-    Ok,
-    Save,
-    SaveAll,
-    Open,
-    Yes,
-    YesToAll,
-    No,
-    NoToAll,
-    Abort,
-    Retry,
-    Ignore,
-    Close,
-    Cancel,
-    Discard,
-    Help,
-    Apply,
-    Reset,
-    RestoreDefaults,
-    FirstButton,
-    LastButton,
-    YesAll,
-    NoAll,
-    Default,
-    Escape,
-    FlagMask,
-    ButtonMask,
-}
-
 struct MessageBox : Dialog {
     /// 
     /// Adds the given *button* to the message box with the specified *role.*
     /// 
-    /// **See also:** removeButton()
-    /// button()
-    /// setStandardButtons()
+    /// **See also:** [`remove_button()`]
+    /// [`button()`]
+    /// [`set_standard_buttons()`]
     /// 
     /// **Overloads**
     /// Creates a button with the given *text,* adds it to the message box for the
@@ -298,14 +243,14 @@ struct MessageBox : Dialog {
     /// Adds a standard *button* to the message box if it is valid to do so, and
     /// returns the push button.
     /// 
-    /// **See also:** setStandardButtons()
+    /// **See also:** [`set_standard_buttons()`]
     add_button(button: *AbstractButtonType, role: MessageBox::ButtonRole),
     /// 
     /// Adds the given *button* to the message box with the specified *role.*
     /// 
-    /// **See also:** removeButton()
-    /// button()
-    /// setStandardButtons()
+    /// **See also:** [`remove_button()`]
+    /// [`button()`]
+    /// [`set_standard_buttons()`]
     /// 
     /// **Overloads**
     /// Creates a button with the given *text,* adds it to the message box for the
@@ -315,14 +260,15 @@ struct MessageBox : Dialog {
     /// Adds a standard *button* to the message box if it is valid to do so, and
     /// returns the push button.
     /// 
-    /// **See also:** setStandardButtons()
-    add_button(text: String, role: MessageBox::ButtonRole) -> PushButton?,
+    /// **See also:** [`set_standard_buttons()`]
+    [org_name(addButton)]
+    add_button_2(text: String, role: MessageBox::ButtonRole) -> PushButton?,
     /// 
     /// Adds the given *button* to the message box with the specified *role.*
     /// 
-    /// **See also:** removeButton()
-    /// button()
-    /// setStandardButtons()
+    /// **See also:** [`remove_button()`]
+    /// [`button()`]
+    /// [`set_standard_buttons()`]
     /// 
     /// **Overloads**
     /// Creates a button with the given *text,* adds it to the message box for the
@@ -332,13 +278,14 @@ struct MessageBox : Dialog {
     /// Adds a standard *button* to the message box if it is valid to do so, and
     /// returns the push button.
     /// 
-    /// **See also:** setStandardButtons()
-    add_button(button: MessageBox::StandardButton) -> PushButton?,
+    /// **See also:** [`set_standard_buttons()`]
+    [org_name(addButton)]
+    add_button_3(button: MessageBox::StandardButton) -> PushButton?,
     /// 
     /// Removes *button* from the button box without deleting it.
     /// 
-    /// **See also:** addButton()
-    /// setStandardButtons()
+    /// **See also:** [`add_button()`]
+    /// [`set_standard_buttons()`]
     remove_button(button: *AbstractButtonType),
     /// 
     /// **Overloads**
@@ -352,17 +299,17 @@ struct MessageBox : Dialog {
     /// 
     /// Returns a list of all the buttons that have been added to the message box.
     /// 
-    /// **See also:** buttonRole()
-    /// addButton()
-    /// removeButton()
+    /// **See also:** [`button_role()`]
+    /// [`add_button()`]
+    /// [`remove_button()`]
     buttons() -> [AbstractButton?],
     /// 
     /// Returns the button role for the specified *button.* This function returns
     /// [InvalidRole](InvalidRole)
     /// if *button* is 0 or has not been added to the message box.
     /// 
-    /// **See also:** buttons()
-    /// addButton()
+    /// **See also:** [`buttons()`]
+    /// [`add_button()`]
     button_role(button: *AbstractButtonType) -> MessageBox::ButtonRole,
     set_standard_buttons(buttons: MessageBox::StandardButtons),
     /// 
@@ -370,20 +317,20 @@ struct MessageBox : Dialog {
     /// 
     /// By default, this property contains no standard buttons.
     /// 
-    /// **See also:** addButton()
+    /// **See also:** [`add_button()`]
     standard_buttons() -> MessageBox::StandardButtons,
     /// 
     /// This property controls which standard buttons are used by the message box.
     /// 
     /// By default, this property contains no standard buttons.
     /// 
-    /// **See also:** addButton()
+    /// **See also:** [`add_button()`]
     /// 
     /// Returns the standard button enum value corresponding to the given *button,*
     /// or NoButton if the given *button* isn't a standard button.
     /// 
-    /// **See also:** button()
-    /// standardButtons()
+    /// **See also:** [`button()`]
+    /// [`standard_buttons()`]
     standard_button(button: *AbstractButtonType) -> MessageBox::StandardButton,
     /// 
     /// This signal is emitted whenever a button is clicked inside the QMessageBox.
@@ -393,20 +340,20 @@ struct MessageBox : Dialog {
     /// or 0 if the standard button doesn't exist in this message box.
     /// 
     /// **See also:** standardButtons
-    /// standardButton()
+    /// [`standard_button()`]
     /// 
     /// Returns a list of all the buttons that have been added to the message box.
     /// 
-    /// **See also:** buttonRole()
-    /// addButton()
-    /// removeButton()
+    /// **See also:** [`button_role()`]
+    /// [`add_button()`]
+    /// [`remove_button()`]
     /// 
     /// Returns the button role for the specified *button.* This function returns
     /// [InvalidRole](InvalidRole)
     /// if *button* is 0 or has not been added to the message box.
     /// 
-    /// **See also:** buttons()
-    /// addButton()
+    /// **See also:** [`buttons()`]
+    /// [`add_button()`]
     /// 
     /// Returns the text of the message box button *button,* or
     /// an empty string if the message box does not contain the button.
@@ -419,39 +366,40 @@ struct MessageBox : Dialog {
     /// . Returns 0
     /// if no default button was set.
     /// 
-    /// **See also:** addButton()
-    /// QPushButton::setDefault()
+    /// **See also:** [`add_button()`]
+    /// [`PushButton::set_default`]
     default_button() -> PushButton?,
     /// 
     /// Sets the message box's [default button](QPushButton::setDefault())
     /// 
     /// to *button.*
     /// 
-    /// **See also:** addButton()
-    /// QPushButton::setDefault()
+    /// **See also:** [`add_button()`]
+    /// [`PushButton::set_default`]
     /// 
     /// Sets the message box's [default button](QPushButton::setDefault())
     /// 
     /// to *button.*
     /// 
-    /// **See also:** addButton()
-    /// QPushButton::setDefault()
+    /// **See also:** [`add_button()`]
+    /// [`PushButton::set_default`]
     set_default_button(button: *PushButtonType),
     /// 
     /// Sets the message box's [default button](QPushButton::setDefault())
     /// 
     /// to *button.*
     /// 
-    /// **See also:** addButton()
-    /// QPushButton::setDefault()
+    /// **See also:** [`add_button()`]
+    /// [`PushButton::set_default`]
     /// 
     /// Sets the message box's [default button](QPushButton::setDefault())
     /// 
     /// to *button.*
     /// 
-    /// **See also:** addButton()
-    /// QPushButton::setDefault()
-    set_default_button(button: MessageBox::StandardButton),
+    /// **See also:** [`add_button()`]
+    /// [`PushButton::set_default`]
+    [org_name(setDefaultButton)]
+    set_default_button_2(button: MessageBox::StandardButton),
     /// 
     /// Returns the button that is activated when escape is pressed.
     /// 
@@ -466,34 +414,35 @@ struct MessageBox : Dialog {
     /// When an escape button could not be automatically detected, pressing
     /// **Esc** has no effect.
     /// 
-    /// **See also:** addButton()
+    /// **See also:** [`add_button()`]
     escape_button() -> AbstractButton?,
     /// 
     /// Sets the button that gets activated when the **Escape** key is
     /// pressed to *button.*
     /// 
-    /// **See also:** addButton()
-    /// clickedButton()
+    /// **See also:** [`add_button()`]
+    /// [`clicked_button()`]
     /// 
     /// Sets the buttons that gets activated when the **Escape** key is
     /// pressed to *button.*
     /// 
-    /// **See also:** addButton()
-    /// clickedButton()
+    /// **See also:** [`add_button()`]
+    /// [`clicked_button()`]
     set_escape_button(button: *AbstractButtonType),
     /// 
     /// Sets the button that gets activated when the **Escape** key is
     /// pressed to *button.*
     /// 
-    /// **See also:** addButton()
-    /// clickedButton()
+    /// **See also:** [`add_button()`]
+    /// [`clicked_button()`]
     /// 
     /// Sets the buttons that gets activated when the **Escape** key is
     /// pressed to *button.*
     /// 
-    /// **See also:** addButton()
-    /// clickedButton()
-    set_escape_button(button: MessageBox::StandardButton),
+    /// **See also:** [`add_button()`]
+    /// [`clicked_button()`]
+    [org_name(setEscapeButton)]
+    set_escape_button_2(button: MessageBox::StandardButton),
     /// 
     /// Returns the button that was clicked by the user,
     /// or 0 if the user hit the **Esc** key and
@@ -504,8 +453,8 @@ struct MessageBox : Dialog {
     /// 
     /// Example:
     /// 
-    /// **See also:** standardButton()
-    /// button()
+    /// **See also:** [`standard_button()`]
+    /// [`button()`]
     clicked_button() -> AbstractButton?,
     /// 
     /// The text will be interpreted either as a plain text or as rich text,
@@ -517,22 +466,22 @@ struct MessageBox : Dialog {
     /// The default value of this property is an empty string.
     /// 
     /// **See also:** textFormat
-    /// QMessageBox::informativeText
-    /// QMessageBox::detailedText
+    /// [`MessageBox::informative_text()`]
+    /// [`MessageBox::detailed_text()`]
     /// 
     /// The current text format used by the message box. See the [Qt::TextFormat](Qt::TextFormat)
     /// enum for an explanation of the possible options.
     /// 
     /// The default format is Qt::AutoText.
     /// 
-    /// **See also:** setText()
+    /// **See also:** [`set_text()`]
     /// 
     /// Specifies how the label of the message box should interact with user
     /// input.
     /// 
     /// The default value depends on the style.
     /// 
-    /// **See also:** QStyle::SH_MessageBox_TextInteractionFlags
+    /// **See also:** [`Style::sh_message_box_text_interaction_flags()`]
     text() -> String,
     set_text(text: String),
     /// 
@@ -581,7 +530,7 @@ struct MessageBox : Dialog {
     /// 
     /// The default format is Qt::AutoText.
     /// 
-    /// **See also:** setText()
+    /// **See also:** [`set_text()`]
     text_format() -> Rute::TextFormat,
     set_text_format(format: Rute::TextFormat),
     set_text_interaction_flags(flags: Rute::TextInteractionFlags),
@@ -591,17 +540,17 @@ struct MessageBox : Dialog {
     /// 
     /// The default value depends on the style.
     /// 
-    /// **See also:** QStyle::SH_MessageBox_TextInteractionFlags
+    /// **See also:** [`Style::sh_message_box_text_interaction_flags()`]
     text_interaction_flags() -> Rute::TextInteractionFlags,
     /// 
     /// Sets the checkbox *cb* on the message dialog. The message box takes ownership of the checkbox.
     /// The argument *cb* can be 0 to remove an existing checkbox from the message box.
     /// 
-    /// **See also:** checkBox()
+    /// **See also:** [`check_box()`]
     set_check_box(cb: *CheckBoxType),
     /// 
     /// Returns the checkbox shown on the dialog. This is 0 if no checkbox is set.
-    /// **See also:** setCheckBox()
+    /// **See also:** [`set_check_box()`]
     check_box() -> CheckBox?,
     /// 
     /// Opens an information message box with the given *title* and
@@ -625,9 +574,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// Opens an information message box with the given *title* and the
     /// *text.* The dialog may have up to three buttons. Each of the
@@ -662,9 +611,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// **Overloads**
     /// Displays an information message box with the given *title* and
@@ -690,9 +639,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
     [static] information(parent: *WidgetType, title: String, text: String, buttons: MessageBox::StandardButtons, default_button: MessageBox::StandardButton) -> MessageBox::StandardButton,
     /// 
     /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
@@ -714,9 +663,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// Opens a question message box with the given *title* and *text.*
     /// The dialog may have up to three buttons. Each of the buttons, *button0,* *button1* and *button2* may be set to one of the
@@ -750,9 +699,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// **Overloads**
     /// Displays a question message box with the given *title* and *text,* as well as one, two or three buttons. Returns the index of
@@ -777,9 +726,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
     [static] question(parent: *WidgetType, title: String, text: String, buttons: MessageBox::StandardButtons, default_button: MessageBox::StandardButton) -> MessageBox::StandardButton,
     /// 
     /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
@@ -801,9 +750,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// information()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`information()`]
+    /// [`critical()`]
     /// 
     /// Opens a warning message box with the given *title* and *text.*
     /// The dialog may have up to three buttons. Each of the button
@@ -838,9 +787,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
     /// 
     /// **Overloads**
     /// Displays a warning message box with the given *title* and *text,* as well as one, two, or three buttons. Returns the number
@@ -865,9 +814,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
     [static] warning(parent: *WidgetType, title: String, text: String, buttons: MessageBox::StandardButtons, default_button: MessageBox::StandardButton) -> MessageBox::StandardButton,
     /// 
     /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
@@ -889,9 +838,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// information()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`information()`]
     /// 
     /// Opens a critical message box with the given *title* and *text.*
     /// The dialog may have up to three buttons. Each of the button
@@ -926,9 +875,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
     /// 
     /// **Overloads**
     /// Displays a critical error message box with the given *title* and
@@ -954,9 +903,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
     [static] critical(parent: *WidgetType, title: String, text: String, buttons: MessageBox::StandardButtons, default_button: MessageBox::StandardButton) -> MessageBox::StandardButton,
     /// 
     /// Displays a simple about box with title *title* and text *text.* The about box's parent is *parent.*
@@ -974,8 +923,8 @@ struct MessageBox : Dialog {
     /// about box is popped up as a modeless window; on other platforms,
     /// it is currently application modal.
     /// 
-    /// **See also:** QWidget::windowIcon()
-    /// QApplication::activeWindow()
+    /// **See also:** [`Widget::window_icon`]
+    /// [`Application::active_window`]
     /// 
     /// Displays a simple message box about Qt, with the given *title*
     /// and centered over *parent* (if *parent* is not 0). The message
@@ -990,7 +939,7 @@ struct MessageBox : Dialog {
     /// On MacOS , the about box is popped up as a modeless window; on
     /// other platforms, it is currently application modal.
     /// 
-    /// **See also:** QApplication::aboutQt()
+    /// **See also:** [`Application::about_qt`]
     [static] about(parent: *WidgetType, title: String, text: String),
     /// 
     /// Displays a simple message box about Qt, with the given *title*
@@ -1006,7 +955,7 @@ struct MessageBox : Dialog {
     /// On MacOS , the about box is popped up as a modeless window; on
     /// other platforms, it is currently application modal.
     /// 
-    /// **See also:** QApplication::aboutQt()
+    /// **See also:** [`Application::about_qt`]
     [static] about_qt(parent: *WidgetType, title: String),
     /// 
     /// Opens an information message box with the given *title* and
@@ -1030,9 +979,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// Opens an information message box with the given *title* and the
     /// *text.* The dialog may have up to three buttons. Each of the
@@ -1067,9 +1016,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// **Overloads**
     /// Displays an information message box with the given *title* and
@@ -1095,10 +1044,11 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    [static] information(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [org_name(information)]
+    [static] information_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
     /// 
     /// Opens an information message box with the given *title* and
     /// *text* in front of the specified *parent* widget.
@@ -1121,9 +1071,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// Opens an information message box with the given *title* and the
     /// *text.* The dialog may have up to three buttons. Each of the
@@ -1158,9 +1108,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// **Overloads**
     /// Displays an information message box with the given *title* and
@@ -1186,10 +1136,11 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    [static] information(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [org_name(information)]
+    [static] information_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
     /// 
     /// Opens an information message box with the given *title* and
     /// *text* in front of the specified *parent* widget.
@@ -1212,9 +1163,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// Opens an information message box with the given *title* and the
     /// *text.* The dialog may have up to three buttons. Each of the
@@ -1249,9 +1200,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// **Overloads**
     /// Displays an information message box with the given *title* and
@@ -1277,10 +1228,11 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// critical()
-    [static] information(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> MessageBox::StandardButton,
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [org_name(information)]
+    [static] information_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> MessageBox::StandardButton,
     /// 
     /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1301,9 +1253,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// Opens a question message box with the given *title* and *text.*
     /// The dialog may have up to three buttons. Each of the buttons, *button0,* *button1* and *button2* may be set to one of the
@@ -1337,9 +1289,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// **Overloads**
     /// Displays a question message box with the given *title* and *text,* as well as one, two or three buttons. Returns the index of
@@ -1364,10 +1316,11 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    [static] question(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [org_name(question)]
+    [static] question_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
     /// 
     /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1388,9 +1341,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// Opens a question message box with the given *title* and *text.*
     /// The dialog may have up to three buttons. Each of the buttons, *button0,* *button1* and *button2* may be set to one of the
@@ -1424,9 +1377,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// **Overloads**
     /// Displays a question message box with the given *title* and *text,* as well as one, two or three buttons. Returns the index of
@@ -1451,10 +1404,11 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    [static] question(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [org_name(question)]
+    [static] question_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
     /// 
     /// Opens a question message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1475,9 +1429,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// Opens a question message box with the given *title* and *text.*
     /// The dialog may have up to three buttons. Each of the buttons, *button0,* *button1* and *button2* may be set to one of the
@@ -1511,9 +1465,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
     /// 
     /// **Overloads**
     /// Displays a question message box with the given *title* and *text,* as well as one, two or three buttons. Returns the index of
@@ -1538,10 +1492,11 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// warning()
-    /// critical()
-    [static] question(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
+    /// **See also:** [`information()`]
+    /// [`warning()`]
+    /// [`critical()`]
+    [org_name(question)]
+    [static] question_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
     /// 
     /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1562,9 +1517,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// information()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`information()`]
+    /// [`critical()`]
     /// 
     /// Opens a warning message box with the given *title* and *text.*
     /// The dialog may have up to three buttons. Each of the button
@@ -1599,9 +1554,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
     /// 
     /// **Overloads**
     /// Displays a warning message box with the given *title* and *text,* as well as one, two, or three buttons. Returns the number
@@ -1626,10 +1581,11 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
-    [static] warning(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
+    [org_name(warning)]
+    [static] warning_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
     /// 
     /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1650,9 +1606,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// information()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`information()`]
+    /// [`critical()`]
     /// 
     /// Opens a warning message box with the given *title* and *text.*
     /// The dialog may have up to three buttons. Each of the button
@@ -1687,9 +1643,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
     /// 
     /// **Overloads**
     /// Displays a warning message box with the given *title* and *text,* as well as one, two, or three buttons. Returns the number
@@ -1714,10 +1670,11 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
-    [static] warning(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
+    [org_name(warning)]
+    [static] warning_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
     /// 
     /// Opens a warning message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1738,9 +1695,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// information()
-    /// critical()
+    /// **See also:** [`question()`]
+    /// [`information()`]
+    /// [`critical()`]
     /// 
     /// Opens a warning message box with the given *title* and *text.*
     /// The dialog may have up to three buttons. Each of the button
@@ -1775,9 +1732,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
     /// 
     /// **Overloads**
     /// Displays a warning message box with the given *title* and *text,* as well as one, two, or three buttons. Returns the number
@@ -1802,10 +1759,11 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// critical()
-    [static] warning(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`critical()`]
+    [org_name(warning)]
+    [static] warning_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
     /// 
     /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1826,9 +1784,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// information()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`information()`]
     /// 
     /// Opens a critical message box with the given *title* and *text.*
     /// The dialog may have up to three buttons. Each of the button
@@ -1863,9 +1821,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
     /// 
     /// **Overloads**
     /// Displays a critical error message box with the given *title* and
@@ -1891,10 +1849,11 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
-    [static] critical(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
+    [org_name(critical)]
+    [static] critical_2(parent: *WidgetType, title: String, text: String, button0: i32, button1: i32, button2: i32) -> i32,
     /// 
     /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -1915,9 +1874,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// information()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`information()`]
     /// 
     /// Opens a critical message box with the given *title* and *text.*
     /// The dialog may have up to three buttons. Each of the button
@@ -1952,9 +1911,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
     /// 
     /// **Overloads**
     /// Displays a critical error message box with the given *title* and
@@ -1980,10 +1939,11 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
-    [static] critical(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
+    [org_name(critical)]
+    [static] critical_3(parent: *WidgetType, title: String, text: String, button0_text: String, button1_text: String, button2_text: String, default_button_number: i32, escape_button_number: i32) -> i32,
     /// 
     /// Opens a critical message box with the given *title* and *text* in front of the specified *parent* widget.
     /// 
@@ -2004,9 +1964,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** question()
-    /// warning()
-    /// information()
+    /// **See also:** [`question()`]
+    /// [`warning()`]
+    /// [`information()`]
     /// 
     /// Opens a critical message box with the given *title* and *text.*
     /// The dialog may have up to three buttons. Each of the button
@@ -2041,9 +2001,9 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
     /// 
     /// **Overloads**
     /// Displays a critical error message box with the given *title* and
@@ -2069,10 +2029,11 @@ struct MessageBox : Dialog {
     /// If you want to do this, you should create the dialog
     /// yourself using one of the QMessageBox constructors.
     /// 
-    /// **See also:** information()
-    /// question()
-    /// warning()
-    [static] critical(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
+    /// **See also:** [`information()`]
+    /// [`question()`]
+    /// [`warning()`]
+    [org_name(critical)]
+    [static] critical_4(parent: *WidgetType, title: String, text: String, button0: MessageBox::StandardButton, button1: MessageBox::StandardButton) -> i32,
     /// 
     /// Returns the text of the message box button *button,* or
     /// an empty string if the message box does not contain the button.
@@ -2094,8 +2055,8 @@ struct MessageBox : Dialog {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** QMessageBox::text
-    /// QMessageBox::detailedText
+    /// **See also:** [`MessageBox::text()`]
+    /// [`MessageBox::detailed_text()`]
     informative_text() -> String,
     set_informative_text(text: String),
     /// 
@@ -2103,8 +2064,8 @@ struct MessageBox : Dialog {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** QMessageBox::text
-    /// QMessageBox::informativeText
+    /// **See also:** [`MessageBox::text()`]
+    /// [`MessageBox::informative_text()`]
     detailed_text() -> String,
     set_detailed_text(text: String),
     /// 
@@ -2149,6 +2110,109 @@ struct MessageBox : Dialog {
     [event] key_press_event(event: *KeyEventType),
     /// 
     [event] change_event(event: *EventType),
+}
+
+[org_name(QMessageBox)]
+enum Icon {
+    /// the message box does not have any icon.
+    NoIcon,
+    /// an icon indicating that the message is nothing out of the ordinary.
+    Information,
+    /// an icon indicating that the message is a warning, but can be dealt with.
+    Warning,
+    /// an icon indicating that the message represents a critical problem.
+    Critical,
+    /// an icon indicating that the message is asking a question.
+    Question,
+}
+
+[org_name(QMessageBox)]
+enum ButtonRole {
+    InvalidRole,
+    AcceptRole,
+    RejectRole,
+    DestructiveRole,
+    ActionRole,
+    HelpRole,
+    YesRole,
+    NoRole,
+    ResetRole,
+    ApplyRole,
+    NRoles,
+}
+
+[org_name(QMessageBox)]
+enum StandardButton {
+    /// An invalid button.
+    NoButton,
+    /// An "OK" button defined with the [AcceptRole.](AcceptRole.)
+
+    Ok,
+    /// A "Save" button defined with the [AcceptRole.](AcceptRole.)
+
+    Save,
+    /// A "Save All" button defined with the [AcceptRole.](AcceptRole.)
+
+    SaveAll,
+    /// An "Open" button defined with the [AcceptRole.](AcceptRole.)
+
+    Open,
+    /// A "Yes" button defined with the [YesRole.](YesRole.)
+
+    Yes,
+    /// A "Yes to All" button defined with the [YesRole.](YesRole.)
+
+    YesToAll,
+    /// A "No" button defined with the [NoRole.](NoRole.)
+
+    No,
+    /// A "No to All" button defined with the [NoRole.](NoRole.)
+
+    NoToAll,
+    /// An "Abort" button defined with the [RejectRole.](RejectRole.)
+
+    Abort,
+    /// A "Retry" button defined with the [AcceptRole.](AcceptRole.)
+
+    Retry,
+    /// An "Ignore" button defined with the [AcceptRole.](AcceptRole.)
+
+    Ignore,
+    /// A "Close" button defined with the [RejectRole.](RejectRole.)
+
+    Close,
+    /// A "Cancel" button defined with the [RejectRole.](RejectRole.)
+
+    Cancel,
+    /// A "Discard" or "Don't Save" button, depending on the platform, defined with the [DestructiveRole.](DestructiveRole.)
+
+    Discard,
+    /// A "Help" button defined with the [HelpRole.](HelpRole.)
+
+    Help,
+    /// An "Apply" button defined with the [ApplyRole.](ApplyRole.)
+
+    Apply,
+    /// A "Reset" button defined with the [ResetRole.](ResetRole.)
+
+    Reset,
+    /// A "Restore Defaults" button defined with the [ResetRole.](ResetRole.)
+
+    RestoreDefaults,
+    FirstButton,
+    LastButton,
+    /// Use YesToAll instead.
+    YesAll,
+    /// Use NoToAll instead.
+    NoAll,
+    /// Use the `defaultButton` argument of information(), warning(), etc. instead, or call setDefaultButton().
+    Default,
+    /// Call setEscapeButton() instead.
+    Escape,
+    /// 
+    FlagMask,
+    /// 
+    ButtonMask,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -19,39 +19,27 @@
 /// QPixmap::scale() directly. Call transformationMode() to get the current
 /// transformation mode for the item.
 /// 
-/// **See also:** QGraphicsPathItem
-/// QGraphicsRectItem
-/// QGraphicsEllipseItem
-/// QGraphicsTextItem
-/// QGraphicsPolygonItem
-/// QGraphicsLineItem
+/// **See also:** [`GraphicsPathItem`]
+/// [`GraphicsRectItem`]
+/// [`GraphicsEllipseItem`]
+/// [`GraphicsTextItem`]
+/// [`GraphicsPolygonItem`]
+/// [`GraphicsLineItem`]
 /// {Graphics View Framework}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsPixmapItem)]
-enum ShapeMode {
-    MaskShape,
-    BoundingRectShape,
-    HeuristicMaskShape,
-}
-
-[org_name(QGraphicsPixmapItem)]
-enum GraphicsPixmapItemFixMeEnums {
-    Type,
-}
-
 struct GraphicsPixmapItem : GraphicsItem {
     /// 
     /// Returns the item's pixmap, or an invalid QPixmap if no pixmap has been
     /// set.
     /// 
-    /// **See also:** setPixmap()
+    /// **See also:** [`set_pixmap()`]
     pixmap() -> Pixmap,
     /// 
     /// Sets the item's pixmap to *pixmap.*
     /// 
-    /// **See also:** pixmap()
+    /// **See also:** [`pixmap()`]
     set_pixmap(pixmap: &PixmapType),
     /// 
     /// Sets the pixmap item's transformation mode to *mode,* and toggles an
@@ -62,19 +50,19 @@ struct GraphicsPixmapItem : GraphicsItem {
     /// painter, and the quality depends on the platform and viewport. The result
     /// is usually not as good as calling QPixmap::scale() directly.
     /// 
-    /// **See also:** transformationMode()
+    /// **See also:** [`transformation_mode()`]
     set_transformation_mode(mode: Rute::TransformationMode),
     /// 
     /// Returns the pixmap item's *offset,* which defines the point of the
     /// top-left corner of the pixmap, in local coordinates.
     /// 
-    /// **See also:** setOffset()
+    /// **See also:** [`set_offset()`]
     offset() -> PointF,
     /// 
     /// Sets the pixmap item's offset to *offset.* QGraphicsPixmapItem will draw
     /// its pixmap using *offset* for its top-left corner.
     /// 
-    /// **See also:** offset()
+    /// **See also:** [`offset()`]
     /// 
     /// This convenience function is equivalent to calling setOffset(QPointF( *x,* *y)).*
     set_offset(offset: &PointFType),
@@ -82,10 +70,11 @@ struct GraphicsPixmapItem : GraphicsItem {
     /// Sets the pixmap item's offset to *offset.* QGraphicsPixmapItem will draw
     /// its pixmap using *offset* for its top-left corner.
     /// 
-    /// **See also:** offset()
+    /// **See also:** [`offset()`]
     /// 
     /// This convenience function is equivalent to calling setOffset(QPointF( *x,* *y)).*
-    set_offset(x: f32, y: f32),
+    [org_name(setOffset)]
+    set_offset_2(x: f32, y: f32),
     /// 
     [event] bounding_rect() -> RectF,
     /// 
@@ -93,7 +82,7 @@ struct GraphicsPixmapItem : GraphicsItem {
     /// Returns the item's shape mode. The shape mode describes how
     /// QGraphicsPixmapItem calculates its shape. The default mode is MaskShape.
     /// 
-    /// **See also:** setShapeMode()
+    /// **See also:** [`set_shape_mode()`]
     /// ShapeMode
     [event] shape() -> PainterPath,
     /// 
@@ -110,19 +99,34 @@ struct GraphicsPixmapItem : GraphicsItem {
     /// Returns the item's shape mode. The shape mode describes how
     /// QGraphicsPixmapItem calculates its shape. The default mode is MaskShape.
     /// 
-    /// **See also:** setShapeMode()
+    /// **See also:** [`set_shape_mode()`]
     /// ShapeMode
     shape_mode() -> GraphicsPixmapItem::ShapeMode,
     /// 
     /// Sets the item's shape mode to *mode.* The shape mode describes how
     /// QGraphicsPixmapItem calculates its shape. The default mode is MaskShape.
     /// 
-    /// **See also:** shapeMode()
+    /// **See also:** [`shape_mode()`]
     /// ShapeMode
     set_shape_mode(mode: GraphicsPixmapItem::ShapeMode),
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
     [event] extension(variant: &VariantType) -> Variant,
+}
+
+[org_name(QGraphicsPixmapItem)]
+enum ShapeMode {
+    /// The shape is determined by calling QPixmap::mask(). This shape includes only the opaque pixels of the pixmap. Because the shape is more complex, however, it can be slower than the other modes, and uses more memory.
+    MaskShape,
+    /// The shape is determined by tracing the outline of the pixmap. This is the fastest shape mode, but it does not take into account any transparent areas on the pixmap.
+    BoundingRectShape,
+    /// The shape is determine by calling QPixmap::createHeuristicMask(). The performance and memory consumption is similar to MaskShape.
+    HeuristicMaskShape,
+}
+
+[org_name(QGraphicsPixmapItem)]
+enum GraphicsPixmapItemFixMeEnums {
+    Type,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

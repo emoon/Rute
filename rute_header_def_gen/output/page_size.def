@@ -34,160 +34,11 @@
 /// The class also provides convenience methods for converting page size IDs to and from
 /// various unit sizes.
 /// 
-/// **See also:** QPagedPaintDevice
-/// QPdfWriter
+/// **See also:** [`PagedPaintDevice`]
+/// [`PdfWriter`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QPageSize)]
-enum PageSizeId {
-    A4,
-    B5,
-    Letter,
-    Legal,
-    Executive,
-    A0,
-    A1,
-    A2,
-    A3,
-    A5,
-    A6,
-    A7,
-    A8,
-    A9,
-    B0,
-    B1,
-    B10,
-    B2,
-    B3,
-    B4,
-    B6,
-    B7,
-    B8,
-    B9,
-    C5E,
-    Comm10E,
-    DLE,
-    Folio,
-    Ledger,
-    Tabloid,
-    Custom,
-    A10,
-    A3Extra,
-    A4Extra,
-    A4Plus,
-    A4Small,
-    A5Extra,
-    B5Extra,
-    JisB0,
-    JisB1,
-    JisB2,
-    JisB3,
-    JisB4,
-    JisB5,
-    JisB6,
-    JisB7,
-    JisB8,
-    JisB9,
-    JisB10,
-    AnsiC,
-    AnsiD,
-    AnsiE,
-    LegalExtra,
-    LetterExtra,
-    LetterPlus,
-    LetterSmall,
-    TabloidExtra,
-    ArchA,
-    ArchB,
-    ArchC,
-    ArchD,
-    ArchE,
-    Imperial7x9,
-    Imperial8x10,
-    Imperial9x11,
-    Imperial9x12,
-    Imperial10x11,
-    Imperial10x13,
-    Imperial10x14,
-    Imperial12x11,
-    Imperial15x11,
-    ExecutiveStandard,
-    Note,
-    Quarto,
-    Statement,
-    SuperA,
-    SuperB,
-    Postcard,
-    DoublePostcard,
-    Prc16K,
-    Prc32K,
-    Prc32KBig,
-    FanFoldUS,
-    FanFoldGerman,
-    FanFoldGermanLegal,
-    EnvelopeB4,
-    EnvelopeB5,
-    EnvelopeB6,
-    EnvelopeC0,
-    EnvelopeC1,
-    EnvelopeC2,
-    EnvelopeC3,
-    EnvelopeC4,
-    EnvelopeC6,
-    EnvelopeC65,
-    EnvelopeC7,
-    Envelope9,
-    Envelope11,
-    Envelope12,
-    Envelope14,
-    EnvelopeMonarch,
-    EnvelopePersonal,
-    EnvelopeChou3,
-    EnvelopeChou4,
-    EnvelopeInvite,
-    EnvelopeItalian,
-    EnvelopeKaku2,
-    EnvelopeKaku3,
-    EnvelopePrc1,
-    EnvelopePrc2,
-    EnvelopePrc3,
-    EnvelopePrc4,
-    EnvelopePrc5,
-    EnvelopePrc6,
-    EnvelopePrc7,
-    EnvelopePrc8,
-    EnvelopePrc9,
-    EnvelopePrc10,
-    EnvelopeYou4,
-    LastPageSize,
-    NPageSize,
-    NPaperSize,
-    AnsiA,
-    AnsiB,
-    EnvelopeC5,
-    EnvelopeDL,
-    Envelope10,
-}
-
-[org_name(QPageSize)]
-enum Unit {
-    Millimeter,
-    Point,
-    Inch,
-    Pica,
-    Didot,
-    Cicero,
-}
-
-[org_name(QPageSize)]
-enum SizeMatchPolicy {
-    FuzzyMatch,
-    FuzzyOrientationMatch,
-    ExactMatch,
-}
-
-
 struct PageSize {
     /// 
     /// Swaps this QPageSize with *other.* This function is very fast and
@@ -216,7 +67,7 @@ struct PageSize {
     /// This key should never be shown to end users, it is an internal key only.
     /// For a human-readable name use name().
     /// 
-    /// **See also:** name()
+    /// **See also:** [`name()`]
     /// 
     /// Returns the PPD mediaOption keyword of the standard *pageSizeId.*
     /// 
@@ -268,7 +119,7 @@ struct PageSize {
     /// 
     /// If the QPageSize is invalid then the Windows ID will be 0.
     /// 
-    /// **See also:** id()
+    /// **See also:** [`id()`]
     /// 
     /// Returns the Windows DMPAPER enum value of the standard *pageSizeId.*
     /// 
@@ -287,7 +138,7 @@ struct PageSize {
     /// 
     /// If the QPageSize is invalid then the QSizeF will be invalid.
     /// 
-    /// **See also:** definitionUnits()
+    /// **See also:** [`definition_units()`]
     /// 
     /// Returns the definition size of the standard *pageSizeId.*
     /// 
@@ -305,7 +156,7 @@ struct PageSize {
     /// 
     /// If the QPageSize is invalid then the QPageSize::Unit will be invalid.
     /// 
-    /// **See also:** definitionSize()
+    /// **See also:** [`definition_size()`]
     /// 
     /// Returns the definition units of the standard *pageSizeId.*
     /// 
@@ -382,12 +233,13 @@ struct PageSize {
     /// This key should never be shown to end users, it is an internal key only.
     /// For a human-readable name use name().
     /// 
-    /// **See also:** name()
+    /// **See also:** [`name()`]
     /// 
     /// Returns the PPD mediaOption keyword of the standard *pageSizeId.*
     /// 
     /// If the QPageSize is invalid then the key will be empty.
-    [static] key(page_size_id: PageSize::PageSizeId) -> String,
+    [org_name(key)]
+    [static] key_2(page_size_id: PageSize::PageSizeId) -> String,
     /// 
     /// Returns a localized human-readable name for the page size.
     /// 
@@ -400,7 +252,8 @@ struct PageSize {
     /// Returns the localized name of the standard *pageSizeId.*
     /// 
     /// If the QPageSize is invalid then the name will be empty.
-    [static] name(page_size_id: PageSize::PageSizeId) -> String,
+    [org_name(name)]
+    [static] name_2(page_size_id: PageSize::PageSizeId) -> String,
     /// 
     /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
     /// 
@@ -425,7 +278,8 @@ struct PageSize {
     /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
     /// 
     /// If there is no matching PageSizeId then QPageSize::Custom is returned.
-    [static] id(point_size: &SizeType, match_policy: PageSize::SizeMatchPolicy) -> PageSize::PageSizeId,
+    [org_name(id)]
+    [static] id_2(point_size: &SizeType, match_policy: PageSize::SizeMatchPolicy) -> PageSize::PageSizeId,
     /// 
     /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
     /// 
@@ -450,7 +304,8 @@ struct PageSize {
     /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
     /// 
     /// If there is no matching PageSizeId then QPageSize::Custom is returned.
-    [static] id(size: &SizeFType, units: PageSize::Unit, match_policy: PageSize::SizeMatchPolicy) -> PageSize::PageSizeId,
+    [org_name(id)]
+    [static] id_3(size: &SizeFType, units: PageSize::Unit, match_policy: PageSize::SizeMatchPolicy) -> PageSize::PageSizeId,
     /// 
     /// Returns the standard QPageSize::PageSizeId of the page, or QPageSize::Custom.
     /// 
@@ -475,7 +330,8 @@ struct PageSize {
     /// Returns the PageSizeId for the given Windows DMPAPER enum value *windowsId.*
     /// 
     /// If there is no matching PageSizeId then QPageSize::Custom is returned.
-    [static] id(windows_id: i32) -> PageSize::PageSizeId,
+    [org_name(id)]
+    [static] id_4(windows_id: i32) -> PageSize::PageSizeId,
     /// 
     /// Returns the Windows DMPAPER enum value for the page size.
     /// 
@@ -484,13 +340,14 @@ struct PageSize {
     /// 
     /// If the QPageSize is invalid then the Windows ID will be 0.
     /// 
-    /// **See also:** id()
+    /// **See also:** [`id()`]
     /// 
     /// Returns the Windows DMPAPER enum value of the standard *pageSizeId.*
     /// 
     /// Not all valid PPD page sizes have a Windows equivalent, in which case 0
     /// will be returned.
-    [static] windows_id(page_size_id: PageSize::PageSizeId) -> i32,
+    [org_name(windowsId)]
+    [static] windows_id_2(page_size_id: PageSize::PageSizeId) -> i32,
     /// 
     /// Returns the definition size of the page size.
     /// 
@@ -503,12 +360,13 @@ struct PageSize {
     /// 
     /// If the QPageSize is invalid then the QSizeF will be invalid.
     /// 
-    /// **See also:** definitionUnits()
+    /// **See also:** [`definition_units()`]
     /// 
     /// Returns the definition size of the standard *pageSizeId.*
     /// 
     /// To obtain the definition units, call QPageSize::definitionUnits().
-    [static] definition_size(page_size_id: PageSize::PageSizeId) -> SizeF,
+    [org_name(definitionSize)]
+    [static] definition_size_2(page_size_id: PageSize::PageSizeId) -> SizeF,
     /// 
     /// Returns the definition units of the page size.
     /// 
@@ -521,12 +379,13 @@ struct PageSize {
     /// 
     /// If the QPageSize is invalid then the QPageSize::Unit will be invalid.
     /// 
-    /// **See also:** definitionSize()
+    /// **See also:** [`definition_size()`]
     /// 
     /// Returns the definition units of the standard *pageSizeId.*
     /// 
     /// To obtain the definition size, call QPageSize::definitionSize().
-    [static] definition_units(page_size_id: PageSize::PageSizeId) -> PageSize::Unit,
+    [org_name(definitionUnits)]
+    [static] definition_units_2(page_size_id: PageSize::PageSizeId) -> PageSize::Unit,
     /// 
     /// Returns the size of the page in the required *units.*
     /// 
@@ -546,14 +405,16 @@ struct PageSize {
     /// 
     /// Returns the size of the standard *pageSizeId* in Device Pixels
     /// for the given *resolution.*
-    [static] size(page_size_id: PageSize::PageSizeId, units: PageSize::Unit) -> SizeF,
+    [org_name(size)]
+    [static] size_2(page_size_id: PageSize::PageSizeId, units: PageSize::Unit) -> SizeF,
     /// 
     /// Returns the size of the page in Postscript Points (1/72 of an inch).
     /// 
     /// If the QPageSize is invalid then the QSize will be invalid.
     /// 
     /// Returns the size of the standard *pageSizeId* in Points.
-    [static] size_points(page_size_id: PageSize::PageSizeId) -> Size,
+    [org_name(sizePoints)]
+    [static] size_points_2(page_size_id: PageSize::PageSizeId) -> Size,
     /// 
     /// Returns the size of the page in Device Pixels at the given *resolution.*
     /// 
@@ -561,7 +422,289 @@ struct PageSize {
     /// 
     /// Returns the size of the standard *pageSizeId* in Device Pixels
     /// for the given *resolution.*
-    [static] size_pixels(page_size_id: PageSize::PageSizeId, resolution: i32) -> Size,
+    [org_name(sizePixels)]
+    [static] size_pixels_2(page_size_id: PageSize::PageSizeId, resolution: i32) -> Size,
+}
+
+[org_name(QPageSize)]
+enum PageSizeId {
+    /// 210 x 297 mm, 8.26 x 11.69 inches
+    A4,
+    /// 176 x 250 mm, 6.93 x 9.84 inches
+    B5,
+    /// 8.5 x 11 inches, 215.9 x 279.4 mm
+    Letter,
+    /// 8.5 x 14 inches, 215.9 x 355.6 mm
+    Legal,
+    /// 7.5 x 10 inches, 190.5 x 254 mm
+    Executive,
+    /// 841 x 1189 mm
+    A0,
+    /// 594 x 841 mm
+    A1,
+    /// 420 x 594 mm
+    A2,
+    /// 297 x 420 mm
+    A3,
+    /// 148 x 210 mm
+    A5,
+    /// 105 x 148 mm
+    A6,
+    /// 74 x 105 mm
+    A7,
+    /// 52 x 74 mm
+    A8,
+    /// 37 x 52 mm
+    A9,
+    /// 1000 x 1414 mm
+    B0,
+    /// 707 x 1000 mm
+    B1,
+    /// 31 x 44 mm
+    B10,
+    /// 500 x 707 mm
+    B2,
+    /// 353 x 500 mm
+    B3,
+    /// 250 x 353 mm
+    B4,
+    /// 125 x 176 mm
+    B6,
+    /// 88 x 125 mm
+    B7,
+    /// 62 x 88 mm
+    B8,
+    /// 44 x 62 mm
+    B9,
+    /// 163 x 229 mm
+    C5E,
+    /// 105 x 241 mm, U.S. Common 10 Envelope
+    Comm10E,
+    /// 110 x 220 mm
+    DLE,
+    /// 210 x 330 mm
+    Folio,
+    /// 431.8 x 279.4 mm
+    Ledger,
+    /// 279.4 x 431.8 mm
+    Tabloid,
+    /// Unknown, or a user defined size.
+    Custom,
+    /// 
+    A10,
+    /// 
+    A3Extra,
+    /// 
+    A4Extra,
+    /// 
+    A4Plus,
+    /// 
+    A4Small,
+    /// 
+    A5Extra,
+    /// 
+    B5Extra,
+    /// 
+    JisB0,
+    /// 
+    JisB1,
+    /// 
+    JisB2,
+    /// 
+    JisB3,
+    /// 
+    JisB4,
+    /// 
+    JisB5,
+    JisB6,
+    /// 
+    JisB7,
+    /// 
+    JisB8,
+    /// 
+    JisB9,
+    /// 
+    JisB10,
+    /// 
+    AnsiC,
+    /// 
+    AnsiD,
+    /// 
+    AnsiE,
+    /// 
+    LegalExtra,
+    /// 
+    LetterExtra,
+    /// 
+    LetterPlus,
+    /// 
+    LetterSmall,
+    /// 
+    TabloidExtra,
+    /// 
+    ArchA,
+    /// 
+    ArchB,
+    /// 
+    ArchC,
+    /// 
+    ArchD,
+    /// 
+    ArchE,
+    /// 
+    Imperial7x9,
+    /// 
+    Imperial8x10,
+    /// 
+    Imperial9x11,
+    /// 
+    Imperial9x12,
+    /// 
+    Imperial10x11,
+    /// 
+    Imperial10x13,
+    /// 
+    Imperial10x14,
+    /// 
+    Imperial12x11,
+    /// 
+    Imperial15x11,
+    /// 
+    ExecutiveStandard,
+    /// 
+    Note,
+    /// 
+    Quarto,
+    /// 
+    Statement,
+    /// 
+    SuperA,
+    /// 
+    SuperB,
+    /// 
+    Postcard,
+    /// 
+    DoublePostcard,
+    /// 
+    Prc16K,
+    /// 
+    Prc32K,
+    /// 
+    Prc32KBig,
+    /// 
+    FanFoldUS,
+    /// 
+    FanFoldGerman,
+    /// 
+    FanFoldGermanLegal,
+    /// 
+    EnvelopeB4,
+    /// 
+    EnvelopeB5,
+    /// 
+    EnvelopeB6,
+    /// 
+    EnvelopeC0,
+    /// 
+    EnvelopeC1,
+    /// 
+    EnvelopeC2,
+    /// 
+    EnvelopeC3,
+    /// 
+    EnvelopeC4,
+    /// 
+    EnvelopeC6,
+    /// 
+    EnvelopeC65,
+    /// 
+    EnvelopeC7,
+    /// 
+    Envelope9,
+    /// 
+    Envelope11,
+    /// 
+    Envelope12,
+    /// 
+    Envelope14,
+    /// 
+    EnvelopeMonarch,
+    /// 
+    EnvelopePersonal,
+    /// 
+    EnvelopeChou3,
+    /// 
+    EnvelopeChou4,
+    /// 
+    EnvelopeInvite,
+    /// 
+    EnvelopeItalian,
+    /// 
+    EnvelopeKaku2,
+    /// 
+    EnvelopeKaku3,
+    /// 
+    EnvelopePrc1,
+    /// 
+    EnvelopePrc2,
+    /// 
+    EnvelopePrc3,
+    /// 
+    EnvelopePrc4,
+    /// 
+    EnvelopePrc5,
+    /// 
+    EnvelopePrc6,
+    /// 
+    EnvelopePrc7,
+    /// 
+    EnvelopePrc8,
+    /// 
+    EnvelopePrc9,
+    /// 
+    EnvelopePrc10,
+    /// 
+    EnvelopeYou4,
+    /// = EnvelopeYou4
+    LastPageSize,
+    NPageSize,
+    NPaperSize,
+    /// = Letter
+    AnsiA,
+    /// = Ledger
+    AnsiB,
+    /// = C5E
+    EnvelopeC5,
+    /// = DLE
+    EnvelopeDL,
+    /// = Comm10E
+    Envelope10,
+}
+
+[org_name(QPageSize)]
+enum Unit {
+    /// 
+    Millimeter,
+    /// 1/72th of an inch
+    Point,
+    /// 
+    Inch,
+    /// 1/72th of a foot, 1/6th of an inch, 12 Points
+    Pica,
+    /// 1/72th of a French inch, 0.375 mm
+    Didot,
+    /// 1/6th of a French inch, 12 Didot, 4.5mm
+    Cicero,
+}
+
+[org_name(QPageSize)]
+enum SizeMatchPolicy {
+    /// Match to a standard page size if within the margin of tolerance.
+    FuzzyMatch,
+    /// Match to a standard page size if within the margin of tolerance regardless of orientation.
+    FuzzyOrientationMatch,
+    /// Only match to a standard page size if the sizes match exactly.
+    ExactMatch,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -14,65 +14,27 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QSurfaceFormat)]
-enum FormatOption {
-    StereoBuffers,
-    DebugContext,
-    DeprecatedFunctions,
-    ResetNotification,
-}
-
-[org_name(QSurfaceFormat)]
-enum SwapBehavior {
-    DefaultSwapBehavior,
-    SingleBuffer,
-    DoubleBuffer,
-    TripleBuffer,
-}
-
-[org_name(QSurfaceFormat)]
-enum RenderableType {
-    DefaultRenderableType,
-    OpenGL,
-    OpenGLES,
-    OpenVG,
-}
-
-[org_name(QSurfaceFormat)]
-enum OpenGLContextProfile {
-    NoProfile,
-    CoreProfile,
-    CompatibilityProfile,
-}
-
-[org_name(QSurfaceFormat)]
-enum ColorSpace {
-    DefaultColorSpace,
-    sRGBColorSpace,
-}
-
-
 struct SurfaceFormat {
     qt_check_for_qgadget_macro(),
     /// 
     /// Set the minimum depth buffer size to *size.*
     /// 
-    /// **See also:** depthBufferSize()
+    /// **See also:** [`depth_buffer_size()`]
     set_depth_buffer_size(size: i32),
     /// 
     /// Returns the depth buffer size.
     /// 
-    /// **See also:** setDepthBufferSize()
+    /// **See also:** [`set_depth_buffer_size()`]
     depth_buffer_size() -> i32,
     /// 
     /// Set the preferred stencil buffer size to *size* bits.
     /// 
-    /// **See also:** stencilBufferSize()
+    /// **See also:** [`stencil_buffer_size()`]
     set_stencil_buffer_size(size: i32),
     /// 
     /// Returns the stencil buffer size in bits.
     /// 
-    /// **See also:** setStencilBufferSize()
+    /// **See also:** [`set_stencil_buffer_size()`]
     stencil_buffer_size() -> i32,
     /// 
     /// Set the desired *size* in bits of the red channel of the color buffer.
@@ -114,13 +76,13 @@ struct SurfaceFormat {
     /// Set the preferred number of samples per pixel when multisampling
     /// is enabled to *numSamples.* By default, multisampling is disabled.
     /// 
-    /// **See also:** samples()
+    /// **See also:** [`samples()`]
     set_samples(num_samples: i32),
     /// 
     /// Returns the number of samples per pixel when multisampling is
     /// enabled. By default, multisampling is disabled.
     /// 
-    /// **See also:** setSamples()
+    /// **See also:** [`set_samples()`]
     samples() -> i32,
     /// 
     /// Set the swap *behavior* of the surface.
@@ -132,7 +94,7 @@ struct SurfaceFormat {
     /// 
     /// Returns the configured swap behaviour.
     /// 
-    /// **See also:** setSwapBehavior()
+    /// **See also:** [`set_swap_behavior()`]
     swap_behavior() -> SurfaceFormat::SwapBehavior,
     /// 
     /// Returns `true` if the alpha buffer size is greater than zero.
@@ -192,7 +154,7 @@ struct SurfaceFormat {
     /// Returns `true` if stereo buffering is enabled; otherwise returns
     /// false. Stereo buffering is disabled by default.
     /// 
-    /// **See also:** setStereo()
+    /// **See also:** [`set_stereo()`]
     stereo() -> bool,
     /// 
     /// If *enable* is true enables stereo buffering; otherwise disables
@@ -203,7 +165,7 @@ struct SurfaceFormat {
     /// Stereo buffering provides extra color buffers to generate left-eye
     /// and right-eye images.
     /// 
-    /// **See also:** stereo()
+    /// **See also:** [`stereo()`]
     set_stereo(enable: bool),
     /// 
     /// **Overloads**
@@ -212,19 +174,19 @@ struct SurfaceFormat {
     /// Sets the format options to the OR combination of *opt* and the
     /// current format options.
     /// 
-    /// **See also:** options()
-    /// testOption()
+    /// **See also:** [`options()`]
+    /// [`test_option()`]
     /// 
     /// Sets the format options to *options.*
     /// 
-    /// **See also:** options()
-    /// testOption()
+    /// **See also:** [`options()`]
+    /// [`test_option()`]
     /// 
     /// Sets the format option *option* if *on* is true; otherwise, clears the option.
     /// 
-    /// **See also:** setOptions()
-    /// options()
-    /// testOption()
+    /// **See also:** [`set_options()`]
+    /// [`options()`]
+    /// [`test_option()`]
     set_option(opt: SurfaceFormat::FormatOptions),
     /// 
     /// **Overloads**
@@ -233,17 +195,17 @@ struct SurfaceFormat {
     /// Returns `true` if any of the options in *opt* is currently set
     /// on this object; otherwise returns false.
     /// 
-    /// **See also:** setOption()
+    /// **See also:** [`set_option()`]
     /// 
     /// Returns true if the format option *option* is set; otherwise returns false.
     /// 
-    /// **See also:** options()
+    /// **See also:** [`options()`]
     test_option(opt: SurfaceFormat::FormatOptions) -> bool,
     /// 
     /// Sets the format options to *options.*
     /// 
-    /// **See also:** options()
-    /// testOption()
+    /// **See also:** [`options()`]
+    /// [`test_option()`]
     set_options(options: SurfaceFormat::FormatOptions),
     /// 
     /// **Overloads**
@@ -252,20 +214,21 @@ struct SurfaceFormat {
     /// Sets the format options to the OR combination of *opt* and the
     /// current format options.
     /// 
-    /// **See also:** options()
-    /// testOption()
+    /// **See also:** [`options()`]
+    /// [`test_option()`]
     /// 
     /// Sets the format options to *options.*
     /// 
-    /// **See also:** options()
-    /// testOption()
+    /// **See also:** [`options()`]
+    /// [`test_option()`]
     /// 
     /// Sets the format option *option* if *on* is true; otherwise, clears the option.
     /// 
-    /// **See also:** setOptions()
-    /// options()
-    /// testOption()
-    set_option(option: SurfaceFormat::FormatOption, on: bool),
+    /// **See also:** [`set_options()`]
+    /// [`options()`]
+    /// [`test_option()`]
+    [org_name(setOption)]
+    set_option_2(option: SurfaceFormat::FormatOption, on: bool),
     /// 
     /// **Overloads**
     /// Use testOption(QSurfaceFormat::FormatOption) instead.
@@ -273,23 +236,24 @@ struct SurfaceFormat {
     /// Returns `true` if any of the options in *opt* is currently set
     /// on this object; otherwise returns false.
     /// 
-    /// **See also:** setOption()
+    /// **See also:** [`set_option()`]
     /// 
     /// Returns true if the format option *option* is set; otherwise returns false.
     /// 
-    /// **See also:** options()
-    test_option(option: SurfaceFormat::FormatOption) -> bool,
+    /// **See also:** [`options()`]
+    [org_name(testOption)]
+    test_option_2(option: SurfaceFormat::FormatOption) -> bool,
     /// 
     /// Returns the currently set format options.
     /// 
-    /// **See also:** setOption()
-    /// setOptions()
-    /// testOption()
+    /// **See also:** [`set_option()`]
+    /// [`set_options()`]
+    /// [`test_option()`]
     options() -> SurfaceFormat::FormatOptions,
     /// 
     /// Returns the swap interval.
     /// 
-    /// **See also:** setSwapInterval()
+    /// **See also:** [`set_swap_interval()`]
     swap_interval() -> i32,
     /// 
     /// Sets the preferred swap interval. The swap interval specifies the
@@ -307,12 +271,12 @@ struct SurfaceFormat {
     /// Changing the swap interval may not be supported by the underlying
     /// platform. In this case, the request will be silently ignored.
     /// 
-    /// **See also:** swapInterval()
+    /// **See also:** [`swap_interval()`]
     set_swap_interval(interval: i32),
     /// 
     /// **Returns** the color space.
     /// 
-    /// **See also:** setColorSpace()
+    /// **See also:** [`set_color_space()`]
     color_space() -> SurfaceFormat::ColorSpace,
     /// 
     /// Sets the preferred *colorSpace.*
@@ -331,7 +295,7 @@ struct SurfaceFormat {
     /// blending to be performed in the given color space instead of using the
     /// standard linear operations.
     /// 
-    /// **See also:** colorSpace()
+    /// **See also:** [`color_space()`]
     set_color_space(color_space: SurfaceFormat::ColorSpace),
     /// 
     /// Sets the global default surface *format.*
@@ -353,15 +317,70 @@ struct SurfaceFormat {
     /// the global share context and therefore issues may arise with context sharing
     /// afterwards.
     /// 
-    /// **See also:** defaultFormat()
+    /// **See also:** [`default_format()`]
     [static] set_default_format(format: &SurfaceFormatType),
     /// 
     /// Returns the global default surface format.
     /// 
     /// When setDefaultFormat() is not called, this is a default-constructed QSurfaceFormat.
     /// 
-    /// **See also:** setDefaultFormat()
+    /// **See also:** [`set_default_format()`]
     [static] default_format() -> SurfaceFormat,
+}
+
+[org_name(QSurfaceFormat)]
+enum FormatOption {
+    /// Used to request stereo buffers in the surface format.
+    StereoBuffers,
+    /// Used to request a debug context with extra debugging information.
+    DebugContext,
+    /// Used to request that deprecated functions be included in the OpenGL context profile. If not specified, you should get a forward compatible context without support functionality marked as deprecated. This requires OpenGL version 3.0 or higher.
+    DeprecatedFunctions,
+    /// Enables notifications about resets of the OpenGL context. The status is then queryable via the context's [isValid()](QOpenGLContext::isValid())
+ function. Note that not setting this flag does not guarantee that context state loss never occurs. Additionally, some implementations may choose to report context loss regardless of this flag.
+    ResetNotification,
+}
+
+[org_name(QSurfaceFormat)]
+enum SwapBehavior {
+    /// The default, unspecified swap behaviour of the platform.
+    DefaultSwapBehavior,
+    /// Used to request single buffering, which might result in flickering when OpenGL rendering is done directly to screen without an intermediate offscreen buffer.
+    SingleBuffer,
+    /// This is typically the default swap behaviour on desktop platforms, consisting of one back buffer and one front buffer. Rendering is done to the back buffer, and then the back buffer and front buffer are swapped, or the contents of the back buffer are copied to the front buffer, depending on the implementation.
+    DoubleBuffer,
+    /// This swap behaviour is sometimes used in order to decrease the risk of skipping a frame when the rendering rate is just barely keeping up with the screen refresh rate. Depending on the platform it might also lead to slightly more efficient use of the GPU due to improved pipelining behaviour. Triple buffering comes at the cost of an extra frame of memory usage and latency, and might not be supported depending on the underlying platform.
+    TripleBuffer,
+}
+
+[org_name(QSurfaceFormat)]
+enum RenderableType {
+    /// The default, unspecified rendering method
+    DefaultRenderableType,
+    /// Desktop OpenGL rendering
+    OpenGL,
+    /// OpenGL ES 2.0 rendering
+    OpenGLES,
+    /// Open Vector Graphics rendering
+    OpenVG,
+}
+
+[org_name(QSurfaceFormat)]
+enum OpenGLContextProfile {
+    /// OpenGL version is lower than 3.2. For 3.2 and newer this is same as CoreProfile.
+    NoProfile,
+    /// Functionality deprecated in OpenGL version 3.0 is not available.
+    CoreProfile,
+    /// Functionality from earlier OpenGL versions is available.
+    CompatibilityProfile,
+}
+
+[org_name(QSurfaceFormat)]
+enum ColorSpace {
+    /// The default, unspecified color space.
+    DefaultColorSpace,
+    /// When `GL_ARB_framebuffer_sRGB` or `GL_EXT_framebuffer_sRGB` is supported by the platform and this value is set, the window will be created with an sRGB-capable default framebuffer. Note that some platforms may return windows with a sRGB-capable default framebuffer even when not requested explicitly.
+    sRGBColorSpace,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

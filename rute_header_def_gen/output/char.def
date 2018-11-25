@@ -63,325 +63,11 @@
 /// 
 /// 
 /// **See also:** Unicode
-/// QString
-/// QLatin1Char
+/// [`String`]
+/// [`Latin1Char`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QChar)]
-enum SpecialCharacter {
-    Null,
-    Tabulation,
-    LineFeed,
-    CarriageReturn,
-    Space,
-    Nbsp,
-    SoftHyphen,
-    ReplacementCharacter,
-    ObjectReplacementCharacter,
-    ByteOrderMark,
-    ByteOrderSwapped,
-    ParagraphSeparator,
-    LineSeparator,
-    LastValidCodePoint,
-}
-
-[org_name(QChar)]
-enum Category {
-    Mark_NonSpacing,
-    Mark_SpacingCombining,
-    Mark_Enclosing,
-    Number_DecimalDigit,
-    Number_Letter,
-    Number_Other,
-    Separator_Space,
-    Separator_Line,
-    Separator_Paragraph,
-    Other_Control,
-    Other_Format,
-    Other_Surrogate,
-    Other_PrivateUse,
-    Other_NotAssigned,
-    Letter_Uppercase,
-    Letter_Lowercase,
-    Letter_Titlecase,
-    Letter_Modifier,
-    Letter_Other,
-    Punctuation_Connector,
-    Punctuation_Dash,
-    Punctuation_Open,
-    Punctuation_Close,
-    Punctuation_InitialQuote,
-    Punctuation_FinalQuote,
-    Punctuation_Other,
-    Symbol_Math,
-    Symbol_Currency,
-    Symbol_Modifier,
-    Symbol_Other,
-}
-
-[org_name(QChar)]
-enum Script {
-    Script_Unknown,
-    Script_Inherited,
-    Script_Common,
-    Script_Latin,
-    Script_Greek,
-    Script_Cyrillic,
-    Script_Armenian,
-    Script_Hebrew,
-    Script_Arabic,
-    Script_Syriac,
-    Script_Thaana,
-    Script_Devanagari,
-    Script_Bengali,
-    Script_Gurmukhi,
-    Script_Gujarati,
-    Script_Oriya,
-    Script_Tamil,
-    Script_Telugu,
-    Script_Kannada,
-    Script_Malayalam,
-    Script_Sinhala,
-    Script_Thai,
-    Script_Lao,
-    Script_Tibetan,
-    Script_Myanmar,
-    Script_Georgian,
-    Script_Hangul,
-    Script_Ethiopic,
-    Script_Cherokee,
-    Script_CanadianAboriginal,
-    Script_Ogham,
-    Script_Runic,
-    Script_Khmer,
-    Script_Mongolian,
-    Script_Hiragana,
-    Script_Katakana,
-    Script_Bopomofo,
-    Script_Han,
-    Script_Yi,
-    Script_OldItalic,
-    Script_Gothic,
-    Script_Deseret,
-    Script_Tagalog,
-    Script_Hanunoo,
-    Script_Buhid,
-    Script_Tagbanwa,
-    Script_Coptic,
-    Script_Limbu,
-    Script_TaiLe,
-    Script_LinearB,
-    Script_Ugaritic,
-    Script_Shavian,
-    Script_Osmanya,
-    Script_Cypriot,
-    Script_Braille,
-    Script_Buginese,
-    Script_NewTaiLue,
-    Script_Glagolitic,
-    Script_Tifinagh,
-    Script_SylotiNagri,
-    Script_OldPersian,
-    Script_Kharoshthi,
-    Script_Balinese,
-    Script_Cuneiform,
-    Script_Phoenician,
-    Script_PhagsPa,
-    Script_Nko,
-    Script_Sundanese,
-    Script_Lepcha,
-    Script_OlChiki,
-    Script_Vai,
-    Script_Saurashtra,
-    Script_KayahLi,
-    Script_Rejang,
-    Script_Lycian,
-    Script_Carian,
-    Script_Lydian,
-    Script_Cham,
-    Script_TaiTham,
-    Script_TaiViet,
-    Script_Avestan,
-    Script_EgyptianHieroglyphs,
-    Script_Samaritan,
-    Script_Lisu,
-    Script_Bamum,
-    Script_Javanese,
-    Script_MeeteiMayek,
-    Script_ImperialAramaic,
-    Script_OldSouthArabian,
-    Script_InscriptionalParthian,
-    Script_InscriptionalPahlavi,
-    Script_OldTurkic,
-    Script_Kaithi,
-    Script_Batak,
-    Script_Brahmi,
-    Script_Mandaic,
-    Script_Chakma,
-    Script_MeroiticCursive,
-    Script_MeroiticHieroglyphs,
-    Script_Miao,
-    Script_Sharada,
-    Script_SoraSompeng,
-    Script_Takri,
-    Script_CaucasianAlbanian,
-    Script_BassaVah,
-    Script_Duployan,
-    Script_Elbasan,
-    Script_Grantha,
-    Script_PahawhHmong,
-    Script_Khojki,
-    Script_LinearA,
-    Script_Mahajani,
-    Script_Manichaean,
-    Script_MendeKikakui,
-    Script_Modi,
-    Script_Mro,
-    Script_OldNorthArabian,
-    Script_Nabataean,
-    Script_Palmyrene,
-    Script_PauCinHau,
-    Script_OldPermic,
-    Script_PsalterPahlavi,
-    Script_Siddham,
-    Script_Khudawadi,
-    Script_Tirhuta,
-    Script_WarangCiti,
-    Script_Ahom,
-    Script_AnatolianHieroglyphs,
-    Script_Hatran,
-    Script_Multani,
-    Script_OldHungarian,
-    Script_SignWriting,
-    Script_Adlam,
-    Script_Bhaiksuki,
-    Script_Marchen,
-    Script_Newa,
-    Script_Osage,
-    Script_Tangut,
-    Script_MasaramGondi,
-    Script_Nushu,
-    Script_Soyombo,
-    Script_ZanabazarSquare,
-    ScriptCount,
-}
-
-[org_name(QChar)]
-enum Direction {
-    DirL,
-    DirR,
-    DirEN,
-    DirES,
-    DirET,
-    DirAN,
-    DirCS,
-    DirB,
-    DirS,
-    DirWS,
-    DirON,
-    DirLRE,
-    DirLRO,
-    DirAL,
-    DirRLE,
-    DirRLO,
-    DirPDF,
-    DirNSM,
-    DirBN,
-    DirLRI,
-    DirRLI,
-    DirFSI,
-    DirPDI,
-}
-
-[org_name(QChar)]
-enum Decomposition {
-    NoDecomposition,
-    Canonical,
-    Font,
-    NoBreak,
-    Initial,
-    Medial,
-    Final,
-    Isolated,
-    Circle,
-    Super,
-    Sub,
-    Vertical,
-    Wide,
-    Narrow,
-    Small,
-    Square,
-    Compat,
-    Fraction,
-}
-
-[org_name(QChar)]
-enum JoiningType {
-    Joining_None,
-    Joining_Causing,
-    Joining_Dual,
-    Joining_Right,
-    Joining_Left,
-    Joining_Transparent,
-}
-
-[org_name(QChar)]
-enum Joining {
-    OtherJoining,
-    Dual,
-    Right,
-    Center,
-}
-
-[org_name(QChar)]
-enum CombiningClass {
-    Combining_BelowLeftAttached,
-    Combining_BelowAttached,
-    Combining_BelowRightAttached,
-    Combining_LeftAttached,
-    Combining_RightAttached,
-    Combining_AboveLeftAttached,
-    Combining_AboveAttached,
-    Combining_AboveRightAttached,
-    Combining_BelowLeft,
-    Combining_Below,
-    Combining_BelowRight,
-    Combining_Left,
-    Combining_Right,
-    Combining_AboveLeft,
-    Combining_Above,
-    Combining_AboveRight,
-    Combining_DoubleBelow,
-    Combining_DoubleAbove,
-    Combining_IotaSubscript,
-}
-
-[org_name(QChar)]
-enum UnicodeVersion {
-    Unicode_Unassigned,
-    Unicode_1_1,
-    Unicode_2_0,
-    Unicode_2_1_2,
-    Unicode_3_0,
-    Unicode_3_1,
-    Unicode_3_2,
-    Unicode_4_0,
-    Unicode_4_1,
-    Unicode_5_0,
-    Unicode_5_1,
-    Unicode_5_2,
-    Unicode_6_0,
-    Unicode_6_1,
-    Unicode_6_2,
-    Unicode_6_3,
-    Unicode_7_0,
-    Unicode_8_0,
-    Unicode_9_0,
-    Unicode_10_0,
-}
-
-
 struct Char {
     /// 
     /// Returns the character's category.
@@ -433,12 +119,12 @@ struct Char {
     /// Returns the mirrored character if this character is a mirrored
     /// character; otherwise returns the character itself.
     /// 
-    /// **See also:** hasMirrored()
+    /// **See also:** [`has_mirrored()`]
     /// 
     /// **Overloads**  Returns the mirrored character if the UCS-4-encoded character specified
     /// by *ucs4* is a mirrored character; otherwise returns the character itself.
     /// 
-    /// **See also:** hasMirrored()
+    /// **See also:** [`has_mirrored()`]
     mirrored_char() -> Char,
     /// 
     /// Returns `true` if the character should be reversed if the text
@@ -446,7 +132,7 @@ struct Char {
     /// 
     /// A bit faster equivalent of (ch.mirroredChar() != ch).
     /// 
-    /// **See also:** mirroredChar()
+    /// **See also:** [`mirrored_char()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
@@ -454,7 +140,7 @@ struct Char {
     /// 
     /// A bit faster equivalent of (QChar::mirroredChar(ucs4) != ucs4).
     /// 
-    /// **See also:** mirroredChar()
+    /// **See also:** [`mirrored_char()`]
     has_mirrored() -> bool,
     /// 
     /// Decomposes a character into it's constituent parts. Returns an empty string
@@ -533,7 +219,7 @@ struct Char {
     /// **Note**: It is not possible to distinguish a non-Latin-1 character from a Latin-1 0
     /// (NUL) character. Prefer to use unicode(), which does not have this ambiguity.
     /// 
-    /// **See also:** unicode()
+    /// **See also:** [`unicode()`]
     to_latin1() -> char,
     /// 
     /// Returns the Unicode version that introduced this character.
@@ -554,15 +240,16 @@ struct Char {
     /// Returns a reference to the numeric Unicode value of the QChar.
     /// 
     /// Returns the numeric Unicode value of the QChar.
-    unicode() -> ushort?,
+    [org_name(unicode)]
+    unicode_2() -> ushort?,
     /// 
     /// Converts the Latin-1 character *c* to its equivalent QChar. This
     /// is mainly useful for non-internationalized software.
     /// 
     /// An alternative is to use QLatin1Char.
     /// 
-    /// **See also:** toLatin1()
-    /// unicode()
+    /// **See also:** [`to_latin1()`]
+    /// [`unicode()`]
     [static] from_latin1(c: char) -> Char,
     /// 
     /// Returns `true` if the character is the Unicode character 0x0000
@@ -638,13 +325,13 @@ struct Char {
     /// Returns `true` if the character is a number (Number_* categories,
     /// not just 0-9); otherwise returns `false.`
     /// 
-    /// **See also:** isDigit()
+    /// **See also:** [`is_digit()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a number (Number_* categories, not just 0-9); otherwise returns `false.`
     /// 
-    /// **See also:** isDigit()
+    /// **See also:** [`is_digit()`]
     is_number() -> bool,
     /// 
     /// Returns `true` if the character is a letter or number (Letter_* or
@@ -658,63 +345,63 @@ struct Char {
     /// Returns `true` if the character is a decimal digit
     /// (Number_DecimalDigit); otherwise returns `false.`
     /// 
-    /// **See also:** isNumber()
+    /// **See also:** [`is_number()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a decimal digit (Number_DecimalDigit); otherwise returns `false.`
     /// 
-    /// **See also:** isNumber()
+    /// **See also:** [`is_number()`]
     is_digit() -> bool,
     /// 
     /// Returns `true` if the character is a lowercase letter, for example
     /// category() is Letter_Lowercase.
     /// 
-    /// **See also:** isUpper()
-    /// toLower()
-    /// toUpper()
+    /// **See also:** [`is_upper()`]
+    /// [`to_lower()`]
+    /// [`to_upper()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
     /// is a lowercase letter, for example category() is Letter_Lowercase.
     /// 
-    /// **See also:** isUpper()
-    /// toLower()
-    /// toUpper()
+    /// **See also:** [`is_upper()`]
+    /// [`to_lower()`]
+    /// [`to_upper()`]
     is_lower() -> bool,
     /// 
     /// Returns `true` if the character is an uppercase letter, for example
     /// category() is Letter_Uppercase.
     /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
     /// is an uppercase letter, for example category() is Letter_Uppercase.
     /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
     is_upper() -> bool,
     /// 
     /// Returns `true` if the character is a titlecase letter, for example
     /// category() is Letter_Titlecase.
     /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    /// toTitleCase()
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    /// [`to_title_case()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
     /// is a titlecase letter, for example category() is Letter_Titlecase.
     /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    /// toTitleCase()
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    /// [`to_title_case()`]
     is_title_case() -> bool,
     /// 
     /// Returns `true` if the QChar is a non-character; false otherwise.
@@ -767,12 +454,12 @@ struct Char {
     /// 
     /// Returns the cell (least significant byte) of the Unicode character.
     /// 
-    /// **See also:** row()
+    /// **See also:** [`row()`]
     cell() -> uchar,
     /// 
     /// Returns the row (most significant byte) of the Unicode character.
     /// 
-    /// **See also:** cell()
+    /// **See also:** [`cell()`]
     row() -> uchar,
     set_cell(acell: uchar),
     set_row(arow: uchar),
@@ -794,7 +481,8 @@ struct Char {
     /// in applications but cannot be used for text interchange.
     /// Those are the last two entries each Unicode Plane ([0xfffe..0xffff],
     /// [0x1fffe..0x1ffff], etc.) as well as the entries in range [0xfdd0..0xfdef].
-    [static] is_non_character(ucs4: uint) -> bool,
+    [org_name(isNonCharacter)]
+    [static] is_non_character_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the QChar is the high part of a UTF16 surrogate
     /// (for example if its code point is in range [0xd800..0xdbff]); false otherwise.
@@ -803,7 +491,8 @@ struct Char {
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
     /// is the high part of a UTF16 surrogate
     /// (for example if its code point is in range [0xd800..0xdbff]); false otherwise.
-    [static] is_high_surrogate(ucs4: uint) -> bool,
+    [org_name(isHighSurrogate)]
+    [static] is_high_surrogate_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the QChar is the low part of a UTF16 surrogate
     /// (for example if its code point is in range [0xdc00..0xdfff]); false otherwise.
@@ -812,7 +501,8 @@ struct Char {
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
     /// is the low part of a UTF16 surrogate
     /// (for example if its code point is in range [0xdc00..0xdfff]); false otherwise.
-    [static] is_low_surrogate(ucs4: uint) -> bool,
+    [org_name(isLowSurrogate)]
+    [static] is_low_surrogate_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the QChar contains a code point that is in either
     /// the high or the low part of the UTF-16 surrogate range
@@ -823,7 +513,8 @@ struct Char {
     /// contains a code point that is in either the high or the low part of the
     /// UTF-16 surrogate range (for example if its code point is in range [0xd800..0xdfff]);
     /// false otherwise.
-    [static] is_surrogate(ucs4: uint) -> bool,
+    [org_name(isSurrogate)]
+    [static] is_surrogate_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
     /// can be split into the high and low parts of a UTF16 surrogate
@@ -843,7 +534,8 @@ struct Char {
     /// 
     /// **Overloads**
     /// Converts a UTF16 surrogate pair ( *high,* *low)* to it's UCS-4-encoded code point.
-    [static] surrogate_to_ucs4(high: CharType, low: CharType) -> uint,
+    [org_name(surrogateToUcs4)]
+    [static] surrogate_to_ucs4_2(high: CharType, low: CharType) -> uint,
     /// 
     /// Returns the high surrogate part of a UCS-4-encoded code point.
     /// The returned result is undefined if *ucs4* is smaller than 0x10000.
@@ -856,12 +548,14 @@ struct Char {
     /// Returns the character's category.
     /// 
     /// **Overloads**  Returns the category of the UCS-4-encoded character specified by *ucs4.*
-    [static] category(ucs4: uint) -> Char::Category,
+    [org_name(category)]
+    [static] category_2(ucs4: uint) -> Char::Category,
     /// 
     /// Returns the character's direction.
     /// 
     /// **Overloads**  Returns the direction of the UCS-4-encoded character specified by *ucs4.*
-    [static] direction(ucs4: uint) -> Char::Direction,
+    [org_name(direction)]
+    [static] direction_2(ucs4: uint) -> Char::Direction,
     /// 
     /// Returns information about the joining type attributes of the character
     /// (needed for certain languages such as Arabic or Syriac).
@@ -870,7 +564,8 @@ struct Char {
     /// Returns information about the joining type attributes of the UCS-4-encoded
     /// character specified by *ucs4*
     /// (needed for certain languages such as Arabic or Syriac).
-    [static] joining_type(ucs4: uint) -> Char::JoiningType,
+    [org_name(joiningType)]
+    [static] joining_type_2(ucs4: uint) -> Char::JoiningType,
     /// 
     /// Returns information about the joining type attributes of the character
     /// (needed for certain languages such as Arabic or Syriac).
@@ -886,7 +581,8 @@ struct Char {
     /// **Overloads**
     /// Returns information about the joining properties of the UCS-4-encoded
     /// character specified by *ucs4* (needed for certain languages such as Arabic).
-    [static] joining(ucs4: uint) -> Char::Joining,
+    [org_name(joining)]
+    [static] joining_2(ucs4: uint) -> Char::Joining,
     /// 
     /// Returns the combining class for the character as defined in the
     /// Unicode standard. This is mainly useful as a positioning hint for
@@ -897,25 +593,27 @@ struct Char {
     /// 
     /// **Overloads**  Returns the combining class for the UCS-4-encoded character specified by
     /// *ucs4,* as defined in the Unicode standard.
-    [static] combining_class(ucs4: uint) -> unsigned,
+    [org_name(combiningClass)]
+    [static] combining_class_2(ucs4: uint) -> unsigned,
     /// 
     /// Returns the mirrored character if this character is a mirrored
     /// character; otherwise returns the character itself.
     /// 
-    /// **See also:** hasMirrored()
+    /// **See also:** [`has_mirrored()`]
     /// 
     /// **Overloads**  Returns the mirrored character if the UCS-4-encoded character specified
     /// by *ucs4* is a mirrored character; otherwise returns the character itself.
     /// 
-    /// **See also:** hasMirrored()
-    [static] mirrored_char(ucs4: uint) -> uint,
+    /// **See also:** [`has_mirrored()`]
+    [org_name(mirroredChar)]
+    [static] mirrored_char_2(ucs4: uint) -> uint,
     /// 
     /// Returns `true` if the character should be reversed if the text
     /// direction is reversed; otherwise returns `false.`
     /// 
     /// A bit faster equivalent of (ch.mirroredChar() != ch).
     /// 
-    /// **See also:** mirroredChar()
+    /// **See also:** [`mirrored_char()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
@@ -923,8 +621,9 @@ struct Char {
     /// 
     /// A bit faster equivalent of (QChar::mirroredChar(ucs4) != ucs4).
     /// 
-    /// **See also:** mirroredChar()
-    [static] has_mirrored(ucs4: uint) -> bool,
+    /// **See also:** [`mirrored_char()`]
+    [org_name(hasMirrored)]
+    [static] has_mirrored_2(ucs4: uint) -> bool,
     /// 
     /// Decomposes a character into it's constituent parts. Returns an empty string
     /// if no decomposition exists.
@@ -937,20 +636,23 @@ struct Char {
     /// 
     /// **Overloads**  Returns the tag defining the composition of the UCS-4-encoded character
     /// specified by *ucs4.* Returns QChar::NoDecomposition if no decomposition exists.
-    [static] decomposition(ucs4: uint) -> String,
+    [org_name(decomposition)]
+    [static] decomposition_2(ucs4: uint) -> String,
     /// 
     /// Returns the tag defining the composition of the character. Returns
     /// QChar::NoDecomposition if no decomposition exists.
     /// 
     /// **Overloads**  Returns the tag defining the composition of the UCS-4-encoded character
     /// specified by *ucs4.* Returns QChar::NoDecomposition if no decomposition exists.
-    [static] decomposition_tag(ucs4: uint) -> Char::Decomposition,
+    [org_name(decompositionTag)]
+    [static] decomposition_tag_2(ucs4: uint) -> Char::Decomposition,
     /// 
     /// Returns the numeric value of the digit, or -1 if the character is not a digit.
     /// 
     /// **Overloads**  Returns the numeric value of the digit specified by the UCS-4-encoded
     /// character, *ucs4,* or -1 if the character is not a digit.
-    [static] digit_value(ucs4: uint) -> i32,
+    [org_name(digitValue)]
+    [static] digit_value_2(ucs4: uint) -> i32,
     /// 
     /// Returns the lowercase equivalent if the character is uppercase or titlecase;
     /// otherwise returns the character itself.
@@ -958,7 +660,8 @@ struct Char {
     /// **Overloads**  Returns the lowercase equivalent of the UCS-4-encoded character specified
     /// by *ucs4* if the character is uppercase or titlecase; otherwise returns
     /// the character itself.
-    [static] to_lower(ucs4: uint) -> uint,
+    [org_name(toLower)]
+    [static] to_lower_2(ucs4: uint) -> uint,
     /// 
     /// Returns the uppercase equivalent if the character is lowercase or titlecase;
     /// otherwise returns the character itself.
@@ -966,7 +669,8 @@ struct Char {
     /// **Overloads**  Returns the uppercase equivalent of the UCS-4-encoded character specified
     /// by *ucs4* if the character is lowercase or titlecase; otherwise returns
     /// the character itself.
-    [static] to_upper(ucs4: uint) -> uint,
+    [org_name(toUpper)]
+    [static] to_upper_2(ucs4: uint) -> uint,
     /// 
     /// Returns the title case equivalent if the character is lowercase or uppercase;
     /// otherwise returns the character itself.
@@ -974,27 +678,31 @@ struct Char {
     /// **Overloads**  Returns the title case equivalent of the UCS-4-encoded character specified
     /// by *ucs4* if the character is lowercase or uppercase; otherwise returns
     /// the character itself.
-    [static] to_title_case(ucs4: uint) -> uint,
+    [org_name(toTitleCase)]
+    [static] to_title_case_2(ucs4: uint) -> uint,
     /// 
     /// Returns the case folded equivalent of the character.
     /// For most Unicode characters this is the same as toLower().
     /// 
     /// **Overloads**  Returns the case folded equivalent of the UCS-4-encoded character specified
     /// by *ucs4.* For most Unicode characters this is the same as toLower().
-    [static] to_case_folded(ucs4: uint) -> uint,
+    [org_name(toCaseFolded)]
+    [static] to_case_folded_2(ucs4: uint) -> uint,
     /// 
     /// Returns the Unicode script property value for this character.
     /// 
     /// **Overloads**
     /// Returns the Unicode script property value for the character specified in
     /// its UCS-4-encoded form as *ucs4.*
-    [static] script(ucs4: uint) -> Char::Script,
+    [org_name(script)]
+    [static] script_2(ucs4: uint) -> Char::Script,
     /// 
     /// Returns the Unicode version that introduced this character.
     /// 
     /// **Overloads**  Returns the Unicode version that introduced the character specified in
     /// its UCS-4-encoded form as *ucs4.*
-    [static] unicode_version(ucs4: uint) -> Char::UnicodeVersion,
+    [org_name(unicodeVersion)]
+    [static] unicode_version_2(ucs4: uint) -> Char::UnicodeVersion,
     /// 
     /// Returns the most recent supported Unicode version.
     [static] current_unicode_version() -> Char::UnicodeVersion,
@@ -1012,7 +720,8 @@ struct Char {
     /// 
     /// Note that this gives no indication of whether the character is
     /// available in a particular font.
-    [static] is_print(ucs4: uint) -> bool,
+    [org_name(isPrint)]
+    [static] is_print_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a separator character
     /// (Separator_* categories or certain code points from Other_Control category);
@@ -1022,7 +731,8 @@ struct Char {
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a separator character (Separator_* categories or certain code points
     /// from Other_Control category); otherwise returns `false.`
-    [static] is_space(ucs4: uint) -> bool,
+    [org_name(isSpace)]
+    [static] is_space_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a mark (Mark_* categories);
     /// otherwise returns `false.`
@@ -1032,7 +742,8 @@ struct Char {
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a mark (Mark_* categories); otherwise returns `false.`
-    [static] is_mark(ucs4: uint) -> bool,
+    [org_name(isMark)]
+    [static] is_mark_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a punctuation mark (Punctuation_*
     /// categories); otherwise returns `false.`
@@ -1040,7 +751,8 @@ struct Char {
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a punctuation mark (Punctuation_* categories); otherwise returns `false.`
-    [static] is_punct(ucs4: uint) -> bool,
+    [org_name(isPunct)]
+    [static] is_punct_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a symbol (Symbol_* categories);
     /// otherwise returns `false.`
@@ -1048,7 +760,8 @@ struct Char {
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a symbol (Symbol_* categories); otherwise returns `false.`
-    [static] is_symbol(ucs4: uint) -> bool,
+    [org_name(isSymbol)]
+    [static] is_symbol_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a letter (Letter_* categories);
     /// otherwise returns `false.`
@@ -1063,19 +776,21 @@ struct Char {
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a letter or number (Letter_* or Number_* categories); otherwise returns `false.`
-    [static] is_letter(ucs4: uint) -> bool,
+    [org_name(isLetter)]
+    [static] is_letter_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a number (Number_* categories,
     /// not just 0-9); otherwise returns `false.`
     /// 
-    /// **See also:** isDigit()
+    /// **See also:** [`is_digit()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a number (Number_* categories, not just 0-9); otherwise returns `false.`
     /// 
-    /// **See also:** isDigit()
-    [static] is_number(ucs4: uint) -> bool,
+    /// **See also:** [`is_digit()`]
+    [org_name(isNumber)]
+    [static] is_number_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a letter or number (Letter_* or
     /// Number_* categories); otherwise returns `false.`
@@ -1083,69 +798,663 @@ struct Char {
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a letter or number (Letter_* or Number_* categories); otherwise returns `false.`
-    [static] is_letter_or_number(ucs4: uint) -> bool,
+    [org_name(isLetterOrNumber)]
+    [static] is_letter_or_number_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a decimal digit
     /// (Number_DecimalDigit); otherwise returns `false.`
     /// 
-    /// **See also:** isNumber()
+    /// **See also:** [`is_number()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4* is
     /// a decimal digit (Number_DecimalDigit); otherwise returns `false.`
     /// 
-    /// **See also:** isNumber()
-    [static] is_digit(ucs4: uint) -> bool,
+    /// **See also:** [`is_number()`]
+    [org_name(isDigit)]
+    [static] is_digit_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a lowercase letter, for example
     /// category() is Letter_Lowercase.
     /// 
-    /// **See also:** isUpper()
-    /// toLower()
-    /// toUpper()
+    /// **See also:** [`is_upper()`]
+    /// [`to_lower()`]
+    /// [`to_upper()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
     /// is a lowercase letter, for example category() is Letter_Lowercase.
     /// 
-    /// **See also:** isUpper()
-    /// toLower()
-    /// toUpper()
-    [static] is_lower(ucs4: uint) -> bool,
+    /// **See also:** [`is_upper()`]
+    /// [`to_lower()`]
+    /// [`to_upper()`]
+    [org_name(isLower)]
+    [static] is_lower_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is an uppercase letter, for example
     /// category() is Letter_Uppercase.
     /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
     /// is an uppercase letter, for example category() is Letter_Uppercase.
     /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    [static] is_upper(ucs4: uint) -> bool,
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    [org_name(isUpper)]
+    [static] is_upper_2(ucs4: uint) -> bool,
     /// 
     /// Returns `true` if the character is a titlecase letter, for example
     /// category() is Letter_Titlecase.
     /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    /// toTitleCase()
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    /// [`to_title_case()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the UCS-4-encoded character specified by *ucs4*
     /// is a titlecase letter, for example category() is Letter_Titlecase.
     /// 
-    /// **See also:** isLower()
-    /// toUpper()
-    /// toLower()
-    /// toTitleCase()
-    [static] is_title_case(ucs4: uint) -> bool,
+    /// **See also:** [`is_lower()`]
+    /// [`to_upper()`]
+    /// [`to_lower()`]
+    /// [`to_title_case()`]
+    [org_name(isTitleCase)]
+    [static] is_title_case_2(ucs4: uint) -> bool,
+}
+
+[org_name(QChar)]
+enum SpecialCharacter {
+    /// A QChar with this value isNull().
+    Null,
+    /// Character tabulation.
+    Tabulation,
+    /// 
+    LineFeed,
+    /// 
+    CarriageReturn,
+    /// 
+    Space,
+    /// Non-breaking space.
+    Nbsp,
+    /// 
+    SoftHyphen,
+    /// The character shown when a font has no glyph for a certain codepoint. A special question mark character is often used. Codecs use this codepoint when input data cannot be represented in Unicode.
+    ReplacementCharacter,
+    /// Used to represent an object such as an image when such objects cannot be presented.
+    ObjectReplacementCharacter,
+    /// 
+    ByteOrderMark,
+    /// 
+    ByteOrderSwapped,
+    /// 
+    ParagraphSeparator,
+    /// 
+    LineSeparator,
+    /// 
+    LastValidCodePoint,
+}
+
+[org_name(QChar)]
+enum Category {
+    /// Unicode class name Mn
+    Mark_NonSpacing,
+    /// Unicode class name Mc
+    Mark_SpacingCombining,
+    /// Unicode class name Me
+    Mark_Enclosing,
+    /// Unicode class name Nd
+    Number_DecimalDigit,
+    /// Unicode class name Nl
+    Number_Letter,
+    /// Unicode class name No
+    Number_Other,
+    /// Unicode class name Zs
+    Separator_Space,
+    /// Unicode class name Zl
+    Separator_Line,
+    /// Unicode class name Zp
+    Separator_Paragraph,
+    /// Unicode class name Cc
+    Other_Control,
+    /// Unicode class name Cf
+    Other_Format,
+    /// Unicode class name Cs
+    Other_Surrogate,
+    /// Unicode class name Co
+    Other_PrivateUse,
+    /// Unicode class name Cn The following categories are informative in Unicode:
+    Other_NotAssigned,
+    /// Unicode class name Lu
+    Letter_Uppercase,
+    /// Unicode class name Ll
+    Letter_Lowercase,
+    /// Unicode class name Lt
+    Letter_Titlecase,
+    /// Unicode class name Lm
+    Letter_Modifier,
+    /// Unicode class name Lo
+    Letter_Other,
+    /// Unicode class name Pc
+    Punctuation_Connector,
+    /// Unicode class name Pd
+    Punctuation_Dash,
+    /// Unicode class name Ps
+    Punctuation_Open,
+    /// Unicode class name Pe
+    Punctuation_Close,
+    /// Unicode class name Pi
+    Punctuation_InitialQuote,
+    /// Unicode class name Pf
+    Punctuation_FinalQuote,
+    /// Unicode class name Po
+    Punctuation_Other,
+    /// Unicode class name Sm
+    Symbol_Math,
+    /// Unicode class name Sc
+    Symbol_Currency,
+    /// Unicode class name Sk
+    Symbol_Modifier,
+    /// Unicode class name So
+    Symbol_Other,
+}
+
+[org_name(QChar)]
+enum Script {
+    /// For unassigned, private-use, noncharacter, and surrogate code points.
+    Script_Unknown,
+    /// For characters that may be used with multiple scripts and that inherit their script from the preceding characters. These include nonspacing marks, enclosing marks, and zero width joiner/non-joiner characters.
+    Script_Inherited,
+    /// For characters that may be used with multiple scripts and that do not inherit their script from the preceding characters.
+    Script_Common,
+    /// 
+    Script_Latin,
+    /// 
+    Script_Greek,
+    /// 
+    Script_Cyrillic,
+    /// 
+    Script_Armenian,
+    /// 
+    Script_Hebrew,
+    /// 
+    Script_Arabic,
+    /// 
+    Script_Syriac,
+    /// 
+    Script_Thaana,
+    /// 
+    Script_Devanagari,
+    /// 
+    Script_Bengali,
+    /// 
+    Script_Gurmukhi,
+    /// 
+    Script_Gujarati,
+    /// 
+    Script_Oriya,
+    /// 
+    Script_Tamil,
+    /// 
+    Script_Telugu,
+    /// 
+    Script_Kannada,
+    /// 
+    Script_Malayalam,
+    /// 
+    Script_Sinhala,
+    /// 
+    Script_Thai,
+    /// 
+    Script_Lao,
+    /// 
+    Script_Tibetan,
+    /// 
+    Script_Myanmar,
+    /// 
+    Script_Georgian,
+    /// 
+    Script_Hangul,
+    /// 
+    Script_Ethiopic,
+    /// 
+    Script_Cherokee,
+    /// 
+    Script_CanadianAboriginal,
+    /// 
+    Script_Ogham,
+    /// 
+    Script_Runic,
+    /// 
+    Script_Khmer,
+    /// 
+    Script_Mongolian,
+    /// 
+    Script_Hiragana,
+    /// 
+    Script_Katakana,
+    /// 
+    Script_Bopomofo,
+    /// 
+    Script_Han,
+    /// 
+    Script_Yi,
+    /// 
+    Script_OldItalic,
+    /// 
+    Script_Gothic,
+    /// 
+    Script_Deseret,
+    /// 
+    Script_Tagalog,
+    /// 
+    Script_Hanunoo,
+    /// 
+    Script_Buhid,
+    /// 
+    Script_Tagbanwa,
+    /// 
+    Script_Coptic,
+    /// 
+    Script_Limbu,
+    /// 
+    Script_TaiLe,
+    /// 
+    Script_LinearB,
+    /// 
+    Script_Ugaritic,
+    /// 
+    Script_Shavian,
+    /// 
+    Script_Osmanya,
+    /// 
+    Script_Cypriot,
+    /// 
+    Script_Braille,
+    /// 
+    Script_Buginese,
+    /// 
+    Script_NewTaiLue,
+    /// 
+    Script_Glagolitic,
+    /// 
+    Script_Tifinagh,
+    /// 
+    Script_SylotiNagri,
+    /// 
+    Script_OldPersian,
+    /// 
+    Script_Kharoshthi,
+    /// 
+    Script_Balinese,
+    /// 
+    Script_Cuneiform,
+    /// 
+    Script_Phoenician,
+    /// 
+    Script_PhagsPa,
+    /// 
+    Script_Nko,
+    /// 
+    Script_Sundanese,
+    /// 
+    Script_Lepcha,
+    /// 
+    Script_OlChiki,
+    /// 
+    Script_Vai,
+    /// 
+    Script_Saurashtra,
+    /// 
+    Script_KayahLi,
+    /// 
+    Script_Rejang,
+    /// 
+    Script_Lycian,
+    /// 
+    Script_Carian,
+    /// 
+    Script_Lydian,
+    /// 
+    Script_Cham,
+    /// 
+    Script_TaiTham,
+    /// 
+    Script_TaiViet,
+    /// 
+    Script_Avestan,
+    /// 
+    Script_EgyptianHieroglyphs,
+    /// 
+    Script_Samaritan,
+    /// 
+    Script_Lisu,
+    /// 
+    Script_Bamum,
+    /// 
+    Script_Javanese,
+    /// 
+    Script_MeeteiMayek,
+    /// 
+    Script_ImperialAramaic,
+    /// 
+    Script_OldSouthArabian,
+    /// 
+    Script_InscriptionalParthian,
+    /// 
+    Script_InscriptionalPahlavi,
+    /// 
+    Script_OldTurkic,
+    /// 
+    Script_Kaithi,
+    /// 
+    Script_Batak,
+    /// 
+    Script_Brahmi,
+    /// 
+    Script_Mandaic,
+    /// 
+    Script_Chakma,
+    /// 
+    Script_MeroiticCursive,
+    /// 
+    Script_MeroiticHieroglyphs,
+    /// 
+    Script_Miao,
+    /// 
+    Script_Sharada,
+    /// 
+    Script_SoraSompeng,
+    /// 
+    Script_Takri,
+    /// 
+    Script_CaucasianAlbanian,
+    /// 
+    Script_BassaVah,
+    /// 
+    Script_Duployan,
+    /// 
+    Script_Elbasan,
+    /// 
+    Script_Grantha,
+    /// 
+    Script_PahawhHmong,
+    /// 
+    Script_Khojki,
+    /// 
+    Script_LinearA,
+    /// 
+    Script_Mahajani,
+    /// 
+    Script_Manichaean,
+    /// 
+    Script_MendeKikakui,
+    /// 
+    Script_Modi,
+    /// 
+    Script_Mro,
+    /// 
+    Script_OldNorthArabian,
+    /// 
+    Script_Nabataean,
+    /// 
+    Script_Palmyrene,
+    /// 
+    Script_PauCinHau,
+    /// 
+    Script_OldPermic,
+    /// 
+    Script_PsalterPahlavi,
+    /// 
+    Script_Siddham,
+    /// 
+    Script_Khudawadi,
+    /// 
+    Script_Tirhuta,
+    /// 
+    Script_WarangCiti,
+    /// 
+    Script_Ahom,
+    /// 
+    Script_AnatolianHieroglyphs,
+    /// 
+    Script_Hatran,
+    /// 
+    Script_Multani,
+    /// 
+    Script_OldHungarian,
+    /// 
+    Script_SignWriting,
+    /// 
+    Script_Adlam,
+    /// 
+    Script_Bhaiksuki,
+    /// 
+    Script_Marchen,
+    /// 
+    Script_Newa,
+    /// 
+    Script_Osage,
+    /// 
+    Script_Tangut,
+    /// 
+    Script_MasaramGondi,
+    /// 
+    Script_Nushu,
+    /// 
+    Script_Soyombo,
+    /// 
+    Script_ZanabazarSquare,
+    ScriptCount,
+}
+
+[org_name(QChar)]
+enum Direction {
+    /// 
+    DirL,
+    /// 
+    DirR,
+    /// 
+    DirEN,
+    /// 
+    DirES,
+    /// 
+    DirET,
+    /// 
+    DirAN,
+    /// 
+    DirCS,
+    /// 
+    DirB,
+    /// 
+    DirS,
+    /// 
+    DirWS,
+    /// 
+    DirON,
+    /// 
+    DirLRE,
+    /// 
+    DirLRO,
+    /// 
+    DirAL,
+    /// 
+    DirRLE,
+    /// 
+    DirRLO,
+    /// 
+    DirPDF,
+    /// 
+    DirNSM,
+    /// 
+    DirBN,
+    /// Since Qt 5.3
+    DirLRI,
+    /// Since Qt 5.3
+    DirRLI,
+    /// Since Qt 5.3
+    DirFSI,
+    /// Since Qt 5.3
+    DirPDI,
+}
+
+[org_name(QChar)]
+enum Decomposition {
+    /// 
+    NoDecomposition,
+    /// 
+    Canonical,
+    /// 
+    Font,
+    /// 
+    NoBreak,
+    /// 
+    Initial,
+    /// 
+    Medial,
+    /// 
+    Final,
+    /// 
+    Isolated,
+    /// 
+    Circle,
+    /// 
+    Super,
+    /// 
+    Sub,
+    /// 
+    Vertical,
+    /// 
+    Wide,
+    /// 
+    Narrow,
+    /// 
+    Small,
+    /// 
+    Square,
+    /// 
+    Compat,
+    /// 
+    Fraction,
+}
+
+[org_name(QChar)]
+enum JoiningType {
+    /// 
+    Joining_None,
+    /// 
+    Joining_Causing,
+    /// 
+    Joining_Dual,
+    /// 
+    Joining_Right,
+    /// 
+    Joining_Left,
+    /// 
+    Joining_Transparent,
+}
+
+[org_name(QChar)]
+enum Joining {
+    /// 
+    OtherJoining,
+    /// 
+    Dual,
+    /// 
+    Right,
+    /// 
+    Center,
+}
+
+[org_name(QChar)]
+enum CombiningClass {
+    /// 
+    Combining_BelowLeftAttached,
+    /// 
+    Combining_BelowAttached,
+    /// 
+    Combining_BelowRightAttached,
+    /// 
+    Combining_LeftAttached,
+    /// 
+    Combining_RightAttached,
+    /// 
+    Combining_AboveLeftAttached,
+    /// 
+    Combining_AboveAttached,
+    /// 
+    Combining_AboveRightAttached,
+    /// 
+    Combining_BelowLeft,
+    /// 
+    Combining_Below,
+    /// 
+    Combining_BelowRight,
+    /// 
+    Combining_Left,
+    /// 
+    Combining_Right,
+    /// 
+    Combining_AboveLeft,
+    /// 
+    Combining_Above,
+    /// 
+    Combining_AboveRight,
+    /// 
+    Combining_DoubleBelow,
+    /// 
+    Combining_DoubleAbove,
+    /// 
+    Combining_IotaSubscript,
+}
+
+[org_name(QChar)]
+enum UnicodeVersion {
+    /// The value is not assigned to any character in version 8.0 of Unicode.
+    Unicode_Unassigned,
+    /// Version 1.1
+    Unicode_1_1,
+    /// Version 2.0
+    Unicode_2_0,
+    /// Version 2.1.2
+    Unicode_2_1_2,
+    /// Version 3.0
+    Unicode_3_0,
+    /// Version 3.1
+    Unicode_3_1,
+    /// Version 3.2
+    Unicode_3_2,
+    /// Version 4.0
+    Unicode_4_0,
+    /// Version 4.1
+    Unicode_4_1,
+    /// Version 5.0
+    Unicode_5_0,
+    /// Version 5.1
+    Unicode_5_1,
+    /// Version 5.2
+    Unicode_5_2,
+    /// Version 6.0
+    Unicode_6_0,
+    /// Version 6.1
+    Unicode_6_1,
+    /// Version 6.2
+    Unicode_6_2,
+    /// Version 6.3 Since Qt 5.3
+    Unicode_6_3,
+    /// Version 7.0 Since Qt 5.5
+    Unicode_7_0,
+    /// Version 8.0 Since Qt 5.6
+    Unicode_8_0,
+    /// Version 9.0 Since Qt 5.11
+    Unicode_9_0,
+    /// Version 10.0 Since Qt 5.11
+    Unicode_10_0,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

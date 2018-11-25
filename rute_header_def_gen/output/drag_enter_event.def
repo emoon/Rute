@@ -1,0 +1,20 @@
+/// 
+/// A widget must accept this event in order to receive the [drag move events](QDragMoveEvent)
+/// that are sent while the drag
+/// and drop action is in progress. The drag enter event is always
+/// immediately followed by a drag move event.
+/// 
+/// QDragEnterEvent inherits most of its functionality from
+/// QDragMoveEvent, which in turn inherits most of its functionality
+/// from QDropEvent.
+/// 
+/// **See also:** [`DragLeaveEvent`]
+/// [`DragMoveEvent`]
+/// [`DropEvent`]
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct DragEnterEvent : DragMoveEvent {
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -11,7 +11,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct TextInlineObject {
     /// 
     /// Returns `true` if this inline object is valid; otherwise returns
@@ -20,39 +19,39 @@ struct TextInlineObject {
     /// 
     /// Returns the inline object's rectangle.
     /// 
-    /// **See also:** ascent()
-    /// descent()
-    /// width()
+    /// **See also:** [`ascent()`]
+    /// [`descent()`]
+    /// [`width()`]
     rect() -> RectF,
     /// 
     /// Returns the inline object's width.
     /// 
-    /// **See also:** ascent()
-    /// descent()
-    /// rect()
+    /// **See also:** [`ascent()`]
+    /// [`descent()`]
+    /// [`rect()`]
     width() -> f32,
     /// 
     /// Returns the inline object's ascent.
     /// 
-    /// **See also:** descent()
-    /// width()
-    /// rect()
+    /// **See also:** [`descent()`]
+    /// [`width()`]
+    /// [`rect()`]
     ascent() -> f32,
     /// 
     /// Returns the inline object's descent.
     /// 
-    /// **See also:** ascent()
-    /// width()
-    /// rect()
+    /// **See also:** [`ascent()`]
+    /// [`width()`]
+    /// [`rect()`]
     descent() -> f32,
     /// 
     /// Returns the inline object's total height. This is equal to
     /// ascent() + descent() + 1.
     /// 
-    /// **See also:** ascent()
-    /// descent()
-    /// width()
-    /// rect()
+    /// **See also:** [`ascent()`]
+    /// [`descent()`]
+    /// [`width()`]
+    /// [`rect()`]
     height() -> f32,
     /// 
     /// Returns if the object should be laid out right-to-left or left-to-right.
@@ -60,26 +59,26 @@ struct TextInlineObject {
     /// 
     /// Sets the inline object's width to *w.*
     /// 
-    /// **See also:** width()
-    /// ascent()
-    /// descent()
-    /// rect()
+    /// **See also:** [`width()`]
+    /// [`ascent()`]
+    /// [`descent()`]
+    /// [`rect()`]
     set_width(w: f32),
     /// 
     /// Sets the inline object's ascent to *a.*
     /// 
-    /// **See also:** ascent()
-    /// setDescent()
-    /// width()
-    /// rect()
+    /// **See also:** [`ascent()`]
+    /// [`set_descent()`]
+    /// [`width()`]
+    /// [`rect()`]
     set_ascent(a: f32),
     /// 
     /// Sets the inline object's descent to *d.*
     /// 
-    /// **See also:** descent()
-    /// setAscent()
-    /// width()
-    /// rect()
+    /// **See also:** [`descent()`]
+    /// [`set_ascent()`]
+    /// [`width()`]
+    /// [`rect()`]
     set_descent(d: f32),
     /// 
     /// The position of the inline object within the text layout.

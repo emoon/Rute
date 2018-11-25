@@ -52,8 +52,8 @@
 /// 
 /// ![A progress dialog shown in the Fusion widget style.](fusion-progressdialog.png)
 /// 
-/// **See also:** QDialog
-/// QProgressBar
+/// **See also:** [`Dialog`]
+/// [`ProgressBar`]
 /// {fowler}{GUI Design Handbook: Progress Indicator}
 /// {Find Files Example}
 /// {Pixelator Example}
@@ -66,7 +66,7 @@ struct ProgressDialog : Dialog {
     /// label becomes owned by the progress dialog and will be deleted when
     /// necessary, so do not pass the address of an object on the stack.
     /// 
-    /// **See also:** setLabelText()
+    /// **See also:** [`set_label_text()`]
     set_label(label: *LabelType),
     /// 
     /// Sets the cancel button to the push button, *cancelButton.* The
@@ -75,13 +75,13 @@ struct ProgressDialog : Dialog {
     /// the stack, i.e. use new() to create the button. If 0 is passed then
     /// no cancel button will be shown.
     /// 
-    /// **See also:** setCancelButtonText()
+    /// **See also:** [`set_cancel_button_text()`]
     /// 
     /// Sets the cancel button's text to *cancelButtonText.* If the text
     /// is set to QString() then it will cause the cancel button to be
     /// hidden and deleted.
     /// 
-    /// **See also:** setCancelButton()
+    /// **See also:** [`set_cancel_button()`]
     set_cancel_button(button: *PushButtonType),
     /// 
     /// Sets the progress bar widget to *bar.* The progress dialog resizes to
@@ -95,7 +95,7 @@ struct ProgressDialog : Dialog {
     /// The default is 0.
     /// 
     /// **See also:** maximum
-    /// setRange()
+    /// [`set_range()`]
     /// 
     /// If the expected duration of the task is less than the
     /// minimumDuration, the dialog will not appear at all. This prevents
@@ -111,7 +111,7 @@ struct ProgressDialog : Dialog {
     /// The default is 100.
     /// 
     /// **See also:** minimum
-    /// setRange()
+    /// [`set_range()`]
     maximum() -> i32,
     /// 
     /// For the progress dialog to work as expected, you should initially set
@@ -151,13 +151,13 @@ struct ProgressDialog : Dialog {
     /// 
     /// The default is true.
     /// 
-    /// **See also:** setAutoClose()
+    /// **See also:** [`set_auto_close()`]
     auto_reset() -> bool,
     set_auto_close(close: bool),
     /// 
     /// The default is true.
     /// 
-    /// **See also:** setAutoReset()
+    /// **See also:** [`set_auto_reset()`]
     auto_close() -> bool,
     /// 
     /// **Overloads**
@@ -170,7 +170,7 @@ struct ProgressDialog : Dialog {
     /// This signal is emitted when the cancel button is clicked.
     /// It is connected to the cancel() slot by default.
     /// 
-    /// **See also:** wasCanceled()
+    /// **See also:** [`was_canceled()`]
     /// 
     /// Resets the progress dialog. wasCanceled() becomes true until
     /// the progress dialog is reset.
@@ -180,8 +180,8 @@ struct ProgressDialog : Dialog {
     /// Resets the progress dialog.
     /// The progress dialog becomes hidden if autoClose() is true.
     /// 
-    /// **See also:** setAutoClose()
-    /// setAutoReset()
+    /// **See also:** [`set_auto_close()`]
+    /// [`set_auto_reset()`]
     reset(),
     set_maximum(maximum: i32),
     set_minimum(minimum: i32),
@@ -205,14 +205,14 @@ struct ProgressDialog : Dialog {
     /// is set to QString() then it will cause the cancel button to be
     /// hidden and deleted.
     /// 
-    /// **See also:** setCancelButton()
+    /// **See also:** [`set_cancel_button()`]
     set_cancel_button_text(text: String),
     set_minimum_duration(ms: i32),
     /// 
     /// This signal is emitted when the cancel button is clicked.
     /// It is connected to the cancel() slot by default.
     /// 
-    /// **See also:** wasCanceled()
+    /// **See also:** [`was_canceled()`]
     [signal] canceled(),
     /// 
     [event] resize_event(event: *ResizeEventType),
@@ -226,7 +226,7 @@ struct ProgressDialog : Dialog {
     /// Shows the dialog if it is still hidden after the algorithm has been started
     /// and minimumDuration milliseconds have passed.
     /// 
-    /// **See also:** setMinimumDuration()
+    /// **See also:** [`set_minimum_duration()`]
     force_show(),
 }
 

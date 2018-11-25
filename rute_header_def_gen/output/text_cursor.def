@@ -83,50 +83,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTextCursor)]
-enum MoveMode {
-    MoveAnchor,
-    KeepAnchor,
-}
-
-[org_name(QTextCursor)]
-enum MoveOperation {
-    NoMove,
-    Start,
-    Up,
-    StartOfLine,
-    StartOfBlock,
-    StartOfWord,
-    PreviousBlock,
-    PreviousCharacter,
-    PreviousWord,
-    Left,
-    WordLeft,
-    End,
-    Down,
-    EndOfLine,
-    EndOfWord,
-    EndOfBlock,
-    NextBlock,
-    NextCharacter,
-    NextWord,
-    Right,
-    WordRight,
-    NextCell,
-    PreviousCell,
-    NextRow,
-    PreviousRow,
-}
-
-[org_name(QTextCursor)]
-enum SelectionType {
-    WordUnderCursor,
-    LineUnderCursor,
-    BlockUnderCursor,
-    Document,
-}
-
-
 struct TextCursor {
     /// 
     /// Swaps this text cursor instance with *other.* This function is
@@ -141,25 +97,25 @@ struct TextCursor {
     /// *pos* using a `MoveMode` specified by *m.* The cursor is positioned
     /// between characters.
     /// 
-    /// **See also:** position()
-    /// movePosition()
-    /// anchor()
+    /// **See also:** [`position()`]
+    /// [`move_position()`]
+    /// [`anchor()`]
     set_position(pos: i32, mode: TextCursor::MoveMode),
     /// 
     /// Returns the absolute position of the cursor within the document.
     /// The cursor is positioned between characters.
     /// 
-    /// **See also:** setPosition()
-    /// movePosition()
-    /// anchor()
-    /// positionInBlock()
+    /// **See also:** [`set_position()`]
+    /// [`move_position()`]
+    /// [`anchor()`]
+    /// [`position_in_block()`]
     /// 
     /// Returns the relative position of the cursor within the block.
     /// The cursor is positioned between characters.
     /// 
     /// This is equivalent to `position() - block().position()` .
     /// 
-    /// **See also:** position()
+    /// **See also:** [`position()`]
     position() -> i32,
     /// 
     /// Returns the relative position of the cursor within the block.
@@ -167,7 +123,7 @@ struct TextCursor {
     /// 
     /// This is equivalent to `position() - block().position()` .
     /// 
-    /// **See also:** position()
+    /// **See also:** [`position()`]
     position_in_block() -> i32,
     /// 
     /// Returns the anchor position; this is the same as position() unless
@@ -175,11 +131,11 @@ struct TextCursor {
     /// selection and anchor() marks the other end. Just like the cursor
     /// position, the anchor position is between characters.
     /// 
-    /// **See also:** position()
-    /// setPosition()
-    /// movePosition()
-    /// selectionStart()
-    /// selectionEnd()
+    /// **See also:** [`position()`]
+    /// [`set_position()`]
+    /// [`move_position()`]
+    /// [`selection_start()`]
+    /// [`selection_end()`]
     anchor() -> i32,
     /// 
     /// Inserts *text* at the current position, using the current
@@ -194,8 +150,8 @@ struct TextCursor {
     /// Any ASCII linefeed characters (\\n) in the inserted text are transformed
     /// into unicode block separators, corresponding to insertBlock() calls.
     /// 
-    /// **See also:** charFormat()
-    /// hasSelection()
+    /// **See also:** [`char_format()`]
+    /// [`has_selection()`]
     /// 
     /// **Overloads**
     /// Inserts *text* at the current position with the given *format.*
@@ -213,12 +169,13 @@ struct TextCursor {
     /// Any ASCII linefeed characters (\\n) in the inserted text are transformed
     /// into unicode block separators, corresponding to insertBlock() calls.
     /// 
-    /// **See also:** charFormat()
-    /// hasSelection()
+    /// **See also:** [`char_format()`]
+    /// [`has_selection()`]
     /// 
     /// **Overloads**
     /// Inserts *text* at the current position with the given *format.*
-    insert_text(text: String, format: &TextCharFormatType),
+    [org_name(insertText)]
+    insert_text_2(text: String, format: &TextCharFormatType),
     /// 
     /// Moves the cursor by performing the given *operation* *n* times, using the specified
     /// *mode,* and returns `true` if all operations were completed successfully; otherwise
@@ -233,7 +190,7 @@ struct TextCursor {
     /// over. This is the same effect that the user achieves when they
     /// hold down the Shift key and move the cursor with the cursor keys.
     /// 
-    /// **See also:** setVisualNavigation()
+    /// **See also:** [`set_visual_navigation()`]
     move_position(op: TextCursor::MoveOperation, arg0: TextCursor::MoveMode, n: i32) -> bool,
     /// 
     /// Returns `true` if the cursor does visual navigation; otherwise
@@ -242,8 +199,8 @@ struct TextCursor {
     /// Visual navigation means skipping over hidden text paragraphs. The
     /// default is false.
     /// 
-    /// **See also:** setVisualNavigation()
-    /// movePosition()
+    /// **See also:** [`set_visual_navigation()`]
+    /// [`move_position()`]
     visual_navigation() -> bool,
     /// 
     /// Sets visual navigation to *b.*
@@ -251,8 +208,8 @@ struct TextCursor {
     /// Visual navigation means skipping over hidden text paragraphs. The
     /// default is false.
     /// 
-    /// **See also:** visualNavigation()
-    /// movePosition()
+    /// **See also:** [`visual_navigation()`]
+    /// [`move_position()`]
     set_visual_navigation(b: bool),
     /// 
     /// Sets the visual x position for vertical cursor movements to *x.*
@@ -264,7 +221,7 @@ struct TextCursor {
     /// A value of -1 indicates no predefined x position. It will then be set automatically the next time the
     /// cursor moves up or down.
     /// 
-    /// **See also:** verticalMovementX()
+    /// **See also:** [`vertical_movement_x()`]
     set_vertical_movement_x(x: i32),
     /// 
     /// Returns the visual x position for vertical cursor movements.
@@ -272,7 +229,7 @@ struct TextCursor {
     /// A value of -1 indicates no predefined x position. It will then be set automatically the next time the
     /// cursor moves up or down.
     /// 
-    /// **See also:** setVerticalMovementX()
+    /// **See also:** [`set_vertical_movement_x()`]
     vertical_movement_x() -> i32,
     /// 
     /// Defines whether the cursor should keep its current position when text gets inserted at the current position of the
@@ -286,7 +243,7 @@ struct TextCursor {
     /// Note that a cursor always moves when text is inserted before the current position of the cursor, and it
     /// always keeps its position when text is inserted after the current position of the cursor.
     /// 
-    /// **See also:** keepPositionOnInsert()
+    /// **See also:** [`keep_position_on_insert()`]
     set_keep_position_on_insert(b: bool),
     /// 
     /// Returns whether the cursor should keep its current position when text gets inserted at the position of the
@@ -294,23 +251,23 @@ struct TextCursor {
     /// 
     /// The default is false;
     /// 
-    /// **See also:** setKeepPositionOnInsert()
+    /// **See also:** [`set_keep_position_on_insert()`]
     keep_position_on_insert() -> bool,
     /// 
     /// If there is no selected text, deletes the character *at* the
     /// current cursor position; otherwise deletes the selected text.
     /// 
-    /// **See also:** deletePreviousChar()
-    /// hasSelection()
-    /// clearSelection()
+    /// **See also:** [`delete_previous_char()`]
+    /// [`has_selection()`]
+    /// [`clear_selection()`]
     delete_char(),
     /// 
     /// If there is no selected text, deletes the character *before* the
     /// current cursor position; otherwise deletes the selected text.
     /// 
-    /// **See also:** deleteChar()
-    /// hasSelection()
-    /// clearSelection()
+    /// **See also:** [`delete_char()`]
+    /// [`has_selection()`]
+    /// [`clear_selection()`]
     delete_previous_char(),
     /// 
     /// Selects text in the document according to the given *selection.*
@@ -324,16 +281,16 @@ struct TextCursor {
     /// Returns the start of the selection or position() if the
     /// cursor doesn't have a selection.
     /// 
-    /// **See also:** selectionEnd()
-    /// position()
-    /// anchor()
+    /// **See also:** [`selection_end()`]
+    /// [`position()`]
+    /// [`anchor()`]
     /// 
     /// Returns the end of the selection or position() if the cursor
     /// doesn't have a selection.
     /// 
-    /// **See also:** selectionStart()
-    /// position()
-    /// anchor()
+    /// **See also:** [`selection_start()`]
+    /// [`position()`]
+    /// [`anchor()`]
     /// 
     /// Returns the current selection's text (which may be empty). This
     /// only returns the text, with no rich text formatting information.
@@ -353,7 +310,7 @@ struct TextCursor {
     /// selectedText() may include special unicode characters such as
     /// QChar::ParagraphSeparator.
     /// 
-    /// **See also:** QTextDocumentFragment::toPlainText()
+    /// **See also:** [`TextDocumentFragment::to_plain_text`]
     select(selection: TextCursor::SelectionType),
     /// 
     /// Returns `true` if the cursor contains a selection; otherwise returns `false.`
@@ -369,31 +326,31 @@ struct TextCursor {
     /// If there is a selection, its content is deleted; otherwise does
     /// nothing.
     /// 
-    /// **See also:** hasSelection()
+    /// **See also:** [`has_selection()`]
     remove_selected_text(),
     /// 
     /// Clears the current selection by setting the anchor to the cursor position.
     /// 
     /// Note that it does **not** delete the text of the selection.
     /// 
-    /// **See also:** removeSelectedText()
-    /// hasSelection()
+    /// **See also:** [`remove_selected_text()`]
+    /// [`has_selection()`]
     clear_selection(),
     /// 
     /// Returns the start of the selection or position() if the
     /// cursor doesn't have a selection.
     /// 
-    /// **See also:** selectionEnd()
-    /// position()
-    /// anchor()
+    /// **See also:** [`selection_end()`]
+    /// [`position()`]
+    /// [`anchor()`]
     selection_start() -> i32,
     /// 
     /// Returns the end of the selection or position() if the cursor
     /// doesn't have a selection.
     /// 
-    /// **See also:** selectionStart()
-    /// position()
-    /// anchor()
+    /// **See also:** [`selection_start()`]
+    /// [`position()`]
+    /// [`anchor()`]
     selection_end() -> i32,
     /// 
     /// Returns the current selection's text (which may be empty). This
@@ -410,16 +367,16 @@ struct TextCursor {
     /// Returns the start of the selection or position() if the
     /// cursor doesn't have a selection.
     /// 
-    /// **See also:** selectionEnd()
-    /// position()
-    /// anchor()
+    /// **See also:** [`selection_end()`]
+    /// [`position()`]
+    /// [`anchor()`]
     /// 
     /// Returns the end of the selection or position() if the cursor
     /// doesn't have a selection.
     /// 
-    /// **See also:** selectionStart()
-    /// position()
-    /// anchor()
+    /// **See also:** [`selection_start()`]
+    /// [`position()`]
+    /// [`anchor()`]
     /// 
     /// Returns the current selection (which may be empty) with all its
     /// formatting information. If you just want the selected text (i.e.
@@ -429,7 +386,7 @@ struct TextCursor {
     /// selectedText() may include special unicode characters such as
     /// QChar::ParagraphSeparator.
     /// 
-    /// **See also:** QTextDocumentFragment::toPlainText()
+    /// **See also:** [`TextDocumentFragment::to_plain_text`]
     selection() -> TextDocumentFragment,
     /// 
     /// If the selection spans over table cells, *firstRow* is populated
@@ -443,15 +400,15 @@ struct TextCursor {
     /// 
     /// Returns the block format of the block the cursor is in.
     /// 
-    /// **See also:** setBlockFormat()
-    /// charFormat()
+    /// **See also:** [`set_block_format()`]
+    /// [`char_format()`]
     /// 
     /// Returns the block character format of the block the cursor is in.
     /// 
     /// The block char format is the format used when inserting text at the
     /// beginning of an empty block.
     /// 
-    /// **See also:** setBlockCharFormat()
+    /// **See also:** [`set_block_char_format()`]
     /// 
     /// Returns the number of the block the cursor is in, or 0 if the cursor is invalid.
     /// 
@@ -464,15 +421,15 @@ struct TextCursor {
     /// block that is not empty then the format of the character
     /// immediately after the cursor is returned.
     /// 
-    /// **See also:** insertText()
-    /// blockFormat()
+    /// **See also:** [`insert_text()`]
+    /// [`block_format()`]
     char_format() -> TextCharFormat,
     /// 
     /// Sets the cursor's current character format to the given *format.* If the cursor has a selection, the given *format* is
     /// applied to the current selection.
     /// 
-    /// **See also:** hasSelection()
-    /// mergeCharFormat()
+    /// **See also:** [`has_selection()`]
+    /// [`merge_char_format()`]
     set_char_format(format: &TextCharFormatType),
     /// 
     /// Merges the cursor's current character format with the properties
@@ -480,29 +437,29 @@ struct TextCursor {
     /// this function applies all the properties set in *modifier* to all
     /// the character formats that are part of the selection.
     /// 
-    /// **See also:** hasSelection()
-    /// setCharFormat()
+    /// **See also:** [`has_selection()`]
+    /// [`set_char_format()`]
     merge_char_format(modifier: &TextCharFormatType),
     /// 
     /// Returns the block format of the block the cursor is in.
     /// 
-    /// **See also:** setBlockFormat()
-    /// charFormat()
+    /// **See also:** [`set_block_format()`]
+    /// [`char_format()`]
     block_format() -> TextBlockFormat,
     /// 
     /// Sets the block format of the current block (or all blocks that
     /// are contained in the selection) to *format.*
     /// 
-    /// **See also:** blockFormat()
-    /// mergeBlockFormat()
+    /// **See also:** [`block_format()`]
+    /// [`merge_block_format()`]
     set_block_format(format: &TextBlockFormatType),
     /// 
     /// Modifies the block format of the current block (or all blocks that
     /// are contained in the selection) with the block format specified by
     /// *modifier.*
     /// 
-    /// **See also:** setBlockFormat()
-    /// blockFormat()
+    /// **See also:** [`set_block_format()`]
+    /// [`block_format()`]
     merge_block_format(modifier: &TextBlockFormatType),
     /// 
     /// Returns the block character format of the block the cursor is in.
@@ -510,145 +467,148 @@ struct TextCursor {
     /// The block char format is the format used when inserting text at the
     /// beginning of an empty block.
     /// 
-    /// **See also:** setBlockCharFormat()
+    /// **See also:** [`set_block_char_format()`]
     block_char_format() -> TextCharFormat,
     /// 
     /// Sets the block char format of the current block (or all blocks that
     /// are contained in the selection) to *format.*
     /// 
-    /// **See also:** blockCharFormat()
+    /// **See also:** [`block_char_format()`]
     set_block_char_format(format: &TextCharFormatType),
     /// 
     /// Modifies the block char format of the current block (or all blocks that
     /// are contained in the selection) with the block format specified by
     /// *modifier.*
     /// 
-    /// **See also:** setBlockCharFormat()
+    /// **See also:** [`set_block_char_format()`]
     merge_block_char_format(modifier: &TextCharFormatType),
     /// 
     /// Returns `true` if the cursor is at the start of a block; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** atBlockEnd()
-    /// atStart()
+    /// **See also:** [`at_block_end()`]
+    /// [`at_start()`]
     at_block_start() -> bool,
     /// 
     /// Returns `true` if the cursor is at the end of a block; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** atBlockStart()
-    /// atEnd()
+    /// **See also:** [`at_block_start()`]
+    /// [`at_end()`]
     at_block_end() -> bool,
     /// 
     /// Returns `true` if the cursor is at the start of the document;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** atBlockStart()
-    /// atEnd()
+    /// **See also:** [`at_block_start()`]
+    /// [`at_end()`]
     at_start() -> bool,
     /// 
     /// Returns `true` if the cursor is at the end of the document;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** atStart()
-    /// atBlockEnd()
+    /// **See also:** [`at_start()`]
+    /// [`at_block_end()`]
     at_end() -> bool,
     /// 
     /// Inserts a new empty block at the cursor position() with the
     /// current blockFormat() and charFormat().
     /// 
-    /// **See also:** setBlockFormat()
+    /// **See also:** [`set_block_format()`]
     /// 
     /// **Overloads**
     /// Inserts a new empty block at the cursor position() with block
     /// format *format* and the current charFormat() as block char format.
     /// 
-    /// **See also:** setBlockFormat()
+    /// **See also:** [`set_block_format()`]
     /// 
     /// **Overloads**
     /// Inserts a new empty block at the cursor position() with block
     /// format *format* and *charFormat* as block char format.
     /// 
-    /// **See also:** setBlockFormat()
+    /// **See also:** [`set_block_format()`]
     insert_block(),
     /// 
     /// Inserts a new empty block at the cursor position() with the
     /// current blockFormat() and charFormat().
     /// 
-    /// **See also:** setBlockFormat()
+    /// **See also:** [`set_block_format()`]
     /// 
     /// **Overloads**
     /// Inserts a new empty block at the cursor position() with block
     /// format *format* and the current charFormat() as block char format.
     /// 
-    /// **See also:** setBlockFormat()
+    /// **See also:** [`set_block_format()`]
     /// 
     /// **Overloads**
     /// Inserts a new empty block at the cursor position() with block
     /// format *format* and *charFormat* as block char format.
     /// 
-    /// **See also:** setBlockFormat()
-    insert_block(format: &TextBlockFormatType),
+    /// **See also:** [`set_block_format()`]
+    [org_name(insertBlock)]
+    insert_block_2(format: &TextBlockFormatType),
     /// 
     /// Inserts a new empty block at the cursor position() with the
     /// current blockFormat() and charFormat().
     /// 
-    /// **See also:** setBlockFormat()
+    /// **See also:** [`set_block_format()`]
     /// 
     /// **Overloads**
     /// Inserts a new empty block at the cursor position() with block
     /// format *format* and the current charFormat() as block char format.
     /// 
-    /// **See also:** setBlockFormat()
+    /// **See also:** [`set_block_format()`]
     /// 
     /// **Overloads**
     /// Inserts a new empty block at the cursor position() with block
     /// format *format* and *charFormat* as block char format.
     /// 
-    /// **See also:** setBlockFormat()
-    insert_block(format: &TextBlockFormatType, char_format: &TextCharFormatType),
+    /// **See also:** [`set_block_format()`]
+    [org_name(insertBlock)]
+    insert_block_3(format: &TextBlockFormatType, char_format: &TextCharFormatType),
     /// 
     /// Inserts a new block at the current position and makes it the first
     /// list item of a newly created list with the given *format.* Returns
     /// the created list.
     /// 
-    /// **See also:** currentList()
-    /// createList()
-    /// insertBlock()
+    /// **See also:** [`current_list()`]
+    /// [`create_list()`]
+    /// [`insert_block()`]
     /// 
     /// **Overloads**
     /// Inserts a new block at the current position and makes it the first
     /// list item of a newly created list with the given *style.* Returns
     /// the created list.
     /// 
-    /// **See also:** currentList()
-    /// createList()
-    /// insertBlock()
+    /// **See also:** [`current_list()`]
+    /// [`create_list()`]
+    /// [`insert_block()`]
     insert_list(format: &TextListFormatType) -> TextList?,
     /// 
     /// Inserts a new block at the current position and makes it the first
     /// list item of a newly created list with the given *format.* Returns
     /// the created list.
     /// 
-    /// **See also:** currentList()
-    /// createList()
-    /// insertBlock()
+    /// **See also:** [`current_list()`]
+    /// [`create_list()`]
+    /// [`insert_block()`]
     /// 
     /// **Overloads**
     /// Inserts a new block at the current position and makes it the first
     /// list item of a newly created list with the given *style.* Returns
     /// the created list.
     /// 
-    /// **See also:** currentList()
-    /// createList()
-    /// insertBlock()
-    insert_list(style: TextListFormat::Style) -> TextList?,
+    /// **See also:** [`current_list()`]
+    /// [`create_list()`]
+    /// [`insert_block()`]
+    [org_name(insertList)]
+    insert_list_2(style: TextListFormat::Style) -> TextList?,
     /// 
     /// Creates and returns a new list with the given *format,* and makes the
     /// current paragraph the cursor is in the first list item.
     /// 
-    /// **See also:** insertList()
-    /// currentList()
+    /// **See also:** [`insert_list()`]
+    /// [`current_list()`]
     /// 
     /// **Overloads**
     /// Creates and returns a new list with the given *style,* making the
@@ -656,15 +616,15 @@ struct TextCursor {
     /// 
     /// The style to be used is defined by the QTextListFormat::Style enum.
     /// 
-    /// **See also:** insertList()
-    /// currentList()
+    /// **See also:** [`insert_list()`]
+    /// [`current_list()`]
     create_list(format: &TextListFormatType) -> TextList?,
     /// 
     /// Creates and returns a new list with the given *format,* and makes the
     /// current paragraph the cursor is in the first list item.
     /// 
-    /// **See also:** insertList()
-    /// currentList()
+    /// **See also:** [`insert_list()`]
+    /// [`current_list()`]
     /// 
     /// **Overloads**
     /// Creates and returns a new list with the given *style,* making the
@@ -672,15 +632,16 @@ struct TextCursor {
     /// 
     /// The style to be used is defined by the QTextListFormat::Style enum.
     /// 
-    /// **See also:** insertList()
-    /// currentList()
-    create_list(style: TextListFormat::Style) -> TextList?,
+    /// **See also:** [`insert_list()`]
+    /// [`current_list()`]
+    [org_name(createList)]
+    create_list_2(style: TextListFormat::Style) -> TextList?,
     /// 
     /// Returns the current list if the cursor position() is inside a
     /// block that is part of a list; otherwise returns 0.
     /// 
-    /// **See also:** insertList()
-    /// createList()
+    /// **See also:** [`insert_list()`]
+    /// [`create_list()`]
     current_list() -> TextList?,
     /// 
     /// **Overloads**
@@ -690,7 +651,7 @@ struct TextCursor {
     /// 
     /// There must be at least one row and one column in the table.
     /// 
-    /// **See also:** currentTable()
+    /// **See also:** [`current_table()`]
     /// 
     /// Creates a new table with the given number of *rows* and *columns*
     /// in the specified *format,* inserts it at the current cursor position()
@@ -699,7 +660,7 @@ struct TextCursor {
     /// 
     /// There must be at least one row and one column in the table.
     /// 
-    /// **See also:** currentTable()
+    /// **See also:** [`current_table()`]
     insert_table(rows: i32, cols: i32, format: &TextTableFormatType) -> TextTable?,
     /// 
     /// **Overloads**
@@ -709,7 +670,7 @@ struct TextCursor {
     /// 
     /// There must be at least one row and one column in the table.
     /// 
-    /// **See also:** currentTable()
+    /// **See also:** [`current_table()`]
     /// 
     /// Creates a new table with the given number of *rows* and *columns*
     /// in the specified *format,* inserts it at the current cursor position()
@@ -718,13 +679,14 @@ struct TextCursor {
     /// 
     /// There must be at least one row and one column in the table.
     /// 
-    /// **See also:** currentTable()
-    insert_table(rows: i32, cols: i32) -> TextTable?,
+    /// **See also:** [`current_table()`]
+    [org_name(insertTable)]
+    insert_table_2(rows: i32, cols: i32) -> TextTable?,
     /// 
     /// Returns a pointer to the current table if the cursor position()
     /// is inside a block that is part of a table; otherwise returns 0.
     /// 
-    /// **See also:** insertTable()
+    /// **See also:** [`insert_table()`]
     current_table() -> TextTable?,
     /// 
     /// Inserts a frame with the given *format* at the current cursor position(),
@@ -733,12 +695,12 @@ struct TextCursor {
     /// If the cursor holds a selection, the whole selection is moved inside the
     /// frame.
     /// 
-    /// **See also:** hasSelection()
+    /// **See also:** [`has_selection()`]
     insert_frame(format: &TextFrameFormatType) -> TextFrame?,
     /// 
     /// Returns a pointer to the current frame. Returns 0 if the cursor is invalid.
     /// 
-    /// **See also:** insertFrame()
+    /// **See also:** [`insert_frame()`]
     current_frame() -> TextFrame?,
     /// 
     /// Inserts the text *fragment* at the current position().
@@ -749,7 +711,7 @@ struct TextCursor {
     /// Inserts the image defined by the given *format* at the cursor's current position
     /// with the specified *alignment.*
     /// 
-    /// **See also:** position()
+    /// **See also:** [`position()`]
     /// 
     /// Inserts the image defined by *format* at the current position().
     /// 
@@ -767,7 +729,7 @@ struct TextCursor {
     /// Inserts the image defined by the given *format* at the cursor's current position
     /// with the specified *alignment.*
     /// 
-    /// **See also:** position()
+    /// **See also:** [`position()`]
     /// 
     /// Inserts the image defined by *format* at the current position().
     /// 
@@ -779,13 +741,14 @@ struct TextCursor {
     /// **Overloads**
     /// Convenience function for inserting the given *image* with an optional
     /// *name* at the current position().
-    insert_image(format: &TextImageFormatType),
+    [org_name(insertImage)]
+    insert_image_2(format: &TextImageFormatType),
     /// 
     /// **Overloads**
     /// Inserts the image defined by the given *format* at the cursor's current position
     /// with the specified *alignment.*
     /// 
-    /// **See also:** position()
+    /// **See also:** [`position()`]
     /// 
     /// Inserts the image defined by *format* at the current position().
     /// 
@@ -797,13 +760,14 @@ struct TextCursor {
     /// **Overloads**
     /// Convenience function for inserting the given *image* with an optional
     /// *name* at the current position().
-    insert_image(name: String),
+    [org_name(insertImage)]
+    insert_image_3(name: String),
     /// 
     /// **Overloads**
     /// Inserts the image defined by the given *format* at the cursor's current position
     /// with the specified *alignment.*
     /// 
-    /// **See also:** position()
+    /// **See also:** [`position()`]
     /// 
     /// Inserts the image defined by *format* at the current position().
     /// 
@@ -815,7 +779,8 @@ struct TextCursor {
     /// **Overloads**
     /// Convenience function for inserting the given *image* with an optional
     /// *name* at the current position().
-    insert_image(image: &ImageType, name: String),
+    [org_name(insertImage)]
+    insert_image_4(image: &ImageType, name: String),
     /// 
     /// Indicates the start of a block of editing operations on the
     /// document that should appear as a single operation from an
@@ -829,7 +794,7 @@ struct TextCursor {
     /// It is possible to nest calls to beginEditBlock and endEditBlock. The
     /// top-most pair will determine the scope of the undo/redo operation.
     /// 
-    /// **See also:** endEditBlock()
+    /// **See also:** [`end_edit_block()`]
     begin_edit_block(),
     /// 
     /// Like beginEditBlock() indicates the start of a block of editing operations
@@ -841,23 +806,23 @@ struct TextCursor {
     /// 
     /// The call to undo() will cause all three insertions to be undone.
     /// 
-    /// **See also:** beginEditBlock()
-    /// endEditBlock()
+    /// **See also:** [`begin_edit_block()`]
+    /// [`end_edit_block()`]
     join_previous_edit_block(),
     /// 
     /// Indicates the end of a block of editing operations on the document
     /// that should appear as a single operation from an undo/redo point
     /// of view.
     /// 
-    /// **See also:** beginEditBlock()
+    /// **See also:** [`begin_edit_block()`]
     end_edit_block(),
     /// 
     /// Returns `true` if this cursor and *other* are copies of each other, i.e.
     /// one of them was created as a copy of the other and neither has moved since.
     /// This is much stricter than equality.
     /// 
-    /// **See also:** operator=()
-    /// operator==()
+    /// **See also:** [`operator()`]
+    /// [`operator()`]
     is_copy_of(other: &TextCursorType) -> bool,
     /// 
     /// Returns the number of the block the cursor is in, or 0 if the cursor is invalid.
@@ -873,11 +838,85 @@ struct TextCursor {
     /// 
     /// You probably want to call positionInBlock() instead.
     /// 
-    /// **See also:** positionInBlock()
+    /// **See also:** [`position_in_block()`]
     column_number() -> i32,
     /// 
     /// Returns the document this cursor is associated with.
     document() -> TextDocument?,
+}
+
+[org_name(QTextCursor)]
+enum MoveMode {
+    /// Moves the anchor to the same position as the cursor itself.
+    MoveAnchor,
+    /// Keeps the anchor where it is. If the anchor() is kept where it is and the position() is moved, the text in between will be selected.
+    KeepAnchor,
+}
+
+[org_name(QTextCursor)]
+enum MoveOperation {
+    /// Keep the cursor where it is
+    NoMove,
+    /// Move to the start of the document.
+    Start,
+    /// Move up one line.
+    Up,
+    /// Move to the start of the current line.
+    StartOfLine,
+    /// Move to the start of the current block.
+    StartOfBlock,
+    /// Move to the start of the current word.
+    StartOfWord,
+    /// Move to the start of the previous block.
+    PreviousBlock,
+    /// Move to the previous character.
+    PreviousCharacter,
+    /// Move to the beginning of the previous word.
+    PreviousWord,
+    /// Move left one character.
+    Left,
+    /// Move left one word.
+    WordLeft,
+    /// Move to the end of the document.
+    End,
+    /// Move down one line.
+    Down,
+    /// Move to the end of the current line.
+    EndOfLine,
+    /// Move to the end of the current word.
+    EndOfWord,
+    /// Move to the end of the current block.
+    EndOfBlock,
+    /// Move to the beginning of the next block.
+    NextBlock,
+    /// Move to the next character.
+    NextCharacter,
+    /// Move to the next word.
+    NextWord,
+    /// Move right one character.
+    Right,
+    /// Move right one word.
+    WordRight,
+    /// Move to the beginning of the next table cell inside the current table. If the current cell is the last cell in the row, the cursor will move to the first cell in the next row.
+    NextCell,
+    /// Move to the beginning of the previous table cell inside the current table. If the current cell is the first cell in the row, the cursor will move to the last cell in the previous row.
+    PreviousCell,
+    /// Move to the first new cell of the next row in the current table.
+    NextRow,
+    /// Move to the last cell of the previous row in the current table.
+    PreviousRow,
+}
+
+[org_name(QTextCursor)]
+enum SelectionType {
+    /// Selects the word under the cursor. If the cursor is not positioned within a string of selectable characters, no text is selected.
+    WordUnderCursor,
+    /// Selects the line of text under the cursor.
+    LineUnderCursor,
+    /// Selects the block of text under the cursor.
+    BlockUnderCursor,
+    /// Selects the entire document.
+    Document,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

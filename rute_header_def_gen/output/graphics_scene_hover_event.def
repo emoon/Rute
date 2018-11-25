@@ -3,10 +3,10 @@
 /// it into QGraphicsSceneHoverEvent. The event is then forwarded to
 /// the QGraphicsScene associated with the view.
 /// 
-/// **See also:** QGraphicsSceneMouseEvent
-/// QGraphicsSceneContextMenuEvent
-/// QGraphicsSceneWheelEvent
-/// QHoverEvent
+/// **See also:** [`GraphicsSceneMouseEvent`]
+/// [`GraphicsSceneContextMenuEvent`]
+/// [`GraphicsSceneWheelEvent`]
+/// [`HoverEvent`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -15,32 +15,32 @@ struct GraphicsSceneHoverEvent : GraphicsSceneEvent {
     /// Returns the position of the mouse cursor in item coordinates at the moment
     /// the hover event was sent.
     /// 
-    /// **See also:** scenePos()
-    /// screenPos()
+    /// **See also:** [`scene_pos()`]
+    /// [`screen_pos()`]
     pos() -> PointF,
     set_pos(pos: &PointFType),
     /// 
     /// Returns the position of the mouse cursor in scene coordinates at the
     /// moment the hover event was sent.
     /// 
-    /// **See also:** pos()
-    /// screenPos()
+    /// **See also:** [`pos()`]
+    /// [`screen_pos()`]
     scene_pos() -> PointF,
     set_scene_pos(pos: &PointFType),
     /// 
     /// Returns the position of the mouse cursor in screen coordinates at the
     /// moment the hover event was sent.
     /// 
-    /// **See also:** pos()
-    /// scenePos()
+    /// **See also:** [`pos()`]
+    /// [`scene_pos()`]
     screen_pos() -> Point,
     set_screen_pos(pos: &PointType),
     /// 
     /// Returns the last recorded mouse cursor position in item coordinates.
     /// 
-    /// **See also:** lastScenePos()
-    /// lastScreenPos()
-    /// pos()
+    /// **See also:** [`last_scene_pos()`]
+    /// [`last_screen_pos()`]
+    /// [`pos()`]
     last_pos() -> PointF,
     set_last_pos(pos: &PointFType),
     /// 
@@ -48,9 +48,9 @@ struct GraphicsSceneHoverEvent : GraphicsSceneEvent {
     /// hover event received by the view, that created the event mouse cursor
     /// position in scene coordinates.
     /// 
-    /// **See also:** lastPos()
-    /// lastScreenPos()
-    /// scenePos()
+    /// **See also:** [`last_pos()`]
+    /// [`last_screen_pos()`]
+    /// [`scene_pos()`]
     last_scene_pos() -> PointF,
     set_last_scene_pos(pos: &PointFType),
     /// 
@@ -58,9 +58,9 @@ struct GraphicsSceneHoverEvent : GraphicsSceneEvent {
     /// last recorded position is the position of the previous mouse or hover
     /// event received by the view that created the event.
     /// 
-    /// **See also:** lastPos()
-    /// lastScenePos()
-    /// screenPos()
+    /// **See also:** [`last_pos()`]
+    /// [`last_scene_pos()`]
+    /// [`screen_pos()`]
     last_screen_pos() -> Point,
     set_last_screen_pos(pos: &PointType),
     /// 

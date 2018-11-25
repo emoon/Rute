@@ -49,24 +49,14 @@
 /// * Home moves to the start (mininum).
 /// * End moves to the end (maximum).
 /// 
-/// **See also:** QScrollBar
-/// QSpinBox
-/// QDial
+/// **See also:** [`ScrollBar`]
+/// [`SpinBox`]
+/// [`Dial`]
 /// {fowler}{GUI Design Handbook: Slider}
 /// {Sliders Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QSlider)]
-enum TickPosition {
-    NoTicks,
-    TicksAbove,
-    TicksLeft,
-    TicksBelow,
-    TicksRight,
-    TicksBothSides,
-}
-
 struct Slider : AbstractSlider {
     /// 
     [event] size_hint() -> Size,
@@ -106,8 +96,24 @@ struct Slider : AbstractSlider {
     /// is useful for subclasses when they need a QStyleOptionSlider, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionSliderType),
+}
+
+[org_name(QSlider)]
+enum TickPosition {
+    /// Do not draw any tick marks.
+    NoTicks,
+    /// Draw tick marks above the (horizontal) slider
+    TicksAbove,
+    /// Draw tick marks to the left of the (vertical) slider
+    TicksLeft,
+    /// Draw tick marks below the (horizontal) slider
+    TicksBelow,
+    /// Draw tick marks to the right of the (vertical) slider
+    TicksRight,
+    /// Draw tick marks on both sides of the groove.
+    TicksBothSides,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -43,7 +43,7 @@ impl Variable {
                 } else {
                     "*const RUBase".into()
                 }
-            },
+            }
             VariableType::Regular => format!(" RU{}", name).into(),
             VariableType::Str => "*const ::std::os::raw::c_char".into(),
         }
@@ -122,6 +122,7 @@ impl HeaderFFIGen for RustFFIGenerator {
         for sdef in api_defs {
             // TODO: Fix me
             if sdef.base_filename != "qnamespace" {
+                writeln!(dest, "#[allow(unused_imports)]")?;
                 writeln!(
                     dest,
                     "use auto::{}_ffi::*;",
@@ -166,11 +167,13 @@ impl HeaderFFIGen for RustFFIGenerator {
         }
 
         for (module, name) in imports {
+            writeln!(dest, "#[allow(unused_imports)]")?;
             writeln!(dest, "use auto::{}_ffi::{};", module.to_snake_case(), name)?;
         }
 
         for name in &sdef.full_inherit {
             if name != &sdef.name {
+                writeln!(dest, "#[allow(unused_imports)]")?;
                 writeln!(dest, "use auto::{}_ffi::*;", name.to_snake_case())?;
             }
         }
@@ -333,7 +336,9 @@ impl RustFFIGenerator {
     /// Generate ffi function
     ///
     fn generate_function<W: Write>(dest: &mut W, func: &Function) -> io::Result<()> {
-        let func_def = func.rust_func_def(true, None, |arg, is_ret| arg.get_rust_ffi_type(is_ret).into());
+        let func_def = func.rust_func_def(true, None, |arg, is_ret| {
+            arg.get_rust_ffi_type(is_ret).into()
+        });
         writeln!(dest, "    pub {}: extern \"C\" fn{},", func.name, &func_def)
     }
 
@@ -351,7 +356,8 @@ impl RustFFIGenerator {
             func.name,
         )?;
 
-        writeln!(dest,
+        writeln!(
+            dest,
             "    pub remove_{}: extern \"C\" fn(object: *const RUBase),\n",
             func.name,
         )

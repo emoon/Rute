@@ -71,20 +71,13 @@
 /// QPainter::drawStaticText() call where it occurs. To avoid this overhead in the paint event, you
 /// can call prepare() ahead of time to ensure that the layout is calculated.
 /// 
-/// **See also:** QPainter::drawText()
-/// QPainter::drawStaticText()
-/// QTextLayout
-/// QTextDocument
+/// **See also:** [`Painter::draw_text`]
+/// [`Painter::draw_static_text`]
+/// [`TextLayout`]
+/// [`TextDocument`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QStaticText)]
-enum PerformanceHint {
-    ModerateCaching,
-    AggressiveCaching,
-}
-
-
 struct StaticText {
     /// 
     /// Swaps this static text instance with *other.* This function is
@@ -95,7 +88,7 @@ struct StaticText {
     /// 
     /// **Note**: This function will cause the layout of the text to require recalculation.
     /// 
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     /// 
     /// Sets the text format of the QStaticText to *textFormat.* If *textFormat* is set to
     /// Qt::AutoText (the default), the format of the text will try to be determined using the
@@ -105,13 +98,13 @@ struct StaticText {
     /// 
     /// **Note**: This function will cause the layout of the text to require recalculation.
     /// 
-    /// **See also:** textFormat()
-    /// setText()
-    /// text()
+    /// **See also:** [`text_format()`]
+    /// [`set_text()`]
+    /// [`text()`]
     /// 
     /// Sets the text option structure that controls the layout process to the given *textOption.*
     /// 
-    /// **See also:** textOption()
+    /// **See also:** [`text_option()`]
     /// 
     /// Sets the preferred width for this QStaticText. If the text is wider than the specified width,
     /// it will be broken into multiple lines and grow vertically. If the text cannot be split into
@@ -123,25 +116,25 @@ struct StaticText {
     /// 
     /// **Note**: This function will cause the layout of the text to require recalculation.
     /// 
-    /// **See also:** textWidth()
-    /// size()
+    /// **See also:** [`text_width()`]
+    /// [`size()`]
     set_text(text: String),
     /// 
     /// Returns the text format of the QStaticText.
     /// 
-    /// **See also:** setTextFormat()
-    /// setText()
-    /// text()
+    /// **See also:** [`set_text_format()`]
+    /// [`set_text()`]
+    /// [`text()`]
     /// 
     /// Returns the text of the QStaticText.
     /// 
-    /// **See also:** setText()
+    /// **See also:** [`set_text()`]
     /// 
     /// Returns the current text option used to control the layout process.
     /// 
     /// Returns the preferred width for this QStaticText.
     /// 
-    /// **See also:** setTextWidth()
+    /// **See also:** [`set_text_width()`]
     text() -> String,
     /// 
     /// Sets the text format of the QStaticText to *textFormat.* If *textFormat* is set to
@@ -152,16 +145,16 @@ struct StaticText {
     /// 
     /// **Note**: This function will cause the layout of the text to require recalculation.
     /// 
-    /// **See also:** textFormat()
-    /// setText()
-    /// text()
+    /// **See also:** [`text_format()`]
+    /// [`set_text()`]
+    /// [`text()`]
     set_text_format(text_format: Rute::TextFormat),
     /// 
     /// Returns the text format of the QStaticText.
     /// 
-    /// **See also:** setTextFormat()
-    /// setText()
-    /// text()
+    /// **See also:** [`set_text_format()`]
+    /// [`set_text()`]
+    /// [`text()`]
     text_format() -> Rute::TextFormat,
     /// 
     /// Sets the preferred width for this QStaticText. If the text is wider than the specified width,
@@ -174,18 +167,18 @@ struct StaticText {
     /// 
     /// **Note**: This function will cause the layout of the text to require recalculation.
     /// 
-    /// **See also:** textWidth()
-    /// size()
+    /// **See also:** [`text_width()`]
+    /// [`size()`]
     set_text_width(text_width: f32),
     /// 
     /// Returns the preferred width for this QStaticText.
     /// 
-    /// **See also:** setTextWidth()
+    /// **See also:** [`set_text_width()`]
     text_width() -> f32,
     /// 
     /// Sets the text option structure that controls the layout process to the given *textOption.*
     /// 
-    /// **See also:** textOption()
+    /// **See also:** [`text_option()`]
     set_text_option(text_option: &TextOptionType),
     /// 
     /// Returns the current text option used to control the layout process.
@@ -193,7 +186,7 @@ struct StaticText {
     /// 
     /// Returns the size of the bounding rect for this QStaticText.
     /// 
-    /// **See also:** textWidth()
+    /// **See also:** [`text_width()`]
     size() -> SizeF,
     /// 
     /// Prepares the QStaticText object for being painted with the given *matrix* and the given *font*
@@ -209,8 +202,8 @@ struct StaticText {
     /// making changes, you can use the prepare() function and pass in the *matrix* and *font* you
     /// expect to use when drawing the text.
     /// 
-    /// **See also:** QPainter::setFont()
-    /// QPainter::setMatrix()
+    /// **See also:** [`Painter::set_font`]
+    /// [`Painter::set_matrix`]
     prepare(matrix: &TransformType, font: &FontType),
     /// 
     /// Sets the performance hint of the QStaticText according to the *performanceHint* provided. The *performanceHint* is used to
@@ -221,13 +214,21 @@ struct StaticText {
     /// 
     /// **Note**: This function will cause the layout of the text to require recalculation.
     /// 
-    /// **See also:** performanceHint()
+    /// **See also:** [`performance_hint()`]
     set_performance_hint(performance_hint: StaticText::PerformanceHint),
     /// 
     /// Returns which performance hint is set for the QStaticText.
     /// 
-    /// **See also:** setPerformanceHint()
+    /// **See also:** [`set_performance_hint()`]
     performance_hint() -> StaticText::PerformanceHint,
+}
+
+[org_name(QStaticText)]
+enum PerformanceHint {
+    /// Do basic caching for high performance at a low memory cost.
+    ModerateCaching,
+    /// Use additional caching when available. This may improve performance at a higher memory cost.
+    AggressiveCaching,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

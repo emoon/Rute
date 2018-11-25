@@ -36,6 +36,8 @@ pub enum KeyboardModifier {
     KeyboardModifierMask,
 }
 
+pub type KeyboardModifiers = KeyboardModifier;
+
 #[repr(u32)]
 pub enum Modifier {
     Meta,
@@ -87,11 +89,15 @@ pub enum MouseButton {
     MouseButtonMask,
 }
 
+pub type MouseButtons = MouseButton;
+
 #[repr(u32)]
 pub enum Orientation {
     Horizontal,
     Vertical,
 }
+
+pub type Orientations = Orientation;
 
 #[repr(u32)]
 pub enum FocusPolicy {
@@ -140,6 +146,8 @@ pub enum AlignmentFlag {
     AlignVerticalMask,
     AlignCenter,
 }
+
+pub type Alignment = AlignmentFlag;
 
 #[repr(u32)]
 pub enum TextFlag {
@@ -223,6 +231,8 @@ pub enum WindowType {
     WindowFullscreenButtonHint,
 }
 
+pub type WindowFlags = WindowType;
+
 #[repr(u32)]
 pub enum WindowState {
     WindowNoState,
@@ -231,6 +241,8 @@ pub enum WindowState {
     WindowFullScreen,
     WindowActive,
 }
+
+pub type WindowStates = WindowState;
 
 #[repr(u32)]
 pub enum ApplicationState {
@@ -363,6 +375,7 @@ pub enum WidgetAttribute {
     WaMacNoShadow,
     WaAlwaysStackOnTop,
     WaTabletTracking,
+    WaContentsMarginsRespectsSafeArea,
     WaAttributeCount,
 }
 
@@ -376,7 +389,6 @@ pub enum ApplicationAttribute {
     AaPluginApplication,
     AaMacPluginApplication,
     AaDontUseNativeMenuBar,
-    AaMacDontSwapCtrlAndMeta,
     AaUse96Dpi,
     AaX11InitThreads,
     AaSynthesizeTouchForUnhandledMouseEvents,
@@ -424,6 +436,8 @@ pub enum ImageConversionFlag {
     NoOpaqueDetection,
     NoFormatConversion,
 }
+
+pub type ImageConversionFlags = ImageConversionFlag;
 
 #[repr(u32)]
 pub enum BGMode {
@@ -692,6 +706,31 @@ pub enum Key {
     KeyDeadBelowdot,
     KeyDeadHook,
     KeyDeadHorn,
+    KeyDeadStroke,
+    KeyDeadAbovecomma,
+    KeyDeadAbovereversedcomma,
+    KeyDeadDoublegrave,
+    KeyDeadBelowring,
+    KeyDeadBelowmacron,
+    KeyDeadBelowcircumflex,
+    KeyDeadBelowtilde,
+    KeyDeadBelowbreve,
+    KeyDeadBelowdiaeresis,
+    KeyDeadInvertedbreve,
+    KeyDeadBelowcomma,
+    KeyDeadCurrency,
+    KeyDeadA,
+    KeyDeadE,
+    KeyDeadI,
+    KeyDeadO,
+    KeyDeadU,
+    KeyDeadSmallSchwa,
+    KeyDeadCapitalSchwa,
+    KeyDeadGreek,
+    KeyDeadLowline,
+    KeyDeadAboveverticalline,
+    KeyDeadBelowverticalline,
+    KeyDeadLongsolidusoverlay,
     KeyBack,
     KeyForward,
     KeyStop,
@@ -1213,6 +1252,8 @@ pub enum InputMethodHint {
     ImhTime,
     ImhPreferLatin,
     ImhMultiLine,
+    ImhNoEditMenu,
+    ImhNoTextHandles,
     ImhDigitsOnly,
     ImhFormattedNumbersOnly,
     ImhUppercaseOnly,
@@ -1223,6 +1264,8 @@ pub enum InputMethodHint {
     ImhLatinOnly,
     ImhExclusiveInputMask,
 }
+
+pub type InputMethodHints = InputMethodHint;
 
 #[repr(u32)]
 pub enum EnterKeyType {
@@ -1268,6 +1311,8 @@ pub enum FindChildOption {
     FindChildrenRecursively,
 }
 
+pub type FindChildOptions = FindChildOption;
+
 #[repr(u32)]
 pub enum DropAction {
     CopyAction,
@@ -1277,6 +1322,8 @@ pub enum DropAction {
     TargetMoveAction,
     IgnoreAction,
 }
+
+pub type DropActions = DropAction;
 
 #[repr(u32)]
 pub enum CheckState {
@@ -1409,6 +1456,8 @@ pub enum TouchPointState {
     TouchPointReleased,
 }
 
+pub type TouchPointStates = TouchPointState;
+
 #[repr(u32)]
 pub enum GestureState {
     NoGesture,
@@ -1433,8 +1482,9 @@ pub enum GestureType {
 pub enum GestureFlag {
     DontStartGestureOnChildren,
     ReceivePartialGestures,
-    IgnoredGesturesPropagateToParent,
 }
+
+pub type GestureFlags = GestureFlag;
 
 #[repr(u32)]
 pub enum NativeGestureType {
@@ -1490,6 +1540,8 @@ pub enum MouseEventFlag {
     MouseEventCreatedDoubleClick,
     MouseEventFlagMask,
 }
+
+pub type MouseEventFlags = MouseEventFlag;
 
 #[repr(u32)]
 pub enum ChecksumType {

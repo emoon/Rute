@@ -24,8 +24,8 @@
 /// for an entire row or column by calling setRowAlignment() and setColumnAlignment()
 /// respectively. By default, items are aligned to the top left.
 /// 
-/// **See also:** QGraphicsLinearLayout
-/// QGraphicsWidget
+/// **See also:** [`GraphicsLinearLayout`]
+/// [`GraphicsWidget`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -43,7 +43,8 @@ struct GraphicsGridLayout : GraphicsLayout {
     /// 
     /// Adds *item* to the grid on *row* and *column.* You can specify
     /// an optional *alignment* for *item.*
-    add_item(item: *GraphicsLayoutItemType, row: i32, column: i32, alignment: Rute::Alignment),
+    [org_name(addItem)]
+    add_item_2(item: *GraphicsLayoutItemType, row: i32, column: i32, alignment: Rute::Alignment),
     /// 
     /// Sets the default horizontal spacing for the grid layout to *spacing.*
     set_horizontal_spacing(spacing: f32),
@@ -60,8 +61,8 @@ struct GraphicsGridLayout : GraphicsLayout {
     /// Sets the grid layout's default spacing, both vertical and
     /// horizontal, to *spacing.*
     /// 
-    /// **See also:** rowSpacing()
-    /// columnSpacing()
+    /// **See also:** [`row_spacing()`]
+    /// [`column_spacing()`]
     set_spacing(spacing: f32),
     /// 
     /// Sets the spacing for *row* to *spacing.*
@@ -159,18 +160,19 @@ struct GraphicsGridLayout : GraphicsLayout {
     /// 
     /// Returns the layout item at *index,* or 0 if there is no layout item at
     /// this index.
-    [event] item_at(index: i32) -> GraphicsLayoutItem?,
+    [org_name(itemAt)]
+    [event] item_at_2(index: i32) -> GraphicsLayoutItem?,
     /// 
     /// Removes the layout item at *index* without destroying it. Ownership of
     /// the item is transferred to the caller.
     /// 
-    /// **See also:** addItem()
+    /// **See also:** [`add_item()`]
     [event] remove_at(index: i32),
     /// 
     /// Removes the layout item *item* without destroying it.
     /// Ownership of the item is transferred to the caller.
     /// 
-    /// **See also:** addItem()
+    /// **See also:** [`add_item()`]
     remove_item(item: *GraphicsLayoutItemType),
     /// 
     [event] invalidate(),

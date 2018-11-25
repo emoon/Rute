@@ -9,16 +9,430 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_show(struct RUBase* self_c) {
+static uint64_t widget_win_id(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->show();
+    auto ret_value = qt_value->winId();
+    return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_hide(struct RUBase* self_c) {
+static void widget_create_win_id(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->hide();
+    qt_value->createWinId();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static uint64_t widget_internal_win_id(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->internalWinId();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static uint64_t widget_effective_win_id(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->effectiveWinId();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUStyle widget_style(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->style();
+    struct RUStyle ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_style_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_style(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setStyle((QStyle*)arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_top_level(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isTopLevel();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_window(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isWindow();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_modal(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isModal();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_window_modality(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->windowModality();
+    return s_window_modality_lookup[(int)ret_value];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_window_modality(struct RUBase* self_c, int window_modality) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setWindowModality((Qt::WindowModality)s_window_modality_lookup[window_modality]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_enabled(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isEnabled();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_enabled_to(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isEnabledTo((QWidget*)arg0);
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_enabled(struct RUBase* self_c, bool arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setEnabled(arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_disabled(struct RUBase* self_c, bool arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setDisabled(arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_window_modified(struct RUBase* self_c, bool arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setWindowModified(arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_x(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->x();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_y(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->y();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUPoint widget_pos(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->pos();
+    WRPoint* new_val = new WRPoint();
+    *new_val = ret_value;
+    struct RUPoint ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_point_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUSize widget_frame_size(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->frameSize();
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUSize widget_size(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->size();
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_width(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->width();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_height(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->height();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RURect widget_rect(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->rect();
+    WRRect* new_val = new WRRect();
+    *new_val = ret_value;
+    struct RURect ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_rect_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RURect widget_children_rect(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->childrenRect();
+    WRRect* new_val = new WRRect();
+    *new_val = ret_value;
+    struct RURect ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_rect_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RURegion widget_children_region(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->childrenRegion();
+    WRRegion* new_val = new WRRegion();
+    *new_val = ret_value;
+    struct RURegion ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_region_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUSize widget_minimum_size(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->minimumSize();
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUSize widget_maximum_size(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->maximumSize();
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_minimum_width(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->minimumWidth();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_minimum_height(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->minimumHeight();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_maximum_width(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->maximumWidth();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_maximum_height(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->maximumHeight();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_minimum_size(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMinimumSize(*((QSize*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_minimum_size_2(struct RUBase* self_c, int minw, int minh) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMinimumSize(minw, minh);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_maximum_size(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMaximumSize(*((QSize*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_maximum_size_2(struct RUBase* self_c, int maxw, int maxh) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMaximumSize(maxw, maxh);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_minimum_width(struct RUBase* self_c, int minw) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMinimumWidth(minw);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_minimum_height(struct RUBase* self_c, int minh) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMinimumHeight(minh);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_maximum_width(struct RUBase* self_c, int maxw) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMaximumWidth(maxw);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_maximum_height(struct RUBase* self_c, int maxh) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMaximumHeight(maxh);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUSize widget_size_increment(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->sizeIncrement();
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_size_increment(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setSizeIncrement(*((QSize*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_size_increment_2(struct RUBase* self_c, int w, int h) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setSizeIncrement(w, h);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUSize widget_base_size(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->baseSize();
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_base_size(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setBaseSize(*((QSize*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_base_size_2(struct RUBase* self_c, int basew, int baseh) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setBaseSize(basew, baseh);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_fixed_size(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setFixedSize(*((QSize*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_fixed_size_2(struct RUBase* self_c, int w, int h) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setFixedSize(w, h);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -37,16 +451,775 @@ static void widget_set_fixed_height(struct RUBase* self_c, int h) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_resize(struct RUBase* self_c, int width, int height) {
+static struct RUPoint widget_map_to_global(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->resize(width, height);
+    auto ret_value = qt_value->mapToGlobal(*((QPoint*)arg0));
+    WRPoint* new_val = new WRPoint();
+    *new_val = ret_value;
+    struct RUPoint ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_point_all_funcs;
+    return ctl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_parent(struct RUBase* self_c, struct RUBase* parent) {
+static struct RUPoint widget_map_from_global(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setParent((QWidget*)parent);
+    auto ret_value = qt_value->mapFromGlobal(*((QPoint*)arg0));
+    WRPoint* new_val = new WRPoint();
+    *new_val = ret_value;
+    struct RUPoint ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_point_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUPoint widget_map_to_parent(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->mapToParent(*((QPoint*)arg0));
+    WRPoint* new_val = new WRPoint();
+    *new_val = ret_value;
+    struct RUPoint ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_point_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUPoint widget_map_from_parent(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->mapFromParent(*((QPoint*)arg0));
+    WRPoint* new_val = new WRPoint();
+    *new_val = ret_value;
+    struct RUPoint ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_point_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUPoint widget_map_to(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* arg1) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->mapTo((QWidget*)arg0, *((QPoint*)arg1));
+    WRPoint* new_val = new WRPoint();
+    *new_val = ret_value;
+    struct RUPoint ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_point_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUPoint widget_map_from(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* arg1) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->mapFrom((QWidget*)arg0, *((QPoint*)arg1));
+    WRPoint* new_val = new WRPoint();
+    *new_val = ret_value;
+    struct RUPoint ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_point_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_window(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->window();
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_native_parent_widget(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->nativeParentWidget();
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUPalette widget_palette(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->palette();
+    WRPalette* new_val = new WRPalette();
+    *new_val = ret_value;
+    struct RUPalette ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_palette_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_palette(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setPalette(*((QPalette*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_background_role(struct RUBase* self_c, int arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setBackgroundRole((QPalette::ColorRole)s_color_role_lookup[arg0]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_background_role(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->backgroundRole();
+    return s_color_role_lookup[(int)ret_value];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_foreground_role(struct RUBase* self_c, int arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setForegroundRole((QPalette::ColorRole)s_color_role_lookup[arg0]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_foreground_role(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->foregroundRole();
+    return s_color_role_lookup[(int)ret_value];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUFont widget_font(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->font();
+    WRFont* new_val = new WRFont();
+    *new_val = ret_value;
+    struct RUFont ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_font_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_font(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setFont(*((QFont*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUCursor widget_cursor(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->cursor();
+    WRCursor* new_val = new WRCursor();
+    *new_val = ret_value;
+    struct RUCursor ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_cursor_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_cursor(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setCursor(*((QCursor*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_unset_cursor(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->unsetCursor();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_mouse_tracking(struct RUBase* self_c, bool enable) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMouseTracking(enable);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_has_mouse_tracking(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->hasMouseTracking();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_under_mouse(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->underMouse();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_tablet_tracking(struct RUBase* self_c, bool enable) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setTabletTracking(enable);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_has_tablet_tracking(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->hasTabletTracking();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_mask(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMask(*((QBitmap*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_mask_2(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setMask(*((QRegion*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RURegion widget_mask(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->mask();
+    WRRegion* new_val = new WRRegion();
+    *new_val = ret_value;
+    struct RURegion ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_region_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_clear_mask(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->clearMask();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_render(struct RUBase* self_c, struct RUBase* target, struct RUBase* target_offset, struct RUBase* source_region, int render_flags) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->render((QPaintDevice*)target, *((QPoint*)target_offset), *((QRegion*)source_region), (QWidget::RenderFlags)s_render_flags_lookup[render_flags]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_render_2(struct RUBase* self_c, struct RUBase* painter, struct RUBase* target_offset, struct RUBase* source_region, int render_flags) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->render((QPainter*)painter, *((QPoint*)target_offset), *((QRegion*)source_region), (QWidget::RenderFlags)s_render_flags_lookup[render_flags]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUPixmap widget_grab(struct RUBase* self_c, struct RUBase* rectangle) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->grab(*((QRect*)rectangle));
+    WRPixmap* new_val = new WRPixmap();
+    *new_val = ret_value;
+    struct RUPixmap ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_pixmap_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_grab_gesture(struct RUBase* self_c, int gtype, int flags) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->grabGesture((Qt::GestureType)s_gesture_type_lookup[gtype], (Qt::GestureFlags)s_gesture_flags_lookup[flags]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_ungrab_gesture(struct RUBase* self_c, int gtype) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->ungrabGesture((Qt::GestureType)s_gesture_type_lookup[gtype]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_window_title(struct RUBase* self_c, const char* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setWindowTitle(QString::fromUtf8(arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_style_sheet(struct RUBase* self_c, const char* style_sheet) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setStyleSheet(QString::fromUtf8(style_sheet));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* widget_style_sheet(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->styleSheet();
+    return q_string_to_const_char(ret_value);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* widget_window_title(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->windowTitle();
+    return q_string_to_const_char(ret_value);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_window_icon(struct RUBase* self_c, struct RUBase* icon) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setWindowIcon(*((QIcon*)icon));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUIcon widget_window_icon(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->windowIcon();
+    WRIcon* new_val = new WRIcon();
+    *new_val = ret_value;
+    struct RUIcon ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_icon_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_window_icon_text(struct RUBase* self_c, const char* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setWindowIconText(QString::fromUtf8(arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* widget_window_icon_text(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->windowIconText();
+    return q_string_to_const_char(ret_value);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_window_role(struct RUBase* self_c, const char* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setWindowRole(QString::fromUtf8(arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* widget_window_role(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->windowRole();
+    return q_string_to_const_char(ret_value);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_window_file_path(struct RUBase* self_c, const char* file_path) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setWindowFilePath(QString::fromUtf8(file_path));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* widget_window_file_path(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->windowFilePath();
+    return q_string_to_const_char(ret_value);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_window_opacity(struct RUBase* self_c, float level) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setWindowOpacity(level);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static float widget_window_opacity(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->windowOpacity();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_window_modified(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isWindowModified();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_tool_tip(struct RUBase* self_c, const char* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setToolTip(QString::fromUtf8(arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* widget_tool_tip(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->toolTip();
+    return q_string_to_const_char(ret_value);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_tool_tip_duration(struct RUBase* self_c, int msec) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setToolTipDuration(msec);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_tool_tip_duration(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->toolTipDuration();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_status_tip(struct RUBase* self_c, const char* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setStatusTip(QString::fromUtf8(arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* widget_status_tip(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->statusTip();
+    return q_string_to_const_char(ret_value);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_whats_this(struct RUBase* self_c, const char* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setWhatsThis(QString::fromUtf8(arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* widget_whats_this(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->whatsThis();
+    return q_string_to_const_char(ret_value);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* widget_accessible_name(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->accessibleName();
+    return q_string_to_const_char(ret_value);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_accessible_name(struct RUBase* self_c, const char* name) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setAccessibleName(QString::fromUtf8(name));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static const char* widget_accessible_description(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->accessibleDescription();
+    return q_string_to_const_char(ret_value);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_accessible_description(struct RUBase* self_c, const char* description) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setAccessibleDescription(QString::fromUtf8(description));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_layout_direction(struct RUBase* self_c, int direction) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setLayoutDirection((Qt::LayoutDirection)s_layout_direction_lookup[direction]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_layout_direction(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->layoutDirection();
+    return s_layout_direction_lookup[(int)ret_value];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_unset_layout_direction(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->unsetLayoutDirection();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_right_to_left(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isRightToLeft();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_left_to_right(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isLeftToRight();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_focus(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setFocus();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_active_window(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isActiveWindow();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_activate_window(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->activateWindow();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_clear_focus(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->clearFocus();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_focus_2(struct RUBase* self_c, int reason) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setFocus((Qt::FocusReason)s_focus_reason_lookup[reason]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_focus_policy(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->focusPolicy();
+    return s_focus_policy_lookup[(int)ret_value];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_focus_policy(struct RUBase* self_c, int policy) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setFocusPolicy((Qt::FocusPolicy)s_focus_policy_lookup[policy]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_has_focus(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->hasFocus();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_tab_order(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* arg1) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setTabOrder((QWidget*)arg0, (QWidget*)arg1);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_focus_proxy(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setFocusProxy((QWidget*)arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_focus_proxy(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->focusProxy();
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_context_menu_policy(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->contextMenuPolicy();
+    return s_context_menu_policy_lookup[(int)ret_value];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_context_menu_policy(struct RUBase* self_c, int policy) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setContextMenuPolicy((Qt::ContextMenuPolicy)s_context_menu_policy_lookup[policy]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_grab_mouse(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->grabMouse();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_grab_mouse_2(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->grabMouse(*((QCursor*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_release_mouse(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->releaseMouse();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_grab_keyboard(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->grabKeyboard();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_release_keyboard(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->releaseKeyboard();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_grab_shortcut(struct RUBase* self_c, struct RUBase* key, int context) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->grabShortcut(*((QKeySequence*)key), (Qt::ShortcutContext)s_shortcut_context_lookup[context]);
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_release_shortcut(struct RUBase* self_c, int id) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->releaseShortcut(id);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_shortcut_enabled(struct RUBase* self_c, int id, bool enable) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setShortcutEnabled(id, enable);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_shortcut_auto_repeat(struct RUBase* self_c, int id, bool enable) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setShortcutAutoRepeat(id, enable);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_mouse_grabber(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->mouseGrabber();
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_keyboard_grabber(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->keyboardGrabber();
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_updates_enabled(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->updatesEnabled();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_updates_enabled(struct RUBase* self_c, bool enable) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setUpdatesEnabled(enable);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,10 +1231,838 @@ static void widget_update(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_window_title_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void* self_c, const char* title)) {
+static void widget_repaint(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->repaint();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_update_2(struct RUBase* self_c, int x, int y, int w, int h) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->update(x, y, w, h);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_update_3(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->update(*((QRect*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_update_4(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->update(*((QRegion*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_repaint_2(struct RUBase* self_c, int x, int y, int w, int h) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->repaint(x, y, w, h);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_repaint_3(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->repaint(*((QRect*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_repaint_4(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->repaint(*((QRegion*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_hidden(struct RUBase* self_c, bool hidden) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setHidden(hidden);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_show(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->show();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_hide(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->hide();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_show_minimized(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->showMinimized();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_show_maximized(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->showMaximized();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_show_full_screen(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->showFullScreen();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_show_normal(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->showNormal();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_close(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->close();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_raise(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->raise();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_lower(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->lower();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_stack_under(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->stackUnder((QWidget*)arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_move_widget(struct RUBase* self_c, int x, int y) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->move(x, y);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_move_2(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->move(*((QPoint*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_resize(struct RUBase* self_c, int w, int h) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->resize(w, h);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_resize_2(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->resize(*((QSize*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_adjust_size(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->adjustSize();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_visible(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isVisible();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_visible_to(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isVisibleTo((QWidget*)arg0);
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_hidden(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isHidden();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_minimized(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isMinimized();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_maximized(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isMaximized();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_full_screen(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isFullScreen();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_window_state(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->windowState();
+    return s_window_states_lookup[(int)ret_value];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_window_state(struct RUBase* self_c, int state) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setWindowState((Qt::WindowStates)s_window_states_lookup[state]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_override_window_state(struct RUBase* self_c, int state) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->overrideWindowState((Qt::WindowStates)s_window_states_lookup[state]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUSize widget_size_hint(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->sizeHint();
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUSize widget_minimum_size_hint(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->minimumSizeHint();
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUSizePolicy widget_size_policy(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->sizePolicy();
+    WRSizePolicy* new_val = new WRSizePolicy();
+    *new_val = ret_value;
+    struct RUSizePolicy ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_policy_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_size_policy(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setSizePolicy(*((QSizePolicy*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_size_policy_2(struct RUBase* self_c, int horizontal, int vertical) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setSizePolicy((QSizePolicy::Policy)s_policy_lookup[horizontal], (QSizePolicy::Policy)s_policy_lookup[vertical]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_height_for_width(struct RUBase* self_c, int arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->heightForWidth(arg0);
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_has_height_for_width(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->hasHeightForWidth();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RURegion widget_visible_region(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->visibleRegion();
+    WRRegion* new_val = new WRRegion();
+    *new_val = ret_value;
+    struct RURegion ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_region_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_contents_margins(struct RUBase* self_c, int left, int top, int right, int bottom) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setContentsMargins(left, top, right, bottom);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_contents_margins_2(struct RUBase* self_c, struct RUBase* margins) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setContentsMargins(*((QMargins*)margins));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUMargins widget_contents_margins(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->contentsMargins();
+    WRMargins* new_val = new WRMargins();
+    *new_val = ret_value;
+    struct RUMargins ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_margins_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RURect widget_contents_rect(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->contentsRect();
+    WRRect* new_val = new WRRect();
+    *new_val = ret_value;
+    struct RURect ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_rect_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RULayout widget_layout(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->layout();
+    struct RULayout ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_layout_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_layout(struct RUBase* self_c, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setLayout((QLayout*)arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_parent(struct RUBase* self_c, struct RUBase* parent) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setParent((QWidget*)parent);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_parent_2(struct RUBase* self_c, struct RUBase* parent, int f) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setParent((QWidget*)parent, (Qt::WindowFlags)s_window_flags_lookup[f]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_scroll(struct RUBase* self_c, int dx, int dy) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->scroll(dx, dy);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_scroll_2(struct RUBase* self_c, int dx, int dy, struct RUBase* arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->scroll(dx, dy, *((QRect*)arg0));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_focus_widget(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->focusWidget();
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_next_in_focus_chain(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->nextInFocusChain();
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_previous_in_focus_chain(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->previousInFocusChain();
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_accept_drops(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->acceptDrops();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_accept_drops(struct RUBase* self_c, bool on) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setAcceptDrops(on);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_parent_widget(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->parentWidget();
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_window_flags(struct RUBase* self_c, int gtype) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setWindowFlags((Qt::WindowFlags)s_window_flags_lookup[gtype]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_window_flags(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->windowFlags();
+    return s_window_flags_lookup[(int)ret_value];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_override_window_flags(struct RUBase* self_c, int wtype) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->overrideWindowFlags((Qt::WindowFlags)s_window_flags_lookup[wtype]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_find(struct RUBase* self_c, uint64_t arg0) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->find(arg0);
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_child_at(struct RUBase* self_c, int x, int y) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->childAt(x, y);
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_child_at_2(struct RUBase* self_c, struct RUBase* p) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->childAt(*((QPoint*)p));
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUPaintEngine widget_paint_engine(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->paintEngine();
+    struct RUPaintEngine ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_paint_engine_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_ensure_polished(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->ensurePolished();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_is_ancestor_of(struct RUBase* self_c, struct RUBase* child) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->isAncestorOf((QWidget*)child);
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static bool widget_auto_fill_background(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->autoFillBackground();
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_auto_fill_background(struct RUBase* self_c, bool enabled) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setAutoFillBackground(enabled);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUBackingStore widget_backing_store(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->backingStore();
+    struct RUBackingStore ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_backing_store_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWindow widget_window_handle(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->windowHandle();
+    struct RUWindow ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_window_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget widget_create_window_container(struct RUBase* self_c, struct RUBase* window, struct RUBase* parent, int flags) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->createWindowContainer((QWindow*)window, (QWidget*)parent, (Qt::WindowFlags)s_window_flags_lookup[flags]);
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_window_title_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* title)) {
     QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(windowTitleChanged(QString)), wrap, SLOT(method(QString)));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_window_icon_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* icon)) {
+    QSlotWrapperSignal_self_IconType_void* wrap = new QSlotWrapperSignal_self_IconType_void(user_data, (Signal_self_IconType_void)event, (void*)wrapped_func);
+    QObject* q_obj = (QObject*)object;
+    QObject::connect(q_obj, SIGNAL(windowIconChanged(*(QIcon)*)), wrap, SLOT(method(*(QIcon)*)));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_window_icon_text_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* icon_text)) {
+    QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)event, (void*)wrapped_func);
+    QObject* q_obj = (QObject*)object;
+    QObject::connect(q_obj, SIGNAL(windowIconTextChanged(QString)), wrap, SLOT(method(QString)));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_custom_context_menu_requested_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* pos)) {
+    QSlotWrapperSignal_self_PointType_void* wrap = new QSlotWrapperSignal_self_PointType_void(user_data, (Signal_self_PointType_void)event, (void*)wrapped_func);
+    QObject* q_obj = (QObject*)object;
+    QObject::connect(q_obj, SIGNAL(customContextMenuRequested(*(QPoint)*)), wrap, SLOT(method(*(QPoint)*)));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_mouse_press_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_mouse_press_event = trampoline_func;
+    qt_object->m_mouse_press_event_user_data = user_data;
+    qt_object->m_mouse_press_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_mouse_press_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_mouse_press_event = nullptr;
+    qt_object->m_mouse_press_event_user_data = nullptr;
+    qt_object->m_mouse_press_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_mouse_release_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_mouse_release_event = trampoline_func;
+    qt_object->m_mouse_release_event_user_data = user_data;
+    qt_object->m_mouse_release_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_mouse_release_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_mouse_release_event = nullptr;
+    qt_object->m_mouse_release_event_user_data = nullptr;
+    qt_object->m_mouse_release_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_mouse_double_click_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_mouse_double_click_event = trampoline_func;
+    qt_object->m_mouse_double_click_event_user_data = user_data;
+    qt_object->m_mouse_double_click_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_mouse_double_click_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_mouse_double_click_event = nullptr;
+    qt_object->m_mouse_double_click_event_user_data = nullptr;
+    qt_object->m_mouse_double_click_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_mouse_move_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_mouse_move_event = trampoline_func;
+    qt_object->m_mouse_move_event_user_data = user_data;
+    qt_object->m_mouse_move_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_mouse_move_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_mouse_move_event = nullptr;
+    qt_object->m_mouse_move_event_user_data = nullptr;
+    qt_object->m_mouse_move_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_wheel_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_wheel_event = trampoline_func;
+    qt_object->m_wheel_event_user_data = user_data;
+    qt_object->m_wheel_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_wheel_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_wheel_event = nullptr;
+    qt_object->m_wheel_event_user_data = nullptr;
+    qt_object->m_wheel_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_key_press_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_key_press_event = trampoline_func;
+    qt_object->m_key_press_event_user_data = user_data;
+    qt_object->m_key_press_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_key_press_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_key_press_event = nullptr;
+    qt_object->m_key_press_event_user_data = nullptr;
+    qt_object->m_key_press_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_key_release_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_key_release_event = trampoline_func;
+    qt_object->m_key_release_event_user_data = user_data;
+    qt_object->m_key_release_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_key_release_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_key_release_event = nullptr;
+    qt_object->m_key_release_event_user_data = nullptr;
+    qt_object->m_key_release_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_focus_in_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_focus_in_event = trampoline_func;
+    qt_object->m_focus_in_event_user_data = user_data;
+    qt_object->m_focus_in_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_focus_in_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_focus_in_event = nullptr;
+    qt_object->m_focus_in_event_user_data = nullptr;
+    qt_object->m_focus_in_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_focus_out_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_focus_out_event = trampoline_func;
+    qt_object->m_focus_out_event_user_data = user_data;
+    qt_object->m_focus_out_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_focus_out_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_focus_out_event = nullptr;
+    qt_object->m_focus_out_event_user_data = nullptr;
+    qt_object->m_focus_out_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_enter_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_enter_event = trampoline_func;
+    qt_object->m_enter_event_user_data = user_data;
+    qt_object->m_enter_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_enter_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_enter_event = nullptr;
+    qt_object->m_enter_event_user_data = nullptr;
+    qt_object->m_enter_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_leave_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_leave_event = trampoline_func;
+    qt_object->m_leave_event_user_data = user_data;
+    qt_object->m_leave_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_leave_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_leave_event = nullptr;
+    qt_object->m_leave_event_user_data = nullptr;
+    qt_object->m_leave_event_wrapped_func = nullptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,6 +2085,237 @@ static void remove_widget_paint_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void set_widget_move_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_move_event = trampoline_func;
+    qt_object->m_move_event_user_data = user_data;
+    qt_object->m_move_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_move_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_move_event = nullptr;
+    qt_object->m_move_event_user_data = nullptr;
+    qt_object->m_move_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_resize_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_resize_event = trampoline_func;
+    qt_object->m_resize_event_user_data = user_data;
+    qt_object->m_resize_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_resize_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_resize_event = nullptr;
+    qt_object->m_resize_event_user_data = nullptr;
+    qt_object->m_resize_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_close_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_close_event = trampoline_func;
+    qt_object->m_close_event_user_data = user_data;
+    qt_object->m_close_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_close_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_close_event = nullptr;
+    qt_object->m_close_event_user_data = nullptr;
+    qt_object->m_close_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_context_menu_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_context_menu_event = trampoline_func;
+    qt_object->m_context_menu_event_user_data = user_data;
+    qt_object->m_context_menu_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_context_menu_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_context_menu_event = nullptr;
+    qt_object->m_context_menu_event_user_data = nullptr;
+    qt_object->m_context_menu_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_tablet_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_tablet_event = trampoline_func;
+    qt_object->m_tablet_event_user_data = user_data;
+    qt_object->m_tablet_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_tablet_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_tablet_event = nullptr;
+    qt_object->m_tablet_event_user_data = nullptr;
+    qt_object->m_tablet_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_drag_enter_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_drag_enter_event = trampoline_func;
+    qt_object->m_drag_enter_event_user_data = user_data;
+    qt_object->m_drag_enter_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_drag_enter_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_drag_enter_event = nullptr;
+    qt_object->m_drag_enter_event_user_data = nullptr;
+    qt_object->m_drag_enter_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_drag_move_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_drag_move_event = trampoline_func;
+    qt_object->m_drag_move_event_user_data = user_data;
+    qt_object->m_drag_move_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_drag_move_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_drag_move_event = nullptr;
+    qt_object->m_drag_move_event_user_data = nullptr;
+    qt_object->m_drag_move_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_drag_leave_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_drag_leave_event = trampoline_func;
+    qt_object->m_drag_leave_event_user_data = user_data;
+    qt_object->m_drag_leave_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_drag_leave_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_drag_leave_event = nullptr;
+    qt_object->m_drag_leave_event_user_data = nullptr;
+    qt_object->m_drag_leave_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_drop_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_drop_event = trampoline_func;
+    qt_object->m_drop_event_user_data = user_data;
+    qt_object->m_drop_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_drop_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_drop_event = nullptr;
+    qt_object->m_drop_event_user_data = nullptr;
+    qt_object->m_drop_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_show_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_show_event = trampoline_func;
+    qt_object->m_show_event_user_data = user_data;
+    qt_object->m_show_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_show_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_show_event = nullptr;
+    qt_object->m_show_event_user_data = nullptr;
+    qt_object->m_show_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_hide_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_hide_event = trampoline_func;
+    qt_object->m_hide_event_user_data = user_data;
+    qt_object->m_hide_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_hide_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_hide_event = nullptr;
+    qt_object->m_hide_event_user_data = nullptr;
+    qt_object->m_hide_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_widget_change_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_change_event = trampoline_func;
+    qt_object->m_change_event_user_data = user_data;
+    qt_object->m_change_event_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_widget_change_event(void* object) {
+    WRWidget* qt_object = (WRWidget*)object;
+    qt_object->m_change_event = nullptr;
+    qt_object->m_change_event_user_data = nullptr;
+    qt_object->m_change_event_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static int widget_input_method_hints(struct RUBase* self_c) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    auto ret_value = qt_value->inputMethodHints();
+    return s_input_method_hints_lookup[(int)ret_value];
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void widget_set_input_method_hints(struct RUBase* self_c, int hints) {
+    WRWidget* qt_value = (WRWidget*)self_c;
+    qt_value->setInputMethodHints((Qt::InputMethodHints)s_input_method_hints_lookup[hints]);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUWidget create_widget(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
@@ -102,23 +2334,292 @@ static void destroy_widget(struct RUBase* priv_data) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct RUWidget get_widget(struct RUBase* priv_data) {
+    (void)priv_data;
+    RUWidget ctl;
+    ctl.qt_data = nullptr;
+    ctl.host_data = nullptr;
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct RUWidgetFuncs s_widget_funcs = {
     destroy_widget,
-    widget_show,
-    widget_hide,
+    widget_win_id,
+    widget_create_win_id,
+    widget_internal_win_id,
+    widget_effective_win_id,
+    widget_style,
+    widget_set_style,
+    widget_is_top_level,
+    widget_is_window,
+    widget_is_modal,
+    widget_window_modality,
+    widget_set_window_modality,
+    widget_is_enabled,
+    widget_is_enabled_to,
+    widget_set_enabled,
+    widget_set_disabled,
+    widget_set_window_modified,
+    widget_x,
+    widget_y,
+    widget_pos,
+    widget_frame_size,
+    widget_size,
+    widget_width,
+    widget_height,
+    widget_rect,
+    widget_children_rect,
+    widget_children_region,
+    widget_minimum_size,
+    widget_maximum_size,
+    widget_minimum_width,
+    widget_minimum_height,
+    widget_maximum_width,
+    widget_maximum_height,
+    widget_set_minimum_size,
+    widget_set_minimum_size_2,
+    widget_set_maximum_size,
+    widget_set_maximum_size_2,
+    widget_set_minimum_width,
+    widget_set_minimum_height,
+    widget_set_maximum_width,
+    widget_set_maximum_height,
+    widget_size_increment,
+    widget_set_size_increment,
+    widget_set_size_increment_2,
+    widget_base_size,
+    widget_set_base_size,
+    widget_set_base_size_2,
+    widget_set_fixed_size,
+    widget_set_fixed_size_2,
     widget_set_fixed_width,
     widget_set_fixed_height,
-    widget_resize,
-    widget_set_parent,
+    widget_map_to_global,
+    widget_map_from_global,
+    widget_map_to_parent,
+    widget_map_from_parent,
+    widget_map_to,
+    widget_map_from,
+    widget_window,
+    widget_native_parent_widget,
+    widget_palette,
+    widget_set_palette,
+    widget_set_background_role,
+    widget_background_role,
+    widget_set_foreground_role,
+    widget_foreground_role,
+    widget_font,
+    widget_set_font,
+    widget_cursor,
+    widget_set_cursor,
+    widget_unset_cursor,
+    widget_set_mouse_tracking,
+    widget_has_mouse_tracking,
+    widget_under_mouse,
+    widget_set_tablet_tracking,
+    widget_has_tablet_tracking,
+    widget_set_mask,
+    widget_set_mask_2,
+    widget_mask,
+    widget_clear_mask,
+    widget_render,
+    widget_render_2,
+    widget_grab,
+    widget_grab_gesture,
+    widget_ungrab_gesture,
+    widget_set_window_title,
+    widget_set_style_sheet,
+    widget_style_sheet,
+    widget_window_title,
+    widget_set_window_icon,
+    widget_window_icon,
+    widget_set_window_icon_text,
+    widget_window_icon_text,
+    widget_set_window_role,
+    widget_window_role,
+    widget_set_window_file_path,
+    widget_window_file_path,
+    widget_set_window_opacity,
+    widget_window_opacity,
+    widget_is_window_modified,
+    widget_set_tool_tip,
+    widget_tool_tip,
+    widget_set_tool_tip_duration,
+    widget_tool_tip_duration,
+    widget_set_status_tip,
+    widget_status_tip,
+    widget_set_whats_this,
+    widget_whats_this,
+    widget_accessible_name,
+    widget_set_accessible_name,
+    widget_accessible_description,
+    widget_set_accessible_description,
+    widget_set_layout_direction,
+    widget_layout_direction,
+    widget_unset_layout_direction,
+    widget_is_right_to_left,
+    widget_is_left_to_right,
+    widget_set_focus,
+    widget_is_active_window,
+    widget_activate_window,
+    widget_clear_focus,
+    widget_set_focus_2,
+    widget_focus_policy,
+    widget_set_focus_policy,
+    widget_has_focus,
+    widget_set_tab_order,
+    widget_set_focus_proxy,
+    widget_focus_proxy,
+    widget_context_menu_policy,
+    widget_set_context_menu_policy,
+    widget_grab_mouse,
+    widget_grab_mouse_2,
+    widget_release_mouse,
+    widget_grab_keyboard,
+    widget_release_keyboard,
+    widget_grab_shortcut,
+    widget_release_shortcut,
+    widget_set_shortcut_enabled,
+    widget_set_shortcut_auto_repeat,
+    widget_mouse_grabber,
+    widget_keyboard_grabber,
+    widget_updates_enabled,
+    widget_set_updates_enabled,
     widget_update,
+    widget_repaint,
+    widget_update_2,
+    widget_update_3,
+    widget_update_4,
+    widget_repaint_2,
+    widget_repaint_3,
+    widget_repaint_4,
+    widget_set_hidden,
+    widget_show,
+    widget_hide,
+    widget_show_minimized,
+    widget_show_maximized,
+    widget_show_full_screen,
+    widget_show_normal,
+    widget_close,
+    widget_raise,
+    widget_lower,
+    widget_stack_under,
+    widget_move_widget,
+    widget_move_2,
+    widget_resize,
+    widget_resize_2,
+    widget_adjust_size,
+    widget_is_visible,
+    widget_is_visible_to,
+    widget_is_hidden,
+    widget_is_minimized,
+    widget_is_maximized,
+    widget_is_full_screen,
+    widget_window_state,
+    widget_set_window_state,
+    widget_override_window_state,
+    widget_size_hint,
+    widget_minimum_size_hint,
+    widget_size_policy,
+    widget_set_size_policy,
+    widget_set_size_policy_2,
+    widget_height_for_width,
+    widget_has_height_for_width,
+    widget_visible_region,
+    widget_set_contents_margins,
+    widget_set_contents_margins_2,
+    widget_contents_margins,
+    widget_contents_rect,
+    widget_layout,
+    widget_set_layout,
+    widget_set_parent,
+    widget_set_parent_2,
+    widget_scroll,
+    widget_scroll_2,
+    widget_focus_widget,
+    widget_next_in_focus_chain,
+    widget_previous_in_focus_chain,
+    widget_accept_drops,
+    widget_set_accept_drops,
+    widget_parent_widget,
+    widget_set_window_flags,
+    widget_window_flags,
+    widget_override_window_flags,
+    widget_find,
+    widget_child_at,
+    widget_child_at_2,
+    widget_paint_engine,
+    widget_ensure_polished,
+    widget_is_ancestor_of,
+    widget_auto_fill_background,
+    widget_set_auto_fill_background,
+    widget_backing_store,
+    widget_window_handle,
+    widget_create_window_container,
     set_widget_window_title_changed_event,
+    set_widget_window_icon_changed_event,
+    set_widget_window_icon_text_changed_event,
+    set_widget_custom_context_menu_requested_event,
+    set_widget_mouse_press_event,
+    remove_widget_mouse_press_event,
+    set_widget_mouse_release_event,
+    remove_widget_mouse_release_event,
+    set_widget_mouse_double_click_event,
+    remove_widget_mouse_double_click_event,
+    set_widget_mouse_move_event,
+    remove_widget_mouse_move_event,
+    set_widget_wheel_event,
+    remove_widget_wheel_event,
+    set_widget_key_press_event,
+    remove_widget_key_press_event,
+    set_widget_key_release_event,
+    remove_widget_key_release_event,
+    set_widget_focus_in_event,
+    remove_widget_focus_in_event,
+    set_widget_focus_out_event,
+    remove_widget_focus_out_event,
+    set_widget_enter_event,
+    remove_widget_enter_event,
+    set_widget_leave_event,
+    remove_widget_leave_event,
     set_widget_paint_event,
     remove_widget_paint_event,
+    set_widget_move_event,
+    remove_widget_move_event,
+    set_widget_resize_event,
+    remove_widget_resize_event,
+    set_widget_close_event,
+    remove_widget_close_event,
+    set_widget_context_menu_event,
+    remove_widget_context_menu_event,
+    set_widget_tablet_event,
+    remove_widget_tablet_event,
+    set_widget_drag_enter_event,
+    remove_widget_drag_enter_event,
+    set_widget_drag_move_event,
+    remove_widget_drag_move_event,
+    set_widget_drag_leave_event,
+    remove_widget_drag_leave_event,
+    set_widget_drop_event,
+    remove_widget_drop_event,
+    set_widget_show_event,
+    remove_widget_show_event,
+    set_widget_hide_event,
+    remove_widget_hide_event,
+    set_widget_change_event,
+    remove_widget_change_event,
+    widget_input_method_hints,
+    widget_set_input_method_hints,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 struct RUWidgetAllFuncs s_widget_all_funcs = {
+    &s_object_funcs,
+    &s_paint_device_funcs,
     &s_widget_funcs,
 };
 

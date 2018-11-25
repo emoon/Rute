@@ -61,10 +61,10 @@
 /// was a button (inheriting from QAbstractButton), triggering the
 /// mnemonic would emulate a button click.
 /// 
-/// **See also:** QLineEdit
-/// QTextEdit
-/// QPixmap
-/// QMovie
+/// **See also:** [`LineEdit`]
+/// [`TextEdit`]
+/// [`Pixmap`]
+/// [`Movie`]
 /// {fowler}{GUI Design Handbook: Label}
 /// # Licence
 ///
@@ -94,8 +94,8 @@ struct Label : Frame {
     /// **Note**: This function enables mouse tracking if *text* contains rich
     /// text.
     /// 
-    /// **See also:** setTextFormat()
-    /// setBuddy()
+    /// **See also:** [`set_text_format()`]
+    /// [`set_buddy()`]
     /// alignment
     /// 
     /// Specifies how the label should interact with user input if it displays text.
@@ -111,7 +111,7 @@ struct Label : Frame {
     /// 
     /// The default format is Qt::AutoText.
     /// 
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     text() -> String,
     /// 
     /// If no pixmap has been set this will return nullptr.
@@ -127,7 +127,7 @@ struct Label : Frame {
     /// Returns a pointer to the label's movie, or nullptr if no movie has been
     /// set.
     /// 
-    /// **See also:** setMovie()
+    /// **See also:** [`set_movie()`]
     movie() -> Movie?,
     /// 
     /// See the Qt::TextFormat enum for an explanation of the possible
@@ -135,7 +135,7 @@ struct Label : Frame {
     /// 
     /// The default format is Qt::AutoText.
     /// 
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     text_format() -> Rute::TextFormat,
     set_text_format(arg0: Rute::TextFormat),
     /// 
@@ -170,8 +170,8 @@ struct Label : Frame {
     /// 
     /// **See also:** alignment
     /// margin
-    /// frameWidth()
-    /// font()
+    /// [`frame_width()`]
+    /// [`font()`]
     indent() -> i32,
     set_indent(arg0: i32),
     /// 
@@ -212,15 +212,15 @@ struct Label : Frame {
     /// To unset a previously set buddy, call this function with *buddy*
     /// set to nullptr.
     /// 
-    /// **See also:** buddy()
-    /// setText()
-    /// QShortcut
-    /// setAlignment()
+    /// **See also:** [`buddy()`]
+    /// [`set_text()`]
+    /// [`Shortcut`]
+    /// [`set_alignment()`]
     set_buddy(arg0: *WidgetType),
     /// 
     /// Returns this label's buddy, or nullptr if no buddy is currently set.
     /// 
-    /// **See also:** setBuddy()
+    /// **See also:** [`set_buddy()`]
     buddy() -> Widget?,
     /// 
     [event] height_for_width(arg0: i32) -> i32,
@@ -234,7 +234,7 @@ struct Label : Frame {
     /// 
     /// The default value is false.
     /// 
-    /// **See also:** textInteractionFlags()
+    /// **See also:** [`text_interaction_flags()`]
     open_external_links() -> bool,
     set_open_external_links(open: bool),
     set_text_interaction_flags(flags: Rute::TextInteractionFlags),
@@ -250,7 +250,7 @@ struct Label : Frame {
     /// 
     /// Selects text from position *start* and for *length* characters.
     /// 
-    /// **See also:** selectedText()
+    /// **See also:** [`selected_text()`]
     /// 
     /// **Note:** The textInteractionFlags set on the label need to include
     /// either TextSelectableByMouse or TextSelectableByKeyboard.
@@ -262,7 +262,7 @@ struct Label : Frame {
     /// 
     /// By default, this property is `false.`
     /// 
-    /// **See also:** selectedText()
+    /// **See also:** [`selected_text()`]
     /// 
     /// **Note:** The textInteractionFlags set on the label need to include
     /// either TextSelectableByMouse or TextSelectableByKeyboard.
@@ -274,7 +274,7 @@ struct Label : Frame {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** hasSelectedText()
+    /// **See also:** [`has_selected_text()`]
     /// 
     /// **Note:** The textInteractionFlags set on the label need to include
     /// either TextSelectableByMouse or TextSelectableByKeyboard.
@@ -284,7 +284,7 @@ struct Label : Frame {
     /// selectionStart() returns the index of the first selected character in the
     /// label or -1 if no text is selected.
     /// 
-    /// **See also:** selectedText()
+    /// **See also:** [`selected_text()`]
     /// 
     /// **Note:** The textInteractionFlags set on the label need to include
     /// either TextSelectableByMouse or TextSelectableByKeyboard.
@@ -298,8 +298,8 @@ struct Label : Frame {
     /// 
     /// The buddy shortcut, if any, is disabled.
     /// 
-    /// **See also:** picture()
-    /// setBuddy()
+    /// **See also:** [`picture()`]
+    /// [`set_buddy()`]
     set_picture(arg0: &PictureType),
     /// 
     /// Sets the label contents to *movie.* Any previous content is
@@ -307,8 +307,8 @@ struct Label : Frame {
     /// 
     /// The buddy shortcut, if any, is disabled.
     /// 
-    /// **See also:** movie()
-    /// setBuddy()
+    /// **See also:** [`movie()`]
+    /// [`set_buddy()`]
     set_movie(movie: *MovieType),
     /// 
     /// Sets the label contents to plain text containing the textual
@@ -318,9 +318,9 @@ struct Label : Frame {
     /// 
     /// The buddy shortcut, if any, is disabled.
     /// 
-    /// **See also:** setText()
-    /// QString::setNum()
-    /// setBuddy()
+    /// **See also:** [`set_text()`]
+    /// [`String::set_num`]
+    /// [`set_buddy()`]
     /// 
     /// **Overloads**
     /// Sets the label contents to plain text containing the textual
@@ -330,9 +330,9 @@ struct Label : Frame {
     /// 
     /// The buddy shortcut, if any, is disabled.
     /// 
-    /// **See also:** setText()
-    /// QString::setNum()
-    /// setBuddy()
+    /// **See also:** [`set_text()`]
+    /// [`String::set_num`]
+    /// [`set_buddy()`]
     set_num(arg0: i32),
     /// 
     /// Sets the label contents to plain text containing the textual
@@ -342,9 +342,9 @@ struct Label : Frame {
     /// 
     /// The buddy shortcut, if any, is disabled.
     /// 
-    /// **See also:** setText()
-    /// QString::setNum()
-    /// setBuddy()
+    /// **See also:** [`set_text()`]
+    /// [`String::set_num`]
+    /// [`set_buddy()`]
     /// 
     /// **Overloads**
     /// Sets the label contents to plain text containing the textual
@@ -354,10 +354,11 @@ struct Label : Frame {
     /// 
     /// The buddy shortcut, if any, is disabled.
     /// 
-    /// **See also:** setText()
-    /// QString::setNum()
-    /// setBuddy()
-    set_num(arg0: double),
+    /// **See also:** [`set_text()`]
+    /// [`String::set_num`]
+    /// [`set_buddy()`]
+    [org_name(setNum)]
+    set_num_2(arg0: double),
     /// 
     /// Clears any label contents.
     clear(),
@@ -365,13 +366,13 @@ struct Label : Frame {
     /// This signal is emitted when the user clicks a link. The URL
     /// referred to by the anchor is passed in *link.*
     /// 
-    /// **See also:** linkHovered()
+    /// **See also:** [`link_hovered()`]
     [signal] link_activated(link: String),
     /// 
     /// This signal is emitted when the user hovers over a link. The URL
     /// referred to by the anchor is passed in *link.*
     /// 
-    /// **See also:** linkActivated()
+    /// **See also:** [`link_activated()`]
     [signal] link_hovered(link: String),
     /// 
     [event] event(e: *EventType) -> bool,

@@ -1,16 +1,17 @@
 chunk = _{ SOI ~ (structdef | enumdef | doc_comment)+ ~ EOI }
 
 structdef   =  { attributes? ~ traits? ~ ("struct") ~ name ~ derive? ~ ("{") ~ fieldlist? ~ ("}") }
-enumdef     =  { attributes? ~ org_name? ~ ("enum") ~ name ~ ("{") ~ fieldlist? ~ ("}") }
+enumdef     =  { (attributes | enum_flags | org_name)*? ~ ("enum") ~ name ~ ("{") ~ fieldlist? ~ ("}") }
 fieldlist   =  { (doc_comment | field)*  }
 field       =  { (var | function | enum_type) ~ fieldsep? }
 fieldsep    = _{ (",") }
 
 rettype      = { name }
 org_name     = { ("[org_name(") ~ name_with_namespace ~ (")]") }
+enum_flags   = { ("[enum_flags(") ~ name ~ (")]") }
 attributes   = { ("[attributes(") ~ namelist ~ (")]") }
 traits       = { ("[traits(") ~ namelist ~ (")]") }
-derive       = { (":") ~ name }
+derive       = { (":") ~ namelist? }
 event        = { ("[event]") }
 no_chain     = { ("[no_chain]") }
 signal       = { ("[signal]") }
@@ -22,7 +23,7 @@ optional     = { ("?") }
 array        = { ("[") ~ (refexp | pointer_exp)? ~ vtype ~ ("]") }
 enum_use     = { ("::") ~ vtype }
 retexp       = { ("->") ~ (refexp | pointer_exp)? ~ (vtype | array) ~ enum_use? ~ optional? }
-var          = { name ~ (":") ~ (refexp | pointer_exp)? ~ vtype ~ enum_use? }
+var          = { name ~ (":") ~ (refexp | pointer_exp)? ~ (vtype | array) ~ enum_use? }
 varlist      = { (var | array) ~ ((",") ~ (var | array))* }
 enum_assign  = { ("=") ~ name_or_num }
 enum_type    = { name ~ enum_assign? }
@@ -50,7 +51,7 @@ COMMENT = _{
 }
 
 doc_comment = @{
-	("///") ~ (!NEWLINE ~ ANY)*
+	((" ")*) ~ ("///") ~ (!NEWLINE ~ ANY)*
 }
 
 WHITESPACE = _{ (" ") | ("\t") | ("\u{000C}") | ("\r") | ("\n") }

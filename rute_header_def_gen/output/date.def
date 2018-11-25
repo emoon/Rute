@@ -54,21 +54,14 @@
 /// for technical reasons limited to between -784350574879 and 784354017364,
 /// which means from before 2 billion BCE to after 2 billion CE.
 /// 
-/// **See also:** QTime
-/// QDateTime
-/// QDateEdit
-/// QDateTimeEdit
-/// QCalendarWidget
+/// **See also:** [`Time`]
+/// [`DateTime`]
+/// [`DateEdit`]
+/// [`DateTimeEdit`]
+/// [`CalendarWidget`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QDate)]
-enum MonthNameType {
-    DateFormat,
-    StandaloneFormat,
-}
-
-
 struct Date {
     /// 
     /// Returns `true` if the date is null; otherwise returns `false.` A null
@@ -76,20 +69,20 @@ struct Date {
     /// 
     /// **Note**: The behavior of this function is equivalent to isValid().
     /// 
-    /// **See also:** isValid()
+    /// **See also:** [`is_valid()`]
     is_null() -> bool,
     /// 
     /// Returns `true` if this date is valid; otherwise returns `false.`
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the specified date ( *year,* *month,* and *day)* is valid; otherwise returns `false.`
     /// 
     /// Example:
     /// 
-    /// **See also:** isNull()
-    /// setDate()
+    /// **See also:** [`is_null()`]
+    /// [`set_date()`]
     is_valid() -> bool,
     /// 
     /// Returns the year of this date. Negative numbers indicate years
@@ -97,8 +90,8 @@ struct Date {
     /// 
     /// Returns 0 if the date is invalid.
     /// 
-    /// **See also:** month()
-    /// day()
+    /// **See also:** [`month()`]
+    /// [`day()`]
     year() -> i32,
     /// 
     /// Returns the number corresponding to the month of this date, using
@@ -119,47 +112,47 @@ struct Date {
     /// 
     /// Returns 0 if the date is invalid.
     /// 
-    /// **See also:** year()
-    /// day()
+    /// **See also:** [`year()`]
+    /// [`day()`]
     month() -> i32,
     /// 
     /// Returns the day of the month (1 to 31) of this date.
     /// 
     /// Returns 0 if the date is invalid.
     /// 
-    /// **See also:** year()
-    /// month()
-    /// dayOfWeek()
+    /// **See also:** [`year()`]
+    /// [`month()`]
+    /// [`day_of_week()`]
     /// 
     /// Returns the weekday (1 = Monday to 7 = Sunday) for this date.
     /// 
     /// Returns 0 if the date is invalid.
     /// 
-    /// **See also:** day()
-    /// dayOfYear()
-    /// Qt::DayOfWeek
+    /// **See also:** [`day()`]
+    /// [`day_of_year()`]
+    /// [`t::day_of_week()`]
     /// 
     /// Returns the day of the year (1 to 365 or 366 on leap years) for
     /// this date.
     /// 
     /// Returns 0 if the date is invalid.
     /// 
-    /// **See also:** day()
-    /// dayOfWeek()
+    /// **See also:** [`day()`]
+    /// [`day_of_week()`]
     /// 
     /// Returns the number of days in the month (28 to 31) for this date.
     /// 
     /// Returns 0 if the date is invalid.
     /// 
-    /// **See also:** day()
-    /// daysInYear()
+    /// **See also:** [`day()`]
+    /// [`days_in_year()`]
     /// 
     /// Returns the number of days in the year (365 or 366) for this date.
     /// 
     /// Returns 0 if the date is invalid.
     /// 
-    /// **See also:** day()
-    /// daysInMonth()
+    /// **See also:** [`day()`]
+    /// [`days_in_month()`]
     /// 
     /// Returns the number of days from this date to *d* (which is
     /// negative if *d* is earlier than this date).
@@ -168,16 +161,16 @@ struct Date {
     /// 
     /// Example:
     /// 
-    /// **See also:** addDays()
+    /// **See also:** [`add_days()`]
     day() -> i32,
     /// 
     /// Returns the weekday (1 = Monday to 7 = Sunday) for this date.
     /// 
     /// Returns 0 if the date is invalid.
     /// 
-    /// **See also:** day()
-    /// dayOfYear()
-    /// Qt::DayOfWeek
+    /// **See also:** [`day()`]
+    /// [`day_of_year()`]
+    /// [`t::day_of_week()`]
     day_of_week() -> i32,
     /// 
     /// Returns the day of the year (1 to 365 or 366 on leap years) for
@@ -185,24 +178,24 @@ struct Date {
     /// 
     /// Returns 0 if the date is invalid.
     /// 
-    /// **See also:** day()
-    /// dayOfWeek()
+    /// **See also:** [`day()`]
+    /// [`day_of_week()`]
     day_of_year() -> i32,
     /// 
     /// Returns the number of days in the month (28 to 31) for this date.
     /// 
     /// Returns 0 if the date is invalid.
     /// 
-    /// **See also:** day()
-    /// daysInYear()
+    /// **See also:** [`day()`]
+    /// [`days_in_year()`]
     days_in_month() -> i32,
     /// 
     /// Returns the number of days in the year (365 or 366) for this date.
     /// 
     /// Returns 0 if the date is invalid.
     /// 
-    /// **See also:** day()
-    /// daysInMonth()
+    /// **See also:** [`day()`]
+    /// [`days_in_month()`]
     days_in_year() -> i32,
     /// 
     /// Returns the week number (1 to 53), and stores the year in
@@ -218,7 +211,7 @@ struct Date {
     /// January 2000 has week number 52 in the year 1999, and 31 December
     /// 2002 has week number 1 in the year 2003.
     /// 
-    /// **See also:** isValid()
+    /// **See also:** [`is_valid()`]
     week_number(year_num: *i32) -> i32,
     /// 
     /// Returns the short name of the *month* for the representation specified
@@ -244,10 +237,10 @@ struct Date {
     /// 
     /// Returns an empty string if the date is invalid.
     /// 
-    /// **See also:** toString()
-    /// longMonthName()
-    /// shortDayName()
-    /// longDayName()
+    /// **See also:** [`to_string()`]
+    /// [`long_month_name()`]
+    /// [`short_day_name()`]
+    /// [`long_day_name()`]
     [static] short_month_name(month: i32, type: Date::MonthNameType) -> String,
     /// 
     /// Returns the short name of the *weekday* for the representation specified
@@ -268,10 +261,10 @@ struct Date {
     /// 
     /// Returns an empty string if the date is invalid.
     /// 
-    /// **See also:** toString()
-    /// shortMonthName()
-    /// longMonthName()
-    /// longDayName()
+    /// **See also:** [`to_string()`]
+    /// [`short_month_name()`]
+    /// [`long_month_name()`]
+    /// [`long_day_name()`]
     [static] short_day_name(weekday: i32, type: Date::MonthNameType) -> String,
     /// 
     /// Returns the long name of the *month* for the representation specified
@@ -297,10 +290,10 @@ struct Date {
     /// 
     /// Returns an empty string if the date is invalid.
     /// 
-    /// **See also:** toString()
-    /// shortMonthName()
-    /// shortDayName()
-    /// longDayName()
+    /// **See also:** [`to_string()`]
+    /// [`short_month_name()`]
+    /// [`short_day_name()`]
+    /// [`long_day_name()`]
     [static] long_month_name(month: i32, type: Date::MonthNameType) -> String,
     /// 
     /// Returns the long name of the *weekday* for the representation specified
@@ -321,10 +314,10 @@ struct Date {
     /// 
     /// Returns an empty string if the date is invalid.
     /// 
-    /// **See also:** toString()
-    /// shortDayName()
-    /// shortMonthName()
-    /// longMonthName()
+    /// **See also:** [`to_string()`]
+    /// [`short_day_name()`]
+    /// [`short_month_name()`]
+    /// [`long_month_name()`]
     [static] long_day_name(weekday: i32, type: Date::MonthNameType) -> String,
     /// 
     /// Sets the date's *year,* *month,* and *day.* Returns `true` if
@@ -333,7 +326,7 @@ struct Date {
     /// If the specified date is invalid, the QDate object is set to be
     /// invalid.
     /// 
-    /// **See also:** isValid()
+    /// **See also:** [`is_valid()`]
     set_date(year: i32, month: i32, day: i32) -> bool,
     /// 
     /// Extracts the date's year, month, and day, and assigns them to
@@ -343,10 +336,10 @@ struct Date {
     /// 
     /// **Note**: In Qt versions prior to 5.7, this function is marked as non- `const` .
     /// 
-    /// **See also:** year()
-    /// month()
-    /// day()
-    /// isValid()
+    /// **See also:** [`year()`]
+    /// [`month()`]
+    /// [`day()`]
+    /// [`is_valid()`]
     get_date(year: *i32, month: *i32, day: *i32),
     /// 
     /// Extracts the date's year, month, and day, and assigns them to
@@ -356,11 +349,12 @@ struct Date {
     /// 
     /// **Note**: In Qt versions prior to 5.7, this function is marked as non- `const` .
     /// 
-    /// **See also:** year()
-    /// month()
-    /// day()
-    /// isValid()
-    get_date(year: *i32, month: *i32, day: *i32),
+    /// **See also:** [`year()`]
+    /// [`month()`]
+    /// [`day()`]
+    /// [`is_valid()`]
+    [org_name(getDate)]
+    get_date_2(year: *i32, month: *i32, day: *i32),
     /// 
     /// Returns a QDate object containing a date *ndays* later than the
     /// date of this object (or earlier if *ndays* is negative).
@@ -368,9 +362,9 @@ struct Date {
     /// Returns a null date if the current date is invalid or the new date is
     /// out of range.
     /// 
-    /// **See also:** addMonths()
-    /// addYears()
-    /// daysTo()
+    /// **See also:** [`add_months()`]
+    /// [`add_years()`]
+    /// [`days_to()`]
     add_days(days: i64) -> Date,
     /// 
     /// Returns a QDate object containing a date *nmonths* later than the
@@ -380,8 +374,8 @@ struct Date {
     /// resulting month/year, this function will return a date that is the
     /// latest valid date.
     /// 
-    /// **See also:** addDays()
-    /// addYears()
+    /// **See also:** [`add_days()`]
+    /// [`add_years()`]
     add_months(months: i32) -> Date,
     /// 
     /// Returns a QDate object containing a date *nyears* later than the
@@ -392,8 +386,8 @@ struct Date {
     /// not a leap year), this function will return a date that is the
     /// latest valid date (that is, Feb 28).
     /// 
-    /// **See also:** addDays()
-    /// addMonths()
+    /// **See also:** [`add_days()`]
+    /// [`add_months()`]
     add_years(years: i32) -> Date,
     /// 
     /// Returns the number of days from this date to *d* (which is
@@ -403,27 +397,28 @@ struct Date {
     /// 
     /// Example:
     /// 
-    /// **See also:** addDays()
+    /// **See also:** [`add_days()`]
     days_to(arg0: &DateType) -> i64,
     /// 
     /// Returns the current date, as reported by the system clock.
     /// 
-    /// **See also:** QTime::currentTime()
-    /// QDateTime::currentDateTime()
+    /// **See also:** [`Time::current_time`]
+    /// [`DateTime::current_date_time`]
     [static] current_date() -> Date,
     /// 
     /// Returns `true` if this date is valid; otherwise returns `false.`
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the specified date ( *year,* *month,* and *day)* is valid; otherwise returns `false.`
     /// 
     /// Example:
     /// 
-    /// **See also:** isNull()
-    /// setDate()
-    [static] is_valid(y: i32, m: i32, d: i32) -> bool,
+    /// **See also:** [`is_null()`]
+    /// [`set_date()`]
+    [org_name(isValid)]
+    [static] is_valid_2(y: i32, m: i32, d: i32) -> bool,
     /// 
     /// Returns `true` if the specified *year* is a leap year; otherwise
     /// returns `false.`
@@ -431,13 +426,21 @@ struct Date {
     /// 
     /// Converts the Julian day *jd* to a QDate.
     /// 
-    /// **See also:** toJulianDay()
+    /// **See also:** [`to_julian_day()`]
     [static] from_julian_day(jd: i64) -> Date,
     /// 
     /// Converts the date to a Julian day.
     /// 
-    /// **See also:** fromJulianDay()
+    /// **See also:** [`from_julian_day()`]
     to_julian_day() -> i64,
+}
+
+[org_name(QDate)]
+enum MonthNameType {
+    /// This type of name can be used for date-to-string formatting.
+    DateFormat,
+    /// This type is used when you need to enumerate months or weekdays. Usually standalone names are represented in singular forms with capitalized first letter.
+    StandaloneFormat,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -36,9 +36,9 @@
 /// current item changes, the currentItemChanged() signal is emitted with the
 /// new current item and the item that was previously current.
 /// 
-/// **See also:** QListWidgetItem
-/// QListView
-/// QTreeView
+/// **See also:** [`ListWidgetItem`]
+/// [`ListView`]
+/// [`TreeView`]
 /// {Model/View Programming}
 /// {Tab Dialog Example}
 /// # Licence
@@ -51,20 +51,20 @@ struct ListWidget : ListView {
     /// This signal is emitted with the specified *item* when a mouse button is
     /// pressed on an item in the widget.
     /// 
-    /// **See also:** itemClicked()
-    /// itemDoubleClicked()
+    /// **See also:** [`item_clicked()`]
+    /// [`item_double_clicked()`]
     /// 
     /// This signal is emitted with the specified *item* when a mouse button is
     /// clicked on an item in the widget.
     /// 
-    /// **See also:** itemPressed()
-    /// itemDoubleClicked()
+    /// **See also:** [`item_pressed()`]
+    /// [`item_double_clicked()`]
     /// 
     /// This signal is emitted with the specified *item* when a mouse button is
     /// double clicked on an item in the widget.
     /// 
-    /// **See also:** itemClicked()
-    /// itemPressed()
+    /// **See also:** [`item_clicked()`]
+    /// [`item_pressed()`]
     /// 
     /// This signal is emitted when the *item* is activated. The *item* is
     /// activated when the user clicks or double clicks on it, depending on the
@@ -76,20 +76,20 @@ struct ListWidget : ListView {
     /// the item entered. This signal is only emitted when mouseTracking is turned
     /// on, or when a mouse button is pressed while moving into an item.
     /// 
-    /// **See also:** QWidget::setMouseTracking()
+    /// **See also:** [`Widget::set_mouse_tracking`]
     /// 
     /// This signal is emitted whenever the data of *item* has changed.
     /// 
     /// This signal is emitted whenever the selection changes.
     /// 
-    /// **See also:** selectedItems()
-    /// QListWidgetItem::isSelected()
-    /// currentItemChanged()
+    /// **See also:** [`selected_items()`]
+    /// [`ListWidgetItem::is_selected`]
+    /// [`current_item_changed()`]
     /// 
     /// Returns the item that occupies the given *row* in the list if one has been
     /// set; otherwise returns 0.
     /// 
-    /// **See also:** row()
+    /// **See also:** [`row()`]
     /// 
     /// Returns a pointer to the item at the coordinates *p.* The coordinates
     /// are relative to the list widget's [viewport()](QAbstractScrollArea::)
@@ -105,8 +105,8 @@ struct ListWidget : ListView {
     /// 
     /// Returns the widget displayed in the given *item.*
     /// 
-    /// **See also:** setItemWidget()
-    /// removeItemWidget()
+    /// **See also:** [`set_item_widget()`]
+    /// [`remove_item_widget()`]
     /// 
     /// Returns a list of pointers to the items contained in the *data* object. If
     /// the object was not created by a QListWidget in the same process, the list
@@ -117,46 +117,47 @@ struct ListWidget : ListView {
     /// 
     /// Returns the row containing the given *item.*
     /// 
-    /// **See also:** item()
+    /// **See also:** [`item()`]
     row(item: *ListWidgetItemType) -> i32,
     /// 
     /// Inserts the *item* at the position in the list given by *row.*
     /// 
-    /// **See also:** addItem()
+    /// **See also:** [`add_item()`]
     /// 
     /// Inserts an item with the text *label* in the list widget at the position
     /// given by *row.*
     /// 
-    /// **See also:** addItem()
+    /// **See also:** [`add_item()`]
     /// 
     /// Inserts items from the list of *labels* into the list, starting at the
     /// given *row.*
     /// 
-    /// **See also:** insertItem()
-    /// addItem()
+    /// **See also:** [`insert_item()`]
+    /// [`add_item()`]
     insert_item(row: i32, item: *ListWidgetItemType),
     /// 
     /// Inserts the *item* at the position in the list given by *row.*
     /// 
-    /// **See also:** addItem()
+    /// **See also:** [`add_item()`]
     /// 
     /// Inserts an item with the text *label* in the list widget at the position
     /// given by *row.*
     /// 
-    /// **See also:** addItem()
+    /// **See also:** [`add_item()`]
     /// 
     /// Inserts items from the list of *labels* into the list, starting at the
     /// given *row.*
     /// 
-    /// **See also:** insertItem()
-    /// addItem()
-    insert_item(row: i32, label: String),
+    /// **See also:** [`insert_item()`]
+    /// [`add_item()`]
+    [org_name(insertItem)]
+    insert_item_2(row: i32, label: String),
     /// 
     /// Inserts items from the list of *labels* into the list, starting at the
     /// given *row.*
     /// 
-    /// **See also:** insertItem()
-    /// addItem()
+    /// **See also:** [`insert_item()`]
+    /// [`add_item()`]
     insert_items(row: i32, labels: &[String]),
     /// 
     /// Inserts the *item* at the end of the list widget.
@@ -165,13 +166,13 @@ struct ListWidget : ListView {
     /// the same QListWidgetItem multiple times to a QListWidget will result in
     /// undefined behavior.
     /// 
-    /// **See also:** insertItem()
+    /// **See also:** [`insert_item()`]
     /// 
     /// Inserts an item with the text *label* at the end of the list widget.
     /// 
     /// Inserts items with the text *labels* at the end of the list widget.
     /// 
-    /// **See also:** insertItems()
+    /// **See also:** [`insert_items()`]
     add_item(label: String),
     /// 
     /// Inserts the *item* at the end of the list widget.
@@ -180,18 +181,19 @@ struct ListWidget : ListView {
     /// the same QListWidgetItem multiple times to a QListWidget will result in
     /// undefined behavior.
     /// 
-    /// **See also:** insertItem()
+    /// **See also:** [`insert_item()`]
     /// 
     /// Inserts an item with the text *label* at the end of the list widget.
     /// 
     /// Inserts items with the text *labels* at the end of the list widget.
     /// 
-    /// **See also:** insertItems()
-    add_item(item: *ListWidgetItemType),
+    /// **See also:** [`insert_items()`]
+    [org_name(addItem)]
+    add_item_2(item: *ListWidgetItemType),
     /// 
     /// Inserts items with the text *labels* at the end of the list widget.
     /// 
-    /// **See also:** insertItems()
+    /// **See also:** [`insert_items()`]
     add_items(labels: &[String]),
     /// 
     /// Removes and returns the item from the given *row* in the list widget;
@@ -200,8 +202,8 @@ struct ListWidget : ListView {
     /// Items removed from a list widget will not be managed by Qt, and will need
     /// to be deleted manually.
     /// 
-    /// **See also:** insertItem()
-    /// addItem()
+    /// **See also:** [`insert_item()`]
+    /// [`add_item()`]
     take_item(row: i32) -> ListWidgetItem?,
     /// 
     count() -> i32,
@@ -230,7 +232,8 @@ struct ListWidget : ListView {
     /// the item is also selected.
     /// 
     /// Set the current item to *item,* using the given *command.*
-    set_current_item(item: *ListWidgetItemType, command: ItemSelectionModel::SelectionFlags),
+    [org_name(setCurrentItem)]
+    set_current_item_2(item: *ListWidgetItemType, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// This signal is emitted whenever the current item changes.
     /// 
@@ -244,7 +247,8 @@ struct ListWidget : ListView {
     set_current_row(row: i32),
     /// 
     /// Sets the current row to be the given *row,* using the given *command,*
-    set_current_row(row: i32, command: ItemSelectionModel::SelectionFlags),
+    [org_name(setCurrentRow)]
+    set_current_row_2(row: i32, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Returns a pointer to the item at the coordinates *p.* The coordinates
     /// are relative to the list widget's [viewport()](QAbstractScrollArea::)
@@ -270,7 +274,8 @@ struct ListWidget : ListView {
     /// [viewport()](QAbstractScrollArea::)
     /// 
     /// 
-    item_at(x: i32, y: i32) -> ListWidgetItem?,
+    [org_name(itemAt)]
+    item_at_2(x: i32, y: i32) -> ListWidgetItem?,
     /// 
     /// Returns the rectangle on the viewport occupied by the item at *item.*
     visual_item_rect(item: *ListWidgetItemType) -> Rect,
@@ -286,26 +291,26 @@ struct ListWidget : ListView {
     /// Opens an editor for the given *item.* The editor remains open after
     /// editing.
     /// 
-    /// **See also:** closePersistentEditor()
-    /// isPersistentEditorOpen()
+    /// **See also:** [`close_persistent_editor()`]
+    /// [`is_persistent_editor_open()`]
     open_persistent_editor(item: *ListWidgetItemType),
     /// 
     /// Closes the persistent editor for the given *item.*
     /// 
-    /// **See also:** openPersistentEditor()
-    /// isPersistentEditorOpen()
+    /// **See also:** [`open_persistent_editor()`]
+    /// [`is_persistent_editor_open()`]
     close_persistent_editor(item: *ListWidgetItemType),
     /// 
     /// Returns whether a persistent editor is open for item *item.*
     /// 
-    /// **See also:** openPersistentEditor()
-    /// closePersistentEditor()
+    /// **See also:** [`open_persistent_editor()`]
+    /// [`close_persistent_editor()`]
     is_persistent_editor_open(item: *ListWidgetItemType) -> bool,
     /// 
     /// Returns the widget displayed in the given *item.*
     /// 
-    /// **See also:** setItemWidget()
-    /// removeItemWidget()
+    /// **See also:** [`set_item_widget()`]
+    /// [`remove_item_widget()`]
     item_widget(item: *ListWidgetItemType) -> Widget?,
     /// 
     /// Sets the *widget* to be displayed in the given *item.*
@@ -315,8 +320,8 @@ struct ListWidget : ListView {
     /// implement a custom editor widget, use QListView and subclass QItemDelegate
     /// instead.
     /// 
-    /// **See also:** itemWidget()
-    /// removeItemWidget()
+    /// **See also:** [`item_widget()`]
+    /// [`remove_item_widget()`]
     /// {Delegate Classes}
     set_item_widget(item: *ListWidgetItemType, widget: *WidgetType),
     /// 
@@ -325,8 +330,8 @@ struct ListWidget : ListView {
     /// To remove an item (row) from the list entirely, either delete the item or
     /// use takeItem().
     /// 
-    /// **See also:** itemWidget()
-    /// setItemWidget()
+    /// **See also:** [`item_widget()`]
+    /// [`set_item_widget()`]
     remove_item_widget(item: *ListWidgetItemType),
     /// 
     /// Returns `true` if *item* is selected; otherwise returns `false.`
@@ -372,22 +377,22 @@ struct ListWidget : ListView {
     /// This signal is emitted with the specified *item* when a mouse button is
     /// pressed on an item in the widget.
     /// 
-    /// **See also:** itemClicked()
-    /// itemDoubleClicked()
+    /// **See also:** [`item_clicked()`]
+    /// [`item_double_clicked()`]
     [signal] item_pressed(item: *ListWidgetItemType),
     /// 
     /// This signal is emitted with the specified *item* when a mouse button is
     /// clicked on an item in the widget.
     /// 
-    /// **See also:** itemPressed()
-    /// itemDoubleClicked()
+    /// **See also:** [`item_pressed()`]
+    /// [`item_double_clicked()`]
     [signal] item_clicked(item: *ListWidgetItemType),
     /// 
     /// This signal is emitted with the specified *item* when a mouse button is
     /// double clicked on an item in the widget.
     /// 
-    /// **See also:** itemClicked()
-    /// itemPressed()
+    /// **See also:** [`item_clicked()`]
+    /// [`item_pressed()`]
     [signal] item_double_clicked(item: *ListWidgetItemType),
     /// 
     /// This signal is emitted when the *item* is activated. The *item* is
@@ -401,7 +406,7 @@ struct ListWidget : ListView {
     /// the item entered. This signal is only emitted when mouseTracking is turned
     /// on, or when a mouse button is pressed while moving into an item.
     /// 
-    /// **See also:** QWidget::setMouseTracking()
+    /// **See also:** [`Widget::set_mouse_tracking`]
     [signal] item_entered(item: *ListWidgetItemType),
     /// 
     /// This signal is emitted whenever the data of *item* has changed.
@@ -427,9 +432,9 @@ struct ListWidget : ListView {
     /// 
     /// This signal is emitted whenever the selection changes.
     /// 
-    /// **See also:** selectedItems()
-    /// QListWidgetItem::isSelected()
-    /// currentItemChanged()
+    /// **See also:** [`selected_items()`]
+    /// [`ListWidgetItem::is_selected`]
+    /// [`current_item_changed()`]
     [signal] item_selection_changed(),
     /// 
     [event] event(e: *EventType) -> bool,
@@ -437,7 +442,7 @@ struct ListWidget : ListView {
     /// Returns a list of MIME types that can be used to describe a list of
     /// listwidget items.
     /// 
-    /// **See also:** mimeData()
+    /// **See also:** [`mime_data()`]
     [event] mime_types() -> [String],
     [event] mime_data(items: [*ListWidgetItemType]) -> MimeData?,
     /// 
@@ -445,12 +450,12 @@ struct ListWidget : ListView {
     /// with the given *action* in the given *index.* Returns `true` if *data* and
     /// *action* can be handled by the model; otherwise returns `false.`
     /// 
-    /// **See also:** supportedDropActions()
+    /// **See also:** [`supported_drop_actions()`]
     [event] drop_mime_data(index: i32, data: *MimeDataType, action: Rute::DropAction) -> bool,
     /// 
     /// Returns the drop actions supported by this view.
     /// 
-    /// **See also:** Qt::DropActions
+    /// **See also:** [`t::drop_actions()`]
     [event] supported_drop_actions() -> Rute::DropActions,
     /// 
     /// Returns a list of pointers to the items contained in the *data* object. If
@@ -466,7 +471,8 @@ struct ListWidget : ListView {
     /// Returns the QModelIndex associated with the given *item.*
     /// 
     /// **Note**: In Qt versions prior to 5.10, this function took a non- `const` *item.*
-    index_from_item(item: *ListWidgetItemType) -> ModelIndex,
+    [org_name(indexFromItem)]
+    index_from_item_2(item: *ListWidgetItemType) -> ModelIndex,
     /// 
     /// Returns a pointer to the QListWidgetItem associated with the given *index.*
     item_from_index(index: &ModelIndexType) -> ListWidgetItem?,

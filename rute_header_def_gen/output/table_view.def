@@ -62,10 +62,10 @@
 /// columnViewportPosition() functions provide the equivalent conversion
 /// operations between x-coordinates and column indexes.
 /// 
-/// **See also:** QTableWidget
+/// **See also:** [`TableWidget`]
 /// {View Classes}
-/// QAbstractItemModel
-/// QAbstractItemView
+/// [`AbstractItemModel`]
+/// [`AbstractItemView`]
 /// {Chart Example}
 /// {Pixelator Example}
 /// {Table Model Example}
@@ -83,28 +83,28 @@ struct TableView : AbstractItemView {
     /// 
     /// Returns the table view's horizontal header.
     /// 
-    /// **See also:** setHorizontalHeader()
-    /// verticalHeader()
-    /// QAbstractItemModel::headerData()
+    /// **See also:** [`set_horizontal_header()`]
+    /// [`vertical_header()`]
+    /// [`AbstractItemModel::header_data`]
     horizontal_header() -> HeaderView?,
     /// 
     /// Returns the table view's vertical header.
     /// 
-    /// **See also:** setVerticalHeader()
-    /// horizontalHeader()
-    /// QAbstractItemModel::headerData()
+    /// **See also:** [`set_vertical_header()`]
+    /// [`horizontal_header()`]
+    /// [`AbstractItemModel::header_data`]
     vertical_header() -> HeaderView?,
     /// 
     /// Sets the widget to use for the horizontal header to *header.*
     /// 
-    /// **See also:** horizontalHeader()
-    /// setVerticalHeader()
+    /// **See also:** [`horizontal_header()`]
+    /// [`set_vertical_header()`]
     set_horizontal_header(header: *HeaderViewType),
     /// 
     /// Sets the widget to use for the vertical header to *header.*
     /// 
-    /// **See also:** verticalHeader()
-    /// setHorizontalHeader()
+    /// **See also:** [`vertical_header()`]
+    /// [`set_horizontal_header()`]
     set_vertical_header(header: *HeaderViewType),
     /// 
     /// Returns the y-coordinate in contents coordinates of the given *row.*
@@ -116,7 +116,7 @@ struct TableView : AbstractItemView {
     /// **Note**: This function returns -1 if the given coordinate is not valid
     /// (has no row).
     /// 
-    /// **See also:** columnAt()
+    /// **See also:** [`column_at()`]
     row_at(y: i32) -> i32,
     /// 
     /// Sets the height of the given *row* to be *height.*
@@ -124,8 +124,8 @@ struct TableView : AbstractItemView {
     /// 
     /// Returns the height of the given *row.*
     /// 
-    /// **See also:** resizeRowToContents()
-    /// columnWidth()
+    /// **See also:** [`resize_row_to_contents()`]
+    /// [`column_width()`]
     row_height(row: i32) -> i32,
     /// 
     /// Returns the x-coordinate in contents coordinates of the given *column.*
@@ -137,7 +137,7 @@ struct TableView : AbstractItemView {
     /// **Note**: This function returns -1 if the given coordinate is not valid
     /// (has no column).
     /// 
-    /// **See also:** rowAt()
+    /// **See also:** [`row_at()`]
     column_at(x: i32) -> i32,
     /// 
     /// Sets the width of the given *column* to be *width.*
@@ -145,29 +145,29 @@ struct TableView : AbstractItemView {
     /// 
     /// Returns the width of the given *column.*
     /// 
-    /// **See also:** resizeColumnToContents()
-    /// rowHeight()
+    /// **See also:** [`resize_column_to_contents()`]
+    /// [`row_height()`]
     column_width(column: i32) -> i32,
     /// 
     /// Returns `true` if the given *row* is hidden; otherwise returns `false.`
     /// 
-    /// **See also:** isColumnHidden()
+    /// **See also:** [`is_column_hidden()`]
     is_row_hidden(row: i32) -> bool,
     /// 
     /// If *hide* is true *row* will be hidden, otherwise it will be shown.
     /// 
-    /// **See also:** setColumnHidden()
+    /// **See also:** [`set_column_hidden()`]
     set_row_hidden(row: i32, hide: bool),
     /// 
     /// Returns `true` if the given *column* is hidden; otherwise returns `false.`
     /// 
-    /// **See also:** isRowHidden()
+    /// **See also:** [`is_row_hidden()`]
     is_column_hidden(column: i32) -> bool,
     /// 
     /// If *hide* is true the given *column* will be hidden; otherwise it
     /// will be shown.
     /// 
-    /// **See also:** setRowHidden()
+    /// **See also:** [`set_row_hidden()`]
     set_column_hidden(column: i32, hide: bool),
     /// 
     /// If *enable* is true, enables sorting for the table and immediately
@@ -208,26 +208,26 @@ struct TableView : AbstractItemView {
     /// Sets the span of the table element at ( *row,* *column)* to the number of
     /// rows and columns specified by ( *rowSpanCount,* *columnSpanCount).*
     /// 
-    /// **See also:** rowSpan()
-    /// columnSpan()
+    /// **See also:** [`row_span()`]
+    /// [`column_span()`]
     set_span(row: i32, column: i32, row_span: i32, column_span: i32),
     /// 
     /// Returns the row span of the table element at ( *row,* *column).*
     /// The default is 1.
     /// 
-    /// **See also:** setSpan()
-    /// columnSpan()
+    /// **See also:** [`set_span()`]
+    /// [`column_span()`]
     row_span(row: i32, column: i32) -> i32,
     /// 
     /// Returns the column span of the table element at ( *row,* *column).* The default is 1.
     /// 
-    /// **See also:** setSpan()
-    /// rowSpan()
+    /// **See also:** [`set_span()`]
+    /// [`row_span()`]
     column_span(row: i32, column: i32) -> i32,
     /// 
     /// Removes all row and column spans in the table view.
     /// 
-    /// **See also:** setSpan()
+    /// **See also:** [`set_span()`]
     clear_spans(),
     /// 
     /// **Overloads**
@@ -241,53 +241,53 @@ struct TableView : AbstractItemView {
     /// Selects the given *row* in the table view if the current
     /// SelectionMode and SelectionBehavior allows rows to be selected.
     /// 
-    /// **See also:** selectColumn()
+    /// **See also:** [`select_column()`]
     select_row(row: i32),
     /// 
     /// Selects the given *column* in the table view if the current
     /// SelectionMode and SelectionBehavior allows columns to be selected.
     /// 
-    /// **See also:** selectRow()
+    /// **See also:** [`select_row()`]
     select_column(column: i32),
     /// 
     /// Hide the given *row.*
     /// 
-    /// **See also:** showRow()
-    /// hideColumn()
+    /// **See also:** [`show_row()`]
+    /// [`hide_column()`]
     hide_row(row: i32),
     /// 
     /// Hide the given *column.*
     /// 
-    /// **See also:** showColumn()
-    /// hideRow()
+    /// **See also:** [`show_column()`]
+    /// [`hide_row()`]
     hide_column(column: i32),
     /// 
     /// Show the given *row.*
     /// 
-    /// **See also:** hideRow()
-    /// showColumn()
+    /// **See also:** [`hide_row()`]
+    /// [`show_column()`]
     show_row(row: i32),
     /// 
     /// Show the given *column.*
     /// 
-    /// **See also:** hideColumn()
-    /// showRow()
+    /// **See also:** [`hide_column()`]
+    /// [`show_row()`]
     show_column(column: i32),
     /// 
     /// Resizes the given *row* based on the size hints of the delegate
     /// used to render each item in the row.
     /// 
-    /// **See also:** resizeRowsToContents()
-    /// sizeHintForRow()
-    /// QHeaderView::resizeContentsPrecision()
+    /// **See also:** [`resize_rows_to_contents()`]
+    /// [`size_hint_for_row()`]
+    /// [`HeaderView::resize_contents_precision`]
     resize_row_to_contents(row: i32),
     /// 
     /// Resizes all rows based on the size hints of the delegate
     /// used to render each item in the rows.
     /// 
-    /// **See also:** resizeRowToContents()
-    /// sizeHintForRow()
-    /// QHeaderView::resizeContentsPrecision()
+    /// **See also:** [`resize_row_to_contents()`]
+    /// [`size_hint_for_row()`]
+    /// [`HeaderView::resize_contents_precision`]
     resize_rows_to_contents(),
     /// 
     /// Resizes the given *column* based on the size hints of the delegate
@@ -296,17 +296,17 @@ struct TableView : AbstractItemView {
     /// **Note**: Only visible columns will be resized. Reimplement sizeHintForColumn()
     /// to resize hidden columns as well.
     /// 
-    /// **See also:** resizeColumnsToContents()
-    /// sizeHintForColumn()
-    /// QHeaderView::resizeContentsPrecision()
+    /// **See also:** [`resize_columns_to_contents()`]
+    /// [`size_hint_for_column()`]
+    /// [`HeaderView::resize_contents_precision`]
     resize_column_to_contents(column: i32),
     /// 
     /// Resizes all columns based on the size hints of the delegate
     /// used to render each item in the columns.
     /// 
-    /// **See also:** resizeColumnToContents()
-    /// sizeHintForColumn()
-    /// QHeaderView::resizeContentsPrecision()
+    /// **See also:** [`resize_column_to_contents()`]
+    /// [`size_hint_for_column()`]
+    /// [`HeaderView::resize_contents_precision`]
     resize_columns_to_contents(),
     /// 
     /// **Overloads**
@@ -315,33 +315,34 @@ struct TableView : AbstractItemView {
     /// Sorts the model by the values in the given *column* in the given *order.*
     /// 
     /// **See also:** sortingEnabled
-    sort_by_column(column: i32),
+    [org_name(sortByColumn)]
+    sort_by_column_2(column: i32),
     set_show_grid(show: bool),
     /// 
     /// This slot is called to change the index of the given *row* in the
     /// table view. The old index is specified by *oldIndex,* and the new
     /// index by *newIndex.*
     /// 
-    /// **See also:** columnMoved()
+    /// **See also:** [`column_moved()`]
     row_moved(row: i32, old_index: i32, new_index: i32),
     /// 
     /// This slot is called to change the index of the given *column* in
     /// the table view. The old index is specified by *oldIndex,* and
     /// the new index by *newIndex.*
     /// 
-    /// **See also:** rowMoved()
+    /// **See also:** [`row_moved()`]
     column_moved(column: i32, old_index: i32, new_index: i32),
     /// 
     /// This slot is called to change the height of the given *row.* The
     /// old height is specified by *oldHeight,* and the new height by *newHeight.*
     /// 
-    /// **See also:** columnResized()
+    /// **See also:** [`column_resized()`]
     row_resized(row: i32, old_height: i32, new_height: i32),
     /// 
     /// This slot is called to change the width of the given *column.*
     /// The old width is specified by *oldWidth,* and the new width by *newWidth.*
     /// 
-    /// **See also:** rowResized()
+    /// **See also:** [`row_resized()`]
     column_resized(column: i32, old_width: i32, new_width: i32),
     /// 
     /// This slot is called whenever rows are added or deleted. The
@@ -367,7 +368,7 @@ struct TableView : AbstractItemView {
     /// Note that the table view uses the horizontal header section
     /// positions to determine the positions of columns in the view.
     /// 
-    /// **See also:** verticalOffset()
+    /// **See also:** [`vertical_offset()`]
     [event] horizontal_offset() -> i32,
     /// 
     /// Returns the vertical offset of the items in the table view.
@@ -375,13 +376,13 @@ struct TableView : AbstractItemView {
     /// Note that the table view uses the vertical header section
     /// positions to determine the positions of rows in the view.
     /// 
-    /// **See also:** horizontalOffset()
+    /// **See also:** [`horizontal_offset()`]
     [event] vertical_offset() -> i32,
     /// 
     /// Moves the cursor in accordance with the given *cursorAction,* using the
     /// information provided by the *modifiers.*
     /// 
-    /// **See also:** QAbstractItemView::CursorAction
+    /// **See also:** [`AbstractItemView::cursor_action()`]
     [event] move_cursor(cursor_action: AbstractItemView::CursorAction, modifiers: Rute::KeyboardModifiers) -> ModelIndex,
     /// 
     /// 
@@ -407,9 +408,9 @@ struct TableView : AbstractItemView {
     /// if a larger row height is required by either the vertical header or
     /// the item delegate, that width will be used instead.
     /// 
-    /// **See also:** QWidget::sizeHint
-    /// verticalHeader()
-    /// QHeaderView::resizeContentsPrecision()
+    /// **See also:** [`Widget::size_hint()`]
+    /// [`vertical_header()`]
+    /// [`HeaderView::resize_contents_precision`]
     [event] size_hint_for_row(row: i32) -> i32,
     /// 
     /// Returns the size hint for the given *column's* width or -1 if
@@ -424,9 +425,9 @@ struct TableView : AbstractItemView {
     /// required by either the horizontal header or the item delegate, the larger
     /// width will be used instead.
     /// 
-    /// **See also:** QWidget::sizeHint
-    /// horizontalHeader()
-    /// QHeaderView::resizeContentsPrecision()
+    /// **See also:** [`Widget::size_hint()`]
+    /// [`horizontal_header()`]
+    /// [`HeaderView::resize_contents_precision`]
     [event] size_hint_for_column(column: i32) -> i32,
     [event] vertical_scrollbar_action(action: i32),
     [event] horizontal_scrollbar_action(action: i32),

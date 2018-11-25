@@ -36,8 +36,8 @@
 /// 
 /// ![A status bar shown in the Fusion widget style](fusion-statusbar-sizegrip.png)
 /// 
-/// **See also:** QMainWindow
-/// QStatusTipEvent
+/// **See also:** [`MainWindow`]
+/// [`StatusTipEvent`]
 /// {fowler}{GUI Design Handbook:
 /// Status Bar}, {Application Example}
 /// # Licence
@@ -55,9 +55,9 @@ struct StatusBar : Widget {
     /// widget (see addPermanentWidget()) and may be obscured by temporary
     /// messages.
     /// 
-    /// **See also:** insertWidget()
-    /// removeWidget()
-    /// addPermanentWidget()
+    /// **See also:** [`insert_widget()`]
+    /// [`remove_widget()`]
+    /// [`add_permanent_widget()`]
     add_widget(widget: *WidgetType, stretch: i32),
     /// 
     /// Inserts the given *widget* at the given *index* to this status bar,
@@ -74,9 +74,9 @@ struct StatusBar : Widget {
     /// widget (see addPermanentWidget()) and may be obscured by temporary
     /// messages.
     /// 
-    /// **See also:** addWidget()
-    /// removeWidget()
-    /// addPermanentWidget()
+    /// **See also:** [`add_widget()`]
+    /// [`remove_widget()`]
+    /// [`add_permanent_widget()`]
     insert_widget(index: i32, widget: *WidgetType, stretch: i32) -> i32,
     /// 
     /// Adds the given *widget* permanently to this status bar,
@@ -89,9 +89,9 @@ struct StatusBar : Widget {
     /// Permanently means that the widget may not be obscured by temporary
     /// messages. It is is located at the far right of the status bar.
     /// 
-    /// **See also:** insertPermanentWidget()
-    /// removeWidget()
-    /// addWidget()
+    /// **See also:** [`insert_permanent_widget()`]
+    /// [`remove_widget()`]
+    /// [`add_widget()`]
     add_permanent_widget(widget: *WidgetType, stretch: i32),
     /// 
     /// Inserts the given *widget* at the given *index* permanently to this status bar,
@@ -107,9 +107,9 @@ struct StatusBar : Widget {
     /// Permanently means that the widget may not be obscured by temporary
     /// messages. It is is located at the far right of the status bar.
     /// 
-    /// **See also:** addPermanentWidget()
-    /// removeWidget()
-    /// addWidget()
+    /// **See also:** [`add_permanent_widget()`]
+    /// [`remove_widget()`]
+    /// [`add_widget()`]
     insert_permanent_widget(index: i32, widget: *WidgetType, stretch: i32) -> i32,
     /// 
     /// Removes the specified *widget* from the status bar.
@@ -118,9 +118,9 @@ struct StatusBar : Widget {
     /// To add the widget again, you must call both the addWidget() and
     /// show() functions.
     /// 
-    /// **See also:** addWidget()
-    /// addPermanentWidget()
-    /// clearMessage()
+    /// **See also:** [`add_widget()`]
+    /// [`add_permanent_widget()`]
+    /// [`clear_message()`]
     remove_widget(widget: *WidgetType),
     set_size_grip_enabled(arg0: bool),
     is_size_grip_enabled() -> bool,
@@ -128,7 +128,7 @@ struct StatusBar : Widget {
     /// Returns the temporary message currently shown,
     /// or an empty string if there is no such message.
     /// 
-    /// **See also:** showMessage()
+    /// **See also:** [`show_message()`]
     current_message() -> String,
     /// 
     /// Hides the normal status indications and displays the given *message* for the specified number of milli-seconds ( *timeout* ). If
@@ -141,16 +141,16 @@ struct StatusBar : Widget {
     /// display a [permanent message](permanent%20message)
     /// 
     /// 
-    /// **See also:** messageChanged()
-    /// currentMessage()
-    /// clearMessage()
+    /// **See also:** [`message_changed()`]
+    /// [`current_message()`]
+    /// [`clear_message()`]
     show_message(text: String, timeout: i32),
     /// 
     /// Removes any temporary message being shown.
     /// 
-    /// **See also:** currentMessage()
-    /// showMessage()
-    /// removeWidget()
+    /// **See also:** [`current_message()`]
+    /// [`show_message()`]
+    /// [`remove_widget()`]
     clear_message(),
     /// 
     /// This signal is emitted whenever the temporary status message
@@ -158,8 +158,8 @@ struct StatusBar : Widget {
     /// parameter which is a null-string when the message has been
     /// removed.
     /// 
-    /// **See also:** showMessage()
-    /// clearMessage()
+    /// **See also:** [`show_message()`]
+    /// [`clear_message()`]
     [signal] message_changed(text: String),
     /// 
     [event] show_event(arg0: *ShowEventType),

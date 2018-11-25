@@ -45,9 +45,9 @@
 /// **Note**: The displayed value of the QDoubleSpinBox is limited to 18 characters
 /// in addition to eventual prefix and suffix content. This limitation is used
 /// to keep the double spin box usable even with extremely large values.
-/// **See also:** QSpinBox
-/// QDateTimeEdit
-/// QSlider
+/// **See also:** [`SpinBox`]
+/// [`DateTimeEdit`]
+/// [`Slider`]
 /// {Spin Boxes Example}
 /// # Licence
 ///
@@ -78,8 +78,8 @@ struct DoubleSpinBox : AbstractSpinBox {
     /// Note: QDoubleSpinBox handles specialValueText() separately; this
     /// function is only concerned with the other values.
     /// 
-    /// **See also:** textFromValue()
-    /// validate()
+    /// **See also:** [`text_from_value()`]
+    /// [`validate()`]
     value() -> double,
     /// 
     /// The prefix is prepended to the start of the displayed value.
@@ -92,10 +92,10 @@ struct DoubleSpinBox : AbstractSpinBox {
     /// 
     /// If no prefix is set, prefix() returns an empty string.
     /// 
-    /// **See also:** suffix()
-    /// setSuffix()
-    /// specialValueText()
-    /// setSpecialValueText()
+    /// **See also:** [`suffix()`]
+    /// [`set_suffix()`]
+    /// [`special_value_text()`]
+    /// [`set_special_value_text()`]
     prefix() -> String,
     set_prefix(prefix: String),
     /// 
@@ -109,16 +109,16 @@ struct DoubleSpinBox : AbstractSpinBox {
     /// 
     /// If no suffix is set, suffix() returns an empty string.
     /// 
-    /// **See also:** prefix()
-    /// setPrefix()
-    /// specialValueText()
-    /// setSpecialValueText()
+    /// **See also:** [`prefix()`]
+    /// [`set_prefix()`]
+    /// [`special_value_text()`]
+    /// [`set_special_value_text()`]
     suffix() -> String,
     set_suffix(suffix: String),
     /// 
     /// **See also:** text
-    /// QDoubleSpinBox::prefix
-    /// QDoubleSpinBox::suffix
+    /// [`DoubleSpinBox::prefix()`]
+    /// [`DoubleSpinBox::suffix()`]
     clean_text() -> String,
     /// 
     /// When the user uses the arrows to change the spin box's value the
@@ -138,7 +138,7 @@ struct DoubleSpinBox : AbstractSpinBox {
     /// property.
     /// 
     /// **See also:** decimals
-    /// setRange()
+    /// [`set_range()`]
     /// specialValueText
     minimum() -> double,
     set_minimum(min: double),
@@ -153,7 +153,7 @@ struct DoubleSpinBox : AbstractSpinBox {
     /// property.
     /// 
     /// **See also:** decimals
-    /// setRange()
+    /// [`set_range()`]
     maximum() -> double,
     set_maximum(max: double),
     /// 
@@ -191,8 +191,8 @@ struct DoubleSpinBox : AbstractSpinBox {
     /// Note: QDoubleSpinBox handles specialValueText() separately; this
     /// function is only concerned with the other values.
     /// 
-    /// **See also:** textFromValue()
-    /// validate()
+    /// **See also:** [`text_from_value()`]
+    /// [`validate()`]
     [event] value_from_text(text: String) -> double,
     /// 
     /// This virtual function is used by the spin box whenever it needs to
@@ -209,8 +209,8 @@ struct DoubleSpinBox : AbstractSpinBox {
     /// If you reimplement this, you may also need to reimplement
     /// valueFromText().
     /// 
-    /// **See also:** valueFromText()
-    /// QLocale::groupSeparator()
+    /// **See also:** [`value_from_text()`]
+    /// [`Locale::group_separator`]
     [event] text_from_value(val: double) -> String,
     /// 
     [event] fixup(str: String),
@@ -228,7 +228,8 @@ struct DoubleSpinBox : AbstractSpinBox {
     /// 
     /// **Overloads**
     /// The new value is passed in *text* with prefix() and suffix().
-    [signal] value_changed(arg0: String),
+    [org_name(valueChanged)]
+    [signal] value_changed_2(arg0: String),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

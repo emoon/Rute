@@ -14,8 +14,8 @@
 /// See [How to Create Qt Plugins](How%20to%20Create%20Qt%20Plugins)
 /// for details.
 /// 
-/// **See also:** QStyleFactory
-/// QStyle
+/// **See also:** [`StyleFactory`]
+/// [`Style`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.

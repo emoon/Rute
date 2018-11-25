@@ -21,12 +21,11 @@
 /// of the start of the fragment. To determine whether the fragment contains
 /// a particular position within the document, use the contains() function.
 /// 
-/// **See also:** QTextDocument
+/// **See also:** [`TextDocument`]
 /// {Rich Text Document Structure}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct TextFragment {
     /// 
     /// Returns `true` if this is a valid text fragment (i.e. has a valid
@@ -38,7 +37,7 @@ struct TextFragment {
     /// 
     /// Returns the number of characters in the text fragment.
     /// 
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     length() -> i32,
     /// 
     /// Returns `true` if the text fragment contains the text at the given
@@ -47,24 +46,24 @@ struct TextFragment {
     /// 
     /// Returns the text fragment's character format.
     /// 
-    /// **See also:** text()
+    /// **See also:** [`text()`]
     /// 
     /// Returns an index into the document's internal list of character formats
     /// for the text fragment's character format.
     /// 
-    /// **See also:** QTextDocument::allFormats()
+    /// **See also:** [`TextDocument::all_formats`]
     char_format() -> TextCharFormat,
     /// 
     /// Returns an index into the document's internal list of character formats
     /// for the text fragment's character format.
     /// 
-    /// **See also:** QTextDocument::allFormats()
+    /// **See also:** [`TextDocument::all_formats`]
     char_format_index() -> i32,
     /// 
     /// Returns the text fragment's as plain text.
     /// 
-    /// **See also:** length()
-    /// charFormat()
+    /// **See also:** [`length()`]
+    /// [`char_format()`]
     text() -> String,
     glyph_runs(from: i32, length: i32) -> [GlyphRun],
 }

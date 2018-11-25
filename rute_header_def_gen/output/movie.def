@@ -46,59 +46,46 @@
 /// 
 /// Call supportedFormats() for a list of formats that QMovie supports.
 /// 
-/// **See also:** QLabel
-/// QImageReader
+/// **See also:** [`Label`]
+/// [`ImageReader`]
 /// {Movie Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QMovie)]
-enum MovieState {
-    NotRunning,
-    Paused,
-    Running,
-}
-
-[org_name(QMovie)]
-enum CacheMode {
-    CacheNone,
-    CacheAll,
-}
-
 struct Movie : Object {
     /// 
     /// Returns the list of image formats supported by QMovie.
     /// 
-    /// **See also:** QImageReader::supportedImageFormats()
+    /// **See also:** [`ImageReader::supported_image_formats`]
     [static] supported_formats() -> [ByteArray],
     /// 
     /// Sets the current device to *device.* QMovie will read image data from
     /// this device when the movie is running.
     /// 
-    /// **See also:** device()
-    /// setFormat()
+    /// **See also:** [`device()`]
+    /// [`set_format()`]
     set_device(device: *IODeviceType),
     /// 
     /// Returns the device QMovie reads image data from. If no device has
     /// currently been assigned, 0 is returned.
     /// 
-    /// **See also:** setDevice()
-    /// fileName()
+    /// **See also:** [`set_device()`]
+    /// [`file_name()`]
     device() -> IODevice?,
     /// 
     /// Sets the name of the file that QMovie reads image data from, to *fileName.*
     /// 
-    /// **See also:** fileName()
-    /// setDevice()
-    /// setFormat()
+    /// **See also:** [`file_name()`]
+    /// [`set_device()`]
+    /// [`set_format()`]
     set_file_name(file_name: String),
     /// 
     /// Returns the name of the file that QMovie reads image data from. If no file
     /// name has been assigned, or if the assigned device is not a file, an empty
     /// QString is returned.
     /// 
-    /// **See also:** setFileName()
-    /// device()
+    /// **See also:** [`set_file_name()`]
+    /// [`device()`]
     file_name() -> String,
     /// 
     /// Sets the format that QMovie will use when decoding image data, to *format.* By default, QMovie will attempt to guess the format of the image
@@ -107,55 +94,55 @@ struct Movie : Object {
     /// You can call supportedFormats() for the full list of formats
     /// QMovie supports.
     /// 
-    /// **See also:** QImageReader::supportedImageFormats()
+    /// **See also:** [`ImageReader::supported_image_formats`]
     set_format(format: &ByteArrayType),
     /// 
     /// Returns the format that QMovie uses when decoding image data. If no format
     /// has been assigned, an empty QByteArray() is returned.
     /// 
-    /// **See also:** setFormat()
+    /// **See also:** [`set_format()`]
     format() -> ByteArray,
     /// 
     /// For image formats that support it, this function sets the background color
     /// to *color.*
     /// 
-    /// **See also:** backgroundColor()
+    /// **See also:** [`background_color()`]
     set_background_color(color: &ColorType),
     /// 
     /// Returns the background color of the movie. If no background color has been
     /// assigned, an invalid QColor is returned.
     /// 
-    /// **See also:** setBackgroundColor()
+    /// **See also:** [`set_background_color()`]
     background_color() -> Color,
     /// 
     /// This signal is emitted every time the state of the movie changes. The new
     /// state is specified by *state.*
     /// 
-    /// **See also:** QMovie::state()
+    /// **See also:** [`Movie::state`]
     /// 
     /// Returns the current state of QMovie.
     /// 
     /// **See also:** MovieState
-    /// stateChanged()
+    /// [`state_changed()`]
     state() -> Movie::MovieState,
     /// 
     /// Returns the rect of the last frame. If no frame has yet been updated, an
     /// invalid QRect is returned.
     /// 
-    /// **See also:** currentImage()
-    /// currentPixmap()
+    /// **See also:** [`current_image()`]
+    /// [`current_pixmap()`]
     frame_rect() -> Rect,
     /// 
     /// Returns the current frame as a QImage.
     /// 
-    /// **See also:** currentPixmap()
-    /// updated()
+    /// **See also:** [`current_pixmap()`]
+    /// [`updated()`]
     current_image() -> Image,
     /// 
     /// Returns the current frame as a QPixmap.
     /// 
-    /// **See also:** currentImage()
-    /// updated()
+    /// **See also:** [`current_image()`]
+    /// [`updated()`]
     current_pixmap() -> Pixmap,
     /// 
     /// Returns `true` if the movie is valid (e.g., the image data is readable and
@@ -166,12 +153,12 @@ struct Movie : Object {
     /// 
     /// Returns the most recent error that occurred while attempting to read image data.
     /// 
-    /// **See also:** lastErrorString()
+    /// **See also:** [`last_error_string()`]
     /// 
     /// Returns a human-readable representation of the most recent error that occurred
     /// while attempting to read image data.
     /// 
-    /// **See also:** lastError()
+    /// **See also:** [`last_error()`]
     last_error() -> ImageReader::ImageReaderError,
     /// 
     /// Jumps to frame number *frameNumber.* Returns `true` on success; otherwise
@@ -209,12 +196,12 @@ struct Movie : Object {
     /// 
     /// Returns the scaled size of frames.
     /// 
-    /// **See also:** QImageReader::scaledSize()
+    /// **See also:** [`ImageReader::scaled_size`]
     scaled_size() -> Size,
     /// 
     /// Sets the scaled frame size to *size.*
     /// 
-    /// **See also:** QImageReader::setScaledSize()
+    /// **See also:** [`ImageReader::set_scaled_size`]
     set_scaled_size(size: &SizeType),
     /// 
     /// Caching frames can be useful when the underlying animation format handler
@@ -231,7 +218,7 @@ struct Movie : Object {
     /// 
     /// By default, this property is set to [CacheNone.](CacheNone.)
     /// 
-    /// **See also:** QMovie::CacheMode
+    /// **See also:** [`Movie::cache_mode()`]
     cache_mode() -> Movie::CacheMode,
     set_cache_mode(mode: Movie::CacheMode),
     /// 
@@ -252,19 +239,19 @@ struct Movie : Object {
     /// This signal is emitted every time the state of the movie changes. The new
     /// state is specified by *state.*
     /// 
-    /// **See also:** QMovie::state()
+    /// **See also:** [`Movie::state`]
     [signal] state_changed(state: Movie::MovieState),
     /// 
     /// This signal is emitted by QMovie when the error *error* occurred during
     /// playback. QMovie will stop the movie, and enter QMovie::NotRunning state.
     /// 
-    /// **See also:** lastError()
-    /// lastErrorString()
+    /// **See also:** [`last_error()`]
+    /// [`last_error_string()`]
     [signal] error(error: ImageReader::ImageReaderError),
     /// 
     /// This signal is emitted when the movie has finished.
     /// 
-    /// **See also:** QMovie::stop()
+    /// **See also:** [`Movie::stop`]
     [signal] finished(),
     /// 
     /// This signal is emitted when the frame number has changed to
@@ -284,8 +271,8 @@ struct Movie : Object {
     /// to calling setPaused(false). If QMovie is already in the [Running](Running)
     /// state, this function does nothing.
     /// 
-    /// **See also:** stop()
-    /// setPaused()
+    /// **See also:** [`stop()`]
+    /// [`set_paused()`]
     start(),
     /// 
     /// Jumps to the next frame. Returns `true` on success; otherwise returns `false.`
@@ -297,7 +284,7 @@ struct Movie : Object {
     /// state and emit
     /// stateChanged(Running).
     /// 
-    /// **See also:** state()
+    /// **See also:** [`state()`]
     set_paused(paused: bool),
     /// 
     /// Stops the movie. QMovie enters [NotRunning](NotRunning)
@@ -309,10 +296,28 @@ struct Movie : Object {
     /// state, this function
     /// does nothing.
     /// 
-    /// **See also:** start()
-    /// setPaused()
+    /// **See also:** [`start()`]
+    /// [`set_paused()`]
     stop(),
     set_speed(percent_speed: i32),
+}
+
+[org_name(QMovie)]
+enum MovieState {
+    /// The movie is not running. This is QMovie's initial state, and the state it enters after stop() has been called or the movie is finished.
+    NotRunning,
+    /// The movie is paused, and QMovie stops emitting updated() or resized(). This state is entered after calling pause() or setPaused(true). The current frame number it kept, and the movie will continue with the next frame when unpause() or setPaused(false) is called.
+    Paused,
+    /// The movie is running.
+    Running,
+}
+
+[org_name(QMovie)]
+enum CacheMode {
+    /// No frames are cached (the default).
+    CacheNone,
+    /// All frames are cached.
+    CacheAll,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -2,23 +2,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QFileIconProvider)]
-enum IconType {
-    Computer,
-    Desktop,
-    Trashcan,
-    Network,
-    Drive,
-    Folder,
-    File,
-}
-
-[org_name(QFileIconProvider)]
-enum Option {
-    DontUseCustomDirectoryIcons,
-}
-
-
 struct FileIconProvider {
     /// 
     /// Returns an icon set for the given *type.*
@@ -29,19 +12,44 @@ struct FileIconProvider {
     /// Returns an icon set for the given *type.*
     /// 
     /// Returns an icon for the file described by *info.*
-    [event] icon(info: &FileInfoType) -> Icon,
+    [org_name(icon)]
+    [event] icon_2(info: &FileInfoType) -> Icon,
     /// 
     /// Returns the type of the file described by *info.*
     [event] type(info: &FileInfoType) -> String,
     /// 
     /// Sets *options* that affect the icon provider.
-    /// **See also:** options()
+    /// **See also:** [`options()`]
     set_options(options: FileIconProvider::Options),
     /// 
     /// Returns all the options that affect the icon provider.
     /// By default, all options are disabled.
-    /// **See also:** setOptions()
+    /// **See also:** [`set_options()`]
     options() -> FileIconProvider::Options,
+}
+
+[org_name(QFileIconProvider)]
+enum IconType {
+    /// 
+    Computer,
+    /// 
+    Desktop,
+    /// 
+    Trashcan,
+    /// 
+    Network,
+    /// 
+    Drive,
+    /// 
+    Folder,
+    /// 
+    File,
+}
+
+[org_name(QFileIconProvider)]
+enum Option {
+    /// Always use the default directory icon. Some platforms allow the user to set a different icon. Custom icon lookup cause a big performance impact over network or removable drives.
+    DontUseCustomDirectoryIcons,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -3,21 +3,10 @@
 /// on it to start a local event loop. From within the event loop,
 /// calling exit() will force exec() to return.
 /// 
-/// **See also:** QAbstractEventDispatcher
+/// **See also:** [`AbstractEventDispatcher`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QEventLoop)]
-enum ProcessEventsFlag {
-    AllEvents,
-    ExcludeUserInputEvents,
-    ExcludeSocketNotifiers,
-    WaitForMoreEvents,
-    X11ExcludeTimers,
-    EventLoopExec,
-    DialogExec,
-}
-
 struct EventLoop : Object {
     /// 
     /// Processes pending events that match *flags* until there are no
@@ -70,7 +59,8 @@ struct EventLoop : Object {
     /// * This function does not process events continuously; it returns after all available events are processed.
     /// * Specifying the [WaitForMoreEvents](WaitForMoreEvents)
     /// flag makes no sense and will be ignored.
-    process_events(flags: EventLoop::ProcessEventsFlags, maximum_time: i32),
+    [org_name(processEvents)]
+    process_events_2(flags: EventLoop::ProcessEventsFlags, maximum_time: i32),
     /// 
     /// Enters the main event loop and waits until exit() is called.
     /// Returns the value that was passed to exit().
@@ -92,9 +82,9 @@ struct EventLoop : Object {
     /// QTimer with 0 timeout. More sophisticated idle processing schemes
     /// can be achieved using processEvents().
     /// 
-    /// **See also:** QCoreApplication::quit()
-    /// exit()
-    /// processEvents()
+    /// **See also:** [`CoreApplication::quit`]
+    /// [`exit()`]
+    /// [`process_events()`]
     exec(flags: EventLoop::ProcessEventsFlags) -> i32,
     /// 
     /// Tells the event loop to exit with a return code.
@@ -109,22 +99,22 @@ struct EventLoop : Object {
     /// function *does* return to the caller -- it is event processing that
     /// stops.
     /// 
-    /// **See also:** QCoreApplication::quit()
-    /// quit()
-    /// exec()
+    /// **See also:** [`CoreApplication::quit`]
+    /// [`quit()`]
+    /// [`exec()`]
     exit(return_code: i32),
     /// 
     /// Returns `true` if the event loop is running; otherwise returns
     /// false. The event loop is considered running from the time when
     /// exec() is called until exit() is called.
     /// 
-    /// **See also:** exec()
-    /// exit()
+    /// **See also:** [`exec()`]
+    /// [`exit()`]
     is_running() -> bool,
     /// 
     /// Wakes up the event loop.
     /// 
-    /// **See also:** QAbstractEventDispatcher::wakeUp()
+    /// **See also:** [`AbstractEventDispatcher::wake_up`]
     wake_up(),
     /// 
     [event] event(event: *EventType) -> bool,
@@ -133,9 +123,25 @@ struct EventLoop : Object {
     /// 
     /// Same as exit(0).
     /// 
-    /// **See also:** QCoreApplication::quit()
-    /// exit()
+    /// **See also:** [`CoreApplication::quit`]
+    /// [`exit()`]
     quit(),
+}
+
+[org_name(QEventLoop)]
+enum ProcessEventsFlag {
+    /// All events. Note that [DeferredDelete](QEvent::DeferredDelete)
+ events are processed specially. See QObject::deleteLater() for more details.
+    AllEvents,
+    /// Do not process user input events, such as ButtonPress and KeyPress. Note that the events are not discarded; they will be delivered the next time processEvents() is called without the ExcludeUserInputEvents flag.
+    ExcludeUserInputEvents,
+    /// Do not process socket notifier events. Note that the events are not discarded; they will be delivered the next time processEvents() is called without the ExcludeSocketNotifiers flag.
+    ExcludeSocketNotifiers,
+    /// Wait for events if no pending events are available.
+    WaitForMoreEvents,
+    X11ExcludeTimers,
+    EventLoopExec,
+    DialogExec,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

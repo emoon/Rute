@@ -34,9 +34,9 @@
 /// function indicates
 /// whether sorting is enabled.
 /// 
-/// **See also:** QTreeWidgetItem
-/// QTreeWidgetItemIterator
-/// QTreeView
+/// **See also:** [`TreeWidgetItem`]
+/// [`TreeWidgetItemIterator`]
+/// [`TreeView`]
 /// {Model/View Programming}
 /// {Settings Editor Example}
 /// # Licence
@@ -59,74 +59,74 @@ struct TreeWidget : TreeView {
     /// Returns the top level item at the given *index,* or 0 if the item does
     /// not exist.
     /// 
-    /// **See also:** topLevelItemCount()
-    /// insertTopLevelItem()
+    /// **See also:** [`top_level_item_count()`]
+    /// [`insert_top_level_item()`]
     /// 
     /// By default, this property has a value of 0.
     /// 
-    /// **See also:** columnCount()
-    /// currentItem()
+    /// **See also:** [`column_count()`]
+    /// [`current_item()`]
     top_level_item(index: i32) -> TreeWidgetItem?,
     /// 
     /// By default, this property has a value of 0.
     /// 
-    /// **See also:** columnCount()
-    /// currentItem()
+    /// **See also:** [`column_count()`]
+    /// [`current_item()`]
     top_level_item_count() -> i32,
     /// 
     /// Inserts the *item* at *index* in the top level in the view.
     /// 
     /// If the item has already been inserted somewhere else it won't be inserted.
     /// 
-    /// **See also:** addTopLevelItem()
-    /// columnCount()
+    /// **See also:** [`add_top_level_item()`]
+    /// [`column_count()`]
     /// 
     /// Inserts the list of *items* at *index* in the top level in the view.
     /// 
     /// Items that have already been inserted somewhere else won't be inserted.
     /// 
-    /// **See also:** addTopLevelItems()
+    /// **See also:** [`add_top_level_items()`]
     insert_top_level_item(index: i32, item: *TreeWidgetItemType),
     /// 
     /// Appends the *item* as a top-level item in the widget.
     /// 
-    /// **See also:** insertTopLevelItem()
+    /// **See also:** [`insert_top_level_item()`]
     /// 
     /// Appends the list of *items* as a top-level items in the widget.
     /// 
-    /// **See also:** insertTopLevelItems()
+    /// **See also:** [`insert_top_level_items()`]
     add_top_level_item(item: *TreeWidgetItemType),
     /// 
     /// Removes the top-level item at the given *index* in the tree and
     /// returns it, otherwise returns 0;
     /// 
-    /// **See also:** insertTopLevelItem()
-    /// topLevelItem()
-    /// topLevelItemCount()
+    /// **See also:** [`insert_top_level_item()`]
+    /// [`top_level_item()`]
+    /// [`top_level_item_count()`]
     take_top_level_item(index: i32) -> TreeWidgetItem?,
     /// 
     /// Returns the index of the given top-level *item,* or -1 if the item
     /// cannot be found.
     /// 
-    /// **See also:** sortItems()
-    /// topLevelItemCount()
+    /// **See also:** [`sort_items()`]
+    /// [`top_level_item_count()`]
     index_of_top_level_item(item: *TreeWidgetItemType) -> i32,
     /// 
     /// Inserts the list of *items* at *index* in the top level in the view.
     /// 
     /// Items that have already been inserted somewhere else won't be inserted.
     /// 
-    /// **See also:** addTopLevelItems()
+    /// **See also:** [`add_top_level_items()`]
     insert_top_level_items(index: i32, items: [*TreeWidgetItemType]),
     /// 
     /// Appends the list of *items* as a top-level items in the widget.
     /// 
-    /// **See also:** insertTopLevelItems()
+    /// **See also:** [`insert_top_level_items()`]
     add_top_level_items(items: [*TreeWidgetItemType]),
     /// 
     /// Returns the item used for the tree widget's header.
     /// 
-    /// **See also:** setHeaderItem()
+    /// **See also:** [`set_header_item()`]
     header_item() -> TreeWidgetItem?,
     /// 
     /// Sets the header *item* for the tree widget. The label for each column in
@@ -134,8 +134,8 @@ struct TreeWidget : TreeView {
     /// 
     /// The tree widget takes ownership of the item.
     /// 
-    /// **See also:** headerItem()
-    /// setHeaderLabels()
+    /// **See also:** [`header_item()`]
+    /// [`set_header_labels()`]
     set_header_item(item: *TreeWidgetItemType),
     /// 
     /// Adds a column in the header for each item in the *labels* list, and sets
@@ -143,8 +143,8 @@ struct TreeWidget : TreeView {
     /// 
     /// Note that setHeaderLabels() won't remove existing columns.
     /// 
-    /// **See also:** setHeaderItem()
-    /// setHeaderLabel()
+    /// **See also:** [`set_header_item()`]
+    /// [`set_header_label()`]
     set_header_labels(labels: &[String]),
     /// 
     /// Adds a column in the header for each item in the *labels* list, and sets
@@ -152,8 +152,8 @@ struct TreeWidget : TreeView {
     /// 
     /// Note that setHeaderLabels() won't remove existing columns.
     /// 
-    /// **See also:** setHeaderItem()
-    /// setHeaderLabel()
+    /// **See also:** [`set_header_item()`]
+    /// [`set_header_label()`]
     /// 
     /// Same as setHeaderLabels(QStringList( *label)).*
     set_header_label(label: String),
@@ -162,18 +162,18 @@ struct TreeWidget : TreeView {
     /// item is specified by *current,* and this replaces the *previous*
     /// current item.
     /// 
-    /// **See also:** setCurrentItem()
+    /// **See also:** [`set_current_item()`]
     /// 
     /// Returns the current item in the tree widget.
     /// 
-    /// **See also:** setCurrentItem()
-    /// currentItemChanged()
+    /// **See also:** [`set_current_item()`]
+    /// [`current_item_changed()`]
     current_item() -> TreeWidgetItem?,
     /// 
     /// Returns the current column in the tree widget.
     /// 
-    /// **See also:** setCurrentItem()
-    /// columnCount()
+    /// **See also:** [`set_current_item()`]
+    /// [`column_count()`]
     current_column() -> i32,
     /// 
     /// Sets the current *item* in the tree widget.
@@ -182,17 +182,17 @@ struct TreeWidget : TreeView {
     /// 
     /// the item is also selected.
     /// 
-    /// **See also:** currentItem()
-    /// currentItemChanged()
+    /// **See also:** [`current_item()`]
+    /// [`current_item_changed()`]
     /// 
     /// Sets the current *item* in the tree widget and the current column to *column.*
     /// 
-    /// **See also:** currentItem()
+    /// **See also:** [`current_item()`]
     /// 
     /// Sets the current *item* in the tree widget and the current column to *column,*
     /// using the given *command.*
     /// 
-    /// **See also:** currentItem()
+    /// **See also:** [`current_item()`]
     set_current_item(item: *TreeWidgetItemType),
     /// 
     /// Sets the current *item* in the tree widget.
@@ -201,18 +201,19 @@ struct TreeWidget : TreeView {
     /// 
     /// the item is also selected.
     /// 
-    /// **See also:** currentItem()
-    /// currentItemChanged()
+    /// **See also:** [`current_item()`]
+    /// [`current_item_changed()`]
     /// 
     /// Sets the current *item* in the tree widget and the current column to *column.*
     /// 
-    /// **See also:** currentItem()
+    /// **See also:** [`current_item()`]
     /// 
     /// Sets the current *item* in the tree widget and the current column to *column,*
     /// using the given *command.*
     /// 
-    /// **See also:** currentItem()
-    set_current_item(item: *TreeWidgetItemType, column: i32),
+    /// **See also:** [`current_item()`]
+    [org_name(setCurrentItem)]
+    set_current_item_2(item: *TreeWidgetItemType, column: i32),
     /// 
     /// Sets the current *item* in the tree widget.
     /// 
@@ -220,24 +221,25 @@ struct TreeWidget : TreeView {
     /// 
     /// the item is also selected.
     /// 
-    /// **See also:** currentItem()
-    /// currentItemChanged()
+    /// **See also:** [`current_item()`]
+    /// [`current_item_changed()`]
     /// 
     /// Sets the current *item* in the tree widget and the current column to *column.*
     /// 
-    /// **See also:** currentItem()
+    /// **See also:** [`current_item()`]
     /// 
     /// Sets the current *item* in the tree widget and the current column to *column,*
     /// using the given *command.*
     /// 
-    /// **See also:** currentItem()
-    set_current_item(item: *TreeWidgetItemType, column: i32, command: ItemSelectionModel::SelectionFlags),
+    /// **See also:** [`current_item()`]
+    [org_name(setCurrentItem)]
+    set_current_item_3(item: *TreeWidgetItemType, column: i32, command: ItemSelectionModel::SelectionFlags),
     /// 
     /// Returns a pointer to the item at the coordinates *p.* The coordinates
     /// are relative to the tree widget's [viewport()](QAbstractScrollArea::)
     /// 
     /// 
-    /// **See also:** visualItemRect()
+    /// **See also:** [`visual_item_rect()`]
     /// 
     /// **Overloads**
     /// Returns a pointer to the item at the coordinates ( *x,* *y).* The coordinates
@@ -249,28 +251,29 @@ struct TreeWidget : TreeView {
     /// are relative to the tree widget's [viewport()](QAbstractScrollArea::)
     /// 
     /// 
-    /// **See also:** visualItemRect()
+    /// **See also:** [`visual_item_rect()`]
     /// 
     /// **Overloads**
     /// Returns a pointer to the item at the coordinates ( *x,* *y).* The coordinates
     /// are relative to the tree widget's [viewport()](QAbstractScrollArea::)
     /// 
-    item_at(x: i32, y: i32) -> TreeWidgetItem?,
+    [org_name(itemAt)]
+    item_at_2(x: i32, y: i32) -> TreeWidgetItem?,
     /// 
     /// Returns the rectangle on the viewport occupied by the item at *item.*
     /// 
-    /// **See also:** itemAt()
+    /// **See also:** [`item_at()`]
     visual_item_rect(item: *TreeWidgetItemType) -> Rect,
     /// 
     /// Returns the column used to sort the contents of the widget.
     /// 
-    /// **See also:** sortItems()
+    /// **See also:** [`sort_items()`]
     sort_column() -> i32,
     /// 
     /// Sorts the items in the widget in the specified *order* by the values in
     /// the given *column.*
     /// 
-    /// **See also:** sortColumn()
+    /// **See also:** [`sort_column()`]
     sort_items(column: i32, order: Rute::SortOrder),
     /// 
     /// Starts editing the *item* in the given *column* if it is editable.
@@ -278,8 +281,8 @@ struct TreeWidget : TreeView {
     /// 
     /// Opens a persistent editor for the *item* in the given *column.*
     /// 
-    /// **See also:** closePersistentEditor()
-    /// isPersistentEditorOpen()
+    /// **See also:** [`close_persistent_editor()`]
+    /// [`is_persistent_editor_open()`]
     open_persistent_editor(item: *TreeWidgetItemType, column: i32),
     /// 
     /// Closes the persistent editor for the *item* in the given *column.*
@@ -287,15 +290,15 @@ struct TreeWidget : TreeView {
     /// This function has no effect if no persistent editor is open for this
     /// combination of item and column.
     /// 
-    /// **See also:** openPersistentEditor()
-    /// isPersistentEditorOpen()
+    /// **See also:** [`open_persistent_editor()`]
+    /// [`is_persistent_editor_open()`]
     close_persistent_editor(item: *TreeWidgetItemType, column: i32),
     /// 
     /// Returns whether a persistent editor is open for item *item* in
     /// column *column.*
     /// 
-    /// **See also:** openPersistentEditor()
-    /// closePersistentEditor()
+    /// **See also:** [`open_persistent_editor()`]
+    /// [`close_persistent_editor()`]
     is_persistent_editor_open(item: *TreeWidgetItemType, column: i32) -> bool,
     /// 
     /// Returns the widget displayed in the cell specified by *item* and the given *column.*
@@ -329,7 +332,7 @@ struct TreeWidget : TreeView {
     /// 
     /// Returns `true` if the *item* is selected; otherwise returns `false.`
     /// 
-    /// **See also:** itemSelectionChanged()
+    /// **See also:** [`item_selection_changed()`]
     /// 
     /// This function is deprecated. Use [QTreeWidgetItem::isSelected()](QTreeWidgetItem::isSelected())
     /// instead.
@@ -338,7 +341,7 @@ struct TreeWidget : TreeView {
     /// If *select* is true, the given *item* is selected; otherwise it is
     /// deselected.
     /// 
-    /// **See also:** itemSelectionChanged()
+    /// **See also:** [`item_selection_changed()`]
     /// 
     /// This function is deprecated. Use [QTreeWidgetItem::setSelected()](QTreeWidgetItem::setSelected())
     /// instead.
@@ -346,7 +349,7 @@ struct TreeWidget : TreeView {
     /// 
     /// Returns a list of all selected non-hidden items.
     /// 
-    /// **See also:** itemSelectionChanged()
+    /// **See also:** [`item_selection_changed()`]
     selected_items() -> [TreeWidgetItem?],
     /// 
     /// Returns a list of items that match the given *text,* using the given *flags,* in the given *column.*
@@ -360,7 +363,7 @@ struct TreeWidget : TreeView {
     /// 
     /// Hides the given *item* if *hide* is true; otherwise shows the item.
     /// 
-    /// **See also:** itemChanged()
+    /// **See also:** [`item_changed()`]
     /// 
     /// This function is deprecated. Use [QTreeWidgetItem::setHidden()](QTreeWidgetItem::setHidden())
     /// instead.
@@ -368,7 +371,7 @@ struct TreeWidget : TreeView {
     /// 
     /// Returns `true` if the given *item* is open; otherwise returns `false.`
     /// 
-    /// **See also:** itemExpanded()
+    /// **See also:** [`item_expanded()`]
     /// 
     /// This function is deprecated. Use [QTreeWidgetItem::isExpanded()](QTreeWidgetItem::isExpanded())
     /// instead.
@@ -377,9 +380,9 @@ struct TreeWidget : TreeView {
     /// Sets the item referred to by *item* to either closed or opened,
     /// depending on the value of *expand.*
     /// 
-    /// **See also:** expandItem()
-    /// collapseItem()
-    /// itemExpanded()
+    /// **See also:** [`expand_item()`]
+    /// [`collapse_item()`]
+    /// [`item_expanded()`]
     /// 
     /// This function is deprecated. Use [QTreeWidgetItem::setExpanded()](QTreeWidgetItem::setExpanded())
     /// instead.
@@ -388,13 +391,13 @@ struct TreeWidget : TreeView {
     /// Returns `true` if the given *item* is set to show only one section over all columns;
     /// otherwise returns `false.`
     /// 
-    /// **See also:** setFirstItemColumnSpanned()
+    /// **See also:** [`set_first_item_column_spanned()`]
     is_first_item_column_spanned(item: *TreeWidgetItemType) -> bool,
     /// 
     /// Sets the given *item* to only show one section for all columns if *span* is true;
     /// otherwise the item will show one section per column.
     /// 
-    /// **See also:** isFirstItemColumnSpanned()
+    /// **See also:** [`is_first_item_column_spanned()`]
     set_first_item_column_spanned(item: *TreeWidgetItemType, span: bool),
     /// 
     /// Returns the item above the given *item.*
@@ -408,28 +411,28 @@ struct TreeWidget : TreeView {
     /// Ensures that the *item* is visible, scrolling the view if necessary using
     /// the specified *hint.*
     /// 
-    /// **See also:** currentItem()
-    /// itemAt()
-    /// topLevelItem()
+    /// **See also:** [`current_item()`]
+    /// [`item_at()`]
+    /// [`top_level_item()`]
     scroll_to_item(item: *TreeWidgetItemType, hint: AbstractItemView::ScrollHint),
     /// 
     /// Expands the *item.* This causes the tree containing the item's children
     /// to be expanded.
     /// 
-    /// **See also:** collapseItem()
-    /// currentItem()
-    /// itemAt()
-    /// topLevelItem()
-    /// itemExpanded()
+    /// **See also:** [`collapse_item()`]
+    /// [`current_item()`]
+    /// [`item_at()`]
+    /// [`top_level_item()`]
+    /// [`item_expanded()`]
     expand_item(item: *TreeWidgetItemType),
     /// 
     /// Closes the *item.* This causes the tree containing the item's children
     /// to be collapsed.
     /// 
-    /// **See also:** expandItem()
-    /// currentItem()
-    /// itemAt()
-    /// topLevelItem()
+    /// **See also:** [`expand_item()`]
+    /// [`current_item()`]
+    /// [`item_at()`]
+    /// [`top_level_item()`]
     collapse_item(item: *TreeWidgetItemType),
     /// 
     /// Clears the tree widget by removing all of its items and selections.
@@ -438,9 +441,9 @@ struct TreeWidget : TreeView {
     /// deleted, the return value of QTreeWidgetItem::treeWidget() will be invalid
     /// when called from an item's destructor.
     /// 
-    /// **See also:** takeTopLevelItem()
-    /// topLevelItemCount()
-    /// columnCount()
+    /// **See also:** [`take_top_level_item()`]
+    /// [`top_level_item_count()`]
+    /// [`column_count()`]
     clear(),
     /// 
     /// This signal is emitted when the user presses a mouse button inside
@@ -491,9 +494,9 @@ struct TreeWidget : TreeView {
     /// **Note**: This signal will not be emitted if an item changes its state when
     /// expandAll() is invoked.
     /// 
-    /// **See also:** QTreeWidgetItem::isExpanded()
-    /// itemCollapsed()
-    /// expandItem()
+    /// **See also:** [`TreeWidgetItem::is_expanded`]
+    /// [`item_collapsed()`]
+    /// [`expand_item()`]
     [signal] item_expanded(item: *TreeWidgetItemType),
     /// 
     /// This signal is emitted when the specified *item* is collapsed so that
@@ -502,16 +505,16 @@ struct TreeWidget : TreeView {
     /// **Note**: This signal will not be emitted if an item changes its state when
     /// collapseAll() is invoked.
     /// 
-    /// **See also:** QTreeWidgetItem::isExpanded()
-    /// itemExpanded()
-    /// collapseItem()
+    /// **See also:** [`TreeWidgetItem::is_expanded`]
+    /// [`item_expanded()`]
+    /// [`collapse_item()`]
     [signal] item_collapsed(item: *TreeWidgetItemType),
     /// 
     /// This signal is emitted when the current item changes. The current
     /// item is specified by *current,* and this replaces the *previous*
     /// current item.
     /// 
-    /// **See also:** setCurrentItem()
+    /// **See also:** [`set_current_item()`]
     [signal] current_item_changed(current: *TreeWidgetItemType, previous: *TreeWidgetItemType),
     /// 
     /// This signal is emitted when the selection changes in the tree widget.
@@ -523,7 +526,7 @@ struct TreeWidget : TreeView {
     /// Returns a list of MIME types that can be used to describe a list of
     /// treewidget items.
     /// 
-    /// **See also:** mimeData()
+    /// **See also:** [`mime_data()`]
     [event] mime_types() -> [String],
     [event] mime_data(items: [*TreeWidgetItemType]) -> MimeData?,
     /// 
@@ -534,38 +537,39 @@ struct TreeWidget : TreeView {
     /// successfully handled by decoding the mime data and inserting it
     /// into the model; otherwise it returns `false.`
     /// 
-    /// **See also:** supportedDropActions()
+    /// **See also:** [`supported_drop_actions()`]
     [event] drop_mime_data(parent: *TreeWidgetItemType, index: i32, data: *MimeDataType, action: Rute::DropAction) -> bool,
     /// 
     /// Returns the drop actions supported by this view.
     /// 
-    /// **See also:** Qt::DropActions
+    /// **See also:** [`t::drop_actions()`]
     [event] supported_drop_actions() -> Rute::DropActions,
     /// 
     /// Returns an empty list
     /// 
-    /// **See also:** mimeData()
+    /// **See also:** [`mime_data()`]
     items(data: *MimeDataType) -> [TreeWidgetItem?],
     /// 
     /// Returns the QModelIndex associated with the given *item* in the given *column.*
     /// 
     /// **Note**: In Qt versions prior to 5.7, this function took a non- `const` *item.*
     /// 
-    /// **See also:** itemFromIndex()
-    /// topLevelItem()
+    /// **See also:** [`item_from_index()`]
+    /// [`top_level_item()`]
     index_from_item(item: *TreeWidgetItemType, column: i32) -> ModelIndex,
     /// 
     /// Returns the QModelIndex associated with the given *item* in the given *column.*
     /// 
     /// **Note**: In Qt versions prior to 5.7, this function took a non- `const` *item.*
     /// 
-    /// **See also:** itemFromIndex()
-    /// topLevelItem()
-    index_from_item(item: *TreeWidgetItemType, column: i32) -> ModelIndex,
+    /// **See also:** [`item_from_index()`]
+    /// [`top_level_item()`]
+    [org_name(indexFromItem)]
+    index_from_item_2(item: *TreeWidgetItemType, column: i32) -> ModelIndex,
     /// 
     /// Returns a pointer to the QTreeWidgetItem associated with the given *index.*
     /// 
-    /// **See also:** indexFromItem()
+    /// **See also:** [`index_from_item()`]
     item_from_index(index: &ModelIndexType) -> TreeWidgetItem?,
     /// 
     [event] drop_event(event: *DropEventType),

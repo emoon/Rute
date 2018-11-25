@@ -46,39 +46,15 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QFrame)]
-enum Shape {
-    NoFrame,
-    Box,
-    Panel,
-    WinPanel,
-    HLine,
-    VLine,
-    StyledPanel,
-}
-
-[org_name(QFrame)]
-enum Shadow {
-    Plain,
-    Raised,
-    Sunken,
-}
-
-[org_name(QFrame)]
-enum StyleMask {
-    Shadow_Mask,
-    Shape_Mask,
-}
-
 struct Frame : Widget {
     /// 
     /// Returns the frame style.
     /// 
     /// The default value is QFrame::Plain.
     /// 
-    /// **See also:** setFrameStyle()
-    /// frameShape()
-    /// frameShadow()
+    /// **See also:** [`set_frame_style()`]
+    /// [`frame_shape()`]
+    /// [`frame_shadow()`]
     frame_style() -> i32,
     /// 
     /// Sets the frame style to *style.*
@@ -101,7 +77,7 @@ struct Frame : Widget {
     /// frames. The mid-color of the current color group is used for
     /// drawing middle lines.
     /// 
-    /// **See also:** frameStyle()
+    /// **See also:** [`frame_style()`]
     set_frame_style(arg0: i32),
     /// 
     /// Note that the frame width depends on the [frame style](QFrame::setFrameStyle())
@@ -112,20 +88,20 @@ struct Frame : Widget {
     /// has a
     /// frame width equivalent to the line width.
     /// 
-    /// **See also:** lineWidth()
-    /// midLineWidth()
-    /// frameStyle()
+    /// **See also:** [`line_width()`]
+    /// [`mid_line_width()`]
+    /// [`frame_style()`]
     frame_width() -> i32,
     /// 
     [event] size_hint() -> Size,
     /// 
-    /// **See also:** frameStyle()
-    /// frameShadow()
+    /// **See also:** [`frame_style()`]
+    /// [`frame_shadow()`]
     frame_shape() -> Frame::Shape,
     set_frame_shape(arg0: Frame::Shape),
     /// 
-    /// **See also:** frameStyle()
-    /// frameShape()
+    /// **See also:** [`frame_style()`]
+    /// [`frame_shape()`]
     frame_shadow() -> Frame::Shadow,
     set_frame_shadow(arg0: Frame::Shadow),
     /// 
@@ -171,8 +147,48 @@ struct Frame : Widget {
     /// useful for subclasses when they need a QStyleOptionFrame but don't want to
     /// fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionFrameType),
+}
+
+[org_name(QFrame)]
+enum Shape {
+    /// QFrame draws nothing
+    NoFrame,
+    /// QFrame draws a box around its contents
+    Box,
+    /// QFrame draws a panel to make the contents appear raised or sunken
+    Panel,
+    /// draws a rectangular panel that can be raised or sunken like those in Windows 2000. Specifying this shape sets the line width to 2 pixels. WinPanel is provided for compatibility. For GUI style independence we recommend using StyledPanel instead. When it does not call QStyle, Shape interacts with QFrame::Shadow, the lineWidth() and the midLineWidth() to create the total result. See the picture of the frames in the main class documentation.
+    WinPanel,
+    /// QFrame draws a horizontal line that frames nothing (useful as separator)
+    HLine,
+    /// QFrame draws a vertical line that frames nothing (useful as separator)
+    VLine,
+    /// draws a rectangular panel with a look that depends on the current GUI style. It can be raised or sunken.
+    StyledPanel,
+}
+
+[org_name(QFrame)]
+enum Shadow {
+    /// the frame and contents appear level with the surroundings; draws using the palette QPalette::WindowText color (without any 3D effect)
+    Plain,
+    /// the frame and contents appear raised; draws a 3D raised line using the light and dark colors of the current color group
+    Raised,
+    /// the frame and contents appear sunken; draws a 3D sunken line using the light and dark colors of the current color group Shadow interacts with QFrame::Shape, the lineWidth() and the midLineWidth(). See the picture of the frames in the main class documentation.
+    Sunken,
+}
+
+[org_name(QFrame)]
+enum StyleMask {
+    /// The [Shadow](Shadow)
+ part of frameStyle()
+    Shadow_Mask,
+    /// The [Shape](Shape)
+ part of frameStyle() Normally, you don't need to use these, since frameShadow() and frameShape() already extract the [Shadow](Shadow)
+ and the [Shape](Shape)
+ parts of frameStyle().
+    Shape_Mask,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

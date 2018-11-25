@@ -11,29 +11,21 @@
 /// containing frame's width, or by a variable width that allows it to take
 /// up just the space it requires.
 /// 
-/// **See also:** QTextTable
+/// **See also:** [`TextTable`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTextLength)]
-enum Type {
-    VariableLength,
-    FixedLength,
-    PercentageLength,
-}
-
-
 struct TextLength {
     /// 
     /// Returns the type of this length object.
     /// 
-    /// **See also:** QTextLength::Type
+    /// **See also:** [`TextLength::type()`]
     type() -> TextLength::Type,
     /// 
     /// Returns the effective length, constrained by the type of the length object
     /// and the specified *maximumLength.*
     /// 
-    /// **See also:** type()
+    /// **See also:** [`type()`]
     value(maximum_length: f32) -> f32,
     /// 
     /// Returns the constraint value that is specific for the type of the length.
@@ -41,6 +33,16 @@ struct TextLength {
     /// percent, in the range of 0 to 100. If the length is QTextLength::FixedLength
     /// then that fixed amount is returned. For variable lengths, zero is returned.
     raw_value() -> f32,
+}
+
+[org_name(QTextLength)]
+enum Type {
+    /// The width of the object is variable
+    VariableLength,
+    /// The width of the object is fixed
+    FixedLength,
+    /// The width of the object is in percentage of the maximum width
+    PercentageLength,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

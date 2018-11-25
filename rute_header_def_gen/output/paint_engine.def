@@ -18,114 +18,39 @@
 /// 
 /// QPaintEngine is created and owned by the QPaintDevice that created it.
 /// 
-/// **See also:** QPainter
-/// QPaintDevice::paintEngine()
+/// **See also:** [`Painter`]
+/// [`PaintDevice::paint_engine`]
 /// {Paint System}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QPaintEngine)]
-enum PaintEngineFeature {
-    PrimitiveTransform,
-    PatternTransform,
-    PixmapTransform,
-    PatternBrush,
-    LinearGradientFill,
-    RadialGradientFill,
-    ConicalGradientFill,
-    AlphaBlend,
-    PorterDuff,
-    PainterPaths,
-    Antialiasing,
-    BrushStroke,
-    ConstantOpacity,
-    MaskedBrush,
-    PerspectiveTransform,
-    BlendModes,
-    ObjectBoundingModeGradients,
-    RasterOpModes,
-    PaintOutsidePaintEvent,
-    AllFeatures,
-}
-
-[org_name(QPaintEngine)]
-enum DirtyFlag {
-    DirtyPen,
-    DirtyBrush,
-    DirtyBrushOrigin,
-    DirtyFont,
-    DirtyBackground,
-    DirtyBackgroundMode,
-    DirtyTransform,
-    DirtyClipRegion,
-    DirtyClipPath,
-    DirtyHints,
-    DirtyCompositionMode,
-    DirtyClipEnabled,
-    DirtyOpacity,
-    AllDirty,
-}
-
-[org_name(QPaintEngine)]
-enum PolygonDrawMode {
-    OddEvenMode,
-    WindingMode,
-    ConvexMode,
-    PolylineMode,
-}
-
-[org_name(QPaintEngine)]
-enum Type {
-    X11,
-    Windows,
-    QuickDraw,
-    CoreGraphics,
-    MacPrinter,
-    QWindowSystem,
-    PostScript,
-    OpenGL,
-    Picture,
-    SVG,
-    Raster,
-    Direct3D,
-    Pdf,
-    OpenVG,
-    OpenGL2,
-    PaintBuffer,
-    Blitter,
-    Direct2D,
-    User,
-    MaxUser,
-}
-
-
 struct PaintEngine {
     /// 
     /// Returns `true` if the paint engine is actively drawing; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** setActive()
+    /// **See also:** [`set_active()`]
     is_active() -> bool,
     /// 
     /// Sets the active state of the paint engine to *state.*
     /// 
-    /// **See also:** isActive()
+    /// **See also:** [`is_active()`]
     set_active(new_state: bool),
     /// 
     /// Reimplement this function to initialise your paint engine when
     /// painting is to start on the paint device *pdev.* Return true if
     /// the initialization was successful; otherwise return false.
     /// 
-    /// **See also:** end()
-    /// isActive()
+    /// **See also:** [`end()`]
+    /// [`is_active()`]
     [event] begin(pdev: *PaintDeviceType) -> bool,
     /// 
     /// Reimplement this function to finish painting on the current paint
     /// device. Return true if painting was finished successfully;
     /// otherwise return false.
     /// 
-    /// **See also:** begin()
-    /// isActive()
+    /// **See also:** [`begin()`]
+    /// [`is_active()`]
     [event] end() -> bool,
     /// 
     /// Reimplement this function to update the state of a paint engine.
@@ -138,7 +63,7 @@ struct PaintEngine {
     /// to retrieve the current values for
     /// the given properties.
     /// 
-    /// **See also:** QPaintEngineState
+    /// **See also:** [`PaintEngineState`]
     [event] update_state(state: &PaintEngineStateType),
     /// 
     /// **Overloads**
@@ -157,7 +82,8 @@ struct PaintEngine {
     /// 
     /// Draws the first *rectCount* rectangles in the buffer *rects.* The default implementation of this function calls drawPath()
     /// or drawPolygon() depending on the feature set of the paint engine.
-    [event] draw_rects(rects: *RectFType, rect_count: i32),
+    [org_name(drawRects)]
+    [event] draw_rects_2(rects: *RectFType, rect_count: i32),
     /// 
     /// The default implementation splits the list of lines in *lines*
     /// into *lineCount* separate calls to drawPath() or drawPolygon()
@@ -177,7 +103,8 @@ struct PaintEngine {
     /// The default implementation converts the first *lineCount* lines
     /// in *lines* to a QLineF and calls the floating point version of
     /// this function.
-    [event] draw_lines(lines: *LineFType, line_count: i32),
+    [org_name(drawLines)]
+    [event] draw_lines_2(lines: *LineFType, line_count: i32),
     /// 
     /// Reimplement this function to draw the largest ellipse that can be
     /// contained within rectangle *rect.*
@@ -195,7 +122,8 @@ struct PaintEngine {
     /// 
     /// The default implementation of this function calls the floating
     /// point version of this function
-    [event] draw_ellipse(r: &RectType),
+    [org_name(drawEllipse)]
+    [event] draw_ellipse_2(r: &RectType),
     /// 
     /// The default implementation ignores the *path* and does nothing.
     [event] draw_path(path: &PainterPathType),
@@ -216,7 +144,8 @@ struct PaintEngine {
     /// The default implementation converts the first *pointCount* QPoints in *points*
     /// to QPointFs and calls the floating point version of drawPoints.
     /// 
-    [event] draw_points(points: *PointType, point_count: i32),
+    [org_name(drawPoints)]
+    [event] draw_points_2(points: *PointType, point_count: i32),
     /// 
     /// PolygonDrawMode mode)
     /// 
@@ -244,7 +173,8 @@ struct PaintEngine {
     /// *pointCount* first points in *points,* using mode *mode.*
     /// 
     /// **Note**: At least one of the drawPolygon() functions must be reimplemented.
-    [event] draw_polygon(points: *PointType, point_count: i32, mode: PaintEngine::PolygonDrawMode),
+    [org_name(drawPolygon)]
+    [event] draw_polygon_2(points: *PointType, point_count: i32, mode: PaintEngine::PolygonDrawMode),
     /// 
     /// &pm, const QRectF &sr)
     /// 
@@ -293,6 +223,138 @@ struct PaintEngine {
     painter() -> Painter?,
     sync_state(),
     is_extended() -> bool,
+}
+
+[org_name(QPaintEngine)]
+enum PaintEngineFeature {
+    /// The engine has support for transforming drawing primitives.
+    PrimitiveTransform,
+    /// The engine has support for transforming brush patterns.
+    PatternTransform,
+    /// The engine can transform pixmaps, including rotation and shearing.
+    PixmapTransform,
+    /// The engine is capable of rendering brushes with the brush patterns specified in Qt::BrushStyle.
+    PatternBrush,
+    /// The engine supports linear gradient fills.
+    LinearGradientFill,
+    /// The engine supports radial gradient fills.
+    RadialGradientFill,
+    /// The engine supports conical gradient fills.
+    ConicalGradientFill,
+    /// The engine can alpha blend primitives.
+    AlphaBlend,
+    /// The engine supports Porter-Duff operations
+    PorterDuff,
+    /// The engine has path support.
+    PainterPaths,
+    /// The engine can use antialising to improve the appearance of rendered primitives.
+    Antialiasing,
+    /// The engine supports drawing strokes that contain brushes as fills, not just solid colors (e.g. a dashed gradient line of width 2).
+    BrushStroke,
+    /// The engine supports the feature provided by QPainter::setOpacity().
+    ConstantOpacity,
+    /// The engine is capable of rendering brushes that has a texture with an alpha channel or a mask.
+    MaskedBrush,
+    /// The engine has support for performing perspective transformations on primitives.
+    PerspectiveTransform,
+    /// The engine supports blending modes.
+    BlendModes,
+    /// The engine has native support for gradients with coordinate mode QGradient::ObjectBoundingMode. Otherwise, if QPaintEngine::PatternTransform is supported, object bounding mode gradients are converted to gradients with coordinate mode QGradient::LogicalMode and a brush transform for the coordinate mapping.
+    ObjectBoundingModeGradients,
+    /// The engine supports bitwise raster operations.
+    RasterOpModes,
+    /// The engine is capable of painting outside of paint events.
+    PaintOutsidePaintEvent,
+    /// All of the above features. This enum value is usually used as a bit mask.
+    AllFeatures,
+}
+
+[org_name(QPaintEngine)]
+enum DirtyFlag {
+    /// The pen is dirty and needs to be updated.
+    DirtyPen,
+    /// The brush is dirty and needs to be updated.
+    DirtyBrush,
+    /// The brush origin is dirty and needs to updated.
+    DirtyBrushOrigin,
+    /// The font is dirty and needs to be updated.
+    DirtyFont,
+    /// The background is dirty and needs to be updated.
+    DirtyBackground,
+    /// The background mode is dirty and needs to be updated.
+    DirtyBackgroundMode,
+    /// The transform is dirty and needs to be updated.
+    DirtyTransform,
+    /// The clip region is dirty and needs to be updated.
+    DirtyClipRegion,
+    /// The clip path is dirty and needs to be updated.
+    DirtyClipPath,
+    /// The render hints is dirty and needs to be updated.
+    DirtyHints,
+    /// The composition mode is dirty and needs to be updated.
+    DirtyCompositionMode,
+    /// Whether clipping is enabled or not is dirty and needs to be updated.
+    DirtyClipEnabled,
+    /// The constant opacity has changed and needs to be updated as part of the state change in QPaintEngine::updateState().
+    DirtyOpacity,
+    /// Convenience enum used internally. These types are used by QPainter to trigger lazy updates of the various states in the QPaintEngine using QPaintEngine::updateState(). A paint engine must update every dirty state.
+    AllDirty,
+}
+
+[org_name(QPaintEngine)]
+enum PolygonDrawMode {
+    /// The polygon should be drawn using OddEven fill rule.
+    OddEvenMode,
+    /// The polygon should be drawn using Winding fill rule.
+    WindingMode,
+    /// The polygon is a convex polygon and can be drawn using specialized algorithms where available.
+    ConvexMode,
+    /// Only the outline of the polygon should be drawn.
+    PolylineMode,
+}
+
+[org_name(QPaintEngine)]
+enum Type {
+    /// 
+    X11,
+    /// 
+    Windows,
+    /// MacOS 's QuickDraw
+    QuickDraw,
+    /// MacOS 's Quartz2D (CoreGraphics)
+    CoreGraphics,
+    /// 
+    MacPrinter,
+    /// Qt for Embedded Linux
+    QWindowSystem,
+    /// (No longer supported)
+    PostScript,
+    /// 
+    OpenGL,
+    /// QPicture format
+    Picture,
+    /// Scalable Vector Graphics XML format
+    SVG,
+    /// 
+    Raster,
+    /// Windows only, Direct3D based engine
+    Direct3D,
+    /// Portable Document Format
+    Pdf,
+    /// 
+    OpenVG,
+    /// 
+    OpenGL2,
+    /// 
+    PaintBuffer,
+    /// 
+    Blitter,
+    /// Windows only, Direct2D based engine
+    Direct2D,
+    /// First user type ID
+    User,
+    /// Last user type ID
+    MaxUser,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

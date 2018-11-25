@@ -127,71 +127,17 @@
 /// If no full packet is received, this code restores the stream to the
 /// initial position, after which you need to wait for more data to arrive.
 /// 
-/// **See also:** QTextStream
-/// QVariant
+/// **See also:** [`TextStream`]
+/// [`Variant`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QDataStream)]
-enum Version {
-    Qt_1_0,
-    Qt_2_0,
-    Qt_2_1,
-    Qt_3_0,
-    Qt_3_1,
-    Qt_3_3,
-    Qt_4_0,
-    Qt_4_1,
-    Qt_4_2,
-    Qt_4_3,
-    Qt_4_4,
-    Qt_4_5,
-    Qt_4_6,
-    Qt_4_7,
-    Qt_4_8,
-    Qt_4_9,
-    Qt_5_0,
-    Qt_5_1,
-    Qt_5_2,
-    Qt_5_3,
-    Qt_5_4,
-    Qt_5_5,
-    Qt_5_6,
-    Qt_5_7,
-    Qt_5_8,
-    Qt_5_9,
-    Qt_5_10,
-    Qt_5_11,
-    Qt_DefaultCompiledVersion,
-}
-
-[org_name(QDataStream)]
-enum ByteOrder {
-    BigEndian,
-    LittleEndian,
-}
-
-[org_name(QDataStream)]
-enum Status {
-    Ok,
-    ReadPastEnd,
-    ReadCorruptData,
-    WriteFailed,
-}
-
-[org_name(QDataStream)]
-enum FloatingPointPrecision {
-    SinglePrecision,
-    DoublePrecision,
-}
-
-
 struct DataStream {
     /// 
     /// Returns the I/O device currently set, or 0 if no
     /// device is currently set.
     /// 
-    /// **See also:** setDevice()
+    /// **See also:** [`set_device()`]
     device() -> IODevice?,
     /// 
     /// void QDataStream::setDevice(QIODevice *d)
@@ -199,7 +145,7 @@ struct DataStream {
     /// Sets the I/O device to *d,* which can be 0
     /// to unset to current I/O device.
     /// 
-    /// **See also:** device()
+    /// **See also:** [`device()`]
     set_device(arg0: *IODeviceType),
     /// 
     /// Unsets the I/O device.
@@ -210,14 +156,14 @@ struct DataStream {
     /// the stream or file) or if there is no I/O device set; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** QIODevice::atEnd()
+    /// **See also:** [`IODevice::at_end`]
     at_end() -> bool,
     /// 
     /// Returns the status of the data stream.
     /// 
     /// **See also:** Status
-    /// setStatus()
-    /// resetStatus()
+    /// [`set_status()`]
+    /// [`reset_status()`]
     status() -> DataStream::Status,
     /// 
     /// Sets the status of the data stream to the *status* given.
@@ -226,21 +172,21 @@ struct DataStream {
     /// is called.
     /// 
     /// **See also:** Status
-    /// status()
-    /// resetStatus()
+    /// [`status()`]
+    /// [`reset_status()`]
     set_status(status: DataStream::Status),
     /// 
     /// Resets the status of the data stream.
     /// 
     /// **See also:** Status
-    /// status()
-    /// setStatus()
+    /// [`status()`]
+    /// [`set_status()`]
     reset_status(),
     /// 
     /// Returns the floating point precision of the data stream.
     /// 
     /// **See also:** FloatingPointPrecision
-    /// setFloatingPointPrecision()
+    /// [`set_floating_point_precision()`]
     floating_point_precision() -> DataStream::FloatingPointPrecision,
     /// 
     /// Sets the floating point precision of the data stream to *precision.* If the floating point precision is
@@ -265,7 +211,7 @@ struct DataStream {
     /// Returns the current byte order setting -- either BigEndian or
     /// LittleEndian.
     /// 
-    /// **See also:** setByteOrder()
+    /// **See also:** [`set_byte_order()`]
     byte_order() -> DataStream::ByteOrder,
     /// 
     /// Sets the serialization byte order to *bo.*
@@ -276,12 +222,12 @@ struct DataStream {
     /// The default setting is big endian. We recommend leaving this
     /// setting unless you have special requirements.
     /// 
-    /// **See also:** byteOrder()
+    /// **See also:** [`byte_order()`]
     set_byte_order(arg0: DataStream::ByteOrder),
     /// 
     /// Returns the version number of the data serialization format.
     /// 
-    /// **See also:** setVersion()
+    /// **See also:** [`set_version()`]
     /// Version
     version() -> i32,
     /// 
@@ -306,7 +252,7 @@ struct DataStream {
     /// enum provides symbolic constants for the different
     /// versions of Qt. For example:
     /// 
-    /// **See also:** version()
+    /// **See also:** [`version()`]
     /// Version
     set_version(arg0: i32),
     /// 
@@ -323,8 +269,8 @@ struct DataStream {
     /// The serialization format is a quint32 length specifier first,
     /// then *l* bytes of data.
     /// 
-    /// **See also:** readRawData()
-    /// writeBytes()
+    /// **See also:** [`read_raw_data()`]
+    /// [`write_bytes()`]
     read_bytes(arg0: &*char, len: &uint) -> DataStream?,
     /// 
     /// Reads at most *len* bytes from the stream into *s* and returns the number of
@@ -332,9 +278,9 @@ struct DataStream {
     /// 
     /// The buffer *s* must be preallocated. The data is *not* decoded.
     /// 
-    /// **See also:** readBytes()
-    /// QIODevice::read()
-    /// writeRawData()
+    /// **See also:** [`read_bytes()`]
+    /// [`IODevice::read`]
+    /// [`write_raw_data()`]
     read_raw_data(arg0: *char, len: i32) -> i32,
     /// 
     /// Writes the length specifier *len* and the buffer *s* to the
@@ -343,17 +289,17 @@ struct DataStream {
     /// The *len* is serialized as a quint32, followed by *len* bytes
     /// from *s.* Note that the data is *not* encoded.
     /// 
-    /// **See also:** writeRawData()
-    /// readBytes()
+    /// **See also:** [`write_raw_data()`]
+    /// [`read_bytes()`]
     write_bytes(arg0: *char, len: uint) -> DataStream?,
     /// 
     /// Writes *len* bytes from *s* to the stream. Returns the
     /// number of bytes actually written, or -1 on error.
     /// The data is *not* encoded.
     /// 
-    /// **See also:** writeBytes()
-    /// QIODevice::write()
-    /// readRawData()
+    /// **See also:** [`write_bytes()`]
+    /// [`IODevice::write`]
+    /// [`read_raw_data()`]
     write_raw_data(arg0: *char, len: i32) -> i32,
     /// 
     /// Skips *len* bytes from the device. Returns the number of bytes
@@ -362,7 +308,7 @@ struct DataStream {
     /// This is equivalent to calling readRawData() on a buffer of length
     /// *len* and ignoring the buffer.
     /// 
-    /// **See also:** QIODevice::seek()
+    /// **See also:** [`IODevice::seek`]
     skip_raw_data(len: i32) -> i32,
     /// 
     /// Starts a new read transaction on the stream.
@@ -389,9 +335,9 @@ struct DataStream {
     /// state. This behavior makes it unnecessary to error-check every read
     /// operation separately.
     /// 
-    /// **See also:** commitTransaction()
-    /// rollbackTransaction()
-    /// abortTransaction()
+    /// **See also:** [`commit_transaction()`]
+    /// [`rollback_transaction()`]
+    /// [`abort_transaction()`]
     start_transaction(),
     /// 
     /// Completes a read transaction. Returns `true` if no read errors have
@@ -408,9 +354,9 @@ struct DataStream {
     /// stream has read corrupt data or any of the inner transactions was aborted,
     /// this function aborts the transaction.
     /// 
-    /// **See also:** startTransaction()
-    /// rollbackTransaction()
-    /// abortTransaction()
+    /// **See also:** [`start_transaction()`]
+    /// [`rollback_transaction()`]
+    /// [`abort_transaction()`]
     commit_transaction() -> bool,
     /// 
     /// Reverts a read transaction.
@@ -429,9 +375,9 @@ struct DataStream {
     /// 
     /// If the preceding stream operations were successful, sets the status of the
     /// data stream to
-    /// **See also:** startTransaction()
-    /// commitTransaction()
-    /// abortTransaction()
+    /// **See also:** [`start_transaction()`]
+    /// [`commit_transaction()`]
+    /// [`abort_transaction()`]
     rollback_transaction(),
     /// 
     /// Aborts a read transaction.
@@ -448,10 +394,99 @@ struct DataStream {
     /// read position of the stream.
     /// 
     /// Sets the status of the data stream to
-    /// **See also:** startTransaction()
-    /// commitTransaction()
-    /// rollbackTransaction()
+    /// **See also:** [`start_transaction()`]
+    /// [`commit_transaction()`]
+    /// [`rollback_transaction()`]
     abort_transaction(),
+}
+
+[org_name(QDataStream)]
+enum Version {
+    /// Version 1 (Qt 1.x)
+    Qt_1_0,
+    /// Version 2 (Qt 2.0)
+    Qt_2_0,
+    /// Version 3 (Qt 2.1, 2.2, 2.3)
+    Qt_2_1,
+    /// Version 4 (Qt 3.0)
+    Qt_3_0,
+    /// Version 5 (Qt 3.1, 3.2)
+    Qt_3_1,
+    /// Version 6 (Qt 3.3)
+    Qt_3_3,
+    /// Version 7 (Qt 4.0, Qt 4.1)
+    Qt_4_0,
+    /// Version 7 (Qt 4.0, Qt 4.1)
+    Qt_4_1,
+    /// Version 8 (Qt 4.2)
+    Qt_4_2,
+    /// Version 9 (Qt 4.3)
+    Qt_4_3,
+    /// Version 10 (Qt 4.4)
+    Qt_4_4,
+    /// Version 11 (Qt 4.5)
+    Qt_4_5,
+    /// Version 12 (Qt 4.6, Qt 4.7, Qt 4.8)
+    Qt_4_6,
+    /// Same as Qt_4_6.
+    Qt_4_7,
+    /// Same as Qt_4_6.
+    Qt_4_8,
+    /// Same as Qt_4_6.
+    Qt_4_9,
+    /// Version 13 (Qt 5.0)
+    Qt_5_0,
+    /// Version 14 (Qt 5.1)
+    Qt_5_1,
+    /// Version 15 (Qt 5.2)
+    Qt_5_2,
+    /// Same as Qt_5_2
+    Qt_5_3,
+    /// Version 16 (Qt 5.4)
+    Qt_5_4,
+    /// Same as Qt_5_4
+    Qt_5_5,
+    /// Version 17 (Qt 5.6)
+    Qt_5_6,
+    /// Same as Qt_5_6
+    Qt_5_7,
+    /// Same as Qt_5_6
+    Qt_5_8,
+    /// Same as Qt_5_6
+    Qt_5_9,
+    /// Same as Qt_5_6
+    Qt_5_10,
+    /// Same as Qt_5_6
+    Qt_5_11,
+    Qt_DefaultCompiledVersion,
+}
+
+[org_name(QDataStream)]
+enum ByteOrder {
+    /// Most significant byte first (the default)
+    BigEndian,
+    /// Least significant byte first
+    LittleEndian,
+}
+
+[org_name(QDataStream)]
+enum Status {
+    /// The data stream is operating normally.
+    Ok,
+    /// The data stream has read past the end of the data in the underlying device.
+    ReadPastEnd,
+    /// The data stream has read corrupt data.
+    ReadCorruptData,
+    /// The data stream cannot write to the underlying device.
+    WriteFailed,
+}
+
+[org_name(QDataStream)]
+enum FloatingPointPrecision {
+    /// All floating point numbers in the data stream have 32-bit precision.
+    SinglePrecision,
+    /// All floating point numbers in the data stream have 64-bit precision.
+    DoublePrecision,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

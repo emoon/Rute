@@ -311,21 +311,14 @@
 /// * Call QWidget::winId to enforce a native window (this implies 3).
 /// * Set the Qt::WA_PaintOnScreen attribute to enforce a native window (this implies 3).
 /// 
-/// **See also:** QEvent
-/// QPainter
-/// QGridLayout
-/// QBoxLayout
+/// **See also:** [`Event`]
+/// [`Painter`]
+/// [`GridLayout`]
+/// [`BoxLayout`]
 /// 
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QWidget)]
-enum RenderFlag {
-    DrawWindowBackground,
-    DrawChildren,
-    IgnoreMask,
-}
-
 struct Widget : Object, PaintDevice {
     [event] dev_type() -> i32,
     /// 
@@ -340,7 +333,7 @@ struct Widget : Object, PaintDevice {
     /// This value may change at run-time. An event with type QEvent::WinIdChange
     /// will be sent to the widget following a change in window system identifier.
     /// 
-    /// **See also:** find()
+    /// **See also:** [`find()`]
     win_id() -> WId,
     create_win_id(),
     internal_win_id() -> WId,
@@ -355,7 +348,7 @@ struct Widget : Object, PaintDevice {
     /// **Note**: We recommend that you do not store this value as it is likely to
     /// change at run-time.
     /// 
-    /// **See also:** nativeParentWidget()
+    /// **See also:** [`native_parent_widget()`]
     effective_win_id() -> WId,
     /// 
     /// The style sheet contains a textual description of customizations to the
@@ -367,13 +360,13 @@ struct Widget : Object, PaintDevice {
     /// **Warning**: Qt style sheets are currently not supported for custom QStyle
     /// subclasses. We plan to address this in some future release.
     /// 
-    /// **See also:** setStyle()
-    /// QApplication::styleSheet
+    /// **See also:** [`set_style()`]
+    /// [`Application::style_sheet()`]
     /// {Qt Style Sheets}
     /// 
-    /// **See also:** QWidget::setStyle()
-    /// QApplication::setStyle()
-    /// QApplication::style()
+    /// **See also:** [`Widget::set_style`]
+    /// [`Application::set_style`]
+    /// [`Application::style`]
     style() -> Style?,
     /// 
     /// Sets the widget's GUI style to *style.* The ownership of the style
@@ -393,10 +386,10 @@ struct Widget : Object, PaintDevice {
     /// **Warning**: Qt style sheets are currently not supported for custom QStyle
     /// subclasses. We plan to address this in some future release.
     /// 
-    /// **See also:** style()
-    /// QStyle
-    /// QApplication::style()
-    /// QApplication::setStyle()
+    /// **See also:** [`style()`]
+    /// [`Style`]
+    /// [`Application::style`]
+    /// [`Application::set_style`]
     set_style(arg0: *StyleType),
     /// 
     /// Use isWindow() instead.
@@ -421,9 +414,9 @@ struct Widget : Object, PaintDevice {
     /// parent widget is specified in the constructor. This behavior is
     /// specified by the Qt::Window flag.
     /// 
-    /// **See also:** window()
-    /// isModal()
-    /// parentWidget()
+    /// **See also:** [`window()`]
+    /// [`is_modal()`]
+    /// [`parent_widget()`]
     is_window() -> bool,
     is_modal() -> bool,
     /// 
@@ -435,9 +428,9 @@ struct Widget : Object, PaintDevice {
     /// 
     /// By default, this property is Qt::NonModal.
     /// 
-    /// **See also:** isWindow()
-    /// QWidget::modal
-    /// QDialog
+    /// **See also:** [`is_window()`]
+    /// [`Widget::modal()`]
+    /// [`Dialog`]
     window_modality() -> Rute::WindowModality,
     set_window_modality(window_modality: Rute::WindowModality),
     /// 
@@ -455,7 +448,7 @@ struct Widget : Object, PaintDevice {
     /// Therefore isEnabledTo(0) stops at this widget's window, unlike
     /// isEnabled() which also takes parent windows into considerations.
     /// 
-    /// **See also:** setEnabled()
+    /// **See also:** [`set_enabled()`]
     /// enabled
     /// 
     /// This function is deprecated. It is equivalent to isEnabled()
@@ -475,7 +468,7 @@ struct Widget : Object, PaintDevice {
     /// Therefore isEnabledTo(0) stops at this widget's window, unlike
     /// isEnabled() which also takes parent windows into considerations.
     /// 
-    /// **See also:** setEnabled()
+    /// **See also:** [`set_enabled()`]
     /// enabled
     /// 
     /// This function is deprecated. It is equivalent to isEnabled()
@@ -491,10 +484,10 @@ struct Widget : Object, PaintDevice {
     /// See the [enabled](enabled)
     /// documentation for more information.
     /// 
-    /// **See also:** isEnabledTo()
-    /// QKeyEvent
-    /// QMouseEvent
-    /// changeEvent()
+    /// **See also:** [`is_enabled_to()`]
+    /// [`KeyEvent`]
+    /// [`MouseEvent`]
+    /// [`change_event()`]
     set_disabled(arg0: bool),
     set_window_modified(arg0: bool),
     /// 
@@ -540,8 +533,8 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **See also:** frameGeometry
     /// size
-    /// x()
-    /// y()
+    /// [`x()`]
+    /// [`y()`]
     pos() -> Point,
     /// 
     /// By default, this property contains a value that depends on the user's
@@ -568,8 +561,8 @@ struct Widget : Object, PaintDevice {
     /// geometry
     /// minimumSize
     /// maximumSize
-    /// resizeEvent()
-    /// adjustSize()
+    /// [`resize_event()`]
+    /// [`adjust_size()`]
     /// 
     /// When the user resizes the window, the size will move in steps of
     /// sizeIncrement().width() pixels horizontally and
@@ -596,11 +589,11 @@ struct Widget : Object, PaintDevice {
     /// if there is no layout for this widget, and returns the layout's
     /// preferred size otherwise.
     /// 
-    /// **See also:** QSize::isValid()
-    /// minimumSizeHint()
-    /// sizePolicy()
-    /// setMinimumSize()
-    /// updateGeometry()
+    /// **See also:** [`Size::is_valid`]
+    /// [`minimum_size_hint()`]
+    /// [`size_policy()`]
+    /// [`set_minimum_size()`]
+    /// [`update_geometry()`]
     /// 
     /// If there is a QLayout that manages this widget's children, the
     /// size policy specified by that layout is used. If there is no such
@@ -621,10 +614,10 @@ struct Widget : Object, PaintDevice {
     /// use additional space, and that they can make do with less than
     /// sizeHint().
     /// 
-    /// **See also:** sizeHint()
-    /// QLayout
-    /// QSizePolicy
-    /// updateGeometry()
+    /// **See also:** [`size_hint()`]
+    /// [`Layout`]
+    /// [`SizePolicy`]
+    /// [`update_geometry()`]
     size() -> Size,
     /// 
     /// See the [Window Geometry](Window%20Geometry)
@@ -687,8 +680,8 @@ struct Widget : Object, PaintDevice {
     /// By default, for a widget with no children, this property contains a
     /// rectangle with zero width and height located at the origin.
     /// 
-    /// **See also:** childrenRegion()
-    /// geometry()
+    /// **See also:** [`children_region()`]
+    /// [`geometry()`]
     children_rect() -> Rect,
     /// 
     /// Hidden children are excluded.
@@ -696,9 +689,9 @@ struct Widget : Object, PaintDevice {
     /// By default, for a widget with no children, this property contains an
     /// empty region.
     /// 
-    /// **See also:** childrenRect()
-    /// geometry()
-    /// mask()
+    /// **See also:** [`children_rect()`]
+    /// [`geometry()`]
+    /// [`mask()`]
     children_region() -> Region,
     /// 
     /// The widget cannot be resized to a smaller size than the minimum
@@ -730,10 +723,10 @@ struct Widget : Object, PaintDevice {
     /// set to QSizePolicy::Ignore. If minimumSize() is set, the minimum
     /// size hint will be ignored.
     /// 
-    /// **See also:** QSize::isValid()
-    /// resize()
-    /// setMinimumSize()
-    /// sizePolicy()
+    /// **See also:** [`Size::is_valid`]
+    /// [`resize()`]
+    /// [`set_minimum_size()`]
+    /// [`size_policy()`]
     minimum_size() -> Size,
     /// 
     /// The widget cannot be resized to a larger size than the maximum
@@ -801,7 +794,8 @@ struct Widget : Object, PaintDevice {
     /// **Overloads**
     /// This function corresponds to setMinimumSize(QSize(minw, minh)).
     /// Sets the minimum width to *minw* and the minimum height to *minh.*
-    set_minimum_size(minw: i32, minh: i32),
+    [org_name(setMinimumSize)]
+    set_minimum_size_2(minw: i32, minh: i32),
     /// 
     /// **Overloads**
     /// This function corresponds to setMaximumSize(QSize( *maxw,* *maxh)).* Sets the maximum width to *maxw* and the maximum height
@@ -811,7 +805,8 @@ struct Widget : Object, PaintDevice {
     /// **Overloads**
     /// This function corresponds to setMaximumSize(QSize( *maxw,* *maxh)).* Sets the maximum width to *maxw* and the maximum height
     /// to *maxh.*
-    set_maximum_size(maxw: i32, maxh: i32),
+    [org_name(setMaximumSize)]
+    set_maximum_size_2(maxw: i32, maxh: i32),
     set_minimum_width(minw: i32),
     set_minimum_height(minh: i32),
     set_maximum_width(maxw: i32),
@@ -844,7 +839,8 @@ struct Widget : Object, PaintDevice {
     /// **Overloads**
     /// Sets the x (width) size increment to *w* and the y (height) size
     /// increment to *h.*
-    set_size_increment(w: i32, h: i32),
+    [org_name(setSizeIncrement)]
+    set_size_increment_2(w: i32, h: i32),
     /// 
     /// The base size is used to calculate a proper widget size if the
     /// widget defines sizeIncrement().
@@ -852,7 +848,7 @@ struct Widget : Object, PaintDevice {
     /// By default, for a newly-created widget, this property contains a size with
     /// zero width and height.
     /// 
-    /// **See also:** setSizeIncrement()
+    /// **See also:** [`set_size_increment()`]
     base_size() -> Size,
     /// 
     /// **Overloads**
@@ -863,7 +859,8 @@ struct Widget : Object, PaintDevice {
     /// **Overloads**
     /// This corresponds to setBaseSize(QSize( *basew,* *baseh)).* Sets
     /// the widgets base size to width *basew* and height *baseh.*
-    set_base_size(basew: i32, baseh: i32),
+    [org_name(setBaseSize)]
+    set_base_size_2(basew: i32, baseh: i32),
     /// 
     /// Sets both the minimum and maximum sizes of the widget to *s,*
     /// thereby preventing it from ever growing or shrinking.
@@ -899,41 +896,42 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **Overloads**
     /// Sets the width of the widget to *w* and the height to *h.*
-    set_fixed_size(w: i32, h: i32),
+    [org_name(setFixedSize)]
+    set_fixed_size_2(w: i32, h: i32),
     /// 
     /// Sets both the minimum and maximum width of the widget to *w*
     /// without changing the heights. Provided for convenience.
     /// 
-    /// **See also:** sizeHint()
-    /// minimumSize()
-    /// maximumSize()
-    /// setFixedSize()
+    /// **See also:** [`size_hint()`]
+    /// [`minimum_size()`]
+    /// [`maximum_size()`]
+    /// [`set_fixed_size()`]
     set_fixed_width(w: i32),
     /// 
     /// Sets both the minimum and maximum heights of the widget to *h*
     /// without changing the widths. Provided for convenience.
     /// 
-    /// **See also:** sizeHint()
-    /// minimumSize()
-    /// maximumSize()
-    /// setFixedSize()
+    /// **See also:** [`size_hint()`]
+    /// [`minimum_size()`]
+    /// [`maximum_size()`]
+    /// [`set_fixed_size()`]
     set_fixed_height(h: i32),
     /// 
     /// Translates the widget coordinate *pos* to global screen
     /// coordinates. For example, `mapToGlobal(QPoint(0,0))` would give
     /// the global coordinates of the top-left pixel of the widget.
     /// 
-    /// **See also:** mapFromGlobal()
-    /// mapTo()
-    /// mapToParent()
+    /// **See also:** [`map_from_global()`]
+    /// [`map_to()`]
+    /// [`map_to_parent()`]
     map_to_global(arg0: &PointType) -> Point,
     /// 
     /// Translates the global screen coordinate *pos* to widget
     /// coordinates.
     /// 
-    /// **See also:** mapToGlobal()
-    /// mapFrom()
-    /// mapFromParent()
+    /// **See also:** [`map_to_global()`]
+    /// [`map_from()`]
+    /// [`map_from_parent()`]
     map_from_global(arg0: &PointType) -> Point,
     /// 
     /// Translates the widget coordinate *pos* to a coordinate in the
@@ -941,10 +939,10 @@ struct Widget : Object, PaintDevice {
     /// 
     /// Same as mapToGlobal() if the widget has no parent.
     /// 
-    /// **See also:** mapFromParent()
-    /// mapTo()
-    /// mapToGlobal()
-    /// underMouse()
+    /// **See also:** [`map_from_parent()`]
+    /// [`map_to()`]
+    /// [`map_to_global()`]
+    /// [`under_mouse()`]
     map_to_parent(arg0: &PointType) -> Point,
     /// 
     /// Translates the parent widget coordinate *pos* to widget
@@ -952,65 +950,65 @@ struct Widget : Object, PaintDevice {
     /// 
     /// Same as mapFromGlobal() if the widget has no parent.
     /// 
-    /// **See also:** mapToParent()
-    /// mapFrom()
-    /// mapFromGlobal()
-    /// underMouse()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_from()`]
+    /// [`map_from_global()`]
+    /// [`under_mouse()`]
     map_from_parent(arg0: &PointType) -> Point,
     /// 
     /// Translates the widget coordinate *pos* to the coordinate system
     /// of *parent.* The *parent* must not be 0 and must be a parent
     /// of the calling widget.
     /// 
-    /// **See also:** mapFrom()
-    /// mapToParent()
-    /// mapToGlobal()
-    /// underMouse()
+    /// **See also:** [`map_from()`]
+    /// [`map_to_parent()`]
+    /// [`map_to_global()`]
+    /// [`under_mouse()`]
     /// 
     /// Translates the widget coordinate *pos* to a coordinate in the
     /// parent widget.
     /// 
     /// Same as mapToGlobal() if the widget has no parent.
     /// 
-    /// **See also:** mapFromParent()
-    /// mapTo()
-    /// mapToGlobal()
-    /// underMouse()
+    /// **See also:** [`map_from_parent()`]
+    /// [`map_to()`]
+    /// [`map_to_global()`]
+    /// [`under_mouse()`]
     /// 
     /// Translates the widget coordinate *pos* to global screen
     /// coordinates. For example, `mapToGlobal(QPoint(0,0))` would give
     /// the global coordinates of the top-left pixel of the widget.
     /// 
-    /// **See also:** mapFromGlobal()
-    /// mapTo()
-    /// mapToParent()
+    /// **See also:** [`map_from_global()`]
+    /// [`map_to()`]
+    /// [`map_to_parent()`]
     map_to(arg0: *WidgetType, arg1: &PointType) -> Point,
     /// 
     /// Translates the widget coordinate *pos* from the coordinate system
     /// of *parent* to this widget's coordinate system. The *parent*
     /// must not be 0 and must be a parent of the calling widget.
     /// 
-    /// **See also:** mapTo()
-    /// mapFromParent()
-    /// mapFromGlobal()
-    /// underMouse()
+    /// **See also:** [`map_to()`]
+    /// [`map_from_parent()`]
+    /// [`map_from_global()`]
+    /// [`under_mouse()`]
     /// 
     /// Translates the parent widget coordinate *pos* to widget
     /// coordinates.
     /// 
     /// Same as mapFromGlobal() if the widget has no parent.
     /// 
-    /// **See also:** mapToParent()
-    /// mapFrom()
-    /// mapFromGlobal()
-    /// underMouse()
+    /// **See also:** [`map_to_parent()`]
+    /// [`map_from()`]
+    /// [`map_from_global()`]
+    /// [`under_mouse()`]
     /// 
     /// Translates the global screen coordinate *pos* to widget
     /// coordinates.
     /// 
-    /// **See also:** mapToGlobal()
-    /// mapFrom()
-    /// mapFromParent()
+    /// **See also:** [`map_to_global()`]
+    /// [`map_from()`]
+    /// [`map_from_parent()`]
     map_from(arg0: *WidgetType, arg1: &PointType) -> Point,
     /// 
     /// If this is a native widget, return the associated QWindow.
@@ -1019,7 +1017,7 @@ struct Widget : Object, PaintDevice {
     /// Native widgets include toplevel widgets, QGLWidget, and child widgets
     /// on which winId() was called.
     /// 
-    /// **See also:** winId()
+    /// **See also:** [`win_id()`]
     /// 
     /// This property only makes sense for windows. A modal widget
     /// prevents widgets in other windows from getting input. The value of
@@ -1029,16 +1027,16 @@ struct Widget : Object, PaintDevice {
     /// 
     /// By default, this property is Qt::NonModal.
     /// 
-    /// **See also:** isWindow()
-    /// QWidget::modal
-    /// QDialog
+    /// **See also:** [`is_window()`]
+    /// [`Widget::modal()`]
+    /// [`Dialog`]
     /// 
     /// Returns the current window state. The window state is a OR'ed
     /// combination of Qt::WindowState: Qt::WindowMinimized,
     /// Qt::WindowMaximized, Qt::WindowFullScreen, and Qt::WindowActive.
     /// 
-    /// **See also:** Qt::WindowState
-    /// setWindowState()
+    /// **See also:** [`t::window_state()`]
+    /// [`set_window_state()`]
     /// 
     /// Returns the window for this widget, i.e. the next ancestor widget
     /// that has (or could have) a window-system frame.
@@ -1047,7 +1045,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// Typical usage is changing the window title:
     /// 
-    /// **See also:** isWindow()
+    /// **See also:** [`is_window()`]
     /// 
     /// This property only makes sense for top-level widgets, such as
     /// windows and dialogs. If no caption has been set, the title is based of the
@@ -1140,8 +1138,8 @@ struct Widget : Object, PaintDevice {
     /// a window, causing the widget to be hidden. You must call show() to make
     /// the widget visible again..
     /// 
-    /// **See also:** windowType()
-    /// setWindowFlag()
+    /// **See also:** [`window_type()`]
+    /// [`set_window_flag()`]
     /// {Window Flags Example}
     /// 
     /// Returns the window type of this widget. This is identical to
@@ -1167,7 +1165,7 @@ struct Widget : Object, PaintDevice {
     /// that semi-transparent windows update and resize significantly slower than
     /// opaque windows.
     /// 
-    /// **See also:** setMask()
+    /// **See also:** [`set_mask()`]
     /// 
     /// A modified window is a window whose content has changed but has
     /// not been saved to disk. This flag will have different effects
@@ -1194,7 +1192,7 @@ struct Widget : Object, PaintDevice {
     /// Returns the native parent for this widget, i.e. the next ancestor widget
     /// that has a system identifier, or 0 if it does not have any native parent.
     /// 
-    /// **See also:** effectiveWinId()
+    /// **See also:** [`effective_win_id()`]
     native_parent_widget() -> Widget?,
     /// 
     /// Use window() instead.
@@ -1249,8 +1247,8 @@ struct Widget : Object, PaintDevice {
     /// the , , ,
     /// and .
     /// 
-    /// **See also:** QApplication::palette()
-    /// QWidget::font()
+    /// **See also:** [`Application::palette`]
+    /// [`Widget::font`]
     palette() -> Palette?,
     set_palette(arg0: &PaletteType),
     /// 
@@ -1267,8 +1265,8 @@ struct Widget : Object, PaintDevice {
     /// You can modify the palette or set a style sheet if you don't
     /// achieve the result you want with setBackgroundRole().
     /// 
-    /// **See also:** backgroundRole()
-    /// foregroundRole()
+    /// **See also:** [`background_role()`]
+    /// [`foreground_role()`]
     set_background_role(arg0: Palette::ColorRole),
     /// 
     /// Returns the background role of the widget.
@@ -1280,8 +1278,8 @@ struct Widget : Object, PaintDevice {
     /// If no explicit background role is set, the widget inherts its parent
     /// widget's background role.
     /// 
-    /// **See also:** setBackgroundRole()
-    /// foregroundRole()
+    /// **See also:** [`set_background_role()`]
+    /// [`foreground_role()`]
     background_role() -> Palette::ColorRole,
     /// 
     /// Sets the foreground role of the widget to *role.*
@@ -1297,8 +1295,8 @@ struct Widget : Object, PaintDevice {
     /// You can modify the palette or set a style sheet if you don't
     /// achieve the result you want with setForegroundRole().
     /// 
-    /// **See also:** foregroundRole()
-    /// backgroundRole()
+    /// **See also:** [`foreground_role()`]
+    /// [`background_role()`]
     set_foreground_role(arg0: Palette::ColorRole),
     /// 
     /// Returns the foreground role.
@@ -1310,8 +1308,8 @@ struct Widget : Object, PaintDevice {
     /// If no explicit foreground role is set, the function returns a role
     /// that contrasts with the background role.
     /// 
-    /// **See also:** setForegroundRole()
-    /// backgroundRole()
+    /// **See also:** [`set_foreground_role()`]
+    /// [`background_role()`]
     foreground_role() -> Palette::ColorRole,
     /// 
     /// This property describes the widget's requested font. The font is used by
@@ -1354,31 +1352,31 @@ struct Widget : Object, PaintDevice {
     /// are used on the same widget as setFont(),
     /// style sheets will take precedence if the settings conflict.
     /// 
-    /// **See also:** fontInfo()
-    /// fontMetrics()
+    /// **See also:** [`font_info()`]
+    /// [`font_metrics()`]
     /// 
     /// Returns the font metrics for the widget's current font.
     /// Equivalent to `QFontMetrics(widget->font()).`
     /// 
-    /// **See also:** font()
-    /// fontInfo()
-    /// setFont()
+    /// **See also:** [`font()`]
+    /// [`font_info()`]
+    /// [`set_font()`]
     /// 
     /// Returns the font info for the widget's current font.
     /// Equivalent to `QFontInfo(widget->font()).`
     /// 
-    /// **See also:** font()
-    /// fontMetrics()
-    /// setFont()
+    /// **See also:** [`font()`]
+    /// [`font_metrics()`]
+    /// [`set_font()`]
     font() -> Font?,
     set_font(arg0: &FontType),
     /// 
     /// Returns the font info for the widget's current font.
     /// Equivalent to `QFontInfo(widget->font()).`
     /// 
-    /// **See also:** font()
-    /// fontMetrics()
-    /// setFont()
+    /// **See also:** [`font()`]
+    /// [`font_metrics()`]
+    /// [`set_font()`]
     font_info() -> FontInfo,
     /// 
     /// The mouse cursor will assume this shape when it's over this
@@ -1398,7 +1396,7 @@ struct Widget : Object, PaintDevice {
     /// a cursor set for all widgets, even when outside the window, consider
     /// QApplication::setOverrideCursor().
     /// 
-    /// **See also:** QApplication::setOverrideCursor()
+    /// **See also:** [`Application::set_override_cursor`]
     cursor() -> Cursor,
     set_cursor(arg0: &CursorType),
     unset_cursor(),
@@ -1411,8 +1409,8 @@ struct Widget : Object, PaintDevice {
     /// This value is not updated properly during drag and drop
     /// operations.
     /// 
-    /// **See also:** enterEvent()
-    /// leaveEvent()
+    /// **See also:** [`enter_event()`]
+    /// [`leave_event()`]
     under_mouse() -> bool,
     set_tablet_tracking(enable: bool),
     has_tablet_tracking() -> bool,
@@ -1446,8 +1444,8 @@ struct Widget : Object, PaintDevice {
     /// Masked widgets receive mouse events only on their visible
     /// portions.
     /// 
-    /// **See also:** clearMask()
-    /// windowOpacity()
+    /// **See also:** [`clear_mask()`]
+    /// [`window_opacity()`]
     /// {Shaped Clock Example}
     set_mask(arg0: &BitmapType),
     /// 
@@ -1480,23 +1478,24 @@ struct Widget : Object, PaintDevice {
     /// Masked widgets receive mouse events only on their visible
     /// portions.
     /// 
-    /// **See also:** clearMask()
-    /// windowOpacity()
+    /// **See also:** [`clear_mask()`]
+    /// [`window_opacity()`]
     /// {Shaped Clock Example}
-    set_mask(arg0: &RegionType),
+    [org_name(setMask)]
+    set_mask_2(arg0: &RegionType),
     /// 
     /// Returns the mask currently set on a widget. If no mask is set the
     /// return value will be an empty region.
     /// 
-    /// **See also:** setMask()
-    /// clearMask()
-    /// QRegion::isEmpty()
+    /// **See also:** [`set_mask()`]
+    /// [`clear_mask()`]
+    /// [`Region::is_empty`]
     /// {Shaped Clock Example}
     mask() -> Region,
     /// 
     /// Removes any mask set by setMask().
     /// 
-    /// **See also:** setMask()
+    /// **See also:** [`set_mask()`]
     clear_mask(),
     /// 
     /// Renders the *sourceRegion* of this widget into the *target*
@@ -1524,7 +1523,7 @@ struct Widget : Object, PaintDevice {
     /// **Note**: The *painter* must be active. On MacOS the widget will be
     /// rendered into a QPixmap and then drawn by the *painter.*
     /// 
-    /// **See also:** QPainter::device()
+    /// **See also:** [`Painter::device`]
     render(target: *PaintDeviceType, target_offset: &PointType, source_region: &RegionType, render_flags: Widget::RenderFlags),
     /// 
     /// Renders the *sourceRegion* of this widget into the *target*
@@ -1552,8 +1551,9 @@ struct Widget : Object, PaintDevice {
     /// **Note**: The *painter* must be active. On MacOS the widget will be
     /// rendered into a QPixmap and then drawn by the *painter.*
     /// 
-    /// **See also:** QPainter::device()
-    render(painter: *PainterType, target_offset: &PointType, source_region: &RegionType, render_flags: Widget::RenderFlags),
+    /// **See also:** [`Painter::device`]
+    [org_name(render)]
+    render_2(painter: *PainterType, target_offset: &PointType, source_region: &RegionType, render_flags: Widget::RenderFlags),
     /// 
     /// Renders the widget into a pixmap restricted by the
     /// given *rectangle.* If the widget has any children, then
@@ -1562,8 +1562,8 @@ struct Widget : Object, PaintDevice {
     /// If a rectangle with an invalid size is specified (the default),
     /// the entire widget is painted.
     /// 
-    /// **See also:** render()
-    /// QPixmap
+    /// **See also:** [`render()`]
+    /// [`Pixmap`]
     /// 
     /// Adds a shortcut to Qt's shortcut system that watches for the given
     /// *key* sequence in the given *context.* If the *context* is
@@ -1587,13 +1587,13 @@ struct Widget : Object, PaintDevice {
     /// key sequence, so are much easier to use than this low-level
     /// function.
     /// 
-    /// **See also:** releaseShortcut()
-    /// setShortcutEnabled()
+    /// **See also:** [`release_shortcut()`]
+    /// [`set_shortcut_enabled()`]
     /// 
     /// Subscribes the widget to a given *gesture* with specific *flags.*
     /// 
-    /// **See also:** ungrabGesture()
-    /// QGestureEvent
+    /// **See also:** [`ungrab_gesture()`]
+    /// [`GestureEvent`]
     /// 
     /// Grabs the mouse input.
     /// 
@@ -1618,9 +1618,9 @@ struct Widget : Object, PaintDevice {
     /// owned by the process.
     /// On MacOS , grabMouse() only works when the mouse is inside the frame of that widget.
     /// 
-    /// **See also:** releaseMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
+    /// **See also:** [`release_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
     /// 
     /// **Overloads** grabMouse()
     /// Grabs the mouse input and changes the cursor shape.
@@ -1633,10 +1633,10 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **Note**: See the note in QWidget::grabMouse().
     /// 
-    /// **See also:** releaseMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
-    /// setCursor()
+    /// **See also:** [`release_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
+    /// [`set_cursor()`]
     /// 
     /// Grabs the keyboard input.
     /// 
@@ -1652,24 +1652,24 @@ struct Widget : Object, PaintDevice {
     /// If a different widget is currently grabbing keyboard input, that
     /// widget's grab is released first.
     /// 
-    /// **See also:** releaseKeyboard()
-    /// grabMouse()
-    /// releaseMouse()
-    /// focusWidget()
+    /// **See also:** [`release_keyboard()`]
+    /// [`grab_mouse()`]
+    /// [`release_mouse()`]
+    /// [`focus_widget()`]
     grab(rectangle: &RectType) -> Pixmap,
     graphics_effect() -> GraphicsEffect?,
     set_graphics_effect(effect: *GraphicsEffectType),
     /// 
     /// Subscribes the widget to a given *gesture* with specific *flags.*
     /// 
-    /// **See also:** ungrabGesture()
-    /// QGestureEvent
+    /// **See also:** [`ungrab_gesture()`]
+    /// [`GestureEvent`]
     grab_gesture(type: Rute::GestureType, flags: Rute::GestureFlags),
     /// 
     /// Unsubscribes the widget from a given *gesture* type
     /// 
-    /// **See also:** grabGesture()
-    /// QGestureEvent
+    /// **See also:** [`grab_gesture()`]
+    /// [`GestureEvent`]
     ungrab_gesture(type: Rute::GestureType),
     set_window_title(arg0: String),
     set_style_sheet(style_sheet: String),
@@ -1683,8 +1683,8 @@ struct Widget : Object, PaintDevice {
     /// **Warning**: Qt style sheets are currently not supported for custom QStyle
     /// subclasses. We plan to address this in some future release.
     /// 
-    /// **See also:** setStyle()
-    /// QApplication::styleSheet
+    /// **See also:** [`set_style()`]
+    /// [`Application::style_sheet()`]
     /// {Qt Style Sheets}
     style_sheet() -> String,
     /// 
@@ -1811,7 +1811,7 @@ struct Widget : Object, PaintDevice {
     /// that semi-transparent windows update and resize significantly slower than
     /// opaque windows.
     /// 
-    /// **See also:** setMask()
+    /// **See also:** [`set_mask()`]
     window_opacity() -> f32,
     is_window_modified() -> bool,
     set_tool_tip(arg0: String),
@@ -1827,7 +1827,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** QToolTip
+    /// **See also:** [`ToolTip`]
     /// statusTip
     /// whatsThis
     /// 
@@ -1854,9 +1854,9 @@ struct Widget : Object, PaintDevice {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** QWhatsThis
-    /// QWidget::toolTip
-    /// QWidget::statusTip
+    /// **See also:** [`WhatsThis`]
+    /// [`Widget::tool_tip()`]
+    /// [`Widget::status_tip()`]
     whats_this() -> String,
     /// 
     /// This is the primary name by which assistive technology such as screen readers
@@ -1874,8 +1874,8 @@ struct Widget : Object, PaintDevice {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** QWidget::accessibleDescription
-    /// QAccessibleInterface::text()
+    /// **See also:** [`Widget::accessible_description()`]
+    /// [`AccessibleInterface::text`]
     accessible_name() -> String,
     set_accessible_name(name: String),
     /// 
@@ -1890,8 +1890,8 @@ struct Widget : Object, PaintDevice {
     /// By default, this property contains an empty string and Qt falls back
     /// to using the tool tip to provide this information.
     /// 
-    /// **See also:** QWidget::accessibleName
-    /// QAccessibleInterface::text()
+    /// **See also:** [`Widget::accessible_name()`]
+    /// [`AccessibleInterface::text`]
     accessible_description() -> String,
     set_accessible_description(description: String),
     set_layout_direction(direction: Rute::LayoutDirection),
@@ -1907,7 +1907,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// This method no longer affects text layout direction since Qt 4.7.
     /// 
-    /// **See also:** QApplication::layoutDirection
+    /// **See also:** [`Application::layout_direction()`]
     layout_direction() -> Rute::LayoutDirection,
     unset_layout_direction(),
     set_locale(locale: &LocaleType),
@@ -1919,8 +1919,8 @@ struct Widget : Object, PaintDevice {
     /// If the widget displays dates or numbers, these should be formatted
     /// using the widget's locale.
     /// 
-    /// **See also:** QLocale
-    /// QLocale::setDefault()
+    /// **See also:** [`Locale`]
+    /// [`Locale::set_default`]
     locale() -> Locale,
     unset_locale(),
     is_right_to_left() -> bool,
@@ -1937,7 +1937,7 @@ struct Widget : Object, PaintDevice {
     /// gets it. If there is a focus proxy, setFocus() and
     /// hasFocus() operate on the focus proxy.
     /// 
-    /// **See also:** focusProxy()
+    /// **See also:** [`focus_proxy()`]
     /// 
     /// Gives the keyboard input focus to this widget (or its focus
     /// proxy) if this widget or one of its parents is the [active window](isActiveWindow())
@@ -1969,17 +1969,17 @@ struct Widget : Object, PaintDevice {
     /// called from focusOutEvent() or focusInEvent(), you may get an
     /// infinite recursion.
     /// 
-    /// **See also:** hasFocus()
-    /// clearFocus()
-    /// focusInEvent()
-    /// focusOutEvent()
-    /// setFocusPolicy()
-    /// focusWidget()
-    /// QApplication::focusWidget()
-    /// grabKeyboard()
-    /// grabMouse()
+    /// **See also:** [`has_focus()`]
+    /// [`clear_focus()`]
+    /// [`focus_in_event()`]
+    /// [`focus_out_event()`]
+    /// [`set_focus_policy()`]
+    /// [`focus_widget()`]
+    /// [`Application::focus_widget`]
+    /// [`grab_keyboard()`]
+    /// [`grab_mouse()`]
     /// {Keyboard Focus in Widgets}
-    /// QEvent::RequestSoftwareInputPanel
+    /// [`Event::request_software_input_panel()`]
     /// 
     /// **Overloads**
     /// Gives the keyboard input focus to this widget (or its focus
@@ -1997,8 +1997,8 @@ struct Widget : Object, PaintDevice {
     /// 
     /// By default, this property is `false.`
     /// 
-    /// **See also:** activateWindow()
-    /// QApplication::activeWindow()
+    /// **See also:** [`activate_window()`]
+    /// [`Application::active_window`]
     is_active_window() -> bool,
     /// 
     /// Sets the top-level widget containing this widget to be the active
@@ -2020,10 +2020,10 @@ struct Widget : Object, PaintDevice {
     /// does not allow an application to interrupt what the user is currently
     /// doing in another application.
     /// 
-    /// **See also:** isActiveWindow()
-    /// window()
-    /// show()
-    /// QWindowsWindowFunctions::setWindowActivationBehavior()
+    /// **See also:** [`is_active_window()`]
+    /// [`window()`]
+    /// [`show()`]
+    /// [`WindowsWindowFunctions::set_window_activation_behavior`]
     activate_window(),
     /// 
     /// Takes keyboard input focus from the widget.
@@ -2035,12 +2035,12 @@ struct Widget : Object, PaintDevice {
     /// This widget must enable focus setting in order to get the keyboard
     /// input focus, i.e. it must call setFocusPolicy().
     /// 
-    /// **See also:** hasFocus()
-    /// setFocus()
-    /// focusInEvent()
-    /// focusOutEvent()
-    /// setFocusPolicy()
-    /// QApplication::focusWidget()
+    /// **See also:** [`has_focus()`]
+    /// [`set_focus()`]
+    /// [`focus_in_event()`]
+    /// [`focus_out_event()`]
+    /// [`set_focus_policy()`]
+    /// [`Application::focus_widget`]
     clear_focus(),
     /// 
     /// Sets the widget's focus proxy to widget *w.* If *w* is 0, the
@@ -2054,7 +2054,7 @@ struct Widget : Object, PaintDevice {
     /// gets it. If there is a focus proxy, setFocus() and
     /// hasFocus() operate on the focus proxy.
     /// 
-    /// **See also:** focusProxy()
+    /// **See also:** [`focus_proxy()`]
     /// 
     /// Gives the keyboard input focus to this widget (or its focus
     /// proxy) if this widget or one of its parents is the [active window](isActiveWindow())
@@ -2086,24 +2086,25 @@ struct Widget : Object, PaintDevice {
     /// called from focusOutEvent() or focusInEvent(), you may get an
     /// infinite recursion.
     /// 
-    /// **See also:** hasFocus()
-    /// clearFocus()
-    /// focusInEvent()
-    /// focusOutEvent()
-    /// setFocusPolicy()
-    /// focusWidget()
-    /// QApplication::focusWidget()
-    /// grabKeyboard()
-    /// grabMouse()
+    /// **See also:** [`has_focus()`]
+    /// [`clear_focus()`]
+    /// [`focus_in_event()`]
+    /// [`focus_out_event()`]
+    /// [`set_focus_policy()`]
+    /// [`focus_widget()`]
+    /// [`Application::focus_widget`]
+    /// [`grab_keyboard()`]
+    /// [`grab_mouse()`]
     /// {Keyboard Focus in Widgets}
-    /// QEvent::RequestSoftwareInputPanel
+    /// [`Event::request_software_input_panel()`]
     /// 
     /// **Overloads**
     /// Gives the keyboard input focus to this widget (or its focus
     /// proxy) if this widget or one of its parents is the
     /// [active window](isActiveWindow())
     /// 
-    set_focus(reason: Rute::FocusReason),
+    [org_name(setFocus)]
+    set_focus_2(reason: Rute::FocusReason),
     /// 
     /// The policy is Qt::TabFocus if the widget accepts keyboard
     /// focus by tabbing, Qt::ClickFocus if the widget accepts
@@ -2119,10 +2120,10 @@ struct Widget : Object, PaintDevice {
     /// If the widget has a focus proxy, then the focus policy will
     /// be propagated to it.
     /// 
-    /// **See also:** focusInEvent()
-    /// focusOutEvent()
-    /// keyPressEvent()
-    /// keyReleaseEvent()
+    /// **See also:** [`focus_in_event()`]
+    /// [`focus_out_event()`]
+    /// [`key_press_event()`]
+    /// [`key_release_event()`]
     /// enabled
     focus_policy() -> Rute::FocusPolicy,
     set_focus_policy(policy: Rute::FocusPolicy),
@@ -2147,8 +2148,8 @@ struct Widget : Object, PaintDevice {
     /// compound widgets, the resulting tab order will be from the last child inside
     /// *first,* to the first child inside *second.*
     /// 
-    /// **See also:** setFocusPolicy()
-    /// setFocusProxy()
+    /// **See also:** [`set_focus_policy()`]
+    /// [`set_focus_proxy()`]
     /// {Keyboard Focus in Widgets}
     [static] set_tab_order(arg0: *WidgetType, arg1: *WidgetType),
     /// 
@@ -2163,12 +2164,12 @@ struct Widget : Object, PaintDevice {
     /// gets it. If there is a focus proxy, setFocus() and
     /// hasFocus() operate on the focus proxy.
     /// 
-    /// **See also:** focusProxy()
+    /// **See also:** [`focus_proxy()`]
     set_focus_proxy(arg0: *WidgetType),
     /// 
     /// Returns the focus proxy, or 0 if there is no focus proxy.
     /// 
-    /// **See also:** setFocusProxy()
+    /// **See also:** [`set_focus_proxy()`]
     focus_proxy() -> Widget?,
     /// 
     /// The default value of this property is Qt::DefaultContextMenu,
@@ -2178,9 +2179,9 @@ struct Widget : Object, PaintDevice {
     /// Qt::CustomContextMenu, the signal customContextMenuRequested() is
     /// emitted.
     /// 
-    /// **See also:** contextMenuEvent()
-    /// customContextMenuRequested()
-    /// actions()
+    /// **See also:** [`context_menu_event()`]
+    /// [`custom_context_menu_requested()`]
+    /// [`actions()`]
     context_menu_policy() -> Rute::ContextMenuPolicy,
     set_context_menu_policy(policy: Rute::ContextMenuPolicy),
     /// 
@@ -2207,9 +2208,9 @@ struct Widget : Object, PaintDevice {
     /// owned by the process.
     /// On MacOS , grabMouse() only works when the mouse is inside the frame of that widget.
     /// 
-    /// **See also:** releaseMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
+    /// **See also:** [`release_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
     /// 
     /// **Overloads** grabMouse()
     /// Grabs the mouse input and changes the cursor shape.
@@ -2222,10 +2223,10 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **Note**: See the note in QWidget::grabMouse().
     /// 
-    /// **See also:** releaseMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
-    /// setCursor()
+    /// **See also:** [`release_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
+    /// [`set_cursor()`]
     grab_mouse(),
     /// 
     /// Grabs the mouse input.
@@ -2251,9 +2252,9 @@ struct Widget : Object, PaintDevice {
     /// owned by the process.
     /// On MacOS , grabMouse() only works when the mouse is inside the frame of that widget.
     /// 
-    /// **See also:** releaseMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
+    /// **See also:** [`release_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
     /// 
     /// **Overloads** grabMouse()
     /// Grabs the mouse input and changes the cursor shape.
@@ -2266,17 +2267,18 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **Note**: See the note in QWidget::grabMouse().
     /// 
-    /// **See also:** releaseMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
-    /// setCursor()
-    grab_mouse(arg0: &CursorType),
+    /// **See also:** [`release_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
+    /// [`set_cursor()`]
+    [org_name(grabMouse)]
+    grab_mouse_2(arg0: &CursorType),
     /// 
     /// Releases the mouse grab.
     /// 
-    /// **See also:** grabMouse()
-    /// grabKeyboard()
-    /// releaseKeyboard()
+    /// **See also:** [`grab_mouse()`]
+    /// [`grab_keyboard()`]
+    /// [`release_keyboard()`]
     release_mouse(),
     /// 
     /// Grabs the keyboard input.
@@ -2293,17 +2295,17 @@ struct Widget : Object, PaintDevice {
     /// If a different widget is currently grabbing keyboard input, that
     /// widget's grab is released first.
     /// 
-    /// **See also:** releaseKeyboard()
-    /// grabMouse()
-    /// releaseMouse()
-    /// focusWidget()
+    /// **See also:** [`release_keyboard()`]
+    /// [`grab_mouse()`]
+    /// [`release_mouse()`]
+    /// [`focus_widget()`]
     grab_keyboard(),
     /// 
     /// Releases the keyboard grab.
     /// 
-    /// **See also:** grabKeyboard()
-    /// grabMouse()
-    /// releaseMouse()
+    /// **See also:** [`grab_keyboard()`]
+    /// [`grab_mouse()`]
+    /// [`release_mouse()`]
     release_keyboard(),
     /// 
     /// Adds a shortcut to Qt's shortcut system that watches for the given
@@ -2328,8 +2330,8 @@ struct Widget : Object, PaintDevice {
     /// key sequence, so are much easier to use than this low-level
     /// function.
     /// 
-    /// **See also:** releaseShortcut()
-    /// setShortcutEnabled()
+    /// **See also:** [`release_shortcut()`]
+    /// [`set_shortcut_enabled()`]
     grab_shortcut(key: &KeySequenceType, context: Rute::ShortcutContext) -> i32,
     /// 
     /// Removes the shortcut with the given *id* from Qt's shortcut
@@ -2344,8 +2346,8 @@ struct Widget : Object, PaintDevice {
     /// this low-level function. Note also that this is an expensive
     /// operation.
     /// 
-    /// **See also:** grabShortcut()
-    /// setShortcutEnabled()
+    /// **See also:** [`grab_shortcut()`]
+    /// [`set_shortcut_enabled()`]
     release_shortcut(id: i32),
     /// 
     /// If *enable* is true, the shortcut with the given *id* is
@@ -2357,15 +2359,15 @@ struct Widget : Object, PaintDevice {
     /// to use QAction or QShortcut to handle shortcuts, since they are
     /// easier to use than this low-level function.
     /// 
-    /// **See also:** grabShortcut()
-    /// releaseShortcut()
+    /// **See also:** [`grab_shortcut()`]
+    /// [`release_shortcut()`]
     set_shortcut_enabled(id: i32, enable: bool),
     /// 
     /// If *enable* is true, auto repeat of the shortcut with the
     /// given *id* is enabled; otherwise it is disabled.
     /// 
-    /// **See also:** grabShortcut()
-    /// releaseShortcut()
+    /// **See also:** [`grab_shortcut()`]
+    /// [`release_shortcut()`]
     set_shortcut_auto_repeat(id: i32, enable: bool),
     /// 
     /// Returns the widget that is currently grabbing the mouse input.
@@ -2373,8 +2375,8 @@ struct Widget : Object, PaintDevice {
     /// If no widget in this application is currently grabbing the mouse,
     /// 0 is returned.
     /// 
-    /// **See also:** grabMouse()
-    /// keyboardGrabber()
+    /// **See also:** [`grab_mouse()`]
+    /// [`keyboard_grabber()`]
     [static] mouse_grabber() -> Widget?,
     /// 
     /// Returns the widget that is currently grabbing the keyboard input.
@@ -2382,8 +2384,8 @@ struct Widget : Object, PaintDevice {
     /// If no widget in this application is currently grabbing the
     /// keyboard, 0 is returned.
     /// 
-    /// **See also:** grabMouse()
-    /// mouseGrabber()
+    /// **See also:** [`grab_mouse()`]
+    /// [`mouse_grabber()`]
     [static] keyboard_grabber() -> Widget?,
     /// 
     /// An updates enabled widget receives paint events and has a system
@@ -2407,15 +2409,15 @@ struct Widget : Object, PaintDevice {
     /// have been explicitly disabled. Re-enabling updates implicitly calls
     /// update() on the widget.
     /// 
-    /// **See also:** paintEvent()
+    /// **See also:** [`paint_event()`]
     updates_enabled() -> bool,
     set_updates_enabled(enable: bool),
     /// 
     /// Returns the proxy widget for the corresponding embedded widget in a graphics
     /// view; otherwise returns 0.
     /// 
-    /// **See also:** QGraphicsProxyWidget::createProxyForChildWidget()
-    /// QGraphicsScene::addWidget()
+    /// **See also:** [`GraphicsProxyWidget::create_proxy_for_child_widget`]
+    /// [`GraphicsScene::add_widget`]
     graphics_proxy_widget() -> GraphicsProxyWidget?,
     /// 
     /// An updates enabled widget receives paint events and has a system
@@ -2439,7 +2441,7 @@ struct Widget : Object, PaintDevice {
     /// have been explicitly disabled. Re-enabling updates implicitly calls
     /// update() on the widget.
     /// 
-    /// **See also:** paintEvent()
+    /// **See also:** [`paint_event()`]
     /// 
     /// Notifies the layout system that this widget has changed and may
     /// need to change geometry.
@@ -2464,9 +2466,9 @@ struct Widget : Object, PaintDevice {
     /// If the Qt::WA_OpaquePaintEvent widget attribute is set, the widget is
     /// responsible for painting all its pixels with an opaque color.
     /// 
-    /// **See also:** repaint()
-    /// paintEvent()
-    /// setUpdatesEnabled()
+    /// **See also:** [`repaint()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
     /// {Analog Clock Example}
     /// **Overloads**
     /// This version updates a rectangle ( *x,* *y,* *w,* *h)* inside
@@ -2493,9 +2495,9 @@ struct Widget : Object, PaintDevice {
     /// called from paintEvent(), you may get infinite recursion. The
     /// update() function never causes recursion.
     /// 
-    /// **See also:** update()
-    /// paintEvent()
-    /// setUpdatesEnabled()
+    /// **See also:** [`update()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
     /// **Overloads**
     /// This version repaints a rectangle ( *x,* *y,* *w,* *h)* inside
     /// the widget.
@@ -2530,7 +2532,7 @@ struct Widget : Object, PaintDevice {
     /// have been explicitly disabled. Re-enabling updates implicitly calls
     /// update() on the widget.
     /// 
-    /// **See also:** paintEvent()
+    /// **See also:** [`paint_event()`]
     /// 
     /// Notifies the layout system that this widget has changed and may
     /// need to change geometry.
@@ -2555,9 +2557,9 @@ struct Widget : Object, PaintDevice {
     /// If the Qt::WA_OpaquePaintEvent widget attribute is set, the widget is
     /// responsible for painting all its pixels with an opaque color.
     /// 
-    /// **See also:** repaint()
-    /// paintEvent()
-    /// setUpdatesEnabled()
+    /// **See also:** [`repaint()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
     /// {Analog Clock Example}
     /// **Overloads**
     /// This version updates a rectangle ( *x,* *y,* *w,* *h)* inside
@@ -2570,7 +2572,8 @@ struct Widget : Object, PaintDevice {
     /// This version repaints a region *rgn* inside the widget.
     /// 
     /// Updates the widget's micro focus.
-    update(x: i32, y: i32, w: i32, h: i32),
+    [org_name(update)]
+    update_2(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// An updates enabled widget receives paint events and has a system
     /// background; a disabled widget does not. This also implies that
@@ -2593,7 +2596,7 @@ struct Widget : Object, PaintDevice {
     /// have been explicitly disabled. Re-enabling updates implicitly calls
     /// update() on the widget.
     /// 
-    /// **See also:** paintEvent()
+    /// **See also:** [`paint_event()`]
     /// 
     /// Notifies the layout system that this widget has changed and may
     /// need to change geometry.
@@ -2618,9 +2621,9 @@ struct Widget : Object, PaintDevice {
     /// If the Qt::WA_OpaquePaintEvent widget attribute is set, the widget is
     /// responsible for painting all its pixels with an opaque color.
     /// 
-    /// **See also:** repaint()
-    /// paintEvent()
-    /// setUpdatesEnabled()
+    /// **See also:** [`repaint()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
     /// {Analog Clock Example}
     /// **Overloads**
     /// This version updates a rectangle ( *x,* *y,* *w,* *h)* inside
@@ -2633,7 +2636,8 @@ struct Widget : Object, PaintDevice {
     /// This version repaints a region *rgn* inside the widget.
     /// 
     /// Updates the widget's micro focus.
-    update(arg0: &RectType),
+    [org_name(update)]
+    update_3(arg0: &RectType),
     /// 
     /// An updates enabled widget receives paint events and has a system
     /// background; a disabled widget does not. This also implies that
@@ -2656,7 +2660,7 @@ struct Widget : Object, PaintDevice {
     /// have been explicitly disabled. Re-enabling updates implicitly calls
     /// update() on the widget.
     /// 
-    /// **See also:** paintEvent()
+    /// **See also:** [`paint_event()`]
     /// 
     /// Notifies the layout system that this widget has changed and may
     /// need to change geometry.
@@ -2681,9 +2685,9 @@ struct Widget : Object, PaintDevice {
     /// If the Qt::WA_OpaquePaintEvent widget attribute is set, the widget is
     /// responsible for painting all its pixels with an opaque color.
     /// 
-    /// **See also:** repaint()
-    /// paintEvent()
-    /// setUpdatesEnabled()
+    /// **See also:** [`repaint()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
     /// {Analog Clock Example}
     /// **Overloads**
     /// This version updates a rectangle ( *x,* *y,* *w,* *h)* inside
@@ -2696,7 +2700,8 @@ struct Widget : Object, PaintDevice {
     /// This version repaints a region *rgn* inside the widget.
     /// 
     /// Updates the widget's micro focus.
-    update(arg0: &RegionType),
+    [org_name(update)]
+    update_4(arg0: &RegionType),
     /// 
     /// Repaints the widget directly by calling paintEvent() immediately,
     /// unless updates are disabled or the widget is hidden.
@@ -2710,9 +2715,9 @@ struct Widget : Object, PaintDevice {
     /// called from paintEvent(), you may get infinite recursion. The
     /// update() function never causes recursion.
     /// 
-    /// **See also:** update()
-    /// paintEvent()
-    /// setUpdatesEnabled()
+    /// **See also:** [`update()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
     /// **Overloads**
     /// This version repaints a rectangle ( *x,* *y,* *w,* *h)* inside
     /// the widget.
@@ -2724,7 +2729,8 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **Overloads**
     /// This version repaints a region *rgn* inside the widget.
-    repaint(x: i32, y: i32, w: i32, h: i32),
+    [org_name(repaint)]
+    repaint_2(x: i32, y: i32, w: i32, h: i32),
     /// 
     /// Repaints the widget directly by calling paintEvent() immediately,
     /// unless updates are disabled or the widget is hidden.
@@ -2738,9 +2744,9 @@ struct Widget : Object, PaintDevice {
     /// called from paintEvent(), you may get infinite recursion. The
     /// update() function never causes recursion.
     /// 
-    /// **See also:** update()
-    /// paintEvent()
-    /// setUpdatesEnabled()
+    /// **See also:** [`update()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
     /// **Overloads**
     /// This version repaints a rectangle ( *x,* *y,* *w,* *h)* inside
     /// the widget.
@@ -2752,7 +2758,8 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **Overloads**
     /// This version repaints a region *rgn* inside the widget.
-    repaint(arg0: &RectType),
+    [org_name(repaint)]
+    repaint_3(arg0: &RectType),
     /// 
     /// Repaints the widget directly by calling paintEvent() immediately,
     /// unless updates are disabled or the widget is hidden.
@@ -2766,9 +2773,9 @@ struct Widget : Object, PaintDevice {
     /// called from paintEvent(), you may get infinite recursion. The
     /// update() function never causes recursion.
     /// 
-    /// **See also:** update()
-    /// paintEvent()
-    /// setUpdatesEnabled()
+    /// **See also:** [`update()`]
+    /// [`paint_event()`]
+    /// [`set_updates_enabled()`]
     /// **Overloads**
     /// This version repaints a rectangle ( *x,* *y,* *w,* *h)* inside
     /// the widget.
@@ -2780,7 +2787,8 @@ struct Widget : Object, PaintDevice {
     /// 
     /// **Overloads**
     /// This version repaints a region *rgn* inside the widget.
-    repaint(arg0: &RegionType),
+    [org_name(repaint)]
+    repaint_4(arg0: &RegionType),
     [event] set_visible(visible: bool),
     /// 
     /// Convenience function, equivalent to setVisible(! *hidden).*
@@ -2791,12 +2799,12 @@ struct Widget : Object, PaintDevice {
     /// Calling this function only affects [windows](isWindow())
     /// 
     /// 
-    /// **See also:** showNormal()
-    /// showMaximized()
-    /// show()
-    /// hide()
-    /// isVisible()
-    /// isMinimized()
+    /// **See also:** [`show_normal()`]
+    /// [`show_maximized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
+    /// [`is_minimized()`]
     /// 
     /// Shows the widget in full-screen mode.
     /// 
@@ -2825,11 +2833,11 @@ struct Widget : Object, PaintDevice {
     /// X11 window managers that follow modern post-ICCCM specifications
     /// support full-screen mode properly.
     /// 
-    /// **See also:** showNormal()
-    /// showMaximized()
-    /// show()
-    /// hide()
-    /// isVisible()
+    /// **See also:** [`show_normal()`]
+    /// [`show_maximized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
     /// 
     /// Shows the widget maximized.
     /// 
@@ -2840,39 +2848,39 @@ struct Widget : Object, PaintDevice {
     /// managers. See the [Window Geometry](Window%20Geometry)
     /// documentation for an explanation.
     /// 
-    /// **See also:** setWindowState()
-    /// showNormal()
-    /// showMinimized()
-    /// show()
-    /// hide()
-    /// isVisible()
+    /// **See also:** [`set_window_state()`]
+    /// [`show_normal()`]
+    /// [`show_minimized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
     /// 
     /// Restores the widget after it has been maximized or minimized.
     /// 
     /// Calling this function only affects [windows](isWindow())
     /// 
     /// 
-    /// **See also:** setWindowState()
-    /// showMinimized()
-    /// showMaximized()
-    /// show()
-    /// hide()
-    /// isVisible()
+    /// **See also:** [`set_window_state()`]
+    /// [`show_minimized()`]
+    /// [`show_maximized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
     /// 
     /// Shows the widget and its child widgets.
     /// 
     /// This is equivalent to calling showFullScreen(), showMaximized(), or setVisible(true),
     /// depending on the platform's default behavior for the window flags.
     /// 
-    /// **See also:** raise()
-    /// showEvent()
-    /// hide()
-    /// setVisible()
-    /// showMinimized()
-    /// showMaximized()
-    /// showNormal()
-    /// isVisible()
-    /// windowFlags()
+    /// **See also:** [`raise()`]
+    /// [`show_event()`]
+    /// [`hide()`]
+    /// [`set_visible()`]
+    /// [`show_minimized()`]
+    /// [`show_maximized()`]
+    /// [`show_normal()`]
+    /// [`is_visible()`]
+    /// [`window_flags()`]
     /// 
     /// This event handler can be reimplemented in a subclass to receive
     /// widget show events which are passed in the *event* parameter.
@@ -2889,8 +2897,8 @@ struct Widget : Object, PaintDevice {
     /// the sense of isVisible().
     /// 
     /// **See also:** visible
-    /// event()
-    /// QShowEvent
+    /// [`event()`]
+    /// [`ShowEvent`]
     show(),
     /// 
     /// Hides the widget. This function is equivalent to
@@ -2900,12 +2908,12 @@ struct Widget : Object, PaintDevice {
     /// the show() function after this function, the dialog will be displayed in
     /// its original position.
     /// 
-    /// **See also:** hideEvent()
-    /// isHidden()
-    /// show()
-    /// setVisible()
-    /// isVisible()
-    /// close()
+    /// **See also:** [`hide_event()`]
+    /// [`is_hidden()`]
+    /// [`show()`]
+    /// [`set_visible()`]
+    /// [`is_visible()`]
+    /// [`close()`]
     /// 
     /// This event handler can be reimplemented in a subclass to receive
     /// widget hide events. The event is passed in the *event* parameter.
@@ -2921,8 +2929,8 @@ struct Widget : Object, PaintDevice {
     /// the sense of isVisible().
     /// 
     /// **See also:** visible
-    /// event()
-    /// QHideEvent
+    /// [`event()`]
+    /// [`HideEvent`]
     hide(),
     /// 
     /// Shows the widget minimized, as an icon.
@@ -2930,12 +2938,12 @@ struct Widget : Object, PaintDevice {
     /// Calling this function only affects [windows](isWindow())
     /// 
     /// 
-    /// **See also:** showNormal()
-    /// showMaximized()
-    /// show()
-    /// hide()
-    /// isVisible()
-    /// isMinimized()
+    /// **See also:** [`show_normal()`]
+    /// [`show_maximized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
+    /// [`is_minimized()`]
     show_minimized(),
     /// 
     /// Shows the widget maximized.
@@ -2947,12 +2955,12 @@ struct Widget : Object, PaintDevice {
     /// managers. See the [Window Geometry](Window%20Geometry)
     /// documentation for an explanation.
     /// 
-    /// **See also:** setWindowState()
-    /// showNormal()
-    /// showMinimized()
-    /// show()
-    /// hide()
-    /// isVisible()
+    /// **See also:** [`set_window_state()`]
+    /// [`show_normal()`]
+    /// [`show_minimized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
     show_maximized(),
     /// 
     /// Shows the widget in full-screen mode.
@@ -2982,11 +2990,11 @@ struct Widget : Object, PaintDevice {
     /// X11 window managers that follow modern post-ICCCM specifications
     /// support full-screen mode properly.
     /// 
-    /// **See also:** showNormal()
-    /// showMaximized()
-    /// show()
-    /// hide()
-    /// isVisible()
+    /// **See also:** [`show_normal()`]
+    /// [`show_maximized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
     show_full_screen(),
     /// 
     /// Restores the widget after it has been maximized or minimized.
@@ -2994,12 +3002,12 @@ struct Widget : Object, PaintDevice {
     /// Calling this function only affects [windows](isWindow())
     /// 
     /// 
-    /// **See also:** setWindowState()
-    /// showMinimized()
-    /// showMaximized()
-    /// show()
-    /// hide()
-    /// isVisible()
+    /// **See also:** [`set_window_state()`]
+    /// [`show_minimized()`]
+    /// [`show_maximized()`]
+    /// [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
     show_normal(),
     /// 
     /// Closes this widget. Returns `true` if the widget was closed;
@@ -3041,10 +3049,10 @@ struct Widget : Object, PaintDevice {
     /// uses a helper function to determine whether
     /// or not to close the window:
     /// 
-    /// **See also:** event()
-    /// hide()
-    /// close()
-    /// QCloseEvent
+    /// **See also:** [`event()`]
+    /// [`hide()`]
+    /// [`close()`]
+    /// [`CloseEvent`]
     /// {Application Example}
     close() -> bool,
     /// 
@@ -3056,8 +3064,8 @@ struct Widget : Object, PaintDevice {
     /// **Note**: When using activateWindow(), you can call this function to
     /// ensure that the window is stacked on top.
     /// 
-    /// **See also:** lower()
-    /// stackUnder()
+    /// **See also:** [`lower()`]
+    /// [`stack_under()`]
     raise(),
     /// 
     /// Lowers the widget to the bottom of the parent widget's stack.
@@ -3065,16 +3073,16 @@ struct Widget : Object, PaintDevice {
     /// After this call the widget will be visually behind (and therefore
     /// obscured by) any overlapping sibling widgets.
     /// 
-    /// **See also:** raise()
-    /// stackUnder()
+    /// **See also:** [`raise()`]
+    /// [`stack_under()`]
     lower(),
     /// 
     /// Places the widget under *w* in the parent widget's stack.
     /// 
     /// To make this work, the widget itself and *w* must be siblings.
     /// 
-    /// **See also:** raise()
-    /// lower()
+    /// **See also:** [`raise()`]
+    /// [`lower()`]
     stack_under(arg0: *WidgetType),
     /// 
     /// **Overloads**
@@ -3087,10 +3095,10 @@ struct Widget : Object, PaintDevice {
     /// 
     /// The old position is accessible through QMoveEvent::oldPos().
     /// 
-    /// **See also:** resizeEvent()
-    /// event()
-    /// move()
-    /// QMoveEvent
+    /// **See also:** [`resize_event()`]
+    /// [`event()`]
+    /// [`move()`]
+    /// [`MoveEvent`]
     move(x: i32, y: i32),
     /// 
     /// **Overloads**
@@ -3103,11 +3111,12 @@ struct Widget : Object, PaintDevice {
     /// 
     /// The old position is accessible through QMoveEvent::oldPos().
     /// 
-    /// **See also:** resizeEvent()
-    /// event()
-    /// move()
-    /// QMoveEvent
-    move(arg0: &PointType),
+    /// **See also:** [`resize_event()`]
+    /// [`event()`]
+    /// [`move()`]
+    /// [`MoveEvent`]
+    [org_name(move)]
+    move_2(arg0: &PointType),
     /// **Overloads**
     /// This corresponds to resize(QSize( *w,* *h)).*
     /// 
@@ -3121,11 +3130,11 @@ struct Widget : Object, PaintDevice {
     /// after processing the resize event. No drawing need be (or should
     /// be) done inside this handler.
     /// 
-    /// **See also:** moveEvent()
-    /// event()
-    /// resize()
-    /// QResizeEvent
-    /// paintEvent()
+    /// **See also:** [`move_event()`]
+    /// [`event()`]
+    /// [`resize()`]
+    /// [`ResizeEvent`]
+    /// [`paint_event()`]
     /// {Scribble Example}
     resize(w: i32, h: i32),
     /// **Overloads**
@@ -3141,13 +3150,14 @@ struct Widget : Object, PaintDevice {
     /// after processing the resize event. No drawing need be (or should
     /// be) done inside this handler.
     /// 
-    /// **See also:** moveEvent()
-    /// event()
-    /// resize()
-    /// QResizeEvent
-    /// paintEvent()
+    /// **See also:** [`move_event()`]
+    /// [`event()`]
+    /// [`resize()`]
+    /// [`ResizeEvent`]
+    /// [`paint_event()`]
     /// {Scribble Example}
-    resize(arg0: &SizeType),
+    [org_name(resize)]
+    resize_2(arg0: &SizeType),
     /// 
     /// Adjusts the size of the widget to fit its contents.
     /// 
@@ -3161,8 +3171,8 @@ struct Widget : Object, PaintDevice {
     /// , the window will be at least (200, 100). The maximum size of
     /// a window is 2/3 of the screen's width and height.
     /// 
-    /// **See also:** sizeHint()
-    /// childrenRect()
+    /// **See also:** [`size_hint()`]
+    /// [`children_rect()`]
     adjust_size(),
     /// 
     /// Returns `true` if this widget would become visible if *ancestor* is
@@ -3177,9 +3187,9 @@ struct Widget : Object, PaintDevice {
     /// 
     /// isVisibleTo(0) is identical to isVisible().
     /// 
-    /// **See also:** show()
-    /// hide()
-    /// isVisible()
+    /// **See also:** [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
     is_visible() -> bool,
     /// 
     /// Returns `true` if this widget would become visible if *ancestor* is
@@ -3194,9 +3204,9 @@ struct Widget : Object, PaintDevice {
     /// 
     /// isVisibleTo(0) is identical to isVisible().
     /// 
-    /// **See also:** show()
-    /// hide()
-    /// isVisible()
+    /// **See also:** [`show()`]
+    /// [`hide()`]
+    /// [`is_visible()`]
     is_visible_to(arg0: *WidgetType) -> bool,
     /// 
     /// Returns `true` if the widget is hidden, otherwise returns `false.`
@@ -3223,8 +3233,8 @@ struct Widget : Object, PaintDevice {
     /// combination of Qt::WindowState: Qt::WindowMinimized,
     /// Qt::WindowMaximized, Qt::WindowFullScreen, and Qt::WindowActive.
     /// 
-    /// **See also:** Qt::WindowState
-    /// setWindowState()
+    /// **See also:** [`t::window_state()`]
+    /// [`set_window_state()`]
     window_state() -> Rute::WindowStates,
     /// 
     /// Sets the window state to *windowState.* The window state is a OR'ed
@@ -3248,8 +3258,8 @@ struct Widget : Object, PaintDevice {
     /// When the window state changes, the widget receives a changeEvent()
     /// of type QEvent::WindowStateChange.
     /// 
-    /// **See also:** Qt::WindowState
-    /// windowState()
+    /// **See also:** [`t::window_state()`]
+    /// [`window_state()`]
     set_window_state(state: Rute::WindowStates),
     override_window_state(state: Rute::WindowStates),
     /// 
@@ -3260,11 +3270,11 @@ struct Widget : Object, PaintDevice {
     /// if there is no layout for this widget, and returns the layout's
     /// preferred size otherwise.
     /// 
-    /// **See also:** QSize::isValid()
-    /// minimumSizeHint()
-    /// sizePolicy()
-    /// setMinimumSize()
-    /// updateGeometry()
+    /// **See also:** [`Size::is_valid`]
+    /// [`minimum_size_hint()`]
+    /// [`size_policy()`]
+    /// [`set_minimum_size()`]
+    /// [`update_geometry()`]
     [event] size_hint() -> Size,
     /// 
     /// If the value of this property is an invalid size, no minimum size
@@ -3281,10 +3291,10 @@ struct Widget : Object, PaintDevice {
     /// set to QSizePolicy::Ignore. If minimumSize() is set, the minimum
     /// size hint will be ignored.
     /// 
-    /// **See also:** QSize::isValid()
-    /// resize()
-    /// setMinimumSize()
-    /// sizePolicy()
+    /// **See also:** [`Size::is_valid`]
+    /// [`resize()`]
+    /// [`set_minimum_size()`]
+    /// [`size_policy()`]
     [event] minimum_size_hint() -> Size,
     /// 
     /// If there is a QLayout that manages this widget's children, the
@@ -3306,23 +3316,24 @@ struct Widget : Object, PaintDevice {
     /// use additional space, and that they can make do with less than
     /// sizeHint().
     /// 
-    /// **See also:** sizeHint()
-    /// QLayout
-    /// QSizePolicy
-    /// updateGeometry()
+    /// **See also:** [`size_hint()`]
+    /// [`Layout`]
+    /// [`SizePolicy`]
+    /// [`update_geometry()`]
     size_policy() -> SizePolicy,
     /// 
     /// **Overloads**
     /// Sets the size policy of the widget to *horizontal* and *vertical,* with standard stretch and no height-for-width.
     /// 
-    /// **See also:** QSizePolicy::QSizePolicy()
+    /// **See also:** [`SizePolicy::q_size_policy`]
     set_size_policy(arg0: SizePolicyType),
     /// 
     /// **Overloads**
     /// Sets the size policy of the widget to *horizontal* and *vertical,* with standard stretch and no height-for-width.
     /// 
-    /// **See also:** QSizePolicy::QSizePolicy()
-    set_size_policy(horizontal: SizePolicy::Policy, vertical: SizePolicy::Policy),
+    /// **See also:** [`SizePolicy::q_size_policy`]
+    [org_name(setSizePolicy)]
+    set_size_policy_2(horizontal: SizePolicy::Policy, vertical: SizePolicy::Policy),
     /// 
     /// Returns the preferred height for this widget, given the width *w.*
     /// 
@@ -3352,8 +3363,8 @@ struct Widget : Object, PaintDevice {
     /// 
     /// Changing the margins will trigger a resizeEvent().
     /// 
-    /// **See also:** contentsRect()
-    /// getContentsMargins()
+    /// **See also:** [`contents_rect()`]
+    /// [`get_contents_margins()`]
     /// 
     /// **Overloads**
     /// 
@@ -3364,8 +3375,8 @@ struct Widget : Object, PaintDevice {
     /// 
     /// Changing the margins will trigger a resizeEvent().
     /// 
-    /// **See also:** contentsRect()
-    /// getContentsMargins()
+    /// **See also:** [`contents_rect()`]
+    /// [`get_contents_margins()`]
     set_contents_margins(left: i32, top: i32, right: i32, bottom: i32),
     /// 
     /// Sets the margins around the contents of the widget to have the sizes
@@ -3375,8 +3386,8 @@ struct Widget : Object, PaintDevice {
     /// 
     /// Changing the margins will trigger a resizeEvent().
     /// 
-    /// **See also:** contentsRect()
-    /// getContentsMargins()
+    /// **See also:** [`contents_rect()`]
+    /// [`get_contents_margins()`]
     /// 
     /// **Overloads**
     /// 
@@ -3387,25 +3398,26 @@ struct Widget : Object, PaintDevice {
     /// 
     /// Changing the margins will trigger a resizeEvent().
     /// 
-    /// **See also:** contentsRect()
-    /// getContentsMargins()
-    set_contents_margins(margins: &MarginsType),
+    /// **See also:** [`contents_rect()`]
+    /// [`get_contents_margins()`]
+    [org_name(setContentsMargins)]
+    set_contents_margins_2(margins: &MarginsType),
     /// 
     /// Returns the widget's contents margins for *left,* *top,* *right,* and *bottom.*
     /// 
-    /// **See also:** setContentsMargins()
-    /// contentsRect()
+    /// **See also:** [`set_contents_margins()`]
+    /// [`contents_rect()`]
     get_contents_margins(left: *i32, top: *i32, right: *i32, bottom: *i32),
     /// 
-    /// **See also:** getContentsMargins()
-    /// setContentsMargins()
-    /// contentsRect()
+    /// **See also:** [`get_contents_margins()`]
+    /// [`set_contents_margins()`]
+    /// [`contents_rect()`]
     contents_margins() -> Margins,
     /// 
     /// Returns the area inside the widget's margins.
     /// 
-    /// **See also:** setContentsMargins()
-    /// getContentsMargins()
+    /// **See also:** [`set_contents_margins()`]
+    /// [`get_contents_margins()`]
     contents_rect() -> Rect,
     /// 
     /// By default, this property is set to Qt::LeftToRight.
@@ -3419,7 +3431,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// This method no longer affects text layout direction since Qt 4.7.
     /// 
-    /// **See also:** QApplication::layoutDirection
+    /// **See also:** [`Application::layout_direction()`]
     /// 
     /// Returns the layout manager that is installed on this widget, or 0
     /// if no layout manager is installed.
@@ -3427,8 +3439,8 @@ struct Widget : Object, PaintDevice {
     /// The layout manager sets the geometry of the widget's children
     /// that have been added to the layout.
     /// 
-    /// **See also:** setLayout()
-    /// sizePolicy()
+    /// **See also:** [`set_layout()`]
+    /// [`size_policy()`]
     /// {Layout Management}
     layout() -> Layout?,
     /// 
@@ -3449,7 +3461,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// The QWidget will take ownership of *layout.*
     /// 
-    /// **See also:** layout()
+    /// **See also:** [`layout()`]
     /// {Layout Management}
     set_layout(arg0: *LayoutType),
     /// 
@@ -3479,7 +3491,7 @@ struct Widget : Object, PaintDevice {
     /// function. If you have a widget that changes its content
     /// dynamically, it is far easier to use [QStackedWidget.](QStackedWidget.)
     /// 
-    /// **See also:** setWindowFlags()
+    /// **See also:** [`set_window_flags()`]
     /// 
     /// **Overloads**
     /// This function also takes widget flags, *f* as an argument.
@@ -3511,11 +3523,12 @@ struct Widget : Object, PaintDevice {
     /// function. If you have a widget that changes its content
     /// dynamically, it is far easier to use [QStackedWidget.](QStackedWidget.)
     /// 
-    /// **See also:** setWindowFlags()
+    /// **See also:** [`set_window_flags()`]
     /// 
     /// **Overloads**
     /// This function also takes widget flags, *f* as an argument.
-    set_parent(parent: *WidgetType, f: Rute::WindowFlags),
+    [org_name(setParent)]
+    set_parent_2(parent: *WidgetType, f: Rute::WindowFlags),
     /// 
     /// Scrolls the widget including its children *dx* pixels to the
     /// right and *dy* downward. Both *dx* and *dy* may be negative.
@@ -3543,7 +3556,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// If *r* is empty or invalid, the result is undefined.
     /// 
-    /// **See also:** QScrollArea
+    /// **See also:** [`ScrollArea`]
     scroll(dx: i32, dy: i32),
     /// 
     /// Scrolls the widget including its children *dx* pixels to the
@@ -3572,8 +3585,9 @@ struct Widget : Object, PaintDevice {
     /// 
     /// If *r* is empty or invalid, the result is undefined.
     /// 
-    /// **See also:** QScrollArea
-    scroll(dx: i32, dy: i32, arg0: &RectType),
+    /// **See also:** [`ScrollArea`]
+    [org_name(scroll)]
+    scroll_2(dx: i32, dy: i32, arg0: &RectType),
     /// 
     /// Returns the last child of this widget that setFocus had been
     /// called on. For top level widgets this is the widget that will get
@@ -3585,10 +3599,10 @@ struct Widget : Object, PaintDevice {
     /// 
     /// Returns the next widget in this widget's focus chain.
     /// 
-    /// **See also:** previousInFocusChain()
+    /// **See also:** [`previous_in_focus_chain()`]
     next_in_focus_chain() -> Widget?,
     /// 
-    /// **See also:** nextInFocusChain()
+    /// **See also:** [`next_in_focus_chain()`]
     /// 
     previous_in_focus_chain() -> Widget?,
     /// 
@@ -3620,10 +3634,10 @@ struct Widget : Object, PaintDevice {
     /// 
     /// The ownership of *action* is not transferred to this QWidget.
     /// 
-    /// **See also:** removeAction()
-    /// insertAction()
-    /// actions()
-    /// QMenu
+    /// **See also:** [`remove_action()`]
+    /// [`insert_action()`]
+    /// [`actions()`]
+    /// [`Menu`]
     add_action(action: *ActionType),
     add_actions(actions: [*ActionType]),
     insert_actions(before: *ActionType, actions: [*ActionType]),
@@ -3634,24 +3648,24 @@ struct Widget : Object, PaintDevice {
     /// 
     /// A QWidget should only have one of each action.
     /// 
-    /// **See also:** removeAction()
-    /// addAction()
-    /// QMenu
+    /// **See also:** [`remove_action()`]
+    /// [`add_action()`]
+    /// [`Menu`]
     /// contextMenuPolicy
-    /// actions()
+    /// [`actions()`]
     insert_action(before: *ActionType, action: *ActionType),
     /// 
     /// Removes the action *action* from this widget's list of actions.
-    /// **See also:** insertAction()
-    /// actions()
-    /// insertAction()
+    /// **See also:** [`insert_action()`]
+    /// [`actions()`]
+    /// [`insert_action()`]
     remove_action(action: *ActionType),
     /// 
     /// Returns the (possibly empty) list of this widget's actions.
     /// 
     /// **See also:** contextMenuPolicy
-    /// insertAction()
-    /// removeAction()
+    /// [`insert_action()`]
+    /// [`remove_action()`]
     actions() -> [Action?],
     /// 
     /// Returns the parent of this widget, or 0 if it does not have any
@@ -3673,17 +3687,17 @@ struct Widget : Object, PaintDevice {
     /// a window, causing the widget to be hidden. You must call show() to make
     /// the widget visible again..
     /// 
-    /// **See also:** windowType()
-    /// setWindowFlag()
+    /// **See also:** [`window_type()`]
+    /// [`set_window_flag()`]
     /// {Window Flags Example}
     window_flags() -> Rute::WindowFlags,
     /// 
     /// Sets the window flag *flag* on this widget if *on* is true;
     /// otherwise clears the flag.
     /// 
-    /// **See also:** setWindowFlags()
-    /// windowFlags()
-    /// windowType()
+    /// **See also:** [`set_window_flags()`]
+    /// [`window_flags()`]
+    /// [`window_type()`]
     set_window_flag(arg0: Rute::WindowType, on: bool),
     /// 
     /// Sets the window flags for the widget to *flags,*
@@ -3692,7 +3706,7 @@ struct Widget : Object, PaintDevice {
     /// **Warning**: Do not call this function unless you really know what
     /// you're doing.
     /// 
-    /// **See also:** setWindowFlags()
+    /// **See also:** [`set_window_flags()`]
     override_window_flags(type: Rute::WindowFlags),
     /// 
     /// Returns the window type of this widget. This is identical to
@@ -3724,7 +3738,8 @@ struct Widget : Object, PaintDevice {
     /// **Overloads**
     /// Returns the visible child widget at point *p* in the widget's own
     /// coordinate system.
-    child_at(p: &PointType) -> Widget?,
+    [org_name(childAt)]
+    child_at_2(p: &PointType) -> Widget?,
     /// 
     /// Returns the widget's paint engine.
     /// 
@@ -3754,7 +3769,7 @@ struct Widget : Object, PaintDevice {
     /// **Note:** The function is declared const so that it can be called from
     /// other const functions (e.g., sizeHint()).
     /// 
-    /// **See also:** event()
+    /// **See also:** [`event()`]
     ensure_polished(),
     /// 
     /// Returns `true` if this widget is a parent, (or grandparent and so on
@@ -3780,8 +3795,8 @@ struct Widget : Object, PaintDevice {
     /// 
     /// By default, this property is `false.`
     /// 
-    /// **See also:** Qt::WA_OpaquePaintEvent
-    /// Qt::WA_NoSystemBackground
+    /// **See also:** [`t::wa_opaque_paint_event()`]
+    /// [`t::wa_no_system_background()`]
     /// {QWidget#Transparency and Double Buffering}{Transparency and Double Buffering}
     auto_fill_background() -> bool,
     set_auto_fill_background(enabled: bool),
@@ -3795,7 +3810,7 @@ struct Widget : Object, PaintDevice {
     /// Native widgets include toplevel widgets, QGLWidget, and child widgets
     /// on which winId() was called.
     /// 
-    /// **See also:** winId()
+    /// **See also:** [`win_id()`]
     window_handle() -> Window?,
     /// 
     /// Creates a QWidget that makes it possible to embed *window* into
@@ -3859,8 +3874,8 @@ struct Widget : Object, PaintDevice {
     /// [viewport()](QAbstractScrollArea::viewport())
     /// 
     /// 
-    /// **See also:** mapToGlobal()
-    /// QMenu
+    /// **See also:** [`map_to_global()`]
+    /// [`Menu`]
     /// contextMenuPolicy
     [signal] custom_context_menu_requested(pos: &PointType),
     /// 
@@ -3885,22 +3900,22 @@ struct Widget : Object, PaintDevice {
     /// any further processing such as event
     /// propagation to the parent widget stops.
     /// 
-    /// **See also:** closeEvent()
-    /// focusInEvent()
-    /// focusOutEvent()
-    /// enterEvent()
-    /// keyPressEvent()
-    /// keyReleaseEvent()
-    /// leaveEvent()
-    /// mouseDoubleClickEvent()
-    /// mouseMoveEvent()
-    /// mousePressEvent()
-    /// mouseReleaseEvent()
-    /// moveEvent()
-    /// paintEvent()
-    /// resizeEvent()
-    /// QObject::event()
-    /// QObject::timerEvent()
+    /// **See also:** [`close_event()`]
+    /// [`focus_in_event()`]
+    /// [`focus_out_event()`]
+    /// [`enter_event()`]
+    /// [`key_press_event()`]
+    /// [`key_release_event()`]
+    /// [`leave_event()`]
+    /// [`mouse_double_click_event()`]
+    /// [`mouse_move_event()`]
+    /// [`mouse_press_event()`]
+    /// [`mouse_release_event()`]
+    /// [`move_event()`]
+    /// [`paint_event()`]
+    /// [`resize_event()`]
+    /// [`Object::event`]
+    /// [`Object::timer_event`]
     [event] event(event: *EventType) -> bool,
     /// 
     /// This event handler, for event *event,* can be reimplemented in a
@@ -3915,22 +3930,22 @@ struct Widget : Object, PaintDevice {
     /// when you click outside the window. For other widget types it does
     /// nothing.
     /// 
-    /// **See also:** mouseReleaseEvent()
-    /// mouseDoubleClickEvent()
-    /// mouseMoveEvent()
-    /// event()
-    /// QMouseEvent
+    /// **See also:** [`mouse_release_event()`]
+    /// [`mouse_double_click_event()`]
+    /// [`mouse_move_event()`]
+    /// [`event()`]
+    /// [`MouseEvent`]
     /// {Scribble Example}
     [event] mouse_press_event(event: *MouseEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented in a
     /// subclass to receive mouse release events for the widget.
     /// 
-    /// **See also:** mousePressEvent()
-    /// mouseDoubleClickEvent()
-    /// mouseMoveEvent()
-    /// event()
-    /// QMouseEvent
+    /// **See also:** [`mouse_press_event()`]
+    /// [`mouse_double_click_event()`]
+    /// [`mouse_move_event()`]
+    /// [`event()`]
+    /// [`MouseEvent`]
     /// {Scribble Example}
     [event] mouse_release_event(event: *MouseEventType),
     /// 
@@ -3944,11 +3959,11 @@ struct Widget : Object, PaintDevice {
     /// developer to ensure that the application interprets these events
     /// correctly.
     /// 
-    /// **See also:** mousePressEvent()
-    /// mouseReleaseEvent()
-    /// mouseMoveEvent()
-    /// event()
-    /// QMouseEvent
+    /// **See also:** [`mouse_press_event()`]
+    /// [`mouse_release_event()`]
+    /// [`mouse_move_event()`]
+    /// [`event()`]
+    /// [`MouseEvent`]
     [event] mouse_double_click_event(event: *MouseEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented in a
@@ -3972,12 +3987,12 @@ struct Widget : Object, PaintDevice {
     /// immediately, you must call QToolTip::showText() instead of
     /// setToolTip() in your implementation of mouseMoveEvent().
     /// 
-    /// **See also:** setMouseTracking()
-    /// mousePressEvent()
-    /// mouseReleaseEvent()
-    /// mouseDoubleClickEvent()
-    /// event()
-    /// QMouseEvent
+    /// **See also:** [`set_mouse_tracking()`]
+    /// [`mouse_press_event()`]
+    /// [`mouse_release_event()`]
+    /// [`mouse_double_click_event()`]
+    /// [`event()`]
+    /// [`MouseEvent`]
     /// {Scribble Example}
     [event] mouse_move_event(event: *MouseEventType),
     /// 
@@ -3991,10 +4006,10 @@ struct Widget : Object, PaintDevice {
     /// 
     /// The default implementation ignores the event.
     /// 
-    /// **See also:** QEvent::ignore()
-    /// QEvent::accept()
-    /// event()
-    /// QWheelEvent
+    /// **See also:** [`Event::ignore`]
+    /// [`Event::accept`]
+    /// [`event()`]
+    /// [`WheelEvent`]
     [event] wheel_event(event: *WheelEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented in a
@@ -4015,12 +4030,12 @@ struct Widget : Object, PaintDevice {
     /// need to call QKeyEvent::accept() - just do not call the base class
     /// implementation if you act upon the key.
     /// 
-    /// **See also:** keyReleaseEvent()
-    /// setFocusPolicy()
-    /// focusInEvent()
-    /// focusOutEvent()
-    /// event()
-    /// QKeyEvent
+    /// **See also:** [`key_release_event()`]
+    /// [`set_focus_policy()`]
+    /// [`focus_in_event()`]
+    /// [`focus_out_event()`]
+    /// [`event()`]
+    /// [`KeyEvent`]
     /// {Tetrix Example}
     [event] key_press_event(event: *KeyEventType),
     /// 
@@ -4043,13 +4058,13 @@ struct Widget : Object, PaintDevice {
     /// need to call QKeyEvent::accept() - just do not call the base class
     /// implementation if you act upon the key.
     /// 
-    /// **See also:** keyPressEvent()
-    /// QEvent::ignore()
-    /// setFocusPolicy()
-    /// focusInEvent()
-    /// focusOutEvent()
-    /// event()
-    /// QKeyEvent
+    /// **See also:** [`key_press_event()`]
+    /// [`Event::ignore`]
+    /// [`set_focus_policy()`]
+    /// [`focus_in_event()`]
+    /// [`focus_out_event()`]
+    /// [`event()`]
+    /// [`KeyEvent`]
     [event] key_release_event(event: *KeyEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
@@ -4064,12 +4079,12 @@ struct Widget : Object, PaintDevice {
     /// The default implementation updates the widget (except for windows
     /// that do not specify a focusPolicy()).
     /// 
-    /// **See also:** focusOutEvent()
-    /// setFocusPolicy()
-    /// keyPressEvent()
-    /// keyReleaseEvent()
-    /// event()
-    /// QFocusEvent
+    /// **See also:** [`focus_out_event()`]
+    /// [`set_focus_policy()`]
+    /// [`key_press_event()`]
+    /// [`key_release_event()`]
+    /// [`event()`]
+    /// [`FocusEvent`]
     [event] focus_in_event(event: *FocusEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
@@ -4084,12 +4099,12 @@ struct Widget : Object, PaintDevice {
     /// The default implementation updates the widget (except for windows
     /// that do not specify a focusPolicy()).
     /// 
-    /// **See also:** focusInEvent()
-    /// setFocusPolicy()
-    /// keyPressEvent()
-    /// keyReleaseEvent()
-    /// event()
-    /// QFocusEvent
+    /// **See also:** [`focus_in_event()`]
+    /// [`set_focus_policy()`]
+    /// [`key_press_event()`]
+    /// [`key_release_event()`]
+    /// [`event()`]
+    /// [`FocusEvent`]
     [event] focus_out_event(event: *FocusEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
@@ -4098,9 +4113,9 @@ struct Widget : Object, PaintDevice {
     /// An event is sent to the widget when the mouse cursor enters the
     /// widget.
     /// 
-    /// **See also:** leaveEvent()
-    /// mouseMoveEvent()
-    /// event()
+    /// **See also:** [`leave_event()`]
+    /// [`mouse_move_event()`]
+    /// [`event()`]
     [event] enter_event(event: *EventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
@@ -4109,9 +4124,9 @@ struct Widget : Object, PaintDevice {
     /// A leave event is sent to the widget when the mouse cursor leaves
     /// the widget.
     /// 
-    /// **See also:** enterEvent()
-    /// mouseMoveEvent()
-    /// event()
+    /// **See also:** [`enter_event()`]
+    /// [`mouse_move_event()`]
+    /// [`event()`]
     [event] leave_event(event: *EventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive paint
@@ -4153,12 +4168,12 @@ struct Widget : Object, PaintDevice {
     /// Qt::WA_PaintOnScreen must be set. Otherwise, QWidget::paintEngine() will
     /// never be called; the backingstore will be used instead.
     /// 
-    /// **See also:** event()
-    /// repaint()
-    /// update()
-    /// QPainter
-    /// QPixmap
-    /// QPaintEvent
+    /// **See also:** [`event()`]
+    /// [`repaint()`]
+    /// [`update()`]
+    /// [`Painter`]
+    /// [`Pixmap`]
+    /// [`PaintEvent`]
     /// {Analog Clock Example}
     [event] paint_event(event: *PaintEventType),
     /// 
@@ -4169,10 +4184,10 @@ struct Widget : Object, PaintDevice {
     /// 
     /// The old position is accessible through QMoveEvent::oldPos().
     /// 
-    /// **See also:** resizeEvent()
-    /// event()
-    /// move()
-    /// QMoveEvent
+    /// **See also:** [`resize_event()`]
+    /// [`event()`]
+    /// [`move()`]
+    /// [`MoveEvent`]
     [event] move_event(event: *MoveEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
@@ -4185,11 +4200,11 @@ struct Widget : Object, PaintDevice {
     /// after processing the resize event. No drawing need be (or should
     /// be) done inside this handler.
     /// 
-    /// **See also:** moveEvent()
-    /// event()
-    /// resize()
-    /// QResizeEvent
-    /// paintEvent()
+    /// **See also:** [`move_event()`]
+    /// [`event()`]
+    /// [`resize()`]
+    /// [`ResizeEvent`]
+    /// [`paint_event()`]
     /// {Scribble Example}
     [event] resize_event(event: *ResizeEventType),
     /// 
@@ -4208,10 +4223,10 @@ struct Widget : Object, PaintDevice {
     /// uses a helper function to determine whether
     /// or not to close the window:
     /// 
-    /// **See also:** event()
-    /// hide()
-    /// close()
-    /// QCloseEvent
+    /// **See also:** [`event()`]
+    /// [`hide()`]
+    /// [`close()`]
+    /// [`CloseEvent`]
     /// {Application Example}
     [event] close_event(event: *CloseEventType),
     /// 
@@ -4226,9 +4241,9 @@ struct Widget : Object, PaintDevice {
     /// See the [QContextMenuEvent](QContextMenuEvent)
     /// documentation for more details.
     /// 
-    /// **See also:** event()
-    /// QContextMenuEvent
-    /// customContextMenuRequested()
+    /// **See also:** [`event()`]
+    /// [`ContextMenuEvent`]
+    /// [`custom_context_menu_requested()`]
     [event] context_menu_event(event: *ContextMenuEventType),
     /// 
     /// This event handler, for event *event,* can be reimplemented in a
@@ -4247,21 +4262,21 @@ struct Widget : Object, PaintDevice {
     /// tablet move events occur even while the stylus is hovering in proximity of
     /// the tablet, with no buttons pressed.
     /// 
-    /// **See also:** QEvent::ignore()
-    /// QEvent::accept()
-    /// event()
-    /// setTabletTracking()
-    /// QTabletEvent
+    /// **See also:** [`Event::ignore`]
+    /// [`Event::accept`]
+    /// [`event()`]
+    /// [`set_tablet_tracking()`]
+    /// [`TabletEvent`]
     [event] tablet_event(event: *TabletEventType),
     /// 
     /// This event handler is called with the given *event* whenever the
     /// widget's actions are changed.
     /// 
-    /// **See also:** addAction()
-    /// insertAction()
-    /// removeAction()
-    /// actions()
-    /// QActionEvent
+    /// **See also:** [`add_action()`]
+    /// [`insert_action()`]
+    /// [`remove_action()`]
+    /// [`actions()`]
+    /// [`ActionEvent`]
     [event] action_event(event: *ActionEventType),
     /// 
     /// This event handler is called when a drag is in progress and the
@@ -4275,8 +4290,8 @@ struct Widget : Object, PaintDevice {
     /// for an
     /// overview of how to provide drag-and-drop in your application.
     /// 
-    /// **See also:** QDrag
-    /// QDragEnterEvent
+    /// **See also:** [`Drag`]
+    /// [`DragEnterEvent`]
     [event] drag_enter_event(event: *DragEnterEventType),
     /// 
     /// This event handler is called if a drag is in progress, and when
@@ -4289,8 +4304,8 @@ struct Widget : Object, PaintDevice {
     /// for an
     /// overview of how to provide drag-and-drop in your application.
     /// 
-    /// **See also:** QDrag
-    /// QDragMoveEvent
+    /// **See also:** [`Drag`]
+    /// [`DragMoveEvent`]
     [event] drag_move_event(event: *DragMoveEventType),
     /// 
     /// This event handler is called when a drag is in progress and the
@@ -4301,8 +4316,8 @@ struct Widget : Object, PaintDevice {
     /// for an
     /// overview of how to provide drag-and-drop in your application.
     /// 
-    /// **See also:** QDrag
-    /// QDragLeaveEvent
+    /// **See also:** [`Drag`]
+    /// [`DragLeaveEvent`]
     [event] drag_leave_event(event: *DragLeaveEventType),
     /// 
     /// This event handler is called when the drag is dropped on this
@@ -4312,8 +4327,8 @@ struct Widget : Object, PaintDevice {
     /// for an
     /// overview of how to provide drag-and-drop in your application.
     /// 
-    /// **See also:** QDrag
-    /// QDropEvent
+    /// **See also:** [`Drag`]
+    /// [`DropEvent`]
     [event] drop_event(event: *DropEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
@@ -4331,8 +4346,8 @@ struct Widget : Object, PaintDevice {
     /// the sense of isVisible().
     /// 
     /// **See also:** visible
-    /// event()
-    /// QShowEvent
+    /// [`event()`]
+    /// [`ShowEvent`]
     [event] show_event(event: *ShowEventType),
     /// 
     /// This event handler can be reimplemented in a subclass to receive
@@ -4349,8 +4364,8 @@ struct Widget : Object, PaintDevice {
     /// the sense of isVisible().
     /// 
     /// **See also:** visible
-    /// event()
-    /// QHideEvent
+    /// [`event()`]
+    /// [`HideEvent`]
     [event] hide_event(event: *HideEventType),
     /// 
     /// This special event handler can be reimplemented in a subclass to
@@ -4419,8 +4434,8 @@ struct Widget : Object, PaintDevice {
     /// documentation for more
     /// details.
     /// 
-    /// **See also:** event()
-    /// QInputMethodEvent
+    /// **See also:** [`event()`]
+    /// [`InputMethodEvent`]
     [event] input_method_event(arg0: *InputMethodEventType),
     /// 
     /// This method is only relevant for input widgets. It is used by the
@@ -4430,9 +4445,9 @@ struct Widget : Object, PaintDevice {
     /// 
     /// *query* specifies which property is queried.
     /// 
-    /// **See also:** inputMethodEvent()
-    /// QInputMethodEvent
-    /// QInputMethodQueryEvent
+    /// **See also:** [`input_method_event()`]
+    /// [`InputMethodEvent`]
+    /// [`InputMethodQueryEvent`]
     /// inputMethodHints
     [event] input_method_query(arg0: Rute::InputMethodQuery) -> Variant,
     /// 
@@ -4453,7 +4468,7 @@ struct Widget : Object, PaintDevice {
     /// 
     /// The default value is Qt::ImhNone.
     /// 
-    /// **See also:** inputMethodQuery()
+    /// **See also:** [`input_method_query()`]
     input_method_hints() -> Rute::InputMethodHints,
     set_input_method_hints(hints: Rute::InputMethodHints),
     /// 
@@ -4509,8 +4524,8 @@ struct Widget : Object, PaintDevice {
     /// The QWidget constructor calls create(0,true,true) to create a
     /// window for this widget.
     /// 
-    /// **See also:** createWindowContainer()
-    /// QWindow::fromWinId()
+    /// **See also:** [`create_window_container()`]
+    /// [`Window::from_win_id`]
     create(arg0: WId, initialize_window: bool, destroy_old_window: bool),
     /// 
     /// Finds a new widget to give the keyboard focus to, as appropriate
@@ -4530,23 +4545,33 @@ struct Widget : Object, PaintDevice {
     /// to redirect focus. By reimplementing this function for an object,
     /// you thus gain control of focus traversal for all child widgets.
     /// 
-    /// **See also:** focusNextChild()
-    /// focusPreviousChild()
+    /// **See also:** [`focus_next_child()`]
+    /// [`focus_previous_child()`]
     [event] focus_next_prev_child(next: bool) -> bool,
     /// 
     /// Finds a new widget to give the keyboard focus to, as appropriate
     /// for **Tab,** and returns `true` if it can find a new widget, or
     /// false if it can't.
     /// 
-    /// **See also:** focusPreviousChild()
+    /// **See also:** [`focus_previous_child()`]
     focus_next_child() -> bool,
     /// 
     /// Finds a new widget to give the keyboard focus to, as appropriate
     /// for **Shift+Tab,** and returns `true` if it can find a new widget,
     /// or false if it can't.
     /// 
-    /// **See also:** focusNextChild()
+    /// **See also:** [`focus_next_child()`]
     focus_previous_child() -> bool,
+}
+
+[org_name(QWidget)]
+enum RenderFlag {
+    /// If you enable this option, the widget's background is rendered into the target even if autoFillBackground is not set. By default, this option is enabled.
+    DrawWindowBackground,
+    /// If you enable this option, the widget's children are rendered recursively into the target. By default, this option is enabled.
+    DrawChildren,
+    /// If you enable this option, the widget's QWidget::mask() is ignored when rendering into the target. By default, this option is disabled.
+    IgnoreMask,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

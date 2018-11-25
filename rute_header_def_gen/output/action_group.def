@@ -36,7 +36,7 @@
 /// considered a separator. Action groups are added to widgets with
 /// the QWidget::addActions() function.
 /// 
-/// **See also:** QAction
+/// **See also:** [`Action`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -47,7 +47,7 @@ struct ActionGroup : Object {
     /// Normally an action is added to a group by creating it with the
     /// group as its parent, so this function is not usually used.
     /// 
-    /// **See also:** QAction::setActionGroup()
+    /// **See also:** [`Action::set_action_group`]
     /// 
     /// Creates and returns an action with *text.* The newly created
     /// action is a child of this action group.
@@ -55,7 +55,7 @@ struct ActionGroup : Object {
     /// Normally an action is added to a group by creating it with the
     /// group as parent, so this function is not usually used.
     /// 
-    /// **See also:** QAction::setActionGroup()
+    /// **See also:** [`Action::set_action_group`]
     /// 
     /// Creates and returns an action with *text* and an *icon.* The
     /// newly created action is a child of this action group.
@@ -63,7 +63,7 @@ struct ActionGroup : Object {
     /// Normally an action is added to a group by creating it with the
     /// group as its parent, so this function is not usually used.
     /// 
-    /// **See also:** QAction::setActionGroup()
+    /// **See also:** [`Action::set_action_group`]
     add_action(a: *ActionType) -> Action?,
     /// 
     /// Adds the *action* to this group, and returns it.
@@ -71,7 +71,7 @@ struct ActionGroup : Object {
     /// Normally an action is added to a group by creating it with the
     /// group as its parent, so this function is not usually used.
     /// 
-    /// **See also:** QAction::setActionGroup()
+    /// **See also:** [`Action::set_action_group`]
     /// 
     /// Creates and returns an action with *text.* The newly created
     /// action is a child of this action group.
@@ -79,7 +79,7 @@ struct ActionGroup : Object {
     /// Normally an action is added to a group by creating it with the
     /// group as parent, so this function is not usually used.
     /// 
-    /// **See also:** QAction::setActionGroup()
+    /// **See also:** [`Action::set_action_group`]
     /// 
     /// Creates and returns an action with *text* and an *icon.* The
     /// newly created action is a child of this action group.
@@ -87,15 +87,16 @@ struct ActionGroup : Object {
     /// Normally an action is added to a group by creating it with the
     /// group as its parent, so this function is not usually used.
     /// 
-    /// **See also:** QAction::setActionGroup()
-    add_action(text: String) -> Action?,
+    /// **See also:** [`Action::set_action_group`]
+    [org_name(addAction)]
+    add_action_2(text: String) -> Action?,
     /// 
     /// Adds the *action* to this group, and returns it.
     /// 
     /// Normally an action is added to a group by creating it with the
     /// group as its parent, so this function is not usually used.
     /// 
-    /// **See also:** QAction::setActionGroup()
+    /// **See also:** [`Action::set_action_group`]
     /// 
     /// Creates and returns an action with *text.* The newly created
     /// action is a child of this action group.
@@ -103,7 +104,7 @@ struct ActionGroup : Object {
     /// Normally an action is added to a group by creating it with the
     /// group as parent, so this function is not usually used.
     /// 
-    /// **See also:** QAction::setActionGroup()
+    /// **See also:** [`Action::set_action_group`]
     /// 
     /// Creates and returns an action with *text* and an *icon.* The
     /// newly created action is a child of this action group.
@@ -111,13 +112,14 @@ struct ActionGroup : Object {
     /// Normally an action is added to a group by creating it with the
     /// group as its parent, so this function is not usually used.
     /// 
-    /// **See also:** QAction::setActionGroup()
-    add_action(icon: &IconType, text: String) -> Action?,
+    /// **See also:** [`Action::set_action_group`]
+    [org_name(addAction)]
+    add_action_3(icon: &IconType, text: String) -> Action?,
     /// 
     /// Removes the *action* from this group. The action will have no
     /// parent as a result.
     /// 
-    /// **See also:** QAction::setActionGroup()
+    /// **See also:** [`Action::set_action_group`]
     remove_action(a: *ActionType),
     /// 
     /// Returns the list of this groups's actions. This may be empty.
@@ -144,7 +146,7 @@ struct ActionGroup : Object {
     /// pauses with the cursor over a menu option, toolbar button, or
     /// presses an action's shortcut key combination.
     /// 
-    /// **See also:** QAction::activate()
+    /// **See also:** [`Action::activate`]
     [signal] hovered(arg0: *ActionType),
 }
 

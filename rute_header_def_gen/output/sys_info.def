@@ -8,118 +8,10 @@
 /// the preprocessor symbols Q_OS_WIN and Q_OS_MACOS to test that
 /// the application is compiled under Windows or MacOS .
 /// 
-/// **See also:** QLibraryInfo
+/// **See also:** [`LibraryInfo`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QSysInfo)]
-enum Sizes {
-    WordSize,
-}
-
-[org_name(QSysInfo)]
-enum Endian {
-    BigEndian,
-    LittleEndian,
-    ByteOrder,
-}
-
-[org_name(QSysInfo)]
-enum WinVersion {
-    WV_None,
-    WV_32s,
-    WV_95,
-    WV_98,
-    WV_Me,
-    WV_DOS_based,
-    WV_NT,
-    WV_2000,
-    WV_XP,
-    WV_2003,
-    WV_VISTA,
-    WV_WINDOWS7,
-    WV_WINDOWS8,
-    WV_WINDOWS8_1,
-    WV_WINDOWS10,
-    WV_NT_based,
-    WV_4_0,
-    WV_5_0,
-    WV_5_1,
-    WV_5_2,
-    WV_6_0,
-    WV_6_1,
-    WV_6_2,
-    WV_6_3,
-    WV_10_0,
-    WV_CE,
-    WV_CENET,
-    WV_CE_5,
-    WV_CE_6,
-    WV_CE_based,
-}
-
-[org_name(QSysInfo)]
-enum MacVersion {
-    MV_None,
-    MV_Unknown,
-    MV_9,
-    MV_10_0,
-    MV_10_1,
-    MV_10_2,
-    MV_10_3,
-    MV_10_4,
-    MV_10_5,
-    MV_10_6,
-    MV_10_7,
-    MV_10_8,
-    MV_10_9,
-    MV_10_10,
-    MV_10_11,
-    MV_10_12,
-    MV_CHEETAH,
-    MV_PUMA,
-    MV_JAGUAR,
-    MV_PANTHER,
-    MV_TIGER,
-    MV_LEOPARD,
-    MV_SNOWLEOPARD,
-    MV_LION,
-    MV_MOUNTAINLION,
-    MV_MAVERICKS,
-    MV_YOSEMITE,
-    MV_ELCAPITAN,
-    MV_SIERRA,
-    MV_IOS,
-    MV_IOS_4_3,
-    MV_IOS_5_0,
-    MV_IOS_5_1,
-    MV_IOS_6_0,
-    MV_IOS_6_1,
-    MV_IOS_7_0,
-    MV_IOS_7_1,
-    MV_IOS_8_0,
-    MV_IOS_8_1,
-    MV_IOS_8_2,
-    MV_IOS_8_3,
-    MV_IOS_8_4,
-    MV_IOS_9_0,
-    MV_IOS_9_1,
-    MV_IOS_9_2,
-    MV_IOS_9_3,
-    MV_IOS_10_0,
-    MV_TVOS,
-    MV_TVOS_9_0,
-    MV_TVOS_9_1,
-    MV_TVOS_9_2,
-    MV_TVOS_10_0,
-    MV_WATCHOS,
-    MV_WATCHOS_2_0,
-    MV_WATCHOS_2_1,
-    MV_WATCHOS_2_2,
-    MV_WATCHOS_3_0,
-}
-
-
 struct SysInfo {
     /// 
     /// Returns the version of the Windows operating system on which the
@@ -155,8 +47,8 @@ struct SysInfo {
     /// * "sparcv9"
     /// * "x86_64"
     /// 
-    /// **See also:** QSysInfo::buildAbi()
-    /// QSysInfo::currentCpuArchitecture()
+    /// **See also:** [`SysInfo::build_abi`]
+    /// [`SysInfo::current_cpu_architecture`]
     [static] build_cpu_architecture() -> String,
     /// 
     /// Returns the architecture of the CPU that the application is running on, in
@@ -184,8 +76,8 @@ struct SysInfo {
     /// * "sparcv9"
     /// * "x86_64"
     /// 
-    /// **See also:** QSysInfo::buildAbi()
-    /// QSysInfo::buildCpuArchitecture()
+    /// **See also:** [`SysInfo::build_abi`]
+    /// [`SysInfo::build_cpu_architecture`]
     [static] current_cpu_architecture() -> String,
     /// 
     /// Returns the full architecture string that Qt was compiled for. This string
@@ -210,7 +102,7 @@ struct SysInfo {
     /// * (Optional) ABI
     /// * Zero or more components identifying different ABIs possible in this architecture. Currently, Qt has optional ABI components for ARM and MIPS processors: one component is the main ABI (such as "eabi", "o32", "n32", "o64"); another is whether the calling convention is using hardware floating point registers ("hardfloat" is present). Additionally, if Qt was configured with `-qreal float` , the ABI option tag "qreal_float" will be present. If Qt was configured with another type as qreal, that type is present after "qreal_", with all characters other than letters and digits escaped by an underscore, followed by two hex digits. For example, `-qreal long double` becomes "qreal_long_20double".
     /// 
-    /// **See also:** QSysInfo::buildCpuArchitecture()
+    /// **See also:** [`SysInfo::build_cpu_architecture`]
     [static] build_abi() -> String,
     /// 
     /// Returns the type of the operating system kernel Qt was compiled for. It's
@@ -231,11 +123,11 @@ struct SysInfo {
     /// Debian/kFreeBSD, and for MacOS and iOS. For information on the type
     /// of product the application is running on, see productType().
     /// 
-    /// **See also:** QFileSelector
-    /// kernelVersion()
-    /// productType()
-    /// productVersion()
-    /// prettyProductName()
+    /// **See also:** [`FileSelector`]
+    /// [`kernel_version()`]
+    /// [`product_type()`]
+    /// [`product_version()`]
+    /// [`pretty_product_name()`]
     [static] kernel_type() -> String,
     /// 
     /// Returns the release version of the operating system kernel. On Windows, it
@@ -246,10 +138,10 @@ struct SysInfo {
     /// If the version could not be determined, this function may return an empty
     /// string.
     /// 
-    /// **See also:** kernelType()
-    /// productType()
-    /// productVersion()
-    /// prettyProductName()
+    /// **See also:** [`kernel_type()`]
+    /// [`product_type()`]
+    /// [`product_version()`]
+    /// [`pretty_product_name()`]
     [static] kernel_version() -> String,
     /// 
     /// Returns the product name of the operating system this application is
@@ -284,11 +176,11 @@ struct SysInfo {
     /// 
     /// For other Unix-type systems, this function usually returns .
     /// 
-    /// **See also:** QFileSelector
-    /// kernelType()
-    /// kernelVersion()
-    /// productVersion()
-    /// prettyProductName()
+    /// **See also:** [`FileSelector`]
+    /// [`kernel_type()`]
+    /// [`kernel_version()`]
+    /// [`product_version()`]
+    /// [`pretty_product_name()`]
     [static] product_type() -> String,
     /// 
     /// Returns the product version of the operating system in string form. If the
@@ -322,10 +214,10 @@ struct SysInfo {
     /// the distribution may jump unexpectedly, please refer to the distribution's
     /// documentation for versioning practices.
     /// 
-    /// **See also:** kernelType()
-    /// kernelVersion()
-    /// productType()
-    /// prettyProductName()
+    /// **See also:** [`kernel_type()`]
+    /// [`kernel_version()`]
+    /// [`product_type()`]
+    /// [`pretty_product_name()`]
     [static] product_version() -> String,
     /// 
     /// Returns a prettier form of productType() and productVersion(), containing
@@ -337,10 +229,10 @@ struct SysInfo {
     /// If productType() is , this function will instead use the
     /// kernelType() and kernelVersion() functions.
     /// 
-    /// **See also:** kernelType()
-    /// kernelVersion()
-    /// productType()
-    /// productVersion()
+    /// **See also:** [`kernel_type()`]
+    /// [`kernel_version()`]
+    /// [`product_type()`]
+    /// [`product_version()`]
     [static] pretty_product_name() -> String,
     /// 
     /// Returns this machine's host name, if one is configured. Note that hostnames
@@ -353,8 +245,8 @@ struct SysInfo {
     /// 
     /// This function returns the same as QHostInfo::localHostName().
     /// 
-    /// **See also:** QHostInfo::localDomainName
-    /// machineUniqueId()
+    /// **See also:** [`HostInfo::local_domain_name()`]
+    /// [`machine_unique_id()`]
     [static] machine_host_name() -> String,
     /// 
     /// Returns a unique ID for this machine, if one can be determined. If no
@@ -374,8 +266,8 @@ struct SysInfo {
     /// this ID is usually permanent and it matches the D-Bus machine ID, except
     /// for nodes without their own storage (replicated nodes).
     /// 
-    /// **See also:** machineHostName()
-    /// bootUniqueId()
+    /// **See also:** [`machine_host_name()`]
+    /// [`boot_unique_id()`]
     [static] machine_unique_id() -> ByteArray,
     /// 
     /// Returns a unique ID for this machine's boot, if one can be determined. If
@@ -386,8 +278,201 @@ struct SysInfo {
     /// This function is currently only implemented for Linux and Apple operating
     /// systems.
     /// 
-    /// **See also:** machineUniqueId()
+    /// **See also:** [`machine_unique_id()`]
     [static] boot_unique_id() -> ByteArray,
+}
+
+[org_name(QSysInfo)]
+enum Sizes {
+    /// The size in bits of a pointer for the platform on which the application is compiled (32 or 64).
+    WordSize,
+}
+
+[org_name(QSysInfo)]
+enum Endian {
+    /// Big-endian byte order (also called Network byte order)
+    BigEndian,
+    /// Little-endian byte order
+    LittleEndian,
+    /// Equals BigEndian or LittleEndian, depending on the platform's byte order.
+    ByteOrder,
+}
+
+[org_name(QSysInfo)]
+enum WinVersion {
+    /// Operating system other than Windows.
+    WV_None,
+    /// Windows 3.1 with Win 32s
+    WV_32s,
+    /// Windows 95
+    WV_95,
+    /// Windows 98
+    WV_98,
+    /// Windows Me NT-based versions (note that each operating system version is only represented once rather than each Windows edition):
+    WV_Me,
+    /// MS-DOS-based version of Windows
+    WV_DOS_based,
+    /// Windows NT (operating system version 4.0)
+    WV_NT,
+    /// Windows 2000 (operating system version 5.0)
+    WV_2000,
+    /// Windows XP (operating system version 5.1)
+    WV_XP,
+    /// Windows Server 2003, Windows Server 2003 R2, Windows Home Server, Windows XP Professional x64 Edition (operating system version 5.2)
+    WV_2003,
+    /// Windows Vista, Windows Server 2008 (operating system version 6.0)
+    WV_VISTA,
+    /// Windows 7, Windows Server 2008 R2 (operating system version 6.1)
+    WV_WINDOWS7,
+    /// Windows 8 (operating system version 6.2)
+    WV_WINDOWS8,
+    /// Windows 8.1 (operating system version 6.3), introduced in Qt 5.2
+    WV_WINDOWS8_1,
+    /// Windows 10 (operating system version 10.0), introduced in Qt 5.5 Alternatively, you may use the following macros which correspond directly to the Windows operating system version number:
+    WV_WINDOWS10,
+    /// NT-based version of Windows
+    WV_NT_based,
+    /// Operating system version 4.0, corresponds to Windows NT
+    WV_4_0,
+    /// Operating system version 5.0, corresponds to Windows 2000
+    WV_5_0,
+    /// Operating system version 5.1, corresponds to Windows XP
+    WV_5_1,
+    /// Operating system version 5.2, corresponds to Windows Server 2003, Windows Server 2003 R2, Windows Home Server, and Windows XP Professional x64 Edition
+    WV_5_2,
+    /// Operating system version 6.0, corresponds to Windows Vista and Windows Server 2008
+    WV_6_0,
+    /// Operating system version 6.1, corresponds to Windows 7 and Windows Server 2008 R2
+    WV_6_1,
+    /// Operating system version 6.2, corresponds to Windows 8
+    WV_6_2,
+    /// Operating system version 6.3, corresponds to Windows 8.1, introduced in Qt 5.2
+    WV_6_3,
+    /// Operating system version 10.0, corresponds to Windows 10, introduced in Qt 5.5 The following masks can be used for testing whether a Windows version is MS-DOS-based or NT-based:
+    WV_10_0,
+    WV_CE,
+    WV_CENET,
+    WV_CE_5,
+    WV_CE_6,
+    WV_CE_based,
+}
+
+[org_name(QSysInfo)]
+enum MacVersion {
+    /// Not a Darwin operating system
+    MV_None,
+    /// An unknown and currently unsupported platform
+    MV_Unknown,
+    /// MacOS 9
+    MV_9,
+    /// MacOS 10.0
+    MV_10_0,
+    /// MacOS 10.1
+    MV_10_1,
+    /// MacOS 10.2
+    MV_10_2,
+    /// MacOS 10.3
+    MV_10_3,
+    /// MacOS 10.4
+    MV_10_4,
+    /// MacOS 10.5
+    MV_10_5,
+    /// MacOS 10.6
+    MV_10_6,
+    /// MacOS 10.7
+    MV_10_7,
+    /// MacOS 10.8
+    MV_10_8,
+    /// MacOS 10.9
+    MV_10_9,
+    /// MacOS 10.10
+    MV_10_10,
+    /// MacOS 10.11
+    MV_10_11,
+    /// MacOS 10.12
+    MV_10_12,
+    /// Apple codename for MV_10_0
+    MV_CHEETAH,
+    /// Apple codename for MV_10_1
+    MV_PUMA,
+    /// Apple codename for MV_10_2
+    MV_JAGUAR,
+    /// Apple codename for MV_10_3
+    MV_PANTHER,
+    /// Apple codename for MV_10_4
+    MV_TIGER,
+    /// Apple codename for MV_10_5
+    MV_LEOPARD,
+    /// Apple codename for MV_10_6
+    MV_SNOWLEOPARD,
+    /// Apple codename for MV_10_7
+    MV_LION,
+    /// Apple codename for MV_10_8
+    MV_MOUNTAINLION,
+    /// Apple codename for MV_10_9
+    MV_MAVERICKS,
+    /// Apple codename for MV_10_10
+    MV_YOSEMITE,
+    /// Apple codename for MV_10_11
+    MV_ELCAPITAN,
+    /// Apple codename for MV_10_12
+    MV_SIERRA,
+    /// iOS (any)
+    MV_IOS,
+    /// iOS 4.3
+    MV_IOS_4_3,
+    /// iOS 5.0
+    MV_IOS_5_0,
+    /// iOS 5.1
+    MV_IOS_5_1,
+    /// iOS 6.0
+    MV_IOS_6_0,
+    /// iOS 6.1
+    MV_IOS_6_1,
+    /// iOS 7.0
+    MV_IOS_7_0,
+    /// iOS 7.1
+    MV_IOS_7_1,
+    /// iOS 8.0
+    MV_IOS_8_0,
+    /// iOS 8.1
+    MV_IOS_8_1,
+    /// iOS 8.2
+    MV_IOS_8_2,
+    /// iOS 8.3
+    MV_IOS_8_3,
+    /// iOS 8.4
+    MV_IOS_8_4,
+    /// iOS 9.0
+    MV_IOS_9_0,
+    /// iOS 9.1
+    MV_IOS_9_1,
+    /// iOS 9.2
+    MV_IOS_9_2,
+    /// iOS 9.3
+    MV_IOS_9_3,
+    /// iOS 10.0
+    MV_IOS_10_0,
+    /// tvOS (any)
+    MV_TVOS,
+    /// tvOS 9.0
+    MV_TVOS_9_0,
+    /// tvOS 9.1
+    MV_TVOS_9_1,
+    /// tvOS 9.2
+    MV_TVOS_9_2,
+    /// tvOS 10.0
+    MV_TVOS_10_0,
+    /// watchOS (any)
+    MV_WATCHOS,
+    /// watchOS 2.0
+    MV_WATCHOS_2_0,
+    /// watchOS 2.1
+    MV_WATCHOS_2_1,
+    /// watchOS 2.2
+    MV_WATCHOS_2_2,
+    /// watchOS 3.0
+    MV_WATCHOS_3_0,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -100,10 +100,10 @@
 /// Most GUI styles use the pageStep() value to calculate the size of the
 /// slider.
 /// 
-/// **See also:** QScrollArea
-/// QSlider
-/// QDial
-/// QSpinBox
+/// **See also:** [`ScrollArea`]
+/// [`Slider`]
+/// [`Dial`]
+/// [`SpinBox`]
 /// {fowler}{GUI Design Handbook: Scroll Bar}
 /// {Sliders Example}
 /// # Licence
@@ -134,7 +134,7 @@ struct ScrollBar : AbstractSlider {
     /// is useful for subclasses when they need a QStyleOptionSlider, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionSliderType),
 }
 

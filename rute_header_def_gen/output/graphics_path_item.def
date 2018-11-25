@@ -11,33 +11,28 @@
 /// and brush, which you can set by calling the setPen() and
 /// setBrush() functions.
 /// 
-/// **See also:** QGraphicsRectItem
-/// QGraphicsEllipseItem
-/// QGraphicsPolygonItem
-/// QGraphicsTextItem
-/// QGraphicsLineItem
-/// QGraphicsPixmapItem
+/// **See also:** [`GraphicsRectItem`]
+/// [`GraphicsEllipseItem`]
+/// [`GraphicsPolygonItem`]
+/// [`GraphicsTextItem`]
+/// [`GraphicsLineItem`]
+/// [`GraphicsPixmapItem`]
 /// {Graphics
 /// View Framework}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsPathItem)]
-enum GraphicsPathItemFixMeEnums {
-    Type,
-}
-
 struct GraphicsPathItem : AbstractGraphicsShapeItem {
     /// 
     /// Returns the item's path as a QPainterPath. If no item has been set, an
     /// empty QPainterPath is returned.
     /// 
-    /// **See also:** setPath()
+    /// **See also:** [`set_path()`]
     path() -> PainterPath,
     /// 
     /// Sets the item's path to be the given *path.*
     /// 
-    /// **See also:** path()
+    /// **See also:** [`path()`]
     set_path(path: &PainterPathType),
     /// 
     [event] bounding_rect() -> RectF,
@@ -56,6 +51,11 @@ struct GraphicsPathItem : AbstractGraphicsShapeItem {
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
     [event] extension(variant: &VariantType) -> Variant,
+}
+
+[org_name(QGraphicsPathItem)]
+enum GraphicsPathItemFixMeEnums {
+    Type,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

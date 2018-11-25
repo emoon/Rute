@@ -1,0 +1,57 @@
+///
+/// The size of the surface is accessible with the size() function. The rendering
+/// specific attributes of the surface are accessible through the format() function.
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[attributes(NoWrapClass, NoCreate)]
+struct Surface {
+    ///
+    /// Returns the surface class of this surface.
+    surface_class() -> Surface::SurfaceClass,
+    ///
+    /// Returns the format of the surface.
+    //[event]
+    format() -> SurfaceFormat,
+    //
+    // Returns a handle to the platform-specific implementation of the surface.
+    //[event] surface_handle() -> PlatformSurface?,
+    ///
+    /// Returns the type of the surface.
+    //[event]
+    surface_type() -> Surface::SurfaceType,
+    ///
+    /// Returns true if the surface is OpenGL compatible and can be used in
+    /// conjunction with QOpenGLContext; otherwise returns false.
+    ///
+    //[org_name(supportsOpenGL)]
+    //supports_open_gl() -> bool,
+    ///
+    /// Returns the size of the surface in pixels.
+    //[event]
+    size() -> Size,
+}
+
+[org_name(QSurface)]
+enum SurfaceClass {
+    /// The surface is an instance of QWindow.
+    Window,
+    /// The surface is an instance of QOffscreenSurface.
+    Offscreen,
+}
+
+[org_name(QSurface)]
+enum SurfaceType {
+    /// The surface is is composed of pixels and can be rendered to using a software rasterizer like Qt's raster paint engine.
+    RasterSurface,
+    /// The surface is an OpenGL compatible surface and can be used in conjunction with QOpenGLContext.
+    OpenGLSurface,
+    /// The surface can be rendered to using a software rasterizer, and also supports OpenGL. This surface type is intended for internal Qt use, and requires the use of private API.
+    RasterGLSurface,
+    /// The surface is an OpenVG compatible surface and can be used in conjunction with OpenVG contexts.
+    OpenVGSurface,
+    /// The surface is a Vulkan compatible surface and can be used in conjunction with the Vulkan graphics API.
+    VulkanSurface,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

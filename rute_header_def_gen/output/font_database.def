@@ -36,94 +36,46 @@
 /// each combination of family and style, displaying this information
 /// in a tree view.
 /// 
-/// **See also:** QFont
-/// QFontInfo
-/// QFontMetrics
+/// **See also:** [`Font`]
+/// [`FontInfo`]
+/// [`FontMetrics`]
 /// {Character Map Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QFontDatabase)]
-enum WritingSystem {
-    Any,
-    Latin,
-    Greek,
-    Cyrillic,
-    Armenian,
-    Hebrew,
-    Arabic,
-    Syriac,
-    Thaana,
-    Devanagari,
-    Bengali,
-    Gurmukhi,
-    Gujarati,
-    Oriya,
-    Tamil,
-    Telugu,
-    Kannada,
-    Malayalam,
-    Sinhala,
-    Thai,
-    Lao,
-    Tibetan,
-    Myanmar,
-    Georgian,
-    Khmer,
-    SimplifiedChinese,
-    TraditionalChinese,
-    Japanese,
-    Korean,
-    Vietnamese,
-    Symbol,
-    Other,
-    Ogham,
-    Runic,
-    Nko,
-    WritingSystemsCount,
-}
-
-[org_name(QFontDatabase)]
-enum SystemFont {
-    GeneralFont,
-    FixedFont,
-    TitleFont,
-    SmallestReadableFont,
-}
-
-
 struct FontDatabase {
     qt_check_for_qgadget_macro(),
     /// 
     /// Returns a list of standard font sizes.
     /// 
-    /// **See also:** smoothSizes()
-    /// pointSizes()
+    /// **See also:** [`smooth_sizes()`]
+    /// [`point_sizes()`]
     [static] standard_sizes() -> [i32],
     /// 
     /// Returns a sorted list of the available writing systems. This is
     /// list generated from information about all installed fonts on the
     /// system.
     /// 
-    /// **See also:** families()
+    /// **See also:** [`families()`]
     /// 
     /// Returns a sorted list of the writing systems supported by a given
     /// font *family.*
     /// 
-    /// **See also:** families()
+    /// **See also:** [`families()`]
     writing_systems() -> List<QFontDatabase::WritingSystem>,
     /// 
     /// Returns a sorted list of the available writing systems. This is
     /// list generated from information about all installed fonts on the
     /// system.
     /// 
-    /// **See also:** families()
+    /// **See also:** [`families()`]
     /// 
     /// Returns a sorted list of the writing systems supported by a given
     /// font *family.*
     /// 
-    /// **See also:** families()
-    writing_systems(family: String) -> List<QFontDatabase::WritingSystem>,
+    /// **See also:** [`families()`]
+    [org_name(writingSystems)]
+    writing_systems_2(family: String) -> List<QFontDatabase::WritingSystem>,
     /// 
     /// Returns a sorted list of the available font families which support
     /// the *writingSystem.*
@@ -131,20 +83,20 @@ struct FontDatabase {
     /// If a family exists in several foundries, the returned name for
     /// that font is in the form . Examples: , , .
     /// 
-    /// **See also:** writingSystems()
+    /// **See also:** [`writing_systems()`]
     families(writing_system: FontDatabase::WritingSystem) -> [String],
     /// 
     /// Returns a list of the styles available for the font family *family.* Some example styles: , , ,
     /// , . The list may be empty.
     /// 
-    /// **See also:** families()
+    /// **See also:** [`families()`]
     styles(family: String) -> [String],
     /// 
     /// Returns a list of the point sizes available for the font that has
     /// family *family* and style *styleName.* The list may be empty.
     /// 
-    /// **See also:** smoothSizes()
-    /// standardSizes()
+    /// **See also:** [`smooth_sizes()`]
+    /// [`standard_sizes()`]
     point_sizes(family: String, style: String) -> [i32],
     /// 
     /// Returns the point sizes of a font that has family *family* and
@@ -152,8 +104,8 @@ struct FontDatabase {
     /// For non-scalable fonts and bitmap scalable fonts, this function
     /// is equivalent to pointSizes().
     /// 
-    /// **See also:** pointSizes()
-    /// standardSizes()
+    /// **See also:** [`point_sizes()`]
+    /// [`standard_sizes()`]
     smooth_sizes(family: String, style: String) -> [i32],
     /// 
     /// Returns a QFont object that has family *family,* style *style*
@@ -168,22 +120,22 @@ struct FontDatabase {
     /// scale a bitmap font it is better to scale it to one of the fixed
     /// sizes returned by smoothSizes().
     /// 
-    /// **See also:** isScalable()
-    /// isSmoothlyScalable()
+    /// **See also:** [`is_scalable()`]
+    /// [`is_smoothly_scalable()`]
     is_bitmap_scalable(family: String, style: String) -> bool,
     /// 
     /// Returns `true` if the font that has family *family* and style *style* is smoothly scalable; otherwise returns `false.` If this
     /// function returns `true,` it's safe to scale this font to any size,
     /// and the result will always look attractive.
     /// 
-    /// **See also:** isScalable()
-    /// isBitmapScalable()
+    /// **See also:** [`is_scalable()`]
+    /// [`is_bitmap_scalable()`]
     is_smoothly_scalable(family: String, style: String) -> bool,
     /// 
     /// Returns `true` if the font that has family *family* and style *style* is scalable; otherwise returns `false.`
     /// 
-    /// **See also:** isBitmapScalable()
-    /// isSmoothlyScalable()
+    /// **See also:** [`is_bitmap_scalable()`]
+    /// [`is_smoothly_scalable()`]
     is_scalable(family: String, style: String) -> bool,
     /// 
     /// Returns `true` if the font that has family *family* and style *style* is fixed pitch; otherwise returns `false.`
@@ -191,22 +143,22 @@ struct FontDatabase {
     /// 
     /// Returns `true` if the font that has family *family* and style *style* is italic; otherwise returns `false.`
     /// 
-    /// **See also:** weight()
-    /// bold()
+    /// **See also:** [`weight()`]
+    /// [`bold()`]
     italic(family: String, style: String) -> bool,
     /// 
     /// Returns `true` if the font that has family *family* and style *style* is bold; otherwise returns `false.`
     /// 
-    /// **See also:** italic()
-    /// weight()
+    /// **See also:** [`italic()`]
+    /// [`weight()`]
     bold(family: String, style: String) -> bool,
     /// 
     /// Returns the weight of the font that has family *family* and style
     /// *style.* If there is no such family and style combination,
     /// returns -1.
     /// 
-    /// **See also:** italic()
-    /// bold()
+    /// **See also:** [`italic()`]
+    /// [`bold()`]
     weight(family: String, style: String) -> i32,
     has_family(family: String) -> bool,
     /// 
@@ -230,9 +182,9 @@ struct FontDatabase {
     /// **Note**: Adding application fonts on Unix/X11 platforms without fontconfig is
     /// currently not supported.
     /// 
-    /// **See also:** addApplicationFontFromData()
-    /// applicationFontFamilies()
-    /// removeApplicationFont()
+    /// **See also:** [`add_application_font_from_data()`]
+    /// [`application_font_families()`]
+    /// [`remove_application_font()`]
     /// 
     /// Loads the font from binary data specified by *fontData* and makes it available to
     /// the application. An ID is returned that can be used to remove the font again
@@ -246,9 +198,9 @@ struct FontDatabase {
     /// **Note:** Adding application fonts on Unix/X11 platforms without fontconfig is
     /// currently not supported.
     /// 
-    /// **See also:** addApplicationFont()
-    /// applicationFontFamilies()
-    /// removeApplicationFont()
+    /// **See also:** [`add_application_font()`]
+    /// [`application_font_families()`]
+    /// [`remove_application_font()`]
     [static] add_application_font(file_name: String) -> i32,
     /// 
     /// Loads the font from binary data specified by *fontData* and makes it available to
@@ -263,24 +215,24 @@ struct FontDatabase {
     /// **Note:** Adding application fonts on Unix/X11 platforms without fontconfig is
     /// currently not supported.
     /// 
-    /// **See also:** addApplicationFont()
-    /// applicationFontFamilies()
-    /// removeApplicationFont()
+    /// **See also:** [`add_application_font()`]
+    /// [`application_font_families()`]
+    /// [`remove_application_font()`]
     [static] add_application_font_from_data(font_data: &ByteArrayType) -> i32,
     /// 
     /// Returns a list of font families for the given application font identified by
     /// *id.*
     /// 
-    /// **See also:** addApplicationFont()
-    /// addApplicationFontFromData()
+    /// **See also:** [`add_application_font()`]
+    /// [`add_application_font_from_data()`]
     [static] application_font_families(id: i32) -> [String],
     /// 
     /// Removes the previously loaded application font identified by *id.* Returns `true` if unloading of the font succeeded; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** removeAllApplicationFonts()
-    /// addApplicationFont()
-    /// addApplicationFontFromData()
+    /// **See also:** [`remove_all_application_fonts()`]
+    /// [`add_application_font()`]
+    /// [`add_application_font_from_data()`]
     [static] remove_application_font(id: i32) -> bool,
     /// 
     /// Removes all application-local fonts previously added using addApplicationFont()
@@ -289,9 +241,9 @@ struct FontDatabase {
     /// Returns `true` if unloading of the fonts succeeded; otherwise
     /// returns `false.`
     /// 
-    /// **See also:** removeApplicationFont()
-    /// addApplicationFont()
-    /// addApplicationFontFromData()
+    /// **See also:** [`remove_application_font()`]
+    /// [`add_application_font()`]
+    /// [`add_application_font_from_data()`]
     [static] remove_all_application_fonts() -> bool,
     /// 
     /// Returns `true` if font rendering is supported outside the GUI
@@ -307,8 +259,95 @@ struct FontDatabase {
     /// Returns the most adequate font for a given *type* case for proper integration
     /// with the system's look and feel.
     /// 
-    /// **See also:** QGuiApplication::font()
+    /// **See also:** [`GuiApplication::font`]
     [static] system_font(type: FontDatabase::SystemFont) -> Font,
+}
+
+[org_name(QFontDatabase)]
+enum WritingSystem {
+    /// 
+    Any,
+    /// 
+    Latin,
+    /// 
+    Greek,
+    /// 
+    Cyrillic,
+    /// 
+    Armenian,
+    /// 
+    Hebrew,
+    /// 
+    Arabic,
+    /// 
+    Syriac,
+    /// 
+    Thaana,
+    /// 
+    Devanagari,
+    /// 
+    Bengali,
+    /// 
+    Gurmukhi,
+    /// 
+    Gujarati,
+    /// 
+    Oriya,
+    /// 
+    Tamil,
+    /// 
+    Telugu,
+    /// 
+    Kannada,
+    /// 
+    Malayalam,
+    /// 
+    Sinhala,
+    /// 
+    Thai,
+    /// 
+    Lao,
+    /// 
+    Tibetan,
+    /// 
+    Myanmar,
+    /// 
+    Georgian,
+    /// 
+    Khmer,
+    /// 
+    SimplifiedChinese,
+    /// 
+    TraditionalChinese,
+    /// 
+    Japanese,
+    /// 
+    Korean,
+    /// 
+    Vietnamese,
+    /// 
+    Symbol,
+    /// (the same as Symbol)
+    Other,
+    /// 
+    Ogham,
+    /// 
+    Runic,
+    /// 
+    Nko,
+    WritingSystemsCount,
+}
+
+[org_name(QFontDatabase)]
+enum SystemFont {
+    /// The default system font.
+    GeneralFont,
+    /// The fixed font that the system recommends.
+    FixedFont,
+    /// The system standard font for titles.
+    TitleFont,
+    /// The smallest readable system font.
+    SmallestReadableFont,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

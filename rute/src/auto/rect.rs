@@ -19,11 +19,167 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
+///
+/// A rectangle is normally expressed as a top-left corner and a
+/// size. The size (width and height) of a QRect is always equivalent
+/// to the mathematical rectangle that forms the basis for its
+/// rendering.
+///
+/// A QRect can be constructed with a set of left, top, width and
+/// height integers, or from a QPoint and a QSize. The following code
+/// creates two identical rectangles.
+///
+/// There is a third constructor that creates a QRect using the
+/// top-left and bottom-right coordinates, but we recommend that you
+/// avoid using it. The rationale is that for historical reasons the
+/// values returned by the bottom() and right() functions deviate from
+/// the true bottom-right corner of the rectangle.
+///
+/// The QRect class provides a collection of functions that return the
+/// various rectangle coordinates, and enable manipulation of
+/// these. QRect also provides functions to move the rectangle relative
+/// to the various coordinates. In addition there is a moveTo()
+/// function that moves the rectangle, leaving its top left corner at
+/// the given coordinates. Alternatively, the translate() function
+/// moves the rectangle the given offset relative to the current
+/// position, and the translated() function returns a translated copy
+/// of this rectangle.
+///
+/// The size() function returns the rectange's dimensions as a
+/// QSize. The dimensions can also be retrieved separately using the
+/// width() and height() functions. To manipulate the dimensions use
+/// the setSize(), setWidth() or setHeight() functions. Alternatively,
+/// the size can be changed by applying either of the functions
+/// setting the rectangle coordinates, for example, setBottom() or
+/// setRight().
+///
+/// The contains() function tells whether a given point is inside the
+/// rectangle or not, and the intersects() function returns `true` if
+/// this rectangle intersects with a given rectangle. The QRect class
+/// also provides the intersected() function which returns the
+/// intersection rectangle, and the united() function which returns the
+/// rectangle that encloses the given rectangle and this:
+///
+/// * ![qrect-intersect.png](qrect-intersect.png)
+///
+/// * ![qrect-unite.png](qrect-unite.png)
+///
+/// * intersected()
+/// * united()
+///
+/// The isEmpty() function returns `true` if left() > right() or top() >
+/// bottom(). Note that an empty rectangle is not valid: The isValid()
+/// function returns `true` if left() <= right() *and* top() <=
+/// bottom(). A null rectangle (isNull() == true) on the other hand,
+/// has both width and height set to 0.
+///
+/// Note that due to the way QRect and QRectF are defined, an
+/// empty QRect is defined in essentially the same way as QRectF.
+///
+/// Finally, QRect objects can be streamed as well as compared.
+///
+/// # Rendering
+///
+/// When using an [anti-aliased](QPainter::Antialiasing)
+/// painter,
+/// the boundary line of a QRect will be rendered symmetrically on
+/// both sides of the mathematical rectangle's boundary line. But when
+/// using an aliased painter (the default) other rules apply.
+///
+/// Then, when rendering with a one pixel wide pen the QRect's boundary
+/// line will be rendered to the right and below the mathematical
+/// rectangle's boundary line.
+///
+/// When rendering with a two pixels wide pen the boundary line will
+/// be split in the middle by the mathematical rectangle. This will be
+/// the case whenever the pen is set to an even number of pixels,
+/// while rendering with a pen with an odd number of pixels, the spare
+/// pixel will be rendered to the right and below the mathematical
+/// rectangle as in the one pixel case.
+///
+/// * ![qrect-diagram-zero.png](qrect-diagram-zero.png)
+///
+/// * ![qrect-diagram-one.png](qrect-diagram-one.png)
+///
+/// * Logical representation
+/// * One pixel wide pen
+///
+/// * ![qrect-diagram-two.png](qrect-diagram-two.png)
+///
+/// * ![qrect-diagram-three.png](qrect-diagram-three.png)
+///
+/// * Two pixel wide pen
+/// * Three pixel wide pen
+///
+/// # Coordinates
+///
+/// The QRect class provides a collection of functions that return the
+/// various rectangle coordinates, and enable manipulation of
+/// these. QRect also provides functions to move the rectangle relative
+/// to the various coordinates.
+///
+/// For example the left(), setLeft() and moveLeft() functions as an
+/// example: left() returns the x-coordinate of the rectangle's left
+/// edge, setLeft() sets the left edge of the rectangle to the given x
+/// coordinate (it may change the width, but will never change the
+/// rectangle's right edge) and moveLeft() moves the entire rectangle
+/// horizontally, leaving the rectangle's left edge at the given x
+/// coordinate and its size unchanged.
+///
+/// ![qrect-coordinates.png](qrect-coordinates.png)
+///
+/// Note that for historical reasons the values returned by the
+/// bottom() and right() functions deviate from the true bottom-right
+/// corner of the rectangle: The right() function returns *left()
+/// + width() - 1* and the bottom() function returns *top() +
+/// height() - 1* . The same is the case for the point returned by the
+/// bottomRight() convenience function. In addition, the x and y
+/// coordinate of the topRight() and bottomLeft() functions,
+/// respectively, contain the same deviation from the true right and
+/// bottom edges.
+///
+/// We recommend that you use x() + width() and y() + height() to find
+/// the true bottom-right corner, and avoid right() and
+/// bottom(). Another solution is to use QRectF: The QRectF class
+/// defines a rectangle in the plane using floating point accuracy for
+/// coordinates, and the QRectF::right() and QRectF::bottom()
+/// functions *do* return the right and bottom coordinates.
+///
+/// It is also possible to add offsets to this rectangle's coordinates
+/// using the adjust() function, as well as retrieve a new rectangle
+/// based on adjustments of the original one using the adjusted()
+/// function. If either of the width and height is negative, use the
+/// normalized() function to retrieve a rectangle where the corners
+/// are swapped.
+///
+/// In addition, QRect provides the getCoords() function which extracts
+/// the position of the rectangle's top-left and bottom-right corner,
+/// and the getRect() function which extracts the rectangle's top-left
+/// corner, width and height. Use the setCoords() and setRect()
+/// function to manipulate the rectangle's coordinates and dimensions
+/// in one go.
+///
+/// # Constraints
+///
+/// QRect is limited to the minimum and maximum values for the `int` type.
+/// Operations on a QRect that could potentially result in values outside this
+/// range will result in undefined behavior.
+///
+/// **See also:** [`RectF`]
+/// [`Region`]
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Rect<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RURectAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
@@ -48,7 +204,8 @@ impl<'a> Rect<'a> {
             _marker: PhantomData,
         }
     }
-    pub fn new_from_rc(ffi_data: RURect) -> Rect<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RURect) -> Rect<'a> {
         Rect {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -57,7 +214,8 @@ impl<'a> Rect<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RURect) -> Rect<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RURect) -> Rect<'a> {
         Rect {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -66,7 +224,8 @@ impl<'a> Rect<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RURect) -> Rect<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RURect) -> Rect<'a> {
         Rect {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -74,206 +233,1111 @@ impl<'a> Rect<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait RectType<'a> {
-    fn is_null(&self) -> bool {
+    ///
+    /// Returns `true` if the rectangle is a null rectangle, otherwise
+    /// returns `false.`
+    ///
+    /// A null rectangle has both the width and the height set to 0 (i.e.,
+    /// right() == left() - 1 and bottom() == top() - 1). A null rectangle
+    /// is also empty, and hence is not valid.
+    ///
+    /// **See also:** [`is_empty()`]
+    /// [`is_valid()`]
+    pub fn is_null(&self) -> bool {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_null)(obj_data);
             ret_val
         }
     }
-
-    fn is_empty(&self) -> bool {
+    ///
+    /// Returns `true` if the rectangle is empty, otherwise returns `false.`
+    ///
+    /// An empty rectangle has a left() > right() or top() > bottom(). An
+    /// empty rectangle is not valid (i.e., isEmpty() == !isValid()).
+    ///
+    /// Use the normalized() function to retrieve a rectangle where the
+    /// corners are swapped.
+    ///
+    /// **See also:** [`is_null()`]
+    /// [`is_valid()`]
+    /// [`normalized()`]
+    pub fn is_empty(&self) -> bool {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_empty)(obj_data);
             ret_val
         }
     }
-
-    fn is_valid(&self) -> bool {
+    ///
+    /// Returns `true` if the rectangle is valid, otherwise returns `false.`
+    ///
+    /// A valid rectangle has a left() <= right() and top() <=
+    /// bottom(). Note that non-trivial operations like intersections are
+    /// not defined for invalid rectangles. A valid rectangle is not empty
+    /// (i.e., isValid() == !isEmpty()).
+    ///
+    /// **See also:** [`is_null()`]
+    /// [`is_empty()`]
+    /// [`normalized()`]
+    pub fn is_valid(&self) -> bool {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_valid)(obj_data);
             ret_val
         }
     }
-
-    fn left(&self) -> i32 {
+    ///
+    /// Returns the x-coordinate of the rectangle's left edge. Equivalent
+    /// to x().
+    ///
+    /// **See also:** [`set_left()`]
+    /// [`top_left()`]
+    /// [`bottom_left()`]
+    pub fn left(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).left)(obj_data);
             ret_val
         }
     }
-
-    fn top(&self) -> i32 {
+    ///
+    /// Returns the y-coordinate of the rectangle's top edge.
+    /// Equivalent to y().
+    ///
+    /// **See also:** [`set_top()`]
+    /// [`top_left()`]
+    /// [`top_right()`]
+    ///
+    /// Returns the position of the rectangle's top-left corner.
+    ///
+    /// **See also:** [`set_top_left()`]
+    /// [`top()`]
+    /// [`left()`]
+    ///
+    /// Returns the position of the rectangle's top-right corner.
+    ///
+    /// Note that for historical reasons this function returns
+    /// QPoint(left() + width() -1, top()).
+    ///
+    /// **See also:** [`set_top_right()`]
+    /// [`top()`]
+    /// [`right()`]
+    pub fn top(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).top)(obj_data);
             ret_val
         }
     }
-
-    fn right(&self) -> i32 {
+    ///
+    /// Returns the x-coordinate of the rectangle's right edge.
+    ///
+    /// Note that for historical reasons this function returns left() +
+    /// width() - 1; use x() + width() to retrieve the true x-coordinate.
+    ///
+    /// **See also:** [`set_right()`]
+    /// [`top_right()`]
+    /// [`bottom_right()`]
+    pub fn right(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).right)(obj_data);
             ret_val
         }
     }
-
-    fn bottom(&self) -> i32 {
+    ///
+    /// Returns the y-coordinate of the rectangle's bottom edge.
+    ///
+    /// Note that for historical reasons this function returns top() +
+    /// height() - 1; use y() + height() to retrieve the true y-coordinate.
+    ///
+    /// **See also:** [`set_bottom()`]
+    /// [`bottom_left()`]
+    /// [`bottom_right()`]
+    ///
+    /// Returns the position of the rectangle's bottom-right corner.
+    ///
+    /// Note that for historical reasons this function returns
+    /// QPoint(left() + width() -1, top() + height() - 1).
+    ///
+    /// **See also:** [`set_bottom_right()`]
+    /// [`bottom()`]
+    /// [`right()`]
+    ///
+    /// Returns the position of the rectangle's bottom-left corner. Note
+    /// that for historical reasons this function returns QPoint(left(),
+    /// top() + height() - 1).
+    ///
+    /// **See also:** [`set_bottom_left()`]
+    /// [`bottom()`]
+    /// [`left()`]
+    pub fn bottom(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).bottom)(obj_data);
             ret_val
         }
     }
-
-    fn x(&self) -> i32 {
+    ///
+    /// Returns a normalized rectangle; i.e., a rectangle that has a
+    /// non-negative width and height.
+    ///
+    /// If width() < 0 the function swaps the left and right corners, and
+    /// it swaps the top and bottom corners if height() < 0.
+    ///
+    /// **See also:** [`is_valid()`]
+    /// [`is_empty()`]
+    pub fn normalized(&self) -> Rect {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).normalized)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Rect::new_from_rc(t);
+            } else {
+                ret_val = Rect::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns the x-coordinate of the rectangle's left edge. Equivalent to left().
+    ///
+    /// **See also:** [`set_x()`]
+    /// [`y()`]
+    /// [`top_left()`]
+    pub fn x(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).x)(obj_data);
             ret_val
         }
     }
-
-    fn y(&self) -> i32 {
+    ///
+    /// Returns the y-coordinate of the rectangle's top edge. Equivalent to top().
+    ///
+    /// **See also:** [`set_y()`]
+    /// [`x()`]
+    /// [`top_left()`]
+    pub fn y(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).y)(obj_data);
             ret_val
         }
     }
-
-    fn set_left(&self, pos: i32) -> &Self {
+    ///
+    /// Sets the left edge of the rectangle to the given *x*
+    /// coordinate. May change the width, but will never change the right
+    /// edge of the rectangle.
+    ///
+    /// Equivalent to setX().
+    ///
+    /// **See also:** [`left()`]
+    /// [`move_left()`]
+    pub fn set_left(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).set_left)(obj_data, pos);
         }
         self
     }
-
-    fn set_top(&self, pos: i32) -> &Self {
+    ///
+    /// Sets the top edge of the rectangle to the given *y*
+    /// coordinate. May change the height, but will never change the
+    /// bottom edge of the rectangle.
+    ///
+    /// Equivalent to setY().
+    ///
+    /// **See also:** [`top()`]
+    /// [`move_top()`]
+    ///
+    /// Set the top-left corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// bottom-right corner of the rectangle.
+    ///
+    /// **See also:** [`top_left()`]
+    /// [`move_top_left()`]
+    ///
+    /// Set the top-right corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// bottom-left corner of the rectangle.
+    ///
+    /// **See also:** [`top_right()`]
+    /// [`move_top_right()`]
+    pub fn set_top(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).set_top)(obj_data, pos);
         }
         self
     }
-
-    fn set_right(&self, pos: i32) -> &Self {
+    ///
+    /// Sets the right edge of the rectangle to the given *x*
+    /// coordinate. May change the width, but will never change the left
+    /// edge of the rectangle.
+    ///
+    /// **See also:** [`right()`]
+    /// [`move_right()`]
+    pub fn set_right(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).set_right)(obj_data, pos);
         }
         self
     }
-
-    fn set_bottom(&self, pos: i32) -> &Self {
+    ///
+    /// Set the bottom-right corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// top-left corner of the rectangle.
+    ///
+    /// **See also:** [`bottom_right()`]
+    /// [`move_bottom_right()`]
+    ///
+    /// Set the bottom-left corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// top-right corner of the rectangle.
+    ///
+    /// **See also:** [`bottom_left()`]
+    /// [`move_bottom_left()`]
+    pub fn set_bottom(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).set_bottom)(obj_data, pos);
         }
         self
     }
-
-    fn set_x(&self, x: i32) -> &Self {
+    ///
+    /// Sets the bottom edge of the rectangle to the given *y*
+    /// coordinate. May change the height, but will never change the top
+    /// edge of the rectangle.
+    ///
+    /// **See also:** [`bottom()`]
+    /// [`move_bottom()`]
+    /// */
+    ///
+    /// /*!
+    ///
+    /// Sets the left edge of the rectangle to the given *x*
+    /// coordinate. May change the width, but will never change the right
+    /// edge of the rectangle.
+    ///
+    /// Equivalent to setLeft().
+    ///
+    /// **See also:** [`x()`]
+    /// [`set_y()`]
+    /// [`set_top_left()`]
+    pub fn set_x(&self, x: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).set_x)(obj_data, x);
         }
         self
     }
-
-    fn set_y(&self, y: i32) -> &Self {
+    ///
+    /// Sets the top edge of the rectangle to the given *y*
+    /// coordinate. May change the height, but will never change the
+    /// bottom edge of the rectangle.
+    ///
+    /// Equivalent to setTop().
+    ///
+    /// **See also:** [`y()`]
+    /// [`set_x()`]
+    /// [`set_top_left()`]
+    pub fn set_y(&self, y: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).set_y)(obj_data, y);
         }
         self
     }
+    ///
+    /// Set the top-left corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// bottom-right corner of the rectangle.
+    ///
+    /// **See also:** [`top_left()`]
+    /// [`move_top_left()`]
+    pub fn set_top_left<P: PointTrait<'a>>(&self, p: &P) -> &Self {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
 
-    fn move_left(&self, pos: i32) -> &Self {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).set_top_left)(obj_data, obj_p_1);
+        }
+        self
+    }
+    ///
+    /// Set the bottom-right corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// top-left corner of the rectangle.
+    ///
+    /// **See also:** [`bottom_right()`]
+    /// [`move_bottom_right()`]
+    pub fn set_bottom_right<P: PointTrait<'a>>(&self, p: &P) -> &Self {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).set_bottom_right)(obj_data, obj_p_1);
+        }
+        self
+    }
+    ///
+    /// Set the top-right corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// bottom-left corner of the rectangle.
+    ///
+    /// **See also:** [`top_right()`]
+    /// [`move_top_right()`]
+    pub fn set_top_right<P: PointTrait<'a>>(&self, p: &P) -> &Self {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).set_top_right)(obj_data, obj_p_1);
+        }
+        self
+    }
+    ///
+    /// Set the bottom-left corner of the rectangle to the given *position.* May change the size, but will never change the
+    /// top-right corner of the rectangle.
+    ///
+    /// **See also:** [`bottom_left()`]
+    /// [`move_bottom_left()`]
+    pub fn set_bottom_left<P: PointTrait<'a>>(&self, p: &P) -> &Self {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).set_bottom_left)(obj_data, obj_p_1);
+        }
+        self
+    }
+    ///
+    /// Returns the position of the rectangle's top-left corner.
+    ///
+    /// **See also:** [`set_top_left()`]
+    /// [`top()`]
+    /// [`left()`]
+    pub fn top_left(&self) -> Point {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).top_left)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns the position of the rectangle's bottom-right corner.
+    ///
+    /// Note that for historical reasons this function returns
+    /// QPoint(left() + width() -1, top() + height() - 1).
+    ///
+    /// **See also:** [`set_bottom_right()`]
+    /// [`bottom()`]
+    /// [`right()`]
+    pub fn bottom_right(&self) -> Point {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).bottom_right)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns the position of the rectangle's top-right corner.
+    ///
+    /// Note that for historical reasons this function returns
+    /// QPoint(left() + width() -1, top()).
+    ///
+    /// **See also:** [`set_top_right()`]
+    /// [`top()`]
+    /// [`right()`]
+    pub fn top_right(&self) -> Point {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).top_right)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns the position of the rectangle's bottom-left corner. Note
+    /// that for historical reasons this function returns QPoint(left(),
+    /// top() + height() - 1).
+    ///
+    /// **See also:** [`set_bottom_left()`]
+    /// [`bottom()`]
+    /// [`left()`]
+    pub fn bottom_left(&self) -> Point {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).bottom_left)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns the center point of the rectangle.
+    ///
+    /// **See also:** [`move_center()`]
+    pub fn center(&self) -> Point {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).center)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Point::new_from_rc(t);
+            } else {
+                ret_val = Point::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Moves the rectangle horizontally, leaving the rectangle's left
+    /// edge at the given *x* coordinate. The rectangle's size is
+    /// unchanged.
+    ///
+    /// **See also:** [`left()`]
+    /// [`set_left()`]
+    /// [`move_right()`]
+    pub fn move_left(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).move_left)(obj_data, pos);
         }
         self
     }
-
-    fn move_top(&self, pos: i32) -> &Self {
+    ///
+    /// Moves the rectangle vertically, leaving the rectangle's top edge
+    /// at the given *y* coordinate. The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`top()`]
+    /// [`set_top()`]
+    /// [`move_bottom()`]
+    ///
+    /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`set_top_left()`]
+    /// [`move_top()`]
+    /// [`move_left()`]
+    ///
+    /// Moves the rectangle, leaving the top-right corner at the given *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`set_top_right()`]
+    /// [`move_top()`]
+    /// [`move_right()`]
+    pub fn move_top(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).move_top)(obj_data, pos);
         }
         self
     }
-
-    fn move_right(&self, pos: i32) -> &Self {
+    ///
+    /// Moves the rectangle horizontally, leaving the rectangle's right
+    /// edge at the given *x* coordinate. The rectangle's size is
+    /// unchanged.
+    ///
+    /// **See also:** [`right()`]
+    /// [`set_right()`]
+    /// [`move_left()`]
+    pub fn move_right(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).move_right)(obj_data, pos);
         }
         self
     }
-
-    fn move_bottom(&self, pos: i32) -> &Self {
+    ///
+    /// Moves the rectangle vertically, leaving the rectangle's bottom
+    /// edge at the given *y* coordinate. The rectangle's size is
+    /// unchanged.
+    ///
+    /// **See also:** [`bottom()`]
+    /// [`set_bottom()`]
+    /// [`move_top()`]
+    ///
+    /// Moves the rectangle, leaving the bottom-right corner at the given
+    /// *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`set_bottom_right()`]
+    /// [`move_right()`]
+    /// [`move_bottom()`]
+    ///
+    /// Moves the rectangle, leaving the bottom-left corner at the given
+    /// *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`set_bottom_left()`]
+    /// [`move_bottom()`]
+    /// [`move_left()`]
+    pub fn move_bottom(&self, pos: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).move_bottom)(obj_data, pos);
         }
         self
     }
+    ///
+    /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`set_top_left()`]
+    /// [`move_top()`]
+    /// [`move_left()`]
+    pub fn move_top_left<P: PointTrait<'a>>(&self, p: &P) -> &Self {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
 
-    fn move_to(&self, x: i32, t: i32) -> &Self {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).move_top_left)(obj_data, obj_p_1);
+        }
+        self
+    }
+    ///
+    /// Moves the rectangle, leaving the bottom-right corner at the given
+    /// *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`set_bottom_right()`]
+    /// [`move_right()`]
+    /// [`move_bottom()`]
+    pub fn move_bottom_right<P: PointTrait<'a>>(&self, p: &P) -> &Self {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).move_bottom_right)(obj_data, obj_p_1);
+        }
+        self
+    }
+    ///
+    /// Moves the rectangle, leaving the top-right corner at the given *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`set_top_right()`]
+    /// [`move_top()`]
+    /// [`move_right()`]
+    pub fn move_top_right<P: PointTrait<'a>>(&self, p: &P) -> &Self {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).move_top_right)(obj_data, obj_p_1);
+        }
+        self
+    }
+    ///
+    /// Moves the rectangle, leaving the bottom-left corner at the given
+    /// *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`set_bottom_left()`]
+    /// [`move_bottom()`]
+    /// [`move_left()`]
+    pub fn move_bottom_left<P: PointTrait<'a>>(&self, p: &P) -> &Self {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).move_bottom_left)(obj_data, obj_p_1);
+        }
+        self
+    }
+    ///
+    /// Moves the rectangle, leaving the center point at the given *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`center()`]
+    pub fn move_center<P: PointTrait<'a>>(&self, p: &P) -> &Self {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).move_center)(obj_data, obj_p_1);
+        }
+        self
+    }
+    ///
+    /// Moves the rectangle vertically, leaving the rectangle's top edge
+    /// at the given *y* coordinate. The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`top()`]
+    /// [`set_top()`]
+    /// [`move_bottom()`]
+    ///
+    /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`set_top_left()`]
+    /// [`move_top()`]
+    /// [`move_left()`]
+    ///
+    /// Moves the rectangle, leaving the top-right corner at the given *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`set_top_right()`]
+    /// [`move_top()`]
+    /// [`move_right()`]
+    ///
+    /// Moves the rectangle, leaving the top-left corner at the given
+    /// position ( *x,* *y).* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`translate()`]
+    /// [`move_top_left()`]
+    ///
+    /// Moves the rectangle, leaving the top-left corner at the given *position.*
+    pub fn move_to(&self, x: i32, t: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).move_to)(obj_data, x, t);
         }
         self
     }
+    ///
+    /// Moves the rectangle vertically, leaving the rectangle's top edge
+    /// at the given *y* coordinate. The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`top()`]
+    /// [`set_top()`]
+    /// [`move_bottom()`]
+    ///
+    /// Moves the rectangle, leaving the top-left corner at the given *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`set_top_left()`]
+    /// [`move_top()`]
+    /// [`move_left()`]
+    ///
+    /// Moves the rectangle, leaving the top-right corner at the given *position.* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`set_top_right()`]
+    /// [`move_top()`]
+    /// [`move_right()`]
+    ///
+    /// Moves the rectangle, leaving the top-left corner at the given
+    /// position ( *x,* *y).* The rectangle's size is unchanged.
+    ///
+    /// **See also:** [`translate()`]
+    /// [`move_top_left()`]
+    ///
+    /// Moves the rectangle, leaving the top-left corner at the given *position.*
+    pub fn move_to_2<P: PointTrait<'a>>(&self, p: &P) -> &Self {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
 
-    fn width(&self) -> i32 {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).move_to_2)(obj_data, obj_p_1);
+        }
+        self
+    }
+    ///
+    /// Sets the coordinates of the rectangle's top-left corner to ( *x* ,
+    /// *y* ), and its size to the given *width* and *height.*
+    ///
+    /// **See also:** [`get_rect()`]
+    /// [`set_coords()`]
+    pub fn set_rect(&self, x: i32, y: i32, w: i32, h: i32) -> &Self {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).set_rect)(obj_data, x, y, w, h);
+        }
+        self
+    }
+    ///
+    /// Sets the coordinates of the rectangle's top-left corner to ( *x1,*
+    /// *y1),* and the coordinates of its bottom-right corner to ( *x2,*
+    /// *y2).*
+    ///
+    /// **See also:** [`get_coords()`]
+    /// [`set_rect()`]
+    pub fn set_coords(&self, x1: i32, y1: i32, x2: i32, y2: i32) -> &Self {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).set_coords)(obj_data, x1, y1, x2, y2);
+        }
+        self
+    }
+    ///
+    /// Returns a new rectangle with *dx1,* *dy1,* *dx2* and *dy2*
+    /// added respectively to the existing coordinates of this rectangle.
+    ///
+    /// **See also:** [`adjust()`]
+    ///
+    /// Adds *dx1,* *dy1,* *dx2* and *dy2* respectively to the
+    /// existing coordinates of the rectangle.
+    ///
+    /// **See also:** [`adjusted()`]
+    /// [`set_rect()`]
+    pub fn adjust(&self, x1: i32, y1: i32, x2: i32, y2: i32) -> &Self {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).adjust)(obj_data, x1, y1, x2, y2);
+        }
+        self
+    }
+    ///
+    /// Returns a new rectangle with *dx1,* *dy1,* *dx2* and *dy2*
+    /// added respectively to the existing coordinates of this rectangle.
+    ///
+    /// **See also:** [`adjust()`]
+    pub fn adjusted(&self, x1: i32, y1: i32, x2: i32, y2: i32) -> Rect {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).adjusted)(obj_data, x1, y1, x2, y2);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Rect::new_from_rc(t);
+            } else {
+                ret_val = Rect::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns the size of the rectangle.
+    ///
+    /// **See also:** [`set_size()`]
+    /// [`width()`]
+    /// [`height()`]
+    pub fn size(&self) -> Size {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).size)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Size::new_from_rc(t);
+            } else {
+                ret_val = Size::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns the width of the rectangle.
+    ///
+    /// **See also:** [`set_width()`]
+    /// [`height()`]
+    /// [`size()`]
+    pub fn width(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).width)(obj_data);
             ret_val
         }
     }
-
-    fn height(&self) -> i32 {
+    ///
+    /// Returns the height of the rectangle.
+    ///
+    /// **See also:** [`set_height()`]
+    /// [`width()`]
+    /// [`size()`]
+    pub fn height(&self) -> i32 {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).height)(obj_data);
             ret_val
         }
     }
-
-    fn set_width(&self, w: i32) -> &Self {
+    ///
+    /// Sets the width of the rectangle to the given *width.* The right
+    /// edge is changed, but not the left one.
+    ///
+    /// **See also:** [`width()`]
+    /// [`set_size()`]
+    pub fn set_width(&self, w: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).set_width)(obj_data, w);
         }
         self
     }
-
-    fn set_height(&self, h: i32) -> &Self {
+    ///
+    /// Sets the height of the rectangle to the given *height.* The bottom
+    /// edge is changed, but not the top one.
+    ///
+    /// **See also:** [`height()`]
+    /// [`set_size()`]
+    pub fn set_height(&self, h: i32) -> &Self {
         let (obj_data, funcs) = self.get_rect_obj_funcs();
         unsafe {
             ((*funcs).set_height)(obj_data, h);
         }
         self
     }
+    ///
+    /// Sets the size of the rectangle to the given *size.* The top-left
+    /// corner is not moved.
+    ///
+    /// **See also:** [`size()`]
+    /// [`set_width()`]
+    /// [`set_height()`]
+    pub fn set_size<S: SizeTrait<'a>>(&self, s: &S) -> &Self {
+        let (obj_s_1, _funcs) = s.get_size_obj_funcs();
 
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            ((*funcs).set_size)(obj_data, obj_s_1);
+        }
+        self
+    }
+    ///
+    /// Returns `true` if the given *point* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the given *point* is *inside* the
+    /// rectangle (i.e., not on the edge).
+    ///
+    /// **See also:** [`intersects()`]
+    ///
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the point is entirely inside the
+    /// rectangle(not on the edge).
+    ///
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside this rectangle,
+    /// otherwise returns `false.`
+    ///
+    /// **Overloads**
+    /// Returns `true` if the given *rectangle* is inside this rectangle.
+    /// otherwise returns `false.` If *proper* is true, this function only
+    /// returns `true` if the *rectangle* is entirely inside this
+    /// rectangle (not on the edge).
+    pub fn contains<R: RectTrait<'a>>(&self, r: &R, proper: bool) -> bool {
+        let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).contains)(obj_data, obj_r_1, proper);
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if the given *point* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the given *point* is *inside* the
+    /// rectangle (i.e., not on the edge).
+    ///
+    /// **See also:** [`intersects()`]
+    ///
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the point is entirely inside the
+    /// rectangle(not on the edge).
+    ///
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside this rectangle,
+    /// otherwise returns `false.`
+    ///
+    /// **Overloads**
+    /// Returns `true` if the given *rectangle* is inside this rectangle.
+    /// otherwise returns `false.` If *proper* is true, this function only
+    /// returns `true` if the *rectangle* is entirely inside this
+    /// rectangle (not on the edge).
+    pub fn contains_2<P: PointTrait<'a>>(&self, p: &P, proper: bool) -> bool {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).contains_2)(obj_data, obj_p_1, proper);
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if the given *point* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the given *point* is *inside* the
+    /// rectangle (i.e., not on the edge).
+    ///
+    /// **See also:** [`intersects()`]
+    ///
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the point is entirely inside the
+    /// rectangle(not on the edge).
+    ///
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside this rectangle,
+    /// otherwise returns `false.`
+    ///
+    /// **Overloads**
+    /// Returns `true` if the given *rectangle* is inside this rectangle.
+    /// otherwise returns `false.` If *proper* is true, this function only
+    /// returns `true` if the *rectangle* is entirely inside this
+    /// rectangle (not on the edge).
+    pub fn contains_3(&self, x: i32, y: i32) -> bool {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).contains_3)(obj_data, x, y);
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if the given *point* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the given *point* is *inside* the
+    /// rectangle (i.e., not on the edge).
+    ///
+    /// **See also:** [`intersects()`]
+    ///
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside or on the edge of
+    /// the rectangle, otherwise returns `false.` If *proper* is true, this
+    /// function only returns `true` if the point is entirely inside the
+    /// rectangle(not on the edge).
+    ///
+    /// **Overloads**
+    /// Returns `true` if the point ( *x,* *y)* is inside this rectangle,
+    /// otherwise returns `false.`
+    ///
+    /// **Overloads**
+    /// Returns `true` if the given *rectangle* is inside this rectangle.
+    /// otherwise returns `false.` If *proper* is true, this function only
+    /// returns `true` if the *rectangle* is entirely inside this
+    /// rectangle (not on the edge).
+    pub fn contains_4(&self, x: i32, y: i32, proper: bool) -> bool {
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).contains_4)(obj_data, x, y, proper);
+            ret_val
+        }
+    }
+    ///
+    /// Returns the bounding rectangle of this rectangle and the given *rectangle.*
+    ///
+    /// ![qrect-unite.png](qrect-unite.png)
+    ///
+    /// **See also:** [`intersected()`]
+    pub fn united<R: RectTrait<'a>>(&self, other: &R) -> Rect {
+        let (obj_other_1, _funcs) = other.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).united)(obj_data, obj_other_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Rect::new_from_rc(t);
+            } else {
+                ret_val = Rect::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns the intersection of this rectangle and the given *rectangle.* Note that `r.intersected(s)` is equivalent to `r & s` .
+    ///
+    /// ![qrect-intersect.png](qrect-intersect.png)
+    ///
+    /// **See also:** [`intersects()`]
+    /// [`united()`]
+    /// [`operator()`]
+    pub fn intersected<R: RectTrait<'a>>(&self, other: &R) -> Rect {
+        let (obj_other_1, _funcs) = other.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).intersected)(obj_data, obj_other_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Rect::new_from_rc(t);
+            } else {
+                ret_val = Rect::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns `true` if this rectangle intersects with the given *rectangle* (i.e., there is at least one pixel that is within both
+    /// rectangles), otherwise returns `false.`
+    ///
+    /// The intersection rectangle can be retrieved using the intersected()
+    /// function.
+    ///
+    /// **See also:** [`contains()`]
+    pub fn intersects<R: RectTrait<'a>>(&self, r: &R) -> bool {
+        let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).intersects)(obj_data, obj_r_1);
+            ret_val
+        }
+    }
+    ///
+    /// Returns a rectangle grown by the *margins.*
+    ///
+    /// **See also:** [`operator()`]
+    /// [`margins_removed()`]
+    /// [`operator()`]
+    ///
+    pub fn margins_added<M: MarginsTrait<'a>>(&self, margins: &M) -> Rect {
+        let (obj_margins_1, _funcs) = margins.get_margins_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).margins_added)(obj_data, obj_margins_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Rect::new_from_rc(t);
+            } else {
+                ret_val = Rect::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Removes the *margins* from the rectangle, shrinking it.
+    ///
+    /// **See also:** [`margins_added()`]
+    /// [`operator()`]
+    ///
+    pub fn margins_removed<M: MarginsTrait<'a>>(&self, margins: &M) -> Rect {
+        let (obj_margins_1, _funcs) = margins.get_margins_obj_funcs();
+
+        let (obj_data, funcs) = self.get_rect_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).margins_removed)(obj_data, obj_margins_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Rect::new_from_rc(t);
+            } else {
+                ret_val = Rect::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+}
+pub trait RectTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_rect_obj_funcs(&self) -> (*const RUBase, *const RURectFuncs);
 }
 
-impl<'a> RectType<'a> for Rect<'a> {
-    #[inline]
+impl<'a> RectTrait<'a> for Rect<'a> {
+    #[doc(hidden)]
     fn get_rect_obj_funcs(&self) -> (*const RUBase, *const RURectFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).rect_funcs) }

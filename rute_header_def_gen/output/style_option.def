@@ -33,52 +33,11 @@
 /// the [Styles](widgets/styles)
 /// example.
 /// 
-/// **See also:** QStyle
-/// QStylePainter
+/// **See also:** [`Style`]
+/// [`StylePainter`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QStyleOption)]
-enum OptionType {
-    SO_Default,
-    SO_FocusRect,
-    SO_Button,
-    SO_Tab,
-    SO_MenuItem,
-    SO_Frame,
-    SO_ProgressBar,
-    SO_ToolBox,
-    SO_Header,
-    SO_DockWidget,
-    SO_ViewItem,
-    SO_TabWidgetFrame,
-    SO_TabBarBase,
-    SO_RubberBand,
-    SO_ToolBar,
-    SO_GraphicsItem,
-    SO_Complex,
-    SO_Slider,
-    SO_SpinBox,
-    SO_ToolButton,
-    SO_ComboBox,
-    SO_TitleBar,
-    SO_GroupBox,
-    SO_SizeGrip,
-    SO_CustomBase,
-    SO_ComplexCustomBase,
-}
-
-[org_name(QStyleOption)]
-enum StyleOptionType {
-    Type,
-}
-
-[org_name(QStyleOption)]
-enum StyleOptionVersion {
-    Version,
-}
-
-
 struct StyleOption {
     /// 
     /// Initializes the [state,](state,)
@@ -93,10 +52,10 @@ struct StyleOption {
     /// This is a convenience function; the member variables can also be
     /// initialized manually.
     /// 
-    /// **See also:** QWidget::layoutDirection()
-    /// QWidget::rect()
-    /// QWidget::palette()
-    /// QWidget::fontMetrics()
+    /// **See also:** [`Widget::layout_direction`]
+    /// [`Widget::rect`]
+    /// [`Widget::palette`]
+    /// [`Widget::font_metrics`]
     /// 
     /// Use initFrom( *widget)* instead.
     init(w: *WidgetType),
@@ -113,11 +72,103 @@ struct StyleOption {
     /// This is a convenience function; the member variables can also be
     /// initialized manually.
     /// 
-    /// **See also:** QWidget::layoutDirection()
-    /// QWidget::rect()
-    /// QWidget::palette()
-    /// QWidget::fontMetrics()
+    /// **See also:** [`Widget::layout_direction`]
+    /// [`Widget::rect`]
+    /// [`Widget::palette`]
+    /// [`Widget::font_metrics`]
     init_from(w: *WidgetType),
+}
+
+[org_name(QStyleOption)]
+enum OptionType {
+    /// QStyleOption
+    SO_Default,
+    /// [QStyleOptionFocusRect](QStyleOptionFocusRect)
+
+    SO_FocusRect,
+    /// [QStyleOptionButton](QStyleOptionButton)
+
+    SO_Button,
+    /// [QStyleOptionTab](QStyleOptionTab)
+
+    SO_Tab,
+    /// [QStyleOptionMenuItem](QStyleOptionMenuItem)
+
+    SO_MenuItem,
+    /// [QStyleOptionFrame](QStyleOptionFrame)
+
+    SO_Frame,
+    /// [QStyleOptionProgressBar](QStyleOptionProgressBar)
+
+    SO_ProgressBar,
+    /// [QStyleOptionToolBox](QStyleOptionToolBox)
+
+    SO_ToolBox,
+    /// [QStyleOptionHeader](QStyleOptionHeader)
+
+    SO_Header,
+    /// [QStyleOptionDockWidget](QStyleOptionDockWidget)
+
+    SO_DockWidget,
+    /// [QStyleOptionViewItem](QStyleOptionViewItem)
+ (used in Interviews) The following values are used for custom controls:
+    SO_ViewItem,
+    /// [QStyleOptionTabWidgetFrame](QStyleOptionTabWidgetFrame)
+
+    SO_TabWidgetFrame,
+    /// [QStyleOptionTabBarBase](QStyleOptionTabBarBase)
+
+    SO_TabBarBase,
+    /// [QStyleOptionRubberBand](QStyleOptionRubberBand)
+
+    SO_RubberBand,
+    /// [QStyleOptionToolBar](QStyleOptionToolBar)
+
+    SO_ToolBar,
+    /// [QStyleOptionGraphicsItem](QStyleOptionGraphicsItem)
+
+    SO_GraphicsItem,
+    /// [QStyleOptionComplex](QStyleOptionComplex)
+
+    SO_Complex,
+    /// [QStyleOptionSlider](QStyleOptionSlider)
+
+    SO_Slider,
+    /// [QStyleOptionSpinBox](QStyleOptionSpinBox)
+
+    SO_SpinBox,
+    /// [QStyleOptionToolButton](QStyleOptionToolButton)
+
+    SO_ToolButton,
+    /// [QStyleOptionComboBox](QStyleOptionComboBox)
+
+    SO_ComboBox,
+    /// [QStyleOptionTitleBar](QStyleOptionTitleBar)
+
+    SO_TitleBar,
+    /// [QStyleOptionGroupBox](QStyleOptionGroupBox)
+
+    SO_GroupBox,
+    /// [QStyleOptionSizeGrip](QStyleOptionSizeGrip)
+
+    SO_SizeGrip,
+    /// Reserved for custom QStyleOptions; all custom controls values must be above this value
+    SO_CustomBase,
+    /// Reserved for custom QStyleOptions; all custom complex controls values must be above this value
+    SO_ComplexCustomBase,
+}
+
+[org_name(QStyleOption)]
+enum StyleOptionType {
+    /// The type of style option provided ( [SO_Default](SO_Default)
+ for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
+    Type,
+}
+
+[org_name(QStyleOption)]
+enum StyleOptionVersion {
+    /// 1 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
+    Version,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

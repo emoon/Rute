@@ -5,20 +5,11 @@
 /// in your applications, see the [Gestures in Widgets and Graphics View](Gestures%20in%20Widgets%20and%20Graphics%20View)
 /// document.
 /// 
-/// **See also:** QPanGesture
-/// QPinchGesture
+/// **See also:** [`PanGesture`]
+/// [`PinchGesture`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QSwipeGesture)]
-enum SwipeDirection {
-    NoDirection,
-    Left,
-    Right,
-    Up,
-    Down,
-}
-
 struct SwipeGesture : Gesture {
     /// 
     /// If the gesture has a horizontal component, the horizontal direction
@@ -45,6 +36,20 @@ struct SwipeGesture : Gesture {
     /// verticalDirection
     swipe_angle() -> f32,
     set_swipe_angle(value: f32),
+}
+
+[org_name(QSwipeGesture)]
+enum SwipeDirection {
+    /// The gesture had no motion associated with it on a particular axis.
+    NoDirection,
+    /// The gesture involved a horizontal motion to the left.
+    Left,
+    /// The gesture involved a horizontal motion to the right.
+    Right,
+    /// The gesture involved an upward vertical motion.
+    Up,
+    /// The gesture involved a downward vertical motion.
+    Down,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

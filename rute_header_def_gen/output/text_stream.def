@@ -118,48 +118,15 @@
 /// parameter: qSetFieldWidth(), qSetPadChar(), and
 /// qSetRealNumberPrecision().
 /// 
-/// **See also:** QDataStream
-/// QIODevice
-/// QFile
-/// QBuffer
-/// QTcpSocket
+/// **See also:** [`DataStream`]
+/// [`IODevice`]
+/// [`File`]
+/// [`Buffer`]
+/// [`TcpSocket`]
 /// {Text Codecs Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTextStream)]
-enum RealNumberNotation {
-    SmartNotation,
-    FixedNotation,
-    ScientificNotation,
-}
-
-[org_name(QTextStream)]
-enum FieldAlignment {
-    AlignLeft,
-    AlignRight,
-    AlignCenter,
-    AlignAccountingStyle,
-}
-
-[org_name(QTextStream)]
-enum Status {
-    Ok,
-    ReadPastEnd,
-    ReadCorruptData,
-    WriteFailed,
-}
-
-[org_name(QTextStream)]
-enum NumberFlag {
-    ShowBase,
-    ForcePoint,
-    ForceSign,
-    UppercaseBase,
-    UppercaseDigits,
-}
-
-
 struct TextStream {
     /// 
     /// Sets the codec for this stream to *codec.* The codec is used for
@@ -174,9 +141,9 @@ struct TextStream {
     /// from an open sequential socket, the internal buffer may still contain
     /// text decoded using the old codec.
     /// 
-    /// **See also:** codec()
-    /// setAutoDetectUnicode()
-    /// setLocale()
+    /// **See also:** [`codec()`]
+    /// [`set_auto_detect_unicode()`]
+    /// [`set_locale()`]
     /// 
     /// Sets the codec for this stream to the QTextCodec for the encoding
     /// specified by *codecName.* Common values for `codecName` include
@@ -185,8 +152,8 @@ struct TextStream {
     /// 
     /// Example:
     /// 
-    /// **See also:** QTextCodec::codecForName()
-    /// setLocale()
+    /// **See also:** [`TextCodec::codec_for_name`]
+    /// [`set_locale()`]
     set_codec(codec: *TextCodecType),
     /// 
     /// Sets the codec for this stream to *codec.* The codec is used for
@@ -201,9 +168,9 @@ struct TextStream {
     /// from an open sequential socket, the internal buffer may still contain
     /// text decoded using the old codec.
     /// 
-    /// **See also:** codec()
-    /// setAutoDetectUnicode()
-    /// setLocale()
+    /// **See also:** [`codec()`]
+    /// [`set_auto_detect_unicode()`]
+    /// [`set_locale()`]
     /// 
     /// Sets the codec for this stream to the QTextCodec for the encoding
     /// specified by *codecName.* Common values for `codecName` include
@@ -212,15 +179,16 @@ struct TextStream {
     /// 
     /// Example:
     /// 
-    /// **See also:** QTextCodec::codecForName()
-    /// setLocale()
-    set_codec(codec_name: *char),
+    /// **See also:** [`TextCodec::codec_for_name`]
+    /// [`set_locale()`]
+    [org_name(setCodec)]
+    set_codec_2(codec_name: *char),
     /// 
     /// Returns the codec that is current assigned to the stream.
     /// 
-    /// **See also:** setCodec()
-    /// setAutoDetectUnicode()
-    /// locale()
+    /// **See also:** [`set_codec()`]
+    /// [`set_auto_detect_unicode()`]
+    /// [`locale()`]
     codec() -> TextCodec?,
     /// 
     /// If *enabled* is true, QTextStream will attempt to detect Unicode
@@ -231,15 +199,15 @@ struct TextStream {
     /// This function can be used together with setCodec(). It is common
     /// to set the codec to UTF-8, and then enable UTF-16 detection.
     /// 
-    /// **See also:** autoDetectUnicode()
-    /// setCodec()
+    /// **See also:** [`auto_detect_unicode()`]
+    /// [`set_codec()`]
     set_auto_detect_unicode(enabled: bool),
     /// 
     /// Returns `true` if automatic Unicode detection is enabled, otherwise
     /// returns `false.` Automatic Unicode detection is enabled by default.
     /// 
-    /// **See also:** setAutoDetectUnicode()
-    /// setCodec()
+    /// **See also:** [`set_auto_detect_unicode()`]
+    /// [`set_codec()`]
     auto_detect_unicode() -> bool,
     /// 
     /// If *generate* is true and a UTF codec is used, QTextStream will insert
@@ -247,15 +215,15 @@ struct TextStream {
     /// device. If *generate* is false, no BOM will be inserted. This function
     /// must be called before any data is written. Otherwise, it does nothing.
     /// 
-    /// **See also:** generateByteOrderMark()
-    /// bom()
+    /// **See also:** [`generate_byte_order_mark()`]
+    /// [`bom()`]
     set_generate_byte_order_mark(generate: bool),
     /// 
     /// Returns `true` if QTextStream is set to generate the UTF BOM (Byte Order
     /// Mark) when using a UTF codec; otherwise returns `false.` UTF BOM generation is
     /// set to false by default.
     /// 
-    /// **See also:** setGenerateByteOrderMark()
+    /// **See also:** [`set_generate_byte_order_mark()`]
     generate_byte_order_mark() -> bool,
     /// 
     /// Sets the locale for this stream to *locale.* The specified locale is
@@ -264,12 +232,12 @@ struct TextStream {
     /// The default locale is C and it is a special case - the thousands
     /// group separator is not used for backward compatibility reasons.
     /// 
-    /// **See also:** locale()
+    /// **See also:** [`locale()`]
     set_locale(locale: &LocaleType),
     /// 
     /// Returns the locale for this stream. The default locale is C.
     /// 
-    /// **See also:** setLocale()
+    /// **See also:** [`set_locale()`]
     locale() -> Locale,
     /// 
     /// Sets the current device to *device.* If a device has already been
@@ -279,22 +247,22 @@ struct TextStream {
     /// **Note**: This function resets locale to the default locale ('C')
     /// and codec to the default codec, QTextCodec::codecForLocale().
     /// 
-    /// **See also:** device()
-    /// setString()
+    /// **See also:** [`device()`]
+    /// [`set_string()`]
     set_device(device: *IODeviceType),
     /// 
     /// Returns the current device associated with the QTextStream,
     /// or 0 if no device has been assigned.
     /// 
-    /// **See also:** setDevice()
-    /// string()
+    /// **See also:** [`set_device()`]
+    /// [`string()`]
     device() -> IODevice?,
     /// 
     /// Returns the status of the text stream.
     /// 
-    /// **See also:** QTextStream::Status
-    /// setStatus()
-    /// resetStatus()
+    /// **See also:** [`TextStream::status()`]
+    /// [`set_status()`]
+    /// [`reset_status()`]
     status() -> TextStream::Status,
     /// 
     /// Sets the status of the text stream to the *status* given.
@@ -303,15 +271,15 @@ struct TextStream {
     /// is called.
     /// 
     /// **See also:** Status
-    /// status()
-    /// resetStatus()
+    /// [`status()`]
+    /// [`reset_status()`]
     set_status(status: TextStream::Status),
     /// 
     /// Resets the status of the text stream.
     /// 
-    /// **See also:** QTextStream::Status
-    /// status()
-    /// setStatus()
+    /// **See also:** [`TextStream::status()`]
+    /// [`status()`]
+    /// [`set_status()`]
     reset_status(),
     /// 
     /// Returns `true` if there is no more data to be read from the
@@ -326,9 +294,9 @@ struct TextStream {
     /// 
     /// Resets the status of the text stream.
     /// 
-    /// **See also:** QTextStream::Status
-    /// status()
-    /// setStatus()
+    /// **See also:** [`TextStream::status()`]
+    /// [`status()`]
+    /// [`set_status()`]
     reset(),
     /// 
     /// Flushes any buffered data waiting to be written to the device.
@@ -349,7 +317,7 @@ struct TextStream {
     /// operation can be expensive, so you may want to avoid calling this
     /// function in a tight loop.
     /// 
-    /// **See also:** seek()
+    /// **See also:** [`seek()`]
     pos() -> i64,
     /// 
     /// Reads and discards whitespace from the stream until either a
@@ -360,7 +328,7 @@ struct TextStream {
     /// Whitespace characters are all characters for which
     /// QChar::isSpace() returns `true.`
     /// 
-    /// **See also:** operator>>()
+    /// **See also:** [`operator()`]
     skip_white_space(),
     /// 
     /// Reads one line of text from the stream, and returns it as a
@@ -378,8 +346,8 @@ struct TextStream {
     /// will return a null QString. For strings, or for devices that support it,
     /// you can explicitly test for the end of the stream using atEnd().
     /// 
-    /// **See also:** readAll()
-    /// QIODevice::readLine()
+    /// **See also:** [`read_all()`]
+    /// [`IODevice::read_line`]
     /// 
     /// Reads one line of text from the stream into *line.*
     /// If *line* is 0, the read line is not stored.
@@ -401,8 +369,8 @@ struct TextStream {
     /// an error has occurred; otherwise returns `true.` The contents in
     /// *line* before the call are discarded in any case.
     /// 
-    /// **See also:** readAll()
-    /// QIODevice::readLine()
+    /// **See also:** [`read_all()`]
+    /// [`IODevice::read_line`]
     read_line(maxlen: i64) -> String,
     /// 
     /// Reads one line of text from the stream into *line.*
@@ -425,8 +393,8 @@ struct TextStream {
     /// an error has occurred; otherwise returns `true.` The contents in
     /// *line* before the call are discarded in any case.
     /// 
-    /// **See also:** readAll()
-    /// QIODevice::readLine()
+    /// **See also:** [`read_all()`]
+    /// [`IODevice::read_line`]
     read_line_into(line: String, maxlen: i64) -> bool,
     /// 
     /// Reads the entire content of the stream, and returns it as a
@@ -437,7 +405,7 @@ struct TextStream {
     /// is better if you do not know how much data is
     /// available.
     /// 
-    /// **See also:** readLine()
+    /// **See also:** [`read_line()`]
     read_all() -> String,
     /// 
     /// Reads the entire content of the stream, and returns it as a
@@ -448,7 +416,7 @@ struct TextStream {
     /// is better if you do not know how much data is
     /// available.
     /// 
-    /// **See also:** readLine()
+    /// **See also:** [`read_line()`]
     /// 
     /// Reads one line of text from the stream, and returns it as a
     /// QString. The maximum allowed line length is set to *maxlen.* If
@@ -465,8 +433,8 @@ struct TextStream {
     /// will return a null QString. For strings, or for devices that support it,
     /// you can explicitly test for the end of the stream using atEnd().
     /// 
-    /// **See also:** readAll()
-    /// QIODevice::readLine()
+    /// **See also:** [`read_all()`]
+    /// [`IODevice::read_line`]
     /// 
     /// Reads one line of text from the stream into *line.*
     /// If *line* is 0, the read line is not stored.
@@ -488,15 +456,15 @@ struct TextStream {
     /// an error has occurred; otherwise returns `true.` The contents in
     /// *line* before the call are discarded in any case.
     /// 
-    /// **See also:** readAll()
-    /// QIODevice::readLine()
+    /// **See also:** [`read_all()`]
+    /// [`IODevice::read_line`]
     /// 
     /// Reads at most *maxlen* characters from the stream, and returns the data
     /// read as a QString.
     /// 
-    /// **See also:** readAll()
-    /// readLine()
-    /// QIODevice::read()
+    /// **See also:** [`read_all()`]
+    /// [`read_line()`]
+    /// [`IODevice::read`]
     read(maxlen: i64) -> String,
     /// 
     /// Sets the field alignment to *mode.* When used together with
@@ -504,14 +472,14 @@ struct TextStream {
     /// output with text aligned to the left, to the right or center
     /// aligned.
     /// 
-    /// **See also:** fieldAlignment()
-    /// setFieldWidth()
+    /// **See also:** [`field_alignment()`]
+    /// [`set_field_width()`]
     set_field_alignment(alignment: TextStream::FieldAlignment),
     /// 
     /// Returns the current field alignment.
     /// 
-    /// **See also:** setFieldAlignment()
-    /// fieldWidth()
+    /// **See also:** [`set_field_alignment()`]
+    /// [`field_width()`]
     field_alignment() -> TextStream::FieldAlignment,
     /// 
     /// Sets the pad character to *ch.* The default value is the ASCII
@@ -522,14 +490,14 @@ struct TextStream {
     /// 
     /// The string `s` contains:
     /// 
-    /// **See also:** padChar()
-    /// setFieldWidth()
+    /// **See also:** [`pad_char()`]
+    /// [`set_field_width()`]
     set_pad_char(ch: CharType),
     /// 
     /// Returns the current pad character.
     /// 
-    /// **See also:** setPadChar()
-    /// setFieldWidth()
+    /// **See also:** [`set_pad_char()`]
+    /// [`set_field_width()`]
     pad_char() -> Char,
     /// 
     /// Sets the current field width to *width.* If *width* is 0 (the
@@ -541,13 +509,13 @@ struct TextStream {
     /// endl). This behavior is different from similar classes in the STL,
     /// where the field width only applies to the next element.
     /// 
-    /// **See also:** fieldWidth()
-    /// setPadChar()
+    /// **See also:** [`field_width()`]
+    /// [`set_pad_char()`]
     set_field_width(width: i32),
     /// 
     /// Returns the current field width.
     /// 
-    /// **See also:** setFieldWidth()
+    /// **See also:** [`set_field_width()`]
     field_width() -> i32,
     /// 
     /// Sets the current number flags to *flags.* *flags* is a set of
@@ -555,16 +523,16 @@ struct TextStream {
     /// formatting generated code (e.g., whether or not to always write
     /// the base or sign of a number).
     /// 
-    /// **See also:** numberFlags()
-    /// setIntegerBase()
-    /// setRealNumberNotation()
+    /// **See also:** [`number_flags()`]
+    /// [`set_integer_base()`]
+    /// [`set_real_number_notation()`]
     set_number_flags(flags: TextStream::NumberFlags),
     /// 
     /// Returns the current number flags.
     /// 
-    /// **See also:** setNumberFlags()
-    /// integerBase()
-    /// realNumberNotation()
+    /// **See also:** [`set_number_flags()`]
+    /// [`integer_base()`]
+    /// [`real_number_notation()`]
     number_flags() -> TextStream::NumberFlags,
     /// 
     /// Sets the base of integers to *base,* both for reading and for
@@ -574,17 +542,17 @@ struct TextStream {
     /// stream. When generating numbers, QTextStream assumes base is 10
     /// unless the base has been set explicitly.
     /// 
-    /// **See also:** integerBase()
-    /// QString::number()
-    /// setNumberFlags()
+    /// **See also:** [`integer_base()`]
+    /// [`String::number`]
+    /// [`set_number_flags()`]
     set_integer_base(base: i32),
     /// 
     /// Returns the current base of integers. 0 means that the base is
     /// detected when reading, or 10 (decimal) when generating numbers.
     /// 
-    /// **See also:** setIntegerBase()
-    /// QString::number()
-    /// numberFlags()
+    /// **See also:** [`set_integer_base()`]
+    /// [`String::number`]
+    /// [`number_flags()`]
     integer_base() -> i32,
     /// 
     /// Sets the real number notation to *notation* (SmartNotation,
@@ -592,18 +560,18 @@ struct TextStream {
     /// numbers, QTextStream uses this value to detect the formatting of
     /// real numbers.
     /// 
-    /// **See also:** realNumberNotation()
-    /// setRealNumberPrecision()
-    /// setNumberFlags()
-    /// setIntegerBase()
+    /// **See also:** [`real_number_notation()`]
+    /// [`set_real_number_precision()`]
+    /// [`set_number_flags()`]
+    /// [`set_integer_base()`]
     set_real_number_notation(notation: TextStream::RealNumberNotation),
     /// 
     /// Returns the current real number notation.
     /// 
-    /// **See also:** setRealNumberNotation()
-    /// realNumberPrecision()
-    /// numberFlags()
-    /// integerBase()
+    /// **See also:** [`set_real_number_notation()`]
+    /// [`real_number_precision()`]
+    /// [`number_flags()`]
+    /// [`integer_base()`]
     real_number_notation() -> TextStream::RealNumberNotation,
     /// 
     /// Sets the precision of real numbers to *precision.* This value
@@ -612,18 +580,66 @@ struct TextStream {
     /// 
     /// The precision cannot be a negative value. The default value is 6.
     /// 
-    /// **See also:** realNumberPrecision()
-    /// setRealNumberNotation()
+    /// **See also:** [`real_number_precision()`]
+    /// [`set_real_number_notation()`]
     set_real_number_precision(precision: i32),
     /// 
     /// Returns the current real number precision, or the number of fraction
     /// digits QTextStream will write when generating real numbers.
     /// 
-    /// **See also:** setRealNumberNotation()
-    /// realNumberNotation()
-    /// numberFlags()
-    /// integerBase()
+    /// **See also:** [`set_real_number_notation()`]
+    /// [`real_number_notation()`]
+    /// [`number_flags()`]
+    /// [`integer_base()`]
     real_number_precision() -> i32,
+}
+
+[org_name(QTextStream)]
+enum RealNumberNotation {
+    /// Scientific or fixed-point notation, depending on which makes most sense ( `printf()` 's `%g` flag).
+    SmartNotation,
+    /// Fixed-point notation ( `printf()` 's `%f` flag).
+    FixedNotation,
+    /// Scientific notation ( `printf()` 's `%e` flag).
+    ScientificNotation,
+}
+
+[org_name(QTextStream)]
+enum FieldAlignment {
+    /// Pad on the right side of fields.
+    AlignLeft,
+    /// Pad on the left side of fields.
+    AlignRight,
+    /// Pad on both sides of field.
+    AlignCenter,
+    /// Same as AlignRight, except that the sign of a number is flush left.
+    AlignAccountingStyle,
+}
+
+[org_name(QTextStream)]
+enum Status {
+    /// The text stream is operating normally.
+    Ok,
+    /// The text stream has read past the end of the data in the underlying device.
+    ReadPastEnd,
+    /// The text stream has read corrupt data.
+    ReadCorruptData,
+    /// The text stream cannot write to the underlying device.
+    WriteFailed,
+}
+
+[org_name(QTextStream)]
+enum NumberFlag {
+    /// Show the base as a prefix if the base is 16 ("0x"), 8 ("0"), or 2 ("0b").
+    ShowBase,
+    /// Always put the decimal separator in numbers, even if there are no decimals.
+    ForcePoint,
+    /// Always put the sign in numbers, even for positive numbers.
+    ForceSign,
+    /// Use uppercase versions of base prefixes ("0X", "0B").
+    UppercaseBase,
+    /// Use uppercase letters for expressing digits 10 to 35 instead of lowercase.
+    UppercaseDigits,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

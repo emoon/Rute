@@ -26,20 +26,13 @@
 /// 
 /// ![A color dialog in the Fusion widget style.](fusion-colordialog.png)
 /// 
-/// **See also:** QColor
-/// QFileDialog
-/// QFontDialog
+/// **See also:** [`Color`]
+/// [`FileDialog`]
+/// [`FontDialog`]
 /// {Standard Dialogs Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QColorDialog)]
-enum ColorDialogOption {
-    ShowAlphaChannel,
-    NoButtons,
-    DontUseNativeDialog,
-}
-
 struct ColorDialog : Dialog {
     set_current_color(color: &ColorType),
     /// 
@@ -48,7 +41,7 @@ struct ColorDialog : Dialog {
     /// The current color is specified by *color.*
     /// 
     /// **See also:** color
-    /// colorSelected()
+    /// [`color_selected()`]
     current_color() -> Color,
     /// 
     /// Returns the color that the user selected by clicking the **{OK}**
@@ -64,14 +57,14 @@ struct ColorDialog : Dialog {
     /// otherwise, clears the given *option.*
     /// 
     /// **See also:** options
-    /// testOption()
+    /// [`test_option()`]
     set_option(option: ColorDialog::ColorDialogOption, on: bool),
     /// 
     /// Returns `true` if the given *option* is enabled; otherwise, returns
     /// false.
     /// 
     /// **See also:** options
-    /// setOption()
+    /// [`set_option()`]
     test_option(option: ColorDialog::ColorDialogOption) -> bool,
     set_options(options: ColorDialog::ColorDialogOptions),
     /// 
@@ -81,8 +74,8 @@ struct ColorDialog : Dialog {
     /// dialog is visible is not guaranteed to have an immediate effect on the
     /// dialog (depending on the option and on the platform).
     /// 
-    /// **See also:** setOption()
-    /// testOption()
+    /// **See also:** [`set_option()`]
+    /// [`test_option()`]
     options() -> ColorDialog::ColorDialogOptions,
     /// 
     /// **Overloads**
@@ -145,14 +138,14 @@ struct ColorDialog : Dialog {
     /// The current color is specified by *color.*
     /// 
     /// **See also:** color
-    /// colorSelected()
+    /// [`color_selected()`]
     [signal] current_color_changed(color: &ColorType),
     /// 
     /// This signal is emitted just after the user has clicked **{OK}** to
     /// select a color to use. The chosen color is specified by *color.*
     /// 
     /// **See also:** color
-    /// currentColorChanged()
+    /// [`current_color_changed()`]
     [signal] color_selected(color: &ColorType),
     /// 
     [event] change_event(event: *EventType),
@@ -161,8 +154,18 @@ struct ColorDialog : Dialog {
     /// is shown with exec(), done() causes the local event loop to finish,
     /// and exec() to return *result.*
     /// 
-    /// **See also:** QDialog::done()
+    /// **See also:** [`Dialog::done`]
     [event] done(result: i32),
+}
+
+[org_name(QColorDialog)]
+enum ColorDialogOption {
+    /// Allow the user to select the alpha component of a color.
+    ShowAlphaChannel,
+    /// Don't display **{OK}** and **{Cancel}** buttons. (Useful for "live dialogs".)
+    NoButtons,
+    /// Use Qt's standard color dialog instead of the operating system native color dialog.
+    DontUseNativeDialog,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

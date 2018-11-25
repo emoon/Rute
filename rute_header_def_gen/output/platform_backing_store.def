@@ -1,14 +1,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QPlatformBackingStore)]
-enum TextureFlag {
-    TextureSwizzle,
-    TextureFlip,
-    TexturePremultiplied,
-}
-
-
 struct PlatformBackingStore {
     /// 
     /// Returns a pointer to the top-level window associated with this
@@ -40,7 +32,7 @@ struct PlatformBackingStore {
     /// If QPlatformIntegration::RasterGLSurface is supported, either this function or
     /// toTexture() must be implemented.
     /// 
-    /// **See also:** toTexture()
+    /// **See also:** [`to_texture()`]
     [event] to_image() -> Image,
     /// 
     /// May be reimplemented in subclasses to return the content of the
@@ -67,7 +59,7 @@ struct PlatformBackingStore {
     /// If the image has to be flipped (e.g. because the texture is attached to an FBO), *flags* will be set to include `TextureFlip.`
     /// 
     /// **Note**: *dirtyRegion* is relative to the backingstore so no adjustment is needed.
-    to_texture(dirty_region: &RegionType, texture_size: *SizeType, flags: PlatformBackingStore::TextureFlags *) -> i32,
+    [event] to_texture(dirty_region: &RegionType, texture_size: *SizeType, flags: PlatformBackingStore::TextureFlags *) -> GLuint,
     /// 
     /// Accessor for a backingstores graphics buffer abstraction
     [event] graphics_buffer() -> PlatformGraphicsBuffer?,
@@ -82,15 +74,22 @@ struct PlatformBackingStore {
     /// This function is called before painting onto the surface begins,
     /// with the *region* in which the painting will occur.
     /// 
-    /// **See also:** endPaint()
-    /// paintDevice()
+    /// **See also:** [`end_paint()`]
+    /// [`paint_device()`]
     [event] begin_paint(arg0: &RegionType),
     /// 
     /// This function is called after painting onto the surface has ended.
     /// 
-    /// **See also:** beginPaint()
-    /// paintDevice()
+    /// **See also:** [`begin_paint()`]
+    /// [`paint_device()`]
     [event] end_paint(),
+}
+
+[org_name(QPlatformBackingStore)]
+enum TextureFlag {
+    TextureSwizzle,
+    TextureFlip,
+    TexturePremultiplied,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

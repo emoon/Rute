@@ -21,7 +21,7 @@ struct ColumnView : AbstractItemView {
     /// This signal is emitted when the preview widget should be updated to
     /// provide rich information about *index*
     /// 
-    /// **See also:** previewWidget()
+    /// **See also:** [`preview_widget()`]
     [signal] update_preview_widget(index: &ModelIndexType),
     /// 
     [event] index_at(point: &PointType) -> ModelIndex,
@@ -43,13 +43,13 @@ struct ColumnView : AbstractItemView {
     /// 
     /// By default, `visible` is set to true
     /// 
-    /// **See also:** setRootIndex()
+    /// **See also:** [`set_root_index()`]
     resize_grips_visible() -> bool,
     /// 
     /// Returns the preview widget, or 0 if there is none.
     /// 
-    /// **See also:** setPreviewWidget()
-    /// updatePreviewWidget()
+    /// **See also:** [`set_preview_widget()`]
+    /// [`update_preview_widget()`]
     preview_widget() -> Widget?,
     /// 
     /// Sets the preview *widget.*
@@ -58,8 +58,8 @@ struct ColumnView : AbstractItemView {
     /// destroyed when the column area is deleted or when a new widget is
     /// set.
     /// 
-    /// **See also:** previewWidget()
-    /// updatePreviewWidget()
+    /// **See also:** [`preview_widget()`]
+    /// [`update_preview_widget()`]
     set_preview_widget(widget: *WidgetType),
     /// 
     /// Sets the column widths to the values given in the *list.* Extra values in the list are
@@ -67,13 +67,13 @@ struct ColumnView : AbstractItemView {
     /// 
     /// If list contains too few values, only width of the rest of the columns will not be modified.
     /// 
-    /// **See also:** columnWidths()
-    /// createColumn()
+    /// **See also:** [`column_widths()`]
+    /// [`create_column()`]
     set_column_widths(list: [i32]),
     /// 
     /// Returns a list of the width of all the columns in this view.
     /// 
-    /// **See also:** setColumnWidths()
+    /// **See also:** [`set_column_widths()`]
     column_widths() -> [i32],
     /// 
     [event] is_index_hidden(index: &ModelIndexType) -> bool,
@@ -105,7 +105,7 @@ struct ColumnView : AbstractItemView {
     /// 
     /// Return the new view. QColumnView will automatically take ownership of the widget.
     /// 
-    /// **See also:** setPreviewWidget()
+    /// **See also:** [`set_preview_widget()`]
     [event] create_column(root_index: &ModelIndexType) -> AbstractItemView?,
     /// 
     /// Copies the behavior and options of the column view and applies them to
@@ -113,7 +113,7 @@ struct ColumnView : AbstractItemView {
     /// alternatingRowColors(). This can be useful when reimplementing
     /// createColumn().
     /// 
-    /// **See also:** createColumn()
+    /// **See also:** [`create_column()`]
     initialize_column(column: *AbstractItemViewType),
 }
 

@@ -75,39 +75,10 @@
 /// use coordinateMode().
 /// 
 /// **See also:** {painting/gradients}{The Gradients Example}
-/// QBrush
+/// [`Brush`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGradient)]
-enum Type {
-    LinearGradient,
-    RadialGradient,
-    ConicalGradient,
-    NoGradient,
-}
-
-[org_name(QGradient)]
-enum Spread {
-    PadSpread,
-    ReflectSpread,
-    RepeatSpread,
-}
-
-[org_name(QGradient)]
-enum CoordinateMode {
-    LogicalMode,
-    StretchToDeviceMode,
-    ObjectBoundingMode,
-}
-
-[org_name(QGradient)]
-enum InterpolationMode {
-    ColorInterpolation,
-    ComponentInterpolation,
-}
-
-
 struct Gradient {
     qt_check_for_qgadget_macro(),
     /// 
@@ -120,26 +91,26 @@ struct Gradient {
     /// Note that this function only has effect for linear and radial
     /// gradients.
     /// 
-    /// **See also:** spread()
+    /// **See also:** [`spread()`]
     set_spread(spread: Gradient::Spread),
     /// 
     /// Returns the spread method use by this gradient. The default is
     /// PadSpread.
     /// 
-    /// **See also:** setSpread()
+    /// **See also:** [`set_spread()`]
     spread() -> Gradient::Spread,
     /// 
     /// Creates a stop point at the given *position* with the given *color.* The given *position* must be in the range 0 to 1.
     /// 
-    /// **See also:** setStops()
-    /// stops()
+    /// **See also:** [`set_stops()`]
+    /// [`stops()`]
     set_color_at(pos: f32, color: &ColorType),
     /// 
     /// Replaces the current set of stop points with the given *stopPoints.* The positions of the points must be in the range 0 to
     /// 1, and must be sorted with the lowest point first.
     /// 
-    /// **See also:** setColorAt()
-    /// stops()
+    /// **See also:** [`set_color_at()`]
+    /// [`stops()`]
     set_stops(stops: &GradientStopsType),
     /// 
     /// Returns the stop points for this gradient.
@@ -147,8 +118,8 @@ struct Gradient {
     /// If no stop points have been specified, a gradient of black at 0 to white
     /// at 1 is used.
     /// 
-    /// **See also:** setStops()
-    /// setColorAt()
+    /// **See also:** [`set_stops()`]
+    /// [`set_color_at()`]
     stops() -> GradientStops,
     /// 
     /// Returns the coordinate mode of this gradient. The default mode is
@@ -160,6 +131,46 @@ struct Gradient {
     set_coordinate_mode(mode: Gradient::CoordinateMode),
     interpolation_mode() -> Gradient::InterpolationMode,
     set_interpolation_mode(mode: Gradient::InterpolationMode),
+}
+
+[org_name(QGradient)]
+enum Type {
+    /// Interpolates colors between start and end points (QLinearGradient).
+    LinearGradient,
+    /// Interpolate colors between a focal point and end points on a circle surrounding it (QRadialGradient).
+    RadialGradient,
+    /// Interpolate colors around a center point (QConicalGradient).
+    ConicalGradient,
+    /// No gradient is used.
+    NoGradient,
+}
+
+[org_name(QGradient)]
+enum Spread {
+    /// The area is filled with the closest stop color. This is the default.
+    PadSpread,
+    /// The gradient is reflected outside the gradient area.
+    ReflectSpread,
+    /// The gradient is repeated outside the gradient area.
+    RepeatSpread,
+}
+
+[org_name(QGradient)]
+enum CoordinateMode {
+    /// This is the default mode. The gradient coordinates are specified logical space just like the object coordinates.
+    LogicalMode,
+    /// In this mode the gradient coordinates are relative to the bounding rectangle of the paint device, with (0,0) in the top left corner, and (1,1) in the bottom right corner of the paint device.
+    StretchToDeviceMode,
+    /// In this mode the gradient coordinates are relative to the bounding rectangle of the object being drawn, with (0,0) in the top left corner, and (1,1) in the bottom right corner of the object's bounding rectangle.
+    ObjectBoundingMode,
+}
+
+[org_name(QGradient)]
+enum InterpolationMode {
+    /// The colors are linearly interpolated in premultiplied color space.
+    ColorInterpolation,
+    /// The color components and the alpha component are independently linearly interpolated.
+    ComponentInterpolation,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

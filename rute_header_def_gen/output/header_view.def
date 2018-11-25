@@ -75,69 +75,60 @@
 /// function will have no effect.
 /// 
 /// **See also:** {Model/View Programming}
-/// QListView
-/// QTableView
-/// QTreeView
+/// [`ListView`]
+/// [`TableView`]
+/// [`TreeView`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QHeaderView)]
-enum ResizeMode {
-    Interactive,
-    Stretch,
-    Fixed,
-    ResizeToContents,
-    Custom,
-}
-
 struct HeaderView : AbstractItemView {
     /// 
     [event] set_model(model: *AbstractItemModelType),
     /// 
     /// Returns the orientation of the header.
     /// 
-    /// **See also:** Qt::Orientation
+    /// **See also:** [`t::orientation()`]
     orientation() -> Rute::Orientation,
     /// 
     /// Returns the offset of the header: this is the header's left-most (or
     /// top-most for vertical headers) visible pixel.
     /// 
-    /// **See also:** setOffset()
+    /// **See also:** [`set_offset()`]
     offset() -> i32,
     /// 
     /// Returns the length along the orientation of the header.
     /// 
-    /// **See also:** sizeHint()
-    /// setSectionResizeMode()
-    /// offset()
+    /// **See also:** [`size_hint()`]
+    /// [`set_section_resize_mode()`]
+    /// [`offset()`]
     length() -> i32,
     /// 
     /// Returns a suitable size hint for this header.
     /// 
-    /// **See also:** sectionSizeHint()
+    /// **See also:** [`section_size_hint()`]
     [event] size_hint() -> Size,
     /// 
     [event] set_visible(v: bool),
     /// 
     /// Returns a suitable size hint for the section specified by *logicalIndex.*
     /// 
-    /// **See also:** sizeHint()
-    /// defaultSectionSize()
-    /// minimumSectionSize()
-    /// maximumSectionSize()
+    /// **See also:** [`size_hint()`]
+    /// [`default_section_size()`]
+    /// [`minimum_section_size()`]
+    /// [`maximum_section_size()`]
     /// Qt::SizeHintRole
     section_size_hint(logical_index: i32) -> i32,
     /// 
     /// Returns the visual index of the section that covers the given *position*
     /// in the viewport.
     /// 
-    /// **See also:** logicalIndexAt()
+    /// **See also:** [`logical_index_at()`]
     visual_index_at(position: i32) -> i32,
     /// 
     /// Returns the section that covers the given *position* in the viewport.
     /// 
-    /// **See also:** visualIndexAt()
-    /// isSectionHidden()
+    /// **See also:** [`visual_index_at()`]
+    /// [`is_section_hidden()`]
     /// 
     /// Returns the logical index of the section at the given coordinate. If the
     /// header is horizontal *x* will be used, otherwise *y* will be used to
@@ -147,13 +138,13 @@ struct HeaderView : AbstractItemView {
     /// If the header is horizontal the x-coordinate will be used, otherwise the
     /// y-coordinate will be used to find the logical index.
     /// 
-    /// **See also:** sectionPosition()
+    /// **See also:** [`section_position()`]
     logical_index_at(position: i32) -> i32,
     /// 
     /// Returns the section that covers the given *position* in the viewport.
     /// 
-    /// **See also:** visualIndexAt()
-    /// isSectionHidden()
+    /// **See also:** [`visual_index_at()`]
+    /// [`is_section_hidden()`]
     /// 
     /// Returns the logical index of the section at the given coordinate. If the
     /// header is horizontal *x* will be used, otherwise *y* will be used to
@@ -163,13 +154,14 @@ struct HeaderView : AbstractItemView {
     /// If the header is horizontal the x-coordinate will be used, otherwise the
     /// y-coordinate will be used to find the logical index.
     /// 
-    /// **See also:** sectionPosition()
-    logical_index_at(x: i32, y: i32) -> i32,
+    /// **See also:** [`section_position()`]
+    [org_name(logicalIndexAt)]
+    logical_index_at_2(x: i32, y: i32) -> i32,
     /// 
     /// Returns the section that covers the given *position* in the viewport.
     /// 
-    /// **See also:** visualIndexAt()
-    /// isSectionHidden()
+    /// **See also:** [`visual_index_at()`]
+    /// [`is_section_hidden()`]
     /// 
     /// Returns the logical index of the section at the given coordinate. If the
     /// header is horizontal *x* will be used, otherwise *y* will be used to
@@ -179,28 +171,29 @@ struct HeaderView : AbstractItemView {
     /// If the header is horizontal the x-coordinate will be used, otherwise the
     /// y-coordinate will be used to find the logical index.
     /// 
-    /// **See also:** sectionPosition()
-    logical_index_at(pos: &PointType) -> i32,
+    /// **See also:** [`section_position()`]
+    [org_name(logicalIndexAt)]
+    logical_index_at_3(pos: &PointType) -> i32,
     /// 
     /// Returns a suitable size hint for the section specified by *logicalIndex.*
     /// 
-    /// **See also:** sizeHint()
-    /// defaultSectionSize()
-    /// minimumSectionSize()
-    /// maximumSectionSize()
+    /// **See also:** [`size_hint()`]
+    /// [`default_section_size()`]
+    /// [`minimum_section_size()`]
+    /// [`maximum_section_size()`]
     /// Qt::SizeHintRole
     /// 
     /// Returns the width (or height for vertical headers) of the given
     /// *logicalIndex.*
     /// 
-    /// **See also:** length()
-    /// setSectionResizeMode()
-    /// defaultSectionSize()
+    /// **See also:** [`length()`]
+    /// [`set_section_resize_mode()`]
+    /// [`default_section_size()`]
     /// 
     /// Returns the size of the contents of the section specified by the given
     /// *logicalIndex.*
     /// 
-    /// **See also:** defaultSectionSize()
+    /// **See also:** [`default_section_size()`]
     section_size(logical_index: i32) -> i32,
     /// 
     /// Returns the section position of the given *logicalIndex,* or -1
@@ -209,26 +202,26 @@ struct HeaderView : AbstractItemView {
     /// the item with *logicalIndex.* The measurement is along the x-axis
     /// for horizontal headers and along the y-axis for vertical headers.
     /// 
-    /// **See also:** sectionViewportPosition()
+    /// **See also:** [`section_viewport_position()`]
     section_position(logical_index: i32) -> i32,
     /// 
     /// Returns the section viewport position of the given *logicalIndex.*
     /// 
     /// If the section is hidden, the return value is undefined.
     /// 
-    /// **See also:** sectionPosition()
-    /// isSectionHidden()
+    /// **See also:** [`section_position()`]
+    /// [`is_section_hidden()`]
     section_viewport_position(logical_index: i32) -> i32,
     /// 
     /// Moves the section at visual index *from* to occupy visual index *to.*
     /// 
-    /// **See also:** sectionsMoved()
+    /// **See also:** [`sections_moved()`]
     move_section(from: i32, to: i32),
     /// 
     /// Swaps the section at visual index *first* with the section at visual
     /// index *second.*
     /// 
-    /// **See also:** moveSection()
+    /// **See also:** [`move_section()`]
     swap_sections(first: i32, second: i32),
     /// 
     /// Resizes the section specified by *logicalIndex* to *size* measured in
@@ -236,16 +229,16 @@ struct HeaderView : AbstractItemView {
     /// size equal to zero is however not recommended. In that situation hideSection
     /// should be used instead.
     /// 
-    /// **See also:** sectionResized()
-    /// resizeMode()
-    /// sectionSize()
-    /// hideSection()
+    /// **See also:** [`section_resized()`]
+    /// [`resize_mode()`]
+    /// [`section_size()`]
+    /// [`hide_section()`]
     /// 
     /// Resizes the sections according to the given *mode,* ignoring the current
     /// resize mode.
     /// 
-    /// **See also:** resizeMode()
-    /// sectionResized()
+    /// **See also:** [`resize_mode()`]
+    /// [`section_resized()`]
     /// 
     /// Resizes the sections according to their size hints. Normally, you do not
     /// have to call this function.
@@ -254,8 +247,8 @@ struct HeaderView : AbstractItemView {
     /// Resizes the sections according to the given *mode,* ignoring the current
     /// resize mode.
     /// 
-    /// **See also:** resizeMode()
-    /// sectionResized()
+    /// **See also:** [`resize_mode()`]
+    /// [`section_resized()`]
     /// 
     /// Resizes the sections according to their size hints. Normally, you do not
     /// have to call this function.
@@ -264,64 +257,64 @@ struct HeaderView : AbstractItemView {
     /// Returns `true` if the section specified by *logicalIndex* is explicitly
     /// hidden from the user; otherwise returns `false.`
     /// 
-    /// **See also:** hideSection()
-    /// showSection()
-    /// setSectionHidden()
-    /// hiddenSectionCount()
+    /// **See also:** [`hide_section()`]
+    /// [`show_section()`]
+    /// [`set_section_hidden()`]
+    /// [`hidden_section_count()`]
     is_section_hidden(logical_index: i32) -> bool,
     /// 
     /// If *hide* is true the section specified by *logicalIndex* is hidden;
     /// otherwise the section is shown.
     /// 
-    /// **See also:** isSectionHidden()
-    /// hiddenSectionCount()
+    /// **See also:** [`is_section_hidden()`]
+    /// [`hidden_section_count()`]
     set_section_hidden(logical_index: i32, hide: bool),
     /// 
     /// Returns the number of sections in the header that has been hidden.
     /// 
-    /// **See also:** setSectionHidden()
-    /// isSectionHidden()
+    /// **See also:** [`set_section_hidden()`]
+    /// [`is_section_hidden()`]
     hidden_section_count() -> i32,
     /// 
     /// Hides the section specified by *logicalIndex.*
     /// 
-    /// **See also:** showSection()
-    /// isSectionHidden()
-    /// hiddenSectionCount()
-    /// setSectionHidden()
+    /// **See also:** [`show_section()`]
+    /// [`is_section_hidden()`]
+    /// [`hidden_section_count()`]
+    /// [`set_section_hidden()`]
     hide_section(logical_index: i32),
     /// 
     /// Shows the section specified by *logicalIndex.*
     /// 
-    /// **See also:** hideSection()
-    /// isSectionHidden()
-    /// hiddenSectionCount()
-    /// setSectionHidden()
+    /// **See also:** [`hide_section()`]
+    /// [`is_section_hidden()`]
+    /// [`hidden_section_count()`]
+    /// [`set_section_hidden()`]
     show_section(logical_index: i32),
     /// 
     /// Returns the number of sections in the header.
     /// 
-    /// **See also:** sectionCountChanged()
-    /// length()
+    /// **See also:** [`section_count_changed()`]
+    /// [`length()`]
     count() -> i32,
     /// 
     /// Returns the visual index of the section that covers the given *position*
     /// in the viewport.
     /// 
-    /// **See also:** logicalIndexAt()
+    /// **See also:** [`logical_index_at()`]
     /// 
     /// Returns the visual index position of the section specified by the given
     /// *logicalIndex,* or -1 otherwise.
     /// 
     /// Hidden sections still have valid visual indexes.
     /// 
-    /// **See also:** logicalIndex()
+    /// **See also:** [`logical_index()`]
     visual_index(logical_index: i32) -> i32,
     /// 
     /// Returns the section that covers the given *position* in the viewport.
     /// 
-    /// **See also:** visualIndexAt()
-    /// isSectionHidden()
+    /// **See also:** [`visual_index_at()`]
+    /// [`is_section_hidden()`]
     /// 
     /// Returns the logical index of the section at the given coordinate. If the
     /// header is horizontal *x* will be used, otherwise *y* will be used to
@@ -331,15 +324,15 @@ struct HeaderView : AbstractItemView {
     /// If the header is horizontal the x-coordinate will be used, otherwise the
     /// y-coordinate will be used to find the logical index.
     /// 
-    /// **See also:** sectionPosition()
+    /// **See also:** [`section_position()`]
     /// 
     /// Returns the logicalIndex for the section at the given *visualIndex*
     /// position, or -1 if visualIndex < 0 or visualIndex >= QHeaderView::count().
     /// 
     /// Note that the visualIndex is not affected by hidden sections.
     /// 
-    /// **See also:** visualIndex()
-    /// sectionPosition()
+    /// **See also:** [`visual_index()`]
+    /// [`section_position()`]
     logical_index(visual_index: i32) -> i32,
     /// 
     /// If *movable* is true, the header sections may be moved by the user;
@@ -349,9 +342,9 @@ struct HeaderView : AbstractItemView {
     /// movable (since it contains the tree structure), by default.
     /// You can make it movable with setFirstSectionMovable(true).
     /// 
-    /// **See also:** sectionsMovable()
-    /// sectionMoved()
-    /// **See also:** setFirstSectionMovable()
+    /// **See also:** [`sections_movable()`]
+    /// [`section_moved()`]
+    /// **See also:** [`set_first_section_movable()`]
     set_sections_movable(movable: bool),
     /// 
     /// Returns `true` if the header can be moved by the user; otherwise returns
@@ -360,24 +353,24 @@ struct HeaderView : AbstractItemView {
     /// By default, sections are movable in QTreeView (except for the first one),
     /// and not movable in QTableView.
     /// 
-    /// **See also:** setSectionsMovable()
+    /// **See also:** [`set_sections_movable()`]
     sections_movable() -> bool,
     set_first_section_movable(movable: bool),
     is_first_section_movable() -> bool,
     /// 
     /// If *clickable* is true, the header will respond to single clicks.
     /// 
-    /// **See also:** sectionsClickable()
-    /// sectionClicked()
-    /// sectionPressed()
-    /// setSortIndicatorShown()
+    /// **See also:** [`sections_clickable()`]
+    /// [`section_clicked()`]
+    /// [`section_pressed()`]
+    /// [`set_sort_indicator_shown()`]
     set_sections_clickable(clickable: bool),
     /// 
     /// Returns `true` if the header is clickable; otherwise returns `false.` A
     /// clickable header could be set up to allow the user to change the
     /// representation of the data in the view related to the header.
     /// 
-    /// **See also:** setSectionsClickable()
+    /// **See also:** [`set_sections_clickable()`]
     sections_clickable() -> bool,
     set_highlight_sections(highlight: bool),
     /// 
@@ -387,15 +380,15 @@ struct HeaderView : AbstractItemView {
     /// Returns the resize mode that applies to the section specified by the given
     /// *logicalIndex.*
     /// 
-    /// **See also:** setSectionResizeMode()
+    /// **See also:** [`set_section_resize_mode()`]
     section_resize_mode(logical_index: i32) -> HeaderView::ResizeMode,
     /// 
     /// Sets the constraints on how the header can be resized to those described
     /// by the given *mode.*
     /// 
-    /// **See also:** resizeMode()
-    /// length()
-    /// sectionResized()
+    /// **See also:** [`resize_mode()`]
+    /// [`length()`]
+    /// [`section_resized()`]
     /// 
     /// Sets the constraints on how the section specified by *logicalIndex* in
     /// the header can be resized to those described by the given *mode.* The logical
@@ -405,16 +398,16 @@ struct HeaderView : AbstractItemView {
     /// property is set to true. This is the default for the horizontal headers provided
     /// by QTreeView.
     /// 
-    /// **See also:** setStretchLastSection()
-    /// resizeContentsPrecision()
+    /// **See also:** [`set_stretch_last_section()`]
+    /// [`resize_contents_precision()`]
     set_section_resize_mode(mode: HeaderView::ResizeMode),
     /// 
     /// Sets the constraints on how the header can be resized to those described
     /// by the given *mode.*
     /// 
-    /// **See also:** resizeMode()
-    /// length()
-    /// sectionResized()
+    /// **See also:** [`resize_mode()`]
+    /// [`length()`]
+    /// [`section_resized()`]
     /// 
     /// Sets the constraints on how the section specified by *logicalIndex* in
     /// the header can be resized to those described by the given *mode.* The logical
@@ -424,9 +417,10 @@ struct HeaderView : AbstractItemView {
     /// property is set to true. This is the default for the horizontal headers provided
     /// by QTreeView.
     /// 
-    /// **See also:** setStretchLastSection()
-    /// resizeContentsPrecision()
-    set_section_resize_mode(logical_index: i32, mode: HeaderView::ResizeMode),
+    /// **See also:** [`set_stretch_last_section()`]
+    /// [`resize_contents_precision()`]
+    [org_name(setSectionResizeMode)]
+    set_section_resize_mode_2(logical_index: i32, mode: HeaderView::ResizeMode),
     /// 
     /// Sets how precise QHeaderView should calculate the size when ResizeToContents is used.
     /// A low value will provide a less accurate but fast auto resize while a higher
@@ -445,18 +439,18 @@ struct HeaderView : AbstractItemView {
     /// and QTreeView::sizeHintForColumn(). Reimplementing these functions can make this
     /// function not having an effect.
     /// 
-    /// **See also:** resizeContentsPrecision()
-    /// setSectionResizeMode()
-    /// resizeSections()
-    /// QTableView::sizeHintForColumn()
-    /// QTableView::sizeHintForRow()
-    /// QTreeView::sizeHintForColumn()
+    /// **See also:** [`resize_contents_precision()`]
+    /// [`set_section_resize_mode()`]
+    /// [`resize_sections()`]
+    /// [`TableView::size_hint_for_column`]
+    /// [`TableView::size_hint_for_row`]
+    /// [`TreeView::size_hint_for_column`]
     set_resize_contents_precision(precision: i32),
     /// 
     /// Returns how precise QHeaderView will calculate on ResizeToContents.
     /// 
-    /// **See also:** setResizeContentsPrecision()
-    /// setSectionResizeMode()
+    /// **See also:** [`set_resize_contents_precision()`]
+    /// [`set_section_resize_mode()`]
     /// 
     resize_contents_precision() -> i32,
     set_sort_indicator_shown(show: bool),
@@ -470,23 +464,23 @@ struct HeaderView : AbstractItemView {
     /// and the model will return to its natural, unsorted order. Note that not
     /// all models support this and may even crash in this case.
     /// 
-    /// **See also:** sortIndicatorSection()
-    /// sortIndicatorOrder()
+    /// **See also:** [`sort_indicator_section()`]
+    /// [`sort_indicator_order()`]
     set_sort_indicator(logical_index: i32, order: Rute::SortOrder),
     /// 
     /// Returns the logical index of the section that has a sort indicator.
     /// By default this is section 0.
     /// 
-    /// **See also:** setSortIndicator()
-    /// sortIndicatorOrder()
-    /// setSortIndicatorShown()
+    /// **See also:** [`set_sort_indicator()`]
+    /// [`sort_indicator_order()`]
+    /// [`set_sort_indicator_shown()`]
     sort_indicator_section() -> i32,
     /// 
     /// Returns the order for the sort indicator. If no section has a sort
     /// indicator the return value of this function is undefined.
     /// 
-    /// **See also:** setSortIndicator()
-    /// sortIndicatorSection()
+    /// **See also:** [`set_sort_indicator()`]
+    /// [`sort_indicator_section()`]
     sort_indicator_order() -> Rute::SortOrder,
     /// 
     /// This property only affects sections that have [Interactive](Interactive)
@@ -495,7 +489,7 @@ struct HeaderView : AbstractItemView {
     /// 
     /// The default value is false.
     /// 
-    /// **See also:** setSectionResizeMode()
+    /// **See also:** [`set_section_resize_mode()`]
     cascading_section_resizes() -> bool,
     set_cascading_section_resizes(enable: bool),
     /// 
@@ -509,7 +503,7 @@ struct HeaderView : AbstractItemView {
     /// Calling setDefaultSectionSize() stops the updates, calling
     /// resetDefaultSectionSize() will restore default behavior.
     /// 
-    /// **See also:** setSectionResizeMode()
+    /// **See also:** [`set_section_resize_mode()`]
     /// minimumSectionSize
     default_section_size() -> i32,
     set_default_section_size(size: i32),
@@ -525,7 +519,7 @@ struct HeaderView : AbstractItemView {
     /// This property is honored by all [resize modes](ResizeMode)
     /// 
     /// 
-    /// **See also:** setSectionResizeMode()
+    /// **See also:** [`set_section_resize_mode()`]
     /// defaultSectionSize
     minimum_section_size() -> i32,
     set_minimum_section_size(size: i32),
@@ -537,7 +531,7 @@ struct HeaderView : AbstractItemView {
     /// 
     /// With exception of stretch this property is honored by all [resize modes](ResizeMode)
     /// 
-    /// **See also:** setSectionResizeMode()
+    /// **See also:** [`set_section_resize_mode()`]
     /// defaultSectionSize
     maximum_section_size() -> i32,
     set_maximum_section_size(size: i32),
@@ -549,63 +543,63 @@ struct HeaderView : AbstractItemView {
     /// Returns `true` if sections in the header has been moved; otherwise returns
     /// false;
     /// 
-    /// **See also:** moveSection()
+    /// **See also:** [`move_section()`]
     sections_moved() -> bool,
     /// 
     /// Returns `true` if sections in the header has been hidden; otherwise returns
     /// false;
     /// 
-    /// **See also:** setSectionHidden()
+    /// **See also:** [`set_section_hidden()`]
     sections_hidden() -> bool,
     /// 
     /// Saves the current state of this header view.
     /// 
     /// To restore the saved state, pass the return value to restoreState().
     /// 
-    /// **See also:** restoreState()
+    /// **See also:** [`restore_state()`]
     save_state() -> ByteArray,
     /// 
     /// Restores the *state* of this header view.
     /// This function returns `true` if the state was restored; otherwise returns
     /// false.
     /// 
-    /// **See also:** saveState()
+    /// **See also:** [`save_state()`]
     restore_state(state: &ByteArrayType) -> bool,
     /// 
     [event] reset(),
     /// 
     /// Sets the header's offset to *offset.*
     /// 
-    /// **See also:** offset()
-    /// length()
+    /// **See also:** [`offset()`]
+    /// [`length()`]
     /// 
     /// Sets the offset to the start of the section at the given *visualSectionNumber.*
     /// *visualSectionNumber* is the actual visible section when hiddenSections are
     /// not considered. That is not always the same as visualIndex().
     /// 
-    /// **See also:** setOffset()
-    /// sectionPosition()
+    /// **See also:** [`set_offset()`]
+    /// [`section_position()`]
     /// 
     /// Sets the offset to make the last section visible.
     /// 
-    /// **See also:** setOffset()
-    /// sectionPosition()
-    /// setOffsetToSectionPosition()
+    /// **See also:** [`set_offset()`]
+    /// [`section_position()`]
+    /// [`set_offset_to_section_position()`]
     set_offset(offset: i32),
     /// 
     /// Sets the offset to the start of the section at the given *visualSectionNumber.*
     /// *visualSectionNumber* is the actual visible section when hiddenSections are
     /// not considered. That is not always the same as visualIndex().
     /// 
-    /// **See also:** setOffset()
-    /// sectionPosition()
+    /// **See also:** [`set_offset()`]
+    /// [`section_position()`]
     set_offset_to_section_position(visual_index: i32),
     /// 
     /// Sets the offset to make the last section visible.
     /// 
-    /// **See also:** setOffset()
-    /// sectionPosition()
-    /// setOffsetToSectionPosition()
+    /// **See also:** [`set_offset()`]
+    /// [`section_position()`]
+    /// [`set_offset_to_section_position()`]
     set_offset_to_last_section(),
     /// 
     /// Updates the changed header sections with the given *orientation,* from
@@ -618,7 +612,7 @@ struct HeaderView : AbstractItemView {
     /// is specified by *logicalIndex,* the old index by *oldVisualIndex,* and
     /// the new index position by *newVisualIndex.*
     /// 
-    /// **See also:** moveSection()
+    /// **See also:** [`move_section()`]
     [signal] section_moved(logical_index: i32, old_visual_index: i32, new_visual_index: i32),
     /// 
     /// int newSize)
@@ -627,13 +621,13 @@ struct HeaderView : AbstractItemView {
     /// number is specified by *logicalIndex,* the old size by *oldSize,* and the
     /// new size by *newSize.*
     /// 
-    /// **See also:** resizeSection()
+    /// **See also:** [`resize_section()`]
     [signal] section_resized(logical_index: i32, old_size: i32, new_size: i32),
     /// 
     /// This signal is emitted when a section is pressed. The section's logical
     /// index is specified by *logicalIndex.*
     /// 
-    /// **See also:** setSectionsClickable()
+    /// **See also:** [`set_sections_clickable()`]
     [signal] section_pressed(logical_index: i32),
     /// 
     /// This signal is emitted when a section is clicked. The section's logical
@@ -641,37 +635,37 @@ struct HeaderView : AbstractItemView {
     /// 
     /// Note that the sectionPressed signal will also be emitted.
     /// 
-    /// **See also:** setSectionsClickable()
-    /// sectionPressed()
+    /// **See also:** [`set_sections_clickable()`]
+    /// [`section_pressed()`]
     [signal] section_clicked(logical_index: i32),
     /// 
     /// This signal is emitted when the cursor moves over the section and the left
     /// mouse button is pressed. The section's logical index is specified by
     /// *logicalIndex.*
     /// 
-    /// **See also:** setSectionsClickable()
-    /// sectionPressed()
+    /// **See also:** [`set_sections_clickable()`]
+    /// [`section_pressed()`]
     [signal] section_entered(logical_index: i32),
     /// 
     /// This signal is emitted when a section is double-clicked. The section's
     /// logical index is specified by *logicalIndex.*
     /// 
-    /// **See also:** setSectionsClickable()
+    /// **See also:** [`set_sections_clickable()`]
     [signal] section_double_clicked(logical_index: i32),
     /// 
     /// This signal is emitted when the number of sections changes, i.e., when
     /// sections are added or deleted. The original count is specified by
     /// *oldCount,* and the new count by *newCount.*
     /// 
-    /// **See also:** count()
-    /// length()
-    /// headerDataChanged()
+    /// **See also:** [`count()`]
+    /// [`length()`]
+    /// [`header_data_changed()`]
     [signal] section_count_changed(old_count: i32, new_count: i32),
     /// 
     /// This signal is emitted when a section is double-clicked. The section's
     /// logical index is specified by *logicalIndex.*
     /// 
-    /// **See also:** setSectionsClickable()
+    /// **See also:** [`set_sections_clickable()`]
     [signal] section_handle_double_clicked(logical_index: i32),
     /// 
     /// Qt::SortOrder order)
@@ -680,19 +674,20 @@ struct HeaderView : AbstractItemView {
     /// the order indicated is changed. The section's logical index is specified
     /// by *logicalIndex* and the sort order is specified by *order.*
     /// 
-    /// **See also:** setSortIndicator()
+    /// **See also:** [`set_sort_indicator()`]
     [signal] sort_indicator_changed(logical_index: i32, order: Rute::SortOrder),
     update_section(logical_index: i32),
     /// 
     /// Resizes the sections according to the given *mode,* ignoring the current
     /// resize mode.
     /// 
-    /// **See also:** resizeMode()
-    /// sectionResized()
+    /// **See also:** [`resize_mode()`]
+    /// [`section_resized()`]
     /// 
     /// Resizes the sections according to their size hints. Normally, you do not
     /// have to call this function.
-    resize_sections(),
+    [org_name(resizeSections)]
+    resize_sections_2(),
     /// 
     /// This slot is called when sections are inserted into the *parent.*
     /// *logicalFirst* and *logicalLast* indices signify where the new sections
@@ -710,7 +705,8 @@ struct HeaderView : AbstractItemView {
     sections_about_to_be_removed(parent: &ModelIndexType, logical_first: i32, logical_last: i32),
     initialize(),
     initialize_sections(),
-    initialize_sections(start: i32, end: i32),
+    [org_name(initializeSections)]
+    initialize_sections_2(start: i32, end: i32),
     /// 
     [event] current_changed(current: &ModelIndexType, old: &ModelIndexType),
     /// 
@@ -737,19 +733,19 @@ struct HeaderView : AbstractItemView {
     /// Returns the size of the contents of the section specified by the given
     /// *logicalIndex.*
     /// 
-    /// **See also:** defaultSectionSize()
+    /// **See also:** [`default_section_size()`]
     [event] section_size_from_contents(logical_index: i32) -> Size,
     /// 
     /// Returns the horizontal offset of the header. This is 0 for vertical
     /// headers.
     /// 
-    /// **See also:** offset()
+    /// **See also:** [`offset()`]
     [event] horizontal_offset() -> i32,
     /// 
     /// Returns the vertical offset of the header. This is 0 for horizontal
     /// headers.
     /// 
-    /// **See also:** offset()
+    /// **See also:** [`offset()`]
     [event] vertical_offset() -> i32,
     [event] scroll_contents_by(dx: i32, dy: i32),
     [event] data_changed(top_left: &ModelIndexType, bottom_right: &ModelIndexType, roles: [i32]),
@@ -771,8 +767,25 @@ struct HeaderView : AbstractItemView {
     /// useful for subclasses when they need a QStyleOptionHeader, but do not want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionHeaderType),
+}
+
+[org_name(QHeaderView)]
+enum ResizeMode {
+    /// The user can resize the section. The section can also be resized programmatically using resizeSection(). The section size defaults to [defaultSectionSize.](defaultSectionSize.)
+ (See also [cascadingSectionResizes.)](cascadingSectionResizes.))
+
+    Interactive,
+    /// QHeaderView will automatically resize the section to fill the available space. The size cannot be changed by the user or programmatically.
+    Stretch,
+    /// The user cannot resize the section. The section can only be resized programmatically using resizeSection(). The section size defaults to [defaultSectionSize.](defaultSectionSize.)
+
+    Fixed,
+    /// QHeaderView will automatically resize the section to its optimal size based on the contents of the entire column or row. The size cannot be changed by the user or programmatically. (This value was introduced in 4.2) The following values are obsolete:
+    ResizeToContents,
+    /// Use Fixed instead.
+    Custom,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

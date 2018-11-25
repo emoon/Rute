@@ -1,0 +1,1098 @@
+///
+/// A window that is supplied a parent becomes a native child window of
+/// their parent window.
+///
+/// An application will typically use QWidget or QQuickView for its UI, and not
+/// QWindow directly. Still, it is possible to render directly to a QWindow
+/// with QBackingStore or QOpenGLContext, when wanting to keep dependencies to
+/// a minimum or when wanting to use OpenGL directly. The
+/// [Raster Window Example](Raster%20Window%20Example)
+/// and [OpenGL Window Example](OpenGL%20Window%20Example)
+/// are useful reference examples for how to render to a QWindow using
+/// either approach.
+///
+/// # Resource Management
+///
+/// Windows can potentially use a lot of memory. A usual measurement is
+/// width times height times color depth. A window might also include multiple
+/// buffers to support double and triple buffering, as well as depth and stencil
+/// buffers. To release a window's memory resources, call the destroy() function.
+///
+/// # Content Orientation
+///
+/// QWindow has reportContentOrientationChange() that can be used to specify
+/// the layout of the window contents in relation to the screen. The content
+/// orientation is simply a hint to the windowing system about which
+/// orientation the window contents are in. It's useful when you wish to keep
+/// the same window size, but rotate the contents instead, especially when
+/// doing rotation animations between different orientations. The windowing
+/// system might use this value to determine the layout of system popups or
+/// dialogs.
+///
+/// # Visibility and Windowing System Exposure
+///
+/// By default, the window is not visible, and you must call setVisible(true),
+/// or show() or similar to make it visible. To make a window hidden again,
+/// call setVisible(false) or hide(). The visible property describes the state
+/// the application wants the window to be in. Depending on the underlying
+/// system, a visible window might still not be shown on the screen. It could,
+/// for instance, be covered by other opaque windows or moved outside the
+/// physical area of the screen. On windowing systems that have exposure
+/// notifications, the isExposed() accessor describes whether the window should
+/// be treated as directly visible on screen. The exposeEvent() function is
+/// called whenever the windows exposure in the windowing system changes. On
+/// windowing systems that do not make this information visible to the
+/// application, isExposed() will simply return the same value as isVisible().
+///
+/// QWindow::Visibility queried through visibility() is a convenience API
+/// combining the functions of visible() and windowStates().
+///
+/// # Rendering
+///
+/// There are two Qt APIs that can be used to render content into a window,
+/// QBackingStore for rendering with a QPainter and flushing the contents
+/// to a window with type QSurface::RasterSurface, and QOpenGLContext for
+/// rendering with OpenGL to a window with type QSurface::OpenGLSurface.
+///
+/// The application can start rendering as soon as isExposed() returns `true,`
+/// and can keep rendering until it isExposed() returns `false.` To find out when
+/// isExposed() changes, reimplement exposeEvent(). The window will always get
+/// a resize event before the first expose event.
+///
+/// # Initial Geometry
+///
+/// If the window's width and height are left uninitialized, the window will
+/// get a reasonable default geometry from the platform window. If the position
+/// is left uninitialized, then the platform window will allow the windowing
+/// system to position the window. For example on X11, the window manager
+/// usually does some kind of smart positioning to try to avoid having new
+/// windows completely obscure existing windows. However setGeometry()
+/// initializes both the position and the size, so if you want a fixed size but
+/// an automatic position, you should call resize() or setWidth() and
+/// setHeight() instead.
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[attributes(NoCppClone)]
+struct Window : Object, Surface {
+    ///
+    /// Sets the *surfaceType* of the window.
+    ///
+    /// Specifies whether the window is meant for raster rendering with
+    /// QBackingStore, or OpenGL rendering with QOpenGLContext.
+    ///
+    /// The surfaceType will be used when the native surface is created
+    /// in the create() function. Calling this function after the native
+    /// surface has been created requires calling destroy() and create()
+    /// to release the old native surface and create a new one.
+    ///
+    /// **See also:** [`BackingStore`]
+    /// [`OpenGLContext`]
+    /// [`create()`]
+    /// [`destroy()`]
+    [org_name(setSurfaceType)]
+    set_object_surface_type(surface_type: Surface::SurfaceType),
+    ///
+    /// Returns the surface type of the window.
+    ///
+    /// **See also:** [`set_surface_type()`]
+    //[event]
+    surface_type() -> Surface::SurfaceType,
+    is_visible() -> bool,
+    ///
+    /// Visibility is whether the window should appear in the windowing system as
+    /// normal, minimized, maximized, fullscreen or hidden.
+    ///
+    /// To set the visibility to AutomaticVisibility means to give the window
+    /// a default visible state, which might be fullscreen or windowed depending on
+    /// the platform.
+    /// When reading the visibility property you will always get the actual state,
+    /// never AutomaticVisibility.
+    visibility() -> Window::Visibility,
+    set_visibility(v: Window::Visibility),
+    ///
+    /// Allocates the platform resources associated with the window.
+    ///
+    /// It is at this point that the surface format set using setFormat() gets resolved
+    /// into an actual native surface. However, the window remains hidden until setVisible() is called.
+    ///
+    /// Note that it is not usually necessary to call this function directly, as it will be implicitly
+    /// called by show(), setVisible(), and other functions that require access to the platform
+    /// resources.
+    ///
+    /// Call destroy() to free the platform resources if necessary.
+    ///
+    /// **See also:** [`destroy()`]
+    create(),
+    ///
+    /// Returns the window's platform id.
+    ///
+    /// For platforms where this id might be useful, the value returned
+    /// will uniquely represent the window inside the corresponding screen.
+    ///
+    /// **See also:** [`screen()`]
+    win_id() -> u64,
+    ///
+    /// Returns the parent window, if any.
+    ///
+    /// If *mode* is IncludeTransients, then the transient parent is returned
+    /// if there is no parent.
+    ///
+    /// A window without a parent is known as a top level window.
+    ///
+    ///
+    /// Returns the parent window, if any.
+    ///
+    /// A window without a parent is known as a top level window.
+    parent(mode: Window::AncestorMode) -> *Window?,
+    ///
+    /// Returns the parent window, if any.
+    ///
+    /// If *mode* is IncludeTransients, then the transient parent is returned
+    /// if there is no parent.
+    ///
+    /// A window without a parent is known as a top level window.
+    ///
+    ///
+    /// Returns the parent window, if any.
+    ///
+    /// A window without a parent is known as a top level window.
+    [org_name(parent)]
+    parent_2() -> *Window?,
+    ///
+    /// Sets the *parent* Window. This will lead to the windowing system managing
+    /// the clip of the window, so it will be clipped to the *parent* window.
+    ///
+    /// Setting *parent* to be 0 will make the window become a top level window.
+    ///
+    /// If *parent* is a window created by fromWinId(), then the current window
+    /// will be embedded inside *parent,* if the platform supports it.
+    set_parent(parent: *WindowType),
+    ///
+    /// Returns whether the window is top level, i.e. has no parent window.
+    is_top_level() -> bool,
+    ///
+    /// Returns whether the window is modal.
+    ///
+    /// A modal window prevents other windows from getting any input.
+    ///
+    /// **See also:** [`Window::modality()`]
+    is_modal() -> bool,
+    ///
+    /// A modal window prevents other windows from receiving input events. Qt
+    /// supports two types of modality: Qt::WindowModal and Qt::ApplicationModal.
+    ///
+    /// By default, this property is Qt::NonModal
+    ///
+    /// **See also:** [`t::window_modality()`]
+    ///
+    /// This signal is emitted when the Qwindow::modality property changes to *modality.*
+    modality() -> Rute::WindowModality,
+    set_modality(modality: Rute::WindowModality),
+    ///
+    /// Sets the window's surface *format.*
+    ///
+    /// The format determines properties such as color depth, alpha, depth and
+    /// stencil buffer size, etc. For example, to give a window a transparent
+    /// background (provided that the window system supports compositing, and
+    /// provided that other content in the window does not make it opaque again):
+    ///
+    /// ```
+    /// QSurfaceFormat format;
+    /// format.setAlphaBufferSize(8);
+    /// window.setFormat(format);
+    /// ```
+    ///
+    /// The surface format will be resolved in the create() function. Calling
+    /// this function after create() has been called will not re-resolve the
+    /// surface format of the native surface.
+    ///
+    /// When the format is not explicitly set via this function, the format returned
+    /// by QSurfaceFormat::defaultFormat() will be used. This means that when having
+    /// multiple windows, individual calls to this function can be replaced by one
+    /// single call to QSurfaceFormat::setDefaultFormat() before creating the first
+    /// window.
+    ///
+    /// **See also:** [`create()`]
+    /// [`destroy()`]
+    /// [`SurfaceFormat::set_default_format`]
+    [org_name(setFormat)]
+    set_object_format(format: &SurfaceFormatType),
+    ///
+    /// Returns the actual format of this window.
+    ///
+    /// After the window has been created, this function will return the actual surface format
+    /// of the window. It might differ from the requested format if the requested format could
+    /// not be fulfilled by the platform. It might also be a superset, for example certain
+    /// buffer sizes may be larger than requested.
+    ///
+    /// **Note**: Depending on the platform, certain values in this surface format may still
+    /// contain the requested values, that is, the values that have been passed to
+    /// setFormat(). Typical examples are the OpenGL version, profile and options. These may
+    /// not get updated during create() since these are context specific and a single window
+    /// may be used together with multiple contexts over its lifetime. Use the
+    /// QOpenGLContext's format() instead to query such values.
+    ///
+    /// **See also:** [`create()`]
+    /// [`requested_format()`]
+    /// [`OpenGLContext::format`]
+    //[event]
+    format() -> SurfaceFormat,
+    ///
+    /// Returns the requested surface format of this window.
+    ///
+    /// If the requested format was not supported by the platform implementation,
+    /// the requestedFormat will differ from the actual window format.
+    ///
+    /// This is the value set with setFormat().
+    ///
+    /// **See also:** [`set_format()`]
+    /// [`format()`]
+    requested_format() -> SurfaceFormat,
+    set_flags(flags: Rute::WindowFlags),
+    ///
+    /// The window flags control the window's appearance in the windowing system,
+    /// whether it's a dialog, popup, or a regular window, and whether it should
+    /// have a title bar, etc.
+    ///
+    /// The actual window flags might differ from the flags set with setFlags()
+    /// if the requested flags could not be fulfilled.
+    ///
+    /// **See also:** [`set_flag()`]
+    flags() -> Rute::WindowFlags,
+    ///
+    /// Sets the window flag *flag* on this window if *on* is true;
+    /// otherwise clears the flag.
+    ///
+    /// **See also:** [`set_flags()`]
+    /// [`flags()`]
+    /// [`type()`]
+    //set_flag(arg0: Rute::WindowType, on: bool),
+    ///
+    /// Returns the type of the window.
+    ///
+    /// This returns the part of the window flags that represents
+    /// whether the window is a dialog, tooltip, popup, regular window, etc.
+    ///
+    /// **See also:** [`flags()`]
+    /// [`set_flags()`]
+    //[org_name(type)]
+    //window_type() -> Rute::WindowType,
+    ///
+    /// The window title might appear in the title area of the window decorations,
+    /// depending on the windowing system and the window flags. It might also
+    /// be used by the windowing system to identify the window in other contexts,
+    /// such as in the task switcher.
+    ///
+    /// **See also:** [`flags()`]
+    title() -> String,
+    set_opacity(level: f32),
+    ///
+    /// If the windowing system supports window opacity, this can be used to fade the
+    /// window in and out, or to make it semitransparent.
+    ///
+    /// A value of 1.0 or above is treated as fully opaque, whereas a value of 0.0 or below
+    /// is treated as fully transparent. Values inbetween represent varying levels of
+    /// translucency between the two extremes.
+    ///
+    /// The default value is 1.0.
+    opacity() -> f32,
+    ///
+    /// Sets the mask of the window.
+    ///
+    /// The mask is a hint to the windowing system that the application does not
+    /// want to receive mouse or touch input outside the given *region.*
+    ///
+    /// The window manager may or may not choose to display any areas of the window
+    /// not included in the mask, thus it is the application's responsibility to
+    /// clear to transparent the areas that are not part of the mask.
+    set_mask(region: &RegionType),
+    ///
+    /// Returns the mask set on the window.
+    ///
+    /// The mask is a hint to the windowing system that the application does not
+    /// want to receive mouse or touch input outside the given region.
+    mask() -> Region,
+    ///
+    /// Returns `true` if the window should appear active from a style perspective.
+    ///
+    /// This is the case for the window that has input focus as well as windows
+    /// that are in the same parent / transient parent chain as the focus window.
+    ///
+    /// To get the window that currently has focus, use QGuiApplication::focusWindow().
+    is_active() -> bool,
+    report_content_orientation_change(orientation: Rute::ScreenOrientation),
+    ///
+    /// This is a hint to the window manager in case it needs to display
+    /// additional content like popups, dialogs, status bars, or similar
+    /// in relation to the window.
+    ///
+    /// The recommended orientation is QScreen::orientation() but
+    /// an application doesn't have to support all possible orientations,
+    /// and thus can opt to ignore the current screen orientation.
+    ///
+    /// The difference between the window and the content orientation
+    /// determines how much to rotate the content by. QScreen::angleBetween(),
+    /// QScreen::transformBetween(), and QScreen::mapBetween() can be used
+    /// to compute the necessary transform.
+    ///
+    /// The default value is Qt::PrimaryOrientation
+    content_orientation() -> Rute::ScreenOrientation,
+    ///
+    /// Returns the ratio between physical pixels and device-independent pixels
+    /// for the window. This value is dependent on the screen the window is on,
+    /// and may change when the window is moved.
+    ///
+    /// Common values are 1.0 on normal displays and 2.0 on Apple displays.
+    ///
+    /// **Note**: For windows not backed by a platform window, meaning that create() was not
+    /// called, the function will fall back to the associated QScreen's device pixel ratio.
+    ///
+    /// **See also:** [`Screen::device_pixel_ratio`]
+    device_pixel_ratio() -> f32,
+    ///
+    /// **See also:** [`set_window_state()`]
+    /// [`window_states()`]
+    ///
+    /// The window can be in a combination of several states. For example, if
+    /// the window is both minimized and maximized, the window will appear
+    /// minimized, but clicking on the task bar entry will restore it to
+    /// the maximized state.
+    ///
+    /// **See also:** [`set_window_states()`]
+    ///
+    /// This signal is emitted when the *windowState* changes, either
+    /// by being set explicitly with setWindowStates(), or automatically when
+    /// the user clicks one of the titlebar buttons or by other means.
+    window_state() -> Rute::WindowState,
+    ///
+    /// The window can be in a combination of several states. For example, if
+    /// the window is both minimized and maximized, the window will appear
+    /// minimized, but clicking on the task bar entry will restore it to
+    /// the maximized state.
+    ///
+    /// **See also:** [`set_window_states()`]
+    window_states() -> Rute::WindowStates,
+    ///
+    /// The window *state* represents whether the window appears in the
+    /// windowing system as maximized, minimized, fullscreen, or normal.
+    ///
+    /// The enum value Qt::WindowActive is not an accepted parameter.
+    ///
+    /// **See also:** [`show_normal()`]
+    /// [`show_full_screen()`]
+    /// [`show_minimized()`]
+    /// [`show_maximized()`]
+    /// [`set_window_states()`]
+    ///
+    /// The window *state* represents whether the window appears in the
+    /// windowing system as maximized, minimized and/or fullscreen.
+    ///
+    /// The window can be in a combination of several states. For example, if
+    /// the window is both minimized and maximized, the window will appear
+    /// minimized, but clicking on the task bar entry will restore it to the
+    /// maximized state.
+    ///
+    /// The enum value Qt::WindowActive should not be set.
+    ///
+    /// **See also:** [`show_normal()`]
+    /// [`show_full_screen()`]
+    /// [`show_minimized()`]
+    /// [`show_maximized()`]
+    set_window_state(state: Rute::WindowState),
+    ///
+    /// The window *state* represents whether the window appears in the
+    /// windowing system as maximized, minimized and/or fullscreen.
+    ///
+    /// The window can be in a combination of several states. For example, if
+    /// the window is both minimized and maximized, the window will appear
+    /// minimized, but clicking on the task bar entry will restore it to the
+    /// maximized state.
+    ///
+    /// The enum value Qt::WindowActive should not be set.
+    ///
+    /// **See also:** [`show_normal()`]
+    /// [`show_full_screen()`]
+    /// [`show_minimized()`]
+    /// [`show_maximized()`]
+    set_window_states(states: Rute::WindowStates),
+    ///
+    /// Sets the transient *parent*
+    ///
+    /// This is a hint to the window manager that this window is a dialog or pop-up
+    /// on behalf of the given window.
+    ///
+    /// In order to cause the window to be centered above its transient parent by
+    /// default, depending on the window manager, it may also be necessary to call
+    /// setFlags() with a suitable [Qt::WindowType](Qt::WindowType)
+    /// (such as `Qt::Dialog).`
+    ///
+    /// **See also:** [`transient_parent()`]
+    /// [`parent()`]
+    set_transient_parent(parent: *WindowType),
+    ///
+    /// Returns `true` if the window is an ancestor of the given *child.* If *mode*
+    /// is IncludeTransients, then transient parents are also considered ancestors.
+    is_ancestor_of(child: *WindowType, mode: Window::AncestorMode) -> bool,
+    ///
+    /// Returns if this window is exposed in the windowing system.
+    ///
+    /// When the window is not exposed, it is shown by the application
+    /// but it is still not showing in the windowing system, so the application
+    /// should minimize rendering and other graphical activities.
+    ///
+    /// An exposeEvent() is sent every time this value changes.
+    ///
+    /// **See also:** [`expose_event()`]
+    is_exposed() -> bool,
+    ///
+    minimum_width() -> i32,
+    ///
+    minimum_height() -> i32,
+    ///
+    maximum_width() -> i32,
+    ///
+    maximum_height() -> i32,
+    ///
+    /// Returns the minimum size of the window.
+    ///
+    /// **See also:** [`set_minimum_size()`]
+    minimum_size() -> Size,
+    ///
+    /// Returns the maximum size of the window.
+    ///
+    /// **See also:** [`set_maximum_size()`]
+    maximum_size() -> Size,
+    ///
+    /// Returns the base size of the window.
+    ///
+    /// **See also:** [`set_base_size()`]
+    base_size() -> Size,
+    ///
+    /// Returns the size increment of the window.
+    ///
+    /// **See also:** [`set_size_increment()`]
+    size_increment() -> Size,
+    ///
+    /// Sets the minimum size of the window.
+    ///
+    /// This is a hint to the window manager to prevent resizing below the specified *size.*
+    ///
+    /// **See also:** [`set_maximum_size()`]
+    /// [`minimum_size()`]
+    set_minimum_size(size: &SizeType),
+    ///
+    /// Sets the maximum size of the window.
+    ///
+    /// This is a hint to the window manager to prevent resizing above the specified *size.*
+    ///
+    /// **See also:** [`set_minimum_size()`]
+    /// [`maximum_size()`]
+    set_maximum_size(size: &SizeType),
+    ///
+    /// Sets the base *size* of the window.
+    ///
+    /// The base size is used to calculate a proper window size if the
+    /// window defines sizeIncrement().
+    ///
+    /// **See also:** [`set_minimum_size()`]
+    /// [`set_maximum_size()`]
+    /// [`set_size_increment()`]
+    /// [`base_size()`]
+    set_base_size(size: &SizeType),
+    ///
+    /// Sets the size increment ( *size)* of the window.
+    ///
+    /// When the user resizes the window, the size will move in steps of
+    /// sizeIncrement().width() pixels horizontally and
+    /// sizeIncrement().height() pixels vertically, with baseSize() as the
+    /// basis.
+    ///
+    /// By default, this property contains a size with zero width and height.
+    ///
+    /// The windowing system might not support size increments.
+    ///
+    /// **See also:** [`set_base_size()`]
+    /// [`set_minimum_size()`]
+    /// [`set_maximum_size()`]
+    set_size_increment(size: &SizeType),
+    ///
+    /// Returns the window frame margins surrounding the window.
+    ///
+    /// **See also:** [`geometry()`]
+    /// [`frame_geometry()`]
+    frame_margins() -> Margins,
+    ///
+    /// Returns the top left position of the window, including its window frame.
+    ///
+    /// This returns the same value as frameGeometry().topLeft().
+    ///
+    /// **See also:** [`geometry()`]
+    /// [`frame_geometry()`]
+    frame_position() -> Point,
+    ///
+    /// Sets the upper left position of the window ( *point)* including its window frame.
+    ///
+    /// The position is in relation to the virtualGeometry() of its screen.
+    ///
+    /// **See also:** [`set_geometry()`]
+    /// [`frame_geometry()`]
+    set_frame_position(point: &PointType),
+    ///
+    width() -> i32,
+    ///
+    height() -> i32,
+    ///
+    x() -> i32,
+    ///
+    y() -> i32,
+    ///
+    /// Returns the size increment of the window.
+    ///
+    /// **See also:** [`set_size_increment()`]
+    ///
+    /// **See also:** [`resize()`]
+    //[event]
+    size() -> Size,
+    ///
+    /// **See also:** [`set_position()`]
+    position() -> Point,
+    ///
+    /// *pt*
+    ///
+    /// The position is in relation to the virtualGeometry() of its screen.
+    ///
+    /// **See also:** [`position()`]
+    ///
+    /// *posx,* *posy*
+    ///
+    /// The position is in relation to the virtualGeometry() of its screen.
+    ///
+    /// **See also:** [`position()`]
+    set_position(pt: &PointType),
+    ///
+    /// *pt*
+    ///
+    /// The position is in relation to the virtualGeometry() of its screen.
+    ///
+    /// **See also:** [`position()`]
+    ///
+    /// *posx,* *posy*
+    ///
+    /// The position is in relation to the virtualGeometry() of its screen.
+    ///
+    /// **See also:** [`position()`]
+    [org_name(setPosition)]
+    set_position_2(posx: i32, posy: i32),
+    ///
+    /// set the size of the window, excluding any window frame, to a QSize
+    /// constructed from width *w* and height *h*
+    ///
+    /// **See also:** [`size()`]
+    /// [`geometry()`]
+    ///
+    /// *newSize*
+    ///
+    /// **See also:** [`size()`]
+    /// [`geometry()`]
+    ///
+    /// Override this to handle resize events ( *ev).*
+    ///
+    /// The resize event is called whenever the window is resized in the windowing system,
+    /// either directly through the windowing system acknowledging a setGeometry() or resize() request,
+    /// or indirectly through the user resizing the window manually.
+    resize(new_size: &SizeType),
+    ///
+    /// set the size of the window, excluding any window frame, to a QSize
+    /// constructed from width *w* and height *h*
+    ///
+    /// **See also:** [`size()`]
+    /// [`geometry()`]
+    ///
+    /// *newSize*
+    ///
+    /// **See also:** [`size()`]
+    /// [`geometry()`]
+    ///
+    /// Override this to handle resize events ( *ev).*
+    ///
+    /// The resize event is called whenever the window is resized in the windowing system,
+    /// either directly through the windowing system acknowledging a setGeometry() or resize() request,
+    /// or indirectly through the user resizing the window manually.
+    [org_name(resize)]
+    resize_2(w: i32, h: i32),
+    ///
+    /// The windowing system might use *filePath* to display the
+    /// path of the document this window is representing in the tile bar.
+    ///
+    set_file_path(file_path: String),
+    ///
+    /// **See also:** [`set_file_path()`]
+    file_path() -> String,
+    ///
+    /// *icon* in the windowing system
+    ///
+    /// The window icon might be used by the windowing system for example to
+    /// decorate the window, and/or in the task switcher.
+    ///
+    /// **Note**: On macOS, the window title bar icon is meant for windows representing
+    /// documents, and will only show up if a file path is also set.
+    ///
+    /// **See also:** [`set_file_path()`]
+    set_icon(icon: &IconType),
+    ///
+    /// **See also:** [`set_icon()`]
+    icon() -> Icon,
+    //handle() -> PlatformWindow?,
+    ///
+    /// Sets whether keyboard grab should be enabled or not ( *grab).*
+    ///
+    /// If the return value is true, the window receives all key events until
+    /// setKeyboardGrabEnabled(false) is called; other windows get no key events at
+    /// all. Mouse events are not affected. Use setMouseGrabEnabled() if you want
+    /// to grab that.
+    ///
+    /// **See also:** [`set_mouse_grab_enabled()`]
+    set_keyboard_grab_enabled(grab: bool) -> bool,
+    ///
+    /// Sets whether mouse grab should be enabled or not ( *grab).*
+    ///
+    /// If the return value is true, the window receives all mouse events until setMouseGrabEnabled(false) is
+    /// called; other windows get no mouse events at all. Keyboard events are not affected.
+    /// Use setKeyboardGrabEnabled() if you want to grab that.
+    ///
+    /// **See also:** [`set_keyboard_grab_enabled()`]
+    set_mouse_grab_enabled(grab: bool) -> bool,
+    ///
+    /// Returns the screen on which the window is shown, or null if there is none.
+    ///
+    /// For child windows, this returns the screen of the corresponding top level window.
+    ///
+    /// **See also:** [`set_screen()`]
+    /// [`Screen::virtual_siblings`]
+    ///
+    /// This signal is emitted when a window's *screen* changes, either
+    /// by being set explicitly with setScreen(), or automatically when
+    /// the window's screen is removed.
+    screen() -> *Screen?,
+    ///
+    /// Sets the screen on which the window should be shown.
+    ///
+    /// If the window has been created, it will be recreated on the *newScreen.*
+    ///
+    /// **Note**: If the screen is part of a virtual desktop of multiple screens,
+    /// the window will not move automatically to *newScreen.* To place the
+    /// window relative to the screen, use the screen's topLeft() position.
+    ///
+    /// This function only works for top level windows.
+    ///
+    /// **See also:** [`screen()`]
+    /// [`Screen::virtual_siblings`]
+    set_screen(screen: *ScreenType),
+    //[event] accessible_root() -> AccessibleInterface?,
+    ///
+    /// This signal is emitted when the final receiver of events tied to focus
+    /// is changed to *object.*
+    ///
+    /// **See also:** [`focus_object()`]
+    ///
+    /// Returns the QObject that will be the final receiver of events tied focus, such
+    /// as key events.
+    //[event]
+    focus_object() -> *Object?,
+    ///
+    /// Translates the window coordinate *pos* to global screen
+    /// coordinates. For example, `mapToGlobal(QPoint(0,0))` would give
+    /// the global coordinates of the top-left pixel of the window.
+    ///
+    /// **See also:** [`map_from_global()`]
+    map_to_global(pos: &PointType) -> Point,
+    ///
+    /// Translates the global screen coordinate *pos* to window
+    /// coordinates.
+    ///
+    /// **See also:** [`map_to_global()`]
+    map_from_global(pos: &PointType) -> Point,
+    ///
+    /// **See also:** [`set_cursor()`]
+    /// [`unset_cursor()`]
+    cursor() -> Cursor,
+    ///
+    /// The mouse *cursor* will assume this shape when it is over this
+    /// window, unless an override cursor is set.
+    /// See the [list of predefined cursor objects](Qt::CursorShape)
+    /// for a
+    /// range of useful shapes.
+    ///
+    /// If no cursor has been set, or after a call to unsetCursor(), the
+    /// parent window's cursor is used.
+    ///
+    /// By default, the cursor has the Qt::ArrowCursor shape.
+    ///
+    /// Some underlying window implementations will reset the cursor if it
+    /// leaves a window even if the mouse is grabbed. If you want to have
+    /// a cursor set for all windows, even when outside the window, consider
+    /// QGuiApplication::setOverrideCursor().
+    ///
+    /// **See also:** [`GuiApplication::set_override_cursor`]
+    set_cursor(arg0: &CursorType),
+    ///
+    unset_cursor(),
+    ///
+    /// Creates a local representation of a window created by another process or by
+    /// using native libraries below Qt.
+    ///
+    /// Given the handle *id* to a native window, this method creates a QWindow
+    /// object which can be used to represent the window when invoking methods like
+    /// setParent() and setTransientParent().
+    ///
+    /// This can be used, on platforms which support it, to embed a QWindow inside a
+    /// native window, or to embed a native window inside a QWindow.
+    ///
+    /// If foreign windows are not supported or embedding the native window
+    /// failed in the platform plugin, this function returns 0.
+    ///
+    /// **Note**: The resulting QWindow should not be used to manipulate the underlying
+    /// native window (besides re-parenting), or to observe state changes of the
+    /// native window. Any support for these kind of operations is incidental, highly
+    /// platform dependent and untested.
+    ///
+    /// **See also:** [`set_parent()`]
+    /// **See also:** [`set_transient_parent()`]
+    [static] from_win_id(id: u64) -> *Window?,
+    ///
+    /// Requests the window to be activated, i.e. receive keyboard focus.
+    ///
+    /// **See also:** [`is_active()`]
+    /// [`GuiApplication::focus_window`]
+    /// [`WindowsWindowFunctions::set_window_activation_behavior`]
+    request_activate(),
+    set_visible(visible: bool),
+    ///
+    /// Shows the window.
+    ///
+    /// This is equivalent to calling showFullScreen(), showMaximized(), or showNormal(),
+    /// depending on the platform's default behavior for the window type and flags.
+    ///
+    /// **See also:** [`show_full_screen()`]
+    /// [`show_maximized()`]
+    /// [`show_normal()`]
+    /// [`hide()`]
+    /// [`StyleHints::show_is_full_screen`]
+    /// [`flags()`]
+    ///
+    /// Shows the window as minimized.
+    ///
+    /// Equivalent to calling setWindowStates(Qt::WindowMinimized) and then
+    /// setVisible(true).
+    ///
+    /// **See also:** [`set_window_states()`]
+    /// [`set_visible()`]
+    ///
+    /// Shows the window as maximized.
+    ///
+    /// Equivalent to calling setWindowStates(Qt::WindowMaximized) and then
+    /// setVisible(true).
+    ///
+    /// **See also:** [`set_window_states()`]
+    /// [`set_visible()`]
+    ///
+    /// Shows the window as fullscreen.
+    ///
+    /// Equivalent to calling setWindowStates(Qt::WindowFullScreen) and then
+    /// setVisible(true).
+    ///
+    /// **See also:** [`set_window_states()`]
+    /// [`set_visible()`]
+    ///
+    /// Shows the window as normal, i.e. neither maximized, minimized, nor fullscreen.
+    ///
+    /// Equivalent to calling setWindowStates(Qt::WindowNoState) and then
+    /// setVisible(true).
+    ///
+    /// **See also:** [`set_window_states()`]
+    /// [`set_visible()`]
+    ///
+    /// Override this to handle show events ( *ev).*
+    ///
+    /// The function is called when the window has requested becoming visible.
+    ///
+    /// If the window is successfully shown by the windowing system, this will
+    /// be followed by a resize and an expose event.
+    show(),
+    ///
+    /// Hides the window.
+    ///
+    /// Equivalent to calling setVisible(false).
+    ///
+    /// **See also:** [`show()`]
+    /// [`set_visible()`]
+    ///
+    /// Override this to handle hide events ( *ev).*
+    ///
+    /// The function is called when the window has requested being hidden in the
+    /// windowing system.
+    hide(),
+    ///
+    /// Shows the window as minimized.
+    ///
+    /// Equivalent to calling setWindowStates(Qt::WindowMinimized) and then
+    /// setVisible(true).
+    ///
+    /// **See also:** [`set_window_states()`]
+    /// [`set_visible()`]
+    show_minimized(),
+    ///
+    /// Shows the window as maximized.
+    ///
+    /// Equivalent to calling setWindowStates(Qt::WindowMaximized) and then
+    /// setVisible(true).
+    ///
+    /// **See also:** [`set_window_states()`]
+    /// [`set_visible()`]
+    show_maximized(),
+    ///
+    /// Shows the window as fullscreen.
+    ///
+    /// Equivalent to calling setWindowStates(Qt::WindowFullScreen) and then
+    /// setVisible(true).
+    ///
+    /// **See also:** [`set_window_states()`]
+    /// [`set_visible()`]
+    show_full_screen(),
+    ///
+    /// Shows the window as normal, i.e. neither maximized, minimized, nor fullscreen.
+    ///
+    /// Equivalent to calling setWindowStates(Qt::WindowNoState) and then
+    /// setVisible(true).
+    ///
+    /// **See also:** [`set_window_states()`]
+    /// [`set_visible()`]
+    show_normal(),
+    ///
+    /// Close the window.
+    ///
+    /// This closes the window, effectively calling destroy(), and potentially
+    /// quitting the application. Returns `true` on success, false if it has a parent
+    /// window (in which case the top level window should be closed instead).
+    ///
+    /// **See also:** [`destroy()`]
+    /// [`GuiApplication::quit_on_last_window_closed`]
+    close() -> bool,
+    ///
+    /// Raise the window in the windowing system.
+    ///
+    /// Requests that the window be raised to appear above other windows.
+    raise(),
+    ///
+    /// Lower the window in the windowing system.
+    ///
+    /// Requests that the window be lowered to appear below other windows.
+    lower(),
+    set_title(arg0: String),
+    set_x(arg: i32),
+    set_y(arg: i32),
+    set_width(arg: i32),
+    set_height(arg: i32),
+    set_minimum_width(w: i32),
+    set_minimum_height(h: i32),
+    set_maximum_width(w: i32),
+    set_maximum_height(h: i32),
+    ///
+    /// Causes an alert to be shown for *msec* miliseconds. If *msec* is `0` (the
+    /// default), then the alert is shown indefinitely until the window becomes
+    /// active again. This function has no effect on an active window.
+    ///
+    /// In alert state, the window indicates that it demands attention, for example by
+    /// flashing or bouncing the taskbar entry.
+    ///
+    alert(msec: i32),
+    ///
+    /// Schedules a QEvent::UpdateRequest event to be delivered to this window.
+    ///
+    /// The event is delivered in sync with the display vsync on platforms
+    /// where this is possible. Otherwise, the event is delivered after a
+    /// delay of 5 ms. The additional time is there to give the event loop
+    /// a bit of idle time to gather system events, and can be overridden
+    /// using the QT_QPA_UPDATE_IDLE_TIME environment variable.
+    ///
+    /// When driving animations, this function should be called once after drawing
+    /// has completed. Calling this function multiple times will result in a single
+    /// event being delivered to the window.
+    ///
+    /// Subclasses of QWindow should reimplement event(), intercept the event and
+    /// call the application's rendering code, then call the base class
+    /// implementation.
+    ///
+    /// **Note**: The subclass' reimplementation of event() must invoke the base class
+    /// implementation, unless it is absolutely sure that the event does not need to
+    /// be handled by the base class. For example, the default implementation of
+    /// this function relies on QEvent::Timer events. Filtering them away would
+    /// therefore break the delivery of the update events.
+    ///
+    request_update(),
+    ///
+    /// This signal is emitted when a window's *screen* changes, either
+    /// by being set explicitly with setScreen(), or automatically when
+    /// the window's screen is removed.
+    [signal] screen_changed(screen: *ScreenType),
+    ///
+    // This signal is emitted when the Qwindow::modality property changes to *modality.*
+    //[signal] modality_changed(modality: Rute::WindowModality),
+    ///
+    /// This signal is emitted when the *windowState* changes, either
+    /// by being set explicitly with setWindowStates(), or automatically when
+    /// the user clicks one of the titlebar buttons or by other means.
+    //[signal] window_state_changed(window_state: Rute::WindowState),
+    [signal] window_title_changed(title: String),
+    [signal] x_changed(arg: i32),
+    [signal] y_changed(arg: i32),
+    [signal] width_changed(arg: i32),
+    [signal] height_changed(arg: i32),
+    [signal] minimum_width_changed(arg: i32),
+    [signal] minimum_height_changed(arg: i32),
+    [signal] maximum_width_changed(arg: i32),
+    [signal] maximum_height_changed(arg: i32),
+    [signal] visible_changed(arg: bool),
+    //[signal] visibility_changed(visibility: Window::Visibility),
+    [signal] active_changed(),
+    //[signal] content_orientation_changed(orientation: Rute::ScreenOrientation),
+    ///
+    /// This signal is emitted when the final receiver of events tied to focus
+    /// is changed to *object.*
+    ///
+    /// **See also:** [`focus_object()`]
+    [signal] focus_object_changed(object: *ObjectType),
+    [signal] opacity_changed(opacity: f32),
+    ///
+    /// The expose event ( *ev)* is sent by the window system whenever the window's
+    /// exposure on screen changes.
+    ///
+    /// The application can start rendering into the window with QBackingStore
+    /// and QOpenGLContext as soon as it gets an exposeEvent() such that
+    /// isExposed() is true.
+    ///
+    /// If the window is moved off screen, is made totally obscured by another
+    /// window, iconified or similar, this function might be called and the
+    /// value of isExposed() might change to false. When this happens,
+    /// an application should stop its rendering as it is no longer visible
+    /// to the user.
+    ///
+    /// A resize event will always be sent before the expose event the first time
+    /// a window is shown.
+    ///
+    /// **See also:** [`is_exposed()`]
+    [event] expose_event(arg0: *ExposeEventType),
+    ///
+    /// Override this to handle resize events ( *ev).*
+    ///
+    /// The resize event is called whenever the window is resized in the windowing system,
+    /// either directly through the windowing system acknowledging a setGeometry() or resize() request,
+    /// or indirectly through the user resizing the window manually.
+    [event] resize_event(arg0: *ResizeEventType),
+    ///
+    /// Override this to handle window move events ( *ev).*
+    [event] move_event(arg0: *MoveEventType),
+    ///
+    /// Override this to handle focus in events ( *ev).*
+    ///
+    /// Focus in events are sent when the window receives keyboard focus.
+    ///
+    /// **See also:** [`focus_out_event()`]
+    [event] focus_in_event(arg0: *FocusEventType),
+    ///
+    /// Override this to handle focus out events ( *ev).*
+    ///
+    /// Focus out events are sent when the window loses keyboard focus.
+    ///
+    /// **See also:** [`focus_in_event()`]
+    [event] focus_out_event(arg0: *FocusEventType),
+    ///
+    /// Override this to handle show events ( *ev).*
+    ///
+    /// The function is called when the window has requested becoming visible.
+    ///
+    /// If the window is successfully shown by the windowing system, this will
+    /// be followed by a resize and an expose event.
+    [event] show_event(arg0: *ShowEventType),
+    ///
+    /// Override this to handle hide events ( *ev).*
+    ///
+    /// The function is called when the window has requested being hidden in the
+    /// windowing system.
+    [event] hide_event(arg0: *HideEventType),
+    //
+    // Override this to handle any event ( *ev)* sent to the window.
+    // Return `true` if the event was recognized and processed.
+    //
+    // Remember to call the base class version if you wish for mouse events,
+    // key events, resize events, etc to be dispatched as usual.
+    //[event] event(arg0: *EventType) -> bool,
+    ///
+    /// Override this to handle key press events ( *ev).*
+    ///
+    /// **See also:** [`key_release_event()`]
+    [event] key_press_event(arg0: *KeyEventType),
+    ///
+    /// Override this to handle key release events ( *ev).*
+    ///
+    /// **See also:** [`key_press_event()`]
+    [event] key_release_event(arg0: *KeyEventType),
+    ///
+    /// Override this to handle mouse press events ( *ev).*
+    ///
+    /// **See also:** [`mouse_release_event()`]
+    [event] mouse_press_event(arg0: *MouseEventType),
+    ///
+    /// Override this to handle mouse release events ( *ev).*
+    ///
+    /// **See also:** [`mouse_press_event()`]
+    [event] mouse_release_event(arg0: *MouseEventType),
+    ///
+    /// Override this to handle mouse double click events ( *ev).*
+    ///
+    /// **See also:** [`mouse_press_event()`]
+    /// [`StyleHints::mouse_double_click_interval`]
+    [event] mouse_double_click_event(arg0: *MouseEventType),
+    ///
+    /// Override this to handle mouse move events ( *ev).*
+    [event] mouse_move_event(arg0: *MouseEventType),
+    ///
+    /// Override this to handle mouse wheel or other wheel events ( *ev).*
+    [event] wheel_event(arg0: *WheelEventType),
+    ///
+    /// Override this to handle touch events ( *ev).*
+    [event] touch_event(arg0: *TouchEventType),
+    ///
+    /// Override this to handle tablet press, move, and release events ( *ev).*
+    ///
+    /// Proximity enter and leave events are not sent to windows, they are
+    /// delivered to the application instance.
+    [event] tablet_event(arg0: *TabletEventType),
+    ///
+    /// Override this to handle platform dependent events.
+    /// Will be given *eventType,* *message* and *result.*
+    ///
+    /// This might make your application non-portable.
+    ///
+    /// Should return true only if the event was handled.
+    //[event] native_event(event_type: &ByteArrayType, message: *void, result: *long) -> bool,
+}
+
+[org_name(QWindow)]
+enum Visibility {
+    Hidden,
+    AutomaticVisibility,
+    Windowed,
+    Minimized,
+    Maximized,
+    FullScreen,
+}
+
+[org_name(QWindow)]
+enum AncestorMode {
+    ExcludeTransients,
+    IncludeTransients,
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

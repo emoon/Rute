@@ -12,9 +12,9 @@
 /// 
 /// ![Horizontal box layout with five child widgets](qhboxlayout-with-5-children.png)
 /// 
-/// **See also:** QVBoxLayout
-/// QGridLayout
-/// QStackedLayout
+/// **See also:** [`VBoxLayout`]
+/// [`GridLayout`]
+/// [`StackedLayout`]
 /// {Layout Management}
 /// {Basic Layouts Example}
 /// # Licence

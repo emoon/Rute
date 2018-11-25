@@ -42,41 +42,13 @@
 /// * Text block format changes.
 /// * Text block group format changes.
 /// 
-/// **See also:** QTextCursor
-/// QTextEdit
+/// **See also:** [`TextCursor`]
+/// [`TextEdit`]
 /// {Rich Text Processing}
 /// {Text Object Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTextDocument)]
-enum MetaInformation {
-    DocumentTitle,
-    DocumentUrl,
-}
-
-[org_name(QTextDocument)]
-enum FindFlag {
-    FindBackward,
-    FindCaseSensitively,
-    FindWholeWords,
-}
-
-[org_name(QTextDocument)]
-enum ResourceType {
-    HtmlResource,
-    ImageResource,
-    StyleSheetResource,
-    UserResource,
-}
-
-[org_name(QTextDocument)]
-enum Stacks {
-    UndoStack,
-    RedoStack,
-    UndoAndRedoStacks,
-}
-
 struct TextDocument : Object {
     /// 
     /// Creates a new QTextDocument that is a copy of this text document. *parent* is the parent of the returned text document.
@@ -94,32 +66,32 @@ struct TextDocument : Object {
     /// signals are emitted, QTextDocument::undoAvailable() or
     /// QTextDocument::redoAvailable().
     /// 
-    /// **See also:** QTextDocument::undoAvailable()
-    /// QTextDocument::redoAvailable()
+    /// **See also:** [`TextDocument::undo_available`]
+    /// [`TextDocument::redo_available`]
     [event] clear(),
     set_undo_redo_enabled(enable: bool),
     is_undo_redo_enabled() -> bool,
     /// 
     /// Returns `true` if undo is available; otherwise returns `false.`
     /// 
-    /// **See also:** isRedoAvailable()
-    /// availableUndoSteps()
+    /// **See also:** [`is_redo_available()`]
+    /// [`available_undo_steps()`]
     is_undo_available() -> bool,
     /// 
     /// Returns `true` if redo is available; otherwise returns `false.`
     /// 
-    /// **See also:** isUndoAvailable()
-    /// availableRedoSteps()
+    /// **See also:** [`is_undo_available()`]
+    /// [`available_redo_steps()`]
     is_redo_available() -> bool,
     /// 
     /// Returns the number of available undo steps.
     /// 
-    /// **See also:** isUndoAvailable()
+    /// **See also:** [`is_undo_available()`]
     available_undo_steps() -> i32,
     /// 
     /// Returns the number of available redo steps.
     /// 
-    /// **See also:** isRedoAvailable()
+    /// **See also:** [`is_redo_available()`]
     available_redo_steps() -> i32,
     /// 
     /// Returns the document's revision (if undo is enabled).
@@ -127,19 +99,19 @@ struct TextDocument : Object {
     /// The revision is guaranteed to increase when a document that is not
     /// modified is edited.
     /// 
-    /// **See also:** QTextBlock::revision()
-    /// isModified()
+    /// **See also:** [`TextBlock::revision`]
+    /// [`is_modified()`]
     revision() -> i32,
     /// 
     /// Sets the document to use the given *layout.* The previous layout
     /// is deleted.
     /// 
-    /// **See also:** documentLayoutChanged()
+    /// **See also:** [`document_layout_changed()`]
     set_document_layout(layout: *AbstractTextDocumentLayoutType),
     /// 
     /// This signal is emitted when a new document layout is set.
     /// 
-    /// **See also:** setDocumentLayout()
+    /// **See also:** [`set_document_layout()`]
     /// 
     /// 
     /// Returns the document layout for this document.
@@ -148,13 +120,13 @@ struct TextDocument : Object {
     /// Sets the document's meta information of the type specified by *info*
     /// to the given *string.*
     /// 
-    /// **See also:** metaInformation()
+    /// **See also:** [`meta_information()`]
     set_meta_information(info: TextDocument::MetaInformation, arg0: String),
     /// 
     /// Returns meta information about the document of the type specified by
     /// *info.*
     /// 
-    /// **See also:** setMetaInformation()
+    /// **See also:** [`set_meta_information()`]
     meta_information(info: TextDocument::MetaInformation) -> String,
     to_html(encoding: &ByteArrayType) -> String,
     set_html(html: String),
@@ -163,7 +135,7 @@ struct TextDocument : Object {
     /// formatting information. If you want formatting information
     /// use a QTextCursor instead.
     /// 
-    /// **See also:** toPlainText()
+    /// **See also:** [`to_plain_text()`]
     to_raw_text() -> String,
     /// 
     /// Returns the plain text contained in the document. If you want
@@ -180,19 +152,19 @@ struct TextDocument : Object {
     /// **Note**: Embedded objects, such as images, are represented by a
     /// Unicode value U+FFFC (OBJECT REPLACEMENT CHARACTER).
     /// 
-    /// **See also:** toHtml()
+    /// **See also:** [`to_html()`]
     to_plain_text() -> String,
     /// 
     /// Replaces the entire contents of the document with the given plain
     /// *text.* The undo/redo history is reset when this function is called.
     /// 
-    /// **See also:** setHtml()
+    /// **See also:** [`set_html()`]
     set_plain_text(text: String),
     /// 
     /// Returns the character at position *pos,* or a null character if the
     /// position is out of range.
     /// 
-    /// **See also:** characterCount()
+    /// **See also:** [`character_count()`]
     character_at(pos: i32) -> Char,
     /// 
     /// **Overloads**
@@ -287,11 +259,11 @@ struct TextDocument : Object {
     /// 
     /// Returns the text block with the specified *blockNumber.*
     /// 
-    /// **See also:** QTextBlock::blockNumber()
+    /// **See also:** [`TextBlock::block_number`]
     /// 
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
-    /// **See also:** QTextBlock::firstLineNumber()
+    /// **See also:** [`TextBlock::first_line_number`]
     find(sub_string: String, from: i32, options: TextDocument::FindFlags) -> TextCursor,
     /// 
     /// **Overloads**
@@ -386,12 +358,13 @@ struct TextDocument : Object {
     /// 
     /// Returns the text block with the specified *blockNumber.*
     /// 
-    /// **See also:** QTextBlock::blockNumber()
+    /// **See also:** [`TextBlock::block_number`]
     /// 
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
-    /// **See also:** QTextBlock::firstLineNumber()
-    find(sub_string: String, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
+    /// **See also:** [`TextBlock::first_line_number`]
+    [org_name(find)]
+    find_2(sub_string: String, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
     /// 
     /// **Overloads**
     /// Finds the next occurrence of the string, *subString,* in the document.
@@ -485,12 +458,13 @@ struct TextDocument : Object {
     /// 
     /// Returns the text block with the specified *blockNumber.*
     /// 
-    /// **See also:** QTextBlock::blockNumber()
+    /// **See also:** [`TextBlock::block_number`]
     /// 
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
-    /// **See also:** QTextBlock::firstLineNumber()
-    find(expr: &RegExpType, from: i32, options: TextDocument::FindFlags) -> TextCursor,
+    /// **See also:** [`TextBlock::first_line_number`]
+    [org_name(find)]
+    find_3(expr: &RegExpType, from: i32, options: TextDocument::FindFlags) -> TextCursor,
     /// 
     /// **Overloads**
     /// Finds the next occurrence of the string, *subString,* in the document.
@@ -584,12 +558,13 @@ struct TextDocument : Object {
     /// 
     /// Returns the text block with the specified *blockNumber.*
     /// 
-    /// **See also:** QTextBlock::blockNumber()
+    /// **See also:** [`TextBlock::block_number`]
     /// 
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
-    /// **See also:** QTextBlock::firstLineNumber()
-    find(expr: &RegExpType, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
+    /// **See also:** [`TextBlock::first_line_number`]
+    [org_name(find)]
+    find_4(expr: &RegExpType, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
     /// 
     /// **Overloads**
     /// Finds the next occurrence of the string, *subString,* in the document.
@@ -683,12 +658,13 @@ struct TextDocument : Object {
     /// 
     /// Returns the text block with the specified *blockNumber.*
     /// 
-    /// **See also:** QTextBlock::blockNumber()
+    /// **See also:** [`TextBlock::block_number`]
     /// 
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
-    /// **See also:** QTextBlock::firstLineNumber()
-    find(expr: &RegularExpressionType, from: i32, options: TextDocument::FindFlags) -> TextCursor,
+    /// **See also:** [`TextBlock::first_line_number`]
+    [org_name(find)]
+    find_5(expr: &RegularExpressionType, from: i32, options: TextDocument::FindFlags) -> TextCursor,
     /// 
     /// **Overloads**
     /// Finds the next occurrence of the string, *subString,* in the document.
@@ -782,12 +758,13 @@ struct TextDocument : Object {
     /// 
     /// Returns the text block with the specified *blockNumber.*
     /// 
-    /// **See also:** QTextBlock::blockNumber()
+    /// **See also:** [`TextBlock::block_number`]
     /// 
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
-    /// **See also:** QTextBlock::firstLineNumber()
-    find(expr: &RegularExpressionType, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
+    /// **See also:** [`TextBlock::first_line_number`]
+    [org_name(find)]
+    find_6(expr: &RegularExpressionType, cursor: &TextCursorType, options: TextDocument::FindFlags) -> TextCursor,
     frame_at(pos: i32) -> TextFrame?,
     /// 
     /// Returns the document's root frame.
@@ -805,26 +782,26 @@ struct TextDocument : Object {
     /// 
     /// Returns the text block with the specified *blockNumber.*
     /// 
-    /// **See also:** QTextBlock::blockNumber()
+    /// **See also:** [`TextBlock::block_number`]
     /// 
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
-    /// **See also:** QTextBlock::firstLineNumber()
+    /// **See also:** [`TextBlock::first_line_number`]
     find_block(pos: i32) -> TextBlock,
     /// 
     /// Returns the text block with the specified *blockNumber.*
     /// 
-    /// **See also:** QTextBlock::blockNumber()
+    /// **See also:** [`TextBlock::block_number`]
     find_block_by_number(block_number: i32) -> TextBlock,
     /// 
     /// Returns the text block that contains the specified *lineNumber.*
     /// 
-    /// **See also:** QTextBlock::firstLineNumber()
+    /// **See also:** [`TextBlock::first_line_number`]
     find_block_by_line_number(block_number: i32) -> TextBlock,
     /// 
     /// Returns the document's first text block.
     /// 
-    /// **See also:** firstBlock()
+    /// **See also:** [`first_block()`]
     begin() -> TextBlock,
     /// 
     /// This function returns a block to test for the end of the document
@@ -834,7 +811,7 @@ struct TextDocument : Object {
     /// last block in the document. You can use lastBlock() to retrieve the
     /// last valid block of the document.
     /// 
-    /// **See also:** lastBlock()
+    /// **See also:** [`last_block()`]
     end() -> TextBlock,
     /// 
     /// Returns the document's first text block.
@@ -851,7 +828,7 @@ struct TextDocument : Object {
     /// By default, for a newly-created, empty document, this property contains
     /// an undefined size.
     /// 
-    /// **See also:** modificationChanged()
+    /// **See also:** [`modification_changed()`]
     page_size() -> SizeF,
     /// 
     /// Sets the default *font* to use in the document layout.
@@ -879,7 +856,7 @@ struct TextDocument : Object {
     /// a 2 cm margin is set around the document contents. In addition the current page
     /// number is printed at the bottom of each page.
     /// 
-    /// **See also:** QTextEdit::print()
+    /// **See also:** [`TextEdit::print`]
     print(printer: *PagedPaintDeviceType),
     /// 
     /// Returns data of the specified *type* from the resource with the
@@ -895,7 +872,7 @@ struct TextDocument : Object {
     /// the resource. loadResource should then use addResource to add the
     /// resource to the cache.
     /// 
-    /// **See also:** QTextDocument::ResourceType
+    /// **See also:** [`TextDocument::resource_type()`]
     resource(type: i32, name: &UrlType) -> Variant,
     /// 
     /// Adds the resource *resource* to the resource cache, using *type* and *name* as identifiers. *type* should be a value from
@@ -938,15 +915,15 @@ struct TextDocument : Object {
     /// grow or shrink vertically in a continuous way. If you want the document layout to break
     /// the text into multiple pages then you have to set the pageSize property instead.
     /// 
-    /// **See also:** size()
-    /// idealWidth()
-    /// pageSize()
+    /// **See also:** [`size()`]
+    /// [`ideal_width()`]
+    /// [`page_size()`]
     text_width() -> f32,
     /// 
     /// Returns the ideal width of the text document. The ideal width is the actually used width
     /// of the document without optional alignments taken into account. It is always <= size().width().
     /// 
-    /// **See also:** adjustSize()
+    /// **See also:** [`adjust_size()`]
     /// textWidth
     ideal_width() -> f32,
     /// 
@@ -961,7 +938,7 @@ struct TextDocument : Object {
     /// The indent properties of QTextListFormat and QTextBlockFormat specify
     /// multiples of this value. The default indent width is 40 .
     /// 
-    /// **See also:** indentWidth()
+    /// **See also:** [`indent_width()`]
     set_indent_width(width: f32),
     /// 
     /// The margin around the document. The default is 4.
@@ -970,7 +947,7 @@ struct TextDocument : Object {
     /// 
     /// Adjusts the document to a reasonable size.
     /// 
-    /// **See also:** idealWidth()
+    /// **See also:** [`ideal_width()`]
     /// textWidth
     /// size
     adjust_size(),
@@ -986,9 +963,9 @@ struct TextDocument : Object {
     /// By default, for a newly-created, empty document, this property contains
     /// a configuration-dependent size.
     /// 
-    /// **See also:** setTextWidth()
-    /// setPageSize()
-    /// idealWidth()
+    /// **See also:** [`set_text_width()`]
+    /// [`set_page_size()`]
+    /// [`ideal_width()`]
     size() -> SizeF,
     /// 
     /// Returns the number of text blocks in the document.
@@ -996,8 +973,8 @@ struct TextDocument : Object {
     /// The value of this property is undefined in documents with tables or frames.
     /// 
     /// By default, if defined, this property contains a value of 1.
-    /// **See also:** lineCount()
-    /// characterCount()
+    /// **See also:** [`line_count()`]
+    /// [`character_count()`]
     /// 
     /// This signal is emitted when the total number of text blocks in the
     /// document changes. The value passed in *newBlockCount* is the new
@@ -1007,14 +984,14 @@ struct TextDocument : Object {
     /// Returns the number of lines of this document (if the layout supports
     /// this). Otherwise, this is identical to the number of blocks.
     /// 
-    /// **See also:** blockCount()
-    /// characterCount()
+    /// **See also:** [`block_count()`]
+    /// [`character_count()`]
     line_count() -> i32,
     /// 
     /// Returns the number of characters of this document.
     /// 
-    /// **See also:** blockCount()
-    /// characterAt()
+    /// **See also:** [`block_count()`]
+    /// [`character_at()`]
     character_count() -> i32,
     set_default_style_sheet(sheet: String),
     /// 
@@ -1037,8 +1014,8 @@ struct TextDocument : Object {
     /// 
     /// documentation for details.
     /// 
-    /// **See also:** undoAvailable()
-    /// isUndoRedoEnabled()
+    /// **See also:** [`undo_available()`]
+    /// [`is_undo_redo_enabled()`]
     /// 
     /// **Overloads**
     /// 
@@ -1052,8 +1029,8 @@ struct TextDocument : Object {
     /// 
     /// documentation for details.
     /// 
-    /// **See also:** undo()
-    /// isUndoRedoEnabled()
+    /// **See also:** [`undo()`]
+    /// [`is_undo_redo_enabled()`]
     /// 
     /// This signal is emitted every time a new level of undo is added to the QTextDocument.
     undo(cursor: *TextCursorType),
@@ -1078,8 +1055,8 @@ struct TextDocument : Object {
     /// signals are emitted, QTextDocument::undoAvailable() or
     /// QTextDocument::redoAvailable().
     /// 
-    /// **See also:** QTextDocument::undoAvailable()
-    /// QTextDocument::redoAvailable()
+    /// **See also:** [`TextDocument::undo_available`]
+    /// [`TextDocument::redo_available`]
     clear_undo_redo_stacks(history_to_clear: TextDocument::Stacks),
     /// 
     /// Specifies the maximum number of blocks the document may have. If there are
@@ -1147,7 +1124,7 @@ struct TextDocument : Object {
     /// This signal is emitted whenever the document's content changes; for
     /// example, when text is inserted or deleted, or when formatting is applied.
     /// 
-    /// **See also:** contentsChange()
+    /// **See also:** [`contents_change()`]
     /// 
     /// This signal is emitted whenever the document's content changes; for
     /// example, when text is inserted or deleted, or when formatting is applied.
@@ -1160,14 +1137,14 @@ struct TextDocument : Object {
     /// about the change. This hook allows you to implement syntax highlighting
     /// for the document.
     /// 
-    /// **See also:** QAbstractTextDocumentLayout::documentChanged()
-    /// contentsChanged()
+    /// **See also:** [`AbstractTextDocumentLayout::document_changed`]
+    /// [`contents_changed()`]
     [signal] contents_change(from: i32, chars_removed: i32, chars_added: i32),
     /// 
     /// This signal is emitted whenever the document's content changes; for
     /// example, when text is inserted or deleted, or when formatting is applied.
     /// 
-    /// **See also:** contentsChange()
+    /// **See also:** [`contents_change()`]
     [signal] contents_changed(),
     /// 
     /// This signal is emitted whenever undo operations become available
@@ -1177,8 +1154,8 @@ struct TextDocument : Object {
     /// 
     /// documentation for details.
     /// 
-    /// **See also:** undo()
-    /// isUndoRedoEnabled()
+    /// **See also:** [`undo()`]
+    /// [`is_undo_redo_enabled()`]
     [signal] undo_available(arg0: bool),
     /// 
     /// This signal is emitted whenever redo operations become available
@@ -1214,7 +1191,7 @@ struct TextDocument : Object {
     /// 
     /// This signal is emitted when a new document layout is set.
     /// 
-    /// **See also:** setDocumentLayout()
+    /// **See also:** [`set_document_layout()`]
     /// 
     [signal] document_layout_changed(),
     /// 
@@ -1226,8 +1203,8 @@ struct TextDocument : Object {
     /// 
     /// documentation for details.
     /// 
-    /// **See also:** undoAvailable()
-    /// isUndoRedoEnabled()
+    /// **See also:** [`undo_available()`]
+    /// [`is_undo_redo_enabled()`]
     /// 
     /// **Overloads**
     /// 
@@ -1241,11 +1218,12 @@ struct TextDocument : Object {
     /// 
     /// documentation for details.
     /// 
-    /// **See also:** undo()
-    /// isUndoRedoEnabled()
+    /// **See also:** [`undo()`]
+    /// [`is_undo_redo_enabled()`]
     /// 
     /// This signal is emitted every time a new level of undo is added to the QTextDocument.
-    undo(),
+    [org_name(undo)]
+    undo_2(),
     /// 
     /// Redoes the last editing operation on the document if [redo is available](QTextDocument::isRedoAvailable())
     /// 
@@ -1258,7 +1236,8 @@ struct TextDocument : Object {
     /// 
     /// This signal is emitted whenever redo operations become available
     /// ( *available* is true) or unavailable ( *available* is false).
-    redo(),
+    [org_name(redo)]
+    redo_2(),
     append_undo_item(arg0: *AbstractUndoItemType),
     set_modified(m: bool),
     /// 
@@ -1286,6 +1265,46 @@ struct TextDocument : Object {
     /// to retrieve the data from the parent.
     [event] load_resource(type: i32, name: &UrlType) -> Variant,
     doc_handle() -> TextDocumentPrivate?,
+}
+
+[org_name(QTextDocument)]
+enum MetaInformation {
+    /// The title of the document.
+    DocumentTitle,
+    /// The url of the document. The loadResource() function uses this url as the base when loading relative resources.
+    DocumentUrl,
+}
+
+[org_name(QTextDocument)]
+enum FindFlag {
+    /// Search backwards instead of forwards.
+    FindBackward,
+    /// By default find works case insensitive. Specifying this option changes the behaviour to a case sensitive find operation.
+    FindCaseSensitively,
+    /// Makes find match only complete words.
+    FindWholeWords,
+}
+
+[org_name(QTextDocument)]
+enum ResourceType {
+    /// The resource contains HTML.
+    HtmlResource,
+    /// The resource contains image data. Currently supported data types are QVariant::Pixmap and QVariant::Image. If the corresponding variant is of type QVariant::ByteArray then Qt attempts to load the image using QImage::loadFromData. QVariant::Icon is currently not supported. The icon needs to be converted to one of the supported types first, for example using QIcon::pixmap.
+    ImageResource,
+    /// The resource contains CSS.
+    StyleSheetResource,
+    /// The first available value for user defined resource types.
+    UserResource,
+}
+
+[org_name(QTextDocument)]
+enum Stacks {
+    /// The undo stack.
+    UndoStack,
+    /// The redo stack.
+    RedoStack,
+    /// Both the undo and redo stacks.
+    UndoAndRedoStacks,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

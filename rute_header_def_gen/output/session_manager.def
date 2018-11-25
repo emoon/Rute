@@ -35,19 +35,11 @@
 /// setRestartHint(), setProperty(), requestPhase2(). See the respective
 /// function descriptions for further details.
 /// 
-/// **See also:** QGuiApplication
+/// **See also:** [`GuiApplication`]
 /// {Session Management}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QSessionManager)]
-enum RestartHint {
-    RestartIfRunning,
-    RestartAnyway,
-    RestartImmediately,
-    RestartNever,
-}
-
 struct SessionManager : Object {
     /// 
     /// Returns the identifier of the current session.
@@ -55,8 +47,8 @@ struct SessionManager : Object {
     /// If the application has been restored from an earlier session, this
     /// identifier is the same as it was in the earlier session.
     /// 
-    /// **See also:** sessionKey()
-    /// QGuiApplication::sessionId()
+    /// **See also:** [`session_key()`]
+    /// [`GuiApplication::session_id`]
     session_id() -> String,
     /// 
     /// Returns the session key in the current session.
@@ -66,8 +58,8 @@ struct SessionManager : Object {
     /// 
     /// The session key changes with every call of commitData() or saveState().
     /// 
-    /// **See also:** sessionId()
-    /// QGuiApplication::sessionKey()
+    /// **See also:** [`session_id()`]
+    /// [`GuiApplication::session_key`]
     session_key() -> String,
     /// 
     /// Asks the session manager for permission to interact with the user. Returns
@@ -94,9 +86,9 @@ struct SessionManager : Object {
     /// If an error occurred within the application while saving its data, you may
     /// want to try allowsErrorInteraction() instead.
     /// 
-    /// **See also:** QGuiApplication::commitDataRequest()
-    /// release()
-    /// cancel()
+    /// **See also:** [`GuiApplication::commit_data_request`]
+    /// [`release()`]
+    /// [`cancel()`]
     allows_interaction() -> bool,
     /// 
     /// Returns `true` if error interaction is permitted; otherwise returns `false.`
@@ -107,23 +99,23 @@ struct SessionManager : Object {
     /// that an error interaction is permitted. However, you are still not
     /// guaranteed that the session manager will allow interaction.
     /// 
-    /// **See also:** allowsInteraction()
-    /// release()
-    /// cancel()
+    /// **See also:** [`allows_interaction()`]
+    /// [`release()`]
+    /// [`cancel()`]
     allows_error_interaction() -> bool,
     /// 
     /// Releases the session manager's interaction semaphore after an interaction
     /// phase.
     /// 
-    /// **See also:** allowsInteraction()
-    /// allowsErrorInteraction()
+    /// **See also:** [`allows_interaction()`]
+    /// [`allows_error_interaction()`]
     release(),
     /// 
     /// Tells the session manager to cancel the shutdown process. Applications
     /// should not call this function without asking the user first.
     /// 
-    /// **See also:** allowsInteraction()
-    /// allowsErrorInteraction()
+    /// **See also:** [`allows_interaction()`]
+    /// [`allows_error_interaction()`]
     cancel(),
     /// 
     /// Sets the application's restart hint to *hint.* On application startup, the
@@ -137,13 +129,13 @@ struct SessionManager : Object {
     /// application's
     /// startup.
     /// 
-    /// **See also:** restartHint()
+    /// **See also:** [`restart_hint()`]
     set_restart_hint(arg0: SessionManager::RestartHint),
     /// 
     /// Returns the application's current restart hint. The default is
     /// `RestartIfRunning.`
     /// 
-    /// **See also:** setRestartHint()
+    /// **See also:** [`set_restart_hint()`]
     restart_hint() -> SessionManager::RestartHint,
     /// 
     /// If the session manager is capable of restoring sessions it will execute
@@ -162,9 +154,9 @@ struct SessionManager : Object {
     /// purpose. By marking the data with the unique sessionId(), you will be able
     /// to restore the application in a future session.
     /// 
-    /// **See also:** restartCommand()
-    /// setDiscardCommand()
-    /// setRestartHint()
+    /// **See also:** [`restart_command()`]
+    /// [`set_discard_command()`]
+    /// [`set_restart_hint()`]
     set_restart_command(arg0: &[String]),
     /// 
     /// Returns the currently set restart command.
@@ -172,14 +164,14 @@ struct SessionManager : Object {
     /// To iterate over the list, you can use the [foreach](foreach)
     /// pseudo-keyword:
     /// 
-    /// **See also:** setRestartCommand()
-    /// restartHint()
+    /// **See also:** [`set_restart_command()`]
+    /// [`restart_hint()`]
     restart_command() -> [String],
     /// 
     /// Sets the discard command to the given *command.*
     /// 
-    /// **See also:** discardCommand()
-    /// setRestartCommand()
+    /// **See also:** [`discard_command()`]
+    /// [`set_restart_command()`]
     set_discard_command(arg0: &[String]),
     /// 
     /// Returns the currently set discard command.
@@ -187,9 +179,9 @@ struct SessionManager : Object {
     /// To iterate over the list, you can use the [foreach](foreach)
     /// pseudo-keyword:
     /// 
-    /// **See also:** setDiscardCommand()
-    /// restartCommand()
-    /// setRestartCommand()
+    /// **See also:** [`set_discard_command()`]
+    /// [`restart_command()`]
+    /// [`set_restart_command()`]
     discard_command() -> [String],
     /// 
     /// **Overloads**
@@ -214,12 +206,13 @@ struct SessionManager : Object {
     /// are kept in the session manager.
     /// 
     /// The property called *name* has its value set to the string list *value.*
-    set_manager_property(name: String, value: &[String]),
+    [org_name(setManagerProperty)]
+    set_manager_property_2(name: String, value: &[String]),
     /// 
     /// Returns `true` if the session manager is currently performing a second
     /// session management phase; otherwise returns `false.`
     /// 
-    /// **See also:** requestPhase2()
+    /// **See also:** [`request_phase2()`]
     is_phase2() -> bool,
     /// 
     /// Requests a second session management phase for the application. The
@@ -236,8 +229,20 @@ struct SessionManager : Object {
     /// **Note**: If another application has requested a second phase it may get called
     /// before, simultaneously with, or after your application's second phase.
     /// 
-    /// **See also:** isPhase2()
+    /// **See also:** [`is_phase2()`]
     request_phase2(),
+}
+
+[org_name(QSessionManager)]
+enum RestartHint {
+    /// If the application is still running when the session is shut down, it wants to be restarted at the start of the next session.
+    RestartIfRunning,
+    /// The application wants to be started at the start of the next session, no matter what. (This is useful for utilities that run just after startup and then quit.)
+    RestartAnyway,
+    /// The application wants to be started immediately whenever it is not running.
+    RestartImmediately,
+    /// The application does not want to be restarted automatically. The default hint is `RestartIfRunning.`
+    RestartNever,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

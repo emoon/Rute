@@ -1,15 +1,18 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct WindowSystemInterface {
     [static] handle_shortcut_event(window: *WindowType, timestamp: ulong, k: i32, mods: Rute::KeyboardModifiers, native_scan_code: u32, native_virtual_key: u32, native_modifiers: u32, text: String, autorep: bool, count: ushort) -> bool,
     [static] handle_extended_key_event(window: *WindowType, type: Event::Type, key: i32, modifiers: Rute::KeyboardModifiers, native_scan_code: u32, native_virtual_key: u32, native_modifiers: u32, text: String, autorep: bool, count: ushort, try_shortcut_override: bool) -> bool,
-    [static] handle_extended_key_event(window: *WindowType, timestamp: ulong, type: Event::Type, key: i32, modifiers: Rute::KeyboardModifiers, native_scan_code: u32, native_virtual_key: u32, native_modifiers: u32, text: String, autorep: bool, count: ushort, try_shortcut_override: bool) -> bool,
+    [org_name(handleExtendedKeyEvent)]
+    [static] handle_extended_key_event_2(window: *WindowType, timestamp: ulong, type: Event::Type, key: i32, modifiers: Rute::KeyboardModifiers, native_scan_code: u32, native_virtual_key: u32, native_modifiers: u32, text: String, autorep: bool, count: ushort, try_shortcut_override: bool) -> bool,
     [static] handle_wheel_event(window: *WindowType, local: &PointFType, global: &PointFType, pixel_delta: PointType, angle_delta: PointType, mods: Rute::KeyboardModifiers, phase: Rute::ScrollPhase, source: Rute::MouseEventSource),
-    [static] handle_wheel_event(window: *WindowType, timestamp: ulong, local: &PointFType, global: &PointFType, pixel_delta: PointType, angle_delta: PointType, mods: Rute::KeyboardModifiers, phase: Rute::ScrollPhase, source: Rute::MouseEventSource, inverted: bool),
-    [static] handle_wheel_event(window: *WindowType, local: &PointFType, global: &PointFType, d: i32, o: Rute::Orientation, mods: Rute::KeyboardModifiers),
-    [static] handle_wheel_event(window: *WindowType, timestamp: ulong, local: &PointFType, global: &PointFType, d: i32, o: Rute::Orientation, mods: Rute::KeyboardModifiers),
+    [org_name(handleWheelEvent)]
+    [static] handle_wheel_event_2(window: *WindowType, timestamp: ulong, local: &PointFType, global: &PointFType, pixel_delta: PointType, angle_delta: PointType, mods: Rute::KeyboardModifiers, phase: Rute::ScrollPhase, source: Rute::MouseEventSource, inverted: bool),
+    [org_name(handleWheelEvent)]
+    [static] handle_wheel_event_3(window: *WindowType, local: &PointFType, global: &PointFType, d: i32, o: Rute::Orientation, mods: Rute::KeyboardModifiers),
+    [org_name(handleWheelEvent)]
+    [static] handle_wheel_event_4(window: *WindowType, timestamp: ulong, local: &PointFType, global: &PointFType, d: i32, o: Rute::Orientation, mods: Rute::KeyboardModifiers),
     [static] register_touch_device(device: *TouchDeviceType),
     [static] unregister_touch_device(device: *TouchDeviceType),
     [static] is_touch_device_registered(device: *TouchDeviceType) -> bool,
@@ -33,15 +36,21 @@ struct WindowSystemInterface {
     [static] handle_screen_refresh_rate_change(screen: *ScreenType, new_refresh_rate: f32),
     [static] handle_theme_change(window: *WindowType),
     [static] handle_file_open_event(file_name: String),
-    [static] handle_file_open_event(url: &UrlType),
+    [org_name(handleFileOpenEvent)]
+    [static] handle_file_open_event_2(url: &UrlType),
     [static] handle_tablet_event(window: *WindowType, timestamp: ulong, local: &PointFType, global: &PointFType, device: i32, pointer_type: i32, buttons: Rute::MouseButtons, pressure: f32, x_tilt: i32, y_tilt: i32, tangential_pressure: f32, rotation: f32, z: i32, uid: i64, modifiers: Rute::KeyboardModifiers),
-    [static] handle_tablet_event(window: *WindowType, local: &PointFType, global: &PointFType, device: i32, pointer_type: i32, buttons: Rute::MouseButtons, pressure: f32, x_tilt: i32, y_tilt: i32, tangential_pressure: f32, rotation: f32, z: i32, uid: i64, modifiers: Rute::KeyboardModifiers),
-    [static] handle_tablet_event(window: *WindowType, timestamp: ulong, down: bool, local: &PointFType, global: &PointFType, device: i32, pointer_type: i32, pressure: f32, x_tilt: i32, y_tilt: i32, tangential_pressure: f32, rotation: f32, z: i32, uid: i64, modifiers: Rute::KeyboardModifiers),
-    [static] handle_tablet_event(window: *WindowType, down: bool, local: &PointFType, global: &PointFType, device: i32, pointer_type: i32, pressure: f32, x_tilt: i32, y_tilt: i32, tangential_pressure: f32, rotation: f32, z: i32, uid: i64, modifiers: Rute::KeyboardModifiers),
+    [org_name(handleTabletEvent)]
+    [static] handle_tablet_event_2(window: *WindowType, local: &PointFType, global: &PointFType, device: i32, pointer_type: i32, buttons: Rute::MouseButtons, pressure: f32, x_tilt: i32, y_tilt: i32, tangential_pressure: f32, rotation: f32, z: i32, uid: i64, modifiers: Rute::KeyboardModifiers),
+    [org_name(handleTabletEvent)]
+    [static] handle_tablet_event_3(window: *WindowType, timestamp: ulong, down: bool, local: &PointFType, global: &PointFType, device: i32, pointer_type: i32, pressure: f32, x_tilt: i32, y_tilt: i32, tangential_pressure: f32, rotation: f32, z: i32, uid: i64, modifiers: Rute::KeyboardModifiers),
+    [org_name(handleTabletEvent)]
+    [static] handle_tablet_event_4(window: *WindowType, down: bool, local: &PointFType, global: &PointFType, device: i32, pointer_type: i32, pressure: f32, x_tilt: i32, y_tilt: i32, tangential_pressure: f32, rotation: f32, z: i32, uid: i64, modifiers: Rute::KeyboardModifiers),
     [static] handle_tablet_enter_proximity_event(timestamp: ulong, device: i32, pointer_type: i32, uid: i64),
-    [static] handle_tablet_enter_proximity_event(device: i32, pointer_type: i32, uid: i64),
+    [org_name(handleTabletEnterProximityEvent)]
+    [static] handle_tablet_enter_proximity_event_2(device: i32, pointer_type: i32, uid: i64),
     [static] handle_tablet_leave_proximity_event(timestamp: ulong, device: i32, pointer_type: i32, uid: i64),
-    [static] handle_tablet_leave_proximity_event(device: i32, pointer_type: i32, uid: i64),
+    [org_name(handleTabletLeaveProximityEvent)]
+    [static] handle_tablet_leave_proximity_event_2(device: i32, pointer_type: i32, uid: i64),
     [static] handle_gesture_event(window: *WindowType, device: *TouchDeviceType, timestamp: ulong, type: Rute::NativeGestureType, local: &PointFType, global: &PointFType),
     [static] handle_gesture_event_with_real_value(window: *WindowType, device: *TouchDeviceType, timestamp: ulong, type: Rute::NativeGestureType, value: f32, local: &PointFType, global: &PointFType),
     [static] handle_gesture_event_with_sequence_id_and_value(window: *WindowType, device: *TouchDeviceType, timestamp: ulong, type: Rute::NativeGestureType, sequence_id: ulong, value: quint64, local: &PointFType, global: &PointFType),

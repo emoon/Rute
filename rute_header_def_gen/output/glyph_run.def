@@ -28,16 +28,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGlyphRun)]
-enum GlyphRunFlag {
-    Overline,
-    Underline,
-    StrikeOut,
-    RightToLeft,
-    SplitLigature,
-}
-
-
 struct GlyphRun {
     /// 
     /// Swaps this glyph run instance with *other.* This function is very
@@ -46,14 +36,14 @@ struct GlyphRun {
     /// 
     /// Returns the font selected for this QGlyphRun object.
     /// 
-    /// **See also:** setRawFont()
+    /// **See also:** [`set_raw_font()`]
     raw_font() -> RawFont,
     /// 
     /// Sets the font in which to look up the glyph indexes to the *rawFont*
     /// specified.
     /// 
-    /// **See also:** rawFont()
-    /// setGlyphIndexes()
+    /// **See also:** [`raw_font()`]
+    /// [`set_glyph_indexes()`]
     set_raw_font(raw_font: &RawFontType),
     /// 
     /// Sets the glyph indexes and positions of this QGlyphRun to use the first *size*
@@ -61,14 +51,14 @@ struct GlyphRun {
     /// *not* copied. The caller must guarantee that the arrays are not deleted as long
     /// as this QGlyphRun and any copies of it exists.
     /// 
-    /// **See also:** setGlyphIndexes()
-    /// setPositions()
+    /// **See also:** [`set_glyph_indexes()`]
+    /// [`set_positions()`]
     set_raw_data(glyph_index_array: *u32, glyph_position_array: *PointFType, size: i32),
     /// 
     /// Returns the glyph indexes for this QGlyphRun object.
     /// 
-    /// **See also:** setGlyphIndexes()
-    /// setPositions()
+    /// **See also:** [`set_glyph_indexes()`]
+    /// [`set_positions()`]
     glyph_indexes() -> [u32],
     /// 
     /// Set the glyph indexes for this QGlyphRun object to *glyphIndexes.* The glyph indexes must
@@ -88,66 +78,66 @@ struct GlyphRun {
     /// Indicates that this QGlyphRun should be painted with an overline decoration if *overline* is true.
     /// Otherwise the QGlyphRun should be painted with no overline decoration.
     /// 
-    /// **See also:** overline()
-    /// setFlag()
-    /// setFlags()
+    /// **See also:** [`overline()`]
+    /// [`set_flag()`]
+    /// [`set_flags()`]
     set_overline(overline: bool),
     /// 
     /// Returns `true` if this QGlyphRun should be painted with an overline decoration.
     /// 
-    /// **See also:** setOverline()
-    /// flags()
+    /// **See also:** [`set_overline()`]
+    /// [`flags()`]
     overline() -> bool,
     /// 
     /// Indicates that this QGlyphRun should be painted with an underline decoration if *underline* is
     /// true. Otherwise the QGlyphRun should be painted with no underline decoration.
     /// 
-    /// **See also:** underline()
-    /// setFlag()
-    /// setFlags()
+    /// **See also:** [`underline()`]
+    /// [`set_flag()`]
+    /// [`set_flags()`]
     set_underline(underline: bool),
     /// 
     /// Returns `true` if this QGlyphRun should be painted with an underline decoration.
     /// 
-    /// **See also:** setUnderline()
-    /// flags()
+    /// **See also:** [`set_underline()`]
+    /// [`flags()`]
     underline() -> bool,
     /// 
     /// Indicates that this QGlyphRun contains glyphs that should be ordered from the right to left
     /// if *rightToLeft* is true. Otherwise the order of the glyphs is assumed to be left to right.
     /// 
-    /// **See also:** isRightToLeft()
-    /// setFlag()
-    /// setFlags()
+    /// **See also:** [`is_right_to_left()`]
+    /// [`set_flag()`]
+    /// [`set_flags()`]
     set_right_to_left(on: bool),
     /// 
     /// Returns `true` if this QGlyphRun contains glyphs that are painted from the right to the left.
     /// 
-    /// **See also:** setRightToLeft()
-    /// flags()
+    /// **See also:** [`set_right_to_left()`]
+    /// [`flags()`]
     is_right_to_left() -> bool,
     /// 
     /// If *enabled* is true, then *flag* is enabled; otherwise, it is disabled.
     /// 
-    /// **See also:** flags()
-    /// setFlags()
+    /// **See also:** [`flags()`]
+    /// [`set_flags()`]
     /// 
     /// Sets the flags of this QGlyphRun to *flags.*
     /// 
-    /// **See also:** setFlag()
-    /// flags()
+    /// **See also:** [`set_flag()`]
+    /// [`flags()`]
     set_flag(flag: GlyphRun::GlyphRunFlag, enabled: bool),
     /// 
     /// Sets the flags of this QGlyphRun to *flags.*
     /// 
-    /// **See also:** setFlag()
-    /// flags()
+    /// **See also:** [`set_flag()`]
+    /// [`flags()`]
     set_flags(flags: GlyphRun::GlyphRunFlags),
     /// 
     /// Returns the flags set for this QGlyphRun.
     /// 
-    /// **See also:** setFlag()
-    /// setFlag()
+    /// **See also:** [`set_flag()`]
+    /// [`set_flag()`]
     flags() -> GlyphRun::GlyphRunFlags,
     /// 
     /// Sets the bounding rect of the glyphs in this QGlyphRun to be *boundingRect.* This rectangle
@@ -166,7 +156,7 @@ struct GlyphRun {
     /// color than the main text color), it is necessary to clip the painting mechanism to the rectangle
     /// returned from boundingRect() to avoid drawing the entire ligature glyph.
     /// 
-    /// **See also:** boundingRect()
+    /// **See also:** [`bounding_rect()`]
     /// 
     set_bounding_rect(bounding_rect: &RectFType),
     /// 
@@ -179,6 +169,20 @@ struct GlyphRun {
     /// Returns `true` if the QGlyphRun does not contain any glyphs.
     /// 
     is_empty() -> bool,
+}
+
+[org_name(QGlyphRun)]
+enum GlyphRunFlag {
+    /// Indicates that the glyphs should be visualized together with an overline.
+    Overline,
+    /// Indicates that the glyphs should be visualized together with an underline.
+    Underline,
+    /// Indicates that the glyphs should be struck out visually.
+    StrikeOut,
+    /// Indicates that the glyphs are ordered right to left. This can affect the positioning of other screen elements that are relative to the glyph run, such as an inline text object.
+    RightToLeft,
+    /// Indicates that the glyph run splits a ligature glyph. This means that a ligature glyph is included in the run, but the characters represented by it corresponds only to part of that ligature. The glyph run's boundingRect() function can in this case be used to retrieve the area covered by glyphs that correspond to the characters represented by the glyph run. When visualizing the glyphs, care needs to be taken to clip to this bounding rect to ensure that only the corresponding part of the ligature is painted. In particular, this can be the case when retrieving a glyph run from a QTextLayout for a specific character range, e.g. when retrieving the selected area of a QTextLayout.
+    SplitLigature,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

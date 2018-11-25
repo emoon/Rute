@@ -50,28 +50,10 @@
 /// 
 /// **Note**: The default scroll bar property for QMdiArea is Qt::ScrollBarAlwaysOff.
 /// 
-/// **See also:** QMdiSubWindow
+/// **See also:** [`MdiSubWindow`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QMdiArea)]
-enum AreaOption {
-    DontMaximizeSubWindowOnActivation,
-}
-
-[org_name(QMdiArea)]
-enum WindowOrder {
-    CreationOrder,
-    StackingOrder,
-    ActivationHistoryOrder,
-}
-
-[org_name(QMdiArea)]
-enum ViewMode {
-    SubWindowView,
-    TabbedView,
-}
-
 struct MdiArea : AbstractScrollArea {
     /// 
     [event] size_hint() -> Size,
@@ -84,8 +66,8 @@ struct MdiArea : AbstractScrollArea {
     /// This function will return the same as activeSubWindow() if
     /// the QApplication containing QMdiArea is active.
     /// 
-    /// **See also:** activeSubWindow()
-    /// QApplication::activeWindow()
+    /// **See also:** [`active_sub_window()`]
+    /// [`Application::active_window`]
     current_sub_window() -> MdiSubWindow?,
     /// 
     /// Returns a pointer to the current active subwindow. If no
@@ -97,8 +79,8 @@ struct MdiArea : AbstractScrollArea {
     /// window in which the MDI area lives gains focus, the window will be
     /// activated.
     /// 
-    /// **See also:** setActiveSubWindow()
-    /// Qt::WindowState
+    /// **See also:** [`set_active_sub_window()`]
+    /// [`t::window_state()`]
     active_sub_window() -> MdiSubWindow?,
     /// 
     /// Returns a list of all subwindows in the MDI area. If *order* is
@@ -128,7 +110,7 @@ struct MdiArea : AbstractScrollArea {
     /// 
     /// Returns the QMdiSubWindow that is added to the MDI area.
     /// 
-    /// **See also:** removeSubWindow()
+    /// **See also:** [`remove_sub_window()`]
     add_sub_window(widget: *WidgetType, flags: Rute::WindowFlags) -> MdiSubWindow?,
     /// 
     /// Removes *widget* from the MDI area. The *widget* must be
@@ -138,7 +120,7 @@ struct MdiArea : AbstractScrollArea {
     /// removed, but if an internal widget is passed in the child widget
     /// is set to 0 but the QMdiSubWindow is not removed.
     /// 
-    /// **See also:** addSubWindow()
+    /// **See also:** [`add_sub_window()`]
     remove_sub_window(widget: *WidgetType),
     /// 
     /// This property sets the background brush for the workspace area
@@ -151,7 +133,7 @@ struct MdiArea : AbstractScrollArea {
     /// subwindows returned by subWindowList(). By default, it is the window
     /// creation order.
     /// 
-    /// **See also:** subWindowList()
+    /// **See also:** [`sub_window_list()`]
     activation_order() -> MdiArea::WindowOrder,
     set_activation_order(order: MdiArea::WindowOrder),
     /// 
@@ -159,85 +141,85 @@ struct MdiArea : AbstractScrollArea {
     /// it is disabled. See AreaOption for the effect of each option.
     /// 
     /// **See also:** AreaOption
-    /// testOption()
+    /// [`test_option()`]
     set_option(option: MdiArea::AreaOption, on: bool),
     /// 
     /// Returns `true` if *option* is enabled; otherwise returns `false.`
     /// 
     /// **See also:** AreaOption
-    /// setOption()
+    /// [`set_option()`]
     test_option(opton: MdiArea::AreaOption) -> bool,
     set_view_mode(mode: MdiArea::ViewMode),
     /// 
     /// By default, the SubWindowView is used to display sub-windows.
     /// 
     /// **See also:** ViewMode
-    /// setTabShape()
-    /// setTabPosition()
+    /// [`set_tab_shape()`]
+    /// [`set_tab_position()`]
     view_mode() -> MdiArea::ViewMode,
     /// 
     /// Document mode is disabled by default.
     /// 
-    /// **See also:** QTabBar::documentMode
-    /// setViewMode()
+    /// **See also:** [`TabBar::document_mode()`]
+    /// [`set_view_mode()`]
     document_mode() -> bool,
     set_document_mode(enabled: bool),
     set_tabs_closable(closable: bool),
     /// 
     /// Tabs are not closable by default.
     /// 
-    /// **See also:** QTabBar::tabsClosable
-    /// setViewMode()
+    /// **See also:** [`TabBar::tabs_closable()`]
+    /// [`set_view_mode()`]
     tabs_closable() -> bool,
     set_tabs_movable(movable: bool),
     /// 
     /// Tabs are not movable by default.
     /// 
-    /// **See also:** QTabBar::movable
-    /// setViewMode()
+    /// **See also:** [`TabBar::movable()`]
+    /// [`set_view_mode()`]
     tabs_movable() -> bool,
     set_tab_shape(shape: TabWidget::TabShape),
     /// 
     /// Possible values for this property are QTabWidget::Rounded
     /// (default) or QTabWidget::Triangular.
     /// 
-    /// **See also:** QTabWidget::TabShape
-    /// setViewMode()
+    /// **See also:** [`TabWidget::tab_shape()`]
+    /// [`set_view_mode()`]
     tab_shape() -> TabWidget::TabShape,
     set_tab_position(position: TabWidget::TabPosition),
     /// 
     /// Possible values for this property are described by the
     /// QTabWidget::TabPosition enum.
     /// 
-    /// **See also:** QTabWidget::TabPosition
-    /// setViewMode()
+    /// **See also:** [`TabWidget::tab_position()`]
+    /// [`set_view_mode()`]
     tab_position() -> TabWidget::TabPosition,
     /// 
     /// QMdiArea emits this signal after *window* has been activated. When *window* is 0, QMdiArea has just deactivated its last active window, and
     /// there are no active windows on the workspace.
     /// 
-    /// **See also:** QMdiArea::activeSubWindow()
+    /// **See also:** [`MdiArea::active_sub_window`]
     [signal] sub_window_activated(arg0: *MdiSubWindowType),
     /// 
     /// Activates the subwindow *window.* If *window* is 0, any
     /// current active window is deactivated.
     /// 
-    /// **See also:** activeSubWindow()
+    /// **See also:** [`active_sub_window()`]
     set_active_sub_window(window: *MdiSubWindowType),
     /// 
     /// Arranges all child windows in a tile pattern.
     /// 
-    /// **See also:** cascadeSubWindows()
+    /// **See also:** [`cascade_sub_windows()`]
     tile_sub_windows(),
     /// 
     /// Arranges all the child windows in a cascade pattern.
     /// 
-    /// **See also:** tileSubWindows()
+    /// **See also:** [`tile_sub_windows()`]
     cascade_sub_windows(),
     /// 
     /// Closes the active subwindow.
     /// 
-    /// **See also:** closeAllSubWindows()
+    /// **See also:** [`close_all_sub_windows()`]
     close_active_sub_window(),
     /// 
     /// Closes all subwindows by sending a QCloseEvent to each window.
@@ -247,7 +229,7 @@ struct MdiArea : AbstractScrollArea {
     /// 
     /// Subwindows that ignore the close event will remain open.
     /// 
-    /// **See also:** closeActiveSubWindow()
+    /// **See also:** [`close_active_sub_window()`]
     close_all_sub_windows(),
     /// 
     /// Gives the keyboard focus to another window in the list of child
@@ -255,8 +237,8 @@ struct MdiArea : AbstractScrollArea {
     /// by the current [activation order](QMdiArea::WindowOrder)
     /// 
     /// 
-    /// **See also:** activatePreviousSubWindow()
-    /// QMdiArea::WindowOrder
+    /// **See also:** [`activate_previous_sub_window()`]
+    /// [`MdiArea::window_order()`]
     activate_next_sub_window(),
     /// 
     /// Gives the keyboard focus to another window in the list of child
@@ -264,15 +246,15 @@ struct MdiArea : AbstractScrollArea {
     /// by the current [activation order](QMdiArea::WindowOrder)
     /// 
     /// 
-    /// **See also:** activateNextSubWindow()
-    /// QMdiArea::WindowOrder
+    /// **See also:** [`activate_next_sub_window()`]
+    /// [`MdiArea::window_order()`]
     activate_previous_sub_window(),
     /// 
     /// This slot is called by QAbstractScrollArea after setViewport() has been
     /// called. Reimplement this function in a subclass of QMdiArea to
     /// initialize the new *viewport* before it is used.
     /// 
-    /// **See also:** setViewport()
+    /// **See also:** [`set_viewport()`]
     [event] setup_viewport(viewport: *WidgetType),
     /// 
     /// 
@@ -293,6 +275,30 @@ struct MdiArea : AbstractScrollArea {
     [event] viewport_event(event: *EventType) -> bool,
     /// 
     [event] scroll_contents_by(dx: i32, dy: i32),
+}
+
+[org_name(QMdiArea)]
+enum AreaOption {
+    /// When the active subwindow is maximized, the default behavior is to maximize the next subwindow that is activated. Set this option if you do not want this behavior.
+    DontMaximizeSubWindowOnActivation,
+}
+
+[org_name(QMdiArea)]
+enum WindowOrder {
+    /// The windows are returned in the order of their creation.
+    CreationOrder,
+    /// The windows are returned in the order in which they are stacked, with the top-most window being last in the list.
+    StackingOrder,
+    /// The windows are returned in the order in which they were activated.
+    ActivationHistoryOrder,
+}
+
+[org_name(QMdiArea)]
+enum ViewMode {
+    /// Display sub-windows with window frames (default).
+    SubWindowView,
+    /// Display sub-windows with tabs in a tab bar.
+    TabbedView,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

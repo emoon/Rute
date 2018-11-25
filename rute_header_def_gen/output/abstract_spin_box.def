@@ -20,34 +20,14 @@
 /// determine whether stepping up/down is allowed at any point. This
 /// function returns a bitset of StepEnabled.
 /// 
-/// **See also:** QAbstractSlider
-/// QSpinBox
-/// QDoubleSpinBox
-/// QDateTimeEdit
+/// **See also:** [`AbstractSlider`]
+/// [`SpinBox`]
+/// [`DoubleSpinBox`]
+/// [`DateTimeEdit`]
 /// {Spin Boxes Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QAbstractSpinBox)]
-enum StepEnabledFlag {
-    StepNone,
-    StepUpEnabled,
-    StepDownEnabled,
-}
-
-[org_name(QAbstractSpinBox)]
-enum ButtonSymbols {
-    UpDownArrows,
-    PlusMinus,
-    NoButtons,
-}
-
-[org_name(QAbstractSpinBox)]
-enum CorrectionMode {
-    CorrectToPreviousValue,
-    CorrectToNearestValue,
-}
-
 struct AbstractSpinBox : Widget {
     /// 
     /// The possible values can be either `UpDownArrows` or `PlusMinus.`
@@ -68,8 +48,8 @@ struct AbstractSpinBox : Widget {
     /// The default mode is QAbstractSpinBox::CorrectToPreviousValue.
     /// 
     /// **See also:** acceptableInput
-    /// validate()
-    /// fixup()
+    /// [`validate()`]
+    /// [`fixup()`]
     correction_mode() -> AbstractSpinBox::CorrectionMode,
     has_acceptable_input() -> bool,
     /// 
@@ -107,8 +87,8 @@ struct AbstractSpinBox : Widget {
     /// to the minimum() value and vica versa. Wrapping only make sense if
     /// you have minimum() and maximum() values set.
     /// 
-    /// **See also:** QSpinBox::minimum()
-    /// QSpinBox::maximum()
+    /// **See also:** [`SpinBox::minimum`]
+    /// [`SpinBox::maximum`]
     wrapping() -> bool,
     set_wrapping(w: bool),
     set_read_only(r: bool),
@@ -138,7 +118,7 @@ struct AbstractSpinBox : Widget {
     /// Attempting to set the alignment to an illegal flag combination
     /// does nothing.
     /// 
-    /// **See also:** Qt::Alignment
+    /// **See also:** [`t::alignment()`]
     alignment() -> Rute::Alignment,
     set_frame(arg0: bool),
     has_frame() -> bool,
@@ -181,21 +161,21 @@ struct AbstractSpinBox : Widget {
     /// value will be outside the bounds of minimum and maximum. It's this
     /// function's job to handle these situations.
     /// 
-    /// **See also:** stepUp()
-    /// stepDown()
-    /// keyPressEvent()
+    /// **See also:** [`step_up()`]
+    /// [`step_down()`]
+    /// [`key_press_event()`]
     [event] step_by(steps: i32),
     /// 
     /// Steps up by one linestep
     /// Calling this slot is analogous to calling stepBy(1);
-    /// **See also:** stepBy()
-    /// stepDown()
+    /// **See also:** [`step_by()`]
+    /// [`step_down()`]
     step_up(),
     /// 
     /// Steps down by one linestep
     /// Calling this slot is analogous to calling stepBy(-1);
-    /// **See also:** stepBy()
-    /// stepUp()
+    /// **See also:** [`step_by()`]
+    /// [`step_up()`]
     step_down(),
     /// 
     /// Selects all the text in the spinbox except the prefix and suffix.
@@ -220,7 +200,7 @@ struct AbstractSpinBox : Widget {
     /// * Page down
     /// * This will invoke stepBy(-10)
     /// 
-    /// **See also:** stepBy()
+    /// **See also:** [`step_by()`]
     [event] key_press_event(event: *KeyEventType),
     /// 
     [event] key_release_event(event: *KeyEventType),
@@ -253,7 +233,7 @@ struct AbstractSpinBox : Widget {
     /// is useful for subclasses when they need a QStyleOptionSpinBox, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionSpinBoxType),
     /// 
     /// This function returns a pointer to the line edit of the spin box.
@@ -281,14 +261,42 @@ struct AbstractSpinBox : Widget {
     /// 
     /// If you subclass QAbstractSpinBox you will need to reimplement this function.
     /// 
-    /// **See also:** QSpinBox::minimum()
-    /// QSpinBox::maximum()
-    /// wrapping()
+    /// **See also:** [`SpinBox::minimum`]
+    /// [`SpinBox::maximum`]
+    /// [`wrapping()`]
     [event] step_enabled() -> AbstractSpinBox::StepEnabled,
     /// 
     /// This signal is emitted editing is finished. This happens when the
     /// spinbox loses focus and when enter is pressed.
     [signal] editing_finished(),
+}
+
+[org_name(QAbstractSpinBox)]
+enum StepEnabledFlag {
+    /// 
+    StepNone,
+    /// 
+    StepUpEnabled,
+    /// 
+    StepDownEnabled,
+}
+
+[org_name(QAbstractSpinBox)]
+enum ButtonSymbols {
+    /// Little arrows in the classic style.
+    UpDownArrows,
+    /// **+** and **-** symbols.
+    PlusMinus,
+    /// Don't display buttons.
+    NoButtons,
+}
+
+[org_name(QAbstractSpinBox)]
+enum CorrectionMode {
+    /// The spinbox will revert to the last valid value.
+    CorrectToPreviousValue,
+    /// The spinbox will revert to the nearest valid value.
+    CorrectToNearestValue,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

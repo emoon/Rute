@@ -16,18 +16,11 @@
 /// will continue to be delivered to the target object, containing an instance
 /// of QPinchGesture in the Qt::GestureUpdated state.
 /// 
-/// **See also:** QPanGesture
-/// QSwipeGesture
+/// **See also:** [`PanGesture`]
+/// [`SwipeGesture`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QPinchGesture)]
-enum ChangeFlag {
-    ScaleFactorChanged,
-    RotationAngleChanged,
-    CenterPointChanged,
-}
-
 struct PinchGesture : Gesture {
     /// 
     /// This property indicates which of the other properties has changed since the
@@ -125,6 +118,16 @@ struct PinchGesture : Gesture {
     set_total_rotation_angle(value: f32),
     set_last_rotation_angle(value: f32),
     set_rotation_angle(value: f32),
+}
+
+[org_name(QPinchGesture)]
+enum ChangeFlag {
+    /// The scale factor held by scaleFactor changed.
+    ScaleFactorChanged,
+    /// The rotation angle held by rotationAngle changed.
+    RotationAngleChanged,
+    /// The center point held by centerPoint changed.
+    CenterPointChanged,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

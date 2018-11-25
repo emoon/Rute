@@ -23,28 +23,28 @@ struct GraphicsSceneDragDropEvent : GraphicsSceneEvent {
     /// Returns the mouse position of the event relative to the
     /// view that sent the event.
     /// 
-    /// **See also:** QGraphicsView
-    /// screenPos()
-    /// scenePos()
+    /// **See also:** [`GraphicsView`]
+    /// [`screen_pos()`]
+    /// [`scene_pos()`]
     /// 
     /// Returns the possible drop actions that the drag and
     /// drop can result in.
     /// 
-    /// **See also:** Qt::DropActions
+    /// **See also:** [`t::drop_actions()`]
     pos() -> PointF,
     set_pos(pos: &PointFType),
     /// 
     /// Returns the position of the mouse in scene coordinates.
     /// 
-    /// **See also:** pos()
-    /// screenPos()
+    /// **See also:** [`pos()`]
+    /// [`screen_pos()`]
     scene_pos() -> PointF,
     set_scene_pos(pos: &PointFType),
     /// 
     /// Returns the position of the mouse relative to the screen.
     /// 
-    /// **See also:** pos()
-    /// scenePos()
+    /// **See also:** [`pos()`]
+    /// [`scene_pos()`]
     screen_pos() -> Point,
     set_screen_pos(pos: &PointType),
     /// 
@@ -52,21 +52,21 @@ struct GraphicsSceneDragDropEvent : GraphicsSceneEvent {
     /// were pressed on the mouse when this mouse event was
     /// generated.
     /// 
-    /// **See also:** Qt::MouseButtons
+    /// **See also:** [`t::mouse_buttons()`]
     buttons() -> Rute::MouseButtons,
     set_buttons(buttons: Rute::MouseButtons),
     /// 
     /// Returns the keyboard modifiers that were pressed when the drag
     /// and drop event was created.
     /// 
-    /// **See also:** Qt::KeyboardModifiers
+    /// **See also:** [`t::keyboard_modifiers()`]
     modifiers() -> Rute::KeyboardModifiers,
     set_modifiers(modifiers: Rute::KeyboardModifiers),
     /// 
     /// Returns the possible drop actions that the drag and
     /// drop can result in.
     /// 
-    /// **See also:** Qt::DropActions
+    /// **See also:** [`t::drop_actions()`]
     possible_actions() -> Rute::DropActions,
     set_possible_actions(actions: Rute::DropActions),
     /// 
@@ -74,8 +74,8 @@ struct GraphicsSceneDragDropEvent : GraphicsSceneEvent {
     /// The action must be one of the possible actions as defined by
     /// `possibleActions().`
     /// 
-    /// **See also:** Qt::DropAction
-    /// possibleActions()
+    /// **See also:** [`t::drop_action()`]
+    /// [`possible_actions()`]
     proposed_action() -> Rute::DropAction,
     set_proposed_action(action: Rute::DropAction),
     /// 
@@ -84,17 +84,17 @@ struct GraphicsSceneDragDropEvent : GraphicsSceneEvent {
     /// 
     /// When using this function, one should not call `accept().`
     /// 
-    /// **See also:** dropAction()
-    /// setDropAction()
-    /// proposedAction()
+    /// **See also:** [`drop_action()`]
+    /// [`set_drop_action()`]
+    /// [`proposed_action()`]
     accept_proposed_action(),
     /// 
     /// Returns the action that was performed in this drag and drop.
     /// This should be set by the receiver of the drop and is
     /// returned by QDrag::exec().
     /// 
-    /// **See also:** setDropAction()
-    /// acceptProposedAction()
+    /// **See also:** [`set_drop_action()`]
+    /// [`accept_proposed_action()`]
     drop_action() -> Rute::DropAction,
     /// 
     /// This function lets the receiver of the drop set the drop
@@ -104,9 +104,9 @@ struct GraphicsSceneDragDropEvent : GraphicsSceneEvent {
     /// actions](QGraphicsSceneDragDropEvent::possibleActions())
     /// . Call `accept()` in stead of `acceptProposedAction()` if you use this function.
     /// 
-    /// **See also:** dropAction()
-    /// accept()
-    /// possibleActions()
+    /// **See also:** [`drop_action()`]
+    /// [`accept()`]
+    /// [`possible_actions()`]
     set_drop_action(action: Rute::DropAction),
     /// 
     /// This function returns the QGraphicsView that created the

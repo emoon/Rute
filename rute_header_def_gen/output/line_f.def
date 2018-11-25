@@ -39,20 +39,12 @@
 /// `int` type. Operations on a QLine that could potentially result
 /// in values outside this range will result in undefined behavior.
 /// 
-/// **See also:** QLine
-/// QPolygonF
-/// QRectF
+/// **See also:** [`Line`]
+/// [`PolygonF`]
+/// [`RectF`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QLineF)]
-enum IntersectType {
-    NoIntersection,
-    BoundedIntersection,
-    UnboundedIntersection,
-}
-
-
 struct LineF {
     /// 
     /// Returns a QLineF with the given *length* and *angle.*
@@ -69,53 +61,53 @@ struct LineF {
     /// 
     /// Returns the line's start point.
     /// 
-    /// **See also:** x1()
-    /// y1()
-    /// p2()
+    /// **See also:** [`x1()`]
+    /// [`y1()`]
+    /// [`p2()`]
     p1() -> PointF,
     /// 
     /// Returns the line's end point.
     /// 
-    /// **See also:** x2()
-    /// y2()
-    /// p1()
+    /// **See also:** [`x2()`]
+    /// [`y2()`]
+    /// [`p1()`]
     p2() -> PointF,
     /// 
     /// Returns the x-coordinate of the line's start point.
     /// 
-    /// **See also:** p1()
+    /// **See also:** [`p1()`]
     x1() -> f32,
     /// 
     /// Returns the y-coordinate of the line's start point.
     /// 
-    /// **See also:** p1()
+    /// **See also:** [`p1()`]
     y1() -> f32,
     /// 
     /// Returns the x-coordinate of the line's end point.
     /// 
-    /// **See also:** p2()
+    /// **See also:** [`p2()`]
     x2() -> f32,
     /// 
     /// Returns the y-coordinate of the line's end point.
     /// 
-    /// **See also:** p2()
+    /// **See also:** [`p2()`]
     y2() -> f32,
     /// 
     /// Returns the horizontal component of the line's vector.
     /// 
-    /// **See also:** dy()
-    /// pointAt()
+    /// **See also:** [`dy()`]
+    /// [`point_at()`]
     dx() -> f32,
     /// 
     /// Returns the vertical component of the line's vector.
     /// 
-    /// **See also:** dx()
-    /// pointAt()
+    /// **See also:** [`dx()`]
+    /// [`point_at()`]
     dy() -> f32,
     /// 
     /// Returns the length of the line.
     /// 
-    /// **See also:** setLength()
+    /// **See also:** [`set_length()`]
     length() -> f32,
     /// 
     /// Sets the length of the line to the given *length.* QLineF will
@@ -124,8 +116,8 @@ struct LineF {
     /// If the line is a null line, the length will remain zero regardless
     /// of the length specified.
     /// 
-    /// **See also:** length()
-    /// isNull()
+    /// **See also:** [`length()`]
+    /// [`is_null()`]
     set_length(len: f32),
     /// 
     /// Returns the angle of the line in degrees.
@@ -134,7 +126,7 @@ struct LineF {
     /// including 360.0. The angles are measured counter-clockwise from a point
     /// on the x-axis to the right of the origin (x > 0).
     /// 
-    /// **See also:** setAngle()
+    /// **See also:** [`set_angle()`]
     /// 
     /// Returns the angle (in degrees) from this line to the given *line,* taking the direction of the lines into account. If the lines
     /// do not intersect within their range, it is the intersection point of
@@ -145,7 +137,7 @@ struct LineF {
     /// to this line to make it have the same angle as the given *line,*
     /// going counter-clockwise.
     /// 
-    /// **See also:** intersect()
+    /// **See also:** [`intersect()`]
     /// 
     /// Returns the angle (in degrees) between this line and the given *line,* taking the direction of the lines into account. If the lines
     /// do not intersect within their range, it is the intersection point of
@@ -159,7 +151,7 @@ struct LineF {
     /// When the lines are parallel, this function returns 0 if they have
     /// the same direction; otherwise it returns 180.
     /// 
-    /// **See also:** intersect()
+    /// **See also:** [`intersect()`]
     angle() -> f32,
     /// 
     /// Sets the angle of the line to the given *angle* (in degrees).
@@ -169,7 +161,7 @@ struct LineF {
     /// Positive values for the angles mean counter-clockwise while negative values
     /// mean the clockwise direction. Zero degrees is at the 3 o'clock position.
     /// 
-    /// **See also:** angle()
+    /// **See also:** [`angle()`]
     set_angle(angle: f32),
     /// 
     /// Returns the angle (in degrees) from this line to the given *line,* taking the direction of the lines into account. If the lines
@@ -181,13 +173,13 @@ struct LineF {
     /// to this line to make it have the same angle as the given *line,*
     /// going counter-clockwise.
     /// 
-    /// **See also:** intersect()
+    /// **See also:** [`intersect()`]
     angle_to(l: &LineFType) -> f32,
     /// 
     /// Returns the unit vector for this line, i.e a line starting at the
     /// same point as *this* line with a length of 1.0.
     /// 
-    /// **See also:** normalVector()
+    /// **See also:** [`normal_vector()`]
     unit_vector() -> LineF,
     /// 
     /// Returns a line that is perpendicular to this line with the same starting
@@ -195,7 +187,7 @@ struct LineF {
     /// 
     /// ![qlinef-normalvector.png](qlinef-normalvector.png)
     /// 
-    /// **See also:** unitVector()
+    /// **See also:** [`unit_vector()`]
     normal_vector() -> LineF,
     /// 
     /// Returns a value indicating whether or not *this* line intersects
@@ -212,7 +204,7 @@ struct LineF {
     /// including 360.0. The angles are measured counter-clockwise from a point
     /// on the x-axis to the right of the origin (x > 0).
     /// 
-    /// **See also:** setAngle()
+    /// **See also:** [`set_angle()`]
     /// 
     /// Returns the angle (in degrees) from this line to the given *line,* taking the direction of the lines into account. If the lines
     /// do not intersect within their range, it is the intersection point of
@@ -223,7 +215,7 @@ struct LineF {
     /// to this line to make it have the same angle as the given *line,*
     /// going counter-clockwise.
     /// 
-    /// **See also:** intersect()
+    /// **See also:** [`intersect()`]
     /// 
     /// Returns the angle (in degrees) between this line and the given *line,* taking the direction of the lines into account. If the lines
     /// do not intersect within their range, it is the intersection point of
@@ -237,14 +229,15 @@ struct LineF {
     /// When the lines are parallel, this function returns 0 if they have
     /// the same direction; otherwise it returns 180.
     /// 
-    /// **See also:** intersect()
-    angle(l: &LineFType) -> f32,
+    /// **See also:** [`intersect()`]
+    [org_name(angle)]
+    angle_2(l: &LineFType) -> f32,
     /// 
     /// Returns the point at the parameterized position specified by *t.* The function returns the line's start point if t = 0, and its end
     /// point if t = 1.
     /// 
-    /// **See also:** dx()
-    /// dy()
+    /// **See also:** [`dx()`]
+    /// [`dy()`]
     point_at(t: f32) -> PointF,
     /// 
     /// Returns the center point of this line. This is equivalent to
@@ -253,30 +246,30 @@ struct LineF {
     /// 
     /// Sets the starting point of this line to *p1.*
     /// 
-    /// **See also:** setP2()
-    /// p1()
+    /// **See also:** [`set_p2()`]
+    /// [`p1()`]
     set_p1(p1: &PointFType),
     /// 
     /// Sets the end point of this line to *p2.*
     /// 
-    /// **See also:** setP1()
-    /// p2()
+    /// **See also:** [`set_p1()`]
+    /// [`p2()`]
     set_p2(p2: &PointFType),
     /// 
     /// Sets the start point of this line to *p1* and the end point of this line to *p2.*
     /// 
-    /// **See also:** setP1()
-    /// setP2()
-    /// p1()
-    /// p2()
+    /// **See also:** [`set_p1()`]
+    /// [`set_p2()`]
+    /// [`p1()`]
+    /// [`p2()`]
     set_points(p1: &PointFType, p2: &PointFType),
     /// 
     /// Sets this line to the start in *x1,* *y1* and end in *x2,* *y2.*
     /// 
-    /// **See also:** setP1()
-    /// setP2()
-    /// p1()
-    /// p2()
+    /// **See also:** [`set_p1()`]
+    /// [`set_p2()`]
+    /// [`p1()`]
+    /// [`p2()`]
     set_line(x1: f32, y1: f32, x2: f32, y2: f32),
     /// 
     /// Returns an integer based copy of this line.
@@ -284,8 +277,18 @@ struct LineF {
     /// Note that the returned line's start and end points are rounded to
     /// the nearest integer.
     /// 
-    /// **See also:** QLineF()
+    /// **See also:** [`q_line_f()`]
     to_line() -> Line,
+}
+
+[org_name(QLineF)]
+enum IntersectType {
+    /// Indicates that the lines do not intersect; i.e. they are parallel.
+    NoIntersection,
+    /// The two lines intersect with each other within the start and end points of each line.
+    BoundedIntersection,
+    /// The two lines intersect, but not within the range defined by their lengths. This will be the case if the lines are not parallel. intersect() will also return this value if the intersect point is within the start and end point of only one of the lines.
+    UnboundedIntersection,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

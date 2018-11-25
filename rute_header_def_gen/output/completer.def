@@ -90,27 +90,13 @@
 /// 
 /// for list models and the absolute file path if the mode is a QFileSystemModel.
 /// 
-/// **See also:** QAbstractItemModel
-/// QLineEdit
-/// QComboBox
+/// **See also:** [`AbstractItemModel`]
+/// [`LineEdit`]
+/// [`ComboBox`]
 /// {Completer Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QCompleter)]
-enum CompletionMode {
-    PopupCompletion,
-    UnfilteredPopupCompletion,
-    InlineCompletion,
-}
-
-[org_name(QCompleter)]
-enum ModelSorting {
-    UnsortedModel,
-    CaseSensitivelySortedModel,
-    CaseInsensitivelySortedModel,
-}
-
 struct Completer : Object {
     /// 
     /// Sets the widget for which completion are provided for to *widget.* This
@@ -119,14 +105,14 @@ struct Completer : Object {
     /// QComboBox::setCompleter(). The widget needs to be set explicitly when
     /// providing completions for custom widgets.
     /// 
-    /// **See also:** widget()
-    /// setModel()
-    /// setPopup()
+    /// **See also:** [`widget()`]
+    /// [`set_model()`]
+    /// [`set_popup()`]
     set_widget(widget: *WidgetType),
     /// 
     /// Returns the widget for which the completer object is providing completions.
     /// 
-    /// **See also:** setWidget()
+    /// **See also:** [`set_widget()`]
     widget() -> Widget?,
     /// 
     /// Sets the model which provides completions to *model.* The *model* can
@@ -137,14 +123,14 @@ struct Completer : Object {
     /// caseSensitivity to Qt::CaseInsensitive on Windows and Qt::CaseSensitive
     /// on other platforms.
     /// 
-    /// **See also:** completionModel()
+    /// **See also:** [`completion_model()`]
     /// modelSorting
     /// {Handling Tree Models}
     set_model(c: *AbstractItemModelType),
     /// 
     /// Returns the model that provides completion strings.
     /// 
-    /// **See also:** completionModel()
+    /// **See also:** [`completion_model()`]
     /// 
     /// By default, no assumptions are made about the order of the items
     /// in the model that provides the completions.
@@ -165,8 +151,8 @@ struct Completer : Object {
     /// is different to the case sensitivity
     /// used by the model's when sorting.
     /// 
-    /// **See also:** setCaseSensitivity()
-    /// QCompleter::ModelSorting
+    /// **See also:** [`set_case_sensitivity()`]
+    /// [`Completer::model_sorting()`]
     model() -> AbstractItemModel?,
     set_completion_mode(mode: Completer::CompletionMode),
     /// 
@@ -181,7 +167,7 @@ struct Completer : Object {
     /// QAbstractProxyModel subclass.
     /// 
     /// **See also:** completionPrefix
-    /// model()
+    /// [`model()`]
     completion_mode() -> Completer::CompletionMode,
     set_filter_mode(filter_mode: Rute::MatchFlags),
     /// 
@@ -199,7 +185,7 @@ struct Completer : Object {
     /// 
     /// Returns the popup used to display completions.
     /// 
-    /// **See also:** setPopup()
+    /// **See also:** [`set_popup()`]
     popup() -> AbstractItemView?,
     /// 
     /// Sets the popup used to display completions to *popup.* QCompleter takes
@@ -214,7 +200,7 @@ struct Completer : Object {
     /// set on the view (for example, hiding columns in the view requires a model
     /// to be set on the view).
     /// 
-    /// **See also:** popup()
+    /// **See also:** [`popup()`]
     set_popup(popup: *AbstractItemViewType),
     set_case_sensitivity(case_sensitivity: Rute::CaseSensitivity),
     /// 
@@ -245,8 +231,8 @@ struct Completer : Object {
     /// is different to the case sensitivity
     /// used by the model's when sorting.
     /// 
-    /// **See also:** setCaseSensitivity()
-    /// QCompleter::ModelSorting
+    /// **See also:** [`set_case_sensitivity()`]
+    /// [`Completer::model_sorting()`]
     model_sorting() -> Completer::ModelSorting,
     set_completion_column(column: i32),
     /// 
@@ -284,20 +270,20 @@ struct Completer : Object {
     /// This function may be used along with currentCompletion() to iterate
     /// through all the possible completions.
     /// 
-    /// **See also:** currentCompletion()
-    /// completionCount()
+    /// **See also:** [`current_completion()`]
+    /// [`completion_count()`]
     set_current_row(row: i32) -> bool,
     /// 
     /// Returns the current row.
     /// 
-    /// **See also:** setCurrentRow()
+    /// **See also:** [`set_current_row()`]
     current_row() -> i32,
     /// 
     /// Returns the model index of the current completion in the completionModel().
     /// 
-    /// **See also:** setCurrentRow()
-    /// currentCompletion()
-    /// model()
+    /// **See also:** [`set_current_row()`]
+    /// [`current_completion()`]
+    /// [`model()`]
     current_index() -> ModelIndex,
     /// 
     /// Returns the current completion string. This includes the [completionPrefix.](completionPrefix.)
@@ -305,8 +291,8 @@ struct Completer : Object {
     /// When used alongside setCurrentRow(), it can be used to iterate through
     /// all the matches.
     /// 
-    /// **See also:** setCurrentRow()
-    /// currentIndex()
+    /// **See also:** [`set_current_row()`]
+    /// [`current_index()`]
     current_completion() -> String,
     /// 
     /// Returns the completion model. The completion model is a read-only list model
@@ -318,7 +304,7 @@ struct Completer : Object {
     /// QAbstractProxyModel subclass.
     /// 
     /// **See also:** completionPrefix
-    /// model()
+    /// [`model()`]
     completion_model() -> AbstractItemModel?,
     /// 
     /// The completionModel() is updated to reflect the list of possible
@@ -345,7 +331,7 @@ struct Completer : Object {
     /// item for list models. It returns the absolute file path if the model is a
     /// QFileSystemModel.
     /// 
-    /// **See also:** splitPath()
+    /// **See also:** [`split_path()`]
     [event] path_from_index(index: &ModelIndexType) -> String,
     /// 
     /// Splits the given *path* into strings that are used to match at each level
@@ -357,7 +343,7 @@ struct Completer : Object {
     /// When used with list models, the first item in the returned list is used for
     /// matching.
     /// 
-    /// **See also:** pathFromIndex()
+    /// **See also:** [`path_from_index()`]
     /// {Handling Tree Models}
     [event] split_path(path: String) -> [String],
     /// 
@@ -384,7 +370,8 @@ struct Completer : Object {
     /// This signal is sent when an item in the popup() is activated by the user (by
     /// clicking or pressing return). The item's *text* is given.
     /// 
-    [signal] activated(index: &ModelIndexType),
+    [org_name(activated)]
+    [signal] activated_2(index: &ModelIndexType),
     /// 
     /// This signal is sent when an item in the popup() is highlighted by
     /// the user. It is also sent if complete() is called with the completionMode()
@@ -404,7 +391,28 @@ struct Completer : Object {
     /// This signal is sent when an item in the popup() is highlighted by
     /// the user. It is also sent if complete() is called with the completionMode()
     /// set to QCompleter::InlineCompletion. The item's *text* is given.
-    [signal] highlighted(index: &ModelIndexType),
+    [org_name(highlighted)]
+    [signal] highlighted_2(index: &ModelIndexType),
+}
+
+[org_name(QCompleter)]
+enum CompletionMode {
+    /// Current completions are displayed in a popup window.
+    PopupCompletion,
+    /// All possible completions are displayed in a popup window with the most likely suggestion indicated as current.
+    UnfilteredPopupCompletion,
+    /// Completions appear inline (as selected text).
+    InlineCompletion,
+}
+
+[org_name(QCompleter)]
+enum ModelSorting {
+    /// The model is unsorted.
+    UnsortedModel,
+    /// The model is sorted case sensitively.
+    CaseSensitivelySortedModel,
+    /// The model is sorted case insensitively.
+    CaseInsensitivelySortedModel,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

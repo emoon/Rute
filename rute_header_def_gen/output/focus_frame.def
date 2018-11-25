@@ -19,13 +19,13 @@ struct FocusFrame : Widget {
     /// and place itself around the widget automatically. If the monitored widget is deleted,
     /// QFocusFrame will set it to zero.
     /// 
-    /// **See also:** QFocusFrame::widget()
+    /// **See also:** [`FocusFrame::widget`]
     set_widget(widget: *WidgetType),
     /// 
     /// Returns the currently monitored widget for automatically resize and
     /// update.
     /// 
-    /// **See also:** QFocusFrame::setWidget()
+    /// **See also:** [`FocusFrame::set_widget`]
     widget() -> Widget?,
     /// 
     /// 
@@ -39,7 +39,7 @@ struct FocusFrame : Widget {
     /// for subclasses when they need a QStyleOption, but don't want to fill
     /// in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionType),
 }
 

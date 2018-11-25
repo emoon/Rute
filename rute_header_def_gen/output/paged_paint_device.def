@@ -4,143 +4,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QPagedPaintDevice)]
-enum PageSize {
-    A4,
-    B5,
-    Letter,
-    Legal,
-    Executive,
-    A0,
-    A1,
-    A2,
-    A3,
-    A5,
-    A6,
-    A7,
-    A8,
-    A9,
-    B0,
-    B1,
-    B10,
-    B2,
-    B3,
-    B4,
-    B6,
-    B7,
-    B8,
-    B9,
-    C5E,
-    Comm10E,
-    DLE,
-    Folio,
-    Ledger,
-    Tabloid,
-    Custom,
-    A10,
-    A3Extra,
-    A4Extra,
-    A4Plus,
-    A4Small,
-    A5Extra,
-    B5Extra,
-    JisB0,
-    JisB1,
-    JisB2,
-    JisB3,
-    JisB4,
-    JisB5,
-    JisB6,
-    JisB7,
-    JisB8,
-    JisB9,
-    JisB10,
-    AnsiC,
-    AnsiD,
-    AnsiE,
-    LegalExtra,
-    LetterExtra,
-    LetterPlus,
-    LetterSmall,
-    TabloidExtra,
-    ArchA,
-    ArchB,
-    ArchC,
-    ArchD,
-    ArchE,
-    Imperial7x9,
-    Imperial8x10,
-    Imperial9x11,
-    Imperial9x12,
-    Imperial10x11,
-    Imperial10x13,
-    Imperial10x14,
-    Imperial12x11,
-    Imperial15x11,
-    ExecutiveStandard,
-    Note,
-    Quarto,
-    Statement,
-    SuperA,
-    SuperB,
-    Postcard,
-    DoublePostcard,
-    Prc16K,
-    Prc32K,
-    Prc32KBig,
-    FanFoldUS,
-    FanFoldGerman,
-    FanFoldGermanLegal,
-    EnvelopeB4,
-    EnvelopeB5,
-    EnvelopeB6,
-    EnvelopeC0,
-    EnvelopeC1,
-    EnvelopeC2,
-    EnvelopeC3,
-    EnvelopeC4,
-    EnvelopeC6,
-    EnvelopeC65,
-    EnvelopeC7,
-    Envelope9,
-    Envelope11,
-    Envelope12,
-    Envelope14,
-    EnvelopeMonarch,
-    EnvelopePersonal,
-    EnvelopeChou3,
-    EnvelopeChou4,
-    EnvelopeInvite,
-    EnvelopeItalian,
-    EnvelopeKaku2,
-    EnvelopeKaku3,
-    EnvelopePrc1,
-    EnvelopePrc2,
-    EnvelopePrc3,
-    EnvelopePrc4,
-    EnvelopePrc5,
-    EnvelopePrc6,
-    EnvelopePrc7,
-    EnvelopePrc8,
-    EnvelopePrc9,
-    EnvelopePrc10,
-    EnvelopeYou4,
-    LastPageSize,
-    NPageSize,
-    NPaperSize,
-    AnsiA,
-    AnsiB,
-    EnvelopeC5,
-    EnvelopeDL,
-    Envelope10,
-}
-
-[org_name(QPagedPaintDevice)]
-enum PdfVersion {
-    PdfVersion_1_4,
-    PdfVersion_A1b,
-}
-
 struct PagedPaintDevice : PaintDevice {
     /// 
     /// Starts a new page. Returns `true` on success.
@@ -155,12 +18,12 @@ struct PagedPaintDevice : PaintDevice {
     /// 
     /// Returns true if the page layout was successfully set to *newPageLayout.*
     /// 
-    /// **See also:** pageLayout()
+    /// **See also:** [`page_layout()`]
     set_page_layout(page_layout: &PageLayoutType) -> bool,
     /// 
     /// Sets the size of the a page to *size.*
     /// 
-    /// **See also:** setPageSizeMM()
+    /// **See also:** [`set_page_size_mm()`]
     /// 
     /// Sets the page size to *size.* *size* is specified in millimeters.
     /// 
@@ -178,7 +41,7 @@ struct PagedPaintDevice : PaintDevice {
     /// 
     /// Returns true if the page size was successfully set to *pageSize.*
     /// 
-    /// **See also:** pageLayout()
+    /// **See also:** [`page_layout()`]
     set_page_size(page_size: &PageSizeType) -> bool,
     /// 
     /// Sets the page *orientation.*
@@ -195,7 +58,7 @@ struct PagedPaintDevice : PaintDevice {
     /// 
     /// Returns true if the page orientation was successfully set to *orientation.*
     /// 
-    /// **See also:** pageLayout()
+    /// **See also:** [`page_layout()`]
     set_page_orientation(orientation: PageLayout::Orientation) -> bool,
     /// 
     /// Set the page *margins* in the current page layout units.
@@ -209,7 +72,7 @@ struct PagedPaintDevice : PaintDevice {
     /// 
     /// Returns true if the page margins were successfully set to *margins.*
     /// 
-    /// **See also:** pageLayout()
+    /// **See also:** [`page_layout()`]
     /// 
     /// Set the page *margins* defined in the given *units.*
     /// 
@@ -222,7 +85,7 @@ struct PagedPaintDevice : PaintDevice {
     /// 
     /// Returns true if the page margins were successfully set to *margins.*
     /// 
-    /// **See also:** pageLayout()
+    /// **See also:** [`page_layout()`]
     set_page_margins(margins: &MarginsFType) -> bool,
     /// 
     /// Set the page *margins* in the current page layout units.
@@ -236,7 +99,7 @@ struct PagedPaintDevice : PaintDevice {
     /// 
     /// Returns true if the page margins were successfully set to *margins.*
     /// 
-    /// **See also:** pageLayout()
+    /// **See also:** [`page_layout()`]
     /// 
     /// Set the page *margins* defined in the given *units.*
     /// 
@@ -249,8 +112,9 @@ struct PagedPaintDevice : PaintDevice {
     /// 
     /// Returns true if the page margins were successfully set to *margins.*
     /// 
-    /// **See also:** pageLayout()
-    set_page_margins(margins: &MarginsFType, units: PageLayout::Unit) -> bool,
+    /// **See also:** [`page_layout()`]
+    [org_name(setPageMargins)]
+    set_page_margins_2(margins: &MarginsFType, units: PageLayout::Unit) -> bool,
     /// 
     /// Returns the current page layout. Use this method to access the current
     /// QPageSize, QPageLayout::Orientation, QMarginsF, fullRect() and paintRect().
@@ -258,15 +122,15 @@ struct PagedPaintDevice : PaintDevice {
     /// Note that you cannot use the setters on the returned object, you must either
     /// call the individual QPagedPaintDevice setters or use setPageLayout().
     /// 
-    /// **See also:** setPageLayout()
-    /// setPageSize()
-    /// setPageOrientation()
-    /// setPageMargins()
+    /// **See also:** [`set_page_layout()`]
+    /// [`set_page_size()`]
+    /// [`set_page_orientation()`]
+    /// [`set_page_margins()`]
     page_layout() -> PageLayout,
     /// 
     /// Sets the size of the a page to *size.*
     /// 
-    /// **See also:** setPageSizeMM()
+    /// **See also:** [`set_page_size_mm()`]
     /// 
     /// Sets the page size to *size.* *size* is specified in millimeters.
     /// 
@@ -284,8 +148,9 @@ struct PagedPaintDevice : PaintDevice {
     /// 
     /// Returns true if the page size was successfully set to *pageSize.*
     /// 
-    /// **See also:** pageLayout()
-    [event] set_page_size(size: PagedPaintDevice::PageSize),
+    /// **See also:** [`page_layout()`]
+    [org_name(setPageSize)]
+    [event] set_page_size_2(size: PagedPaintDevice::PageSize),
     /// 
     /// Returns the currently used page size.
     /// 
@@ -308,18 +173,282 @@ struct PagedPaintDevice : PaintDevice {
     /// The margins are purely a hint to the drawing method. They don't affect the
     /// coordinate system or clipping.
     /// 
-    /// **See also:** margins()
+    /// **See also:** [`margins()`]
     [event] set_margins(margins: onst QPagedPaintDevice::Margins &),
     /// 
     /// Returns the current margins of the paint device. The default is 0.
     /// 
     /// Margins are specified in millimeters.
     /// 
-    /// **See also:** setMargins()
+    /// **See also:** [`set_margins()`]
     margins() -> PagedPaintDevice::Margins,
     dd() -> PagedPaintDevicePrivate?,
     device_page_layout() -> PageLayout,
-    device_page_layout() -> PageLayout?,
+    [org_name(devicePageLayout)]
+    device_page_layout_2() -> PageLayout?,
+}
+
+[org_name(QPagedPaintDevice)]
+enum PageSize {
+    /// 210 x 297 mm, 8.26 x 11.69 inches
+    A4,
+    /// 176 x 250 mm, 6.93 x 9.84 inches
+    B5,
+    /// 8.5 x 11 inches, 215.9 x 279.4 mm
+    Letter,
+    /// 8.5 x 14 inches, 215.9 x 355.6 mm
+    Legal,
+    /// 7.5 x 10 inches, 190.5 x 254 mm
+    Executive,
+    /// 841 x 1189 mm
+    A0,
+    /// 594 x 841 mm
+    A1,
+    /// 420 x 594 mm
+    A2,
+    /// 297 x 420 mm
+    A3,
+    /// 148 x 210 mm
+    A5,
+    /// 105 x 148 mm
+    A6,
+    /// 74 x 105 mm
+    A7,
+    /// 52 x 74 mm
+    A8,
+    /// 37 x 52 mm
+    A9,
+    /// 1000 x 1414 mm
+    B0,
+    /// 707 x 1000 mm
+    B1,
+    /// 31 x 44 mm
+    B10,
+    /// 500 x 707 mm
+    B2,
+    /// 353 x 500 mm
+    B3,
+    /// 250 x 353 mm
+    B4,
+    /// 125 x 176 mm
+    B6,
+    /// 88 x 125 mm
+    B7,
+    /// 62 x 88 mm
+    B8,
+    /// 33 x 62 mm
+    B9,
+    /// 163 x 229 mm
+    C5E,
+    /// 105 x 241 mm, U.S. Common 10 Envelope
+    Comm10E,
+    /// 110 x 220 mm
+    DLE,
+    /// 210 x 330 mm
+    Folio,
+    /// 431.8 x 279.4 mm
+    Ledger,
+    /// 279.4 x 431.8 mm
+    Tabloid,
+    /// Unknown, or a user defined size.
+    Custom,
+    /// 
+    A10,
+    /// 
+    A3Extra,
+    /// 
+    A4Extra,
+    /// 
+    A4Plus,
+    /// 
+    A4Small,
+    /// 
+    A5Extra,
+    /// 
+    B5Extra,
+    /// 
+    JisB0,
+    /// 
+    JisB1,
+    /// 
+    JisB2,
+    /// 
+    JisB3,
+    /// 
+    JisB4,
+    /// 
+    JisB5,
+    JisB6,
+    /// 
+    JisB7,
+    /// 
+    JisB8,
+    /// 
+    JisB9,
+    /// 
+    JisB10,
+    /// 
+    AnsiC,
+    /// 
+    AnsiD,
+    /// 
+    AnsiE,
+    /// 
+    LegalExtra,
+    /// 
+    LetterExtra,
+    /// 
+    LetterPlus,
+    /// 
+    LetterSmall,
+    /// 
+    TabloidExtra,
+    /// 
+    ArchA,
+    /// 
+    ArchB,
+    /// 
+    ArchC,
+    /// 
+    ArchD,
+    /// 
+    ArchE,
+    /// 
+    Imperial7x9,
+    /// 
+    Imperial8x10,
+    /// 
+    Imperial9x11,
+    /// 
+    Imperial9x12,
+    /// 
+    Imperial10x11,
+    /// 
+    Imperial10x13,
+    /// 
+    Imperial10x14,
+    /// 
+    Imperial12x11,
+    /// 
+    Imperial15x11,
+    /// 
+    ExecutiveStandard,
+    /// 
+    Note,
+    /// 
+    Quarto,
+    /// 
+    Statement,
+    /// 
+    SuperA,
+    /// 
+    SuperB,
+    /// 
+    Postcard,
+    /// 
+    DoublePostcard,
+    /// 
+    Prc16K,
+    /// 
+    Prc32K,
+    /// 
+    Prc32KBig,
+    /// 
+    FanFoldUS,
+    /// 
+    FanFoldGerman,
+    /// 
+    FanFoldGermanLegal,
+    /// 
+    EnvelopeB4,
+    /// 
+    EnvelopeB5,
+    /// 
+    EnvelopeB6,
+    /// 
+    EnvelopeC0,
+    /// 
+    EnvelopeC1,
+    /// 
+    EnvelopeC2,
+    /// 
+    EnvelopeC3,
+    /// 
+    EnvelopeC4,
+    /// 
+    EnvelopeC6,
+    /// 
+    EnvelopeC65,
+    /// 
+    EnvelopeC7,
+    /// 
+    Envelope9,
+    /// 
+    Envelope11,
+    /// 
+    Envelope12,
+    /// 
+    Envelope14,
+    /// 
+    EnvelopeMonarch,
+    /// 
+    EnvelopePersonal,
+    /// 
+    EnvelopeChou3,
+    /// 
+    EnvelopeChou4,
+    /// 
+    EnvelopeInvite,
+    /// 
+    EnvelopeItalian,
+    /// 
+    EnvelopeKaku2,
+    /// 
+    EnvelopeKaku3,
+    /// 
+    EnvelopePrc1,
+    /// 
+    EnvelopePrc2,
+    /// 
+    EnvelopePrc3,
+    /// 
+    EnvelopePrc4,
+    /// 
+    EnvelopePrc5,
+    /// 
+    EnvelopePrc6,
+    /// 
+    EnvelopePrc7,
+    /// 
+    EnvelopePrc8,
+    /// 
+    EnvelopePrc9,
+    /// 
+    EnvelopePrc10,
+    /// 
+    EnvelopeYou4,
+    /// = EnvelopeYou4
+    LastPageSize,
+    NPageSize,
+    NPaperSize,
+    /// = Letter
+    AnsiA,
+    /// = Ledger
+    AnsiB,
+    /// = C5E
+    EnvelopeC5,
+    /// = DLE
+    EnvelopeDL,
+    /// = Comm10E
+    Envelope10,
+}
+
+[org_name(QPagedPaintDevice)]
+enum PdfVersion {
+    /// A PDF 1.4 compatible document is produced.
+    PdfVersion_1_4,
+    /// A PDF/A-1b compatible document is produced.
+    PdfVersion_A1b,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

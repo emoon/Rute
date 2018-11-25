@@ -26,191 +26,14 @@
 /// Subclasses of QEvent contain additional parameters that describe
 /// the particular event.
 /// 
-/// **See also:** QObject::event()
-/// QObject::installEventFilter()
-/// QCoreApplication::sendEvent()
-/// QCoreApplication::postEvent()
-/// QCoreApplication::processEvents()
+/// **See also:** [`Object::event`]
+/// [`Object::install_event_filter`]
+/// [`CoreApplication::send_event`]
+/// [`CoreApplication::post_event`]
+/// [`CoreApplication::process_events`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QEvent)]
-enum Type {
-    None,
-    Timer,
-    MouseButtonPress,
-    MouseButtonRelease,
-    MouseButtonDblClick,
-    MouseMove,
-    KeyPress,
-    KeyRelease,
-    FocusIn,
-    FocusOut,
-    FocusAboutToChange,
-    Enter,
-    Leave,
-    Paint,
-    Move,
-    Resize,
-    Create,
-    Destroy,
-    Show,
-    Hide,
-    Close,
-    Quit,
-    ParentChange,
-    ParentAboutToChange,
-    ThreadChange,
-    WindowActivate,
-    WindowDeactivate,
-    ShowToParent,
-    HideToParent,
-    Wheel,
-    WindowTitleChange,
-    WindowIconChange,
-    ApplicationWindowIconChange,
-    ApplicationFontChange,
-    ApplicationLayoutDirectionChange,
-    ApplicationPaletteChange,
-    PaletteChange,
-    Clipboard,
-    Speech,
-    MetaCall,
-    SockAct,
-    WinEventAct,
-    DeferredDelete,
-    DragEnter,
-    DragMove,
-    DragLeave,
-    Drop,
-    DragResponse,
-    ChildAdded,
-    ChildPolished,
-    ChildRemoved,
-    ShowWindowRequest,
-    PolishRequest,
-    Polish,
-    LayoutRequest,
-    UpdateRequest,
-    UpdateLater,
-    EmbeddingControl,
-    ActivateControl,
-    DeactivateControl,
-    ContextMenu,
-    InputMethod,
-    TabletMove,
-    LocaleChange,
-    LanguageChange,
-    LayoutDirectionChange,
-    Style,
-    TabletPress,
-    TabletRelease,
-    OkRequest,
-    HelpRequest,
-    IconDrag,
-    FontChange,
-    EnabledChange,
-    ActivationChange,
-    StyleChange,
-    IconTextChange,
-    ModifiedChange,
-    MouseTrackingChange,
-    WindowBlocked,
-    WindowUnblocked,
-    WindowStateChange,
-    ReadOnlyChange,
-    ToolTip,
-    WhatsThis,
-    StatusTip,
-    ActionChanged,
-    ActionAdded,
-    ActionRemoved,
-    FileOpen,
-    Shortcut,
-    ShortcutOverride,
-    WhatsThisClicked,
-    ToolBarChange,
-    ApplicationActivate,
-    ApplicationActivated,
-    ApplicationDeactivate,
-    ApplicationDeactivated,
-    QueryWhatsThis,
-    EnterWhatsThisMode,
-    LeaveWhatsThisMode,
-    ZOrderChange,
-    HoverEnter,
-    HoverLeave,
-    HoverMove,
-    AcceptDropsChange,
-    ZeroTimerEvent,
-    GraphicsSceneMouseMove,
-    GraphicsSceneMousePress,
-    GraphicsSceneMouseRelease,
-    GraphicsSceneMouseDoubleClick,
-    GraphicsSceneContextMenu,
-    GraphicsSceneHoverEnter,
-    GraphicsSceneHoverMove,
-    GraphicsSceneHoverLeave,
-    GraphicsSceneHelp,
-    GraphicsSceneDragEnter,
-    GraphicsSceneDragMove,
-    GraphicsSceneDragLeave,
-    GraphicsSceneDrop,
-    GraphicsSceneWheel,
-    KeyboardLayoutChange,
-    DynamicPropertyChange,
-    TabletEnterProximity,
-    TabletLeaveProximity,
-    NonClientAreaMouseMove,
-    NonClientAreaMouseButtonPress,
-    NonClientAreaMouseButtonRelease,
-    NonClientAreaMouseButtonDblClick,
-    MacSizeChange,
-    ContentsRectChange,
-    MacGLWindowChange,
-    FutureCallOut,
-    GraphicsSceneResize,
-    GraphicsSceneMove,
-    CursorChange,
-    ToolTipChange,
-    NetworkReplyUpdated,
-    GrabMouse,
-    UngrabMouse,
-    GrabKeyboard,
-    UngrabKeyboard,
-    MacGLClearDrawable,
-    StateMachineSignal,
-    StateMachineWrapped,
-    TouchBegin,
-    TouchUpdate,
-    TouchEnd,
-    NativeGesture,
-    RequestSoftwareInputPanel,
-    CloseSoftwareInputPanel,
-    WinIdChange,
-    Gesture,
-    GestureOverride,
-    ScrollPrepare,
-    Scroll,
-    Expose,
-    InputMethodQuery,
-    OrientationChange,
-    TouchCancel,
-    ThemeChange,
-    SockClose,
-    PlatformPanel,
-    StyleAnimationUpdate,
-    ApplicationStateChange,
-    WindowChangeInternal,
-    ScreenChangeInternal,
-    PlatformSurface,
-    Pointer,
-    TabletTrackingChange,
-    User,
-    MaxUser,
-}
-
-
 struct Event {
     qt_check_for_qgadget_macro(),
     /// 
@@ -242,7 +65,7 @@ struct Event {
     /// wants the event. Unwanted events might be propagated to the parent
     /// widget.
     /// 
-    /// **See also:** ignore()
+    /// **See also:** [`ignore()`]
     accept(),
     /// 
     /// Clears the accept flag parameter of the event object, the
@@ -252,7 +75,7 @@ struct Event {
     /// does not want the event. Unwanted events might be propagated to the
     /// parent widget.
     /// 
-    /// **See also:** accept()
+    /// **See also:** [`accept()`]
     ignore(),
     /// 
     /// Registers and returns a custom event type. The *hint* provided
@@ -264,6 +87,330 @@ struct Event {
     /// Returns -1 if all available values are already taken or the
     /// program is shutting down.
     [static] register_event_type(hint: i32) -> i32,
+}
+
+[org_name(QEvent)]
+enum Type {
+    /// Not an event.
+    None,
+    /// Regular timer events (QTimerEvent).
+    Timer,
+    /// Mouse press (QMouseEvent).
+    MouseButtonPress,
+    /// Mouse release (QMouseEvent).
+    MouseButtonRelease,
+    /// Mouse press again (QMouseEvent).
+    MouseButtonDblClick,
+    /// Mouse move (QMouseEvent).
+    MouseMove,
+    /// Key press (QKeyEvent).
+    KeyPress,
+    /// Key release (QKeyEvent).
+    KeyRelease,
+    /// Widget or Window gains keyboard focus (QFocusEvent).
+    FocusIn,
+    /// Widget or Window loses keyboard focus (QFocusEvent).
+    FocusOut,
+    /// Widget or Window focus is about to change (QFocusEvent)
+    FocusAboutToChange,
+    /// Mouse enters widget's boundaries (QEnterEvent).
+    Enter,
+    /// Mouse leaves widget's boundaries.
+    Leave,
+    /// Screen update necessary (QPaintEvent).
+    Paint,
+    /// Widget's position changed (QMoveEvent).
+    Move,
+    /// Widget's size changed (QResizeEvent).
+    Resize,
+    Create,
+    Destroy,
+    /// Widget was shown on screen (QShowEvent).
+    Show,
+    /// Widget was hidden (QHideEvent).
+    Hide,
+    /// Widget was closed (QCloseEvent).
+    Close,
+    Quit,
+    /// The widget parent has changed.
+    ParentChange,
+    /// The widget parent is about to change.
+    ParentAboutToChange,
+    /// The object is moved to another thread. This is the last event sent to this object in the previous thread. See QObject::moveToThread().
+    ThreadChange,
+    /// Window was activated.
+    WindowActivate,
+    /// Window was deactivated.
+    WindowDeactivate,
+    /// A child widget has been shown.
+    ShowToParent,
+    /// A child widget has been hidden.
+    HideToParent,
+    /// Mouse wheel rolled (QWheelEvent).
+    Wheel,
+    /// The window title has changed.
+    WindowTitleChange,
+    /// The window's icon has changed.
+    WindowIconChange,
+    /// The application's icon has changed.
+    ApplicationWindowIconChange,
+    /// The default application font has changed.
+    ApplicationFontChange,
+    /// The default application layout direction has changed.
+    ApplicationLayoutDirectionChange,
+    /// The default application palette has changed.
+    ApplicationPaletteChange,
+    /// Palette of the widget changed.
+    PaletteChange,
+    /// The clipboard contents have changed.
+    Clipboard,
+    Speech,
+    /// An asynchronous method invocation via QMetaObject::invokeMethod().
+    MetaCall,
+    /// Socket activated, used to implement QSocketNotifier.
+    SockAct,
+    /// A Windows-specific activation event has occurred.
+    WinEventAct,
+    /// The object will be deleted after it has cleaned up (QDeferredDeleteEvent)
+    DeferredDelete,
+    /// The cursor enters a widget during a drag and drop operation (QDragEnterEvent).
+    DragEnter,
+    /// A drag and drop operation is in progress (QDragMoveEvent).
+    DragMove,
+    /// The cursor leaves a widget during a drag and drop operation (QDragLeaveEvent).
+    DragLeave,
+    /// A drag and drop operation is completed (QDropEvent).
+    Drop,
+    DragResponse,
+    /// An object gets a child (QChildEvent).
+    ChildAdded,
+    /// A widget child gets polished (QChildEvent).
+    ChildPolished,
+    /// An object loses a child (QChildEvent).
+    ChildRemoved,
+    ShowWindowRequest,
+    /// The widget should be polished.
+    PolishRequest,
+    /// The widget is polished.
+    Polish,
+    /// Widget layout needs to be redone.
+    LayoutRequest,
+    /// The widget should be repainted.
+    UpdateRequest,
+    /// The widget should be queued to be repainted at a later time.
+    UpdateLater,
+    EmbeddingControl,
+    ActivateControl,
+    DeactivateControl,
+    /// Context popup menu (QContextMenuEvent).
+    ContextMenu,
+    /// An input method is being used (QInputMethodEvent).
+    InputMethod,
+    /// Wacom tablet move (QTabletEvent).
+    TabletMove,
+    /// The system locale has changed.
+    LocaleChange,
+    /// The application translation changed.
+    LanguageChange,
+    /// The direction of layouts changed.
+    LayoutDirectionChange,
+    Style,
+    /// Wacom tablet press (QTabletEvent).
+    TabletPress,
+    /// Wacom tablet release (QTabletEvent).
+    TabletRelease,
+    OkRequest,
+    HelpRequest,
+    /// The main icon of a window has been dragged away (QIconDragEvent).
+    IconDrag,
+    /// Widget's font has changed.
+    FontChange,
+    /// Widget's enabled state has changed.
+    EnabledChange,
+    /// A widget's top-level window activation state has changed.
+    ActivationChange,
+    /// Widget's style has been changed.
+    StyleChange,
+    /// Widget's icon text has been changed. (Deprecated)
+    IconTextChange,
+    /// Widgets modification state has been changed.
+    ModifiedChange,
+    /// The mouse tracking state has changed.
+    MouseTrackingChange,
+    /// The window is blocked by a modal dialog.
+    WindowBlocked,
+    /// The window is unblocked after a modal dialog exited.
+    WindowUnblocked,
+    /// The [window's state](QWindow::windowState())
+ (minimized, maximized or full-screen) has changed (QWindowStateChangeEvent).
+    WindowStateChange,
+    /// Widget's read-only state has changed (since Qt 5.4).
+    ReadOnlyChange,
+    /// A tooltip was requested (QHelpEvent).
+    ToolTip,
+    /// The widget should reveal "What's This?" help (QHelpEvent).
+    WhatsThis,
+    /// A status tip is requested (QStatusTipEvent).
+    StatusTip,
+    /// An action has been changed (QActionEvent).
+    ActionChanged,
+    /// A new action has been added (QActionEvent).
+    ActionAdded,
+    /// An action has been removed (QActionEvent).
+    ActionRemoved,
+    /// File open request (QFileOpenEvent).
+    FileOpen,
+    /// Key press in child for shortcut key handling (QShortcutEvent).
+    Shortcut,
+    /// Key press in child, for overriding shortcut key handling (QKeyEvent). When a shortcut is about to trigger, `ShortcutOverride` is sent to the active window. This allows clients (e.g. widgets) to signal that they will handle the shortcut themselves, by accepting the event. If the shortcut override is accepted, the event is delivered as a normal key press to the focus widget. Otherwise, it triggers the shortcut action, if one exists.
+    ShortcutOverride,
+    /// A link in a widget's "What's This?" help was clicked.
+    WhatsThisClicked,
+    /// The toolbar button is toggled on MacOS .
+    ToolBarChange,
+    /// This enum has been deprecated. Use ApplicationStateChange instead.
+    ApplicationActivate,
+    /// This enum has been deprecated. Use ApplicationStateChange instead.
+    ApplicationActivated,
+    /// This enum has been deprecated. Use ApplicationStateChange instead.
+    ApplicationDeactivate,
+    ApplicationDeactivated,
+    /// The widget should accept the event if it has "What's This?" help (QHelpEvent).
+    QueryWhatsThis,
+    /// Send to toplevel widgets when the application enters "What's This?" mode.
+    EnterWhatsThisMode,
+    /// Send to toplevel widgets when the application leaves "What's This?" mode.
+    LeaveWhatsThisMode,
+    /// The widget's z-order has changed. This event is never sent to top level windows. User events should have values between `User` and `MaxUser` :
+    ZOrderChange,
+    /// The mouse cursor enters a hover widget (QHoverEvent).
+    HoverEnter,
+    /// The mouse cursor leaves a hover widget (QHoverEvent).
+    HoverLeave,
+    /// The mouse cursor moves inside a hover widget (QHoverEvent).
+    HoverMove,
+    AcceptDropsChange,
+    ZeroTimerEvent,
+    /// Move mouse in a graphics scene (QGraphicsSceneMouseEvent).
+    GraphicsSceneMouseMove,
+    /// Mouse press in a graphics scene (QGraphicsSceneMouseEvent).
+    GraphicsSceneMousePress,
+    /// Mouse release in a graphics scene (QGraphicsSceneMouseEvent).
+    GraphicsSceneMouseRelease,
+    /// Mouse press again (double click) in a graphics scene (QGraphicsSceneMouseEvent).
+    GraphicsSceneMouseDoubleClick,
+    /// Context popup menu over a graphics scene (QGraphicsSceneContextMenuEvent).
+    GraphicsSceneContextMenu,
+    /// The mouse cursor enters a hover item in a graphics scene (QGraphicsSceneHoverEvent).
+    GraphicsSceneHoverEnter,
+    /// The mouse cursor moves inside a hover item in a graphics scene (QGraphicsSceneHoverEvent).
+    GraphicsSceneHoverMove,
+    /// The mouse cursor leaves a hover item in a graphics scene (QGraphicsSceneHoverEvent).
+    GraphicsSceneHoverLeave,
+    /// The user requests help for a graphics scene (QHelpEvent).
+    GraphicsSceneHelp,
+    /// The cursor enters a graphics scene during a drag and drop operation (QGraphicsSceneDragDropEvent).
+    GraphicsSceneDragEnter,
+    /// A drag and drop operation is in progress over a scene (QGraphicsSceneDragDropEvent).
+    GraphicsSceneDragMove,
+    /// The cursor leaves a graphics scene during a drag and drop operation (QGraphicsSceneDragDropEvent).
+    GraphicsSceneDragLeave,
+    /// A drag and drop operation is completed over a scene (QGraphicsSceneDragDropEvent).
+    GraphicsSceneDrop,
+    /// Mouse wheel rolled in a graphics scene (QGraphicsSceneWheelEvent).
+    GraphicsSceneWheel,
+    /// The keyboard layout has changed.
+    KeyboardLayoutChange,
+    /// A dynamic property was added, changed, or removed from the object.
+    DynamicPropertyChange,
+    /// Wacom tablet enter proximity event (QTabletEvent), sent to QApplication.
+    TabletEnterProximity,
+    /// Wacom tablet leave proximity event (QTabletEvent), sent to QApplication.
+    TabletLeaveProximity,
+    /// A mouse move occurred outside the client area (QMouseEvent).
+    NonClientAreaMouseMove,
+    /// A mouse button press occurred outside the client area (QMouseEvent).
+    NonClientAreaMouseButtonPress,
+    /// A mouse button release occurred outside the client area (QMouseEvent).
+    NonClientAreaMouseButtonRelease,
+    /// A mouse double click occurred outside the client area (QMouseEvent).
+    NonClientAreaMouseButtonDblClick,
+    /// The user changed his widget sizes ( MacOS only).
+    MacSizeChange,
+    /// The margins of the widget's content rect changed.
+    ContentsRectChange,
+    MacGLWindowChange,
+    FutureCallOut,
+    /// Widget was resized (QGraphicsSceneResizeEvent).
+    GraphicsSceneResize,
+    /// Widget was moved (QGraphicsSceneMoveEvent).
+    GraphicsSceneMove,
+    /// The widget's cursor has changed.
+    CursorChange,
+    /// The widget's tooltip has changed.
+    ToolTipChange,
+    NetworkReplyUpdated,
+    /// Item gains mouse grab (QGraphicsItem only).
+    GrabMouse,
+    /// Item loses mouse grab (QGraphicsItem, QQuickItem).
+    UngrabMouse,
+    /// Item gains keyboard grab (QGraphicsItem only).
+    GrabKeyboard,
+    /// Item loses keyboard grab (QGraphicsItem only).
+    UngrabKeyboard,
+    MacGLClearDrawable,
+    /// A signal delivered to a state machine (QStateMachine::SignalEvent).
+    StateMachineSignal,
+    /// The event is a wrapper for, i.e., contains, another event (QStateMachine::WrappedEvent).
+    StateMachineWrapped,
+    /// Beginning of a sequence of touch-screen or track-pad events (QTouchEvent).
+    TouchBegin,
+    /// Touch-screen event (QTouchEvent).
+    TouchUpdate,
+    /// End of touch-event sequence (QTouchEvent).
+    TouchEnd,
+    /// The system has detected a gesture (QNativeGestureEvent).
+    NativeGesture,
+    /// A widget wants to open a software input panel (SIP).
+    RequestSoftwareInputPanel,
+    /// A widget wants to close the software input panel (SIP).
+    CloseSoftwareInputPanel,
+    /// The window system identifer for this native widget has changed.
+    WinIdChange,
+    /// A gesture was triggered (QGestureEvent).
+    Gesture,
+    /// A gesture override was triggered (QGestureEvent).
+    GestureOverride,
+    /// The object needs to fill in its geometry information (QScrollPrepareEvent).
+    ScrollPrepare,
+    /// The object needs to scroll to the supplied position (QScrollEvent).
+    Scroll,
+    /// Sent to a window when its on-screen contents are invalidated and need to be flushed from the backing store.
+    Expose,
+    /// A input method query event (QInputMethodQueryEvent)
+    InputMethodQuery,
+    /// The screens orientation has changes (QScreenOrientationChangeEvent).
+    OrientationChange,
+    /// Cancellation of touch-event sequence (QTouchEvent).
+    TouchCancel,
+    ThemeChange,
+    SockClose,
+    /// A platform specific panel has been requested.
+    PlatformPanel,
+    StyleAnimationUpdate,
+    /// The state of the application has changed.
+    ApplicationStateChange,
+    WindowChangeInternal,
+    ScreenChangeInternal,
+    /// A native platform surface has been created or is about to be destroyed (QPlatformSurfaceEvent).
+    PlatformSurface,
+    Pointer,
+    /// The Wacom tablet tracking state has changed (since Qt 5.9).
+    TabletTrackingChange,
+    /// User-defined event.
+    User,
+    /// Last user event ID. For convenience, you can use the registerEventType() function to register and reserve a custom event type for your application. Doing so will allow you to avoid accidentally re-using a custom event type already in use elsewhere in your application.
+    MaxUser,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

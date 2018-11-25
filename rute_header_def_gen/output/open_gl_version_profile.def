@@ -7,36 +7,35 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct OpenGLVersionProfile {
     /// 
     /// Returns a QPair<int,int> where the components represent the major and minor OpenGL
     /// version numbers respectively.
     /// 
-    /// **See also:** setVersion()
+    /// **See also:** [`set_version()`]
     version() -> Pair<int,,
     /// 
     /// Sets the major and minor version numbers to *majorVersion* and *minorVersion* respectively.
     /// 
-    /// **See also:** version()
+    /// **See also:** [`version()`]
     set_version(major_version: i32, minor_version: i32),
     /// 
     /// Returns the OpenGL profile. Only makes sense if profiles are supported by this version.
     /// 
-    /// **See also:** setProfile()
+    /// **See also:** [`set_profile()`]
     profile() -> SurfaceFormat::OpenGLContextProfile,
     /// 
     /// Sets the OpenGL profile *profile.* Only makes sense if profiles are supported by
     /// this version.
     /// 
-    /// **See also:** profile()
+    /// **See also:** [`profile()`]
     set_profile(profile: SurfaceFormat::OpenGLContextProfile),
     /// 
     /// Returns `true` if profiles are supported by the OpenGL version returned by version(). Only
     /// OpenGL versions >= 3.2 support profiles.
     /// 
-    /// **See also:** profile()
-    /// version()
+    /// **See also:** [`profile()`]
+    /// [`version()`]
     has_profiles() -> bool,
     /// 
     /// Returns `true` is the OpenGL version returned by version() contains deprecated functions
@@ -46,8 +45,8 @@ struct OpenGLVersionProfile {
     /// Returns `true` if the version number is valid. Note that for a default constructed
     /// QOpenGLVersionProfile object this function will return `false.`
     /// 
-    /// **See also:** setVersion()
-    /// version()
+    /// **See also:** [`set_version()`]
+    /// [`version()`]
     is_valid() -> bool,
 }
 

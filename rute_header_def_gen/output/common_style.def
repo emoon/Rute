@@ -6,8 +6,8 @@
 /// Since QCommonStyle inherits QStyle, all of its functions are fully documented
 /// in the QStyle documentation.
 /// 
-/// **See also:** QStyle
-/// QProxyStyle
+/// **See also:** [`Style`]
+/// [`ProxyStyle`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -34,17 +34,20 @@ struct CommonStyle : Style {
     /// 
     /// 
     /// 
-    [event] polish(app: *ApplicationType),
+    [org_name(polish)]
+    [event] polish_2(app: *ApplicationType),
     /// 
     /// 
     /// 
-    [event] polish(widget: *WidgetType),
+    [org_name(polish)]
+    [event] polish_3(widget: *WidgetType),
     /// 
     /// 
     [event] unpolish(widget: *WidgetType),
     /// 
     /// 
-    [event] unpolish(application: *ApplicationType),
+    [org_name(unpolish)]
+    [event] unpolish_2(application: *ApplicationType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

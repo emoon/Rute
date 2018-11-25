@@ -33,30 +33,24 @@
 /// QTime can be used to measure a span of elapsed time using the
 /// start(), restart(), and elapsed() functions.
 /// 
-/// **See also:** QDate
-/// QDateTime
+/// **See also:** [`Date`]
+/// [`DateTime`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTime)]
-enum TimeFlag {
-    NullTime,
-}
-
-
 struct Time {
     /// 
     /// Returns `true` if the time is null (i.e., the QTime object was
     /// constructed using the default constructor); otherwise returns
     /// false. A null time is also an invalid time.
     /// 
-    /// **See also:** isValid()
+    /// **See also:** [`is_valid()`]
     is_null() -> bool,
     /// 
     /// Returns `true` if the time is valid; otherwise returns `false.` For example,
     /// the time 23:30:55.746 is valid, but 24:12:30 is invalid.
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the specified time is valid; otherwise returns
@@ -73,36 +67,36 @@ struct Time {
     /// 
     /// Returns -1 if the time is invalid.
     /// 
-    /// **See also:** minute()
-    /// second()
-    /// msec()
+    /// **See also:** [`minute()`]
+    /// [`second()`]
+    /// [`msec()`]
     hour() -> i32,
     /// 
     /// Returns the minute part (0 to 59) of the time.
     /// 
     /// Returns -1 if the time is invalid.
     /// 
-    /// **See also:** hour()
-    /// second()
-    /// msec()
+    /// **See also:** [`hour()`]
+    /// [`second()`]
+    /// [`msec()`]
     minute() -> i32,
     /// 
     /// Returns the second part (0 to 59) of the time.
     /// 
     /// Returns -1 if the time is invalid.
     /// 
-    /// **See also:** hour()
-    /// minute()
-    /// msec()
+    /// **See also:** [`hour()`]
+    /// [`minute()`]
+    /// [`msec()`]
     second() -> i32,
     /// 
     /// Returns the millisecond part (0 to 999) of the time.
     /// 
     /// Returns -1 if the time is invalid.
     /// 
-    /// **See also:** hour()
-    /// minute()
-    /// second()
+    /// **See also:** [`hour()`]
+    /// [`minute()`]
+    /// [`second()`]
     /// 
     /// Returns the number of milliseconds from this time to *t.*
     /// If *t* is earlier than this time, the number of milliseconds returned
@@ -114,13 +108,13 @@ struct Time {
     /// 
     /// Returns 0 if either time is invalid.
     /// 
-    /// **See also:** secsTo()
-    /// addMSecs()
-    /// QDateTime::msecsTo()
+    /// **See also:** [`secs_to()`]
+    /// [`add_m_secs()`]
+    /// [`DateTime::msecs_to`]
     /// 
     /// Returns the number of msecs since the start of the day, i.e. since 00:00:00.
     /// 
-    /// **See also:** fromMSecsSinceStartOfDay()
+    /// **See also:** [`from_m_secs_since_start_of_day()`]
     msec() -> i32,
     /// 
     /// Sets the time to hour *h,* minute *m,* seconds *s* and
@@ -130,7 +124,7 @@ struct Time {
     /// range 0 to 59, and *ms* must be in the range 0 to 999.
     /// Returns `true` if the set time is valid; otherwise returns `false.`
     /// 
-    /// **See also:** isValid()
+    /// **See also:** [`is_valid()`]
     set_hms(h: i32, m: i32, s: i32, ms: i32) -> bool,
     /// 
     /// Returns a QTime object containing a time *s* seconds later
@@ -142,9 +136,9 @@ struct Time {
     /// 
     /// Example:
     /// 
-    /// **See also:** addMSecs()
-    /// secsTo()
-    /// QDateTime::addSecs()
+    /// **See also:** [`add_m_secs()`]
+    /// [`secs_to()`]
+    /// [`DateTime::add_secs`]
     add_secs(secs: i32) -> Time,
     /// 
     /// Returns the number of seconds from this time to *t.*
@@ -158,8 +152,8 @@ struct Time {
     /// 
     /// Returns 0 if either time is invalid.
     /// 
-    /// **See also:** addSecs()
-    /// QDateTime::secsTo()
+    /// **See also:** [`add_secs()`]
+    /// [`DateTime::secs_to`]
     secs_to(arg0: &TimeType) -> i32,
     /// 
     /// Returns a QTime object containing a time *ms* milliseconds later
@@ -170,9 +164,9 @@ struct Time {
     /// 
     /// Returns a null time if this time is invalid.
     /// 
-    /// **See also:** addSecs()
-    /// msecsTo()
-    /// QDateTime::addMSecs()
+    /// **See also:** [`add_secs()`]
+    /// [`msecs_to()`]
+    /// [`DateTime::add_m_secs`]
     add_m_secs(ms: i32) -> Time,
     /// 
     /// Returns the number of milliseconds from this time to *t.*
@@ -185,9 +179,9 @@ struct Time {
     /// 
     /// Returns 0 if either time is invalid.
     /// 
-    /// **See also:** secsTo()
-    /// addMSecs()
-    /// QDateTime::msecsTo()
+    /// **See also:** [`secs_to()`]
+    /// [`add_m_secs()`]
+    /// [`DateTime::msecs_to`]
     msecs_to(arg0: &TimeType) -> i32,
     /// 
     /// Returns a new QTime instance with the time set to the number of *msecs*
@@ -195,12 +189,12 @@ struct Time {
     /// 
     /// If *msecs* falls outside the valid range an invalid QTime will be returned.
     /// 
-    /// **See also:** msecsSinceStartOfDay()
+    /// **See also:** [`msecs_since_start_of_day()`]
     [static] from_m_secs_since_start_of_day(msecs: i32) -> Time,
     /// 
     /// Returns the number of msecs since the start of the day, i.e. since 00:00:00.
     /// 
-    /// **See also:** fromMSecsSinceStartOfDay()
+    /// **See also:** [`from_m_secs_since_start_of_day()`]
     msecs_since_start_of_day() -> i32,
     /// 
     /// Returns the current time as reported by the system clock.
@@ -212,7 +206,7 @@ struct Time {
     /// Returns `true` if the time is valid; otherwise returns `false.` For example,
     /// the time 23:30:55.746 is valid, but 24:12:30 is invalid.
     /// 
-    /// **See also:** isNull()
+    /// **See also:** [`is_null()`]
     /// 
     /// **Overloads**
     /// Returns `true` if the specified time is valid; otherwise returns
@@ -223,13 +217,14 @@ struct Time {
     /// 
     /// Example:
     /// 
-    [static] is_valid(h: i32, m: i32, s: i32, ms: i32) -> bool,
+    [org_name(isValid)]
+    [static] is_valid_2(h: i32, m: i32, s: i32, ms: i32) -> bool,
     /// 
     /// Sets this time to the current time. This is practical for timing:
     /// 
-    /// **See also:** restart()
-    /// elapsed()
-    /// currentTime()
+    /// **See also:** [`restart()`]
+    /// [`elapsed()`]
+    /// [`current_time()`]
     start(),
     /// 
     /// Sets this time to the current time and returns the number of
@@ -248,9 +243,9 @@ struct Time {
     /// undefined. This can happen when daylight-saving time is turned on
     /// or off.
     /// 
-    /// **See also:** start()
-    /// elapsed()
-    /// currentTime()
+    /// **See also:** [`start()`]
+    /// [`elapsed()`]
+    /// [`current_time()`]
     restart() -> i32,
     /// 
     /// Returns the number of milliseconds that have elapsed since the
@@ -267,9 +262,14 @@ struct Time {
     /// undefined. This can happen when daylight-saving time is turned on
     /// or off.
     /// 
-    /// **See also:** start()
-    /// restart()
+    /// **See also:** [`start()`]
+    /// [`restart()`]
     elapsed() -> i32,
+}
+
+[org_name(QTime)]
+enum TimeFlag {
+    NullTime,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

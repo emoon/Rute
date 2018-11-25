@@ -6,7 +6,7 @@ use std::fs::File;
 use std::io::Read;
 use std::path::Path;
 
-#[cfg(debug_assertions)]
+//#[cfg(debug_assertions)]
 const _GRAMMAR: &str = include_str!("api.pest");
 
 ///
@@ -23,6 +23,7 @@ const PRMITIVE_TYPES: &[&str] = &[
 static ATTRIB_NO_CREATE: &'static str = "NoCreate";
 static ATTRIB_MANUAL_CREATE: &'static str = "ManualCreate";
 static ATTRIB_NO_WRAP_CLASS: &'static str = "NoWrapClass";
+static ATTRIB_NO_CPP_CLONE: &'static str = "NoCppClone";
 static ATTRIB_DROP: &'static str = "Drop";
 
 ///
@@ -37,7 +38,7 @@ pub enum VariableType {
     Enum,
     /// Struct/other type
     Regular,
-    /// Struct/other type
+    /// String type
     Str,
     /// Prmitive type (such as i32,u64,etc)
     Primitive,
@@ -50,8 +51,10 @@ pub enum VariableType {
 ///
 #[derive(Debug, Clone)]
 pub struct Variable {
-    /// Documentation 
+    /// Documentation
     pub doc_comments: String,
+    /// Which def file this variable comes from
+    pub def_file: String,
     /// Name of the variable
     pub name: String,
     /// Type of the variable
@@ -81,6 +84,7 @@ impl Default for Variable {
         Variable {
             name: String::new(),
             doc_comments: String::new(),
+            def_file: String::new(),
             vtype: VariableType::None,
             type_name: String::new(),
             enum_sub_type: String::new(),
@@ -113,8 +117,10 @@ pub enum FunctionType {
 ///
 #[derive(Debug, Clone)]
 pub struct Function {
-	/// Documentation
-	pub doc_comments: String,
+    /// Documentation
+    pub doc_comments: String,
+    /// Which def file this function comes from
+    pub def_file: String,
     /// Name of the function
     pub name: String,
     /// This is the C++ name of the function. Most of the time it will
@@ -136,8 +142,9 @@ pub struct Function {
 impl Default for Function {
     fn default() -> Self {
         Function {
-        	doc_comments: String::new(),
+            doc_comments: String::new(),
             name: String::new(),
+            def_file: String::new(),
             cpp_name: String::new(),
             function_args: Vec::new(),
             return_val: None,
@@ -156,6 +163,8 @@ pub struct Struct {
     pub doc_comments: String,
     /// Name
     pub name: String,
+    /// Which def file this struct comes from
+    pub def_file: String,
     /// Name for the C++ class in the generation
     pub cpp_name: String,
     /// Name of the Qt Class/Struct
@@ -169,7 +178,7 @@ pub struct Struct {
     /// Traits
     pub traits: Vec<String>,
     /// If the struct inherits another
-    pub inherit: Option<String>,
+    pub inherit: Option<Vec<String>>,
     /// The full inherit chain
     pub full_inherit: Vec<String>,
     /// If the struct is a widget or not
@@ -197,6 +206,10 @@ pub enum EnumEntry {
 pub struct Enum {
     /// Name of the enum
     pub name: String,
+    /// The file this enum is present in (notice if it's qnamespace we change it to rute_enums)
+    pub def_file: String,
+    /// Qt supports having a flags macro on enums being type checked with an extra name
+    pub flags_name: String,
     /// Original class name (like Qt, QAccesibility)
     pub original_class_name: String,
     /// All the enem entries
@@ -262,7 +275,7 @@ impl ApiParser {
         for chunk in chunks {
             match chunk.as_rule() {
                 Rule::structdef => {
-                    let sdef = Self::fill_struct(chunk, &struct_comments);
+                    let sdef = Self::fill_struct(chunk, &struct_comments, &api_def.base_filename);
                     struct_comments.clear();
 
                     // If we have some variables in the struct we push it to pod_struct
@@ -274,12 +287,20 @@ impl ApiParser {
                 }
 
                 Rule::doc_comment => {
-                	struct_comments.push_str(chunk.as_str());
-                	struct_comments.push_str("\n");
+                    struct_comments.push_str(chunk.as_str());
+                    struct_comments.push_str("\n");
                 }
 
                 Rule::enumdef => {
                     let mut enum_def = Enum::default();
+
+                    // Global enums are stored in qnamespace in Qt but we have them in rute_enums
+                    // so we change the name here to reflect that
+                    if base_filename == "qnamespace" {
+                        enum_def.def_file = "rute_enums".to_owned();
+                    } else {
+                        enum_def.def_file = base_filename.to_owned();
+                    }
 
                     for entry in chunk.into_inner() {
                         match entry.as_rule() {
@@ -287,6 +308,14 @@ impl ApiParser {
                             Rule::fieldlist => enum_def.entries = Self::fill_field_list_enum(entry),
                             Rule::org_name => {
                                 enum_def.original_class_name = entry
+                                    .into_inner()
+                                    .next()
+                                    .map(|e| e.as_str())
+                                    .unwrap()
+                                    .to_owned();
+                            }
+                            Rule::enum_flags => {
+                                enum_def.flags_name = entry
                                     .into_inner()
                                     .next()
                                     .map(|e| e.as_str())
@@ -308,15 +337,16 @@ impl ApiParser {
     ///
     /// Fill struct def
     ///
-    fn fill_struct(chunk: Pair<Rule>, doc_comments: &str) -> Struct {
+    fn fill_struct(chunk: Pair<Rule>, doc_comments: &str, def_file: &str) -> Struct {
         let mut sdef = Struct::default();
 
         sdef.doc_comments = doc_comments.to_owned();
+        sdef.def_file = def_file.to_owned();
 
         for entry in chunk.into_inner() {
             match entry.as_rule() {
                 Rule::name => sdef.name = entry.as_str().to_owned(),
-                Rule::derive => sdef.inherit = Some(Self::get_name(entry)),
+                Rule::derive => sdef.inherit = Some(Self::get_derive_list(entry)),
                 Rule::attributes => sdef.attributes = Self::get_attrbutes(entry),
                 Rule::traits => sdef.traits = Self::get_attrbutes(entry),
                 Rule::fieldlist => {
@@ -351,7 +381,20 @@ impl ApiParser {
     ///
     fn get_attrbutes(rule: Pair<Rule>) -> Vec<String> {
         let mut attribs = Vec::new();
+        for entry in rule.into_inner() {
+            if entry.as_rule() == Rule::namelist {
+                attribs = Self::get_namelist_list(entry);
+            }
+        }
 
+        attribs
+    }
+
+    ///
+    /// Get attributes for a struct
+    ///
+    fn get_derive_list(rule: Pair<Rule>) -> Vec<String> {
+        let mut attribs = Vec::new();
         for entry in rule.into_inner() {
             if entry.as_rule() == Rule::namelist {
                 attribs = Self::get_namelist_list(entry);
@@ -379,49 +422,34 @@ impl ApiParser {
         let mut doc_comments = String::new();
 
         for entry in rule.into_inner() {
-        	match entry.as_rule() {
-        		Rule::field => {
-					let field = entry.clone().into_inner().next().unwrap();
+            match entry.as_rule() {
+                Rule::field => {
+                    let field = entry.clone().into_inner().next().unwrap();
 
-					match field.as_rule() {
-						Rule::var => { 
-							var_entries.push(Self::get_variable(field, &doc_comments));
-							doc_comments.clear();
-						}
-						Rule::function => {
-							func_entries.push(Self::get_function(field, &doc_comments));
-							doc_comments.clear();
-						}
-						_ => (),
-					}
-				}
+                    match field.as_rule() {
+                        Rule::var => {
+                            var_entries.push(Self::get_variable(field, &doc_comments));
+                            doc_comments.clear();
+                        }
+                        Rule::function => {
+                            func_entries.push(Self::get_function(field, &doc_comments));
+                            doc_comments.clear();
+                        }
+                        _ => (),
+                    }
+                }
 
-				Rule::doc_comment => {
-					doc_comments.push_str(entry.as_str());
-					doc_comments.push_str("\n");
-				}
+                Rule::doc_comment => {
+                    doc_comments.push_str("    ");
+                    doc_comments.push_str(entry.as_str());
+                    doc_comments.push_str("\n");
+                }
 
-				_ => (),
-        	}
-        }
-
-        (var_entries, func_entries)
-    }
-
-    ///
-    /// Get the name for a rule
-    ///
-    fn get_name(rule: Pair<Rule>) -> String {
-        let mut name = String::new();
-
-        for entry in rule.into_inner() {
-            if entry.as_rule() == Rule::name {
-                name = entry.as_str().to_owned();
-                break;
+                _ => (),
             }
         }
 
-        name
+        (var_entries, func_entries)
     }
 
     ///
@@ -429,8 +457,8 @@ impl ApiParser {
     ///
     fn get_function(rule: Pair<Rule>, doc_comments: &str) -> Function {
         let mut function = Function {
-        	doc_comments: doc_comments.to_owned(),
-        	.. Function::default()
+            doc_comments: doc_comments.to_owned(),
+            ..Function::default()
         };
 
         for entry in rule.into_inner() {
@@ -448,7 +476,7 @@ impl ApiParser {
                         .map(|e| e.as_str())
                         .unwrap()
                         .to_owned();
-                },
+                }
 
                 Rule::manual => {
                     function.is_manual = true;
@@ -662,6 +690,52 @@ impl ApiParser {
         out_structs
     }
 
+    fn update_variable(arg: &mut Variable,
+        struct_name_map: &HashMap<String, String>,
+        type_def_file: &HashMap<String, String>,
+        enum_def_file: &HashMap<String, String>)
+    {
+        if let Some(qt_name) = struct_name_map.get(&arg.type_name) {
+            arg.qt_type_name = qt_name.to_owned();
+        }
+
+        match arg.vtype {
+            VariableType::Enum => {
+                if let Some(def_file) = enum_def_file.get(&arg.enum_sub_type) {
+                    arg.def_file = def_file.to_owned();
+                } else {
+                    println!("--> enum {} wasn't found in lookup", arg.enum_sub_type);
+                }
+            },
+
+            VariableType::Regular => {
+                if let Some(def_file) = type_def_file.get(&Self::get_trait_name(&arg.type_name)) {
+                    arg.def_file = def_file.to_owned();
+                } else {
+                    println!("--> type {:?} wasn't found in lookup", arg);
+                }
+            },
+
+            VariableType::Reference => {
+                if let Some(def_file) = type_def_file.get(&Self::get_trait_name(&arg.type_name)) {
+                    arg.def_file = def_file.to_owned();
+                } else {
+                    println!("--> type {:?} wasn't found in lookup", arg);
+                }
+            },
+
+            _ => (),
+        }
+    }
+
+    fn get_trait_name(name: &str) -> String {
+        if name.ends_with("Type") {
+            format!("{}Trait", &name[..name.len() - 4])
+        } else {
+            name.to_owned()
+        }
+    }
+
     pub fn second_pass(api_defs: &mut [ApiDef]) {
         // Build a hash_set of all classes that are inherited
         let mut inherited_classes = HashMap::new();
@@ -670,7 +744,9 @@ impl ApiParser {
             api_def.class_structs.iter().for_each(|s| {
                 s.inherit.as_ref().map_or((), |i| {
                     let mut in_values = Vec::new();
-                    in_values.push(i.to_owned());
+                    for v in i {
+                        in_values.push(v.trim().to_owned());
+                    }
                     // Using vec here to support multiple classes later
                     inherited_classes.insert(s.name.to_owned(), in_values);
                 })
@@ -693,30 +769,40 @@ impl ApiParser {
         }
 
         // Build a hash map of all type and their QtName
+        // and we also build two hashmaps for all types and which modules they belong into
+        // and they are separate for structs and enums
         let mut struct_name_map = HashMap::new();
+        let mut type_def_file = HashMap::new();
+        let mut enum_def_file = HashMap::new();
 
         for api_def in api_defs.iter() {
             api_def.class_structs.iter().for_each(|s| {
                 struct_name_map.insert(s.name.to_owned(), s.cpp_name.to_owned());
+                type_def_file.insert(s.name.to_owned(), s.def_file.to_owned());
+                type_def_file.insert(format!("{}Trait",s.name), s.def_file.to_owned());
+            });
+
+            api_def.enums.iter().for_each(|s| {
+                enum_def_file.insert(s.name.to_owned(), s.def_file.to_owned());
+
+                if !s.flags_name.is_empty() {
+                    enum_def_file.insert(s.flags_name.to_owned(), s.def_file.to_owned());
+                }
             });
         }
 
-        // Patch up the qt names in the function arguments
+        // Patch up the qt names/def_file in the function arguments
         for func in api_defs
             .iter_mut()
             .flat_map(|api| api.class_structs.iter_mut())
             .flat_map(|s| s.functions.iter_mut())
         {
             for arg in func.function_args.iter_mut() {
-                if let Some(qt_name) = struct_name_map.get(&arg.type_name) {
-                    arg.qt_type_name = qt_name.to_owned();
-                }
+                Self::update_variable(arg, &struct_name_map, &type_def_file, &enum_def_file);
             }
 
             if let Some(ref mut ret_val) = func.return_val {
-                if let Some(qt_name) = struct_name_map.get(&ret_val.type_name) {
-                    ret_val.qt_type_name = qt_name.to_owned();
-                }
+                Self::update_variable(ret_val, &struct_name_map, &type_def_file, &enum_def_file);
             }
         }
     }
@@ -808,6 +894,16 @@ impl Struct {
     ///
     /// Check if no wrapping class should be generated
     ///
+    pub fn supports_cpp_clone(&self) -> bool {
+        self.attributes
+            .iter()
+            .find(|&s| s == ATTRIB_NO_CPP_CLONE)
+            .is_none()
+    }
+
+    ///
+    /// Check if no wrapping class should be generated
+    ///
     pub fn should_generate_drop(&self) -> bool {
         self.attributes.iter().any(|ref s| *s == ATTRIB_DROP)
     }
@@ -840,12 +936,10 @@ impl Variable {
                 }
             },
 
-            VariableType::Reference => {
-                match is_ret_type {
-                    IsReturnType::Yes => format!("struct RU{}", tname).into(),
-                    IsReturnType::No => "struct RUBase*".into(),
-                }
-            }
+            VariableType::Reference => match is_ret_type {
+                IsReturnType::Yes => format!("struct RU{}", tname).into(),
+                IsReturnType::No => "struct RUBase*".into(),
+            },
 
             VariableType::Regular => {
                 if tname == "String" {
@@ -1053,13 +1147,12 @@ impl Function {
     /// cased) without the _event if it has that at the end
     ///
     pub fn get_name_skip_event(&self) -> &str {
-        if self.name.ends_with("event") {
+        if self.name.ends_with("event") && self.name != "event" {
             &self.name[..self.name.len() - 6]
         } else {
             &self.name
         }
     }
-
 }
 
 #[cfg(test)]
@@ -1103,7 +1196,7 @@ mod tests {
     fn test_var_untyped_name_typed() {
         let var = Variable {
             type_name: "WidgetType".to_owned(),
-            .. Variable::default()
+            ..Variable::default()
         };
 
         assert_eq!(var.get_untyped_name(), "Widget");
@@ -1116,7 +1209,7 @@ mod tests {
     fn test_var_untyped_name() {
         let var = Variable {
             type_name: "Widget".to_owned(),
-            .. Variable::default()
+            ..Variable::default()
         };
 
         assert_eq!(var.get_untyped_name(), "Widget");

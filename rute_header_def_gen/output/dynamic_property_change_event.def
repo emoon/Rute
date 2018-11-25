@@ -9,8 +9,8 @@ struct DynamicPropertyChangeEvent : Event {
     /// Returns the name of the dynamic property that was added, changed or
     /// removed.
     /// 
-    /// **See also:** QObject::setProperty()
-    /// QObject::dynamicPropertyNames()
+    /// **See also:** [`Object::set_property`]
+    /// [`Object::dynamic_property_names`]
     property_name() -> ByteArray,
 }
 

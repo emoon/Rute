@@ -91,8 +91,8 @@
 /// current command index, then the clean index will be reset when the command is
 /// deleted from the stack.
 /// 
-/// **See also:** QUndoCommand
-/// QUndoView
+/// **See also:** [`UndoCommand`]
+/// [`UndoView`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -107,7 +107,7 @@ struct UndoStack : Object {
     /// This function is usually used when the contents of the document are
     /// abandoned.
     /// 
-    /// **See also:** QUndoStack()
+    /// **See also:** [`q_undo_stack()`]
     clear(),
     /// 
     /// Pushes *cmd* on the stack or merges it with the most recently executed command.
@@ -134,8 +134,8 @@ struct UndoStack : Object {
     /// been executed will almost always lead to corruption of the document's
     /// state.
     /// 
-    /// **See also:** QUndoCommand::id()
-    /// QUndoCommand::mergeWith()
+    /// **See also:** [`UndoCommand::id`]
+    /// [`UndoCommand::merge_with`]
     push(cmd: *UndoCommandType),
     /// 
     /// Returns `true` if there is a command available for undo; otherwise returns `false.`
@@ -145,8 +145,8 @@ struct UndoStack : Object {
     /// 
     /// Synonymous with index() == 0.
     /// 
-    /// **See also:** index()
-    /// canRedo()
+    /// **See also:** [`index()`]
+    /// [`can_redo()`]
     /// 
     /// This signal is emitted whenever the value of canUndo() changes. It is
     /// used to enable or disable the undo action returned by createUndoAction().
@@ -160,8 +160,8 @@ struct UndoStack : Object {
     /// 
     /// Synonymous with index() == count().
     /// 
-    /// **See also:** index()
-    /// canUndo()
+    /// **See also:** [`index()`]
+    /// [`can_undo()`]
     /// 
     /// This signal is emitted whenever the value of canRedo() changes. It is
     /// used to enable or disable the redo action returned by createRedoAction().
@@ -170,8 +170,8 @@ struct UndoStack : Object {
     /// 
     /// Returns the text of the command which will be undone in the next call to undo().
     /// 
-    /// **See also:** QUndoCommand::actionText()
-    /// redoText()
+    /// **See also:** [`UndoCommand::action_text`]
+    /// [`redo_text()`]
     /// 
     /// This signal is emitted whenever the value of undoText() changes. It is
     /// used to update the text property of the undo action returned by createUndoAction().
@@ -180,8 +180,8 @@ struct UndoStack : Object {
     /// 
     /// Returns the text of the command which will be redone in the next call to redo().
     /// 
-    /// **See also:** QUndoCommand::actionText()
-    /// undoText()
+    /// **See also:** [`UndoCommand::action_text`]
+    /// [`undo_text()`]
     /// 
     /// This signal is emitted whenever the value of redoText() changes. It is
     /// used to update the text property of the redo action returned by createRedoAction().
@@ -191,18 +191,18 @@ struct UndoStack : Object {
     /// Returns the number of commands on the stack. Macro commands are counted as
     /// one command.
     /// 
-    /// **See also:** index()
-    /// setIndex()
-    /// command()
+    /// **See also:** [`index()`]
+    /// [`set_index()`]
+    /// [`command()`]
     count() -> i32,
     /// 
     /// Returns the index of the current command. This is the command that will be
     /// executed on the next call to redo(). It is not always the top-most command
     /// on the stack, since a number of commands may have been undone.
     /// 
-    /// **See also:** undo()
-    /// redo()
-    /// count()
+    /// **See also:** [`undo()`]
+    /// [`redo()`]
+    /// [`count()`]
     /// 
     /// This signal is emitted whenever a command modifies the state of the document.
     /// This happens when a command is undone or redone. When a macro
@@ -212,13 +212,13 @@ struct UndoStack : Object {
     /// *idx* specifies the index of the current command, ie. the command which will be
     /// executed on the next call to redo().
     /// 
-    /// **See also:** index()
-    /// setIndex()
+    /// **See also:** [`index()`]
+    /// [`set_index()`]
     index() -> i32,
     /// 
     /// Returns the text of the command at index *idx.*
     /// 
-    /// **See also:** beginMacro()
+    /// **See also:** [`begin_macro()`]
     text(idx: i32) -> String,
     /// 
     /// Creates an undo QAction object with the given *parent.*
@@ -231,9 +231,9 @@ struct UndoStack : Object {
     /// If *prefix* is empty, the default template is used instead of prefix.
     /// Before Qt 4.8, the prefix was used by default.
     /// 
-    /// **See also:** createRedoAction()
-    /// canUndo()
-    /// QUndoCommand::text()
+    /// **See also:** [`create_redo_action()`]
+    /// [`can_undo()`]
+    /// [`UndoCommand::text`]
     create_undo_action(parent: *ObjectType, prefix: String) -> Action?,
     /// 
     /// Creates an redo QAction object with the given *parent.*
@@ -246,16 +246,16 @@ struct UndoStack : Object {
     /// If *prefix* is empty, the default template is used instead of prefix.
     /// Before Qt 4.8, the prefix was used by default.
     /// 
-    /// **See also:** createUndoAction()
-    /// canRedo()
-    /// QUndoCommand::text()
+    /// **See also:** [`create_undo_action()`]
+    /// [`can_redo()`]
+    /// [`UndoCommand::text`]
     create_redo_action(parent: *ObjectType, prefix: String) -> Action?,
     is_active() -> bool,
     /// 
     /// If the stack is in the clean state, returns `true;` otherwise returns `false.`
     /// 
-    /// **See also:** setClean()
-    /// cleanIndex()
+    /// **See also:** [`set_clean()`]
+    /// [`clean_index()`]
     is_clean() -> bool,
     /// 
     /// Returns the clean index. This is the index at which setClean() was called.
@@ -266,8 +266,8 @@ struct UndoStack : Object {
     /// can't return to the clean state again. In this case, this function returns -1.
     /// The -1 may also be returned after an explicit call to resetClean().
     /// 
-    /// **See also:** isClean()
-    /// setClean()
+    /// **See also:** [`is_clean()`]
+    /// [`set_clean()`]
     clean_index() -> i32,
     /// 
     /// Begins composition of a macro command with the given *text* description.
@@ -290,7 +290,7 @@ struct UndoStack : Object {
     /// 
     /// This code is equivalent to:
     /// 
-    /// **See also:** endMacro()
+    /// **See also:** [`end_macro()`]
     begin_macro(text: String),
     /// 
     /// Ends composition of a macro command.
@@ -298,7 +298,7 @@ struct UndoStack : Object {
     /// If this is the outermost macro in a set nested macros, this function emits
     /// indexChanged() once for the entire macro command.
     /// 
-    /// **See also:** beginMacro()
+    /// **See also:** [`begin_macro()`]
     end_macro(),
     set_undo_limit(limit: i32),
     /// 
@@ -319,7 +319,7 @@ struct UndoStack : Object {
     /// causes corruption of the state of the document, if the command is
     /// later undone or redone.
     /// 
-    /// **See also:** QUndoCommand::child()
+    /// **See also:** [`UndoCommand::child`]
     command(index: i32) -> UndoCommand?,
     /// 
     /// Marks the stack as clean and emits cleanChanged() if the stack was
@@ -331,9 +331,9 @@ struct UndoStack : Object {
     /// commands, it emits the signal cleanChanged(). This signal is also
     /// emitted when the stack leaves the clean state.
     /// 
-    /// **See also:** isClean()
-    /// resetClean()
-    /// cleanIndex()
+    /// **See also:** [`is_clean()`]
+    /// [`reset_clean()`]
+    /// [`clean_index()`]
     set_clean(),
     /// 
     /// Leaves the clean state and emits cleanChanged() if the stack was clean.
@@ -344,19 +344,19 @@ struct UndoStack : Object {
     /// * restored from a backup file.
     /// * changed outside of the editor and the user did not reload it.
     /// 
-    /// **See also:** isClean()
-    /// setClean()
-    /// cleanIndex()
+    /// **See also:** [`is_clean()`]
+    /// [`set_clean()`]
+    /// [`clean_index()`]
     reset_clean(),
     /// 
     /// Repeatedly calls undo() or redo() until the current command index reaches
     /// *idx.* This function can be used to roll the state of the document forwards
     /// of backwards. indexChanged() is emitted only once.
     /// 
-    /// **See also:** index()
-    /// count()
-    /// undo()
-    /// redo()
+    /// **See also:** [`index()`]
+    /// [`count()`]
+    /// [`undo()`]
+    /// [`redo()`]
     set_index(idx: i32),
     /// 
     /// Undoes the command below the current command by calling QUndoCommand::undo().
@@ -370,13 +370,13 @@ struct UndoStack : Object {
     /// index is greater than or equal to the current command index, then the clean
     /// index is reset.
     /// 
-    /// **See also:** redo()
-    /// index()
+    /// **See also:** [`redo()`]
+    /// [`index()`]
     /// 
     /// Returns the text of the command which will be undone in the next call to undo().
     /// 
-    /// **See also:** QUndoCommand::actionText()
-    /// redoText()
+    /// **See also:** [`UndoCommand::action_text`]
+    /// [`redo_text()`]
     /// 
     /// When the number of commands on a stack exceedes the stack's undoLimit, commands are
     /// deleted from the bottom of the stack. Macro commands (commands with child commands)
@@ -403,13 +403,13 @@ struct UndoStack : Object {
     /// index is greater than or equal to the current command index, then the clean
     /// index is reset.
     /// 
-    /// **See also:** undo()
-    /// index()
+    /// **See also:** [`undo()`]
+    /// [`index()`]
     /// 
     /// Returns the text of the command which will be redone in the next call to redo().
     /// 
-    /// **See also:** QUndoCommand::actionText()
-    /// undoText()
+    /// **See also:** [`UndoCommand::action_text`]
+    /// [`undo_text()`]
     /// 
     /// This signal is emitted whenever the value of redoText() changes. It is
     /// used to update the text property of the redo action returned by createRedoAction().
@@ -425,16 +425,16 @@ struct UndoStack : Object {
     /// *idx* specifies the index of the current command, ie. the command which will be
     /// executed on the next call to redo().
     /// 
-    /// **See also:** index()
-    /// setIndex()
+    /// **See also:** [`index()`]
+    /// [`set_index()`]
     [signal] index_changed(idx: i32),
     /// 
     /// This signal is emitted whenever the stack enters or leaves the clean state.
     /// If *clean* is true, the stack is in a clean state; otherwise this signal
     /// indicates that it has left the clean state.
     /// 
-    /// **See also:** isClean()
-    /// setClean()
+    /// **See also:** [`is_clean()`]
+    /// [`set_clean()`]
     [signal] clean_changed(clean: bool),
     /// 
     /// This signal is emitted whenever the value of canUndo() changes. It is

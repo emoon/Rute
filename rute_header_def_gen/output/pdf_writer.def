@@ -33,12 +33,12 @@ struct PdfWriter : Object, PagedPaintDevice {
     /// This setting affects the coordinate system as returned by, for
     /// example QPainter::viewport().
     /// 
-    /// **See also:** resolution()
+    /// **See also:** [`resolution()`]
     set_resolution(resolution: i32),
     /// 
     /// Returns the resolution of the PDF in DPI.
     /// 
-    /// **See also:** setResolution()
+    /// **See also:** [`set_resolution()`]
     resolution() -> i32,
     /// 
     /// Sets the PDF page size to *pageSize.*
@@ -52,17 +52,17 @@ struct PdfWriter : Object, PagedPaintDevice {
     /// 
     /// Returns true if the page size was successfully set to *pageSize.*
     /// 
-    /// **See also:** pageLayout()
+    /// **See also:** [`page_layout()`]
     /// 
-    /// **See also:** setPageSize()
+    /// **See also:** [`set_page_size()`]
     /// 
-    /// **See also:** setPageSize()
+    /// **See also:** [`set_page_size()`]
     [event] set_page_size(size: PagedPaintDevice::PageSize),
     /// 
-    /// **See also:** setPageSize()
+    /// **See also:** [`set_page_size()`]
     [event] set_page_size_mm(size: &SizeFType),
     /// 
-    /// **See also:** setPageMargins()
+    /// **See also:** [`set_page_margins()`]
     [event] set_margins(m: onst QPagedPaintDevice::Margins &),
     /// 
     [event] paint_engine() -> PaintEngine?,

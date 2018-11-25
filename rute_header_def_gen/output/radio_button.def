@@ -31,9 +31,9 @@
 /// setDown(), isDown(), autoRepeat(), group(), setAutoRepeat(),
 /// toggle(), pressed(), released(), clicked(), and toggled().
 /// 
-/// **See also:** QPushButton
-/// QToolButton
-/// QCheckBox
+/// **See also:** [`PushButton`]
+/// [`ToolButton`]
+/// [`CheckBox`]
 /// {fowler}{GUI Design Handbook: Radio Button}
 /// {Group Box Example}
 /// # Licence
@@ -57,7 +57,7 @@ struct RadioButton : AbstractButton {
     /// for subclasses when they need a QStyleOptionButton, but don't want to fill
     /// in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(button: *StyleOptionButtonType),
 }
 

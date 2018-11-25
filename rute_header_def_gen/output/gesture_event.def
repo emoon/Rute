@@ -21,10 +21,10 @@
 /// in your applications, see the [Gestures in Widgets and Graphics View](Gestures%20in%20Widgets%20and%20Graphics%20View)
 /// document.
 /// 
-/// **See also:** QGesture
-/// QGestureRecognizer
-/// QWidget::grabGesture()
-/// QGraphicsObject::grabGesture()
+/// **See also:** [`Gesture`]
+/// [`GestureRecognizer`]
+/// [`Widget::grab_gesture`]
+/// [`GraphicsObject::grab_gesture`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -82,7 +82,7 @@ struct GestureEvent : Event {
     /// Setting the accept flag indicates that the event receiver wants the
     /// gesture. Unwanted gestures may be propagated to the parent widget.
     /// 
-    /// **See also:** QGestureEvent::ignore()
+    /// **See also:** [`GestureEvent::ignore`]
     /// 
     /// Sets the accept flag of the given *gestureType,* the equivalent of calling
     /// [setAccepted(gestureType, true)](QGestureEvent::setAccepted())
@@ -91,7 +91,7 @@ struct GestureEvent : Event {
     /// Setting the accept flag indicates that the event receiver wants the
     /// gesture. Unwanted gestures may be propagated to the parent widget.
     /// 
-    /// **See also:** QGestureEvent::ignore()
+    /// **See also:** [`GestureEvent::ignore`]
     accept(arg0: *GestureType),
     /// 
     /// Clears the accept flag parameter of the given *gesture* object, the equivalent
@@ -101,7 +101,7 @@ struct GestureEvent : Event {
     /// Clearing the accept flag indicates that the event receiver does not
     /// want the gesture. Unwanted gestures may be propagated to the parent widget.
     /// 
-    /// **See also:** QGestureEvent::accept()
+    /// **See also:** [`GestureEvent::accept`]
     /// 
     /// Clears the accept flag parameter of the given *gestureType,* the equivalent
     /// of calling [setAccepted(gesture, false)](QGestureEvent::setAccepted())
@@ -110,7 +110,7 @@ struct GestureEvent : Event {
     /// Clearing the accept flag indicates that the event receiver does not
     /// want the gesture. Unwanted gestures may be propgated to the parent widget.
     /// 
-    /// **See also:** QGestureEvent::accept()
+    /// **See also:** [`GestureEvent::accept`]
     ignore(arg0: *GestureType),
     /// 
     /// Returns `true` if the *gesture* is accepted; otherwise returns `false.`
@@ -148,7 +148,8 @@ struct GestureEvent : Event {
     /// , and cleared with
     /// [ignore(gestureType)](QGestureEvent::ignore())
     /// 
-    set_accepted(arg0: Rute::GestureType, arg1: bool),
+    [org_name(setAccepted)]
+    set_accepted_2(arg0: Rute::GestureType, arg1: bool),
     /// 
     /// Sets the accept flag of the given *gesture* object, the equivalent of calling
     /// [setAccepted(gesture, true)](QGestureEvent::setAccepted())
@@ -157,7 +158,7 @@ struct GestureEvent : Event {
     /// Setting the accept flag indicates that the event receiver wants the
     /// gesture. Unwanted gestures may be propagated to the parent widget.
     /// 
-    /// **See also:** QGestureEvent::ignore()
+    /// **See also:** [`GestureEvent::ignore`]
     /// 
     /// Sets the accept flag of the given *gestureType,* the equivalent of calling
     /// [setAccepted(gestureType, true)](QGestureEvent::setAccepted())
@@ -166,8 +167,9 @@ struct GestureEvent : Event {
     /// Setting the accept flag indicates that the event receiver wants the
     /// gesture. Unwanted gestures may be propagated to the parent widget.
     /// 
-    /// **See also:** QGestureEvent::ignore()
-    accept(arg0: Rute::GestureType),
+    /// **See also:** [`GestureEvent::ignore`]
+    [org_name(accept)]
+    accept_2(arg0: Rute::GestureType),
     /// 
     /// Clears the accept flag parameter of the given *gesture* object, the equivalent
     /// of calling [setAccepted(gesture, false)](QGestureEvent::setAccepted())
@@ -176,7 +178,7 @@ struct GestureEvent : Event {
     /// Clearing the accept flag indicates that the event receiver does not
     /// want the gesture. Unwanted gestures may be propagated to the parent widget.
     /// 
-    /// **See also:** QGestureEvent::accept()
+    /// **See also:** [`GestureEvent::accept`]
     /// 
     /// Clears the accept flag parameter of the given *gestureType,* the equivalent
     /// of calling [setAccepted(gesture, false)](QGestureEvent::setAccepted())
@@ -185,14 +187,16 @@ struct GestureEvent : Event {
     /// Clearing the accept flag indicates that the event receiver does not
     /// want the gesture. Unwanted gestures may be propgated to the parent widget.
     /// 
-    /// **See also:** QGestureEvent::accept()
-    ignore(arg0: Rute::GestureType),
+    /// **See also:** [`GestureEvent::accept`]
+    [org_name(ignore)]
+    ignore_2(arg0: Rute::GestureType),
     /// 
     /// Returns `true` if the *gesture* is accepted; otherwise returns `false.`
     /// 
     /// Returns `true` if the gesture of type *gestureType* is accepted; otherwise
     /// returns `false.`
-    is_accepted(arg0: Rute::GestureType) -> bool,
+    [org_name(isAccepted)]
+    is_accepted_2(arg0: Rute::GestureType) -> bool,
     set_widget(widget: *WidgetType),
     /// 
     /// Returns the widget on which the event occurred.
@@ -205,7 +209,7 @@ struct GestureEvent : Event {
     /// QGraphicsObject to translate a point in screen coordinates to scene-local
     /// coordinates.
     /// 
-    /// **See also:** QPointF::isNull()
+    /// **See also:** [`PointF::is_null`]
     map_to_graphics_scene(gesture_point: &PointFType) -> PointF,
 }
 

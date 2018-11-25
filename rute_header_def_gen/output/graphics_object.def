@@ -16,7 +16,7 @@
 /// functions are the equivalent of the QWidget::parent() and QWidget::parentWidget()
 /// functions for QWidget subclasses.
 /// 
-/// **See also:** QGraphicsWidget
+/// **See also:** [`GraphicsWidget`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -24,19 +24,19 @@ struct GraphicsObject : Object, GraphicsItem {
     /// 
     /// Subscribes the graphics object to the given *gesture* with specific *flags.*
     /// 
-    /// **See also:** ungrabGesture()
-    /// QGestureEvent
+    /// **See also:** [`ungrab_gesture()`]
+    /// [`GestureEvent`]
     grab_gesture(type: Rute::GestureType, flags: Rute::GestureFlags),
     /// 
     /// Unsubscribes the graphics object from the given *gesture.*
     /// 
-    /// **See also:** grabGesture()
-    /// QGestureEvent
+    /// **See also:** [`grab_gesture()`]
+    /// [`GestureEvent`]
     ungrab_gesture(type: Rute::GestureType),
     /// 
     /// Updates the item's micro focus. This is slot for convenience.
     /// 
-    /// **See also:** QInputMethod
+    /// **See also:** [`InputMethod`]
     update_micro_focus(),
     /// 
     /// This signal gets emitted whenever the parent of the item changes
@@ -44,7 +44,7 @@ struct GraphicsObject : Object, GraphicsItem {
     /// 
     /// This signal gets emitted whenever the opacity of the item changes
     /// 
-    /// **See also:** QGraphicsItem::opacity()
+    /// **See also:** [`GraphicsItem::opacity`]
     [signal] opacity_changed(),
     /// 
     /// This signal gets emitted whenever the visibility of the item changes
@@ -54,22 +54,22 @@ struct GraphicsObject : Object, GraphicsItem {
     /// 
     /// This signal gets emitted whenever the item get's enabled or disabled.
     /// 
-    /// **See also:** isEnabled()
+    /// **See also:** [`is_enabled()`]
     [signal] enabled_changed(),
     /// 
     /// This signal gets emitted whenever the x position of the item changes
     /// 
-    /// **See also:** pos()
+    /// **See also:** [`pos()`]
     [signal] x_changed(),
     /// 
     /// This signal gets emitted whenever the y position of the item changes.
     /// 
-    /// **See also:** pos()
+    /// **See also:** [`pos()`]
     [signal] y_changed(),
     /// 
     /// This signal gets emitted whenever the z value of the item changes.
     /// 
-    /// **See also:** pos()
+    /// **See also:** [`pos()`]
     [signal] z_changed(),
     /// 
     /// This signal gets emitted whenever the roation of the item changes.

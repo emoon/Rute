@@ -42,8 +42,8 @@
 /// setAutoRepeat(), toggle(), pressed(), released(), clicked(), toggled(),
 /// checkState(), and stateChanged().
 /// 
-/// **See also:** QAbstractButton
-/// QRadioButton
+/// **See also:** [`AbstractButton`]
+/// [`RadioButton`]
 /// {fowler}{GUI Design Handbook: Check Box}
 /// # Licence
 ///
@@ -60,8 +60,8 @@ struct CheckBox : AbstractButton {
     /// you can also use [QAbstractButton::isChecked(),](QAbstractButton::isChecked(),)
     /// which returns a boolean.
     /// 
-    /// **See also:** setCheckState()
-    /// Qt::CheckState
+    /// **See also:** [`set_check_state()`]
+    /// [`t::check_state()`]
     /// 
     check_state() -> Rute::CheckState,
     /// 
@@ -70,8 +70,8 @@ struct CheckBox : AbstractButton {
     /// which takes a
     /// boolean.
     /// 
-    /// **See also:** checkState()
-    /// Qt::CheckState
+    /// **See also:** [`check_state()`]
+    /// [`t::check_state()`]
     set_check_state(state: Rute::CheckState),
     /// 
     /// This signal is emitted whenever the checkbox's state changes, i.e.,
@@ -96,7 +96,7 @@ struct CheckBox : AbstractButton {
     /// useful for subclasses that require a QStyleOptionButton, but do not want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionButtonType),
 }
 

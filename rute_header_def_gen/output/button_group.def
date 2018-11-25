@@ -35,10 +35,10 @@
 /// of the mapping mechanism is to simplify the representation of enum
 /// values in a user interface.
 /// 
-/// **See also:** QGroupBox
-/// QPushButton
-/// QCheckBox
-/// QRadioButton
+/// **See also:** [`GroupBox`]
+/// [`PushButton`]
+/// [`CheckBox`]
+/// [`RadioButton`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -62,26 +62,26 @@ struct ButtonGroup : Object {
     /// starting with -2. If you are assigning your own ids, use
     /// positive values to avoid conflicts.
     /// 
-    /// **See also:** removeButton()
-    /// buttons()
+    /// **See also:** [`remove_button()`]
+    /// [`buttons()`]
     add_button(arg0: *AbstractButtonType, id: i32),
     /// 
     /// Removes the given *button* from the button group.
     /// 
-    /// **See also:** addButton()
-    /// buttons()
+    /// **See also:** [`add_button()`]
+    /// [`buttons()`]
     remove_button(arg0: *AbstractButtonType),
     /// 
     /// Returns the button group's list of buttons. This may be empty.
     /// 
-    /// **See also:** addButton()
-    /// removeButton()
+    /// **See also:** [`add_button()`]
+    /// [`remove_button()`]
     buttons() -> [AbstractButton?],
     /// 
     /// Returns the button group's checked button, or 0 if no buttons are
     /// checked.
     /// 
-    /// **See also:** buttonClicked()
+    /// **See also:** [`button_clicked()`]
     checked_button() -> AbstractButton?,
     /// 
     /// This signal is emitted when the given *button* is clicked. A
@@ -89,47 +89,47 @@ struct ButtonGroup : Object {
     /// its shortcut key is typed, or when QAbstractButton::click()
     /// or QAbstractButton::animateClick() is programmatically called.
     /// 
-    /// **See also:** checkedButton()
-    /// QAbstractButton::clicked()
+    /// **See also:** [`checked_button()`]
+    /// [`AbstractButton::clicked`]
     /// 
     /// This signal is emitted when a button with the given *id* is
     /// clicked.
     /// 
-    /// **See also:** checkedButton()
-    /// QAbstractButton::clicked()
+    /// **See also:** [`checked_button()`]
+    /// [`AbstractButton::clicked`]
     /// 
     /// This signal is emitted when the given *button* is pressed down.
     /// 
-    /// **See also:** QAbstractButton::pressed()
+    /// **See also:** [`AbstractButton::pressed`]
     /// 
     /// This signal is emitted when a button with the given *id* is
     /// pressed down.
     /// 
-    /// **See also:** QAbstractButton::pressed()
+    /// **See also:** [`AbstractButton::pressed`]
     /// 
     /// This signal is emitted when the given *button* is released.
     /// 
-    /// **See also:** QAbstractButton::released()
+    /// **See also:** [`AbstractButton::released`]
     /// 
     /// This signal is emitted when a button with the given *id* is
     /// released.
     /// 
-    /// **See also:** QAbstractButton::released()
+    /// **See also:** [`AbstractButton::released`]
     /// 
     /// This signal is emitted when the given *button* is toggled.
     /// *checked* is true if the button is checked, or false if the button is unchecked.
     /// 
-    /// **See also:** QAbstractButton::toggled()
+    /// **See also:** [`AbstractButton::toggled`]
     /// 
     /// This signal is emitted when a button with the given *id* is toggled.
     /// *checked* is true if the button is checked, or false if the button is unchecked.
     /// 
-    /// **See also:** QAbstractButton::toggled()
+    /// **See also:** [`AbstractButton::toggled`]
     /// 
     /// Returns the button group's list of buttons. This may be empty.
     /// 
-    /// **See also:** addButton()
-    /// removeButton()
+    /// **See also:** [`add_button()`]
+    /// [`remove_button()`]
     /// 
     /// Returns the button with the specified *id,* or 0 if no such button
     /// exists.
@@ -138,18 +138,18 @@ struct ButtonGroup : Object {
     /// Sets the *id* for the specified *button.* Note that *id* cannot
     /// be -1.
     /// 
-    /// **See also:** id()
+    /// **See also:** [`id()`]
     set_id(button: *AbstractButtonType, id: i32),
     /// 
     /// Returns the id for the specified *button,* or -1 if no such button
     /// exists.
     /// 
-    /// **See also:** setId()
+    /// **See also:** [`set_id()`]
     id(button: *AbstractButtonType) -> i32,
     /// 
     /// Returns the id of the checkedButton(), or -1 if no button is checked.
     /// 
-    /// **See also:** setId()
+    /// **See also:** [`set_id()`]
     checked_id() -> i32,
     /// 
     /// This signal is emitted when the given *button* is clicked. A
@@ -157,14 +157,14 @@ struct ButtonGroup : Object {
     /// its shortcut key is typed, or when QAbstractButton::click()
     /// or QAbstractButton::animateClick() is programmatically called.
     /// 
-    /// **See also:** checkedButton()
-    /// QAbstractButton::clicked()
+    /// **See also:** [`checked_button()`]
+    /// [`AbstractButton::clicked`]
     /// 
     /// This signal is emitted when a button with the given *id* is
     /// clicked.
     /// 
-    /// **See also:** checkedButton()
-    /// QAbstractButton::clicked()
+    /// **See also:** [`checked_button()`]
+    /// [`AbstractButton::clicked`]
     [signal] button_clicked(arg0: *AbstractButtonType),
     /// 
     /// This signal is emitted when the given *button* is clicked. A
@@ -172,77 +172,81 @@ struct ButtonGroup : Object {
     /// its shortcut key is typed, or when QAbstractButton::click()
     /// or QAbstractButton::animateClick() is programmatically called.
     /// 
-    /// **See also:** checkedButton()
-    /// QAbstractButton::clicked()
+    /// **See also:** [`checked_button()`]
+    /// [`AbstractButton::clicked`]
     /// 
     /// This signal is emitted when a button with the given *id* is
     /// clicked.
     /// 
-    /// **See also:** checkedButton()
-    /// QAbstractButton::clicked()
-    [signal] button_clicked(arg0: i32),
+    /// **See also:** [`checked_button()`]
+    /// [`AbstractButton::clicked`]
+    [org_name(buttonClicked)]
+    [signal] button_clicked_2(arg0: i32),
     /// 
     /// This signal is emitted when the given *button* is pressed down.
     /// 
-    /// **See also:** QAbstractButton::pressed()
+    /// **See also:** [`AbstractButton::pressed`]
     /// 
     /// This signal is emitted when a button with the given *id* is
     /// pressed down.
     /// 
-    /// **See also:** QAbstractButton::pressed()
+    /// **See also:** [`AbstractButton::pressed`]
     [signal] button_pressed(arg0: *AbstractButtonType),
     /// 
     /// This signal is emitted when the given *button* is pressed down.
     /// 
-    /// **See also:** QAbstractButton::pressed()
+    /// **See also:** [`AbstractButton::pressed`]
     /// 
     /// This signal is emitted when a button with the given *id* is
     /// pressed down.
     /// 
-    /// **See also:** QAbstractButton::pressed()
-    [signal] button_pressed(arg0: i32),
+    /// **See also:** [`AbstractButton::pressed`]
+    [org_name(buttonPressed)]
+    [signal] button_pressed_2(arg0: i32),
     /// 
     /// This signal is emitted when the given *button* is released.
     /// 
-    /// **See also:** QAbstractButton::released()
+    /// **See also:** [`AbstractButton::released`]
     /// 
     /// This signal is emitted when a button with the given *id* is
     /// released.
     /// 
-    /// **See also:** QAbstractButton::released()
+    /// **See also:** [`AbstractButton::released`]
     [signal] button_released(arg0: *AbstractButtonType),
     /// 
     /// This signal is emitted when the given *button* is released.
     /// 
-    /// **See also:** QAbstractButton::released()
+    /// **See also:** [`AbstractButton::released`]
     /// 
     /// This signal is emitted when a button with the given *id* is
     /// released.
     /// 
-    /// **See also:** QAbstractButton::released()
-    [signal] button_released(arg0: i32),
+    /// **See also:** [`AbstractButton::released`]
+    [org_name(buttonReleased)]
+    [signal] button_released_2(arg0: i32),
     /// 
     /// This signal is emitted when the given *button* is toggled.
     /// *checked* is true if the button is checked, or false if the button is unchecked.
     /// 
-    /// **See also:** QAbstractButton::toggled()
+    /// **See also:** [`AbstractButton::toggled`]
     /// 
     /// This signal is emitted when a button with the given *id* is toggled.
     /// *checked* is true if the button is checked, or false if the button is unchecked.
     /// 
-    /// **See also:** QAbstractButton::toggled()
+    /// **See also:** [`AbstractButton::toggled`]
     [signal] button_toggled(arg0: *AbstractButtonType, arg1: bool),
     /// 
     /// This signal is emitted when the given *button* is toggled.
     /// *checked* is true if the button is checked, or false if the button is unchecked.
     /// 
-    /// **See also:** QAbstractButton::toggled()
+    /// **See also:** [`AbstractButton::toggled`]
     /// 
     /// This signal is emitted when a button with the given *id* is toggled.
     /// *checked* is true if the button is checked, or false if the button is unchecked.
     /// 
-    /// **See also:** QAbstractButton::toggled()
-    [signal] button_toggled(arg0: i32, arg1: bool),
+    /// **See also:** [`AbstractButton::toggled`]
+    [org_name(buttonToggled)]
+    [signal] button_toggled_2(arg0: i32, arg1: bool),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

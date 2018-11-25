@@ -128,12 +128,11 @@
 /// * Qt::DragLinkCursor
 /// * `dnd-link` or `link`
 /// 
-/// **See also:** QWidget
+/// **See also:** [`Widget`]
 /// {fowler}{GUI Design Handbook: Cursors}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct Cursor {
     /// 
     /// Swaps this cursor with the *other* cursor.
@@ -143,7 +142,7 @@ struct Cursor {
     /// the [Qt::CursorShape](Qt::CursorShape)
     /// enum values (cast to an int).
     /// 
-    /// **See also:** setShape()
+    /// **See also:** [`set_shape()`]
     shape() -> Rute::CursorShape,
     /// 
     /// Sets the cursor to the shape identified by *shape.*
@@ -151,7 +150,7 @@ struct Cursor {
     /// See [Qt::CursorShape](Qt::CursorShape)
     /// for the list of cursor shapes.
     /// 
-    /// **See also:** shape()
+    /// **See also:** [`shape()`]
     set_shape(new_shape: Rute::CursorShape),
     /// 
     /// Returns the cursor bitmap, or 0 if it is one of the standard
@@ -176,9 +175,9 @@ struct Cursor {
     /// You can call QWidget::mapFromGlobal() to translate it to widget
     /// coordinates.
     /// 
-    /// **See also:** setPos()
-    /// QWidget::mapFromGlobal()
-    /// QWidget::mapToGlobal()
+    /// **See also:** [`set_pos()`]
+    /// [`Widget::map_from_global`]
+    /// [`Widget::map_to_global`]
     /// 
     /// Returns the position of the cursor (hot spot) of
     /// the primary screen in global screen coordinates.
@@ -193,10 +192,10 @@ struct Cursor {
     /// **Note**: On platforms where there is no windowing system or cursors are not available, the returned
     /// position is based on the mouse move events generated via QWindowSystemInterface.
     /// 
-    /// **See also:** setPos()
-    /// QWidget::mapFromGlobal()
-    /// QWidget::mapToGlobal()
-    /// QGuiApplication::primaryScreen()
+    /// **See also:** [`set_pos()`]
+    /// [`Widget::map_from_global`]
+    /// [`Widget::map_to_global`]
+    /// [`GuiApplication::primary_screen`]
     [static] pos() -> Point,
     /// 
     /// Returns the position of the cursor (hot spot) of the *screen*
@@ -205,9 +204,9 @@ struct Cursor {
     /// You can call QWidget::mapFromGlobal() to translate it to widget
     /// coordinates.
     /// 
-    /// **See also:** setPos()
-    /// QWidget::mapFromGlobal()
-    /// QWidget::mapToGlobal()
+    /// **See also:** [`set_pos()`]
+    /// [`Widget::map_from_global`]
+    /// [`Widget::map_to_global`]
     /// 
     /// Returns the position of the cursor (hot spot) of
     /// the primary screen in global screen coordinates.
@@ -222,11 +221,12 @@ struct Cursor {
     /// **Note**: On platforms where there is no windowing system or cursors are not available, the returned
     /// position is based on the mouse move events generated via QWindowSystemInterface.
     /// 
-    /// **See also:** setPos()
-    /// QWidget::mapFromGlobal()
-    /// QWidget::mapToGlobal()
-    /// QGuiApplication::primaryScreen()
-    [static] pos(screen: *ScreenType) -> Point,
+    /// **See also:** [`set_pos()`]
+    /// [`Widget::map_from_global`]
+    /// [`Widget::map_to_global`]
+    /// [`GuiApplication::primary_screen`]
+    [org_name(pos)]
+    [static] pos_2(screen: *ScreenType) -> Point,
     /// 
     /// Moves the cursor (hot spot) of the *screen* to the global
     /// screen position ( *x,* *y).*
@@ -244,9 +244,9 @@ struct Cursor {
     /// **Note**: On platforms where there is no windowing system or cursors are not available, this
     /// function may do nothing.
     /// 
-    /// **See also:** pos()
-    /// QWidget::mapFromGlobal()
-    /// QWidget::mapToGlobal()
+    /// **See also:** [`pos()`]
+    /// [`Widget::map_from_global`]
+    /// [`Widget::map_to_global`]
     /// 
     /// Moves the cursor (hot spot) of the primary screen
     /// to the global screen position ( *x,* *y).*
@@ -254,10 +254,10 @@ struct Cursor {
     /// You can call QWidget::mapToGlobal() to translate widget
     /// coordinates to global screen coordinates.
     /// 
-    /// **See also:** pos()
-    /// QWidget::mapFromGlobal()
-    /// QWidget::mapToGlobal()
-    /// QGuiApplication::primaryScreen()
+    /// **See also:** [`pos()`]
+    /// [`Widget::map_from_global`]
+    /// [`Widget::map_to_global`]
+    /// [`GuiApplication::primary_screen`]
     /// 
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position at point
@@ -284,9 +284,9 @@ struct Cursor {
     /// **Note**: On platforms where there is no windowing system or cursors are not available, this
     /// function may do nothing.
     /// 
-    /// **See also:** pos()
-    /// QWidget::mapFromGlobal()
-    /// QWidget::mapToGlobal()
+    /// **See also:** [`pos()`]
+    /// [`Widget::map_from_global`]
+    /// [`Widget::map_to_global`]
     /// 
     /// Moves the cursor (hot spot) of the primary screen
     /// to the global screen position ( *x,* *y).*
@@ -294,10 +294,10 @@ struct Cursor {
     /// You can call QWidget::mapToGlobal() to translate widget
     /// coordinates to global screen coordinates.
     /// 
-    /// **See also:** pos()
-    /// QWidget::mapFromGlobal()
-    /// QWidget::mapToGlobal()
-    /// QGuiApplication::primaryScreen()
+    /// **See also:** [`pos()`]
+    /// [`Widget::map_from_global`]
+    /// [`Widget::map_to_global`]
+    /// [`GuiApplication::primary_screen`]
     /// 
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position at point
@@ -306,7 +306,8 @@ struct Cursor {
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position of the
     /// *screen* at point *p.*
-    [static] set_pos(screen: *ScreenType, x: i32, y: i32),
+    [org_name(setPos)]
+    [static] set_pos_2(screen: *ScreenType, x: i32, y: i32),
     /// 
     /// Moves the cursor (hot spot) of the *screen* to the global
     /// screen position ( *x,* *y).*
@@ -324,9 +325,9 @@ struct Cursor {
     /// **Note**: On platforms where there is no windowing system or cursors are not available, this
     /// function may do nothing.
     /// 
-    /// **See also:** pos()
-    /// QWidget::mapFromGlobal()
-    /// QWidget::mapToGlobal()
+    /// **See also:** [`pos()`]
+    /// [`Widget::map_from_global`]
+    /// [`Widget::map_to_global`]
     /// 
     /// Moves the cursor (hot spot) of the primary screen
     /// to the global screen position ( *x,* *y).*
@@ -334,10 +335,10 @@ struct Cursor {
     /// You can call QWidget::mapToGlobal() to translate widget
     /// coordinates to global screen coordinates.
     /// 
-    /// **See also:** pos()
-    /// QWidget::mapFromGlobal()
-    /// QWidget::mapToGlobal()
-    /// QGuiApplication::primaryScreen()
+    /// **See also:** [`pos()`]
+    /// [`Widget::map_from_global`]
+    /// [`Widget::map_to_global`]
+    /// [`GuiApplication::primary_screen`]
     /// 
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position at point
@@ -346,7 +347,8 @@ struct Cursor {
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position of the
     /// *screen* at point *p.*
-    [static] set_pos(p: &PointType),
+    [org_name(setPos)]
+    [static] set_pos_3(p: &PointType),
     /// 
     /// Moves the cursor (hot spot) of the *screen* to the global
     /// screen position ( *x,* *y).*
@@ -364,9 +366,9 @@ struct Cursor {
     /// **Note**: On platforms where there is no windowing system or cursors are not available, this
     /// function may do nothing.
     /// 
-    /// **See also:** pos()
-    /// QWidget::mapFromGlobal()
-    /// QWidget::mapToGlobal()
+    /// **See also:** [`pos()`]
+    /// [`Widget::map_from_global`]
+    /// [`Widget::map_to_global`]
     /// 
     /// Moves the cursor (hot spot) of the primary screen
     /// to the global screen position ( *x,* *y).*
@@ -374,10 +376,10 @@ struct Cursor {
     /// You can call QWidget::mapToGlobal() to translate widget
     /// coordinates to global screen coordinates.
     /// 
-    /// **See also:** pos()
-    /// QWidget::mapFromGlobal()
-    /// QWidget::mapToGlobal()
-    /// QGuiApplication::primaryScreen()
+    /// **See also:** [`pos()`]
+    /// [`Widget::map_from_global`]
+    /// [`Widget::map_to_global`]
+    /// [`GuiApplication::primary_screen`]
     /// 
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position at point
@@ -386,7 +388,8 @@ struct Cursor {
     /// **Overloads**
     /// Moves the cursor (hot spot) to the global screen position of the
     /// *screen* at point *p.*
-    [static] set_pos(screen: *ScreenType, p: &PointType),
+    [org_name(setPos)]
+    [static] set_pos_4(screen: *ScreenType, p: &PointType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

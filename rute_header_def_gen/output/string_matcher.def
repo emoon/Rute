@@ -11,27 +11,26 @@
 /// Create the QStringMatcher with the QString you want to search
 /// for. Then call indexIn() on the QString that you want to search.
 /// 
-/// **See also:** QString
-/// QByteArrayMatcher
-/// QRegExp
+/// **See also:** [`String`]
+/// [`ByteArrayMatcher`]
+/// [`RegExp`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct StringMatcher {
     /// 
     /// Sets the string that this string matcher will search for to *pattern.*
     /// 
-    /// **See also:** pattern()
-    /// setCaseSensitivity()
-    /// indexIn()
+    /// **See also:** [`pattern()`]
+    /// [`set_case_sensitivity()`]
+    /// [`index_in()`]
     set_pattern(pattern: String),
     /// 
     /// Sets the case sensitivity setting of this string matcher to *cs.*
     /// 
-    /// **See also:** caseSensitivity()
-    /// setPattern()
-    /// indexIn()
+    /// **See also:** [`case_sensitivity()`]
+    /// [`set_pattern()`]
+    /// [`index_in()`]
     set_case_sensitivity(cs: Rute::CaseSensitivity),
     /// 
     /// Searches the string *str* from character position *from*
@@ -40,8 +39,8 @@ struct StringMatcher {
     /// call to setPattern(). Returns the position where the pattern()
     /// matched in *str,* or -1 if no match was found.
     /// 
-    /// **See also:** setPattern()
-    /// setCaseSensitivity()
+    /// **See also:** [`set_pattern()`]
+    /// [`set_case_sensitivity()`]
     /// 
     /// Searches the string starting at *str* (of length *length)* from
     /// character position *from* (default 0, i.e. from the first
@@ -50,8 +49,8 @@ struct StringMatcher {
     /// the position where the pattern() matched in *str,* or -1 if no
     /// match was found.
     /// 
-    /// **See also:** setPattern()
-    /// setCaseSensitivity()
+    /// **See also:** [`set_pattern()`]
+    /// [`set_case_sensitivity()`]
     index_in(str: String, from: i32) -> i32,
     /// 
     /// Searches the string *str* from character position *from*
@@ -60,8 +59,8 @@ struct StringMatcher {
     /// call to setPattern(). Returns the position where the pattern()
     /// matched in *str,* or -1 if no match was found.
     /// 
-    /// **See also:** setPattern()
-    /// setCaseSensitivity()
+    /// **See also:** [`set_pattern()`]
+    /// [`set_case_sensitivity()`]
     /// 
     /// Searches the string starting at *str* (of length *length)* from
     /// character position *from* (default 0, i.e. from the first
@@ -70,19 +69,20 @@ struct StringMatcher {
     /// the position where the pattern() matched in *str,* or -1 if no
     /// match was found.
     /// 
-    /// **See also:** setPattern()
-    /// setCaseSensitivity()
-    index_in(str: *CharType, length: i32, from: i32) -> i32,
+    /// **See also:** [`set_pattern()`]
+    /// [`set_case_sensitivity()`]
+    [org_name(indexIn)]
+    index_in_2(str: *CharType, length: i32, from: i32) -> i32,
     /// 
     /// Returns the string pattern that this string matcher will search
     /// for.
     /// 
-    /// **See also:** setPattern()
+    /// **See also:** [`set_pattern()`]
     pattern() -> String,
     /// 
     /// Returns the case sensitivity setting for this string matcher.
     /// 
-    /// **See also:** setCaseSensitivity()
+    /// **See also:** [`set_case_sensitivity()`]
     case_sensitivity() -> Rute::CaseSensitivity,
 }
 

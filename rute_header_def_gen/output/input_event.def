@@ -7,7 +7,7 @@ struct InputEvent : Event {
     /// Returns the keyboard modifier flags that existed immediately
     /// before the event occurred.
     /// 
-    /// **See also:** QGuiApplication::keyboardModifiers()
+    /// **See also:** [`GuiApplication::keyboard_modifiers`]
     modifiers() -> Rute::KeyboardModifiers,
     set_modifiers(amodifiers: Rute::KeyboardModifiers),
     /// 

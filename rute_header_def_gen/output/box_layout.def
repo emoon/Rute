@@ -57,30 +57,20 @@
 /// You will almost always want to use QVBoxLayout and QHBoxLayout
 /// rather than QBoxLayout because of their convenient constructors.
 /// 
-/// **See also:** QGridLayout
-/// QStackedLayout
+/// **See also:** [`GridLayout`]
+/// [`StackedLayout`]
 /// {Layout Management}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QBoxLayout)]
-enum Direction {
-    LeftToRight,
-    RightToLeft,
-    TopToBottom,
-    BottomToTop,
-    Down,
-    Up,
-}
-
 struct BoxLayout : Layout {
     /// 
     /// Returns the direction of the box. addWidget() and addSpacing()
     /// work in this direction; the stretch stretches in this direction.
     /// 
-    /// **See also:** QBoxLayout::Direction
-    /// addWidget()
-    /// addSpacing()
+    /// **See also:** [`BoxLayout::direction()`]
+    /// [`add_widget()`]
+    /// [`add_spacing()`]
     direction() -> BoxLayout::Direction,
     /// 
     /// Sets the direction of this layout to *direction.*
@@ -90,15 +80,15 @@ struct BoxLayout : Layout {
     /// to the end of this box layout. QBoxLayout provides default margin
     /// and spacing. This function adds additional space.
     /// 
-    /// **See also:** insertSpacing()
-    /// addItem()
-    /// QSpacerItem
+    /// **See also:** [`insert_spacing()`]
+    /// [`add_item()`]
+    /// [`SpacerItem`]
     add_spacing(size: i32),
     /// 
     /// Adds *spacerItem* to the end of this box layout.
     /// 
-    /// **See also:** addSpacing()
-    /// addStretch()
+    /// **See also:** [`add_spacing()`]
+    /// [`add_stretch()`]
     add_spacer_item(spacer_item: *SpacerItemType),
     /// 
     /// Adds *widget* to the end of this box layout, with a stretch
@@ -118,20 +108,20 @@ struct BoxLayout : Layout {
     /// The alignment is specified by *alignment.* The default
     /// alignment is 0, which means that the widget fills the entire cell.
     /// 
-    /// **See also:** insertWidget()
-    /// addItem()
-    /// addLayout()
-    /// addStretch()
-    /// addSpacing()
-    /// addStrut()
+    /// **See also:** [`insert_widget()`]
+    /// [`add_item()`]
+    /// [`add_layout()`]
+    /// [`add_stretch()`]
+    /// [`add_spacing()`]
+    /// [`add_strut()`]
     add_widget(arg0: *WidgetType, stretch: i32, alignment: Rute::Alignment),
     /// 
     /// Adds *layout* to the end of the box, with serial stretch factor
     /// *stretch.*
     /// 
-    /// **See also:** insertLayout()
-    /// addItem()
-    /// addWidget()
+    /// **See also:** [`insert_layout()`]
+    /// [`add_item()`]
+    /// [`add_widget()`]
     add_layout(layout: *LayoutType, stretch: i32),
     /// 
     [event] add_item(arg0: *LayoutItemType),
@@ -142,18 +132,18 @@ struct BoxLayout : Layout {
     /// The box layout has default margin and spacing. This function adds
     /// additional space.
     /// 
-    /// **See also:** addSpacing()
-    /// insertItem()
-    /// QSpacerItem
+    /// **See also:** [`add_spacing()`]
+    /// [`insert_item()`]
+    /// [`SpacerItem`]
     insert_spacing(index: i32, size: i32),
     /// 
     /// Inserts *spacerItem* at position *index,* with zero minimum
     /// size and stretch factor. If *index* is negative the
     /// space is added at the end.
     /// 
-    /// **See also:** addSpacerItem()
-    /// insertStretch()
-    /// insertSpacing()
+    /// **See also:** [`add_spacer_item()`]
+    /// [`insert_stretch()`]
+    /// [`insert_spacing()`]
     insert_spacer_item(index: i32, spacer_item: *SpacerItemType),
     /// 
     /// Inserts *widget* at position *index,* with stretch factor *stretch* and alignment *alignment.* If *index* is negative, the
@@ -173,25 +163,25 @@ struct BoxLayout : Layout {
     /// The alignment is specified by *alignment.* The default alignment
     /// is 0, which means that the widget fills the entire cell.
     /// 
-    /// **See also:** addWidget()
-    /// insertItem()
+    /// **See also:** [`add_widget()`]
+    /// [`insert_item()`]
     insert_widget(index: i32, widget: *WidgetType, stretch: i32, alignment: Rute::Alignment),
     /// 
     /// Inserts *layout* at position *index,* with stretch factor *stretch.* If *index* is negative, the layout is added at the end.
     /// 
     /// *layout* becomes a child of the box layout.
     /// 
-    /// **See also:** addLayout()
-    /// insertItem()
+    /// **See also:** [`add_layout()`]
+    /// [`insert_item()`]
     insert_layout(index: i32, layout: *LayoutType, stretch: i32),
     /// 
     /// Inserts *item* into this box layout at position *index.* If *index* is negative, the item is added at the end.
     /// 
-    /// **See also:** addItem()
-    /// insertWidget()
-    /// insertLayout()
-    /// insertStretch()
-    /// insertSpacing()
+    /// **See also:** [`add_item()`]
+    /// [`insert_widget()`]
+    /// [`insert_layout()`]
+    /// [`insert_stretch()`]
+    /// [`insert_spacing()`]
     insert_item(index: i32, arg0: *LayoutItemType),
     /// 
     /// Reimplements QLayout::spacing(). If the spacing property is
@@ -202,15 +192,15 @@ struct BoxLayout : Layout {
     /// the parent is a layout, and it queries the parent layout for the
     /// spacing().
     /// 
-    /// **See also:** QLayout::spacing()
-    /// setSpacing()
+    /// **See also:** [`Layout::spacing`]
+    /// [`set_spacing()`]
     spacing() -> i32,
     /// 
     /// Reimplements QLayout::setSpacing(). Sets the spacing
     /// property to *spacing.*
     /// 
-    /// **See also:** QLayout::setSpacing()
-    /// spacing()
+    /// **See also:** [`Layout::set_spacing`]
+    /// [`spacing()`]
     set_spacing(spacing: i32),
     /// 
     [event] size_hint() -> Size,
@@ -235,6 +225,20 @@ struct BoxLayout : Layout {
     [event] take_at(arg0: i32) -> LayoutItem?,
     /// 
     [event] count() -> i32,
+}
+
+[org_name(QBoxLayout)]
+enum Direction {
+    /// Horizontal from left to right.
+    LeftToRight,
+    /// Horizontal from right to left.
+    RightToLeft,
+    /// Vertical from top to bottom.
+    TopToBottom,
+    /// Vertical from bottom to top.
+    BottomToTop,
+    Down,
+    Up,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

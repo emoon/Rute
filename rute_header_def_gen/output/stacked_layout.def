@@ -31,17 +31,11 @@
 /// removed from the layout, the currentChanged() and widgetRemoved()
 /// signals are emitted respectively.
 /// 
-/// **See also:** QStackedWidget
-/// QTabWidget
+/// **See also:** [`StackedWidget`]
+/// [`TabWidget`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QStackedLayout)]
-enum StackingMode {
-    StackOne,
-    StackAll,
-}
-
 struct StackedLayout : Layout {
     /// 
     /// Adds the given *widget* to the end of this layout and returns the
@@ -50,9 +44,9 @@ struct StackedLayout : Layout {
     /// If the QStackedLayout is empty before this function is called,
     /// the given *widget* becomes the current widget.
     /// 
-    /// **See also:** insertWidget()
-    /// removeWidget()
-    /// setCurrentWidget()
+    /// **See also:** [`insert_widget()`]
+    /// [`remove_widget()`]
+    /// [`set_current_widget()`]
     add_widget(w: *WidgetType) -> i32,
     /// 
     /// Inserts the given *widget* at the given *index* in this
@@ -66,38 +60,38 @@ struct StackedLayout : Layout {
     /// Inserting a new widget at an index less than or equal to the current index
     /// will increment the current index, but keep the current widget.
     /// 
-    /// **See also:** addWidget()
-    /// removeWidget()
-    /// setCurrentWidget()
+    /// **See also:** [`add_widget()`]
+    /// [`remove_widget()`]
+    /// [`set_current_widget()`]
     insert_widget(index: i32, w: *WidgetType) -> i32,
     /// 
     /// Returns the current widget, or 0 if there are no widgets in this
     /// layout.
     /// 
-    /// **See also:** currentIndex()
-    /// setCurrentWidget()
+    /// **See also:** [`current_index()`]
+    /// [`set_current_widget()`]
     current_widget() -> Widget?,
     /// 
     /// The current index is -1 if there is no current widget.
     /// 
-    /// **See also:** currentWidget()
-    /// indexOf()
+    /// **See also:** [`current_widget()`]
+    /// [`index_of()`]
     current_index() -> i32,
     /// 
     /// This signal is emitted whenever a widget is removed from the
     /// layout. The widget's *index* is passed as parameter.
     /// 
-    /// **See also:** removeWidget()
+    /// **See also:** [`remove_widget()`]
     /// 
     /// Returns the widget at the given *index,* or 0 if there is no
     /// widget at the given position.
     /// 
-    /// **See also:** currentWidget()
-    /// indexOf()
+    /// **See also:** [`current_widget()`]
+    /// [`index_of()`]
     widget(arg0: i32) -> Widget?,
     /// 
-    /// **See also:** currentIndex()
-    /// widget()
+    /// **See also:** [`current_index()`]
+    /// [`widget()`]
     [event] count() -> i32,
     /// 
     /// The default value is StackOne. Setting the property to StackAll
@@ -124,7 +118,7 @@ struct StackedLayout : Layout {
     /// This signal is emitted whenever a widget is removed from the
     /// layout. The widget's *index* is passed as parameter.
     /// 
-    /// **See also:** removeWidget()
+    /// **See also:** [`remove_widget()`]
     [signal] widget_removed(index: i32),
     /// 
     /// This signal is emitted whenever the current widget in the layout
@@ -132,17 +126,25 @@ struct StackedLayout : Layout {
     /// widget, or -1 if there isn't a new one (for example, if there
     /// are no widgets in the QStackedLayout)
     /// 
-    /// **See also:** currentWidget()
-    /// setCurrentWidget()
+    /// **See also:** [`current_widget()`]
+    /// [`set_current_widget()`]
     [signal] current_changed(index: i32),
     set_current_index(index: i32),
     /// 
     /// Sets the current widget to be the specified *widget.* The new
     /// current widget must already be contained in this stacked layout.
     /// 
-    /// **See also:** setCurrentIndex()
-    /// currentWidget()
+    /// **See also:** [`set_current_index()`]
+    /// [`current_widget()`]
     set_current_widget(w: *WidgetType),
+}
+
+[org_name(QStackedLayout)]
+enum StackingMode {
+    /// Only the current widget is visible. This is the default.
+    StackOne,
+    /// All widgets are visible. The current widget is merely raised.
+    StackAll,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

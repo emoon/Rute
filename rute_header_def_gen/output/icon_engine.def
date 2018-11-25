@@ -12,20 +12,11 @@
 /// The paint(), pixmap(), and addPixmap() functions are all virtual, and can
 /// therefore be reimplemented in subclasses of QIconEngine.
 /// 
-/// **See also:** QIconEnginePlugin
+/// **See also:** [`IconEnginePlugin`]
 /// 
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QIconEngine)]
-enum IconEngineHook {
-    AvailableSizesHook,
-    IconNameHook,
-    IsNullHook,
-    ScaledPixmapHook,
-}
-
-
 struct IconEngine {
     /// 
     /// Uses the given *painter* to paint the icon with the required *mode* and
@@ -104,6 +95,20 @@ struct IconEngine {
     /// 
     /// **See also:** IconEngineHook
     [event] virtual_hook(id: i32, data: *void),
+}
+
+[org_name(QIconEngine)]
+enum IconEngineHook {
+    /// Allows to query the sizes of the contained pixmaps for pixmap-based engines. The *data* argument of the virtual_hook() function is a AvailableSizesArgument pointer that should be filled with icon sizes. Engines that work in terms of a scalable, vectorial format normally return an empty list.
+    AvailableSizesHook,
+    /// Allows to query the name used to create the icon, for example when instantiating an icon using QIcon::fromTheme().
+    IconNameHook,
+    /// Allow to query if this engine represents a null icon. The *data* argument of the virtual_hook() is a pointer to a bool that can be set to true if the icon is null. This enum value was added in Qt 5.7.
+    IsNullHook,
+    /// Provides a way to get a pixmap that is scaled according to the given scale (typically equal to the [device pixel ratio](Glossary%20Of%20High%0A%20%20%20%20DPI%20Terms)
+ ). The *data* argument of the virtual_hook() function is a [ScaledPixmapArgument](ScaledPixmapArgument)
+ pointer that contains both the input and output arguments. This enum value was added in Qt 5.9.
+    ScaledPixmapHook,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -26,7 +26,7 @@
 /// picture is available, for example, size(), isNull() and
 /// boundingRect().
 /// 
-/// **See also:** QMovie
+/// **See also:** [`Movie`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -39,22 +39,22 @@ struct Picture : PaintDevice {
     /// 
     /// Returns the size of the picture data.
     /// 
-    /// **See also:** data()
+    /// **See also:** [`data()`]
     size() -> uint,
     /// 
     /// Returns a pointer to the picture data. The pointer is only valid
     /// until the next non-const function is called on this picture. The
     /// returned pointer is 0 if the picture contains no data.
     /// 
-    /// **See also:** size()
-    /// isNull()
+    /// **See also:** [`size()`]
+    /// [`is_null()`]
     data() -> char?,
     /// 
     /// Sets the picture data directly from *data* and *size.* This
     /// function copies the input data.
     /// 
-    /// **See also:** data()
-    /// size()
+    /// **See also:** [`data()`]
+    /// [`size()`]
     [event] set_data(data: *char, size: uint),
     /// 
     /// Replays the picture using *painter,* and returns `true` if
@@ -70,7 +70,7 @@ struct Picture : PaintDevice {
     /// Please note that the *format* parameter has been deprecated and
     /// will have no effect.
     /// 
-    /// **See also:** save()
+    /// **See also:** [`save()`]
     /// 
     /// **Overloads**
     /// *dev* is the device to use for loading.
@@ -82,11 +82,12 @@ struct Picture : PaintDevice {
     /// Please note that the *format* parameter has been deprecated and
     /// will have no effect.
     /// 
-    /// **See also:** save()
+    /// **See also:** [`save()`]
     /// 
     /// **Overloads**
     /// *dev* is the device to use for loading.
-    load(file_name: String, format: *char) -> bool,
+    [org_name(load)]
+    load_2(file_name: String, format: *char) -> bool,
     /// 
     /// Saves a picture to the file specified by *fileName* and returns
     /// true if successful; otherwise returns `false.`
@@ -94,7 +95,7 @@ struct Picture : PaintDevice {
     /// Please note that the *format* parameter has been deprecated and
     /// will have no effect.
     /// 
-    /// **See also:** load()
+    /// **See also:** [`load()`]
     /// 
     /// **Overloads**
     /// *dev* is the device to use for saving.
@@ -106,11 +107,12 @@ struct Picture : PaintDevice {
     /// Please note that the *format* parameter has been deprecated and
     /// will have no effect.
     /// 
-    /// **See also:** load()
+    /// **See also:** [`load()`]
     /// 
     /// **Overloads**
     /// *dev* is the device to use for saving.
-    save(file_name: String, format: *char) -> bool,
+    [org_name(save)]
+    save_2(file_name: String, format: *char) -> bool,
     /// 
     /// Returns the picture's bounding rectangle or an invalid rectangle
     /// if the picture contains no data.
@@ -129,24 +131,24 @@ struct Picture : PaintDevice {
     /// Returns a string that specifies the picture format of the file *fileName,* or 0 if the file cannot be read or if the format is not
     /// recognized.
     /// 
-    /// **See also:** load()
-    /// save()
+    /// **See also:** [`load()`]
+    /// [`save()`]
     [static] picture_format(file_name: String) -> char?,
     /// 
     /// Returns a list of picture formats that are supported for picture
     /// input.
     /// 
-    /// **See also:** outputFormats()
-    /// inputFormatList()
-    /// QPictureIO
+    /// **See also:** [`output_formats()`]
+    /// [`input_format_list()`]
+    /// [`PictureIO`]
     [static] input_formats() -> [ByteArray],
     /// 
     /// Returns a list of picture formats that are supported for picture
     /// output.
     /// 
-    /// **See also:** inputFormats()
-    /// outputFormatList()
-    /// QPictureIO
+    /// **See also:** [`input_formats()`]
+    /// [`output_format_list()`]
+    /// [`PictureIO`]
     [static] output_formats() -> [ByteArray],
     /// 
     /// Returns a list of picture formats that are supported for picture
@@ -155,9 +157,9 @@ struct Picture : PaintDevice {
     /// Note that if you want to iterate over the list, you should iterate
     /// over a copy, e.g.
     /// 
-    /// **See also:** outputFormatList()
-    /// inputFormats()
-    /// QPictureIO
+    /// **See also:** [`output_format_list()`]
+    /// [`input_formats()`]
+    /// [`PictureIO`]
     [static] input_format_list() -> [String],
     /// 
     /// Returns a list of picture formats that are supported for picture
@@ -166,9 +168,9 @@ struct Picture : PaintDevice {
     /// Note that if you want to iterate over the list, you should iterate
     /// over a copy, e.g.
     /// 
-    /// **See also:** inputFormatList()
-    /// outputFormats()
-    /// QPictureIO
+    /// **See also:** [`input_format_list()`]
+    /// [`output_formats()`]
+    /// [`PictureIO`]
     [static] output_format_list() -> [String],
     [event] paint_engine() -> PaintEngine?,
 }

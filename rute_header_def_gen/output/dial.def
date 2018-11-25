@@ -57,9 +57,9 @@
 /// [pageStep](QAbstractSlider::pageStep)
 /// 
 /// 
-/// **See also:** QScrollBar
-/// QSpinBox
-/// QSlider
+/// **See also:** [`ScrollBar`]
+/// [`SpinBox`]
+/// [`Slider`]
 /// {fowler}{GUI Design Handbook: Slider}
 /// {Sliders Example}
 /// # Licence
@@ -84,8 +84,8 @@ struct Dial : AbstractSlider {
     /// 
     /// By default, this property has a value of 1.
     /// 
-    /// **See also:** notchTarget()
-    /// singleStep()
+    /// **See also:** [`notch_target()`]
+    /// [`single_step()`]
     notch_size() -> i32,
     set_notch_target(target: double),
     /// 
@@ -128,7 +128,7 @@ struct Dial : AbstractSlider {
     /// is useful for subclasses when they need a QStyleOptionSlider, but don't want
     /// to fill in all the information themselves.
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     init_style_option(option: *StyleOptionSliderType),
 }
 

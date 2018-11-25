@@ -61,13 +61,13 @@ struct SplashScreen : Widget {
     /// changes. *message* is the new message and is a null-string
     /// when the message has been removed.
     /// 
-    /// **See also:** showMessage()
-    /// clearMessage()
+    /// **See also:** [`show_message()`]
+    /// [`clear_message()`]
     /// 
     /// Returns the message that is currently displayed on the splash screen.
     /// 
-    /// **See also:** showMessage()
-    /// clearMessage()
+    /// **See also:** [`show_message()`]
+    /// [`clear_message()`]
     message() -> String,
     /// 
     /// Draws the *message* text onto the splash screen with color *color* and aligns the text according to the flags in *alignment.*
@@ -75,22 +75,22 @@ struct SplashScreen : Widget {
     /// repainted immediately. As a result the message is kept up
     /// to date with what your application is doing (e.g. loading files).
     /// 
-    /// **See also:** Qt::Alignment
-    /// clearMessage()
-    /// message()
+    /// **See also:** [`t::alignment()`]
+    /// [`clear_message()`]
+    /// [`message()`]
     show_message(message: String, alignment: i32, color: &ColorType),
     /// 
     /// Removes the message being displayed on the splash screen
     /// 
-    /// **See also:** showMessage()
+    /// **See also:** [`show_message()`]
     clear_message(),
     /// 
     /// This signal is emitted when the message on the splash screen
     /// changes. *message* is the new message and is a null-string
     /// when the message has been removed.
     /// 
-    /// **See also:** showMessage()
-    /// clearMessage()
+    /// **See also:** [`show_message()`]
+    /// [`clear_message()`]
     [signal] message_changed(message: String),
     /// 
     [event] event(e: *EventType) -> bool,

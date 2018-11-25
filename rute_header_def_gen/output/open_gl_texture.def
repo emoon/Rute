@@ -30,352 +30,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QOpenGLTexture)]
-enum Target {
-    Target1D,
-    Target1DArray,
-    Target2D,
-    Target2DArray,
-    Target3D,
-    TargetCubeMap,
-    TargetCubeMapArray,
-    Target2DMultisample,
-    Target2DMultisampleArray,
-    TargetRectangle,
-    TargetBuffer,
-}
-
-[org_name(QOpenGLTexture)]
-enum BindingTarget {
-    BindingTarget1D,
-    BindingTarget1DArray,
-    BindingTarget2D,
-    BindingTarget2DArray,
-    BindingTarget3D,
-    BindingTargetCubeMap,
-    BindingTargetCubeMapArray,
-    BindingTarget2DMultisample,
-    BindingTarget2DMultisampleArray,
-    BindingTargetRectangle,
-    BindingTargetBuffer,
-}
-
-[org_name(QOpenGLTexture)]
-enum MipMapGeneration {
-    GenerateMipMaps,
-    DontGenerateMipMaps,
-}
-
-[org_name(QOpenGLTexture)]
-enum TextureUnitReset {
-    ResetTextureUnit,
-    DontResetTextureUnit,
-}
-
-[org_name(QOpenGLTexture)]
-enum TextureFormat {
-    NoFormat,
-    R8_UNorm,
-    RG8_UNorm,
-    RGB8_UNorm,
-    RGBA8_UNorm,
-    R16_UNorm,
-    RG16_UNorm,
-    RGB16_UNorm,
-    RGBA16_UNorm,
-    R8_SNorm,
-    RG8_SNorm,
-    RGB8_SNorm,
-    RGBA8_SNorm,
-    R16_SNorm,
-    RG16_SNorm,
-    RGB16_SNorm,
-    RGBA16_SNorm,
-    R8U,
-    RG8U,
-    RGB8U,
-    RGBA8U,
-    R16U,
-    RG16U,
-    RGB16U,
-    RGBA16U,
-    R32U,
-    RG32U,
-    RGB32U,
-    RGBA32U,
-    R8I,
-    RG8I,
-    RGB8I,
-    RGBA8I,
-    R16I,
-    RG16I,
-    RGB16I,
-    RGBA16I,
-    R32I,
-    RG32I,
-    RGB32I,
-    RGBA32I,
-    R16F,
-    RG16F,
-    RGB16F,
-    RGBA16F,
-    R32F,
-    RG32F,
-    RGB32F,
-    RGBA32F,
-    RGB9E5,
-    RG11B10F,
-    RG3B2,
-    R5G6B5,
-    RGB5A1,
-    RGBA4,
-    RGB10A2,
-    D16,
-    D24,
-    D24S8,
-    D32,
-    D32F,
-    D32FS8X24,
-    S8,
-    RGB_DXT1,
-    RGBA_DXT1,
-    RGBA_DXT3,
-    RGBA_DXT5,
-    R_ATI1N_UNorm,
-    R_ATI1N_SNorm,
-    RG_ATI2N_UNorm,
-    RG_ATI2N_SNorm,
-    RGB_BP_UNSIGNED_FLOAT,
-    RGB_BP_SIGNED_FLOAT,
-    RGB_BP_UNorm,
-    R11_EAC_UNorm,
-    R11_EAC_SNorm,
-    RG11_EAC_UNorm,
-    RG11_EAC_SNorm,
-    RGB8_ETC2,
-    SRGB8_ETC2,
-    RGB8_PunchThrough_Alpha1_ETC2,
-    SRGB8_PunchThrough_Alpha1_ETC2,
-    RGBA8_ETC2_EAC,
-    SRGB8_Alpha8_ETC2_EAC,
-    RGB8_ETC1,
-    RGBA_ASTC_4x4,
-    RGBA_ASTC_5x4,
-    RGBA_ASTC_5x5,
-    RGBA_ASTC_6x5,
-    RGBA_ASTC_6x6,
-    RGBA_ASTC_8x5,
-    RGBA_ASTC_8x6,
-    RGBA_ASTC_8x8,
-    RGBA_ASTC_10x5,
-    RGBA_ASTC_10x6,
-    RGBA_ASTC_10x8,
-    RGBA_ASTC_10x10,
-    RGBA_ASTC_12x10,
-    RGBA_ASTC_12x12,
-    SRGB8_Alpha8_ASTC_4x4,
-    SRGB8_Alpha8_ASTC_5x4,
-    SRGB8_Alpha8_ASTC_5x5,
-    SRGB8_Alpha8_ASTC_6x5,
-    SRGB8_Alpha8_ASTC_6x6,
-    SRGB8_Alpha8_ASTC_8x5,
-    SRGB8_Alpha8_ASTC_8x6,
-    SRGB8_Alpha8_ASTC_8x8,
-    SRGB8_Alpha8_ASTC_10x5,
-    SRGB8_Alpha8_ASTC_10x6,
-    SRGB8_Alpha8_ASTC_10x8,
-    SRGB8_Alpha8_ASTC_10x10,
-    SRGB8_Alpha8_ASTC_12x10,
-    SRGB8_Alpha8_ASTC_12x12,
-    SRGB8,
-    SRGB8_Alpha8,
-    SRGB_DXT1,
-    SRGB_Alpha_DXT1,
-    SRGB_Alpha_DXT3,
-    SRGB_Alpha_DXT5,
-    SRGB_BP_UNorm,
-    DepthFormat,
-    AlphaFormat,
-    RGBFormat,
-    RGBAFormat,
-    LuminanceFormat,
-    LuminanceAlphaFormat,
-}
-
-[org_name(QOpenGLTexture)]
-enum TextureFormatClass {
-    NoFormatClass,
-    FormatClass_128Bit,
-    FormatClass_96Bit,
-    FormatClass_64Bit,
-    FormatClass_48Bit,
-    FormatClass_32Bit,
-    FormatClass_24Bit,
-    FormatClass_16Bit,
-    FormatClass_8Bit,
-    FormatClass_RGTC1_R,
-    FormatClass_RGTC2_RG,
-    FormatClass_BPTC_Unorm,
-    FormatClass_BPTC_Float,
-    FormatClass_S3TC_DXT1_RGB,
-    FormatClass_S3TC_DXT1_RGBA,
-    FormatClass_S3TC_DXT3_RGBA,
-    FormatClass_S3TC_DXT5_RGBA,
-    FormatClass_Unique,
-}
-
-[org_name(QOpenGLTexture)]
-enum CubeMapFace {
-    CubeMapPositiveX,
-    CubeMapNegativeX,
-    CubeMapPositiveY,
-    CubeMapNegativeY,
-    CubeMapPositiveZ,
-    CubeMapNegativeZ,
-}
-
-[org_name(QOpenGLTexture)]
-enum PixelFormat {
-    NoSourceFormat,
-    Red,
-    RG,
-    RGB,
-    BGR,
-    RGBA,
-    BGRA,
-    Red_Integer,
-    RG_Integer,
-    RGB_Integer,
-    BGR_Integer,
-    RGBA_Integer,
-    BGRA_Integer,
-    Stencil,
-    Depth,
-    DepthStencil,
-    Alpha,
-    Luminance,
-    LuminanceAlpha,
-}
-
-[org_name(QOpenGLTexture)]
-enum PixelType {
-    NoPixelType,
-    Int8,
-    UInt8,
-    Int16,
-    UInt16,
-    Int32,
-    UInt32,
-    Float16,
-    Float16OES,
-    Float32,
-    UInt32_RGB9_E5,
-    UInt32_RG11B10F,
-    UInt8_RG3B2,
-    UInt8_RG3B2_Rev,
-    UInt16_RGB5A1,
-    UInt16_RGB5A1_Rev,
-    UInt16_R5G6B5,
-    UInt16_R5G6B5_Rev,
-    UInt16_RGBA4,
-    UInt16_RGBA4_Rev,
-    UInt32_RGBA8,
-    UInt32_RGBA8_Rev,
-    UInt32_RGB10A2,
-    UInt32_RGB10A2_Rev,
-    UInt32_D24S8,
-    Float32_D32_UInt32_S8_X24,
-}
-
-[org_name(QOpenGLTexture)]
-enum SwizzleComponent {
-    SwizzleRed,
-    SwizzleGreen,
-    SwizzleBlue,
-    SwizzleAlpha,
-}
-
-[org_name(QOpenGLTexture)]
-enum SwizzleValue {
-    RedValue,
-    GreenValue,
-    BlueValue,
-    AlphaValue,
-    ZeroValue,
-    OneValue,
-}
-
-[org_name(QOpenGLTexture)]
-enum WrapMode {
-    Repeat,
-    MirroredRepeat,
-    ClampToEdge,
-    ClampToBorder,
-}
-
-[org_name(QOpenGLTexture)]
-enum CoordinateDirection {
-    DirectionS,
-    DirectionT,
-    DirectionR,
-}
-
-[org_name(QOpenGLTexture)]
-enum Feature {
-    ImmutableStorage,
-    ImmutableMultisampleStorage,
-    TextureRectangle,
-    TextureArrays,
-    Texture3D,
-    TextureMultisample,
-    TextureBuffer,
-    TextureCubeMapArrays,
-    Swizzle,
-    StencilTexturing,
-    AnisotropicFiltering,
-    NPOTTextures,
-    NPOTTextureRepeat,
-    Texture1D,
-    TextureComparisonOperators,
-    TextureMipMapLevel,
-    MaxFeatureFlag,
-}
-
-[org_name(QOpenGLTexture)]
-enum DepthStencilMode {
-    DepthMode,
-    StencilMode,
-}
-
-[org_name(QOpenGLTexture)]
-enum ComparisonFunction {
-    CompareLessEqual,
-    CompareGreaterEqual,
-    CompareLess,
-    CompareGreater,
-    CompareEqual,
-    CommpareNotEqual,
-    CompareAlways,
-    CompareNever,
-}
-
-[org_name(QOpenGLTexture)]
-enum ComparisonMode {
-    CompareRefToTexture,
-    CompareNone,
-}
-
-[org_name(QOpenGLTexture)]
-enum Filter {
-    Nearest,
-    Linear,
-    NearestMipMapNearest,
-    NearestMipMapLinear,
-    LinearMipMapNearest,
-    LinearMipMapLinear,
-}
-
-
 struct OpenGLTexture {
     qt_check_for_qgadget_macro(),
     /// 
@@ -397,9 +51,9 @@ struct OpenGLTexture {
     /// 
     /// Returns `true` if the creation succeeded, otherwise returns `false.`
     /// 
-    /// **See also:** destroy()
-    /// isCreated()
-    /// textureId()
+    /// **See also:** [`destroy()`]
+    /// [`is_created()`]
+    /// [`texture_id()`]
     /// 
     /// Attempts to create a texture view onto this texture. A texture
     /// view is somewhat analogous to a view in SQL in that it presents
@@ -430,23 +84,23 @@ struct OpenGLTexture {
     /// QOpenGLTexture object that will return `true` from its isTextureView()
     /// function.
     /// 
-    /// **See also:** isTextureView()
+    /// **See also:** [`is_texture_view()`]
     create() -> bool,
     /// 
     /// Returns `true` if the underlying OpenGL texture object has been created.
     /// 
-    /// **See also:** create()
-    /// destroy()
-    /// textureId()
+    /// **See also:** [`create()`]
+    /// [`destroy()`]
+    /// [`texture_id()`]
     is_created() -> bool,
     /// 
     /// Returns the name of the underlying OpenGL texture object or 0 if it has
     /// not yet been created.
     /// 
-    /// **See also:** create()
-    /// destroy()
-    /// isCreated()
-    texture_id() -> i32,
+    /// **See also:** [`create()`]
+    /// [`destroy()`]
+    /// [`is_created()`]
+    texture_id() -> GLuint,
     /// 
     /// Binds this texture to the currently active texture unit ready for
     /// rendering. Note that you do not need to bind QOpenGLTexture objects
@@ -454,7 +108,7 @@ struct OpenGLTexture {
     /// EXT_direct_state_access extension where available and simulates it
     /// where it is not.
     /// 
-    /// **See also:** release()
+    /// **See also:** [`release()`]
     /// 
     /// Binds this texture to texture unit *unit* ready for
     /// rendering. Note that you do not need to bind QOpenGLTexture objects
@@ -465,7 +119,7 @@ struct OpenGLTexture {
     /// If parameter *reset* is `true` then this function will restore
     /// the active unit to the texture unit that was active upon entry.
     /// 
-    /// **See also:** release()
+    /// **See also:** [`release()`]
     bind(),
     /// 
     /// Binds this texture to the currently active texture unit ready for
@@ -474,7 +128,7 @@ struct OpenGLTexture {
     /// EXT_direct_state_access extension where available and simulates it
     /// where it is not.
     /// 
-    /// **See also:** release()
+    /// **See also:** [`release()`]
     /// 
     /// Binds this texture to texture unit *unit* ready for
     /// rendering. Note that you do not need to bind QOpenGLTexture objects
@@ -485,12 +139,13 @@ struct OpenGLTexture {
     /// If parameter *reset* is `true` then this function will restore
     /// the active unit to the texture unit that was active upon entry.
     /// 
-    /// **See also:** release()
-    bind(unit: uint, reset: OpenGLTexture::TextureUnitReset),
+    /// **See also:** [`release()`]
+    [org_name(bind)]
+    bind_2(unit: uint, reset: OpenGLTexture::TextureUnitReset),
     /// 
     /// Unbinds this texture from the currently active texture unit.
     /// 
-    /// **See also:** bind()
+    /// **See also:** [`bind()`]
     /// 
     /// Unbinds this texture from texture unit *unit.*
     /// 
@@ -501,54 +156,57 @@ struct OpenGLTexture {
     /// 
     /// Unbinds this texture from the currently active texture unit.
     /// 
-    /// **See also:** bind()
+    /// **See also:** [`bind()`]
     /// 
     /// Unbinds this texture from texture unit *unit.*
     /// 
     /// If parameter *reset* is `true` then this function
     /// will restore the active unit to the texture unit that was active
     /// upon entry.
-    release(unit: uint, reset: OpenGLTexture::TextureUnitReset),
+    [org_name(release)]
+    release_2(unit: uint, reset: OpenGLTexture::TextureUnitReset),
     /// 
     /// Returns `true` if this texture is bound to the corresponding target
     /// of the currently active texture unit.
     /// 
-    /// **See also:** bind()
-    /// release()
+    /// **See also:** [`bind()`]
+    /// [`release()`]
     /// 
     /// Returns `true` if this texture is bound to the corresponding target
     /// of texture unit *unit.*
     /// 
-    /// **See also:** bind()
-    /// release()
+    /// **See also:** [`bind()`]
+    /// [`release()`]
     is_bound() -> bool,
     /// 
     /// Returns `true` if this texture is bound to the corresponding target
     /// of the currently active texture unit.
     /// 
-    /// **See also:** bind()
-    /// release()
+    /// **See also:** [`bind()`]
+    /// [`release()`]
     /// 
     /// Returns `true` if this texture is bound to the corresponding target
     /// of texture unit *unit.*
     /// 
-    /// **See also:** bind()
-    /// release()
-    is_bound(unit: uint) -> bool,
+    /// **See also:** [`bind()`]
+    /// [`release()`]
+    [org_name(isBound)]
+    is_bound_2(unit: uint) -> bool,
     /// 
     /// Returns the textureId of the texture that is bound to the *target*
     /// of the currently active texture unit.
     /// 
     /// Returns the textureId of the texture that is bound to the *target*
     /// of the texture unit *unit.*
-    [static] bound_texture_id(target: OpenGLTexture::BindingTarget) -> i32,
+    [static] bound_texture_id(target: OpenGLTexture::BindingTarget) -> GLuint,
     /// 
     /// Returns the textureId of the texture that is bound to the *target*
     /// of the currently active texture unit.
     /// 
     /// Returns the textureId of the texture that is bound to the *target*
     /// of the texture unit *unit.*
-    [static] bound_texture_id(unit: uint, target: OpenGLTexture::BindingTarget) -> i32,
+    [org_name(boundTextureId)]
+    [static] bound_texture_id_2(unit: uint, target: OpenGLTexture::BindingTarget) -> GLuint,
     /// 
     /// Sets the format of this texture object to *format.* This function
     /// must be called before texture storage is allocated.
@@ -556,13 +214,13 @@ struct OpenGLTexture {
     /// Note that all formats may not be supported. The exact set of supported
     /// formats is dependent upon your OpenGL implementation and version.
     /// 
-    /// **See also:** format()
-    /// allocateStorage()
+    /// **See also:** [`format()`]
+    /// [`allocate_storage()`]
     set_format(format: OpenGLTexture::TextureFormat),
     /// 
     /// Returns the format of this texture object.
     /// 
-    /// **See also:** setFormat()
+    /// **See also:** [`set_format()`]
     format() -> OpenGLTexture::TextureFormat,
     /// 
     /// Sets the dimensions of this texture object to *width,*
@@ -575,34 +233,34 @@ struct OpenGLTexture {
     /// OpenGL implementation doesn't have support for repeating non-power-of-two
     /// textures, then the wrap mode is automatically set to ClampToEdge.
     /// 
-    /// **See also:** width()
-    /// height()
-    /// depth()
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`depth()`]
     set_size(width: i32, height: i32, depth: i32),
     /// 
     /// Returns the width of a 1D, 2D or 3D texture.
     /// 
-    /// **See also:** height()
-    /// depth()
-    /// setSize()
+    /// **See also:** [`height()`]
+    /// [`depth()`]
+    /// [`set_size()`]
     width() -> i32,
     /// 
     /// Returns the height of a 2D or 3D texture.
     /// 
-    /// **See also:** width()
-    /// depth()
-    /// setSize()
+    /// **See also:** [`width()`]
+    /// [`depth()`]
+    /// [`set_size()`]
     height() -> i32,
     /// 
     /// Returns the depth of a 3D texture.
     /// 
-    /// **See also:** width()
-    /// height()
-    /// setSize()
+    /// **See also:** [`width()`]
+    /// [`height()`]
+    /// [`set_size()`]
     /// 
     /// Returns the depth stencil mode for textures using a combined depth/stencil format.
     /// 
-    /// **See also:** setDepthStencilMode()
+    /// **See also:** [`set_depth_stencil_mode()`]
     depth() -> i32,
     /// 
     /// For texture targets that support mipmaps, this function
@@ -613,26 +271,26 @@ struct OpenGLTexture {
     /// If the texture target does not support mipmaps this function
     /// has no effect.
     /// 
-    /// **See also:** mipLevels()
-    /// maximumMipLevels()
-    /// isStorageAllocated()
+    /// **See also:** [`mip_levels()`]
+    /// [`maximum_mip_levels()`]
+    /// [`is_storage_allocated()`]
     set_mip_levels(levels: i32),
     /// 
     /// Returns the number of mipmap levels for this texture. If storage
     /// has not yet been allocated for this texture it returns the
     /// requested number of mipmap levels.
     /// 
-    /// **See also:** setMipLevels()
-    /// maximumMipLevels()
-    /// isStorageAllocated()
+    /// **See also:** [`set_mip_levels()`]
+    /// [`maximum_mip_levels()`]
+    /// [`is_storage_allocated()`]
     mip_levels() -> i32,
     /// 
     /// Returns the maximum number of mipmap levels that this texture
     /// can have given the current dimensions.
     /// 
-    /// **See also:** setMipLevels()
-    /// mipLevels()
-    /// setSize()
+    /// **See also:** [`set_mip_levels()`]
+    /// [`mip_levels()`]
+    /// [`set_size()`]
     maximum_mip_levels() -> i32,
     /// 
     /// Sets the number of array *layers* to allocate storage for. This
@@ -641,8 +299,8 @@ struct OpenGLTexture {
     /// For targets that do not support array layers this function has
     /// no effect.
     /// 
-    /// **See also:** layers()
-    /// isStorageAllocated()
+    /// **See also:** [`layers()`]
+    /// [`is_storage_allocated()`]
     set_layers(layers: i32),
     /// 
     /// Returns the number of array layers for this texture. If
@@ -652,8 +310,8 @@ struct OpenGLTexture {
     /// For texture targets that do not support array layers this
     /// will return 1.
     /// 
-    /// **See also:** setLayers()
-    /// isStorageAllocated()
+    /// **See also:** [`set_layers()`]
+    /// [`is_storage_allocated()`]
     layers() -> i32,
     /// 
     /// Returns the number of faces for this texture. For cubemap
@@ -669,8 +327,8 @@ struct OpenGLTexture {
     /// For targets that do not support multisampling this function has
     /// no effect.
     /// 
-    /// **See also:** samples()
-    /// isStorageAllocated()
+    /// **See also:** [`samples()`]
+    /// [`is_storage_allocated()`]
     set_samples(samples: i32),
     /// 
     /// Returns the number of multisample sample points for this texture.
@@ -680,8 +338,8 @@ struct OpenGLTexture {
     /// For texture targets that do not support multisampling this
     /// will return 0.
     /// 
-    /// **See also:** setSamples()
-    /// isStorageAllocated()
+    /// **See also:** [`set_samples()`]
+    /// [`is_storage_allocated()`]
     samples() -> i32,
     /// 
     /// Sets whether the sample positions and number of samples used with
@@ -696,8 +354,8 @@ struct OpenGLTexture {
     /// 
     /// The default value is `true.`
     /// 
-    /// **See also:** isFixedSamplePositions()
-    /// isStorageAllocated()
+    /// **See also:** [`is_fixed_sample_positions()`]
+    /// [`is_storage_allocated()`]
     set_fixed_sample_positions(fixed: bool),
     /// 
     /// Returns whether this texture uses a fixed pattern of multisample
@@ -707,8 +365,8 @@ struct OpenGLTexture {
     /// For texture targets that do not support multisampling this
     /// will return `true.`
     /// 
-    /// **See also:** setFixedSamplePositions()
-    /// isStorageAllocated()
+    /// **See also:** [`set_fixed_sample_positions()`]
+    /// [`is_storage_allocated()`]
     is_fixed_sample_positions() -> bool,
     /// 
     /// Allocates server-side storage for this texture object taking
@@ -734,8 +392,8 @@ struct OpenGLTexture {
     /// used at allocation time must perfectly match the format
     /// and the type passed to any subsequent setData() call.
     /// 
-    /// **See also:** isStorageAllocated()
-    /// setData()
+    /// **See also:** [`is_storage_allocated()`]
+    /// [`set_data()`]
     /// 
     /// Allocates server-side storage for this texture object taking
     /// into account, the format, dimensions, mipmap levels, array
@@ -754,8 +412,8 @@ struct OpenGLTexture {
     /// Once storage has been allocated for the texture then pixel data
     /// can be uploaded via one of the setData() overloads.
     /// 
-    /// **See also:** isStorageAllocated()
-    /// setData()
+    /// **See also:** [`is_storage_allocated()`]
+    /// [`set_data()`]
     allocate_storage(),
     /// 
     /// Allocates server-side storage for this texture object taking
@@ -781,8 +439,8 @@ struct OpenGLTexture {
     /// used at allocation time must perfectly match the format
     /// and the type passed to any subsequent setData() call.
     /// 
-    /// **See also:** isStorageAllocated()
-    /// setData()
+    /// **See also:** [`is_storage_allocated()`]
+    /// [`set_data()`]
     /// 
     /// Allocates server-side storage for this texture object taking
     /// into account, the format, dimensions, mipmap levels, array
@@ -801,9 +459,10 @@ struct OpenGLTexture {
     /// Once storage has been allocated for the texture then pixel data
     /// can be uploaded via one of the setData() overloads.
     /// 
-    /// **See also:** isStorageAllocated()
-    /// setData()
-    allocate_storage(pixel_format: OpenGLTexture::PixelFormat, pixel_type: OpenGLTexture::PixelType),
+    /// **See also:** [`is_storage_allocated()`]
+    /// [`set_data()`]
+    [org_name(allocateStorage)]
+    allocate_storage_2(pixel_format: OpenGLTexture::PixelFormat, pixel_type: OpenGLTexture::PixelType),
     /// 
     /// Returns `true` if server-side storage for this texture as been
     /// allocated.
@@ -811,11 +470,11 @@ struct OpenGLTexture {
     /// The texture format, dimensions, mipmap levels and array layers
     /// cannot be altered once storage ihas been allocated.
     /// 
-    /// **See also:** allocateStorage()
-    /// setSize()
-    /// setMipLevels()
-    /// setLayers()
-    /// setFormat()
+    /// **See also:** [`allocate_storage()`]
+    /// [`set_size()`]
+    /// [`set_mip_levels()`]
+    /// [`set_layers()`]
+    /// [`set_format()`]
     is_storage_allocated() -> bool,
     /// 
     /// Attempts to create a texture view onto this texture. A texture
@@ -847,13 +506,13 @@ struct OpenGLTexture {
     /// QOpenGLTexture object that will return `true` from its isTextureView()
     /// function.
     /// 
-    /// **See also:** isTextureView()
+    /// **See also:** [`is_texture_view()`]
     create_texture_view(target: OpenGLTexture::Target, view_format: OpenGLTexture::TextureFormat, minimum_mipmap_level: i32, maximum_mipmap_level: i32, minimum_layer: i32, maximum_layer: i32) -> OpenGLTexture?,
     /// 
     /// Returns `true` if this texture object is actually a view onto another
     /// texture object.
     /// 
-    /// **See also:** createTextureView()
+    /// **See also:** [`create_texture_view()`]
     is_texture_view() -> bool,
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
@@ -868,7 +527,7 @@ struct OpenGLTexture {
     /// If using a compressed format() then you should use setCompressedData() instead of this
     /// function.
     /// 
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// Parameter *layerCount* is the number of layers in a texture array
@@ -881,7 +540,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// 
@@ -909,7 +568,7 @@ struct OpenGLTexture {
     /// If using a compressed format() then you should use setCompressedData() instead of this
     /// function.
     /// 
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// Parameter *layerCount* is the number of layers in a texture array
@@ -922,7 +581,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// 
@@ -936,7 +595,8 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setData)]
+    set_data_2(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -950,7 +610,7 @@ struct OpenGLTexture {
     /// If using a compressed format() then you should use setCompressedData() instead of this
     /// function.
     /// 
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// Parameter *layerCount* is the number of layers in a texture array
@@ -963,7 +623,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// 
@@ -977,7 +637,8 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setData)]
+    set_data_3(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -991,7 +652,7 @@ struct OpenGLTexture {
     /// If using a compressed format() then you should use setCompressedData() instead of this
     /// function.
     /// 
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// Parameter *layerCount* is the number of layers in a texture array
@@ -1004,7 +665,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// 
@@ -1018,7 +679,8 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setData)]
+    set_data_4(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1032,7 +694,7 @@ struct OpenGLTexture {
     /// If using a compressed format() then you should use setCompressedData() instead of this
     /// function.
     /// 
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// Parameter *layerCount* is the number of layers in a texture array
@@ -1045,7 +707,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// 
@@ -1059,7 +721,8 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setData)]
+    set_data_5(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1073,7 +736,7 @@ struct OpenGLTexture {
     /// If using a compressed format() then you should use setCompressedData() instead of this
     /// function.
     /// 
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// Parameter *layerCount* is the number of layers in a texture array
@@ -1086,7 +749,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// 
@@ -1100,7 +763,8 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setData)]
+    set_data_6(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1114,7 +778,7 @@ struct OpenGLTexture {
     /// If using a compressed format() then you should use setCompressedData() instead of this
     /// function.
     /// 
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// Parameter *layerCount* is the number of layers in a texture array
@@ -1127,7 +791,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// 
@@ -1141,7 +805,8 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setData)]
+    set_data_7(mip_level: i32, layer: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1155,7 +820,7 @@ struct OpenGLTexture {
     /// If using a compressed format() then you should use setCompressedData() instead of this
     /// function.
     /// 
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// Parameter *layerCount* is the number of layers in a texture array
@@ -1168,7 +833,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// 
@@ -1182,7 +847,8 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setData)]
+    set_data_8(mip_level: i32, source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1196,7 +862,7 @@ struct OpenGLTexture {
     /// If using a compressed format() then you should use setCompressedData() instead of this
     /// function.
     /// 
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// Parameter *layerCount* is the number of layers in a texture array
@@ -1209,7 +875,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// 
@@ -1223,7 +889,8 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setData)]
+    set_data_9(source_format: OpenGLTexture::PixelFormat, source_type: OpenGLTexture::PixelType, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1277,7 +944,8 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setCompressedData)]
+    set_compressed_data_2(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1304,7 +972,8 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setCompressedData)]
+    set_compressed_data_3(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1331,7 +1000,8 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setCompressedData)]
+    set_compressed_data_4(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1358,7 +1028,8 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setCompressedData)]
+    set_compressed_data_5(mip_level: i32, layer: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1385,7 +1056,8 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setCompressedData)]
+    set_compressed_data_6(mip_level: i32, layer: i32, layer_count: i32, cube_face: OpenGLTexture::CubeMapFace, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1412,7 +1084,8 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setCompressedData)]
+    set_compressed_data_7(mip_level: i32, layer: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1439,7 +1112,8 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setCompressedData)]
+    set_compressed_data_8(mip_level: i32, data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads compressed pixel *data* to *mipLevel,* array *layer,* and *cubeFace.*
     /// The pixel transfer can optionally be controlled with *options.* The *dataSize*
@@ -1466,7 +1140,8 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    set_compressed_data(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
+    [org_name(setCompressedData)]
+    set_compressed_data_9(data_size: i32, data: *void, options: *OpenGLPixelTransferOptionsType),
     /// 
     /// Uploads pixel *data* for this texture object *mipLevel,* array *layer,* and *cubeFace.*
     /// Storage must have been allocated before uploading pixel data. Some overloads of setData()
@@ -1480,7 +1155,7 @@ struct OpenGLTexture {
     /// If using a compressed format() then you should use setCompressedData() instead of this
     /// function.
     /// 
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// Parameter *layerCount* is the number of layers in a texture array
@@ -1493,7 +1168,7 @@ struct OpenGLTexture {
     /// **Overloads**
     /// 
     /// **Overloads**
-    /// **See also:** setCompressedData()
+    /// **See also:** [`set_compressed_data()`]
     /// 
     /// **Overloads**
     /// 
@@ -1507,7 +1182,8 @@ struct OpenGLTexture {
     /// to turn off mipmap generation.
     /// 
     /// **Overloads**
-    set_data(image: &ImageType, gen_mip_maps: OpenGLTexture::MipMapGeneration),
+    [org_name(setData)]
+    set_data_10(image: &ImageType, gen_mip_maps: OpenGLTexture::MipMapGeneration),
     /// 
     /// Returns `true` if your OpenGL implementation and version supports the texture
     /// feature *feature.*
@@ -1516,47 +1192,47 @@ struct OpenGLTexture {
     /// Sets the base mipmap level used for all texture lookups with this texture to *baseLevel.*
     /// 
     /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** mipBaseLevel()
-    /// setMipMaxLevel()
-    /// setMipLevelRange()
+    /// **See also:** [`mip_base_level()`]
+    /// [`set_mip_max_level()`]
+    /// [`set_mip_level_range()`]
     set_mip_base_level(base_level: i32),
     /// 
     /// Returns the mipmap base level used for all texture lookups with this texture.
     /// The default is 0.
     /// 
-    /// **See also:** setMipBaseLevel()
-    /// mipMaxLevel()
-    /// mipLevelRange()
+    /// **See also:** [`set_mip_base_level()`]
+    /// [`mip_max_level()`]
+    /// [`mip_level_range()`]
     mip_base_level() -> i32,
     /// 
     /// Sets the maximum mipmap level used for all texture lookups with this texture to *maxLevel.*
     /// 
     /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** mipMaxLevel()
-    /// setMipBaseLevel()
-    /// setMipLevelRange()
+    /// **See also:** [`mip_max_level()`]
+    /// [`set_mip_base_level()`]
+    /// [`set_mip_level_range()`]
     set_mip_max_level(max_level: i32),
     /// 
     /// Returns the mipmap maximum level used for all texture lookups with this texture.
     /// 
-    /// **See also:** setMipMaxLevel()
-    /// mipBaseLevel()
-    /// mipLevelRange()
+    /// **See also:** [`set_mip_max_level()`]
+    /// [`mip_base_level()`]
+    /// [`mip_level_range()`]
     mip_max_level() -> i32,
     /// 
     /// Sets the range of mipmap levels that can be used for texture lookups with this texture
     /// to range from *baseLevel* to *maxLevel.*
     /// 
     /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** setMipBaseLevel()
-    /// setMipMaxLevel()
-    /// mipLevelRange()
+    /// **See also:** [`set_mip_base_level()`]
+    /// [`set_mip_max_level()`]
+    /// [`mip_level_range()`]
     set_mip_level_range(base_level: i32, max_level: i32),
     /// 
     /// Returns the range of mipmap levels that can be used for texture lookups with this texture.
     /// 
-    /// **See also:** mipBaseLevel()
-    /// mipMaxLevel()
+    /// **See also:** [`mip_base_level()`]
+    /// [`mip_max_level()`]
     mip_level_range() -> Pair<int,,
     /// 
     /// If *enabled* is `true,` enables automatic mipmap generation for this texture object
@@ -1566,14 +1242,14 @@ struct OpenGLTexture {
     /// 
     /// **Note**: Mipmap generation is not supported for compressed textures with OpenGL ES 2.0.
     /// 
-    /// **See also:** isAutoMipMapGenerationEnabled()
-    /// generateMipMaps()
+    /// **See also:** [`is_auto_mip_map_generation_enabled()`]
+    /// [`generate_mip_maps()`]
     set_auto_mip_map_generation_enabled(enabled: bool),
     /// 
     /// Returns whether auto mipmap generation is enabled for this texture object.
     /// 
-    /// **See also:** setAutoMipMapGenerationEnabled()
-    /// generateMipMaps()
+    /// **See also:** [`set_auto_mip_map_generation_enabled()`]
+    /// [`generate_mip_maps()`]
     is_auto_mip_map_generation_enabled() -> bool,
     /// 
     /// Generates mipmaps for this texture object from mipmap level 0. If you are
@@ -1584,9 +1260,9 @@ struct OpenGLTexture {
     /// **Note**: Mipmap generation is not supported for compressed textures with OpenGL
     /// ES 2.0.
     /// 
-    /// **See also:** setAutoMipMapGenerationEnabled()
-    /// setMipLevels()
-    /// mipLevels()
+    /// **See also:** [`set_auto_mip_map_generation_enabled()`]
+    /// [`set_mip_levels()`]
+    /// [`mip_levels()`]
     /// 
     /// Generates mipmaps for this texture object from mipmap level *baseLevel.* If you are
     /// using a texture target and filtering option that requires mipmaps and you
@@ -1597,9 +1273,9 @@ struct OpenGLTexture {
     /// base level to *baseLevel* and then generating the mipmap chain. If *resetBaseLevel*
     /// is `true,` then the baseLevel of the texture will be reset to its previous value.
     /// 
-    /// **See also:** setAutoMipMapGenerationEnabled()
-    /// setMipLevels()
-    /// mipLevels()
+    /// **See also:** [`set_auto_mip_map_generation_enabled()`]
+    /// [`set_mip_levels()`]
+    /// [`mip_levels()`]
     generate_mip_maps(),
     /// 
     /// Generates mipmaps for this texture object from mipmap level 0. If you are
@@ -1610,9 +1286,9 @@ struct OpenGLTexture {
     /// **Note**: Mipmap generation is not supported for compressed textures with OpenGL
     /// ES 2.0.
     /// 
-    /// **See also:** setAutoMipMapGenerationEnabled()
-    /// setMipLevels()
-    /// mipLevels()
+    /// **See also:** [`set_auto_mip_map_generation_enabled()`]
+    /// [`set_mip_levels()`]
+    /// [`mip_levels()`]
     /// 
     /// Generates mipmaps for this texture object from mipmap level *baseLevel.* If you are
     /// using a texture target and filtering option that requires mipmaps and you
@@ -1623,10 +1299,11 @@ struct OpenGLTexture {
     /// base level to *baseLevel* and then generating the mipmap chain. If *resetBaseLevel*
     /// is `true,` then the baseLevel of the texture will be reset to its previous value.
     /// 
-    /// **See also:** setAutoMipMapGenerationEnabled()
-    /// setMipLevels()
-    /// mipLevels()
-    generate_mip_maps(base_level: i32, reset_base_level: bool),
+    /// **See also:** [`set_auto_mip_map_generation_enabled()`]
+    /// [`set_mip_levels()`]
+    /// [`mip_levels()`]
+    [org_name(generateMipMaps)]
+    generate_mip_maps_2(base_level: i32, reset_base_level: bool),
     /// 
     /// GLSL shaders are able to reorder the components of the vec4 returned by texture
     /// functions. It is also desirable to be able to control this reordering from CPU
@@ -1637,7 +1314,7 @@ struct OpenGLTexture {
     /// This function maps *component* to the output *value.*
     /// 
     /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** swizzleMask()
+    /// **See also:** [`swizzle_mask()`]
     /// 
     /// Parameters *r* , *g* , *b* , and *a* are values used for setting
     /// the colors red, green, blue, and the alpha value.
@@ -1653,12 +1330,13 @@ struct OpenGLTexture {
     /// This function maps *component* to the output *value.*
     /// 
     /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** swizzleMask()
+    /// **See also:** [`swizzle_mask()`]
     /// 
     /// Parameters *r* , *g* , *b* , and *a* are values used for setting
     /// the colors red, green, blue, and the alpha value.
     /// **Overloads**
-    set_swizzle_mask(r: OpenGLTexture::SwizzleValue, g: OpenGLTexture::SwizzleValue, b: OpenGLTexture::SwizzleValue, a: OpenGLTexture::SwizzleValue),
+    [org_name(setSwizzleMask)]
+    set_swizzle_mask_2(r: OpenGLTexture::SwizzleValue, g: OpenGLTexture::SwizzleValue, b: OpenGLTexture::SwizzleValue, a: OpenGLTexture::SwizzleValue),
     /// 
     /// Returns the swizzle mask for texture *component.*
     swizzle_mask(component: OpenGLTexture::SwizzleComponent) -> OpenGLTexture::SwizzleValue,
@@ -1671,73 +1349,73 @@ struct OpenGLTexture {
     /// the parameter is set to StencilMode, the shader will access the stencil component.
     /// 
     /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** depthStencilMode()
+    /// **See also:** [`depth_stencil_mode()`]
     set_depth_stencil_mode(mode: OpenGLTexture::DepthStencilMode),
     /// 
     /// Returns the depth stencil mode for textures using a combined depth/stencil format.
     /// 
-    /// **See also:** setDepthStencilMode()
+    /// **See also:** [`set_depth_stencil_mode()`]
     depth_stencil_mode() -> OpenGLTexture::DepthStencilMode,
     set_comparison_function(function: OpenGLTexture::ComparisonFunction),
     /// 
     /// Returns the texture comparison operator set on this texture. By default, a
     /// texture has a CompareLessEqual comparison function.
     /// 
-    /// **See also:** setComparisonFunction()
+    /// **See also:** [`set_comparison_function()`]
     comparison_function() -> OpenGLTexture::ComparisonFunction,
     /// 
     /// Sets the texture comparison mode on this texture to *mode.* The texture
     /// comparison mode is used by shadow samplers when sampling a depth texture.
     /// 
-    /// **See also:** comparisonMode()
+    /// **See also:** [`comparison_mode()`]
     set_comparison_mode(mode: OpenGLTexture::ComparisonMode),
     /// 
     /// Returns the texture comparison mode set on this texture. By default, a
     /// texture has a CompareNone comparison mode (i.e. comparisons are disabled).
     /// 
-    /// **See also:** setComparisonMode()
+    /// **See also:** [`set_comparison_mode()`]
     comparison_mode() -> OpenGLTexture::ComparisonMode,
     /// 
     /// Sets the filter used for minification to *filter.*
     /// 
-    /// **See also:** minificationFilter()
-    /// setMagnificationFilter()
-    /// setMinMagFilters()
+    /// **See also:** [`minification_filter()`]
+    /// [`set_magnification_filter()`]
+    /// [`set_min_mag_filters()`]
     set_minification_filter(filter: OpenGLTexture::Filter),
     /// 
     /// Returns the minification filter.
     /// 
-    /// **See also:** setMinificationFilter()
+    /// **See also:** [`set_minification_filter()`]
     minification_filter() -> OpenGLTexture::Filter,
     /// 
     /// Sets the magnification filter to *filter.*
     /// 
-    /// **See also:** magnificationFilter()
-    /// setMinificationFilter()
-    /// setMinMagFilters()
+    /// **See also:** [`magnification_filter()`]
+    /// [`set_minification_filter()`]
+    /// [`set_min_mag_filters()`]
     set_magnification_filter(filter: OpenGLTexture::Filter),
     /// 
     /// Returns the magnification filter.
     /// 
-    /// **See also:** setMagnificationFilter()
+    /// **See also:** [`set_magnification_filter()`]
     magnification_filter() -> OpenGLTexture::Filter,
     /// 
     /// Sets the minification filter to *minificationFilter* and the magnification filter
     /// to *magnificationFilter.*
     /// 
-    /// **See also:** minMagFilters()
-    /// setMinificationFilter()
-    /// setMagnificationFilter()
+    /// **See also:** [`min_mag_filters()`]
+    /// [`set_minification_filter()`]
+    /// [`set_magnification_filter()`]
     set_min_mag_filters(minification_filter: OpenGLTexture::Filter, magnification_filter: OpenGLTexture::Filter),
     /// 
     /// Returns the current minification and magnification filters.
     /// 
-    /// **See also:** setMinMagFilters()
+    /// **See also:** [`set_min_mag_filters()`]
     min_mag_filters() -> Pair<QOpenGLTexture::Filter, QOpenGLTexture::Filter>,
     /// 
     /// Sets the wrap (or repeat mode) for all texture dimentions to *mode.*
     /// 
-    /// **See also:** wrapMode()
+    /// **See also:** [`wrap_mode()`]
     /// 
     /// Holds the texture dimension *direction.*
     /// **Overloads**
@@ -1745,21 +1423,22 @@ struct OpenGLTexture {
     /// 
     /// Sets the wrap (or repeat mode) for all texture dimentions to *mode.*
     /// 
-    /// **See also:** wrapMode()
+    /// **See also:** [`wrap_mode()`]
     /// 
     /// Holds the texture dimension *direction.*
     /// **Overloads**
-    set_wrap_mode(direction: OpenGLTexture::CoordinateDirection, mode: OpenGLTexture::WrapMode),
+    [org_name(setWrapMode)]
+    set_wrap_mode_2(direction: OpenGLTexture::CoordinateDirection, mode: OpenGLTexture::WrapMode),
     /// 
     /// Returns the wrap mode for the texture dimension *direction.*
     /// 
-    /// **See also:** setWrapMode()
+    /// **See also:** [`set_wrap_mode()`]
     wrap_mode(direction: OpenGLTexture::CoordinateDirection) -> OpenGLTexture::WrapMode,
     /// 
     /// Sets the border color of the texture to *color.*
     /// 
     /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** borderColor()
+    /// **See also:** [`border_color()`]
     /// 
     /// Sets the color red to *r* , green to *g* , blue to *b* , and *a* to the
     /// alpha value.
@@ -1777,7 +1456,7 @@ struct OpenGLTexture {
     /// Sets the border color of the texture to *color.*
     /// 
     /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** borderColor()
+    /// **See also:** [`border_color()`]
     /// 
     /// Sets the color red to *r* , green to *g* , blue to *b* , and *a* to the
     /// alpha value.
@@ -1790,12 +1469,13 @@ struct OpenGLTexture {
     /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
     /// value to *a* .
     /// **Overloads**
-    set_border_color(r: f32, g: f32, b: f32, a: f32),
+    [org_name(setBorderColor)]
+    set_border_color_2(r: f32, g: f32, b: f32, a: f32),
     /// 
     /// Sets the border color of the texture to *color.*
     /// 
     /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** borderColor()
+    /// **See also:** [`border_color()`]
     /// 
     /// Sets the color red to *r* , green to *g* , blue to *b* , and *a* to the
     /// alpha value.
@@ -1808,12 +1488,13 @@ struct OpenGLTexture {
     /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
     /// value to *a* .
     /// **Overloads**
-    set_border_color(r: i32, g: i32, b: i32, a: i32),
+    [org_name(setBorderColor)]
+    set_border_color_3(r: i32, g: i32, b: i32, a: i32),
     /// 
     /// Sets the border color of the texture to *color.*
     /// 
     /// **Note**: This function has no effect on Mac and Qt built for OpenGL ES 2.
-    /// **See also:** borderColor()
+    /// **See also:** [`border_color()`]
     /// 
     /// Sets the color red to *r* , green to *g* , blue to *b* , and *a* to the
     /// alpha value.
@@ -1826,16 +1507,17 @@ struct OpenGLTexture {
     /// Sets the color red to *r* , green to *g* , blue to *b* , and the alpha
     /// value to *a* .
     /// **Overloads**
-    set_border_color(r: uint, g: uint, b: uint, a: uint),
+    [org_name(setBorderColor)]
+    set_border_color_4(r: uint, g: uint, b: uint, a: uint),
     /// 
     /// Returns the borderColor of this texture.
     /// 
-    /// **See also:** setBorderColor()
+    /// **See also:** [`set_border_color()`]
     /// 
     /// Writes the texture border color into the first four elements
     /// of the array pointed to by *border.*
     /// 
-    /// **See also:** setBorderColor()
+    /// **See also:** [`set_border_color()`]
     /// 
     /// Writes the texture border color into the first four elements
     /// of the array pointed to by *border.*
@@ -1850,109 +1532,112 @@ struct OpenGLTexture {
     /// 
     /// Returns the borderColor of this texture.
     /// 
-    /// **See also:** setBorderColor()
+    /// **See also:** [`set_border_color()`]
     /// 
     /// Writes the texture border color into the first four elements
     /// of the array pointed to by *border.*
     /// 
-    /// **See also:** setBorderColor()
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **Overloads**
+    /// **See also:** [`set_border_color()`]
     /// 
     /// Writes the texture border color into the first four elements
     /// of the array pointed to by *border.*
     /// 
     /// **Overloads**
-    border_color(border: *f32),
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **Overloads**
+    [org_name(borderColor)]
+    border_color_2(border: *f32),
     /// 
     /// Returns the borderColor of this texture.
     /// 
-    /// **See also:** setBorderColor()
+    /// **See also:** [`set_border_color()`]
     /// 
     /// Writes the texture border color into the first four elements
     /// of the array pointed to by *border.*
     /// 
-    /// **See also:** setBorderColor()
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **Overloads**
+    /// **See also:** [`set_border_color()`]
     /// 
     /// Writes the texture border color into the first four elements
     /// of the array pointed to by *border.*
     /// 
     /// **Overloads**
-    border_color(border: *i32),
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **Overloads**
+    [org_name(borderColor)]
+    border_color_3(border: *i32),
     /// 
     /// Returns the borderColor of this texture.
     /// 
-    /// **See also:** setBorderColor()
+    /// **See also:** [`set_border_color()`]
     /// 
     /// Writes the texture border color into the first four elements
     /// of the array pointed to by *border.*
     /// 
-    /// **See also:** setBorderColor()
-    /// 
-    /// Writes the texture border color into the first four elements
-    /// of the array pointed to by *border.*
-    /// 
-    /// **Overloads**
+    /// **See also:** [`set_border_color()`]
     /// 
     /// Writes the texture border color into the first four elements
     /// of the array pointed to by *border.*
     /// 
     /// **Overloads**
-    border_color(border: *unsigned),
+    /// 
+    /// Writes the texture border color into the first four elements
+    /// of the array pointed to by *border.*
+    /// 
+    /// **Overloads**
+    [org_name(borderColor)]
+    border_color_4(border: *unsigned),
     /// 
     /// Sets the minimum level of detail to *value.* This limits the selection of highest
     /// resolution mipmap (lowest mipmap level). The default value is -1000.
     /// 
     /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** minimumLevelOfDetail()
-    /// setMaximumLevelOfDetail()
-    /// setLevelOfDetailRange()
+    /// **See also:** [`minimum_level_of_detail()`]
+    /// [`set_maximum_level_of_detail()`]
+    /// [`set_level_of_detail_range()`]
     set_minimum_level_of_detail(value: f32),
     /// 
     /// Returns the minimum level of detail parameter.
     /// 
-    /// **See also:** setMinimumLevelOfDetail()
-    /// maximumLevelOfDetail()
-    /// levelOfDetailRange()
+    /// **See also:** [`set_minimum_level_of_detail()`]
+    /// [`maximum_level_of_detail()`]
+    /// [`level_of_detail_range()`]
     minimum_level_of_detail() -> f32,
     /// 
     /// Sets the maximum level of detail to *value.* This limits the selection of lowest
     /// resolution mipmap (highest mipmap level). The default value is 1000.
     /// 
     /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** maximumLevelOfDetail()
-    /// setMinimumLevelOfDetail()
-    /// setLevelOfDetailRange()
+    /// **See also:** [`maximum_level_of_detail()`]
+    /// [`set_minimum_level_of_detail()`]
+    /// [`set_level_of_detail_range()`]
     set_maximum_level_of_detail(value: f32),
     /// 
     /// Returns the maximum level of detail parameter.
     /// 
-    /// **See also:** setMaximumLevelOfDetail()
-    /// minimumLevelOfDetail()
-    /// levelOfDetailRange()
+    /// **See also:** [`set_maximum_level_of_detail()`]
+    /// [`minimum_level_of_detail()`]
+    /// [`level_of_detail_range()`]
     maximum_level_of_detail() -> f32,
     /// 
     /// Sets the minimum level of detail parameters to *min* and the maximum level
     /// to *max.*
     /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** levelOfDetailRange()
-    /// setMinimumLevelOfDetail()
-    /// setMaximumLevelOfDetail()
+    /// **See also:** [`level_of_detail_range()`]
+    /// [`set_minimum_level_of_detail()`]
+    /// [`set_maximum_level_of_detail()`]
     set_level_of_detail_range(min: f32, max: f32),
     /// 
     /// Returns the minimum and maximum level of detail parameters.
     /// 
-    /// **See also:** setLevelOfDetailRange()
-    /// minimumLevelOfDetail()
-    /// maximumLevelOfDetail()
+    /// **See also:** [`set_level_of_detail_range()`]
+    /// [`minimum_level_of_detail()`]
+    /// [`maximum_level_of_detail()`]
     level_of_detail_range() -> Pair<float,,
     /// 
     /// Sets the level of detail bias to *bias.*
@@ -1961,13 +1646,612 @@ struct OpenGLTexture {
     /// or smoother. Decreasing values make the overall images sharper.
     /// 
     /// **Note**: This function has no effect on Qt built for OpenGL ES 2.
-    /// **See also:** levelofDetailBias()
+    /// **See also:** [`levelof_detail_bias()`]
     set_levelof_detail_bias(bias: f32),
     /// 
     /// Returns the level of detail bias parameter.
     /// 
-    /// **See also:** setLevelofDetailBias()
+    /// **See also:** [`set_levelof_detail_bias()`]
     levelof_detail_bias() -> f32,
+}
+
+[org_name(QOpenGLTexture)]
+enum Target {
+    /// A 1-dimensional texture. Equivalent to GL_TEXTURE_1D.
+    Target1D,
+    /// An array of 1-dimensional textures. Equivalent to GL_TEXTURE_1D_ARRAY
+    Target1DArray,
+    /// A 2-dimensional texture. Equivalent to GL_TEXTURE_2D
+    Target2D,
+    /// An array of 1-dimensional textures. Equivalent to GL_TEXTURE_2D_ARRAY
+    Target2DArray,
+    /// A 3-dimensional texture. Equivalent to GL_TEXTURE_3D
+    Target3D,
+    /// A cubemap texture. Equivalent to GL_TEXTURE_CUBE_MAP
+    TargetCubeMap,
+    /// An array of cubemap textures. Equivalent to GL_TEXTURE_CUBE_MAP_ARRAY
+    TargetCubeMapArray,
+    /// A 2-dimensional texture with multisample support. Equivalent to GL_TEXTURE_2D_MULTISAMPLE
+    Target2DMultisample,
+    /// An array of 2-dimensional textures with multisample support. Equivalent to GL_TEXTURE_2D_MULTISAMPLE_ARRAY
+    Target2DMultisampleArray,
+    /// A rectangular 2-dimensional texture. Equivalent to GL_TEXTURE_RECTANGLE
+    TargetRectangle,
+    /// A texture with data from an OpenGL buffer object. Equivalent to GL_TEXTURE_BUFFER
+    TargetBuffer,
+}
+
+[org_name(QOpenGLTexture)]
+enum BindingTarget {
+    /// Equivalent to GL_TEXTURE_BINDING_1D
+    BindingTarget1D,
+    /// Equivalent to GL_TEXTURE_BINDING_1D_ARRAY
+    BindingTarget1DArray,
+    /// Equivalent to GL_TEXTURE_BINDING_2D
+    BindingTarget2D,
+    /// Equivalent to GL_TEXTURE_BINDING_2D_ARRAY
+    BindingTarget2DArray,
+    /// Equivalent to GL_TEXTURE_BINDING_3D
+    BindingTarget3D,
+    /// Equivalent to GL_TEXTURE_BINDING_CUBE_MAP
+    BindingTargetCubeMap,
+    /// Equivalent to GL_TEXTURE_BINDING_CUBE_MAP_ARRAY
+    BindingTargetCubeMapArray,
+    /// Equivalent to GL_TEXTURE_BINDING_2D_MULTISAMPLE
+    BindingTarget2DMultisample,
+    /// Equivalent to GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY
+    BindingTarget2DMultisampleArray,
+    /// Equivalent to GL_TEXTURE_BINDING_RECTANGLE
+    BindingTargetRectangle,
+    /// Equivalent to GL_TEXTURE_BINDING_BUFFER
+    BindingTargetBuffer,
+}
+
+[org_name(QOpenGLTexture)]
+enum MipMapGeneration {
+    /// Mipmaps should be generated
+    GenerateMipMaps,
+    /// Mipmaps should not be generated
+    DontGenerateMipMaps,
+}
+
+[org_name(QOpenGLTexture)]
+enum TextureUnitReset {
+    /// The previous active texture unit will be reset
+    ResetTextureUnit,
+    /// The previous active texture unit will not be rest
+    DontResetTextureUnit,
+}
+
+[org_name(QOpenGLTexture)]
+enum TextureFormat {
+    /// Equivalent to GL_NONE
+    NoFormat,
+    /// Equivalent to GL_R8
+    R8_UNorm,
+    /// Equivalent to GL_RG8
+    RG8_UNorm,
+    /// Equivalent to GL_RGB8
+    RGB8_UNorm,
+    /// Equivalent to GL_RGBA8
+    RGBA8_UNorm,
+    /// Equivalent to GL_R16
+    R16_UNorm,
+    /// Equivalent to GL_RG16
+    RG16_UNorm,
+    /// Equivalent to GL_RGB16
+    RGB16_UNorm,
+    /// Equivalent to GL_RGBA16
+    RGBA16_UNorm,
+    /// Equivalent to GL_R8_SNORM
+    R8_SNorm,
+    /// Equivalent to GL_RG8_SNORM
+    RG8_SNorm,
+    /// Equivalent to GL_RGB8_SNORM
+    RGB8_SNorm,
+    /// Equivalent to GL_RGBA8_SNORM
+    RGBA8_SNorm,
+    /// Equivalent to GL_R16_SNORM
+    R16_SNorm,
+    /// Equivalent to GL_RG16_SNORM
+    RG16_SNorm,
+    /// Equivalent to GL_RGB16_SNORM
+    RGB16_SNorm,
+    /// Equivalent to GL_RGBA16_SNORM
+    RGBA16_SNorm,
+    /// Equivalent to GL_R8UI
+    R8U,
+    /// Equivalent to GL_RG8UI
+    RG8U,
+    /// Equivalent to GL_RGB8UI
+    RGB8U,
+    /// Equivalent to GL_RGBA8UI
+    RGBA8U,
+    /// Equivalent to GL_R16UI
+    R16U,
+    /// Equivalent to GL_RG16UI
+    RG16U,
+    /// Equivalent to GL_RGB16UI
+    RGB16U,
+    /// Equivalent to GL_RGBA16UI
+    RGBA16U,
+    /// Equivalent to GL_R32UI
+    R32U,
+    /// Equivalent to GL_RG32UI
+    RG32U,
+    /// Equivalent to GL_RGB32UI
+    RGB32U,
+    /// Equivalent to GL_RGBA32UI
+    RGBA32U,
+    /// Equivalent to GL_R8I
+    R8I,
+    /// Equivalent to GL_RG8I
+    RG8I,
+    /// Equivalent to GL_RGB8I
+    RGB8I,
+    /// Equivalent to GL_RGBA8I
+    RGBA8I,
+    /// Equivalent to GL_R16I
+    R16I,
+    /// Equivalent to GL_RG16I
+    RG16I,
+    /// Equivalent to GL_RGB16I
+    RGB16I,
+    /// Equivalent to GL_RGBA16I
+    RGBA16I,
+    /// Equivalent to GL_R32I
+    R32I,
+    /// Equivalent to GL_RG32I
+    RG32I,
+    /// Equivalent to GL_RGB32I
+    RGB32I,
+    /// Equivalent to GL_RGBA32I
+    RGBA32I,
+    /// Equivalent to GL_R16F
+    R16F,
+    /// Equivalent to GL_RG16F
+    RG16F,
+    /// Equivalent to GL_RGB16F
+    RGB16F,
+    /// Equivalent to GL_RGBA16F
+    RGBA16F,
+    /// Equivalent to GL_R32F
+    R32F,
+    /// Equivalent to GL_RG32F
+    RG32F,
+    /// Equivalent to GL_RGB32F
+    RGB32F,
+    /// Equivalent to GL_RGBA32F
+    RGBA32F,
+    /// Equivalent to GL_RGB9_E5
+    RGB9E5,
+    /// Equivalent to GL_R11F_G11F_B10F
+    RG11B10F,
+    /// Equivalent to GL_R3_G3_B2
+    RG3B2,
+    /// Equivalent to GL_RGB565
+    R5G6B5,
+    /// Equivalent to GL_RGB5_A1
+    RGB5A1,
+    /// Equivalent to GL_RGBA4
+    RGBA4,
+    /// Equivalent to GL_RGB10_A2UI
+    RGB10A2,
+    /// Equivalent to GL_DEPTH_COMPONENT16
+    D16,
+    /// Equivalent to GL_DEPTH_COMPONENT24
+    D24,
+    /// Equivalent to GL_DEPTH24_STENCIL8
+    D24S8,
+    /// Equivalent to GL_DEPTH_COMPONENT32
+    D32,
+    /// Equivalent to GL_DEPTH_COMPONENT32F
+    D32F,
+    /// Equivalent to GL_DEPTH32F_STENCIL8
+    D32FS8X24,
+    /// Equivalent to GL_STENCIL_INDEX8. Introduced in Qt 5.4
+    S8,
+    /// Equivalent to GL_COMPRESSED_RGB_S3TC_DXT1_EXT
+    RGB_DXT1,
+    /// Equivalent to GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
+    RGBA_DXT1,
+    /// Equivalent to GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
+    RGBA_DXT3,
+    /// Equivalent to GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
+    RGBA_DXT5,
+    /// Equivalent to GL_COMPRESSED_RED_RGTC1
+    R_ATI1N_UNorm,
+    /// Equivalent to GL_COMPRESSED_SIGNED_RED_RGTC1
+    R_ATI1N_SNorm,
+    /// Equivalent to GL_COMPRESSED_RG_RGTC2
+    RG_ATI2N_UNorm,
+    /// Equivalent to GL_COMPRESSED_SIGNED_RG_RGTC2
+    RG_ATI2N_SNorm,
+    /// Equivalent to GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_ARB
+    RGB_BP_UNSIGNED_FLOAT,
+    /// Equivalent to GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT_ARB
+    RGB_BP_SIGNED_FLOAT,
+    /// Equivalent to GL_COMPRESSED_RGBA_BPTC_UNORM_ARB
+    RGB_BP_UNorm,
+    /// Equivalent to GL_COMPRESSED_R11_EAC
+    R11_EAC_UNorm,
+    /// Equivalent to GL_COMPRESSED_SIGNED_R11_EAC
+    R11_EAC_SNorm,
+    /// Equivalent to GL_COMPRESSED_RG11_EAC
+    RG11_EAC_UNorm,
+    /// Equivalent to GL_COMPRESSED_SIGNED_RG11_EAC
+    RG11_EAC_SNorm,
+    /// Equivalent to GL_COMPRESSED_RGB8_ETC2
+    RGB8_ETC2,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ETC2
+    SRGB8_ETC2,
+    /// Equivalent to GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2
+    RGB8_PunchThrough_Alpha1_ETC2,
+    /// Equivalent to GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2
+    SRGB8_PunchThrough_Alpha1_ETC2,
+    /// Equivalent to GL_COMPRESSED_RGBA8_ETC2_EAC
+    RGBA8_ETC2_EAC,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC
+    SRGB8_Alpha8_ETC2_EAC,
+    /// Equivalent to GL_ETC1_RGB8_OES
+    RGB8_ETC1,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_4x4_KHR
+    RGBA_ASTC_4x4,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_5x4_KHR
+    RGBA_ASTC_5x4,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_5x5_KHR
+    RGBA_ASTC_5x5,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_6x5_KHR
+    RGBA_ASTC_6x5,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_6x6_KHR
+    RGBA_ASTC_6x6,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_8x5_KHR
+    RGBA_ASTC_8x5,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_8x6_KHR
+    RGBA_ASTC_8x6,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_8x8_KHR
+    RGBA_ASTC_8x8,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_10x5_KHR
+    RGBA_ASTC_10x5,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_10x6_KHR
+    RGBA_ASTC_10x6,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_10x8_KHR
+    RGBA_ASTC_10x8,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_10x10_KHR
+    RGBA_ASTC_10x10,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_12x10_KHR
+    RGBA_ASTC_12x10,
+    /// Equivalent to GL_COMPRESSED_RGBA_ASTC_12x12_KHR
+    RGBA_ASTC_12x12,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR
+    SRGB8_Alpha8_ASTC_4x4,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR
+    SRGB8_Alpha8_ASTC_5x4,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR
+    SRGB8_Alpha8_ASTC_5x5,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR
+    SRGB8_Alpha8_ASTC_6x5,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR
+    SRGB8_Alpha8_ASTC_6x6,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR
+    SRGB8_Alpha8_ASTC_8x5,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR
+    SRGB8_Alpha8_ASTC_8x6,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR
+    SRGB8_Alpha8_ASTC_8x8,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR
+    SRGB8_Alpha8_ASTC_10x5,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR
+    SRGB8_Alpha8_ASTC_10x6,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR
+    SRGB8_Alpha8_ASTC_10x8,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR
+    SRGB8_Alpha8_ASTC_10x10,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR
+    SRGB8_Alpha8_ASTC_12x10,
+    /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR
+    SRGB8_Alpha8_ASTC_12x12,
+    /// Equivalent to GL_SRGB8
+    SRGB8,
+    /// Equivalent to GL_SRGB8_ALPHA8
+    SRGB8_Alpha8,
+    /// Equivalent to GL_COMPRESSED_SRGB_S3TC_DXT1_EXT
+    SRGB_DXT1,
+    /// Equivalent to GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT
+    SRGB_Alpha_DXT1,
+    /// Equivalent to GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT
+    SRGB_Alpha_DXT3,
+    /// Equivalent to GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT
+    SRGB_Alpha_DXT5,
+    /// Equivalent to GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM_ARB
+    SRGB_BP_UNorm,
+    /// Equivalent to GL_DEPTH_COMPONENT (only OpenGL ES 3 or ES 2 with OES_depth_texture)
+    DepthFormat,
+    /// Equivalent to GL_ALPHA (OpenGL ES 2 only)
+    AlphaFormat,
+    /// Equivalent to GL_RGB (OpenGL ES 2 only)
+    RGBFormat,
+    /// Equivalent to GL_RGBA (OpenGL ES 2 only)
+    RGBAFormat,
+    /// Equivalent to GL_LUMINANCE (OpenGL ES 2 only)
+    LuminanceFormat,
+    /// Equivalent to GL_LUMINANCE_ALPHA (OpenGL ES 2 only)
+    LuminanceAlphaFormat,
+}
+
+[org_name(QOpenGLTexture)]
+enum TextureFormatClass {
+    NoFormatClass,
+    FormatClass_128Bit,
+    FormatClass_96Bit,
+    FormatClass_64Bit,
+    FormatClass_48Bit,
+    FormatClass_32Bit,
+    FormatClass_24Bit,
+    FormatClass_16Bit,
+    FormatClass_8Bit,
+    FormatClass_RGTC1_R,
+    FormatClass_RGTC2_RG,
+    FormatClass_BPTC_Unorm,
+    FormatClass_BPTC_Float,
+    FormatClass_S3TC_DXT1_RGB,
+    FormatClass_S3TC_DXT1_RGBA,
+    FormatClass_S3TC_DXT3_RGBA,
+    FormatClass_S3TC_DXT5_RGBA,
+    FormatClass_Unique,
+}
+
+[org_name(QOpenGLTexture)]
+enum CubeMapFace {
+    /// Equivalent to GL_TEXTURE_CUBE_MAP_POSITIVE_X
+    CubeMapPositiveX,
+    /// Equivalent to GL_TEXTURE_CUBE_MAP_NEGATIVE_X
+    CubeMapNegativeX,
+    /// Equivalent to GL_TEXTURE_CUBE_MAP_POSITIVE_Y
+    CubeMapPositiveY,
+    /// Equivalent to GL_TEXTURE_CUBE_MAP_NEGATIVE_Y
+    CubeMapNegativeY,
+    /// Equivalent to GL_TEXTURE_CUBE_MAP_POSITIVE_Z
+    CubeMapPositiveZ,
+    /// Equivalent to GL_TEXTURE_CUBE_MAP_NEGATIVE_Z
+    CubeMapNegativeZ,
+}
+
+[org_name(QOpenGLTexture)]
+enum PixelFormat {
+    /// Equivalent to GL_NONE
+    NoSourceFormat,
+    /// Equivalent to GL_RED
+    Red,
+    /// Equivalent to GL_RG
+    RG,
+    /// Equivalent to GL_RGB
+    RGB,
+    /// Equivalent to GL_BGR
+    BGR,
+    /// Equivalent to GL_RGBA
+    RGBA,
+    /// Equivalent to GL_BGRA
+    BGRA,
+    /// Equivalent to GL_RED_INTEGER
+    Red_Integer,
+    /// Equivalent to GL_RG_INTEGER
+    RG_Integer,
+    /// Equivalent to GL_RGB_INTEGER
+    RGB_Integer,
+    /// Equivalent to GL_BGR_INTEGER
+    BGR_Integer,
+    /// Equivalent to GL_RGBA_INTEGER
+    RGBA_Integer,
+    /// Equivalent to GL_BGRA_INTEGER
+    BGRA_Integer,
+    /// Equivalent to GL_STENCIL_INDEX. Introduced in Qt 5.4
+    Stencil,
+    /// Equivalent to GL_DEPTH_COMPONENT
+    Depth,
+    /// Equivalent to GL_DEPTH_STENCIL
+    DepthStencil,
+    /// Equivalent to GL_ALPHA (OpenGL ES 2 only)
+    Alpha,
+    /// Equivalent to GL_LUMINANCE (OpenGL ES 2 only)
+    Luminance,
+    /// Equivalent to GL_LUMINANCE_ALPHA (OpenGL ES 2 only)
+    LuminanceAlpha,
+}
+
+[org_name(QOpenGLTexture)]
+enum PixelType {
+    /// Equivalent to GL_NONE
+    NoPixelType,
+    /// Equivalent to GL_BYTE
+    Int8,
+    /// Equivalent to GL_UNSIGNED_BYTE
+    UInt8,
+    /// Equivalent to GL_SHORT
+    Int16,
+    /// Equivalent to GL_UNSIGNED_SHORT
+    UInt16,
+    /// Equivalent to GL_INT
+    Int32,
+    /// Equivalent to GL_UNSIGNED_INT
+    UInt32,
+    /// Equivalent to GL_HALF_FLOAT
+    Float16,
+    /// Equivalent to GL_HALF_FLOAT_OES
+    Float16OES,
+    /// Equivalent to GL_FLOAT
+    Float32,
+    /// Equivalent to GL_UNSIGNED_INT_5_9_9_9_REV
+    UInt32_RGB9_E5,
+    /// Equivalent to GL_UNSIGNED_INT_10F_11F_11F_REV
+    UInt32_RG11B10F,
+    /// Equivalent to GL_UNSIGNED_BYTE_3_3_2
+    UInt8_RG3B2,
+    /// Equivalent to GL_UNSIGNED_BYTE_2_3_3_REV
+    UInt8_RG3B2_Rev,
+    /// Equivalent to GL_UNSIGNED_SHORT_5_5_5_1
+    UInt16_RGB5A1,
+    /// Equivalent to GL_UNSIGNED_SHORT_1_5_5_5_REV
+    UInt16_RGB5A1_Rev,
+    /// Equivalent to GL_UNSIGNED_SHORT_5_6_5
+    UInt16_R5G6B5,
+    /// Equivalent to GL_UNSIGNED_SHORT_5_6_5_REV
+    UInt16_R5G6B5_Rev,
+    /// Equivalent to GL_UNSIGNED_SHORT_4_4_4_4
+    UInt16_RGBA4,
+    /// Equivalent to GL_UNSIGNED_SHORT_4_4_4_4_REV
+    UInt16_RGBA4_Rev,
+    /// Equivalent to GL_UNSIGNED_INT_8_8_8_8
+    UInt32_RGBA8,
+    /// Equivalent to GL_UNSIGNED_INT_8_8_8_8_REV
+    UInt32_RGBA8_Rev,
+    /// Equivalent to GL_UNSIGNED_INT_10_10_10_2
+    UInt32_RGB10A2,
+    /// Equivalent to GL_UNSIGNED_INT_2_10_10_10_REV
+    UInt32_RGB10A2_Rev,
+    /// Equivalent to GL_UNSIGNED_INT_24_8. Introduced in Qt 5.4
+    UInt32_D24S8,
+    /// Equivalent to GL_FLOAT_32_UNSIGNED_INT_24_8_REV. Introduced in Qt 5.4
+    Float32_D32_UInt32_S8_X24,
+}
+
+[org_name(QOpenGLTexture)]
+enum SwizzleComponent {
+    /// The red component. Equivalent to GL_TEXTURE_SWIZZLE_R
+    SwizzleRed,
+    /// The green component. Equivalent to GL_TEXTURE_SWIZZLE_G
+    SwizzleGreen,
+    /// The blue component. Equivalent to GL_TEXTURE_SWIZZLE_B
+    SwizzleBlue,
+    /// The alpha component. Equivalent to GL_TEXTURE_SWIZZLE_A
+    SwizzleAlpha,
+}
+
+[org_name(QOpenGLTexture)]
+enum SwizzleValue {
+    /// Maps the component to the red channel. Equivalent to GL_RED
+    RedValue,
+    /// Maps the component to the green channel. Equivalent to GL_GREEN
+    GreenValue,
+    /// Maps the component to the blue channel. Equivalent to GL_BLUE
+    BlueValue,
+    /// Maps the component to the alpha channel. Equivalent to GL_ALPHA
+    AlphaValue,
+    /// Maps the component to a fixed value of 0. Equivalent to GL_ZERO
+    ZeroValue,
+    /// Maps the component to a fixed value of 1. Equivalent to GL_ONE
+    OneValue,
+}
+
+[org_name(QOpenGLTexture)]
+enum WrapMode {
+    /// Texture coordinate is repeated. Equivalent to GL_REPEAT
+    Repeat,
+    /// Texture coordinate is reflected about 0 and 1. Equivalent to GL_MIRRORED_REPEAT
+    MirroredRepeat,
+    /// Clamps the texture coordinates to [0,1]. Equivalent to GL_CLAMP_TO_EDGE
+    ClampToEdge,
+    /// As for ClampToEdge but also blends samples at 0 and 1 with a fixed border color. Equivalent to GL_CLAMP_TO_BORDER
+    ClampToBorder,
+}
+
+[org_name(QOpenGLTexture)]
+enum CoordinateDirection {
+    /// The horizontal direction. Equivalent to GL_TEXTURE_WRAP_S
+    DirectionS,
+    /// The vertical direction. Equivalent to GL_TEXTURE_WRAP_T
+    DirectionT,
+    /// The depth direction. Equivalent to GL_TEXTURE_WRAP_R
+    DirectionR,
+}
+
+[org_name(QOpenGLTexture)]
+enum Feature {
+    /// Support for immutable texture storage
+    ImmutableStorage,
+    /// Support for immutable texture storage with multisample targets
+    ImmutableMultisampleStorage,
+    /// Support for the GL_TEXTURE_RECTANGLE target
+    TextureRectangle,
+    /// Support for texture targets with array layers
+    TextureArrays,
+    /// Support for the 3 dimensional texture target
+    Texture3D,
+    /// Support for texture targets that have multisample capabilities
+    TextureMultisample,
+    /// Support for textures that use OpenGL buffer objects as their data source
+    TextureBuffer,
+    /// Support for cubemap array texture target
+    TextureCubeMapArrays,
+    /// Support for texture component swizzle masks
+    Swizzle,
+    /// Support for stencil texturing (i.e. looking up depth or stencil components of a combined depth/stencil format texture in GLSL shaders).
+    StencilTexturing,
+    /// Support for anisotropic texture filtering
+    AnisotropicFiltering,
+    /// Basic support for non-power-of-two textures
+    NPOTTextures,
+    /// Full support for non-power-of-two textures including texture repeat modes
+    NPOTTextureRepeat,
+    /// Support for the 1 dimensional texture target
+    Texture1D,
+    /// Support for texture comparison operators
+    TextureComparisonOperators,
+    /// Support for setting the base and maximum mipmap levels
+    TextureMipMapLevel,
+    MaxFeatureFlag,
+}
+
+[org_name(QOpenGLTexture)]
+enum DepthStencilMode {
+    /// Equivalent to GL_DEPTH_COMPONENT.
+    DepthMode,
+    /// Equivalent to GL_STENCIL_INDEX.
+    StencilMode,
+}
+
+[org_name(QOpenGLTexture)]
+enum ComparisonFunction {
+    /// Equivalent to GL_LEQUAL.
+    CompareLessEqual,
+    /// Equivalent to GL_GEQUAL.
+    CompareGreaterEqual,
+    /// Equivalent to GL_LESS.
+    CompareLess,
+    /// Equivalent to GL_GREATER.
+    CompareGreater,
+    /// Equivalent to GL_EQUAL.
+    CompareEqual,
+    /// Equivalent to GL_NOTEQUAL.
+    CommpareNotEqual,
+    /// Equivalent to GL_ALWAYS.
+    CompareAlways,
+    /// Equivalent to GL_NEVER.
+    CompareNever,
+}
+
+[org_name(QOpenGLTexture)]
+enum ComparisonMode {
+    /// Equivalent to GL_COMPARE_REF_TO_TEXTURE.
+    CompareRefToTexture,
+    /// Equivalent to GL_NONE.
+    CompareNone,
+}
+
+[org_name(QOpenGLTexture)]
+enum Filter {
+    /// Equivalent to GL_NEAREST
+    Nearest,
+    /// Equivalent to GL_LINEAR
+    Linear,
+    /// Equivalent to GL_NEAREST_MIPMAP_NEAREST
+    NearestMipMapNearest,
+    /// Equivalent to GL_NEAREST_MIPMAP_LINEAR
+    NearestMipMapLinear,
+    /// Equivalent to GL_LINEAR_MIPMAP_NEAREST
+    LinearMipMapNearest,
+    /// Equivalent to GL_LINEAR_MIPMAP_LINEAR
+    LinearMipMapLinear,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

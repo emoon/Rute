@@ -35,36 +35,12 @@
 /// they are used in. In most cases actions will be children of
 /// the application's main window.
 /// 
-/// **See also:** QMenu
-/// QToolBar
+/// **See also:** [`Menu`]
+/// [`ToolBar`]
 /// {Application Example}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QAction)]
-enum MenuRole {
-    NoRole,
-    TextHeuristicRole,
-    ApplicationSpecificRole,
-    AboutQtRole,
-    AboutRole,
-    PreferencesRole,
-    QuitRole,
-}
-
-[org_name(QAction)]
-enum Priority {
-    LowPriority,
-    NormalPriority,
-    HighPriority,
-}
-
-[org_name(QAction)]
-enum ActionEvent {
-    Trigger,
-    Hover,
-}
-
 struct Action : Object {
     /// 
     /// Sets this action group to *group.* The action will be automatically
@@ -72,15 +48,15 @@ struct Action : Object {
     /// 
     /// Actions within the group will be mutually exclusive.
     /// 
-    /// **See also:** QActionGroup
-    /// QAction::actionGroup()
+    /// **See also:** [`ActionGroup`]
+    /// [`Action::action_group`]
     set_action_group(group: *ActionGroupType),
     /// 
     /// Returns the action group for this action. If no action group manages
     /// this action then 0 will be returned.
     /// 
-    /// **See also:** QActionGroup
-    /// QAction::setActionGroup()
+    /// **See also:** [`ActionGroup`]
+    /// [`Action::set_action_group`]
     action_group() -> ActionGroup?,
     set_icon(icon: &IconType),
     /// 
@@ -104,8 +80,8 @@ struct Action : Object {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** setToolTip()
-    /// setStatusTip()
+    /// **See also:** [`set_tool_tip()`]
+    /// [`set_status_tip()`]
     /// 
     /// In some applications, it may make sense to have actions with icons in the
     /// toolbar, but not in menus. If true, the icon (if valid) is shown in the menu, when it
@@ -117,8 +93,8 @@ struct Action : Object {
     /// 
     /// For example:
     /// 
-    /// **See also:** QAction::icon
-    /// QCoreApplication::setAttribute()
+    /// **See also:** [`Action::icon()`]
+    /// [`CoreApplication::set_attribute`]
     icon() -> Icon,
     set_text(text: String),
     /// 
@@ -145,8 +121,8 @@ struct Action : Object {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** setToolTip()
-    /// setStatusTip()
+    /// **See also:** [`set_tool_tip()`]
+    /// [`set_status_tip()`]
     icon_text() -> String,
     set_tool_tip(tip: String),
     /// 
@@ -155,8 +131,8 @@ struct Action : Object {
     /// 
     /// By default, this property contains the action's text.
     /// 
-    /// **See also:** setStatusTip()
-    /// setShortcut()
+    /// **See also:** [`set_status_tip()`]
+    /// [`set_shortcut()`]
     tool_tip() -> String,
     set_status_tip(status_tip: String),
     /// 
@@ -165,8 +141,8 @@ struct Action : Object {
     /// 
     /// By default, this property contains an empty string.
     /// 
-    /// **See also:** setToolTip()
-    /// showStatusText()
+    /// **See also:** [`set_tool_tip()`]
+    /// [`show_status_text()`]
     status_tip() -> String,
     set_whats_this(what: String),
     /// 
@@ -174,7 +150,7 @@ struct Action : Object {
     /// the action. The text may contain rich text. There is no default
     /// text.
     /// 
-    /// **See also:** QWhatsThis
+    /// **See also:** [`WhatsThis`]
     whats_this() -> String,
     set_priority(priority: Action::Priority),
     /// 
@@ -190,7 +166,7 @@ struct Action : Object {
     /// menus can be used to create menu items with submenus, or inserted
     /// into toolbars to create buttons with popup menus.
     /// 
-    /// **See also:** QMenu::addAction()
+    /// **See also:** [`Menu::add_action`]
     /// 
     /// This indicates what role the action serves in the application menu on
     /// MacOS . By default all actions have the TextHeuristicRole, which means that
@@ -210,13 +186,13 @@ struct Action : Object {
     /// into. Under most circumstances the text, submenu, and icon will be
     /// ignored for separator actions.
     /// 
-    /// **See also:** QAction::isSeparator()
+    /// **See also:** [`Action::is_separator`]
     set_separator(b: bool),
     /// 
     /// Returns `true` if this action is a separator action; otherwise it
     /// returns `false.`
     /// 
-    /// **See also:** QAction::setSeparator()
+    /// **See also:** [`Action::set_separator`]
     is_separator() -> bool,
     /// 
     /// Sets *shortcuts* as the list of shortcuts that trigger the
@@ -229,7 +205,7 @@ struct Action : Object {
     /// Note that more than one shortcut can assigned by this action.
     /// If only the primary shortcut is required, use setShortcut instead.
     /// 
-    /// **See also:** QKeySequence::keyBindings()
+    /// **See also:** [`KeySequence::key_bindings`]
     set_shortcut(shortcut: &KeySequenceType),
     /// 
     /// Valid keycodes for this property can be found in [Qt::Key](Qt::Key)
@@ -239,12 +215,12 @@ struct Action : Object {
     /// 
     /// Returns the primary shortcut.
     /// 
-    /// **See also:** setShortcuts()
+    /// **See also:** [`set_shortcuts()`]
     /// 
     /// Returns the list of shortcuts, with the primary shortcut as
     /// the first element of the list.
     /// 
-    /// **See also:** setShortcuts()
+    /// **See also:** [`set_shortcuts()`]
     /// 
     /// Valid values for this property can be found in [Qt::ShortcutContext.](Qt::ShortcutContext.)
     /// 
@@ -258,8 +234,8 @@ struct Action : Object {
     /// is set for the application, falling back to the widget style hint.
     /// Explicitly setting this property overrides the presence (or abscence) of the attribute.
     /// 
-    /// **See also:** QAction::shortcut
-    /// QCoreApplication::setAttribute()
+    /// **See also:** [`Action::shortcut()`]
+    /// [`CoreApplication::set_attribute`]
     shortcut() -> KeySequence,
     /// 
     /// Sets *shortcuts* as the list of shortcuts that trigger the
@@ -272,7 +248,7 @@ struct Action : Object {
     /// Note that more than one shortcut can assigned by this action.
     /// If only the primary shortcut is required, use setShortcut instead.
     /// 
-    /// **See also:** QKeySequence::keyBindings()
+    /// **See also:** [`KeySequence::key_bindings`]
     set_shortcuts(shortcuts: [KeySequenceType]),
     /// 
     /// Sets *shortcuts* as the list of shortcuts that trigger the
@@ -285,13 +261,14 @@ struct Action : Object {
     /// Note that more than one shortcut can assigned by this action.
     /// If only the primary shortcut is required, use setShortcut instead.
     /// 
-    /// **See also:** QKeySequence::keyBindings()
-    set_shortcuts(arg0: KeySequence::StandardKey),
+    /// **See also:** [`KeySequence::key_bindings`]
+    [org_name(setShortcuts)]
+    set_shortcuts_2(arg0: KeySequence::StandardKey),
     /// 
     /// Returns the list of shortcuts, with the primary shortcut as
     /// the first element of the list.
     /// 
-    /// **See also:** setShortcuts()
+    /// **See also:** [`set_shortcuts()`]
     shortcuts() -> [KeySequence],
     set_shortcut_context(context: Rute::ShortcutContext),
     /// 
@@ -314,20 +291,20 @@ struct Action : Object {
     /// 
     /// By default, this property contains the application's default font.
     /// 
-    /// **See also:** QAction::setText()
-    /// QStyle
+    /// **See also:** [`Action::set_text`]
+    /// [`Style`]
     font() -> Font,
     set_checkable(arg0: bool),
     is_checkable() -> bool,
     /// 
     /// Returns the user data as set in QAction::setData.
     /// 
-    /// **See also:** setData()
+    /// **See also:** [`set_data()`]
     data() -> Variant,
     /// 
     /// Sets the action's internal data to the given *userData.*
     /// 
-    /// **See also:** data()
+    /// **See also:** [`data()`]
     set_data(var: &VariantType),
     is_checked() -> bool,
     is_enabled() -> bool,
@@ -367,14 +344,14 @@ struct Action : Object {
     /// 
     /// Returns a list of widgets this action has been added to.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// associatedGraphicsWidgets()
+    /// **See also:** [`Widget::add_action`]
+    /// [`associated_graphics_widgets()`]
     associated_widgets() -> [Widget?],
     /// 
     /// Returns a list of widgets this action has been added to.
     /// 
-    /// **See also:** QWidget::addAction()
-    /// associatedWidgets()
+    /// **See also:** [`Widget::add_action`]
+    /// [`associated_widgets()`]
     associated_graphics_widgets() -> [GraphicsWidget?],
     /// 
     [event] event(arg0: *EventType) -> bool,
@@ -385,7 +362,7 @@ struct Action : Object {
     /// for example, when the user pauses with the cursor over a menu option,
     /// toolbar button, or presses an action's shortcut key combination.
     /// 
-    /// **See also:** QAction::activate()
+    /// **See also:** [`Action::activate`]
     hover(),
     set_checked(arg0: bool),
     /// 
@@ -401,8 +378,8 @@ struct Action : Object {
     /// *checked* is true if the action is checked, or false if the
     /// action is unchecked.
     /// 
-    /// **See also:** QAction::activate()
-    /// QAction::triggered()
+    /// **See also:** [`Action::activate`]
+    /// [`Action::triggered`]
     /// checked
     toggle(),
     set_enabled(arg0: bool),
@@ -419,14 +396,14 @@ struct Action : Object {
     /// watch for QWidget::actionEvent() sent with an
     /// QEvent::ActionChanged.
     /// 
-    /// **See also:** QWidget::actionEvent()
+    /// **See also:** [`Widget::action_event`]
     [signal] changed(),
     /// 
     /// This signal is emitted when an action is highlighted by the user;
     /// for example, when the user pauses with the cursor over a menu option,
     /// toolbar button, or presses an action's shortcut key combination.
     /// 
-    /// **See also:** QAction::activate()
+    /// **See also:** [`Action::activate`]
     [signal] hovered(),
     /// 
     /// This signal is emitted whenever a checkable action changes its
@@ -437,10 +414,47 @@ struct Action : Object {
     /// *checked* is true if the action is checked, or false if the
     /// action is unchecked.
     /// 
-    /// **See also:** QAction::activate()
-    /// QAction::triggered()
+    /// **See also:** [`Action::activate`]
+    /// [`Action::triggered`]
     /// checked
     [signal] toggled(arg0: bool),
+}
+
+[org_name(QAction)]
+enum MenuRole {
+    /// This action should not be put into the application menu
+    NoRole,
+    /// This action should be put in the application menu based on the action's text as described in the QMenuBar documentation.
+    TextHeuristicRole,
+    /// This action should be put in the application menu with an application specific role
+    ApplicationSpecificRole,
+    /// This action handles the "About Qt" menu item.
+    AboutQtRole,
+    /// This action should be placed where the "About" menu item is in the application menu. The text of the menu item will be set to "About <application name>". The application name is fetched from the `Info.plist` file in the application's bundle (See [Qt for macOS - Deployment](Qt%20for%20macOS%20-%20Deployment)
+ ).
+    AboutRole,
+    /// This action should be placed where the "Preferences..." menu item is in the application menu.
+    PreferencesRole,
+    /// This action should be placed where the Quit menu item is in the application menu. Setting this value only has effect on items that are in the immediate menus of the menubar, not the submenus of those menus. For example, if you have File menu in your menubar and the File menu has a submenu, setting the MenuRole for the actions in that submenu have no effect. They will never be moved.
+    QuitRole,
+}
+
+[org_name(QAction)]
+enum Priority {
+    /// The action should not be prioritized in the user interface.
+    LowPriority,
+    /// 
+    NormalPriority,
+    /// The action should be prioritized in the user interface.
+    HighPriority,
+}
+
+[org_name(QAction)]
+enum ActionEvent {
+    /// this will cause the QAction::triggered() signal to be emitted.
+    Trigger,
+    /// this will cause the QAction::hovered() signal to be emitted.
+    Hover,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

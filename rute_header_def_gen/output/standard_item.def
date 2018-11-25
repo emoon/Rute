@@ -57,19 +57,12 @@
 /// determines the sorted order when sorting items
 /// with sortChildren() or with QStandardItemModel::sort().
 /// 
-/// **See also:** QStandardItemModel
+/// **See also:** [`StandardItemModel`]
 /// {Item View Convenience Classes}
 /// {Model/View Programming}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QStandardItem)]
-enum ItemType {
-    Type,
-    UserType,
-}
-
-
 struct StandardItem {
     /// 
     /// Returns the item's data for the given *role,* or an invalid
@@ -89,34 +82,34 @@ struct StandardItem {
     /// **Note**: The default implementation treats Qt::EditRole and Qt::DisplayRole
     /// as referring to the same data.
     /// 
-    /// **See also:** Qt::ItemDataRole
-    /// data()
-    /// setFlags()
+    /// **See also:** [`t::item_data_role()`]
+    /// [`data()`]
+    /// [`set_flags()`]
     [event] set_data(value: &VariantType, role: i32),
     /// 
     /// Returns the item's text. This is the text that's presented to the user
     /// in a view.
     /// 
-    /// **See also:** setText()
+    /// **See also:** [`set_text()`]
     /// 
     /// Returns the text alignment for the item's text.
     text() -> String,
     /// 
     /// Sets the item's text to the *text* specified.
     /// 
-    /// **See also:** text()
-    /// setFont()
-    /// setForeground()
+    /// **See also:** [`text()`]
+    /// [`set_font()`]
+    /// [`set_foreground()`]
     /// 
     /// Sets the text alignment for the item's text to the *alignment*
     /// specified.
     /// 
-    /// **See also:** textAlignment()
+    /// **See also:** [`text_alignment()`]
     set_text(text: String),
     /// 
     /// Returns the item's icon.
     /// 
-    /// **See also:** setIcon()
+    /// **See also:** [`set_icon()`]
     /// {QAbstractItemView::iconSize}{iconSize}
     icon() -> Icon,
     /// 
@@ -125,44 +118,44 @@ struct StandardItem {
     /// 
     /// Returns the item's tooltip.
     /// 
-    /// **See also:** setToolTip()
-    /// statusTip()
-    /// whatsThis()
+    /// **See also:** [`set_tool_tip()`]
+    /// [`status_tip()`]
+    /// [`whats_this()`]
     tool_tip() -> String,
     /// 
     /// Sets the item's tooltip to the string specified by *toolTip.*
     /// 
-    /// **See also:** toolTip()
-    /// setStatusTip()
-    /// setWhatsThis()
+    /// **See also:** [`tool_tip()`]
+    /// [`set_status_tip()`]
+    /// [`set_whats_this()`]
     set_tool_tip(tool_tip: String),
     /// 
     /// Returns the item's status tip.
     /// 
-    /// **See also:** setStatusTip()
-    /// toolTip()
-    /// whatsThis()
+    /// **See also:** [`set_status_tip()`]
+    /// [`tool_tip()`]
+    /// [`whats_this()`]
     status_tip() -> String,
     /// 
     /// Sets the item's status tip to the string specified by *statusTip.*
     /// 
-    /// **See also:** statusTip()
-    /// setToolTip()
-    /// setWhatsThis()
+    /// **See also:** [`status_tip()`]
+    /// [`set_tool_tip()`]
+    /// [`set_whats_this()`]
     set_status_tip(status_tip: String),
     /// 
     /// Returns the item's help.
     /// 
-    /// **See also:** setWhatsThis()
-    /// toolTip()
-    /// statusTip()
+    /// **See also:** [`set_whats_this()`]
+    /// [`tool_tip()`]
+    /// [`status_tip()`]
     whats_this() -> String,
     /// 
     /// Sets the item's help to the string specified by *whatsThis.*
     /// 
-    /// **See also:** whatsThis()
-    /// setStatusTip()
-    /// setToolTip()
+    /// **See also:** [`whats_this()`]
+    /// [`set_status_tip()`]
+    /// [`set_tool_tip()`]
     set_whats_this(whats_this: String),
     /// 
     /// Returns the size hint set for the item, or an invalid QSize if no
@@ -171,26 +164,26 @@ struct StandardItem {
     /// If no size hint has been set, the item delegate will compute the
     /// size hint based on the item data.
     /// 
-    /// **See also:** setSizeHint()
+    /// **See also:** [`set_size_hint()`]
     size_hint() -> Size,
     /// 
     /// Sets the size hint for the item to be *size.*
     /// If no size hint is set, the item delegate will compute the
     /// size hint based on the item data.
     /// 
-    /// **See also:** sizeHint()
+    /// **See also:** [`size_hint()`]
     set_size_hint(size_hint: &SizeType),
     /// 
     /// Returns the font used to render the item's text.
     /// 
-    /// **See also:** setFont()
+    /// **See also:** [`set_font()`]
     font() -> Font,
     /// 
     /// Sets the font used to display the item's text to the given *font.*
     /// 
-    /// **See also:** font()
-    /// setText()
-    /// setForeground()
+    /// **See also:** [`font()`]
+    /// [`set_text()`]
+    /// [`set_foreground()`]
     set_font(font: &FontType),
     /// 
     /// Returns the text alignment for the item's text.
@@ -199,45 +192,45 @@ struct StandardItem {
     /// Sets the text alignment for the item's text to the *alignment*
     /// specified.
     /// 
-    /// **See also:** textAlignment()
+    /// **See also:** [`text_alignment()`]
     set_text_alignment(text_alignment: Rute::Alignment),
     /// 
     /// Returns the brush used to render the item's background.
     /// 
-    /// **See also:** foreground()
-    /// setBackground()
+    /// **See also:** [`foreground()`]
+    /// [`set_background()`]
     background() -> Brush,
     /// 
     /// Sets the item's background brush to the specified *brush.*
     /// 
-    /// **See also:** background()
-    /// setForeground()
+    /// **See also:** [`background()`]
+    /// [`set_foreground()`]
     set_background(brush: &BrushType),
     /// 
     /// Returns the brush used to render the item's foreground (e.g. text).
     /// 
-    /// **See also:** setForeground()
-    /// background()
+    /// **See also:** [`set_foreground()`]
+    /// [`background()`]
     foreground() -> Brush,
     /// 
     /// Sets the brush used to display the item's foreground (e.g. text) to the
     /// given *brush.*
     /// 
-    /// **See also:** foreground()
-    /// setBackground()
-    /// setFont()
+    /// **See also:** [`foreground()`]
+    /// [`set_background()`]
+    /// [`set_font()`]
     set_foreground(brush: &BrushType),
     /// 
     /// Returns the checked state of the item.
     /// 
-    /// **See also:** setCheckState()
-    /// isCheckable()
+    /// **See also:** [`set_check_state()`]
+    /// [`is_checkable()`]
     check_state() -> Rute::CheckState,
     /// 
     /// Sets the check state of the item to be *state.*
     /// 
-    /// **See also:** checkState()
-    /// setCheckable()
+    /// **See also:** [`check_state()`]
+    /// [`set_checkable()`]
     set_check_state(check_state: Rute::CheckState),
     /// 
     /// Returns the item's accessible text.
@@ -245,8 +238,8 @@ struct StandardItem {
     /// The accessible text is used by assistive technologies (i.e. for users who
     /// cannot use conventional means of interaction).
     /// 
-    /// **See also:** setAccessibleText()
-    /// accessibleDescription()
+    /// **See also:** [`set_accessible_text()`]
+    /// [`accessible_description()`]
     accessible_text() -> String,
     /// 
     /// Sets the item's accessible text to the string specified by *accessibleText.*
@@ -254,8 +247,8 @@ struct StandardItem {
     /// The accessible text is used by assistive technologies (i.e. for users who
     /// cannot use conventional means of interaction).
     /// 
-    /// **See also:** accessibleText()
-    /// setAccessibleDescription()
+    /// **See also:** [`accessible_text()`]
+    /// [`set_accessible_description()`]
     set_accessible_text(accessible_text: String),
     /// 
     /// Returns the item's accessible description.
@@ -263,8 +256,8 @@ struct StandardItem {
     /// The accessible description is used by assistive technologies (i.e. for
     /// users who cannot use conventional means of interaction).
     /// 
-    /// **See also:** setAccessibleDescription()
-    /// accessibleText()
+    /// **See also:** [`set_accessible_description()`]
+    /// [`accessible_text()`]
     accessible_description() -> String,
     /// 
     /// Sets the item's accessible description to the string specified by *accessibleDescription.*
@@ -272,8 +265,8 @@ struct StandardItem {
     /// The accessible description is used by assistive technologies (i.e. for
     /// users who cannot use conventional means of interaction).
     /// 
-    /// **See also:** accessibleDescription()
-    /// setAccessibleText()
+    /// **See also:** [`accessible_description()`]
+    /// [`set_accessible_text()`]
     set_accessible_description(accessible_description: String),
     /// 
     /// Returns the item flags for the item.
@@ -283,7 +276,7 @@ struct StandardItem {
     /// By default, items are enabled, editable, selectable, checkable, and can be
     /// used both as the source of a drag and drop operation and as a drop target.
     /// 
-    /// **See also:** setFlags()
+    /// **See also:** [`set_flags()`]
     flags() -> Rute::ItemFlags,
     /// 
     /// Sets the item flags for the item to *flags.*
@@ -291,8 +284,8 @@ struct StandardItem {
     /// The item flags determine how the user can interact with the item.
     /// This is often used to disable an item.
     /// 
-    /// **See also:** flags()
-    /// setData()
+    /// **See also:** [`flags()`]
+    /// [`set_data()`]
     set_flags(flags: Rute::ItemFlags),
     /// 
     /// Returns whether the item is enabled.
@@ -303,8 +296,8 @@ struct StandardItem {
     /// 
     /// The default value is true.
     /// 
-    /// **See also:** setEnabled()
-    /// flags()
+    /// **See also:** [`set_enabled()`]
+    /// [`flags()`]
     is_enabled() -> bool,
     /// 
     /// Sets whether the item is enabled. If *enabled* is true, the item is enabled,
@@ -315,9 +308,9 @@ struct StandardItem {
     /// enabled, it cannot be selected by the user, even if the Qt::ItemIsSelectable
     /// flag has been set.
     /// 
-    /// **See also:** isEnabled()
-    /// Qt::ItemIsEnabled
-    /// setFlags()
+    /// **See also:** [`is_enabled()`]
+    /// [`t::item_is_enabled()`]
+    /// [`set_flags()`]
     set_enabled(enabled: bool),
     /// 
     /// Returns whether the item can be edited by the user.
@@ -328,8 +321,8 @@ struct StandardItem {
     /// 
     /// The default value is true.
     /// 
-    /// **See also:** setEditable()
-    /// flags()
+    /// **See also:** [`set_editable()`]
+    /// [`flags()`]
     is_editable() -> bool,
     /// 
     /// Sets whether the item is editable. If *editable* is true, the item can be
@@ -338,16 +331,16 @@ struct StandardItem {
     /// How the user can edit items in a view is determined by the view's edit
     /// triggers; see QAbstractItemView::editTriggers.
     /// 
-    /// **See also:** isEditable()
-    /// setFlags()
+    /// **See also:** [`is_editable()`]
+    /// [`set_flags()`]
     set_editable(editable: bool),
     /// 
     /// Returns whether the item is selectable by the user.
     /// 
     /// The default value is true.
     /// 
-    /// **See also:** setSelectable()
-    /// flags()
+    /// **See also:** [`set_selectable()`]
+    /// [`flags()`]
     is_selectable() -> bool,
     /// 
     /// Sets whether the item is selectable. If *selectable* is true, the item
@@ -357,18 +350,18 @@ struct StandardItem {
     /// view properties; see QAbstractItemView::selectionMode and
     /// QAbstractItemView::selectionBehavior.
     /// 
-    /// **See also:** isSelectable()
-    /// setFlags()
+    /// **See also:** [`is_selectable()`]
+    /// [`set_flags()`]
     set_selectable(selectable: bool),
     /// 
     /// Returns whether the item is user-checkable.
     /// 
     /// The default value is false.
     /// 
-    /// **See also:** setCheckable()
-    /// checkState()
-    /// isUserTristate()
-    /// isAutoTristate()
+    /// **See also:** [`set_checkable()`]
+    /// [`check_state()`]
+    /// [`is_user_tristate()`]
+    /// [`is_auto_tristate()`]
     is_checkable() -> bool,
     /// 
     /// Sets whether the item is user-checkable. If *checkable* is true, the
@@ -378,19 +371,19 @@ struct StandardItem {
     /// The item delegate will render a checkable item with a check box next to the
     /// item's text.
     /// 
-    /// **See also:** isCheckable()
-    /// setCheckState()
-    /// setUserTristate()
-    /// setAutoTristate()
+    /// **See also:** [`is_checkable()`]
+    /// [`set_check_state()`]
+    /// [`set_user_tristate()`]
+    /// [`set_auto_tristate()`]
     set_checkable(checkable: bool),
     /// 
     /// Returns whether the item is tristate and is controlled by QTreeWidget.
     /// 
     /// The default value is false.
     /// 
-    /// **See also:** setAutoTristate()
-    /// isCheckable()
-    /// checkState()
+    /// **See also:** [`set_auto_tristate()`]
+    /// [`is_checkable()`]
+    /// [`check_state()`]
     is_auto_tristate() -> bool,
     /// 
     /// Determines that the item is tristate and controlled by QTreeWidget if *tristate*
@@ -399,9 +392,9 @@ struct StandardItem {
     /// (checked if all children are checked, unchecked if all children are unchecked,
     /// or partially checked if only some children are checked).
     /// 
-    /// **See also:** isAutoTristate()
-    /// setCheckable()
-    /// setCheckState()
+    /// **See also:** [`is_auto_tristate()`]
+    /// [`set_checkable()`]
+    /// [`set_check_state()`]
     set_auto_tristate(tristate: bool),
     /// 
     /// Returns whether the item is tristate; that is, if it's checkable with three
@@ -409,9 +402,9 @@ struct StandardItem {
     /// 
     /// The default value is false.
     /// 
-    /// **See also:** setUserTristate()
-    /// isCheckable()
-    /// checkState()
+    /// **See also:** [`set_user_tristate()`]
+    /// [`is_checkable()`]
+    /// [`check_state()`]
     is_user_tristate() -> bool,
     /// 
     /// Sets whether the item is tristate and controlled by the user.
@@ -419,9 +412,9 @@ struct StandardItem {
     /// otherwise, the item is checkable with two states.
     /// (Note that this also requires that the item is checkable; see isCheckable().)
     /// 
-    /// **See also:** isUserTristate()
-    /// setCheckable()
-    /// setCheckState()
+    /// **See also:** [`is_user_tristate()`]
+    /// [`set_checkable()`]
+    /// [`set_check_state()`]
     set_user_tristate(tristate: bool),
     /// 
     /// Use QStandardItem::isAutoTristate() instead.
@@ -442,9 +435,9 @@ struct StandardItem {
     /// Note that item dragging must be enabled in the view for dragging to work;
     /// see QAbstractItemView::dragEnabled.
     /// 
-    /// **See also:** setDragEnabled()
-    /// isDropEnabled()
-    /// flags()
+    /// **See also:** [`set_drag_enabled()`]
+    /// [`is_drop_enabled()`]
+    /// [`flags()`]
     is_drag_enabled() -> bool,
     /// 
     /// Sets whether the item is drag enabled. If *dragEnabled* is true, the item
@@ -453,9 +446,9 @@ struct StandardItem {
     /// Note that you also need to ensure that item dragging is enabled in the view;
     /// see QAbstractItemView::dragEnabled.
     /// 
-    /// **See also:** isDragEnabled()
-    /// setDropEnabled()
-    /// setFlags()
+    /// **See also:** [`is_drag_enabled()`]
+    /// [`set_drop_enabled()`]
+    /// [`set_flags()`]
     set_drag_enabled(drag_enabled: bool),
     /// 
     /// Returns whether the item is drop enabled. When an item is drop enabled, it
@@ -463,9 +456,9 @@ struct StandardItem {
     /// 
     /// The default value is true.
     /// 
-    /// **See also:** setDropEnabled()
-    /// isDragEnabled()
-    /// flags()
+    /// **See also:** [`set_drop_enabled()`]
+    /// [`is_drag_enabled()`]
+    /// [`flags()`]
     is_drop_enabled() -> bool,
     /// 
     /// Sets whether the item is drop enabled. If *dropEnabled* is true, the item
@@ -475,41 +468,41 @@ struct StandardItem {
     /// QWidget::acceptDrops(); and that the model supports the desired drop actions;
     /// see QAbstractItemModel::supportedDropActions().
     /// 
-    /// **See also:** isDropEnabled()
-    /// setDragEnabled()
-    /// setFlags()
+    /// **See also:** [`is_drop_enabled()`]
+    /// [`set_drag_enabled()`]
+    /// [`set_flags()`]
     set_drop_enabled(drop_enabled: bool),
     /// 
     /// Returns the item's parent item, or 0 if the item has no parent.
     /// **Note**: For toplevel items parent() returns 0. To receive toplevel
     /// item's parent use QStandardItemModel::invisibleRootItem() instead.
     /// 
-    /// **See also:** child()
-    /// QStandardItemModel::invisibleRootItem()
+    /// **See also:** [`child()`]
+    /// [`StandardItemModel::invisible_root_item`]
     parent() -> StandardItem?,
     /// 
     /// Returns the row where the item is located in its parent's child table, or
     /// -1 if the item has no parent.
     /// 
-    /// **See also:** column()
-    /// parent()
+    /// **See also:** [`column()`]
+    /// [`parent()`]
     /// 
     /// Returns the number of child item rows that the item has.
     /// 
-    /// **See also:** setRowCount()
-    /// columnCount()
+    /// **See also:** [`set_row_count()`]
+    /// [`column_count()`]
     row() -> i32,
     /// 
     /// Returns the column where the item is located in its parent's child table,
     /// or -1 if the item has no parent.
     /// 
-    /// **See also:** row()
-    /// parent()
+    /// **See also:** [`row()`]
+    /// [`parent()`]
     /// 
     /// Returns the number of child item columns that the item has.
     /// 
-    /// **See also:** setColumnCount()
-    /// rowCount()
+    /// **See also:** [`set_column_count()`]
+    /// [`row_count()`]
     column() -> i32,
     /// 
     /// Returns the QModelIndex associated with this item.
@@ -521,8 +514,8 @@ struct StandardItem {
     /// If the item is not associated with a model, an invalid QModelIndex is
     /// returned.
     /// 
-    /// **See also:** model()
-    /// QStandardItemModel::itemFromIndex()
+    /// **See also:** [`model()`]
+    /// [`StandardItemModel::item_from_index`]
     index() -> ModelIndex,
     /// 
     /// Returns the QStandardItemModel that this item belongs to.
@@ -530,48 +523,48 @@ struct StandardItem {
     /// If the item is not a child of another item that belongs to the model, this
     /// function returns 0.
     /// 
-    /// **See also:** index()
+    /// **See also:** [`index()`]
     model() -> StandardItemModel?,
     /// 
     /// Returns the number of child item rows that the item has.
     /// 
-    /// **See also:** setRowCount()
-    /// columnCount()
+    /// **See also:** [`set_row_count()`]
+    /// [`column_count()`]
     row_count() -> i32,
     /// 
     /// Sets the number of child item rows to *rows.* If this is less than
     /// rowCount(), the data in the unwanted rows is discarded.
     /// 
-    /// **See also:** rowCount()
-    /// setColumnCount()
+    /// **See also:** [`row_count()`]
+    /// [`set_column_count()`]
     set_row_count(rows: i32),
     /// 
     /// Returns the number of child item columns that the item has.
     /// 
-    /// **See also:** setColumnCount()
-    /// rowCount()
+    /// **See also:** [`set_column_count()`]
+    /// [`row_count()`]
     column_count() -> i32,
     /// 
     /// Sets the number of child item columns to *columns.* If this is less than
     /// columnCount(), the data in the unwanted columns is discarded.
     /// 
-    /// **See also:** columnCount()
-    /// setRowCount()
+    /// **See also:** [`column_count()`]
+    /// [`set_row_count()`]
     set_column_count(columns: i32),
     /// 
     /// Returns `true` if this item has any children; otherwise returns `false.`
     /// 
-    /// **See also:** rowCount()
-    /// columnCount()
-    /// child()
+    /// **See also:** [`row_count()`]
+    /// [`column_count()`]
+    /// [`child()`]
     has_children() -> bool,
     /// 
     /// Returns the child item at ( *row,* *column)* if one has been set; otherwise
     /// returns 0.
     /// 
-    /// **See also:** setChild()
-    /// takeChild()
-    /// parent()
+    /// **See also:** [`set_child()`]
+    /// [`take_child()`]
+    /// [`parent()`]
     child(row: i32, column: i32) -> StandardItem?,
     /// 
     /// Sets the child item at ( *row,* *column)* to *item.* This item (the parent
@@ -580,7 +573,7 @@ struct StandardItem {
     /// 
     /// **Note**: Passing a null pointer as *item* removes the item.
     /// 
-    /// **See also:** child()
+    /// **See also:** [`child()`]
     /// 
     /// **Overloads**
     /// Sets the child at *row* to *item.*
@@ -592,27 +585,28 @@ struct StandardItem {
     /// 
     /// **Note**: Passing a null pointer as *item* removes the item.
     /// 
-    /// **See also:** child()
+    /// **See also:** [`child()`]
     /// 
     /// **Overloads**
     /// Sets the child at *row* to *item.*
-    set_child(row: i32, item: *StandardItemType),
+    [org_name(setChild)]
+    set_child_2(row: i32, item: *StandardItemType),
     /// 
     /// Inserts a row at *row* containing *items.* If necessary, the column
     /// count is increased to the size of *items.*
     /// 
-    /// **See also:** insertRows()
-    /// insertColumn()
+    /// **See also:** [`insert_rows()`]
+    /// [`insert_column()`]
     /// 
     /// Inserts *items* at *row.* The column count won't be changed.
     /// 
-    /// **See also:** insertRow()
-    /// insertColumn()
+    /// **See also:** [`insert_row()`]
+    /// [`insert_column()`]
     /// 
     /// Inserts *count* rows of child items at row *row.*
     /// 
-    /// **See also:** insertRow()
-    /// insertColumns()
+    /// **See also:** [`insert_row()`]
+    /// [`insert_columns()`]
     /// 
     /// **Overloads**
     /// Inserts a row at *row* containing *item.*
@@ -624,92 +618,93 @@ struct StandardItem {
     /// Inserts a column at *column* containing *items.* If necessary,
     /// the row count is increased to the size of *items.*
     /// 
-    /// **See also:** insertColumns()
-    /// insertRow()
+    /// **See also:** [`insert_columns()`]
+    /// [`insert_row()`]
     /// 
     /// Inserts *count* columns of child items at column *column.*
     /// 
-    /// **See also:** insertColumn()
-    /// insertRows()
+    /// **See also:** [`insert_column()`]
+    /// [`insert_rows()`]
     insert_column(column: i32, items: [*StandardItemType]),
     /// 
     /// Inserts *items* at *row.* The column count won't be changed.
     /// 
-    /// **See also:** insertRow()
-    /// insertColumn()
+    /// **See also:** [`insert_row()`]
+    /// [`insert_column()`]
     /// 
     /// Inserts *count* rows of child items at row *row.*
     /// 
-    /// **See also:** insertRow()
-    /// insertColumns()
+    /// **See also:** [`insert_row()`]
+    /// [`insert_columns()`]
     insert_rows(row: i32, items: [*StandardItemType]),
     /// 
     /// Inserts *items* at *row.* The column count won't be changed.
     /// 
-    /// **See also:** insertRow()
-    /// insertColumn()
+    /// **See also:** [`insert_row()`]
+    /// [`insert_column()`]
     /// 
     /// Inserts *count* rows of child items at row *row.*
     /// 
-    /// **See also:** insertRow()
-    /// insertColumns()
-    insert_rows(row: i32, count: i32),
+    /// **See also:** [`insert_row()`]
+    /// [`insert_columns()`]
+    [org_name(insertRows)]
+    insert_rows_2(row: i32, count: i32),
     /// 
     /// Inserts *count* columns of child items at column *column.*
     /// 
-    /// **See also:** insertColumn()
-    /// insertRows()
+    /// **See also:** [`insert_column()`]
+    /// [`insert_rows()`]
     insert_columns(column: i32, count: i32),
     /// 
     /// Removes the given *row.* The items that were in the row are deleted.
     /// 
-    /// **See also:** takeRow()
-    /// removeRows()
-    /// removeColumn()
+    /// **See also:** [`take_row()`]
+    /// [`remove_rows()`]
+    /// [`remove_column()`]
     /// 
     /// Removes *count* rows at row *row.* The items that were in those rows are
     /// deleted.
     /// 
-    /// **See also:** removeRow()
-    /// removeColumn()
+    /// **See also:** [`remove_row()`]
+    /// [`remove_column()`]
     remove_row(row: i32),
     /// 
     /// Removes the given *column.* The items that were in the
     /// column are deleted.
     /// 
-    /// **See also:** takeColumn()
-    /// removeColumns()
-    /// removeRow()
+    /// **See also:** [`take_column()`]
+    /// [`remove_columns()`]
+    /// [`remove_row()`]
     /// 
     /// Removes *count* columns at column *column.* The items that were in those
     /// columns are deleted.
     /// 
-    /// **See also:** removeColumn()
-    /// removeRows()
+    /// **See also:** [`remove_column()`]
+    /// [`remove_rows()`]
     remove_column(column: i32),
     /// 
     /// Removes *count* rows at row *row.* The items that were in those rows are
     /// deleted.
     /// 
-    /// **See also:** removeRow()
-    /// removeColumn()
+    /// **See also:** [`remove_row()`]
+    /// [`remove_column()`]
     remove_rows(row: i32, count: i32),
     /// 
     /// Removes *count* columns at column *column.* The items that were in those
     /// columns are deleted.
     /// 
-    /// **See also:** removeColumn()
-    /// removeRows()
+    /// **See also:** [`remove_column()`]
+    /// [`remove_rows()`]
     remove_columns(column: i32, count: i32),
     /// 
     /// Appends a row containing *items.* If necessary, the column count is
     /// increased to the size of *items.*
     /// 
-    /// **See also:** insertRow()
+    /// **See also:** [`insert_row()`]
     /// 
     /// Appends rows containing *items.* The column count will not change.
     /// 
-    /// **See also:** insertRow()
+    /// **See also:** [`insert_row()`]
     /// 
     /// **Overloads**
     /// Appends a row containing *item.*
@@ -720,53 +715,55 @@ struct StandardItem {
     /// 
     /// Appends rows containing *items.* The column count will not change.
     /// 
-    /// **See also:** insertRow()
+    /// **See also:** [`insert_row()`]
     append_rows(items: [*StandardItemType]),
     /// 
     /// Appends a column containing *items.* If necessary, the row count is
     /// increased to the size of *items.*
     /// 
-    /// **See also:** insertColumn()
+    /// **See also:** [`insert_column()`]
     append_column(items: [*StandardItemType]),
     /// 
     /// Inserts a row at *row* containing *items.* If necessary, the column
     /// count is increased to the size of *items.*
     /// 
-    /// **See also:** insertRows()
-    /// insertColumn()
+    /// **See also:** [`insert_rows()`]
+    /// [`insert_column()`]
     /// 
     /// Inserts *items* at *row.* The column count won't be changed.
     /// 
-    /// **See also:** insertRow()
-    /// insertColumn()
+    /// **See also:** [`insert_row()`]
+    /// [`insert_column()`]
     /// 
     /// Inserts *count* rows of child items at row *row.*
     /// 
-    /// **See also:** insertRow()
-    /// insertColumns()
+    /// **See also:** [`insert_row()`]
+    /// [`insert_columns()`]
     /// 
     /// **Overloads**
     /// Inserts a row at *row* containing *item.*
     /// 
     /// When building a list or a tree that has only one column, this function
     /// provides a convenient way to insert a single new item.
-    insert_row(row: i32, item: *StandardItemType),
+    [org_name(insertRow)]
+    insert_row_2(row: i32, item: *StandardItemType),
     /// 
     /// Appends a row containing *items.* If necessary, the column count is
     /// increased to the size of *items.*
     /// 
-    /// **See also:** insertRow()
+    /// **See also:** [`insert_row()`]
     /// 
     /// Appends rows containing *items.* The column count will not change.
     /// 
-    /// **See also:** insertRow()
+    /// **See also:** [`insert_row()`]
     /// 
     /// **Overloads**
     /// Appends a row containing *item.*
     /// 
     /// When building a list or a tree that has only one column, this function
     /// provides a convenient way to append a single new item.
-    append_row(item: *StandardItemType),
+    [org_name(appendRow)]
+    append_row_2(item: *StandardItemType),
     /// 
     /// Removes the child item at ( *row,* *column)* without deleting it, and returns
     /// a pointer to the item. If there was no child at the given location, then
@@ -775,27 +772,27 @@ struct StandardItem {
     /// Note that this function, unlike takeRow() and takeColumn(), does not affect
     /// the dimensions of the child table.
     /// 
-    /// **See also:** child()
-    /// takeRow()
-    /// takeColumn()
+    /// **See also:** [`child()`]
+    /// [`take_row()`]
+    /// [`take_column()`]
     take_child(row: i32, column: i32) -> StandardItem?,
     /// 
     /// Removes *row* without deleting the row items, and returns a list of
     /// pointers to the removed items. For items in the row that have not been
     /// set, the corresponding pointers in the list will be 0.
     /// 
-    /// **See also:** removeRow()
-    /// insertRow()
-    /// takeColumn()
+    /// **See also:** [`remove_row()`]
+    /// [`insert_row()`]
+    /// [`take_column()`]
     take_row(row: i32) -> [StandardItem?],
     /// 
     /// Removes *column* without deleting the column items, and returns a list of
     /// pointers to the removed items. For items in the column that have not been
     /// set, the corresponding pointers in the list will be 0.
     /// 
-    /// **See also:** removeColumn()
-    /// insertColumn()
-    /// takeRow()
+    /// **See also:** [`remove_column()`]
+    /// [`insert_column()`]
+    /// [`take_row()`]
     take_column(column: i32) -> [StandardItem?],
     /// 
     /// Sorts the children of the item using the given *order,* by the values in
@@ -813,8 +810,8 @@ struct StandardItem {
     /// to provide QStandardItemModel with a factory that it can use to
     /// create new items on demand.
     /// 
-    /// **See also:** QStandardItemModel::setItemPrototype()
-    /// operator=()
+    /// **See also:** [`StandardItemModel::set_item_prototype`]
+    /// [`operator()`]
     [event] clone() -> StandardItem?,
     /// 
     /// Returns the type of this item. The type is used to distinguish custom
@@ -822,19 +819,19 @@ struct StandardItem {
     /// reimplement this function and return a new value greater than or equal
     /// to [UserType.](UserType.)
     /// 
-    /// **See also:** QStandardItem::Type
+    /// **See also:** [`StandardItem::type()`]
     [event] type() -> i32,
     /// 
     /// Reads the item from stream *in.* Only the data and flags of the item are
     /// read, not the child items.
     /// 
-    /// **See also:** write()
+    /// **See also:** [`write()`]
     [event] read(in: &DataStreamType),
     /// 
     /// Writes the item to stream *out.* Only the data and flags of the item
     /// are written, not the child items.
     /// 
-    /// **See also:** read()
+    /// **See also:** [`read()`]
     [event] write(out: &DataStreamType),
     /// 
     /// Causes the model associated with this item to emit a
@@ -845,8 +842,16 @@ struct StandardItem {
     /// You normally only need to call this function if you have subclassed
     /// QStandardItem and reimplemented data() and/or setData().
     /// 
-    /// **See also:** setData()
+    /// **See also:** [`set_data()`]
     emit_data_changed(),
+}
+
+[org_name(QStandardItem)]
+enum ItemType {
+    /// The default type for standard items.
+    Type,
+    /// The minimum value for custom types. Values below UserType are reserved by Qt. You can define new user types in QStandardItem subclasses to ensure that custom items are treated specially; for example, when items are sorted.
+    UserType,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

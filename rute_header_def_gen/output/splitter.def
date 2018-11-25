@@ -41,10 +41,10 @@
 /// setLayout() or making the QSplitter a parent of the QLayout); use addWidget()
 /// instead (see example above).
 /// 
-/// **See also:** QSplitterHandle
-/// QHBoxLayout
-/// QVBoxLayout
-/// QTabWidget
+/// **See also:** [`SplitterHandle`]
+/// [`HBoxLayout`]
+/// [`VBoxLayout`]
+/// [`TabWidget`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -57,9 +57,9 @@ struct Splitter : Frame {
     /// 
     /// **Note**: The splitter takes ownership of the widget.
     /// 
-    /// **See also:** insertWidget()
-    /// widget()
-    /// indexOf()
+    /// **See also:** [`insert_widget()`]
+    /// [`widget()`]
+    /// [`index_of()`]
     add_widget(widget: *WidgetType),
     /// 
     /// Inserts the *widget* specified into the splitter's layout at the
@@ -71,9 +71,9 @@ struct Splitter : Frame {
     /// 
     /// **Note**: The splitter takes ownership of the widget.
     /// 
-    /// **See also:** addWidget()
-    /// indexOf()
-    /// widget()
+    /// **See also:** [`add_widget()`]
+    /// [`index_of()`]
+    /// [`widget()`]
     insert_widget(index: i32, widget: *WidgetType),
     /// 
     /// Replaces the widget in the splitter's layout at the given *index* by *widget.*
@@ -94,8 +94,8 @@ struct Splitter : Frame {
     /// may not be set right away, but only after *widget* will
     /// receive the appropriate events.
     /// 
-    /// **See also:** insertWidget()
-    /// indexOf()
+    /// **See also:** [`insert_widget()`]
+    /// [`index_of()`]
     replace_widget(index: i32, widget: *WidgetType) -> Widget?,
     set_orientation(arg0: Rute::Orientation),
     /// 
@@ -103,7 +103,7 @@ struct Splitter : Frame {
     /// laid out side by side). The possible orientations are
     /// Qt::Horizontal and Qt::Vertical.
     /// 
-    /// **See also:** QSplitterHandle::orientation()
+    /// **See also:** [`SplitterHandle::orientation`]
     orientation() -> Rute::Orientation,
     set_children_collapsible(arg0: bool),
     /// 
@@ -111,7 +111,7 @@ struct Splitter : Frame {
     /// and disable the collapsing of individual children using
     /// setCollapsible().
     /// 
-    /// **See also:** setCollapsible()
+    /// **See also:** [`set_collapsible()`]
     children_collapsible() -> bool,
     /// 
     /// Sets whether the child widget at *index* is collapsible to *collapse.*
@@ -134,7 +134,7 @@ struct Splitter : Frame {
     /// SH_Splitter_OpaqueResize style hint). However, you can override it
     /// by calling setOpaqueResize()
     /// 
-    /// **See also:** QStyle::StyleHint
+    /// **See also:** [`Style::style_hint()`]
     opaque_resize() -> bool,
     /// 
     /// Updates the splitter's state. You should not need to call this
@@ -157,7 +157,7 @@ struct Splitter : Frame {
     /// 
     /// Note that invisible widgets have a size of 0.
     /// 
-    /// **See also:** setSizes()
+    /// **See also:** [`set_sizes()`]
     sizes() -> [i32],
     /// 
     /// Sets the child widgets' respective sizes to the values given in the *list.*
@@ -177,7 +177,7 @@ struct Splitter : Frame {
     /// of the widgets are preserved. That is, a value smaller than the minimal size
     /// hint of the respective widget will be replaced by the value of the hint.
     /// 
-    /// **See also:** sizes()
+    /// **See also:** [`sizes()`]
     set_sizes(list: [i32]),
     /// 
     /// Saves the state of the splitter's layout.
@@ -186,7 +186,7 @@ struct Splitter : Frame {
     /// for a future session. A version number is stored as part of the data.
     /// Here is an example:
     /// 
-    /// **See also:** restoreState()
+    /// **See also:** [`restore_state()`]
     save_state() -> ByteArray,
     /// 
     /// Restores the splitter's layout to the *state* specified.
@@ -200,7 +200,7 @@ struct Splitter : Frame {
     /// A failure to restore the splitter's layout may result from either
     /// invalid or out-of-date data in the supplied byte array.
     /// 
-    /// **See also:** saveState()
+    /// **See also:** [`save_state()`]
     restore_state(state: &ByteArrayType) -> bool,
     /// 
     /// By default, this property contains a value that depends on the user's platform
@@ -217,23 +217,23 @@ struct Splitter : Frame {
     /// Handles are numbered from 0. There are as many handles as there
     /// are child widgets, but the handle at position 0 is always hidden.
     /// 
-    /// **See also:** count()
-    /// widget()
+    /// **See also:** [`count()`]
+    /// [`widget()`]
     index_of(w: *WidgetType) -> i32,
     /// 
     /// Returns the widget at the given *index* in the splitter's layout,
     /// or `nullptr` if there is no such widget.
     /// 
-    /// **See also:** count()
-    /// handle()
-    /// indexOf()
-    /// insertWidget()
+    /// **See also:** [`count()`]
+    /// [`handle()`]
+    /// [`index_of()`]
+    /// [`insert_widget()`]
     widget(index: i32) -> Widget?,
     /// 
     /// Returns the number of widgets contained in the splitter's layout.
     /// 
-    /// **See also:** widget()
-    /// handle()
+    /// **See also:** [`widget()`]
+    /// [`handle()`]
     count() -> i32,
     /// 
     /// Returns the valid range of the splitter at *index* in
@@ -248,11 +248,11 @@ struct Splitter : Frame {
     /// of horizontal splitters is reversed. The handle will be to the
     /// right of the widget at *index.*
     /// 
-    /// **See also:** count()
-    /// widget()
-    /// indexOf()
-    /// createHandle()
-    /// setHandleWidth()
+    /// **See also:** [`count()`]
+    /// [`widget()`]
+    /// [`index_of()`]
+    /// [`create_handle()`]
+    /// [`set_handle_width()`]
     /// 
     /// By default, this property contains a value that depends on the user's platform
     /// and style preferences.
@@ -267,15 +267,15 @@ struct Splitter : Frame {
     /// of horizontal splitters is reversed. *pos* is then the
     /// distance from the right edge of the widget.
     /// 
-    /// **See also:** moveSplitter()
+    /// **See also:** [`move_splitter()`]
     [signal] splitter_moved(pos: i32, index: i32),
     /// 
     /// Returns a new splitter handle as a child widget of this splitter.
     /// This function can be reimplemented in subclasses to provide support
     /// for custom handles.
     /// 
-    /// **See also:** handle()
-    /// indexOf()
+    /// **See also:** [`handle()`]
+    /// [`index_of()`]
     [event] create_handle() -> SplitterHandle?,
     /// 
     /// Tells the splitter that the child widget described by *c* has been
@@ -287,8 +287,8 @@ struct Splitter : Frame {
     /// putting widgets into a splitter in new code. Please use insertWidget() or
     /// addWidget() in new code.
     /// 
-    /// **See also:** addWidget()
-    /// insertWidget()
+    /// **See also:** [`add_widget()`]
+    /// [`insert_widget()`]
     [event] child_event(arg0: *ChildEventType),
     /// 
     [event] event(arg0: *EventType) -> bool,
@@ -305,9 +305,9 @@ struct Splitter : Frame {
     /// of horizontal splitters is reversed. *pos* is then the distance
     /// from the right edge of the widget.
     /// 
-    /// **See also:** splitterMoved()
-    /// closestLegalPosition()
-    /// getRange()
+    /// **See also:** [`splitter_moved()`]
+    /// [`closest_legal_position()`]
+    /// [`get_range()`]
     move_splitter(pos: i32, index: i32),
     /// 
     /// Displays a rubber band at position *pos.* If *pos* is negative, the
@@ -320,7 +320,7 @@ struct Splitter : Frame {
     /// of horizontal splitters is reversed. Positions are then measured
     /// from the right edge of the widget.
     /// 
-    /// **See also:** getRange()
+    /// **See also:** [`get_range()`]
     closest_legal_position(arg0: i32, arg1: i32) -> i32,
 }
 

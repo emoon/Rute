@@ -49,26 +49,11 @@
 /// the source has changed in some way - e.g., if the source is a
 /// QGraphicsRectItem and its rectangle parameters have changed.
 /// 
-/// **See also:** QGraphicsItem::setGraphicsEffect()
-/// QWidget::setGraphicsEffect()
+/// **See also:** [`GraphicsItem::set_graphics_effect`]
+/// [`Widget::set_graphics_effect`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsEffect)]
-enum ChangeFlag {
-    SourceAttached,
-    SourceDetached,
-    SourceBoundingRectChanged,
-    SourceInvalidated,
-}
-
-[org_name(QGraphicsEffect)]
-enum PixmapPadMode {
-    NoPad,
-    PadToTransparentBorder,
-    PadToEffectiveBoundingRect,
-}
-
 struct GraphicsEffect : Object {
     /// 
     /// Returns the effective bounding rectangle for this effect, given the
@@ -77,15 +62,15 @@ struct GraphicsEffect : Object {
     /// parameters are changed that may cause this this function to return a
     /// different value.
     /// 
-    /// **See also:** sourceBoundingRect()
+    /// **See also:** [`source_bounding_rect()`]
     [event] bounding_rect_for(source_rect: &RectFType) -> RectF,
     /// 
     /// Returns the effective bounding rectangle for this effect, i.e., the
     /// bounding rectangle of the source in device coordinates, adjusted by
     /// any margins applied by the effect itself.
     /// 
-    /// **See also:** boundingRectFor()
-    /// updateBoundingRect()
+    /// **See also:** [`bounding_rect_for()`]
+    /// [`update_bounding_rect()`]
     /// 
     /// Returns the effective bounding rectangle for this effect, given the
     /// provided *rect* in the device coordinates. When writing
@@ -93,7 +78,7 @@ struct GraphicsEffect : Object {
     /// parameters are changed that may cause this this function to return a
     /// different value.
     /// 
-    /// **See also:** sourceBoundingRect()
+    /// **See also:** [`source_bounding_rect()`]
     bounding_rect() -> RectF,
     is_enabled() -> bool,
     set_enabled(enable: bool),
@@ -101,7 +86,7 @@ struct GraphicsEffect : Object {
     /// Schedules a redraw of the effect. Call this function whenever the effect
     /// needs to be redrawn. This function does not trigger a redraw of the source.
     /// 
-    /// **See also:** updateBoundingRect()
+    /// **See also:** [`update_bounding_rect()`]
     /// 
     /// This function notifies the effect framework when the effect's bounding
     /// rectangle has changed. As a custom effect author, you must call this
@@ -110,15 +95,15 @@ struct GraphicsEffect : Object {
     /// 
     /// This function will call update() if this is necessary.
     /// 
-    /// **See also:** boundingRectFor()
-    /// boundingRect()
-    /// sourceBoundingRect()
+    /// **See also:** [`bounding_rect_for()`]
+    /// [`bounding_rect()`]
+    /// [`source_bounding_rect()`]
     update(),
     /// 
     /// This signal is emitted whenever the effect is enabled or disabled.
     /// The *enabled* parameter holds the effects's new enabled state.
     /// 
-    /// **See also:** isEnabled()
+    /// **See also:** [`is_enabled()`]
     [signal] enabled_changed(enabled: bool),
     /// 
     /// Draws the source directly using the given *painter.*
@@ -127,7 +112,7 @@ struct GraphicsEffect : Object {
     /// 
     /// For example:
     /// 
-    /// **See also:** QGraphicsEffect::draw()
+    /// **See also:** [`GraphicsEffect::draw`]
     /// 
     /// This pure virtual function draws the effect and is called whenever the
     /// source needs to be drawn.
@@ -155,9 +140,9 @@ struct GraphicsEffect : Object {
     /// 
     /// This function will call update() if this is necessary.
     /// 
-    /// **See also:** boundingRectFor()
-    /// boundingRect()
-    /// sourceBoundingRect()
+    /// **See also:** [`bounding_rect_for()`]
+    /// [`bounding_rect()`]
+    /// [`source_bounding_rect()`]
     update_bounding_rect(),
     /// 
     /// Returns `true` if the source effectively is a pixmap, e.g., a
@@ -174,7 +159,7 @@ struct GraphicsEffect : Object {
     /// QGraphicsEffect::draw() will give undefined results, as there is no device
     /// context available.
     /// 
-    /// **See also:** draw()
+    /// **See also:** [`draw()`]
     source_bounding_rect(system: Rute::CoordinateSystem) -> RectF,
     /// 
     /// Draws the source directly using the given *painter.*
@@ -183,7 +168,7 @@ struct GraphicsEffect : Object {
     /// 
     /// For example:
     /// 
-    /// **See also:** QGraphicsEffect::draw()
+    /// **See also:** [`GraphicsEffect::draw`]
     draw_source(painter: *PainterType),
     /// 
     /// Returns a pixmap with the source painted into it.
@@ -200,8 +185,8 @@ struct GraphicsEffect : Object {
     /// QGraphicsEffect::draw() will give undefined results, as there is no device
     /// context available.
     /// 
-    /// **See also:** draw()
-    /// boundingRect()
+    /// **See also:** [`draw()`]
+    /// [`bounding_rect()`]
     source_pixmap(system: Rute::CoordinateSystem, offset: *PointType, mode: GraphicsEffect::PixmapPadMode) -> Pixmap,
     /// 
     /// Returns the bounding rectangle of the source mapped to the given *system.*
@@ -210,7 +195,7 @@ struct GraphicsEffect : Object {
     /// QGraphicsEffect::draw() will give undefined results, as there is no device
     /// context available.
     /// 
-    /// **See also:** draw()
+    /// **See also:** [`draw()`]
     /// 
     /// Returns `true` if the source effectively is a pixmap, e.g., a
     /// QGraphicsPixmapItem.
@@ -233,8 +218,8 @@ struct GraphicsEffect : Object {
     /// QGraphicsEffect::draw() will give undefined results, as there is no device
     /// context available.
     /// 
-    /// **See also:** draw()
-    /// boundingRect()
+    /// **See also:** [`draw()`]
+    /// [`bounding_rect()`]
     /// 
     /// This virtual function is called by QGraphicsEffect to notify the effect
     /// that the source has changed. If the effect applies any cache, then this
@@ -242,6 +227,28 @@ struct GraphicsEffect : Object {
     /// 
     /// The *flags* describes what has changed.
     source() -> GraphicsEffectSource?,
+}
+
+[org_name(QGraphicsEffect)]
+enum ChangeFlag {
+    /// The effect is installed on a source.
+    SourceAttached,
+    /// The effect is uninstalled on a source.
+    SourceDetached,
+    /// The bounding rect of the source has changed.
+    SourceBoundingRectChanged,
+    /// The visual appearance of the source has changed.
+    SourceInvalidated,
+}
+
+[org_name(QGraphicsEffect)]
+enum PixmapPadMode {
+    /// The pixmap should not receive any additional padding.
+    NoPad,
+    /// The pixmap should be padded to ensure it has a completely transparent border.
+    PadToTransparentBorder,
+    /// The pixmap should be padded to match the effective bounding rectangle of the effect.
+    PadToEffectiveBoundingRect,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

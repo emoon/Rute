@@ -9,19 +9,12 @@
 /// 
 /// ![graphicseffect-blur.png](graphicseffect-blur.png)
 /// 
-/// **See also:** QGraphicsDropShadowEffect
-/// QGraphicsColorizeEffect
-/// QGraphicsOpacityEffect
+/// **See also:** [`GraphicsDropShadowEffect`]
+/// [`GraphicsColorizeEffect`]
+/// [`GraphicsOpacityEffect`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsBlurEffect)]
-enum BlurHint {
-    PerformanceHint,
-    QualityHint,
-    AnimationHint,
-}
-
 struct GraphicsBlurEffect : GraphicsEffect {
     /// 
     [event] bounding_rect_for(rect: &RectFType) -> RectF,
@@ -59,6 +52,16 @@ struct GraphicsBlurEffect : GraphicsEffect {
     [signal] blur_hints_changed(hints: GraphicsBlurEffect::BlurHints),
     /// 
     [event] draw(painter: *PainterType),
+}
+
+[org_name(QGraphicsBlurEffect)]
+enum BlurHint {
+    /// Indicates that rendering performance is the most important factor, at the potential cost of lower quality.
+    PerformanceHint,
+    /// Indicates that rendering quality is the most important factor, at the potential cost of lower performance.
+    QualityHint,
+    /// Indicates that the blur radius is going to be animated, hinting that the implementation can keep a cache of blurred verisons of the source. Do not use this hint if the source is going to be dynamically changing.
+    AnimationHint,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

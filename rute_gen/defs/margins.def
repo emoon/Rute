@@ -1,0 +1,47 @@
+/// 
+/// QMargin defines a set of four margins; left, top, right and bottom,
+/// that describe the size of the borders surrounding a rectangle.
+/// 
+/// The isNull() function returns `true` only if all margins are set to zero.
+/// 
+/// QMargin objects can be streamed as well as compared.
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+
+struct Margins {
+    /// 
+    /// Returns `true` if all margins are is 0; otherwise returns
+    /// false.
+    is_null() -> bool,
+    /// 
+    /// Returns the left margin.
+    /// 
+    /// **See also:** setLeft()
+    left() -> i32,
+    /// 
+    /// Returns the top margin.
+    /// 
+    /// **See also:** setTop()
+    top() -> i32,
+    /// 
+    /// Returns the right margin.
+    right() -> i32,
+    /// 
+    /// Returns the bottom margin.
+    bottom() -> i32,
+    /// 
+    /// Sets the left margin to *left.*
+    set_left(left: i32),
+    /// 
+    /// Sets the Top margin to *Top.*
+    set_top(top: i32),
+    /// 
+    /// Sets the right margin to *right.*
+    set_right(right: i32),
+    /// 
+    /// Sets the bottom margin to *bottom.*
+    set_bottom(bottom: i32),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

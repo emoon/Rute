@@ -43,27 +43,27 @@ struct Screen : Object {
     /// Depending on what information the underlying system provides the value might not be
     /// entirely accurate.
     /// 
-    /// **See also:** physicalDotsPerInchY()
+    /// **See also:** [`physical_dots_per_inch_y()`]
     physical_dots_per_inch_x() -> f32,
     /// 
     /// This value represents the actual vertical pixel density on the screen's display.
     /// Depending on what information the underlying system provides the value might not be
     /// entirely accurate.
     /// 
-    /// **See also:** physicalDotsPerInchX()
+    /// **See also:** [`physical_dots_per_inch_x()`]
     physical_dots_per_inch_y() -> f32,
     /// 
     /// This value represents the actual horizontal pixel density on the screen's display.
     /// Depending on what information the underlying system provides the value might not be
     /// entirely accurate.
     /// 
-    /// **See also:** physicalDotsPerInchY()
+    /// **See also:** [`physical_dots_per_inch_y()`]
     /// 
     /// This value represents the actual vertical pixel density on the screen's display.
     /// Depending on what information the underlying system provides the value might not be
     /// entirely accurate.
     /// 
-    /// **See also:** physicalDotsPerInchX()
+    /// **See also:** [`physical_dots_per_inch_x()`]
     /// 
     /// This value represents the pixel density on the screen's display.
     /// Depending on what information the underlying system provides the value might not be
@@ -72,35 +72,35 @@ struct Screen : Object {
     /// This is a convenience property that's simply the average of the physicalDotsPerInchX
     /// and physicalDotsPerInchY properties.
     /// 
-    /// **See also:** physicalDotsPerInchX()
-    /// **See also:** physicalDotsPerInchY()
+    /// **See also:** [`physical_dots_per_inch_x()`]
+    /// **See also:** [`physical_dots_per_inch_y()`]
     physical_dots_per_inch() -> f32,
     /// 
     /// This value is used to convert font point sizes to pixel sizes.
     /// 
-    /// **See also:** logicalDotsPerInchY()
+    /// **See also:** [`logical_dots_per_inch_y()`]
     logical_dots_per_inch_x() -> f32,
     /// 
     /// This value is used to convert font point sizes to pixel sizes.
     /// 
-    /// **See also:** logicalDotsPerInchX()
+    /// **See also:** [`logical_dots_per_inch_x()`]
     logical_dots_per_inch_y() -> f32,
     /// 
     /// This value is used to convert font point sizes to pixel sizes.
     /// 
-    /// **See also:** logicalDotsPerInchY()
+    /// **See also:** [`logical_dots_per_inch_y()`]
     /// 
     /// This value is used to convert font point sizes to pixel sizes.
     /// 
-    /// **See also:** logicalDotsPerInchX()
+    /// **See also:** [`logical_dots_per_inch_x()`]
     /// 
     /// This value can be used to convert font point sizes to pixel sizes.
     /// 
     /// This is a convenience property that's simply the average of the logicalDotsPerInchX
     /// and logicalDotsPerInchY properties.
     /// 
-    /// **See also:** logicalDotsPerInchX()
-    /// **See also:** logicalDotsPerInchY()
+    /// **See also:** [`logical_dots_per_inch_x()`]
+    /// **See also:** [`logical_dots_per_inch_y()`]
     logical_dots_per_inch() -> f32,
     /// 
     /// Returns the ratio between physical pixels and device-independent pixels for the screen.
@@ -108,8 +108,8 @@ struct Screen : Object {
     /// Common values are 1.0 on normal displays and 2.0 on displays.
     /// Higher values are also possible.
     /// 
-    /// **See also:** QWindow::devicePixelRatio()
-    /// QGuiApplication::devicePixelRatio()
+    /// **See also:** [`Window::device_pixel_ratio`]
+    /// [`GuiApplication::device_pixel_ratio`]
     device_pixel_ratio() -> f32,
     /// 
     /// The available size is the size excluding window manager reserved areas
@@ -127,15 +127,15 @@ struct Screen : Object {
     /// 
     /// This is the combined size of the virtual siblings' individual geometries.
     /// 
-    /// **See also:** virtualSiblings()
+    /// **See also:** [`virtual_siblings()`]
     virtual_size() -> Size,
     /// 
     /// Returns the available pixel size of the virtual desktop corresponding to this screen.
     /// 
     /// This is the combined size of the virtual siblings' individual available geometries.
     /// 
-    /// **See also:** availableSize()
-    /// virtualSiblings()
+    /// **See also:** [`available_size()`]
+    /// [`virtual_siblings()`]
     available_virtual_size() -> Size,
     /// 
     /// The primary screen orientation is Qt::LandscapeOrientation
@@ -150,12 +150,12 @@ struct Screen : Object {
     /// This signal is emitted when the primary orientation of the screen
     /// changes with *orientation* as an argument.
     /// 
-    /// **See also:** primaryOrientation()
+    /// **See also:** [`primary_orientation()`]
     primary_orientation() -> Rute::ScreenOrientation,
     /// 
     /// Returns the currently set orientation update mask.
     /// 
-    /// **See also:** setOrientationUpdateMask()
+    /// **See also:** [`set_orientation_update_mask()`]
     /// 
     /// The screen orientation represents the physical orientation
     /// of the display. For example, the screen orientation of a mobile device
@@ -169,12 +169,12 @@ struct Screen : Object {
     /// 
     /// Qt::PrimaryOrientation is never returned.
     /// 
-    /// **See also:** primaryOrientation()
+    /// **See also:** [`primary_orientation()`]
     /// 
     /// This signal is emitted when the orientation of the screen
     /// changes with *orientation* as an argument.
     /// 
-    /// **See also:** orientation()
+    /// **See also:** [`orientation()`]
     orientation() -> Rute::ScreenOrientation,
     /// 
     /// The native orientation of the screen is the orientation where the logo
@@ -186,7 +186,7 @@ struct Screen : Object {
     /// 
     /// Returns the currently set orientation update mask.
     /// 
-    /// **See also:** setOrientationUpdateMask()
+    /// **See also:** [`set_orientation_update_mask()`]
     orientation_update_mask() -> Rute::ScreenOrientations,
     /// 
     /// Sets the orientations that the application is interested in receiving
@@ -270,13 +270,13 @@ struct Screen : Object {
     /// This signal is emitted when the primary orientation of the screen
     /// changes with *orientation* as an argument.
     /// 
-    /// **See also:** primaryOrientation()
+    /// **See also:** [`primary_orientation()`]
     [signal] primary_orientation_changed(orientation: Rute::ScreenOrientation),
     /// 
     /// This signal is emitted when the orientation of the screen
     /// changes with *orientation* as an argument.
     /// 
-    /// **See also:** orientation()
+    /// **See also:** [`orientation()`]
     [signal] orientation_changed(orientation: Rute::ScreenOrientation),
     [signal] refresh_rate_changed(refresh_rate: f32),
 }

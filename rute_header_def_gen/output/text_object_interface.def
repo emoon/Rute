@@ -41,12 +41,11 @@
 /// **Warning**: Copy and Paste operations ignore custom text objects.
 /// 
 /// **See also:** {Text Object Example}
-/// QTextCharFormat
-/// QTextLayout
+/// [`TextCharFormat`]
+/// [`TextLayout`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct TextObjectInterface {
     /// 
     /// Draws this text object using the specified *painter.*
@@ -57,7 +56,7 @@ struct TextObjectInterface {
     /// 
     /// You also get the document ( *doc)* and the position ( *posInDocument)* of the *format* in that document.
     /// 
-    /// **See also:** intrinsicSize()
+    /// **See also:** [`intrinsic_size()`]
     [event] draw_object(painter: *PainterType, rect: &RectFType, doc: *TextDocumentType, pos_in_document: i32, format: &TextFormatType),
 }
 

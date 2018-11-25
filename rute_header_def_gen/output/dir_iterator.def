@@ -22,19 +22,11 @@
 /// you cannot iterate directories in reverse order) and does not allow random
 /// access.
 /// 
-/// **See also:** QDir
-/// QDir::entryList()
+/// **See also:** [`Dir`]
+/// [`Dir::entry_list`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QDirIterator)]
-enum IteratorFlag {
-    NoIteratorFlags,
-    FollowSymlinks,
-    Subdirectories,
-}
-
-
 struct DirIterator {
     /// 
     /// Advances the iterator to the next entry, and returns the file path of this
@@ -44,19 +36,19 @@ struct DirIterator {
     /// You can call fileName() or filePath() to get the current entry file name
     /// or path, or fileInfo() to get a QFileInfo for the current entry.
     /// 
-    /// **See also:** hasNext()
-    /// fileName()
-    /// filePath()
-    /// fileInfo()
+    /// **See also:** [`has_next()`]
+    /// [`file_name()`]
+    /// [`file_path()`]
+    /// [`file_info()`]
     next() -> String,
     /// 
     /// Returns `true` if there is at least one more entry in the directory;
     /// otherwise, false is returned.
     /// 
-    /// **See also:** next()
-    /// fileName()
-    /// filePath()
-    /// fileInfo()
+    /// **See also:** [`next()`]
+    /// [`file_name()`]
+    /// [`file_path()`]
+    /// [`file_info()`]
     has_next() -> bool,
     /// 
     /// Returns the file name for the current directory entry, without the path
@@ -66,24 +58,34 @@ struct DirIterator {
     /// the QDirIterator::Subdirectories flag, you can use filePath() to get the
     /// full path.
     /// 
-    /// **See also:** filePath()
-    /// fileInfo()
+    /// **See also:** [`file_path()`]
+    /// [`file_info()`]
     file_name() -> String,
     /// 
     /// Returns the full file path for the current directory entry.
     /// 
-    /// **See also:** fileInfo()
-    /// fileName()
+    /// **See also:** [`file_info()`]
+    /// [`file_name()`]
     file_path() -> String,
     /// 
     /// Returns a QFileInfo for the current directory entry.
     /// 
-    /// **See also:** filePath()
-    /// fileName()
+    /// **See also:** [`file_path()`]
+    /// [`file_name()`]
     file_info() -> FileInfo,
     /// 
     /// Returns the base directory of the iterator.
     path() -> String,
+}
+
+[org_name(QDirIterator)]
+enum IteratorFlag {
+    /// The default value, representing no flags. The iterator will return entries for the assigned path.
+    NoIteratorFlags,
+    /// When combined with Subdirectories, this flag enables iterating through all subdirectories of the assigned path, following all symbolic links. Symbolic link loops (e.g., "link" => "." or "link" => "..") are automatically detected and ignored.
+    FollowSymlinks,
+    /// List entries inside all subdirectories as well.
+    Subdirectories,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

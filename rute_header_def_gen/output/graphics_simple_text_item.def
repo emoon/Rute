@@ -19,22 +19,17 @@
 /// 
 /// ![graphicsview-simpletextitem.png](graphicsview-simpletextitem.png)
 /// 
-/// **See also:** QGraphicsTextItem
-/// QGraphicsPathItem
-/// QGraphicsRectItem
-/// QGraphicsEllipseItem
-/// QGraphicsPixmapItem
-/// QGraphicsPolygonItem
-/// QGraphicsLineItem
+/// **See also:** [`GraphicsTextItem`]
+/// [`GraphicsPathItem`]
+/// [`GraphicsRectItem`]
+/// [`GraphicsEllipseItem`]
+/// [`GraphicsPixmapItem`]
+/// [`GraphicsPolygonItem`]
+/// [`GraphicsLineItem`]
 /// {Graphics View Framework}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsSimpleTextItem)]
-enum GraphicsSimpleTextItemFixMeEnums {
-    Type,
-}
-
 struct GraphicsSimpleTextItem : AbstractGraphicsShapeItem {
     /// 
     /// Sets the item's text to *text.* The text will be displayed as
@@ -68,6 +63,11 @@ struct GraphicsSimpleTextItem : AbstractGraphicsShapeItem {
     [event] supports_extension(extension: GraphicsItem::Extension) -> bool,
     [event] set_extension(extension: GraphicsItem::Extension, variant: &VariantType),
     [event] extension(variant: &VariantType) -> Variant,
+}
+
+[org_name(QGraphicsSimpleTextItem)]
+enum GraphicsSimpleTextItemFixMeEnums {
+    Type,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

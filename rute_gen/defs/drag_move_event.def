@@ -1,0 +1,80 @@
+///
+/// A widget will receive drag move events repeatedly while the drag
+/// is within its boundaries, if it accepts
+/// [drop events](QWidget::setAcceptDrops())
+/// and [enter events](QWidget::dragEnterEvent())
+/// . The widget should
+/// examine the event to see what kind of [data](mimeData())
+/// it
+/// provides, and call the accept() function to accept the drop if appropriate.
+///
+/// The rectangle supplied by the answerRect() function can be used to restrict
+/// drops to certain parts of the widget. For example, we can check whether the
+/// rectangle intersects with the geometry of a certain child widget and only
+/// call [acceptProposedAction()](QDropEvent::acceptProposedAction())
+/// if that
+/// is the case.
+///
+/// Note that this class inherits most of its functionality from
+/// QDropEvent.
+///
+/// **See also:** [`DragEnterEvent`]
+/// [`DragLeaveEvent`]
+/// [`DropEvent`]
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[attributes(NoWrapClass, NoCreate)]
+struct DragMoveEvent : DropEvent {
+    ///
+    /// Returns the rectangle in the widget where the drop will occur if accepted.
+    /// You can use this information to restrict drops to certain places on the
+    /// widget.
+    answer_rect() -> Rect,
+    ///
+    /// The same as accept(), but also notifies that future moves will
+    /// also be acceptable if they remain within the *rectangle*
+    /// given on the widget. This can improve performance, but may
+    /// also be ignored by the underlying system.
+    ///
+    /// If the rectangle is empty, drag move events will be sent
+    /// continuously. This is useful if the source is scrolling in a
+    /// timer event.
+    ///
+    /// **Overloads**
+    /// Calls QDropEvent::accept().
+    accept(),
+    ///
+    /// **Overloads**
+    /// Calls QDropEvent::ignore().
+    ///
+    /// The opposite of the accept(const QRect&) function.
+    /// Moves within the *rectangle* are not acceptable, and will be
+    /// ignored.
+    ignore(),
+    ///
+    /// The same as accept(), but also notifies that future moves will
+    /// also be acceptable if they remain within the *rectangle*
+    /// given on the widget. This can improve performance, but may
+    /// also be ignored by the underlying system.
+    ///
+    /// If the rectangle is empty, drag move events will be sent
+    /// continuously. This is useful if the source is scrolling in a
+    /// timer event.
+    ///
+    /// **Overloads**
+    /// Calls QDropEvent::accept().
+    [org_name(accept)]
+    accept_2(r: &RectType),
+    ///
+    /// **Overloads**
+    /// Calls QDropEvent::ignore().
+    ///
+    /// The opposite of the accept(const QRect&) function.
+    /// Moves within the *rectangle* are not acceptable, and will be
+    /// ignored.
+    [org_name(ignore)]
+    ignore_2(r: &RectType),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -11,19 +11,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QTextLine)]
-enum Edge {
-    Leading,
-    Trailing,
-}
-
-[org_name(QTextLine)]
-enum CursorPosition {
-    CursorBetweenCharacters,
-    CursorOnCharacter,
-}
-
-
 struct TextLine {
     /// 
     /// Returns `true` if this text line is valid; otherwise returns `false.`
@@ -31,77 +18,77 @@ struct TextLine {
     /// 
     /// Returns the line's bounding rectangle.
     /// 
-    /// **See also:** x()
-    /// y()
-    /// textLength()
-    /// width()
+    /// **See also:** [`x()`]
+    /// [`y()`]
+    /// [`text_length()`]
+    /// [`width()`]
     rect() -> RectF,
     /// 
     /// Returns the line's x position.
     /// 
-    /// **See also:** rect()
-    /// y()
-    /// textLength()
-    /// width()
+    /// **See also:** [`rect()`]
+    /// [`y()`]
+    /// [`text_length()`]
+    /// [`width()`]
     /// 
     /// Converts the x-coordinate *x,* to the nearest matching cursor
     /// position, depending on the cursor position type, *cpos.*
     /// Note that result cursor position includes possible preedit area text.
     /// 
-    /// **See also:** cursorToX()
+    /// **See also:** [`cursor_to_x()`]
     x() -> f32,
     /// 
     /// Returns the line's y position.
     /// 
-    /// **See also:** x()
-    /// rect()
-    /// textLength()
-    /// width()
+    /// **See also:** [`x()`]
+    /// [`rect()`]
+    /// [`text_length()`]
+    /// [`width()`]
     y() -> f32,
     /// 
     /// Returns the line's width as specified by the layout() function.
     /// 
-    /// **See also:** naturalTextWidth()
-    /// x()
-    /// y()
-    /// textLength()
-    /// rect()
+    /// **See also:** [`natural_text_width()`]
+    /// [`x()`]
+    /// [`y()`]
+    /// [`text_length()`]
+    /// [`rect()`]
     width() -> f32,
     /// 
     /// Returns the line's ascent.
     /// 
-    /// **See also:** descent()
-    /// height()
+    /// **See also:** [`descent()`]
+    /// [`height()`]
     ascent() -> f32,
     /// 
     /// Returns the line's descent.
     /// 
-    /// **See also:** ascent()
-    /// height()
+    /// **See also:** [`ascent()`]
+    /// [`height()`]
     descent() -> f32,
     /// 
     /// Returns the line's height. This is equal to ascent() + descent()
     /// if leading is not included. If leading is included, this equals to
     /// ascent() + descent() + leading().
     /// 
-    /// **See also:** ascent()
-    /// descent()
-    /// leading()
-    /// setLeadingIncluded()
+    /// **See also:** [`ascent()`]
+    /// [`descent()`]
+    /// [`leading()`]
+    /// [`set_leading_included()`]
     height() -> f32,
     /// 
     /// Returns the line's leading.
     /// 
-    /// **See also:** ascent()
-    /// descent()
-    /// height()
+    /// **See also:** [`ascent()`]
+    /// [`descent()`]
+    /// [`height()`]
     /// 
     /// Returns `true` if positive leading is included into the line's height;
     /// otherwise returns `false.`
     /// 
     /// By default, leading is not included.
     /// 
-    /// **See also:** setLeadingIncluded()
+    /// **See also:** [`set_leading_included()`]
     leading() -> f32,
     /// 
     /// Includes positive leading into the line's height if *included* is true;
@@ -112,7 +99,7 @@ struct TextLine {
     /// Note that negative leading is ignored, it must be handled
     /// in the code using the text lines by letting the lines overlap.
     /// 
-    /// **See also:** leadingIncluded()
+    /// **See also:** [`leading_included()`]
     /// 
     set_leading_included(included: bool),
     /// 
@@ -121,7 +108,7 @@ struct TextLine {
     /// 
     /// By default, leading is not included.
     /// 
-    /// **See also:** setLeadingIncluded()
+    /// **See also:** [`set_leading_included()`]
     leading_included() -> bool,
     /// 
     /// Returns the width of the line that is occupied by text. This is
@@ -150,7 +137,7 @@ struct TextLine {
     /// cursor position will be used instead, and *cursorPos* will be modified to
     /// point to this valid cursor position.
     /// 
-    /// **See also:** xToCursor()
+    /// **See also:** [`x_to_cursor()`]
     cursor_to_x(cursor_pos: *i32, edge: TextLine::Edge) -> f32,
     /// 
     /// **Overloads**
@@ -162,14 +149,15 @@ struct TextLine {
     /// cursor position will be used instead, and *cursorPos* will be modified to
     /// point to this valid cursor position.
     /// 
-    /// **See also:** xToCursor()
-    cursor_to_x(cursor_pos: i32, edge: TextLine::Edge) -> f32,
+    /// **See also:** [`x_to_cursor()`]
+    [org_name(cursorToX)]
+    cursor_to_x_2(cursor_pos: i32, edge: TextLine::Edge) -> f32,
     /// 
     /// Converts the x-coordinate *x,* to the nearest matching cursor
     /// position, depending on the cursor position type, *cpos.*
     /// Note that result cursor position includes possible preedit area text.
     /// 
-    /// **See also:** cursorToX()
+    /// **See also:** [`cursor_to_x()`]
     x_to_cursor(x: f32, arg0: TextLine::CursorPosition) -> i32,
     /// 
     /// Lays out the line with the given *width.* The line is filled from
@@ -205,7 +193,8 @@ struct TextLine {
     /// will be filled with as many characters to the next whitespace or
     /// end of the text. The provided *alignmentWidth* is used as reference
     /// width for alignment.
-    set_num_columns(columns: i32, alignment_width: f32),
+    [org_name(setNumColumns)]
+    set_num_columns_2(columns: i32, alignment_width: f32),
     /// 
     /// Moves the line to position *pos.*
     set_position(pos: &PointFType),
@@ -219,7 +208,7 @@ struct TextLine {
     /// 
     /// Returns the length of the text in the line.
     /// 
-    /// **See also:** naturalTextWidth()
+    /// **See also:** [`natural_text_width()`]
     text_length() -> i32,
     /// 
     /// Returns the position of the line in the text engine.
@@ -237,8 +226,24 @@ struct TextLine {
     /// If *from* is negative, it will default to textStart(), and if *length* is negative it will
     /// default to the return value of textLength().
     /// 
-    /// **See also:** QTextLayout::glyphRuns()
+    /// **See also:** [`TextLayout::glyph_runs`]
     glyph_runs(from: i32, length: i32) -> [GlyphRun],
+}
+
+[org_name(QTextLine)]
+enum Edge {
+    /// 
+    Leading,
+    /// 
+    Trailing,
+}
+
+[org_name(QTextLine)]
+enum CursorPosition {
+    /// 
+    CursorBetweenCharacters,
+    /// 
+    CursorOnCharacter,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

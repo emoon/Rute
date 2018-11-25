@@ -41,23 +41,23 @@ struct UndoGroup : Object {
     /// QObject in QUndoStack::QUndoStack(). In this case, the stack is deleted when the
     /// group is deleted, in the usual manner of QObjects.
     /// 
-    /// **See also:** removeStack()
-    /// stacks()
-    /// QUndoStack::QUndoStack()
+    /// **See also:** [`remove_stack()`]
+    /// [`stacks()`]
+    /// [`UndoStack::q_undo_stack`]
     add_stack(stack: *UndoStackType),
     /// 
     /// Removes *stack* from this group. If the stack was the active stack in the group,
     /// the active stack becomes 0.
     /// 
-    /// **See also:** addStack()
-    /// stacks()
-    /// QUndoStack::~QUndoStack()
+    /// **See also:** [`add_stack()`]
+    /// [`stacks()`]
+    /// [`UndoStack::q_undo_stack`]
     remove_stack(stack: *UndoStackType),
     /// 
     /// Returns a list of stacks in this group.
     /// 
-    /// **See also:** addStack()
-    /// removeStack()
+    /// **See also:** [`add_stack()`]
+    /// [`remove_stack()`]
     stacks() -> [UndoStack?],
     /// 
     /// Returns the active stack of this group.
@@ -65,16 +65,16 @@ struct UndoGroup : Object {
     /// If none of the stacks are active, or if the group is empty, this function
     /// returns 0.
     /// 
-    /// **See also:** setActiveStack()
-    /// QUndoStack::setActive()
+    /// **See also:** [`set_active_stack()`]
+    /// [`UndoStack::set_active`]
     /// 
     /// This signal is emitted whenever the active stack of the group changes. This can happen
     /// when setActiveStack() or QUndoStack::setActive() is called, or when the active stack
     /// is removed form the group. *stack* is the new active stack. If no stack is active,
     /// *stack* is 0.
     /// 
-    /// **See also:** setActiveStack()
-    /// QUndoStack::setActive()
+    /// **See also:** [`set_active_stack()`]
+    /// [`UndoStack::set_active`]
     active_stack() -> UndoStack?,
     /// 
     /// Creates an undo QAction object with parent *parent.*
@@ -88,9 +88,9 @@ struct UndoGroup : Object {
     /// If *prefix* is empty, the default template is used instead of prefix.
     /// Before Qt 4.8, the prefix was used by default.
     /// 
-    /// **See also:** createRedoAction()
-    /// canUndo()
-    /// QUndoCommand::text()
+    /// **See also:** [`create_redo_action()`]
+    /// [`can_undo()`]
+    /// [`UndoCommand::text`]
     create_undo_action(parent: *ObjectType, prefix: String) -> Action?,
     /// 
     /// Creates an redo QAction object with parent *parent.*
@@ -104,9 +104,9 @@ struct UndoGroup : Object {
     /// If *prefix* is empty, the default template is used instead of prefix.
     /// Before Qt 4.8, the prefix was used by default.
     /// 
-    /// **See also:** createUndoAction()
-    /// canRedo()
-    /// QUndoCommand::text()
+    /// **See also:** [`create_undo_action()`]
+    /// [`can_redo()`]
+    /// [`UndoCommand::text`]
     create_redo_action(parent: *ObjectType, prefix: String) -> Action?,
     /// 
     /// Returns the value of the active stack's QUndoStack::canUndo().
@@ -114,16 +114,16 @@ struct UndoGroup : Object {
     /// If none of the stacks are active, or if the group is empty, this function
     /// returns `false.`
     /// 
-    /// **See also:** canRedo()
-    /// setActiveStack()
+    /// **See also:** [`can_redo()`]
+    /// [`set_active_stack()`]
     /// 
     /// This signal is emitted whenever the active stack emits QUndoStack::canUndoChanged()
     /// or the active stack changes.
     /// 
     /// *canUndo* is the new state, or false if the active stack is 0.
     /// 
-    /// **See also:** QUndoStack::canUndoChanged()
-    /// setActiveStack()
+    /// **See also:** [`UndoStack::can_undo_changed`]
+    /// [`set_active_stack()`]
     can_undo() -> bool,
     /// 
     /// Returns the value of the active stack's QUndoStack::canRedo().
@@ -131,16 +131,16 @@ struct UndoGroup : Object {
     /// If none of the stacks are active, or if the group is empty, this function
     /// returns `false.`
     /// 
-    /// **See also:** canUndo()
-    /// setActiveStack()
+    /// **See also:** [`can_undo()`]
+    /// [`set_active_stack()`]
     /// 
     /// This signal is emitted whenever the active stack emits QUndoStack::canRedoChanged()
     /// or the active stack changes.
     /// 
     /// *canRedo* is the new state, or false if the active stack is 0.
     /// 
-    /// **See also:** QUndoStack::canRedoChanged()
-    /// setActiveStack()
+    /// **See also:** [`UndoStack::can_redo_changed`]
+    /// [`set_active_stack()`]
     can_redo() -> bool,
     /// 
     /// Returns the value of the active stack's QUndoStack::undoText().
@@ -148,16 +148,16 @@ struct UndoGroup : Object {
     /// If none of the stacks are active, or if the group is empty, this function
     /// returns an empty string.
     /// 
-    /// **See also:** redoText()
-    /// setActiveStack()
+    /// **See also:** [`redo_text()`]
+    /// [`set_active_stack()`]
     /// 
     /// This signal is emitted whenever the active stack emits QUndoStack::undoTextChanged()
     /// or the active stack changes.
     /// 
     /// *undoText* is the new state, or an empty string if the active stack is 0.
     /// 
-    /// **See also:** QUndoStack::undoTextChanged()
-    /// setActiveStack()
+    /// **See also:** [`UndoStack::undo_text_changed`]
+    /// [`set_active_stack()`]
     undo_text() -> String,
     /// 
     /// Returns the value of the active stack's QUndoStack::redoText().
@@ -165,16 +165,16 @@ struct UndoGroup : Object {
     /// If none of the stacks are active, or if the group is empty, this function
     /// returns an empty string.
     /// 
-    /// **See also:** undoText()
-    /// setActiveStack()
+    /// **See also:** [`undo_text()`]
+    /// [`set_active_stack()`]
     /// 
     /// This signal is emitted whenever the active stack emits QUndoStack::redoTextChanged()
     /// or the active stack changes.
     /// 
     /// *redoText* is the new state, or an empty string if the active stack is 0.
     /// 
-    /// **See also:** QUndoStack::redoTextChanged()
-    /// setActiveStack()
+    /// **See also:** [`UndoStack::redo_text_changed`]
+    /// [`set_active_stack()`]
     redo_text() -> String,
     /// 
     /// Returns the value of the active stack's QUndoStack::isClean().
@@ -182,7 +182,7 @@ struct UndoGroup : Object {
     /// If none of the stacks are active, or if the group is empty, this function
     /// returns `true.`
     /// 
-    /// **See also:** setActiveStack()
+    /// **See also:** [`set_active_stack()`]
     is_clean() -> bool,
     /// 
     /// Calls QUndoStack::undo() on the active stack.
@@ -190,25 +190,25 @@ struct UndoGroup : Object {
     /// If none of the stacks are active, or if the group is empty, this function
     /// does nothing.
     /// 
-    /// **See also:** redo()
-    /// canUndo()
-    /// setActiveStack()
+    /// **See also:** [`redo()`]
+    /// [`can_undo()`]
+    /// [`set_active_stack()`]
     /// 
     /// Returns the value of the active stack's QUndoStack::undoText().
     /// 
     /// If none of the stacks are active, or if the group is empty, this function
     /// returns an empty string.
     /// 
-    /// **See also:** redoText()
-    /// setActiveStack()
+    /// **See also:** [`redo_text()`]
+    /// [`set_active_stack()`]
     /// 
     /// This signal is emitted whenever the active stack emits QUndoStack::undoTextChanged()
     /// or the active stack changes.
     /// 
     /// *undoText* is the new state, or an empty string if the active stack is 0.
     /// 
-    /// **See also:** QUndoStack::undoTextChanged()
-    /// setActiveStack()
+    /// **See also:** [`UndoStack::undo_text_changed`]
+    /// [`set_active_stack()`]
     undo(),
     /// 
     /// Calls QUndoStack::redo() on the active stack.
@@ -216,25 +216,25 @@ struct UndoGroup : Object {
     /// If none of the stacks are active, or if the group is empty, this function
     /// does nothing.
     /// 
-    /// **See also:** undo()
-    /// canRedo()
-    /// setActiveStack()
+    /// **See also:** [`undo()`]
+    /// [`can_redo()`]
+    /// [`set_active_stack()`]
     /// 
     /// Returns the value of the active stack's QUndoStack::redoText().
     /// 
     /// If none of the stacks are active, or if the group is empty, this function
     /// returns an empty string.
     /// 
-    /// **See also:** undoText()
-    /// setActiveStack()
+    /// **See also:** [`undo_text()`]
+    /// [`set_active_stack()`]
     /// 
     /// This signal is emitted whenever the active stack emits QUndoStack::redoTextChanged()
     /// or the active stack changes.
     /// 
     /// *redoText* is the new state, or an empty string if the active stack is 0.
     /// 
-    /// **See also:** QUndoStack::redoTextChanged()
-    /// setActiveStack()
+    /// **See also:** [`UndoStack::redo_text_changed`]
+    /// [`set_active_stack()`]
     redo(),
     /// 
     /// Sets the active stack of this group to *stack.*
@@ -247,8 +247,8 @@ struct UndoGroup : Object {
     /// in the same way as those returned by *stack's* QUndoStack::createUndoAction()
     /// and QUndoStack::createRedoAction().
     /// 
-    /// **See also:** QUndoStack::setActive()
-    /// activeStack()
+    /// **See also:** [`UndoStack::set_active`]
+    /// [`active_stack()`]
     set_active_stack(stack: *UndoStackType),
     /// 
     /// This signal is emitted whenever the active stack of the group changes. This can happen
@@ -256,8 +256,8 @@ struct UndoGroup : Object {
     /// is removed form the group. *stack* is the new active stack. If no stack is active,
     /// *stack* is 0.
     /// 
-    /// **See also:** setActiveStack()
-    /// QUndoStack::setActive()
+    /// **See also:** [`set_active_stack()`]
+    /// [`UndoStack::set_active`]
     [signal] active_stack_changed(stack: *UndoStackType),
     /// 
     /// This signal is emitted whenever the active stack emits QUndoStack::indexChanged()
@@ -265,8 +265,8 @@ struct UndoGroup : Object {
     /// 
     /// *idx* is the new current index, or 0 if the active stack is 0.
     /// 
-    /// **See also:** QUndoStack::indexChanged()
-    /// setActiveStack()
+    /// **See also:** [`UndoStack::index_changed`]
+    /// [`set_active_stack()`]
     [signal] index_changed(idx: i32),
     /// 
     /// This signal is emitted whenever the active stack emits QUndoStack::cleanChanged()
@@ -274,8 +274,8 @@ struct UndoGroup : Object {
     /// 
     /// *clean* is the new state, or true if the active stack is 0.
     /// 
-    /// **See also:** QUndoStack::cleanChanged()
-    /// setActiveStack()
+    /// **See also:** [`UndoStack::clean_changed`]
+    /// [`set_active_stack()`]
     [signal] clean_changed(clean: bool),
     /// 
     /// This signal is emitted whenever the active stack emits QUndoStack::canUndoChanged()
@@ -283,8 +283,8 @@ struct UndoGroup : Object {
     /// 
     /// *canUndo* is the new state, or false if the active stack is 0.
     /// 
-    /// **See also:** QUndoStack::canUndoChanged()
-    /// setActiveStack()
+    /// **See also:** [`UndoStack::can_undo_changed`]
+    /// [`set_active_stack()`]
     [signal] can_undo_changed(can_undo: bool),
     /// 
     /// This signal is emitted whenever the active stack emits QUndoStack::canRedoChanged()
@@ -292,8 +292,8 @@ struct UndoGroup : Object {
     /// 
     /// *canRedo* is the new state, or false if the active stack is 0.
     /// 
-    /// **See also:** QUndoStack::canRedoChanged()
-    /// setActiveStack()
+    /// **See also:** [`UndoStack::can_redo_changed`]
+    /// [`set_active_stack()`]
     [signal] can_redo_changed(can_redo: bool),
     /// 
     /// This signal is emitted whenever the active stack emits QUndoStack::undoTextChanged()
@@ -301,8 +301,8 @@ struct UndoGroup : Object {
     /// 
     /// *undoText* is the new state, or an empty string if the active stack is 0.
     /// 
-    /// **See also:** QUndoStack::undoTextChanged()
-    /// setActiveStack()
+    /// **See also:** [`UndoStack::undo_text_changed`]
+    /// [`set_active_stack()`]
     [signal] undo_text_changed(undo_text: String),
     /// 
     /// This signal is emitted whenever the active stack emits QUndoStack::redoTextChanged()
@@ -310,8 +310,8 @@ struct UndoGroup : Object {
     /// 
     /// *redoText* is the new state, or an empty string if the active stack is 0.
     /// 
-    /// **See also:** QUndoStack::redoTextChanged()
-    /// setActiveStack()
+    /// **See also:** [`UndoStack::redo_text_changed`]
+    /// [`set_active_stack()`]
     [signal] redo_text_changed(redo_text: String),
 }
 

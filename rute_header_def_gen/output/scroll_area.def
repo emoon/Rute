@@ -69,8 +69,8 @@
 /// example. The example shows how
 /// to combine QLabel and QScrollArea to display an image.
 /// 
-/// **See also:** QAbstractScrollArea
-/// QScrollBar
+/// **See also:** [`AbstractScrollArea`]
+/// [`ScrollBar`]
 /// {Image Viewer Example}
 /// # Licence
 ///
@@ -79,7 +79,7 @@ struct ScrollArea : AbstractScrollArea {
     /// 
     /// Returns the scroll area's widget, or 0 if there is none.
     /// 
-    /// **See also:** setWidget()
+    /// **See also:** [`set_widget()`]
     /// 
     /// If this property is set to false (the default), the scroll area
     /// honors the size of its widget. Regardless of this property, you
@@ -113,13 +113,13 @@ struct ScrollArea : AbstractScrollArea {
     /// area. In this case, you can also not [show()](QWidget::)
     /// the *widget* later.
     /// 
-    /// **See also:** widget()
+    /// **See also:** [`widget()`]
     set_widget(widget: *WidgetType),
     /// 
     /// Removes the scroll area's widget, and passes ownership of the
     /// widget to the caller.
     /// 
-    /// **See also:** widget()
+    /// **See also:** [`widget()`]
     take_widget() -> Widget?,
     /// 
     /// If this property is set to false (the default), the scroll area

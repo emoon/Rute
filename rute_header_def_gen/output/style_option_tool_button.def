@@ -11,29 +11,42 @@
 /// the [Styles](widgets/styles)
 /// example.
 /// 
-/// **See also:** QStyleOption
-/// QStyleOptionComplex
-/// QStyleOptionButton
+/// **See also:** [`StyleOption`]
+/// [`StyleOptionComplex`]
+/// [`StyleOptionButton`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct StyleOptionToolButton : StyleOptionComplex {
+}
+
 [org_name(QStyleOptionToolButton)]
 enum StyleOptionType {
+    /// The type of style option provided ( [SO_ToolButton](SO_ToolButton)
+ for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
     Type,
 }
 
 [org_name(QStyleOptionToolButton)]
 enum StyleOptionVersion {
+    /// 1 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
     Version,
 }
 
 [org_name(QStyleOptionToolButton)]
 enum ToolButtonFeature {
+    /// A normal tool button.
     None,
+    /// The tool button is an arrow.
     Arrow,
+    /// The tool button has a menu.
     Menu,
+    /// The button should display an arrow to indicate that a menu is present.
     MenuButtonPopup,
+    /// There is a delay to showing the menu.
     PopupDelay,
+    /// The button has a popup menu.
     HasMenu,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

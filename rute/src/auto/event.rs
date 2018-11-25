@@ -19,16 +19,22 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 #[derive(Clone)]
 pub struct Event<'a> {
+    #[doc(hidden)]
     pub data: Rc<Cell<Option<*const RUBase>>>,
+    #[doc(hidden)]
     pub all_funcs: *const RUEventAllFuncs,
+    #[doc(hidden)]
     pub owned: bool,
+    #[doc(hidden)]
     pub _marker: PhantomData<::std::cell::Cell<&'a ()>>,
 }
 
 impl<'a> Event<'a> {
-    pub fn new_from_rc(ffi_data: RUEvent) -> Event<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_rc(ffi_data: RUEvent) -> Event<'a> {
         Event {
             data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
             all_funcs: ffi_data.all_funcs,
@@ -37,7 +43,8 @@ impl<'a> Event<'a> {
         }
     }
 
-    pub fn new_from_owned(ffi_data: RUEvent) -> Event<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_owned(ffi_data: RUEvent) -> Event<'a> {
         Event {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -46,7 +53,8 @@ impl<'a> Event<'a> {
         }
     }
 
-    pub fn new_from_temporary(ffi_data: RUEvent) -> Event<'a> {
+    #[allow(dead_code)]
+    pub(crate) fn new_from_temporary(ffi_data: RUEvent) -> Event<'a> {
         Event {
             data: Rc::new(Cell::new(Some(ffi_data.qt_data as *const RUBase))),
             all_funcs: ffi_data.all_funcs,
@@ -54,54 +62,50 @@ impl<'a> Event<'a> {
             _marker: PhantomData,
         }
     }
-}
-pub trait EventType<'a> {
-    fn spontaneous(&self) -> bool {
+    pub fn spontaneous(&self) -> bool {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).spontaneous)(obj_data);
             ret_val
         }
     }
-
-    fn set_accepted(&self, accepted: bool) -> &Self {
+    pub fn set_accepted(&self, accepted: bool) -> &Self {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {
             ((*funcs).set_accepted)(obj_data, accepted);
         }
         self
     }
-
-    fn is_accepted(&self) -> bool {
+    pub fn is_accepted(&self) -> bool {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).is_accepted)(obj_data);
             ret_val
         }
     }
-
-    fn accept(&self) -> &Self {
+    pub fn accept(&self) -> &Self {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {
             ((*funcs).accept)(obj_data);
         }
         self
     }
-
-    fn ignore(&self) -> &Self {
+    pub fn ignore(&self) -> &Self {
         let (obj_data, funcs) = self.get_event_obj_funcs();
         unsafe {
             ((*funcs).ignore)(obj_data);
         }
         self
     }
-
+}
+pub trait EventTrait<'a> {
     #[inline]
+    #[doc(hidden)]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs);
 }
 
-impl<'a> EventType<'a> for Event<'a> {
-    #[inline]
+impl<'a> EventTrait<'a> for Event<'a> {
+    #[doc(hidden)]
     fn get_event_obj_funcs(&self) -> (*const RUBase, *const RUEventFuncs) {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).event_funcs) }

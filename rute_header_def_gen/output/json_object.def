@@ -16,7 +16,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-
 struct JsonObject {
     /// 
     /// Swaps the object *other* with this. This operation is very fast and never fails.
@@ -27,16 +26,16 @@ struct JsonObject {
     /// The keys in *map* will be used as the keys in the JSON object,
     /// and the QVariant values will be converted to JSON values.
     /// 
-    /// **See also:** fromVariantHash()
-    /// toVariantMap()
-    /// QJsonValue::fromVariant()
+    /// **See also:** [`from_variant_hash()`]
+    /// [`to_variant_map()`]
+    /// [`JsonValue::from_variant`]
     [static] from_variant_map(map: &VariantMapType) -> JsonObject,
     /// 
     /// Converts this object to a QVariantMap.
     /// 
     /// Returns the created map.
     /// 
-    /// **See also:** toVariantHash()
+    /// **See also:** [`to_variant_hash()`]
     to_variant_map() -> VariantMap,
     /// 
     /// Converts the variant hash *hash* to a QJsonObject.
@@ -44,16 +43,16 @@ struct JsonObject {
     /// The keys in *hash* will be used as the keys in the JSON object,
     /// and the QVariant values will be converted to JSON values.
     /// 
-    /// **See also:** fromVariantMap()
-    /// toVariantHash()
-    /// QJsonValue::fromVariant()
+    /// **See also:** [`from_variant_map()`]
+    /// [`to_variant_hash()`]
+    /// [`JsonValue::from_variant`]
     [static] from_variant_hash(map: &VariantHashType) -> JsonObject,
     /// 
     /// Converts this object to a QVariantHash.
     /// 
     /// Returns the created hash.
     /// 
-    /// **See also:** toVariantMap()
+    /// **See also:** [`to_variant_map()`]
     to_variant_hash() -> VariantHash,
     /// 
     /// Returns a list of all keys in this object.
@@ -74,15 +73,15 @@ struct JsonObject {
     /// 
     /// Returns `true` if the object is empty. This is the same as size() == 0.
     /// 
-    /// **See also:** size()
+    /// **See also:** [`size()`]
     is_empty() -> bool,
     /// 
     /// Returns a QJsonValue representing the value for the key *key.*
     /// 
     /// The returned QJsonValue is QJsonValue::Undefined if the key does not exist.
     /// 
-    /// **See also:** QJsonValue
-    /// QJsonValue::isUndefined()
+    /// **See also:** [`JsonValue`]
+    /// [`JsonValue::is_undefined`]
     /// 
     /// **Overloads**
     value(key: String) -> JsonValue,
@@ -91,16 +90,17 @@ struct JsonObject {
     /// 
     /// The returned QJsonValue is QJsonValue::Undefined if the key does not exist.
     /// 
-    /// **See also:** QJsonValue
-    /// QJsonValue::isUndefined()
+    /// **See also:** [`JsonValue`]
+    /// [`JsonValue::is_undefined`]
     /// 
     /// **Overloads**
-    value(key: Latin1StringType) -> JsonValue,
+    [org_name(value)]
+    value_2(key: Latin1StringType) -> JsonValue,
     /// 
     /// Removes *key* from the object.
     /// 
-    /// **See also:** insert()
-    /// take()
+    /// **See also:** [`insert()`]
+    /// [`take()`]
     remove(key: String),
     /// 
     /// Removes *key* from the object.
@@ -109,35 +109,36 @@ struct JsonObject {
     /// If *key* was not contained in the object, the returned QJsonValue
     /// is QJsonValue::Undefined.
     /// 
-    /// **See also:** insert()
-    /// remove()
-    /// QJsonValue
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
+    /// [`JsonValue`]
     take(key: String) -> JsonValue,
     /// 
     /// Returns `true` if the object contains key *key.*
     /// 
-    /// **See also:** insert()
-    /// remove()
-    /// take()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
+    /// [`take()`]
     /// 
     /// **Overloads**
     contains(key: String) -> bool,
     /// 
     /// Returns `true` if the object contains key *key.*
     /// 
-    /// **See also:** insert()
-    /// remove()
-    /// take()
+    /// **See also:** [`insert()`]
+    /// [`remove()`]
+    /// [`take()`]
     /// 
     /// **Overloads**
-    contains(key: Latin1StringType) -> bool,
+    [org_name(contains)]
+    contains_2(key: Latin1StringType) -> bool,
     /// 
     /// Returns an [STL-style iterator](STL-style%20iterators)
     /// pointing to the first item in
     /// the object.
     /// 
-    /// **See also:** constBegin()
-    /// end()
+    /// **See also:** [`const_begin()`]
+    /// [`end()`]
     /// 
     /// **Overloads**
     begin() -> JsonObject::iterator,
@@ -146,26 +147,27 @@ struct JsonObject {
     /// pointing to the first item in
     /// the object.
     /// 
-    /// **See also:** constBegin()
-    /// end()
+    /// **See also:** [`const_begin()`]
+    /// [`end()`]
     /// 
     /// **Overloads**
-    begin() -> JsonObject::const_iterator,
+    [org_name(begin)]
+    begin_2() -> JsonObject::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the first item
     /// in the object.
     /// 
-    /// **See also:** begin()
-    /// constEnd()
+    /// **See also:** [`begin()`]
+    /// [`const_end()`]
     const_begin() -> JsonObject::const_iterator,
     /// 
     /// Returns an [STL-style iterator](STL-style%20iterators)
     /// pointing to the imaginary item
     /// after the last item in the object.
     /// 
-    /// **See also:** begin()
-    /// constEnd()
+    /// **See also:** [`begin()`]
+    /// [`const_end()`]
     /// 
     /// **Overloads**
     end() -> JsonObject::iterator,
@@ -174,25 +176,26 @@ struct JsonObject {
     /// pointing to the imaginary item
     /// after the last item in the object.
     /// 
-    /// **See also:** begin()
-    /// constEnd()
+    /// **See also:** [`begin()`]
+    /// [`const_end()`]
     /// 
     /// **Overloads**
-    end() -> JsonObject::const_iterator,
+    [org_name(end)]
+    end_2() -> JsonObject::const_iterator,
     /// 
     /// Returns a const [STL-style iterator](STL-style%20iterators)
     /// pointing to the imaginary
     /// item after the last item in the object.
     /// 
-    /// **See also:** constBegin()
-    /// end()
+    /// **See also:** [`const_begin()`]
+    /// [`end()`]
     const_end() -> JsonObject::const_iterator,
     /// 
     /// Removes the (key, value) pair pointed to by the iterator *it*
     /// from the map, and returns an iterator to the next item in the
     /// map.
     /// 
-    /// **See also:** remove()
+    /// **See also:** [`remove()`]
     erase(it: JsonObject::iterator) -> JsonObject::iterator,
     /// 
     /// Returns an iterator pointing to the item with key *key* in the
@@ -219,7 +222,8 @@ struct JsonObject {
     /// **Overloads**
     /// 
     /// **Overloads**
-    find(key: Latin1StringType) -> JsonObject::iterator,
+    [org_name(find)]
+    find_2(key: Latin1StringType) -> JsonObject::iterator,
     /// 
     /// Returns an iterator pointing to the item with key *key* in the
     /// map.
@@ -232,7 +236,8 @@ struct JsonObject {
     /// **Overloads**
     /// 
     /// **Overloads**
-    find(key: String) -> JsonObject::const_iterator,
+    [org_name(find)]
+    find_3(key: String) -> JsonObject::const_iterator,
     /// 
     /// Returns an iterator pointing to the item with key *key* in the
     /// map.
@@ -245,7 +250,8 @@ struct JsonObject {
     /// **Overloads**
     /// 
     /// **Overloads**
-    find(key: Latin1StringType) -> JsonObject::const_iterator,
+    [org_name(find)]
+    find_4(key: Latin1StringType) -> JsonObject::const_iterator,
     /// 
     /// Returns a const iterator pointing to the item with key *key* in the
     /// map.
@@ -263,7 +269,8 @@ struct JsonObject {
     /// returns constEnd().
     /// 
     /// **Overloads**
-    const_find(key: Latin1StringType) -> JsonObject::const_iterator,
+    [org_name(constFind)]
+    const_find_2(key: Latin1StringType) -> JsonObject::const_iterator,
     /// 
     /// Inserts a new item with the key *key* and a value of *value.*
     /// 
@@ -275,10 +282,10 @@ struct JsonObject {
     /// If the value is QJsonValue::Undefined, it will cause the key to get removed
     /// from the object. The returned iterator will then point to end().
     /// 
-    /// **See also:** remove()
-    /// take()
-    /// QJsonObject::iterator
-    /// end()
+    /// **See also:** [`remove()`]
+    /// [`take()`]
+    /// [`JsonObject::iterator()`]
+    /// [`end()`]
     insert(key: String, value: &JsonValueType) -> JsonObject::iterator,
     /// 
     /// This function is provided for STL compatibility. It is equivalent

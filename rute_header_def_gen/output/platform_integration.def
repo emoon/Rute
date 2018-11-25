@@ -1,61 +1,11 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QPlatformIntegration)]
-enum Capability {
-    ThreadedPixmaps,
-    OpenGL,
-    ThreadedOpenGL,
-    SharedGraphicsCache,
-    BufferQueueingOpenGL,
-    WindowMasks,
-    MultipleWindows,
-    ApplicationState,
-    ForeignWindows,
-    NonFullScreenWindows,
-    NativeWidgets,
-    WindowManagement,
-    WindowActivation,
-    SyncState,
-    RasterGLSurface,
-    AllGLFunctionsQueryable,
-    ApplicationIcon,
-    SwitchableWidgetComposition,
-    TopStackedNativeChildWindows,
-}
-
-[org_name(QPlatformIntegration)]
-enum StyleHint {
-    CursorFlashTime,
-    KeyboardInputInterval,
-    MouseDoubleClickInterval,
-    StartDragDistance,
-    StartDragTime,
-    KeyboardAutoRepeatRate,
-    ShowIsFullScreen,
-    PasswordMaskDelay,
-    FontSmoothingGamma,
-    StartDragVelocity,
-    UseRtlExtensions,
-    PasswordMaskCharacter,
-    SetFocusOnTouchRelease,
-    ShowIsMaximized,
-    MousePressAndHoldInterval,
-    TabFocusBehavior,
-    ReplayMousePressOutsidePopup,
-    ItemViewActivateItemOnSingleClick,
-    UiEffects,
-    WheelScrollLines,
-    ShowShortcutsInContextMenus,
-    MouseQuickSelectionThreshold,
-}
-
-
 struct PlatformIntegration {
     [event] has_capability(cap: PlatformIntegration::Capability) -> bool,
     /// 
     /// Factory function for QPlatformPixmap. PixelType can be either PixmapType or BitmapType.
-    /// **See also:** QPlatformPixmap
+    /// **See also:** [`PlatformPixmap`]
     create_platform_pixmap(type: i32) -> i32?,
     /// 
     /// Factory function for QPlatformWindow. The *window* parameter is a pointer to the window
@@ -69,9 +19,9 @@ struct PlatformIntegration {
     /// differs, the resulting values should be set on the *window* using QWindow::setWindowFlags()
     /// or QWindow::setWindowState(), respectively.
     /// 
-    /// **See also:** QPlatformWindow
-    /// QPlatformWindowFormat
-    /// **See also:** createPlatformBackingStore()
+    /// **See also:** [`PlatformWindow`]
+    /// [`PlatformWindowFormat`]
+    /// **See also:** [`create_platform_backing_store()`]
     [event] create_platform_window(window: *WindowType) -> PlatformWindow?,
     [event] create_foreign_window(arg0: *WindowType, arg1: WId) -> PlatformWindow?,
     /// 
@@ -79,8 +29,8 @@ struct PlatformIntegration {
     /// top level widget(tlw) the window surface is created for. A QPlatformWindow is always created
     /// before the QPlatformBackingStore for tlw where the widget also requires a backing store.
     /// 
-    /// **See also:** QBackingStore
-    /// **See also:** createPlatformWindow()
+    /// **See also:** [`BackingStore`]
+    /// **See also:** [`create_platform_window()`]
     [event] create_platform_backing_store(window: *WindowType) -> PlatformBackingStore?,
     /// 
     /// Factory function for QPlatformOpenGLContext. The *context* parameter is a pointer to
@@ -99,7 +49,7 @@ struct PlatformIntegration {
     /// Returns a pointer to a QPlatformOpenGLContext instance or `NULL` if the context could
     /// not be created.
     /// 
-    /// **See also:** QOpenGLContext
+    /// **See also:** [`OpenGLContext`]
     [event] create_platform_open_gl_context(context: *OpenGLContextType) -> PlatformOpenGLContext?,
     /// 
     /// Factory function for QPlatformSharedGraphicsCache. This function will return 0 if the platform
@@ -136,7 +86,7 @@ struct PlatformIntegration {
     /// 
     /// Default implementation returns a default QPlatformFontDatabase.
     /// 
-    /// **See also:** QPlatformFontDatabase
+    /// **See also:** [`PlatformFontDatabase`]
     [event] font_database() -> PlatformFontDatabase?,
     [event] clipboard() -> PlatformClipboard?,
     /// 
@@ -158,7 +108,7 @@ struct PlatformIntegration {
     [event] accessibility() -> PlatformAccessibility?,
     [event] native_interface() -> PlatformNativeInterface?,
     [event] services() -> PlatformServices?,
-    [event] style_hint(hint: PlatformIntegration::StyleHint) -> Variant,
+    style_hint(hint: PlatformIntegration::StyleHint) -> i32,
     [event] default_window_state(arg0: Rute::WindowFlags) -> Rute::WindowState,
     [event] query_keyboard_modifiers() -> Rute::KeyboardModifiers,
     /// 
@@ -171,7 +121,7 @@ struct PlatformIntegration {
     /// 
     /// **Note**: This function should be called only from key event handlers.
     [event] possible_keys(arg0: *KeyEventType) -> [i32],
-    [event] theme_names() -> [String],
+    theme_names() -> i32,
     [event] create_platform_theme(name: String) -> PlatformTheme?,
     /// 
     /// Factory function for QOffscreenSurface. An offscreen surface will typically be implemented with a
@@ -203,24 +153,24 @@ struct PlatformIntegration {
     /// a desktop OpenGL implementation may be capable of creating OpenGL
     /// ES-compatible contexts too.
     /// 
-    /// **See also:** QOpenGLContext::openGLModuleType()
-    /// QOpenGLContext::isOpenGLES()
+    /// **See also:** [`OpenGLContext::open_gl_module_type`]
+    /// [`OpenGLContext::is_open_gles`]
     /// 
-    [event] open_gl_module_type() -> OpenGLContext::OpenGLModuleType,
+    open_gl_module_type() -> i32,
     /// 
     /// Platform integration function for setting the application icon.
     /// 
-    /// **See also:** QGuiApplication::setWindowIcon()
-    [event] set_application_icon(icon: &IconType),
+    /// **See also:** [`GuiApplication::set_window_icon`]
+    [event] set_application_icon(icon: &i32),
     /// 
     /// Just removes the screen, call destroyScreen instead.
     /// 
-    /// **See also:** destroyScreen()
-    remove_screen(screen: *ScreenType),
+    /// **See also:** [`destroy_screen()`]
+    remove_screen(screen: *i32),
     /// 
     /// Should sound a bell, using the default volume and sound.
     /// 
-    /// **See also:** QApplication::beep()
+    /// **See also:** [`Application::beep`]
     [event] beep(),
     /// 
     /// Should be called by the implementation whenever a new screen is added.
@@ -239,6 +189,68 @@ struct PlatformIntegration {
     /// When the screen specified as primary changes, this method will notify
     /// QGuiApplication and emit the QGuiApplication::primaryScreenChanged signal.
     set_primary_screen(new_primary: *i32),
+}
+
+[org_name(QPlatformIntegration)]
+enum Capability {
+    /// The platform uses a pixmap implementation that is reentrant and can be used from multiple threads, like the raster paint engine and QImage based pixmaps.
+    ThreadedPixmaps,
+    /// The platform supports OpenGL
+    OpenGL,
+    /// The platform supports using OpenGL outside the GUI thread.
+    ThreadedOpenGL,
+    /// The platform supports a shared graphics cache
+    SharedGraphicsCache,
+    /// The OpenGL implementation on the platform will queue up buffers when swapBuffers() is called and block only when its buffer pipeline is full, rather than block immediately.
+    BufferQueueingOpenGL,
+    WindowMasks,
+    /// The platform supports multiple QWindows, i.e. does some kind of compositing either client or server side. Some platforms might only support a single fullscreen window.
+    MultipleWindows,
+    /// The platform handles the application state explicitly. This means that QEvent::ApplicationActivate and QEvent::ApplicationDeativate will not be posted automatically. Instead, the platform must handle application state explicitly by using QWindowSystemInterface::handleApplicationStateChanged(). If not set, application state will follow window activation, which is the normal behavior for desktop platforms.
+    ApplicationState,
+    /// The platform allows creating QWindows which represent native windows created by other processes or by using native libraries.
+    ForeignWindows,
+    /// The platform supports top-level windows which do not fill the screen. The default implementation returns `true.` Returning false for this will cause all windows, including dialogs and popups, to be resized to fill the screen.
+    NonFullScreenWindows,
+    NativeWidgets,
+    /// The platform is based on a system that performs window management. This includes the typical desktop platforms. Can be set to false on platforms where no window management is available, meaning for example that windows are never repositioned by the window manager. The default implementation returns `true.`
+    WindowManagement,
+    WindowActivation,
+    SyncState,
+    RasterGLSurface,
+    /// Deprecated. Used to indicate whether the QOpenGLContext backend provided by the platform is able to return function pointers from getProcAddress() even for standard OpenGL functions, for example OpenGL 1 functions like glClear() or glDrawArrays(). This is important because the OpenGL specifications do not require this ability from the getProcAddress implementations of the windowing system interfaces (EGL, WGL, GLX). The platform plugins may however choose to enhance the behavior in the backend implementation for QOpenGLContext::getProcAddress() and support returning a function pointer also for the standard, non-extension functions. This capability is a prerequisite for dynamic OpenGL loading. Starting with Qt 5.7, the platform plugin is required to have this capability.
+    AllGLFunctionsQueryable,
+    /// The platform supports setting the application icon. (since 5.5)
+    ApplicationIcon,
+    SwitchableWidgetComposition,
+    /// The platform supports native child windows via QWindowContainer without having to punch a transparent hole in the backingstore. (since 5.10)
+    TopStackedNativeChildWindows,
+}
+
+[org_name(QPlatformIntegration)]
+enum StyleHint {
+    CursorFlashTime,
+    KeyboardInputInterval,
+    MouseDoubleClickInterval,
+    StartDragDistance,
+    StartDragTime,
+    KeyboardAutoRepeatRate,
+    ShowIsFullScreen,
+    PasswordMaskDelay,
+    FontSmoothingGamma,
+    StartDragVelocity,
+    UseRtlExtensions,
+    PasswordMaskCharacter,
+    SetFocusOnTouchRelease,
+    ShowIsMaximized,
+    MousePressAndHoldInterval,
+    TabFocusBehavior,
+    ReplayMousePressOutsidePopup,
+    ItemViewActivateItemOnSingleClick,
+    UiEffects,
+    WheelScrollLines,
+    ShowShortcutsInContextMenus,
+    MouseQuickSelectionThreshold,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

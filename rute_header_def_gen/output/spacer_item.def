@@ -17,9 +17,9 @@
 /// , [setColumnMinimumWidth()](QGridLayout::setColumnMinimumWidth())
 /// , [setColumnStretch()](QGridLayout::setColumnStretch())
 /// 
-/// **See also:** QLayout
-/// QWidgetItem
-/// QLayoutItem::spacerItem()
+/// **See also:** [`Layout`]
+/// [`WidgetItem`]
+/// [`LayoutItem::spacer_item`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -36,7 +36,7 @@ struct SpacerItem : LayoutItem {
     /// to a layout, it is necessary to invalidate the layout in order for the
     /// spacer item's new size to take effect.
     /// 
-    /// **See also:** QSpacerItem::invalidate()
+    /// **See also:** [`SpacerItem::invalidate`]
     change_size(w: i32, h: i32, h_data: SizePolicy::Policy, v_data: SizePolicy::Policy),
     /// 
     [event] size_hint() -> Size,

@@ -19,45 +19,6 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QOpenGLBuffer)]
-enum Type {
-    VertexBuffer,
-    IndexBuffer,
-    PixelPackBuffer,
-    PixelUnpackBuffer,
-}
-
-[org_name(QOpenGLBuffer)]
-enum UsagePattern {
-    StreamDraw,
-    StreamRead,
-    StreamCopy,
-    StaticDraw,
-    StaticRead,
-    StaticCopy,
-    DynamicDraw,
-    DynamicRead,
-    DynamicCopy,
-}
-
-[org_name(QOpenGLBuffer)]
-enum Access {
-    ReadOnly,
-    WriteOnly,
-    ReadWrite,
-}
-
-[org_name(QOpenGLBuffer)]
-enum RangeAccessFlag {
-    RangeRead,
-    RangeWrite,
-    RangeInvalidate,
-    RangeInvalidateBuffer,
-    RangeFlushExplicit,
-    RangeUnsynchronized,
-}
-
-
 struct OpenGLBuffer {
     /// 
     /// Returns the type of buffer represented by this object.
@@ -66,15 +27,15 @@ struct OpenGLBuffer {
     /// Returns the usage pattern for this buffer object.
     /// The default value is StaticDraw.
     /// 
-    /// **See also:** setUsagePattern()
+    /// **See also:** [`set_usage_pattern()`]
     usage_pattern() -> OpenGLBuffer::UsagePattern,
     /// 
     /// Sets the usage pattern for this buffer object to *value.*
     /// This function must be called before allocate() or write().
     /// 
-    /// **See also:** usagePattern()
-    /// allocate()
-    /// write()
+    /// **See also:** [`usage_pattern()`]
+    /// [`allocate()`]
+    /// [`write()`]
     set_usage_pattern(value: OpenGLBuffer::UsagePattern),
     /// 
     /// Creates the buffer object in the OpenGL server. Returns `true` if
@@ -87,16 +48,16 @@ struct OpenGLBuffer {
     /// This function will return false if the OpenGL implementation
     /// does not support buffers, or there is no current QOpenGLContext.
     /// 
-    /// **See also:** isCreated()
-    /// allocate()
-    /// write()
-    /// destroy()
+    /// **See also:** [`is_created()`]
+    /// [`allocate()`]
+    /// [`write()`]
+    /// [`destroy()`]
     create() -> bool,
     /// 
     /// Returns `true` if this buffer has been created; false otherwise.
     /// 
-    /// **See also:** create()
-    /// destroy()
+    /// **See also:** [`create()`]
+    /// [`destroy()`]
     is_created() -> bool,
     /// 
     /// Binds the buffer associated with this object to the current
@@ -107,8 +68,8 @@ struct OpenGLBuffer {
     /// was called, or to another QOpenGLContext that is sharing with it.
     /// Otherwise, false will be returned from this function.
     /// 
-    /// **See also:** release()
-    /// create()
+    /// **See also:** [`release()`]
+    /// [`create()`]
     bind() -> bool,
     /// 
     /// Releases the buffer associated with this object from the
@@ -117,7 +78,7 @@ struct OpenGLBuffer {
     /// This function must be called with the same QOpenGLContext current
     /// as when bind() was called on the buffer.
     /// 
-    /// **See also:** bind()
+    /// **See also:** [`bind()`]
     /// 
     /// Releases the buffer associated with *type* in the current
     /// QOpenGLContext.
@@ -139,7 +100,7 @@ struct OpenGLBuffer {
     /// This function must be called with the same QOpenGLContext current
     /// as when bind() was called on the buffer.
     /// 
-    /// **See also:** bind()
+    /// **See also:** [`bind()`]
     /// 
     /// Releases the buffer associated with *type* in the current
     /// QOpenGLContext.
@@ -153,13 +114,14 @@ struct OpenGLBuffer {
     /// QOpenGLBuffer::release(QOpenGLBuffer::VertexBuffer);
     /// ```
     /// 
-    [static] release(type: OpenGLBuffer::Type),
+    [org_name(release)]
+    [static] release_2(type: OpenGLBuffer::Type),
     /// 
     /// Returns the OpenGL identifier associated with this buffer; zero if
     /// the buffer has not been created.
     /// 
-    /// **See also:** isCreated()
-    buffer_id() -> i32,
+    /// **See also:** [`is_created()`]
+    buffer_id() -> GLuint,
     /// 
     /// Returns the size of the data in this buffer, for reading operations.
     /// Returns -1 if fetching the buffer size is not supported, or the
@@ -167,8 +129,8 @@ struct OpenGLBuffer {
     /// 
     /// It is assumed that this buffer has been bound to the current context.
     /// 
-    /// **See also:** isCreated()
-    /// bind()
+    /// **See also:** [`is_created()`]
+    /// [`bind()`]
     size() -> i32,
     /// 
     /// Reads the *count* bytes in this buffer starting at *offset*
@@ -178,8 +140,8 @@ struct OpenGLBuffer {
     /// 
     /// It is assumed that this buffer has been bound to the current context.
     /// 
-    /// **See also:** write()
-    /// bind()
+    /// **See also:** [`write()`]
+    /// [`bind()`]
     read(offset: i32, data: *void, count: i32) -> bool,
     /// 
     /// Replaces the *count* bytes of this buffer starting at *offset*
@@ -189,9 +151,9 @@ struct OpenGLBuffer {
     /// It is assumed that create() has been called on this buffer and that
     /// it has been bound to the current context.
     /// 
-    /// **See also:** create()
-    /// read()
-    /// allocate()
+    /// **See also:** [`create()`]
+    /// [`read()`]
+    /// [`allocate()`]
     write(offset: i32, data: *void, count: i32),
     /// 
     /// Allocates *count* bytes of space to the buffer, initialized to
@@ -200,9 +162,9 @@ struct OpenGLBuffer {
     /// It is assumed that create() has been called on this buffer and that
     /// it has been bound to the current context.
     /// 
-    /// **See also:** create()
-    /// read()
-    /// write()
+    /// **See also:** [`create()`]
+    /// [`read()`]
+    /// [`write()`]
     /// 
     /// **Overloads**
     /// Allocates *count* bytes of space to the buffer. Any previous
@@ -211,8 +173,8 @@ struct OpenGLBuffer {
     /// It is assumed that create() has been called on this buffer and that
     /// it has been bound to the current context.
     /// 
-    /// **See also:** create()
-    /// write()
+    /// **See also:** [`create()`]
+    /// [`write()`]
     allocate(data: *void, count: i32),
     /// 
     /// Allocates *count* bytes of space to the buffer, initialized to
@@ -221,9 +183,9 @@ struct OpenGLBuffer {
     /// It is assumed that create() has been called on this buffer and that
     /// it has been bound to the current context.
     /// 
-    /// **See also:** create()
-    /// read()
-    /// write()
+    /// **See also:** [`create()`]
+    /// [`read()`]
+    /// [`write()`]
     /// 
     /// **Overloads**
     /// Allocates *count* bytes of space to the buffer. Any previous
@@ -232,9 +194,10 @@ struct OpenGLBuffer {
     /// It is assumed that create() has been called on this buffer and that
     /// it has been bound to the current context.
     /// 
-    /// **See also:** create()
-    /// write()
-    allocate(count: i32),
+    /// **See also:** [`create()`]
+    /// [`write()`]
+    [org_name(allocate)]
+    allocate_2(count: i32),
     /// 
     /// Maps the contents of this buffer into the application's memory
     /// space and returns a pointer to it. Returns null if memory
@@ -251,10 +214,10 @@ struct OpenGLBuffer {
     /// if `GL_ARB_map_buffer_range` is supported, this function uses
     /// `glMapBufferRange` instead of `glMapBuffer.`
     /// 
-    /// **See also:** unmap()
-    /// create()
-    /// bind()
-    /// mapRange()
+    /// **See also:** [`unmap()`]
+    /// [`create()`]
+    /// [`bind()`]
+    /// [`map_range()`]
     /// 
     /// Maps the range specified by *offset* and *count* of the contents
     /// of this buffer into the application's memory space and returns a
@@ -266,9 +229,9 @@ struct OpenGLBuffer {
     /// 
     /// **Note**: This function is not available on OpenGL ES 2.0 and earlier.
     /// 
-    /// **See also:** unmap()
-    /// create()
-    /// bind()
+    /// **See also:** [`unmap()`]
+    /// [`create()`]
+    /// [`bind()`]
     map(access: OpenGLBuffer::Access),
     /// 
     /// Maps the range specified by *offset* and *count* of the contents
@@ -281,9 +244,9 @@ struct OpenGLBuffer {
     /// 
     /// **Note**: This function is not available on OpenGL ES 2.0 and earlier.
     /// 
-    /// **See also:** unmap()
-    /// create()
-    /// bind()
+    /// **See also:** [`unmap()`]
+    /// [`create()`]
+    /// [`bind()`]
     map_range(offset: i32, count: i32, access: OpenGLBuffer::RangeAccessFlags),
     /// 
     /// Unmaps the buffer after it was mapped into the application's
@@ -296,8 +259,68 @@ struct OpenGLBuffer {
     /// **Note**: This function is only supported under OpenGL ES 2.0 and
     /// earlier if the `GL_OES_mapbuffer` extension is present.
     /// 
-    /// **See also:** map()
+    /// **See also:** [`map()`]
     unmap() -> bool,
+}
+
+[org_name(QOpenGLBuffer)]
+enum Type {
+    /// Vertex buffer object for use when specifying vertex arrays.
+    VertexBuffer,
+    /// Index buffer object for use with `glDrawElements()` .
+    IndexBuffer,
+    /// Pixel pack buffer object for reading pixel data from the OpenGL server (for example, with `glReadPixels()` ). Not supported under OpenGL/ES.
+    PixelPackBuffer,
+    /// Pixel unpack buffer object for writing pixel data to the OpenGL server (for example, with `glTexImage2D()` ). Not supported under OpenGL/ES.
+    PixelUnpackBuffer,
+}
+
+[org_name(QOpenGLBuffer)]
+enum UsagePattern {
+    /// The data will be set once and used a few times for drawing operations. Under OpenGL/ES 1.1 this is identical to StaticDraw.
+    StreamDraw,
+    /// The data will be set once and used a few times for reading data back from the OpenGL server. Not supported under OpenGL/ES.
+    StreamRead,
+    /// The data will be set once and used a few times for reading data back from the OpenGL server for use in further drawing operations. Not supported under OpenGL/ES.
+    StreamCopy,
+    /// The data will be set once and used many times for drawing operations.
+    StaticDraw,
+    /// The data will be set once and used many times for reading data back from the OpenGL server. Not supported under OpenGL/ES.
+    StaticRead,
+    /// The data will be set once and used many times for reading data back from the OpenGL server for use in further drawing operations. Not supported under OpenGL/ES.
+    StaticCopy,
+    /// The data will be modified repeatedly and used many times for drawing operations.
+    DynamicDraw,
+    /// The data will be modified repeatedly and used many times for reading data back from the OpenGL server. Not supported under OpenGL/ES.
+    DynamicRead,
+    /// The data will be modified repeatedly and used many times for reading data back from the OpenGL server for use in further drawing operations. Not supported under OpenGL/ES.
+    DynamicCopy,
+}
+
+[org_name(QOpenGLBuffer)]
+enum Access {
+    /// The buffer will be mapped for reading only.
+    ReadOnly,
+    /// The buffer will be mapped for writing only.
+    WriteOnly,
+    /// The buffer will be mapped for reading and writing.
+    ReadWrite,
+}
+
+[org_name(QOpenGLBuffer)]
+enum RangeAccessFlag {
+    /// The buffer will be mapped for reading.
+    RangeRead,
+    /// The buffer will be mapped for writing.
+    RangeWrite,
+    /// Discard the previous contents of the specified range.
+    RangeInvalidate,
+    /// Discard the previous contents of the entire buffer.
+    RangeInvalidateBuffer,
+    /// Indicates that modifications are to be flushed explicitly via `glFlushMappedBufferRange.`
+    RangeFlushExplicit,
+    /// Indicates that pending operations should not be synchronized before returning from mapRange().
+    RangeUnsynchronized,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -39,9 +39,9 @@
 /// and QWidget::mouseMoveEvent() to receive mouse events in your own
 /// widgets.
 /// 
-/// **See also:** QWidget::setMouseTracking()
-/// QWidget::grabMouse()
-/// QCursor::pos()
+/// **See also:** [`Widget::set_mouse_tracking`]
+/// [`Widget::grab_mouse`]
+/// [`Cursor::pos`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -54,9 +54,9 @@ struct MouseEvent : InputEvent {
     /// global position returned by globalPos() to avoid a shaking
     /// motion.
     /// 
-    /// **See also:** x()
-    /// y()
-    /// globalPos()
+    /// **See also:** [`x()`]
+    /// [`y()`]
+    /// [`global_pos()`]
     /// 
     /// Use localPos() instead.
     pos() -> Point,
@@ -68,36 +68,36 @@ struct MouseEvent : InputEvent {
     /// pointer position QCursor::pos(), and from
     /// QWidget::mapToGlobal(pos()).
     /// 
-    /// **See also:** globalX()
-    /// globalY()
+    /// **See also:** [`global_x()`]
+    /// [`global_y()`]
     global_pos() -> Point,
     /// 
     /// Returns the x position of the mouse cursor, relative to the
     /// widget that received the event.
     /// 
-    /// **See also:** y()
-    /// pos()
+    /// **See also:** [`y()`]
+    /// [`pos()`]
     x() -> i32,
     /// 
     /// Returns the y position of the mouse cursor, relative to the
     /// widget that received the event.
     /// 
-    /// **See also:** x()
-    /// pos()
+    /// **See also:** [`x()`]
+    /// [`pos()`]
     y() -> i32,
     /// 
     /// Returns the global x position of the mouse cursor at the time of
     /// the event.
     /// 
-    /// **See also:** globalY()
-    /// globalPos()
+    /// **See also:** [`global_y()`]
+    /// [`global_pos()`]
     global_x() -> i32,
     /// 
     /// Returns the global y position of the mouse cursor at the time of
     /// the event.
     /// 
-    /// **See also:** globalX()
-    /// globalPos()
+    /// **See also:** [`global_x()`]
+    /// [`global_pos()`]
     global_y() -> i32,
     /// 
     /// Returns the position of the mouse cursor as a QPointF, relative to the
@@ -107,10 +107,10 @@ struct MouseEvent : InputEvent {
     /// screen position returned by screenPos() to avoid a shaking
     /// motion.
     /// 
-    /// **See also:** x()
-    /// y()
-    /// windowPos()
-    /// screenPos()
+    /// **See also:** [`x()`]
+    /// [`y()`]
+    /// [`window_pos()`]
+    /// [`screen_pos()`]
     local_pos() -> PointF?,
     /// 
     /// Returns the position of the mouse cursor as a QPointF, relative to the
@@ -120,21 +120,21 @@ struct MouseEvent : InputEvent {
     /// global position returned by globalPos() to avoid a shaking
     /// motion.
     /// 
-    /// **See also:** x()
-    /// y()
-    /// pos()
-    /// localPos()
-    /// screenPos()
+    /// **See also:** [`x()`]
+    /// [`y()`]
+    /// [`pos()`]
+    /// [`local_pos()`]
+    /// [`screen_pos()`]
     window_pos() -> PointF?,
     /// 
     /// Returns the position of the mouse cursor as a QPointF, relative to the
     /// screen that received the event.
     /// 
-    /// **See also:** x()
-    /// y()
-    /// pos()
-    /// localPos()
-    /// windowPos()
+    /// **See also:** [`x()`]
+    /// [`y()`]
+    /// [`pos()`]
+    /// [`local_pos()`]
+    /// [`window_pos()`]
     screen_pos() -> PointF?,
     /// 
     /// Returns the button that caused the event.
@@ -142,8 +142,8 @@ struct MouseEvent : InputEvent {
     /// Note that the returned value is always Qt::NoButton for mouse
     /// move events.
     /// 
-    /// **See also:** buttons()
-    /// Qt::MouseButton
+    /// **See also:** [`buttons()`]
+    /// [`t::mouse_button()`]
     /// 
     /// Returns the button state when the event was generated. The button
     /// state is a combination of Qt::LeftButton, Qt::RightButton,
@@ -153,8 +153,8 @@ struct MouseEvent : InputEvent {
     /// event. For mouse release events this excludes the button that
     /// caused the event.
     /// 
-    /// **See also:** button()
-    /// Qt::MouseButton
+    /// **See also:** [`button()`]
+    /// [`t::mouse_button()`]
     button() -> Rute::MouseButton,
     /// 
     /// Returns the button state when the event was generated. The button
@@ -165,8 +165,8 @@ struct MouseEvent : InputEvent {
     /// event. For mouse release events this excludes the button that
     /// caused the event.
     /// 
-    /// **See also:** button()
-    /// Qt::MouseButton
+    /// **See also:** [`button()`]
+    /// [`t::mouse_button()`]
     buttons() -> Rute::MouseButtons,
     set_local_pos(local_position: &PointFType),
     /// 
@@ -180,16 +180,16 @@ struct MouseEvent : InputEvent {
     /// [Qt::MouseEventNotSynthesized](Qt::MouseEventNotSynthesized)
     /// is returned always.
     /// 
-    /// **See also:** Qt::MouseEventSource
-    /// **See also:** QGraphicsSceneMouseEvent::source()
+    /// **See also:** [`t::mouse_event_source()`]
+    /// **See also:** [`GraphicsSceneMouseEvent::source`]
     source() -> Rute::MouseEventSource,
     /// 
     /// Returns the mouse event flags.
     /// 
     /// The mouse event flags provide additional information about a mouse event.
     /// 
-    /// **See also:** Qt::MouseEventFlag
-    /// **See also:** QGraphicsSceneMouseEvent::flags()
+    /// **See also:** [`t::mouse_event_flag()`]
+    /// **See also:** [`GraphicsSceneMouseEvent::flags`]
     flags() -> Rute::MouseEventFlags,
 }
 

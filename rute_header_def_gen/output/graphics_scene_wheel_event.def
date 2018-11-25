@@ -5,10 +5,10 @@
 /// into item, scene, and screen coordinates (pos(), scenePos(), and
 /// screenPos()).
 /// 
-/// **See also:** QGraphicsSceneMouseEvent
-/// QGraphicsSceneContextMenuEvent
-/// QGraphicsSceneHoverEvent
-/// QWheelEvent
+/// **See also:** [`GraphicsSceneMouseEvent`]
+/// [`GraphicsSceneContextMenuEvent`]
+/// [`GraphicsSceneHoverEvent`]
+/// [`WheelEvent`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
@@ -17,37 +17,37 @@ struct GraphicsSceneWheelEvent : GraphicsSceneEvent {
     /// Returns the position of the cursor in item coordinates when the
     /// wheel event occurred.
     /// 
-    /// **See also:** scenePos()
-    /// screenPos()
+    /// **See also:** [`scene_pos()`]
+    /// [`screen_pos()`]
     pos() -> PointF,
     set_pos(pos: &PointFType),
     /// 
     /// Returns the position of the cursor in scene coordinates when the wheel
     /// event occurred.
     /// 
-    /// **See also:** pos()
-    /// screenPos()
+    /// **See also:** [`pos()`]
+    /// [`screen_pos()`]
     scene_pos() -> PointF,
     set_scene_pos(pos: &PointFType),
     /// 
     /// Returns the position of the cursor in screen coordinates when the wheel
     /// event occurred.
     /// 
-    /// **See also:** pos()
-    /// scenePos()
+    /// **See also:** [`pos()`]
+    /// [`scene_pos()`]
     screen_pos() -> Point,
     set_screen_pos(pos: &PointType),
     /// 
     /// Returns the mouse buttons that were pressed when the wheel event occurred.
     /// 
-    /// **See also:** modifiers()
+    /// **See also:** [`modifiers()`]
     buttons() -> Rute::MouseButtons,
     set_buttons(buttons: Rute::MouseButtons),
     /// 
     /// Returns the keyboard modifiers that were active when the wheel event
     /// occurred.
     /// 
-    /// **See also:** buttons()
+    /// **See also:** [`buttons()`]
     modifiers() -> Rute::KeyboardModifiers,
     set_modifiers(modifiers: Rute::KeyboardModifiers),
     /// 

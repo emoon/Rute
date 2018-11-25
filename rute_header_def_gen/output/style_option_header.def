@@ -12,40 +12,58 @@
 /// the [Styles](widgets/styles)
 /// example.
 /// 
-/// **See also:** QStyleOption
+/// **See also:** [`StyleOption`]
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+struct StyleOptionHeader : StyleOption {
+}
+
 [org_name(QStyleOptionHeader)]
 enum StyleOptionType {
+    /// The type of style option provided ( [SO_Header](SO_Header)
+ for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
     Type,
 }
 
 [org_name(QStyleOptionHeader)]
 enum StyleOptionVersion {
+    /// 1 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
     Version,
 }
 
 [org_name(QStyleOptionHeader)]
 enum SectionPosition {
+    /// At the beginining of the header
     Beginning,
+    /// In the middle of the header
     Middle,
+    /// At the end of the header
     End,
+    /// Only one header section
     OnlyOneSection,
 }
 
 [org_name(QStyleOptionHeader)]
 enum SelectedPosition {
+    /// Not adjacent to the selected section
     NotAdjacent,
+    /// The next section is selected
     NextIsSelected,
+    /// The previous section is selected
     PreviousIsSelected,
+    /// Both the next and previous section are selected
     NextAndPreviousAreSelected,
 }
 
 [org_name(QStyleOptionHeader)]
 enum SortIndicator {
+    /// No sort indicator is needed
     None,
+    /// Draw an up indicator
     SortUp,
+    /// Draw a down indicator
     SortDown,
 }
 
+// vim: syntax=rust expandtab ts=4 sw=4

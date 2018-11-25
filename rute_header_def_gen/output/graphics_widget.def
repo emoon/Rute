@@ -74,17 +74,12 @@
 /// **Note**: The QObject::parent() should always return 0 for QGraphicsWidgets,
 /// but this policy is not strictly defined.
 /// 
-/// **See also:** QGraphicsProxyWidget
-/// QGraphicsItem
+/// **See also:** [`GraphicsProxyWidget`]
+/// [`GraphicsItem`]
 /// {Widgets and Layouts}
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[org_name(QGraphicsWidget)]
-enum GraphicsWidgetFixMeEnums {
-    Type,
-}
-
 struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// 
     /// Any existing layout manager is deleted before the new layout is assigned. If
@@ -106,7 +101,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// Returns this widget's layout, or 0 if no layout is currently managing this
     /// widget.
     /// 
-    /// **See also:** setLayout()
+    /// **See also:** [`set_layout()`]
     /// 
     /// This property modifies this widget's and all of its descendants'
     /// Qt::WA_RightToLeft attribute. It also sets this widget's
@@ -129,8 +124,8 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// event, and then
     /// propagate the new layout direction to all its descendants.
     /// 
-    /// **See also:** QWidget::layoutDirection
-    /// QApplication::layoutDirection
+    /// **See also:** [`Widget::layout_direction()`]
+    /// [`Application::layout_direction()`]
     layout() -> GraphicsLayout?,
     /// 
     /// Sets the layout for this widget to *layout.* Any existing layout manager
@@ -147,9 +142,9 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// 
     /// QGraphicsWidget takes ownership of *layout.*
     /// 
-    /// **See also:** layout()
-    /// QGraphicsLinearLayout::addItem()
-    /// QGraphicsLayout::invalidate()
+    /// **See also:** [`layout()`]
+    /// [`GraphicsLinearLayout::add_item`]
+    /// [`GraphicsLayout::invalidate`]
     set_layout(layout: *GraphicsLayoutType),
     /// 
     /// Adjusts the size of the widget to its effective preferred size hint.
@@ -157,8 +152,8 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// This function is called implicitly when the item is shown for the first
     /// time.
     /// 
-    /// **See also:** effectiveSizeHint()
-    /// Qt::MinimumSize
+    /// **See also:** [`effective_size_hint()`]
+    /// [`t::minimum_size()`]
     adjust_size(),
     /// 
     /// This property modifies this widget's and all of its descendants'
@@ -182,8 +177,8 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// event, and then
     /// propagate the new layout direction to all its descendants.
     /// 
-    /// **See also:** QWidget::layoutDirection
-    /// QApplication::layoutDirection
+    /// **See also:** [`Widget::layout_direction()`]
+    /// [`Application::layout_direction()`]
     layout_direction() -> Rute::LayoutDirection,
     set_layout_direction(direction: Rute::LayoutDirection),
     unset_layout_direction(),
@@ -193,7 +188,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// if the scene does not have any assigned style, this function returns
     /// QApplication::style().
     /// 
-    /// **See also:** setStyle()
+    /// **See also:** [`set_style()`]
     style() -> Style?,
     /// 
     /// Sets the widget's style to *style.* QGraphicsWidget does *not* take
@@ -206,7 +201,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// This function sets the Qt::WA_SetStyle attribute if *style* is not 0;
     /// otherwise it clears the attribute.
     /// 
-    /// **See also:** style()
+    /// **See also:** [`style()`]
     set_style(style: *StyleType),
     /// 
     /// This property provides the widget's font.
@@ -226,9 +221,9 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// 
     /// By default, this property contains the application's default font.
     /// 
-    /// **See also:** QApplication::font()
-    /// QGraphicsScene::font
-    /// QFont::resolve()
+    /// **See also:** [`Application::font`]
+    /// [`GraphicsScene::font()`]
+    /// [`Font::resolve`]
     font() -> Font,
     set_font(font: &FontType),
     /// 
@@ -252,9 +247,9 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// 
     /// By default, this property contains the application's default palette.
     /// 
-    /// **See also:** QApplication::palette()
-    /// QGraphicsScene::palette
-    /// QPalette::resolve()
+    /// **See also:** [`Application::palette`]
+    /// [`GraphicsScene::palette()`]
+    /// [`Palette::resolve`]
     palette() -> Palette,
     set_palette(palette: &PaletteType),
     /// 
@@ -268,8 +263,8 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// 
     /// By default, this property is `false.`
     /// 
-    /// **See also:** Qt::WA_OpaquePaintEvent
-    /// Qt::WA_NoSystemBackground
+    /// **See also:** [`t::wa_opaque_paint_event()`]
+    /// [`t::wa_no_system_background()`]
     /// */
     /// bool QGraphicsWidget::autoFillBackground() const
     /// 
@@ -291,7 +286,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// 
     /// Call this function if the widget's sizeHint() has changed.
     /// 
-    /// **See also:** QGraphicsLayout::invalidate()
+    /// **See also:** [`GraphicsLayout::invalidate`]
     auto_fill_background() -> bool,
     set_auto_fill_background(enabled: bool),
     /// 
@@ -299,8 +294,8 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// Constructs a resize with the given `width` ( *w)* and `height` ( *h).*
     /// This convenience function is equivalent to calling resize(QSizeF(w, h)).
     /// 
-    /// **See also:** setGeometry()
-    /// setTransform()
+    /// **See also:** [`set_geometry()`]
+    /// [`set_transform()`]
     /// 
     /// This event handler, for
     /// [GraphicsSceneResize](QEvent::GraphicsSceneResize)
@@ -316,16 +311,16 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// resized. Calling QEvent::accept() or QEvent::ignore() on *event* has no
     /// effect.
     /// 
-    /// **See also:** geometry()
-    /// setGeometry()
+    /// **See also:** [`geometry()`]
+    /// [`set_geometry()`]
     resize(size: &SizeFType),
     /// 
     /// **Overloads**
     /// Constructs a resize with the given `width` ( *w)* and `height` ( *h).*
     /// This convenience function is equivalent to calling resize(QSizeF(w, h)).
     /// 
-    /// **See also:** setGeometry()
-    /// setTransform()
+    /// **See also:** [`set_geometry()`]
+    /// [`set_transform()`]
     /// 
     /// This event handler, for
     /// [GraphicsSceneResize](QEvent::GraphicsSceneResize)
@@ -341,9 +336,10 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// resized. Calling QEvent::accept() or QEvent::ignore() on *event* has no
     /// effect.
     /// 
-    /// **See also:** geometry()
-    /// setGeometry()
-    resize(w: f32, h: f32),
+    /// **See also:** [`geometry()`]
+    /// [`set_geometry()`]
+    [org_name(resize)]
+    resize_2(w: f32, h: f32),
     /// 
     /// Calling resize() resizes the widget to a *size* bounded by minimumSize()
     /// and maximumSize(). This property only affects the widget's width and
@@ -363,21 +359,21 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// 
     /// By default, this property contains a size with zero width and height.
     /// 
-    /// **See also:** setGeometry()
-    /// QGraphicsSceneResizeEvent
-    /// QGraphicsLayout
+    /// **See also:** [`set_geometry()`]
+    /// [`GraphicsSceneResizeEvent`]
+    /// [`GraphicsLayout`]
     /// 
-    /// **See also:** sizePolicy()
-    /// setSizePolicy()
-    /// QWidget::sizePolicy()
+    /// **See also:** [`size_policy()`]
+    /// [`set_size_policy()`]
+    /// [`Widget::size_policy`]
     /// 
     size() -> SizeF,
     /// 
     /// Returns the item's local rect as a QRectF. This function is equivalent
     /// to QRectF(QPointF(), size()).
     /// 
-    /// **See also:** setGeometry()
-    /// resize()
+    /// **See also:** [`set_geometry()`]
+    /// [`resize()`]
     rect() -> RectF,
     /// 
     /// Sets the widget's contents margins to *left,* *top,* *right* and *bottom.*
@@ -393,14 +389,14 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// receive a [ContentsRectChange](QEvent::ContentsRectChange)
     /// event.
     /// 
-    /// **See also:** getContentsMargins()
-    /// setGeometry()
+    /// **See also:** [`get_contents_margins()`]
+    /// [`set_geometry()`]
     set_contents_margins(left: f32, top: f32, right: f32, bottom: f32),
     /// 
     /// Gets the widget's contents margins. The margins are stored in *left,* *top,* *right* and *bottom,* as pointers to qreals. Each argument can
     /// be *omitted* by passing 0.
     /// 
-    /// **See also:** setContentsMargins()
+    /// **See also:** [`set_contents_margins()`]
     [event] get_contents_margins(left: *f32, top: *f32, right: *f32, bottom: *f32),
     /// 
     /// Sets the widget's window frame margins to *left,* *top,* *right* and
@@ -410,31 +406,31 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// If you would like to draw your own window decoration, you can set your
     /// own frame margins to override the default margins.
     /// 
-    /// **See also:** unsetWindowFrameMargins()
-    /// getWindowFrameMargins()
-    /// windowFrameRect()
+    /// **See also:** [`unset_window_frame_margins()`]
+    /// [`get_window_frame_margins()`]
+    /// [`window_frame_rect()`]
     set_window_frame_margins(left: f32, top: f32, right: f32, bottom: f32),
     /// 
     /// Gets the widget's window frame margins. The margins are stored in *left,*
     /// *top,* *right* and *bottom* as pointers to qreals. Each argument can
     /// be *omitted* by passing 0.
     /// 
-    /// **See also:** setWindowFrameMargins()
-    /// windowFrameRect()
+    /// **See also:** [`set_window_frame_margins()`]
+    /// [`window_frame_rect()`]
     get_window_frame_margins(left: *f32, top: *f32, right: *f32, bottom: *f32),
     /// 
     /// Resets the window frame margins to the default value, provided by the style.
     /// 
-    /// **See also:** setWindowFrameMargins()
-    /// getWindowFrameMargins()
-    /// windowFrameRect()
+    /// **See also:** [`set_window_frame_margins()`]
+    /// [`get_window_frame_margins()`]
+    /// [`window_frame_rect()`]
     unset_window_frame_margins(),
     /// 
     /// Returns the widget's local rect including any window frame.
     /// 
-    /// **See also:** windowFrameGeometry()
-    /// getWindowFrameMargins()
-    /// setWindowFrameMargins()
+    /// **See also:** [`window_frame_geometry()`]
+    /// [`get_window_frame_margins()`]
+    /// [`set_window_frame_margins()`]
     window_frame_rect() -> RectF,
     /// 
     /// Window flags are a combination of a window type (e.g., Qt::Dialog) and
@@ -448,15 +444,15 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// ItemIsPanel flag is also cleared. Note that the ItemIsPanel flag can be
     /// set independently of Qt::Window.
     /// 
-    /// **See also:** isWindow()
-    /// isPanel()
+    /// **See also:** [`is_window()`]
+    /// [`is_panel()`]
     window_flags() -> Rute::WindowFlags,
     /// 
     /// Returns the widgets window type.
     /// 
-    /// **See also:** windowFlags()
-    /// isWindow()
-    /// isPanel()
+    /// **See also:** [`window_flags()`]
+    /// [`is_window()`]
+    /// [`is_panel()`]
     window_type() -> Rute::WindowType,
     set_window_flags(w_flags: Rute::WindowFlags),
     /// 
@@ -467,9 +463,9 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// The active window is the window that either contains a child widget that
     /// currently has input focus, or that itself has input focus.
     /// 
-    /// **See also:** QGraphicsScene::activeWindow()
-    /// QGraphicsScene::setActiveWindow()
-    /// isActive()
+    /// **See also:** [`GraphicsScene::active_window`]
+    /// [`GraphicsScene::set_active_window`]
+    /// [`is_active()`]
     is_active_window() -> bool,
     set_window_title(title: String),
     /// 
@@ -493,10 +489,10 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// widget will clear the ItemIsFocusable flag. If the widget currently has
     /// keyboard focus, the widget will automatically lose focus.
     /// 
-    /// **See also:** focusInEvent()
-    /// focusOutEvent()
-    /// keyPressEvent()
-    /// keyReleaseEvent()
+    /// **See also:** [`focus_in_event()`]
+    /// [`focus_out_event()`]
+    /// [`key_press_event()`]
+    /// [`key_release_event()`]
     /// enabled
     focus_policy() -> Rute::FocusPolicy,
     set_focus_policy(policy: Rute::FocusPolicy),
@@ -526,8 +522,8 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// focus, this function will return a pointer to that widget. If
     /// no descendant widget has input focus, 0 is returned.
     /// 
-    /// **See also:** QGraphicsItem::focusItem()
-    /// QWidget::focusWidget()
+    /// **See also:** [`GraphicsItem::focus_item`]
+    /// [`Widget::focus_widget`]
     focus_widget() -> GraphicsWidget?,
     /// 
     /// Adds a shortcut to Qt's shortcut system that watches for the given key *sequence* in the given *context.* If the *context* is
@@ -553,9 +549,9 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// key sequence, so are much easier to use than this low-level
     /// function.
     /// 
-    /// **See also:** releaseShortcut()
-    /// setShortcutEnabled()
-    /// QWidget::grabShortcut()
+    /// **See also:** [`release_shortcut()`]
+    /// [`set_shortcut_enabled()`]
+    /// [`Widget::grab_shortcut`]
     grab_shortcut(sequence: &KeySequenceType, context: Rute::ShortcutContext) -> i32,
     /// 
     /// Removes the shortcut with the given *id* from Qt's shortcut
@@ -570,9 +566,9 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// this low-level function. Note also that this is an expensive
     /// operation.
     /// 
-    /// **See also:** grabShortcut()
-    /// setShortcutEnabled()
-    /// QWidget::releaseShortcut()
+    /// **See also:** [`grab_shortcut()`]
+    /// [`set_shortcut_enabled()`]
+    /// [`Widget::release_shortcut`]
     release_shortcut(id: i32),
     /// 
     /// If *enabled* is true, the shortcut with the given *id* is
@@ -584,17 +580,17 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// to use QAction or QShortcut to handle shortcuts, since they are
     /// easier to use than this low-level function.
     /// 
-    /// **See also:** grabShortcut()
-    /// releaseShortcut()
-    /// QWidget::setShortcutEnabled()
+    /// **See also:** [`grab_shortcut()`]
+    /// [`release_shortcut()`]
+    /// [`Widget::set_shortcut_enabled`]
     set_shortcut_enabled(id: i32, enabled: bool),
     /// 
     /// If *enabled* is true, auto repeat of the shortcut with the
     /// given *id* is enabled; otherwise it is disabled.
     /// 
-    /// **See also:** grabShortcut()
-    /// releaseShortcut()
-    /// QWidget::setShortcutAutoRepeat()
+    /// **See also:** [`grab_shortcut()`]
+    /// [`release_shortcut()`]
+    /// [`Widget::set_shortcut_auto_repeat`]
     set_shortcut_auto_repeat(id: i32, enabled: bool),
     /// 
     /// Appends the action *action* to this widget's list of actions.
@@ -607,10 +603,10 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// A QGraphicsWidget should only have one of each action and adding an action
     /// it already has will not cause the same action to be in the widget twice.
     /// 
-    /// **See also:** removeAction()
-    /// insertAction()
-    /// actions()
-    /// QWidget::addAction()
+    /// **See also:** [`remove_action()`]
+    /// [`insert_action()`]
+    /// [`actions()`]
+    /// [`Widget::add_action`]
     add_action(action: *ActionType),
     add_actions(actions: [*ActionType]),
     insert_actions(before: *ActionType, actions: [*ActionType]),
@@ -621,28 +617,28 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// 
     /// A QGraphicsWidget should only have one of each action.
     /// 
-    /// **See also:** removeAction()
-    /// addAction()
-    /// QMenu
-    /// actions()
-    /// QWidget::insertActions()
+    /// **See also:** [`remove_action()`]
+    /// [`add_action()`]
+    /// [`Menu`]
+    /// [`actions()`]
+    /// [`Widget::insert_actions`]
     insert_action(before: *ActionType, action: *ActionType),
     /// 
     /// Removes the action *action* from this widget's list of actions.
     /// 
-    /// **See also:** insertAction()
-    /// actions()
-    /// insertAction()
-    /// QWidget::removeAction()
+    /// **See also:** [`insert_action()`]
+    /// [`actions()`]
+    /// [`insert_action()`]
+    /// [`Widget::remove_action`]
     remove_action(action: *ActionType),
     /// 
     /// Returns the (possibly empty) list of this widget's actions.
     /// 
-    /// **See also:** insertAction()
-    /// removeAction()
-    /// QWidget::actions()
-    /// QAction::associatedWidgets()
-    /// QAction::associatedGraphicsWidgets()
+    /// **See also:** [`insert_action()`]
+    /// [`remove_action()`]
+    /// [`Widget::actions`]
+    /// [`Action::associated_widgets`]
+    /// [`Action::associated_graphics_widgets`]
     actions() -> [Action?],
     /// 
     [event] type() -> i32,
@@ -656,7 +652,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// You can reimplement this function in a subclass of QGraphicsWidget to
     /// provide custom rendering of the widget's window frame.
     /// 
-    /// **See also:** QGraphicsItem::paint()
+    /// **See also:** [`GraphicsItem::paint`]
     [event] paint(painter: *PainterType, option: *StyleOptionGraphicsItemType, widget: *WidgetType),
     /// 
     /// This virtual function is called by QGraphicsScene to draw the window frame
@@ -667,7 +663,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// You can reimplement this function in a subclass of QGraphicsWidget to
     /// provide custom rendering of the widget's window frame.
     /// 
-    /// **See also:** QGraphicsItem::paint()
+    /// **See also:** [`GraphicsItem::paint`]
     [event] paint_window_frame(painter: *PainterType, option: *StyleOptionGraphicsItemType, widget: *WidgetType),
     /// 
     [event] bounding_rect() -> RectF,
@@ -679,8 +675,8 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// receive widget close events. The default implementation accepts the
     /// event.
     /// 
-    /// **See also:** close()
-    /// QCloseEvent
+    /// **See also:** [`close()`]
+    /// [`CloseEvent`]
     /// 
     /// Call this function to close the widget.
     /// 
@@ -727,7 +723,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// 
     /// For example:
     /// 
-    /// **See also:** QStyleOption::initFrom()
+    /// **See also:** [`StyleOption::init_from`]
     [event] init_style_option(option: *StyleOptionType),
     /// 
     [event] size_hint(which: Rute::SizeHint, constraint: &SizeFType) -> SizeF,
@@ -750,7 +746,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// QGraphicsWidget enables the ItemSendsGeometryChanges flag by default in
     /// order to track position changes.
     /// 
-    /// **See also:** QGraphicsItem::itemChange()
+    /// **See also:** [`GraphicsItem::item_change`]
     [event] item_change(change: GraphicsItem::GraphicsItemChange, value: &VariantType) -> Variant,
     [event] property_change(property_name: String, value: &VariantType) -> Variant,
     /// 
@@ -759,7 +755,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// event() or in any of the convenience functions; you should not have to
     /// reimplement this function in a subclass of QGraphicsWidget.
     /// 
-    /// **See also:** QGraphicsItem::sceneEvent()
+    /// **See also:** [`GraphicsItem::scene_event`]
     [event] scene_event(event: *EventType) -> bool,
     /// 
     /// This event handler, for *event,* receives events for the window frame if
@@ -772,7 +768,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// Returns `true` if *event* has been recognized and processed; otherwise,
     /// returns `false.`
     /// 
-    /// **See also:** event()
+    /// **See also:** [`event()`]
     [event] window_frame_event(e: *EventType) -> bool,
     /// 
     /// Returns the window frame section at position *pos,* or
@@ -788,9 +784,9 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// reimplement this function to return Qt::NoSection for all sections except
     /// Qt::BottomRightSection.
     /// 
-    /// **See also:** windowFrameEvent()
-    /// paintWindowFrame()
-    /// windowFrameGeometry()
+    /// **See also:** [`window_frame_event()`]
+    /// [`paint_window_frame()`]
+    /// [`window_frame_geometry()`]
     [event] window_frame_section_at(pos: &PointFType) -> Rute::WindowFrameSection,
     /// 
     /// Handles the *event.* QGraphicsWidget handles the following
@@ -836,8 +832,8 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// receive widget close events. The default implementation accepts the
     /// event.
     /// 
-    /// **See also:** close()
-    /// QCloseEvent
+    /// **See also:** [`close()`]
+    /// [`CloseEvent`]
     [event] close_event(event: *CloseEventType),
     /// 
     [event] focus_in_event(event: *FocusEventType),
@@ -858,7 +854,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// focus. By reimplementing this function for an object, you gain control of
     /// focus traversal for all child widgets.
     /// 
-    /// **See also:** focusPolicy()
+    /// **See also:** [`focus_policy()`]
     [event] focus_next_prev_child(next: bool) -> bool,
     /// 
     [event] focus_out_event(event: *FocusEventType),
@@ -873,8 +869,8 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// hidden. Calling QEvent::accept() or QEvent::ignore() on *event* has no
     /// effect.
     /// 
-    /// **See also:** showEvent()
-    /// QWidget::hideEvent()
+    /// **See also:** [`show_event()`]
+    /// [`Widget::hide_event`]
     /// ItemVisibleChange
     [event] hide_event(event: *HideEventType),
     /// 
@@ -917,8 +913,8 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// resized. Calling QEvent::accept() or QEvent::ignore() on *event* has no
     /// effect.
     /// 
-    /// **See also:** geometry()
-    /// setGeometry()
+    /// **See also:** [`geometry()`]
+    /// [`set_geometry()`]
     [event] resize_event(event: *GraphicsSceneResizeEventType),
     /// 
     /// This event handler, for [Show](QEvent::Show)
@@ -931,8 +927,8 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// shown. Calling QEvent::accept() or QEvent::ignore() on *event* has no
     /// effect.
     /// 
-    /// **See also:** hideEvent()
-    /// QWidget::showEvent()
+    /// **See also:** [`hide_event()`]
+    /// [`Widget::show_event`]
     /// ItemVisibleChange
     [event] show_event(event: *ShowEventType),
     /// 
@@ -943,30 +939,35 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
     /// This event handler, for *event,* can be reimplemented in a subclass to
     /// receive notifications for QEvent::GrabMouse events.
     /// 
-    /// **See also:** grabMouse()
-    /// grabKeyboard()
+    /// **See also:** [`grab_mouse()`]
+    /// [`grab_keyboard()`]
     [event] grab_mouse_event(event: *EventType),
     /// 
     /// This event handler, for *event,* can be reimplemented in a subclass to
     /// receive notifications for QEvent::UngrabMouse events.
     /// 
-    /// **See also:** ungrabMouse()
-    /// ungrabKeyboard()
+    /// **See also:** [`ungrab_mouse()`]
+    /// [`ungrab_keyboard()`]
     [event] ungrab_mouse_event(event: *EventType),
     /// 
     /// This event handler, for *event,* can be reimplemented in a subclass to
     /// receive notifications for QEvent::GrabKeyboard events.
     /// 
-    /// **See also:** grabKeyboard()
-    /// grabMouse()
+    /// **See also:** [`grab_keyboard()`]
+    /// [`grab_mouse()`]
     [event] grab_keyboard_event(event: *EventType),
     /// 
     /// This event handler, for *event,* can be reimplemented in a subclass to
     /// receive notifications for QEvent::UngrabKeyboard events.
     /// 
-    /// **See also:** ungrabKeyboard()
-    /// ungrabMouse()
+    /// **See also:** [`ungrab_keyboard()`]
+    /// [`ungrab_mouse()`]
     [event] ungrab_keyboard_event(event: *EventType),
+}
+
+[org_name(QGraphicsWidget)]
+enum GraphicsWidgetFixMeEnums {
+    Type,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
