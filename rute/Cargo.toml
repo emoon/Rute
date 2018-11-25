@@ -1,6 +1,6 @@
 [package]
 name = "rute"
-version = "0.0.4"
+version = "0.0.5"
 license = "MIT/Apache-2.0"
 authors = ["Daniel Collin <daniel@collin.com>"]
 description = "UI library implemented on top of Qt"
@@ -25,4 +25,4 @@ libloading = "0.5"
 
 [build-dependencies]
 cc = { version = "1.0", features = ["parallel"] }
-
+rustc_version = "0.2"

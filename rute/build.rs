@@ -1,21 +1,29 @@
+extern crate cc;
+extern crate rustc_version;
+use rustc_version::{version_meta, Channel};
+
 use std::env;
-//use std::fs::File;
-//use std::io::Write;
 use std::path::Path;
 use std::process::Command;
-
-extern crate cc;
 
 fn main() {
     let target = env::var("TARGET").unwrap();
 
-    let qt_dir = env::var("QT5").unwrap_or_else(|_| {
+    let qt_dir_t = env::var("QT5");
+
+    // This is a hack to get docs to be generated on docs.rs without having QT5 set
+    if qt_dir_t.is_err() && version_meta().unwrap().channel == Channel::Nightly {
+        return;
+    }
+
+    let qt_dir = qt_dir_t.unwrap_or_else(|_| {
         panic!(
 "\n\nUnable to find QT5 environment variable. This needs to be set in order to use Rute.
 You can download Qt from https://www.qt.io and the set the variable. Examples:
 macOS: export QT5=/Users/USER_NAME/Qt/5.11.2/clang_64\n
 GNU/Linux: export QT5=/opt/qt510\n\n");
     });
+
 
     let moc_exe = format!("{}/bin/moc", qt_dir.as_str());
     let rute_signal_wrappers = "qt_cpp/auto/rute_signal_wrappers.h";
