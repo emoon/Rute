@@ -1361,6 +1361,7 @@ impl QtGenerator {
     }
 }
 
+/*
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1502,3 +1503,4 @@ mod tests {
     #[test]
     fn test_generate_qt_func_def() {}
 }
+*/

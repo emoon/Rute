@@ -16,7 +16,7 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-// Auto-generated imports
+#[allow(unused_imports)]
 use auto::*;
 
 pub(crate) unsafe extern "C" fn object_custom_trampoline_ud<T>(
@@ -24,7 +24,7 @@ pub(crate) unsafe extern "C" fn object_custom_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &EventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &Event) + 'static) = transmute(func);
     let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -36,7 +36,7 @@ pub(crate) unsafe extern "C" fn object_custom_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&EventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&Event) + 'static) = transmute(func);
     let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
     f(&obj_event_0);
 }
@@ -899,12 +899,12 @@ impl<'a> Object<'a> {
     /// [`Event`]
     pub fn set_custom_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &EventTrait) + 'a,
+        F: Fn(&T, &Event) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_object_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -921,10 +921,10 @@ impl<'a> Object<'a> {
 
     pub fn set_custom_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&EventTrait) + 'a,
+        F: Fn(&Event) + 'a,
     {
         let (obj_data, funcs) = self.get_object_obj_funcs();
-        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_custom_event)(

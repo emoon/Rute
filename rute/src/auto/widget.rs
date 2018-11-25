@@ -16,7 +16,7 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-// Auto-generated imports
+#[allow(unused_imports)]
 use auto::*;
 
 pub(crate) unsafe extern "C" fn widget_window_title_changed_trampoline_ud<T>(
@@ -48,7 +48,7 @@ pub(crate) unsafe extern "C" fn widget_window_icon_changed_trampoline_ud<T>(
     func: *const c_void,
     icon: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &IconTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &Icon) + 'static) = transmute(func);
     let obj_icon_0 = Icon::new_from_temporary(*(icon as *const RUIcon));
     let data = self_c as *const T;
     f(&*data, &obj_icon_0);
@@ -60,7 +60,7 @@ pub(crate) unsafe extern "C" fn widget_window_icon_changed_trampoline(
     func: *const c_void,
     icon: *const RUBase,
 ) {
-    let f: &&(Fn(&IconTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&Icon) + 'static) = transmute(func);
     let obj_icon_0 = Icon::new_from_temporary(*(icon as *const RUIcon));
     f(&obj_icon_0);
 }
@@ -94,7 +94,7 @@ pub(crate) unsafe extern "C" fn widget_custom_context_menu_requested_trampoline_
     func: *const c_void,
     pos: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &PointTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &Point) + 'static) = transmute(func);
     let obj_pos_0 = Point::new_from_temporary(*(pos as *const RUPoint));
     let data = self_c as *const T;
     f(&*data, &obj_pos_0);
@@ -106,7 +106,7 @@ pub(crate) unsafe extern "C" fn widget_custom_context_menu_requested_trampoline(
     func: *const c_void,
     pos: *const RUBase,
 ) {
-    let f: &&(Fn(&PointTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&Point) + 'static) = transmute(func);
     let obj_pos_0 = Point::new_from_temporary(*(pos as *const RUPoint));
     f(&obj_pos_0);
 }
@@ -116,7 +116,7 @@ pub(crate) unsafe extern "C" fn widget_mouse_press_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &MouseEvent) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -128,7 +128,7 @@ pub(crate) unsafe extern "C" fn widget_mouse_press_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&MouseEvent) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     f(&obj_event_0);
 }
@@ -138,7 +138,7 @@ pub(crate) unsafe extern "C" fn widget_mouse_release_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &MouseEvent) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -150,7 +150,7 @@ pub(crate) unsafe extern "C" fn widget_mouse_release_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&MouseEvent) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     f(&obj_event_0);
 }
@@ -160,7 +160,7 @@ pub(crate) unsafe extern "C" fn widget_mouse_double_click_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &MouseEvent) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -172,7 +172,7 @@ pub(crate) unsafe extern "C" fn widget_mouse_double_click_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&MouseEvent) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     f(&obj_event_0);
 }
@@ -182,7 +182,7 @@ pub(crate) unsafe extern "C" fn widget_mouse_move_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &MouseEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &MouseEvent) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -194,7 +194,7 @@ pub(crate) unsafe extern "C" fn widget_mouse_move_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&MouseEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&MouseEvent) + 'static) = transmute(func);
     let obj_event_0 = MouseEvent::new_from_temporary(*(event as *const RUMouseEvent));
     f(&obj_event_0);
 }
@@ -204,7 +204,7 @@ pub(crate) unsafe extern "C" fn widget_wheel_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &WheelEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &WheelEvent) + 'static) = transmute(func);
     let obj_event_0 = WheelEvent::new_from_temporary(*(event as *const RUWheelEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -216,7 +216,7 @@ pub(crate) unsafe extern "C" fn widget_wheel_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&WheelEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&WheelEvent) + 'static) = transmute(func);
     let obj_event_0 = WheelEvent::new_from_temporary(*(event as *const RUWheelEvent));
     f(&obj_event_0);
 }
@@ -226,7 +226,7 @@ pub(crate) unsafe extern "C" fn widget_key_press_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &KeyEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &KeyEvent) + 'static) = transmute(func);
     let obj_event_0 = KeyEvent::new_from_temporary(*(event as *const RUKeyEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -238,7 +238,7 @@ pub(crate) unsafe extern "C" fn widget_key_press_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&KeyEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&KeyEvent) + 'static) = transmute(func);
     let obj_event_0 = KeyEvent::new_from_temporary(*(event as *const RUKeyEvent));
     f(&obj_event_0);
 }
@@ -248,7 +248,7 @@ pub(crate) unsafe extern "C" fn widget_key_release_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &KeyEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &KeyEvent) + 'static) = transmute(func);
     let obj_event_0 = KeyEvent::new_from_temporary(*(event as *const RUKeyEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -260,7 +260,7 @@ pub(crate) unsafe extern "C" fn widget_key_release_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&KeyEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&KeyEvent) + 'static) = transmute(func);
     let obj_event_0 = KeyEvent::new_from_temporary(*(event as *const RUKeyEvent));
     f(&obj_event_0);
 }
@@ -270,7 +270,7 @@ pub(crate) unsafe extern "C" fn widget_focus_in_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &FocusEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &FocusEvent) + 'static) = transmute(func);
     let obj_event_0 = FocusEvent::new_from_temporary(*(event as *const RUFocusEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -282,7 +282,7 @@ pub(crate) unsafe extern "C" fn widget_focus_in_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&FocusEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&FocusEvent) + 'static) = transmute(func);
     let obj_event_0 = FocusEvent::new_from_temporary(*(event as *const RUFocusEvent));
     f(&obj_event_0);
 }
@@ -292,7 +292,7 @@ pub(crate) unsafe extern "C" fn widget_focus_out_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &FocusEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &FocusEvent) + 'static) = transmute(func);
     let obj_event_0 = FocusEvent::new_from_temporary(*(event as *const RUFocusEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -304,7 +304,7 @@ pub(crate) unsafe extern "C" fn widget_focus_out_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&FocusEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&FocusEvent) + 'static) = transmute(func);
     let obj_event_0 = FocusEvent::new_from_temporary(*(event as *const RUFocusEvent));
     f(&obj_event_0);
 }
@@ -314,7 +314,7 @@ pub(crate) unsafe extern "C" fn widget_enter_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &EventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &Event) + 'static) = transmute(func);
     let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -326,7 +326,7 @@ pub(crate) unsafe extern "C" fn widget_enter_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&EventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&Event) + 'static) = transmute(func);
     let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
     f(&obj_event_0);
 }
@@ -336,7 +336,7 @@ pub(crate) unsafe extern "C" fn widget_leave_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &EventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &Event) + 'static) = transmute(func);
     let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -348,7 +348,7 @@ pub(crate) unsafe extern "C" fn widget_leave_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&EventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&Event) + 'static) = transmute(func);
     let obj_event_0 = Event::new_from_temporary(*(event as *const RUEvent));
     f(&obj_event_0);
 }
@@ -358,7 +358,7 @@ pub(crate) unsafe extern "C" fn widget_paint_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &PaintEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &PaintEvent) + 'static) = transmute(func);
     let obj_event_0 = PaintEvent::new_from_temporary(*(event as *const RUPaintEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -370,7 +370,7 @@ pub(crate) unsafe extern "C" fn widget_paint_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&PaintEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&PaintEvent) + 'static) = transmute(func);
     let obj_event_0 = PaintEvent::new_from_temporary(*(event as *const RUPaintEvent));
     f(&obj_event_0);
 }
@@ -380,7 +380,7 @@ pub(crate) unsafe extern "C" fn widget_move_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &MoveEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &MoveEvent) + 'static) = transmute(func);
     let obj_event_0 = MoveEvent::new_from_temporary(*(event as *const RUMoveEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -392,7 +392,7 @@ pub(crate) unsafe extern "C" fn widget_move_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&MoveEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&MoveEvent) + 'static) = transmute(func);
     let obj_event_0 = MoveEvent::new_from_temporary(*(event as *const RUMoveEvent));
     f(&obj_event_0);
 }
@@ -402,7 +402,7 @@ pub(crate) unsafe extern "C" fn widget_resize_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &ResizeEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &ResizeEvent) + 'static) = transmute(func);
     let obj_event_0 = ResizeEvent::new_from_temporary(*(event as *const RUResizeEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -414,7 +414,7 @@ pub(crate) unsafe extern "C" fn widget_resize_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&ResizeEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&ResizeEvent) + 'static) = transmute(func);
     let obj_event_0 = ResizeEvent::new_from_temporary(*(event as *const RUResizeEvent));
     f(&obj_event_0);
 }
@@ -424,7 +424,7 @@ pub(crate) unsafe extern "C" fn widget_close_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &CloseEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &CloseEvent) + 'static) = transmute(func);
     let obj_event_0 = CloseEvent::new_from_temporary(*(event as *const RUCloseEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -436,7 +436,7 @@ pub(crate) unsafe extern "C" fn widget_close_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&CloseEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&CloseEvent) + 'static) = transmute(func);
     let obj_event_0 = CloseEvent::new_from_temporary(*(event as *const RUCloseEvent));
     f(&obj_event_0);
 }
@@ -446,7 +446,7 @@ pub(crate) unsafe extern "C" fn widget_context_menu_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &ContextMenuEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &ContextMenuEvent) + 'static) = transmute(func);
     let obj_event_0 = ContextMenuEvent::new_from_temporary(*(event as *const RUContextMenuEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -458,7 +458,7 @@ pub(crate) unsafe extern "C" fn widget_context_menu_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&ContextMenuEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&ContextMenuEvent) + 'static) = transmute(func);
     let obj_event_0 = ContextMenuEvent::new_from_temporary(*(event as *const RUContextMenuEvent));
     f(&obj_event_0);
 }
@@ -468,7 +468,7 @@ pub(crate) unsafe extern "C" fn widget_tablet_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &TabletEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &TabletEvent) + 'static) = transmute(func);
     let obj_event_0 = TabletEvent::new_from_temporary(*(event as *const RUTabletEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -480,7 +480,7 @@ pub(crate) unsafe extern "C" fn widget_tablet_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&TabletEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&TabletEvent) + 'static) = transmute(func);
     let obj_event_0 = TabletEvent::new_from_temporary(*(event as *const RUTabletEvent));
     f(&obj_event_0);
 }
@@ -490,7 +490,7 @@ pub(crate) unsafe extern "C" fn widget_drag_enter_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &DragEnterEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &DragEnterEvent) + 'static) = transmute(func);
     let obj_event_0 = DragEnterEvent::new_from_temporary(*(event as *const RUDragEnterEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -502,7 +502,7 @@ pub(crate) unsafe extern "C" fn widget_drag_enter_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&DragEnterEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&DragEnterEvent) + 'static) = transmute(func);
     let obj_event_0 = DragEnterEvent::new_from_temporary(*(event as *const RUDragEnterEvent));
     f(&obj_event_0);
 }
@@ -512,7 +512,7 @@ pub(crate) unsafe extern "C" fn widget_drag_move_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &DragMoveEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &DragMoveEvent) + 'static) = transmute(func);
     let obj_event_0 = DragMoveEvent::new_from_temporary(*(event as *const RUDragMoveEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -524,7 +524,7 @@ pub(crate) unsafe extern "C" fn widget_drag_move_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&DragMoveEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&DragMoveEvent) + 'static) = transmute(func);
     let obj_event_0 = DragMoveEvent::new_from_temporary(*(event as *const RUDragMoveEvent));
     f(&obj_event_0);
 }
@@ -534,7 +534,7 @@ pub(crate) unsafe extern "C" fn widget_drag_leave_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &DragLeaveEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &DragLeaveEvent) + 'static) = transmute(func);
     let obj_event_0 = DragLeaveEvent::new_from_temporary(*(event as *const RUDragLeaveEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -546,7 +546,7 @@ pub(crate) unsafe extern "C" fn widget_drag_leave_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&DragLeaveEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&DragLeaveEvent) + 'static) = transmute(func);
     let obj_event_0 = DragLeaveEvent::new_from_temporary(*(event as *const RUDragLeaveEvent));
     f(&obj_event_0);
 }
@@ -556,7 +556,7 @@ pub(crate) unsafe extern "C" fn widget_drop_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &DropEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &DropEvent) + 'static) = transmute(func);
     let obj_event_0 = DropEvent::new_from_temporary(*(event as *const RUDropEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -568,7 +568,7 @@ pub(crate) unsafe extern "C" fn widget_drop_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&DropEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&DropEvent) + 'static) = transmute(func);
     let obj_event_0 = DropEvent::new_from_temporary(*(event as *const RUDropEvent));
     f(&obj_event_0);
 }
@@ -578,7 +578,7 @@ pub(crate) unsafe extern "C" fn widget_show_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &ShowEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &ShowEvent) + 'static) = transmute(func);
     let obj_event_0 = ShowEvent::new_from_temporary(*(event as *const RUShowEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -590,7 +590,7 @@ pub(crate) unsafe extern "C" fn widget_show_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&ShowEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&ShowEvent) + 'static) = transmute(func);
     let obj_event_0 = ShowEvent::new_from_temporary(*(event as *const RUShowEvent));
     f(&obj_event_0);
 }
@@ -600,7 +600,7 @@ pub(crate) unsafe extern "C" fn widget_hide_trampoline_ud<T>(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &HideEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &HideEvent) + 'static) = transmute(func);
     let obj_event_0 = HideEvent::new_from_temporary(*(event as *const RUHideEvent));
     let data = self_c as *const T;
     f(&*data, &obj_event_0);
@@ -612,7 +612,7 @@ pub(crate) unsafe extern "C" fn widget_hide_trampoline(
     func: *const c_void,
     event: *const RUBase,
 ) {
-    let f: &&(Fn(&HideEventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&HideEvent) + 'static) = transmute(func);
     let obj_event_0 = HideEvent::new_from_temporary(*(event as *const RUHideEvent));
     f(&obj_event_0);
 }
@@ -622,7 +622,7 @@ pub(crate) unsafe extern "C" fn widget_change_trampoline_ud<T>(
     func: *const c_void,
     arg0: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &EventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &Event) + 'static) = transmute(func);
     let obj_arg0_0 = Event::new_from_temporary(*(arg0 as *const RUEvent));
     let data = self_c as *const T;
     f(&*data, &obj_arg0_0);
@@ -634,7 +634,7 @@ pub(crate) unsafe extern "C" fn widget_change_trampoline(
     func: *const c_void,
     arg0: *const RUBase,
 ) {
-    let f: &&(Fn(&EventTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&Event) + 'static) = transmute(func);
     let obj_arg0_0 = Event::new_from_temporary(*(arg0 as *const RUEvent));
     f(&obj_arg0_0);
 }
@@ -6408,12 +6408,12 @@ impl<'a> Widget<'a> {
     ///
     pub fn set_window_icon_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &IconTrait) + 'a,
+        F: Fn(&T, &Icon) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &IconTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Icon) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -6430,10 +6430,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_window_icon_changed_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&IconTrait) + 'a,
+        F: Fn(&Icon) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&IconTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Icon) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_window_icon_changed_event)(
@@ -6507,12 +6507,12 @@ impl<'a> Widget<'a> {
     /// contextMenuPolicy
     pub fn set_custom_context_menu_requested_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &PointTrait) + 'a,
+        F: Fn(&T, &Point) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &PointTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Point) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -6529,10 +6529,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_custom_context_menu_requested_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&PointTrait) + 'a,
+        F: Fn(&Point) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&PointTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Point) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_custom_context_menu_requested_event)(
@@ -6604,12 +6604,12 @@ impl<'a> Widget<'a> {
     /// {Scribble Example}
     pub fn set_mouse_press_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &MouseEventTrait) + 'a,
+        F: Fn(&T, &MouseEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MouseEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -6626,10 +6626,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_mouse_press_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&MouseEventTrait) + 'a,
+        F: Fn(&MouseEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MouseEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_mouse_press_event)(
@@ -6654,12 +6654,12 @@ impl<'a> Widget<'a> {
     /// {Scribble Example}
     pub fn set_mouse_release_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &MouseEventTrait) + 'a,
+        F: Fn(&T, &MouseEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MouseEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -6676,10 +6676,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_mouse_release_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&MouseEventTrait) + 'a,
+        F: Fn(&MouseEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MouseEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_mouse_release_event)(
@@ -6710,12 +6710,12 @@ impl<'a> Widget<'a> {
     /// [`MouseEvent`]
     pub fn set_mouse_double_click_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &MouseEventTrait) + 'a,
+        F: Fn(&T, &MouseEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MouseEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -6732,10 +6732,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_mouse_double_click_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&MouseEventTrait) + 'a,
+        F: Fn(&MouseEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MouseEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_mouse_double_click_event)(
@@ -6779,12 +6779,12 @@ impl<'a> Widget<'a> {
     /// {Scribble Example}
     pub fn set_mouse_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &MouseEventTrait) + 'a,
+        F: Fn(&T, &MouseEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MouseEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -6801,10 +6801,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_mouse_move_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&MouseEventTrait) + 'a,
+        F: Fn(&MouseEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MouseEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_mouse_move_event)(
@@ -6834,12 +6834,12 @@ impl<'a> Widget<'a> {
     /// [`WheelEvent`]
     pub fn set_wheel_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &WheelEventTrait) + 'a,
+        F: Fn(&T, &WheelEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &WheelEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &WheelEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -6856,10 +6856,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_wheel_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&WheelEventTrait) + 'a,
+        F: Fn(&WheelEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&WheelEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&WheelEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_wheel_event)(
@@ -6900,12 +6900,12 @@ impl<'a> Widget<'a> {
     /// {Tetrix Example}
     pub fn set_key_press_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &KeyEventTrait) + 'a,
+        F: Fn(&T, &KeyEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &KeyEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &KeyEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -6922,10 +6922,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_key_press_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&KeyEventTrait) + 'a,
+        F: Fn(&KeyEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&KeyEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&KeyEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_key_press_event)(
@@ -6967,12 +6967,12 @@ impl<'a> Widget<'a> {
     /// [`KeyEvent`]
     pub fn set_key_release_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &KeyEventTrait) + 'a,
+        F: Fn(&T, &KeyEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &KeyEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &KeyEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -6989,10 +6989,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_key_release_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&KeyEventTrait) + 'a,
+        F: Fn(&KeyEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&KeyEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&KeyEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_key_release_event)(
@@ -7026,12 +7026,12 @@ impl<'a> Widget<'a> {
     /// [`FocusEvent`]
     pub fn set_focus_in_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &FocusEventTrait) + 'a,
+        F: Fn(&T, &FocusEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &FocusEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &FocusEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7048,10 +7048,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_focus_in_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&FocusEventTrait) + 'a,
+        F: Fn(&FocusEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&FocusEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&FocusEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_focus_in_event)(
@@ -7085,12 +7085,12 @@ impl<'a> Widget<'a> {
     /// [`FocusEvent`]
     pub fn set_focus_out_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &FocusEventTrait) + 'a,
+        F: Fn(&T, &FocusEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &FocusEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &FocusEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7107,10 +7107,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_focus_out_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&FocusEventTrait) + 'a,
+        F: Fn(&FocusEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&FocusEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&FocusEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_focus_out_event)(
@@ -7135,12 +7135,12 @@ impl<'a> Widget<'a> {
     /// [`event()`]
     pub fn set_enter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &EventTrait) + 'a,
+        F: Fn(&T, &Event) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7157,10 +7157,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_enter_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&EventTrait) + 'a,
+        F: Fn(&Event) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_enter_event)(
@@ -7185,12 +7185,12 @@ impl<'a> Widget<'a> {
     /// [`event()`]
     pub fn set_leave_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &EventTrait) + 'a,
+        F: Fn(&T, &Event) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7207,10 +7207,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_leave_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&EventTrait) + 'a,
+        F: Fn(&Event) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_leave_event)(
@@ -7272,12 +7272,12 @@ impl<'a> Widget<'a> {
     /// {Analog Clock Example}
     pub fn set_paint_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &PaintEventTrait) + 'a,
+        F: Fn(&T, &PaintEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &PaintEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &PaintEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7294,10 +7294,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_paint_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&PaintEventTrait) + 'a,
+        F: Fn(&PaintEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&PaintEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&PaintEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_paint_event)(
@@ -7324,12 +7324,12 @@ impl<'a> Widget<'a> {
     /// [`MoveEvent`]
     pub fn set_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &MoveEventTrait) + 'a,
+        F: Fn(&T, &MoveEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MoveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MoveEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7346,10 +7346,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_move_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&MoveEventTrait) + 'a,
+        F: Fn(&MoveEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MoveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MoveEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_move_event)(
@@ -7381,12 +7381,12 @@ impl<'a> Widget<'a> {
     /// {Scribble Example}
     pub fn set_resize_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &ResizeEventTrait) + 'a,
+        F: Fn(&T, &ResizeEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &ResizeEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &ResizeEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7403,10 +7403,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_resize_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&ResizeEventTrait) + 'a,
+        F: Fn(&ResizeEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&ResizeEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&ResizeEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_resize_event)(
@@ -7442,12 +7442,12 @@ impl<'a> Widget<'a> {
     /// {Application Example}
     pub fn set_close_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &CloseEventTrait) + 'a,
+        F: Fn(&T, &CloseEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &CloseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &CloseEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7464,10 +7464,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_close_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&CloseEventTrait) + 'a,
+        F: Fn(&CloseEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&CloseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&CloseEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_close_event)(
@@ -7497,12 +7497,12 @@ impl<'a> Widget<'a> {
     /// [`custom_context_menu_requested()`]
     pub fn set_context_menu_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &ContextMenuEventTrait) + 'a,
+        F: Fn(&T, &ContextMenuEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &ContextMenuEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &ContextMenuEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7519,10 +7519,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_context_menu_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&ContextMenuEventTrait) + 'a,
+        F: Fn(&ContextMenuEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&ContextMenuEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&ContextMenuEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_context_menu_event)(
@@ -7559,12 +7559,12 @@ impl<'a> Widget<'a> {
     /// [`TabletEvent`]
     pub fn set_tablet_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &TabletEventTrait) + 'a,
+        F: Fn(&T, &TabletEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &TabletEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &TabletEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7581,10 +7581,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_tablet_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&TabletEventTrait) + 'a,
+        F: Fn(&TabletEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&TabletEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&TabletEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_tablet_event)(
@@ -7613,12 +7613,12 @@ impl<'a> Widget<'a> {
     /// [`DragEnterEvent`]
     pub fn set_drag_enter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &DragEnterEventTrait) + 'a,
+        F: Fn(&T, &DragEnterEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &DragEnterEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &DragEnterEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7635,10 +7635,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_drag_enter_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&DragEnterEventTrait) + 'a,
+        F: Fn(&DragEnterEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&DragEnterEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&DragEnterEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_drag_enter_event)(
@@ -7666,12 +7666,12 @@ impl<'a> Widget<'a> {
     /// [`DragMoveEvent`]
     pub fn set_drag_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &DragMoveEventTrait) + 'a,
+        F: Fn(&T, &DragMoveEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &DragMoveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &DragMoveEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7688,10 +7688,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_drag_move_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&DragMoveEventTrait) + 'a,
+        F: Fn(&DragMoveEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&DragMoveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&DragMoveEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_drag_move_event)(
@@ -7717,12 +7717,12 @@ impl<'a> Widget<'a> {
     /// [`DragLeaveEvent`]
     pub fn set_drag_leave_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &DragLeaveEventTrait) + 'a,
+        F: Fn(&T, &DragLeaveEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &DragLeaveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &DragLeaveEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7739,10 +7739,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_drag_leave_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&DragLeaveEventTrait) + 'a,
+        F: Fn(&DragLeaveEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&DragLeaveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&DragLeaveEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_drag_leave_event)(
@@ -7767,12 +7767,12 @@ impl<'a> Widget<'a> {
     /// [`DropEvent`]
     pub fn set_drop_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &DropEventTrait) + 'a,
+        F: Fn(&T, &DropEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &DropEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &DropEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7789,10 +7789,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_drop_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&DropEventTrait) + 'a,
+        F: Fn(&DropEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&DropEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&DropEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_drop_event)(
@@ -7825,12 +7825,12 @@ impl<'a> Widget<'a> {
     /// [`ShowEvent`]
     pub fn set_show_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &ShowEventTrait) + 'a,
+        F: Fn(&T, &ShowEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &ShowEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &ShowEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7847,10 +7847,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_show_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&ShowEventTrait) + 'a,
+        F: Fn(&ShowEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&ShowEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&ShowEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_show_event)(
@@ -7882,12 +7882,12 @@ impl<'a> Widget<'a> {
     /// [`HideEvent`]
     pub fn set_hide_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &HideEventTrait) + 'a,
+        F: Fn(&T, &HideEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &HideEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &HideEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7904,10 +7904,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_hide_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&HideEventTrait) + 'a,
+        F: Fn(&HideEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&HideEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&HideEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_hide_event)(
@@ -7937,12 +7937,12 @@ impl<'a> Widget<'a> {
     ///
     pub fn set_change_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &EventTrait) + 'a,
+        F: Fn(&T, &Event) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -7959,10 +7959,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_change_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&EventTrait) + 'a,
+        F: Fn(&Event) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_change_event)(
@@ -8254,12 +8254,12 @@ impl<'a> Widget<'a> {
     #[doc(hidden)]
     pub fn set_custom_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &EventTrait) + 'a,
+        F: Fn(&T, &Event) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_object_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -8276,10 +8276,10 @@ impl<'a> Widget<'a> {
 
     pub fn set_custom_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&EventTrait) + 'a,
+        F: Fn(&Event) + 'a,
     {
         let (obj_data, funcs) = self.get_object_obj_funcs();
-        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_custom_event)(

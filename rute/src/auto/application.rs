@@ -16,7 +16,7 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-// Auto-generated imports
+#[allow(unused_imports)]
 use auto::*;
 
 pub(crate) unsafe extern "C" fn application_about_to_quit_trampoline_ud<T>(
@@ -44,7 +44,7 @@ pub(crate) unsafe extern "C" fn application_screen_added_trampoline_ud<T>(
     func: *const c_void,
     screen: *const RUBase,
 ) {
-    let f: &&(Fn(&T, &ScreenTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&T, &Screen) + 'static) = transmute(func);
     let obj_screen_0 = Screen::new_from_temporary(*(screen as *const RUScreen));
     let data = self_c as *const T;
     f(&*data, &obj_screen_0);
@@ -56,7 +56,7 @@ pub(crate) unsafe extern "C" fn application_screen_added_trampoline(
     func: *const c_void,
     screen: *const RUBase,
 ) {
-    let f: &&(Fn(&ScreenTrait) + 'static) = transmute(func);
+    let f: &&(Fn(&Screen) + 'static) = transmute(func);
     let obj_screen_0 = Screen::new_from_temporary(*(screen as *const RUScreen));
     f(&obj_screen_0);
 }
@@ -526,12 +526,12 @@ impl<'a> Application<'a> {
     }
     pub fn set_screen_added_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &ScreenTrait) + 'a,
+        F: Fn(&T, &Screen) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_application_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &ScreenTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Screen) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -548,10 +548,10 @@ impl<'a> Application<'a> {
 
     pub fn set_screen_added_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&ScreenTrait) + 'a,
+        F: Fn(&Screen) + 'a,
     {
         let (obj_data, funcs) = self.get_application_obj_funcs();
-        let f: Box<Box<Fn(&ScreenTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Screen) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_screen_added_event)(

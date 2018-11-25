@@ -16,7 +16,7 @@ use std::ffi::{CStr, CString};
 
 use rute_ffi_base::*;
 
-// Auto-generated imports
+#[allow(unused_imports)]
 use auto::*;
 
 #[derive(Clone)]
@@ -2443,12 +2443,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_window_icon_changed_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &IconTrait) + 'a,
+        F: Fn(&T, &Icon) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &IconTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Icon) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2465,10 +2465,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_window_icon_changed_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&IconTrait) + 'a,
+        F: Fn(&Icon) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&IconTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Icon) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_window_icon_changed_event)(
@@ -2525,12 +2525,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_custom_context_menu_requested_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &PointTrait) + 'a,
+        F: Fn(&T, &Point) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &PointTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Point) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2547,10 +2547,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_custom_context_menu_requested_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&PointTrait) + 'a,
+        F: Fn(&Point) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&PointTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Point) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_custom_context_menu_requested_event)(
@@ -2566,12 +2566,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_mouse_press_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &MouseEventTrait) + 'a,
+        F: Fn(&T, &MouseEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MouseEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2588,10 +2588,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_mouse_press_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&MouseEventTrait) + 'a,
+        F: Fn(&MouseEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MouseEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_mouse_press_event)(
@@ -2607,12 +2607,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_mouse_release_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &MouseEventTrait) + 'a,
+        F: Fn(&T, &MouseEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MouseEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2629,10 +2629,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_mouse_release_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&MouseEventTrait) + 'a,
+        F: Fn(&MouseEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MouseEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_mouse_release_event)(
@@ -2648,12 +2648,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_mouse_double_click_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &MouseEventTrait) + 'a,
+        F: Fn(&T, &MouseEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MouseEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2670,10 +2670,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_mouse_double_click_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&MouseEventTrait) + 'a,
+        F: Fn(&MouseEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MouseEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_mouse_double_click_event)(
@@ -2689,12 +2689,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_mouse_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &MouseEventTrait) + 'a,
+        F: Fn(&T, &MouseEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MouseEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2711,10 +2711,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_mouse_move_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&MouseEventTrait) + 'a,
+        F: Fn(&MouseEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MouseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MouseEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_mouse_move_event)(
@@ -2730,12 +2730,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_wheel_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &WheelEventTrait) + 'a,
+        F: Fn(&T, &WheelEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &WheelEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &WheelEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2752,10 +2752,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_wheel_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&WheelEventTrait) + 'a,
+        F: Fn(&WheelEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&WheelEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&WheelEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_wheel_event)(
@@ -2771,12 +2771,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_key_press_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &KeyEventTrait) + 'a,
+        F: Fn(&T, &KeyEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &KeyEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &KeyEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2793,10 +2793,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_key_press_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&KeyEventTrait) + 'a,
+        F: Fn(&KeyEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&KeyEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&KeyEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_key_press_event)(
@@ -2812,12 +2812,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_key_release_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &KeyEventTrait) + 'a,
+        F: Fn(&T, &KeyEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &KeyEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &KeyEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2834,10 +2834,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_key_release_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&KeyEventTrait) + 'a,
+        F: Fn(&KeyEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&KeyEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&KeyEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_key_release_event)(
@@ -2853,12 +2853,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_focus_in_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &FocusEventTrait) + 'a,
+        F: Fn(&T, &FocusEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &FocusEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &FocusEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2875,10 +2875,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_focus_in_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&FocusEventTrait) + 'a,
+        F: Fn(&FocusEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&FocusEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&FocusEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_focus_in_event)(
@@ -2894,12 +2894,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_focus_out_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &FocusEventTrait) + 'a,
+        F: Fn(&T, &FocusEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &FocusEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &FocusEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2916,10 +2916,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_focus_out_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&FocusEventTrait) + 'a,
+        F: Fn(&FocusEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&FocusEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&FocusEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_focus_out_event)(
@@ -2935,12 +2935,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_enter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &EventTrait) + 'a,
+        F: Fn(&T, &Event) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2957,10 +2957,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_enter_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&EventTrait) + 'a,
+        F: Fn(&Event) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_enter_event)(
@@ -2976,12 +2976,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_leave_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &EventTrait) + 'a,
+        F: Fn(&T, &Event) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -2998,10 +2998,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_leave_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&EventTrait) + 'a,
+        F: Fn(&Event) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_leave_event)(
@@ -3017,12 +3017,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_paint_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &PaintEventTrait) + 'a,
+        F: Fn(&T, &PaintEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &PaintEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &PaintEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3039,10 +3039,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_paint_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&PaintEventTrait) + 'a,
+        F: Fn(&PaintEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&PaintEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&PaintEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_paint_event)(
@@ -3058,12 +3058,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &MoveEventTrait) + 'a,
+        F: Fn(&T, &MoveEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &MoveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &MoveEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3080,10 +3080,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_move_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&MoveEventTrait) + 'a,
+        F: Fn(&MoveEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&MoveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&MoveEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_move_event)(
@@ -3099,12 +3099,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_resize_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &ResizeEventTrait) + 'a,
+        F: Fn(&T, &ResizeEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &ResizeEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &ResizeEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3121,10 +3121,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_resize_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&ResizeEventTrait) + 'a,
+        F: Fn(&ResizeEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&ResizeEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&ResizeEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_resize_event)(
@@ -3140,12 +3140,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_close_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &CloseEventTrait) + 'a,
+        F: Fn(&T, &CloseEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &CloseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &CloseEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3162,10 +3162,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_close_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&CloseEventTrait) + 'a,
+        F: Fn(&CloseEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&CloseEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&CloseEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_close_event)(
@@ -3181,12 +3181,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_context_menu_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &ContextMenuEventTrait) + 'a,
+        F: Fn(&T, &ContextMenuEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &ContextMenuEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &ContextMenuEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3203,10 +3203,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_context_menu_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&ContextMenuEventTrait) + 'a,
+        F: Fn(&ContextMenuEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&ContextMenuEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&ContextMenuEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_context_menu_event)(
@@ -3222,12 +3222,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_tablet_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &TabletEventTrait) + 'a,
+        F: Fn(&T, &TabletEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &TabletEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &TabletEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3244,10 +3244,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_tablet_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&TabletEventTrait) + 'a,
+        F: Fn(&TabletEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&TabletEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&TabletEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_tablet_event)(
@@ -3263,12 +3263,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_drag_enter_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &DragEnterEventTrait) + 'a,
+        F: Fn(&T, &DragEnterEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &DragEnterEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &DragEnterEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3285,10 +3285,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_drag_enter_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&DragEnterEventTrait) + 'a,
+        F: Fn(&DragEnterEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&DragEnterEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&DragEnterEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_drag_enter_event)(
@@ -3304,12 +3304,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_drag_move_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &DragMoveEventTrait) + 'a,
+        F: Fn(&T, &DragMoveEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &DragMoveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &DragMoveEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3326,10 +3326,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_drag_move_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&DragMoveEventTrait) + 'a,
+        F: Fn(&DragMoveEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&DragMoveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&DragMoveEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_drag_move_event)(
@@ -3345,12 +3345,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_drag_leave_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &DragLeaveEventTrait) + 'a,
+        F: Fn(&T, &DragLeaveEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &DragLeaveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &DragLeaveEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3367,10 +3367,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_drag_leave_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&DragLeaveEventTrait) + 'a,
+        F: Fn(&DragLeaveEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&DragLeaveEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&DragLeaveEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_drag_leave_event)(
@@ -3386,12 +3386,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_drop_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &DropEventTrait) + 'a,
+        F: Fn(&T, &DropEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &DropEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &DropEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3408,10 +3408,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_drop_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&DropEventTrait) + 'a,
+        F: Fn(&DropEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&DropEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&DropEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_drop_event)(
@@ -3427,12 +3427,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_show_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &ShowEventTrait) + 'a,
+        F: Fn(&T, &ShowEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &ShowEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &ShowEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3449,10 +3449,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_show_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&ShowEventTrait) + 'a,
+        F: Fn(&ShowEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&ShowEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&ShowEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_show_event)(
@@ -3468,12 +3468,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_hide_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &HideEventTrait) + 'a,
+        F: Fn(&T, &HideEvent) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &HideEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &HideEvent) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3490,10 +3490,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_hide_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&HideEventTrait) + 'a,
+        F: Fn(&HideEvent) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&HideEventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&HideEvent) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_hide_event)(
@@ -3509,12 +3509,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_change_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &EventTrait) + 'a,
+        F: Fn(&T, &Event) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3531,10 +3531,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_change_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&EventTrait) + 'a,
+        F: Fn(&Event) + 'a,
     {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
-        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_change_event)(
@@ -3788,12 +3788,12 @@ impl<'a> ListWidget<'a> {
     #[doc(hidden)]
     pub fn set_custom_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, &EventTrait) + 'a,
+        F: Fn(&T, &Event) + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_object_obj_funcs();
 
-        let f: Box<Box<Fn(&T, &EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -3810,10 +3810,10 @@ impl<'a> ListWidget<'a> {
 
     pub fn set_custom_event<F>(&self, func: F) -> &Self
     where
-        F: Fn(&EventTrait) + 'a,
+        F: Fn(&Event) + 'a,
     {
         let (obj_data, funcs) = self.get_object_obj_funcs();
-        let f: Box<Box<Fn(&EventTrait) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_custom_event)(

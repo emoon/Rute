@@ -35,8 +35,6 @@ pub struct RustGenerator {
     trait_impl_template: Template,
     struct_impl_template: Template,
     drop_template: Template,
-    impl_trait_static_template: Template,
-    static_struct_template: Template,
     type_handler: TypeHandler,
 }
 
@@ -277,6 +275,14 @@ fn get_trait_name(name: &str) -> String {
     }
 }
 
+fn get_real_type(name: &str) -> &str {
+    if name.ends_with("Type") {
+        &name[..name.len() - 4]
+    } else {
+        &name
+    }
+}
+
 impl RustGenerator {
     pub fn new() -> RustGenerator {
         let parser = ParserBuilder::with_liquid().build();
@@ -290,8 +296,6 @@ impl RustGenerator {
             trait_impl_template: parser.parse(RUST_IMPL_TRAIT_TEMPLATE).unwrap(),
             struct_impl_template: parser.parse(RUST_STRUCT_IMPL_TEMPLATE).unwrap(),
             trait_impl_end_template: parser.parse(RUST_IMPL_TRAIT_END_TEMPLATE).unwrap(),
-            impl_trait_static_template: parser.parse(RUST_IMPL_TRAIT_STATIC_TEMPLATE).unwrap(),
-            static_struct_template: parser.parse(RUST_STATIC_STRUCT_TEMPLATE).unwrap(),
         }
     }
 
@@ -304,6 +308,7 @@ impl RustGenerator {
         var: &Variable,
         return_arg: IsReturnArg,
         need_lifetime: bool,
+        real_type: bool,
     ) {
         dest.clear();
 
@@ -325,7 +330,11 @@ impl RustGenerator {
             VariableType::Primitive => dest.push_str(&type_name),
             VariableType::Enum => dest.push_str(&var.enum_sub_type),
             VariableType::Regular => {
-                dest.push_str(&get_trait_name(&type_name));
+                if real_type {
+                    dest.push_str(get_real_type(&type_name));
+                } else {
+                    dest.push_str(&get_trait_name(&type_name));
+                }
 
                 if need_lifetime {
                     dest.push_str("<'a>");
@@ -343,7 +352,12 @@ impl RustGenerator {
                 if return_arg == IsReturnArg::No {
                     dest.push('&');
                 }
-                dest.push_str(&get_trait_name(&type_name));
+
+                if real_type {
+                    dest.push_str(get_real_type(&type_name));
+                } else {
+                    dest.push_str(&get_trait_name(&type_name));
+                }
 
                 if need_lifetime {
                     dest.push_str("<'a>");
@@ -409,7 +423,7 @@ impl RustGenerator {
                 temp_str.push('&');
                 temp_str.push(label);
             } else {
-                self.generate_arg_type(&mut temp_str, &arg, IsReturnArg::No, is_static_func);
+                self.generate_arg_type(&mut temp_str, &arg, IsReturnArg::No, is_static_func, false);
             }
 
             if !(is_static_func && index == 0) {
@@ -441,7 +455,7 @@ impl RustGenerator {
         } else {
             let ret_val = func.return_val.as_ref().unwrap();
 
-            self.generate_arg_type(&mut temp_str, ret_val, IsReturnArg::Yes, is_static_func);
+            self.generate_arg_type(&mut temp_str, ret_val, IsReturnArg::Yes, is_static_func, false);
             func_imp.push_str(" -> ");
 
             if ret_val.array {
@@ -470,7 +484,7 @@ impl RustGenerator {
         );
 
         let out = self.trait_impl_end_template.render(&template_data).unwrap();
-        dest.write_all(out.as_bytes());
+        dest.write_all(out.as_bytes())?;
 
         for name in &sdef.full_inherit {
             let mut template_data = Object::new();
@@ -510,7 +524,7 @@ impl RustGenerator {
 
         let len = func.function_args[1..].len().wrapping_sub(1);
         for (index, arg) in func.function_args[1..].iter().enumerate() {
-            self.generate_arg_type(&mut temp_str, &arg, IsReturnArg::No, false);
+            self.generate_arg_type(&mut temp_str, &arg, IsReturnArg::No, false, true);
             function_arg_types.push_str(&temp_str);
 
             if index != len {
@@ -763,38 +777,17 @@ impl RustGenerator {
             );
 
             let mut event_funcs = String::with_capacity(512*1024);
-
-            //println!("-----------------------------------------------------");
-            //println!("struct name {}", sdef.name);
-
             let mut func_lookup = HashSet::new();
 
             // Reverse order to start with highest inheritance to lowest
             for inh in sdef.full_inherit.iter().rev() {
-                //println!("  {}", inh);
                 if let Some(ref def) = Self::find_api_def(&inh, api_defs) {
                     self.generate_functions(&mut event_funcs, def, def.name == sdef.name,
                         &mut func_lookup);
                 }
             }
 
-            /*
-            sdef.functions
-                .iter()
-                .for_each(|f| {
-                    let res;
-                    event_funcs.push_str(&f.doc_comments);
-                    if f.func_type == FunctionType::Event || f.func_type == FunctionType::Signal {
-                        res = self.generate_callback(&f, &sdef.name, &self.callback_template);
-                    } else {
-                        res = self.generate_function(&f, &sdef.name, &sdef.name);
-                    }
-                    event_funcs.push_str(&res);
-                });
-            */
-
             template_data.insert("event_funcs".into(), Value::scalar(event_funcs));
-
             dest.write_all(sdef.doc_comments.as_bytes())?;
             let output = self.struct_impl_template.render(&template_data).unwrap();
             dest.write_all(output.as_bytes())?;
@@ -812,7 +805,6 @@ impl RustGenerator {
 
             // Implement drop for structs that needs it
 
-            /*
             if s.should_generate_drop() {
                 let mut template_data = Object::new();
 
@@ -826,7 +818,6 @@ impl RustGenerator {
 
                 f.write_all(output.as_bytes())?;
             }
-            */
 
             Ok(())
         })
@@ -888,132 +879,11 @@ impl RustGenerator {
         writeln!(dest, "pub use rute::*;")
     }
 
-    fn gen_mod_regular(var: &Variable) -> Vec<String> {
-        let mut strings = Vec::new();
-        let name = get_trait_name(&var.type_name);
-
-        // If type ends with trait we import the regular type as well
-        if name.ends_with("Trait") {
-            let type_name = &name[..name.len() - 5];
-            strings.push(format!("#[allow(unused_imports)]\nuse auto::{}::{};", var.def_file, type_name));
-            strings.push(format!("#[allow(unused_imports)]\nuse auto::{}_ffi::*;", var.def_file));
-        }
-
-        strings.push(format!("#[allow(unused_imports)]\nuse auto::{}::{};", var.def_file, name));
-        strings
-    }
-
-    fn gen_mod_name(var: &Variable, def_file: &str, lookup: &HashSet<String>, print: bool) -> Vec<String> {
-        if var.def_file == def_file {
-            return Vec::new()
-        }
-
-        match var.vtype {
-            VariableType::Enum => {
-                if !lookup.contains(&var.enum_sub_type) {
-                    vec![format!("#[allow(unused_imports)]\nuse auto::{}::{};", var.def_file, var.enum_sub_type)]
-                } else {
-                    Vec::new()
-                }
-            }
-
-            VariableType::Regular => Self::gen_mod_regular(var),
-            VariableType::Reference => Self::gen_mod_regular(var),
-            _ => Vec::new(),
-        }
-    }
-
-    ///
-    /// Gather up all the types we need and import them
-    ///
-    fn generate_mod_usage<W: Write>(&self, dest: &mut W, api_def: &ApiDef) -> io::Result<()> {
-        let mut lookup = BTreeMap::new();
-        let mut local_types = HashSet::new();
-
-        // Build a lookup for the local types so they won't be included by global ones.
-        // There are some cases (mostly for enums) where enums has the same name for various
-        // cases so we need to make sure we don't import the remote one if we have a local
-        // one with the same name
-
-        for sdef in &api_def.class_structs {
-            local_types.insert(sdef.name.to_owned());
-        }
-
-        for edef in &api_def.enums {
-            local_types.insert(edef.name.to_owned());
-        }
-
-        let print = false;
-
-        for sdef in &api_def.class_structs {
-            for func in &sdef.functions {
-                for arg in &func.function_args {
-                    for var in Self::gen_mod_name(&arg, &sdef.def_file, &local_types, print) {
-                        if !lookup.contains_key(&var) {
-                            lookup.insert(var, ());
-                        }
-                    }
-                }
-
-                if let Some(ref var) = func.return_val {
-                    for var in Self::gen_mod_name(&var, &sdef.def_file, &local_types, print) {
-                        if !lookup.contains_key(&var) {
-                            lookup.insert(var, ());
-                        }
-                    }
-                }
-            }
-        }
-
-        // import in-traits
-
-        for sdef in &api_def.class_structs {
-            let mut print = false;
-
-            if sdef.name.contains("Cursor") {
-                print = true;
-            }
-
-            for name in &sdef.full_inherit {
-                let mut wrote = false;
-                if name != &sdef.name {
-                    writeln!(dest, "#[allow(unused_imports)]")?;
-                    writeln!(dest, "use auto::{}::*;", name.to_snake_case());
-                    writeln!(dest, "#[allow(unused_imports)]")?;
-                    writeln!(dest, "use auto::{}_ffi::*;", name.to_snake_case());
-                    wrote = true;
-                }
-
-                if print {
-                    println!("{} {} - {}", name, sdef.name, wrote);
-                }
-            }
-        }
-
-        // always import the ffi issue
-
-        writeln!(dest, "#[allow(unused_imports)]")?;
-        writeln!(dest, "use auto::rute::*;");
-        writeln!(dest, "#[allow(unused_imports)]")?;
-        writeln!(dest, "use auto::rute_ffi::*;");
-        writeln!(dest, "#[allow(unused_imports)]")?;
-        writeln!(dest, "use auto::{}_ffi::*;", api_def.base_filename);
-
-        for (import, _) in lookup {
-            writeln!(dest, "{}", import)?;
-        }
-
-        Ok(())
-    }
-
     pub fn generate(&self, filename: &str, api_def: &ApiDef, api_defs: &[ApiDef]) -> io::Result<()> {
         let mut dest = BufWriter::new(File::create(filename)?);
 
         // write header
         dest.write_all(HEADER)?;
-
-        // As we may need types/enums/etc from other types we need to generate that
-        //self.generate_mod_usage(&mut dest, api_def)?;
 
         // write all the structs
         self.generate_structs(&mut dest, api_def, api_defs)?;
@@ -1149,7 +1019,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl.1, "<W: WidgetType<'a>>(&self, foo: &W) -> &Self");
+        assert_eq!(func_impl.1, "<W: WidgetTrait<'a>>(&self, foo: &W) -> &Self");
     }
 
     //
@@ -1170,7 +1040,7 @@ mod tests {
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
 
         assert_eq!(func_impl.0, true);
-        assert_eq!(func_impl.1, "<'a, W: WidgetType<'a>>(foo: &W)");
+        assert_eq!(func_impl.1, "<W: WidgetTrait<'a>>(foo: &W)");
     }
 
     //
@@ -1197,7 +1067,7 @@ mod tests {
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
         assert_eq!(
             func_impl.1,
-            "<W: WidgetType<'a>>(&self, foo: &W, bar: &W) -> &Self"
+            "<W: WidgetTrait<'a>>(&self, foo: &W, bar: &W) -> &Self"
         );
     }
 
@@ -1230,7 +1100,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl.1, "<P: PaintType<'a>, Q: PoleType<'a>, W: WidgetType<'a>>(&self, foo: &W, bar: &P, pole: &Q) -> &Self");
+        assert_eq!(func_impl.1, "<P: PaintTrait<'a>, Q: PoleTrait<'a>, W: WidgetTrait<'a>>(&self, foo: &W, bar: &P, pole: &Q) -> &Self");
     }
 
     //

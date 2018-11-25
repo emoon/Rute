@@ -453,22 +453,6 @@ impl ApiParser {
     }
 
     ///
-    /// Get the name for a rule
-    ///
-    fn get_name(rule: Pair<Rule>) -> String {
-        let mut name = String::new();
-
-        for entry in rule.into_inner() {
-            if entry.as_rule() == Rule::name {
-                name = entry.as_str().to_owned();
-                break;
-            }
-        }
-
-        name
-    }
-
-    ///
     /// Get data for function declaration
     ///
     fn get_function(rule: Pair<Rule>, doc_comments: &str) -> Function {
@@ -796,16 +780,13 @@ impl ApiParser {
                 struct_name_map.insert(s.name.to_owned(), s.cpp_name.to_owned());
                 type_def_file.insert(s.name.to_owned(), s.def_file.to_owned());
                 type_def_file.insert(format!("{}Trait",s.name), s.def_file.to_owned());
-                println!("type {} in module {}", s.name, s.def_file);
             });
 
             api_def.enums.iter().for_each(|s| {
                 enum_def_file.insert(s.name.to_owned(), s.def_file.to_owned());
-                println!("enum {} in module {}", s.name, s.def_file);
 
                 if !s.flags_name.is_empty() {
                     enum_def_file.insert(s.flags_name.to_owned(), s.def_file.to_owned());
-                    println!("enum {} in module {}", s.flags_name, s.def_file);
                 }
             });
         }
