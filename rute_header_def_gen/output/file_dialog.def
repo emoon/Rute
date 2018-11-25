@@ -960,9 +960,9 @@ struct FileDialog : Dialog {
 
 [org_name(QFileDialog)]
 enum ViewMode {
-    /// Displays an icon, a name, and details for each item in
+    /// Displays an icon, a name, and details for each item in the directory.
     Detail,
-    /// Displays only an icon and a name for each item in the
+    /// Displays only an icon and a name for each item in the directory.
     List,
 }
 
@@ -972,11 +972,11 @@ enum FileMode {
     AnyFile,
     /// The name of a single existing file.
     ExistingFile,
-    /// The name of a directory. Both files and
+    /// The name of a directory. Both files and directories are displayed. However, the native Windows file dialog does not support displaying files in the directory chooser.
     Directory,
-    /// The names of zero or more existing files.
+    /// The names of zero or more existing files. This value is obsolete since Qt 4.5:
     ExistingFiles,
-    /// Use
+    /// Use `Directory` and setOption(ShowDirsOnly, true) instead.
     DirectoryOnly,
 }
 
@@ -1004,21 +1004,22 @@ enum DialogLabel {
 
 [org_name(QFileDialog)]
 enum Option {
-    /// Only show directories in the file dialog. By
+    /// Only show directories in the file dialog. By default both files and directories are shown. (Valid only in the [Directory](Directory)
+ file mode.)
     ShowDirsOnly,
-    /// Don't resolve symlinks in the file
+    /// Don't resolve symlinks in the file dialog. By default symlinks are resolved.
     DontResolveSymlinks,
-    /// Don't ask for confirmation if an
+    /// Don't ask for confirmation if an existing file is selected. By default confirmation is requested.
     DontConfirmOverwrite,
-    /// In previous versions of Qt, the static
+    /// In previous versions of Qt, the static functions would create a sheet by default if the static function was given a parent. This is no longer supported and does nothing in Qt 4.5, The static functions will always be an application modal dialog. If you want to use sheets, use QFileDialog::open() instead.
     DontUseSheet,
-    /// Don't use the native file dialog. By
+    /// Don't use the native file dialog. By default, the native file dialog is used unless you use a subclass of QFileDialog that contains the Q_OBJECT macro, or the platform does not have a native dialog of the type that you require.
     DontUseNativeDialog,
     /// Indicates that the model is readonly.
     ReadOnly,
-    /// Indicates if the file name filter details are
+    /// Indicates if the file name filter details are hidden or not.
     HideNameFilterDetails,
-    /// Always use the default directory icon.
+    /// Always use the default directory icon. Some platforms allow the user to set a different icon. Custom icon lookup cause a big performance impact over network or removable drives. Setting this will enable the QFileIconProvider::DontUseCustomDirectoryIcons option in the icon provider. This enum value was added in Qt 5.2.
     DontUseCustomDirectoryIcons,
 }
 

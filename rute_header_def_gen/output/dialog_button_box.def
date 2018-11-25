@@ -288,15 +288,25 @@ struct DialogButtonBox : Widget {
 
 [org_name(QDialogButtonBox)]
 enum ButtonRole {
+    /// The button is invalid.
     InvalidRole,
+    /// Clicking the button causes the dialog to be accepted (e.g. OK).
     AcceptRole,
+    /// Clicking the button causes the dialog to be rejected (e.g. Cancel).
     RejectRole,
+    /// Clicking the button causes a destructive change (e.g. for Discarding Changes) and closes the dialog.
     DestructiveRole,
+    /// Clicking the button causes changes to the elements within the dialog.
     ActionRole,
+    /// The button can be clicked to request help.
     HelpRole,
+    /// The button is a "Yes"-like button.
     YesRole,
+    /// The button is a "No"-like button.
     NoRole,
+    /// The button resets the dialog's fields to default values.
     ResetRole,
+    /// The button applies current changes.
     ApplyRole,
     NRoles,
 }
@@ -305,41 +315,59 @@ enum ButtonRole {
 enum StandardButton {
     /// An invalid button.
     NoButton,
-    /// An "OK" button defined with the
+    /// An "OK" button defined with the [AcceptRole.](AcceptRole.)
+
     Ok,
-    /// A "Save" button defined with the
+    /// A "Save" button defined with the [AcceptRole.](AcceptRole.)
+
     Save,
-    /// A "Save All" button defined with the
+    /// A "Save All" button defined with the [AcceptRole.](AcceptRole.)
+
     SaveAll,
-    /// An "Open" button defined with the
+    /// An "Open" button defined with the [AcceptRole.](AcceptRole.)
+
     Open,
-    /// A "Yes" button defined with the
+    /// A "Yes" button defined with the [YesRole.](YesRole.)
+
     Yes,
-    /// A "Yes to All" button defined with the
+    /// A "Yes to All" button defined with the [YesRole.](YesRole.)
+
     YesToAll,
-    /// A "No" button defined with the
+    /// A "No" button defined with the [NoRole.](NoRole.)
+
     No,
-    /// A "No to All" button defined with the
+    /// A "No to All" button defined with the [NoRole.](NoRole.)
+
     NoToAll,
-    /// An "Abort" button defined with the
+    /// An "Abort" button defined with the [RejectRole.](RejectRole.)
+
     Abort,
-    /// A "Retry" button defined with the
+    /// A "Retry" button defined with the [AcceptRole.](AcceptRole.)
+
     Retry,
-    /// An "Ignore" button defined with the
+    /// An "Ignore" button defined with the [AcceptRole.](AcceptRole.)
+
     Ignore,
-    /// A "Close" button defined with the
+    /// A "Close" button defined with the [RejectRole.](RejectRole.)
+
     Close,
-    /// A "Cancel" button defined with the
+    /// A "Cancel" button defined with the [RejectRole.](RejectRole.)
+
     Cancel,
-    /// A "Discard" or "Don't Save" button, depending on the platform,
+    /// A "Discard" or "Don't Save" button, depending on the platform, defined with the [DestructiveRole.](DestructiveRole.)
+
     Discard,
-    /// A "Help" button defined with the
+    /// A "Help" button defined with the [HelpRole.](HelpRole.)
+
     Help,
-    /// An "Apply" button defined with the
+    /// An "Apply" button defined with the [ApplyRole.](ApplyRole.)
+
     Apply,
-    /// A "Reset" button defined with the
+    /// A "Reset" button defined with the [ResetRole.](ResetRole.)
+
     Reset,
-    /// A "Restore Defaults" button defined with the
+    /// A "Restore Defaults" button defined with the [ResetRole.](ResetRole.)
+
     RestoreDefaults,
     FirstButton,
     LastButton,
@@ -349,13 +377,14 @@ enum StandardButton {
 enum ButtonLayout {
     /// Use a policy appropriate for applications on Windows.
     WinLayout,
-    /// Use a policy appropriate for applications on
+    /// Use a policy appropriate for applications on MacOS .
     MacLayout,
     /// Use a policy appropriate for applications on KDE.
     KdeLayout,
     /// Use a policy appropriate for applications on GNOME.
     GnomeLayout,
-    /// Use a policy appropriate for applications on Android.
+    /// Use a policy appropriate for applications on Android. This enum value was added in Qt 5.10. The button layout is specified by the [current style](style())
+ . However, on the X11 platform, it may be influenced by the desktop environment.
     AndroidLayout,
 }
 

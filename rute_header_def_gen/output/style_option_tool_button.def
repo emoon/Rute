@@ -22,13 +22,14 @@ struct StyleOptionToolButton : StyleOptionComplex {
 
 [org_name(QStyleOptionToolButton)]
 enum StyleOptionType {
-    /// The type of style option provided (
+    /// The type of style option provided ( [SO_ToolButton](SO_ToolButton)
+ for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
     Type,
 }
 
 [org_name(QStyleOptionToolButton)]
 enum StyleOptionVersion {
-    /// 1
+    /// 1 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
     Version,
 }
 
@@ -40,7 +41,7 @@ enum ToolButtonFeature {
     Arrow,
     /// The tool button has a menu.
     Menu,
-    /// The button should display an arrow to
+    /// The button should display an arrow to indicate that a menu is present.
     MenuButtonPopup,
     /// There is a delay to showing the menu.
     PopupDelay,

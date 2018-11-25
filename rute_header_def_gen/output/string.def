@@ -14822,15 +14822,15 @@ struct String {
 
 [org_name(QString)]
 enum SectionFlag {
-    /// Empty fields are counted, leading and
+    /// Empty fields are counted, leading and trailing separators are not included, and the separator is compared case sensitively.
     SectionDefault,
-    /// Treat empty fields as if they don't exist,
+    /// Treat empty fields as if they don't exist, i.e. they are not considered as far as *start* and *end* are concerned.
     SectionSkipEmpty,
-    /// Include the leading separator (if
+    /// Include the leading separator (if any) in the result string.
     SectionIncludeLeadingSep,
-    /// Include the trailing separator
+    /// Include the trailing separator (if any) in the result string.
     SectionIncludeTrailingSep,
-    /// Compare the separator
+    /// Compare the separator case-insensitively.
     SectionCaseInsensitiveSeps,
 }
 

@@ -849,7 +849,7 @@ struct TextCursor {
 enum MoveMode {
     /// Moves the anchor to the same position as the cursor itself.
     MoveAnchor,
-    /// Keeps the anchor where it is.
+    /// Keeps the anchor where it is. If the anchor() is kept where it is and the position() is moved, the text in between will be selected.
     KeepAnchor,
 }
 
@@ -897,19 +897,19 @@ enum MoveOperation {
     Right,
     /// Move right one word.
     WordRight,
-    /// Move to the beginning of the next table cell inside the
+    /// Move to the beginning of the next table cell inside the current table. If the current cell is the last cell in the row, the cursor will move to the first cell in the next row.
     NextCell,
-    /// Move to the beginning of the previous table cell
+    /// Move to the beginning of the previous table cell inside the current table. If the current cell is the first cell in the row, the cursor will move to the last cell in the previous row.
     PreviousCell,
-    /// Move to the first new cell of the next row in the current
+    /// Move to the first new cell of the next row in the current table.
     NextRow,
-    /// Move to the last cell of the previous row in the
+    /// Move to the last cell of the previous row in the current table.
     PreviousRow,
 }
 
 [org_name(QTextCursor)]
 enum SelectionType {
-    /// Selects the word under the cursor. If the cursor
+    /// Selects the word under the cursor. If the cursor is not positioned within a string of selectable characters, no text is selected.
     WordUnderCursor,
     /// Selects the line of text under the cursor.
     LineUnderCursor,

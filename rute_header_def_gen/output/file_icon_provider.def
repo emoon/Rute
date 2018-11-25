@@ -48,7 +48,7 @@ enum IconType {
 
 [org_name(QFileIconProvider)]
 enum Option {
-    /// Always use the default directory icon.
+    /// Always use the default directory icon. Some platforms allow the user to set a different icon. Custom icon lookup cause a big performance impact over network or removable drives.
     DontUseCustomDirectoryIcons,
 }
 

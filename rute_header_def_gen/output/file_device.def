@@ -202,9 +202,9 @@ enum FileError {
 
 [org_name(QFileDevice)]
 enum FileTime {
-    /// When the file was most recently accessed
+    /// When the file was most recently accessed (e.g. read or written to).
     FileAccessTime,
-    /// When the file was created (may not be not
+    /// When the file was created (may not be not supported on UNIX).
     FileBirthTime,
     /// When the file's metadata was last changed.
     FileMetadataChangeTime,
@@ -236,15 +236,15 @@ enum Permission {
     ReadOther,
     /// The file is writable by anyone.
     WriteOther,
-    /// The file is executable by anyone.
+    /// The file is executable by anyone. **Warning**: Because of differences in the platforms supported by Qt, the semantics of ReadUser, WriteUser and ExeUser are platform-dependent: On Unix, the rights of the owner of the file are returned and on Windows the rights of the current user are returned. This behavior might change in a future Qt version.
     ExeOther,
 }
 
 [org_name(QFileDevice)]
 enum FileHandleFlag {
-    /// The file handle passed into open() should be
+    /// The file handle passed into open() should be closed by close(), the default behavior is that close just flushes the file and the application is responsible for closing the file handle. When opening a file by name, this flag is ignored as Qt always owns the file handle and must close it.
     AutoCloseHandle,
-    /// If not explicitly closed, the underlying file
+    /// If not explicitly closed, the underlying file handle is left open when the QFile object is destroyed.
     DontCloseHandle,
 }
 
@@ -252,7 +252,7 @@ enum FileHandleFlag {
 enum MemoryMapFlags {
     /// No options.
     NoOptions,
-    /// The mapped memory will be private, so any
+    /// The mapped memory will be private, so any modifications will not be visible to other processes and will not be written to disk. Any such modifications will be lost when the memory is unmapped. It is unspecified whether modifications made to the file made after the mapping is created will be visible through the mapped memory. This enum value was introduced in Qt 5.4.
     MapPrivateOption,
 }
 

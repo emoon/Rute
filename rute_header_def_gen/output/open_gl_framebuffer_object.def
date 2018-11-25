@@ -662,9 +662,9 @@ struct OpenGLFramebufferObject {
 
 [org_name(QOpenGLFramebufferObject)]
 enum Attachment {
-    /// No attachment is added to the framebuffer object. Note that the
+    /// No attachment is added to the framebuffer object. Note that the OpenGL depth and stencil tests won't work when rendering to a framebuffer object without any depth or stencil buffers. This is the default value.
     NoAttachment,
-    /// If the
+    /// If the `GL_EXT_packed_depth_stencil` extension is present, a combined depth and stencil buffer is attached. If the extension is not present, only a depth buffer is attached.
     CombinedDepthStencil,
     /// A depth buffer is attached to the framebuffer object.
     Depth,
@@ -672,11 +672,11 @@ enum Attachment {
 
 [org_name(QOpenGLFramebufferObject)]
 enum FramebufferRestorePolicy {
-    /// Do not restore the previous framebuffer binding.
+    /// Do not restore the previous framebuffer binding. The caller is responsible for tracking and setting the framebuffer binding as needed.
     DontRestoreFramebufferBinding,
-    /// After the blit operation, bind the default
+    /// After the blit operation, bind the default framebuffer.
     RestoreFramebufferBindingToDefault,
-    /// Restore the previously bound framebuffer. This is
+    /// Restore the previously bound framebuffer. This is potentially expensive because of the need to query the currently bound framebuffer.
     RestoreFrameBufferBinding,
 }
 

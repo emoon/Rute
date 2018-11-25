@@ -22,13 +22,14 @@ struct StyleOptionViewItem : StyleOption {
 
 [org_name(QStyleOptionViewItem)]
 enum StyleOptionType {
-    /// The type of style option provided (
+    /// The type of style option provided ( [SO_ViewItem](SO_ViewItem)
+ for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
     Type,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum StyleOptionVersion {
-    /// 4
+    /// 4 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
     Version,
 }
 
@@ -62,7 +63,7 @@ enum ViewItemFeature {
 
 [org_name(QStyleOptionViewItem)]
 enum ViewItemPosition {
-    /// The ViewItemPosition is unknown and should be
+    /// The ViewItemPosition is unknown and should be disregarded.
     Invalid,
     /// The item appears at the beginning of the row.
     Beginning,
@@ -70,7 +71,7 @@ enum ViewItemPosition {
     Middle,
     /// The item appears at the end of the row.
     End,
-    /// The item is the only one on the row, and is
+    /// The item is the only one on the row, and is therefore both at the beginning and the end.
     OnlyOne,
 }
 

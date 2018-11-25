@@ -1657,27 +1657,27 @@ struct OpenGLTexture {
 
 [org_name(QOpenGLTexture)]
 enum Target {
-    /// A 1-dimensional texture.
+    /// A 1-dimensional texture. Equivalent to GL_TEXTURE_1D.
     Target1D,
-    /// An array of 1-dimensional textures.
+    /// An array of 1-dimensional textures. Equivalent to GL_TEXTURE_1D_ARRAY
     Target1DArray,
-    /// A 2-dimensional texture.
+    /// A 2-dimensional texture. Equivalent to GL_TEXTURE_2D
     Target2D,
-    /// An array of 1-dimensional textures.
+    /// An array of 1-dimensional textures. Equivalent to GL_TEXTURE_2D_ARRAY
     Target2DArray,
-    /// A 3-dimensional texture.
+    /// A 3-dimensional texture. Equivalent to GL_TEXTURE_3D
     Target3D,
-    /// A cubemap texture.
+    /// A cubemap texture. Equivalent to GL_TEXTURE_CUBE_MAP
     TargetCubeMap,
-    /// An array of cubemap textures.
+    /// An array of cubemap textures. Equivalent to GL_TEXTURE_CUBE_MAP_ARRAY
     TargetCubeMapArray,
-    /// A 2-dimensional texture with multisample support.
+    /// A 2-dimensional texture with multisample support. Equivalent to GL_TEXTURE_2D_MULTISAMPLE
     Target2DMultisample,
-    /// An array of 2-dimensional textures with multisample support.
+    /// An array of 2-dimensional textures with multisample support. Equivalent to GL_TEXTURE_2D_MULTISAMPLE_ARRAY
     Target2DMultisampleArray,
-    /// A rectangular 2-dimensional texture.
+    /// A rectangular 2-dimensional texture. Equivalent to GL_TEXTURE_RECTANGLE
     TargetRectangle,
-    /// A texture with data from an OpenGL buffer object.
+    /// A texture with data from an OpenGL buffer object. Equivalent to GL_TEXTURE_BUFFER
     TargetBuffer,
 }
 
@@ -2151,7 +2151,7 @@ enum WrapMode {
     MirroredRepeat,
     /// Clamps the texture coordinates to [0,1]. Equivalent to GL_CLAMP_TO_EDGE
     ClampToEdge,
-    /// As for ClampToEdge but also blends samples at 0 and 1 with a
+    /// As for ClampToEdge but also blends samples at 0 and 1 with a fixed border color. Equivalent to GL_CLAMP_TO_BORDER
     ClampToBorder,
 }
 
@@ -2169,7 +2169,7 @@ enum CoordinateDirection {
 enum Feature {
     /// Support for immutable texture storage
     ImmutableStorage,
-    /// Support for immutable texture storage with
+    /// Support for immutable texture storage with multisample targets
     ImmutableMultisampleStorage,
     /// Support for the GL_TEXTURE_RECTANGLE target
     TextureRectangle,
@@ -2179,19 +2179,19 @@ enum Feature {
     Texture3D,
     /// Support for texture targets that have multisample capabilities
     TextureMultisample,
-    /// Support for textures that use OpenGL buffer objects
+    /// Support for textures that use OpenGL buffer objects as their data source
     TextureBuffer,
     /// Support for cubemap array texture target
     TextureCubeMapArrays,
     /// Support for texture component swizzle masks
     Swizzle,
-    /// Support for stencil texturing (i.e. looking up depth or stencil
+    /// Support for stencil texturing (i.e. looking up depth or stencil components of a combined depth/stencil format texture in GLSL shaders).
     StencilTexturing,
     /// Support for anisotropic texture filtering
     AnisotropicFiltering,
     /// Basic support for non-power-of-two textures
     NPOTTextures,
-    /// Full support for non-power-of-two textures including texture
+    /// Full support for non-power-of-two textures including texture repeat modes
     NPOTTextureRepeat,
     /// Support for the 1 dimensional texture target
     Texture1D,

@@ -241,7 +241,8 @@ enum Type {
     WindowBlocked,
     /// The window is unblocked after a modal dialog exited.
     WindowUnblocked,
-    /// The
+    /// The [window's state](QWindow::windowState())
+ (minimized, maximized or full-screen) has changed (QWindowStateChangeEvent).
     WindowStateChange,
     /// Widget's read-only state has changed (since Qt 5.4).
     ReadOnlyChange,
@@ -261,11 +262,11 @@ enum Type {
     FileOpen,
     /// Key press in child for shortcut key handling (QShortcutEvent).
     Shortcut,
-    /// Key press in child, for overriding shortcut key handling (QKeyEvent).
+    /// Key press in child, for overriding shortcut key handling (QKeyEvent). When a shortcut is about to trigger, `ShortcutOverride` is sent to the active window. This allows clients (e.g. widgets) to signal that they will handle the shortcut themselves, by accepting the event. If the shortcut override is accepted, the event is delivered as a normal key press to the focus widget. Otherwise, it triggers the shortcut action, if one exists.
     ShortcutOverride,
     /// A link in a widget's "What's This?" help was clicked.
     WhatsThisClicked,
-    /// The toolbar button is toggled on
+    /// The toolbar button is toggled on MacOS .
     ToolBarChange,
     /// This enum has been deprecated. Use ApplicationStateChange instead.
     ApplicationActivate,
@@ -280,7 +281,7 @@ enum Type {
     EnterWhatsThisMode,
     /// Send to toplevel widgets when the application leaves "What's This?" mode.
     LeaveWhatsThisMode,
-    /// The widget's z-order has changed. This event is never sent to top level windows.
+    /// The widget's z-order has changed. This event is never sent to top level windows. User events should have values between `User` and `MaxUser` :
     ZOrderChange,
     /// The mouse cursor enters a hover widget (QHoverEvent).
     HoverEnter,
@@ -334,7 +335,7 @@ enum Type {
     NonClientAreaMouseButtonRelease,
     /// A mouse double click occurred outside the client area (QMouseEvent).
     NonClientAreaMouseButtonDblClick,
-    /// The user changed his widget sizes (
+    /// The user changed his widget sizes ( MacOS only).
     MacSizeChange,
     /// The margins of the widget's content rect changed.
     ContentsRectChange,
@@ -408,7 +409,7 @@ enum Type {
     TabletTrackingChange,
     /// User-defined event.
     User,
-    /// Last user event ID.
+    /// Last user event ID. For convenience, you can use the registerEventType() function to register and reserve a custom event type for your application. Doing so will allow you to avoid accidentally re-using a custom event type already in use elsewhere in your application.
     MaxUser,
 }
 

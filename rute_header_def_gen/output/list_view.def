@@ -326,15 +326,15 @@ enum Movement {
     Static,
     /// The items can be moved freely by the user.
     Free,
-    /// The items snap to the specified grid when moved; see
+    /// The items snap to the specified grid when moved; see setGridSize().
     Snap,
 }
 
 [org_name(QListView)]
 enum Flow {
-    /// The items are laid out in the view from the left
+    /// The items are laid out in the view from the left to the right.
     LeftToRight,
-    /// The items are laid out in the view from the top
+    /// The items are laid out in the view from the top to the bottom.
     TopToBottom,
 }
 
@@ -350,7 +350,8 @@ enum ResizeMode {
 enum LayoutMode {
     /// The items are laid out all at once.
     SinglePass,
-    /// The items are laid out in batches of
+    /// The items are laid out in batches of [batchSize](batchSize)
+ items.
     Batched,
 }
 

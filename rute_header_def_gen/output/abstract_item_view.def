@@ -1116,15 +1116,15 @@ struct AbstractItemView : AbstractScrollArea {
 
 [org_name(QAbstractItemView)]
 enum SelectionMode {
-    /// Items cannot be selected.
+    /// Items cannot be selected. The most commonly used modes are SingleSelection and ExtendedSelection.
     NoSelection,
-    /// When the user selects an item, any already-selected
+    /// When the user selects an item, any already-selected item becomes unselected. It is possible for the user to deselect the selected item.
     SingleSelection,
-    /// When the user selects an item in the usual way, the
+    /// When the user selects an item in the usual way, the selection status of that item is toggled and the other items are left alone. Multiple items can be toggled by dragging the mouse over them.
     MultiSelection,
-    /// When the user selects an item in the usual way,
+    /// When the user selects an item in the usual way, the selection is cleared and the new item selected. However, if the user presses the Ctrl key when clicking on an item, the clicked item gets toggled and all other items are left untouched. If the user presses the Shift key while clicking on an item, all items between the current item and the clicked item are selected or unselected, depending on the state of the clicked item. Multiple items can be selected by dragging the mouse over them.
     ExtendedSelection,
-    /// When the user selects an item in the usual way,
+    /// When the user selects an item in the usual way, the selection is cleared and the new item selected. However, if the user presses the Shift key while clicking on an item, all items between the current item and the clicked item are selected or unselected, depending on the state of the clicked item.
     ContiguousSelection,
 }
 
@@ -1142,11 +1142,11 @@ enum SelectionBehavior {
 enum ScrollHint {
     /// Scroll to ensure that the item is visible.
     EnsureVisible,
-    /// Scroll to position the item at the top of the
+    /// Scroll to position the item at the top of the viewport.
     PositionAtTop,
-    /// Scroll to position the item at the bottom of the
+    /// Scroll to position the item at the bottom of the viewport.
     PositionAtBottom,
-    /// Scroll to position the item at the center of the
+    /// Scroll to position the item at the center of the viewport.
     PositionAtCenter,
 }
 
@@ -1158,9 +1158,9 @@ enum EditTrigger {
     CurrentChanged,
     /// Editing starts when an item is double clicked.
     DoubleClicked,
-    /// Editing starts when clicking on an already selected
+    /// Editing starts when clicking on an already selected item.
     SelectedClicked,
-    /// Editing starts when the platform edit key has been
+    /// Editing starts when the platform edit key has been pressed over an item.
     EditKeyPressed,
     /// Editing starts when any key is pressed over an item.
     AnyKeyPressed,
@@ -1186,7 +1186,7 @@ enum DragDropMode {
     DropOnly,
     /// The view supports both dragging and dropping
     DragDrop,
-    /// The view accepts move (
+    /// The view accepts move ( **not copy** ) operations only from itself. Note that the model used needs to provide support for drag and drop operations.
     InternalMove,
 }
 
@@ -1240,7 +1240,7 @@ enum DropIndicatorPosition {
     AboveItem,
     /// The item will be dropped below the index.
     BelowItem,
-    /// The item will be dropped onto a region of the viewport with
+    /// The item will be dropped onto a region of the viewport with no items. The way each view handles items dropped onto the viewport depends on the behavior of the underlying model in use.
     OnViewport,
 }
 

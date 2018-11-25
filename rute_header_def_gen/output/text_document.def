@@ -1271,7 +1271,7 @@ struct TextDocument : Object {
 enum MetaInformation {
     /// The title of the document.
     DocumentTitle,
-    /// The url of the document. The loadResource() function uses
+    /// The url of the document. The loadResource() function uses this url as the base when loading relative resources.
     DocumentUrl,
 }
 
@@ -1279,7 +1279,7 @@ enum MetaInformation {
 enum FindFlag {
     /// Search backwards instead of forwards.
     FindBackward,
-    /// By default find works case insensitive. Specifying this option
+    /// By default find works case insensitive. Specifying this option changes the behaviour to a case sensitive find operation.
     FindCaseSensitively,
     /// Makes find match only complete words.
     FindWholeWords,
@@ -1289,11 +1289,11 @@ enum FindFlag {
 enum ResourceType {
     /// The resource contains HTML.
     HtmlResource,
-    /// The resource contains image data.
+    /// The resource contains image data. Currently supported data types are QVariant::Pixmap and QVariant::Image. If the corresponding variant is of type QVariant::ByteArray then Qt attempts to load the image using QImage::loadFromData. QVariant::Icon is currently not supported. The icon needs to be converted to one of the supported types first, for example using QIcon::pixmap.
     ImageResource,
     /// The resource contains CSS.
     StyleSheetResource,
-    /// The first available value for user defined
+    /// The first available value for user defined resource types.
     UserResource,
 }
 

@@ -54,27 +54,27 @@ struct PlatformTheme {
 
 [org_name(QPlatformTheme)]
 enum ThemeHint {
-    /// (int) Cursor flash time in ms, overriding
+    /// (int) Cursor flash time in ms, overriding QPlatformIntegration::styleHint.
     CursorFlashTime,
-    /// (int) Keyboard input interval in ms, overriding
+    /// (int) Keyboard input interval in ms, overriding QPlatformIntegration::styleHint.
     KeyboardInputInterval,
-    /// (int) Mouse double click interval in ms,
+    /// (int) Mouse double click interval in ms, overriding QPlatformIntegration::styleHint.
     MouseDoubleClickInterval,
-    /// (int) Start drag distance,
+    /// (int) Start drag distance, overriding QPlatformIntegration::styleHint.
     StartDragDistance,
-    /// (int) Start drag time in ms,
+    /// (int) Start drag time in ms, overriding QPlatformIntegration::styleHint.
     StartDragTime,
-    /// (int) Keyboard auto repeat rate,
+    /// (int) Keyboard auto repeat rate, overriding QPlatformIntegration::styleHint.
     KeyboardAutoRepeatRate,
-    /// (int) Pass word mask delay in ms,
+    /// (int) Pass word mask delay in ms, overriding QPlatformIntegration::styleHint.
     PasswordMaskDelay,
-    /// (int) Velocity of a drag,
+    /// (int) Velocity of a drag, overriding QPlatformIntegration::styleHint.
     StartDragVelocity,
     /// (int) Determines the width of the text cursor.
     TextCursorWidth,
-    /// (bool) Determines whether the drop shadow effect for
+    /// (bool) Determines whether the drop shadow effect for tooltips or whatsthis is enabled.
     DropShadow,
-    /// (int) Determines the value returned by
+    /// (int) Determines the value returned by QStyle::pixelMetric(PM_MaximumDragDistance)
     MaximumScrollBarDragDistance,
     /// (int) A value representing a Qt::ToolButtonStyle.
     ToolButtonStyle,
@@ -90,36 +90,36 @@ enum ThemeHint {
     IconThemeSearchPaths,
     /// (QStringList) A list of preferred style names.
     StyleNames,
-    /// (bool) A boolean value indicating whether Windows
+    /// (bool) A boolean value indicating whether Windows (particularly dialogs) are placed by the system (see _NET_WM_FULL_PLACEMENT in X11).
     WindowAutoPlacement,
-    /// (int) An integer representing a
+    /// (int) An integer representing a QDialogButtonBox::ButtonLayout value.
     DialogButtonBoxLayout,
-    /// (bool) A boolean value indicating whether
+    /// (bool) A boolean value indicating whether the buttons of a QDialogButtonBox should have icons.
     DialogButtonBoxButtonsHaveIcons,
     /// (bool) Pop menus can cover the full screen including task bar.
     UseFullScreenForPopupMenu,
-    /// (int) An integer value (enum KeyboardSchemes) specifying the
+    /// (int) An integer value (enum KeyboardSchemes) specifying the keyboard scheme.
     KeyboardScheme,
     /// (int) A flag value consisting of UiEffect values specifying the enabled UI animations.
     UiEffects,
-    /// (int) A QTextCharFormat::UnderlineStyle specifying
+    /// (int) A QTextCharFormat::UnderlineStyle specifying the underline style used misspelled words when spell checking.
     SpellCheckUnderlineStyle,
     TabAllWidgets,
-    /// (int) A Qt::TabFocusBehavior specifying
+    /// (int) A Qt::TabFocusBehavior specifying the behavior of focus change when tab key was pressed. This enum value was added in Qt 5.5.
     TabFocusBehavior,
     IconPixmapSizes,
     PasswordMaskCharacter,
-    /// (bool) Whether the mouse should snap to the default button when a dialog
+    /// (bool) Whether the mouse should snap to the default button when a dialog becomes visible.
     DialogSnapToDefaultButton,
     /// (bool) Whether the context menu should be shown on mouse release.
     ContextMenuOnMouseRelease,
-    /// (int) Mouse press and hold interval in ms,
+    /// (int) Mouse press and hold interval in ms, overriding QPlatformIntegration::styleHint.
     MousePressAndHoldInterval,
-    /// (int) The maximum distance in logical pixels which the mouse can travel
+    /// (int) The maximum distance in logical pixels which the mouse can travel between clicks in order for the click sequence to be handled as a double click. The default value is 5 logical pixels.
     MouseDoubleClickDistance,
-    /// (int) The number of lines to scroll a widget, when the mouse wheel is rotated.
+    /// (int) The number of lines to scroll a widget, when the mouse wheel is rotated. The default value is 3.
     WheelScrollLines,
-    /// (int) The maximum distance in logical pixels which a touchpoint can travel
+    /// (int) The maximum distance in logical pixels which a touchpoint can travel between taps in order for the tap sequence to be handled as a double tap. The default value is double the MouseDoubleClickDistance, or 10 logical pixels if that is not specified.
     TouchDoubleTapDistance,
     /// (bool) Whether to display shortcut key sequences in context menus.
     ShowShortcutsInContextMenus,

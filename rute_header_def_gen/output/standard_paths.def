@@ -94,45 +94,213 @@ struct StandardPaths {
 
 [org_name(QStandardPaths)]
 enum StandardLocation {
-    /// Returns the user's desktop directory. This is a generic value.
+    /// Returns the user's desktop directory. This is a generic value. On systems with no concept of a desktop.
     DesktopLocation,
-    /// Returns the directory containing user document files.
+    /// Returns the directory containing user document files. This is a generic value. The returned path is never empty.
     DocumentsLocation,
-    /// Returns the directory containing user's fonts. This is a generic value.
+    /// Returns the directory containing user's fonts. This is a generic value. Note that installing fonts may require additional, platform-specific operations.
     FontsLocation,
-    /// Returns the directory containing the user applications
+    /// Returns the directory containing the user applications (either executables, application bundles, or shortcuts to them). This is a generic value. Note that installing applications may require additional, platform-specific operations. Files, folders or shortcuts in this directory are platform-specific.
     ApplicationsLocation,
-    /// Returns the directory containing the user's music or other audio files.
+    /// Returns the directory containing the user's music or other audio files. This is a generic value. If no directory specific for music files exists, a sensible fallback for storing user documents is returned.
     MusicLocation,
-    /// Returns the directory containing the user's movies and videos.
+    /// Returns the directory containing the user's movies and videos. This is a generic value. If no directory specific for movie files exists, a sensible fallback for storing user documents is returned.
     MoviesLocation,
-    /// Returns the directory containing the user's pictures or photos.
+    /// Returns the directory containing the user's pictures or photos. This is a generic value. If no directory specific for picture files exists, a sensible fallback for storing user documents is returned.
     PicturesLocation,
-    /// Returns a directory where temporary files can be stored. The returned value
+    /// Returns a directory where temporary files can be stored. The returned value might be application-specific, shared among other applications for this user, or even system-wide. The returned path is never empty.
     TempLocation,
-    /// Returns the user's home directory (the same as QDir::homePath()). On Unix
+    /// Returns the user's home directory (the same as QDir::homePath()). On Unix systems, this is equal to the HOME environment variable. This value might be generic or application-specific, but the returned path is never empty.
     HomeLocation,
-    /// Returns the same value as AppLocalDataLocation. This enumeration value
+    /// Returns the same value as AppLocalDataLocation. This enumeration value is deprecated. Using AppDataLocation is preferable since on Windows, the roaming path is recommended.
     DataLocation,
-    /// Returns a directory location where user-specific
+    /// Returns a directory location where user-specific non-essential (cached) data should be written. This is an application-specific directory. The returned path is never empty.
     CacheLocation,
-    /// Returns a directory location where persistent
+    /// Returns a directory location where persistent data shared across applications can be stored. This is a generic value. The returned path is never empty.
     GenericDataLocation,
-    /// Returns a directory location where runtime communication
+    /// Returns a directory location where runtime communication files should be written, like Unix local sockets. This is a generic value. The returned path may be empty on some systems.
     RuntimeLocation,
-    /// Returns a directory location where user-specific
+    /// Returns a directory location where user-specific configuration files should be written. This may be either a generic value or application-specific, and the returned path is never empty.
     ConfigLocation,
-    /// Returns a directory for user's downloaded files. This is a generic value.
+    /// Returns a directory for user's downloaded files. This is a generic value. If no directory specific for downloads exists, a sensible fallback for storing user documents is returned.
     DownloadLocation,
-    /// Returns a directory location where user-specific non-essential
+    /// Returns a directory location where user-specific non-essential (cached) data, shared across applications, should be written. This is a generic value. Note that the returned path may be empty if the system has no concept of shared cache.
     GenericCacheLocation,
-    /// Returns a directory location where user-specific
+    /// Returns a directory location where user-specific configuration files shared between multiple applications should be written. This is a generic value and the returned path is never empty.
     GenericConfigLocation,
-    /// Returns a directory location where persistent
+    /// Returns a directory location where persistent application data can be stored. This is an application-specific directory. To obtain a path to store data to be shared with other applications, use QStandardPaths::GenericDataLocation. The returned path is never empty. On the Windows operating system, this returns the roaming path. This enum value was added in Qt 5.4.
     AppDataLocation,
-    /// Returns a directory location where user-specific
+    /// Returns a directory location where user-specific configuration files should be written. This is an application-specific directory, and the returned path is never empty. This enum value was added in Qt 5.5. The following table gives examples of paths on different operating systems. The first path is the writable path (unless noted). Other, additional paths, if any, represent non-writable locations. * Path type 
+ * MacOS 
+ * Windows 
+ * DesktopLocation 
+ * "~/Desktop" 
+ * "C:/Users/<USER>/Desktop" 
+ * DocumentsLocation 
+ * "~/Documents" 
+ * "C:/Users/<USER>/Documents" 
+ * FontsLocation 
+ * "/System/Library/Fonts" (not writable) 
+ * "C:/Windows/Fonts" (not writable) 
+ * ApplicationsLocation 
+ * "/Applications" (not writable) 
+ * "C:/Users/<USER>/AppData/Roaming/Microsoft/Windows/Start Menu/Programs" 
+ * MusicLocation 
+ * "~/Music" 
+ * "C:/Users/<USER>/Music" 
+ * MoviesLocation 
+ * "~/Movies" 
+ * "C:/Users/<USER>/Videos" 
+ * PicturesLocation 
+ * "~/Pictures" 
+ * "C:/Users/<USER>/Pictures" 
+ * TempLocation 
+ * randomly generated by the OS 
+ * "C:/Users/<USER>/AppData/Local/Temp" 
+ * HomeLocation 
+ * "~" 
+ * "C:/Users/<USER>" 
+ * DataLocation 
+ * "~/Library/Application Support/<APPNAME>", "/Library/Application Support/<APPNAME>". "<APPDIR>/../Resources" 
+ * "C:/Users/<USER>/AppData/Local/<APPNAME>", "C:/ProgramData/<APPNAME>", "<APPDIR>", "<APPDIR>/data", "<APPDIR>/data/<APPNAME>" 
+ * CacheLocation 
+ * "~/Library/Caches/<APPNAME>", "/Library/Caches/<APPNAME>" 
+ * "C:/Users/<USER>/AppData/Local/<APPNAME>/cache" 
+ * GenericDataLocation 
+ * "~/Library/Application Support", "/Library/Application Support" 
+ * "C:/Users/<USER>/AppData/Local", "C:/ProgramData", "<APPDIR>", "<APPDIR>/data" 
+ * RuntimeLocation 
+ * "~/Library/Application Support" 
+ * "C:/Users/<USER>" 
+ * ConfigLocation 
+ * "~/Library/Preferences" 
+ * "C:/Users/<USER>/AppData/Local/<APPNAME>", "C:/ProgramData/<APPNAME>" 
+ * GenericConfigLocation 
+ * "~/Library/Preferences" 
+ * "C:/Users/<USER>/AppData/Local", "C:/ProgramData" 
+ * DownloadLocation 
+ * "~/Downloads" 
+ * "C:/Users/<USER>/Documents" 
+ * GenericCacheLocation 
+ * "~/Library/Caches", "/Library/Caches" 
+ * "C:/Users/<USER>/AppData/Local/cache" 
+ * AppDataLocation 
+ * "~/Library/Application Support/<APPNAME>", "/Library/Application Support/<APPNAME>". "<APPDIR>/../Resources" 
+ * "C:/Users/<USER>/AppData/Roaming/<APPNAME>", "C:/ProgramData/<APPNAME>", "<APPDIR>", "<APPDIR>/data", "<APPDIR>/data/<APPNAME>" 
+ * AppLocalDataLocation 
+ * "~/Library/Application Support/<APPNAME>", "/Library/Application Support/<APPNAME>". "<APPDIR>/../Resources" 
+ * "C:/Users/<USER>/AppData/Local/<APPNAME>", "C:/ProgramData/<APPNAME>", "<APPDIR>", "<APPDIR>/data", "<APPDIR>/data/<APPNAME>" 
+ * AppConfigLocation 
+ * "~/Library/Preferences/<APPNAME>" 
+ * "C:/Users/<USER>/AppData/Local/<APPNAME>", "C:/ProgramData/<APPNAME>" 
+ * Path type 
+ * Linux 
+ * DesktopLocation 
+ * "~/Desktop" 
+ * DocumentsLocation 
+ * "~/Documents" 
+ * FontsLocation 
+ * "~/.fonts" 
+ * ApplicationsLocation 
+ * "~/.local/share/applications", "/usr/local/share/applications", "/usr/share/applications" 
+ * MusicLocation 
+ * "~/Music" 
+ * MoviesLocation 
+ * "~/Videos" 
+ * PicturesLocation 
+ * "~/Pictures" 
+ * TempLocation 
+ * "/tmp" 
+ * HomeLocation 
+ * "~" 
+ * DataLocation 
+ * "~/.local/share/<APPNAME>", "/usr/local/share/<APPNAME>", "/usr/share/<APPNAME>" 
+ * CacheLocation 
+ * "~/.cache/<APPNAME>" 
+ * GenericDataLocation 
+ * "~/.local/share", "/usr/local/share", "/usr/share" 
+ * RuntimeLocation 
+ * "/run/user/<USER>" 
+ * ConfigLocation 
+ * "~/.config", "/etc/xdg" 
+ * GenericConfigLocation 
+ * "~/.config", "/etc/xdg" 
+ * DownloadLocation 
+ * "~/Downloads" 
+ * GenericCacheLocation 
+ * "~/.cache" 
+ * AppDataLocation 
+ * "~/.local/share/<APPNAME>", "/usr/local/share/<APPNAME>", "/usr/share/<APPNAME>" 
+ * AppLocalDataLocation 
+ * "~/.local/share/<APPNAME>", "/usr/local/share/<APPNAME>", "/usr/share/<APPNAME>" 
+ * AppConfigLocation 
+ * "~/.config/<APPNAME>", "/etc/xdg/<APPNAME>" 
+ * Path type 
+ * Android 
+ * iOS 
+ * DesktopLocation 
+ * "<APPROOT>/files" 
+ * "<APPROOT>/Documents/Desktop" 
+ * DocumentsLocation 
+ * "<USER>/Documents", "<USER>/<APPNAME>/Documents" 
+ * "<APPROOT>/Documents" 
+ * FontsLocation 
+ * "/system/fonts" (not writable) 
+ * "<APPROOT>/Library/Fonts" 
+ * ApplicationsLocation 
+ * not supported (directory not readable) 
+ * not supported 
+ * MusicLocation 
+ * "<USER>/Music", "<USER>/<APPNAME>/Music" 
+ * "<APPROOT>/Documents/Music" 
+ * MoviesLocation 
+ * "<USER>/Movies", "<USER>/<APPNAME>/Movies" 
+ * "<APPROOT>/Documents/Movies" 
+ * PicturesLocation 
+ * "<USER>/Pictures", "<USER>/<APPNAME>/Pictures" 
+ * "<APPROOT>/Documents/Pictures", "assets-library://" 
+ * TempLocation 
+ * "<APPROOT>/cache" 
+ * "<APPROOT>/tmp" 
+ * HomeLocation 
+ * "<APPROOT>/files" 
+ * "<APPROOT>" (not writable) 
+ * DataLocation 
+ * "<APPROOT>/files", "<USER>/<APPNAME>/files" 
+ * "<APPROOT>/Library/Application Support" 
+ * CacheLocation 
+ * "<APPROOT>/cache", "<USER>/<APPNAME>/cache" 
+ * "<APPROOT>/Library/Caches" 
+ * GenericDataLocation 
+ * "<USER>" 
+ * "<APPROOT>/Documents" 
+ * RuntimeLocation 
+ * "<APPROOT>/cache" 
+ * not supported 
+ * ConfigLocation 
+ * "<APPROOT>/files/settings" 
+ * "<APPROOT>/Library/Preferences" 
+ * GenericConfigLocation 
+ * "<APPROOT>/files/settings" (there is no shared settings) 
+ * "<APPROOT>/Library/Preferences" 
+ * DownloadLocation 
+ * "<USER>/Downloads", "<USER>/<APPNAME>/Downloads" 
+ * "<APPROOT>/Documents/Downloads" 
+ * GenericCacheLocation 
+ * "<APPROOT>/cache" (there is no shared cache) 
+ * "<APPROOT>/Library/Caches" 
+ * AppDataLocation 
+ * "<APPROOT>/files", "<USER>/<APPNAME>/files" 
+ * "<APPROOT>/Library/Application Support" 
+ * AppConfigLocation 
+ * "<APPROOT>/files/settings" 
+ * "<APPROOT>/Library/Preferences/<APPNAME>" 
+ * AppLocalDataLocation 
+ * "<APPROOT>/files", "<USER>/<APPNAME>/files" 
+ * "<APPROOT>/Library/Application Support" 
+ In the table above, `<APPNAME>` is usually the organization name, the application name, or both, or a unique name generated at packaging. Similarly, <APPROOT> is the location where this application is installed (often a sandbox). <APPDIR> is the directory containing the application executable. The paths above should not be relied upon, as they may change according to OS configuration, locale, or they may change in future Qt versions.
     AppConfigLocation,
-    /// Returns the local settings path on the Windows operating
+    /// Returns the local settings path on the Windows operating system. On all other platforms, it returns the same value as AppDataLocation. This enum value was added in Qt 5.4.
     AppLocalDataLocation,
 }
 

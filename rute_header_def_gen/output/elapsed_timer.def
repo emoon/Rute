@@ -219,9 +219,14 @@ enum ClockType {
     MonotonicClock,
     /// The system's tick counter, used on Windows systems. This clock may overflow.
     TickCounter,
-    /// The Mach kernel's absolute time (
+    /// The Mach kernel's absolute time ( MacOS and iOS). This clock is monotonic and does not overflow.
     MachAbsoluteTime,
-    /// The high-resolution performance counter provided by Windows. This clock is monotonic and does not overflow.
+    /// The high-resolution performance counter provided by Windows. This clock is monotonic and does not overflow. ## SystemTime
+ The system time clock is purely the real time, expressed in milliseconds since Jan 1, 1970 at 0:00 UTC. It's equivalent to the value returned by the C and POSIX `time` function, with the milliseconds added. This clock type is currently only used on Unix systems that do not support monotonic clocks (see below). This is the only non-monotonic clock that QElapsedTimer may use. ## MonotonicClock
+ This is the system's monotonic clock, expressed in milliseconds since an arbitrary point in the past. This clock type is used on Unix systems which support POSIX monotonic clocks ( `_POSIX_MONOTONIC_CLOCK` ). This clock does not overflow. ## TickCounter
+ The tick counter clock type is based on the system's or the processor's tick counter, multiplied by the duration of a tick. This clock type is used on Windows platforms. If the high-precision performance counter is available on Windows, the `PerformanceCounter` clock type is used instead. The TickCounter clock type is the only clock type that may overflow. Windows Vista and Windows Server 2008 support the extended 64-bit tick counter, which allows avoiding the overflow. On Windows systems, the clock overflows after 2^32 milliseconds, which corresponds to roughly 49.7 days. This means two processes' reckoning of the time since the reference may be different by multiples of 2^32 milliseconds. When comparing such values, it's recommended that the high 32 bits of the millisecond count be masked off. ## MachAbsoluteTime
+ This clock type is based on the absolute time presented by Mach kernels, such as that found on MacOS . This clock type is presented separately from MonotonicClock since MacOS and iOS are also Unix systems and may support a POSIX monotonic clock with values differing from the Mach absolute time. This clock is monotonic and does not overflow. ## PerformanceCounter
+ This clock uses the Windows functions `QueryPerformanceCounter` and `QueryPerformanceFrequency` to access the system's high-precision performance counter. Since this counter may not be available on all systems, QElapsedTimer will fall back to the `TickCounter` clock automatically, if this clock cannot be used. This clock is monotonic and does not overflow.
     PerformanceCounter,
 }
 

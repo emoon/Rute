@@ -161,15 +161,15 @@ struct AbstractItemDelegate : Object {
 
 [org_name(QAbstractItemDelegate)]
 enum EndEditHint {
-    /// There is no recommended action to be performed.
+    /// There is no recommended action to be performed. These hints let the delegate influence the behavior of the view:
     NoHint,
-    /// The view should use the delegate to open an
+    /// The view should use the delegate to open an editor on the next item in the view.
     EditNextItem,
-    /// The view should use the delegate to open an
+    /// The view should use the delegate to open an editor on the previous item in the view. Note that custom views may interpret the concepts of next and previous differently. The following hints are most useful when models are used that cache data, such as those that manipulate data locally in order to increase performance or conserve network bandwidth.
     EditPreviousItem,
-    /// If the model caches data, it should write out
+    /// If the model caches data, it should write out cached data to the underlying data store.
     SubmitModelCache,
-    /// If the model caches data, it should discard
+    /// If the model caches data, it should discard cached data and replace it with data from the underlying data store. Although models and views should respond to these hints in appropriate ways, custom components may ignore any or all of them if they are not relevant.
     RevertModelCache,
 }
 

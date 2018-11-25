@@ -152,11 +152,11 @@ struct ToolButton : AbstractButton {
 
 [org_name(QToolButton)]
 enum ToolButtonPopupMode {
-    /// After pressing and holding the tool button
+    /// After pressing and holding the tool button down for a certain amount of time (the timeout is style dependent, see QStyle::SH_ToolButton_PopupDelay), the menu is displayed. A typical application example is the "back" button in some web browsers's tool bars. If the user clicks it, the browser simply browses back to the previous page. If the user presses and holds the button down for a while, the tool button shows a menu containing the current history list
     DelayedPopup,
-    /// In this mode the tool button displays a
+    /// In this mode the tool button displays a special arrow to indicate that a menu is present. The menu is displayed when the arrow part of the button is pressed.
     MenuButtonPopup,
-    /// The menu is displayed, without delay, when
+    /// The menu is displayed, without delay, when the tool button is pressed. In this mode, the button's own action is not triggered.
     InstantPopup,
 }
 

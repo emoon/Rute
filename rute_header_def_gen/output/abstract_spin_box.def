@@ -285,7 +285,7 @@ enum StepEnabledFlag {
 enum ButtonSymbols {
     /// Little arrows in the classic style.
     UpDownArrows,
-    /// 
+    /// **+** and **-** symbols.
     PlusMinus,
     /// Don't display buttons.
     NoButtons,
@@ -293,9 +293,9 @@ enum ButtonSymbols {
 
 [org_name(QAbstractSpinBox)]
 enum CorrectionMode {
-    /// The spinbox will revert to the last
+    /// The spinbox will revert to the last valid value.
     CorrectToPreviousValue,
-    /// The spinbox will revert to the nearest
+    /// The spinbox will revert to the nearest valid value.
     CorrectToNearestValue,
 }
 

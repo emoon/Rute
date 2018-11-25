@@ -503,9 +503,9 @@ enum StandardKey {
     MoveToStartOfLine,
     /// Move cursor to end of line.
     MoveToEndOfLine,
-    /// Move cursor to start of a block. This shortcut is only used on
+    /// Move cursor to start of a block. This shortcut is only used on MacOS .
     MoveToStartOfBlock,
-    /// Move cursor to end of block. This shortcut is only used on the
+    /// Move cursor to end of block. This shortcut is only used on the MacOS .
     MoveToEndOfBlock,
     /// Move cursor to start of document.
     MoveToStartOfDocument,
@@ -531,9 +531,9 @@ enum StandardKey {
     SelectStartOfLine,
     /// Extend selection to end of line.
     SelectEndOfLine,
-    /// Extend selection to the start of a text block. This shortcut is only used on
+    /// Extend selection to the start of a text block. This shortcut is only used on MacOS .
     SelectStartOfBlock,
-    /// Extend selection to the end of a text block. This shortcut is only used on
+    /// Extend selection to the end of a text block. This shortcut is only used on MacOS .
     SelectEndOfBlock,
     /// Extend selection to start of document.
     SelectStartOfDocument,
@@ -569,17 +569,17 @@ enum StandardKey {
 
 [org_name(QKeySequence)]
 enum SequenceFormat {
-    /// The key sequence as a platform specific string.
+    /// The key sequence as a platform specific string. This means that it will be shown translated and on the Mac it will resemble a key sequence from the menu bar. This enum is best used when you want to display the string to the user.
     NativeText,
-    /// The key sequence is given in a "portable" format,
+    /// The key sequence is given in a "portable" format, suitable for reading and writing to a file. In many cases, it will look similar to the native text on Windows and X11.
     PortableText,
 }
 
 [org_name(QKeySequence)]
 enum SequenceMatch {
-    /// The key sequences are different; not even partially
+    /// The key sequences are different; not even partially matching.
     NoMatch,
-    /// The key sequences match partially, but are not
+    /// The key sequences match partially, but are not the same.
     PartialMatch,
     /// The key sequences are the same.
     ExactMatch,

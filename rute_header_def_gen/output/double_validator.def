@@ -87,9 +87,9 @@ struct DoubleValidator : Validator {
 
 [org_name(QDoubleValidator)]
 enum Notation {
-    /// The string is written as a standard number
+    /// The string is written as a standard number (i.e. 0.015).
     StandardNotation,
-    /// The string is written in scientific
+    /// The string is written in scientific form. It may have an exponent part(i.e. 1.5E-2).
     ScientificNotation,
 }
 

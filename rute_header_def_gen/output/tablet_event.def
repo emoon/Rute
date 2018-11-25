@@ -314,7 +314,7 @@ struct TabletEvent : InputEvent {
 enum TabletDevice {
     /// No device, or an unknown device.
     NoDevice,
-    /// A Puck (a device that is similar to a flat mouse with
+    /// A Puck (a device that is similar to a flat mouse with a transparent circle with cross-hairs).
     Puck,
     /// A Stylus.
     Stylus,
@@ -323,7 +323,7 @@ enum TabletDevice {
     /// A 4D Mouse.
     FourDMouse,
     XFreeEraser,
-    /// A special stylus that also knows about rotation
+    /// A special stylus that also knows about rotation (a 6D stylus).
     RotationStylus,
 }
 

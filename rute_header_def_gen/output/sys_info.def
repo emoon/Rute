@@ -284,7 +284,7 @@ struct SysInfo {
 
 [org_name(QSysInfo)]
 enum Sizes {
-    /// The size in bits of a pointer for the platform on which
+    /// The size in bits of a pointer for the platform on which the application is compiled (32 or 64).
     WordSize,
 }
 
@@ -294,7 +294,7 @@ enum Endian {
     BigEndian,
     /// Little-endian byte order
     LittleEndian,
-    /// Equals BigEndian or LittleEndian, depending on
+    /// Equals BigEndian or LittleEndian, depending on the platform's byte order.
     ByteOrder,
 }
 
@@ -308,7 +308,7 @@ enum WinVersion {
     WV_95,
     /// Windows 98
     WV_98,
-    /// Windows Me
+    /// Windows Me NT-based versions (note that each operating system version is only represented once rather than each Windows edition):
     WV_Me,
     /// MS-DOS-based version of Windows
     WV_DOS_based,
@@ -328,7 +328,7 @@ enum WinVersion {
     WV_WINDOWS8,
     /// Windows 8.1 (operating system version 6.3), introduced in Qt 5.2
     WV_WINDOWS8_1,
-    /// Windows 10 (operating system version 10.0), introduced in Qt 5.5
+    /// Windows 10 (operating system version 10.0), introduced in Qt 5.5 Alternatively, you may use the following macros which correspond directly to the Windows operating system version number:
     WV_WINDOWS10,
     /// NT-based version of Windows
     WV_NT_based,
@@ -348,7 +348,7 @@ enum WinVersion {
     WV_6_2,
     /// Operating system version 6.3, corresponds to Windows 8.1, introduced in Qt 5.2
     WV_6_3,
-    /// Operating system version 10.0, corresponds to Windows 10, introduced in Qt 5.5
+    /// Operating system version 10.0, corresponds to Windows 10, introduced in Qt 5.5 The following masks can be used for testing whether a Windows version is MS-DOS-based or NT-based:
     WV_10_0,
     WV_CE,
     WV_CENET,
@@ -363,33 +363,33 @@ enum MacVersion {
     MV_None,
     /// An unknown and currently unsupported platform
     MV_Unknown,
-    /// 
+    /// MacOS 9
     MV_9,
-    /// 
+    /// MacOS 10.0
     MV_10_0,
-    /// 
+    /// MacOS 10.1
     MV_10_1,
-    /// 
+    /// MacOS 10.2
     MV_10_2,
-    /// 
+    /// MacOS 10.3
     MV_10_3,
-    /// 
+    /// MacOS 10.4
     MV_10_4,
-    /// 
+    /// MacOS 10.5
     MV_10_5,
-    /// 
+    /// MacOS 10.6
     MV_10_6,
-    /// 
+    /// MacOS 10.7
     MV_10_7,
-    /// 
+    /// MacOS 10.8
     MV_10_8,
-    /// 
+    /// MacOS 10.9
     MV_10_9,
-    /// 
+    /// MacOS 10.10
     MV_10_10,
-    /// 
+    /// MacOS 10.11
     MV_10_11,
-    /// 
+    /// MacOS 10.12
     MV_10_12,
     /// Apple codename for MV_10_0
     MV_CHEETAH,

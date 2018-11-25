@@ -193,7 +193,7 @@ struct PlatformIntegration {
 
 [org_name(QPlatformIntegration)]
 enum Capability {
-    /// The platform uses a pixmap implementation that is reentrant
+    /// The platform uses a pixmap implementation that is reentrant and can be used from multiple threads, like the raster paint engine and QImage based pixmaps.
     ThreadedPixmaps,
     /// The platform supports OpenGL
     OpenGL,
@@ -201,29 +201,29 @@ enum Capability {
     ThreadedOpenGL,
     /// The platform supports a shared graphics cache
     SharedGraphicsCache,
-    /// The OpenGL implementation on the platform will queue
+    /// The OpenGL implementation on the platform will queue up buffers when swapBuffers() is called and block only when its buffer pipeline is full, rather than block immediately.
     BufferQueueingOpenGL,
     WindowMasks,
-    /// The platform supports multiple QWindows, i.e. does some kind
+    /// The platform supports multiple QWindows, i.e. does some kind of compositing either client or server side. Some platforms might only support a single fullscreen window.
     MultipleWindows,
-    /// The platform handles the application state explicitly.
+    /// The platform handles the application state explicitly. This means that QEvent::ApplicationActivate and QEvent::ApplicationDeativate will not be posted automatically. Instead, the platform must handle application state explicitly by using QWindowSystemInterface::handleApplicationStateChanged(). If not set, application state will follow window activation, which is the normal behavior for desktop platforms.
     ApplicationState,
-    /// The platform allows creating QWindows which represent
+    /// The platform allows creating QWindows which represent native windows created by other processes or by using native libraries.
     ForeignWindows,
-    /// The platform supports top-level windows which do not
+    /// The platform supports top-level windows which do not fill the screen. The default implementation returns `true.` Returning false for this will cause all windows, including dialogs and popups, to be resized to fill the screen.
     NonFullScreenWindows,
     NativeWidgets,
-    /// The platform is based on a system that performs window
+    /// The platform is based on a system that performs window management. This includes the typical desktop platforms. Can be set to false on platforms where no window management is available, meaning for example that windows are never repositioned by the window manager. The default implementation returns `true.`
     WindowManagement,
     WindowActivation,
     SyncState,
     RasterGLSurface,
-    /// Deprecated. Used to indicate whether the QOpenGLContext
+    /// Deprecated. Used to indicate whether the QOpenGLContext backend provided by the platform is able to return function pointers from getProcAddress() even for standard OpenGL functions, for example OpenGL 1 functions like glClear() or glDrawArrays(). This is important because the OpenGL specifications do not require this ability from the getProcAddress implementations of the windowing system interfaces (EGL, WGL, GLX). The platform plugins may however choose to enhance the behavior in the backend implementation for QOpenGLContext::getProcAddress() and support returning a function pointer also for the standard, non-extension functions. This capability is a prerequisite for dynamic OpenGL loading. Starting with Qt 5.7, the platform plugin is required to have this capability.
     AllGLFunctionsQueryable,
     /// The platform supports setting the application icon. (since 5.5)
     ApplicationIcon,
     SwitchableWidgetComposition,
-    /// The platform supports native child windows via
+    /// The platform supports native child windows via QWindowContainer without having to punch a transparent hole in the backingstore. (since 5.10)
     TopStackedNativeChildWindows,
 }
 

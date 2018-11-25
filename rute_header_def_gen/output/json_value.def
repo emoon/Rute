@@ -101,8 +101,6 @@ struct JsonValue {
     /// 
     /// The QJsonValue types will be converted as follows:
     /// 
-    /// [QVariant()](QVariant::)
-    /// 
     /// **See also:** [`from_variant()`]
     to_variant() -> Variant,
     /// 
@@ -215,7 +213,7 @@ enum Type {
     Array,
     /// An object. Use toObject() to convert to a QJsonObject.
     Object,
-    /// The value is undefined. This is usually returned as an
+    /// The value is undefined. This is usually returned as an error condition, when trying to read an out of bounds value in an array or a non existent key in an object.
     Undefined,
 }
 

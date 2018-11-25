@@ -101,9 +101,9 @@ struct RubberBand : Widget {
 
 [org_name(QRubberBand)]
 enum Shape {
-    /// A QRubberBand can represent a vertical or horizontal
+    /// A QRubberBand can represent a vertical or horizontal line. Geometry is still given in rect() and the line will fill the given geometry on most styles.
     Line,
-    /// A QRubberBand can represent a rectangle. Some
+    /// A QRubberBand can represent a rectangle. Some styles will interpret this as a filled (often semi-transparent) rectangle, or a rectangular outline.
     Rectangle,
 }
 

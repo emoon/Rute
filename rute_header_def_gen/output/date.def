@@ -439,7 +439,7 @@ struct Date {
 enum MonthNameType {
     /// This type of name can be used for date-to-string formatting.
     DateFormat,
-    /// This type is used when you need to enumerate months or weekdays.
+    /// This type is used when you need to enumerate months or weekdays. Usually standalone names are represented in singular forms with capitalized first letter.
     StandaloneFormat,
 }
 

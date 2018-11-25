@@ -424,7 +424,7 @@ enum Unit {
 enum Orientation {
     /// The page size is used in its default orientation
     Portrait,
-    /// The page size is rotated through 90 degrees
+    /// The page size is rotated through 90 degrees Note that some standard page sizes are defined with a width larger than their height, hence the orientation is defined relative to the standard page size and not using the relative page dimensions.
     Landscape,
 }
 

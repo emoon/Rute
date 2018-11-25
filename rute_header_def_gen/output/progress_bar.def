@@ -166,7 +166,7 @@ struct ProgressBar : Widget {
 enum Direction {
     /// The text is rotated 90 degrees clockwise.
     TopToBottom,
-    /// The text is rotated 90 degrees counter-clockwise.
+    /// The text is rotated 90 degrees counter-clockwise. Note that whether or not the text is drawn is dependent on the style. Currently CleanLooks and Plastique draw the text. Mac, Windows and WindowsVista style do not.
     BottomToTop,
 }
 

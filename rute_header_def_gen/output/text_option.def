@@ -149,9 +149,9 @@ enum WrapMode {
     WordWrap,
     /// Same as QTextOption::NoWrap
     ManualWrap,
-    /// Text can be wrapped at any point on a line, even if
+    /// Text can be wrapped at any point on a line, even if it occurs in the middle of a word.
     WrapAnywhere,
-    /// If possible, wrapping occurs at a word
+    /// If possible, wrapping occurs at a word boundary; otherwise it will occur at the appropriate point on the line, even in the middle of a word.
     WrapAtWordBoundaryOrAnywhere,
 }
 
@@ -161,13 +161,13 @@ enum Flag {
     ShowTabsAndSpaces,
     /// Visualize line and paragraph separators with appropriate symbol characters.
     ShowLineAndParagraphSeparators,
-    /// While determining the line-break positions take into account the
+    /// While determining the line-break positions take into account the space added for drawing a separator character.
     AddSpaceForLineAndParagraphSeparators,
     /// Suppress all color changes in the character formats (except the main selection).
     SuppressColors,
-    /// Visualize the end of the document with a section sign. This enum value was added
+    /// Visualize the end of the document with a section sign. This enum value was added in Qt 5.7.
     ShowDocumentTerminator,
-    /// When this option is set, QTextLine::naturalTextWidth() and naturalTextRect() will
+    /// When this option is set, QTextLine::naturalTextWidth() and naturalTextRect() will return a value that includes the width of trailing spaces in the text; otherwise this width is excluded.
     IncludeTrailingSpaces,
 }
 

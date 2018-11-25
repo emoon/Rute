@@ -67,11 +67,11 @@ struct ContextMenuEvent : InputEvent {
 
 [org_name(QContextMenuEvent)]
 enum Reason {
-    /// The mouse caused the event to be sent. Normally this
+    /// The mouse caused the event to be sent. Normally this means the right mouse button was clicked, but this is platform dependent.
     Mouse,
-    /// The keyboard caused this event to be sent. On
+    /// The keyboard caused this event to be sent. On Windows, this means the menu button was pressed.
     Keyboard,
-    /// The event was sent by some other means (i.e. not by
+    /// The event was sent by some other means (i.e. not by the mouse or keyboard).
     Other,
 }
 

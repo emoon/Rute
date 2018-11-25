@@ -813,23 +813,23 @@ struct Wizard : Dialog {
 
 [org_name(QWizard)]
 enum WizardButton {
-    /// The
+    /// The **Back** button ( **{Go** Back} on MacOS )
     BackButton,
-    /// The
+    /// The **Next** button ( **Continue** on MacOS )
     NextButton,
-    /// The
+    /// The **Commit** button
     CommitButton,
-    /// The
+    /// The **Finish** button ( **Done** on MacOS )
     FinishButton,
-    /// The
+    /// The **Cancel** button (see also NoCancelButton)
     CancelButton,
-    /// The
+    /// The **Help** button (see also HaveHelpButton)
     HelpButton,
     /// The first user-defined button (see also HaveCustomButton1)
     CustomButton1,
     /// The second user-defined button (see also HaveCustomButton2)
     CustomButton2,
-    /// The third user-defined button (see also HaveCustomButton3)
+    /// The third user-defined button (see also HaveCustomButton3) The following value is only useful when calling setButtonLayout():
     CustomButton3,
     /// A horizontal stretch in the button layout
     Stretch,
@@ -857,7 +857,7 @@ enum WizardStyle {
     ClassicStyle,
     /// Modern Windows look
     ModernStyle,
-    /// 
+    /// MacOS look
     MacStyle,
     /// Windows Aero look
     AeroStyle,
@@ -866,31 +866,32 @@ enum WizardStyle {
 
 [org_name(QWizard)]
 enum WizardOption {
-    /// The pages are independent of each other
+    /// The pages are independent of each other (i.e., they don't derive values from each other).
     IndependentPages,
     /// Don't show any subtitles, even if they are set.
     IgnoreSubTitles,
-    /// Extend any WatermarkPixmap all the
+    /// Extend any WatermarkPixmap all the way down to the window's edge.
     ExtendedWatermarkPixmap,
-    /// Don't make the
+    /// Don't make the **Next** or **Finish** button the dialog's [default button](QPushButton::setDefault())
+ .
     NoDefaultButton,
-    /// Don't show the
+    /// Don't show the **Back** button on the start page.
     NoBackButtonOnStartPage,
-    /// Don't show the
+    /// Don't show the **Back** button on the last page.
     NoBackButtonOnLastPage,
-    /// Disable the
+    /// Disable the **Back** button on the last page.
     DisabledBackButtonOnLastPage,
-    /// Show the (disabled)
+    /// Show the (disabled) **Next** button on the last page.
     HaveNextButtonOnLastPage,
-    /// Show the (disabled)
+    /// Show the (disabled) **Finish** button on non-final pages.
     HaveFinishButtonOnEarlyPages,
-    /// Don't show the
+    /// Don't show the **Cancel** button.
     NoCancelButton,
-    /// Put the
+    /// Put the **Cancel** button on the left of **Back** (rather than on the right of **Finish** or **Next).**
     CancelButtonOnLeft,
-    /// Show the
+    /// Show the **Help** button.
     HaveHelpButton,
-    /// Put the
+    /// Put the **Help** button on the far right of the button layout (rather than on the far left).
     HelpButtonOnRight,
     /// Show the first user-defined button (CustomButton1).
     HaveCustomButton1,
@@ -898,7 +899,7 @@ enum WizardOption {
     HaveCustomButton2,
     /// Show the third user-defined button (CustomButton3).
     HaveCustomButton3,
-    /// Don't show the
+    /// Don't show the **Cancel** button on the last page.
     NoCancelButtonOnLastPage,
 }
 

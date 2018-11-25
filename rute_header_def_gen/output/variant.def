@@ -898,11 +898,14 @@ enum Type {
     Bool,
     /// an int
     Int,
-    /// a
+    /// a [uint](uint)
+
     UInt,
-    /// a
+    /// a [qlonglong](qlonglong)
+
     LongLong,
-    /// a
+    /// a [qulonglong](qulonglong)
+
     ULongLong,
     /// a double
     Double,

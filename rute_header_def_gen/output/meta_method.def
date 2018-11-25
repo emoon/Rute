@@ -781,8 +781,11 @@ enum MethodType {
 
 [org_name(QMetaMethod)]
 enum Attributes {
+    /// 
     Compatibility,
+    /// 
     Cloned,
+    /// 
     Scriptable,
 }
 

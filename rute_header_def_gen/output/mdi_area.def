@@ -279,17 +279,17 @@ struct MdiArea : AbstractScrollArea {
 
 [org_name(QMdiArea)]
 enum AreaOption {
-    /// When the active subwindow
+    /// When the active subwindow is maximized, the default behavior is to maximize the next subwindow that is activated. Set this option if you do not want this behavior.
     DontMaximizeSubWindowOnActivation,
 }
 
 [org_name(QMdiArea)]
 enum WindowOrder {
-    /// The windows are returned in the order of
+    /// The windows are returned in the order of their creation.
     CreationOrder,
-    /// The windows are returned in the order in
+    /// The windows are returned in the order in which they are stacked, with the top-most window being last in the list.
     StackingOrder,
-    /// The windows are returned in the order in
+    /// The windows are returned in the order in which they were activated.
     ActivationHistoryOrder,
 }
 

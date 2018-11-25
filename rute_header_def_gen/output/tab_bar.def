@@ -426,7 +426,7 @@ enum Shape {
     RoundedEast,
     /// Triangular tabs above the pages.
     TriangularNorth,
-    /// Triangular tabs similar to those used in
+    /// Triangular tabs similar to those used in the Excel spreadsheet, for example
     TriangularSouth,
     /// Triangular tabs on the left of the pages.
     TriangularWest,

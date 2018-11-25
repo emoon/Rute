@@ -130,13 +130,14 @@ struct EventLoop : Object {
 
 [org_name(QEventLoop)]
 enum ProcessEventsFlag {
-    /// All events. Note that
+    /// All events. Note that [DeferredDelete](QEvent::DeferredDelete)
+ events are processed specially. See QObject::deleteLater() for more details.
     AllEvents,
-    /// Do not process user input events,
+    /// Do not process user input events, such as ButtonPress and KeyPress. Note that the events are not discarded; they will be delivered the next time processEvents() is called without the ExcludeUserInputEvents flag.
     ExcludeUserInputEvents,
-    /// Do not process socket notifier
+    /// Do not process socket notifier events. Note that the events are not discarded; they will be delivered the next time processEvents() is called without the ExcludeSocketNotifiers flag.
     ExcludeSocketNotifiers,
-    /// Wait for events if no pending events are
+    /// Wait for events if no pending events are available.
     WaitForMoreEvents,
     X11ExcludeTimers,
     EventLoopExec,

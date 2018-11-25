@@ -186,9 +186,9 @@ struct OpenGLTextureBlitter {
 
 [org_name(QOpenGLTextureBlitter)]
 enum Origin {
-    /// Indicates that the data in the texture
+    /// Indicates that the data in the texture follows the OpenGL convention of coordinate systems, meaning Y is running from bottom to top.
     OriginBottomLeft,
-    /// Indicates that the data in the texture has Y
+    /// Indicates that the data in the texture has Y running from top to bottom, which is typical with regular, unflipped image data.
     OriginTopLeft,
 }
 

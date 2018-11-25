@@ -227,7 +227,7 @@ struct StaticText {
 enum PerformanceHint {
     /// Do basic caching for high performance at a low memory cost.
     ModerateCaching,
-    /// Use additional caching when available. This may improve performance
+    /// Use additional caching when available. This may improve performance at a higher memory cost.
     AggressiveCaching,
 }
 

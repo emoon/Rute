@@ -364,7 +364,8 @@ enum HorizontalHeaderFormat {
 enum VerticalHeaderFormat {
     /// The header is hidden.
     NoVerticalHeader,
-    /// The header displays ISO week numbers as described by
+    /// The header displays ISO week numbers as described by [QDate::weekNumber().](QDate::weekNumber().)
+
     ISOWeekNumbers,
 }
 

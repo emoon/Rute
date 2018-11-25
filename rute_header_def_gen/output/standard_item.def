@@ -850,7 +850,7 @@ struct StandardItem {
 enum ItemType {
     /// The default type for standard items.
     Type,
-    /// The minimum value for custom types. Values below UserType are
+    /// The minimum value for custom types. Values below UserType are reserved by Qt. You can define new user types in QStandardItem subclasses to ensure that custom items are treated specially; for example, when items are sorted.
     UserType,
 }
 

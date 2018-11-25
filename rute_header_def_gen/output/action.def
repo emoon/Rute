@@ -424,27 +424,28 @@ struct Action : Object {
 enum MenuRole {
     /// This action should not be put into the application menu
     NoRole,
-    /// This action should be put in the application menu based on the action's text
+    /// This action should be put in the application menu based on the action's text as described in the QMenuBar documentation.
     TextHeuristicRole,
     /// This action should be put in the application menu with an application specific role
     ApplicationSpecificRole,
     /// This action handles the "About Qt" menu item.
     AboutQtRole,
-    /// This action should be placed where the "About" menu item is in the application menu. The text of
+    /// This action should be placed where the "About" menu item is in the application menu. The text of the menu item will be set to "About <application name>". The application name is fetched from the `Info.plist` file in the application's bundle (See [Qt for macOS - Deployment](Qt%20for%20macOS%20-%20Deployment)
+ ).
     AboutRole,
-    /// This action should be placed where the  "Preferences..." menu item is in the application menu.
+    /// This action should be placed where the "Preferences..." menu item is in the application menu.
     PreferencesRole,
-    /// This action should be placed where the Quit menu item is in the application menu.
+    /// This action should be placed where the Quit menu item is in the application menu. Setting this value only has effect on items that are in the immediate menus of the menubar, not the submenus of those menus. For example, if you have File menu in your menubar and the File menu has a submenu, setting the MenuRole for the actions in that submenu have no effect. They will never be moved.
     QuitRole,
 }
 
 [org_name(QAction)]
 enum Priority {
-    /// The action should not be prioritized in
+    /// The action should not be prioritized in the user interface.
     LowPriority,
     /// 
     NormalPriority,
-    /// The action should be prioritized in
+    /// The action should be prioritized in the user interface.
     HighPriority,
 }
 

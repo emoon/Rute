@@ -884,9 +884,9 @@ enum SpecialCharacter {
     Nbsp,
     /// 
     SoftHyphen,
-    /// The character shown when a font has no glyph
+    /// The character shown when a font has no glyph for a certain codepoint. A special question mark character is often used. Codecs use this codepoint when input data cannot be represented in Unicode.
     ReplacementCharacter,
-    /// Used to represent an object such as an
+    /// Used to represent an object such as an image when such objects cannot be presented.
     ObjectReplacementCharacter,
     /// 
     ByteOrderMark,
@@ -928,7 +928,7 @@ enum Category {
     Other_Surrogate,
     /// Unicode class name Co
     Other_PrivateUse,
-    /// Unicode class name Cn
+    /// Unicode class name Cn The following categories are informative in Unicode:
     Other_NotAssigned,
     /// Unicode class name Lu
     Letter_Uppercase,
@@ -968,9 +968,9 @@ enum Category {
 enum Script {
     /// For unassigned, private-use, noncharacter, and surrogate code points.
     Script_Unknown,
-    /// For characters that may be used with multiple scripts
+    /// For characters that may be used with multiple scripts and that inherit their script from the preceding characters. These include nonspacing marks, enclosing marks, and zero width joiner/non-joiner characters.
     Script_Inherited,
-    /// For characters that may be used with multiple scripts
+    /// For characters that may be used with multiple scripts and that do not inherit their script from the preceding characters.
     Script_Common,
     /// 
     Script_Latin,
@@ -1373,30 +1373,49 @@ enum Joining {
 
 [org_name(QChar)]
 enum CombiningClass {
+    /// 
     Combining_BelowLeftAttached,
+    /// 
     Combining_BelowAttached,
+    /// 
     Combining_BelowRightAttached,
+    /// 
     Combining_LeftAttached,
+    /// 
     Combining_RightAttached,
+    /// 
     Combining_AboveLeftAttached,
+    /// 
     Combining_AboveAttached,
+    /// 
     Combining_AboveRightAttached,
+    /// 
     Combining_BelowLeft,
+    /// 
     Combining_Below,
+    /// 
     Combining_BelowRight,
+    /// 
     Combining_Left,
+    /// 
     Combining_Right,
+    /// 
     Combining_AboveLeft,
+    /// 
     Combining_Above,
+    /// 
     Combining_AboveRight,
+    /// 
     Combining_DoubleBelow,
+    /// 
     Combining_DoubleAbove,
+    /// 
     Combining_IotaSubscript,
 }
 
 [org_name(QChar)]
 enum UnicodeVersion {
-    /// The value is not assigned to any character
+    /// The value is not assigned to any character in version 8.0 of Unicode.
     Unicode_Unassigned,
     /// Version 1.1
     Unicode_1_1,
@@ -1426,13 +1445,13 @@ enum UnicodeVersion {
     Unicode_6_1,
     /// Version 6.2
     Unicode_6_2,
-    /// Version 6.3  Since Qt 5.3
+    /// Version 6.3 Since Qt 5.3
     Unicode_6_3,
-    /// Version 7.0  Since Qt 5.5
+    /// Version 7.0 Since Qt 5.5
     Unicode_7_0,
-    /// Version 8.0  Since Qt 5.6
+    /// Version 8.0 Since Qt 5.6
     Unicode_8_0,
-    /// Version 9.0  Since Qt 5.11
+    /// Version 9.0 Since Qt 5.11
     Unicode_9_0,
     /// Version 10.0 Since Qt 5.11
     Unicode_10_0,

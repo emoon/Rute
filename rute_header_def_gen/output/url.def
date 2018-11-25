@@ -1093,11 +1093,15 @@ struct Url {
 
 [org_name(QUrl)]
 enum ParsingMode {
-    /// QUrl will try to correct some common errors in URLs.
+    /// QUrl will try to correct some common errors in URLs. This mode is useful for parsing URLs coming from sources not known to be strictly standards-conforming.
     TolerantMode,
-    /// Only valid URLs are accepted. This mode is useful for
+    /// Only valid URLs are accepted. This mode is useful for general URL validation.
     StrictMode,
-    /// QUrl will interpret the URL component in the fully-decoded form,
+    /// QUrl will interpret the URL component in the fully-decoded form, where percent characters stand for themselves, not as the beginning of a percent-encoded sequence. This mode is only valid for the setters setting components of a URL; it is not permitted in the QUrl constructor, in fromEncoded() or in setUrl(). For more information on this mode, see the documentation for [QUrl::FullyDecoded](QUrl::ComponentFormattingOption)
+ . In TolerantMode, the parser has the following behaviour: * Spaces and "%20": unencoded space characters will be accepted and will be treated as equivalent to "%20". 
+ * Single "%" characters: Any occurrences of a percent character "%" not followed by exactly two hexadecimal characters (e.g., "13% coverage.html") will be replaced by "%25". Note that one lone "%" character will trigger the correction mode for all percent characters. 
+ * Reserved and unreserved characters: An encoded URL should only contain a few characters as literals; all other characters should be percent-encoded. In TolerantMode, these characters will be accepted if they are found in the URL: space / double-quote / "<" / ">" / "\" / "^" / "`" / "{" / "|" / "}" Those same characters can be decoded again by passing QUrl::DecodeReserved to toString() or toEncoded(). In the getters of individual components, those characters are often returned in decoded form. 
+ When in StrictMode, if a parsing error is found, isValid() will return `false` and errorString() will return a message describing the error. If more than one error is detected, it is undefined which error gets reported. Note that TolerantMode is not usually enough for parsing user input, which often contains more errors and expectations than the parser can deal with. When dealing with data coming directly from the user -- as opposed to data coming from data-transfer sources, such as other programs -- it is recommended to use fromUserInput().
     DecodedMode,
 }
 
@@ -1115,47 +1119,59 @@ enum UrlFormattingOption {
     RemovePort,
     /// 
     RemoveAuthority,
-    /// The URL's path is removed, leaving only the scheme,
+    /// The URL's path is removed, leaving only the scheme, host address, and port (if present).
     RemovePath,
-    /// The query part of the URL (following a '?' character)
+    /// The query part of the URL (following a '?' character) is removed.
     RemoveQuery,
     /// 
     RemoveFragment,
-    /// If the URL is a local file according to isLocalFile()
+    /// If the URL is a local file according to isLocalFile() and contains no query or fragment, a local file path is returned.
     PreferLocalFile,
     /// The trailing slash is removed from the path, if one is present.
     StripTrailingSlash,
-    /// The filename (i.e. everything after the last '/' in the path) is removed.
+    /// The filename (i.e. everything after the last '/' in the path) is removed. The trailing '/' is kept, unless StripTrailingSlash is set. Only valid if RemovePath is not set.
     RemoveFilename,
-    /// Modifies the path to remove redundant directory separators,
+    /// Modifies the path to remove redundant directory separators, and to resolve "."s and ".."s (as far as possible). Note that the case folding rules in [Nameprep](RFC%203491)
+ , which QUrl conforms to, require host names to always be converted to lower case, regardless of the Qt::FormattingOptions used. The options from QUrl::ComponentFormattingOptions are also possible.
     NormalizePathSegments,
 }
 
 [org_name(QUrl)]
 enum ComponentFormattingOption {
-    /// The component is returned in a "pretty form", with
+    /// The component is returned in a "pretty form", with most percent-encoded characters decoded. The exact behavior of PrettyDecoded varies from component to component and may also change from Qt release to Qt release. This is the default.
     PrettyDecoded,
     /// Leave space characters in their encoded form ("%20").
     EncodeSpaces,
-    /// Leave non-US-ASCII characters encoded in their UTF-8
+    /// Leave non-US-ASCII characters encoded in their UTF-8 percent-encoded form (e.g., "%C3%A9" for the U+00E9 codepoint, LATIN SMALL LETTER E WITH ACUTE).
     EncodeUnicode,
-    /// Leave certain delimiters in their encoded form, as
+    /// Leave certain delimiters in their encoded form, as would appear in the URL when the full URL is represented as text. The delimiters are affected by this option change from component to component. This flag has no effect in toString() or toEncoded().
     EncodeDelimiters,
-    /// Leave US-ASCII characters not permitted in the URL by
+    /// Leave US-ASCII characters not permitted in the URL by the specification in their encoded form. This is the default on toString() and toEncoded().
     EncodeReserved,
-    /// Decode the US-ASCII characters that the URL specification
+    /// Decode the US-ASCII characters that the URL specification does not allow to appear in the URL. This is the default on the getters of individual components.
     DecodeReserved,
-    /// Leave all characters in their properly-encoded form,
+    /// Leave all characters in their properly-encoded form, as this component would appear as part of a URL. When used with toString(), this produces a fully-compliant URL in QString form, exactly equal to the result of toEncoded()
     FullyEncoded,
-    /// Attempt to decode as much as possible. For individual
+    /// Attempt to decode as much as possible. For individual components of the URL, this decodes every percent encoding sequence, including control characters (U+0000 to U+001F) and UTF-8 sequences found in percent-encoded form. Use of this mode may cause data loss, see below for more information. The values of EncodeReserved and DecodeReserved should not be used together in one call. The behavior is undefined if that happens. They are provided as separate values because the behavior of the "pretty mode" with regards to reserved characters is different on certain components and specially on the full URL. ## Full decoding
+ The FullyDecoded mode is similar to the behavior of the functions returning QString in Qt 4.x, in that every character represents itself and never has any special meaning. This is true even for the percent character ('%'), which should be interpreted to mean a literal percent, not the beginning of a percent-encoded sequence. The same actual character, in all other decoding modes, is represented by the sequence "%25". Whenever re-applying data obtained with QUrl::FullyDecoded into a QUrl, care must be taken to use the QUrl::DecodedMode parameter to the setters (like setPath() and setUserName()). Failure to do so may cause re-interpretation of the percent character ('%') as the beginning of a percent-encoded sequence. This mode is quite useful when portions of a URL are used in a non-URL context. For example, to extract the username, password or file paths in an FTP client application, the FullyDecoded mode should be used. This mode should be used with care, since there are two conditions that cannot be reliably represented in the returned QString. They are: * **Non-UTF-8 sequences:** URLs may contain sequences of percent-encoded characters that do not form valid UTF-8 sequences. Since URLs need to be decoded using UTF-8, any decoder failure will result in the QString containing one or more replacement characters where the sequence existed. 
+ * **Encoded delimiters:** URLs are also allowed to make a distinction between a delimiter found in its literal form and its equivalent in percent-encoded form. This is most commonly found in the query, but is permitted in most parts of the URL. 
+ The following example illustrates the problem: ```
+    QUrl original("http://example.com/?q=a%2B%3Db%26c");
+        QUrl copy(original);
+        copy.setQuery(copy.query(QUrl::FullyDecoded), QUrl::DecodedMode);
+
+        qDebug() << original.toString();   // prints: http://example.com/?q=a%2B%3Db%26c
+        qDebug() << copy.toString();       // prints: http://example.com/?q=a+=b&c 
+ ```
+ If the two URLs were used via HTTP GET, the interpretation by the web server would probably be different. In the first case, it would interpret as one parameter, with a key of "q" and value "a+=b&c". In the second case, it would probably interpret as two parameters, one with a key of "q" and value "a =b", and the second with a key "c" and no value.
     FullyDecoded,
 }
 
 [org_name(QUrl)]
 enum UserInputResolutionOption {
-    /// The default resolution mechanism is to check
+    /// The default resolution mechanism is to check whether a local file exists, in the working directory given to fromUserInput, and only return a local path in that case. Otherwise a URL is assumed.
     DefaultResolution,
-    /// This option makes fromUserInput() always return
+    /// This option makes fromUserInput() always return a local path unless the input contains a scheme, such as `http://file.pl` . This is useful for applications such as text editors, which are able to create the file if it doesn't exist.
     AssumeLocalFile,
 }
 

@@ -262,7 +262,7 @@ enum Mode {
     Dec,
     /// Octal
     Oct,
-    /// Binary
+    /// Binary If the display is set to hexadecimal, octal or binary, the integer equivalent of the value is displayed.
     Bin,
 }
 

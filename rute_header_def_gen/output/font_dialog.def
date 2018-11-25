@@ -198,9 +198,9 @@ struct FontDialog : Dialog {
 
 [org_name(QFontDialog)]
 enum FontDialogOption {
-    /// Don't display
+    /// Don't display **{OK}** and **{Cancel}** buttons. (Useful for "live dialogs".)
     NoButtons,
-    /// Use Qt's standard font dialog on the Mac instead of Apple's
+    /// Use Qt's standard font dialog on the Mac instead of Apple's native font panel.
     DontUseNativeDialog,
     /// Show scalable fonts
     ScalableFonts,

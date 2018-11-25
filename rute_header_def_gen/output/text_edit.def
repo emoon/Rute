@@ -896,9 +896,9 @@ enum LineWrapMode {
 enum AutoFormattingFlag {
     /// Don't do any automatic formatting.
     AutoNone,
-    /// Automatically create bullet lists (e.g. when
+    /// Automatically create bullet lists (e.g. when the user enters an asterisk ('*') in the left most column, or presses Enter in an existing list item.
     AutoBulletList,
-    /// Apply all automatic formatting. Currently only
+    /// Apply all automatic formatting. Currently only automatic bullet lists are supported.
     AutoAll,
 }
 

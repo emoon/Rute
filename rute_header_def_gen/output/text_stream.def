@@ -596,11 +596,11 @@ struct TextStream {
 
 [org_name(QTextStream)]
 enum RealNumberNotation {
-    /// Scientific or fixed-point notation, depending on which makes most sense (
+    /// Scientific or fixed-point notation, depending on which makes most sense ( `printf()` 's `%g` flag).
     SmartNotation,
-    /// Fixed-point notation (
+    /// Fixed-point notation ( `printf()` 's `%f` flag).
     FixedNotation,
-    /// Scientific notation (
+    /// Scientific notation ( `printf()` 's `%e` flag).
     ScientificNotation,
 }
 
@@ -612,7 +612,7 @@ enum FieldAlignment {
     AlignRight,
     /// Pad on both sides of field.
     AlignCenter,
-    /// Same as AlignRight, except that the
+    /// Same as AlignRight, except that the sign of a number is flush left.
     AlignAccountingStyle,
 }
 
@@ -620,7 +620,7 @@ enum FieldAlignment {
 enum Status {
     /// The text stream is operating normally.
     Ok,
-    /// The text stream has read past the end of the
+    /// The text stream has read past the end of the data in the underlying device.
     ReadPastEnd,
     /// The text stream has read corrupt data.
     ReadCorruptData,
@@ -630,15 +630,15 @@ enum Status {
 
 [org_name(QTextStream)]
 enum NumberFlag {
-    /// Show the base as a prefix if the base
+    /// Show the base as a prefix if the base is 16 ("0x"), 8 ("0"), or 2 ("0b").
     ShowBase,
-    /// Always put the decimal separator in numbers, even if
+    /// Always put the decimal separator in numbers, even if there are no decimals.
     ForcePoint,
     /// Always put the sign in numbers, even for positive numbers.
     ForceSign,
     /// Use uppercase versions of base prefixes ("0X", "0B").
     UppercaseBase,
-    /// Use uppercase letters for expressing
+    /// Use uppercase letters for expressing digits 10 to 35 instead of lowercase.
     UppercaseDigits,
 }
 

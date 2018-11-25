@@ -464,12 +464,12 @@ struct CoreApplication : Object {
     /// 
     /// **See also:** [`closing_down()`]
     [static] starting_up() -> bool,
-    /// X11
     /// 
     /// Returns `true` if the application objects are being destroyed;
     /// otherwise returns `false.`
     /// 
     /// **See also:** [`starting_up()`]
+    /// X11
     [static] closing_down() -> bool,
     /// 
     /// Returns the directory that contains the application executable.

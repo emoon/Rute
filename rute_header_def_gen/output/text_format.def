@@ -343,7 +343,7 @@ struct TextFormat {
 
 [org_name(QTextFormat)]
 enum FormatType {
-    /// An invalid format as created by the default
+    /// An invalid format as created by the default constructor
     InvalidFormat,
     /// The object formats a text block
     BlockFormat,
@@ -360,11 +360,11 @@ enum FormatType {
 
 [org_name(QTextFormat)]
 enum Property {
-    /// The index of the formatted object. See objectIndex().
+    /// The index of the formatted object. See objectIndex(). Paragraph and character properties
     ObjectIndex,
     /// How a frame is located relative to the surrounding text
     CssFloat,
-    /// The layout direction of the text in the document
+    /// The layout direction of the text in the document (Qt::LayoutDirection).
     LayoutDirection,
     /// 
     OutlinePen,
@@ -386,7 +386,7 @@ enum Property {
     BlockRightMargin,
     /// 
     TextIndent,
-    /// Specifies the tab positions.  The tab positions are structs of QTextOption::Tab which are stored in
+    /// Specifies the tab positions. The tab positions are structs of QTextOption::Tab which are stored in a QList (internally, in a QList<QVariant>).
     TabPositions,
     /// 
     BlockIndent,
@@ -396,16 +396,16 @@ enum Property {
     LineHeightType,
     /// 
     BlockNonBreakableLines,
-    /// The width of a horizontal ruler element.
+    /// The width of a horizontal ruler element. Character properties
     BlockTrailingHorizontalRulerWidth,
     FirstFontProperty,
     /// Specifies the capitalization type that is to be applied to the text.
     FontCapitalization,
-    /// Specifies the meaning of the FontLetterSpacing property. The default
+    /// Specifies the meaning of the FontLetterSpacing property. The default is QFont::PercentageSpacing.
     FontLetterSpacingType,
-    /// Changes the default spacing between individual letters in the font. The value is
+    /// Changes the default spacing between individual letters in the font. The value is specified as a percentage or absolute value, depending on FontLetterSpacingType. The default value is 100%.
     FontLetterSpacing,
-    /// Changes the default spacing between individual words. A positive value increases the word spacing
+    /// Changes the default spacing between individual words. A positive value increases the word spacing by the corresponding pixels; a negative value decreases the spacing.
     FontWordSpacing,
     /// Corresponds to the QFont::Stretch property
     FontStretch,
@@ -415,20 +415,20 @@ enum Property {
     FontStyleStrategy,
     /// Specifies whether the font has kerning turned on.
     FontKerning,
-    /// Controls the use of hinting according to values
+    /// Controls the use of hinting according to values of the QFont::HintingPreference enum.
     FontHintingPreference,
     /// 
     FontFamily,
     /// 
     FontPointSize,
-    /// Specifies the change in size given to the fontsize already set using
+    /// Specifies the change in size given to the fontsize already set using FontPointSize or FontPixelSize.
     FontSizeAdjustment,
     FontSizeIncrement,
     /// 
     FontWeight,
     /// 
     FontItalic,
-    /// 
+    /// *This property has been deprecated.* Use QTextFormat::TextUnderlineStyle instead.
     FontUnderline,
     /// 
     FontOverline,
@@ -457,13 +457,13 @@ enum Property {
     AnchorName,
     /// 
     ObjectType,
-    /// Specifies the style used for the items in a list,
+    /// Specifies the style used for the items in a list, described by values of the QTextListFormat::Style enum.
     ListStyle,
     /// Specifies the amount of indentation used for a list.
     ListIndent,
-    /// Defines the text which is prepended to item numbers in
+    /// Defines the text which is prepended to item numbers in numeric lists.
     ListNumberPrefix,
-    /// Defines the text which is appended to item numbers in
+    /// Defines the text which is appended to item numbers in numeric lists. Table and frame properties
     ListNumberSuffix,
     /// 
     FrameBorder,
@@ -485,7 +485,8 @@ enum Property {
     FrameRightMargin,
     /// 
     FrameBorderBrush,
-    /// See the
+    /// See the [BorderStyle](QTextFrameFormat::BorderStyle)
+ enum.
     FrameBorderStyle,
     /// 
     TableColumns,
@@ -515,7 +516,7 @@ enum Property {
     ImageWidth,
     /// 
     ImageHeight,
-    /// When set on the characterFormat of a selection,
+    /// When set on the characterFormat of a selection, the whole width of the text will be shown selected. Page break properties
     FullWidthSelection,
     /// Specifies how pages are broken. See the PageBreakFlag enum.
     PageBreakPolicy,
@@ -539,7 +540,7 @@ enum ObjectTypes {
 
 [org_name(QTextFormat)]
 enum PageBreakFlag {
-    /// The page break is determined automatically depending on the
+    /// The page break is determined automatically depending on the available space on the current page
     PageBreak_Auto,
     /// The page is always broken before the paragraph/table
     PageBreak_AlwaysBefore,

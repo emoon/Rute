@@ -620,7 +620,7 @@ enum InsertPolicy {
     NoInsert,
     /// The string will be inserted as the first item in the combobox.
     InsertAtTop,
-    /// The current item will be
+    /// The current item will be *replaced* by the string.
     InsertAtCurrent,
     /// The string will be inserted after the last item in the combobox.
     InsertAtBottom,
@@ -640,7 +640,8 @@ enum SizeAdjustPolicy {
     AdjustToContentsOnFirstShow,
     /// Use AdjustToContents or AdjustToContentsOnFirstShow instead.
     AdjustToMinimumContentsLength,
-    /// The combobox will adjust to
+    /// The combobox will adjust to [minimumContentsLength](minimumContentsLength)
+ plus space for an icon. For performance reasons use this policy on large models.
     AdjustToMinimumContentsLengthWithIcon,
 }
 

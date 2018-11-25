@@ -662,15 +662,15 @@ struct ImageReader {
 
 [org_name(QImageReader)]
 enum ImageReaderError {
-    /// An unknown error occurred. If you get this
+    /// An unknown error occurred. If you get this value after calling read(), it is most likely caused by a bug in QImageReader.
     UnknownError,
-    /// QImageReader was used with a file name,
+    /// QImageReader was used with a file name, but not file was found with that name. This can also happen if the file name contained no extension, and the file with the correct extension is not supported by Qt.
     FileNotFoundError,
-    /// QImageReader encountered a device error when
+    /// QImageReader encountered a device error when reading the image. You can consult your particular device for more details on what went wrong.
     DeviceError,
-    /// Qt does not support the requested
+    /// Qt does not support the requested image format.
     UnsupportedFormatError,
-    /// The image data was invalid, and
+    /// The image data was invalid, and QImageReader was unable to read an image from it. The can happen if the image file is damaged.
     InvalidDataError,
 }
 

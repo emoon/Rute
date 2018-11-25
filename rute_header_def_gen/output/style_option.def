@@ -83,67 +83,91 @@ struct StyleOption {
 enum OptionType {
     /// QStyleOption
     SO_Default,
-    /// 
+    /// [QStyleOptionFocusRect](QStyleOptionFocusRect)
+
     SO_FocusRect,
-    /// 
+    /// [QStyleOptionButton](QStyleOptionButton)
+
     SO_Button,
-    /// 
+    /// [QStyleOptionTab](QStyleOptionTab)
+
     SO_Tab,
-    /// 
+    /// [QStyleOptionMenuItem](QStyleOptionMenuItem)
+
     SO_MenuItem,
-    /// 
+    /// [QStyleOptionFrame](QStyleOptionFrame)
+
     SO_Frame,
-    /// 
+    /// [QStyleOptionProgressBar](QStyleOptionProgressBar)
+
     SO_ProgressBar,
-    /// 
+    /// [QStyleOptionToolBox](QStyleOptionToolBox)
+
     SO_ToolBox,
-    /// 
+    /// [QStyleOptionHeader](QStyleOptionHeader)
+
     SO_Header,
-    /// 
+    /// [QStyleOptionDockWidget](QStyleOptionDockWidget)
+
     SO_DockWidget,
-    /// 
+    /// [QStyleOptionViewItem](QStyleOptionViewItem)
+ (used in Interviews) The following values are used for custom controls:
     SO_ViewItem,
-    /// 
+    /// [QStyleOptionTabWidgetFrame](QStyleOptionTabWidgetFrame)
+
     SO_TabWidgetFrame,
-    /// 
+    /// [QStyleOptionTabBarBase](QStyleOptionTabBarBase)
+
     SO_TabBarBase,
-    /// 
+    /// [QStyleOptionRubberBand](QStyleOptionRubberBand)
+
     SO_RubberBand,
-    /// 
+    /// [QStyleOptionToolBar](QStyleOptionToolBar)
+
     SO_ToolBar,
-    /// 
+    /// [QStyleOptionGraphicsItem](QStyleOptionGraphicsItem)
+
     SO_GraphicsItem,
-    /// 
+    /// [QStyleOptionComplex](QStyleOptionComplex)
+
     SO_Complex,
-    /// 
+    /// [QStyleOptionSlider](QStyleOptionSlider)
+
     SO_Slider,
-    /// 
+    /// [QStyleOptionSpinBox](QStyleOptionSpinBox)
+
     SO_SpinBox,
-    /// 
+    /// [QStyleOptionToolButton](QStyleOptionToolButton)
+
     SO_ToolButton,
-    /// 
+    /// [QStyleOptionComboBox](QStyleOptionComboBox)
+
     SO_ComboBox,
-    /// 
+    /// [QStyleOptionTitleBar](QStyleOptionTitleBar)
+
     SO_TitleBar,
-    /// 
+    /// [QStyleOptionGroupBox](QStyleOptionGroupBox)
+
     SO_GroupBox,
-    /// 
+    /// [QStyleOptionSizeGrip](QStyleOptionSizeGrip)
+
     SO_SizeGrip,
-    /// Reserved for custom QStyleOptions;
+    /// Reserved for custom QStyleOptions; all custom controls values must be above this value
     SO_CustomBase,
-    /// Reserved for custom QStyleOptions;
+    /// Reserved for custom QStyleOptions; all custom complex controls values must be above this value
     SO_ComplexCustomBase,
 }
 
 [org_name(QStyleOption)]
 enum StyleOptionType {
-    /// The type of style option provided (
+    /// The type of style option provided ( [SO_Default](SO_Default)
+ for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
     Type,
 }
 
 [org_name(QStyleOption)]
 enum StyleOptionVersion {
-    /// 1
+    /// 1 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
     Version,
 }
 

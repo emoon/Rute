@@ -304,9 +304,9 @@ struct Movie : Object {
 
 [org_name(QMovie)]
 enum MovieState {
-    /// The movie is not running. This is QMovie's initial
+    /// The movie is not running. This is QMovie's initial state, and the state it enters after stop() has been called or the movie is finished.
     NotRunning,
-    /// The movie is paused, and QMovie stops emitting updated() or
+    /// The movie is paused, and QMovie stops emitting updated() or resized(). This state is entered after calling pause() or setPaused(true). The current frame number it kept, and the movie will continue with the next frame when unpause() or setPaused(false) is called.
     Paused,
     /// The movie is running.
     Running,

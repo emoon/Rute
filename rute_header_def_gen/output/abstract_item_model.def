@@ -1502,7 +1502,7 @@ enum LayoutChangeHint {
     NoLayoutChangeHint,
     /// Rows are being sorted.
     VerticalSortHint,
-    /// Columns are being sorted.
+    /// Columns are being sorted. Note that VerticalSortHint and HorizontalSortHint carry the meaning that items are being moved within the same parent, not moved to a different parent in the model, and not filtered out or in.
     HorizontalSortHint,
 }
 
@@ -1510,11 +1510,11 @@ enum LayoutChangeHint {
 enum CheckIndexOption {
     /// No check options are specified.
     NoOption,
-    /// The model index passed to
+    /// The model index passed to QAbstractItemModel::checkIndex() is checked to be a valid model index.
     IndexIsValid,
-    /// Does not perform any check
+    /// Does not perform any check involving the usage of the parent of the index passed to QAbstractItemModel::checkIndex().
     DoNotUseParent,
-    /// The parent of the model index
+    /// The parent of the model index passed to QAbstractItemModel::checkIndex() is checked to be an invalid model index. If both this option and DoNotUseParent are specified, then this option is ignored.
     ParentIsInvalid,
 }
 

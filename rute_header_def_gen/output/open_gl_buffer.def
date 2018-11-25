@@ -265,35 +265,35 @@ struct OpenGLBuffer {
 
 [org_name(QOpenGLBuffer)]
 enum Type {
-    /// Vertex buffer object for use when specifying
+    /// Vertex buffer object for use when specifying vertex arrays.
     VertexBuffer,
-    /// Index buffer object for use with
+    /// Index buffer object for use with `glDrawElements()` .
     IndexBuffer,
-    /// Pixel pack buffer object for reading pixel
+    /// Pixel pack buffer object for reading pixel data from the OpenGL server (for example, with `glReadPixels()` ). Not supported under OpenGL/ES.
     PixelPackBuffer,
-    /// Pixel unpack buffer object for writing pixel
+    /// Pixel unpack buffer object for writing pixel data to the OpenGL server (for example, with `glTexImage2D()` ). Not supported under OpenGL/ES.
     PixelUnpackBuffer,
 }
 
 [org_name(QOpenGLBuffer)]
 enum UsagePattern {
-    /// The data will be set once and used a few times
+    /// The data will be set once and used a few times for drawing operations. Under OpenGL/ES 1.1 this is identical to StaticDraw.
     StreamDraw,
-    /// The data will be set once and used a few times
+    /// The data will be set once and used a few times for reading data back from the OpenGL server. Not supported under OpenGL/ES.
     StreamRead,
-    /// The data will be set once and used a few times
+    /// The data will be set once and used a few times for reading data back from the OpenGL server for use in further drawing operations. Not supported under OpenGL/ES.
     StreamCopy,
-    /// The data will be set once and used many times
+    /// The data will be set once and used many times for drawing operations.
     StaticDraw,
-    /// The data will be set once and used many times
+    /// The data will be set once and used many times for reading data back from the OpenGL server. Not supported under OpenGL/ES.
     StaticRead,
-    /// The data will be set once and used many times
+    /// The data will be set once and used many times for reading data back from the OpenGL server for use in further drawing operations. Not supported under OpenGL/ES.
     StaticCopy,
-    /// The data will be modified repeatedly and used
+    /// The data will be modified repeatedly and used many times for drawing operations.
     DynamicDraw,
-    /// The data will be modified repeatedly and used
+    /// The data will be modified repeatedly and used many times for reading data back from the OpenGL server. Not supported under OpenGL/ES.
     DynamicRead,
-    /// The data will be modified repeatedly and used
+    /// The data will be modified repeatedly and used many times for reading data back from the OpenGL server for use in further drawing operations. Not supported under OpenGL/ES.
     DynamicCopy,
 }
 
@@ -317,7 +317,7 @@ enum RangeAccessFlag {
     RangeInvalidate,
     /// Discard the previous contents of the entire buffer.
     RangeInvalidateBuffer,
-    /// Indicates that modifications are to be flushed explicitly via
+    /// Indicates that modifications are to be flushed explicitly via `glFlushMappedBufferRange.`
     RangeFlushExplicit,
     /// Indicates that pending operations should not be synchronized before returning from mapRange().
     RangeUnsynchronized,

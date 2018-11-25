@@ -70,7 +70,7 @@ struct Gesture : Object {
 enum GestureCancelPolicy {
     /// On accepting this gesture no other gestures will be affected.
     CancelNone,
-    /// On accepting this gesture all gestures that are
+    /// On accepting this gesture all gestures that are active in the context (respecting the Qt::GestureFlag that were specified when subscribed to the gesture) will be cancelled.
     CancelAllInContext,
 }
 

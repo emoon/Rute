@@ -128,9 +128,9 @@ struct AbstractTransition : Object {
 
 [org_name(QAbstractTransition)]
 enum TransitionType {
-    /// Any state that is the source state of a transition (which is not a
+    /// Any state that is the source state of a transition (which is not a target-less transition) is left, and re-entered when necessary.
     ExternalTransition,
-    /// If the target state of a transition is a sub-state of a compound state,
+    /// If the target state of a transition is a sub-state of a compound state, and that compound state is the source state, an internal transition will not leave the source state.
     InternalTransition,
 }
 

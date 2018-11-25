@@ -418,7 +418,7 @@ struct TreeWidgetItem {
 enum ItemType {
     /// The default type for tree widget items.
     Type,
-    /// The minimum value for custom types. Values below UserType are
+    /// The minimum value for custom types. Values below UserType are reserved by Qt. You can define new user types in QTreeWidgetItem subclasses to ensure that custom items are treated specially; for example, when items are sorted.
     UserType,
 }
 
@@ -426,7 +426,7 @@ enum ItemType {
 enum ChildIndicatorPolicy {
     /// The controls for expanding and collapsing will be shown for this item even if there are no children.
     ShowIndicator,
-    /// The controls for expanding and collapsing will never be shown even if there are children.  If the node is forced open the user will not be able to expand or collapse the item.
+    /// The controls for expanding and collapsing will never be shown even if there are children. If the node is forced open the user will not be able to expand or collapse the item.
     DontShowIndicator,
     /// The controls for expanding and collapsing will be shown if the item contains children.
     DontShowIndicatorWhenChildless,

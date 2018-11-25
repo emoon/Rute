@@ -332,7 +332,7 @@ enum State {
 
 [org_name(QScroller)]
 enum ScrollerGestureType {
-    /// The gesture recognizer will only trigger on touch
+    /// The gesture recognizer will only trigger on touch events. Specifically it will react on single touch points when using a touch screen and dual touch points when using a touchpad.
     TouchGesture,
     /// The gesture recognizer will only trigger on left mouse button events.
     LeftMouseButtonGesture,
@@ -344,11 +344,11 @@ enum ScrollerGestureType {
 
 [org_name(QScroller)]
 enum Input {
-    /// The user pressed the input device (e.g.  QEvent::MouseButtonPress,
+    /// The user pressed the input device (e.g. QEvent::MouseButtonPress, QEvent::GraphicsSceneMousePress, QEvent::TouchBegin)
     InputPress,
-    /// The user moved the input device (e.g.  QEvent::MouseMove,
+    /// The user moved the input device (e.g. QEvent::MouseMove, QEvent::GraphicsSceneMouseMove, QEvent::TouchUpdate)
     InputMove,
-    /// The user released the input device (e.g.  QEvent::MouseButtonRelease,
+    /// The user released the input device (e.g. QEvent::MouseButtonRelease, QEvent::GraphicsSceneMouseRelease, QEvent::TouchEnd)
     InputRelease,
 }
 

@@ -505,7 +505,7 @@ enum TabPosition {
 
 [org_name(QTabWidget)]
 enum TabShape {
-    /// The tabs are drawn with a rounded look. This is the default
+    /// The tabs are drawn with a rounded look. This is the default shape.
     Rounded,
     /// The tabs are drawn with a triangular look.
     Triangular,

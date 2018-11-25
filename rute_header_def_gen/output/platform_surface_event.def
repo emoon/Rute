@@ -17,7 +17,7 @@ struct PlatformSurfaceEvent : Event {
 enum SurfaceEventType {
     /// The underlying native surface has been created
     SurfaceCreated,
-    /// The underlying native surface will be destroyed immediately after this event
+    /// The underlying native surface will be destroyed immediately after this event The `SurfaceAboutToBeDestroyed` event type is useful as a means of stopping rendering to a platform window before it is destroyed.
     SurfaceAboutToBeDestroyed,
 }
 

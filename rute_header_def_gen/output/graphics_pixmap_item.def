@@ -116,11 +116,11 @@ struct GraphicsPixmapItem : GraphicsItem {
 
 [org_name(QGraphicsPixmapItem)]
 enum ShapeMode {
-    /// The shape is determined by calling QPixmap::mask().
+    /// The shape is determined by calling QPixmap::mask(). This shape includes only the opaque pixels of the pixmap. Because the shape is more complex, however, it can be slower than the other modes, and uses more memory.
     MaskShape,
-    /// The shape is determined by tracing the outline of
+    /// The shape is determined by tracing the outline of the pixmap. This is the fastest shape mode, but it does not take into account any transparent areas on the pixmap.
     BoundingRectShape,
-    /// The shape is determine by calling
+    /// The shape is determine by calling QPixmap::createHeuristicMask(). The performance and memory consumption is similar to MaskShape.
     HeuristicMaskShape,
 }
 

@@ -298,7 +298,7 @@ enum SelectionFlag {
     Select,
     /// All specified indexes will be deselected.
     Deselect,
-    /// All specified indexes will be selected or
+    /// All specified indexes will be selected or deselected depending on their current state.
     Toggle,
     /// The current selection will be updated.
     Current,
@@ -306,11 +306,11 @@ enum SelectionFlag {
     Rows,
     /// All indexes will be expanded to span columns.
     Columns,
-    /// A combination of Select and Current, provided for
+    /// A combination of Select and Current, provided for convenience.
     SelectCurrent,
-    /// A combination of Toggle and Current, provided for
+    /// A combination of Toggle and Current, provided for convenience.
     ToggleCurrent,
-    /// A combination of Clear and Select, provided for
+    /// A combination of Clear and Select, provided for convenience.
     ClearAndSelect,
 }
 

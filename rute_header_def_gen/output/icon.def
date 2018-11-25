@@ -525,13 +525,13 @@ struct Icon {
 
 [org_name(QIcon)]
 enum Mode {
-    /// Display the pixmap when the user is
+    /// Display the pixmap when the user is not interacting with the icon, but the functionality represented by the icon is available.
     Normal,
-    /// Display the pixmap when the
+    /// Display the pixmap when the functionality represented by the icon is not available.
     Disabled,
-    /// Display the pixmap when the
+    /// Display the pixmap when the functionality represented by the icon is available and the user is interacting with the icon, for example, moving the mouse over it or clicking it.
     Active,
-    /// Display the pixmap when the item represented by the icon is
+    /// Display the pixmap when the item represented by the icon is selected.
     Selected,
 }
 

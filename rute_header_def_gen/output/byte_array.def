@@ -4652,11 +4652,11 @@ struct ByteArray {
 enum Base64Option {
     /// (default) The regular Base64 alphabet, called simply "base64"
     Base64Encoding,
-    /// An alternate alphabet, called "base64url", which replaces two
+    /// An alternate alphabet, called "base64url", which replaces two characters in the alphabet to be more friendly to URLs.
     Base64UrlEncoding,
-    /// (default) Keeps the trailing padding equal signs at the end
+    /// (default) Keeps the trailing padding equal signs at the end of the encoded data, so the data is always a size multiple of four.
     KeepTrailingEquals,
-    /// Omits adding the padding equal signs at the end of the encoded
+    /// Omits adding the padding equal signs at the end of the encoded data. QByteArray::fromBase64() ignores the KeepTrailingEquals and OmitTrailingEquals options and will not flag errors in case they are missing or if there are too many of them.
     OmitTrailingEquals,
 }
 

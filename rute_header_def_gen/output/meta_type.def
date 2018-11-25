@@ -277,39 +277,39 @@ enum ExtensionFlag {
 
 [org_name(QMetaType)]
 enum Type {
-    /// 
+    /// `void`
     Void,
-    /// 
+    /// `bool`
     Bool,
-    /// 
+    /// `int`
     Int,
-    /// 
+    /// `unsigned int`
     UInt,
     /// LongLong
     LongLong,
     /// ULongLong
     ULongLong,
-    /// 
+    /// `double`
     Double,
-    /// 
+    /// `long`
     Long,
-    /// 
+    /// `short`
     Short,
-    /// 
+    /// `char`
     Char,
-    /// 
+    /// `unsigned long`
     ULong,
-    /// 
+    /// `unsigned short`
     UShort,
-    /// 
+    /// `unsigned char`
     UChar,
-    /// 
+    /// `float`
     Float,
-    /// 
+    /// `signed char`
     SChar,
-    /// 
+    /// `std::nullptr_t`
     Nullptr,
-    /// 
+    /// `void *`
     VoidStar,
     /// QChar
     QChar,

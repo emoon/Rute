@@ -41,7 +41,7 @@ enum Type {
     VariableLength,
     /// The width of the object is fixed
     FixedLength,
-    /// The width of the object is in
+    /// The width of the object is in percentage of the maximum width
     PercentageLength,
 }
 

@@ -473,7 +473,7 @@ enum ByteOrder {
 enum Status {
     /// The data stream is operating normally.
     Ok,
-    /// The data stream has read past the end of the
+    /// The data stream has read past the end of the data in the underlying device.
     ReadPastEnd,
     /// The data stream has read corrupt data.
     ReadCorruptData,

@@ -227,13 +227,13 @@ struct PaintEngine {
 
 [org_name(QPaintEngine)]
 enum PaintEngineFeature {
-    /// The engine has support for transforming
+    /// The engine has support for transforming drawing primitives.
     PrimitiveTransform,
-    /// The engine has support for transforming brush
+    /// The engine has support for transforming brush patterns.
     PatternTransform,
-    /// The engine can transform pixmaps, including
+    /// The engine can transform pixmaps, including rotation and shearing.
     PixmapTransform,
-    /// The engine is capable of rendering brushes with
+    /// The engine is capable of rendering brushes with the brush patterns specified in Qt::BrushStyle.
     PatternBrush,
     /// The engine supports linear gradient fills.
     LinearGradientFill,
@@ -247,25 +247,25 @@ enum PaintEngineFeature {
     PorterDuff,
     /// The engine has path support.
     PainterPaths,
-    /// The engine can use antialising to improve the appearance
+    /// The engine can use antialising to improve the appearance of rendered primitives.
     Antialiasing,
-    /// The engine supports drawing strokes that
+    /// The engine supports drawing strokes that contain brushes as fills, not just solid colors (e.g. a dashed gradient line of width 2).
     BrushStroke,
-    /// The engine supports the feature provided by
+    /// The engine supports the feature provided by QPainter::setOpacity().
     ConstantOpacity,
-    /// The engine is capable of rendering brushes that has a
+    /// The engine is capable of rendering brushes that has a texture with an alpha channel or a mask.
     MaskedBrush,
-    /// The engine has support for performing perspective
+    /// The engine has support for performing perspective transformations on primitives.
     PerspectiveTransform,
     /// The engine supports blending modes.
     BlendModes,
-    /// The engine has native support for gradients
+    /// The engine has native support for gradients with coordinate mode QGradient::ObjectBoundingMode. Otherwise, if QPaintEngine::PatternTransform is supported, object bounding mode gradients are converted to gradients with coordinate mode QGradient::LogicalMode and a brush transform for the coordinate mapping.
     ObjectBoundingModeGradients,
     /// The engine supports bitwise raster operations.
     RasterOpModes,
-    /// The engine is capable of painting outside of
+    /// The engine is capable of painting outside of paint events.
     PaintOutsidePaintEvent,
-    /// All of the above features. This enum value is usually
+    /// All of the above features. This enum value is usually used as a bit mask.
     AllFeatures,
 }
 
@@ -275,41 +275,41 @@ enum DirtyFlag {
     DirtyPen,
     /// The brush is dirty and needs to be updated.
     DirtyBrush,
-    /// The brush origin is dirty and needs to
+    /// The brush origin is dirty and needs to updated.
     DirtyBrushOrigin,
     /// The font is dirty and needs to be updated.
     DirtyFont,
-    /// The background is dirty and needs to be
+    /// The background is dirty and needs to be updated.
     DirtyBackground,
-    /// The background mode is dirty and needs
+    /// The background mode is dirty and needs to be updated.
     DirtyBackgroundMode,
-    /// The transform is dirty and needs to be
+    /// The transform is dirty and needs to be updated.
     DirtyTransform,
-    /// The clip region is dirty and needs to be
+    /// The clip region is dirty and needs to be updated.
     DirtyClipRegion,
-    /// The clip path is dirty and needs to be
+    /// The clip path is dirty and needs to be updated.
     DirtyClipPath,
-    /// The render hints is dirty and needs to be
+    /// The render hints is dirty and needs to be updated.
     DirtyHints,
-    /// The composition mode is dirty and
+    /// The composition mode is dirty and needs to be updated.
     DirtyCompositionMode,
-    /// Whether clipping is enabled or not is
+    /// Whether clipping is enabled or not is dirty and needs to be updated.
     DirtyClipEnabled,
-    /// The constant opacity has changed and needs to
+    /// The constant opacity has changed and needs to be updated as part of the state change in QPaintEngine::updateState().
     DirtyOpacity,
-    /// Convenience enum used internally.
+    /// Convenience enum used internally. These types are used by QPainter to trigger lazy updates of the various states in the QPaintEngine using QPaintEngine::updateState(). A paint engine must update every dirty state.
     AllDirty,
 }
 
 [org_name(QPaintEngine)]
 enum PolygonDrawMode {
-    /// The polygon should be drawn using OddEven fill
+    /// The polygon should be drawn using OddEven fill rule.
     OddEvenMode,
     /// The polygon should be drawn using Winding fill rule.
     WindingMode,
-    /// The polygon is a convex polygon and can be drawn
+    /// The polygon is a convex polygon and can be drawn using specialized algorithms where available.
     ConvexMode,
-    /// Only the outline of the polygon should be
+    /// Only the outline of the polygon should be drawn.
     PolylineMode,
 }
 
@@ -319,9 +319,9 @@ enum Type {
     X11,
     /// 
     Windows,
-    /// 
+    /// MacOS 's QuickDraw
     QuickDraw,
-    /// 
+    /// MacOS 's Quartz2D (CoreGraphics)
     CoreGraphics,
     /// 
     MacPrinter,

@@ -235,7 +235,7 @@ enum ChangeFlag {
     SourceAttached,
     /// The effect is uninstalled on a source.
     SourceDetached,
-    /// The bounding rect of the source has
+    /// The bounding rect of the source has changed.
     SourceBoundingRectChanged,
     /// The visual appearance of the source has changed.
     SourceInvalidated,
@@ -243,11 +243,11 @@ enum ChangeFlag {
 
 [org_name(QGraphicsEffect)]
 enum PixmapPadMode {
-    /// The pixmap should not receive any additional
+    /// The pixmap should not receive any additional padding.
     NoPad,
-    /// The pixmap should be padded
+    /// The pixmap should be padded to ensure it has a completely transparent border.
     PadToTransparentBorder,
-    /// The pixmap should be padded to
+    /// The pixmap should be padded to match the effective bounding rectangle of the effect.
     PadToEffectiveBoundingRect,
 }
 

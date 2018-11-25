@@ -56,27 +56,27 @@ struct TouchDevice {
 
 [org_name(QTouchDevice)]
 enum DeviceType {
-    /// In this type of device, the touch surface and display are integrated. This
+    /// In this type of device, the touch surface and display are integrated. This means the surface and display typically have the same size, such that there is a direct relationship between the touch points' physical positions and the coordinate reported by QTouchEvent::TouchPoint. As a result, Qt allows the user to interact directly with multiple QWidgets and QGraphicsItems at the same time.
     TouchScreen,
-    /// In this type of device, the touch surface is separate from the display. There
+    /// In this type of device, the touch surface is separate from the display. There is not a direct relationship between the physical touch location and the on-screen coordinates. Instead, they are calculated relative to the current mouse position, and the user must use the touch-pad to move this reference point. Unlike touch-screens, Qt allows users to only interact with a single QWidget or QGraphicsItem at a time.
     TouchPad,
 }
 
 [org_name(QTouchDevice)]
 enum CapabilityFlag {
-    /// Indicates that position information is available, meaning
+    /// Indicates that position information is available, meaning that the pos() family of functions in the touch points return valid points.
     Position,
-    /// Indicates that touch area information is available, meaning that the rect() family
+    /// Indicates that touch area information is available, meaning that the rect() family of functions in the touch points return valid rectangles.
     Area,
-    /// Indicates that pressure information is available, meaning that pressure()
+    /// Indicates that pressure information is available, meaning that pressure() returns a valid value.
     Pressure,
-    /// Indicates that velocity information is available, meaning that velocity()
+    /// Indicates that velocity information is available, meaning that velocity() returns a valid vector.
     Velocity,
-    /// Indicates that the list returned by QTouchEvent::TouchPoint::rawScreenPositions()
+    /// Indicates that the list returned by QTouchEvent::TouchPoint::rawScreenPositions() may contain one or more positions for each touch point. This is relevant when the touch input gets filtered or corrected on driver level.
     RawPositions,
-    /// Indicates that the normalized position is available, meaning that normalizedPos()
+    /// Indicates that the normalized position is available, meaning that normalizedPos() returns a valid value.
     NormalizedPosition,
-    /// Indicates that the device synthesizes mouse events.
+    /// Indicates that the device synthesizes mouse events. This enum value has been introduced in Qt 5.5.
     MouseEmulation,
 }
 

@@ -650,17 +650,17 @@ struct TextCharFormat : TextFormat {
 
 [org_name(QTextCharFormat)]
 enum VerticalAlignment {
-    /// Adjacent characters are positioned in the standard
+    /// Adjacent characters are positioned in the standard way for text in the writing system in use.
     AlignNormal,
-    /// Characters are placed above the base line for
+    /// Characters are placed above the base line for normal text.
     AlignSuperScript,
-    /// Characters are placed below the base line for
+    /// Characters are placed below the base line for normal text.
     AlignSubScript,
-    /// The center of the object is vertically aligned with the
+    /// The center of the object is vertically aligned with the base line. Currently, this is only implemented for inline objects.
     AlignMiddle,
-    /// The top edge of the object is vertically aligned with
+    /// The top edge of the object is vertically aligned with the base line.
     AlignTop,
-    /// The bottom edge of the object is vertically aligned with
+    /// The bottom edge of the object is vertically aligned with the base line.
     AlignBottom,
     /// The base lines of the characters are aligned.
     AlignBaseline,
@@ -682,15 +682,15 @@ enum UnderlineStyle {
     DashDotDotLine,
     /// The text is underlined using a wave shaped line.
     WaveUnderline,
-    /// The underline is drawn depending on the SpellCheckUnderlineStyle
+    /// The underline is drawn depending on the SpellCheckUnderlineStyle theme hint of QPlatformTheme. By default this is mapped to WaveUnderline, on MacOS it is mapped to DotLine.
     SpellCheckUnderline,
 }
 
 [org_name(QTextCharFormat)]
 enum FontPropertiesInheritanceBehavior {
-    /// If a property is not explicitly set, do not
+    /// If a property is not explicitly set, do not change the text format's property value.
     FontPropertiesSpecifiedOnly,
-    /// If a property is not explicitly set, override the
+    /// If a property is not explicitly set, override the text format's property with a default value.
     FontPropertiesAll,
 }
 

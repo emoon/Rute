@@ -144,25 +144,25 @@ enum PolicyFlag {
     ExpandFlag,
     /// The widget can shrink below its size hint if necessary.
     ShrinkFlag,
-    /// The widget's size hint is ignored. The widget will get
+    /// The widget's size hint is ignored. The widget will get as much space as possible.
     IgnoreFlag,
 }
 
 [org_name(QSizePolicy)]
 enum Policy {
-    /// The QWidget::sizeHint() is the only acceptable
+    /// The QWidget::sizeHint() is the only acceptable alternative, so the widget can never grow or shrink (e.g. the vertical direction of a push button).
     Fixed,
-    /// The sizeHint() is minimal, and sufficient. The
+    /// The sizeHint() is minimal, and sufficient. The widget can be expanded, but there is no advantage to it being larger (e.g. the horizontal direction of a push button). It cannot be smaller than the size provided by sizeHint().
     Minimum,
-    /// The sizeHint() is a maximum. The widget can be
+    /// The sizeHint() is a maximum. The widget can be shrunk any amount without detriment if other widgets need the space (e.g. a separator line). It cannot be larger than the size provided by sizeHint().
     Maximum,
-    /// The sizeHint() is best, but the widget can be
+    /// The sizeHint() is best, but the widget can be shrunk and still be useful. The widget can be expanded, but there is no advantage to it being larger than sizeHint() (the default QWidget policy).
     Preferred,
-    /// The sizeHint() is minimal, and sufficient.
+    /// The sizeHint() is minimal, and sufficient. The widget can make use of extra space, so it should get as much space as possible (e.g. the horizontal direction of a horizontal slider).
     MinimumExpanding,
-    /// The sizeHint() is a sensible size, but the
+    /// The sizeHint() is a sensible size, but the widget can be shrunk and still be useful. The widget can make use of extra space, so it should get as much space as possible (e.g. the horizontal direction of a horizontal slider).
     Expanding,
-    /// The sizeHint() is ignored. The widget will get as
+    /// The sizeHint() is ignored. The widget will get as much space as possible.
     Ignored,
 }
 

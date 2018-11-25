@@ -275,7 +275,7 @@ struct ListWidgetItem {
 enum ItemType {
     /// The default type for list widget items.
     Type,
-    /// The minimum value for custom types. Values below UserType are
+    /// The minimum value for custom types. Values below UserType are reserved by Qt. You can define new user types in QListWidgetItem subclasses to ensure that custom items are treated specially.
     UserType,
 }
 

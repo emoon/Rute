@@ -1176,7 +1176,7 @@ enum ElementType {
     LineToElement,
     /// A curve. See also cubicTo() and quadTo().
     CurveToElement,
-    /// The extra data required to describe a curve in
+    /// The extra data required to describe a curve in a CurveToElement element.
     CurveToDataElement,
 }
 

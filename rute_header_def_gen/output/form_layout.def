@@ -1008,19 +1008,23 @@ struct FormLayout : Layout {
 
 [org_name(QFormLayout)]
 enum FieldGrowthPolicy {
-    /// The fields never grow beyond their
+    /// The fields never grow beyond their [effective size hint](QWidgetItem::sizeHint())
+ . This is the default for QMacStyle.
     FieldsStayAtSizeHint,
-    /// Fields with an horizontal
+    /// Fields with an horizontal [size policy](QSizePolicy)
+ of [Expanding](QSizePolicy::)
+ or [MinimumExpanding](QSizePolicy::)
+ will grow to fill the available space. The other fields will not grow beyond their effective size hint. This is the default policy for Plastique.
     ExpandingFieldsGrow,
-    /// All fields with a size policy that allows them to grow
+    /// All fields with a size policy that allows them to grow will grow to fill the available space. This is the default policy for most styles.
     AllNonFixedFieldsGrow,
 }
 
 [org_name(QFormLayout)]
 enum RowWrapPolicy {
-    /// Fields are always laid out next to their label.  This is
+    /// Fields are always laid out next to their label. This is the default policy for all styles except Qt Extended styles.
     DontWrapRows,
-    /// Labels are given enough horizontal space to fit the widest label,
+    /// Labels are given enough horizontal space to fit the widest label, and the rest of the space is given to the fields. If the minimum size of a field pair is wider than the available space, the field is wrapped to the next line. This is the default policy for Qt Extended styles.
     WrapLongRows,
     /// Fields are always laid out below their label.
     WrapAllRows,

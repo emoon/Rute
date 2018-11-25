@@ -382,17 +382,17 @@ struct Layout : Object, LayoutItem {
 
 [org_name(QLayout)]
 enum SizeConstraint {
-    /// The main widget's minimum size is set
+    /// The main widget's minimum size is set to minimumSize(), unless the widget already has a minimum size.
     SetDefaultConstraint,
     /// The widget is not constrained.
     SetNoConstraint,
-    /// The main widget's minimum size is set to
+    /// The main widget's minimum size is set to minimumSize(); it cannot be smaller.
     SetMinimumSize,
-    /// The main widget's size is set to sizeHint(); it
+    /// The main widget's size is set to sizeHint(); it cannot be resized at all.
     SetFixedSize,
-    /// The main widget's maximum size is set to
+    /// The main widget's maximum size is set to maximumSize(); it cannot be larger.
     SetMaximumSize,
-    /// The main widget's minimum size is set to
+    /// The main widget's minimum size is set to minimumSize() and its maximum size is set to maximumSize().
     SetMinAndMaxSize,
 }
 

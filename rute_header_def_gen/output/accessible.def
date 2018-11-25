@@ -170,11 +170,11 @@ enum Event {
     SoundPlayed,
     /// A system alert (e.g., a message from a QMessageBox)
     Alert,
-    /// A window has been activated (i.e., a new window has
+    /// A window has been activated (i.e., a new window has gained focus on the desktop).
     ForegroundChanged,
-    /// A menu has been opened on the menubar (Qt uses
+    /// A menu has been opened on the menubar (Qt uses PopupMenuStart for all menus).
     MenuStart,
-    /// A menu has been closed (Qt uses PopupMenuEnd for all
+    /// A menu has been closed (Qt uses PopupMenuEnd for all menus).
     MenuEnd,
     /// A pop-up menu has opened.
     PopupMenuStart,
@@ -192,9 +192,9 @@ enum Event {
     DialogStart,
     /// A dialog (QDialog) has been hidden
     DialogEnd,
-    /// A scrollbar scroll operation is about to start; this may
+    /// A scrollbar scroll operation is about to start; this may be caused by a mouse press on the slider handle, for example.
     ScrollingStart,
-    /// A scrollbar scroll operation has ended (the mouse has
+    /// A scrollbar scroll operation has ended (the mouse has released the slider handle).
     ScrollingEnd,
     /// A menu item is triggered.
     MenuCommand,
@@ -212,17 +212,17 @@ enum Event {
     DocumentLoadStopped,
     /// A document reload has been initiated.
     DocumentReload,
-    /// The end position of the display text for a hypertext
+    /// The end position of the display text for a hypertext link has changed.
     HyperlinkEndIndexChanged,
-    /// The number of anchors in a hypertext link has changed,
+    /// The number of anchors in a hypertext link has changed, perhaps because the display text has been split to provide more than one link.
     HyperlinkNumberOfAnchorsChanged,
     /// The link for the selected hypertext link has changed.
     HyperlinkSelectedLinkChanged,
-    /// A hypertext link has been activated, perhaps by being
+    /// A hypertext link has been activated, perhaps by being clicked or via a key press.
     HypertextLinkActivated,
     /// A hypertext link has been selected.
     HypertextLinkSelected,
-    /// The start position of the display text for a hypertext
+    /// The start position of the display text for a hypertext link has changed.
     HyperlinkStartIndexChanged,
     /// The display text for a hypertext link has changed.
     HypertextChanged,
@@ -236,12 +236,12 @@ enum Event {
     SectionChanged,
     /// A table caption has been changed.
     TableCaptionChanged,
-    /// The description of a table column, typically found in
+    /// The description of a table column, typically found in the column's header, has been changed.
     TableColumnDescriptionChanged,
     /// A table column header has been changed.
     TableColumnHeaderChanged,
     TableModelChanged,
-    /// The description of a table row, typically found in the
+    /// The description of a table row, typically found in the row's header, has been changed.
     TableRowDescriptionChanged,
     /// A table row header has been changed.
     TableRowHeaderChanged,
@@ -261,11 +261,11 @@ enum Event {
     ObjectCreated,
     /// An object is deleted.
     ObjectDestroyed,
-    /// An object is displayed; for example, with
+    /// An object is displayed; for example, with QWidget::show().
     ObjectShow,
-    /// An object is hidden; for example, with QWidget::hide().
+    /// An object is hidden; for example, with QWidget::hide(). Any children the object that is hidden has do not send this event. It is not sent when an object is hidden as it is being obcured by others.
     ObjectHide,
-    /// A layout or item view  has added, removed, or moved an
+    /// A layout or item view has added, removed, or moved an object (Qt does not use this event).
     ObjectReorder,
     /// An object has gained keyboard focus.
     Focus,
@@ -275,7 +275,7 @@ enum Event {
     SelectionAdd,
     /// An item has been removed from an item view selection.
     SelectionRemove,
-    /// Several changes to a selection has occurred in an item
+    /// Several changes to a selection has occurred in an item view.
     SelectionWithin,
     StateChanged,
     /// An object's location on the screen has changed.
@@ -287,9 +287,9 @@ enum Event {
     ValueChanged,
     /// An object's parent object changed.
     ParentChanged,
-    /// The QAccessible::Help text property of an object has
+    /// The QAccessible::Help text property of an object has changed.
     HelpChanged,
-    /// The default QAccessible::Action for the accessible
+    /// The default QAccessible::Action for the accessible object has changed.
     DefaultActionChanged,
     /// The keyboard accelerator for an action has been changed.
     AcceleratorChanged,
@@ -453,7 +453,7 @@ enum Role {
 
 [org_name(QAccessible)]
 enum Text {
-    /// The name of the object. This can be used both
+    /// The name of the object. This can be used both as an identifier or a short description by accessible clients.
     Name,
     /// A short text describing the object.
     Description,
@@ -478,7 +478,7 @@ enum RelationFlag {
     Controller,
     /// The first object is controlled by the second object.
     Controlled,
-    /// Used as a mask to specify that we are interesting in information
+    /// Used as a mask to specify that we are interesting in information about all relations Implementations of relations() return a combination of these flags. Some values are mutually exclusive.
     AllRelations,
 }
 

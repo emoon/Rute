@@ -145,7 +145,7 @@ enum Field {
 enum ColorModel {
     /// The color model is RGB.
     RGB,
-    /// This is logically the opposite endian version of RGB. However,
+    /// This is logically the opposite endian version of RGB. However, for ease of use it has its own model.
     BGR,
     /// The color model uses a color palette.
     Indexed,
@@ -173,9 +173,9 @@ enum AlphaUsage {
 
 [org_name(QPixelFormat)]
 enum AlphaPosition {
-    /// The alpha channel will be put in front of the color
+    /// The alpha channel will be put in front of the color channels . E.g. ARGB.
     AtBeginning,
-    /// The alpha channel will be put in the back of the color
+    /// The alpha channel will be put in the back of the color channels. E.g. RGBA.
     AtEnd,
 }
 
@@ -241,7 +241,7 @@ enum ByteOrder {
     LittleEndian,
     /// The byte order is big endian.
     BigEndian,
-    /// This enum will not be stored, but is converted in
+    /// This enum will not be stored, but is converted in the constructor to the endian enum that matches the enum of the current system.
     CurrentSystemEndian,
 }
 

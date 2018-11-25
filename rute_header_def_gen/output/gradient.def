@@ -135,9 +135,9 @@ struct Gradient {
 
 [org_name(QGradient)]
 enum Type {
-    /// Interpolates colors between start and end points
+    /// Interpolates colors between start and end points (QLinearGradient).
     LinearGradient,
-    /// Interpolate colors between a focal point and end
+    /// Interpolate colors between a focal point and end points on a circle surrounding it (QRadialGradient).
     RadialGradient,
     /// Interpolate colors around a center point (QConicalGradient).
     ConicalGradient,
@@ -147,27 +147,29 @@ enum Type {
 
 [org_name(QGradient)]
 enum Spread {
-    /// The area is filled with the closest stop
+    /// The area is filled with the closest stop color. This is the default.
     PadSpread,
-    /// The gradient is reflected outside the
+    /// The gradient is reflected outside the gradient area.
     ReflectSpread,
-    /// The gradient  is repeated outside the gradient
+    /// The gradient is repeated outside the gradient area.
     RepeatSpread,
 }
 
 [org_name(QGradient)]
 enum CoordinateMode {
-    /// This is the default mode. The gradient coordinates
+    /// This is the default mode. The gradient coordinates are specified logical space just like the object coordinates.
     LogicalMode,
-    /// In this mode the gradient coordinates
+    /// In this mode the gradient coordinates are relative to the bounding rectangle of the paint device, with (0,0) in the top left corner, and (1,1) in the bottom right corner of the paint device.
     StretchToDeviceMode,
-    /// In this mode the gradient coordinates are
+    /// In this mode the gradient coordinates are relative to the bounding rectangle of the object being drawn, with (0,0) in the top left corner, and (1,1) in the bottom right corner of the object's bounding rectangle.
     ObjectBoundingMode,
 }
 
 [org_name(QGradient)]
 enum InterpolationMode {
+    /// The colors are linearly interpolated in premultiplied color space.
     ColorInterpolation,
+    /// The color components and the alpha component are independently linearly interpolated.
     ComponentInterpolation,
 }
 

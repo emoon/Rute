@@ -113,13 +113,13 @@ enum ShaderTypeBit {
     Vertex,
     /// Fragment shader written in the OpenGL Shading Language (GLSL).
     Fragment,
-    /// Geometry shaders written in the OpenGL Shading Language (GLSL)
+    /// Geometry shaders written in the OpenGL Shading Language (GLSL) based on the OpenGL core feature (requires OpenGL >= 3.2).
     Geometry,
-    /// Tessellation control shaders written in the OpenGL
+    /// Tessellation control shaders written in the OpenGL shading language (GLSL), based on the core feature (requires OpenGL >= 4.0).
     TessellationControl,
-    /// Tessellation evaluation shaders written in the OpenGL
+    /// Tessellation evaluation shaders written in the OpenGL shading language (GLSL), based on the core feature (requires OpenGL >= 4.0).
     TessellationEvaluation,
-    /// Compute shaders written in the OpenGL shading language (GLSL),
+    /// Compute shaders written in the OpenGL shading language (GLSL), based on the core feature (requires OpenGL >= 4.3).
     Compute,
 }
 

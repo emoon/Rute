@@ -251,7 +251,7 @@ struct TextBlockFormat : TextFormat {
 enum LineHeightTypes {
     /// This is the default line height: single spacing.
     SingleHeight,
-    /// This sets the spacing proportional to the line (in percentage).
+    /// This sets the spacing proportional to the line (in percentage). For example, set to 200 for double spacing.
     ProportionalHeight,
     /// This sets the line height to a fixed line height (in pixels).
     FixedHeight,

@@ -738,9 +738,9 @@ struct Application : GuiApplication {
 enum ColorSpec {
     /// the default color allocation policy
     NormalColor,
-    /// the same as NormalColor for X11; allocates colors
+    /// the same as NormalColor for X11; allocates colors to a palette on demand under Windows
     CustomColor,
-    /// the right choice for applications that use thousands of
+    /// the right choice for applications that use thousands of colors See setColorSpec() for full details.
     ManyColor,
 }
 
