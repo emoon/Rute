@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// The QBitmap class is a monochrome off-screen paint device used
 /// mainly for creating custom QCursor and QBrush objects,

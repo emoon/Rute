@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// A color is normally specified in terms of RGB (red, green, and
 /// blue) components, but it is also possible to specify it in terms

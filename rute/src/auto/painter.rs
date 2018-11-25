@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// QPainter provides highly optimized functions to do most of the
 /// drawing GUI programs require. It can draw everything from simple

@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// A QPolygon object is a QVector<QPoint>. The easiest way to add
 /// points to a QPolygon is to use QVector's streaming operator, as

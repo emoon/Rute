@@ -639,6 +639,7 @@ pub(crate) unsafe extern "C" fn widget_change_trampoline(
     f(&obj_arg0_0);
 }
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// The widget is the atom of the user interface: it receives mouse, keyboard
 /// and other events from the window system, and paints a representation of

@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// When you create a QFont object you specify various attributes that
 /// you want the font to have. Qt will use the font with the specified

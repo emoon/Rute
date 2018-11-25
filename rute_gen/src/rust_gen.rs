@@ -725,6 +725,7 @@ impl RustGenerator {
                 let res;
                 if !func_names_lookup.contains(&f.name) {
                     if gen_comments {
+                        //dest.push("**Notice these docs are heavy WIP and not very relevent yet**");
                         dest.push_str(&f.doc_comments);
                     } else {
                         dest.push_str("    #[doc(hidden)]\n");
@@ -788,6 +789,7 @@ impl RustGenerator {
             }
 
             template_data.insert("event_funcs".into(), Value::scalar(event_funcs));
+            dest.write_all("/// **Notice these docs are heavy WIP and not very relevent yet**\n".as_bytes())?;
             dest.write_all(sdef.doc_comments.as_bytes())?;
             let output = self.struct_impl_template.render(&template_data).unwrap();
             dest.write_all(output.as_bytes())?;

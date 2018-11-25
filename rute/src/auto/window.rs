@@ -679,6 +679,7 @@ pub(crate) unsafe extern "C" fn window_tablet_trampoline(
     f(&obj_arg0_0);
 }
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// A window that is supplied a parent becomes a native child window of
 /// their parent window.

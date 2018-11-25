@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// A QLine describes a finite length line (or a line segment) on a
 /// two-dimensional surface. The start and end points of the line are

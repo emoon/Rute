@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// Qt provides four classes for handling image data: QImage, QPixmap,
 /// QBitmap and QPicture. QImage is designed and optimized for I/O,

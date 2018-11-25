@@ -61,6 +61,7 @@ pub(crate) unsafe extern "C" fn application_screen_added_trampoline(
     f(&obj_screen_0);
 }
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 #[derive(Clone)]
 pub struct Application<'a> {
     #[doc(hidden)]

@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// A matrix specifies how to translate, scale, shear or rotate the
 /// coordinate system, and is typically used when rendering graphics.

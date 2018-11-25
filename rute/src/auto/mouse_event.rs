@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// Mouse events occur when a mouse button is pressed or released
 /// inside a widget, or when the mouse cursor is moved.

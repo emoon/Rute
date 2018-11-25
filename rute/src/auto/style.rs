@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// Qt contains a set of QStyle subclasses that emulate the styles of
 /// the different platforms supported by Qt (QWindowsStyle,

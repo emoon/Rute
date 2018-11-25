@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// Focus events are sent to widgets when the keyboard input focus
 /// changes. Focus events occur due to mouse actions, key presses

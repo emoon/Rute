@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// Expose events are sent to windows when an area of the window is invalidated
 /// or window exposure in the windowing system changes.

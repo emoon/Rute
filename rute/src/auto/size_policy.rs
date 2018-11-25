@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// The size policy of a widget is an expression of its willingness to
 /// be resized in various ways, and affects how the widget is treated

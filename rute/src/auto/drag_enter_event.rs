@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// A widget must accept this event in order to receive the [drag move events](QDragMoveEvent)
 /// that are sent while the drag

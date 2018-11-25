@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// The format includes the size of the color buffers, red, green, and blue;
 /// the size of the alpha buffer; the size of the depth and stencil buffers;

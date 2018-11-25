@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// In its most common form, a key sequence describes a combination of
 /// keys that must be used together to perform some action. Key sequences

@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// This event is sent just before QWidget::hide() returns, and also
 /// when a top-level window has been hidden (iconified) by the user.

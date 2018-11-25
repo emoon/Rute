@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// A palette consists of three color groups: *Active,* *Disabled,*
 /// and *Inactive.* All widgets in Qt contain a palette and

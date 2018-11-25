@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// A QIcon can generate smaller, larger, active, and disabled pixmaps
 /// from the set of pixmaps it is given. Such pixmaps are used by Qt

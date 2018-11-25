@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// A rectangle is normally expressed as a top-left corner and a
 /// size. The size (width and height) of a QRectF is always equivalent

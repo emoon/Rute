@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// A size is specified by a width() and a height(). It can be set in
 /// the constructor and changed using the setWidth(), setHeight(), or

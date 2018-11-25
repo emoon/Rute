@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// A QLineF describes a finite length line (or line segment) on a
 /// two-dimensional surface. QLineF defines the start and end points

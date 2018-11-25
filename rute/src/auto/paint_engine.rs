@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// Qt provides several premade implementations of QPaintEngine for the
 /// different painter backends we support. The primary paint engine

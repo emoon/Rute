@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// *Tablet events* are generated from tablet peripherals such as Wacom
 /// tablets and various other brands, and electromagnetic stylus devices

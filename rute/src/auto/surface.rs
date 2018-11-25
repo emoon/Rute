@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// The size of the surface is accessible with the size() function. The rendering
 /// specific attributes of the surface are accessible through the format() function.

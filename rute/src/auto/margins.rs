@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// QMargin defines a set of four margins; left, top, right and bottom,
 /// that describe the size of the borders surrounding a rectangle.

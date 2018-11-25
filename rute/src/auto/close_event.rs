@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// Close events are sent to widgets that the user wants to close,
 /// usually by choosing from the window menu, or by clicking

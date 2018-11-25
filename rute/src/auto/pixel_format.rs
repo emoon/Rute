@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// In Qt there is a often a need to represent the layout of the pixels in a
 /// graphics buffer. Internally QPixelFormat stores everything in a 64 bit

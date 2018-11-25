@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// QBackingStore enables the use of QPainter to paint on a QWindow with type
 /// RasterSurface. The other way of rendering to a QWindow is through the use

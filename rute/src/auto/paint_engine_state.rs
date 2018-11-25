@@ -19,6 +19,7 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// QPaintEngineState records which properties that have changed since
 /// the last time the paint engine was updated, as well as their

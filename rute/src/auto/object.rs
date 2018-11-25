@@ -41,6 +41,7 @@ pub(crate) unsafe extern "C" fn object_custom_trampoline(
     f(&obj_event_0);
 }
 
+/// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// QObject is the heart of the Qt [Object Model](Object%20Model)
 /// . The central
