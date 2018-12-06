@@ -706,6 +706,8 @@ impl QtGenerator {
             .as_ref()
             .map_or("void".into(), |v| v.get_c_type(IsReturnType::Yes));
 
+		object.insert("c_primitive_type".into(), Value::scalar(""));
+
         if let Some(ref ret_val) = func.return_val {
             object.insert("array_return".into(), Value::scalar(ret_val.array));
             object.insert("qt_ret_value".into(), Value::scalar("ret_value"));
@@ -718,7 +720,9 @@ impl QtGenerator {
 
             match ret_val.vtype {
                 VariableType::Primitive => {
-                    object.insert("return_type".into(), Value::scalar("primitive"))
+                    object.insert("return_type".into(), Value::scalar("primitive"));
+					object.insert("c_primitive_type".into(), Value::scalar(
+						ret_val.get_c_primitive_type().into_owned()))
                 }
                 VariableType::Str => object.insert("return_type".into(), Value::scalar("string")),
                 VariableType::Regular => {
@@ -750,7 +754,7 @@ impl QtGenerator {
             object.insert("qt_ret_value".into(), Value::scalar(""));
         }
 
-        object.insert(
+		object.insert(
             "c_return_type".into(),
             Value::scalar(ret_value.into_owned()),
         );

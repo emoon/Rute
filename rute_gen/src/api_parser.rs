@@ -922,20 +922,7 @@ impl Variable {
 
         match self.vtype {
             VariableType::SelfType => "struct RUBase*".into(),
-            VariableType::Primitive => match tname {
-                "f32" => "float".into(),
-                "bool" => "bool".into(),
-                "f64" => "double".into(),
-                "i32" => "int".into(),
-                _ => {
-                    if self.type_name.starts_with('u') {
-                        format!("uint{}_t", &tname[1..]).into()
-                    } else {
-                        format!("int{}_t", &tname[1..]).into()
-                    }
-                }
-            },
-
+            VariableType::Primitive => self.get_c_primitive_type(),
             VariableType::Reference => match is_ret_type {
                 IsReturnType::Yes => format!("struct RU{}", tname).into(),
                 IsReturnType::No => "struct RUBase*".into(),
@@ -957,6 +944,24 @@ impl Variable {
                 "<error>".into()
             }
         }
+    }
+
+    pub fn get_c_primitive_type(&self) -> Cow<str> {
+        let tname = self.type_name.as_str();
+
+		match tname {
+			"f32" => "float".into(),
+			"bool" => "bool".into(),
+			"f64" => "double".into(),
+			"i32" => "int".into(),
+			_ => {
+				if self.type_name.starts_with('u') {
+					format!("uint{}_t", &tname[1..]).into()
+				} else {
+					format!("int{}_t", &tname[1..]).into()
+				}
+			}
+		}
     }
 
     ///
