@@ -1,5 +1,5 @@
-use api_parser::*;
-use header_ffi_gen::HeaderFFIGen;
+use crate::api_parser::*;
+use crate::header_ffi_gen::HeaderFFIGen;
 use heck::SnakeCase;
 use std::collections::BTreeMap;
 ///

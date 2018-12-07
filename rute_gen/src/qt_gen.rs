@@ -1,4 +1,4 @@
-use c_gen::*;
+use crate::c_gen::*;
 use heck::{CamelCase, MixedCase, SnakeCase};
 use std::borrow::Cow;
 use std::collections::{BTreeMap, HashMap};
@@ -7,8 +7,8 @@ use std::io;
 use std::io::{BufWriter, Write};
 use std::path::Path;
 
-use api_parser::*;
-use qt_gen_templates::*;
+use crate::api_parser::*;
+use crate::qt_gen_templates::*;
 
 use liquid::value::{Object, Value};
 use liquid::{Parser, ParserBuilder, Template};

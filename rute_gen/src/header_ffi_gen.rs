@@ -1,4 +1,4 @@
-use api_parser::{ApiDef, Enum, Function, Struct};
+use crate::api_parser::{ApiDef, Enum, Function, Struct};
 use std::fs::File;
 use std::io::BufWriter;
 use std::io::Result;

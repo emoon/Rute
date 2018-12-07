@@ -31,13 +31,13 @@ mod qt_gen_templates;
 // Code for C/Header generation
 mod c_gen;
 
-use api_parser::{ApiDef, ApiParser};
-use c_gen::CapiHeaderGen;
-use header_ffi_gen::HeaderFFIGenerator;
-use qt_gen::QtGenerator;
+use crate::api_parser::{ApiDef, ApiParser};
+use crate::c_gen::CapiHeaderGen;
+use crate::header_ffi_gen::HeaderFFIGenerator;
+use crate::qt_gen::QtGenerator;
 use rayon::prelude::*;
-use rust_ffi_gen::RustFFIGenerator;
-use rust_gen::RustGenerator;
+use crate::rust_ffi_gen::RustFFIGenerator;
+use crate::rust_gen::RustGenerator;
 use std::fs;
 use std::process::Command;
 use std::sync::RwLock;

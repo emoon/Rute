@@ -1,4 +1,4 @@
-use api_parser::*;
+use crate::api_parser::*;
 use heck::{CamelCase, SnakeCase};
 use liquid::value::{Object, Value};
 use liquid::{ParserBuilder, Template};
@@ -9,7 +9,7 @@ use std::fs::File;
 use std::io;
 use std::io::{BufWriter, Write};
 
-use rust_gen_templates::*;
+use crate::rust_gen_templates::*;
 
 ///
 /// Keeps track of all the type handlers and when to apply them
@@ -946,7 +946,7 @@ mod tests {
     use super::*;
 
     #[allow(unused_imports)]
-    use api_parser::*;
+    use crate::api_parser::*;
 
     //
     // Create a default function to reduce duplication a bit
