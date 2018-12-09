@@ -89,6 +89,8 @@ impl<'a> From<WrapperRcOwn> for ListWidgetItem<'a> {
     }
 }
 
+QToolButton
+
 impl<'a, T, F> Iterator for RefArray<'a, T, F>
 where
     T: std::convert::From<WrapperRcOwn>,

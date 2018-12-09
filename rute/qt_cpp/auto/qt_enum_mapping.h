@@ -140,6 +140,7 @@ extern std::map<int, int> s_time_spec_lookup;
 extern std::map<int, int> s_timer_type_lookup;
 extern std::map<int, int> s_tool_bar_area_lookup;
 extern std::map<int, int> s_tool_bar_area_sizes_lookup;
+extern std::map<int, int> s_tool_button_popup_mode_lookup;
 extern std::map<int, int> s_tool_button_style_lookup;
 extern std::map<int, int> s_touch_point_state_lookup;
 extern std::map<int, int> s_transformation_mode_lookup;

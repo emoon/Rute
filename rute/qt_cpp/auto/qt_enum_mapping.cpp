@@ -19,6 +19,7 @@
 #include <QSurface>
 #include <QSurfaceFormat>
 #include <QTabletEvent>
+#include <QToolButton>
 #include <QTransform>
 #include <QWheelEvent>
 #include <QWidget>
@@ -168,6 +169,7 @@ std::map<int, int> s_time_spec_lookup;
 std::map<int, int> s_timer_type_lookup;
 std::map<int, int> s_tool_bar_area_lookup;
 std::map<int, int> s_tool_bar_area_sizes_lookup;
+std::map<int, int> s_tool_button_popup_mode_lookup;
 std::map<int, int> s_tool_button_style_lookup;
 std::map<int, int> s_touch_point_state_lookup;
 std::map<int, int> s_transformation_mode_lookup;
@@ -3058,6 +3060,17 @@ extern void create_enum_mappings() {
     for (int i = 0; i < 1; ++i) {
         s_tool_bar_area_sizes_lookup[tool_bar_area_sizes_vals[i].key] =
             tool_bar_area_sizes_vals[i].val;
+    }
+
+    static KeyVal tool_button_popup_mode_vals[] = {
+        {(int)QToolButton::DelayedPopup, 0},
+        {(int)QToolButton::MenuButtonPopup, 1},
+        {(int)QToolButton::InstantPopup, 2},
+    };
+
+    for (int i = 0; i < 3; ++i) {
+        s_tool_button_popup_mode_lookup[tool_button_popup_mode_vals[i].key] =
+            tool_button_popup_mode_vals[i].val;
     }
 
     static KeyVal tool_button_style_vals[] = {

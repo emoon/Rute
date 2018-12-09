@@ -6,10 +6,12 @@
 
 #include "../rute_base.h"
 
+#include "abstract_button_ffi.h"
 #include "application_ffi.h"
 #include "backing_store_ffi.h"
 #include "bitmap_ffi.h"
 #include "brush_ffi.h"
+#include "button_group_ffi.h"
 #include "close_event_ffi.h"
 #include "color_ffi.h"
 #include "context_menu_event_ffi.h"
@@ -70,6 +72,7 @@
 #include "surface_ffi.h"
 #include "surface_format_ffi.h"
 #include "tablet_event_ffi.h"
+#include "tool_button_ffi.h"
 #include "touch_event_ffi.h"
 #include "transform_ffi.h"
 #include "wheel_event_ffi.h"
@@ -197,6 +200,9 @@ typedef struct RuteFFI {
         struct RUBase* priv_data, RUDeleteCallback delete_callback,
         void* host_data);
     struct RUSurfaceFormat (*get_surface_format)(struct RUBase* priv_data);
+    struct RUToolButton (*create_tool_button)(struct RUBase* priv_data,
+                                              RUDeleteCallback delete_callback,
+                                              void* host_data);
     struct RUTransform (*create_transform)(struct RUBase* priv_data,
                                            RUDeleteCallback delete_callback,
                                            void* host_data);

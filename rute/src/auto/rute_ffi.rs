@@ -1,4 +1,6 @@
 #[allow(unused_imports)]
+use auto::abstract_button_ffi::*;
+#[allow(unused_imports)]
 use auto::application_ffi::*;
 #[allow(unused_imports)]
 use auto::backing_store_ffi::*;
@@ -6,6 +8,8 @@ use auto::backing_store_ffi::*;
 use auto::bitmap_ffi::*;
 #[allow(unused_imports)]
 use auto::brush_ffi::*;
+#[allow(unused_imports)]
+use auto::button_group_ffi::*;
 #[allow(unused_imports)]
 use auto::close_event_ffi::*;
 #[allow(unused_imports)]
@@ -126,6 +130,8 @@ use auto::surface_ffi::*;
 use auto::surface_format_ffi::*;
 #[allow(unused_imports)]
 use auto::tablet_event_ffi::*;
+#[allow(unused_imports)]
+use auto::tool_button_ffi::*;
 #[allow(unused_imports)]
 use auto::touch_event_ffi::*;
 #[allow(unused_imports)]
@@ -324,6 +330,11 @@ pub struct RuteFFI {
         host_data: *const c_void,
     ) -> RUSurfaceFormat,
     pub get_surface_format: extern "C" fn(priv_data: *const RUBase) -> RUSurfaceFormat,
+    pub create_tool_button: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUToolButton,
     pub create_transform: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),

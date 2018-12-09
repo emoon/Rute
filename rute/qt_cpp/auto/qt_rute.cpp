@@ -78,6 +78,7 @@ static struct RuteFFI s_rute = {
     create_size_policy,
     create_surface_format,
     get_surface_format,
+    create_tool_button,
     create_transform,
     get_transform,
     create_widget,

@@ -1,0 +1,253 @@
+///
+/// QButtonGroup provides an abstract container into which button widgets can
+/// be placed. It does not provide a visual representation of this container
+/// (see QGroupBox for a container widget), but instead manages the states of
+/// each of the buttons in the group.
+///
+/// An [exclusive](QButtonGroup::exclusive)
+/// button group switches
+/// off all checkable (toggle) buttons except the one that has been
+/// clicked. By default, a button group is exclusive. The buttons in a
+/// button group are usually checkable [QPushButton](QPushButton)
+/// s, [QCheckBox](QCheckBox)
+/// es
+/// (normally for non-exclusive button groups), or [QRadioButton](QRadioButton)
+/// s.
+/// If you create an exclusive button group, you should ensure that
+/// one of the buttons in the group is initially checked; otherwise,
+/// the group will initially be in a state where no buttons are
+/// checked.
+///
+/// A button can be added to the group with addButton() and removed
+/// with removeButton(). If the group is exclusive, the
+/// currently checked button is available with checkedButton(). If a
+/// button is clicked, the buttonClicked() signal is emitted; for a
+/// checkable button in an exclusive group this means that the button
+/// has been checked. The list of buttons in the group is returned by
+/// buttons().
+///
+/// In addition, QButtonGroup can map between integers and buttons.
+/// You can assign an integer id to a button with setId(), and
+/// retrieve it with id(). The id of the currently checked button is
+/// available with checkedId(), and there is an overloaded signal
+/// buttonClicked() which emits the id of the button. The id `-1`
+/// is reserved by QButtonGroup to mean . The purpose
+/// of the mapping mechanism is to simplify the representation of enum
+/// values in a user interface.
+///
+/// **See also:** [`GroupBox`]
+/// [`PushButton`]
+/// [`CheckBox`]
+/// [`RadioButton`]
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[attributes(NoWrapClass, NoCreate)]
+struct ButtonGroup : Object {
+    set_exclusive(arg0: bool),
+    ///
+    /// If this property is `true,` then only one button in the group can be checked
+    /// at any given time. The user can click on any button to check it, and that
+    /// button will replace the existing one as the checked button in the group.
+    ///
+    /// In an exclusive group, the user cannot uncheck the currently checked button
+    /// by clicking on it; instead, another button in the group must be clicked
+    /// to set the new checked button for that group.
+    ///
+    /// By default, this property is `true.`
+    exclusive() -> bool,
+    ///
+    /// Adds the given *button* to the button group. If *id* is -1,
+    /// an id will be assigned to the button.
+    /// Automatically assigned ids are guaranteed to be negative,
+    /// starting with -2. If you are assigning your own ids, use
+    /// positive values to avoid conflicts.
+    ///
+    /// **See also:** [`remove_button()`]
+    /// [`buttons()`]
+    add_button(arg0: *AbstractButtonType, id: i32),
+    ///
+    /// Removes the given *button* from the button group.
+    ///
+    /// **See also:** [`add_button()`]
+    /// [`buttons()`]
+    remove_button(arg0: *AbstractButtonType),
+    //
+    // Returns the button group's list of buttons. This may be empty.
+    //
+    // **See also:** [`add_button()`]
+    // [`remove_button()`]
+    //buttons() -> [AbstractButton?],
+    ///
+    /// Returns the button group's checked button, or 0 if no buttons are
+    /// checked.
+    ///
+    /// **See also:** [`button_clicked()`]
+    checked_button() -> *AbstractButton?,
+    ///
+    /// This signal is emitted when the given *button* is clicked. A
+    /// button is clicked when it is first pressed and then released, when
+    /// its shortcut key is typed, or when QAbstractButton::click()
+    /// or QAbstractButton::animateClick() is programmatically called.
+    ///
+    /// **See also:** [`checked_button()`]
+    /// [`AbstractButton::clicked`]
+    ///
+    /// This signal is emitted when a button with the given *id* is
+    /// clicked.
+    ///
+    /// **See also:** [`checked_button()`]
+    /// [`AbstractButton::clicked`]
+    ///
+    /// This signal is emitted when the given *button* is pressed down.
+    ///
+    /// **See also:** [`AbstractButton::pressed`]
+    ///
+    /// This signal is emitted when a button with the given *id* is
+    /// pressed down.
+    ///
+    /// **See also:** [`AbstractButton::pressed`]
+    ///
+    /// This signal is emitted when the given *button* is released.
+    ///
+    /// **See also:** [`AbstractButton::released`]
+    ///
+    /// This signal is emitted when a button with the given *id* is
+    /// released.
+    ///
+    /// **See also:** [`AbstractButton::released`]
+    ///
+    /// This signal is emitted when the given *button* is toggled.
+    /// *checked* is true if the button is checked, or false if the button is unchecked.
+    ///
+    /// **See also:** [`AbstractButton::toggled`]
+    ///
+    /// This signal is emitted when a button with the given *id* is toggled.
+    /// *checked* is true if the button is checked, or false if the button is unchecked.
+    ///
+    /// **See also:** [`AbstractButton::toggled`]
+    ///
+    /// Returns the button group's list of buttons. This may be empty.
+    ///
+    /// **See also:** [`add_button()`]
+    /// [`remove_button()`]
+    ///
+    /// Returns the button with the specified *id,* or 0 if no such button
+    /// exists.
+    button(id: i32) -> *AbstractButton?,
+    ///
+    /// Sets the *id* for the specified *button.* Note that *id* cannot
+    /// be -1.
+    ///
+    /// **See also:** [`id()`]
+    set_id(button: *AbstractButtonType, id: i32),
+    ///
+    /// Returns the id for the specified *button,* or -1 if no such button
+    /// exists.
+    ///
+    /// **See also:** [`set_id()`]
+    id(button: *AbstractButtonType) -> i32,
+    ///
+    /// Returns the id of the checkedButton(), or -1 if no button is checked.
+    ///
+    /// **See also:** [`set_id()`]
+    checked_id() -> i32,
+    ///
+    /// This signal is emitted when the given *button* is clicked. A
+    /// button is clicked when it is first pressed and then released, when
+    /// its shortcut key is typed, or when QAbstractButton::click()
+    /// or QAbstractButton::animateClick() is programmatically called.
+    ///
+    /// **See also:** [`checked_button()`]
+    /// [`AbstractButton::clicked`]
+    ///
+    /// This signal is emitted when a button with the given *id* is
+    /// clicked.
+    ///
+    /// **See also:** [`checked_button()`]
+    /// [`AbstractButton::clicked`]
+    [signal] button_clicked(arg0: *AbstractButtonType),
+    ///
+    /// This signal is emitted when the given *button* is clicked. A
+    /// button is clicked when it is first pressed and then released, when
+    /// its shortcut key is typed, or when QAbstractButton::click()
+    /// or QAbstractButton::animateClick() is programmatically called.
+    ///
+    /// **See also:** [`checked_button()`]
+    /// [`AbstractButton::clicked`]
+    ///
+    /// This signal is emitted when a button with the given *id* is
+    /// clicked.
+    ///
+    /// **See also:** [`checked_button()`]
+    /// [`AbstractButton::clicked`]
+    [org_name(buttonClicked)]
+    [signal] button_clicked_2(arg0: i32),
+    ///
+    /// This signal is emitted when the given *button* is pressed down.
+    ///
+    /// **See also:** [`AbstractButton::pressed`]
+    ///
+    /// This signal is emitted when a button with the given *id* is
+    /// pressed down.
+    ///
+    /// **See also:** [`AbstractButton::pressed`]
+    [signal] button_pressed(arg0: *AbstractButtonType),
+    ///
+    /// This signal is emitted when the given *button* is pressed down.
+    ///
+    /// **See also:** [`AbstractButton::pressed`]
+    ///
+    /// This signal is emitted when a button with the given *id* is
+    /// pressed down.
+    ///
+    /// **See also:** [`AbstractButton::pressed`]
+    [org_name(buttonPressed)]
+    [signal] button_pressed_2(arg0: i32),
+    ///
+    /// This signal is emitted when the given *button* is released.
+    ///
+    /// **See also:** [`AbstractButton::released`]
+    ///
+    /// This signal is emitted when a button with the given *id* is
+    /// released.
+    ///
+    /// **See also:** [`AbstractButton::released`]
+    [signal] button_released(arg0: *AbstractButtonType),
+    ///
+    /// This signal is emitted when the given *button* is released.
+    ///
+    /// **See also:** [`AbstractButton::released`]
+    ///
+    /// This signal is emitted when a button with the given *id* is
+    /// released.
+    ///
+    /// **See also:** [`AbstractButton::released`]
+    [org_name(buttonReleased)]
+    [signal] button_released_2(arg0: i32),
+    ///
+    /// This signal is emitted when the given *button* is toggled.
+    /// *checked* is true if the button is checked, or false if the button is unchecked.
+    ///
+    /// **See also:** [`AbstractButton::toggled`]
+    ///
+    /// This signal is emitted when a button with the given *id* is toggled.
+    /// *checked* is true if the button is checked, or false if the button is unchecked.
+    ///
+    /// **See also:** [`AbstractButton::toggled`]
+    [signal] button_toggled(arg0: *AbstractButtonType, arg1: bool),
+    ///
+    /// This signal is emitted when the given *button* is toggled.
+    /// *checked* is true if the button is checked, or false if the button is unchecked.
+    ///
+    /// **See also:** [`AbstractButton::toggled`]
+    ///
+    /// This signal is emitted when a button with the given *id* is toggled.
+    /// *checked* is true if the button is checked, or false if the button is unchecked.
+    ///
+    /// **See also:** [`AbstractButton::toggled`]
+    [org_name(buttonToggled)]
+    [signal] button_toggled_2(arg0: i32, arg1: bool),
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4
