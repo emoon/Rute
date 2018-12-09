@@ -51,9 +51,12 @@ pub struct RULayoutFuncs {
     pub index_of: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase) -> i32,
     pub count: extern "C" fn(self_c: *const RUBase) -> i32,
     pub is_empty: extern "C" fn(self_c: *const RUBase) -> bool,
-    pub replace_widget:
-        extern "C" fn(self_c: *const RUBase, from: *const RUBase, to: *const RUBase, options: i32)
-            -> RULayoutItem,
+    pub replace_widget: extern "C" fn(
+        self_c: *const RUBase,
+        from: *const RUBase,
+        to: *const RUBase,
+        options: i32,
+    ) -> RULayoutItem,
     pub total_height_for_width: extern "C" fn(self_c: *const RUBase, w: i32) -> i32,
     pub total_minimum_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
     pub total_maximum_size: extern "C" fn(self_c: *const RUBase) -> RUSize,

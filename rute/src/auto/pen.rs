@@ -286,6 +286,14 @@ impl<'a> Pen<'a> {
         }
         self
     }
+    pub fn dash_pattern(&self) -> PrimitiveArray<f32> {
+        let (obj_data, funcs) = self.get_pen_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).dash_pattern)(obj_data);
+            let ret_val = PrimitiveArray::<f32>::new(ret_val);
+            ret_val
+        }
+    }
     ///
     /// Returns the dash offset for the pen.
     ///

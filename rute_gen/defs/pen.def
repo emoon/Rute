@@ -185,7 +185,7 @@ struct Pen {
     //
     // **See also:** [`style()`]
     // [`is_solid()`]
-    //dash_pattern() -> [f32],
+    dash_pattern() -> [f32],
     //
     // Sets the dash pattern for this pen to the given *pattern.* This
     // implicitly converts the style of the pen to Qt::CustomDashLine.

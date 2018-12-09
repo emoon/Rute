@@ -459,9 +459,15 @@ impl RustGenerator {
             func_imp.push_str(" -> ");
 
             if ret_val.array {
-                func_imp.push_str("RefArray<");
-                func_imp.push_str(&temp_str);
-                func_imp.push_str(", WrapperRcOwn>");
+                if ret_val.vtype == VariableType::Primitive {
+                    func_imp.push_str("PrimitiveArray<");
+                    func_imp.push_str(&temp_str);
+                    func_imp.push_str(">");
+                } else {
+                    func_imp.push_str("RefArray<");
+                    func_imp.push_str(&temp_str);
+                    func_imp.push_str(", WrapperRcOwn>");
+                }
             } else {
                 func_imp.push_str(&temp_str);
             }
@@ -695,13 +701,12 @@ impl RustGenerator {
                             );
                         }
 
-                        /*
-                   VariableType::Array(ref vtype) => {
-                   template_data.insert("rust_return_type".to_owned(), Value::scalar(vtype.clone()));
-                   template_data.insert("return_type".to_owned(), Value::str("array"));
-                   },
-                   */
                         _ => (),
+                    }
+
+                    if ret_val.array && ret_val.vtype == VariableType::Primitive {
+                        template_data.insert("return_type".into(), Value::scalar("primitive_array"));
+                        template_data.insert("return_vtype".into(), Value::scalar(ret_val.type_name.to_owned()));
                     }
                 }
             }
@@ -1183,7 +1188,7 @@ mod tests {
         });
 
         let func_impl = rust_gen.generate_func_def(&func, "TestStruct");
-        assert_eq!(func_impl.1, "(&self) -> RefArray<f32, WrapperRcOwn>");
+        assert_eq!(func_impl.1, "(&self) -> PrimitiveArray<f32>");
     }
 
     //

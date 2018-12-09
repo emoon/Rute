@@ -28,9 +28,11 @@ pub struct RULineFFuncs {
     pub angle_to: extern "C" fn(self_c: *const RUBase, l: *const RUBase) -> f32,
     pub unit_vector: extern "C" fn(self_c: *const RUBase) -> RULineF,
     pub normal_vector: extern "C" fn(self_c: *const RUBase) -> RULineF,
-    pub intersect:
-        extern "C" fn(self_c: *const RUBase, l: *const RUBase, intersection_point: *const RUBase)
-            -> i32,
+    pub intersect: extern "C" fn(
+        self_c: *const RUBase,
+        l: *const RUBase,
+        intersection_point: *const RUBase,
+    ) -> i32,
     pub angle_2: extern "C" fn(self_c: *const RUBase, l: *const RUBase) -> f32,
     pub point_at: extern "C" fn(self_c: *const RUBase, t: f32) -> RUPointF,
     pub center: extern "C" fn(self_c: *const RUBase) -> RUPointF,

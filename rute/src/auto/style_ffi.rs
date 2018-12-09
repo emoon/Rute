@@ -17,9 +17,12 @@ pub struct RUStyleFuncs {
     pub polish_2: extern "C" fn(self_c: *const RUBase, application: *const RUBase),
     pub unpolish_2: extern "C" fn(self_c: *const RUBase, application: *const RUBase),
     pub polish_3: extern "C" fn(self_c: *const RUBase, palette: *const RUBase),
-    pub item_pixmap_rect:
-        extern "C" fn(self_c: *const RUBase, r: *const RUBase, flags: i32, pixmap: *const RUBase)
-            -> RURect,
+    pub item_pixmap_rect: extern "C" fn(
+        self_c: *const RUBase,
+        r: *const RUBase,
+        flags: i32,
+        pixmap: *const RUBase,
+    ) -> RURect,
     pub draw_item_text: extern "C" fn(
         self_c: *const RUBase,
         painter: *const RUBase,

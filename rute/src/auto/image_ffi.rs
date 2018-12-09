@@ -65,11 +65,19 @@ pub struct RUImageFuncs {
     pub alpha_channel: extern "C" fn(self_c: *const RUBase) -> RUImage,
     pub create_alpha_mask: extern "C" fn(self_c: *const RUBase, flags: i32) -> RUImage,
     pub create_heuristic_mask: extern "C" fn(self_c: *const RUBase, clip_tight: bool) -> RUImage,
-    pub scaled: extern "C" fn(self_c: *const RUBase, w: i32, h: i32, aspect_mode: i32, mode: i32)
-        -> RUImage,
-    pub scaled_2:
-        extern "C" fn(self_c: *const RUBase, s: *const RUBase, aspect_mode: i32, mode: i32)
-            -> RUImage,
+    pub scaled: extern "C" fn(
+        self_c: *const RUBase,
+        w: i32,
+        h: i32,
+        aspect_mode: i32,
+        mode: i32,
+    ) -> RUImage,
+    pub scaled_2: extern "C" fn(
+        self_c: *const RUBase,
+        s: *const RUBase,
+        aspect_mode: i32,
+        mode: i32,
+    ) -> RUImage,
     pub scaled_to_width: extern "C" fn(self_c: *const RUBase, w: i32, mode: i32) -> RUImage,
     pub scaled_to_height: extern "C" fn(self_c: *const RUBase, h: i32, mode: i32) -> RUImage,
     pub mirrored:
@@ -87,8 +95,10 @@ pub struct RUImageFuncs {
     pub set_dots_per_meter_y: extern "C" fn(self_c: *const RUBase, arg0: i32),
     pub offset: extern "C" fn(self_c: *const RUBase) -> RUPoint,
     pub set_offset: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
-    pub text: extern "C" fn(self_c: *const RUBase, key: *const ::std::os::raw::c_char)
-        -> *const ::std::os::raw::c_char,
+    pub text: extern "C" fn(
+        self_c: *const RUBase,
+        key: *const ::std::os::raw::c_char,
+    ) -> *const ::std::os::raw::c_char,
     pub set_text: extern "C" fn(
         self_c: *const RUBase,
         key: *const ::std::os::raw::c_char,

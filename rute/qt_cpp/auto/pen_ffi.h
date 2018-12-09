@@ -20,6 +20,7 @@ typedef struct RUPenFuncs {
     void (*swap)(struct RUBase* self_c, struct RUBase* other);
     int (*style)(struct RUBase* self_c);
     void (*set_style)(struct RUBase* self_c, int arg0);
+    struct RUArray (*dash_pattern)(struct RUBase* self_c);
     float (*dash_offset)(struct RUBase* self_c);
     void (*set_dash_offset)(struct RUBase* self_c, float doffset);
     float (*miter_limit)(struct RUBase* self_c);

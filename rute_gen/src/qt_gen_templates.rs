@@ -212,7 +212,13 @@ pub static QT_FUNC_DEF_TEMPLATE: &str = "{% if c_return_type != 'void' %}
 {%- when 'string' %}
     return return_string_array(ret_value);
 {%- when 'primitive' %}
-    return return_primitive_array<{{c_primitive_type}}>(ret_value);
+    RUArray ru_array = alloc_primitive_array(sizeof({{c_primitive_type}}) * ret_value.size());
+    ru_array.count = (uint32_t)ret_value.size();
+    {{c_primitive_type}}* ru_dest = ({{c_primitive_type}}*)ru_array.elements;
+    for (int i = 0, len = (int)ret_value.size(); i < len; ++i) {
+        *ru_dest++ = ({{c_primitive_type}})ret_value.at(i);
+    }
+    return ru_array;
 {%- when 'regular' %}
     return return_by_value_array<{{qt_type}}>(ret_value);
 {%- when 'reference' %}

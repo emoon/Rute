@@ -192,6 +192,8 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str =
             } else {
                 ret_val = {{return_vtype}}::new_from_owned(t);
             }
+          {%- when 'primitive_array' %}
+            let ret_val = PrimitiveArray::<{{return_vtype}}>::new(ret_val);
           {%- endcase %}
         {%- if optional_return %}
             Some(ret_val)

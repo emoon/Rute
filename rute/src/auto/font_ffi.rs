@@ -50,8 +50,10 @@ pub struct RUFontFuncs {
     pub set_raw_name: extern "C" fn(self_c: *const RUBase, arg0: *const ::std::os::raw::c_char),
     pub raw_name: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
     pub key: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
-    pub substitute: extern "C" fn(self_c: *const RUBase, arg0: *const ::std::os::raw::c_char)
-        -> *const ::std::os::raw::c_char,
+    pub substitute: extern "C" fn(
+        self_c: *const RUBase,
+        arg0: *const ::std::os::raw::c_char,
+    ) -> *const ::std::os::raw::c_char,
     pub insert_substitution: extern "C" fn(
         self_c: *const RUBase,
         arg0: *const ::std::os::raw::c_char,

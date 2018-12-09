@@ -14,6 +14,8 @@ struct PrivData {
     QWidget* parent;
 };
 
+RUArray alloc_primitive_array(int size);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 template<typename QT> void destroy_generic(struct RUBase* qt_data) {

@@ -7,14 +7,16 @@
 extern "C" {
 #endif
 
+typedef void (*RUDeleteCallback)(void* data);
+
 struct RUBase;
 struct RUArray {
+    // Callback used to free the elements allocated for this
+    RUDeleteCallback delete_callback;
     void* priv_data;
     void* elements;
     uint32_t count;
 };
-
-typedef void (*RUDeleteCallback)(void* data);
 
 #ifdef __cplusplus
 }

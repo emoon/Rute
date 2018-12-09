@@ -391,9 +391,11 @@ pub struct RUPainterFuncs {
         replacement: *const RUBase,
         offset: *const RUBase,
     ),
-    pub redirected:
-        extern "C" fn(self_c: *const RUBase, device: *const RUBase, offset: *const RUBase)
-            -> RUPaintDevice,
+    pub redirected: extern "C" fn(
+        self_c: *const RUBase,
+        device: *const RUBase,
+        offset: *const RUBase,
+    ) -> RUPaintDevice,
     pub restore_redirected: extern "C" fn(self_c: *const RUBase, device: *const RUBase),
     pub begin_native_painting: extern "C" fn(self_c: *const RUBase),
     pub end_native_painting: extern "C" fn(self_c: *const RUBase),

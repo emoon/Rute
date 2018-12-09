@@ -14,6 +14,7 @@ pub struct RUPenFuncs {
     pub swap: extern "C" fn(self_c: *const RUBase, other: *const RUBase),
     pub style: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_style: extern "C" fn(self_c: *const RUBase, arg0: i32),
+    pub dash_pattern: extern "C" fn(self_c: *const RUBase) -> RUArray,
     pub dash_offset: extern "C" fn(self_c: *const RUBase) -> f32,
     pub set_dash_offset: extern "C" fn(self_c: *const RUBase, doffset: f32),
     pub miter_limit: extern "C" fn(self_c: *const RUBase) -> f32,

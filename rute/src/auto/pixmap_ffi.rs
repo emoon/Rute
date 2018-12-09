@@ -41,17 +41,32 @@ pub struct RUPixmapFuncs {
         extern "C" fn(self_c: *const RUBase, mask_color: *const RUBase, mode: i32) -> RUBitmap,
     pub grab_window:
         extern "C" fn(self_c: *const RUBase, arg0: u64, x: i32, y: i32, w: i32, h: i32) -> RUPixmap,
-    pub grab_widget:
-        extern "C" fn(self_c: *const RUBase, widget: *const RUBase, rect: *const RUBase)
-            -> RUPixmap,
-    pub grab_widget_2:
-        extern "C" fn(self_c: *const RUBase, widget: *const RUBase, x: i32, y: i32, w: i32, h: i32)
-            -> RUPixmap,
-    pub scaled: extern "C" fn(self_c: *const RUBase, w: i32, h: i32, aspect_mode: i32, mode: i32)
-        -> RUPixmap,
-    pub scaled_2:
-        extern "C" fn(self_c: *const RUBase, s: *const RUBase, aspect_mode: i32, mode: i32)
-            -> RUPixmap,
+    pub grab_widget: extern "C" fn(
+        self_c: *const RUBase,
+        widget: *const RUBase,
+        rect: *const RUBase,
+    ) -> RUPixmap,
+    pub grab_widget_2: extern "C" fn(
+        self_c: *const RUBase,
+        widget: *const RUBase,
+        x: i32,
+        y: i32,
+        w: i32,
+        h: i32,
+    ) -> RUPixmap,
+    pub scaled: extern "C" fn(
+        self_c: *const RUBase,
+        w: i32,
+        h: i32,
+        aspect_mode: i32,
+        mode: i32,
+    ) -> RUPixmap,
+    pub scaled_2: extern "C" fn(
+        self_c: *const RUBase,
+        s: *const RUBase,
+        aspect_mode: i32,
+        mode: i32,
+    ) -> RUPixmap,
     pub scaled_to_width: extern "C" fn(self_c: *const RUBase, w: i32, mode: i32) -> RUPixmap,
     pub scaled_to_height: extern "C" fn(self_c: *const RUBase, h: i32, mode: i32) -> RUPixmap,
     pub to_image: extern "C" fn(self_c: *const RUBase) -> RUImage,

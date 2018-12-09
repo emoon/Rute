@@ -12,8 +12,12 @@ use std::os::raw::c_void;
 pub struct RUIconFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub swap: extern "C" fn(self_c: *const RUBase, other: *const RUBase),
-    pub pixmap: extern "C" fn(self_c: *const RUBase, size: *const RUBase, mode: i32, state: i32)
-        -> RUPixmap,
+    pub pixmap: extern "C" fn(
+        self_c: *const RUBase,
+        size: *const RUBase,
+        mode: i32,
+        state: i32,
+    ) -> RUPixmap,
     pub pixmap_2:
         extern "C" fn(self_c: *const RUBase, w: i32, h: i32, mode: i32, state: i32) -> RUPixmap,
     pub pixmap_3:
