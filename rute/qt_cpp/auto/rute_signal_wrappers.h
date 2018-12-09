@@ -92,6 +92,9 @@
 #include "line_ffi.h"
 #include <QLine>
 
+#include "line_edit_ffi.h"
+#include <QLineEdit>
+
 #include "line_f_ffi.h"
 #include <QLineF>
 
@@ -574,6 +577,295 @@ class WRLine : public QLine {
             m_delete_callback(m_private_data);
         }
     }
+
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRLineEdit : public QLineEdit {
+    // Q_OBJECT
+  public:
+    WRLineEdit(QWidget* widget) : QLineEdit(widget) {}
+    virtual ~WRLineEdit() {
+        if (m_delete_callback) {
+            m_delete_callback(m_private_data);
+        }
+    }
+
+    void mousePressEvent(QMouseEvent* arg0) {
+        if (m_mouse_press_event) {
+            RUMouseEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_mouse_event_all_funcs;
+
+            m_mouse_press_event(m_mouse_press_event_user_data,
+                                m_mouse_press_event_wrapped_func,
+                                (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QLineEdit::mousePressEvent(arg0);
+        }
+    }
+
+    void (*m_mouse_press_event)(void*, void* self_c,
+                                struct RUBase* arg0) = nullptr;
+    void* m_mouse_press_event_user_data = nullptr;
+    void* m_mouse_press_event_wrapped_func = nullptr;
+
+    void mouseMoveEvent(QMouseEvent* arg0) {
+        if (m_mouse_move_event) {
+            RUMouseEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_mouse_event_all_funcs;
+
+            m_mouse_move_event(m_mouse_move_event_user_data,
+                               m_mouse_move_event_wrapped_func,
+                               (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QLineEdit::mouseMoveEvent(arg0);
+        }
+    }
+
+    void (*m_mouse_move_event)(void*, void* self_c,
+                               struct RUBase* arg0) = nullptr;
+    void* m_mouse_move_event_user_data = nullptr;
+    void* m_mouse_move_event_wrapped_func = nullptr;
+
+    void mouseReleaseEvent(QMouseEvent* arg0) {
+        if (m_mouse_release_event) {
+            RUMouseEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_mouse_event_all_funcs;
+
+            m_mouse_release_event(m_mouse_release_event_user_data,
+                                  m_mouse_release_event_wrapped_func,
+                                  (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QLineEdit::mouseReleaseEvent(arg0);
+        }
+    }
+
+    void (*m_mouse_release_event)(void*, void* self_c,
+                                  struct RUBase* arg0) = nullptr;
+    void* m_mouse_release_event_user_data = nullptr;
+    void* m_mouse_release_event_wrapped_func = nullptr;
+
+    void mouseDoubleClickEvent(QMouseEvent* arg0) {
+        if (m_mouse_double_click_event) {
+            RUMouseEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_mouse_event_all_funcs;
+
+            m_mouse_double_click_event(m_mouse_double_click_event_user_data,
+                                       m_mouse_double_click_event_wrapped_func,
+                                       (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QLineEdit::mouseDoubleClickEvent(arg0);
+        }
+    }
+
+    void (*m_mouse_double_click_event)(void*, void* self_c,
+                                       struct RUBase* arg0) = nullptr;
+    void* m_mouse_double_click_event_user_data = nullptr;
+    void* m_mouse_double_click_event_wrapped_func = nullptr;
+
+    void keyPressEvent(QKeyEvent* arg0) {
+        if (m_key_press_event) {
+            RUKeyEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_key_event_all_funcs;
+
+            m_key_press_event(m_key_press_event_user_data,
+                              m_key_press_event_wrapped_func,
+                              (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QLineEdit::keyPressEvent(arg0);
+        }
+    }
+
+    void (*m_key_press_event)(void*, void* self_c,
+                              struct RUBase* arg0) = nullptr;
+    void* m_key_press_event_user_data = nullptr;
+    void* m_key_press_event_wrapped_func = nullptr;
+
+    void focusInEvent(QFocusEvent* arg0) {
+        if (m_focus_in_event) {
+            RUFocusEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_focus_event_all_funcs;
+
+            m_focus_in_event(m_focus_in_event_user_data,
+                             m_focus_in_event_wrapped_func,
+                             (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QLineEdit::focusInEvent(arg0);
+        }
+    }
+
+    void (*m_focus_in_event)(void*, void* self_c,
+                             struct RUBase* arg0) = nullptr;
+    void* m_focus_in_event_user_data = nullptr;
+    void* m_focus_in_event_wrapped_func = nullptr;
+
+    void focusOutEvent(QFocusEvent* arg0) {
+        if (m_focus_out_event) {
+            RUFocusEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_focus_event_all_funcs;
+
+            m_focus_out_event(m_focus_out_event_user_data,
+                              m_focus_out_event_wrapped_func,
+                              (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QLineEdit::focusOutEvent(arg0);
+        }
+    }
+
+    void (*m_focus_out_event)(void*, void* self_c,
+                              struct RUBase* arg0) = nullptr;
+    void* m_focus_out_event_user_data = nullptr;
+    void* m_focus_out_event_wrapped_func = nullptr;
+
+    void paintEvent(QPaintEvent* arg0) {
+        if (m_paint_event) {
+            RUPaintEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_paint_event_all_funcs;
+
+            m_paint_event(m_paint_event_user_data, m_paint_event_wrapped_func,
+                          (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QLineEdit::paintEvent(arg0);
+        }
+    }
+
+    void (*m_paint_event)(void*, void* self_c, struct RUBase* arg0) = nullptr;
+    void* m_paint_event_user_data = nullptr;
+    void* m_paint_event_wrapped_func = nullptr;
+
+    void dragEnterEvent(QDragEnterEvent* arg0) {
+        if (m_drag_enter_event) {
+            RUDragEnterEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_drag_enter_event_all_funcs;
+
+            m_drag_enter_event(m_drag_enter_event_user_data,
+                               m_drag_enter_event_wrapped_func,
+                               (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QLineEdit::dragEnterEvent(arg0);
+        }
+    }
+
+    void (*m_drag_enter_event)(void*, void* self_c,
+                               struct RUBase* arg0) = nullptr;
+    void* m_drag_enter_event_user_data = nullptr;
+    void* m_drag_enter_event_wrapped_func = nullptr;
+
+    void dragMoveEvent(QDragMoveEvent* e) {
+        if (m_drag_move_event) {
+            RUDragMoveEvent obj_in_e_1;
+            obj_in_e_1.qt_data = (struct RUBase*)e;
+            obj_in_e_1.host_data = nullptr;
+            obj_in_e_1.all_funcs = &s_drag_move_event_all_funcs;
+
+            m_drag_move_event(m_drag_move_event_user_data,
+                              m_drag_move_event_wrapped_func,
+                              (struct RUBase*)&obj_in_e_1);
+        } else {
+            QLineEdit::dragMoveEvent(e);
+        }
+    }
+
+    void (*m_drag_move_event)(void*, void* self_c, struct RUBase* e) = nullptr;
+    void* m_drag_move_event_user_data = nullptr;
+    void* m_drag_move_event_wrapped_func = nullptr;
+
+    void dragLeaveEvent(QDragLeaveEvent* e) {
+        if (m_drag_leave_event) {
+            RUDragLeaveEvent obj_in_e_1;
+            obj_in_e_1.qt_data = (struct RUBase*)e;
+            obj_in_e_1.host_data = nullptr;
+            obj_in_e_1.all_funcs = &s_drag_leave_event_all_funcs;
+
+            m_drag_leave_event(m_drag_leave_event_user_data,
+                               m_drag_leave_event_wrapped_func,
+                               (struct RUBase*)&obj_in_e_1);
+        } else {
+            QLineEdit::dragLeaveEvent(e);
+        }
+    }
+
+    void (*m_drag_leave_event)(void*, void* self_c, struct RUBase* e) = nullptr;
+    void* m_drag_leave_event_user_data = nullptr;
+    void* m_drag_leave_event_wrapped_func = nullptr;
+
+    void dropEvent(QDropEvent* arg0) {
+        if (m_drop_event) {
+            RUDropEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_drop_event_all_funcs;
+
+            m_drop_event(m_drop_event_user_data, m_drop_event_wrapped_func,
+                         (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QLineEdit::dropEvent(arg0);
+        }
+    }
+
+    void (*m_drop_event)(void*, void* self_c, struct RUBase* arg0) = nullptr;
+    void* m_drop_event_user_data = nullptr;
+    void* m_drop_event_wrapped_func = nullptr;
+
+    void changeEvent(QEvent* arg0) {
+        if (m_change_event) {
+            RUEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_event_all_funcs;
+
+            m_change_event(m_change_event_user_data,
+                           m_change_event_wrapped_func,
+                           (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QLineEdit::changeEvent(arg0);
+        }
+    }
+
+    void (*m_change_event)(void*, void* self_c, struct RUBase* arg0) = nullptr;
+    void* m_change_event_user_data = nullptr;
+    void* m_change_event_wrapped_func = nullptr;
+
+    void contextMenuEvent(QContextMenuEvent* arg0) {
+        if (m_context_menu_event) {
+            RUContextMenuEvent obj_in_arg0_1;
+            obj_in_arg0_1.qt_data = (struct RUBase*)arg0;
+            obj_in_arg0_1.host_data = nullptr;
+            obj_in_arg0_1.all_funcs = &s_context_menu_event_all_funcs;
+
+            m_context_menu_event(m_context_menu_event_user_data,
+                                 m_context_menu_event_wrapped_func,
+                                 (struct RUBase*)&obj_in_arg0_1);
+        } else {
+            QLineEdit::contextMenuEvent(arg0);
+        }
+    }
+
+    void (*m_context_menu_event)(void*, void* self_c,
+                                 struct RUBase* arg0) = nullptr;
+    void* m_context_menu_event_user_data = nullptr;
+    void* m_context_menu_event_wrapped_func = nullptr;
 
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
@@ -2218,6 +2510,32 @@ class QSlotWrapperSignal_self_int_bool_void : public QObject {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+typedef void (*Signal_self_int_int_void)(void* self_c, void* trampoline_func,
+                                         int arg0, int arg1);
+
+class QSlotWrapperSignal_self_int_int_void : public QObject {
+    Q_OBJECT
+  public:
+    QSlotWrapperSignal_self_int_int_void(
+        void* data, Signal_self_int_int_void trampoline_func,
+        void* wrapped_func) {
+        m_trampoline_func = trampoline_func;
+        m_data = data;
+        m_wrapped_func = wrapped_func;
+    }
+
+    Q_SLOT void method(int arg0, int arg1) {
+        m_trampoline_func(m_data, m_wrapped_func, arg0, arg1);
+    }
+
+  private:
+    Signal_self_int_int_void m_trampoline_func;
+    void* m_data;
+    void* m_wrapped_func;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 typedef void (*Signal_self_int_void)(void* self_c, void* trampoline_func,
                                      int arg0);
 
@@ -2245,7 +2563,7 @@ class QSlotWrapperSignal_self_int_void : public QObject {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 typedef void (*Signal_self_string_void)(void* self_c, void* trampoline_func,
-                                        const char* title);
+                                        const char* arg0);
 
 class QSlotWrapperSignal_self_string_void : public QObject {
     Q_OBJECT
@@ -2258,8 +2576,8 @@ class QSlotWrapperSignal_self_string_void : public QObject {
         m_wrapped_func = wrapped_func;
     }
 
-    Q_SLOT void method(const char* title) {
-        m_trampoline_func(m_data, m_wrapped_func, title);
+    Q_SLOT void method(const char* arg0) {
+        m_trampoline_func(m_data, m_wrapped_func, arg0);
     }
 
   private:

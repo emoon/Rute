@@ -34,6 +34,7 @@
 #include "key_sequence_ffi.h"
 #include "layout_ffi.h"
 #include "layout_item_ffi.h"
+#include "line_edit_ffi.h"
 #include "line_f_ffi.h"
 #include "line_ffi.h"
 #include "list_widget_ffi.h"
@@ -121,6 +122,9 @@ typedef struct RuteFFI {
     struct RULine (*create_line)(struct RUBase* priv_data,
                                  RUDeleteCallback delete_callback,
                                  void* host_data);
+    struct RULineEdit (*create_line_edit)(struct RUBase* priv_data,
+                                          RUDeleteCallback delete_callback,
+                                          void* host_data);
     struct RULineF (*create_line_f)(struct RUBase* priv_data,
                                     RUDeleteCallback delete_callback,
                                     void* host_data);

@@ -55,6 +55,8 @@ use auto::layout_ffi::*;
 #[allow(unused_imports)]
 use auto::layout_item_ffi::*;
 #[allow(unused_imports)]
+use auto::line_edit_ffi::*;
+#[allow(unused_imports)]
 use auto::line_f_ffi::*;
 #[allow(unused_imports)]
 use auto::line_ffi::*;
@@ -203,6 +205,11 @@ pub struct RuteFFI {
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
     ) -> RULine,
+    pub create_line_edit: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RULineEdit,
     pub create_line_f: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),

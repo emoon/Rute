@@ -6,6 +6,7 @@
 #include <QImage>
 #include <QKeySequence>
 #include <QLayout>
+#include <QLineEdit>
 #include <QLineF>
 #include <QListWidgetItem>
 #include <QPaintDevice>
@@ -31,6 +32,7 @@ struct KeyVal {
     int val, key;
 };
 
+std::map<int, int> s_action_position_lookup;
 std::map<int, int> s_alignment_flag_lookup;
 std::map<int, int> s_alpha_position_lookup;
 std::map<int, int> s_alpha_premultiplied_lookup;
@@ -72,6 +74,7 @@ std::map<int, int> s_dirty_flag_lookup;
 std::map<int, int> s_dock_widget_area_lookup;
 std::map<int, int> s_dock_widget_area_sizes_lookup;
 std::map<int, int> s_drop_action_lookup;
+std::map<int, int> s_echo_mode_lookup;
 std::map<int, int> s_edge_lookup;
 std::map<int, int> s_enter_key_type_lookup;
 std::map<int, int> s_event_priority_lookup;
@@ -191,6 +194,16 @@ std::map<int, int> s_yuv_layout_lookup;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 extern void create_enum_mappings() {
+
+    static KeyVal action_position_vals[] = {
+        {(int)QLineEdit::LeadingPosition, 0},
+        {(int)QLineEdit::TrailingPosition, 1},
+    };
+
+    for (int i = 0; i < 2; ++i) {
+        s_action_position_lookup[action_position_vals[i].key] =
+            action_position_vals[i].val;
+    }
 
     static KeyVal alignment_flag_vals[] = {
         {(int)Qt::AlignLeft, 0},
@@ -834,6 +847,17 @@ extern void create_enum_mappings() {
 
     for (int i = 0; i < 6; ++i) {
         s_drop_action_lookup[drop_action_vals[i].key] = drop_action_vals[i].val;
+    }
+
+    static KeyVal echo_mode_vals[] = {
+        {(int)QLineEdit::Normal, 0},
+        {(int)QLineEdit::NoEcho, 1},
+        {(int)QLineEdit::Password, 2},
+        {(int)QLineEdit::PasswordEchoOnEdit, 3},
+    };
+
+    for (int i = 0; i < 4; ++i) {
+        s_echo_mode_lookup[echo_mode_vals[i].key] = echo_mode_vals[i].val;
     }
 
     static KeyVal edge_vals[] = {

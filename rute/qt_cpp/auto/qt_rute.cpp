@@ -47,6 +47,7 @@ static struct RuteFFI s_rute = {
     create_key_sequence,
     get_key_sequence,
     create_line,
+    create_line_edit,
     create_line_f,
     get_line_f,
     create_list_widget,
