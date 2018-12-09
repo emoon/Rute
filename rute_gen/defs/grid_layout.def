@@ -71,7 +71,7 @@
 /// # Licence
 ///
 /// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
-[attributes(NoCppClone, NoCreate)]
+[attributes(NoCppClone)]
 struct GridLayout : Layout {
     //
     //[event] size_hint() -> Size,
@@ -195,7 +195,7 @@ struct GridLayout : Layout {
     /// extend to the bottom and/or right edge, respectively.
     ///
     [org_name(addWidget)]
-    add_widget_2(arg0: *WidgetType, row: i32, column: i32, arg1: Rute::Alignment),
+    add_widget_row_column(arg0: *WidgetType, row: i32, column: i32, arg1: Rute::Alignment),
     ///
     /// Adds the given *widget* to the cell grid at *row,* *column.* The
     /// top-left position is (0, 0) by default.
@@ -213,7 +213,7 @@ struct GridLayout : Layout {
     /// extend to the bottom and/or right edge, respectively.
     ///
     [org_name(addWidget)]
-    add_widget_3(arg0: *WidgetType, row: i32, column: i32, row_span: i32, column_span: i32, arg1: Rute::Alignment),
+    add_widget_row_column_span(arg0: *WidgetType, row: i32, column: i32, row_span: i32, column_span: i32, arg1: Rute::Alignment),
     ///
     /// Places the *layout* at position ( *row,* *column)* in the grid. The
     /// top-left position is (0, 0).

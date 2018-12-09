@@ -108,6 +108,9 @@ typedef struct RuteFFI {
     struct RUGradient (*create_gradient)(struct RUBase* priv_data,
                                          RUDeleteCallback delete_callback,
                                          void* host_data);
+    struct RUGridLayout (*create_grid_layout)(struct RUBase* priv_data,
+                                              RUDeleteCallback delete_callback,
+                                              void* host_data);
     struct RUIcon (*create_icon)(struct RUBase* priv_data,
                                  RUDeleteCallback delete_callback,
                                  void* host_data);

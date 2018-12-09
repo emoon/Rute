@@ -16,6 +16,7 @@ struct RUGridLayoutFuncs;
 struct RUGridLayout;
 
 typedef struct RUGridLayoutFuncs {
+    void (*destroy)(struct RUBase* self);
     void (*set_horizontal_spacing)(struct RUBase* self_c, int spacing);
     int (*horizontal_spacing)(struct RUBase* self_c);
     void (*set_vertical_spacing)(struct RUBase* self_c, int spacing);
@@ -32,10 +33,11 @@ typedef struct RUGridLayoutFuncs {
     int (*row_count)(struct RUBase* self_c);
     struct RURect (*cell_rect)(struct RUBase* self_c, int row, int column);
     void (*add_widget)(struct RUBase* self_c, struct RUBase* w);
-    void (*add_widget_2)(struct RUBase* self_c, struct RUBase* arg0, int row,
-                         int column, int arg1);
-    void (*add_widget_3)(struct RUBase* self_c, struct RUBase* arg0, int row,
-                         int column, int row_span, int column_span, int arg1);
+    void (*add_widget_row_column)(struct RUBase* self_c, struct RUBase* arg0,
+                                  int row, int column, int arg1);
+    void (*add_widget_row_column_span)(struct RUBase* self_c,
+                                       struct RUBase* arg0, int row, int column,
+                                       int row_span, int column_span, int arg1);
     void (*add_layout)(struct RUBase* self_c, struct RUBase* arg0, int row,
                        int column, int arg1);
     void (*add_layout_2)(struct RUBase* self_c, struct RUBase* arg0, int row,

@@ -106,6 +106,26 @@ pub struct GridLayout<'a> {
 }
 
 impl<'a> GridLayout<'a> {
+    pub fn new() -> GridLayout<'a> {
+        let data = Rc::new(Cell::new(None));
+
+        let ffi_data = unsafe {
+            ((*rute_ffi_get()).create_grid_layout)(
+                ::std::ptr::null(),
+                transmute(rute_object_delete_callback as usize),
+                Rc::into_raw(data.clone()) as *const c_void,
+            )
+        };
+
+        data.set(Some(ffi_data.qt_data));
+
+        GridLayout {
+            data,
+            all_funcs: ffi_data.all_funcs,
+            owned: true,
+            _marker: PhantomData,
+        }
+    }
     #[allow(dead_code)]
     pub(crate) fn new_from_rc(ffi_data: RUGridLayout) -> GridLayout<'a> {
         GridLayout {
@@ -333,7 +353,7 @@ impl<'a> GridLayout<'a> {
     /// If *rowSpan* and/or *columnSpan* is -1, then the widget will
     /// extend to the bottom and/or right edge, respectively.
     ///
-    pub fn add_widget_2<W: WidgetTrait<'a>>(
+    pub fn add_widget_row_column<W: WidgetTrait<'a>>(
         &self,
         arg0: &W,
         row: i32,
@@ -345,7 +365,7 @@ impl<'a> GridLayout<'a> {
 
         let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
         unsafe {
-            ((*funcs).add_widget_2)(obj_data, obj_arg0_1, row, column, enum_arg1_4);
+            ((*funcs).add_widget_row_column)(obj_data, obj_arg0_1, row, column, enum_arg1_4);
         }
         self
     }
@@ -365,7 +385,7 @@ impl<'a> GridLayout<'a> {
     /// If *rowSpan* and/or *columnSpan* is -1, then the widget will
     /// extend to the bottom and/or right edge, respectively.
     ///
-    pub fn add_widget_3<W: WidgetTrait<'a>>(
+    pub fn add_widget_row_column_span<W: WidgetTrait<'a>>(
         &self,
         arg0: &W,
         row: i32,
@@ -379,7 +399,7 @@ impl<'a> GridLayout<'a> {
 
         let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
         unsafe {
-            ((*funcs).add_widget_3)(
+            ((*funcs).add_widget_row_column_span)(
                 obj_data,
                 obj_arg0_1,
                 row,

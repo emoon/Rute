@@ -16,6 +16,7 @@ use std::os::raw::c_void;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUGridLayoutFuncs {
+    pub destroy: extern "C" fn(self_c: *const RUBase),
     pub set_horizontal_spacing: extern "C" fn(self_c: *const RUBase, spacing: i32),
     pub horizontal_spacing: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_vertical_spacing: extern "C" fn(self_c: *const RUBase, spacing: i32),
@@ -30,9 +31,9 @@ pub struct RUGridLayoutFuncs {
     pub row_count: extern "C" fn(self_c: *const RUBase) -> i32,
     pub cell_rect: extern "C" fn(self_c: *const RUBase, row: i32, column: i32) -> RURect,
     pub add_widget: extern "C" fn(self_c: *const RUBase, w: *const RUBase),
-    pub add_widget_2:
+    pub add_widget_row_column:
         extern "C" fn(self_c: *const RUBase, arg0: *const RUBase, row: i32, column: i32, arg1: i32),
-    pub add_widget_3: extern "C" fn(
+    pub add_widget_row_column_span: extern "C" fn(
         self_c: *const RUBase,
         arg0: *const RUBase,
         row: i32,

@@ -184,6 +184,11 @@ pub struct RuteFFI {
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
     ) -> RUGradient,
+    pub create_grid_layout: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUGridLayout,
     pub create_icon: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),

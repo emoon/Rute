@@ -121,14 +121,14 @@ static void grid_layout_add_widget(struct RUBase* self_c, struct RUBase* w) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void grid_layout_add_widget_2(struct RUBase* self_c, struct RUBase* arg0, int row, int column, int arg1) {
+static void grid_layout_add_widget_row_column(struct RUBase* self_c, struct RUBase* arg0, int row, int column, int arg1) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
     qt_value->addWidget((QWidget*)arg0, row, column, (Qt::Alignment)s_alignment_lookup[arg1]);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void grid_layout_add_widget_3(struct RUBase* self_c, struct RUBase* arg0, int row, int column, int row_span, int column_span, int arg1) {
+static void grid_layout_add_widget_row_column_span(struct RUBase* self_c, struct RUBase* arg0, int row, int column, int row_span, int column_span, int arg1) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
     qt_value->addWidget((QWidget*)arg0, row, column, row_span, column_span, (Qt::Alignment)s_alignment_lookup[arg1]);
 }
@@ -191,7 +191,26 @@ static void grid_layout_set_default_positioning(struct RUBase* self_c, int n, in
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct RUGridLayout create_grid_layout(
+    struct RUBase* priv_data,
+    RUDeleteCallback delete_callback,
+    void* private_user_data)
+{
+    auto ctl = generic_create_func_with_delete<struct RUGridLayout, WRGridLayout>(priv_data, delete_callback, private_user_data);
+    ctl.all_funcs = &s_grid_layout_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void destroy_grid_layout(struct RUBase* priv_data) {
+    destroy_generic<WRGridLayout>(priv_data);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 struct RUGridLayoutFuncs s_grid_layout_funcs = {
+    destroy_grid_layout,
     grid_layout_set_horizontal_spacing,
     grid_layout_horizontal_spacing,
     grid_layout_set_vertical_spacing,
@@ -206,8 +225,8 @@ struct RUGridLayoutFuncs s_grid_layout_funcs = {
     grid_layout_row_count,
     grid_layout_cell_rect,
     grid_layout_add_widget,
-    grid_layout_add_widget_2,
-    grid_layout_add_widget_3,
+    grid_layout_add_widget_row_column,
+    grid_layout_add_widget_row_column_span,
     grid_layout_add_layout,
     grid_layout_add_layout_2,
     grid_layout_set_origin_corner,

@@ -40,6 +40,7 @@ static struct RuteFFI s_rute = {
     create_font,
     get_font,
     create_gradient,
+    create_grid_layout,
     create_icon,
     get_icon,
     create_image,
