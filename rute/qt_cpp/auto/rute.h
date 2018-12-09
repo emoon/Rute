@@ -26,6 +26,7 @@
 #include "font_ffi.h"
 #include "font_info_ffi.h"
 #include "gradient_ffi.h"
+#include "grid_layout_ffi.h"
 #include "hide_event_ffi.h"
 #include "icon_ffi.h"
 #include "image_ffi.h"

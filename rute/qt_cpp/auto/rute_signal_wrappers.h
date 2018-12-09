@@ -65,6 +65,9 @@
 #include "gradient_ffi.h"
 #include <QGradient>
 
+#include "grid_layout_ffi.h"
+#include <QGridLayout>
+
 #include "hide_event_ffi.h"
 #include <QHideEvent>
 
@@ -489,6 +492,22 @@ class WRGradient : public QGradient {
     WRGradient(const QGradient& clone) : QGradient(clone) {}
     WRGradient() : QGradient() {}
     virtual ~WRGradient() {
+        if (m_delete_callback) {
+            m_delete_callback(m_private_data);
+        }
+    }
+
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRGridLayout : public QGridLayout {
+    // Q_OBJECT
+  public:
+    WRGridLayout() : QGridLayout() {}
+    virtual ~WRGridLayout() {
         if (m_delete_callback) {
             m_delete_callback(m_private_data);
         }

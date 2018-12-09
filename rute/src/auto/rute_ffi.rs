@@ -39,6 +39,8 @@ use auto::font_info_ffi::*;
 #[allow(unused_imports)]
 use auto::gradient_ffi::*;
 #[allow(unused_imports)]
+use auto::grid_layout_ffi::*;
+#[allow(unused_imports)]
 use auto::hide_event_ffi::*;
 #[allow(unused_imports)]
 use auto::icon_ffi::*;
