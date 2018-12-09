@@ -67,6 +67,8 @@ impl<'a> Calculator<'a> {
             }
         }
 
+        layout.add_widget_row_column_span(&self.display, 0, 0, 1, 6, rute::AlignmentFlag::AlignRight);
+
         // Stoe display and setup main widget
         self.main_widget.set_layout(&layout);
         self.main_widget.set_window_title("Calculator");
