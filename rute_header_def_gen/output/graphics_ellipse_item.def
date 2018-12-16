@@ -124,7 +124,7 @@ struct GraphicsEllipseItem : AbstractGraphicsShapeItem {
 
 [org_name(QGraphicsEllipseItem)]
 enum GraphicsEllipseItemFixMeEnums {
-    Type,
+    Type = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

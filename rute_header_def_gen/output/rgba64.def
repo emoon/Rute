@@ -29,10 +29,10 @@ struct Rgba64 {
 
 [org_name(QRgba64)]
 enum Shifts {
-    RedShift,
-    GreenShift,
-    BlueShift,
-    AlphaShift,
+    RedShift = 0,
+    GreenShift = 16,
+    BlueShift = 32,
+    AlphaShift = 48,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

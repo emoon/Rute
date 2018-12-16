@@ -28,8 +28,8 @@ struct PlatformMenu : Object {
 
 [org_name(QPlatformMenu)]
 enum MenuType {
-    DefaultMenu,
-    EditMenu,
+    DefaultMenu = 0,
+    EditMenu = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

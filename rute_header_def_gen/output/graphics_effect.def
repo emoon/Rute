@@ -232,23 +232,23 @@ struct GraphicsEffect : Object {
 [org_name(QGraphicsEffect)]
 enum ChangeFlag {
     /// The effect is installed on a source.
-    SourceAttached,
+    SourceAttached = 1,
     /// The effect is uninstalled on a source.
-    SourceDetached,
+    SourceDetached = 2,
     /// The bounding rect of the source has changed.
-    SourceBoundingRectChanged,
+    SourceBoundingRectChanged = 4,
     /// The visual appearance of the source has changed.
-    SourceInvalidated,
+    SourceInvalidated = 8,
 }
 
 [org_name(QGraphicsEffect)]
 enum PixmapPadMode {
     /// The pixmap should not receive any additional padding.
-    NoPad,
+    NoPad = 0,
     /// The pixmap should be padded to ensure it has a completely transparent border.
-    PadToTransparentBorder,
+    PadToTransparentBorder = 1,
     /// The pixmap should be padded to match the effective bounding rectangle of the effect.
-    PadToEffectiveBoundingRect,
+    PadToEffectiveBoundingRect = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

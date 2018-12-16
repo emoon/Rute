@@ -4470,149 +4470,149 @@ struct GraphicsItem {
 [org_name(QGraphicsItem)]
 enum GraphicsItemFlag {
     /// The item supports interactive movement using the mouse. By clicking on the item and then dragging, the item will move together with the mouse cursor. If the item has children, all children are also moved. If the item is part of a selection, all selected items are also moved. This feature is provided as a convenience through the base implementation of QGraphicsItem's mouse event handlers.
-    ItemIsMovable,
+    ItemIsMovable = 1,
     /// The item supports selection. Enabling this feature will enable setSelected() to toggle selection for the item. It will also let the item be selected automatically as a result of calling QGraphicsScene::setSelectionArea(), by clicking on an item, or by using rubber band selection in QGraphicsView.
-    ItemIsSelectable,
+    ItemIsSelectable = 2,
     /// The item supports keyboard input focus (i.e., it is an input item). Enabling this flag will allow the item to accept focus, which again allows the delivery of key events to QGraphicsItem::keyPressEvent() and QGraphicsItem::keyReleaseEvent().
-    ItemIsFocusable,
+    ItemIsFocusable = 4,
     /// The item clips to its own shape. The item cannot draw or receive mouse, tablet, drag and drop or hover events outside its shape. It is disabled by default. This behavior is enforced by QGraphicsView::drawItems() or QGraphicsScene::drawItems(). This flag was introduced in Qt 4.3.
-    ItemClipsToShape,
+    ItemClipsToShape = 8,
     /// The item clips the painting of all its descendants to its own shape. Items that are either direct or indirect children of this item cannot draw outside this item's shape. By default, this flag is disabled; children can draw anywhere. This behavior is enforced by QGraphicsView::drawItems() or QGraphicsScene::drawItems(). This flag was introduced in Qt 4.3.
-    ItemClipsChildrenToShape,
+    ItemClipsChildrenToShape = 16,
     /// The item ignores inherited transformations (i.e., its position is still anchored to its parent, but the parent or view rotation, zoom or shear transformations are ignored). This flag is useful for keeping text label items horizontal and unscaled, so they will still be readable if the view is transformed. When set, the item's view geometry and scene geometry will be maintained separately. You must call deviceTransform() to map coordinates and detect collisions in the view. By default, this flag is disabled. This flag was introduced in Qt 4.3.
-    ItemIgnoresTransformations,
+    ItemIgnoresTransformations = 32,
     /// The item ignores its parent's opacity. The item's effective opacity is the same as its own; it does not combine with the parent's opacity. This flags allows your item to keep its absolute opacity even if the parent is semitransparent. This flag was introduced in Qt 4.5.
-    ItemIgnoresParentOpacity,
+    ItemIgnoresParentOpacity = 64,
     /// The item doesn't propagate its opacity to its children. This flag allows you to create a semitransparent item that does not affect the opacity of its children. This flag was introduced in Qt 4.5.
-    ItemDoesntPropagateOpacityToChildren,
+    ItemDoesntPropagateOpacityToChildren = 128,
     /// The item is stacked behind its parent. By default, child items are stacked on top of the parent item. But setting this flag, the child will be stacked behind it. This flag is useful for drop shadow effects and for decoration objects that follow the parent item's geometry without drawing on top of it. This flag was introduced in Qt 4.5.
-    ItemStacksBehindParent,
+    ItemStacksBehindParent = 256,
     /// The item makes use of either [exposedRect](QStyleOptionGraphicsItem::)
  or [matrix](QStyleOptionGraphicsItem::)
  in QStyleOptionGraphicsItem. By default, the [exposedRect](QStyleOptionGraphicsItem::)
  is initialized to the item's boundingRect() and the [matrix](QStyleOptionGraphicsItem::)
  is untransformed. You can enable this flag for the style options to be set up with more fine-grained values. Note that QStyleOptionGraphicsItem::levelOfDetail is unaffected by this flag and always initialized to 1. Use QStyleOptionGraphicsItem::levelOfDetailFromTransform() if you need a higher value. This flag was introduced in Qt 4.6.
-    ItemUsesExtendedStyleOption,
+    ItemUsesExtendedStyleOption = 512,
     /// The item does not paint anything (i.e., calling paint() on the item has no effect). You should set this flag on items that do not need to be painted to ensure that Graphics View avoids unnecessary painting preparations. This flag was introduced in Qt 4.6.
-    ItemHasNoContents,
+    ItemHasNoContents = 1024,
     /// The item enables itemChange() notifications for ItemPositionChange, ItemPositionHasChanged, ItemMatrixChange, ItemTransformChange, ItemTransformHasChanged, ItemRotationChange, ItemRotationHasChanged, ItemScaleChange, ItemScaleHasChanged, ItemTransformOriginPointChange, and ItemTransformOriginPointHasChanged. For performance reasons, these notifications are disabled by default. You must enable this flag to receive notifications for position and transform changes. This flag was introduced in Qt 4.6.
-    ItemSendsGeometryChanges,
+    ItemSendsGeometryChanges = 2048,
     /// The item supports input methods typically used for Asian languages. This flag was introduced in Qt 4.6.
-    ItemAcceptsInputMethod,
+    ItemAcceptsInputMethod = 4096,
     /// The item automatically stacks behind it's parent if it's z-value is negative. This flag enables setZValue() to toggle ItemStacksBehindParent. This flag was introduced in Qt 4.6.
-    ItemNegativeZStacksBehindParent,
+    ItemNegativeZStacksBehindParent = 8192,
     /// The item is a panel. A panel provides activation and contained focus handling. Only one panel can be active at a time (see QGraphicsItem::isActive()). When no panel is active, QGraphicsScene activates all non-panel items. Window items (i.e., QGraphicsItem::isWindow() returns `true)` are panels. This flag was introduced in Qt 4.6.
-    ItemIsPanel,
-    ItemIsFocusScope,
+    ItemIsPanel = 16384,
+    ItemIsFocusScope = 32768,
     /// The item enables itemChange() notifications for ItemScenePositionHasChanged. For performance reasons, these notifications are disabled by default. You must enable this flag to receive notifications for scene position changes. This flag was introduced in Qt 4.6.
-    ItemSendsScenePositionChanges,
-    ItemStopsClickFocusPropagation,
-    ItemStopsFocusHandling,
+    ItemSendsScenePositionChanges = 65536,
+    ItemStopsClickFocusPropagation = 131072,
+    ItemStopsFocusHandling = 262144,
     /// This flag indicates that all of the item's direct or indirect children only draw within the item's shape. Unlike ItemClipsChildrenToShape, this restriction is not enforced. Set ItemContainsChildrenInShape when you manually assure that drawing is bound to the item's shape and want to avoid the cost associated with enforcing the clip. Setting this flag enables more efficient drawing and collision detection. The flag is disabled by default.
-    ItemContainsChildrenInShape,
+    ItemContainsChildrenInShape = 524288,
 }
 
 [org_name(QGraphicsItem)]
 enum GraphicsItemChange {
     /// The item's position changes. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and when the item's local position changes, relative to its parent (i.e., as a result of calling setPos() or moveBy()). The value argument is the new position (i.e., a QPointF). You can call pos() to get the original position. Do not call setPos() or moveBy() in itemChange() as this notification is delivered; instead, you can return the new, adjusted position from itemChange(). After this notification, QGraphicsItem immediately sends the ItemPositionHasChanged notification if the position changed.
-    ItemPositionChange,
+    ItemPositionChange = 0,
     /// The item's affine transformation matrix is changing. This value is obsolete; you can use ItemTransformChange instead.
-    ItemMatrixChange,
+    ItemMatrixChange = 1,
     /// The item's visible state changes. If the item is presently visible, it will become invisible, and vice verca. The value argument is the new visible state (i.e., true or false). Do not call setVisible() in itemChange() as this notification is delivered; instead, you can return the new visible state from itemChange().
-    ItemVisibleChange,
+    ItemVisibleChange = 2,
     /// The item's enabled state changes. If the item is presently enabled, it will become disabled, and vice verca. The value argument is the new enabled state (i.e., true or false). Do not call setEnabled() in itemChange() as this notification is delivered. Instead, you can return the new state from itemChange().
-    ItemEnabledChange,
+    ItemEnabledChange = 3,
     /// The item's selected state changes. If the item is presently selected, it will become unselected, and vice verca. The value argument is the new selected state (i.e., true or false). Do not call setSelected() in itemChange() as this notification is delivered; instead, you can return the new selected state from itemChange().
-    ItemSelectedChange,
+    ItemSelectedChange = 4,
     /// The item's parent changes. The value argument is the new parent item (i.e., a QGraphicsItem pointer). Do not call setParentItem() in itemChange() as this notification is delivered; instead, you can return the new parent from itemChange().
-    ItemParentChange,
+    ItemParentChange = 5,
     /// A child is added to this item. The value argument is the new child item (i.e., a QGraphicsItem pointer). Do not pass this item to any item's setParentItem() function as this notification is delivered. The return value is unused; you cannot adjust anything in this notification. Note that the new child might not be fully constructed when this notification is sent; calling pure virtual functions on the child can lead to a crash.
-    ItemChildAddedChange,
+    ItemChildAddedChange = 6,
     /// A child is removed from this item. The value argument is the child item that is about to be removed (i.e., a QGraphicsItem pointer). The return value is unused; you cannot adjust anything in this notification.
-    ItemChildRemovedChange,
+    ItemChildRemovedChange = 7,
     /// The item's transformation matrix changes. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and when the item's local transformation matrix changes (i.e., as a result of calling setTransform(). The value argument is the new matrix (i.e., a QTransform); to get the old matrix, call transform(). Do not call setTransform() or set any of the transformation properties in itemChange() as this notification is delivered; instead, you can return the new matrix from itemChange(). This notification is not sent if you change the transformation properties.
-    ItemTransformChange,
+    ItemTransformChange = 8,
     /// The item's position has changed. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and after the item's local position, relative to its parent, has changed. The value argument is the new position (the same as pos()), and QGraphicsItem ignores the return value for this notification (i.e., a read-only notification).
-    ItemPositionHasChanged,
+    ItemPositionHasChanged = 9,
     /// The item's transformation matrix has changed either because setTransform is called, or one of the transformation properties is changed. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and after the item's local transformation matrix has changed. The value argument is the new matrix (same as transform()), and QGraphicsItem ignores the return value for this notification (i.e., a read-only notification).
-    ItemTransformHasChanged,
+    ItemTransformHasChanged = 10,
     /// The item is moved to a new scene. This notification is also sent when the item is added to its initial scene, and when it is removed. The item's scene() is the old scene (or 0 if the item has not been added to a scene yet). The value argument is the new scene (i.e., a QGraphicsScene pointer), or a null pointer if the item is removed from a scene. Do not override this change by passing this item to QGraphicsScene::addItem() as this notification is delivered; instead, you can return the new scene from itemChange(). Use this feature with caution; objecting to a scene change can quickly lead to unwanted recursion.
-    ItemSceneChange,
+    ItemSceneChange = 11,
     /// The item's visible state has changed. The value argument is the new visible state (i.e., true or false). Do not call setVisible() in itemChange() as this notification is delivered. The return value is ignored.
-    ItemVisibleHasChanged,
+    ItemVisibleHasChanged = 12,
     /// The item's enabled state has changed. The value argument is the new enabled state (i.e., true or false). Do not call setEnabled() in itemChange() as this notification is delivered. The return value is ignored.
-    ItemEnabledHasChanged,
+    ItemEnabledHasChanged = 13,
     /// The item's selected state has changed. The value argument is the new selected state (i.e., true or false). Do not call setSelected() in itemChange() as this notification is delivered. The return value is ignored.
-    ItemSelectedHasChanged,
+    ItemSelectedHasChanged = 14,
     /// The item's parent has changed. The value argument is the new parent (i.e., a pointer to a QGraphicsItem). Do not call setParentItem() in itemChange() as this notification is delivered. The return value is ignored.
-    ItemParentHasChanged,
+    ItemParentHasChanged = 15,
     /// The item's scene has changed. The item's scene() is the new scene. This notification is also sent when the item is added to its initial scene, and when it is removed.The value argument is the new scene (i.e., a pointer to a QGraphicsScene). Do not call setScene() in itemChange() as this notification is delivered. The return value is ignored.
-    ItemSceneHasChanged,
+    ItemSceneHasChanged = 16,
     /// The item's cursor changes. The value argument is the new cursor (i.e., a QCursor). Do not call setCursor() in itemChange() as this notification is delivered. Instead, you can return a new cursor from itemChange().
-    ItemCursorChange,
+    ItemCursorChange = 17,
     /// The item's cursor has changed. The value argument is the new cursor (i.e., a QCursor). Do not call setCursor() as this notification is delivered. The return value is ignored.
-    ItemCursorHasChanged,
+    ItemCursorHasChanged = 18,
     /// The item's tooltip changes. The value argument is the new tooltip (i.e., a QToolTip). Do not call setToolTip() in itemChange() as this notification is delivered. Instead, you can return a new tooltip from itemChange().
-    ItemToolTipChange,
+    ItemToolTipChange = 19,
     /// The item's tooltip has changed. The value argument is the new tooltip (i.e., a QToolTip). Do not call setToolTip() as this notification is delivered. The return value is ignored.
-    ItemToolTipHasChanged,
+    ItemToolTipHasChanged = 20,
     /// The item's flags change. The value argument is the new flags (i.e., a quint32). Do not call setFlags() in itemChange() as this notification is delivered. Instead, you can return the new flags from itemChange().
-    ItemFlagsChange,
+    ItemFlagsChange = 21,
     /// The item's flags have changed. The value argument is the new flags (i.e., a quint32). Do not call setFlags() in itemChange() as this notification is delivered. The return value is ignored.
-    ItemFlagsHaveChanged,
+    ItemFlagsHaveChanged = 22,
     /// The item's Z-value changes. The value argument is the new Z-value (i.e., a double). Do not call setZValue() in itemChange() as this notification is delivered. Instead, you can return a new Z-value from itemChange().
-    ItemZValueChange,
+    ItemZValueChange = 23,
     /// The item's Z-value has changed. The value argument is the new Z-value (i.e., a double). Do not call setZValue() as this notification is delivered. The return value is ignored.
-    ItemZValueHasChanged,
+    ItemZValueHasChanged = 24,
     /// The item's opacity changes. The value argument is the new opacity (i.e., a double). Do not call setOpacity() in itemChange() as this notification is delivered. Instead, you can return a new opacity from itemChange().
-    ItemOpacityChange,
+    ItemOpacityChange = 25,
     /// The item's opacity has changed. The value argument is the new opacity (i.e., a double). Do not call setOpacity() as this notification is delivered. The return value is ignored.
-    ItemOpacityHasChanged,
+    ItemOpacityHasChanged = 26,
     /// The item's scene position has changed. This notification is sent if the ItemSendsScenePositionChanges flag is enabled, and after the item's scene position has changed (i.e., the position or transformation of the item itself or the position or transformation of any ancestor has changed). The value argument is the new scene position (the same as scenePos()), and QGraphicsItem ignores the return value for this notification (i.e., a read-only notification).
-    ItemScenePositionHasChanged,
+    ItemScenePositionHasChanged = 27,
     /// The item's rotation property changes. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and when the item's rotation property changes (i.e., as a result of calling setRotation()). The value argument is the new rotation (i.e., a double); to get the old rotation, call rotation(). Do not call setRotation() in itemChange() as this notification is delivered; instead, you can return the new rotation from itemChange().
-    ItemRotationChange,
+    ItemRotationChange = 28,
     /// The item's rotation property has changed. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and after the item's rotation property has changed. The value argument is the new rotation (i.e., a double), and QGraphicsItem ignores the return value for this notification (i.e., a read-only notification). Do not call setRotation() in itemChange() as this notification is delivered.
-    ItemRotationHasChanged,
+    ItemRotationHasChanged = 29,
     /// The item's scale property changes. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and when the item's scale property changes (i.e., as a result of calling setScale()). The value argument is the new scale (i.e., a double); to get the old scale, call scale(). Do not call setScale() in itemChange() as this notification is delivered; instead, you can return the new scale from itemChange().
-    ItemScaleChange,
+    ItemScaleChange = 30,
     /// The item's scale property has changed. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and after the item's scale property has changed. The value argument is the new scale (i.e., a double), and QGraphicsItem ignores the return value for this notification (i.e., a read-only notification). Do not call setScale() in itemChange() as this notification is delivered.
-    ItemScaleHasChanged,
+    ItemScaleHasChanged = 31,
     /// The item's transform origin point property changes. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and when the item's transform origin point property changes (i.e., as a result of calling setTransformOriginPoint()). The value argument is the new origin point (i.e., a QPointF); to get the old origin point, call transformOriginPoint(). Do not call setTransformOriginPoint() in itemChange() as this notification is delivered; instead, you can return the new transform origin point from itemChange().
-    ItemTransformOriginPointChange,
+    ItemTransformOriginPointChange = 32,
     /// The item's transform origin point property has changed. This notification is sent if the ItemSendsGeometryChanges flag is enabled, and after the item's transform origin point property has changed. The value argument is the new origin point (i.e., a QPointF), and QGraphicsItem ignores the return value for this notification (i.e., a read-only notification). Do not call setTransformOriginPoint() in itemChange() as this notification is delivered.
-    ItemTransformOriginPointHasChanged,
+    ItemTransformOriginPointHasChanged = 33,
 }
 
 [org_name(QGraphicsItem)]
 enum CacheMode {
     /// The default; all item caching is disabled. QGraphicsItem::paint() is called every time the item needs redrawing.
-    NoCache,
+    NoCache = 0,
     /// Caching is enabled for the item's logical (local) coordinate system. QGraphicsItem creates an off-screen pixel buffer with a configurable size / resolution that you can pass to QGraphicsItem::setCacheMode(). Rendering quality will typically degrade, depending on the resolution of the cache and the item transformation. The first time the item is redrawn, it will render itself into the cache, and the cache is then reused for every subsequent expose. The cache is also reused as the item is transformed. To adjust the resolution of the cache, you can call setCacheMode() again.
-    ItemCoordinateCache,
+    ItemCoordinateCache = 1,
     /// Caching is enabled at the paint device level, in device coordinates. This mode is for items that can move, but are not rotated, scaled or sheared. If the item is transformed directly or indirectly, the cache will be regenerated automatically. Unlike ItemCoordinateCacheMode, DeviceCoordinateCache always renders at maximum quality.
-    DeviceCoordinateCache,
+    DeviceCoordinateCache = 2,
 }
 
 [org_name(QGraphicsItem)]
 enum PanelModality {
     /// The panel is not modal and does not block input to other panels. This is the default value for panels.
-    NonModal,
+    NonModal = 0,
     /// The panel is modal to a single item hierarchy and blocks input to its parent pane, all grandparent panels, and all siblings of its parent and grandparent panels.
-    PanelModal,
+    PanelModal = 1,
     /// The window is modal to the entire scene and blocks input to all panels.
-    SceneModal,
+    SceneModal = 2,
 }
 
 [org_name(QGraphicsItem)]
 enum GraphicsItemFixMeEnums {
-    Type,
-    UserType,
+    Type = 1,
+    UserType = 65536,
 }
 
 [org_name(QGraphicsItem)]
 enum Extension {
-    UserExtension,
+    UserExtension = 2147483648,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

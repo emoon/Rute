@@ -438,6 +438,7 @@ fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_cl
         writeln!(dest, "enum {}FixMeEnums {{", struct_name);
     }
 
+
     for entry in entry.get_children() {
         match entry.get_kind() {
             EntityKind::EnumConstantDecl => {
@@ -446,7 +447,11 @@ fn print_enums<W: Write>(dest: &mut W, entry: &Entity, struct_name: &str, org_cl
                     writeln!(dest,"    /// {}", data);
                 }
 
-                writeln!(dest, "    {},", name);
+                if let Some(enum_value) = entry.get_enum_constant_value() {
+                    writeln!(dest, "    {} = {},", name, enum_value.1);
+                } else {
+                    writeln!(dest, "    {},", name);
+                }
             }
 
             _ => (),

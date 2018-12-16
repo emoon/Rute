@@ -597,49 +597,49 @@ struct TextStream {
 [org_name(QTextStream)]
 enum RealNumberNotation {
     /// Scientific or fixed-point notation, depending on which makes most sense ( `printf()` 's `%g` flag).
-    SmartNotation,
+    SmartNotation = 0,
     /// Fixed-point notation ( `printf()` 's `%f` flag).
-    FixedNotation,
+    FixedNotation = 1,
     /// Scientific notation ( `printf()` 's `%e` flag).
-    ScientificNotation,
+    ScientificNotation = 2,
 }
 
 [org_name(QTextStream)]
 enum FieldAlignment {
     /// Pad on the right side of fields.
-    AlignLeft,
+    AlignLeft = 0,
     /// Pad on the left side of fields.
-    AlignRight,
+    AlignRight = 1,
     /// Pad on both sides of field.
-    AlignCenter,
+    AlignCenter = 2,
     /// Same as AlignRight, except that the sign of a number is flush left.
-    AlignAccountingStyle,
+    AlignAccountingStyle = 3,
 }
 
 [org_name(QTextStream)]
 enum Status {
     /// The text stream is operating normally.
-    Ok,
+    Ok = 0,
     /// The text stream has read past the end of the data in the underlying device.
-    ReadPastEnd,
+    ReadPastEnd = 1,
     /// The text stream has read corrupt data.
-    ReadCorruptData,
+    ReadCorruptData = 2,
     /// The text stream cannot write to the underlying device.
-    WriteFailed,
+    WriteFailed = 3,
 }
 
 [org_name(QTextStream)]
 enum NumberFlag {
     /// Show the base as a prefix if the base is 16 ("0x"), 8 ("0"), or 2 ("0b").
-    ShowBase,
+    ShowBase = 1,
     /// Always put the decimal separator in numbers, even if there are no decimals.
-    ForcePoint,
+    ForcePoint = 2,
     /// Always put the sign in numbers, even for positive numbers.
-    ForceSign,
+    ForceSign = 4,
     /// Use uppercase versions of base prefixes ("0X", "0B").
-    UppercaseBase,
+    UppercaseBase = 8,
     /// Use uppercase letters for expressing digits 10 to 35 instead of lowercase.
-    UppercaseDigits,
+    UppercaseDigits = 16,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

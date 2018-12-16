@@ -15,12 +15,12 @@ struct FontDialogOptions {
 
 [org_name(QFontDialogOptions)]
 enum FontDialogOption {
-    NoButtons,
-    DontUseNativeDialog,
-    ScalableFonts,
-    NonScalableFonts,
-    MonospacedFonts,
-    ProportionalFonts,
+    NoButtons = 1,
+    DontUseNativeDialog = 2,
+    ScalableFonts = 4,
+    NonScalableFonts = 8,
+    MonospacedFonts = 16,
+    ProportionalFonts = 32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

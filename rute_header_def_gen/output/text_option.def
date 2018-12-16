@@ -132,43 +132,43 @@ struct TextOption {
 [org_name(QTextOption)]
 enum TabType {
     /// A left-tab
-    LeftTab,
+    LeftTab = 0,
     /// A right-tab
-    RightTab,
+    RightTab = 1,
     /// A centered-tab
-    CenterTab,
+    CenterTab = 2,
     /// A tab stopping at a certain delimiter-character
-    DelimiterTab,
+    DelimiterTab = 3,
 }
 
 [org_name(QTextOption)]
 enum WrapMode {
     /// Text is not wrapped at all.
-    NoWrap,
+    NoWrap = 0,
     /// Text is wrapped at word boundaries.
-    WordWrap,
+    WordWrap = 1,
     /// Same as QTextOption::NoWrap
-    ManualWrap,
+    ManualWrap = 2,
     /// Text can be wrapped at any point on a line, even if it occurs in the middle of a word.
-    WrapAnywhere,
+    WrapAnywhere = 3,
     /// If possible, wrapping occurs at a word boundary; otherwise it will occur at the appropriate point on the line, even in the middle of a word.
-    WrapAtWordBoundaryOrAnywhere,
+    WrapAtWordBoundaryOrAnywhere = 4,
 }
 
 [org_name(QTextOption)]
 enum Flag {
     /// Visualize spaces with little dots, and tabs with little arrows.
-    ShowTabsAndSpaces,
+    ShowTabsAndSpaces = 1,
     /// Visualize line and paragraph separators with appropriate symbol characters.
-    ShowLineAndParagraphSeparators,
+    ShowLineAndParagraphSeparators = 2,
     /// While determining the line-break positions take into account the space added for drawing a separator character.
-    AddSpaceForLineAndParagraphSeparators,
+    AddSpaceForLineAndParagraphSeparators = 4,
     /// Suppress all color changes in the character formats (except the main selection).
-    SuppressColors,
+    SuppressColors = 8,
     /// Visualize the end of the document with a section sign. This enum value was added in Qt 5.7.
-    ShowDocumentTerminator,
+    ShowDocumentTerminator = 16,
     /// When this option is set, QTextLine::naturalTextWidth() and naturalTextRect() will return a value that includes the width of trailing spaces in the text; otherwise this width is excluded.
-    IncludeTrailingSpaces,
+    IncludeTrailingSpaces = 2147483648,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

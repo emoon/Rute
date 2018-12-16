@@ -50,11 +50,11 @@ struct GraphicsSceneContextMenuEvent : GraphicsSceneEvent {
 [org_name(QGraphicsSceneContextMenuEvent)]
 enum Reason {
     /// The mouse caused the event to be sent. On most platforms, this means the right mouse button was clicked.
-    Mouse,
+    Mouse = 0,
     /// The keyboard caused this event to be sent. On Windows and MacOS , this means the menu button was pressed.
-    Keyboard,
+    Keyboard = 1,
     /// The event was sent by some other means (i.e. not by the mouse or keyboard).
-    Other,
+    Other = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

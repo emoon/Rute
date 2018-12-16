@@ -165,9 +165,9 @@ struct ProgressBar : Widget {
 [org_name(QProgressBar)]
 enum Direction {
     /// The text is rotated 90 degrees clockwise.
-    TopToBottom,
+    TopToBottom = 0,
     /// The text is rotated 90 degrees counter-clockwise. Note that whether or not the text is drawn is dependent on the style. Currently CleanLooks and Plastique draw the text. Mac, Windows and WindowsVista style do not.
-    BottomToTop,
+    BottomToTop = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

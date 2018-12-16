@@ -285,194 +285,194 @@ struct SysInfo {
 [org_name(QSysInfo)]
 enum Sizes {
     /// The size in bits of a pointer for the platform on which the application is compiled (32 or 64).
-    WordSize,
+    WordSize = 64,
 }
 
 [org_name(QSysInfo)]
 enum Endian {
     /// Big-endian byte order (also called Network byte order)
-    BigEndian,
+    BigEndian = 0,
     /// Little-endian byte order
-    LittleEndian,
+    LittleEndian = 1,
     /// Equals BigEndian or LittleEndian, depending on the platform's byte order.
-    ByteOrder,
+    ByteOrder = 1,
 }
 
 [org_name(QSysInfo)]
 enum WinVersion {
     /// Operating system other than Windows.
-    WV_None,
+    WV_None = 0,
     /// Windows 3.1 with Win 32s
-    WV_32s,
+    WV_32s = 1,
     /// Windows 95
-    WV_95,
+    WV_95 = 2,
     /// Windows 98
-    WV_98,
+    WV_98 = 3,
     /// Windows Me NT-based versions (note that each operating system version is only represented once rather than each Windows edition):
-    WV_Me,
+    WV_Me = 4,
     /// MS-DOS-based version of Windows
-    WV_DOS_based,
+    WV_DOS_based = 15,
     /// Windows NT (operating system version 4.0)
-    WV_NT,
+    WV_NT = 16,
     /// Windows 2000 (operating system version 5.0)
-    WV_2000,
+    WV_2000 = 32,
     /// Windows XP (operating system version 5.1)
-    WV_XP,
+    WV_XP = 48,
     /// Windows Server 2003, Windows Server 2003 R2, Windows Home Server, Windows XP Professional x64 Edition (operating system version 5.2)
-    WV_2003,
+    WV_2003 = 64,
     /// Windows Vista, Windows Server 2008 (operating system version 6.0)
-    WV_VISTA,
+    WV_VISTA = 128,
     /// Windows 7, Windows Server 2008 R2 (operating system version 6.1)
-    WV_WINDOWS7,
+    WV_WINDOWS7 = 144,
     /// Windows 8 (operating system version 6.2)
-    WV_WINDOWS8,
+    WV_WINDOWS8 = 160,
     /// Windows 8.1 (operating system version 6.3), introduced in Qt 5.2
-    WV_WINDOWS8_1,
+    WV_WINDOWS8_1 = 176,
     /// Windows 10 (operating system version 10.0), introduced in Qt 5.5 Alternatively, you may use the following macros which correspond directly to the Windows operating system version number:
-    WV_WINDOWS10,
+    WV_WINDOWS10 = 192,
     /// NT-based version of Windows
-    WV_NT_based,
+    WV_NT_based = 240,
     /// Operating system version 4.0, corresponds to Windows NT
-    WV_4_0,
+    WV_4_0 = 16,
     /// Operating system version 5.0, corresponds to Windows 2000
-    WV_5_0,
+    WV_5_0 = 32,
     /// Operating system version 5.1, corresponds to Windows XP
-    WV_5_1,
+    WV_5_1 = 48,
     /// Operating system version 5.2, corresponds to Windows Server 2003, Windows Server 2003 R2, Windows Home Server, and Windows XP Professional x64 Edition
-    WV_5_2,
+    WV_5_2 = 64,
     /// Operating system version 6.0, corresponds to Windows Vista and Windows Server 2008
-    WV_6_0,
+    WV_6_0 = 128,
     /// Operating system version 6.1, corresponds to Windows 7 and Windows Server 2008 R2
-    WV_6_1,
+    WV_6_1 = 144,
     /// Operating system version 6.2, corresponds to Windows 8
-    WV_6_2,
+    WV_6_2 = 160,
     /// Operating system version 6.3, corresponds to Windows 8.1, introduced in Qt 5.2
-    WV_6_3,
+    WV_6_3 = 176,
     /// Operating system version 10.0, corresponds to Windows 10, introduced in Qt 5.5 The following masks can be used for testing whether a Windows version is MS-DOS-based or NT-based:
-    WV_10_0,
-    WV_CE,
-    WV_CENET,
-    WV_CE_5,
-    WV_CE_6,
-    WV_CE_based,
+    WV_10_0 = 192,
+    WV_CE = 256,
+    WV_CENET = 512,
+    WV_CE_5 = 768,
+    WV_CE_6 = 1024,
+    WV_CE_based = 3840,
 }
 
 [org_name(QSysInfo)]
 enum MacVersion {
     /// Not a Darwin operating system
-    MV_None,
+    MV_None = 65535,
     /// An unknown and currently unsupported platform
-    MV_Unknown,
+    MV_Unknown = 0,
     /// MacOS 9
-    MV_9,
+    MV_9 = 1,
     /// MacOS 10.0
-    MV_10_0,
+    MV_10_0 = 2,
     /// MacOS 10.1
-    MV_10_1,
+    MV_10_1 = 3,
     /// MacOS 10.2
-    MV_10_2,
+    MV_10_2 = 4,
     /// MacOS 10.3
-    MV_10_3,
+    MV_10_3 = 5,
     /// MacOS 10.4
-    MV_10_4,
+    MV_10_4 = 6,
     /// MacOS 10.5
-    MV_10_5,
+    MV_10_5 = 7,
     /// MacOS 10.6
-    MV_10_6,
+    MV_10_6 = 8,
     /// MacOS 10.7
-    MV_10_7,
+    MV_10_7 = 9,
     /// MacOS 10.8
-    MV_10_8,
+    MV_10_8 = 10,
     /// MacOS 10.9
-    MV_10_9,
+    MV_10_9 = 11,
     /// MacOS 10.10
-    MV_10_10,
+    MV_10_10 = 12,
     /// MacOS 10.11
-    MV_10_11,
+    MV_10_11 = 13,
     /// MacOS 10.12
-    MV_10_12,
+    MV_10_12 = 14,
     /// Apple codename for MV_10_0
-    MV_CHEETAH,
+    MV_CHEETAH = 2,
     /// Apple codename for MV_10_1
-    MV_PUMA,
+    MV_PUMA = 3,
     /// Apple codename for MV_10_2
-    MV_JAGUAR,
+    MV_JAGUAR = 4,
     /// Apple codename for MV_10_3
-    MV_PANTHER,
+    MV_PANTHER = 5,
     /// Apple codename for MV_10_4
-    MV_TIGER,
+    MV_TIGER = 6,
     /// Apple codename for MV_10_5
-    MV_LEOPARD,
+    MV_LEOPARD = 7,
     /// Apple codename for MV_10_6
-    MV_SNOWLEOPARD,
+    MV_SNOWLEOPARD = 8,
     /// Apple codename for MV_10_7
-    MV_LION,
+    MV_LION = 9,
     /// Apple codename for MV_10_8
-    MV_MOUNTAINLION,
+    MV_MOUNTAINLION = 10,
     /// Apple codename for MV_10_9
-    MV_MAVERICKS,
+    MV_MAVERICKS = 11,
     /// Apple codename for MV_10_10
-    MV_YOSEMITE,
+    MV_YOSEMITE = 12,
     /// Apple codename for MV_10_11
-    MV_ELCAPITAN,
+    MV_ELCAPITAN = 13,
     /// Apple codename for MV_10_12
-    MV_SIERRA,
+    MV_SIERRA = 14,
     /// iOS (any)
-    MV_IOS,
+    MV_IOS = 256,
     /// iOS 4.3
-    MV_IOS_4_3,
+    MV_IOS_4_3 = 323,
     /// iOS 5.0
-    MV_IOS_5_0,
+    MV_IOS_5_0 = 336,
     /// iOS 5.1
-    MV_IOS_5_1,
+    MV_IOS_5_1 = 337,
     /// iOS 6.0
-    MV_IOS_6_0,
+    MV_IOS_6_0 = 352,
     /// iOS 6.1
-    MV_IOS_6_1,
+    MV_IOS_6_1 = 353,
     /// iOS 7.0
-    MV_IOS_7_0,
+    MV_IOS_7_0 = 368,
     /// iOS 7.1
-    MV_IOS_7_1,
+    MV_IOS_7_1 = 369,
     /// iOS 8.0
-    MV_IOS_8_0,
+    MV_IOS_8_0 = 384,
     /// iOS 8.1
-    MV_IOS_8_1,
+    MV_IOS_8_1 = 385,
     /// iOS 8.2
-    MV_IOS_8_2,
+    MV_IOS_8_2 = 386,
     /// iOS 8.3
-    MV_IOS_8_3,
+    MV_IOS_8_3 = 387,
     /// iOS 8.4
-    MV_IOS_8_4,
+    MV_IOS_8_4 = 388,
     /// iOS 9.0
-    MV_IOS_9_0,
+    MV_IOS_9_0 = 400,
     /// iOS 9.1
-    MV_IOS_9_1,
+    MV_IOS_9_1 = 401,
     /// iOS 9.2
-    MV_IOS_9_2,
+    MV_IOS_9_2 = 402,
     /// iOS 9.3
-    MV_IOS_9_3,
+    MV_IOS_9_3 = 403,
     /// iOS 10.0
-    MV_IOS_10_0,
+    MV_IOS_10_0 = 416,
     /// tvOS (any)
-    MV_TVOS,
+    MV_TVOS = 512,
     /// tvOS 9.0
-    MV_TVOS_9_0,
+    MV_TVOS_9_0 = 656,
     /// tvOS 9.1
-    MV_TVOS_9_1,
+    MV_TVOS_9_1 = 657,
     /// tvOS 9.2
-    MV_TVOS_9_2,
+    MV_TVOS_9_2 = 658,
     /// tvOS 10.0
-    MV_TVOS_10_0,
+    MV_TVOS_10_0 = 672,
     /// watchOS (any)
-    MV_WATCHOS,
+    MV_WATCHOS = 1024,
     /// watchOS 2.0
-    MV_WATCHOS_2_0,
+    MV_WATCHOS_2_0 = 1056,
     /// watchOS 2.1
-    MV_WATCHOS_2_1,
+    MV_WATCHOS_2_1 = 1057,
     /// watchOS 2.2
-    MV_WATCHOS_2_2,
+    MV_WATCHOS_2_2 = 1058,
     /// watchOS 3.0
-    MV_WATCHOS_3_0,
+    MV_WATCHOS_3_0 = 1072,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

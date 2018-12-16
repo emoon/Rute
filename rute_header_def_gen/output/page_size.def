@@ -429,282 +429,282 @@ struct PageSize {
 [org_name(QPageSize)]
 enum PageSizeId {
     /// 210 x 297 mm, 8.26 x 11.69 inches
-    A4,
+    A4 = 0,
     /// 176 x 250 mm, 6.93 x 9.84 inches
-    B5,
+    B5 = 1,
     /// 8.5 x 11 inches, 215.9 x 279.4 mm
-    Letter,
+    Letter = 2,
     /// 8.5 x 14 inches, 215.9 x 355.6 mm
-    Legal,
+    Legal = 3,
     /// 7.5 x 10 inches, 190.5 x 254 mm
-    Executive,
+    Executive = 4,
     /// 841 x 1189 mm
-    A0,
+    A0 = 5,
     /// 594 x 841 mm
-    A1,
+    A1 = 6,
     /// 420 x 594 mm
-    A2,
+    A2 = 7,
     /// 297 x 420 mm
-    A3,
+    A3 = 8,
     /// 148 x 210 mm
-    A5,
+    A5 = 9,
     /// 105 x 148 mm
-    A6,
+    A6 = 10,
     /// 74 x 105 mm
-    A7,
+    A7 = 11,
     /// 52 x 74 mm
-    A8,
+    A8 = 12,
     /// 37 x 52 mm
-    A9,
+    A9 = 13,
     /// 1000 x 1414 mm
-    B0,
+    B0 = 14,
     /// 707 x 1000 mm
-    B1,
+    B1 = 15,
     /// 31 x 44 mm
-    B10,
+    B10 = 16,
     /// 500 x 707 mm
-    B2,
+    B2 = 17,
     /// 353 x 500 mm
-    B3,
+    B3 = 18,
     /// 250 x 353 mm
-    B4,
+    B4 = 19,
     /// 125 x 176 mm
-    B6,
+    B6 = 20,
     /// 88 x 125 mm
-    B7,
+    B7 = 21,
     /// 62 x 88 mm
-    B8,
+    B8 = 22,
     /// 44 x 62 mm
-    B9,
+    B9 = 23,
     /// 163 x 229 mm
-    C5E,
+    C5E = 24,
     /// 105 x 241 mm, U.S. Common 10 Envelope
-    Comm10E,
+    Comm10E = 25,
     /// 110 x 220 mm
-    DLE,
+    DLE = 26,
     /// 210 x 330 mm
-    Folio,
+    Folio = 27,
     /// 431.8 x 279.4 mm
-    Ledger,
+    Ledger = 28,
     /// 279.4 x 431.8 mm
-    Tabloid,
+    Tabloid = 29,
     /// Unknown, or a user defined size.
-    Custom,
+    Custom = 30,
     /// 
-    A10,
+    A10 = 31,
     /// 
-    A3Extra,
+    A3Extra = 32,
     /// 
-    A4Extra,
+    A4Extra = 33,
     /// 
-    A4Plus,
+    A4Plus = 34,
     /// 
-    A4Small,
+    A4Small = 35,
     /// 
-    A5Extra,
+    A5Extra = 36,
     /// 
-    B5Extra,
+    B5Extra = 37,
     /// 
-    JisB0,
+    JisB0 = 38,
     /// 
-    JisB1,
+    JisB1 = 39,
     /// 
-    JisB2,
+    JisB2 = 40,
     /// 
-    JisB3,
+    JisB3 = 41,
     /// 
-    JisB4,
+    JisB4 = 42,
     /// 
-    JisB5,
-    JisB6,
+    JisB5 = 43,
+    JisB6 = 44,
     /// 
-    JisB7,
+    JisB7 = 45,
     /// 
-    JisB8,
+    JisB8 = 46,
     /// 
-    JisB9,
+    JisB9 = 47,
     /// 
-    JisB10,
+    JisB10 = 48,
     /// 
-    AnsiC,
+    AnsiC = 49,
     /// 
-    AnsiD,
+    AnsiD = 50,
     /// 
-    AnsiE,
+    AnsiE = 51,
     /// 
-    LegalExtra,
+    LegalExtra = 52,
     /// 
-    LetterExtra,
+    LetterExtra = 53,
     /// 
-    LetterPlus,
+    LetterPlus = 54,
     /// 
-    LetterSmall,
+    LetterSmall = 55,
     /// 
-    TabloidExtra,
+    TabloidExtra = 56,
     /// 
-    ArchA,
+    ArchA = 57,
     /// 
-    ArchB,
+    ArchB = 58,
     /// 
-    ArchC,
+    ArchC = 59,
     /// 
-    ArchD,
+    ArchD = 60,
     /// 
-    ArchE,
+    ArchE = 61,
     /// 
-    Imperial7x9,
+    Imperial7x9 = 62,
     /// 
-    Imperial8x10,
+    Imperial8x10 = 63,
     /// 
-    Imperial9x11,
+    Imperial9x11 = 64,
     /// 
-    Imperial9x12,
+    Imperial9x12 = 65,
     /// 
-    Imperial10x11,
+    Imperial10x11 = 66,
     /// 
-    Imperial10x13,
+    Imperial10x13 = 67,
     /// 
-    Imperial10x14,
+    Imperial10x14 = 68,
     /// 
-    Imperial12x11,
+    Imperial12x11 = 69,
     /// 
-    Imperial15x11,
+    Imperial15x11 = 70,
     /// 
-    ExecutiveStandard,
+    ExecutiveStandard = 71,
     /// 
-    Note,
+    Note = 72,
     /// 
-    Quarto,
+    Quarto = 73,
     /// 
-    Statement,
+    Statement = 74,
     /// 
-    SuperA,
+    SuperA = 75,
     /// 
-    SuperB,
+    SuperB = 76,
     /// 
-    Postcard,
+    Postcard = 77,
     /// 
-    DoublePostcard,
+    DoublePostcard = 78,
     /// 
-    Prc16K,
+    Prc16K = 79,
     /// 
-    Prc32K,
+    Prc32K = 80,
     /// 
-    Prc32KBig,
+    Prc32KBig = 81,
     /// 
-    FanFoldUS,
+    FanFoldUS = 82,
     /// 
-    FanFoldGerman,
+    FanFoldGerman = 83,
     /// 
-    FanFoldGermanLegal,
+    FanFoldGermanLegal = 84,
     /// 
-    EnvelopeB4,
+    EnvelopeB4 = 85,
     /// 
-    EnvelopeB5,
+    EnvelopeB5 = 86,
     /// 
-    EnvelopeB6,
+    EnvelopeB6 = 87,
     /// 
-    EnvelopeC0,
+    EnvelopeC0 = 88,
     /// 
-    EnvelopeC1,
+    EnvelopeC1 = 89,
     /// 
-    EnvelopeC2,
+    EnvelopeC2 = 90,
     /// 
-    EnvelopeC3,
+    EnvelopeC3 = 91,
     /// 
-    EnvelopeC4,
+    EnvelopeC4 = 92,
     /// 
-    EnvelopeC6,
+    EnvelopeC6 = 93,
     /// 
-    EnvelopeC65,
+    EnvelopeC65 = 94,
     /// 
-    EnvelopeC7,
+    EnvelopeC7 = 95,
     /// 
-    Envelope9,
+    Envelope9 = 96,
     /// 
-    Envelope11,
+    Envelope11 = 97,
     /// 
-    Envelope12,
+    Envelope12 = 98,
     /// 
-    Envelope14,
+    Envelope14 = 99,
     /// 
-    EnvelopeMonarch,
+    EnvelopeMonarch = 100,
     /// 
-    EnvelopePersonal,
+    EnvelopePersonal = 101,
     /// 
-    EnvelopeChou3,
+    EnvelopeChou3 = 102,
     /// 
-    EnvelopeChou4,
+    EnvelopeChou4 = 103,
     /// 
-    EnvelopeInvite,
+    EnvelopeInvite = 104,
     /// 
-    EnvelopeItalian,
+    EnvelopeItalian = 105,
     /// 
-    EnvelopeKaku2,
+    EnvelopeKaku2 = 106,
     /// 
-    EnvelopeKaku3,
+    EnvelopeKaku3 = 107,
     /// 
-    EnvelopePrc1,
+    EnvelopePrc1 = 108,
     /// 
-    EnvelopePrc2,
+    EnvelopePrc2 = 109,
     /// 
-    EnvelopePrc3,
+    EnvelopePrc3 = 110,
     /// 
-    EnvelopePrc4,
+    EnvelopePrc4 = 111,
     /// 
-    EnvelopePrc5,
+    EnvelopePrc5 = 112,
     /// 
-    EnvelopePrc6,
+    EnvelopePrc6 = 113,
     /// 
-    EnvelopePrc7,
+    EnvelopePrc7 = 114,
     /// 
-    EnvelopePrc8,
+    EnvelopePrc8 = 115,
     /// 
-    EnvelopePrc9,
+    EnvelopePrc9 = 116,
     /// 
-    EnvelopePrc10,
+    EnvelopePrc10 = 117,
     /// 
-    EnvelopeYou4,
+    EnvelopeYou4 = 118,
     /// = EnvelopeYou4
-    LastPageSize,
-    NPageSize,
-    NPaperSize,
+    LastPageSize = 118,
+    NPageSize = 118,
+    NPaperSize = 118,
     /// = Letter
-    AnsiA,
+    AnsiA = 2,
     /// = Ledger
-    AnsiB,
+    AnsiB = 28,
     /// = C5E
-    EnvelopeC5,
+    EnvelopeC5 = 24,
     /// = DLE
-    EnvelopeDL,
+    EnvelopeDL = 26,
     /// = Comm10E
-    Envelope10,
+    Envelope10 = 25,
 }
 
 [org_name(QPageSize)]
 enum Unit {
     /// 
-    Millimeter,
+    Millimeter = 0,
     /// 1/72th of an inch
-    Point,
+    Point = 1,
     /// 
-    Inch,
+    Inch = 2,
     /// 1/72th of a foot, 1/6th of an inch, 12 Points
-    Pica,
+    Pica = 3,
     /// 1/72th of a French inch, 0.375 mm
-    Didot,
+    Didot = 4,
     /// 1/6th of a French inch, 12 Didot, 4.5mm
-    Cicero,
+    Cicero = 5,
 }
 
 [org_name(QPageSize)]
 enum SizeMatchPolicy {
     /// Match to a standard page size if within the margin of tolerance.
-    FuzzyMatch,
+    FuzzyMatch = 0,
     /// Match to a standard page size if within the margin of tolerance regardless of orientation.
-    FuzzyOrientationMatch,
+    FuzzyOrientationMatch = 1,
     /// Only match to a standard page size if the sizes match exactly.
-    ExactMatch,
+    ExactMatch = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -31,14 +31,14 @@ struct TextItem {
 [org_name(QTextItem)]
 enum RenderFlag {
     /// Render the text from right to left.
-    RightToLeft,
+    RightToLeft = 1,
     /// Paint a line above the text.
-    Overline,
+    Overline = 16,
     /// Paint a line under the text.
-    Underline,
+    Underline = 32,
     /// Paint a line through the text.
-    StrikeOut,
-    Dummy,
+    StrikeOut = 64,
+    Dummy = 4294967295,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

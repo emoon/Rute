@@ -13,26 +13,26 @@ struct StyleHintReturn {
 [org_name(QStyleHintReturn)]
 enum HintReturnType {
     /// QStyleHintReturn
-    SH_Default,
+    SH_Default = 61440,
     /// [QStyle::SH_RubberBand_Mask](QStyle::SH_RubberBand_Mask)
  QStyle::SH_FocusFrame_Mask
-    SH_Mask,
+    SH_Mask = 61441,
     /// [QStyle::SH_TextControl_FocusIndicatorTextCharFormat](QStyle::SH_TextControl_FocusIndicatorTextCharFormat)
 
-    SH_Variant,
+    SH_Variant = 61442,
 }
 
 [org_name(QStyleHintReturn)]
 enum StyleOptionType {
     /// The type of style option provided ( [SH_Default](SH_Default)
  for this class). The type is used internally by QStyleHintReturn, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleHintReturn subclass and your own styles.
-    Type,
+    Type = 61440,
 }
 
 [org_name(QStyleHintReturn)]
 enum StyleOptionVersion {
     /// 1 The version is used by QStyleHintReturn subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
-    Version,
+    Version = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

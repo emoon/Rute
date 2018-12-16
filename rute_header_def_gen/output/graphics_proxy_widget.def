@@ -248,7 +248,7 @@ struct GraphicsProxyWidget : GraphicsWidget {
 
 [org_name(QGraphicsProxyWidget)]
 enum GraphicsProxyWidgetFixMeEnums {
-    Type,
+    Type = 12,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

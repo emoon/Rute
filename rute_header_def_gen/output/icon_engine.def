@@ -100,15 +100,15 @@ struct IconEngine {
 [org_name(QIconEngine)]
 enum IconEngineHook {
     /// Allows to query the sizes of the contained pixmaps for pixmap-based engines. The *data* argument of the virtual_hook() function is a AvailableSizesArgument pointer that should be filled with icon sizes. Engines that work in terms of a scalable, vectorial format normally return an empty list.
-    AvailableSizesHook,
+    AvailableSizesHook = 1,
     /// Allows to query the name used to create the icon, for example when instantiating an icon using QIcon::fromTheme().
-    IconNameHook,
+    IconNameHook = 2,
     /// Allow to query if this engine represents a null icon. The *data* argument of the virtual_hook() is a pointer to a bool that can be set to true if the icon is null. This enum value was added in Qt 5.7.
-    IsNullHook,
+    IsNullHook = 3,
     /// Provides a way to get a pixmap that is scaled according to the given scale (typically equal to the [device pixel ratio](Glossary%20Of%20High%0A%20%20%20%20DPI%20Terms)
  ). The *data* argument of the virtual_hook() function is a [ScaledPixmapArgument](ScaledPixmapArgument)
  pointer that contains both the input and output arguments. This enum value was added in Qt 5.9.
-    ScaledPixmapHook,
+    ScaledPixmapHook = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

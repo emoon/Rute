@@ -344,208 +344,208 @@ struct TextFormat {
 [org_name(QTextFormat)]
 enum FormatType {
     /// An invalid format as created by the default constructor
-    InvalidFormat,
+    InvalidFormat = 4294967295,
     /// The object formats a text block
-    BlockFormat,
+    BlockFormat = 1,
     /// The object formats a single character
-    CharFormat,
+    CharFormat = 2,
     /// The object formats a list
-    ListFormat,
-    TableFormat,
+    ListFormat = 3,
+    TableFormat = 4,
     /// The object formats a frame
-    FrameFormat,
+    FrameFormat = 5,
     /// 
-    UserFormat,
+    UserFormat = 100,
 }
 
 [org_name(QTextFormat)]
 enum Property {
     /// The index of the formatted object. See objectIndex(). Paragraph and character properties
-    ObjectIndex,
+    ObjectIndex = 0,
     /// How a frame is located relative to the surrounding text
-    CssFloat,
+    CssFloat = 2048,
     /// The layout direction of the text in the document (Qt::LayoutDirection).
-    LayoutDirection,
+    LayoutDirection = 2049,
     /// 
-    OutlinePen,
+    OutlinePen = 2064,
     /// 
-    BackgroundBrush,
+    BackgroundBrush = 2080,
     /// 
-    ForegroundBrush,
+    ForegroundBrush = 2081,
     /// 
-    BackgroundImageUrl,
+    BackgroundImageUrl = 2083,
     /// 
-    BlockAlignment,
+    BlockAlignment = 4112,
     /// 
-    BlockTopMargin,
+    BlockTopMargin = 4144,
     /// 
-    BlockBottomMargin,
+    BlockBottomMargin = 4145,
     /// 
-    BlockLeftMargin,
+    BlockLeftMargin = 4146,
     /// 
-    BlockRightMargin,
+    BlockRightMargin = 4147,
     /// 
-    TextIndent,
+    TextIndent = 4148,
     /// Specifies the tab positions. The tab positions are structs of QTextOption::Tab which are stored in a QList (internally, in a QList<QVariant>).
-    TabPositions,
+    TabPositions = 4149,
     /// 
-    BlockIndent,
+    BlockIndent = 4160,
     /// 
-    LineHeight,
+    LineHeight = 4168,
     /// 
-    LineHeightType,
+    LineHeightType = 4169,
     /// 
-    BlockNonBreakableLines,
+    BlockNonBreakableLines = 4176,
     /// The width of a horizontal ruler element. Character properties
-    BlockTrailingHorizontalRulerWidth,
-    FirstFontProperty,
+    BlockTrailingHorizontalRulerWidth = 4192,
+    FirstFontProperty = 8160,
     /// Specifies the capitalization type that is to be applied to the text.
-    FontCapitalization,
+    FontCapitalization = 8160,
     /// Specifies the meaning of the FontLetterSpacing property. The default is QFont::PercentageSpacing.
-    FontLetterSpacingType,
+    FontLetterSpacingType = 8243,
     /// Changes the default spacing between individual letters in the font. The value is specified as a percentage or absolute value, depending on FontLetterSpacingType. The default value is 100%.
-    FontLetterSpacing,
+    FontLetterSpacing = 8161,
     /// Changes the default spacing between individual words. A positive value increases the word spacing by the corresponding pixels; a negative value decreases the spacing.
-    FontWordSpacing,
+    FontWordSpacing = 8162,
     /// Corresponds to the QFont::Stretch property
-    FontStretch,
+    FontStretch = 8244,
     /// Corresponds to the QFont::StyleHint property
-    FontStyleHint,
+    FontStyleHint = 8163,
     /// Corresponds to the QFont::StyleStrategy property
-    FontStyleStrategy,
+    FontStyleStrategy = 8164,
     /// Specifies whether the font has kerning turned on.
-    FontKerning,
+    FontKerning = 8165,
     /// Controls the use of hinting according to values of the QFont::HintingPreference enum.
-    FontHintingPreference,
+    FontHintingPreference = 8166,
     /// 
-    FontFamily,
+    FontFamily = 8192,
     /// 
-    FontPointSize,
+    FontPointSize = 8193,
     /// Specifies the change in size given to the fontsize already set using FontPointSize or FontPixelSize.
-    FontSizeAdjustment,
-    FontSizeIncrement,
+    FontSizeAdjustment = 8194,
+    FontSizeIncrement = 8194,
     /// 
-    FontWeight,
+    FontWeight = 8195,
     /// 
-    FontItalic,
+    FontItalic = 8196,
     /// *This property has been deprecated.* Use QTextFormat::TextUnderlineStyle instead.
-    FontUnderline,
+    FontUnderline = 8197,
     /// 
-    FontOverline,
+    FontOverline = 8198,
     /// 
-    FontStrikeOut,
+    FontStrikeOut = 8199,
     /// 
-    FontFixedPitch,
+    FontFixedPitch = 8200,
     /// 
-    FontPixelSize,
-    LastFontProperty,
+    FontPixelSize = 8201,
+    LastFontProperty = 8201,
     /// 
-    TextUnderlineColor,
+    TextUnderlineColor = 8208,
     /// 
-    TextVerticalAlignment,
+    TextVerticalAlignment = 8225,
     /// 
-    TextOutline,
+    TextOutline = 8226,
     /// 
-    TextUnderlineStyle,
+    TextUnderlineStyle = 8227,
     /// Specifies the (optional) tool tip to be displayed for a fragment of text.
-    TextToolTip,
+    TextToolTip = 8228,
     /// 
-    IsAnchor,
+    IsAnchor = 8240,
     /// 
-    AnchorHref,
+    AnchorHref = 8241,
     /// 
-    AnchorName,
+    AnchorName = 8242,
     /// 
-    ObjectType,
+    ObjectType = 12032,
     /// Specifies the style used for the items in a list, described by values of the QTextListFormat::Style enum.
-    ListStyle,
+    ListStyle = 12288,
     /// Specifies the amount of indentation used for a list.
-    ListIndent,
+    ListIndent = 12289,
     /// Defines the text which is prepended to item numbers in numeric lists.
-    ListNumberPrefix,
+    ListNumberPrefix = 12290,
     /// Defines the text which is appended to item numbers in numeric lists. Table and frame properties
-    ListNumberSuffix,
+    ListNumberSuffix = 12291,
     /// 
-    FrameBorder,
+    FrameBorder = 16384,
     /// 
-    FrameMargin,
+    FrameMargin = 16385,
     /// 
-    FramePadding,
+    FramePadding = 16386,
     /// 
-    FrameWidth,
+    FrameWidth = 16387,
     /// 
-    FrameHeight,
+    FrameHeight = 16388,
     /// 
-    FrameTopMargin,
+    FrameTopMargin = 16389,
     /// 
-    FrameBottomMargin,
+    FrameBottomMargin = 16390,
     /// 
-    FrameLeftMargin,
+    FrameLeftMargin = 16391,
     /// 
-    FrameRightMargin,
+    FrameRightMargin = 16392,
     /// 
-    FrameBorderBrush,
+    FrameBorderBrush = 16393,
     /// See the [BorderStyle](QTextFrameFormat::BorderStyle)
  enum.
-    FrameBorderStyle,
+    FrameBorderStyle = 16400,
     /// 
-    TableColumns,
+    TableColumns = 16640,
     /// 
-    TableColumnWidthConstraints,
+    TableColumnWidthConstraints = 16641,
     /// 
-    TableCellSpacing,
+    TableCellSpacing = 16642,
     /// 
-    TableCellPadding,
+    TableCellPadding = 16643,
     /// 
-    TableHeaderRowCount,
+    TableHeaderRowCount = 16644,
     /// 
-    TableCellRowSpan,
+    TableCellRowSpan = 18448,
     /// 
-    TableCellColumnSpan,
+    TableCellColumnSpan = 18449,
     /// 
-    TableCellTopPadding,
+    TableCellTopPadding = 18450,
     /// 
-    TableCellBottomPadding,
+    TableCellBottomPadding = 18451,
     /// 
-    TableCellLeftPadding,
+    TableCellLeftPadding = 18452,
     /// 
-    TableCellRightPadding,
+    TableCellRightPadding = 18453,
     /// 
-    ImageName,
+    ImageName = 20480,
     /// 
-    ImageWidth,
+    ImageWidth = 20496,
     /// 
-    ImageHeight,
+    ImageHeight = 20497,
     /// When set on the characterFormat of a selection, the whole width of the text will be shown selected. Page break properties
-    FullWidthSelection,
+    FullWidthSelection = 24576,
     /// Specifies how pages are broken. See the PageBreakFlag enum.
-    PageBreakPolicy,
+    PageBreakPolicy = 28672,
     /// 
-    UserProperty,
+    UserProperty = 1048576,
 }
 
 [org_name(QTextFormat)]
 enum ObjectTypes {
     /// 
-    NoObject,
+    NoObject = 0,
     /// 
-    ImageObject,
+    ImageObject = 1,
     /// 
-    TableObject,
+    TableObject = 2,
     /// 
-    TableCellObject,
+    TableCellObject = 3,
     /// The first object that can be used for application-specific purposes.
-    UserObject,
+    UserObject = 4096,
 }
 
 [org_name(QTextFormat)]
 enum PageBreakFlag {
     /// The page break is determined automatically depending on the available space on the current page
-    PageBreak_Auto,
+    PageBreak_Auto = 0,
     /// The page is always broken before the paragraph/table
-    PageBreak_AlwaysBefore,
+    PageBreak_AlwaysBefore = 1,
     /// A new page is always started after the paragraph/table
-    PageBreak_AlwaysAfter,
+    PageBreak_AlwaysAfter = 16,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

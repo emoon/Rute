@@ -6,15 +6,15 @@ struct TypeInfo {
 
 [org_name(QTypeInfo)]
 enum TypeInfoFixMeEnums {
-    isSpecialized,
-    isPointer,
-    isIntegral,
-    isComplex,
-    isStatic,
-    isRelocatable,
-    isLarge,
-    isDummy,
-    sizeOf,
+    isSpecialized = 1,
+    isPointer = 0,
+    isIntegral = 0,
+    isComplex = 0,
+    isStatic = 0,
+    isRelocatable = 0,
+    isLarge = 0,
+    isDummy = 0,
+    sizeOf = 0,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -48,45 +48,45 @@ struct FileDialogOptions {
 
 [org_name(QFileDialogOptions)]
 enum ViewMode {
-    Detail,
-    List,
+    Detail = 0,
+    List = 1,
 }
 
 [org_name(QFileDialogOptions)]
 enum FileMode {
-    AnyFile,
-    ExistingFile,
-    Directory,
-    ExistingFiles,
-    DirectoryOnly,
+    AnyFile = 0,
+    ExistingFile = 1,
+    Directory = 2,
+    ExistingFiles = 3,
+    DirectoryOnly = 4,
 }
 
 [org_name(QFileDialogOptions)]
 enum AcceptMode {
-    AcceptOpen,
-    AcceptSave,
+    AcceptOpen = 0,
+    AcceptSave = 1,
 }
 
 [org_name(QFileDialogOptions)]
 enum DialogLabel {
-    LookIn,
-    FileName,
-    FileType,
-    Accept,
-    Reject,
-    DialogLabelCount,
+    LookIn = 0,
+    FileName = 1,
+    FileType = 2,
+    Accept = 3,
+    Reject = 4,
+    DialogLabelCount = 5,
 }
 
 [org_name(QFileDialogOptions)]
 enum FileDialogOption {
-    ShowDirsOnly,
-    DontResolveSymlinks,
-    DontConfirmOverwrite,
-    DontUseSheet,
-    DontUseNativeDialog,
-    ReadOnly,
-    HideNameFilterDetails,
-    DontUseCustomDirectoryIcons,
+    ShowDirsOnly = 1,
+    DontResolveSymlinks = 2,
+    DontConfirmOverwrite = 4,
+    DontUseSheet = 8,
+    DontUseNativeDialog = 16,
+    ReadOnly = 32,
+    HideNameFilterDetails = 64,
+    DontUseCustomDirectoryIcons = 128,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

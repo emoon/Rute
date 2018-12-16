@@ -31,25 +31,25 @@ struct FileIconProvider {
 [org_name(QFileIconProvider)]
 enum IconType {
     /// 
-    Computer,
+    Computer = 0,
     /// 
-    Desktop,
+    Desktop = 1,
     /// 
-    Trashcan,
+    Trashcan = 2,
     /// 
-    Network,
+    Network = 3,
     /// 
-    Drive,
+    Drive = 4,
     /// 
-    Folder,
+    Folder = 5,
     /// 
-    File,
+    File = 6,
 }
 
 [org_name(QFileIconProvider)]
 enum Option {
     /// Always use the default directory icon. Some platforms allow the user to set a different icon. Custom icon lookup cause a big performance impact over network or removable drives.
-    DontUseCustomDirectoryIcons,
+    DontUseCustomDirectoryIcons = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

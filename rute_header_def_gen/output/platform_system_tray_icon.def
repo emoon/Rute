@@ -60,27 +60,27 @@ struct PlatformSystemTrayIcon : Object {
 [org_name(QPlatformSystemTrayIcon)]
 enum ActivationReason {
     /// Unknown reason
-    Unknown,
+    Unknown = 0,
     /// The context menu for the system tray entry was requested
-    Context,
+    Context = 1,
     /// The system tray entry was double clicked
-    DoubleClick,
+    DoubleClick = 2,
     /// The system tray entry was clicked
-    Trigger,
+    Trigger = 3,
     /// The system tray entry was clicked with the middle mouse button
-    MiddleClick,
+    MiddleClick = 4,
 }
 
 [org_name(QPlatformSystemTrayIcon)]
 enum MessageIcon {
     /// No icon is shown.
-    NoIcon,
+    NoIcon = 0,
     /// An information icon is shown.
-    Information,
+    Information = 1,
     /// A standard warning icon is shown.
-    Warning,
+    Warning = 2,
     /// A critical warning icon is shown.
-    Critical,
+    Critical = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

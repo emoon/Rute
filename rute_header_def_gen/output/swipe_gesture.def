@@ -41,15 +41,15 @@ struct SwipeGesture : Gesture {
 [org_name(QSwipeGesture)]
 enum SwipeDirection {
     /// The gesture had no motion associated with it on a particular axis.
-    NoDirection,
+    NoDirection = 0,
     /// The gesture involved a horizontal motion to the left.
-    Left,
+    Left = 1,
     /// The gesture involved a horizontal motion to the right.
-    Right,
+    Right = 2,
     /// The gesture involved an upward vertical motion.
-    Up,
+    Up = 3,
     /// The gesture involved a downward vertical motion.
-    Down,
+    Down = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

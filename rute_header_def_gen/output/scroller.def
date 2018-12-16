@@ -321,35 +321,35 @@ struct Scroller : Object {
 [org_name(QScroller)]
 enum State {
     /// The scroller is not scrolling and nothing is pressed.
-    Inactive,
+    Inactive = 0,
     /// A touch event was received or the mouse button was pressed but the scroll area is currently not dragged.
-    Pressed,
+    Pressed = 1,
     /// The scroll area is currently following the touch point or mouse.
-    Dragging,
+    Dragging = 2,
     /// The scroll area is moving on it's own.
-    Scrolling,
+    Scrolling = 3,
 }
 
 [org_name(QScroller)]
 enum ScrollerGestureType {
     /// The gesture recognizer will only trigger on touch events. Specifically it will react on single touch points when using a touch screen and dual touch points when using a touchpad.
-    TouchGesture,
+    TouchGesture = 0,
     /// The gesture recognizer will only trigger on left mouse button events.
-    LeftMouseButtonGesture,
+    LeftMouseButtonGesture = 1,
     /// The gesture recognizer will only trigger on right mouse button events.
-    RightMouseButtonGesture,
+    RightMouseButtonGesture = 2,
     /// The gesture recognizer will only trigger on middle mouse button events.
-    MiddleMouseButtonGesture,
+    MiddleMouseButtonGesture = 3,
 }
 
 [org_name(QScroller)]
 enum Input {
     /// The user pressed the input device (e.g. QEvent::MouseButtonPress, QEvent::GraphicsSceneMousePress, QEvent::TouchBegin)
-    InputPress,
+    InputPress = 1,
     /// The user moved the input device (e.g. QEvent::MouseMove, QEvent::GraphicsSceneMouseMove, QEvent::TouchUpdate)
-    InputMove,
+    InputMove = 2,
     /// The user released the input device (e.g. QEvent::MouseButtonRelease, QEvent::GraphicsSceneMouseRelease, QEvent::TouchEnd)
-    InputRelease,
+    InputRelease = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -266,61 +266,61 @@ struct OpenGLBuffer {
 [org_name(QOpenGLBuffer)]
 enum Type {
     /// Vertex buffer object for use when specifying vertex arrays.
-    VertexBuffer,
+    VertexBuffer = 34962,
     /// Index buffer object for use with `glDrawElements()` .
-    IndexBuffer,
+    IndexBuffer = 34963,
     /// Pixel pack buffer object for reading pixel data from the OpenGL server (for example, with `glReadPixels()` ). Not supported under OpenGL/ES.
-    PixelPackBuffer,
+    PixelPackBuffer = 35051,
     /// Pixel unpack buffer object for writing pixel data to the OpenGL server (for example, with `glTexImage2D()` ). Not supported under OpenGL/ES.
-    PixelUnpackBuffer,
+    PixelUnpackBuffer = 35052,
 }
 
 [org_name(QOpenGLBuffer)]
 enum UsagePattern {
     /// The data will be set once and used a few times for drawing operations. Under OpenGL/ES 1.1 this is identical to StaticDraw.
-    StreamDraw,
+    StreamDraw = 35040,
     /// The data will be set once and used a few times for reading data back from the OpenGL server. Not supported under OpenGL/ES.
-    StreamRead,
+    StreamRead = 35041,
     /// The data will be set once and used a few times for reading data back from the OpenGL server for use in further drawing operations. Not supported under OpenGL/ES.
-    StreamCopy,
+    StreamCopy = 35042,
     /// The data will be set once and used many times for drawing operations.
-    StaticDraw,
+    StaticDraw = 35044,
     /// The data will be set once and used many times for reading data back from the OpenGL server. Not supported under OpenGL/ES.
-    StaticRead,
+    StaticRead = 35045,
     /// The data will be set once and used many times for reading data back from the OpenGL server for use in further drawing operations. Not supported under OpenGL/ES.
-    StaticCopy,
+    StaticCopy = 35046,
     /// The data will be modified repeatedly and used many times for drawing operations.
-    DynamicDraw,
+    DynamicDraw = 35048,
     /// The data will be modified repeatedly and used many times for reading data back from the OpenGL server. Not supported under OpenGL/ES.
-    DynamicRead,
+    DynamicRead = 35049,
     /// The data will be modified repeatedly and used many times for reading data back from the OpenGL server for use in further drawing operations. Not supported under OpenGL/ES.
-    DynamicCopy,
+    DynamicCopy = 35050,
 }
 
 [org_name(QOpenGLBuffer)]
 enum Access {
     /// The buffer will be mapped for reading only.
-    ReadOnly,
+    ReadOnly = 35000,
     /// The buffer will be mapped for writing only.
-    WriteOnly,
+    WriteOnly = 35001,
     /// The buffer will be mapped for reading and writing.
-    ReadWrite,
+    ReadWrite = 35002,
 }
 
 [org_name(QOpenGLBuffer)]
 enum RangeAccessFlag {
     /// The buffer will be mapped for reading.
-    RangeRead,
+    RangeRead = 1,
     /// The buffer will be mapped for writing.
-    RangeWrite,
+    RangeWrite = 2,
     /// Discard the previous contents of the specified range.
-    RangeInvalidate,
+    RangeInvalidate = 4,
     /// Discard the previous contents of the entire buffer.
-    RangeInvalidateBuffer,
+    RangeInvalidateBuffer = 8,
     /// Indicates that modifications are to be flushed explicitly via `glFlushMappedBufferRange.`
-    RangeFlushExplicit,
+    RangeFlushExplicit = 16,
     /// Indicates that pending operations should not be synchronized before returning from mapRange().
-    RangeUnsynchronized,
+    RangeUnsynchronized = 32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

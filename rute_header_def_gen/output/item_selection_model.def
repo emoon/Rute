@@ -291,27 +291,27 @@ struct ItemSelectionModel : Object {
 [org_name(QItemSelectionModel)]
 enum SelectionFlag {
     /// No selection will be made.
-    NoUpdate,
+    NoUpdate = 0,
     /// The complete selection will be cleared.
-    Clear,
+    Clear = 1,
     /// All specified indexes will be selected.
-    Select,
+    Select = 2,
     /// All specified indexes will be deselected.
-    Deselect,
+    Deselect = 4,
     /// All specified indexes will be selected or deselected depending on their current state.
-    Toggle,
+    Toggle = 8,
     /// The current selection will be updated.
-    Current,
+    Current = 16,
     /// All indexes will be expanded to span rows.
-    Rows,
+    Rows = 32,
     /// All indexes will be expanded to span columns.
-    Columns,
+    Columns = 64,
     /// A combination of Select and Current, provided for convenience.
-    SelectCurrent,
+    SelectCurrent = 18,
     /// A combination of Toggle and Current, provided for convenience.
-    ToggleCurrent,
+    ToggleCurrent = 24,
     /// A combination of Clear and Select, provided for convenience.
-    ClearAndSelect,
+    ClearAndSelect = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

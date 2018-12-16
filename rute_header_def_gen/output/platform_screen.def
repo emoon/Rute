@@ -187,19 +187,19 @@ struct PlatformScreen {
 
 [org_name(QPlatformScreen)]
 enum SubpixelAntialiasingType {
-    Subpixel_None,
-    Subpixel_RGB,
-    Subpixel_BGR,
-    Subpixel_VRGB,
-    Subpixel_VBGR,
+    Subpixel_None = 0,
+    Subpixel_RGB = 1,
+    Subpixel_BGR = 2,
+    Subpixel_VRGB = 3,
+    Subpixel_VBGR = 4,
 }
 
 [org_name(QPlatformScreen)]
 enum PowerState {
-    PowerStateOn,
-    PowerStateStandby,
-    PowerStateSuspend,
-    PowerStateOff,
+    PowerStateOn = 0,
+    PowerStateStandby = 1,
+    PowerStateSuspend = 2,
+    PowerStateOff = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

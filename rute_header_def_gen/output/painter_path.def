@@ -1171,13 +1171,13 @@ struct PainterPath {
 [org_name(QPainterPath)]
 enum ElementType {
     /// A new subpath. See also moveTo().
-    MoveToElement,
+    MoveToElement = 0,
     /// A line. See also lineTo().
-    LineToElement,
+    LineToElement = 1,
     /// A curve. See also cubicTo() and quadTo().
-    CurveToElement,
+    CurveToElement = 2,
     /// The extra data required to describe a curve in a CurveToElement element.
-    CurveToDataElement,
+    CurveToDataElement = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

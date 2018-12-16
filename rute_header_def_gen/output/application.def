@@ -737,11 +737,11 @@ struct Application : GuiApplication {
 [org_name(QApplication)]
 enum ColorSpec {
     /// the default color allocation policy
-    NormalColor,
+    NormalColor = 0,
     /// the same as NormalColor for X11; allocates colors to a palette on demand under Windows
-    CustomColor,
+    CustomColor = 1,
     /// the right choice for applications that use thousands of colors See setColorSpec() for full details.
-    ManyColor,
+    ManyColor = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

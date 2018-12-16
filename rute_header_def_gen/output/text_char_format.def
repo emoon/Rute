@@ -651,47 +651,47 @@ struct TextCharFormat : TextFormat {
 [org_name(QTextCharFormat)]
 enum VerticalAlignment {
     /// Adjacent characters are positioned in the standard way for text in the writing system in use.
-    AlignNormal,
+    AlignNormal = 0,
     /// Characters are placed above the base line for normal text.
-    AlignSuperScript,
+    AlignSuperScript = 1,
     /// Characters are placed below the base line for normal text.
-    AlignSubScript,
+    AlignSubScript = 2,
     /// The center of the object is vertically aligned with the base line. Currently, this is only implemented for inline objects.
-    AlignMiddle,
+    AlignMiddle = 3,
     /// The top edge of the object is vertically aligned with the base line.
-    AlignTop,
+    AlignTop = 4,
     /// The bottom edge of the object is vertically aligned with the base line.
-    AlignBottom,
+    AlignBottom = 5,
     /// The base lines of the characters are aligned.
-    AlignBaseline,
+    AlignBaseline = 6,
 }
 
 [org_name(QTextCharFormat)]
 enum UnderlineStyle {
     /// Text is draw without any underlining decoration.
-    NoUnderline,
+    NoUnderline = 0,
     /// A line is drawn using Qt::SolidLine.
-    SingleUnderline,
+    SingleUnderline = 1,
     /// Dashes are drawn using Qt::DashLine.
-    DashUnderline,
+    DashUnderline = 2,
     /// Dots are drawn using Qt::DotLine;
-    DotLine,
+    DotLine = 3,
     /// Dashs and dots are drawn using Qt::DashDotLine.
-    DashDotLine,
+    DashDotLine = 4,
     /// Underlines draw drawn using Qt::DashDotDotLine.
-    DashDotDotLine,
+    DashDotDotLine = 5,
     /// The text is underlined using a wave shaped line.
-    WaveUnderline,
+    WaveUnderline = 6,
     /// The underline is drawn depending on the SpellCheckUnderlineStyle theme hint of QPlatformTheme. By default this is mapped to WaveUnderline, on MacOS it is mapped to DotLine.
-    SpellCheckUnderline,
+    SpellCheckUnderline = 7,
 }
 
 [org_name(QTextCharFormat)]
 enum FontPropertiesInheritanceBehavior {
     /// If a property is not explicitly set, do not change the text format's property value.
-    FontPropertiesSpecifiedOnly,
+    FontPropertiesSpecifiedOnly = 0,
     /// If a property is not explicitly set, override the text format's property with a default value.
-    FontPropertiesAll,
+    FontPropertiesAll = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -250,15 +250,15 @@ struct TextBlockFormat : TextFormat {
 [org_name(QTextBlockFormat)]
 enum LineHeightTypes {
     /// This is the default line height: single spacing.
-    SingleHeight,
+    SingleHeight = 0,
     /// This sets the spacing proportional to the line (in percentage). For example, set to 200 for double spacing.
-    ProportionalHeight,
+    ProportionalHeight = 1,
     /// This sets the line height to a fixed line height (in pixels).
-    FixedHeight,
+    FixedHeight = 2,
     /// This sets the minimum line height (in pixels).
-    MinimumHeight,
+    MinimumHeight = 3,
     /// This adds the specified height between lines (in pixels).
-    LineDistanceHeight,
+    LineDistanceHeight = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

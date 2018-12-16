@@ -71,7 +71,7 @@ struct GraphicsPolygonItem : AbstractGraphicsShapeItem {
 
 [org_name(QGraphicsPolygonItem)]
 enum GraphicsPolygonItemFixMeEnums {
-    Type,
+    Type = 5,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

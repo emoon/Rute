@@ -23,47 +23,47 @@ struct StyleOptionHeader : StyleOption {
 enum StyleOptionType {
     /// The type of style option provided ( [SO_Header](SO_Header)
  for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
-    Type,
+    Type = 8,
 }
 
 [org_name(QStyleOptionHeader)]
 enum StyleOptionVersion {
     /// 1 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
-    Version,
+    Version = 1,
 }
 
 [org_name(QStyleOptionHeader)]
 enum SectionPosition {
     /// At the beginining of the header
-    Beginning,
+    Beginning = 0,
     /// In the middle of the header
-    Middle,
+    Middle = 1,
     /// At the end of the header
-    End,
+    End = 2,
     /// Only one header section
-    OnlyOneSection,
+    OnlyOneSection = 3,
 }
 
 [org_name(QStyleOptionHeader)]
 enum SelectedPosition {
     /// Not adjacent to the selected section
-    NotAdjacent,
+    NotAdjacent = 0,
     /// The next section is selected
-    NextIsSelected,
+    NextIsSelected = 1,
     /// The previous section is selected
-    PreviousIsSelected,
+    PreviousIsSelected = 2,
     /// Both the next and previous section are selected
-    NextAndPreviousAreSelected,
+    NextAndPreviousAreSelected = 3,
 }
 
 [org_name(QStyleOptionHeader)]
 enum SortIndicator {
     /// No sort indicator is needed
-    None,
+    None = 0,
     /// Draw an up indicator
-    SortUp,
+    SortUp = 1,
     /// Draw a down indicator
-    SortDown,
+    SortDown = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

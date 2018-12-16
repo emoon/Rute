@@ -883,23 +883,23 @@ struct TextEdit : AbstractScrollArea {
 [org_name(QTextEdit)]
 enum LineWrapMode {
     /// 
-    NoWrap,
+    NoWrap = 0,
     /// 
-    WidgetWidth,
+    WidgetWidth = 1,
     /// 
-    FixedPixelWidth,
+    FixedPixelWidth = 2,
     /// 
-    FixedColumnWidth,
+    FixedColumnWidth = 3,
 }
 
 [org_name(QTextEdit)]
 enum AutoFormattingFlag {
     /// Don't do any automatic formatting.
-    AutoNone,
+    AutoNone = 0,
     /// Automatically create bullet lists (e.g. when the user enters an asterisk ('*') in the left most column, or presses Enter in an existing list item.
-    AutoBulletList,
+    AutoBulletList = 1,
     /// Apply all automatic formatting. Currently only automatic bullet lists are supported.
-    AutoAll,
+    AutoAll = 4294967295,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

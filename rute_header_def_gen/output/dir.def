@@ -957,68 +957,68 @@ struct Dir {
 [org_name(QDir)]
 enum Filter {
     /// List directories that match the filters.
-    Dirs,
+    Dirs = 1,
     /// List files.
-    Files,
+    Files = 2,
     /// List disk drives (ignored under Unix).
-    Drives,
+    Drives = 4,
     /// Do not list symbolic links (ignored by operating systems that don't support symbolic links).
-    NoSymLinks,
+    NoSymLinks = 8,
     /// List directories, files, drives and symlinks (this does not list broken symlinks unless you specify System).
-    AllEntries,
-    TypeMask,
+    AllEntries = 7,
+    TypeMask = 15,
     /// List files for which the application has read access. The Readable value needs to be combined with Dirs or Files.
-    Readable,
+    Readable = 16,
     /// List files for which the application has write access. The Writable value needs to be combined with Dirs or Files.
-    Writable,
+    Writable = 32,
     /// List files for which the application has execute access. The Executable value needs to be combined with Dirs or Files.
-    Executable,
-    PermissionMask,
+    Executable = 64,
+    PermissionMask = 112,
     /// Only list files that have been modified (ignored on Unix).
-    Modified,
+    Modified = 128,
     /// List hidden files (on Unix, files starting with a ".").
-    Hidden,
+    Hidden = 256,
     /// List system files (on Unix, FIFOs, sockets and device files are included; on Windows, `.lnk` files are included)
-    System,
-    AccessMask,
+    System = 512,
+    AccessMask = 1008,
     /// List all directories; i.e. don't apply the filters to directory names.
-    AllDirs,
+    AllDirs = 1024,
     /// The filter should be case sensitive.
-    CaseSensitive,
+    CaseSensitive = 2048,
     /// Do not list the special entry ".".
-    NoDot,
+    NoDot = 8192,
     /// Do not list the special entry "..".
-    NoDotDot,
+    NoDotDot = 16384,
     /// Do not list the special entries "." and "..".
-    NoDotAndDotDot,
-    NoFilter,
+    NoDotAndDotDot = 24576,
+    NoFilter = 4294967295,
 }
 
 [org_name(QDir)]
 enum SortFlag {
     /// Sort by name.
-    Name,
+    Name = 0,
     /// Sort by time (modification time).
-    Time,
+    Time = 1,
     /// Sort by file size.
-    Size,
+    Size = 2,
     /// Do not sort.
-    Unsorted,
-    SortByMask,
+    Unsorted = 3,
+    SortByMask = 3,
     /// Put the directories first, then the files.
-    DirsFirst,
+    DirsFirst = 4,
     /// Reverse the sort order.
-    Reversed,
+    Reversed = 8,
     /// Sort case-insensitively.
-    IgnoreCase,
+    IgnoreCase = 16,
     /// Put the files first, then the directories.
-    DirsLast,
+    DirsLast = 32,
     /// Sort items appropriately using the current locale settings.
-    LocaleAware,
+    LocaleAware = 64,
     /// Sort by file type (extension).
-    Type,
+    Type = 128,
     /// Not sorted by default.
-    NoSort,
+    NoSort = 4294967295,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

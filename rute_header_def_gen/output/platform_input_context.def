@@ -76,7 +76,7 @@ struct PlatformInputContext : Object {
 
 [org_name(QPlatformInputContext)]
 enum Capability {
-    HiddenTextCapability,
+    HiddenTextCapability = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

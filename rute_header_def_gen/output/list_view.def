@@ -323,44 +323,44 @@ struct ListView : AbstractItemView {
 [org_name(QListView)]
 enum Movement {
     /// The items cannot be moved by the user.
-    Static,
+    Static = 0,
     /// The items can be moved freely by the user.
-    Free,
+    Free = 1,
     /// The items snap to the specified grid when moved; see setGridSize().
-    Snap,
+    Snap = 2,
 }
 
 [org_name(QListView)]
 enum Flow {
     /// The items are laid out in the view from the left to the right.
-    LeftToRight,
+    LeftToRight = 0,
     /// The items are laid out in the view from the top to the bottom.
-    TopToBottom,
+    TopToBottom = 1,
 }
 
 [org_name(QListView)]
 enum ResizeMode {
     /// The items will only be laid out the first time the view is shown.
-    Fixed,
+    Fixed = 0,
     /// The items will be laid out every time the view is resized.
-    Adjust,
+    Adjust = 1,
 }
 
 [org_name(QListView)]
 enum LayoutMode {
     /// The items are laid out all at once.
-    SinglePass,
+    SinglePass = 0,
     /// The items are laid out in batches of [batchSize](batchSize)
  items.
-    Batched,
+    Batched = 1,
 }
 
 [org_name(QListView)]
 enum ViewMode {
     /// The items are laid out using TopToBottom flow, with Small size and Static movement
-    ListMode,
+    ListMode = 0,
     /// The items are laid out using LeftToRight flow, with Large size and Free movement
-    IconMode,
+    IconMode = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

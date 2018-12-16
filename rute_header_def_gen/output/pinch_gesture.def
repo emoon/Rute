@@ -123,11 +123,11 @@ struct PinchGesture : Gesture {
 [org_name(QPinchGesture)]
 enum ChangeFlag {
     /// The scale factor held by scaleFactor changed.
-    ScaleFactorChanged,
+    ScaleFactorChanged = 1,
     /// The rotation angle held by rotationAngle changed.
-    RotationAngleChanged,
+    RotationAngleChanged = 2,
     /// The center point held by centerPoint changed.
-    CenterPointChanged,
+    CenterPointChanged = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

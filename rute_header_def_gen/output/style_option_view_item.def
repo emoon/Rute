@@ -24,55 +24,55 @@ struct StyleOptionViewItem : StyleOption {
 enum StyleOptionType {
     /// The type of style option provided ( [SO_ViewItem](SO_ViewItem)
  for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
-    Type,
+    Type = 10,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum StyleOptionVersion {
     /// 4 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
-    Version,
+    Version = 4,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum Position {
     /// On the left of the text.
-    Left,
+    Left = 0,
     /// On the right of the text.
-    Right,
+    Right = 1,
     /// Above the text.
-    Top,
+    Top = 2,
     /// Below the text.
-    Bottom,
+    Bottom = 3,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum ViewItemFeature {
     /// Indicates a normal item.
-    None,
+    None = 0,
     /// Indicates an item with wrapped text.
-    WrapText,
+    WrapText = 1,
     /// Indicates that the item's background is rendered using alternateBase.
-    Alternate,
+    Alternate = 2,
     /// Indicates that the item has a check state indicator.
-    HasCheckIndicator,
+    HasCheckIndicator = 4,
     /// Indicates that the item has a display role.
-    HasDisplay,
+    HasDisplay = 8,
     /// Indicates that the item has a decoration role.
-    HasDecoration,
+    HasDecoration = 16,
 }
 
 [org_name(QStyleOptionViewItem)]
 enum ViewItemPosition {
     /// The ViewItemPosition is unknown and should be disregarded.
-    Invalid,
+    Invalid = 0,
     /// The item appears at the beginning of the row.
-    Beginning,
+    Beginning = 1,
     /// The item appears in the middle of the row.
-    Middle,
+    Middle = 2,
     /// The item appears at the end of the row.
-    End,
+    End = 3,
     /// The item is the only one on the row, and is therefore both at the beginning and the end.
-    OnlyOne,
+    OnlyOne = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

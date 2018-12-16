@@ -228,133 +228,133 @@ struct PaintEngine {
 [org_name(QPaintEngine)]
 enum PaintEngineFeature {
     /// The engine has support for transforming drawing primitives.
-    PrimitiveTransform,
+    PrimitiveTransform = 1,
     /// The engine has support for transforming brush patterns.
-    PatternTransform,
+    PatternTransform = 2,
     /// The engine can transform pixmaps, including rotation and shearing.
-    PixmapTransform,
+    PixmapTransform = 4,
     /// The engine is capable of rendering brushes with the brush patterns specified in Qt::BrushStyle.
-    PatternBrush,
+    PatternBrush = 8,
     /// The engine supports linear gradient fills.
-    LinearGradientFill,
+    LinearGradientFill = 16,
     /// The engine supports radial gradient fills.
-    RadialGradientFill,
+    RadialGradientFill = 32,
     /// The engine supports conical gradient fills.
-    ConicalGradientFill,
+    ConicalGradientFill = 64,
     /// The engine can alpha blend primitives.
-    AlphaBlend,
+    AlphaBlend = 128,
     /// The engine supports Porter-Duff operations
-    PorterDuff,
+    PorterDuff = 256,
     /// The engine has path support.
-    PainterPaths,
+    PainterPaths = 512,
     /// The engine can use antialising to improve the appearance of rendered primitives.
-    Antialiasing,
+    Antialiasing = 1024,
     /// The engine supports drawing strokes that contain brushes as fills, not just solid colors (e.g. a dashed gradient line of width 2).
-    BrushStroke,
+    BrushStroke = 2048,
     /// The engine supports the feature provided by QPainter::setOpacity().
-    ConstantOpacity,
+    ConstantOpacity = 4096,
     /// The engine is capable of rendering brushes that has a texture with an alpha channel or a mask.
-    MaskedBrush,
+    MaskedBrush = 8192,
     /// The engine has support for performing perspective transformations on primitives.
-    PerspectiveTransform,
+    PerspectiveTransform = 16384,
     /// The engine supports blending modes.
-    BlendModes,
+    BlendModes = 32768,
     /// The engine has native support for gradients with coordinate mode QGradient::ObjectBoundingMode. Otherwise, if QPaintEngine::PatternTransform is supported, object bounding mode gradients are converted to gradients with coordinate mode QGradient::LogicalMode and a brush transform for the coordinate mapping.
-    ObjectBoundingModeGradients,
+    ObjectBoundingModeGradients = 65536,
     /// The engine supports bitwise raster operations.
-    RasterOpModes,
+    RasterOpModes = 131072,
     /// The engine is capable of painting outside of paint events.
-    PaintOutsidePaintEvent,
+    PaintOutsidePaintEvent = 536870912,
     /// All of the above features. This enum value is usually used as a bit mask.
-    AllFeatures,
+    AllFeatures = 4294967295,
 }
 
 [org_name(QPaintEngine)]
 enum DirtyFlag {
     /// The pen is dirty and needs to be updated.
-    DirtyPen,
+    DirtyPen = 1,
     /// The brush is dirty and needs to be updated.
-    DirtyBrush,
+    DirtyBrush = 2,
     /// The brush origin is dirty and needs to updated.
-    DirtyBrushOrigin,
+    DirtyBrushOrigin = 4,
     /// The font is dirty and needs to be updated.
-    DirtyFont,
+    DirtyFont = 8,
     /// The background is dirty and needs to be updated.
-    DirtyBackground,
+    DirtyBackground = 16,
     /// The background mode is dirty and needs to be updated.
-    DirtyBackgroundMode,
+    DirtyBackgroundMode = 32,
     /// The transform is dirty and needs to be updated.
-    DirtyTransform,
+    DirtyTransform = 64,
     /// The clip region is dirty and needs to be updated.
-    DirtyClipRegion,
+    DirtyClipRegion = 128,
     /// The clip path is dirty and needs to be updated.
-    DirtyClipPath,
+    DirtyClipPath = 256,
     /// The render hints is dirty and needs to be updated.
-    DirtyHints,
+    DirtyHints = 512,
     /// The composition mode is dirty and needs to be updated.
-    DirtyCompositionMode,
+    DirtyCompositionMode = 1024,
     /// Whether clipping is enabled or not is dirty and needs to be updated.
-    DirtyClipEnabled,
+    DirtyClipEnabled = 2048,
     /// The constant opacity has changed and needs to be updated as part of the state change in QPaintEngine::updateState().
-    DirtyOpacity,
+    DirtyOpacity = 4096,
     /// Convenience enum used internally. These types are used by QPainter to trigger lazy updates of the various states in the QPaintEngine using QPaintEngine::updateState(). A paint engine must update every dirty state.
-    AllDirty,
+    AllDirty = 65535,
 }
 
 [org_name(QPaintEngine)]
 enum PolygonDrawMode {
     /// The polygon should be drawn using OddEven fill rule.
-    OddEvenMode,
+    OddEvenMode = 0,
     /// The polygon should be drawn using Winding fill rule.
-    WindingMode,
+    WindingMode = 1,
     /// The polygon is a convex polygon and can be drawn using specialized algorithms where available.
-    ConvexMode,
+    ConvexMode = 2,
     /// Only the outline of the polygon should be drawn.
-    PolylineMode,
+    PolylineMode = 3,
 }
 
 [org_name(QPaintEngine)]
 enum Type {
     /// 
-    X11,
+    X11 = 0,
     /// 
-    Windows,
+    Windows = 1,
     /// MacOS 's QuickDraw
-    QuickDraw,
+    QuickDraw = 2,
     /// MacOS 's Quartz2D (CoreGraphics)
-    CoreGraphics,
+    CoreGraphics = 3,
     /// 
-    MacPrinter,
+    MacPrinter = 4,
     /// Qt for Embedded Linux
-    QWindowSystem,
+    QWindowSystem = 5,
     /// (No longer supported)
-    PostScript,
+    PostScript = 6,
     /// 
-    OpenGL,
+    OpenGL = 7,
     /// QPicture format
-    Picture,
+    Picture = 8,
     /// Scalable Vector Graphics XML format
-    SVG,
+    SVG = 9,
     /// 
-    Raster,
+    Raster = 10,
     /// Windows only, Direct3D based engine
-    Direct3D,
+    Direct3D = 11,
     /// Portable Document Format
-    Pdf,
+    Pdf = 12,
     /// 
-    OpenVG,
+    OpenVG = 13,
     /// 
-    OpenGL2,
+    OpenGL2 = 14,
     /// 
-    PaintBuffer,
+    PaintBuffer = 15,
     /// 
-    Blitter,
+    Blitter = 16,
     /// Windows only, Direct2D based engine
-    Direct2D,
+    Direct2D = 17,
     /// First user type ID
-    User,
+    User = 50,
     /// Last user type ID
-    MaxUser,
+    MaxUser = 100,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

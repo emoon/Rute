@@ -760,33 +760,33 @@ struct MetaMethod {
 [org_name(QMetaMethod)]
 enum Access {
     /// 
-    Private,
+    Private = 0,
     /// 
-    Protected,
+    Protected = 1,
     /// 
-    Public,
+    Public = 2,
 }
 
 [org_name(QMetaMethod)]
 enum MethodType {
     /// The function is a plain member function.
-    Method,
+    Method = 0,
     /// The function is a signal.
-    Signal,
+    Signal = 1,
     /// The function is a slot.
-    Slot,
+    Slot = 2,
     /// The function is a constructor.
-    Constructor,
+    Constructor = 3,
 }
 
 [org_name(QMetaMethod)]
 enum Attributes {
     /// 
-    Compatibility,
+    Compatibility = 1,
     /// 
-    Cloned,
+    Cloned = 2,
     /// 
-    Scriptable,
+    Scriptable = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -266,88 +266,88 @@ struct FontDatabase {
 [org_name(QFontDatabase)]
 enum WritingSystem {
     /// 
-    Any,
+    Any = 0,
     /// 
-    Latin,
+    Latin = 1,
     /// 
-    Greek,
+    Greek = 2,
     /// 
-    Cyrillic,
+    Cyrillic = 3,
     /// 
-    Armenian,
+    Armenian = 4,
     /// 
-    Hebrew,
+    Hebrew = 5,
     /// 
-    Arabic,
+    Arabic = 6,
     /// 
-    Syriac,
+    Syriac = 7,
     /// 
-    Thaana,
+    Thaana = 8,
     /// 
-    Devanagari,
+    Devanagari = 9,
     /// 
-    Bengali,
+    Bengali = 10,
     /// 
-    Gurmukhi,
+    Gurmukhi = 11,
     /// 
-    Gujarati,
+    Gujarati = 12,
     /// 
-    Oriya,
+    Oriya = 13,
     /// 
-    Tamil,
+    Tamil = 14,
     /// 
-    Telugu,
+    Telugu = 15,
     /// 
-    Kannada,
+    Kannada = 16,
     /// 
-    Malayalam,
+    Malayalam = 17,
     /// 
-    Sinhala,
+    Sinhala = 18,
     /// 
-    Thai,
+    Thai = 19,
     /// 
-    Lao,
+    Lao = 20,
     /// 
-    Tibetan,
+    Tibetan = 21,
     /// 
-    Myanmar,
+    Myanmar = 22,
     /// 
-    Georgian,
+    Georgian = 23,
     /// 
-    Khmer,
+    Khmer = 24,
     /// 
-    SimplifiedChinese,
+    SimplifiedChinese = 25,
     /// 
-    TraditionalChinese,
+    TraditionalChinese = 26,
     /// 
-    Japanese,
+    Japanese = 27,
     /// 
-    Korean,
+    Korean = 28,
     /// 
-    Vietnamese,
+    Vietnamese = 29,
     /// 
-    Symbol,
+    Symbol = 30,
     /// (the same as Symbol)
-    Other,
+    Other = 30,
     /// 
-    Ogham,
+    Ogham = 31,
     /// 
-    Runic,
+    Runic = 32,
     /// 
-    Nko,
-    WritingSystemsCount,
+    Nko = 33,
+    WritingSystemsCount = 34,
 }
 
 [org_name(QFontDatabase)]
 enum SystemFont {
     /// The default system font.
-    GeneralFont,
+    GeneralFont = 0,
     /// The fixed font that the system recommends.
-    FixedFont,
+    FixedFont = 1,
     /// The system standard font for titles.
-    TitleFont,
+    TitleFont = 2,
     /// The smallest readable system font.
-    SmallestReadableFont,
+    SmallestReadableFont = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

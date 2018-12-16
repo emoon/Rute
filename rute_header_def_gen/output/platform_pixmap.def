@@ -38,18 +38,18 @@ struct PlatformPixmap {
 
 [org_name(QPlatformPixmap)]
 enum PixelType {
-    PixmapType,
-    BitmapType,
+    PixmapType = 0,
+    BitmapType = 1,
 }
 
 [org_name(QPlatformPixmap)]
 enum ClassId {
-    RasterClass,
-    DirectFBClass,
-    BlitterClass,
-    Direct2DClass,
-    X11Class,
-    CustomClass,
+    RasterClass = 0,
+    DirectFBClass = 1,
+    BlitterClass = 2,
+    Direct2DClass = 3,
+    X11Class = 4,
+    CustomClass = 1024,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

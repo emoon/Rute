@@ -23,35 +23,35 @@ struct StyleOptionToolBox : StyleOption {
 enum StyleOptionType {
     /// The type of style option provided ( [SO_ToolBox](SO_ToolBox)
  for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
-    Type,
+    Type = 7,
 }
 
 [org_name(QStyleOptionToolBox)]
 enum StyleOptionVersion {
     /// 2 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
-    Version,
+    Version = 2,
 }
 
 [org_name(QStyleOptionToolBox)]
 enum TabPosition {
     /// The tab is the first (i.e., top-most) tab in the toolbox.
-    Beginning,
+    Beginning = 0,
     /// The tab is placed in the middle of the toolbox.
-    Middle,
+    Middle = 1,
     /// The tab is placed at the bottom of the toolbox.
-    End,
+    End = 2,
     /// There is only one tab in the toolbox.
-    OnlyOneTab,
+    OnlyOneTab = 3,
 }
 
 [org_name(QStyleOptionToolBox)]
 enum SelectedPosition {
     /// The tab is not adjacent to a selected tab (or is the selected tab).
-    NotAdjacent,
+    NotAdjacent = 0,
     /// The next tab (typically the tab on the right) is selected.
-    NextIsSelected,
+    NextIsSelected = 1,
     /// The previous tab (typically the tab on the left) is selected.
-    PreviousIsSelected,
+    PreviousIsSelected = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

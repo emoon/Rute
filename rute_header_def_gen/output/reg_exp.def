@@ -908,29 +908,29 @@ struct RegExp {
 [org_name(QRegExp)]
 enum PatternSyntax {
     /// A rich Perl-like pattern matching syntax. This is the default.
-    RegExp,
+    RegExp = 0,
     /// This provides a simple pattern matching syntax similar to that used by shells (command interpreters) for "file globbing". See [QRegExp wildcard matching](QRegExp%20wildcard%20matching)
  .
-    Wildcard,
+    Wildcard = 1,
     /// The pattern is a fixed string. This is equivalent to using the RegExp pattern on a string in which all metacharacters are escaped using escape().
-    FixedString,
+    FixedString = 2,
     /// Like RegExp, but with [greedy quantifiers](greedy%20quantifiers)
  . (Introduced in Qt 4.2.)
-    RegExp2,
+    RegExp2 = 3,
     /// This is similar to Wildcard but with the behavior of a Unix shell. The wildcard characters can be escaped with the character "\\".
-    WildcardUnix,
+    WildcardUnix = 4,
     /// The pattern is a regular expression as defined by the W3C XML Schema 1.1 specification.
-    W3CXmlSchema11,
+    W3CXmlSchema11 = 5,
 }
 
 [org_name(QRegExp)]
 enum CaretMode {
     /// The caret corresponds to index 0 in the searched string.
-    CaretAtZero,
+    CaretAtZero = 0,
     /// The caret corresponds to the start offset of the search.
-    CaretAtOffset,
+    CaretAtOffset = 1,
     /// The caret never matches.
-    CaretWontMatch,
+    CaretWontMatch = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

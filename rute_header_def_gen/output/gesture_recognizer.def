@@ -107,19 +107,19 @@ struct GestureRecognizer {
 [org_name(QGestureRecognizer)]
 enum ResultFlag {
     /// The event does not change the state of the recognizer.
-    Ignore,
+    Ignore = 1,
     /// The event changed the internal state of the recognizer, but it isn't clear yet if it is a gesture or not. The recognizer needs to filter more events to decide. Gesture recognizers in the MayBeGesture state may be reset automatically if they take too long to recognize gestures.
-    MayBeGesture,
+    MayBeGesture = 2,
     /// The gesture has been triggered and the appropriate QGesture object will be delivered to the target as a part of a QGestureEvent.
-    TriggerGesture,
+    TriggerGesture = 4,
     /// The gesture has been finished successfully and the appropriate QGesture object will be delivered to the target as a part of a QGestureEvent.
-    FinishGesture,
+    FinishGesture = 8,
     /// The event made it clear that it is not a gesture. If the gesture recognizer was in GestureTriggered state before, then the gesture is canceled and the appropriate QGesture object will be delivered to the target as a part of a QGestureEvent.
-    CancelGesture,
-    ResultState_Mask,
+    CancelGesture = 16,
+    ResultState_Mask = 255,
     /// This hint specifies that the gesture framework should consume the filtered event and not deliver it to the receiver.
-    ConsumeEventHint,
-    ResultHint_Mask,
+    ConsumeEventHint = 256,
+    ResultHint_Mask = 65280,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

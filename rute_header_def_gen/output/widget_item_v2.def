@@ -10,8 +10,8 @@ struct WidgetItemV2 : WidgetItem {
 
 [org_name(QWidgetItemV2)]
 enum WidgetItemV2FixMeEnums {
-    Dirty,
-    HfwCacheMaxSize,
+    Dirty = 4294967173,
+    HfwCacheMaxSize = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

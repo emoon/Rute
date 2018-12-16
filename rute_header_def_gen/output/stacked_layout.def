@@ -142,9 +142,9 @@ struct StackedLayout : Layout {
 [org_name(QStackedLayout)]
 enum StackingMode {
     /// Only the current widget is visible. This is the default.
-    StackOne,
+    StackOne = 0,
     /// All widgets are visible. The current widget is merely raised.
-    StackAll,
+    StackAll = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

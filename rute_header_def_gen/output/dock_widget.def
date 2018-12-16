@@ -174,19 +174,19 @@ struct DockWidget : Widget {
 [org_name(QDockWidget)]
 enum DockWidgetFeature {
     /// The dock widget can be closed. On some systems the dock widget always has a close button when it's floating (for example on MacOS 10.5).
-    DockWidgetClosable,
+    DockWidgetClosable = 1,
     /// The dock widget can be moved between docks by the user.
-    DockWidgetMovable,
+    DockWidgetMovable = 2,
     /// The dock widget can be detached from the main window, and floated as an independent window.
-    DockWidgetFloatable,
+    DockWidgetFloatable = 4,
     /// The dock widget displays a vertical title bar on its left side. This can be used to increase the amount of vertical space in a QMainWindow.
-    DockWidgetVerticalTitleBar,
-    DockWidgetFeatureMask,
+    DockWidgetVerticalTitleBar = 8,
+    DockWidgetFeatureMask = 15,
     /// (Deprecated) The dock widget can be closed, moved, and floated. Since new features might be added in future releases, the look and behavior of dock widgets might change if you use this flag. Please specify individual flags instead.
-    AllDockWidgetFeatures,
+    AllDockWidgetFeatures = 7,
     /// The dock widget cannot be closed, moved, or floated.
-    NoDockWidgetFeatures,
-    Reserved,
+    NoDockWidgetFeatures = 0,
+    Reserved = 255,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

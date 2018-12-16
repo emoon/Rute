@@ -226,9 +226,9 @@ struct StaticText {
 [org_name(QStaticText)]
 enum PerformanceHint {
     /// Do basic caching for high performance at a low memory cost.
-    ModerateCaching,
+    ModerateCaching = 0,
     /// Use additional caching when available. This may improve performance at a higher memory cost.
-    AggressiveCaching,
+    AggressiveCaching = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

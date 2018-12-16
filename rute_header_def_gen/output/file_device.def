@@ -169,91 +169,91 @@ struct FileDevice : IODevice {
 [org_name(QFileDevice)]
 enum FileError {
     /// No error occurred.
-    NoError,
+    NoError = 0,
     /// An error occurred when reading from the file.
-    ReadError,
+    ReadError = 1,
     /// An error occurred when writing to the file.
-    WriteError,
+    WriteError = 2,
     /// A fatal error occurred.
-    FatalError,
+    FatalError = 3,
     /// Out of resources (e.g., too many open files, out of memory, etc.)
-    ResourceError,
+    ResourceError = 4,
     /// The file could not be opened.
-    OpenError,
+    OpenError = 5,
     /// The operation was aborted.
-    AbortError,
+    AbortError = 6,
     /// A timeout occurred.
-    TimeOutError,
+    TimeOutError = 7,
     /// An unspecified error occurred.
-    UnspecifiedError,
+    UnspecifiedError = 8,
     /// The file could not be removed.
-    RemoveError,
+    RemoveError = 9,
     /// The file could not be renamed.
-    RenameError,
+    RenameError = 10,
     /// The position in the file could not be changed.
-    PositionError,
+    PositionError = 11,
     /// The file could not be resized.
-    ResizeError,
+    ResizeError = 12,
     /// The file could not be accessed.
-    PermissionsError,
+    PermissionsError = 13,
     /// The file could not be copied.
-    CopyError,
+    CopyError = 14,
 }
 
 [org_name(QFileDevice)]
 enum FileTime {
     /// When the file was most recently accessed (e.g. read or written to).
-    FileAccessTime,
+    FileAccessTime = 0,
     /// When the file was created (may not be not supported on UNIX).
-    FileBirthTime,
+    FileBirthTime = 1,
     /// When the file's metadata was last changed.
-    FileMetadataChangeTime,
+    FileMetadataChangeTime = 2,
     /// When the file was most recently modified.
-    FileModificationTime,
+    FileModificationTime = 3,
 }
 
 [org_name(QFileDevice)]
 enum Permission {
     /// The file is readable by the owner of the file.
-    ReadOwner,
+    ReadOwner = 16384,
     /// The file is writable by the owner of the file.
-    WriteOwner,
+    WriteOwner = 8192,
     /// The file is executable by the owner of the file.
-    ExeOwner,
+    ExeOwner = 4096,
     /// The file is readable by the user.
-    ReadUser,
+    ReadUser = 1024,
     /// The file is writable by the user.
-    WriteUser,
+    WriteUser = 512,
     /// The file is executable by the user.
-    ExeUser,
+    ExeUser = 256,
     /// The file is readable by the group.
-    ReadGroup,
+    ReadGroup = 64,
     /// The file is writable by the group.
-    WriteGroup,
+    WriteGroup = 32,
     /// The file is executable by the group.
-    ExeGroup,
+    ExeGroup = 16,
     /// The file is readable by anyone.
-    ReadOther,
+    ReadOther = 4,
     /// The file is writable by anyone.
-    WriteOther,
+    WriteOther = 2,
     /// The file is executable by anyone. **Warning**: Because of differences in the platforms supported by Qt, the semantics of ReadUser, WriteUser and ExeUser are platform-dependent: On Unix, the rights of the owner of the file are returned and on Windows the rights of the current user are returned. This behavior might change in a future Qt version.
-    ExeOther,
+    ExeOther = 1,
 }
 
 [org_name(QFileDevice)]
 enum FileHandleFlag {
     /// The file handle passed into open() should be closed by close(), the default behavior is that close just flushes the file and the application is responsible for closing the file handle. When opening a file by name, this flag is ignored as Qt always owns the file handle and must close it.
-    AutoCloseHandle,
+    AutoCloseHandle = 1,
     /// If not explicitly closed, the underlying file handle is left open when the QFile object is destroyed.
-    DontCloseHandle,
+    DontCloseHandle = 0,
 }
 
 [org_name(QFileDevice)]
 enum MemoryMapFlags {
     /// No options.
-    NoOptions,
+    NoOptions = 0,
     /// The mapped memory will be private, so any modifications will not be visible to other processes and will not be written to disk. Any such modifications will be lost when the memory is unmapped. It is unspecified whether modifications made to the file made after the mapping is created will be visible through the mapped memory. This enum value was introduced in Qt 5.4.
-    MapPrivateOption,
+    MapPrivateOption = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

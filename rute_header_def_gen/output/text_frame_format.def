@@ -157,37 +157,37 @@ struct TextFrameFormat : TextFormat {
 [org_name(QTextFrameFormat)]
 enum Position {
     /// 
-    InFlow,
+    InFlow = 0,
     /// 
-    FloatLeft,
+    FloatLeft = 1,
     /// 
-    FloatRight,
+    FloatRight = 2,
 }
 
 [org_name(QTextFrameFormat)]
 enum BorderStyle {
     /// 
-    BorderStyle_None,
+    BorderStyle_None = 0,
     /// 
-    BorderStyle_Dotted,
+    BorderStyle_Dotted = 1,
     /// 
-    BorderStyle_Dashed,
+    BorderStyle_Dashed = 2,
     /// 
-    BorderStyle_Solid,
+    BorderStyle_Solid = 3,
     /// 
-    BorderStyle_Double,
+    BorderStyle_Double = 4,
     /// 
-    BorderStyle_DotDash,
+    BorderStyle_DotDash = 5,
     /// 
-    BorderStyle_DotDotDash,
+    BorderStyle_DotDotDash = 6,
     /// 
-    BorderStyle_Groove,
+    BorderStyle_Groove = 7,
     /// 
-    BorderStyle_Ridge,
+    BorderStyle_Ridge = 8,
     /// 
-    BorderStyle_Inset,
+    BorderStyle_Inset = 9,
     /// 
-    BorderStyle_Outset,
+    BorderStyle_Outset = 10,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

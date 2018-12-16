@@ -36,33 +36,33 @@ struct StyleOptionToolBar : StyleOption {
 enum StyleOptionType {
     /// The type of style option provided ( [SO_ToolBar](SO_ToolBar)
  for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
-    Type,
+    Type = 14,
 }
 
 [org_name(QStyleOptionToolBar)]
 enum StyleOptionVersion {
     /// 1 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
-    Version,
+    Version = 1,
 }
 
 [org_name(QStyleOptionToolBar)]
 enum ToolBarPosition {
     /// The toolbar is located at the beginning of the line, or the toolbar line is the first of several lines. There can only be one toolbar (and only one line) with this position.
-    Beginning,
+    Beginning = 0,
     /// The toolbar is located in the middle of the line, or the toolbar line is in the middle of several lines. There can several toolbars (and lines) with this position.
-    Middle,
+    Middle = 1,
     /// The toolbar is located at the end of the line, or the toolbar line is the last of several lines. There can only be one toolbar (and only one line) with this position.
-    End,
+    End = 2,
     /// There is only one toolbar or line. This is the default value of the positionOfLine and positionWithinLine variables.
-    OnlyOne,
+    OnlyOne = 3,
 }
 
 [org_name(QStyleOptionToolBar)]
 enum ToolBarFeature {
     /// The toolbar cannot be moved. The default value.
-    None,
+    None = 0,
     /// The toolbar is movable, and a handle will appear when holding the cursor over the toolbar's boundary.
-    Movable,
+    Movable = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

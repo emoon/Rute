@@ -777,9 +777,9 @@ struct PlainTextEdit : AbstractScrollArea {
 [org_name(QPlainTextEdit)]
 enum LineWrapMode {
     /// 
-    NoWrap,
+    NoWrap = 0,
     /// 
-    WidgetWidth,
+    WidgetWidth = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

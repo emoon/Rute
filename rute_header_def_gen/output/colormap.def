@@ -15,9 +15,9 @@ struct Colormap {
 
 [org_name(QColormap)]
 enum Mode {
-    Direct,
-    Indexed,
-    Gray,
+    Direct = 0,
+    Indexed = 1,
+    Gray = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

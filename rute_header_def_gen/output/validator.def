@@ -122,11 +122,11 @@ struct Validator : Object {
 [org_name(QValidator)]
 enum State {
     /// The string is *clearly* invalid.
-    Invalid,
+    Invalid = 0,
     /// The string is a plausible intermediate value.
-    Intermediate,
+    Intermediate = 1,
     /// The string is acceptable as a final result; i.e. it is valid.
-    Acceptable,
+    Acceptable = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

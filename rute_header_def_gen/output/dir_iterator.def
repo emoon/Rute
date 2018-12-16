@@ -81,11 +81,11 @@ struct DirIterator {
 [org_name(QDirIterator)]
 enum IteratorFlag {
     /// The default value, representing no flags. The iterator will return entries for the assigned path.
-    NoIteratorFlags,
+    NoIteratorFlags = 0,
     /// When combined with Subdirectories, this flag enables iterating through all subdirectories of the assigned path, following all symbolic links. Symbolic link loops (e.g., "link" => "." or "link" => "..") are automatically detected and ignored.
-    FollowSymlinks,
+    FollowSymlinks = 1,
     /// List entries inside all subdirectories as well.
-    Subdirectories,
+    Subdirectories = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

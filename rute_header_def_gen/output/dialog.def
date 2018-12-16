@@ -361,9 +361,9 @@ struct Dialog : Widget {
 [org_name(QDialog)]
 enum DialogCode {
     /// 
-    Rejected,
+    Rejected = 0,
     /// 
-    Accepted,
+    Accepted = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

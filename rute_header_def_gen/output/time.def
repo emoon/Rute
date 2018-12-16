@@ -269,7 +269,7 @@ struct Time {
 
 [org_name(QTime)]
 enum TimeFlag {
-    NullTime,
+    NullTime = 4294967295,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

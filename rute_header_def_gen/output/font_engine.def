@@ -102,56 +102,56 @@ struct FontEngine {
 
 [org_name(QFontEngine)]
 enum Type {
-    Box,
-    Multi,
-    Win,
-    Mac,
-    Freetype,
-    QPF1,
-    QPF2,
-    Proxy,
-    DirectWrite,
-    TestFontEngine,
+    Box = 0,
+    Multi = 1,
+    Win = 2,
+    Mac = 3,
+    Freetype = 4,
+    QPF1 = 5,
+    QPF2 = 6,
+    Proxy = 7,
+    DirectWrite = 8,
+    TestFontEngine = 4096,
 }
 
 [org_name(QFontEngine)]
 enum GlyphFormat {
-    Format_None,
-    Format_Render,
-    Format_Mono,
-    Format_A8,
-    Format_A32,
-    Format_ARGB,
+    Format_None = 0,
+    Format_Render = 0,
+    Format_Mono = 1,
+    Format_A8 = 2,
+    Format_A32 = 3,
+    Format_ARGB = 4,
 }
 
 [org_name(QFontEngine)]
 enum ShaperFlag {
-    DesignMetrics,
-    GlyphIndicesOnly,
+    DesignMetrics = 2,
+    GlyphIndicesOnly = 4,
 }
 
 [org_name(QFontEngine)]
 enum SynthesizedFlags {
-    SynthesizedItalic,
-    SynthesizedBold,
-    SynthesizedStretch,
+    SynthesizedItalic = 1,
+    SynthesizedBold = 2,
+    SynthesizedStretch = 4,
 }
 
 [org_name(QFontEngine)]
 enum HintStyle {
-    HintNone,
-    HintLight,
-    HintMedium,
-    HintFull,
+    HintNone = 0,
+    HintLight = 1,
+    HintMedium = 2,
+    HintFull = 3,
 }
 
 [org_name(QFontEngine)]
 enum SubpixelAntialiasingType {
-    Subpixel_None,
-    Subpixel_RGB,
-    Subpixel_BGR,
-    Subpixel_VRGB,
-    Subpixel_VBGR,
+    Subpixel_None = 0,
+    Subpixel_RGB = 1,
+    Subpixel_BGR = 2,
+    Subpixel_VRGB = 3,
+    Subpixel_VBGR = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

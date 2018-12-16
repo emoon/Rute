@@ -40,17 +40,17 @@ struct AccessibleTableModelChangeEvent : AccessibleEvent {
 [org_name(QAccessibleTableModelChangeEvent)]
 enum ModelChangeType {
     /// The model has been reset, all previous knowledge about the model is now invalid.
-    ModelReset,
+    ModelReset = 0,
     /// No cells have been added or removed, but the data of the specified cell range is invalid.
-    DataChanged,
+    DataChanged = 1,
     /// New rows have been inserted.
-    RowsInserted,
+    RowsInserted = 2,
     /// New columns have been inserted.
-    ColumnsInserted,
+    ColumnsInserted = 3,
     /// Rows have been removed.
-    RowsRemoved,
+    RowsRemoved = 4,
     /// Columns have been removed.
-    ColumnsRemoved,
+    ColumnsRemoved = 5,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

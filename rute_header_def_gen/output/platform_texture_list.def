@@ -17,8 +17,8 @@ struct PlatformTextureList : Object {
 
 [org_name(QPlatformTextureList)]
 enum Flag {
-    StacksOnTop,
-    TextureIsSrgb,
+    StacksOnTop = 1,
+    TextureIsSrgb = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

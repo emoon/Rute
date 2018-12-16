@@ -192,61 +192,61 @@ struct ImageIOHandler {
 [org_name(QImageIOHandler)]
 enum ImageOption {
     /// The original size of an image. A handler that supports this option is expected to read the size of the image from the image metadata, and return this size from option() as a QSize.
-    Size,
+    Size = 0,
     /// The clip rect, or ROI (Region Of Interest). A handler that supports this option is expected to only read the provided QRect area from the original image in read(), before any other transformation is applied.
-    ClipRect,
+    ClipRect = 1,
     /// The image description. Some image formats, such as GIF and PNG, allow embedding of text or comments into the image data (e.g., for storing copyright information). It's common that the text is stored in key-value pairs, but some formats store all text in one continuous block. QImageIOHandler returns the text as one QString, where keys and values are separated by a ':', and keys-value pairs are separated by two newlines (\\n\\n). For example, "Title: Sunset\\n\\nAuthor: Jim Smith\\nSarah Jones\\n\\n". Formats that store text in a single block can use "Description" as the key.
-    Description,
+    Description = 2,
     /// The scaled clip rect (or ROI, Region Of Interest) of the image. A handler that supports this option is expected to apply the provided clip rect (a QRect), after applying any scaling (ScaleSize) or regular clipping (ClipRect). If the handler does not support this option, QImageReader will apply the scaled clip rect after the image has been read.
-    ScaledClipRect,
+    ScaledClipRect = 3,
     /// The scaled size of the image. A handler that supports this option is expected to scale the image to the provided size (a QSize), after applying any clip rect transformation (ClipRect). If the handler does not support this option, QImageReader will perform the scaling after the image has been read.
-    ScaledSize,
+    ScaledSize = 4,
     /// The compression ratio of the image data. A handler that supports this option is expected to set its compression rate depending on the value of this option (an int) when writing.
-    CompressionRatio,
+    CompressionRatio = 5,
     /// The gamma level of the image. A handler that supports this option is expected to set the image gamma level depending on the value of this option (a float) when writing.
-    Gamma,
+    Gamma = 6,
     /// The quality level of the image. A handler that supports this option is expected to set the image quality level depending on the value of this option (an int) when writing.
-    Quality,
+    Quality = 7,
     /// The name of the image. A handler that supports this option is expected to read the name from the image metadata and return this as a QString, or when writing an image it is expected to store the name in the image metadata.
-    Name,
+    Name = 8,
     /// The subtype of the image. A handler that supports this option can use the subtype value to help when reading and writing images. For example, a PPM handler may have a subtype value of "ppm" or "ppmraw".
-    SubType,
+    SubType = 9,
     /// A handler that supports this option is expected to read the image in several passes, as if it was an animation. QImageReader will treat the image as an animation.
-    IncrementalReading,
+    IncrementalReading = 10,
     /// The endianness of the image. Certain image formats can be stored as BigEndian or LittleEndian. A handler that supports Endianness uses the value of this option to determine how the image should be stored.
-    Endianness,
+    Endianness = 11,
     /// Image formats that support animation return true for this value in supportsOption(); otherwise, false is returned.
-    Animation,
+    Animation = 12,
     /// Certain image formats allow the background color to be specified. A handler that supports BackgroundColor initializes the background color to this option (a QColor) when reading an image.
-    BackgroundColor,
+    BackgroundColor = 13,
     /// The image's data format returned by the handler. This can be any of the formats listed in QImage::Format.
-    ImageFormat,
+    ImageFormat = 14,
     /// Image formats that support different saving variants should return a list of supported variant names (QList<QByteArray>) in this option.
-    SupportedSubTypes,
-    OptimizedWrite,
-    ProgressiveScanWrite,
-    ImageTransformation,
-    TransformedByDefault,
+    SupportedSubTypes = 15,
+    OptimizedWrite = 16,
+    ProgressiveScanWrite = 17,
+    ImageTransformation = 18,
+    TransformedByDefault = 19,
 }
 
 [org_name(QImageIOHandler)]
 enum Transformation {
     /// No transformation should be applied.
-    TransformationNone,
+    TransformationNone = 0,
     /// Mirror the image horizontally.
-    TransformationMirror,
+    TransformationMirror = 1,
     /// Mirror the image vertically.
-    TransformationFlip,
+    TransformationFlip = 2,
     /// Rotate the image 180 degrees. This is the same as mirroring it both horizontally and vertically.
-    TransformationRotate180,
+    TransformationRotate180 = 3,
     /// Rotate the image 90 degrees.
-    TransformationRotate90,
+    TransformationRotate90 = 4,
     /// Mirror the image horizontally and then rotate it 90 degrees.
-    TransformationMirrorAndRotate90,
+    TransformationMirrorAndRotate90 = 5,
     /// Mirror the image vertically and then rotate it 90 degrees.
-    TransformationFlipAndRotate90,
+    TransformationFlipAndRotate90 = 6,
     /// Rotate the image 270 degrees. This is the same as mirroring it both horizontally, vertically and then rotating it 90 degrees.
-    TransformationRotate270,
+    TransformationRotate270 = 7,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

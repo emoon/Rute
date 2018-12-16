@@ -194,63 +194,63 @@ struct PlatformIntegration {
 [org_name(QPlatformIntegration)]
 enum Capability {
     /// The platform uses a pixmap implementation that is reentrant and can be used from multiple threads, like the raster paint engine and QImage based pixmaps.
-    ThreadedPixmaps,
+    ThreadedPixmaps = 1,
     /// The platform supports OpenGL
-    OpenGL,
+    OpenGL = 2,
     /// The platform supports using OpenGL outside the GUI thread.
-    ThreadedOpenGL,
+    ThreadedOpenGL = 3,
     /// The platform supports a shared graphics cache
-    SharedGraphicsCache,
+    SharedGraphicsCache = 4,
     /// The OpenGL implementation on the platform will queue up buffers when swapBuffers() is called and block only when its buffer pipeline is full, rather than block immediately.
-    BufferQueueingOpenGL,
-    WindowMasks,
+    BufferQueueingOpenGL = 5,
+    WindowMasks = 6,
     /// The platform supports multiple QWindows, i.e. does some kind of compositing either client or server side. Some platforms might only support a single fullscreen window.
-    MultipleWindows,
+    MultipleWindows = 7,
     /// The platform handles the application state explicitly. This means that QEvent::ApplicationActivate and QEvent::ApplicationDeativate will not be posted automatically. Instead, the platform must handle application state explicitly by using QWindowSystemInterface::handleApplicationStateChanged(). If not set, application state will follow window activation, which is the normal behavior for desktop platforms.
-    ApplicationState,
+    ApplicationState = 8,
     /// The platform allows creating QWindows which represent native windows created by other processes or by using native libraries.
-    ForeignWindows,
+    ForeignWindows = 9,
     /// The platform supports top-level windows which do not fill the screen. The default implementation returns `true.` Returning false for this will cause all windows, including dialogs and popups, to be resized to fill the screen.
-    NonFullScreenWindows,
-    NativeWidgets,
+    NonFullScreenWindows = 10,
+    NativeWidgets = 11,
     /// The platform is based on a system that performs window management. This includes the typical desktop platforms. Can be set to false on platforms where no window management is available, meaning for example that windows are never repositioned by the window manager. The default implementation returns `true.`
-    WindowManagement,
-    WindowActivation,
-    SyncState,
-    RasterGLSurface,
+    WindowManagement = 12,
+    WindowActivation = 13,
+    SyncState = 14,
+    RasterGLSurface = 15,
     /// Deprecated. Used to indicate whether the QOpenGLContext backend provided by the platform is able to return function pointers from getProcAddress() even for standard OpenGL functions, for example OpenGL 1 functions like glClear() or glDrawArrays(). This is important because the OpenGL specifications do not require this ability from the getProcAddress implementations of the windowing system interfaces (EGL, WGL, GLX). The platform plugins may however choose to enhance the behavior in the backend implementation for QOpenGLContext::getProcAddress() and support returning a function pointer also for the standard, non-extension functions. This capability is a prerequisite for dynamic OpenGL loading. Starting with Qt 5.7, the platform plugin is required to have this capability.
-    AllGLFunctionsQueryable,
+    AllGLFunctionsQueryable = 16,
     /// The platform supports setting the application icon. (since 5.5)
-    ApplicationIcon,
-    SwitchableWidgetComposition,
+    ApplicationIcon = 17,
+    SwitchableWidgetComposition = 18,
     /// The platform supports native child windows via QWindowContainer without having to punch a transparent hole in the backingstore. (since 5.10)
-    TopStackedNativeChildWindows,
+    TopStackedNativeChildWindows = 19,
 }
 
 [org_name(QPlatformIntegration)]
 enum StyleHint {
-    CursorFlashTime,
-    KeyboardInputInterval,
-    MouseDoubleClickInterval,
-    StartDragDistance,
-    StartDragTime,
-    KeyboardAutoRepeatRate,
-    ShowIsFullScreen,
-    PasswordMaskDelay,
-    FontSmoothingGamma,
-    StartDragVelocity,
-    UseRtlExtensions,
-    PasswordMaskCharacter,
-    SetFocusOnTouchRelease,
-    ShowIsMaximized,
-    MousePressAndHoldInterval,
-    TabFocusBehavior,
-    ReplayMousePressOutsidePopup,
-    ItemViewActivateItemOnSingleClick,
-    UiEffects,
-    WheelScrollLines,
-    ShowShortcutsInContextMenus,
-    MouseQuickSelectionThreshold,
+    CursorFlashTime = 0,
+    KeyboardInputInterval = 1,
+    MouseDoubleClickInterval = 2,
+    StartDragDistance = 3,
+    StartDragTime = 4,
+    KeyboardAutoRepeatRate = 5,
+    ShowIsFullScreen = 6,
+    PasswordMaskDelay = 7,
+    FontSmoothingGamma = 8,
+    StartDragVelocity = 9,
+    UseRtlExtensions = 10,
+    PasswordMaskCharacter = 11,
+    SetFocusOnTouchRelease = 12,
+    ShowIsMaximized = 13,
+    MousePressAndHoldInterval = 14,
+    TabFocusBehavior = 15,
+    ReplayMousePressOutsidePopup = 16,
+    ItemViewActivateItemOnSingleClick = 17,
+    UiEffects = 18,
+    WheelScrollLines = 19,
+    ShowShortcutsInContextMenus = 20,
+    MouseQuickSelectionThreshold = 21,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

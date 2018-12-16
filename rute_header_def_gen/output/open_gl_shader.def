@@ -110,17 +110,17 @@ struct OpenGLShader : Object {
 [org_name(QOpenGLShader)]
 enum ShaderTypeBit {
     /// Vertex shader written in the OpenGL Shading Language (GLSL).
-    Vertex,
+    Vertex = 1,
     /// Fragment shader written in the OpenGL Shading Language (GLSL).
-    Fragment,
+    Fragment = 2,
     /// Geometry shaders written in the OpenGL Shading Language (GLSL) based on the OpenGL core feature (requires OpenGL >= 3.2).
-    Geometry,
+    Geometry = 4,
     /// Tessellation control shaders written in the OpenGL shading language (GLSL), based on the core feature (requires OpenGL >= 4.0).
-    TessellationControl,
+    TessellationControl = 8,
     /// Tessellation evaluation shaders written in the OpenGL shading language (GLSL), based on the core feature (requires OpenGL >= 4.0).
-    TessellationEvaluation,
+    TessellationEvaluation = 16,
     /// Compute shaders written in the OpenGL shading language (GLSL), based on the core feature (requires OpenGL >= 4.3).
-    Compute,
+    Compute = 32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -561,9 +561,9 @@ struct OpenGLWidget : Widget {
 [org_name(QOpenGLWidget)]
 enum UpdateBehavior {
     /// QOpenGLWidget will discard the contents of the color buffer and the ancillary buffers after the QOpenGLWidget is rendered to screen. This is the same behavior that can be expected by calling QOpenGLContext::swapBuffers with a default opengl enabled QWindow as the argument. NoPartialUpdate can have some performance benefits on certain hardware architectures common in the mobile and embedded space when a framebuffer object is used as the rendering target. The framebuffer object is invalidated between frames with glDiscardFramebufferEXT if supported or a glClear. Please see the documentation of EXT_discard_framebuffer for more information: https://www.khronos.org/registry/gles/extensions/EXT/EXT_discard_framebuffer.txt
-    NoPartialUpdate,
+    NoPartialUpdate = 0,
     /// The framebuffer objects color buffer and ancillary buffers are not invalidated between frames.
-    PartialUpdate,
+    PartialUpdate = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -262,203 +262,203 @@ struct MetaType {
 
 [org_name(QMetaType)]
 enum ExtensionFlag {
-    NoExtensionFlags,
-    CreateEx,
-    DestroyEx,
-    ConstructEx,
-    DestructEx,
-    NameEx,
-    SizeEx,
-    CtorEx,
-    DtorEx,
-    FlagsEx,
-    MetaObjectEx,
+    NoExtensionFlags = 0,
+    CreateEx = 1,
+    DestroyEx = 2,
+    ConstructEx = 4,
+    DestructEx = 8,
+    NameEx = 16,
+    SizeEx = 32,
+    CtorEx = 64,
+    DtorEx = 128,
+    FlagsEx = 256,
+    MetaObjectEx = 512,
 }
 
 [org_name(QMetaType)]
 enum Type {
     /// `void`
-    Void,
+    Void = 43,
     /// `bool`
-    Bool,
+    Bool = 1,
     /// `int`
-    Int,
+    Int = 2,
     /// `unsigned int`
-    UInt,
+    UInt = 3,
     /// LongLong
-    LongLong,
+    LongLong = 4,
     /// ULongLong
-    ULongLong,
+    ULongLong = 5,
     /// `double`
-    Double,
+    Double = 6,
     /// `long`
-    Long,
+    Long = 32,
     /// `short`
-    Short,
+    Short = 33,
     /// `char`
-    Char,
+    Char = 34,
     /// `unsigned long`
-    ULong,
+    ULong = 35,
     /// `unsigned short`
-    UShort,
+    UShort = 36,
     /// `unsigned char`
-    UChar,
+    UChar = 37,
     /// `float`
-    Float,
+    Float = 38,
     /// `signed char`
-    SChar,
+    SChar = 40,
     /// `std::nullptr_t`
-    Nullptr,
+    Nullptr = 51,
     /// `void *`
-    VoidStar,
+    VoidStar = 31,
     /// QChar
-    QChar,
+    QChar = 7,
     /// QString
-    QString,
+    QString = 10,
     /// QStringList
-    QStringList,
+    QStringList = 11,
     /// QByteArray
-    QByteArray,
+    QByteArray = 12,
     /// QBitArray
-    QBitArray,
+    QBitArray = 13,
     /// QDate
-    QDate,
+    QDate = 14,
     /// QTime
-    QTime,
+    QTime = 15,
     /// QDateTime
-    QDateTime,
+    QDateTime = 16,
     /// QUrl
-    QUrl,
+    QUrl = 17,
     /// QLocale
-    QLocale,
+    QLocale = 18,
     /// QRect
-    QRect,
+    QRect = 19,
     /// QRectF
-    QRectF,
+    QRectF = 20,
     /// QSize
-    QSize,
+    QSize = 21,
     /// QSizeF
-    QSizeF,
+    QSizeF = 22,
     /// QLine
-    QLine,
+    QLine = 23,
     /// QLineF
-    QLineF,
+    QLineF = 24,
     /// QPoint
-    QPoint,
+    QPoint = 25,
     /// QPointF
-    QPointF,
+    QPointF = 26,
     /// QRegExp
-    QRegExp,
+    QRegExp = 27,
     /// QEasingCurve
-    QEasingCurve,
+    QEasingCurve = 29,
     /// QUuid
-    QUuid,
+    QUuid = 30,
     /// QVariant
-    QVariant,
+    QVariant = 41,
     /// QRegularExpression
-    QRegularExpression,
+    QRegularExpression = 44,
     /// QJsonValue
-    QJsonValue,
+    QJsonValue = 45,
     /// QJsonObject
-    QJsonObject,
+    QJsonObject = 46,
     /// QJsonArray
-    QJsonArray,
+    QJsonArray = 47,
     /// QJsonDocument
-    QJsonDocument,
+    QJsonDocument = 48,
     /// QModelIndex
-    QModelIndex,
+    QModelIndex = 42,
     /// QPersistentModelIndex (since 5.5)
-    QPersistentModelIndex,
+    QPersistentModelIndex = 50,
     /// QObject *
-    QObjectStar,
+    QObjectStar = 39,
     /// QVariantMap
-    QVariantMap,
+    QVariantMap = 8,
     /// QVariantList
-    QVariantList,
+    QVariantList = 9,
     /// QVariantHash
-    QVariantHash,
+    QVariantHash = 28,
     /// QByteArrayList
-    QByteArrayList,
+    QByteArrayList = 49,
     /// QFont
-    QFont,
+    QFont = 64,
     /// QPixmap
-    QPixmap,
+    QPixmap = 65,
     /// QBrush
-    QBrush,
+    QBrush = 66,
     /// QColor
-    QColor,
+    QColor = 67,
     /// QPalette
-    QPalette,
+    QPalette = 68,
     /// QIcon
-    QIcon,
+    QIcon = 69,
     /// QImage
-    QImage,
+    QImage = 70,
     /// QPolygon
-    QPolygon,
+    QPolygon = 71,
     /// QRegion
-    QRegion,
+    QRegion = 72,
     /// QBitmap
-    QBitmap,
+    QBitmap = 73,
     /// QCursor
-    QCursor,
+    QCursor = 74,
     /// QKeySequence
-    QKeySequence,
+    QKeySequence = 75,
     /// QPen
-    QPen,
+    QPen = 76,
     /// QTextLength
-    QTextLength,
+    QTextLength = 77,
     /// QTextFormat
-    QTextFormat,
+    QTextFormat = 78,
     /// QMatrix
-    QMatrix,
+    QMatrix = 79,
     /// QTransform
-    QTransform,
+    QTransform = 80,
     /// QMatrix4x4
-    QMatrix4x4,
+    QMatrix4x4 = 81,
     /// QVector2D
-    QVector2D,
+    QVector2D = 82,
     /// QVector3D
-    QVector3D,
+    QVector3D = 83,
     /// QVector4D
-    QVector4D,
+    QVector4D = 84,
     /// QQuaternion
-    QQuaternion,
+    QQuaternion = 85,
     /// QPolygonF
-    QPolygonF,
+    QPolygonF = 86,
     /// QSizePolicy
-    QSizePolicy,
-    FirstCoreType,
-    LastCoreType,
-    FirstGuiType,
-    LastGuiType,
-    FirstWidgetsType,
-    LastWidgetsType,
-    HighestInternalId,
-    QReal,
+    QSizePolicy = 121,
+    FirstCoreType = 1,
+    LastCoreType = 51,
+    FirstGuiType = 64,
+    LastGuiType = 86,
+    FirstWidgetsType = 121,
+    LastWidgetsType = 121,
+    HighestInternalId = 121,
+    QReal = 6,
     /// This is an invalid type id. It is returned from QMetaType for types that are not registered
-    UnknownType,
+    UnknownType = 0,
     /// Base value for user types
-    User,
+    User = 1024,
 }
 
 [org_name(QMetaType)]
 enum TypeFlag {
     /// This type has non-trivial constructors. If the flag is not set instances can be safely initialized with memset to 0.
-    NeedsConstruction,
+    NeedsConstruction = 1,
     /// This type has a non-trivial destructor. If the flag is not set calls to the destructor are not necessary before discarding objects.
-    NeedsDestruction,
+    NeedsDestruction = 2,
     /// An instance of a type having this attribute can be safely moved by memcpy.
-    MovableType,
+    MovableType = 4,
     /// This type is a pointer to a derived of QObject
-    PointerToQObject,
+    PointerToQObject = 8,
     /// This type is an enumeration
-    IsEnumeration,
-    SharedPointerToQObject,
-    WeakPointerToQObject,
-    TrackingPointerToQObject,
-    WasDeclaredAsMetaType,
-    IsGadget,
-    PointerToGadget,
+    IsEnumeration = 16,
+    SharedPointerToQObject = 32,
+    WeakPointerToQObject = 64,
+    TrackingPointerToQObject = 128,
+    WasDeclaredAsMetaType = 256,
+    IsGadget = 512,
+    PointerToGadget = 1024,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

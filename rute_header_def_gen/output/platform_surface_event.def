@@ -16,9 +16,9 @@ struct PlatformSurfaceEvent : Event {
 [org_name(QPlatformSurfaceEvent)]
 enum SurfaceEventType {
     /// The underlying native surface has been created
-    SurfaceCreated,
+    SurfaceCreated = 0,
     /// The underlying native surface will be destroyed immediately after this event The `SurfaceAboutToBeDestroyed` event type is useful as a means of stopping rendering to a platform window before it is destroyed.
-    SurfaceAboutToBeDestroyed,
+    SurfaceAboutToBeDestroyed = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

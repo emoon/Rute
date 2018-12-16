@@ -236,13 +236,13 @@ struct SessionManager : Object {
 [org_name(QSessionManager)]
 enum RestartHint {
     /// If the application is still running when the session is shut down, it wants to be restarted at the start of the next session.
-    RestartIfRunning,
+    RestartIfRunning = 0,
     /// The application wants to be started at the start of the next session, no matter what. (This is useful for utilities that run just after startup and then quit.)
-    RestartAnyway,
+    RestartAnyway = 1,
     /// The application wants to be started immediately whenever it is not running.
-    RestartImmediately,
+    RestartImmediately = 2,
     /// The application does not want to be restarted automatically. The default hint is `RestartIfRunning.`
-    RestartNever,
+    RestartNever = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

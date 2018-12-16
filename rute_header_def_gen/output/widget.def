@@ -4567,11 +4567,11 @@ struct Widget : Object, PaintDevice {
 [org_name(QWidget)]
 enum RenderFlag {
     /// If you enable this option, the widget's background is rendered into the target even if autoFillBackground is not set. By default, this option is enabled.
-    DrawWindowBackground,
+    DrawWindowBackground = 1,
     /// If you enable this option, the widget's children are rendered recursively into the target. By default, this option is enabled.
-    DrawChildren,
+    DrawChildren = 2,
     /// If you enable this option, the widget's QWidget::mask() is ignored when rendering into the target. By default, this option is disabled.
-    IgnoreMask,
+    IgnoreMask = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

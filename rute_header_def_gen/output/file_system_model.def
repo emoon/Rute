@@ -250,13 +250,13 @@ struct FileSystemModel : AbstractItemModel {
 [org_name(QFileSystemModel)]
 enum Roles {
     /// 
-    FileIconRole,
+    FileIconRole = 1,
     /// 
-    FilePathRole,
+    FilePathRole = 257,
     /// 
-    FileNameRole,
+    FileNameRole = 258,
     /// 
-    FilePermissions,
+    FilePermissions = 259,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

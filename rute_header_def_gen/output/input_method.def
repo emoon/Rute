@@ -120,9 +120,9 @@ struct InputMethod : Object {
 [org_name(QInputMethod)]
 enum Action {
     /// A normal click/tap
-    Click,
+    Click = 0,
     /// A context menu click/tap (e.g. right-button or tap-and-hold)
-    ContextMenu,
+    ContextMenu = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

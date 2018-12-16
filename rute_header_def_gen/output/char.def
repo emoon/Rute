@@ -871,590 +871,590 @@ struct Char {
 [org_name(QChar)]
 enum SpecialCharacter {
     /// A QChar with this value isNull().
-    Null,
+    Null = 0,
     /// Character tabulation.
-    Tabulation,
+    Tabulation = 9,
     /// 
-    LineFeed,
+    LineFeed = 10,
     /// 
-    CarriageReturn,
+    CarriageReturn = 13,
     /// 
-    Space,
+    Space = 32,
     /// Non-breaking space.
-    Nbsp,
+    Nbsp = 160,
     /// 
-    SoftHyphen,
+    SoftHyphen = 173,
     /// The character shown when a font has no glyph for a certain codepoint. A special question mark character is often used. Codecs use this codepoint when input data cannot be represented in Unicode.
-    ReplacementCharacter,
+    ReplacementCharacter = 65533,
     /// Used to represent an object such as an image when such objects cannot be presented.
-    ObjectReplacementCharacter,
+    ObjectReplacementCharacter = 65532,
     /// 
-    ByteOrderMark,
+    ByteOrderMark = 65279,
     /// 
-    ByteOrderSwapped,
+    ByteOrderSwapped = 65534,
     /// 
-    ParagraphSeparator,
+    ParagraphSeparator = 8233,
     /// 
-    LineSeparator,
+    LineSeparator = 8232,
     /// 
-    LastValidCodePoint,
+    LastValidCodePoint = 1114111,
 }
 
 [org_name(QChar)]
 enum Category {
     /// Unicode class name Mn
-    Mark_NonSpacing,
+    Mark_NonSpacing = 0,
     /// Unicode class name Mc
-    Mark_SpacingCombining,
+    Mark_SpacingCombining = 1,
     /// Unicode class name Me
-    Mark_Enclosing,
+    Mark_Enclosing = 2,
     /// Unicode class name Nd
-    Number_DecimalDigit,
+    Number_DecimalDigit = 3,
     /// Unicode class name Nl
-    Number_Letter,
+    Number_Letter = 4,
     /// Unicode class name No
-    Number_Other,
+    Number_Other = 5,
     /// Unicode class name Zs
-    Separator_Space,
+    Separator_Space = 6,
     /// Unicode class name Zl
-    Separator_Line,
+    Separator_Line = 7,
     /// Unicode class name Zp
-    Separator_Paragraph,
+    Separator_Paragraph = 8,
     /// Unicode class name Cc
-    Other_Control,
+    Other_Control = 9,
     /// Unicode class name Cf
-    Other_Format,
+    Other_Format = 10,
     /// Unicode class name Cs
-    Other_Surrogate,
+    Other_Surrogate = 11,
     /// Unicode class name Co
-    Other_PrivateUse,
+    Other_PrivateUse = 12,
     /// Unicode class name Cn The following categories are informative in Unicode:
-    Other_NotAssigned,
+    Other_NotAssigned = 13,
     /// Unicode class name Lu
-    Letter_Uppercase,
+    Letter_Uppercase = 14,
     /// Unicode class name Ll
-    Letter_Lowercase,
+    Letter_Lowercase = 15,
     /// Unicode class name Lt
-    Letter_Titlecase,
+    Letter_Titlecase = 16,
     /// Unicode class name Lm
-    Letter_Modifier,
+    Letter_Modifier = 17,
     /// Unicode class name Lo
-    Letter_Other,
+    Letter_Other = 18,
     /// Unicode class name Pc
-    Punctuation_Connector,
+    Punctuation_Connector = 19,
     /// Unicode class name Pd
-    Punctuation_Dash,
+    Punctuation_Dash = 20,
     /// Unicode class name Ps
-    Punctuation_Open,
+    Punctuation_Open = 21,
     /// Unicode class name Pe
-    Punctuation_Close,
+    Punctuation_Close = 22,
     /// Unicode class name Pi
-    Punctuation_InitialQuote,
+    Punctuation_InitialQuote = 23,
     /// Unicode class name Pf
-    Punctuation_FinalQuote,
+    Punctuation_FinalQuote = 24,
     /// Unicode class name Po
-    Punctuation_Other,
+    Punctuation_Other = 25,
     /// Unicode class name Sm
-    Symbol_Math,
+    Symbol_Math = 26,
     /// Unicode class name Sc
-    Symbol_Currency,
+    Symbol_Currency = 27,
     /// Unicode class name Sk
-    Symbol_Modifier,
+    Symbol_Modifier = 28,
     /// Unicode class name So
-    Symbol_Other,
+    Symbol_Other = 29,
 }
 
 [org_name(QChar)]
 enum Script {
     /// For unassigned, private-use, noncharacter, and surrogate code points.
-    Script_Unknown,
+    Script_Unknown = 0,
     /// For characters that may be used with multiple scripts and that inherit their script from the preceding characters. These include nonspacing marks, enclosing marks, and zero width joiner/non-joiner characters.
-    Script_Inherited,
+    Script_Inherited = 1,
     /// For characters that may be used with multiple scripts and that do not inherit their script from the preceding characters.
-    Script_Common,
+    Script_Common = 2,
     /// 
-    Script_Latin,
+    Script_Latin = 3,
     /// 
-    Script_Greek,
+    Script_Greek = 4,
     /// 
-    Script_Cyrillic,
+    Script_Cyrillic = 5,
     /// 
-    Script_Armenian,
+    Script_Armenian = 6,
     /// 
-    Script_Hebrew,
+    Script_Hebrew = 7,
     /// 
-    Script_Arabic,
+    Script_Arabic = 8,
     /// 
-    Script_Syriac,
+    Script_Syriac = 9,
     /// 
-    Script_Thaana,
+    Script_Thaana = 10,
     /// 
-    Script_Devanagari,
+    Script_Devanagari = 11,
     /// 
-    Script_Bengali,
+    Script_Bengali = 12,
     /// 
-    Script_Gurmukhi,
+    Script_Gurmukhi = 13,
     /// 
-    Script_Gujarati,
+    Script_Gujarati = 14,
     /// 
-    Script_Oriya,
+    Script_Oriya = 15,
     /// 
-    Script_Tamil,
+    Script_Tamil = 16,
     /// 
-    Script_Telugu,
+    Script_Telugu = 17,
     /// 
-    Script_Kannada,
+    Script_Kannada = 18,
     /// 
-    Script_Malayalam,
+    Script_Malayalam = 19,
     /// 
-    Script_Sinhala,
+    Script_Sinhala = 20,
     /// 
-    Script_Thai,
+    Script_Thai = 21,
     /// 
-    Script_Lao,
+    Script_Lao = 22,
     /// 
-    Script_Tibetan,
+    Script_Tibetan = 23,
     /// 
-    Script_Myanmar,
+    Script_Myanmar = 24,
     /// 
-    Script_Georgian,
+    Script_Georgian = 25,
     /// 
-    Script_Hangul,
+    Script_Hangul = 26,
     /// 
-    Script_Ethiopic,
+    Script_Ethiopic = 27,
     /// 
-    Script_Cherokee,
+    Script_Cherokee = 28,
     /// 
-    Script_CanadianAboriginal,
+    Script_CanadianAboriginal = 29,
     /// 
-    Script_Ogham,
+    Script_Ogham = 30,
     /// 
-    Script_Runic,
+    Script_Runic = 31,
     /// 
-    Script_Khmer,
+    Script_Khmer = 32,
     /// 
-    Script_Mongolian,
+    Script_Mongolian = 33,
     /// 
-    Script_Hiragana,
+    Script_Hiragana = 34,
     /// 
-    Script_Katakana,
+    Script_Katakana = 35,
     /// 
-    Script_Bopomofo,
+    Script_Bopomofo = 36,
     /// 
-    Script_Han,
+    Script_Han = 37,
     /// 
-    Script_Yi,
+    Script_Yi = 38,
     /// 
-    Script_OldItalic,
+    Script_OldItalic = 39,
     /// 
-    Script_Gothic,
+    Script_Gothic = 40,
     /// 
-    Script_Deseret,
+    Script_Deseret = 41,
     /// 
-    Script_Tagalog,
+    Script_Tagalog = 42,
     /// 
-    Script_Hanunoo,
+    Script_Hanunoo = 43,
     /// 
-    Script_Buhid,
+    Script_Buhid = 44,
     /// 
-    Script_Tagbanwa,
+    Script_Tagbanwa = 45,
     /// 
-    Script_Coptic,
+    Script_Coptic = 46,
     /// 
-    Script_Limbu,
+    Script_Limbu = 47,
     /// 
-    Script_TaiLe,
+    Script_TaiLe = 48,
     /// 
-    Script_LinearB,
+    Script_LinearB = 49,
     /// 
-    Script_Ugaritic,
+    Script_Ugaritic = 50,
     /// 
-    Script_Shavian,
+    Script_Shavian = 51,
     /// 
-    Script_Osmanya,
+    Script_Osmanya = 52,
     /// 
-    Script_Cypriot,
+    Script_Cypriot = 53,
     /// 
-    Script_Braille,
+    Script_Braille = 54,
     /// 
-    Script_Buginese,
+    Script_Buginese = 55,
     /// 
-    Script_NewTaiLue,
+    Script_NewTaiLue = 56,
     /// 
-    Script_Glagolitic,
+    Script_Glagolitic = 57,
     /// 
-    Script_Tifinagh,
+    Script_Tifinagh = 58,
     /// 
-    Script_SylotiNagri,
+    Script_SylotiNagri = 59,
     /// 
-    Script_OldPersian,
+    Script_OldPersian = 60,
     /// 
-    Script_Kharoshthi,
+    Script_Kharoshthi = 61,
     /// 
-    Script_Balinese,
+    Script_Balinese = 62,
     /// 
-    Script_Cuneiform,
+    Script_Cuneiform = 63,
     /// 
-    Script_Phoenician,
+    Script_Phoenician = 64,
     /// 
-    Script_PhagsPa,
+    Script_PhagsPa = 65,
     /// 
-    Script_Nko,
+    Script_Nko = 66,
     /// 
-    Script_Sundanese,
+    Script_Sundanese = 67,
     /// 
-    Script_Lepcha,
+    Script_Lepcha = 68,
     /// 
-    Script_OlChiki,
+    Script_OlChiki = 69,
     /// 
-    Script_Vai,
+    Script_Vai = 70,
     /// 
-    Script_Saurashtra,
+    Script_Saurashtra = 71,
     /// 
-    Script_KayahLi,
+    Script_KayahLi = 72,
     /// 
-    Script_Rejang,
+    Script_Rejang = 73,
     /// 
-    Script_Lycian,
+    Script_Lycian = 74,
     /// 
-    Script_Carian,
+    Script_Carian = 75,
     /// 
-    Script_Lydian,
+    Script_Lydian = 76,
     /// 
-    Script_Cham,
+    Script_Cham = 77,
     /// 
-    Script_TaiTham,
+    Script_TaiTham = 78,
     /// 
-    Script_TaiViet,
+    Script_TaiViet = 79,
     /// 
-    Script_Avestan,
+    Script_Avestan = 80,
     /// 
-    Script_EgyptianHieroglyphs,
+    Script_EgyptianHieroglyphs = 81,
     /// 
-    Script_Samaritan,
+    Script_Samaritan = 82,
     /// 
-    Script_Lisu,
+    Script_Lisu = 83,
     /// 
-    Script_Bamum,
+    Script_Bamum = 84,
     /// 
-    Script_Javanese,
+    Script_Javanese = 85,
     /// 
-    Script_MeeteiMayek,
+    Script_MeeteiMayek = 86,
     /// 
-    Script_ImperialAramaic,
+    Script_ImperialAramaic = 87,
     /// 
-    Script_OldSouthArabian,
+    Script_OldSouthArabian = 88,
     /// 
-    Script_InscriptionalParthian,
+    Script_InscriptionalParthian = 89,
     /// 
-    Script_InscriptionalPahlavi,
+    Script_InscriptionalPahlavi = 90,
     /// 
-    Script_OldTurkic,
+    Script_OldTurkic = 91,
     /// 
-    Script_Kaithi,
+    Script_Kaithi = 92,
     /// 
-    Script_Batak,
+    Script_Batak = 93,
     /// 
-    Script_Brahmi,
+    Script_Brahmi = 94,
     /// 
-    Script_Mandaic,
+    Script_Mandaic = 95,
     /// 
-    Script_Chakma,
+    Script_Chakma = 96,
     /// 
-    Script_MeroiticCursive,
+    Script_MeroiticCursive = 97,
     /// 
-    Script_MeroiticHieroglyphs,
+    Script_MeroiticHieroglyphs = 98,
     /// 
-    Script_Miao,
+    Script_Miao = 99,
     /// 
-    Script_Sharada,
+    Script_Sharada = 100,
     /// 
-    Script_SoraSompeng,
+    Script_SoraSompeng = 101,
     /// 
-    Script_Takri,
+    Script_Takri = 102,
     /// 
-    Script_CaucasianAlbanian,
+    Script_CaucasianAlbanian = 103,
     /// 
-    Script_BassaVah,
+    Script_BassaVah = 104,
     /// 
-    Script_Duployan,
+    Script_Duployan = 105,
     /// 
-    Script_Elbasan,
+    Script_Elbasan = 106,
     /// 
-    Script_Grantha,
+    Script_Grantha = 107,
     /// 
-    Script_PahawhHmong,
+    Script_PahawhHmong = 108,
     /// 
-    Script_Khojki,
+    Script_Khojki = 109,
     /// 
-    Script_LinearA,
+    Script_LinearA = 110,
     /// 
-    Script_Mahajani,
+    Script_Mahajani = 111,
     /// 
-    Script_Manichaean,
+    Script_Manichaean = 112,
     /// 
-    Script_MendeKikakui,
+    Script_MendeKikakui = 113,
     /// 
-    Script_Modi,
+    Script_Modi = 114,
     /// 
-    Script_Mro,
+    Script_Mro = 115,
     /// 
-    Script_OldNorthArabian,
+    Script_OldNorthArabian = 116,
     /// 
-    Script_Nabataean,
+    Script_Nabataean = 117,
     /// 
-    Script_Palmyrene,
+    Script_Palmyrene = 118,
     /// 
-    Script_PauCinHau,
+    Script_PauCinHau = 119,
     /// 
-    Script_OldPermic,
+    Script_OldPermic = 120,
     /// 
-    Script_PsalterPahlavi,
+    Script_PsalterPahlavi = 121,
     /// 
-    Script_Siddham,
+    Script_Siddham = 122,
     /// 
-    Script_Khudawadi,
+    Script_Khudawadi = 123,
     /// 
-    Script_Tirhuta,
+    Script_Tirhuta = 124,
     /// 
-    Script_WarangCiti,
+    Script_WarangCiti = 125,
     /// 
-    Script_Ahom,
+    Script_Ahom = 126,
     /// 
-    Script_AnatolianHieroglyphs,
+    Script_AnatolianHieroglyphs = 127,
     /// 
-    Script_Hatran,
+    Script_Hatran = 128,
     /// 
-    Script_Multani,
+    Script_Multani = 129,
     /// 
-    Script_OldHungarian,
+    Script_OldHungarian = 130,
     /// 
-    Script_SignWriting,
+    Script_SignWriting = 131,
     /// 
-    Script_Adlam,
+    Script_Adlam = 132,
     /// 
-    Script_Bhaiksuki,
+    Script_Bhaiksuki = 133,
     /// 
-    Script_Marchen,
+    Script_Marchen = 134,
     /// 
-    Script_Newa,
+    Script_Newa = 135,
     /// 
-    Script_Osage,
+    Script_Osage = 136,
     /// 
-    Script_Tangut,
+    Script_Tangut = 137,
     /// 
-    Script_MasaramGondi,
+    Script_MasaramGondi = 138,
     /// 
-    Script_Nushu,
+    Script_Nushu = 139,
     /// 
-    Script_Soyombo,
+    Script_Soyombo = 140,
     /// 
-    Script_ZanabazarSquare,
-    ScriptCount,
+    Script_ZanabazarSquare = 141,
+    ScriptCount = 142,
 }
 
 [org_name(QChar)]
 enum Direction {
     /// 
-    DirL,
+    DirL = 0,
     /// 
-    DirR,
+    DirR = 1,
     /// 
-    DirEN,
+    DirEN = 2,
     /// 
-    DirES,
+    DirES = 3,
     /// 
-    DirET,
+    DirET = 4,
     /// 
-    DirAN,
+    DirAN = 5,
     /// 
-    DirCS,
+    DirCS = 6,
     /// 
-    DirB,
+    DirB = 7,
     /// 
-    DirS,
+    DirS = 8,
     /// 
-    DirWS,
+    DirWS = 9,
     /// 
-    DirON,
+    DirON = 10,
     /// 
-    DirLRE,
+    DirLRE = 11,
     /// 
-    DirLRO,
+    DirLRO = 12,
     /// 
-    DirAL,
+    DirAL = 13,
     /// 
-    DirRLE,
+    DirRLE = 14,
     /// 
-    DirRLO,
+    DirRLO = 15,
     /// 
-    DirPDF,
+    DirPDF = 16,
     /// 
-    DirNSM,
+    DirNSM = 17,
     /// 
-    DirBN,
+    DirBN = 18,
     /// Since Qt 5.3
-    DirLRI,
+    DirLRI = 19,
     /// Since Qt 5.3
-    DirRLI,
+    DirRLI = 20,
     /// Since Qt 5.3
-    DirFSI,
+    DirFSI = 21,
     /// Since Qt 5.3
-    DirPDI,
+    DirPDI = 22,
 }
 
 [org_name(QChar)]
 enum Decomposition {
     /// 
-    NoDecomposition,
+    NoDecomposition = 0,
     /// 
-    Canonical,
+    Canonical = 1,
     /// 
-    Font,
+    Font = 2,
     /// 
-    NoBreak,
+    NoBreak = 3,
     /// 
-    Initial,
+    Initial = 4,
     /// 
-    Medial,
+    Medial = 5,
     /// 
-    Final,
+    Final = 6,
     /// 
-    Isolated,
+    Isolated = 7,
     /// 
-    Circle,
+    Circle = 8,
     /// 
-    Super,
+    Super = 9,
     /// 
-    Sub,
+    Sub = 10,
     /// 
-    Vertical,
+    Vertical = 11,
     /// 
-    Wide,
+    Wide = 12,
     /// 
-    Narrow,
+    Narrow = 13,
     /// 
-    Small,
+    Small = 14,
     /// 
-    Square,
+    Square = 15,
     /// 
-    Compat,
+    Compat = 16,
     /// 
-    Fraction,
+    Fraction = 17,
 }
 
 [org_name(QChar)]
 enum JoiningType {
     /// 
-    Joining_None,
+    Joining_None = 0,
     /// 
-    Joining_Causing,
+    Joining_Causing = 1,
     /// 
-    Joining_Dual,
+    Joining_Dual = 2,
     /// 
-    Joining_Right,
+    Joining_Right = 3,
     /// 
-    Joining_Left,
+    Joining_Left = 4,
     /// 
-    Joining_Transparent,
+    Joining_Transparent = 5,
 }
 
 [org_name(QChar)]
 enum Joining {
     /// 
-    OtherJoining,
+    OtherJoining = 0,
     /// 
-    Dual,
+    Dual = 1,
     /// 
-    Right,
+    Right = 2,
     /// 
-    Center,
+    Center = 3,
 }
 
 [org_name(QChar)]
 enum CombiningClass {
     /// 
-    Combining_BelowLeftAttached,
+    Combining_BelowLeftAttached = 200,
     /// 
-    Combining_BelowAttached,
+    Combining_BelowAttached = 202,
     /// 
-    Combining_BelowRightAttached,
+    Combining_BelowRightAttached = 204,
     /// 
-    Combining_LeftAttached,
+    Combining_LeftAttached = 208,
     /// 
-    Combining_RightAttached,
+    Combining_RightAttached = 210,
     /// 
-    Combining_AboveLeftAttached,
+    Combining_AboveLeftAttached = 212,
     /// 
-    Combining_AboveAttached,
+    Combining_AboveAttached = 214,
     /// 
-    Combining_AboveRightAttached,
+    Combining_AboveRightAttached = 216,
     /// 
-    Combining_BelowLeft,
+    Combining_BelowLeft = 218,
     /// 
-    Combining_Below,
+    Combining_Below = 220,
     /// 
-    Combining_BelowRight,
+    Combining_BelowRight = 222,
     /// 
-    Combining_Left,
+    Combining_Left = 224,
     /// 
-    Combining_Right,
+    Combining_Right = 226,
     /// 
-    Combining_AboveLeft,
+    Combining_AboveLeft = 228,
     /// 
-    Combining_Above,
+    Combining_Above = 230,
     /// 
-    Combining_AboveRight,
+    Combining_AboveRight = 232,
     /// 
-    Combining_DoubleBelow,
+    Combining_DoubleBelow = 233,
     /// 
-    Combining_DoubleAbove,
+    Combining_DoubleAbove = 234,
     /// 
-    Combining_IotaSubscript,
+    Combining_IotaSubscript = 240,
 }
 
 [org_name(QChar)]
 enum UnicodeVersion {
     /// The value is not assigned to any character in version 8.0 of Unicode.
-    Unicode_Unassigned,
+    Unicode_Unassigned = 0,
     /// Version 1.1
-    Unicode_1_1,
+    Unicode_1_1 = 1,
     /// Version 2.0
-    Unicode_2_0,
+    Unicode_2_0 = 2,
     /// Version 2.1.2
-    Unicode_2_1_2,
+    Unicode_2_1_2 = 3,
     /// Version 3.0
-    Unicode_3_0,
+    Unicode_3_0 = 4,
     /// Version 3.1
-    Unicode_3_1,
+    Unicode_3_1 = 5,
     /// Version 3.2
-    Unicode_3_2,
+    Unicode_3_2 = 6,
     /// Version 4.0
-    Unicode_4_0,
+    Unicode_4_0 = 7,
     /// Version 4.1
-    Unicode_4_1,
+    Unicode_4_1 = 8,
     /// Version 5.0
-    Unicode_5_0,
+    Unicode_5_0 = 9,
     /// Version 5.1
-    Unicode_5_1,
+    Unicode_5_1 = 10,
     /// Version 5.2
-    Unicode_5_2,
+    Unicode_5_2 = 11,
     /// Version 6.0
-    Unicode_6_0,
+    Unicode_6_0 = 12,
     /// Version 6.1
-    Unicode_6_1,
+    Unicode_6_1 = 13,
     /// Version 6.2
-    Unicode_6_2,
+    Unicode_6_2 = 14,
     /// Version 6.3 Since Qt 5.3
-    Unicode_6_3,
+    Unicode_6_3 = 15,
     /// Version 7.0 Since Qt 5.5
-    Unicode_7_0,
+    Unicode_7_0 = 16,
     /// Version 8.0 Since Qt 5.6
-    Unicode_8_0,
+    Unicode_8_0 = 17,
     /// Version 9.0 Since Qt 5.11
-    Unicode_9_0,
+    Unicode_9_0 = 18,
     /// Version 10.0 Since Qt 5.11
-    Unicode_10_0,
+    Unicode_10_0 = 19,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

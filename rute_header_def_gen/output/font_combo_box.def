@@ -69,15 +69,15 @@ struct FontComboBox : ComboBox {
 [org_name(QFontComboBox)]
 enum FontFilter {
     /// Show all fonts
-    AllFonts,
+    AllFonts = 0,
     /// Show scalable fonts
-    ScalableFonts,
+    ScalableFonts = 1,
     /// Show non scalable fonts
-    NonScalableFonts,
+    NonScalableFonts = 2,
     /// Show monospaced fonts
-    MonospacedFonts,
+    MonospacedFonts = 4,
     /// Show proportional fonts
-    ProportionalFonts,
+    ProportionalFonts = 8,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

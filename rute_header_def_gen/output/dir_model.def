@@ -234,11 +234,11 @@ struct DirModel : AbstractItemModel {
 [org_name(QDirModel)]
 enum Roles {
     /// 
-    FileIconRole,
+    FileIconRole = 1,
     /// 
-    FilePathRole,
+    FilePathRole = 257,
     /// 
-    FileNameRole,
+    FileNameRole = 258,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

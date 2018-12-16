@@ -257,23 +257,23 @@ struct LCDNumber : Frame {
 [org_name(QLCDNumber)]
 enum Mode {
     /// Hexadecimal
-    Hex,
+    Hex = 0,
     /// Decimal
-    Dec,
+    Dec = 1,
     /// Octal
-    Oct,
+    Oct = 2,
     /// Binary If the display is set to hexadecimal, octal or binary, the integer equivalent of the value is displayed.
-    Bin,
+    Bin = 3,
 }
 
 [org_name(QLCDNumber)]
 enum SegmentStyle {
     /// gives raised segments filled with the background color.
-    Outline,
+    Outline = 0,
     /// gives raised segments filled with the windowText color.
-    Filled,
+    Filled = 1,
     /// gives flat segments filled with the windowText color.
-    Flat,
+    Flat = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

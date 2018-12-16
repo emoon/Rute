@@ -331,56 +331,56 @@ struct SurfaceFormat {
 [org_name(QSurfaceFormat)]
 enum FormatOption {
     /// Used to request stereo buffers in the surface format.
-    StereoBuffers,
+    StereoBuffers = 1,
     /// Used to request a debug context with extra debugging information.
-    DebugContext,
+    DebugContext = 2,
     /// Used to request that deprecated functions be included in the OpenGL context profile. If not specified, you should get a forward compatible context without support functionality marked as deprecated. This requires OpenGL version 3.0 or higher.
-    DeprecatedFunctions,
+    DeprecatedFunctions = 4,
     /// Enables notifications about resets of the OpenGL context. The status is then queryable via the context's [isValid()](QOpenGLContext::isValid())
  function. Note that not setting this flag does not guarantee that context state loss never occurs. Additionally, some implementations may choose to report context loss regardless of this flag.
-    ResetNotification,
+    ResetNotification = 8,
 }
 
 [org_name(QSurfaceFormat)]
 enum SwapBehavior {
     /// The default, unspecified swap behaviour of the platform.
-    DefaultSwapBehavior,
+    DefaultSwapBehavior = 0,
     /// Used to request single buffering, which might result in flickering when OpenGL rendering is done directly to screen without an intermediate offscreen buffer.
-    SingleBuffer,
+    SingleBuffer = 1,
     /// This is typically the default swap behaviour on desktop platforms, consisting of one back buffer and one front buffer. Rendering is done to the back buffer, and then the back buffer and front buffer are swapped, or the contents of the back buffer are copied to the front buffer, depending on the implementation.
-    DoubleBuffer,
+    DoubleBuffer = 2,
     /// This swap behaviour is sometimes used in order to decrease the risk of skipping a frame when the rendering rate is just barely keeping up with the screen refresh rate. Depending on the platform it might also lead to slightly more efficient use of the GPU due to improved pipelining behaviour. Triple buffering comes at the cost of an extra frame of memory usage and latency, and might not be supported depending on the underlying platform.
-    TripleBuffer,
+    TripleBuffer = 3,
 }
 
 [org_name(QSurfaceFormat)]
 enum RenderableType {
     /// The default, unspecified rendering method
-    DefaultRenderableType,
+    DefaultRenderableType = 0,
     /// Desktop OpenGL rendering
-    OpenGL,
+    OpenGL = 1,
     /// OpenGL ES 2.0 rendering
-    OpenGLES,
+    OpenGLES = 2,
     /// Open Vector Graphics rendering
-    OpenVG,
+    OpenVG = 4,
 }
 
 [org_name(QSurfaceFormat)]
 enum OpenGLContextProfile {
     /// OpenGL version is lower than 3.2. For 3.2 and newer this is same as CoreProfile.
-    NoProfile,
+    NoProfile = 0,
     /// Functionality deprecated in OpenGL version 3.0 is not available.
-    CoreProfile,
+    CoreProfile = 1,
     /// Functionality from earlier OpenGL versions is available.
-    CompatibilityProfile,
+    CompatibilityProfile = 2,
 }
 
 [org_name(QSurfaceFormat)]
 enum ColorSpace {
     /// The default, unspecified color space.
-    DefaultColorSpace,
+    DefaultColorSpace = 0,
     /// When `GL_ARB_framebuffer_sRGB` or `GL_EXT_framebuffer_sRGB` is supported by the platform and this value is set, the window will be created with an sRGB-capable default framebuffer. Note that some platforms may return windows with a sRGB-capable default framebuffer even when not requested explicitly.
-    sRGBColorSpace,
+    sRGBColorSpace = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

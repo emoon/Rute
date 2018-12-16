@@ -2082,21 +2082,21 @@ struct GraphicsScene : Object {
 [org_name(QGraphicsScene)]
 enum ItemIndexMethod {
     /// A Binary Space Partitioning tree is applied. All QGraphicsScene's item location algorithms are of an order close to logarithmic complexity, by making use of binary search. Adding, moving and removing items is logarithmic. This approach is best for static scenes (i.e., scenes where most items do not move).
-    BspTreeIndex,
+    BspTreeIndex = 0,
     /// No index is applied. Item location is of linear complexity, as all items on the scene are searched. Adding, moving and removing items, however, is done in constant time. This approach is ideal for dynamic scenes, where many items are added, moved or removed continuously.
-    NoIndex,
+    NoIndex = 4294967295,
 }
 
 [org_name(QGraphicsScene)]
 enum SceneLayer {
     /// The item layer. QGraphicsScene renders all items are in this layer by calling the virtual function drawItems(). The item layer is drawn after the background layer, but before the foreground layer.
-    ItemLayer,
+    ItemLayer = 1,
     /// The background layer. QGraphicsScene renders the scene's background in this layer by calling the virtual function drawBackground(). The background layer is drawn first of all layers.
-    BackgroundLayer,
+    BackgroundLayer = 2,
     /// The foreground layer. QGraphicsScene renders the scene's foreground in this layer by calling the virtual function drawForeground(). The foreground layer is drawn last of all layers.
-    ForegroundLayer,
+    ForegroundLayer = 4,
     /// All layers; this value represents a combination of all three layers.
-    AllLayers,
+    AllLayers = 65535,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

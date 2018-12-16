@@ -114,23 +114,23 @@ struct PlatformGraphicsBuffer : Object {
 [org_name(QPlatformGraphicsBuffer)]
 enum AccessType {
     /// 
-    None,
+    None = 0,
     /// 
-    SWReadAccess,
+    SWReadAccess = 1,
     /// 
-    SWWriteAccess,
+    SWWriteAccess = 2,
     /// 
-    TextureAccess,
+    TextureAccess = 4,
     /// 
-    HWCompositor,
+    HWCompositor = 8,
 }
 
 [org_name(QPlatformGraphicsBuffer)]
 enum Origin {
     /// 
-    OriginBottomLeft,
+    OriginBottomLeft = 0,
     /// 
-    OriginTopLeft,
+    OriginTopLeft = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

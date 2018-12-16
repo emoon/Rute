@@ -234,12 +234,12 @@ struct MdiSubWindow : Widget {
 
 [org_name(QMdiSubWindow)]
 enum SubWindowOption {
-    AllowOutsideAreaHorizontally,
-    AllowOutsideAreaVertically,
+    AllowOutsideAreaHorizontally = 1,
+    AllowOutsideAreaVertically = 2,
     /// If you enable this option, a rubber band control is used to represent the subwindow's outline, and the user resizes this instead of the subwindow itself. As a result, the subwindow maintains its original position and size until the resize operation has been completed, at which time it will receive a single QResizeEvent. By default, this option is disabled.
-    RubberBandResize,
+    RubberBandResize = 4,
     /// If you enable this option, a rubber band control is used to represent the subwindow's outline, and the user moves this instead of the subwindow itself. As a result, the subwindow remains in its original position until the move operation has completed, at which time a QMoveEvent is sent to the window. By default, this option is disabled.
-    RubberBandMove,
+    RubberBandMove = 8,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

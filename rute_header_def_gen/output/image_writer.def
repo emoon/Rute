@@ -322,13 +322,13 @@ struct ImageWriter {
 [org_name(QImageWriter)]
 enum ImageWriterError {
     /// An unknown error occurred. If you get this value after calling write(), it is most likely caused by a bug in QImageWriter.
-    UnknownError,
+    UnknownError = 0,
     /// QImageWriter encountered a device error when writing the image data. Consult your device for more details on what went wrong.
-    DeviceError,
+    DeviceError = 1,
     /// Qt does not support the requested image format.
-    UnsupportedFormatError,
+    UnsupportedFormatError = 2,
     /// An attempt was made to write an invalid QImage. An example of an invalid image would be a null QImage.
-    InvalidImageError,
+    InvalidImageError = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

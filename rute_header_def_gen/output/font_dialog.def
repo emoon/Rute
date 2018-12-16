@@ -199,17 +199,17 @@ struct FontDialog : Dialog {
 [org_name(QFontDialog)]
 enum FontDialogOption {
     /// Don't display **{OK}** and **{Cancel}** buttons. (Useful for "live dialogs".)
-    NoButtons,
+    NoButtons = 1,
     /// Use Qt's standard font dialog on the Mac instead of Apple's native font panel.
-    DontUseNativeDialog,
+    DontUseNativeDialog = 2,
     /// Show scalable fonts
-    ScalableFonts,
+    ScalableFonts = 4,
     /// Show non scalable fonts
-    NonScalableFonts,
+    NonScalableFonts = 8,
     /// Show monospaced fonts
-    MonospacedFonts,
+    MonospacedFonts = 16,
     /// Show proportional fonts
-    ProportionalFonts,
+    ProportionalFonts = 32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

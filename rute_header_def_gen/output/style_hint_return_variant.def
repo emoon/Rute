@@ -9,13 +9,13 @@ struct StyleHintReturnVariant : StyleHintReturn {
 enum StyleOptionType {
     /// The type of style option provided ( [SH_Variant](SH_Variant)
  for this class). The type is used internally by QStyleHintReturn, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleHintReturn subclass and your own styles.
-    Type,
+    Type = 61442,
 }
 
 [org_name(QStyleHintReturnVariant)]
 enum StyleOptionVersion {
     /// 1 The version is used by QStyleHintReturn subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
-    Version,
+    Version = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

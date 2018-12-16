@@ -233,17 +233,17 @@ struct TextLine {
 [org_name(QTextLine)]
 enum Edge {
     /// 
-    Leading,
+    Leading = 0,
     /// 
-    Trailing,
+    Trailing = 1,
 }
 
 [org_name(QTextLine)]
 enum CursorPosition {
     /// 
-    CursorBetweenCharacters,
+    CursorBetweenCharacters = 0,
     /// 
-    CursorOnCharacter,
+    CursorOnCharacter = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

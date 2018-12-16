@@ -1756,64 +1756,64 @@ struct Image : PaintDevice {
 [org_name(QImage)]
 enum InvertMode {
     /// Invert only the RGB values and leave the alpha channel unchanged.
-    InvertRgb,
+    InvertRgb = 0,
     /// Invert all channels, including the alpha channel.
-    InvertRgba,
+    InvertRgba = 1,
 }
 
 [org_name(QImage)]
 enum Format {
     /// The image is invalid.
-    Format_Invalid,
+    Format_Invalid = 0,
     /// The image is stored using 1-bit per pixel. Bytes are packed with the most significant bit (MSB) first.
-    Format_Mono,
+    Format_Mono = 1,
     /// The image is stored using 1-bit per pixel. Bytes are packed with the less significant bit (LSB) first.
-    Format_MonoLSB,
+    Format_MonoLSB = 2,
     /// The image is stored using 8-bit indexes into a colormap.
-    Format_Indexed8,
+    Format_Indexed8 = 3,
     /// The image is stored using a 32-bit RGB format (0xffRRGGBB).
-    Format_RGB32,
+    Format_RGB32 = 4,
     /// The image is stored using a 32-bit ARGB format (0xAARRGGBB).
-    Format_ARGB32,
+    Format_ARGB32 = 5,
     /// The image is stored using a premultiplied 32-bit ARGB format (0xAARRGGBB), i.e. the red, green, and blue channels are multiplied by the alpha component divided by 255. (If RR, GG, or BB has a higher value than the alpha channel, the results are undefined.) Certain operations (such as image composition using alpha blending) are faster using premultiplied ARGB32 than with plain ARGB32.
-    Format_ARGB32_Premultiplied,
+    Format_ARGB32_Premultiplied = 6,
     /// The image is stored using a 16-bit RGB format (5-6-5).
-    Format_RGB16,
+    Format_RGB16 = 7,
     /// The image is stored using a premultiplied 24-bit ARGB format (8-5-6-5).
-    Format_ARGB8565_Premultiplied,
+    Format_ARGB8565_Premultiplied = 8,
     /// The image is stored using a 24-bit RGB format (6-6-6). The unused most significant bits is always zero.
-    Format_RGB666,
+    Format_RGB666 = 9,
     /// The image is stored using a premultiplied 24-bit ARGB format (6-6-6-6).
-    Format_ARGB6666_Premultiplied,
+    Format_ARGB6666_Premultiplied = 10,
     /// The image is stored using a 16-bit RGB format (5-5-5). The unused most significant bit is always zero.
-    Format_RGB555,
+    Format_RGB555 = 11,
     /// The image is stored using a premultiplied 24-bit ARGB format (8-5-5-5).
-    Format_ARGB8555_Premultiplied,
+    Format_ARGB8555_Premultiplied = 12,
     /// The image is stored using a 24-bit RGB format (8-8-8).
-    Format_RGB888,
+    Format_RGB888 = 13,
     /// The image is stored using a 16-bit RGB format (4-4-4). The unused bits are always zero.
-    Format_RGB444,
+    Format_RGB444 = 14,
     /// The image is stored using a premultiplied 16-bit ARGB format (4-4-4-4).
-    Format_ARGB4444_Premultiplied,
+    Format_ARGB4444_Premultiplied = 15,
     /// The image is stored using a 32-bit byte-ordered RGB(x) format (8-8-8-8). This is the same as the Format_RGBA8888 except alpha must always be 255.
-    Format_RGBX8888,
+    Format_RGBX8888 = 16,
     /// The image is stored using a 32-bit byte-ordered RGBA format (8-8-8-8). Unlike ARGB32 this is a byte-ordered format, which means the 32bit encoding differs between big endian and little endian architectures, being respectively (0xRRGGBBAA) and (0xAABBGGRR). The order of the colors is the same on any architecture if read as bytes 0xRR,0xGG,0xBB,0xAA.
-    Format_RGBA8888,
+    Format_RGBA8888 = 17,
     /// The image is stored using a premultiplied 32-bit byte-ordered RGBA format (8-8-8-8).
-    Format_RGBA8888_Premultiplied,
+    Format_RGBA8888_Premultiplied = 18,
     /// The image is stored using a 32-bit BGR format (x-10-10-10).
-    Format_BGR30,
+    Format_BGR30 = 19,
     /// The image is stored using a 32-bit premultiplied ABGR format (2-10-10-10).
-    Format_A2BGR30_Premultiplied,
+    Format_A2BGR30_Premultiplied = 20,
     /// The image is stored using a 32-bit RGB format (x-10-10-10).
-    Format_RGB30,
+    Format_RGB30 = 21,
     /// The image is stored using a 32-bit premultiplied ARGB format (2-10-10-10).
-    Format_A2RGB30_Premultiplied,
+    Format_A2RGB30_Premultiplied = 22,
     /// The image is stored using an 8-bit alpha only format.
-    Format_Alpha8,
+    Format_Alpha8 = 23,
     /// The image is stored using an 8-bit grayscale format.
-    Format_Grayscale8,
-    NImageFormats,
+    Format_Grayscale8 = 24,
+    NImageFormats = 25,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

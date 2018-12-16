@@ -66,9 +66,9 @@ struct Mutex : BasicMutex {
 [org_name(QMutex)]
 enum RecursionMode {
     /// In this mode, a thread may only lock a mutex once.
-    NonRecursive,
+    NonRecursive = 0,
     /// In this mode, a thread can lock the same mutex multiple times and the mutex won't be unlocked until a corresponding number of unlock() calls have been made.
-    Recursive,
+    Recursive = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -24,29 +24,29 @@ struct StyleOptionButton : StyleOption {
 enum StyleOptionType {
     /// The type of style option provided ( [SO_Button](SO_Button)
  for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
-    Type,
+    Type = 2,
 }
 
 [org_name(QStyleOptionButton)]
 enum StyleOptionVersion {
     /// 1 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
-    Version,
+    Version = 1,
 }
 
 [org_name(QStyleOptionButton)]
 enum ButtonFeature {
     /// Indicates a normal push button.
-    None,
+    None = 0,
     /// Indicates a flat push button.
-    Flat,
+    Flat = 1,
     /// Indicates that the button has a drop down menu.
-    HasMenu,
+    HasMenu = 2,
     /// Indicates that the button is a default button.
-    DefaultButton,
+    DefaultButton = 4,
     /// Indicates that the button is an auto default button.
-    AutoDefaultButton,
+    AutoDefaultButton = 8,
     /// Indicates that the button is a Windows Vista type command link.
-    CommandLinkButton,
+    CommandLinkButton = 16,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -893,129 +893,129 @@ struct Variant {
 [org_name(QVariant)]
 enum Type {
     /// no type
-    Invalid,
+    Invalid = 0,
     /// a bool
-    Bool,
+    Bool = 1,
     /// an int
-    Int,
+    Int = 2,
     /// a [uint](uint)
 
-    UInt,
+    UInt = 3,
     /// a [qlonglong](qlonglong)
 
-    LongLong,
+    LongLong = 4,
     /// a [qulonglong](qulonglong)
 
-    ULongLong,
+    ULongLong = 5,
     /// a double
-    Double,
+    Double = 6,
     /// a QChar
-    Char,
+    Char = 7,
     /// a QVariantMap
-    Map,
+    Map = 8,
     /// a QVariantList
-    List,
+    List = 9,
     /// a QString
-    String,
+    String = 10,
     /// a QStringList
-    StringList,
+    StringList = 11,
     /// a QByteArray
-    ByteArray,
+    ByteArray = 12,
     /// a QBitArray
-    BitArray,
+    BitArray = 13,
     /// a QDate
-    Date,
+    Date = 14,
     /// a QTime
-    Time,
+    Time = 15,
     /// a QDateTime
-    DateTime,
+    DateTime = 16,
     /// a QUrl
-    Url,
+    Url = 17,
     /// a QLocale
-    Locale,
+    Locale = 18,
     /// a QRect
-    Rect,
+    Rect = 19,
     /// a QRectF
-    RectF,
+    RectF = 20,
     /// a QSize
-    Size,
+    Size = 21,
     /// a QSizeF
-    SizeF,
+    SizeF = 22,
     /// a QLine
-    Line,
+    Line = 23,
     /// a QLineF
-    LineF,
+    LineF = 24,
     /// a QPoint
-    Point,
+    Point = 25,
     /// a QPointF
-    PointF,
+    PointF = 26,
     /// a QRegExp
-    RegExp,
+    RegExp = 27,
     /// a QRegularExpression
-    RegularExpression,
+    RegularExpression = 44,
     /// a QVariantHash
-    Hash,
+    Hash = 28,
     /// a QEasingCurve
-    EasingCurve,
+    EasingCurve = 29,
     /// a QUuid
-    Uuid,
+    Uuid = 30,
     /// a QModelIndex
-    ModelIndex,
+    ModelIndex = 42,
     /// a QPersistentModelIndex (since 5.5)
-    PersistentModelIndex,
-    LastCoreType,
+    PersistentModelIndex = 50,
+    LastCoreType = 51,
     /// a QFont
-    Font,
+    Font = 64,
     /// a QPixmap
-    Pixmap,
+    Pixmap = 65,
     /// a QBrush
-    Brush,
+    Brush = 66,
     /// a QColor
-    Color,
+    Color = 67,
     /// a QPalette
-    Palette,
+    Palette = 68,
     /// a QImage
-    Image,
+    Image = 70,
     /// a QPolygon
-    Polygon,
+    Polygon = 71,
     /// a QRegion
-    Region,
+    Region = 72,
     /// a QBitmap
-    Bitmap,
+    Bitmap = 73,
     /// a QCursor
-    Cursor,
+    Cursor = 74,
     /// a QKeySequence
-    KeySequence,
+    KeySequence = 75,
     /// a QPen
-    Pen,
+    Pen = 76,
     /// a QTextLength
-    TextLength,
+    TextLength = 77,
     /// a QTextFormat
-    TextFormat,
+    TextFormat = 78,
     /// a QMatrix
-    Matrix,
+    Matrix = 79,
     /// a QTransform
-    Transform,
+    Transform = 80,
     /// a QMatrix4x4
-    Matrix4x4,
+    Matrix4x4 = 81,
     /// a QVector2D
-    Vector2D,
+    Vector2D = 82,
     /// a QVector3D
-    Vector3D,
+    Vector3D = 83,
     /// a QVector4D
-    Vector4D,
+    Vector4D = 84,
     /// a QQuaternion
-    Quaternion,
+    Quaternion = 85,
     /// a QPolygonF
-    PolygonF,
+    PolygonF = 86,
     /// a QIcon
-    Icon,
-    LastGuiType,
+    Icon = 69,
+    LastGuiType = 86,
     /// a QSizePolicy
-    SizePolicy,
+    SizePolicy = 121,
     /// Base value for user-defined types.
-    UserType,
-    LastType,
+    UserType = 1024,
+    LastType = 4294967295,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

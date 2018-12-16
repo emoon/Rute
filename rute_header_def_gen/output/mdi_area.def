@@ -280,25 +280,25 @@ struct MdiArea : AbstractScrollArea {
 [org_name(QMdiArea)]
 enum AreaOption {
     /// When the active subwindow is maximized, the default behavior is to maximize the next subwindow that is activated. Set this option if you do not want this behavior.
-    DontMaximizeSubWindowOnActivation,
+    DontMaximizeSubWindowOnActivation = 1,
 }
 
 [org_name(QMdiArea)]
 enum WindowOrder {
     /// The windows are returned in the order of their creation.
-    CreationOrder,
+    CreationOrder = 0,
     /// The windows are returned in the order in which they are stacked, with the top-most window being last in the list.
-    StackingOrder,
+    StackingOrder = 1,
     /// The windows are returned in the order in which they were activated.
-    ActivationHistoryOrder,
+    ActivationHistoryOrder = 2,
 }
 
 [org_name(QMdiArea)]
 enum ViewMode {
     /// Display sub-windows with window frames (default).
-    SubWindowView,
+    SubWindowView = 0,
     /// Display sub-windows with tabs in a tab bar.
-    TabbedView,
+    TabbedView = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

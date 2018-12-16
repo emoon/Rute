@@ -141,8 +141,8 @@ struct Debug {
 
 [org_name(QDebug)]
 enum Latin1Content {
-    ContainsBinary,
-    ContainsLatin1,
+    ContainsBinary = 0,
+    ContainsLatin1 = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

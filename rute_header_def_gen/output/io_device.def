@@ -1209,25 +1209,25 @@ struct IODevice : Object {
 [org_name(QIODevice)]
 enum OpenModeFlag {
     /// The device is not open.
-    NotOpen,
+    NotOpen = 0,
     /// The device is open for reading.
-    ReadOnly,
+    ReadOnly = 1,
     /// The device is open for writing. Note that this mode implies Truncate.
-    WriteOnly,
+    WriteOnly = 2,
     /// The device is open for reading and writing.
-    ReadWrite,
+    ReadWrite = 3,
     /// The device is opened in append mode so that all data is written to the end of the file.
-    Append,
+    Append = 4,
     /// If possible, the device is truncated before it is opened. All earlier contents of the device are lost.
-    Truncate,
+    Truncate = 8,
     /// When reading, the end-of-line terminators are translated to '\\n'. When writing, the end-of-line terminators are translated to the local encoding, for example '\\r\\n' for Win32.
-    Text,
+    Text = 16,
     /// Any buffer in the device is bypassed.
-    Unbuffered,
+    Unbuffered = 32,
     /// Fail if the file to be opened already exists. Create and open the file only if it does not exist. There is a guarantee from the operating system that you are the only one creating and opening the file. Note that this mode implies WriteOnly, and combining it with ReadWrite is allowed. This flag currently only affects QFile. Other classes might use this flag in the future, but until then using this flag with any classes other than QFile may result in undefined behavior.
-    NewOnly,
+    NewOnly = 64,
     /// Fail if the file to be opened does not exist. This flag must be specified alongside ReadOnly, WriteOnly, or ReadWrite. Note that using this flag with ReadOnly alone is redundant, as ReadOnly already fails when the file does not exist. This flag currently only affects QFile. Other classes might use this flag in the future, but until then using this flag with any classes other than QFile may result in undefined behavior. Certain flags, such as `Unbuffered` and `Truncate,` are meaningless when used with some subclasses. Some of these restrictions are implied by the type of device that is represented by a subclass. In other cases, the restriction may be due to the implementation, or may be imposed by the underlying platform; for example, QTcpSocket does not support `Unbuffered` mode, and limitations in the native API prevent QFile from supporting `Unbuffered` on Windows.
-    ExistingOnly,
+    ExistingOnly = 128,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

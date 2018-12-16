@@ -85,22 +85,22 @@ struct TextListFormat : TextFormat {
 [org_name(QTextListFormat)]
 enum Style {
     /// a filled circle
-    ListDisc,
+    ListDisc = 4294967295,
     /// an empty circle
-    ListCircle,
+    ListCircle = 4294967294,
     /// a filled square
-    ListSquare,
+    ListSquare = 4294967293,
     /// decimal values in ascending order
-    ListDecimal,
+    ListDecimal = 4294967292,
     /// lower case Latin characters in alphabetical order
-    ListLowerAlpha,
+    ListLowerAlpha = 4294967291,
     /// upper case Latin characters in alphabetical order
-    ListUpperAlpha,
+    ListUpperAlpha = 4294967290,
     /// lower case roman numerals (supports up to 4999 items only)
-    ListLowerRoman,
+    ListLowerRoman = 4294967289,
     /// upper case roman numerals (supports up to 4999 items only)
-    ListUpperRoman,
-    ListStyleUndefined,
+    ListUpperRoman = 4294967288,
+    ListStyleUndefined = 0,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1117,131 +1117,131 @@ struct AbstractItemView : AbstractScrollArea {
 [org_name(QAbstractItemView)]
 enum SelectionMode {
     /// Items cannot be selected. The most commonly used modes are SingleSelection and ExtendedSelection.
-    NoSelection,
+    NoSelection = 0,
     /// When the user selects an item, any already-selected item becomes unselected. It is possible for the user to deselect the selected item.
-    SingleSelection,
+    SingleSelection = 1,
     /// When the user selects an item in the usual way, the selection status of that item is toggled and the other items are left alone. Multiple items can be toggled by dragging the mouse over them.
-    MultiSelection,
+    MultiSelection = 2,
     /// When the user selects an item in the usual way, the selection is cleared and the new item selected. However, if the user presses the Ctrl key when clicking on an item, the clicked item gets toggled and all other items are left untouched. If the user presses the Shift key while clicking on an item, all items between the current item and the clicked item are selected or unselected, depending on the state of the clicked item. Multiple items can be selected by dragging the mouse over them.
-    ExtendedSelection,
+    ExtendedSelection = 3,
     /// When the user selects an item in the usual way, the selection is cleared and the new item selected. However, if the user presses the Shift key while clicking on an item, all items between the current item and the clicked item are selected or unselected, depending on the state of the clicked item.
-    ContiguousSelection,
+    ContiguousSelection = 4,
 }
 
 [org_name(QAbstractItemView)]
 enum SelectionBehavior {
     /// Selecting single items.
-    SelectItems,
+    SelectItems = 0,
     /// Selecting only rows.
-    SelectRows,
+    SelectRows = 1,
     /// Selecting only columns.
-    SelectColumns,
+    SelectColumns = 2,
 }
 
 [org_name(QAbstractItemView)]
 enum ScrollHint {
     /// Scroll to ensure that the item is visible.
-    EnsureVisible,
+    EnsureVisible = 0,
     /// Scroll to position the item at the top of the viewport.
-    PositionAtTop,
+    PositionAtTop = 1,
     /// Scroll to position the item at the bottom of the viewport.
-    PositionAtBottom,
+    PositionAtBottom = 2,
     /// Scroll to position the item at the center of the viewport.
-    PositionAtCenter,
+    PositionAtCenter = 3,
 }
 
 [org_name(QAbstractItemView)]
 enum EditTrigger {
     /// No editing possible.
-    NoEditTriggers,
+    NoEditTriggers = 0,
     /// Editing start whenever current item changes.
-    CurrentChanged,
+    CurrentChanged = 1,
     /// Editing starts when an item is double clicked.
-    DoubleClicked,
+    DoubleClicked = 2,
     /// Editing starts when clicking on an already selected item.
-    SelectedClicked,
+    SelectedClicked = 4,
     /// Editing starts when the platform edit key has been pressed over an item.
-    EditKeyPressed,
+    EditKeyPressed = 8,
     /// Editing starts when any key is pressed over an item.
-    AnyKeyPressed,
+    AnyKeyPressed = 16,
     /// Editing starts for all above actions.
-    AllEditTriggers,
+    AllEditTriggers = 31,
 }
 
 [org_name(QAbstractItemView)]
 enum ScrollMode {
     /// The view will scroll the contents one item at a time.
-    ScrollPerItem,
+    ScrollPerItem = 0,
     /// The view will scroll the contents one pixel at a time.
-    ScrollPerPixel,
+    ScrollPerPixel = 1,
 }
 
 [org_name(QAbstractItemView)]
 enum DragDropMode {
     /// Does not support dragging or dropping.
-    NoDragDrop,
+    NoDragDrop = 0,
     /// The view supports dragging of its own items
-    DragOnly,
+    DragOnly = 1,
     /// The view accepts drops
-    DropOnly,
+    DropOnly = 2,
     /// The view supports both dragging and dropping
-    DragDrop,
+    DragDrop = 3,
     /// The view accepts move ( **not copy** ) operations only from itself. Note that the model used needs to provide support for drag and drop operations.
-    InternalMove,
+    InternalMove = 4,
 }
 
 [org_name(QAbstractItemView)]
 enum CursorAction {
     /// Move to the item above the current item.
-    MoveUp,
+    MoveUp = 0,
     /// Move to the item below the current item.
-    MoveDown,
+    MoveDown = 1,
     /// Move to the item left of the current item.
-    MoveLeft,
+    MoveLeft = 2,
     /// Move to the item right of the current item.
-    MoveRight,
+    MoveRight = 3,
     /// Move to the top-left corner item.
-    MoveHome,
+    MoveHome = 4,
     /// Move to the bottom-right corner item.
-    MoveEnd,
+    MoveEnd = 5,
     /// Move one page up above the current item.
-    MovePageUp,
+    MovePageUp = 6,
     /// Move one page down below the current item.
-    MovePageDown,
+    MovePageDown = 7,
     /// Move to the item after the current item.
-    MoveNext,
+    MoveNext = 8,
     /// Move to the item before the current item.
-    MovePrevious,
+    MovePrevious = 9,
 }
 
 [org_name(QAbstractItemView)]
 enum State {
     /// The is the default state.
-    NoState,
+    NoState = 0,
     /// The user is dragging items.
-    DraggingState,
+    DraggingState = 1,
     /// The user is selecting items.
-    DragSelectingState,
+    DragSelectingState = 2,
     /// The user is editing an item in a widget editor.
-    EditingState,
+    EditingState = 3,
     /// The user is opening a branch of items.
-    ExpandingState,
+    ExpandingState = 4,
     /// The user is closing a branch of items.
-    CollapsingState,
+    CollapsingState = 5,
     /// The item view is performing an animation.
-    AnimatingState,
+    AnimatingState = 6,
 }
 
 [org_name(QAbstractItemView)]
 enum DropIndicatorPosition {
     /// The item will be dropped on the index.
-    OnItem,
+    OnItem = 0,
     /// The item will be dropped above the index.
-    AboveItem,
+    AboveItem = 1,
     /// The item will be dropped below the index.
-    BelowItem,
+    BelowItem = 2,
     /// The item will be dropped onto a region of the viewport with no items. The way each view handles items dropped onto the viewport depends on the behavior of the underlying model in use.
-    OnViewport,
+    OnViewport = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

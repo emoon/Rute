@@ -550,19 +550,19 @@ struct MainWindow : Widget {
 enum DockOption {
     /// Identical to the [animated](animated)
  property.
-    AnimatedDocks,
+    AnimatedDocks = 1,
     /// Identical to the [dockNestingEnabled](dockNestingEnabled)
  property.
-    AllowNestedDocks,
+    AllowNestedDocks = 2,
     /// The user can drop one dock widget "on top" of another. The two widgets are stacked and a tab bar appears for selecting which one is visible.
-    AllowTabbedDocks,
+    AllowTabbedDocks = 4,
     /// Each dock area contains a single stack of tabbed dock widgets. In other words, dock widgets cannot be placed next to each other in a dock area. If this option is set, AllowNestedDocks has no effect.
-    ForceTabbedDocks,
+    ForceTabbedDocks = 8,
     /// The two vertical dock areas on the sides of the main window show their tabs vertically. If this option is not set, all dock areas show their tabs at the bottom. Implies AllowTabbedDocks. See also [setTabPosition().](setTabPosition().)
 
-    VerticalTabs,
+    VerticalTabs = 16,
     /// When dragging the titlebar of a dock, all the tabs that are tabbed with it are going to be dragged. Implies AllowTabbedDocks. Does not work well if some QDockWidgets have restrictions in which area they are allowed. (This enum value was added in Qt 5.6.) These options only control how dock widgets may be dropped in a QMainWindow. They do not re-arrange the dock widgets to conform with the specified options. For this reason they should be set before any dock widgets are added to the main window. Exceptions to this are the AnimatedDocks and VerticalTabs options, which may be set at any time.
-    GroupedDragging,
+    GroupedDragging = 32,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

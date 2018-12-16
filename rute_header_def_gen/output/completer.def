@@ -398,21 +398,21 @@ struct Completer : Object {
 [org_name(QCompleter)]
 enum CompletionMode {
     /// Current completions are displayed in a popup window.
-    PopupCompletion,
+    PopupCompletion = 0,
     /// All possible completions are displayed in a popup window with the most likely suggestion indicated as current.
-    UnfilteredPopupCompletion,
+    UnfilteredPopupCompletion = 1,
     /// Completions appear inline (as selected text).
-    InlineCompletion,
+    InlineCompletion = 2,
 }
 
 [org_name(QCompleter)]
 enum ModelSorting {
     /// The model is unsorted.
-    UnsortedModel,
+    UnsortedModel = 0,
     /// The model is sorted case sensitively.
-    CaseSensitivelySortedModel,
+    CaseSensitivelySortedModel = 1,
     /// The model is sorted case insensitively.
-    CaseInsensitivelySortedModel,
+    CaseInsensitivelySortedModel = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

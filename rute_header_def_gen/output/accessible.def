@@ -167,351 +167,351 @@ struct Accessible {
 [org_name(QAccessible)]
 enum Event {
     /// A sound has been played by an object
-    SoundPlayed,
+    SoundPlayed = 1,
     /// A system alert (e.g., a message from a QMessageBox)
-    Alert,
+    Alert = 2,
     /// A window has been activated (i.e., a new window has gained focus on the desktop).
-    ForegroundChanged,
+    ForegroundChanged = 3,
     /// A menu has been opened on the menubar (Qt uses PopupMenuStart for all menus).
-    MenuStart,
+    MenuStart = 4,
     /// A menu has been closed (Qt uses PopupMenuEnd for all menus).
-    MenuEnd,
+    MenuEnd = 5,
     /// A pop-up menu has opened.
-    PopupMenuStart,
+    PopupMenuStart = 6,
     /// A pop-up menu has closed.
-    PopupMenuEnd,
+    PopupMenuEnd = 7,
     /// Context help (QWhatsThis) for an object is initiated.
-    ContextHelpStart,
+    ContextHelpStart = 12,
     /// Context help (QWhatsThis) for an object is finished.
-    ContextHelpEnd,
+    ContextHelpEnd = 13,
     /// A drag and drop operation is about to be initiated.
-    DragDropStart,
+    DragDropStart = 14,
     /// A drag and drop operation is about to finished.
-    DragDropEnd,
+    DragDropEnd = 15,
     /// A dialog (QDialog) has been set visible.
-    DialogStart,
+    DialogStart = 16,
     /// A dialog (QDialog) has been hidden
-    DialogEnd,
+    DialogEnd = 17,
     /// A scrollbar scroll operation is about to start; this may be caused by a mouse press on the slider handle, for example.
-    ScrollingStart,
+    ScrollingStart = 18,
     /// A scrollbar scroll operation has ended (the mouse has released the slider handle).
-    ScrollingEnd,
+    ScrollingEnd = 19,
     /// A menu item is triggered.
-    MenuCommand,
+    MenuCommand = 24,
     /// An action has been changed.
-    ActionChanged,
+    ActionChanged = 257,
     /// 
-    ActiveDescendantChanged,
+    ActiveDescendantChanged = 258,
     /// 
-    AttributeChanged,
+    AttributeChanged = 259,
     /// The contents of a text document have changed.
-    DocumentContentChanged,
+    DocumentContentChanged = 260,
     /// A document has been loaded.
-    DocumentLoadComplete,
+    DocumentLoadComplete = 261,
     /// A document load has been stopped.
-    DocumentLoadStopped,
+    DocumentLoadStopped = 262,
     /// A document reload has been initiated.
-    DocumentReload,
+    DocumentReload = 263,
     /// The end position of the display text for a hypertext link has changed.
-    HyperlinkEndIndexChanged,
+    HyperlinkEndIndexChanged = 264,
     /// The number of anchors in a hypertext link has changed, perhaps because the display text has been split to provide more than one link.
-    HyperlinkNumberOfAnchorsChanged,
+    HyperlinkNumberOfAnchorsChanged = 265,
     /// The link for the selected hypertext link has changed.
-    HyperlinkSelectedLinkChanged,
+    HyperlinkSelectedLinkChanged = 266,
     /// A hypertext link has been activated, perhaps by being clicked or via a key press.
-    HypertextLinkActivated,
+    HypertextLinkActivated = 267,
     /// A hypertext link has been selected.
-    HypertextLinkSelected,
+    HypertextLinkSelected = 268,
     /// The start position of the display text for a hypertext link has changed.
-    HyperlinkStartIndexChanged,
+    HyperlinkStartIndexChanged = 269,
     /// The display text for a hypertext link has changed.
-    HypertextChanged,
+    HypertextChanged = 270,
     /// 
-    HypertextNLinksChanged,
+    HypertextNLinksChanged = 271,
     /// 
-    ObjectAttributeChanged,
+    ObjectAttributeChanged = 272,
     /// 
-    PageChanged,
+    PageChanged = 273,
     /// 
-    SectionChanged,
+    SectionChanged = 274,
     /// A table caption has been changed.
-    TableCaptionChanged,
+    TableCaptionChanged = 275,
     /// The description of a table column, typically found in the column's header, has been changed.
-    TableColumnDescriptionChanged,
+    TableColumnDescriptionChanged = 276,
     /// A table column header has been changed.
-    TableColumnHeaderChanged,
-    TableModelChanged,
+    TableColumnHeaderChanged = 277,
+    TableModelChanged = 278,
     /// The description of a table row, typically found in the row's header, has been changed.
-    TableRowDescriptionChanged,
+    TableRowDescriptionChanged = 279,
     /// A table row header has been changed.
-    TableRowHeaderChanged,
+    TableRowHeaderChanged = 280,
     /// The summary of a table has been changed.
-    TableSummaryChanged,
-    TextAttributeChanged,
-    TextCaretMoved,
+    TableSummaryChanged = 281,
+    TextAttributeChanged = 282,
+    TextCaretMoved = 283,
     /// A text column has been changed.
-    TextColumnChanged,
-    TextInserted,
-    TextRemoved,
-    TextUpdated,
-    TextSelectionChanged,
+    TextColumnChanged = 285,
+    TextInserted = 286,
+    TextRemoved = 287,
+    TextUpdated = 288,
+    TextSelectionChanged = 289,
     /// 
-    VisibleDataChanged,
+    VisibleDataChanged = 290,
     /// A new object is created.
-    ObjectCreated,
+    ObjectCreated = 32768,
     /// An object is deleted.
-    ObjectDestroyed,
+    ObjectDestroyed = 32769,
     /// An object is displayed; for example, with QWidget::show().
-    ObjectShow,
+    ObjectShow = 32770,
     /// An object is hidden; for example, with QWidget::hide(). Any children the object that is hidden has do not send this event. It is not sent when an object is hidden as it is being obcured by others.
-    ObjectHide,
+    ObjectHide = 32771,
     /// A layout or item view has added, removed, or moved an object (Qt does not use this event).
-    ObjectReorder,
+    ObjectReorder = 32772,
     /// An object has gained keyboard focus.
-    Focus,
+    Focus = 32773,
     /// The selection has changed in a menu or item view.
-    Selection,
+    Selection = 32774,
     /// An item has been added to the selection in an item view.
-    SelectionAdd,
+    SelectionAdd = 32775,
     /// An item has been removed from an item view selection.
-    SelectionRemove,
+    SelectionRemove = 32776,
     /// Several changes to a selection has occurred in an item view.
-    SelectionWithin,
-    StateChanged,
+    SelectionWithin = 32777,
+    StateChanged = 32778,
     /// An object's location on the screen has changed.
-    LocationChanged,
+    LocationChanged = 32779,
     /// The QAccessible::Name property of an object has changed.
-    NameChanged,
+    NameChanged = 32780,
     /// The object's QAccessible::Description changed.
-    DescriptionChanged,
-    ValueChanged,
+    DescriptionChanged = 32781,
+    ValueChanged = 32782,
     /// An object's parent object changed.
-    ParentChanged,
+    ParentChanged = 32783,
     /// The QAccessible::Help text property of an object has changed.
-    HelpChanged,
+    HelpChanged = 32928,
     /// The default QAccessible::Action for the accessible object has changed.
-    DefaultActionChanged,
+    DefaultActionChanged = 32944,
     /// The keyboard accelerator for an action has been changed.
-    AcceleratorChanged,
-    InvalidEvent,
+    AcceleratorChanged = 32960,
+    InvalidEvent = 32961,
 }
 
 [org_name(QAccessible)]
 enum Role {
     /// The object has no role. This usually indicates an invalid object.
-    NoRole,
+    NoRole = 0,
     /// The title bar caption of a window.
-    TitleBar,
+    TitleBar = 1,
     /// A menu bar from which menus are opened by the user.
-    MenuBar,
+    MenuBar = 2,
     /// A scroll bar, which allows the user to scroll the visible area.
-    ScrollBar,
+    ScrollBar = 3,
     /// A grip that the user can drag to change the size of widgets.
-    Grip,
+    Grip = 4,
     /// An object that represents a sound.
-    Sound,
+    Sound = 5,
     /// An object that represents the mouse cursor.
-    Cursor,
+    Cursor = 6,
     /// An object that represents the system caret (text cursor).
-    Caret,
+    Caret = 7,
     /// An object that is used to alert the user.
-    AlertMessage,
+    AlertMessage = 8,
     /// A top level window.
-    Window,
+    Window = 9,
     /// The client area in a window.
-    Client,
+    Client = 10,
     /// A menu which lists options that the user can select to perform an action.
-    PopupMenu,
+    PopupMenu = 11,
     /// An item in a menu or menu bar.
-    MenuItem,
+    MenuItem = 12,
     /// A tool tip which provides information about other objects.
-    ToolTip,
+    ToolTip = 13,
     /// The application's main window.
-    Application,
+    Application = 14,
     /// A document, for example in an office application.
-    Document,
+    Document = 15,
     /// A generic container.
-    Pane,
+    Pane = 16,
     /// An object that displays a graphical representation of data.
-    Chart,
+    Chart = 17,
     /// A dialog box.
-    Dialog,
+    Dialog = 18,
     /// An object that represents a border.
-    Border,
+    Border = 19,
     /// An object that represents a logical grouping of other objects.
-    Grouping,
+    Grouping = 20,
     /// A separator that divides space into logical areas.
-    Separator,
+    Separator = 21,
     /// A tool bar, which groups widgets that the user accesses frequently.
-    ToolBar,
+    ToolBar = 22,
     /// A status bar.
-    StatusBar,
+    StatusBar = 23,
     /// A table representing data in a grid of rows and columns.
-    Table,
+    Table = 24,
     /// A header for a column of data.
-    ColumnHeader,
+    ColumnHeader = 25,
     /// A header for a row of data.
-    RowHeader,
+    RowHeader = 26,
     /// A column of cells, usually within a table.
-    Column,
+    Column = 27,
     /// A row of cells, usually within a table.
-    Row,
+    Row = 28,
     /// A cell in a table.
-    Cell,
+    Cell = 29,
     /// A link to something else.
-    Link,
+    Link = 30,
     /// An object that displays help in a separate, short lived window.
-    HelpBalloon,
+    HelpBalloon = 31,
     /// An object that provids interactive help.
-    Assistant,
+    Assistant = 32,
     /// A list of items, from which the user can select one or more items.
-    List,
+    List = 33,
     /// An item in a list of items.
-    ListItem,
+    ListItem = 34,
     /// A list of items in a tree structure.
-    Tree,
+    Tree = 35,
     /// An item in a tree structure.
-    TreeItem,
+    TreeItem = 36,
     /// A page tab that the user can select to switch to a different page in a dialog.
-    PageTab,
+    PageTab = 37,
     /// A property page where the user can change options and settings.
-    PropertyPage,
+    PropertyPage = 38,
     /// An indicator that represents a current value or item.
-    Indicator,
+    Indicator = 39,
     /// A graphic or picture, e.g. an icon.
-    Graphic,
+    Graphic = 40,
     /// Static text, such as labels for other widgets.
-    StaticText,
+    StaticText = 41,
     /// Editable text such as a line or text edit.
-    EditableText,
+    EditableText = 42,
     /// A button.
-    Button,
-    PushButton,
+    Button = 43,
+    PushButton = 43,
     /// An object that represents an option that can be checked or unchecked. Some options provide a "mixed" state, e.g. neither checked nor unchecked.
-    CheckBox,
+    CheckBox = 44,
     /// An object that represents an option that is mutually exclusive with other options.
-    RadioButton,
+    RadioButton = 45,
     /// A list of choices that the user can select from.
-    ComboBox,
+    ComboBox = 46,
     /// The object displays the progress of an operation in progress.
-    ProgressBar,
+    ProgressBar = 48,
     /// An object that represents a dial or knob.
-    Dial,
+    Dial = 49,
     /// A hotkey field that allows the user to enter a key sequence.
-    HotkeyField,
+    HotkeyField = 50,
     /// A slider that allows the user to select a value within a given range.
-    Slider,
+    Slider = 51,
     /// A spin box widget that allows the user to enter a value within a given range.
-    SpinBox,
+    SpinBox = 52,
     /// An object that displays graphics that the user can interact with.
-    Canvas,
+    Canvas = 53,
     /// An object that displays an animation.
-    Animation,
+    Animation = 54,
     /// An object that represents a mathematical equation.
-    Equation,
+    Equation = 55,
     /// A button that drops down a list of items.
-    ButtonDropDown,
+    ButtonDropDown = 56,
     /// A button that drops down a menu.
-    ButtonMenu,
+    ButtonMenu = 57,
     /// A button that drops down a grid.
-    ButtonDropGrid,
+    ButtonDropGrid = 58,
     /// Blank space between other objects.
-    Whitespace,
+    Whitespace = 59,
     /// A list of page tabs.
-    PageTabList,
+    PageTabList = 60,
     /// A clock displaying time.
-    Clock,
+    Clock = 61,
     /// A splitter distributing available space between its child widgets.
-    Splitter,
+    Splitter = 62,
     /// An object that can contain layered children, e.g. in a stack.
-    LayeredPane,
+    LayeredPane = 128,
     /// A terminal or command line interface.
-    Terminal,
+    Terminal = 129,
     /// The object represents the desktop or workspace.
-    Desktop,
+    Desktop = 130,
     /// A paragraph of text (usually found in documents).
-    Paragraph,
+    Paragraph = 131,
     /// HTML document, usually in a browser.
-    WebDocument,
+    WebDocument = 132,
     /// A section (in a document).
-    Section,
+    Section = 133,
     /// A dialog that lets the user choose a color.
-    ColorChooser,
+    ColorChooser = 1028,
     /// A footer in a page (usually in documents).
-    Footer,
+    Footer = 1038,
     /// A web form containing controls.
-    Form,
+    Form = 1040,
     /// A heading in a document.
-    Heading,
+    Heading = 1044,
     /// A section whose content is parenthetic or ancillary to the main content of the resource.
-    Note,
+    Note = 1051,
     /// A part of the document or web page that is complementary to the main content, usually a landmark (see WAI-ARIA).
-    ComplementaryContent,
+    ComplementaryContent = 1068,
     /// The first value to be used for user defined roles.
-    UserRole,
+    UserRole = 65535,
 }
 
 [org_name(QAccessible)]
 enum Text {
     /// The name of the object. This can be used both as an identifier or a short description by accessible clients.
-    Name,
+    Name = 0,
     /// A short text describing the object.
-    Description,
+    Description = 1,
     /// The value of the object.
-    Value,
+    Value = 2,
     /// A longer text giving information about how to use the object.
-    Help,
+    Help = 3,
     /// The keyboard shortcut that executes the object's default action.
-    Accelerator,
-    DebugDescription,
+    Accelerator = 4,
+    DebugDescription = 5,
     /// The first value to be used for user defined text.
-    UserText,
+    UserText = 65535,
 }
 
 [org_name(QAccessible)]
 enum RelationFlag {
     /// The first object is the label of the second object.
-    Label,
+    Label = 1,
     /// The first object is labelled by the second object.
-    Labelled,
+    Labelled = 2,
     /// The first object controls the second object.
-    Controller,
+    Controller = 4,
     /// The first object is controlled by the second object.
-    Controlled,
+    Controlled = 8,
     /// Used as a mask to specify that we are interesting in information about all relations Implementations of relations() return a combination of these flags. Some values are mutually exclusive.
-    AllRelations,
+    AllRelations = 4294967295,
 }
 
 [org_name(QAccessible)]
 enum InterfaceType {
     /// For text that supports selections or is more than one line. Simple labels do not need to implement this interface.
-    TextInterface,
-    EditableTextInterface,
+    TextInterface = 0,
+    EditableTextInterface = 1,
     /// For objects that are used to manipulate a value, for example slider or scroll bar.
-    ValueInterface,
+    ValueInterface = 2,
     /// For interactive objects that allow the user to trigger an action. Basically everything that allows for example mouse interaction.
-    ActionInterface,
-    ImageInterface,
+    ActionInterface = 3,
+    ImageInterface = 4,
     /// For lists, tables and trees.
-    TableInterface,
+    TableInterface = 5,
     /// For cells in a TableInterface object.
-    TableCellInterface,
+    TableCellInterface = 6,
 }
 
 [org_name(QAccessible)]
 enum TextBoundaryType {
     /// Use individual characters as boundary.
-    CharBoundary,
+    CharBoundary = 0,
     /// Use words as boundaries.
-    WordBoundary,
+    WordBoundary = 1,
     /// Use sentences as boundary.
-    SentenceBoundary,
+    SentenceBoundary = 2,
     /// Use paragraphs as boundary.
-    ParagraphBoundary,
+    ParagraphBoundary = 3,
     /// Use newlines as boundary.
-    LineBoundary,
+    LineBoundary = 4,
     /// No boundary (use the whole text).
-    NoBoundary,
+    NoBoundary = 5,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

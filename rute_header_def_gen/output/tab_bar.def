@@ -417,39 +417,39 @@ struct TabBar : Widget {
 [org_name(QTabBar)]
 enum Shape {
     /// The normal rounded look above the pages
-    RoundedNorth,
+    RoundedNorth = 0,
     /// The normal rounded look below the pages
-    RoundedSouth,
+    RoundedSouth = 1,
     /// The normal rounded look on the left side of the pages
-    RoundedWest,
+    RoundedWest = 2,
     /// The normal rounded look on the right side the pages
-    RoundedEast,
+    RoundedEast = 3,
     /// Triangular tabs above the pages.
-    TriangularNorth,
+    TriangularNorth = 4,
     /// Triangular tabs similar to those used in the Excel spreadsheet, for example
-    TriangularSouth,
+    TriangularSouth = 5,
     /// Triangular tabs on the left of the pages.
-    TriangularWest,
+    TriangularWest = 6,
     /// Triangular tabs on the right of the pages.
-    TriangularEast,
+    TriangularEast = 7,
 }
 
 [org_name(QTabBar)]
 enum ButtonPosition {
     /// Left side of the tab.
-    LeftSide,
+    LeftSide = 0,
     /// Right side of the tab.
-    RightSide,
+    RightSide = 1,
 }
 
 [org_name(QTabBar)]
 enum SelectionBehavior {
     /// Select the tab to the left of the one being removed.
-    SelectLeftTab,
+    SelectLeftTab = 0,
     /// Select the tab to the right of the one being removed.
-    SelectRightTab,
+    SelectRightTab = 1,
     /// Select the previously selected tab.
-    SelectPreviousTab,
+    SelectPreviousTab = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

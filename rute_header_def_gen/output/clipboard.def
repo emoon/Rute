@@ -312,12 +312,12 @@ struct Clipboard : Object {
 [org_name(QClipboard)]
 enum Mode {
     /// indicates that data should be stored and retrieved from the global clipboard.
-    Clipboard,
+    Clipboard = 0,
     /// indicates that data should be stored and retrieved from the global mouse selection. Support for `Selection` is provided only on systems with a global mouse selection (e.g. X11).
-    Selection,
+    Selection = 1,
     /// indicates that data should be stored and retrieved from the Find buffer. This mode is used for holding search strings on MacOS .
-    FindBuffer,
-    LastMode,
+    FindBuffer = 2,
+    LastMode = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

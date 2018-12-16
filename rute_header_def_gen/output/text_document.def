@@ -1270,41 +1270,41 @@ struct TextDocument : Object {
 [org_name(QTextDocument)]
 enum MetaInformation {
     /// The title of the document.
-    DocumentTitle,
+    DocumentTitle = 0,
     /// The url of the document. The loadResource() function uses this url as the base when loading relative resources.
-    DocumentUrl,
+    DocumentUrl = 1,
 }
 
 [org_name(QTextDocument)]
 enum FindFlag {
     /// Search backwards instead of forwards.
-    FindBackward,
+    FindBackward = 1,
     /// By default find works case insensitive. Specifying this option changes the behaviour to a case sensitive find operation.
-    FindCaseSensitively,
+    FindCaseSensitively = 2,
     /// Makes find match only complete words.
-    FindWholeWords,
+    FindWholeWords = 4,
 }
 
 [org_name(QTextDocument)]
 enum ResourceType {
     /// The resource contains HTML.
-    HtmlResource,
+    HtmlResource = 1,
     /// The resource contains image data. Currently supported data types are QVariant::Pixmap and QVariant::Image. If the corresponding variant is of type QVariant::ByteArray then Qt attempts to load the image using QImage::loadFromData. QVariant::Icon is currently not supported. The icon needs to be converted to one of the supported types first, for example using QIcon::pixmap.
-    ImageResource,
+    ImageResource = 2,
     /// The resource contains CSS.
-    StyleSheetResource,
+    StyleSheetResource = 3,
     /// The first available value for user defined resource types.
-    UserResource,
+    UserResource = 100,
 }
 
 [org_name(QTextDocument)]
 enum Stacks {
     /// The undo stack.
-    UndoStack,
+    UndoStack = 1,
     /// The redo stack.
-    RedoStack,
+    RedoStack = 2,
     /// Both the undo and redo stacks.
-    UndoAndRedoStacks,
+    UndoAndRedoStacks = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

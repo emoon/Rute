@@ -245,11 +245,11 @@ struct OpenGLWindow : PaintDeviceWindow {
 [org_name(QOpenGLWindow)]
 enum UpdateBehavior {
     /// Indicates that the entire window surface will redrawn on each update and so no additional framebuffers are needed. This is the setting used in most cases and is equivalent to how drawing directly via QWindow would function.
-    NoPartialUpdate,
+    NoPartialUpdate = 0,
     /// Indicates that the drawing performed in paintGL() does not cover the entire window. In this case an extra framebuffer object is created under the hood, and rendering performed in paintGL() will target this framebuffer. This framebuffer is then blitted onto the window surface's default framebuffer after each paint. This allows having QPainter-based drawing code in paintGL() which only repaints a smaller area at a time, because, unlike NoPartialUpdate, the previous content is preserved.
-    PartialUpdateBlit,
+    PartialUpdateBlit = 1,
     /// Similar to PartialUpdateBlit, but instead of using framebuffer blits, the contents of the extra framebuffer is rendered by drawing a textured quad with blending enabled. This, unlike PartialUpdateBlit, allows alpha blended content and works even when the glBlitFramebuffer is not available. Performance-wise this setting is likely to be somewhat slower than PartialUpdateBlit.
-    PartialUpdateBlend,
+    PartialUpdateBlend = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

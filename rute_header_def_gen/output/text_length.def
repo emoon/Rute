@@ -38,11 +38,11 @@ struct TextLength {
 [org_name(QTextLength)]
 enum Type {
     /// The width of the object is variable
-    VariableLength,
+    VariableLength = 0,
     /// The width of the object is fixed
-    FixedLength,
+    FixedLength = 1,
     /// The width of the object is in percentage of the maximum width
-    PercentageLength,
+    PercentageLength = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

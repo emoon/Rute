@@ -14823,35 +14823,35 @@ struct String {
 [org_name(QString)]
 enum SectionFlag {
     /// Empty fields are counted, leading and trailing separators are not included, and the separator is compared case sensitively.
-    SectionDefault,
+    SectionDefault = 0,
     /// Treat empty fields as if they don't exist, i.e. they are not considered as far as *start* and *end* are concerned.
-    SectionSkipEmpty,
+    SectionSkipEmpty = 1,
     /// Include the leading separator (if any) in the result string.
-    SectionIncludeLeadingSep,
+    SectionIncludeLeadingSep = 2,
     /// Include the trailing separator (if any) in the result string.
-    SectionIncludeTrailingSep,
+    SectionIncludeTrailingSep = 4,
     /// Compare the separator case-insensitively.
-    SectionCaseInsensitiveSeps,
+    SectionCaseInsensitiveSeps = 8,
 }
 
 [org_name(QString)]
 enum SplitBehavior {
     /// If a field is empty, keep it in the result.
-    KeepEmptyParts,
+    KeepEmptyParts = 0,
     /// If a field is empty, don't include it in the result.
-    SkipEmptyParts,
+    SkipEmptyParts = 1,
 }
 
 [org_name(QString)]
 enum NormalizationForm {
     /// Canonical Decomposition
-    NormalizationForm_D,
+    NormalizationForm_D = 0,
     /// Canonical Decomposition followed by Canonical Composition
-    NormalizationForm_C,
+    NormalizationForm_C = 1,
     /// Compatibility Decomposition
-    NormalizationForm_KD,
+    NormalizationForm_KD = 2,
     /// Compatibility Decomposition followed by Canonical Composition
-    NormalizationForm_KC,
+    NormalizationForm_KC = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

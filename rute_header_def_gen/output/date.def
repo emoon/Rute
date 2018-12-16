@@ -438,9 +438,9 @@ struct Date {
 [org_name(QDate)]
 enum MonthNameType {
     /// This type of name can be used for date-to-string formatting.
-    DateFormat,
+    DateFormat = 0,
     /// This type is used when you need to enumerate months or weekdays. Usually standalone names are represented in singular forms with capitalized first letter.
-    StandaloneFormat,
+    StandaloneFormat = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

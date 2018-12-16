@@ -21,45 +21,45 @@ struct TreeWidgetItemIterator {
 [org_name(QTreeWidgetItemIterator)]
 enum IteratorFlag {
     /// 
-    All,
+    All = 0,
     /// 
-    Hidden,
+    Hidden = 1,
     /// 
-    NotHidden,
+    NotHidden = 2,
     /// 
-    Selected,
+    Selected = 4,
     /// 
-    Unselected,
+    Unselected = 8,
     /// 
-    Selectable,
+    Selectable = 16,
     /// 
-    NotSelectable,
+    NotSelectable = 32,
     /// 
-    DragEnabled,
+    DragEnabled = 64,
     /// 
-    DragDisabled,
+    DragDisabled = 128,
     /// 
-    DropEnabled,
+    DropEnabled = 256,
     /// 
-    DropDisabled,
+    DropDisabled = 512,
     /// 
-    HasChildren,
+    HasChildren = 1024,
     /// 
-    NoChildren,
+    NoChildren = 2048,
     /// 
-    Checked,
+    Checked = 4096,
     /// 
-    NotChecked,
+    NotChecked = 8192,
     /// 
-    Enabled,
+    Enabled = 16384,
     /// 
-    Disabled,
+    Disabled = 32768,
     /// 
-    Editable,
+    Editable = 65536,
     /// 
-    NotEditable,
+    NotEditable = 131072,
     /// 
-    UserFlag,
+    UserFlag = 16777216,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

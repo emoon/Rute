@@ -82,93 +82,93 @@ struct StyleOption {
 [org_name(QStyleOption)]
 enum OptionType {
     /// QStyleOption
-    SO_Default,
+    SO_Default = 0,
     /// [QStyleOptionFocusRect](QStyleOptionFocusRect)
 
-    SO_FocusRect,
+    SO_FocusRect = 1,
     /// [QStyleOptionButton](QStyleOptionButton)
 
-    SO_Button,
+    SO_Button = 2,
     /// [QStyleOptionTab](QStyleOptionTab)
 
-    SO_Tab,
+    SO_Tab = 3,
     /// [QStyleOptionMenuItem](QStyleOptionMenuItem)
 
-    SO_MenuItem,
+    SO_MenuItem = 4,
     /// [QStyleOptionFrame](QStyleOptionFrame)
 
-    SO_Frame,
+    SO_Frame = 5,
     /// [QStyleOptionProgressBar](QStyleOptionProgressBar)
 
-    SO_ProgressBar,
+    SO_ProgressBar = 6,
     /// [QStyleOptionToolBox](QStyleOptionToolBox)
 
-    SO_ToolBox,
+    SO_ToolBox = 7,
     /// [QStyleOptionHeader](QStyleOptionHeader)
 
-    SO_Header,
+    SO_Header = 8,
     /// [QStyleOptionDockWidget](QStyleOptionDockWidget)
 
-    SO_DockWidget,
+    SO_DockWidget = 9,
     /// [QStyleOptionViewItem](QStyleOptionViewItem)
  (used in Interviews) The following values are used for custom controls:
-    SO_ViewItem,
+    SO_ViewItem = 10,
     /// [QStyleOptionTabWidgetFrame](QStyleOptionTabWidgetFrame)
 
-    SO_TabWidgetFrame,
+    SO_TabWidgetFrame = 11,
     /// [QStyleOptionTabBarBase](QStyleOptionTabBarBase)
 
-    SO_TabBarBase,
+    SO_TabBarBase = 12,
     /// [QStyleOptionRubberBand](QStyleOptionRubberBand)
 
-    SO_RubberBand,
+    SO_RubberBand = 13,
     /// [QStyleOptionToolBar](QStyleOptionToolBar)
 
-    SO_ToolBar,
+    SO_ToolBar = 14,
     /// [QStyleOptionGraphicsItem](QStyleOptionGraphicsItem)
 
-    SO_GraphicsItem,
+    SO_GraphicsItem = 15,
     /// [QStyleOptionComplex](QStyleOptionComplex)
 
-    SO_Complex,
+    SO_Complex = 983040,
     /// [QStyleOptionSlider](QStyleOptionSlider)
 
-    SO_Slider,
+    SO_Slider = 983041,
     /// [QStyleOptionSpinBox](QStyleOptionSpinBox)
 
-    SO_SpinBox,
+    SO_SpinBox = 983042,
     /// [QStyleOptionToolButton](QStyleOptionToolButton)
 
-    SO_ToolButton,
+    SO_ToolButton = 983043,
     /// [QStyleOptionComboBox](QStyleOptionComboBox)
 
-    SO_ComboBox,
+    SO_ComboBox = 983044,
     /// [QStyleOptionTitleBar](QStyleOptionTitleBar)
 
-    SO_TitleBar,
+    SO_TitleBar = 983045,
     /// [QStyleOptionGroupBox](QStyleOptionGroupBox)
 
-    SO_GroupBox,
+    SO_GroupBox = 983046,
     /// [QStyleOptionSizeGrip](QStyleOptionSizeGrip)
 
-    SO_SizeGrip,
+    SO_SizeGrip = 983047,
     /// Reserved for custom QStyleOptions; all custom controls values must be above this value
-    SO_CustomBase,
+    SO_CustomBase = 3840,
     /// Reserved for custom QStyleOptions; all custom complex controls values must be above this value
-    SO_ComplexCustomBase,
+    SO_ComplexCustomBase = 251658240,
 }
 
 [org_name(QStyleOption)]
 enum StyleOptionType {
     /// The type of style option provided ( [SO_Default](SO_Default)
  for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
-    Type,
+    Type = 0,
 }
 
 [org_name(QStyleOption)]
 enum StyleOptionVersion {
     /// 1 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
-    Version,
+    Version = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

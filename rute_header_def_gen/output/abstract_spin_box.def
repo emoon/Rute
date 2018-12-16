@@ -274,29 +274,29 @@ struct AbstractSpinBox : Widget {
 [org_name(QAbstractSpinBox)]
 enum StepEnabledFlag {
     /// 
-    StepNone,
+    StepNone = 0,
     /// 
-    StepUpEnabled,
+    StepUpEnabled = 1,
     /// 
-    StepDownEnabled,
+    StepDownEnabled = 2,
 }
 
 [org_name(QAbstractSpinBox)]
 enum ButtonSymbols {
     /// Little arrows in the classic style.
-    UpDownArrows,
+    UpDownArrows = 0,
     /// **+** and **-** symbols.
-    PlusMinus,
+    PlusMinus = 1,
     /// Don't display buttons.
-    NoButtons,
+    NoButtons = 2,
 }
 
 [org_name(QAbstractSpinBox)]
 enum CorrectionMode {
     /// The spinbox will revert to the last valid value.
-    CorrectToPreviousValue,
+    CorrectToPreviousValue = 0,
     /// The spinbox will revert to the nearest valid value.
-    CorrectToNearestValue,
+    CorrectToNearestValue = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

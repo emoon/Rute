@@ -24,18 +24,18 @@ struct PlatformMenuItem : Object {
 
 [org_name(QPlatformMenuItem)]
 enum MenuRole {
-    NoRole,
-    TextHeuristicRole,
-    ApplicationSpecificRole,
-    AboutQtRole,
-    AboutRole,
-    PreferencesRole,
-    QuitRole,
-    CutRole,
-    CopyRole,
-    PasteRole,
-    SelectAllRole,
-    RoleCount,
+    NoRole = 0,
+    TextHeuristicRole = 1,
+    ApplicationSpecificRole = 2,
+    AboutQtRole = 3,
+    AboutRole = 4,
+    PreferencesRole = 5,
+    QuitRole = 6,
+    CutRole = 7,
+    CopyRole = 8,
+    PasteRole = 9,
+    SelectAllRole = 10,
+    RoleCount = 11,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

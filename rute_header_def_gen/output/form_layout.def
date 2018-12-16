@@ -1010,34 +1010,34 @@ struct FormLayout : Layout {
 enum FieldGrowthPolicy {
     /// The fields never grow beyond their [effective size hint](QWidgetItem::sizeHint())
  . This is the default for QMacStyle.
-    FieldsStayAtSizeHint,
+    FieldsStayAtSizeHint = 0,
     /// Fields with an horizontal [size policy](QSizePolicy)
  of [Expanding](QSizePolicy::)
  or [MinimumExpanding](QSizePolicy::)
  will grow to fill the available space. The other fields will not grow beyond their effective size hint. This is the default policy for Plastique.
-    ExpandingFieldsGrow,
+    ExpandingFieldsGrow = 1,
     /// All fields with a size policy that allows them to grow will grow to fill the available space. This is the default policy for most styles.
-    AllNonFixedFieldsGrow,
+    AllNonFixedFieldsGrow = 2,
 }
 
 [org_name(QFormLayout)]
 enum RowWrapPolicy {
     /// Fields are always laid out next to their label. This is the default policy for all styles except Qt Extended styles.
-    DontWrapRows,
+    DontWrapRows = 0,
     /// Labels are given enough horizontal space to fit the widest label, and the rest of the space is given to the fields. If the minimum size of a field pair is wider than the available space, the field is wrapped to the next line. This is the default policy for Qt Extended styles.
-    WrapLongRows,
+    WrapLongRows = 1,
     /// Fields are always laid out below their label.
-    WrapAllRows,
+    WrapAllRows = 2,
 }
 
 [org_name(QFormLayout)]
 enum ItemRole {
     /// A label widget.
-    LabelRole,
+    LabelRole = 0,
     /// A field widget.
-    FieldRole,
+    FieldRole = 1,
     /// A widget that spans label and field columns.
-    SpanningRole,
+    SpanningRole = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

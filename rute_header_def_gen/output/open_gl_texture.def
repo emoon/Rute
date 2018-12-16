@@ -1658,600 +1658,600 @@ struct OpenGLTexture {
 [org_name(QOpenGLTexture)]
 enum Target {
     /// A 1-dimensional texture. Equivalent to GL_TEXTURE_1D.
-    Target1D,
+    Target1D = 3552,
     /// An array of 1-dimensional textures. Equivalent to GL_TEXTURE_1D_ARRAY
-    Target1DArray,
+    Target1DArray = 35864,
     /// A 2-dimensional texture. Equivalent to GL_TEXTURE_2D
-    Target2D,
+    Target2D = 3553,
     /// An array of 1-dimensional textures. Equivalent to GL_TEXTURE_2D_ARRAY
-    Target2DArray,
+    Target2DArray = 35866,
     /// A 3-dimensional texture. Equivalent to GL_TEXTURE_3D
-    Target3D,
+    Target3D = 32879,
     /// A cubemap texture. Equivalent to GL_TEXTURE_CUBE_MAP
-    TargetCubeMap,
+    TargetCubeMap = 34067,
     /// An array of cubemap textures. Equivalent to GL_TEXTURE_CUBE_MAP_ARRAY
-    TargetCubeMapArray,
+    TargetCubeMapArray = 36873,
     /// A 2-dimensional texture with multisample support. Equivalent to GL_TEXTURE_2D_MULTISAMPLE
-    Target2DMultisample,
+    Target2DMultisample = 37120,
     /// An array of 2-dimensional textures with multisample support. Equivalent to GL_TEXTURE_2D_MULTISAMPLE_ARRAY
-    Target2DMultisampleArray,
+    Target2DMultisampleArray = 37122,
     /// A rectangular 2-dimensional texture. Equivalent to GL_TEXTURE_RECTANGLE
-    TargetRectangle,
+    TargetRectangle = 34037,
     /// A texture with data from an OpenGL buffer object. Equivalent to GL_TEXTURE_BUFFER
-    TargetBuffer,
+    TargetBuffer = 35882,
 }
 
 [org_name(QOpenGLTexture)]
 enum BindingTarget {
     /// Equivalent to GL_TEXTURE_BINDING_1D
-    BindingTarget1D,
+    BindingTarget1D = 32872,
     /// Equivalent to GL_TEXTURE_BINDING_1D_ARRAY
-    BindingTarget1DArray,
+    BindingTarget1DArray = 35868,
     /// Equivalent to GL_TEXTURE_BINDING_2D
-    BindingTarget2D,
+    BindingTarget2D = 32873,
     /// Equivalent to GL_TEXTURE_BINDING_2D_ARRAY
-    BindingTarget2DArray,
+    BindingTarget2DArray = 35869,
     /// Equivalent to GL_TEXTURE_BINDING_3D
-    BindingTarget3D,
+    BindingTarget3D = 32874,
     /// Equivalent to GL_TEXTURE_BINDING_CUBE_MAP
-    BindingTargetCubeMap,
+    BindingTargetCubeMap = 34068,
     /// Equivalent to GL_TEXTURE_BINDING_CUBE_MAP_ARRAY
-    BindingTargetCubeMapArray,
+    BindingTargetCubeMapArray = 36874,
     /// Equivalent to GL_TEXTURE_BINDING_2D_MULTISAMPLE
-    BindingTarget2DMultisample,
+    BindingTarget2DMultisample = 37124,
     /// Equivalent to GL_TEXTURE_BINDING_2D_MULTISAMPLE_ARRAY
-    BindingTarget2DMultisampleArray,
+    BindingTarget2DMultisampleArray = 37125,
     /// Equivalent to GL_TEXTURE_BINDING_RECTANGLE
-    BindingTargetRectangle,
+    BindingTargetRectangle = 34038,
     /// Equivalent to GL_TEXTURE_BINDING_BUFFER
-    BindingTargetBuffer,
+    BindingTargetBuffer = 35884,
 }
 
 [org_name(QOpenGLTexture)]
 enum MipMapGeneration {
     /// Mipmaps should be generated
-    GenerateMipMaps,
+    GenerateMipMaps = 0,
     /// Mipmaps should not be generated
-    DontGenerateMipMaps,
+    DontGenerateMipMaps = 1,
 }
 
 [org_name(QOpenGLTexture)]
 enum TextureUnitReset {
     /// The previous active texture unit will be reset
-    ResetTextureUnit,
+    ResetTextureUnit = 0,
     /// The previous active texture unit will not be rest
-    DontResetTextureUnit,
+    DontResetTextureUnit = 1,
 }
 
 [org_name(QOpenGLTexture)]
 enum TextureFormat {
     /// Equivalent to GL_NONE
-    NoFormat,
+    NoFormat = 0,
     /// Equivalent to GL_R8
-    R8_UNorm,
+    R8_UNorm = 33321,
     /// Equivalent to GL_RG8
-    RG8_UNorm,
+    RG8_UNorm = 33323,
     /// Equivalent to GL_RGB8
-    RGB8_UNorm,
+    RGB8_UNorm = 32849,
     /// Equivalent to GL_RGBA8
-    RGBA8_UNorm,
+    RGBA8_UNorm = 32856,
     /// Equivalent to GL_R16
-    R16_UNorm,
+    R16_UNorm = 33322,
     /// Equivalent to GL_RG16
-    RG16_UNorm,
+    RG16_UNorm = 33324,
     /// Equivalent to GL_RGB16
-    RGB16_UNorm,
+    RGB16_UNorm = 32852,
     /// Equivalent to GL_RGBA16
-    RGBA16_UNorm,
+    RGBA16_UNorm = 32859,
     /// Equivalent to GL_R8_SNORM
-    R8_SNorm,
+    R8_SNorm = 36756,
     /// Equivalent to GL_RG8_SNORM
-    RG8_SNorm,
+    RG8_SNorm = 36757,
     /// Equivalent to GL_RGB8_SNORM
-    RGB8_SNorm,
+    RGB8_SNorm = 36758,
     /// Equivalent to GL_RGBA8_SNORM
-    RGBA8_SNorm,
+    RGBA8_SNorm = 36759,
     /// Equivalent to GL_R16_SNORM
-    R16_SNorm,
+    R16_SNorm = 36760,
     /// Equivalent to GL_RG16_SNORM
-    RG16_SNorm,
+    RG16_SNorm = 36761,
     /// Equivalent to GL_RGB16_SNORM
-    RGB16_SNorm,
+    RGB16_SNorm = 36762,
     /// Equivalent to GL_RGBA16_SNORM
-    RGBA16_SNorm,
+    RGBA16_SNorm = 36763,
     /// Equivalent to GL_R8UI
-    R8U,
+    R8U = 33330,
     /// Equivalent to GL_RG8UI
-    RG8U,
+    RG8U = 33336,
     /// Equivalent to GL_RGB8UI
-    RGB8U,
+    RGB8U = 36221,
     /// Equivalent to GL_RGBA8UI
-    RGBA8U,
+    RGBA8U = 36220,
     /// Equivalent to GL_R16UI
-    R16U,
+    R16U = 33332,
     /// Equivalent to GL_RG16UI
-    RG16U,
+    RG16U = 33338,
     /// Equivalent to GL_RGB16UI
-    RGB16U,
+    RGB16U = 36215,
     /// Equivalent to GL_RGBA16UI
-    RGBA16U,
+    RGBA16U = 36214,
     /// Equivalent to GL_R32UI
-    R32U,
+    R32U = 33334,
     /// Equivalent to GL_RG32UI
-    RG32U,
+    RG32U = 33340,
     /// Equivalent to GL_RGB32UI
-    RGB32U,
+    RGB32U = 36209,
     /// Equivalent to GL_RGBA32UI
-    RGBA32U,
+    RGBA32U = 36208,
     /// Equivalent to GL_R8I
-    R8I,
+    R8I = 33329,
     /// Equivalent to GL_RG8I
-    RG8I,
+    RG8I = 33335,
     /// Equivalent to GL_RGB8I
-    RGB8I,
+    RGB8I = 36239,
     /// Equivalent to GL_RGBA8I
-    RGBA8I,
+    RGBA8I = 36238,
     /// Equivalent to GL_R16I
-    R16I,
+    R16I = 33331,
     /// Equivalent to GL_RG16I
-    RG16I,
+    RG16I = 33337,
     /// Equivalent to GL_RGB16I
-    RGB16I,
+    RGB16I = 36233,
     /// Equivalent to GL_RGBA16I
-    RGBA16I,
+    RGBA16I = 36232,
     /// Equivalent to GL_R32I
-    R32I,
+    R32I = 33333,
     /// Equivalent to GL_RG32I
-    RG32I,
+    RG32I = 33339,
     /// Equivalent to GL_RGB32I
-    RGB32I,
+    RGB32I = 36227,
     /// Equivalent to GL_RGBA32I
-    RGBA32I,
+    RGBA32I = 36226,
     /// Equivalent to GL_R16F
-    R16F,
+    R16F = 33325,
     /// Equivalent to GL_RG16F
-    RG16F,
+    RG16F = 33327,
     /// Equivalent to GL_RGB16F
-    RGB16F,
+    RGB16F = 34843,
     /// Equivalent to GL_RGBA16F
-    RGBA16F,
+    RGBA16F = 34842,
     /// Equivalent to GL_R32F
-    R32F,
+    R32F = 33326,
     /// Equivalent to GL_RG32F
-    RG32F,
+    RG32F = 33328,
     /// Equivalent to GL_RGB32F
-    RGB32F,
+    RGB32F = 34837,
     /// Equivalent to GL_RGBA32F
-    RGBA32F,
+    RGBA32F = 34836,
     /// Equivalent to GL_RGB9_E5
-    RGB9E5,
+    RGB9E5 = 35901,
     /// Equivalent to GL_R11F_G11F_B10F
-    RG11B10F,
+    RG11B10F = 35898,
     /// Equivalent to GL_R3_G3_B2
-    RG3B2,
+    RG3B2 = 10768,
     /// Equivalent to GL_RGB565
-    R5G6B5,
+    R5G6B5 = 36194,
     /// Equivalent to GL_RGB5_A1
-    RGB5A1,
+    RGB5A1 = 32855,
     /// Equivalent to GL_RGBA4
-    RGBA4,
+    RGBA4 = 32854,
     /// Equivalent to GL_RGB10_A2UI
-    RGB10A2,
+    RGB10A2 = 36975,
     /// Equivalent to GL_DEPTH_COMPONENT16
-    D16,
+    D16 = 33189,
     /// Equivalent to GL_DEPTH_COMPONENT24
-    D24,
+    D24 = 33190,
     /// Equivalent to GL_DEPTH24_STENCIL8
-    D24S8,
+    D24S8 = 35056,
     /// Equivalent to GL_DEPTH_COMPONENT32
-    D32,
+    D32 = 33191,
     /// Equivalent to GL_DEPTH_COMPONENT32F
-    D32F,
+    D32F = 36012,
     /// Equivalent to GL_DEPTH32F_STENCIL8
-    D32FS8X24,
+    D32FS8X24 = 36013,
     /// Equivalent to GL_STENCIL_INDEX8. Introduced in Qt 5.4
-    S8,
+    S8 = 36168,
     /// Equivalent to GL_COMPRESSED_RGB_S3TC_DXT1_EXT
-    RGB_DXT1,
+    RGB_DXT1 = 33776,
     /// Equivalent to GL_COMPRESSED_RGBA_S3TC_DXT1_EXT
-    RGBA_DXT1,
+    RGBA_DXT1 = 33777,
     /// Equivalent to GL_COMPRESSED_RGBA_S3TC_DXT3_EXT
-    RGBA_DXT3,
+    RGBA_DXT3 = 33778,
     /// Equivalent to GL_COMPRESSED_RGBA_S3TC_DXT5_EXT
-    RGBA_DXT5,
+    RGBA_DXT5 = 33779,
     /// Equivalent to GL_COMPRESSED_RED_RGTC1
-    R_ATI1N_UNorm,
+    R_ATI1N_UNorm = 36283,
     /// Equivalent to GL_COMPRESSED_SIGNED_RED_RGTC1
-    R_ATI1N_SNorm,
+    R_ATI1N_SNorm = 36284,
     /// Equivalent to GL_COMPRESSED_RG_RGTC2
-    RG_ATI2N_UNorm,
+    RG_ATI2N_UNorm = 36285,
     /// Equivalent to GL_COMPRESSED_SIGNED_RG_RGTC2
-    RG_ATI2N_SNorm,
+    RG_ATI2N_SNorm = 36286,
     /// Equivalent to GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT_ARB
-    RGB_BP_UNSIGNED_FLOAT,
+    RGB_BP_UNSIGNED_FLOAT = 36495,
     /// Equivalent to GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT_ARB
-    RGB_BP_SIGNED_FLOAT,
+    RGB_BP_SIGNED_FLOAT = 36494,
     /// Equivalent to GL_COMPRESSED_RGBA_BPTC_UNORM_ARB
-    RGB_BP_UNorm,
+    RGB_BP_UNorm = 36492,
     /// Equivalent to GL_COMPRESSED_R11_EAC
-    R11_EAC_UNorm,
+    R11_EAC_UNorm = 37488,
     /// Equivalent to GL_COMPRESSED_SIGNED_R11_EAC
-    R11_EAC_SNorm,
+    R11_EAC_SNorm = 37489,
     /// Equivalent to GL_COMPRESSED_RG11_EAC
-    RG11_EAC_UNorm,
+    RG11_EAC_UNorm = 37490,
     /// Equivalent to GL_COMPRESSED_SIGNED_RG11_EAC
-    RG11_EAC_SNorm,
+    RG11_EAC_SNorm = 37491,
     /// Equivalent to GL_COMPRESSED_RGB8_ETC2
-    RGB8_ETC2,
+    RGB8_ETC2 = 37492,
     /// Equivalent to GL_COMPRESSED_SRGB8_ETC2
-    SRGB8_ETC2,
+    SRGB8_ETC2 = 37493,
     /// Equivalent to GL_COMPRESSED_RGB8_PUNCHTHROUGH_ALPHA1_ETC2
-    RGB8_PunchThrough_Alpha1_ETC2,
+    RGB8_PunchThrough_Alpha1_ETC2 = 37494,
     /// Equivalent to GL_COMPRESSED_SRGB8_PUNCHTHROUGH_ALPHA1_ETC2
-    SRGB8_PunchThrough_Alpha1_ETC2,
+    SRGB8_PunchThrough_Alpha1_ETC2 = 37495,
     /// Equivalent to GL_COMPRESSED_RGBA8_ETC2_EAC
-    RGBA8_ETC2_EAC,
+    RGBA8_ETC2_EAC = 37496,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ETC2_EAC
-    SRGB8_Alpha8_ETC2_EAC,
+    SRGB8_Alpha8_ETC2_EAC = 37497,
     /// Equivalent to GL_ETC1_RGB8_OES
-    RGB8_ETC1,
+    RGB8_ETC1 = 36196,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_4x4_KHR
-    RGBA_ASTC_4x4,
+    RGBA_ASTC_4x4 = 37808,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_5x4_KHR
-    RGBA_ASTC_5x4,
+    RGBA_ASTC_5x4 = 37809,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_5x5_KHR
-    RGBA_ASTC_5x5,
+    RGBA_ASTC_5x5 = 37810,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_6x5_KHR
-    RGBA_ASTC_6x5,
+    RGBA_ASTC_6x5 = 37811,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_6x6_KHR
-    RGBA_ASTC_6x6,
+    RGBA_ASTC_6x6 = 37812,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_8x5_KHR
-    RGBA_ASTC_8x5,
+    RGBA_ASTC_8x5 = 37813,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_8x6_KHR
-    RGBA_ASTC_8x6,
+    RGBA_ASTC_8x6 = 37814,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_8x8_KHR
-    RGBA_ASTC_8x8,
+    RGBA_ASTC_8x8 = 37815,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_10x5_KHR
-    RGBA_ASTC_10x5,
+    RGBA_ASTC_10x5 = 37816,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_10x6_KHR
-    RGBA_ASTC_10x6,
+    RGBA_ASTC_10x6 = 37817,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_10x8_KHR
-    RGBA_ASTC_10x8,
+    RGBA_ASTC_10x8 = 37818,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_10x10_KHR
-    RGBA_ASTC_10x10,
+    RGBA_ASTC_10x10 = 37819,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_12x10_KHR
-    RGBA_ASTC_12x10,
+    RGBA_ASTC_12x10 = 37820,
     /// Equivalent to GL_COMPRESSED_RGBA_ASTC_12x12_KHR
-    RGBA_ASTC_12x12,
+    RGBA_ASTC_12x12 = 37821,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_4x4_KHR
-    SRGB8_Alpha8_ASTC_4x4,
+    SRGB8_Alpha8_ASTC_4x4 = 37840,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x4_KHR
-    SRGB8_Alpha8_ASTC_5x4,
+    SRGB8_Alpha8_ASTC_5x4 = 37841,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_5x5_KHR
-    SRGB8_Alpha8_ASTC_5x5,
+    SRGB8_Alpha8_ASTC_5x5 = 37842,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x5_KHR
-    SRGB8_Alpha8_ASTC_6x5,
+    SRGB8_Alpha8_ASTC_6x5 = 37843,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_6x6_KHR
-    SRGB8_Alpha8_ASTC_6x6,
+    SRGB8_Alpha8_ASTC_6x6 = 37844,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x5_KHR
-    SRGB8_Alpha8_ASTC_8x5,
+    SRGB8_Alpha8_ASTC_8x5 = 37845,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x6_KHR
-    SRGB8_Alpha8_ASTC_8x6,
+    SRGB8_Alpha8_ASTC_8x6 = 37846,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_8x8_KHR
-    SRGB8_Alpha8_ASTC_8x8,
+    SRGB8_Alpha8_ASTC_8x8 = 37847,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x5_KHR
-    SRGB8_Alpha8_ASTC_10x5,
+    SRGB8_Alpha8_ASTC_10x5 = 37848,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x6_KHR
-    SRGB8_Alpha8_ASTC_10x6,
+    SRGB8_Alpha8_ASTC_10x6 = 37849,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x8_KHR
-    SRGB8_Alpha8_ASTC_10x8,
+    SRGB8_Alpha8_ASTC_10x8 = 37850,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_10x10_KHR
-    SRGB8_Alpha8_ASTC_10x10,
+    SRGB8_Alpha8_ASTC_10x10 = 37851,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x10_KHR
-    SRGB8_Alpha8_ASTC_12x10,
+    SRGB8_Alpha8_ASTC_12x10 = 37852,
     /// Equivalent to GL_COMPRESSED_SRGB8_ALPHA8_ASTC_12x12_KHR
-    SRGB8_Alpha8_ASTC_12x12,
+    SRGB8_Alpha8_ASTC_12x12 = 37853,
     /// Equivalent to GL_SRGB8
-    SRGB8,
+    SRGB8 = 35905,
     /// Equivalent to GL_SRGB8_ALPHA8
-    SRGB8_Alpha8,
+    SRGB8_Alpha8 = 35907,
     /// Equivalent to GL_COMPRESSED_SRGB_S3TC_DXT1_EXT
-    SRGB_DXT1,
+    SRGB_DXT1 = 35916,
     /// Equivalent to GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT1_EXT
-    SRGB_Alpha_DXT1,
+    SRGB_Alpha_DXT1 = 35917,
     /// Equivalent to GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT3_EXT
-    SRGB_Alpha_DXT3,
+    SRGB_Alpha_DXT3 = 35918,
     /// Equivalent to GL_COMPRESSED_SRGB_ALPHA_S3TC_DXT5_EXT
-    SRGB_Alpha_DXT5,
+    SRGB_Alpha_DXT5 = 35919,
     /// Equivalent to GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM_ARB
-    SRGB_BP_UNorm,
+    SRGB_BP_UNorm = 36493,
     /// Equivalent to GL_DEPTH_COMPONENT (only OpenGL ES 3 or ES 2 with OES_depth_texture)
-    DepthFormat,
+    DepthFormat = 6402,
     /// Equivalent to GL_ALPHA (OpenGL ES 2 only)
-    AlphaFormat,
+    AlphaFormat = 6406,
     /// Equivalent to GL_RGB (OpenGL ES 2 only)
-    RGBFormat,
+    RGBFormat = 6407,
     /// Equivalent to GL_RGBA (OpenGL ES 2 only)
-    RGBAFormat,
+    RGBAFormat = 6408,
     /// Equivalent to GL_LUMINANCE (OpenGL ES 2 only)
-    LuminanceFormat,
+    LuminanceFormat = 6409,
     /// Equivalent to GL_LUMINANCE_ALPHA (OpenGL ES 2 only)
-    LuminanceAlphaFormat,
+    LuminanceAlphaFormat = 6410,
 }
 
 [org_name(QOpenGLTexture)]
 enum TextureFormatClass {
-    NoFormatClass,
-    FormatClass_128Bit,
-    FormatClass_96Bit,
-    FormatClass_64Bit,
-    FormatClass_48Bit,
-    FormatClass_32Bit,
-    FormatClass_24Bit,
-    FormatClass_16Bit,
-    FormatClass_8Bit,
-    FormatClass_RGTC1_R,
-    FormatClass_RGTC2_RG,
-    FormatClass_BPTC_Unorm,
-    FormatClass_BPTC_Float,
-    FormatClass_S3TC_DXT1_RGB,
-    FormatClass_S3TC_DXT1_RGBA,
-    FormatClass_S3TC_DXT3_RGBA,
-    FormatClass_S3TC_DXT5_RGBA,
-    FormatClass_Unique,
+    NoFormatClass = 0,
+    FormatClass_128Bit = 1,
+    FormatClass_96Bit = 2,
+    FormatClass_64Bit = 3,
+    FormatClass_48Bit = 4,
+    FormatClass_32Bit = 5,
+    FormatClass_24Bit = 6,
+    FormatClass_16Bit = 7,
+    FormatClass_8Bit = 8,
+    FormatClass_RGTC1_R = 9,
+    FormatClass_RGTC2_RG = 10,
+    FormatClass_BPTC_Unorm = 11,
+    FormatClass_BPTC_Float = 12,
+    FormatClass_S3TC_DXT1_RGB = 13,
+    FormatClass_S3TC_DXT1_RGBA = 14,
+    FormatClass_S3TC_DXT3_RGBA = 15,
+    FormatClass_S3TC_DXT5_RGBA = 16,
+    FormatClass_Unique = 17,
 }
 
 [org_name(QOpenGLTexture)]
 enum CubeMapFace {
     /// Equivalent to GL_TEXTURE_CUBE_MAP_POSITIVE_X
-    CubeMapPositiveX,
+    CubeMapPositiveX = 34069,
     /// Equivalent to GL_TEXTURE_CUBE_MAP_NEGATIVE_X
-    CubeMapNegativeX,
+    CubeMapNegativeX = 34070,
     /// Equivalent to GL_TEXTURE_CUBE_MAP_POSITIVE_Y
-    CubeMapPositiveY,
+    CubeMapPositiveY = 34071,
     /// Equivalent to GL_TEXTURE_CUBE_MAP_NEGATIVE_Y
-    CubeMapNegativeY,
+    CubeMapNegativeY = 34072,
     /// Equivalent to GL_TEXTURE_CUBE_MAP_POSITIVE_Z
-    CubeMapPositiveZ,
+    CubeMapPositiveZ = 34073,
     /// Equivalent to GL_TEXTURE_CUBE_MAP_NEGATIVE_Z
-    CubeMapNegativeZ,
+    CubeMapNegativeZ = 34074,
 }
 
 [org_name(QOpenGLTexture)]
 enum PixelFormat {
     /// Equivalent to GL_NONE
-    NoSourceFormat,
+    NoSourceFormat = 0,
     /// Equivalent to GL_RED
-    Red,
+    Red = 6403,
     /// Equivalent to GL_RG
-    RG,
+    RG = 33319,
     /// Equivalent to GL_RGB
-    RGB,
+    RGB = 6407,
     /// Equivalent to GL_BGR
-    BGR,
+    BGR = 32992,
     /// Equivalent to GL_RGBA
-    RGBA,
+    RGBA = 6408,
     /// Equivalent to GL_BGRA
-    BGRA,
+    BGRA = 32993,
     /// Equivalent to GL_RED_INTEGER
-    Red_Integer,
+    Red_Integer = 36244,
     /// Equivalent to GL_RG_INTEGER
-    RG_Integer,
+    RG_Integer = 33320,
     /// Equivalent to GL_RGB_INTEGER
-    RGB_Integer,
+    RGB_Integer = 36248,
     /// Equivalent to GL_BGR_INTEGER
-    BGR_Integer,
+    BGR_Integer = 36250,
     /// Equivalent to GL_RGBA_INTEGER
-    RGBA_Integer,
+    RGBA_Integer = 36249,
     /// Equivalent to GL_BGRA_INTEGER
-    BGRA_Integer,
+    BGRA_Integer = 36251,
     /// Equivalent to GL_STENCIL_INDEX. Introduced in Qt 5.4
-    Stencil,
+    Stencil = 6401,
     /// Equivalent to GL_DEPTH_COMPONENT
-    Depth,
+    Depth = 6402,
     /// Equivalent to GL_DEPTH_STENCIL
-    DepthStencil,
+    DepthStencil = 34041,
     /// Equivalent to GL_ALPHA (OpenGL ES 2 only)
-    Alpha,
+    Alpha = 6406,
     /// Equivalent to GL_LUMINANCE (OpenGL ES 2 only)
-    Luminance,
+    Luminance = 6409,
     /// Equivalent to GL_LUMINANCE_ALPHA (OpenGL ES 2 only)
-    LuminanceAlpha,
+    LuminanceAlpha = 6410,
 }
 
 [org_name(QOpenGLTexture)]
 enum PixelType {
     /// Equivalent to GL_NONE
-    NoPixelType,
+    NoPixelType = 0,
     /// Equivalent to GL_BYTE
-    Int8,
+    Int8 = 5120,
     /// Equivalent to GL_UNSIGNED_BYTE
-    UInt8,
+    UInt8 = 5121,
     /// Equivalent to GL_SHORT
-    Int16,
+    Int16 = 5122,
     /// Equivalent to GL_UNSIGNED_SHORT
-    UInt16,
+    UInt16 = 5123,
     /// Equivalent to GL_INT
-    Int32,
+    Int32 = 5124,
     /// Equivalent to GL_UNSIGNED_INT
-    UInt32,
+    UInt32 = 5125,
     /// Equivalent to GL_HALF_FLOAT
-    Float16,
+    Float16 = 5131,
     /// Equivalent to GL_HALF_FLOAT_OES
-    Float16OES,
+    Float16OES = 36193,
     /// Equivalent to GL_FLOAT
-    Float32,
+    Float32 = 5126,
     /// Equivalent to GL_UNSIGNED_INT_5_9_9_9_REV
-    UInt32_RGB9_E5,
+    UInt32_RGB9_E5 = 35902,
     /// Equivalent to GL_UNSIGNED_INT_10F_11F_11F_REV
-    UInt32_RG11B10F,
+    UInt32_RG11B10F = 35899,
     /// Equivalent to GL_UNSIGNED_BYTE_3_3_2
-    UInt8_RG3B2,
+    UInt8_RG3B2 = 32818,
     /// Equivalent to GL_UNSIGNED_BYTE_2_3_3_REV
-    UInt8_RG3B2_Rev,
+    UInt8_RG3B2_Rev = 33634,
     /// Equivalent to GL_UNSIGNED_SHORT_5_5_5_1
-    UInt16_RGB5A1,
+    UInt16_RGB5A1 = 32820,
     /// Equivalent to GL_UNSIGNED_SHORT_1_5_5_5_REV
-    UInt16_RGB5A1_Rev,
+    UInt16_RGB5A1_Rev = 33638,
     /// Equivalent to GL_UNSIGNED_SHORT_5_6_5
-    UInt16_R5G6B5,
+    UInt16_R5G6B5 = 33635,
     /// Equivalent to GL_UNSIGNED_SHORT_5_6_5_REV
-    UInt16_R5G6B5_Rev,
+    UInt16_R5G6B5_Rev = 33636,
     /// Equivalent to GL_UNSIGNED_SHORT_4_4_4_4
-    UInt16_RGBA4,
+    UInt16_RGBA4 = 32819,
     /// Equivalent to GL_UNSIGNED_SHORT_4_4_4_4_REV
-    UInt16_RGBA4_Rev,
+    UInt16_RGBA4_Rev = 33637,
     /// Equivalent to GL_UNSIGNED_INT_8_8_8_8
-    UInt32_RGBA8,
+    UInt32_RGBA8 = 32821,
     /// Equivalent to GL_UNSIGNED_INT_8_8_8_8_REV
-    UInt32_RGBA8_Rev,
+    UInt32_RGBA8_Rev = 33639,
     /// Equivalent to GL_UNSIGNED_INT_10_10_10_2
-    UInt32_RGB10A2,
+    UInt32_RGB10A2 = 32822,
     /// Equivalent to GL_UNSIGNED_INT_2_10_10_10_REV
-    UInt32_RGB10A2_Rev,
+    UInt32_RGB10A2_Rev = 33640,
     /// Equivalent to GL_UNSIGNED_INT_24_8. Introduced in Qt 5.4
-    UInt32_D24S8,
+    UInt32_D24S8 = 34042,
     /// Equivalent to GL_FLOAT_32_UNSIGNED_INT_24_8_REV. Introduced in Qt 5.4
-    Float32_D32_UInt32_S8_X24,
+    Float32_D32_UInt32_S8_X24 = 36269,
 }
 
 [org_name(QOpenGLTexture)]
 enum SwizzleComponent {
     /// The red component. Equivalent to GL_TEXTURE_SWIZZLE_R
-    SwizzleRed,
+    SwizzleRed = 36418,
     /// The green component. Equivalent to GL_TEXTURE_SWIZZLE_G
-    SwizzleGreen,
+    SwizzleGreen = 36419,
     /// The blue component. Equivalent to GL_TEXTURE_SWIZZLE_B
-    SwizzleBlue,
+    SwizzleBlue = 36420,
     /// The alpha component. Equivalent to GL_TEXTURE_SWIZZLE_A
-    SwizzleAlpha,
+    SwizzleAlpha = 36421,
 }
 
 [org_name(QOpenGLTexture)]
 enum SwizzleValue {
     /// Maps the component to the red channel. Equivalent to GL_RED
-    RedValue,
+    RedValue = 6403,
     /// Maps the component to the green channel. Equivalent to GL_GREEN
-    GreenValue,
+    GreenValue = 6404,
     /// Maps the component to the blue channel. Equivalent to GL_BLUE
-    BlueValue,
+    BlueValue = 6405,
     /// Maps the component to the alpha channel. Equivalent to GL_ALPHA
-    AlphaValue,
+    AlphaValue = 6406,
     /// Maps the component to a fixed value of 0. Equivalent to GL_ZERO
-    ZeroValue,
+    ZeroValue = 0,
     /// Maps the component to a fixed value of 1. Equivalent to GL_ONE
-    OneValue,
+    OneValue = 1,
 }
 
 [org_name(QOpenGLTexture)]
 enum WrapMode {
     /// Texture coordinate is repeated. Equivalent to GL_REPEAT
-    Repeat,
+    Repeat = 10497,
     /// Texture coordinate is reflected about 0 and 1. Equivalent to GL_MIRRORED_REPEAT
-    MirroredRepeat,
+    MirroredRepeat = 33648,
     /// Clamps the texture coordinates to [0,1]. Equivalent to GL_CLAMP_TO_EDGE
-    ClampToEdge,
+    ClampToEdge = 33071,
     /// As for ClampToEdge but also blends samples at 0 and 1 with a fixed border color. Equivalent to GL_CLAMP_TO_BORDER
-    ClampToBorder,
+    ClampToBorder = 33069,
 }
 
 [org_name(QOpenGLTexture)]
 enum CoordinateDirection {
     /// The horizontal direction. Equivalent to GL_TEXTURE_WRAP_S
-    DirectionS,
+    DirectionS = 10242,
     /// The vertical direction. Equivalent to GL_TEXTURE_WRAP_T
-    DirectionT,
+    DirectionT = 10243,
     /// The depth direction. Equivalent to GL_TEXTURE_WRAP_R
-    DirectionR,
+    DirectionR = 32882,
 }
 
 [org_name(QOpenGLTexture)]
 enum Feature {
     /// Support for immutable texture storage
-    ImmutableStorage,
+    ImmutableStorage = 1,
     /// Support for immutable texture storage with multisample targets
-    ImmutableMultisampleStorage,
+    ImmutableMultisampleStorage = 2,
     /// Support for the GL_TEXTURE_RECTANGLE target
-    TextureRectangle,
+    TextureRectangle = 4,
     /// Support for texture targets with array layers
-    TextureArrays,
+    TextureArrays = 8,
     /// Support for the 3 dimensional texture target
-    Texture3D,
+    Texture3D = 16,
     /// Support for texture targets that have multisample capabilities
-    TextureMultisample,
+    TextureMultisample = 32,
     /// Support for textures that use OpenGL buffer objects as their data source
-    TextureBuffer,
+    TextureBuffer = 64,
     /// Support for cubemap array texture target
-    TextureCubeMapArrays,
+    TextureCubeMapArrays = 128,
     /// Support for texture component swizzle masks
-    Swizzle,
+    Swizzle = 256,
     /// Support for stencil texturing (i.e. looking up depth or stencil components of a combined depth/stencil format texture in GLSL shaders).
-    StencilTexturing,
+    StencilTexturing = 512,
     /// Support for anisotropic texture filtering
-    AnisotropicFiltering,
+    AnisotropicFiltering = 1024,
     /// Basic support for non-power-of-two textures
-    NPOTTextures,
+    NPOTTextures = 2048,
     /// Full support for non-power-of-two textures including texture repeat modes
-    NPOTTextureRepeat,
+    NPOTTextureRepeat = 4096,
     /// Support for the 1 dimensional texture target
-    Texture1D,
+    Texture1D = 8192,
     /// Support for texture comparison operators
-    TextureComparisonOperators,
+    TextureComparisonOperators = 16384,
     /// Support for setting the base and maximum mipmap levels
-    TextureMipMapLevel,
-    MaxFeatureFlag,
+    TextureMipMapLevel = 32768,
+    MaxFeatureFlag = 65536,
 }
 
 [org_name(QOpenGLTexture)]
 enum DepthStencilMode {
     /// Equivalent to GL_DEPTH_COMPONENT.
-    DepthMode,
+    DepthMode = 6402,
     /// Equivalent to GL_STENCIL_INDEX.
-    StencilMode,
+    StencilMode = 6401,
 }
 
 [org_name(QOpenGLTexture)]
 enum ComparisonFunction {
     /// Equivalent to GL_LEQUAL.
-    CompareLessEqual,
+    CompareLessEqual = 515,
     /// Equivalent to GL_GEQUAL.
-    CompareGreaterEqual,
+    CompareGreaterEqual = 518,
     /// Equivalent to GL_LESS.
-    CompareLess,
+    CompareLess = 513,
     /// Equivalent to GL_GREATER.
-    CompareGreater,
+    CompareGreater = 516,
     /// Equivalent to GL_EQUAL.
-    CompareEqual,
+    CompareEqual = 514,
     /// Equivalent to GL_NOTEQUAL.
-    CommpareNotEqual,
+    CommpareNotEqual = 517,
     /// Equivalent to GL_ALWAYS.
-    CompareAlways,
+    CompareAlways = 519,
     /// Equivalent to GL_NEVER.
-    CompareNever,
+    CompareNever = 512,
 }
 
 [org_name(QOpenGLTexture)]
 enum ComparisonMode {
     /// Equivalent to GL_COMPARE_REF_TO_TEXTURE.
-    CompareRefToTexture,
+    CompareRefToTexture = 34894,
     /// Equivalent to GL_NONE.
-    CompareNone,
+    CompareNone = 0,
 }
 
 [org_name(QOpenGLTexture)]
 enum Filter {
     /// Equivalent to GL_NEAREST
-    Nearest,
+    Nearest = 9728,
     /// Equivalent to GL_LINEAR
-    Linear,
+    Linear = 9729,
     /// Equivalent to GL_NEAREST_MIPMAP_NEAREST
-    NearestMipMapNearest,
+    NearestMipMapNearest = 9984,
     /// Equivalent to GL_NEAREST_MIPMAP_LINEAR
-    NearestMipMapLinear,
+    NearestMipMapLinear = 9986,
     /// Equivalent to GL_LINEAR_MIPMAP_NEAREST
-    LinearMipMapNearest,
+    LinearMipMapNearest = 9985,
     /// Equivalent to GL_LINEAR_MIPMAP_LINEAR
-    LinearMipMapLinear,
+    LinearMipMapLinear = 9987,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

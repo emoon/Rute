@@ -494,21 +494,21 @@ struct TabWidget : Widget {
 [org_name(QTabWidget)]
 enum TabPosition {
     /// The tabs are drawn above the pages.
-    North,
+    North = 0,
     /// The tabs are drawn below the pages.
-    South,
+    South = 1,
     /// The tabs are drawn to the left of the pages.
-    West,
+    West = 2,
     /// The tabs are drawn to the right of the pages.
-    East,
+    East = 3,
 }
 
 [org_name(QTabWidget)]
 enum TabShape {
     /// The tabs are drawn with a rounded look. This is the default shape.
-    Rounded,
+    Rounded = 0,
     /// The tabs are drawn with a triangular look.
-    Triangular,
+    Triangular = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

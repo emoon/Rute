@@ -230,15 +230,15 @@ struct BoxLayout : Layout {
 [org_name(QBoxLayout)]
 enum Direction {
     /// Horizontal from left to right.
-    LeftToRight,
+    LeftToRight = 0,
     /// Horizontal from right to left.
-    RightToLeft,
+    RightToLeft = 1,
     /// Vertical from top to bottom.
-    TopToBottom,
+    TopToBottom = 2,
     /// Vertical from bottom to top.
-    BottomToTop,
-    Down,
-    Up,
+    BottomToTop = 3,
+    Down = 2,
+    Up = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

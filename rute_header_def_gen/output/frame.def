@@ -154,41 +154,41 @@ struct Frame : Widget {
 [org_name(QFrame)]
 enum Shape {
     /// QFrame draws nothing
-    NoFrame,
+    NoFrame = 0,
     /// QFrame draws a box around its contents
-    Box,
+    Box = 1,
     /// QFrame draws a panel to make the contents appear raised or sunken
-    Panel,
+    Panel = 2,
     /// draws a rectangular panel that can be raised or sunken like those in Windows 2000. Specifying this shape sets the line width to 2 pixels. WinPanel is provided for compatibility. For GUI style independence we recommend using StyledPanel instead. When it does not call QStyle, Shape interacts with QFrame::Shadow, the lineWidth() and the midLineWidth() to create the total result. See the picture of the frames in the main class documentation.
-    WinPanel,
+    WinPanel = 3,
     /// QFrame draws a horizontal line that frames nothing (useful as separator)
-    HLine,
+    HLine = 4,
     /// QFrame draws a vertical line that frames nothing (useful as separator)
-    VLine,
+    VLine = 5,
     /// draws a rectangular panel with a look that depends on the current GUI style. It can be raised or sunken.
-    StyledPanel,
+    StyledPanel = 6,
 }
 
 [org_name(QFrame)]
 enum Shadow {
     /// the frame and contents appear level with the surroundings; draws using the palette QPalette::WindowText color (without any 3D effect)
-    Plain,
+    Plain = 16,
     /// the frame and contents appear raised; draws a 3D raised line using the light and dark colors of the current color group
-    Raised,
+    Raised = 32,
     /// the frame and contents appear sunken; draws a 3D sunken line using the light and dark colors of the current color group Shadow interacts with QFrame::Shape, the lineWidth() and the midLineWidth(). See the picture of the frames in the main class documentation.
-    Sunken,
+    Sunken = 48,
 }
 
 [org_name(QFrame)]
 enum StyleMask {
     /// The [Shadow](Shadow)
  part of frameStyle()
-    Shadow_Mask,
+    Shadow_Mask = 240,
     /// The [Shape](Shape)
  part of frameStyle() Normally, you don't need to use these, since frameShadow() and frameShape() already extract the [Shadow](Shadow)
  and the [Shape](Shape)
  parts of frameStyle().
-    Shape_Mask,
+    Shape_Mask = 15,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

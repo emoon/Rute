@@ -720,13 +720,13 @@ struct Matrix4x4 {
 
 [org_name(QMatrix4x4)]
 enum Matrix4x4FixMeEnums {
-    Identity,
-    Translation,
-    Scale,
-    Rotation2D,
-    Rotation,
-    Perspective,
-    General,
+    Identity = 0,
+    Translation = 1,
+    Scale = 2,
+    Rotation2D = 4,
+    Rotation = 8,
+    Perspective = 16,
+    General = 31,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

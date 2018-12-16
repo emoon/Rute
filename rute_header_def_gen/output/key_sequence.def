@@ -424,165 +424,165 @@ struct KeySequence {
 [org_name(QKeySequence)]
 enum StandardKey {
     /// Unbound key.
-    UnknownKey,
+    UnknownKey = 0,
     /// Open help contents.
-    HelpContents,
+    HelpContents = 1,
     /// Activate "what's this".
-    WhatsThis,
+    WhatsThis = 2,
     /// Open document.
-    Open,
+    Open = 3,
     /// Close document/tab.
-    Close,
+    Close = 4,
     /// Save document.
-    Save,
+    Save = 5,
     /// Create new document.
-    New,
+    New = 6,
     /// Delete.
-    Delete,
+    Delete = 7,
     /// Cut.
-    Cut,
+    Cut = 8,
     /// Copy.
-    Copy,
+    Copy = 9,
     /// Paste.
-    Paste,
+    Paste = 10,
     /// Undo.
-    Undo,
+    Undo = 11,
     /// Redo.
-    Redo,
+    Redo = 12,
     /// Navigate back.
-    Back,
+    Back = 13,
     /// Navigate forward.
-    Forward,
+    Forward = 14,
     /// Refresh or reload current document.
-    Refresh,
+    Refresh = 15,
     /// Zoom in.
-    ZoomIn,
+    ZoomIn = 16,
     /// Zoom out.
-    ZoomOut,
+    ZoomOut = 17,
     /// Print document.
-    Print,
+    Print = 18,
     /// Add new tab.
-    AddTab,
+    AddTab = 19,
     /// Navigate to next tab or child window.
-    NextChild,
+    NextChild = 20,
     /// Navigate to previous tab or child window.
-    PreviousChild,
+    PreviousChild = 21,
     /// Find in document.
-    Find,
+    Find = 22,
     /// Find next result.
-    FindNext,
+    FindNext = 23,
     /// Find previous result.
-    FindPrevious,
+    FindPrevious = 24,
     /// Find and replace.
-    Replace,
+    Replace = 25,
     /// Select all text.
-    SelectAll,
+    SelectAll = 26,
     /// Bold text.
-    Bold,
+    Bold = 27,
     /// Italic text.
-    Italic,
+    Italic = 28,
     /// Underline text.
-    Underline,
+    Underline = 29,
     /// Move cursor to next character.
-    MoveToNextChar,
+    MoveToNextChar = 30,
     /// Move cursor to previous character.
-    MoveToPreviousChar,
+    MoveToPreviousChar = 31,
     /// Move cursor to next word.
-    MoveToNextWord,
+    MoveToNextWord = 32,
     /// Move cursor to previous word.
-    MoveToPreviousWord,
+    MoveToPreviousWord = 33,
     /// Move cursor to next line.
-    MoveToNextLine,
+    MoveToNextLine = 34,
     /// Move cursor to previous line.
-    MoveToPreviousLine,
+    MoveToPreviousLine = 35,
     /// Move cursor to next page.
-    MoveToNextPage,
+    MoveToNextPage = 36,
     /// Move cursor to previous page.
-    MoveToPreviousPage,
+    MoveToPreviousPage = 37,
     /// Move cursor to start of line.
-    MoveToStartOfLine,
+    MoveToStartOfLine = 38,
     /// Move cursor to end of line.
-    MoveToEndOfLine,
+    MoveToEndOfLine = 39,
     /// Move cursor to start of a block. This shortcut is only used on MacOS .
-    MoveToStartOfBlock,
+    MoveToStartOfBlock = 40,
     /// Move cursor to end of block. This shortcut is only used on the MacOS .
-    MoveToEndOfBlock,
+    MoveToEndOfBlock = 41,
     /// Move cursor to start of document.
-    MoveToStartOfDocument,
+    MoveToStartOfDocument = 42,
     /// Move cursor to end of document.
-    MoveToEndOfDocument,
+    MoveToEndOfDocument = 43,
     /// Extend selection to next character.
-    SelectNextChar,
+    SelectNextChar = 44,
     /// Extend selection to previous character.
-    SelectPreviousChar,
+    SelectPreviousChar = 45,
     /// Extend selection to next word.
-    SelectNextWord,
+    SelectNextWord = 46,
     /// Extend selection to previous word.
-    SelectPreviousWord,
+    SelectPreviousWord = 47,
     /// Extend selection to next line.
-    SelectNextLine,
+    SelectNextLine = 48,
     /// Extend selection to previous line.
-    SelectPreviousLine,
+    SelectPreviousLine = 49,
     /// Extend selection to next page.
-    SelectNextPage,
+    SelectNextPage = 50,
     /// Extend selection to previous page.
-    SelectPreviousPage,
+    SelectPreviousPage = 51,
     /// Extend selection to start of line.
-    SelectStartOfLine,
+    SelectStartOfLine = 52,
     /// Extend selection to end of line.
-    SelectEndOfLine,
+    SelectEndOfLine = 53,
     /// Extend selection to the start of a text block. This shortcut is only used on MacOS .
-    SelectStartOfBlock,
+    SelectStartOfBlock = 54,
     /// Extend selection to the end of a text block. This shortcut is only used on MacOS .
-    SelectEndOfBlock,
+    SelectEndOfBlock = 55,
     /// Extend selection to start of document.
-    SelectStartOfDocument,
+    SelectStartOfDocument = 56,
     /// Extend selection to end of document.
-    SelectEndOfDocument,
+    SelectEndOfDocument = 57,
     /// Delete the beginning of a word up to the cursor.
-    DeleteStartOfWord,
+    DeleteStartOfWord = 58,
     /// Delete word from the end of the cursor.
-    DeleteEndOfWord,
+    DeleteEndOfWord = 59,
     /// Delete end of line.
-    DeleteEndOfLine,
+    DeleteEndOfLine = 60,
     /// Insert a new paragraph.
-    InsertParagraphSeparator,
+    InsertParagraphSeparator = 61,
     /// Insert a new line.
-    InsertLineSeparator,
+    InsertLineSeparator = 62,
     /// Save document after prompting the user for a file name.
-    SaveAs,
+    SaveAs = 63,
     /// Open the preferences dialog.
-    Preferences,
+    Preferences = 64,
     /// Quit the application.
-    Quit,
+    Quit = 65,
     /// Toggle the window state to/from full screen.
-    FullScreen,
+    FullScreen = 66,
     /// Deselect text. Since 5.1
-    Deselect,
+    Deselect = 67,
     /// Delete the entire line.
-    DeleteCompleteLine,
+    DeleteCompleteLine = 68,
     /// Delete previous character.
-    Backspace,
+    Backspace = 69,
     /// Cancel the current operation.
-    Cancel,
+    Cancel = 70,
 }
 
 [org_name(QKeySequence)]
 enum SequenceFormat {
     /// The key sequence as a platform specific string. This means that it will be shown translated and on the Mac it will resemble a key sequence from the menu bar. This enum is best used when you want to display the string to the user.
-    NativeText,
+    NativeText = 0,
     /// The key sequence is given in a "portable" format, suitable for reading and writing to a file. In many cases, it will look similar to the native text on Windows and X11.
-    PortableText,
+    PortableText = 1,
 }
 
 [org_name(QKeySequence)]
 enum SequenceMatch {
     /// The key sequences are different; not even partially matching.
-    NoMatch,
+    NoMatch = 0,
     /// The key sequences match partially, but are not the same.
-    PartialMatch,
+    PartialMatch = 1,
     /// The key sequences are the same.
-    ExactMatch,
+    ExactMatch = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

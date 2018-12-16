@@ -1561,23 +1561,23 @@ struct Color {
 [org_name(QColor)]
 enum Spec {
     /// 
-    Invalid,
+    Invalid = 0,
     /// 
-    Rgb,
+    Rgb = 1,
     /// 
-    Hsv,
+    Hsv = 2,
     /// 
-    Cmyk,
+    Cmyk = 3,
     /// 
-    Hsl,
+    Hsl = 4,
 }
 
 [org_name(QColor)]
 enum NameFormat {
     /// #RRGGBB A "#" character followed by three two-digit hexadecimal numbers (i.e. `#RRGGBB` ).
-    HexRgb,
+    HexRgb = 0,
     /// #AARRGGBB A "#" character followed by four two-digit hexadecimal numbers (i.e. `#AARRGGBB` ).
-    HexArgb,
+    HexArgb = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

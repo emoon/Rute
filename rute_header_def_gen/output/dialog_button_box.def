@@ -289,103 +289,103 @@ struct DialogButtonBox : Widget {
 [org_name(QDialogButtonBox)]
 enum ButtonRole {
     /// The button is invalid.
-    InvalidRole,
+    InvalidRole = 4294967295,
     /// Clicking the button causes the dialog to be accepted (e.g. OK).
-    AcceptRole,
+    AcceptRole = 0,
     /// Clicking the button causes the dialog to be rejected (e.g. Cancel).
-    RejectRole,
+    RejectRole = 1,
     /// Clicking the button causes a destructive change (e.g. for Discarding Changes) and closes the dialog.
-    DestructiveRole,
+    DestructiveRole = 2,
     /// Clicking the button causes changes to the elements within the dialog.
-    ActionRole,
+    ActionRole = 3,
     /// The button can be clicked to request help.
-    HelpRole,
+    HelpRole = 4,
     /// The button is a "Yes"-like button.
-    YesRole,
+    YesRole = 5,
     /// The button is a "No"-like button.
-    NoRole,
+    NoRole = 6,
     /// The button resets the dialog's fields to default values.
-    ResetRole,
+    ResetRole = 7,
     /// The button applies current changes.
-    ApplyRole,
-    NRoles,
+    ApplyRole = 8,
+    NRoles = 9,
 }
 
 [org_name(QDialogButtonBox)]
 enum StandardButton {
     /// An invalid button.
-    NoButton,
+    NoButton = 0,
     /// An "OK" button defined with the [AcceptRole.](AcceptRole.)
 
-    Ok,
+    Ok = 1024,
     /// A "Save" button defined with the [AcceptRole.](AcceptRole.)
 
-    Save,
+    Save = 2048,
     /// A "Save All" button defined with the [AcceptRole.](AcceptRole.)
 
-    SaveAll,
+    SaveAll = 4096,
     /// An "Open" button defined with the [AcceptRole.](AcceptRole.)
 
-    Open,
+    Open = 8192,
     /// A "Yes" button defined with the [YesRole.](YesRole.)
 
-    Yes,
+    Yes = 16384,
     /// A "Yes to All" button defined with the [YesRole.](YesRole.)
 
-    YesToAll,
+    YesToAll = 32768,
     /// A "No" button defined with the [NoRole.](NoRole.)
 
-    No,
+    No = 65536,
     /// A "No to All" button defined with the [NoRole.](NoRole.)
 
-    NoToAll,
+    NoToAll = 131072,
     /// An "Abort" button defined with the [RejectRole.](RejectRole.)
 
-    Abort,
+    Abort = 262144,
     /// A "Retry" button defined with the [AcceptRole.](AcceptRole.)
 
-    Retry,
+    Retry = 524288,
     /// An "Ignore" button defined with the [AcceptRole.](AcceptRole.)
 
-    Ignore,
+    Ignore = 1048576,
     /// A "Close" button defined with the [RejectRole.](RejectRole.)
 
-    Close,
+    Close = 2097152,
     /// A "Cancel" button defined with the [RejectRole.](RejectRole.)
 
-    Cancel,
+    Cancel = 4194304,
     /// A "Discard" or "Don't Save" button, depending on the platform, defined with the [DestructiveRole.](DestructiveRole.)
 
-    Discard,
+    Discard = 8388608,
     /// A "Help" button defined with the [HelpRole.](HelpRole.)
 
-    Help,
+    Help = 16777216,
     /// An "Apply" button defined with the [ApplyRole.](ApplyRole.)
 
-    Apply,
+    Apply = 33554432,
     /// A "Reset" button defined with the [ResetRole.](ResetRole.)
 
-    Reset,
+    Reset = 67108864,
     /// A "Restore Defaults" button defined with the [ResetRole.](ResetRole.)
 
-    RestoreDefaults,
-    FirstButton,
-    LastButton,
+    RestoreDefaults = 134217728,
+    FirstButton = 1024,
+    LastButton = 134217728,
 }
 
 [org_name(QDialogButtonBox)]
 enum ButtonLayout {
     /// Use a policy appropriate for applications on Windows.
-    WinLayout,
+    WinLayout = 0,
     /// Use a policy appropriate for applications on MacOS .
-    MacLayout,
+    MacLayout = 1,
     /// Use a policy appropriate for applications on KDE.
-    KdeLayout,
+    KdeLayout = 2,
     /// Use a policy appropriate for applications on GNOME.
-    GnomeLayout,
+    GnomeLayout = 3,
     /// Use a policy appropriate for applications on Android. This enum value was added in Qt 5.10. The button layout is specified by the [current style](style())
  . However, on the X11 platform, it may be influenced by the desktop environment.
-    AndroidLayout,
+    AndroidLayout = 5,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -1265,39 +1265,39 @@ struct OpenGLFunctions {
 [org_name(QOpenGLFunctions)]
 enum OpenGLFeature {
     /// glActiveTexture() function is available.
-    Multitexture,
+    Multitexture = 1,
     /// Shader functions are available.
-    Shaders,
+    Shaders = 2,
     /// Vertex and index buffer functions are available.
-    Buffers,
+    Buffers = 4,
     /// Framebuffer object functions are available.
-    Framebuffers,
+    Framebuffers = 8,
     /// glBlendColor() is available.
-    BlendColor,
+    BlendColor = 16,
     /// glBlendEquation() is available.
-    BlendEquation,
+    BlendEquation = 32,
     /// glBlendEquationSeparate() is available.
-    BlendEquationSeparate,
+    BlendEquationSeparate = 64,
     /// glBlendFuncSeparate() is available.
-    BlendFuncSeparate,
+    BlendFuncSeparate = 128,
     /// Blend subtract mode is available.
-    BlendSubtract,
+    BlendSubtract = 256,
     /// Compressed texture functions are available.
-    CompressedTextures,
+    CompressedTextures = 512,
     /// glSampleCoverage() function is available.
-    Multisample,
+    Multisample = 1024,
     /// Separate stencil functions are available.
-    StencilSeparate,
+    StencilSeparate = 2048,
     /// Non power of two textures are available.
-    NPOTTextures,
+    NPOTTextures = 4096,
     /// Non power of two textures can use GL_REPEAT as wrap parameter.
-    NPOTTextureRepeat,
+    NPOTTextureRepeat = 8192,
     /// The fixed function pipeline is available.
-    FixedFunctionPipeline,
+    FixedFunctionPipeline = 16384,
     /// The GL_RED and GL_RG texture formats are available.
-    TextureRGFormats,
+    TextureRGFormats = 32768,
     /// Multiple color attachments to framebuffer objects are available.
-    MultipleRenderTargets,
+    MultipleRenderTargets = 65536,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

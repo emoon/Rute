@@ -555,25 +555,25 @@ struct DateTimeEdit : AbstractSpinBox {
 [org_name(QDateTimeEdit)]
 enum Section {
     /// 
-    NoSection,
+    NoSection = 0,
     /// 
-    AmPmSection,
+    AmPmSection = 1,
     /// 
-    MSecSection,
+    MSecSection = 2,
     /// 
-    SecondSection,
+    SecondSection = 4,
     /// 
-    MinuteSection,
+    MinuteSection = 8,
     /// 
-    HourSection,
+    HourSection = 16,
     /// 
-    DaySection,
+    DaySection = 256,
     /// 
-    MonthSection,
+    MonthSection = 512,
     /// 
-    YearSection,
-    TimeSections_Mask,
-    DateSections_Mask,
+    YearSection = 1024,
+    TimeSections_Mask = 31,
+    DateSections_Mask = 1792,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -741,73 +741,73 @@ struct Font {
 [org_name(QFont)]
 enum StyleHint {
     /// is a synonym for `SansSerif.`
-    Helvetica,
+    Helvetica = 0,
     /// the font matcher prefer sans serif fonts.
-    SansSerif,
+    SansSerif = 0,
     /// is a synonym for `Serif.`
-    Times,
+    Times = 1,
     /// the font matcher prefers serif fonts.
-    Serif,
+    Serif = 1,
     /// a synonym for `TypeWriter.`
-    Courier,
+    Courier = 2,
     /// the font matcher prefers fixed pitch fonts.
-    TypeWriter,
+    TypeWriter = 2,
     /// the font matcher prefers decorative fonts.
-    OldEnglish,
+    OldEnglish = 3,
     /// is a synonym for `OldEnglish.`
-    Decorative,
+    Decorative = 3,
     /// the font matcher prefers system fonts.
-    System,
+    System = 4,
     /// leaves the font matching algorithm to choose the family. This is the default.
-    AnyStyle,
+    AnyStyle = 5,
     /// the font matcher prefers fonts that map to the CSS generic font-family 'cursive'.
-    Cursive,
+    Cursive = 6,
     /// the font matcher prefers fonts that map to the CSS generic font-family 'monospace'.
-    Monospace,
+    Monospace = 7,
     /// the font matcher prefers fonts that map to the CSS generic font-family 'fantasy'.
-    Fantasy,
+    Fantasy = 8,
 }
 
 [org_name(QFont)]
 enum StyleStrategy {
     /// the default style strategy. It does not prefer any type of font.
-    PreferDefault,
+    PreferDefault = 1,
     /// prefers bitmap fonts (as opposed to outline fonts).
-    PreferBitmap,
+    PreferBitmap = 2,
     /// prefers device fonts.
-    PreferDevice,
+    PreferDevice = 4,
     /// prefers outline fonts (as opposed to bitmap fonts).
-    PreferOutline,
+    PreferOutline = 8,
     /// forces the use of outline fonts.
-    ForceOutline,
+    ForceOutline = 16,
     /// prefer an exact match. The font matcher will try to use the exact font size that has been specified.
-    PreferMatch,
+    PreferMatch = 32,
     /// prefer the best quality font. The font matcher will use the nearest standard point size that the font supports.
-    PreferQuality,
+    PreferQuality = 64,
     /// antialias if possible.
-    PreferAntialias,
+    PreferAntialias = 128,
     /// don't antialias the fonts.
-    NoAntialias,
+    NoAntialias = 256,
     /// forces the use of OpenGL compatible fonts.
-    OpenGLCompatible,
+    OpenGLCompatible = 512,
     /// forces the use of integer values in font engines that support fractional font metrics.
-    ForceIntegerMetrics,
+    ForceIntegerMetrics = 1024,
     /// avoid subpixel antialiasing on the fonts if possible.
-    NoSubpixelAntialias,
+    NoSubpixelAntialias = 2048,
     /// Sometimes, a font will apply complex rules to a set of characters in order to display them correctly. In some writing systems, such as Brahmic scripts, this is required in order for the text to be legible, but in e.g. Latin script, it is merely a cosmetic feature. The PreferNoShaping flag will disable all such features when they are not required, which will improve performance in most cases (since Qt 5.10). Any of these may be OR-ed with one of these flags:
-    PreferNoShaping,
+    PreferNoShaping = 4096,
     /// If the font selected for a certain writing system does not contain a character requested to draw, then Qt automatically chooses a similar looking font that contains the character. The NoFontMerging flag disables this feature. Please note that enabling this flag will not prevent Qt from automatically picking a suitable font when the selected font does not support the writing system of the text.
-    NoFontMerging,
+    NoFontMerging = 32768,
 }
 
 [org_name(QFont)]
 enum HintingPreference {
     /// Use the default hinting level for the target platform.
-    PreferDefaultHinting,
+    PreferDefaultHinting = 0,
     /// If possible, render text without hinting the outlines of the glyphs. The text layout will be typographically accurate and scalable, using the same metrics as are used e.g. when printing.
-    PreferNoHinting,
+    PreferNoHinting = 1,
     /// If possible, render text with no horizontal hinting, but align glyphs to the pixel grid in the vertical direction. The text will appear crisper on displays where the density is too low to give an accurate rendering of the glyphs. But since the horizontal metrics of the glyphs are unhinted, the text's layout will be scalable to higher density devices (such as printers) without impacting details such as line breaks.
-    PreferVerticalHinting,
+    PreferVerticalHinting = 2,
     /// If possible, render text with hinting in both horizontal and vertical directions. The text will be altered to optimize legibility on the target device, but since the metrics will depend on the target size of the text, the positions of glyphs, line breaks, and other typographical detail will not scale, meaning that a text layout may look different on devices with different pixel densities. Please note that this enum only describes a preference, as the full range of hinting levels are not supported on all of Qt's supported platforms. The following table details the effect of a given hinting preference on a selected set of target platforms. * 
  * PreferDefaultHinting 
  * PreferNoHinting 
@@ -834,107 +834,107 @@ enum HintingPreference {
  * No hinting 
  * No hinting 
 
-    PreferFullHinting,
+    PreferFullHinting = 3,
 }
 
 [org_name(QFont)]
 enum Weight {
     /// 0
-    Thin,
+    Thin = 0,
     /// 12
-    ExtraLight,
+    ExtraLight = 12,
     /// 25
-    Light,
+    Light = 25,
     /// 50
-    Normal,
+    Normal = 50,
     /// 57
-    Medium,
+    Medium = 57,
     /// 63
-    DemiBold,
+    DemiBold = 63,
     /// 75
-    Bold,
+    Bold = 75,
     /// 81
-    ExtraBold,
+    ExtraBold = 81,
     /// 87
-    Black,
+    Black = 87,
 }
 
 [org_name(QFont)]
 enum Style {
     /// Normal glyphs used in unstyled text.
-    StyleNormal,
+    StyleNormal = 0,
     /// Italic glyphs that are specifically designed for the purpose of representing italicized text.
-    StyleItalic,
+    StyleItalic = 1,
     /// Glyphs with an italic appearance that are typically based on the unstyled glyphs, but are not fine-tuned for the purpose of representing italicized text.
-    StyleOblique,
+    StyleOblique = 2,
 }
 
 [org_name(QFont)]
 enum Stretch {
     /// 0 Accept any stretch matched using the other QFont properties (added in Qt 5.8)
-    AnyStretch,
+    AnyStretch = 0,
     /// 50
-    UltraCondensed,
+    UltraCondensed = 50,
     /// 62
-    ExtraCondensed,
+    ExtraCondensed = 62,
     /// 75
-    Condensed,
+    Condensed = 75,
     /// 87
-    SemiCondensed,
+    SemiCondensed = 87,
     /// 100
-    Unstretched,
+    Unstretched = 100,
     /// 112
-    SemiExpanded,
+    SemiExpanded = 112,
     /// 125
-    Expanded,
+    Expanded = 125,
     /// 150
-    ExtraExpanded,
+    ExtraExpanded = 150,
     /// 200
-    UltraExpanded,
+    UltraExpanded = 200,
 }
 
 [org_name(QFont)]
 enum Capitalization {
     /// This is the normal text rendering option where no capitalization change is applied.
-    MixedCase,
+    MixedCase = 0,
     /// This alters the text to be rendered in all uppercase type.
-    AllUppercase,
+    AllUppercase = 1,
     /// This alters the text to be rendered in all lowercase type.
-    AllLowercase,
+    AllLowercase = 2,
     /// This alters the text to be rendered in small-caps type.
-    SmallCaps,
+    SmallCaps = 3,
     /// This alters the text to be rendered with the first character of each word as an uppercase character.
-    Capitalize,
+    Capitalize = 4,
 }
 
 [org_name(QFont)]
 enum SpacingType {
     /// A value of 100 will keep the spacing unchanged; a value of 200 will enlarge the spacing after a character by the width of the character itself.
-    PercentageSpacing,
+    PercentageSpacing = 0,
     /// A positive value increases the letter spacing by the corresponding pixels; a negative value decreases the spacing.
-    AbsoluteSpacing,
+    AbsoluteSpacing = 1,
 }
 
 [org_name(QFont)]
 enum ResolveProperties {
-    FamilyResolved,
-    SizeResolved,
-    StyleHintResolved,
-    StyleStrategyResolved,
-    WeightResolved,
-    StyleResolved,
-    UnderlineResolved,
-    OverlineResolved,
-    StrikeOutResolved,
-    FixedPitchResolved,
-    StretchResolved,
-    KerningResolved,
-    CapitalizationResolved,
-    LetterSpacingResolved,
-    WordSpacingResolved,
-    HintingPreferenceResolved,
-    StyleNameResolved,
-    AllPropertiesResolved,
+    FamilyResolved = 1,
+    SizeResolved = 2,
+    StyleHintResolved = 4,
+    StyleStrategyResolved = 8,
+    WeightResolved = 16,
+    StyleResolved = 32,
+    UnderlineResolved = 64,
+    OverlineResolved = 128,
+    StrikeOutResolved = 256,
+    FixedPitchResolved = 512,
+    StretchResolved = 1024,
+    KerningResolved = 2048,
+    CapitalizationResolved = 4096,
+    LetterSpacingResolved = 8192,
+    WordSpacingResolved = 16384,
+    HintingPreferenceResolved = 32768,
+    StyleNameResolved = 65536,
+    AllPropertiesResolved = 131071,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -360,9 +360,9 @@ struct DataWidgetMapper : Object {
 [org_name(QDataWidgetMapper)]
 enum SubmitPolicy {
     /// Whenever a widget loses focus, the widget's current value is set to the item model.
-    AutoSubmit,
+    AutoSubmit = 0,
     /// The model is not updated until submit() is called.
-    ManualSubmit,
+    ManualSubmit = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

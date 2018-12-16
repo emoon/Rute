@@ -423,19 +423,19 @@ struct RawFont {
 [org_name(QRawFont)]
 enum AntialiasingType {
     /// Will rasterize by measuring the coverage of the shape on whole pixels. The returned image contains the alpha values of each pixel based on the coverage of the glyph shape.
-    PixelAntialiasing,
+    PixelAntialiasing = 0,
     /// Will rasterize by measuring the coverage of each subpixel, returning a separate alpha value for each of the red, green and blue components of each pixel.
-    SubPixelAntialiasing,
+    SubPixelAntialiasing = 1,
 }
 
 [org_name(QRawFont)]
 enum LayoutFlag {
     /// Will calculate the advance for each glyph separately.
-    SeparateAdvances,
+    SeparateAdvances = 0,
     /// Will apply kerning between adjacent glyphs. Note that OpenType GPOS based kerning is currently not supported.
-    KernedAdvances,
+    KernedAdvances = 1,
     /// Use design metrics instead of hinted metrics adjusted to the resolution of the paint device. Can be OR-ed with any of the options above.
-    UseDesignMetrics,
+    UseDesignMetrics = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

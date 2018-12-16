@@ -814,93 +814,93 @@ struct Wizard : Dialog {
 [org_name(QWizard)]
 enum WizardButton {
     /// The **Back** button ( **{Go** Back} on MacOS )
-    BackButton,
+    BackButton = 0,
     /// The **Next** button ( **Continue** on MacOS )
-    NextButton,
+    NextButton = 1,
     /// The **Commit** button
-    CommitButton,
+    CommitButton = 2,
     /// The **Finish** button ( **Done** on MacOS )
-    FinishButton,
+    FinishButton = 3,
     /// The **Cancel** button (see also NoCancelButton)
-    CancelButton,
+    CancelButton = 4,
     /// The **Help** button (see also HaveHelpButton)
-    HelpButton,
+    HelpButton = 5,
     /// The first user-defined button (see also HaveCustomButton1)
-    CustomButton1,
+    CustomButton1 = 6,
     /// The second user-defined button (see also HaveCustomButton2)
-    CustomButton2,
+    CustomButton2 = 7,
     /// The third user-defined button (see also HaveCustomButton3) The following value is only useful when calling setButtonLayout():
-    CustomButton3,
+    CustomButton3 = 8,
     /// A horizontal stretch in the button layout
-    Stretch,
-    NoButton,
-    NStandardButtons,
-    NButtons,
+    Stretch = 9,
+    NoButton = 4294967295,
+    NStandardButtons = 6,
+    NButtons = 9,
 }
 
 [org_name(QWizard)]
 enum WizardPixmap {
     /// The tall pixmap on the left side of a ClassicStyle or ModernStyle page
-    WatermarkPixmap,
+    WatermarkPixmap = 0,
     /// The small pixmap on the right side of a ClassicStyle or ModernStyle page header
-    LogoPixmap,
+    LogoPixmap = 1,
     /// The pixmap that occupies the background of a ModernStyle page header
-    BannerPixmap,
+    BannerPixmap = 2,
     /// The pixmap that occupies the background of a MacStyle wizard
-    BackgroundPixmap,
-    NPixmaps,
+    BackgroundPixmap = 3,
+    NPixmaps = 4,
 }
 
 [org_name(QWizard)]
 enum WizardStyle {
     /// Classic Windows look
-    ClassicStyle,
+    ClassicStyle = 0,
     /// Modern Windows look
-    ModernStyle,
+    ModernStyle = 1,
     /// MacOS look
-    MacStyle,
+    MacStyle = 2,
     /// Windows Aero look
-    AeroStyle,
-    NStyles,
+    AeroStyle = 3,
+    NStyles = 4,
 }
 
 [org_name(QWizard)]
 enum WizardOption {
     /// The pages are independent of each other (i.e., they don't derive values from each other).
-    IndependentPages,
+    IndependentPages = 1,
     /// Don't show any subtitles, even if they are set.
-    IgnoreSubTitles,
+    IgnoreSubTitles = 2,
     /// Extend any WatermarkPixmap all the way down to the window's edge.
-    ExtendedWatermarkPixmap,
+    ExtendedWatermarkPixmap = 4,
     /// Don't make the **Next** or **Finish** button the dialog's [default button](QPushButton::setDefault())
  .
-    NoDefaultButton,
+    NoDefaultButton = 8,
     /// Don't show the **Back** button on the start page.
-    NoBackButtonOnStartPage,
+    NoBackButtonOnStartPage = 16,
     /// Don't show the **Back** button on the last page.
-    NoBackButtonOnLastPage,
+    NoBackButtonOnLastPage = 32,
     /// Disable the **Back** button on the last page.
-    DisabledBackButtonOnLastPage,
+    DisabledBackButtonOnLastPage = 64,
     /// Show the (disabled) **Next** button on the last page.
-    HaveNextButtonOnLastPage,
+    HaveNextButtonOnLastPage = 128,
     /// Show the (disabled) **Finish** button on non-final pages.
-    HaveFinishButtonOnEarlyPages,
+    HaveFinishButtonOnEarlyPages = 256,
     /// Don't show the **Cancel** button.
-    NoCancelButton,
+    NoCancelButton = 512,
     /// Put the **Cancel** button on the left of **Back** (rather than on the right of **Finish** or **Next).**
-    CancelButtonOnLeft,
+    CancelButtonOnLeft = 1024,
     /// Show the **Help** button.
-    HaveHelpButton,
+    HaveHelpButton = 2048,
     /// Put the **Help** button on the far right of the button layout (rather than on the far left).
-    HelpButtonOnRight,
+    HelpButtonOnRight = 4096,
     /// Show the first user-defined button (CustomButton1).
-    HaveCustomButton1,
+    HaveCustomButton1 = 8192,
     /// Show the second user-defined button (CustomButton2).
-    HaveCustomButton2,
+    HaveCustomButton2 = 16384,
     /// Show the third user-defined button (CustomButton3).
-    HaveCustomButton3,
+    HaveCustomButton3 = 32768,
     /// Don't show the **Cancel** button on the last page.
-    NoCancelButtonOnLastPage,
+    NoCancelButtonOnLastPage = 65536,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

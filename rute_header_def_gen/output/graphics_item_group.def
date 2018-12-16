@@ -83,7 +83,7 @@ struct GraphicsItemGroup : GraphicsItem {
 
 [org_name(QGraphicsItemGroup)]
 enum GraphicsItemGroupFixMeEnums {
-    Type,
+    Type = 10,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

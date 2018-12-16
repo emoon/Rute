@@ -1363,17 +1363,17 @@ struct Transform {
 [org_name(QTransform)]
 enum TransformationType {
     /// 
-    TxNone,
+    TxNone = 0,
     /// 
-    TxTranslate,
+    TxTranslate = 1,
     /// 
-    TxScale,
+    TxScale = 2,
     /// 
-    TxRotate,
+    TxRotate = 4,
     /// 
-    TxShear,
+    TxShear = 8,
     /// 
-    TxProject,
+    TxProject = 16,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

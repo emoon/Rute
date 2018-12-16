@@ -24,44 +24,44 @@ struct StyleOptionMenuItem : StyleOption {
 enum StyleOptionType {
     /// The type of style option provided ( [SO_MenuItem](SO_MenuItem)
  for this class). The type is used internally by QStyleOption, its subclasses, and qstyleoption_cast() to determine the type of style option. In general you do not need to worry about this unless you want to create your own QStyleOption subclass and your own styles.
-    Type,
+    Type = 4,
 }
 
 [org_name(QStyleOptionMenuItem)]
 enum StyleOptionVersion {
     /// 1 The version is used by QStyleOption subclasses to implement extensions without breaking compatibility. If you use qstyleoption_cast(), you normally do not need to check it.
-    Version,
+    Version = 1,
 }
 
 [org_name(QStyleOptionMenuItem)]
 enum MenuItemType {
     /// A normal menu item.
-    Normal,
+    Normal = 0,
     /// A menu item that is the default action as specified with [QMenu::defaultAction().](QMenu::defaultAction().)
 
-    DefaultItem,
+    DefaultItem = 1,
     /// A menu separator.
-    Separator,
+    Separator = 2,
     /// Indicates the menu item points to a sub-menu.
-    SubMenu,
+    SubMenu = 3,
     /// A popup menu scroller (currently only used on MacOS ).
-    Scroller,
+    Scroller = 4,
     /// A tear-off handle for the menu.
-    TearOff,
+    TearOff = 5,
     /// The margin of the menu.
-    Margin,
+    Margin = 6,
     /// The empty area of the menu.
-    EmptyArea,
+    EmptyArea = 7,
 }
 
 [org_name(QStyleOptionMenuItem)]
 enum CheckType {
     /// The item is not checkable.
-    NotCheckable,
+    NotCheckable = 0,
     /// The item is an exclusive check item (like a radio button).
-    Exclusive,
+    Exclusive = 1,
     /// The item is a non-exclusive check item (like a check box).
-    NonExclusive,
+    NonExclusive = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

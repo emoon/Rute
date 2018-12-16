@@ -472,21 +472,21 @@ struct InputDialog : Dialog {
 [org_name(QInputDialog)]
 enum InputDialogOption {
     /// Don't display **{OK}** and **{Cancel}** buttons (useful for "live dialogs").
-    NoButtons,
+    NoButtons = 1,
     /// Use a QListView rather than a non-editable QComboBox for displaying the items set with setComboBoxItems().
-    UseListViewForComboBoxItems,
+    UseListViewForComboBoxItems = 2,
     /// Use a QPlainTextEdit for multiline text input. This value was introduced in 5.2.
-    UsePlainTextEditForTextInput,
+    UsePlainTextEditForTextInput = 4,
 }
 
 [org_name(QInputDialog)]
 enum InputMode {
     /// Used to input text strings.
-    TextInput,
+    TextInput = 0,
     /// Used to input integers.
-    IntInput,
+    IntInput = 1,
     /// Used to input floating point numbers with double precision accuracy.
-    DoubleInput,
+    DoubleInput = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

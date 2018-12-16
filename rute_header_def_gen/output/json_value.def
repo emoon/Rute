@@ -202,19 +202,19 @@ struct JsonValue {
 [org_name(QJsonValue)]
 enum Type {
     /// A Null value
-    Null,
+    Null = 0,
     /// A boolean value. Use toBool() to convert to a bool.
-    Bool,
+    Bool = 1,
     /// A double. Use toDouble() to convert to a double.
-    Double,
+    Double = 2,
     /// A string. Use toString() to convert to a QString.
-    String,
+    String = 3,
     /// An array. Use toArray() to convert to a QJsonArray.
-    Array,
+    Array = 4,
     /// An object. Use toObject() to convert to a QJsonObject.
-    Object,
+    Object = 5,
     /// The value is undefined. This is usually returned as an error condition, when trying to read an out of bounds value in an array or a non existent key in an object.
-    Undefined,
+    Undefined = 128,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

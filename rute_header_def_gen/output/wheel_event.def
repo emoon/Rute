@@ -203,7 +203,7 @@ struct WheelEvent : InputEvent {
 
 [org_name(QWheelEvent)]
 enum WheelEventFixMeEnums {
-    DefaultDeltasPerStep,
+    DefaultDeltasPerStep = 120,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

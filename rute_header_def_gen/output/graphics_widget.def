@@ -967,7 +967,7 @@ struct GraphicsWidget : GraphicsObject, GraphicsLayoutItem {
 
 [org_name(QGraphicsWidget)]
 enum GraphicsWidgetFixMeEnums {
-    Type,
+    Type = 11,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

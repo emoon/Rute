@@ -87,9 +87,9 @@ struct PlatformBackingStore {
 
 [org_name(QPlatformBackingStore)]
 enum TextureFlag {
-    TextureSwizzle,
-    TextureFlip,
-    TexturePremultiplied,
+    TextureSwizzle = 1,
+    TextureFlip = 2,
+    TexturePremultiplied = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

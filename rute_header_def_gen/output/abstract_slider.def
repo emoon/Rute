@@ -243,33 +243,33 @@ struct AbstractSlider : Widget {
 [org_name(QAbstractSlider)]
 enum SliderAction {
     /// 
-    SliderNoAction,
+    SliderNoAction = 0,
     /// 
-    SliderSingleStepAdd,
+    SliderSingleStepAdd = 1,
     /// 
-    SliderSingleStepSub,
+    SliderSingleStepSub = 2,
     /// 
-    SliderPageStepAdd,
+    SliderPageStepAdd = 3,
     /// 
-    SliderPageStepSub,
+    SliderPageStepSub = 4,
     /// 
-    SliderToMinimum,
+    SliderToMinimum = 5,
     /// 
-    SliderToMaximum,
+    SliderToMaximum = 6,
     /// 
-    SliderMove,
+    SliderMove = 7,
 }
 
 [org_name(QAbstractSlider)]
 enum SliderChange {
     /// 
-    SliderRangeChange,
+    SliderRangeChange = 0,
     /// 
-    SliderOrientationChange,
+    SliderOrientationChange = 1,
     /// 
-    SliderStepsChange,
+    SliderStepsChange = 2,
     /// 
-    SliderValueChange,
+    SliderValueChange = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

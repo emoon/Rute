@@ -80,7 +80,7 @@ struct GraphicsLineItem : GraphicsItem {
 
 [org_name(QGraphicsLineItem)]
 enum GraphicsLineItemFixMeEnums {
-    Type,
+    Type = 6,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

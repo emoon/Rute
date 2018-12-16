@@ -57,11 +57,11 @@ struct GraphicsBlurEffect : GraphicsEffect {
 [org_name(QGraphicsBlurEffect)]
 enum BlurHint {
     /// Indicates that rendering performance is the most important factor, at the potential cost of lower quality.
-    PerformanceHint,
+    PerformanceHint = 0,
     /// Indicates that rendering quality is the most important factor, at the potential cost of lower performance.
-    QualityHint,
+    QualityHint = 1,
     /// Indicates that the blur radius is going to be animated, hinting that the implementation can keep a cache of blurred verisons of the source. Do not use this hint if the source is going to be dynamically changing.
-    AnimationHint,
+    AnimationHint = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

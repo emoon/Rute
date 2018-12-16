@@ -9,40 +9,40 @@ struct Internal {
 
 [org_name(QInternal)]
 enum PaintDeviceFlags {
-    UnknownDevice,
-    Widget,
-    Pixmap,
-    Image,
-    Printer,
-    Picture,
-    Pbuffer,
-    FramebufferObject,
-    CustomRaster,
-    MacQuartz,
-    PaintBuffer,
-    OpenGL,
+    UnknownDevice = 0,
+    Widget = 1,
+    Pixmap = 2,
+    Image = 3,
+    Printer = 4,
+    Picture = 5,
+    Pbuffer = 6,
+    FramebufferObject = 7,
+    CustomRaster = 8,
+    MacQuartz = 9,
+    PaintBuffer = 10,
+    OpenGL = 11,
 }
 
 [org_name(QInternal)]
 enum RelayoutType {
-    RelayoutNormal,
-    RelayoutDragging,
-    RelayoutDropped,
+    RelayoutNormal = 0,
+    RelayoutDragging = 1,
+    RelayoutDropped = 2,
 }
 
 [org_name(QInternal)]
 enum DockPosition {
-    LeftDock,
-    RightDock,
-    TopDock,
-    BottomDock,
-    DockCount,
+    LeftDock = 0,
+    RightDock = 1,
+    TopDock = 2,
+    BottomDock = 3,
+    DockCount = 4,
 }
 
 [org_name(QInternal)]
 enum Callback {
-    EventNotifyCallback,
-    LastCallback,
+    EventNotifyCallback = 0,
+    LastCallback = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

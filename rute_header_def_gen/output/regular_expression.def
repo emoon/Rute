@@ -655,50 +655,50 @@ struct RegularExpression {
 [org_name(QRegularExpression)]
 enum PatternOption {
     /// No pattern options are set.
-    NoPatternOption,
+    NoPatternOption = 0,
     /// The pattern should match against the subject string in a case insensitive way. This option corresponds to the /i modifier in Perl regular expressions.
-    CaseInsensitiveOption,
+    CaseInsensitiveOption = 1,
     /// The dot metacharacter ( `.` ) in the pattern string is allowed to match any character in the subject string, including newlines (normally, the dot does not match newlines). This option corresponds to the `/s` modifier in Perl regular expressions.
-    DotMatchesEverythingOption,
+    DotMatchesEverythingOption = 2,
     /// The caret ( `^` ) and the dollar ( `$` ) metacharacters in the pattern string are allowed to match, respectively, immediately after and immediately before any newline in the subject string, as well as at the very beginning and at the very end of the subject string. This option corresponds to the `/m` modifier in Perl regular expressions.
-    MultilineOption,
+    MultilineOption = 4,
     /// Any whitespace in the pattern string which is not escaped and outside a character class is ignored. Moreover, an unescaped sharp ( **#** ) outside a character class causes all the following characters, until the first newline (included), to be ignored. This can be used to increase the readability of a pattern string as well as put comments inside regular expressions; this is particulary useful if the pattern string is loaded from a file or written by the user, because in C++ code it is always possible to use the rules for string literals to put comments outside the pattern string. This option corresponds to the `/x` modifier in Perl regular expressions.
-    ExtendedPatternSyntaxOption,
+    ExtendedPatternSyntaxOption = 8,
     /// The greediness of the quantifiers is inverted: `*` , `+` , `?` , `{m,n` }, etc. become lazy, while their lazy versions ( `*?` , `+?` , `??` , `{m,n` ?}, etc.) become greedy. There is no equivalent for this option in Perl regular expressions.
-    InvertedGreedinessOption,
+    InvertedGreedinessOption = 16,
     /// The non-named capturing groups do not capture substrings; named capturing groups still work as intended, as well as the implicit capturing group number 0 corresponding to the entire match. There is no equivalent for this option in Perl regular expressions.
-    DontCaptureOption,
+    DontCaptureOption = 32,
     /// The meaning of the `\w` , `\d` , etc., character classes, as well as the meaning of their counterparts ( `\W` , `\D` , etc.), is changed from matching ASCII characters only to matching any character with the corresponding Unicode property. For instance, `\d` is changed to match any character with the Unicode Nd (decimal digit) property; `\w` to match any character with either the Unicode L (letter) or N (digit) property, plus underscore, and so on. This option corresponds to the `/u` modifier in Perl regular expressions.
-    UseUnicodePropertiesOption,
+    UseUnicodePropertiesOption = 64,
     /// The regular expression will be optimized (and possibly JIT-compiled) on its first usage, instead of after a certain (undefined) number of usages. See also [optimize()](QRegularExpression::)
  . This enum value has been introduced in Qt 5.4.
-    OptimizeOnFirstUsageOption,
+    OptimizeOnFirstUsageOption = 128,
     /// Regular expressions are automatically optimized after a certain number of usages; setting this option prevents such optimizations, therefore avoiding possible unpredictable spikes in CPU and memory usage. If both this option and the `OptimizeOnFirstUsageOption` option are set, then this option takes precedence. Note: this option will still let the regular expression to be optimized by manually calling [optimize()](QRegularExpression::)
  . This enum value has been introduced in Qt 5.4.
-    DontAutomaticallyOptimizeOption,
+    DontAutomaticallyOptimizeOption = 256,
 }
 
 [org_name(QRegularExpression)]
 enum MatchType {
     /// A normal match is done.
-    NormalMatch,
+    NormalMatch = 0,
     /// The pattern string is matched partially against the subject string. If a partial match is found, then it is recorded, and other matching alternatives are tried as usual. If a complete match is then found, then it's preferred to the partial match; in this case only the complete match is reported. If instead no complete match is found (but only the partial one), then the partial one is reported.
-    PartialPreferCompleteMatch,
+    PartialPreferCompleteMatch = 1,
     /// The pattern string is matched partially against the subject string. If a partial match is found, then matching stops and the partial match is reported. In this case, other matching alternatives (potentially leading to a complete match) are not tried. Moreover, this match type assumes that the subject string only a substring of a larger text, and that (in this text) there are other characters beyond the end of the subject string. This can lead to surprising results; see the discussion in the [partial matching](partial%20matching)
  section for more details.
-    PartialPreferFirstMatch,
+    PartialPreferFirstMatch = 2,
     /// No matching is done. This value is returned as the match type by a default constructed QRegularExpressionMatch or QRegularExpressionMatchIterator. Using this match type is not very useful for the user, as no matching ever happens. This enum value has been introduced in Qt 5.1.
-    NoMatch,
+    NoMatch = 3,
 }
 
 [org_name(QRegularExpression)]
 enum MatchOption {
     /// No match options are set.
-    NoMatchOption,
+    NoMatchOption = 0,
     /// The match is constrained to start exactly at the offset passed to match() in order to be successful, even if the pattern string does not contain any metacharacter that anchors the match at that point.
-    AnchoredMatchOption,
+    AnchoredMatchOption = 1,
     /// The subject string is not checked for UTF-16 validity before attempting a match. Use this option with extreme caution, as attempting to match an invalid string may crash the program and/or constitute a security issue. This enum value has been introduced in Qt 5.4.
-    DontCheckSubjectStringMatchOption,
+    DontCheckSubjectStringMatchOption = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

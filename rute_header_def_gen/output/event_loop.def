@@ -132,16 +132,16 @@ struct EventLoop : Object {
 enum ProcessEventsFlag {
     /// All events. Note that [DeferredDelete](QEvent::DeferredDelete)
  events are processed specially. See QObject::deleteLater() for more details.
-    AllEvents,
+    AllEvents = 0,
     /// Do not process user input events, such as ButtonPress and KeyPress. Note that the events are not discarded; they will be delivered the next time processEvents() is called without the ExcludeUserInputEvents flag.
-    ExcludeUserInputEvents,
+    ExcludeUserInputEvents = 1,
     /// Do not process socket notifier events. Note that the events are not discarded; they will be delivered the next time processEvents() is called without the ExcludeSocketNotifiers flag.
-    ExcludeSocketNotifiers,
+    ExcludeSocketNotifiers = 2,
     /// Wait for events if no pending events are available.
-    WaitForMoreEvents,
-    X11ExcludeTimers,
-    EventLoopExec,
-    DialogExec,
+    WaitForMoreEvents = 4,
+    X11ExcludeTimers = 8,
+    EventLoopExec = 32,
+    DialogExec = 64,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

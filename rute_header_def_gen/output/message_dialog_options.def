@@ -21,11 +21,11 @@ struct MessageDialogOptions {
 
 [org_name(QMessageDialogOptions)]
 enum Icon {
-    NoIcon,
-    Information,
-    Warning,
-    Critical,
-    Question,
+    NoIcon = 0,
+    Information = 1,
+    Warning = 2,
+    Critical = 3,
+    Question = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

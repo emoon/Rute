@@ -161,11 +161,11 @@ struct ColorDialog : Dialog {
 [org_name(QColorDialog)]
 enum ColorDialogOption {
     /// Allow the user to select the alpha component of a color.
-    ShowAlphaChannel,
+    ShowAlphaChannel = 1,
     /// Don't display **{OK}** and **{Cancel}** buttons. (Useful for "live dialogs".)
-    NoButtons,
+    NoButtons = 2,
     /// Use Qt's standard color dialog instead of the operating system native color dialog.
-    DontUseNativeDialog,
+    DontUseNativeDialog = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

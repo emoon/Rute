@@ -1499,23 +1499,23 @@ struct AbstractItemModel : Object {
 [org_name(QAbstractItemModel)]
 enum LayoutChangeHint {
     /// No hint is available.
-    NoLayoutChangeHint,
+    NoLayoutChangeHint = 0,
     /// Rows are being sorted.
-    VerticalSortHint,
+    VerticalSortHint = 1,
     /// Columns are being sorted. Note that VerticalSortHint and HorizontalSortHint carry the meaning that items are being moved within the same parent, not moved to a different parent in the model, and not filtered out or in.
-    HorizontalSortHint,
+    HorizontalSortHint = 2,
 }
 
 [org_name(QAbstractItemModel)]
 enum CheckIndexOption {
     /// No check options are specified.
-    NoOption,
+    NoOption = 0,
     /// The model index passed to QAbstractItemModel::checkIndex() is checked to be a valid model index.
-    IndexIsValid,
+    IndexIsValid = 1,
     /// Does not perform any check involving the usage of the parent of the index passed to QAbstractItemModel::checkIndex().
-    DoNotUseParent,
+    DoNotUseParent = 2,
     /// The parent of the model index passed to QAbstractItemModel::checkIndex() is checked to be an invalid model index. If both this option and DoNotUseParent are specified, then this option is ignored.
-    ParentIsInvalid,
+    ParentIsInvalid = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

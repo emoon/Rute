@@ -776,16 +776,16 @@ enum ResizeMode {
     /// The user can resize the section. The section can also be resized programmatically using resizeSection(). The section size defaults to [defaultSectionSize.](defaultSectionSize.)
  (See also [cascadingSectionResizes.)](cascadingSectionResizes.))
 
-    Interactive,
+    Interactive = 0,
     /// QHeaderView will automatically resize the section to fill the available space. The size cannot be changed by the user or programmatically.
-    Stretch,
+    Stretch = 1,
     /// The user cannot resize the section. The section can only be resized programmatically using resizeSection(). The section size defaults to [defaultSectionSize.](defaultSectionSize.)
 
-    Fixed,
+    Fixed = 2,
     /// QHeaderView will automatically resize the section to its optimal size based on the contents of the entire column or row. The size cannot be changed by the user or programmatically. (This value was introduced in 4.2) The following values are obsolete:
-    ResizeToContents,
+    ResizeToContents = 3,
     /// Use Fixed instead.
-    Custom,
+    Custom = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

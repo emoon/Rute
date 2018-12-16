@@ -407,33 +407,33 @@ struct PageLayout {
 [org_name(QPageLayout)]
 enum Unit {
     /// 
-    Millimeter,
+    Millimeter = 0,
     /// 1/72th of an inch
-    Point,
+    Point = 1,
     /// 
-    Inch,
+    Inch = 2,
     /// 1/72th of a foot, 1/6th of an inch, 12 Points
-    Pica,
+    Pica = 3,
     /// 1/72th of a French inch, 0.375 mm
-    Didot,
+    Didot = 4,
     /// 1/6th of a French inch, 12 Didot, 4.5mm
-    Cicero,
+    Cicero = 5,
 }
 
 [org_name(QPageLayout)]
 enum Orientation {
     /// The page size is used in its default orientation
-    Portrait,
+    Portrait = 0,
     /// The page size is rotated through 90 degrees Note that some standard page sizes are defined with a width larger than their height, hence the orientation is defined relative to the standard page size and not using the relative page dimensions.
-    Landscape,
+    Landscape = 1,
 }
 
 [org_name(QPageLayout)]
 enum Mode {
     /// Paint Rect includes margins, margins must fall between the minimum and maximum.
-    StandardMode,
+    StandardMode = 0,
     /// Paint Rect excludes margins, margins can be any value and must be managed manually.
-    FullPageMode,
+    FullPageMode = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

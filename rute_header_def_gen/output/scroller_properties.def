@@ -35,70 +35,70 @@ struct ScrollerProperties {
 [org_name(QScrollerProperties)]
 enum OvershootPolicy {
     /// Overshooting is possible when the content is scrollable. This is the default.
-    OvershootWhenScrollable,
+    OvershootWhenScrollable = 0,
     /// Overshooting is never enabled, even when the content is scrollable.
-    OvershootAlwaysOff,
+    OvershootAlwaysOff = 1,
     /// Overshooting is always enabled, even when the content is not scrollable.
-    OvershootAlwaysOn,
+    OvershootAlwaysOn = 2,
 }
 
 [org_name(QScrollerProperties)]
 enum FrameRates {
     /// the default value is 60 frames per second (which corresponds to QAbstractAnimation).
-    Standard,
+    Standard = 0,
     /// 60 frames per second
-    Fps60,
+    Fps60 = 1,
     /// 30 frames per second
-    Fps30,
+    Fps30 = 2,
     /// 20 frames per second
-    Fps20,
+    Fps20 = 3,
 }
 
 [org_name(QScrollerProperties)]
 enum ScrollMetric {
     /// This is the time a mouse press event is delayed when starting a flick gesture in `[s]` . If the gesture is triggered within that time, no mouse press or release is sent to the scrolled object. If it triggers after that delay the delayed mouse press plus a faked release event at global position `QPoint(-QWIDGETSIZE_MAX,
     -QWIDGETSIZE_MAX)` is sent. If the gesture is canceled, then both the delayed mouse press plus the real release event are delivered.
-    MousePressEventDelay,
+    MousePressEventDelay = 0,
     /// This is the minimum distance the touch or mouse point needs to be moved before the flick gesture is triggered in `m.`
-    DragStartDistance,
+    DragStartDistance = 1,
     /// A value that describes to which extent new drag velocities are included in the final scrolling velocity. This value should be in the range between `0` and `1.` The lower the value, the more smoothing is applied to the dragging velocity.
-    DragVelocitySmoothingFactor,
+    DragVelocitySmoothingFactor = 2,
     /// Restricts the movement to one axis if the movement is inside an angle around the axis. The threshold must be in the range `0` to `1.`
-    AxisLockThreshold,
+    AxisLockThreshold = 3,
     /// The QEasingCurve used when decelerating the scrolling velocity after an user initiated flick. Please note that this is the easing curve for the positions, **not** the velocity: the default is QEasingCurve::OutQuad, which results in a linear decrease in velocity (1st derivative) and a constant deceleration (2nd derivative).
-    ScrollingCurve,
+    ScrollingCurve = 4,
     /// This factor influences how long it takes the scroller to decelerate to 0 velocity. The actual value depends on the chosen ScrollingCurve. For most types the value should be in the range from `0.1` to `2.0`
-    DecelerationFactor,
+    DecelerationFactor = 5,
     /// The minimum velocity that is needed after ending the touch or releasing the mouse to start scrolling in `m/s` .
-    MinimumVelocity,
+    MinimumVelocity = 6,
     /// This is the maximum velocity that can be reached in `m/s` .
-    MaximumVelocity,
+    MaximumVelocity = 7,
     /// This is the maximum allowed scroll speed for a click-through in `m/s` . This means that a click on a currently (slowly) scrolling object will not only stop the scrolling but the click event will also be delivered to the UI control. This is useful when using exponential-type scrolling curves.
-    MaximumClickThroughVelocity,
+    MaximumClickThroughVelocity = 8,
     /// This is the maximum time in `seconds` that a flick gesture can take to be recognized as an accelerating flick. If set to zero no such gesture is detected. An "accelerating flick" is a flick gesture executed on an already scrolling object. In such cases the scrolling speed is multiplied by AcceleratingFlickSpeedupFactor in order to accelerate it.
-    AcceleratingFlickMaximumTime,
+    AcceleratingFlickMaximumTime = 9,
     /// The current speed is multiplied by this number if an accelerating flick is detected. Should be `>= 1` .
-    AcceleratingFlickSpeedupFactor,
+    AcceleratingFlickSpeedupFactor = 10,
     /// This is the distance that the user must drag the area beween two snap points in order to snap it to the next position. `0.33` means that the scroll must only reach one third of the distance between two snap points to snap to the next one. The ratio must be between `0` and `1.`
-    SnapPositionRatio,
+    SnapPositionRatio = 11,
     /// This is the time factor for the scrolling curve. A lower value means that the scrolling will take longer. The scrolling distance is independet of this value.
-    SnapTime,
+    SnapTime = 12,
     /// This value is the factor between the mouse dragging and the actual scroll area movement (during overshoot). The factor must be between `0` and `1.`
-    OvershootDragResistanceFactor,
+    OvershootDragResistanceFactor = 13,
     /// This is the maximum distance for overshoot movements while dragging. The actual overshoot distance is calculated by multiplying this value with the viewport size of the scrolled object. The factor must be between `0` and `1.`
-    OvershootDragDistanceFactor,
+    OvershootDragDistanceFactor = 14,
     /// This is the maximum distance for overshoot movements while scrolling. The actual overshoot distance is calculated by multiplying this value with the viewport size of the scrolled object. The factor must be between `0` and `1.`
-    OvershootScrollDistanceFactor,
+    OvershootScrollDistanceFactor = 15,
     /// This is the time in `seconds` that is used to play the complete overshoot animation.
-    OvershootScrollTime,
+    OvershootScrollTime = 16,
     /// This is the horizontal overshooting policy (see OvershootPolicy).
-    HorizontalOvershootPolicy,
+    HorizontalOvershootPolicy = 17,
     /// This is the horizontal overshooting policy (see OvershootPolicy).
-    VerticalOvershootPolicy,
+    VerticalOvershootPolicy = 18,
     /// This is the frame rate which should be used while dragging or scrolling. QScroller uses a QAbstractAnimation timer internally to sync all scrolling operations to other animations that might be active at the same time. If the standard value of 60 frames per second is too fast, it can be lowered with this setting, while still being in-sync with QAbstractAnimation. Please note that only the values of the FrameRates enum are allowed here.
-    FrameRate,
+    FrameRate = 19,
     /// This is always the last entry.
-    ScrollMetricCount,
+    ScrollMetricCount = 20,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

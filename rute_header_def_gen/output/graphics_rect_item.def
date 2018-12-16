@@ -67,7 +67,7 @@ struct GraphicsRectItem : AbstractGraphicsShapeItem {
 
 [org_name(QGraphicsRectItem)]
 enum GraphicsRectItemFixMeEnums {
-    Type,
+    Type = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

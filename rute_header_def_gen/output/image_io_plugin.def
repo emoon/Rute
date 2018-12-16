@@ -76,11 +76,11 @@ struct ImageIOPlugin : Object {
 [org_name(QImageIOPlugin)]
 enum Capability {
     /// The plugin can read images.
-    CanRead,
+    CanRead = 1,
     /// The plugin can write images.
-    CanWrite,
+    CanWrite = 2,
     /// The plugin can read images incrementally.
-    CanReadIncremental,
+    CanReadIncremental = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
