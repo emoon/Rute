@@ -69,6 +69,12 @@ pub struct RUApplicationFuncs {
     pub auto_sip_enabled: extern "C" fn(self_c: *const RUBase) -> bool,
     pub close_all_windows: extern "C" fn(self_c: *const RUBase),
     pub about_qt: extern "C" fn(self_c: *const RUBase),
+    pub set_about_to_quit_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
 }
 
 #[repr(C)]

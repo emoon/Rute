@@ -404,6 +404,14 @@ static void application_about_qt(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void set_application_about_to_quit_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
+    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, (void*)wrapped_func);
+    QObject* q_obj = (QObject*)object;
+    QObject::connect(q_obj, SIGNAL(aboutToQuit()), wrap, SLOT(method()));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUApplication get_application(struct RUBase* priv_data) {
     (void)priv_data;
     RUApplication ctl;
@@ -460,6 +468,7 @@ struct RUApplicationFuncs s_application_funcs = {
     application_auto_sip_enabled,
     application_close_all_windows,
     application_about_qt,
+    set_application_about_to_quit_event,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

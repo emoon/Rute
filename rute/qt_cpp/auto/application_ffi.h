@@ -64,6 +64,9 @@ typedef struct RUApplicationFuncs {
     bool (*auto_sip_enabled)(struct RUBase* self_c);
     void (*close_all_windows)(struct RUBase* self_c);
     void (*about_qt)(struct RUBase* self_c);
+    void (*set_about_to_quit_event)(void* object, void* user_data,
+                                    void* wrapped_func,
+                                    void (*event)(void*, void* self_c));
 } RUApplicationFuncs;
 
 typedef struct RUApplicationAllFuncs {

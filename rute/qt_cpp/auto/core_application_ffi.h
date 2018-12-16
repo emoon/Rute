@@ -50,6 +50,9 @@ typedef struct RUCoreApplicationFuncs {
     bool (*is_quit_lock_enabled)(struct RUBase* self_c);
     void (*set_quit_lock_enabled)(struct RUBase* self_c, bool enabled);
     void (*quit)(struct RUBase* self_c);
+    void (*set_about_to_quit_event)(void* object, void* user_data,
+                                    void* wrapped_func,
+                                    void (*event)(void*, void* self_c));
 } RUCoreApplicationFuncs;
 
 typedef struct RUCoreApplicationAllFuncs {

@@ -1586,6 +1586,47 @@ impl<'a> GuiApplication<'a> {
         }
     }
     #[doc(hidden)]
+    pub fn set_about_to_quit_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_core_application_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_about_to_quit_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(core_application_about_to_quit_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_about_to_quit_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_core_application_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_about_to_quit_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(core_application_about_to_quit_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    #[doc(hidden)]
     pub fn object_name(&self) -> String {
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {

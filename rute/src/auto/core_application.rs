@@ -19,6 +19,26 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+pub(crate) unsafe extern "C" fn core_application_about_to_quit_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+) {
+    let f: &&(Fn(&T) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn core_application_about_to_quit_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+) {
+    let f: &&(Fn() + 'static) = transmute(func);
+
+    f();
+}
+
 /// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// This class is used by non-GUI applications to provide their event
@@ -1022,6 +1042,57 @@ impl<'a> CoreApplication<'a> {
         unsafe {
             ((*funcs).quit)(obj_data);
         }
+    }
+    ///
+    /// This signal is emitted when the application is about to quit the
+    /// main event loop, e.g. when the event loop level drops to zero.
+    /// This may happen either after a call to quit() from inside the
+    /// application or when the user shuts down the entire desktop session.
+    ///
+    /// The signal is particularly useful if your application has to do some
+    /// last-second cleanup. Note that no user interaction is possible in
+    /// this state.
+    ///
+    /// **See also:** [`quit()`]
+    pub fn set_about_to_quit_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_core_application_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_about_to_quit_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(core_application_about_to_quit_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_about_to_quit_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_core_application_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_about_to_quit_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(core_application_about_to_quit_trampoline as usize),
+            );
+        }
+
+        self
     }
     #[doc(hidden)]
     pub fn object_name(&self) -> String {

@@ -51,6 +51,12 @@ pub struct RUCoreApplicationFuncs {
     pub is_quit_lock_enabled: extern "C" fn(self_c: *const RUBase) -> bool,
     pub set_quit_lock_enabled: extern "C" fn(self_c: *const RUBase, enabled: bool),
     pub quit: extern "C" fn(self_c: *const RUBase),
+    pub set_about_to_quit_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
 }
 
 #[repr(C)]
