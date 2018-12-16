@@ -9,6 +9,37 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct RUStyle application_style(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+    auto ret_value = qt_value->style();
+    struct RUStyle ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_style_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_style(struct RUBase* self_c, struct RUBase* arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+    qt_value->setStyle((QStyle*)arg0);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUStyle application_set_style_2(struct RUBase* self_c, const char* arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+    auto ret_value = qt_value->setStyle(QString::fromUtf8(arg0));
+    struct RUStyle ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_style_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static int application_color_spec(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
     auto ret_value = qt_value->colorSpec();
@@ -24,7 +55,21 @@ static void application_set_color_spec(struct RUBase* self_c, int arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUFont application_get_font(struct RUBase* self_c) {
+static struct RUPalette application_palette(struct RUBase* self_c, struct RUBase* arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+    auto ret_value = qt_value->palette((QWidget*)arg0);
+    WRPalette* new_val = new WRPalette();
+    *new_val = ret_value;
+    struct RUPalette ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_palette_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUFont application_font(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
     auto ret_value = qt_value->font();
     WRFont* new_val = new WRFont();
@@ -33,6 +78,53 @@ static struct RUFont application_get_font(struct RUBase* self_c) {
     ctl.qt_data = (struct RUBase*)new_val;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
     ctl.all_funcs = &s_font_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUFont application_font_2(struct RUBase* self_c, struct RUBase* arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+    auto ret_value = qt_value->font((QWidget*)arg0);
+    WRFont* new_val = new WRFont();
+    *new_val = ret_value;
+    struct RUFont ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_font_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_window_icon(struct RUBase* self_c, struct RUBase* icon) {
+    QApplication* qt_value = (QApplication*)self_c;
+    qt_value->setWindowIcon(*((QIcon*)icon));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUIcon application_window_icon(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+    auto ret_value = qt_value->windowIcon();
+    WRIcon* new_val = new WRIcon();
+    *new_val = ret_value;
+    struct RUIcon ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_icon_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUDesktopWidget application_desktop(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+    auto ret_value = qt_value->desktop();
+    struct RUDesktopWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_desktop_widget_all_funcs;
     return ctl;
 }
 
@@ -86,14 +178,26 @@ static struct RUWidget application_active_window(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void application_set_active_window(struct RUBase* self_c, struct RUBase* actor) {
+static void application_set_active_window(struct RUBase* self_c, struct RUBase* act) {
     QApplication* qt_value = (QApplication*)self_c;
-    qt_value->setActiveWindow((QWidget*)actor);
+    qt_value->setActiveWindow((QWidget*)act);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUWidget application_widget_at(struct RUBase* self_c, int x, int y) {
+static struct RUWidget application_widget_at(struct RUBase* self_c, struct RUBase* p) {
+    QApplication* qt_value = (QApplication*)self_c;
+    auto ret_value = qt_value->widgetAt(*((QPoint*)p));
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget application_widget_at_2(struct RUBase* self_c, int x, int y) {
     QApplication* qt_value = (QApplication*)self_c;
     auto ret_value = qt_value->widgetAt(x, y);
     struct RUWidget ctl;
@@ -105,7 +209,19 @@ static struct RUWidget application_widget_at(struct RUBase* self_c, int x, int y
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUWidget application_top_level_at(struct RUBase* self_c, int x, int y) {
+static struct RUWidget application_top_level_at(struct RUBase* self_c, struct RUBase* p) {
+    QApplication* qt_value = (QApplication*)self_c;
+    auto ret_value = qt_value->topLevelAt(*((QPoint*)p));
+    struct RUWidget ctl;
+    ctl.qt_data = (struct RUBase*)ret_value;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
+    ctl.all_funcs = &s_widget_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUWidget application_top_level_at_2(struct RUBase* self_c, int x, int y) {
     QApplication* qt_value = (QApplication*)self_c;
     auto ret_value = qt_value->topLevelAt(x, y);
     struct RUWidget ctl;
@@ -120,6 +236,13 @@ static struct RUWidget application_top_level_at(struct RUBase* self_c, int x, in
 static void application_beep(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
     qt_value->beep();
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_alert(struct RUBase* self_c, struct RUBase* widget, int duration) {
+    QApplication* qt_value = (QApplication*)self_c;
+    qt_value->alert((QWidget*)widget, duration);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -214,6 +337,21 @@ static int application_start_drag_distance(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static bool application_is_effect_enabled(struct RUBase* self_c, int arg0) {
+    QApplication* qt_value = (QApplication*)self_c;
+    auto ret_value = qt_value->isEffectEnabled((Qt::UIEffect)s_ui_effect_lookup[arg0]);
+    return ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void application_set_effect_enabled(struct RUBase* self_c, int arg0, bool enable) {
+    QApplication* qt_value = (QApplication*)self_c;
+    qt_value->setEffectEnabled((Qt::UIEffect)s_ui_effect_lookup[arg0], enable);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static int application_exec(struct RUBase* self_c) {
     QApplication* qt_value = (QApplication*)self_c;
     auto ret_value = qt_value->exec();
@@ -222,18 +360,10 @@ static int application_exec(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_application_about_to_quit_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
-    QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, (void*)wrapped_func);
-    QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(aboutToQuit()), wrap, SLOT(method()));
-}
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-static void set_application_screen_added_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* screen)) {
-    QSlotWrapperSignal_self_ScreenType_void* wrap = new QSlotWrapperSignal_self_ScreenType_void(user_data, (Signal_self_ScreenType_void)event, (void*)wrapped_func);
-    QObject* q_obj = (QObject*)object;
-    QObject::connect(q_obj, SIGNAL(screenAdded(QScreen*)), wrap, SLOT(method(QScreen*)));
+static const char* application_style_sheet(struct RUBase* self_c) {
+    QApplication* qt_value = (QApplication*)self_c;
+    auto ret_value = qt_value->styleSheet();
+    return q_string_to_const_char(ret_value);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -287,17 +417,28 @@ static struct RUApplication get_application(struct RUBase* priv_data) {
 
 struct RUApplicationFuncs s_application_funcs = {
     destroy_application,
+    application_style,
+    application_set_style,
+    application_set_style_2,
     application_color_spec,
     application_set_color_spec,
-    application_get_font,
+    application_palette,
+    application_font,
+    application_font_2,
+    application_set_window_icon,
+    application_window_icon,
+    application_desktop,
     application_active_popup_widget,
     application_active_modal_widget,
     application_focus_widget,
     application_active_window,
     application_set_active_window,
     application_widget_at,
+    application_widget_at_2,
     application_top_level_at,
+    application_top_level_at_2,
     application_beep,
+    application_alert,
     application_set_cursor_flash_time,
     application_cursor_flash_time,
     application_set_double_click_interval,
@@ -310,9 +451,10 @@ struct RUApplicationFuncs s_application_funcs = {
     application_start_drag_time,
     application_set_start_drag_distance,
     application_start_drag_distance,
+    application_is_effect_enabled,
+    application_set_effect_enabled,
     application_exec,
-    set_application_about_to_quit_event,
-    set_application_screen_added_event,
+    application_style_sheet,
     application_set_style_sheet,
     application_set_auto_sip_enabled,
     application_auto_sip_enabled,
@@ -323,6 +465,9 @@ struct RUApplicationFuncs s_application_funcs = {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 struct RUApplicationAllFuncs s_application_all_funcs = {
+    &s_object_funcs,
+    &s_core_application_funcs,
+    &s_gui_application_funcs,
     &s_application_funcs,
 };
 

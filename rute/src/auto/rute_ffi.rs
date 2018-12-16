@@ -11,13 +11,19 @@ use auto::brush_ffi::*;
 #[allow(unused_imports)]
 use auto::button_group_ffi::*;
 #[allow(unused_imports)]
+use auto::clipboard_ffi::*;
+#[allow(unused_imports)]
 use auto::close_event_ffi::*;
 #[allow(unused_imports)]
 use auto::color_ffi::*;
 #[allow(unused_imports)]
 use auto::context_menu_event_ffi::*;
 #[allow(unused_imports)]
+use auto::core_application_ffi::*;
+#[allow(unused_imports)]
 use auto::cursor_ffi::*;
+#[allow(unused_imports)]
+use auto::desktop_widget_ffi::*;
 #[allow(unused_imports)]
 use auto::drag_enter_event_ffi::*;
 #[allow(unused_imports)]
@@ -40,6 +46,8 @@ use auto::font_info_ffi::*;
 use auto::gradient_ffi::*;
 #[allow(unused_imports)]
 use auto::grid_layout_ffi::*;
+#[allow(unused_imports)]
+use auto::gui_application_ffi::*;
 #[allow(unused_imports)]
 use auto::hide_event_ffi::*;
 #[allow(unused_imports)]
@@ -167,6 +175,7 @@ pub struct RuteFFI {
         host_data: *const c_void,
     ) -> RUColor,
     pub get_color: extern "C" fn(priv_data: *const RUBase) -> RUColor,
+    pub get_core_application: extern "C" fn(priv_data: *const RUBase) -> RUCoreApplication,
     pub create_cursor: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -189,6 +198,7 @@ pub struct RuteFFI {
         callback: unsafe extern "C" fn(),
         host_data: *const c_void,
     ) -> RUGridLayout,
+    pub get_gui_application: extern "C" fn(priv_data: *const RUBase) -> RUGuiApplication,
     pub create_icon: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),

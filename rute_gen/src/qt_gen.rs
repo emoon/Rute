@@ -1305,9 +1305,10 @@ impl QtGenerator {
         for sdef in api_defs
             .iter()
             .flat_map(|d| d.class_structs.iter())
-            .filter(|s| s.should_have_create_func())
         {
-            writeln!(dest, "    create_{},", sdef.name.to_snake_case())?;
+            if sdef.should_have_create_func() {
+                writeln!(dest, "    create_{},", sdef.name.to_snake_case())?;
+            }
 
             if sdef.has_static_functions() {
                 writeln!(dest, "    get_{},", sdef.name.to_snake_case())?;

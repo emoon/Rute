@@ -2,7 +2,21 @@
 use rute_ffi_base::*;
 
 #[allow(unused_imports)]
+use auto::core_application_ffi::*;
+#[allow(unused_imports)]
+use auto::desktop_widget_ffi::RUDesktopWidget;
+#[allow(unused_imports)]
 use auto::font_ffi::RUFont;
+#[allow(unused_imports)]
+use auto::gui_application_ffi::*;
+#[allow(unused_imports)]
+use auto::icon_ffi::RUIcon;
+#[allow(unused_imports)]
+use auto::object_ffi::*;
+#[allow(unused_imports)]
+use auto::palette_ffi::RUPalette;
+#[allow(unused_imports)]
+use auto::style_ffi::RUStyle;
 #[allow(unused_imports)]
 use auto::widget_ffi::RUWidget;
 #[allow(unused_imports)]
@@ -11,17 +25,29 @@ use std::os::raw::c_void;
 #[derive(Copy, Clone)]
 pub struct RUApplicationFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
+    pub style: extern "C" fn(self_c: *const RUBase) -> RUStyle,
+    pub set_style: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
+    pub set_style_2:
+        extern "C" fn(self_c: *const RUBase, arg0: *const ::std::os::raw::c_char) -> RUStyle,
     pub color_spec: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_color_spec: extern "C" fn(self_c: *const RUBase, arg0: i32),
-    pub get_font: extern "C" fn(self_c: *const RUBase) -> RUFont,
+    pub palette: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase) -> RUPalette,
+    pub font: extern "C" fn(self_c: *const RUBase) -> RUFont,
+    pub font_2: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase) -> RUFont,
+    pub set_window_icon: extern "C" fn(self_c: *const RUBase, icon: *const RUBase),
+    pub window_icon: extern "C" fn(self_c: *const RUBase) -> RUIcon,
+    pub desktop: extern "C" fn(self_c: *const RUBase) -> RUDesktopWidget,
     pub active_popup_widget: extern "C" fn(self_c: *const RUBase) -> RUWidget,
     pub active_modal_widget: extern "C" fn(self_c: *const RUBase) -> RUWidget,
     pub focus_widget: extern "C" fn(self_c: *const RUBase) -> RUWidget,
     pub active_window: extern "C" fn(self_c: *const RUBase) -> RUWidget,
-    pub set_active_window: extern "C" fn(self_c: *const RUBase, actor: *const RUBase),
-    pub widget_at: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) -> RUWidget,
-    pub top_level_at: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) -> RUWidget,
+    pub set_active_window: extern "C" fn(self_c: *const RUBase, act: *const RUBase),
+    pub widget_at: extern "C" fn(self_c: *const RUBase, p: *const RUBase) -> RUWidget,
+    pub widget_at_2: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) -> RUWidget,
+    pub top_level_at: extern "C" fn(self_c: *const RUBase, p: *const RUBase) -> RUWidget,
+    pub top_level_at_2: extern "C" fn(self_c: *const RUBase, x: i32, y: i32) -> RUWidget,
     pub beep: extern "C" fn(self_c: *const RUBase),
+    pub alert: extern "C" fn(self_c: *const RUBase, widget: *const RUBase, duration: i32),
     pub set_cursor_flash_time: extern "C" fn(self_c: *const RUBase, arg0: i32),
     pub cursor_flash_time: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_double_click_interval: extern "C" fn(self_c: *const RUBase, arg0: i32),
@@ -34,21 +60,10 @@ pub struct RUApplicationFuncs {
     pub start_drag_time: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_start_drag_distance: extern "C" fn(self_c: *const RUBase, l: i32),
     pub start_drag_distance: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub is_effect_enabled: extern "C" fn(self_c: *const RUBase, arg0: i32) -> bool,
+    pub set_effect_enabled: extern "C" fn(self_c: *const RUBase, arg0: i32, enable: bool),
     pub exec: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub set_about_to_quit_event: extern "C" fn(
-        object: *const RUBase,
-        user_data: *const c_void,
-        trampoline_func: *const c_void,
-        callback: *const c_void,
-    ),
-
-    pub set_screen_added_event: extern "C" fn(
-        object: *const RUBase,
-        user_data: *const c_void,
-        trampoline_func: *const c_void,
-        callback: *const c_void,
-    ),
-
+    pub style_sheet: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
     pub set_style_sheet: extern "C" fn(self_c: *const RUBase, sheet: *const ::std::os::raw::c_char),
     pub set_auto_sip_enabled: extern "C" fn(self_c: *const RUBase, enabled: bool),
     pub auto_sip_enabled: extern "C" fn(self_c: *const RUBase) -> bool,
@@ -59,6 +74,9 @@ pub struct RUApplicationFuncs {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUApplicationAllFuncs {
+    pub object_funcs: *const RUObjectFuncs,
+    pub core_application_funcs: *const RUCoreApplicationFuncs,
+    pub gui_application_funcs: *const RUGuiApplicationFuncs,
     pub application_funcs: *const RUApplicationFuncs,
 }
 

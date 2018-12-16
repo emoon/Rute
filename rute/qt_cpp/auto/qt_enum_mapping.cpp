@@ -1,5 +1,7 @@
+#include <QApplication>
 #include <QColor>
 #include <QContextMenuEvent>
+#include <QCoreApplication>
 #include <QFont>
 #include <QGradient>
 #include <QIcon>
@@ -56,6 +58,7 @@ std::map<int, int> s_color_group_lookup;
 std::map<int, int> s_color_model_lookup;
 std::map<int, int> s_color_role_lookup;
 std::map<int, int> s_color_space_lookup;
+std::map<int, int> s_color_spec_lookup;
 std::map<int, int> s_complex_control_lookup;
 std::map<int, int> s_composition_mode_lookup;
 std::map<int, int> s_connection_type_lookup;
@@ -65,6 +68,7 @@ std::map<int, int> s_control_element_lookup;
 std::map<int, int> s_control_type_lookup;
 std::map<int, int> s_coordinate_mode_lookup;
 std::map<int, int> s_coordinate_system_lookup;
+std::map<int, int> s_core_application_fix_me_enums_lookup;
 std::map<int, int> s_corner_lookup;
 std::map<int, int> s_cursor_move_style_lookup;
 std::map<int, int> s_cursor_shape_lookup;
@@ -521,6 +525,16 @@ extern void create_enum_mappings() {
         s_color_space_lookup[color_space_vals[i].key] = color_space_vals[i].val;
     }
 
+    static KeyVal color_spec_vals[] = {
+        {(int)QApplication::NormalColor, 0},
+        {(int)QApplication::CustomColor, 1},
+        {(int)QApplication::ManyColor, 2},
+    };
+
+    for (int i = 0; i < 3; ++i) {
+        s_color_spec_lookup[color_spec_vals[i].key] = color_spec_vals[i].val;
+    }
+
     static KeyVal complex_control_vals[] = {
         {(int)QStyle::CC_SpinBox, 0},     {(int)QStyle::CC_ComboBox, 1},
         {(int)QStyle::CC_ScrollBar, 2},   {(int)QStyle::CC_Slider, 3},
@@ -725,6 +739,16 @@ extern void create_enum_mappings() {
     for (int i = 0; i < 2; ++i) {
         s_coordinate_system_lookup[coordinate_system_vals[i].key] =
             coordinate_system_vals[i].val;
+    }
+
+    static KeyVal core_application_fix_me_enums_vals[] = {
+        {(int)QCoreApplication::ApplicationFlags, 330498},
+    };
+
+    for (int i = 0; i < 1; ++i) {
+        s_core_application_fix_me_enums_lookup
+            [core_application_fix_me_enums_vals[i].key] =
+                core_application_fix_me_enums_vals[i].val;
     }
 
     static KeyVal corner_vals[] = {

@@ -12,10 +12,13 @@
 #include "bitmap_ffi.h"
 #include "brush_ffi.h"
 #include "button_group_ffi.h"
+#include "clipboard_ffi.h"
 #include "close_event_ffi.h"
 #include "color_ffi.h"
 #include "context_menu_event_ffi.h"
+#include "core_application_ffi.h"
 #include "cursor_ffi.h"
+#include "desktop_widget_ffi.h"
 #include "drag_enter_event_ffi.h"
 #include "drag_leave_event_ffi.h"
 #include "drag_move_event_ffi.h"
@@ -27,6 +30,7 @@
 #include "font_info_ffi.h"
 #include "gradient_ffi.h"
 #include "grid_layout_ffi.h"
+#include "gui_application_ffi.h"
 #include "hide_event_ffi.h"
 #include "icon_ffi.h"
 #include "image_ffi.h"
@@ -97,6 +101,7 @@ typedef struct RuteFFI {
                                    RUDeleteCallback delete_callback,
                                    void* host_data);
     struct RUColor (*get_color)(struct RUBase* priv_data);
+    struct RUCoreApplication (*get_core_application)(struct RUBase* priv_data);
     struct RUCursor (*create_cursor)(struct RUBase* priv_data,
                                      RUDeleteCallback delete_callback,
                                      void* host_data);
@@ -111,6 +116,7 @@ typedef struct RuteFFI {
     struct RUGridLayout (*create_grid_layout)(struct RUBase* priv_data,
                                               RUDeleteCallback delete_callback,
                                               void* host_data);
+    struct RUGuiApplication (*get_gui_application)(struct RUBase* priv_data);
     struct RUIcon (*create_icon)(struct RUBase* priv_data,
                                  RUDeleteCallback delete_callback,
                                  void* host_data);

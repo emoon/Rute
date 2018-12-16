@@ -23,6 +23,9 @@
 #include "button_group_ffi.h"
 #include <QButtonGroup>
 
+#include "clipboard_ffi.h"
+#include <QClipboard>
+
 #include "close_event_ffi.h"
 #include <QCloseEvent>
 
@@ -32,8 +35,14 @@
 #include "context_menu_event_ffi.h"
 #include <QContextMenuEvent>
 
+#include "core_application_ffi.h"
+#include <QCoreApplication>
+
 #include "cursor_ffi.h"
 #include <QCursor>
+
+#include "desktop_widget_ffi.h"
+#include <QDesktopWidget>
 
 #include "drag_enter_event_ffi.h"
 #include <QDragEnterEvent>
@@ -67,6 +76,9 @@
 
 #include "grid_layout_ffi.h"
 #include <QGridLayout>
+
+#include "gui_application_ffi.h"
+#include <QGuiApplication>
 
 #include "hide_event_ffi.h"
 #include <QHideEvent>

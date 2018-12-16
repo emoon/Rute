@@ -40,7 +40,8 @@ impl<T> Drop for PrimitiveArray<T> {
 }
 
 impl<T> Iterator for PrimitiveArray<T>
-    where T: std::marker::Copy
+where
+    T: std::marker::Copy,
 {
     type Item = T;
 
@@ -51,7 +52,8 @@ impl<T> Iterator for PrimitiveArray<T>
             unsafe {
                 let data = std::slice::from_raw_parts(
                     self.data.priv_data as *const T,
-                    self.data.count as usize);
+                    self.data.count as usize,
+                );
                 let index = self.index;
                 self.index += 1;
                 Some(data[index])
@@ -112,4 +114,3 @@ where
     }
 }
 */
-

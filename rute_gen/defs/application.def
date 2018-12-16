@@ -1,71 +1,748 @@
+///
+/// QApplication specializes QGuiApplication with some functionality needed
+/// for QWidget-based applications. It handles widget specific initialization,
+/// finalization.
+///
+/// For any GUI application using Qt, there is precisely **one** QApplication
+/// object, no matter whether the application has 0, 1, 2 or more windows at
+/// any given time. For non-QWidget based Qt applications, use QGuiApplication instead,
+/// as it does not depend on the [QtWidgets](QtWidgets)
+/// library.
+///
+/// Some GUI applications provide a special batch mode ie. provide command line
+/// arguments for executing tasks without manual intervention. In such non-GUI
+/// mode, it is often sufficient to instantiate a plain QCoreApplication to
+/// avoid unnecessarily initializing resources needed for a graphical user
+/// interface. The following example shows how to dynamically create an
+/// appropriate type of application instance:
+///
+/// The QApplication object is accessible through the instance() function that
+/// returns a pointer equivalent to the global qApp pointer.
+///
+/// QApplication's main areas of responsibility are:
+/// * It initializes the application with the user's desktop settings such as palette(), font() and doubleClickInterval(). It keeps track of these properties in case the user changes the desktop globally, for example through some kind of control panel.
+/// * It performs event handling, meaning that it receives events from the underlying window system and dispatches them to the relevant widgets. By using sendEvent() and postEvent() you can send your own events to widgets.
+/// * It parses common command line arguments and sets its internal state accordingly. See the [constructor documentation](QApplication::QApplication())
+/// below for more details.
+/// * It defines the application's look and feel, which is encapsulated in a QStyle object. This can be changed at runtime with setStyle().
+/// * It specifies how the application is to allocate colors. See setColorSpec() for details.
+/// * It provides localization of strings that are visible to the user via translate().
+/// * It provides some magical objects like the desktop() and the clipboard().
+/// * It knows about the application's windows. You can ask which widget is at a certain position using widgetAt(), get a list of topLevelWidgets() and closeAllWindows(), etc.
+/// * It manages the application's mouse cursor handling, see setOverrideCursor()
+///
+/// Since the QApplication object does so much initialization, it *must* be
+/// created before any other objects related to the user interface are created.
+/// QApplication also deals with common command line arguments. Hence, it is
+/// usually a good idea to create it *before* any interpretation or
+/// modification of `argv` is done in the application itself.
+///
+/// * {2,1} Groups of functions
+///
+/// * System settings
+/// * desktopSettingsAware(), setDesktopSettingsAware(), cursorFlashTime(), setCursorFlashTime(), doubleClickInterval(), setDoubleClickInterval(), setKeyboardInputInterval(), wheelScrollLines(), setWheelScrollLines(), palette(), setPalette(), font(), setFont(), fontMetrics().
+///
+/// * Event handling
+/// * exec(), processEvents(), exit(), quit(). sendEvent(), postEvent(), sendPostedEvents(), removePostedEvents(), hasPendingEvents(), notify().
+///
+/// * GUI Styles
+/// * style(), setStyle().
+///
+/// * Color usage
+/// * colorSpec(), setColorSpec().
+///
+/// * Text handling
+/// * installTranslator(), removeTranslator() translate().
+///
+/// * Widgets
+/// * allWidgets(), topLevelWidgets(), desktop(), activePopupWidget(), activeModalWidget(), clipboard(), focusWidget(), activeWindow(), widgetAt().
+///
+/// * Advanced cursor handling
+/// * overrideCursor(), setOverrideCursor(), restoreOverrideCursor().
+///
+/// * Miscellaneous
+/// * closeAllWindows(), startingUp(), closingDown().
+///
+/// **See also:** [`CoreApplication`]
+/// [`AbstractEventDispatcher`]
+/// [`EventLoop`]
+/// [`Settings`]
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 [attributes(ManualCreate, NoWrapClass)]
-struct Application {
-    //[static] style() -> Style?,
-    //[static] set_style(arg0: Rute::test),
-    //[static] set_style(arg0: &StyleType),
-    //[static] set_style(arg0: String) -> Style?,
+struct Application : GuiApplication {
+    ///
+    /// By default, this property returns an empty string unless the user specifies
+    /// the `-stylesheet` option on the command line when running the application.
+    ///
+    /// **See also:** [`Widget::set_style`]
+    /// {Qt Style Sheets}
+    ///
+    /// Returns the application's style object.
+    ///
+    /// **See also:** [`set_style()`]
+    /// [`Style`]
+    [static] style() -> *Style?,
+    ///
+    /// Sets the application's GUI style to *style.* Ownership of the style object
+    /// is transferred to QApplication, so QApplication will delete the style
+    /// object on application exit or when a new style is set and the old style is
+    /// still the parent of the application object.
+    ///
+    /// Example usage:
+    ///
+    /// When switching application styles, the color palette is set back to the
+    /// initial colors or the system defaults. This is necessary since certain
+    /// styles have to adapt the color palette to be fully style-guide compliant.
+    ///
+    /// Setting the style before a palette has been set, i.e., before creating
+    /// QApplication, will cause the application to use QStyle::standardPalette()
+    /// for the palette.
+    ///
+    /// **Warning**: Qt style sheets are currently not supported for custom QStyle
+    /// subclasses. We plan to address this in some future release.
+    ///
+    /// **See also:** [`style()`]
+    /// [`Style`]
+    /// [`set_palette()`]
+    /// [`desktop_settings_aware()`]
+    ///
+    /// **Overloads**
+    /// Requests a QStyle object for *style* from the QStyleFactory.
+    ///
+    /// The string must be one of the QStyleFactory::keys(), typically one of
+    /// , , , or . Style
+    /// names are case insensitive.
+    ///
+    /// Returns 0 if an unknown *style* is passed, otherwise the QStyle object
+    /// returned is set as the application's GUI style.
+    ///
+    /// **Warning**: To ensure that the application's style is set correctly, it is
+    /// best to call this function before the QApplication constructor, if
+    /// possible.
+    [static] set_style(arg0: *StyleType),
+    ///
+    /// Sets the application's GUI style to *style.* Ownership of the style object
+    /// is transferred to QApplication, so QApplication will delete the style
+    /// object on application exit or when a new style is set and the old style is
+    /// still the parent of the application object.
+    ///
+    /// Example usage:
+    ///
+    /// When switching application styles, the color palette is set back to the
+    /// initial colors or the system defaults. This is necessary since certain
+    /// styles have to adapt the color palette to be fully style-guide compliant.
+    ///
+    /// Setting the style before a palette has been set, i.e., before creating
+    /// QApplication, will cause the application to use QStyle::standardPalette()
+    /// for the palette.
+    ///
+    /// **Warning**: Qt style sheets are currently not supported for custom QStyle
+    /// subclasses. We plan to address this in some future release.
+    ///
+    /// **See also:** [`style()`]
+    /// [`Style`]
+    /// [`set_palette()`]
+    /// [`desktop_settings_aware()`]
+    ///
+    /// **Overloads**
+    /// Requests a QStyle object for *style* from the QStyleFactory.
+    ///
+    /// The string must be one of the QStyleFactory::keys(), typically one of
+    /// , , , or . Style
+    /// names are case insensitive.
+    ///
+    /// Returns 0 if an unknown *style* is passed, otherwise the QStyle object
+    /// returned is set as the application's GUI style.
+    ///
+    /// **Warning**: To ensure that the application's style is set correctly, it is
+    /// best to call this function before the QApplication constructor, if
+    /// possible.
+    [org_name(setStyle)]
+    [static] set_style_2(arg0: String) -> *Style?,
+    ///
+    /// Returns the color specification.
+    ///
+    /// **See also:** [`Application::set_color_spec`]
     [static] color_spec() -> i32,
+    ///
+    /// Sets the color specification for the application to *spec.*
+    ///
+    /// This call has no effect.
+    ///
+    /// The color specification controls how the application allocates colors when
+    /// run on a display with a limited amount of colors, e.g. 8 bit / 256 color
+    /// displays.
+    ///
+    /// The color specification must be set before you create the QApplication
+    /// object.
+    ///
+    /// The options are:
+    /// * QApplication::NormalColor. This is the default color allocation strategy. Use this option if your application uses buttons, menus, texts and pixmaps with few colors. With this option, the application uses system global colors. This works fine for most applications under X11, but on the Windows platform, it may cause dithering of non-standard colors.
+    /// * QApplication::CustomColor. Use this option if your application needs a small number of custom colors. On X11, this option is the same as NormalColor. On Windows, Qt creates a Windows palette, and allocates colors to it on demand.
+    /// * QApplication::ManyColor. Use this option if your application is very color hungry, e.g., it requires thousands of colors. **r** Under X11 the effect is:
+    /// * For 256-color displays which have at best a 256 color true color visual, the default visual is used, and colors are allocated from a color cube. The color cube is the 6x6x6 (216 color) "Web palette" (the red, green, and blue components always have one of the following values: 0x00, 0x33, 0x66, 0x99, 0xCC, or 0xFF), but the number of colors can be changed by the *-ncols* option. The user can force the application to use the true color visual with the [-visual](QApplication::QApplication())
+    /// option.
+    /// * For 256-color displays which have a true color visual with more than 256 colors, use that visual. Silicon Graphics X servers this feature, for example. They provide an 8 bit visual by default but can deliver true color when asked.
+    /// On Windows, Qt creates a Windows palette, and fills it with a color
+    /// cube.
+    ///
+    /// Be aware that the CustomColor and ManyColor choices may lead to colormap
+    /// flashing: The foreground application gets (most) of the available colors,
+    /// while the background windows will look less attractive.
+    ///
+    /// Example:
+    ///
+    /// **See also:** [`color_spec()`]
     [static] set_color_spec(arg0: i32),
-    //[static] palette(arg0: &WidgetType) -> Palette,
-    //[static] palette(class_name: String) -> Palette,
-    //[static] set_palette(arg0: &PaletteType, class_name: String),
-
-    [static]
+    ///
+    /// **Overloads**
+    /// If a *widget* is passed, the default palette for the widget's class is
+    /// returned. This may or may not be the application palette. In most cases
+    /// there is no special palette for certain types of widgets, but one notable
+    /// exception is the popup menu under Windows, if the user has defined a
+    /// special background color for menus in the display settings.
+    ///
+    /// **See also:** [`set_palette()`]
+    /// [`Widget::palette`]
+    ///
+    /// **Overloads**
+    /// Returns the palette for widgets of the given *className.*
+    ///
+    /// **See also:** [`set_palette()`]
+    /// [`Widget::palette`]
+    [static] palette(arg0: *WidgetType) -> Palette,
+    ///
+    /// **Overloads**
+    /// If a *widget* is passed, the default palette for the widget's class is
+    /// returned. This may or may not be the application palette. In most cases
+    /// there is no special palette for certain types of widgets, but one notable
+    /// exception is the popup menu under Windows, if the user has defined a
+    /// special background color for menus in the display settings.
+    ///
+    /// **See also:** [`set_palette()`]
+    /// [`Widget::palette`]
+    ///
+    /// **Overloads**
+    /// Returns the palette for widgets of the given *className.*
+    ///
+    /// **See also:** [`set_palette()`]
+    /// [`Widget::palette`]
+    //[org_name(palette)]
+    //[static] palette_2(class_name: *char) -> Palette,
+    //
+    // Changes the default application palette to *palette.*
+    //
+    // If *className* is passed, the change applies only to widgets that inherit
+    // *className* (as reported by QObject::inherits()). If *className* is left
+    // 0, the change affects all widgets, thus overriding any previously set class
+    // specific palettes.
+    //
+    // The palette may be changed according to the current GUI style in
+    // QStyle::polish().
+    //
+    // **Warning**: Do not use this function in conjunction with [Qt Style Sheets](Qt%20Style%20Sheets)
+    //
+    // When using style sheets, the palette of a widget can be customized using
+    // the , , ,
+    // and .
+    //
+    // **Note**: Some styles do not use the palette for all drawing, for instance, if
+    // they make use of native theme engines. This is the case for the
+    // Windows Vista and MacOS styles.
+    //
+    // **See also:** [`Widget::set_palette`]
+    // [`palette()`]
+    // [`Style::polish`]
+    //[static] set_palette(arg0: &PaletteType, class_name: *char),
+    ///
+    /// Returns the default application font.
+    ///
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::font`]
+    ///
+    /// **Overloads**
+    /// Returns the default font for the *widget.*
+    ///
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::set_font`]
+    ///
+    /// **Overloads**
+    /// Returns the font for widgets of the given *className.*
+    ///
+    /// **See also:** [`set_font()`]
+    /// [`Widget::font`]
+    ///
+    /// Returns display (screen) font metrics for the application font.
+    ///
+    /// **See also:** [`font()`]
+    /// [`set_font()`]
+    /// [`Widget::font_metrics`]
+    /// [`Painter::font_metrics`]
+    [static] font() -> Font,
+    ///
+    /// Returns the default application font.
+    ///
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::font`]
+    ///
+    /// **Overloads**
+    /// Returns the default font for the *widget.*
+    ///
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::set_font`]
+    ///
+    /// **Overloads**
+    /// Returns the font for widgets of the given *className.*
+    ///
+    /// **See also:** [`set_font()`]
+    /// [`Widget::font`]
+    ///
+    /// Returns display (screen) font metrics for the application font.
+    ///
+    /// **See also:** [`font()`]
+    /// [`set_font()`]
+    /// [`Widget::font_metrics`]
+    /// [`Painter::font_metrics`]
     [org_name(font)]
-    get_font() -> Font,
-
-    //[static] font(arg0: &WidgetType) -> Font,
-    //[static] font(class_name: String) -> Font,
-    //[static] set_font(arg0: &FontType, class_name: String),
-    //[static] set_window_icon(icon: &IconType),
-    //[static] window_icon() -> Icon,
+    [static] font_2(arg0: *WidgetType) -> Font,
+    //
+    // Returns the default application font.
+    //
+    // **See also:** [`font_metrics()`]
+    // [`Widget::font`]
+    //
+    // **Overloads**
+    // Returns the default font for the *widget.*
+    //
+    // **See also:** [`font_metrics()`]
+    // [`Widget::set_font`]
+    //
+    // **Overloads**
+    // Returns the font for widgets of the given *className.*
+    //
+    // **See also:** [`set_font()`]
+    // [`Widget::font`]
+    //
+    // Returns display (screen) font metrics for the application font.
+    //
+    // **See also:** [`font()`]
+    // [`set_font()`]
+    // [`Widget::font_metrics`]
+    // [`Painter::font_metrics`]
+    //[org_name(font)]
+    //[static] font_3(class_name: *char) -> Font,
+    //
+    // Changes the default application font to *font.* If *className* is passed,
+    // the change applies only to classes that inherit *className* (as reported
+    // by QObject::inherits()).
+    //
+    // On application start-up, the default font depends on the window system. It
+    // can vary depending on both the window system version and the locale. This
+    // function lets you override the default font; but overriding may be a bad
+    // idea because, for example, some locales need extra large fonts to support
+    // their special characters.
+    //
+    // **Warning**: Do not use this function in conjunction with [Qt Style Sheets](Qt%20Style%20Sheets)
+    //
+    // The font of an application can be customized using the style sheet
+    // property. To set a bold font for all QPushButtons, set the application
+    // styleSheet() as
+    //
+    // **See also:** [`font()`]
+    // [`font_metrics()`]
+    // [`Widget::set_font`]
+    //[static] set_font(arg0: &FontType, class_name: *char),
+    [static] set_window_icon(icon: &IconType),
+    ///
+    /// **See also:** [`Widget::set_window_icon`]
+    /// {Setting the Application Icon}
+    [static] window_icon() -> Icon,
+    //
+    // Returns a list of all the widgets in the application.
+    //
+    // The list is empty (QList::isEmpty()) if there are no widgets.
+    //
+    // **Note**: Some of the widgets may be hidden.
+    //
+    // Example:
+    //
+    // **See also:** [`top_level_widgets()`]
+    // [`Widget::is_visible`]
     //[static] all_widgets() -> WidgetList,
+    //
+    // Returns a list of the top-level widgets (windows) in the application.
+    //
+    // **Note**: Some of the top-level widgets may be hidden, for example a tooltip if
+    // no tooltip is currently shown.
+    //
+    // Example:
+    //
+    // **See also:** [`all_widgets()`]
+    // [`Widget::is_window`]
+    // [`Widget::is_hidden`]
     //[static] top_level_widgets() -> WidgetList,
-    //[static] desktop() -> DesktopWidget?,
-    [static] active_popup_widget() -> &Widget?,
-    [static] active_modal_widget() -> &Widget?,
-    [static] focus_widget() -> &Widget?,
-    [static] active_window() -> &Widget?,
-
-    [static]
-    set_active_window(actor: *WidgetType),
-
-    //[static] widget_at(p: &PointType) -> Widget?,
-    [static] widget_at(x: i32, y: i32) -> &Widget?,
-    //[static] top_level_at(p: &PointType) -> Widget?,
-    [static] top_level_at(x: i32, y: i32) -> &Widget?,
+    ///
+    /// Returns the desktop widget (also called the root window).
+    ///
+    /// The desktop may be composed of multiple screens, so it would be incorrect,
+    /// for example, to attempt to *center* some widget in the desktop's geometry.
+    /// QDesktopWidget has various functions for obtaining useful geometries upon
+    /// the desktop, such as QDesktopWidget::screenGeometry() and
+    /// QDesktopWidget::availableGeometry().
+    ///
+    /// On X11, it is also possible to draw on the desktop.
+    [static] desktop() -> *DesktopWidget?,
+    ///
+    /// Returns the active popup widget.
+    ///
+    /// A popup widget is a special top-level widget that sets the `Qt::WType_Popup` widget flag, e.g. the QMenu widget. When the application
+    /// opens a popup widget, all events are sent to the popup. Normal widgets and
+    /// modal widgets cannot be accessed before the popup widget is closed.
+    ///
+    /// Only other popup widgets may be opened when a popup widget is shown. The
+    /// popup widgets are organized in a stack. This function returns the active
+    /// popup widget at the top of the stack.
+    ///
+    /// **See also:** [`active_modal_widget()`]
+    /// [`top_level_widgets()`]
+    [static] active_popup_widget() -> *Widget?,
+    ///
+    /// Returns the active modal widget.
+    ///
+    /// A modal widget is a special top-level widget which is a subclass of QDialog
+    /// that specifies the modal parameter of the constructor as true. A modal
+    /// widget must be closed before the user can continue with other parts of the
+    /// program.
+    ///
+    /// Modal widgets are organized in a stack. This function returns the active
+    /// modal widget at the top of the stack.
+    ///
+    /// **See also:** [`active_popup_widget()`]
+    /// [`top_level_widgets()`]
+    [static] active_modal_widget() -> *Widget?,
+    ///
+    /// Returns the application widget that has the keyboard input focus, or 0 if
+    /// no widget in this application has the focus.
+    ///
+    /// **See also:** [`Widget::set_focus`]
+    /// [`Widget::has_focus`]
+    /// [`active_window()`]
+    /// [`focus_changed()`]
+    [static] focus_widget() -> *Widget?,
+    ///
+    /// Returns the application top-level window that has the keyboard input focus,
+    /// or 0 if no application window has the focus. There might be an
+    /// activeWindow() even if there is no focusWidget(), for example if no widget
+    /// in that window accepts key events.
+    ///
+    /// **See also:** [`Widget::set_focus`]
+    /// [`Widget::has_focus`]
+    /// [`focus_widget()`]
+    [static] active_window() -> *Widget?,
+    ///
+    /// Sets the active window to the *active* widget in response to a system
+    /// event. The function is called from the platform specific event handlers.
+    ///
+    /// **Warning**: This function does *not* set the keyboard focus to the active
+    /// widget. Call QWidget::activateWindow() instead.
+    ///
+    /// It sets the activeWindow() and focusWidget() attributes and sends proper
+    /// [WindowActivate](QEvent::WindowActivate)
+    /// / [WindowDeactivate](QEvent::WindowDeactivate)
+    /// and [FocusIn](QEvent::FocusIn)
+    /// / [FocusOut](QEvent::FocusOut)
+    /// events to all appropriate widgets. The window will then be
+    /// painted in active state (e.g. cursors in line edits will blink), and it
+    /// will have tool tips enabled.
+    ///
+    /// **See also:** [`active_window()`]
+    /// [`Widget::activate_window`]
+    [static] set_active_window(act: *WidgetType),
+    ///
+    /// Returns the widget at global screen position *point,* or 0 if there is no
+    /// Qt widget there.
+    ///
+    /// This function can be slow.
+    ///
+    /// **See also:** [`Cursor::pos`]
+    /// [`Widget::grab_mouse`]
+    /// [`Widget::grab_keyboard`]
+    ///
+    /// **Overloads**
+    /// Returns the widget at global screen position ( *x,* *y),* or 0 if there is
+    /// no Qt widget there.
+    [static] widget_at(p: &PointType) -> *Widget?,
+    ///
+    /// Returns the widget at global screen position *point,* or 0 if there is no
+    /// Qt widget there.
+    ///
+    /// This function can be slow.
+    ///
+    /// **See also:** [`Cursor::pos`]
+    /// [`Widget::grab_mouse`]
+    /// [`Widget::grab_keyboard`]
+    ///
+    /// **Overloads**
+    /// Returns the widget at global screen position ( *x,* *y),* or 0 if there is
+    /// no Qt widget there.
+    [org_name(widgetAt)]
+    [static] widget_at_2(x: i32, y: i32) -> *Widget?,
+    ///
+    /// Returns the top-level widget at the given *point;* returns 0 if
+    /// there is no such widget.
+    ///
+    /// **Overloads**
+    /// Returns the top-level widget at the point ( *x* , *y* ); returns
+    /// 0 if there is no such widget.
+    [static] top_level_at(p: &PointType) -> *Widget?,
+    ///
+    /// Returns the top-level widget at the given *point;* returns 0 if
+    /// there is no such widget.
+    ///
+    /// **Overloads**
+    /// Returns the top-level widget at the point ( *x* , *y* ); returns
+    /// 0 if there is no such widget.
+    [org_name(topLevelAt)]
+    [static] top_level_at_2(x: i32, y: i32) -> *Widget?,
+    ///
+    /// Sounds the bell, using the default volume and sound. The function is *not*
+    /// available in Qt for Embedded Linux.
     [static] beep(),
-    //[static] alert(widget: &WidgetType, duration: i32),
+    ///
+    /// Causes an alert to be shown for *widget* if the window is not the active
+    /// window. The alert is shown for *msec* miliseconds. If *msec* is zero (the
+    /// default), then the alert is shown indefinitely until the window becomes
+    /// active again.
+    ///
+    /// Currently this function does nothing on Qt for Embedded Linux.
+    ///
+    /// On MacOS , this works more at the application level and will cause the
+    /// application icon to bounce in the dock.
+    ///
+    /// On Windows, this causes the window's taskbar entry to flash for a time. If
+    /// *msec* is zero, the flashing will stop and the taskbar entry will turn a
+    /// different color (currently orange).
+    ///
+    /// On X11, this will cause the window to be marked as , the
+    /// window must not be hidden (i.e. not have hide() called on it, but be
+    /// visible in some sort of way) in order for this to work.
+    [static] alert(widget: *WidgetType, duration: i32),
     [static] set_cursor_flash_time(arg0: i32),
+    ///
+    /// The flash time is the time required to display, invert and restore the
+    /// caret display. Usually the text cursor is displayed for half the cursor
+    /// flash time, then hidden for the same amount of time, but this may vary.
+    ///
+    /// The default value on X11 is 1000 milliseconds. On Windows, the
+    /// **{Control** Panel} value is used and setting this property sets the cursor
+    /// flash time for all applications.
+    ///
+    /// We recommend that widgets do not cache this value as it may change at any
+    /// time if the user changes the global desktop settings.
+    ///
+    /// **Note**: This property may hold a negative value, for instance if cursor
+    /// blinking is disabled.
     [static] cursor_flash_time() -> i32,
     [static] set_double_click_interval(arg0: i32),
+    ///
+    /// The default value on X11 is 400 milliseconds. On Windows and Mac OS, the
+    /// operating system's value is used.
     [static] double_click_interval() -> i32,
     [static] set_keyboard_input_interval(arg0: i32),
+    ///
+    /// The default value on X11 is 400 milliseconds. On Windows and Mac OS, the
+    /// operating system's value is used.
     [static] keyboard_input_interval() -> i32,
     [static] set_wheel_scroll_lines(arg0: i32),
+    ///
+    /// If the value exceeds the widget's number of visible lines, the widget
+    /// should interpret the scroll operation as a single *page up* or
+    /// *page down* . If the widget is an [item view class](QAbstractItemView)
+    ///
+    /// then the result of scrolling one *line* depends on the setting of the
+    /// widget's [scroll mode](QAbstractItemView::verticalScrollMode())
+    /// . Scroll
+    /// one *line* can mean [scroll one item](QAbstractItemView::ScrollPerItem)
+    ///
+    /// or [scroll one pixel](QAbstractItemView::ScrollPerPixel)
+    ///
+    ///
+    /// By default, this property has a value of 3.
+    ///
+    /// **See also:** [`StyleHints::wheel_scroll_lines`]
     [static] wheel_scroll_lines() -> i32,
     [static] set_start_drag_time(ms: i32),
+    ///
+    /// If you support drag and drop in your application, and want to start a drag
+    /// and drop operation after the user has held down a mouse button for a
+    /// certain amount of time, you should use this property's value as the delay.
+    ///
+    /// Qt also uses this delay internally, e.g. in QTextEdit and QLineEdit, for
+    /// starting a drag.
+    ///
+    /// The default value is 500 ms.
+    ///
+    /// **See also:** [`start_drag_distance()`]
+    /// {Drag and Drop}
     [static] start_drag_time() -> i32,
     [static] set_start_drag_distance(l: i32),
+    ///
+    /// If you support drag and drop in your application, and want to start a drag
+    /// and drop operation after the user has moved the cursor a certain distance
+    /// with a button held down, you should use this property's value as the
+    /// minimum distance required.
+    ///
+    /// For example, if the mouse position of the click is stored in `startPos`
+    /// and the current position (e.g. in the mouse move event) is `currentPos,`
+    /// you can find out if a drag should be started with code like this:
+    ///
+    /// Qt uses this value internally, e.g. in QFileDialog.
+    ///
+    /// The default value (if the platform doesn't provide a different default)
+    /// is 10 pixels.
+    ///
+    /// **See also:** [`start_drag_time()`]
+    /// [`Point::manhattan_length`]
+    /// {Drag and Drop}
     [static] start_drag_distance() -> i32,
-    //[static] is_effect_enabled(arg0: Rute::UIEffect) -> bool,
-    //[static] set_effect_enabled(arg0: Rute::UIEffect, enable: bool),
+    ///
+    /// Returns `true` if *effect* is enabled; otherwise returns `false.`
+    ///
+    /// By default, Qt will try to use the desktop settings. To prevent this, call
+    /// setDesktopSettingsAware(false).
+    ///
+    /// **Note**: All effects are disabled on screens running at less than 16-bit color
+    /// depth.
+    ///
+    /// **See also:** [`set_effect_enabled()`]
+    /// [`t::ui_effect()`]
+    [static] is_effect_enabled(arg0: Rute::UIEffect) -> bool,
+    ///
+    /// Enables the UI effect *effect* if *enable* is true, otherwise the effect
+    /// will not be used.
+    ///
+    /// **Note**: All effects are disabled on screens running at less than 16-bit color
+    /// depth.
+    ///
+    /// **See also:** [`is_effect_enabled()`]
+    /// [`t::ui_effect()`]
+    /// [`set_desktop_settings_aware()`]
+    [static] set_effect_enabled(arg0: Rute::UIEffect, enable: bool),
+    ///
+    /// Enters the main event loop and waits until exit() is called, then returns
+    /// the value that was set to exit() (which is 0 if exit() is called via
+    /// quit()).
+    ///
+    /// It is necessary to call this function to start event handling. The main
+    /// event loop receives events from the window system and dispatches these to
+    /// the application widgets.
+    ///
+    /// Generally, no user interaction can take place before calling exec(). As a
+    /// special case, modal widgets like QMessageBox can be used before calling
+    /// exec(), because modal widgets call exec() to start a local event loop.
+    ///
+    /// To make your application perform idle processing, i.e., executing a special
+    /// function whenever there are no pending events, use a QTimer with 0 timeout.
+    /// More advanced idle processing schemes can be achieved using processEvents().
+    ///
+    /// We recommend that you connect clean-up code to the
+    /// [aboutToQuit()](QCoreApplication::)
+    /// signal, instead of putting it in your
+    /// application's `main()` function. This is because, on some platforms the
+    /// QApplication::exec() call may not return. For example, on the Windows
+    /// platform, when the user logs off, the system terminates the process after Qt
+    /// closes all top-level windows. Hence, there is *no guarantee* that the
+    /// application will have time to exit its event loop and execute code at the
+    /// end of the `main()` function, after the QApplication::exec() call.
+    ///
+    /// **See also:** quitOnLastWindowClosed
+    /// [`CoreApplication::quit`]
+    /// [`CoreApplication::exit`]
+    /// [`CoreApplication::process_events`]
+    /// [`CoreApplication::exec`]
     [static] exec() -> i32,
-    //[override] notify(arg0: &ObjectType, arg1: &EventType) -> bool,
-    //[event] focus_changed(old: &Widget, now: &Widget),
-    //style_sheet() -> String,
-    [signal] about_to_quit(),
-    //[signal] application_state_changed(state: Rute::ApplicationState),
-    [signal] screen_added(screen: *ScreenType),
-    //[signal] screen_added(screen: String),
+    ///
+    //[event] notify(arg0: *ObjectType, arg1: *EventType) -> bool,
+    ///
+    /// This signal is emitted when the widget that has keyboard focus changed from
+    /// *old* to *now,* i.e., because the user pressed the tab-key, clicked into
+    /// a widget or changed the active window. Both *old* and *now* can be the
+    /// null-pointer.
+    ///
+    /// The signal is emitted after both widget have been notified about the change
+    /// through QFocusEvent.
+    ///
+    /// **See also:** [`Widget::set_focus`]
+    /// [`Widget::clear_focus`]
+    /// [`t::focus_reason()`]
+    //[signal] focus_changed(old: *WidgetType, now: *WidgetType),
+    ///
+    /// By default, this property returns an empty string unless the user specifies
+    /// the `-stylesheet` option on the command line when running the application.
+    ///
+    /// **See also:** [`Widget::set_style`]
+    /// {Qt Style Sheets}
+    style_sheet() -> String,
     set_style_sheet(sheet: String),
     set_auto_sip_enabled(enabled: bool),
+    ///
+    /// Set this property to `true` to automatically display the SIP when entering
+    /// widgets that accept keyboard input. This property only affects widgets with
+    /// the WA_InputMethodEnabled attribute set, and is typically used to launch
+    /// a virtual keyboard on devices which have very few or no keys.
+    ///
+    /// **The property only has an effect on platforms that use software input
+    /// panels.**
+    ///
+    /// The default is platform dependent.
     auto_sip_enabled() -> bool,
+    ///
+    /// Closes all top-level windows.
+    ///
+    /// This function is particularly useful for applications with many top-level
+    /// windows. It could, for example, be connected to a **{Exit}** entry in the
+    /// **{File}** menu:
+    ///
+    /// The windows are closed in random order, until one window does not accept
+    /// the close event. The application quits when the last window was
+    /// successfully closed; this can be turned off by setting
+    /// [quitOnLastWindowClosed](quitOnLastWindowClosed)
+    /// to false.
+    ///
+    /// **See also:** quitOnLastWindowClosed
+    /// [`last_window_closed()`]
+    /// [`Widget::close`]
+    /// [`Widget::close_event`]
+    /// [`last_window_closed()`]
+    /// [`CoreApplication::quit`]
+    /// [`top_level_widgets()`]
+    /// [`Widget::is_window`]
     [static] close_all_windows(),
+    ///
+    /// Displays a simple message box about Qt. The message includes the version
+    /// number of Qt being used by the application.
+    ///
+    /// This is useful for inclusion in the **Help** menu of an application, as
+    /// shown in the [Menus](mainwindows/menus)
+    /// example.
+    ///
+    /// This function is a convenience slot for QMessageBox::aboutQt().
     [static] about_qt(),
-    //[override] event(arg0: &EventType) -> bool,
-    //[override] compress_event(arg0: &EventType, receiver: &ObjectType, arg1: &PostEventListType) -> bool,
+    ///
+    //[event] event(arg0: *EventType) -> bool,
+    //[event] compress_event(arg0: *EventType, receiver: *ObjectType, arg1: *PostEventListType) -> bool,
+}
+
+[org_name(QApplication)]
+enum ColorSpec {
+    /// the default color allocation policy
+    NormalColor = 0,
+    /// the same as NormalColor for X11; allocates colors to a palette on demand under Windows
+    CustomColor = 1,
+    /// the right choice for applications that use thousands of colors See setColorSpec() for full details.
+    ManyColor = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
-

@@ -19,49 +19,79 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
-pub(crate) unsafe extern "C" fn application_about_to_quit_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-) {
-    let f: &&(Fn(&T) + 'static) = transmute(func);
-
-    let data = self_c as *const T;
-    f(&*data);
-}
-
-#[allow(unused_variables)]
-pub(crate) unsafe extern "C" fn application_about_to_quit_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-) {
-    let f: &&(Fn() + 'static) = transmute(func);
-
-    f();
-}
-
-pub(crate) unsafe extern "C" fn application_screen_added_trampoline_ud<T>(
-    self_c: *const c_void,
-    func: *const c_void,
-    screen: *const RUBase,
-) {
-    let f: &&(Fn(&T, &Screen) + 'static) = transmute(func);
-    let obj_screen_0 = Screen::new_from_temporary(*(screen as *const RUScreen));
-    let data = self_c as *const T;
-    f(&*data, &obj_screen_0);
-}
-
-#[allow(unused_variables)]
-pub(crate) unsafe extern "C" fn application_screen_added_trampoline(
-    self_c: *const c_void,
-    func: *const c_void,
-    screen: *const RUBase,
-) {
-    let f: &&(Fn(&Screen) + 'static) = transmute(func);
-    let obj_screen_0 = Screen::new_from_temporary(*(screen as *const RUScreen));
-    f(&obj_screen_0);
-}
-
 /// **Notice these docs are heavy WIP and not very relevent yet**
+///
+/// QApplication specializes QGuiApplication with some functionality needed
+/// for QWidget-based applications. It handles widget specific initialization,
+/// finalization.
+///
+/// For any GUI application using Qt, there is precisely **one** QApplication
+/// object, no matter whether the application has 0, 1, 2 or more windows at
+/// any given time. For non-QWidget based Qt applications, use QGuiApplication instead,
+/// as it does not depend on the [QtWidgets](QtWidgets)
+/// library.
+///
+/// Some GUI applications provide a special batch mode ie. provide command line
+/// arguments for executing tasks without manual intervention. In such non-GUI
+/// mode, it is often sufficient to instantiate a plain QCoreApplication to
+/// avoid unnecessarily initializing resources needed for a graphical user
+/// interface. The following example shows how to dynamically create an
+/// appropriate type of application instance:
+///
+/// The QApplication object is accessible through the instance() function that
+/// returns a pointer equivalent to the global qApp pointer.
+///
+/// QApplication's main areas of responsibility are:
+/// * It initializes the application with the user's desktop settings such as palette(), font() and doubleClickInterval(). It keeps track of these properties in case the user changes the desktop globally, for example through some kind of control panel.
+/// * It performs event handling, meaning that it receives events from the underlying window system and dispatches them to the relevant widgets. By using sendEvent() and postEvent() you can send your own events to widgets.
+/// * It parses common command line arguments and sets its internal state accordingly. See the [constructor documentation](QApplication::QApplication())
+/// below for more details.
+/// * It defines the application's look and feel, which is encapsulated in a QStyle object. This can be changed at runtime with setStyle().
+/// * It specifies how the application is to allocate colors. See setColorSpec() for details.
+/// * It provides localization of strings that are visible to the user via translate().
+/// * It provides some magical objects like the desktop() and the clipboard().
+/// * It knows about the application's windows. You can ask which widget is at a certain position using widgetAt(), get a list of topLevelWidgets() and closeAllWindows(), etc.
+/// * It manages the application's mouse cursor handling, see setOverrideCursor()
+///
+/// Since the QApplication object does so much initialization, it *must* be
+/// created before any other objects related to the user interface are created.
+/// QApplication also deals with common command line arguments. Hence, it is
+/// usually a good idea to create it *before* any interpretation or
+/// modification of `argv` is done in the application itself.
+///
+/// * {2,1} Groups of functions
+///
+/// * System settings
+/// * desktopSettingsAware(), setDesktopSettingsAware(), cursorFlashTime(), setCursorFlashTime(), doubleClickInterval(), setDoubleClickInterval(), setKeyboardInputInterval(), wheelScrollLines(), setWheelScrollLines(), palette(), setPalette(), font(), setFont(), fontMetrics().
+///
+/// * Event handling
+/// * exec(), processEvents(), exit(), quit(). sendEvent(), postEvent(), sendPostedEvents(), removePostedEvents(), hasPendingEvents(), notify().
+///
+/// * GUI Styles
+/// * style(), setStyle().
+///
+/// * Color usage
+/// * colorSpec(), setColorSpec().
+///
+/// * Text handling
+/// * installTranslator(), removeTranslator() translate().
+///
+/// * Widgets
+/// * allWidgets(), topLevelWidgets(), desktop(), activePopupWidget(), activeModalWidget(), clipboard(), focusWidget(), activeWindow(), widgetAt().
+///
+/// * Advanced cursor handling
+/// * overrideCursor(), setOverrideCursor(), restoreOverrideCursor().
+///
+/// * Miscellaneous
+/// * closeAllWindows(), startingUp(), closingDown().
+///
+/// **See also:** [`CoreApplication`]
+/// [`AbstractEventDispatcher`]
+/// [`EventLoop`]
+/// [`Settings`]
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
 #[derive(Clone)]
 pub struct Application<'a> {
     #[doc(hidden)]
@@ -113,6 +143,157 @@ impl<'a> Application<'a> {
             _marker: PhantomData,
         }
     }
+    ///
+    /// By default, this property returns an empty string unless the user specifies
+    /// the `-stylesheet` option on the command line when running the application.
+    ///
+    /// **See also:** [`Widget::set_style`]
+    /// {Qt Style Sheets}
+    ///
+    /// Returns the application's style object.
+    ///
+    /// **See also:** [`set_style()`]
+    /// [`Style`]
+    pub fn style() -> Option<Style<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).style)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Style::new_from_rc(t);
+            } else {
+                ret_val = Style::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Sets the application's GUI style to *style.* Ownership of the style object
+    /// is transferred to QApplication, so QApplication will delete the style
+    /// object on application exit or when a new style is set and the old style is
+    /// still the parent of the application object.
+    ///
+    /// Example usage:
+    ///
+    /// When switching application styles, the color palette is set back to the
+    /// initial colors or the system defaults. This is necessary since certain
+    /// styles have to adapt the color palette to be fully style-guide compliant.
+    ///
+    /// Setting the style before a palette has been set, i.e., before creating
+    /// QApplication, will cause the application to use QStyle::standardPalette()
+    /// for the palette.
+    ///
+    /// **Warning**: Qt style sheets are currently not supported for custom QStyle
+    /// subclasses. We plan to address this in some future release.
+    ///
+    /// **See also:** [`style()`]
+    /// [`Style`]
+    /// [`set_palette()`]
+    /// [`desktop_settings_aware()`]
+    ///
+    /// **Overloads**
+    /// Requests a QStyle object for *style* from the QStyleFactory.
+    ///
+    /// The string must be one of the QStyleFactory::keys(), typically one of
+    /// , , , or . Style
+    /// names are case insensitive.
+    ///
+    /// Returns 0 if an unknown *style* is passed, otherwise the QStyle object
+    /// returned is set as the application's GUI style.
+    ///
+    /// **Warning**: To ensure that the application's style is set correctly, it is
+    /// best to call this function before the QApplication constructor, if
+    /// possible.
+    pub fn set_style<S: StyleTrait<'a>>(arg0: &S) {
+        let (obj_arg0_1, _funcs) = arg0.get_style_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_style)(obj_data, obj_arg0_1);
+        }
+    }
+    ///
+    /// Sets the application's GUI style to *style.* Ownership of the style object
+    /// is transferred to QApplication, so QApplication will delete the style
+    /// object on application exit or when a new style is set and the old style is
+    /// still the parent of the application object.
+    ///
+    /// Example usage:
+    ///
+    /// When switching application styles, the color palette is set back to the
+    /// initial colors or the system defaults. This is necessary since certain
+    /// styles have to adapt the color palette to be fully style-guide compliant.
+    ///
+    /// Setting the style before a palette has been set, i.e., before creating
+    /// QApplication, will cause the application to use QStyle::standardPalette()
+    /// for the palette.
+    ///
+    /// **Warning**: Qt style sheets are currently not supported for custom QStyle
+    /// subclasses. We plan to address this in some future release.
+    ///
+    /// **See also:** [`style()`]
+    /// [`Style`]
+    /// [`set_palette()`]
+    /// [`desktop_settings_aware()`]
+    ///
+    /// **Overloads**
+    /// Requests a QStyle object for *style* from the QStyleFactory.
+    ///
+    /// The string must be one of the QStyleFactory::keys(), typically one of
+    /// , , , or . Style
+    /// names are case insensitive.
+    ///
+    /// Returns 0 if an unknown *style* is passed, otherwise the QStyle object
+    /// returned is set as the application's GUI style.
+    ///
+    /// **Warning**: To ensure that the application's style is set correctly, it is
+    /// best to call this function before the QApplication constructor, if
+    /// possible.
+    pub fn set_style_2(arg0: &str) -> Option<Style<'a>> {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).set_style_2)(obj_data, str_in_arg0_1.as_ptr());
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Style::new_from_rc(t);
+            } else {
+                ret_val = Style::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Returns the color specification.
+    ///
+    /// **See also:** [`Application::set_color_spec`]
     pub fn color_spec() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -126,6 +307,35 @@ impl<'a> Application<'a> {
             ret_val
         }
     }
+    ///
+    /// Sets the color specification for the application to *spec.*
+    ///
+    /// This call has no effect.
+    ///
+    /// The color specification controls how the application allocates colors when
+    /// run on a display with a limited amount of colors, e.g. 8 bit / 256 color
+    /// displays.
+    ///
+    /// The color specification must be set before you create the QApplication
+    /// object.
+    ///
+    /// The options are:
+    /// * QApplication::NormalColor. This is the default color allocation strategy. Use this option if your application uses buttons, menus, texts and pixmaps with few colors. With this option, the application uses system global colors. This works fine for most applications under X11, but on the Windows platform, it may cause dithering of non-standard colors.
+    /// * QApplication::CustomColor. Use this option if your application needs a small number of custom colors. On X11, this option is the same as NormalColor. On Windows, Qt creates a Windows palette, and allocates colors to it on demand.
+    /// * QApplication::ManyColor. Use this option if your application is very color hungry, e.g., it requires thousands of colors. **r** Under X11 the effect is:
+    /// * For 256-color displays which have at best a 256 color true color visual, the default visual is used, and colors are allocated from a color cube. The color cube is the 6x6x6 (216 color) "Web palette" (the red, green, and blue components always have one of the following values: 0x00, 0x33, 0x66, 0x99, 0xCC, or 0xFF), but the number of colors can be changed by the *-ncols* option. The user can force the application to use the true color visual with the [-visual](QApplication::QApplication())
+    /// option.
+    /// * For 256-color displays which have a true color visual with more than 256 colors, use that visual. Silicon Graphics X servers this feature, for example. They provide an 8 bit visual by default but can deliver true color when asked.
+    /// On Windows, Qt creates a Windows palette, and fills it with a color
+    /// cube.
+    ///
+    /// Be aware that the CustomColor and ManyColor choices may lead to colormap
+    /// flashing: The foreground application gets (most) of the available colors,
+    /// while the background windows will look less attractive.
+    ///
+    /// Example:
+    ///
+    /// **See also:** [`color_spec()`]
     pub fn set_color_spec(arg0: i32) {
         let (obj_data, funcs) = unsafe {
             (
@@ -138,7 +348,25 @@ impl<'a> Application<'a> {
             ((*funcs).set_color_spec)(obj_data, arg0);
         }
     }
-    pub fn get_font() -> Font<'a> {
+    ///
+    /// **Overloads**
+    /// If a *widget* is passed, the default palette for the widget's class is
+    /// returned. This may or may not be the application palette. In most cases
+    /// there is no special palette for certain types of widgets, but one notable
+    /// exception is the popup menu under Windows, if the user has defined a
+    /// special background color for menus in the display settings.
+    ///
+    /// **See also:** [`set_palette()`]
+    /// [`Widget::palette`]
+    ///
+    /// **Overloads**
+    /// Returns the palette for widgets of the given *className.*
+    ///
+    /// **See also:** [`set_palette()`]
+    /// [`Widget::palette`]
+    pub fn palette<W: WidgetTrait<'a>>(arg0: &W) -> Palette<'a> {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -147,7 +375,67 @@ impl<'a> Application<'a> {
             )
         };
         unsafe {
-            let ret_val = ((*funcs).get_font)(obj_data);
+            let ret_val = ((*funcs).palette)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Palette::new_from_rc(t);
+            } else {
+                ret_val = Palette::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// **Overloads**
+    /// If a *widget* is passed, the default palette for the widget's class is
+    /// returned. This may or may not be the application palette. In most cases
+    /// there is no special palette for certain types of widgets, but one notable
+    /// exception is the popup menu under Windows, if the user has defined a
+    /// special background color for menus in the display settings.
+    ///
+    /// **See also:** [`set_palette()`]
+    /// [`Widget::palette`]
+    ///
+    /// **Overloads**
+    /// Returns the palette for widgets of the given *className.*
+    ///
+    /// **See also:** [`set_palette()`]
+    /// [`Widget::palette`]
+    ///
+    /// Returns the default application font.
+    ///
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::font`]
+    ///
+    /// **Overloads**
+    /// Returns the default font for the *widget.*
+    ///
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::set_font`]
+    ///
+    /// **Overloads**
+    /// Returns the font for widgets of the given *className.*
+    ///
+    /// **See also:** [`set_font()`]
+    /// [`Widget::font`]
+    ///
+    /// Returns display (screen) font metrics for the application font.
+    ///
+    /// **See also:** [`font()`]
+    /// [`set_font()`]
+    /// [`Widget::font_metrics`]
+    /// [`Painter::font_metrics`]
+    pub fn font() -> Font<'a> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).font)(obj_data);
             let t = ret_val;
             let ret_val;
             if t.host_data != ::std::ptr::null() {
@@ -158,6 +446,135 @@ impl<'a> Application<'a> {
             ret_val
         }
     }
+    ///
+    /// Returns the default application font.
+    ///
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::font`]
+    ///
+    /// **Overloads**
+    /// Returns the default font for the *widget.*
+    ///
+    /// **See also:** [`font_metrics()`]
+    /// [`Widget::set_font`]
+    ///
+    /// **Overloads**
+    /// Returns the font for widgets of the given *className.*
+    ///
+    /// **See also:** [`set_font()`]
+    /// [`Widget::font`]
+    ///
+    /// Returns display (screen) font metrics for the application font.
+    ///
+    /// **See also:** [`font()`]
+    /// [`set_font()`]
+    /// [`Widget::font_metrics`]
+    /// [`Painter::font_metrics`]
+    pub fn font_2<W: WidgetTrait<'a>>(arg0: &W) -> Font<'a> {
+        let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).font_2)(obj_data, obj_arg0_1);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Font::new_from_rc(t);
+            } else {
+                ret_val = Font::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    pub fn set_window_icon<I: IconTrait<'a>>(icon: &I) {
+        let (obj_icon_1, _funcs) = icon.get_icon_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_window_icon)(obj_data, obj_icon_1);
+        }
+    }
+    ///
+    /// **See also:** [`Widget::set_window_icon`]
+    /// {Setting the Application Icon}
+    pub fn window_icon() -> Icon<'a> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).window_icon)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Icon::new_from_rc(t);
+            } else {
+                ret_val = Icon::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
+    ///
+    /// Returns the desktop widget (also called the root window).
+    ///
+    /// The desktop may be composed of multiple screens, so it would be incorrect,
+    /// for example, to attempt to *center* some widget in the desktop's geometry.
+    /// QDesktopWidget has various functions for obtaining useful geometries upon
+    /// the desktop, such as QDesktopWidget::screenGeometry() and
+    /// QDesktopWidget::availableGeometry().
+    ///
+    /// On X11, it is also possible to draw on the desktop.
+    pub fn desktop() -> Option<DesktopWidget<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).desktop)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = DesktopWidget::new_from_rc(t);
+            } else {
+                ret_val = DesktopWidget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Returns the active popup widget.
+    ///
+    /// A popup widget is a special top-level widget that sets the `Qt::WType_Popup` widget flag, e.g. the QMenu widget. When the application
+    /// opens a popup widget, all events are sent to the popup. Normal widgets and
+    /// modal widgets cannot be accessed before the popup widget is closed.
+    ///
+    /// Only other popup widgets may be opened when a popup widget is shown. The
+    /// popup widgets are organized in a stack. This function returns the active
+    /// popup widget at the top of the stack.
+    ///
+    /// **See also:** [`active_modal_widget()`]
+    /// [`top_level_widgets()`]
     pub fn active_popup_widget() -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
@@ -181,6 +598,19 @@ impl<'a> Application<'a> {
             Some(ret_val)
         }
     }
+    ///
+    /// Returns the active modal widget.
+    ///
+    /// A modal widget is a special top-level widget which is a subclass of QDialog
+    /// that specifies the modal parameter of the constructor as true. A modal
+    /// widget must be closed before the user can continue with other parts of the
+    /// program.
+    ///
+    /// Modal widgets are organized in a stack. This function returns the active
+    /// modal widget at the top of the stack.
+    ///
+    /// **See also:** [`active_popup_widget()`]
+    /// [`top_level_widgets()`]
     pub fn active_modal_widget() -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
@@ -204,6 +634,14 @@ impl<'a> Application<'a> {
             Some(ret_val)
         }
     }
+    ///
+    /// Returns the application widget that has the keyboard input focus, or 0 if
+    /// no widget in this application has the focus.
+    ///
+    /// **See also:** [`Widget::set_focus`]
+    /// [`Widget::has_focus`]
+    /// [`active_window()`]
+    /// [`focus_changed()`]
     pub fn focus_widget() -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
@@ -227,6 +665,15 @@ impl<'a> Application<'a> {
             Some(ret_val)
         }
     }
+    ///
+    /// Returns the application top-level window that has the keyboard input focus,
+    /// or 0 if no application window has the focus. There might be an
+    /// activeWindow() even if there is no focusWidget(), for example if no widget
+    /// in that window accepts key events.
+    ///
+    /// **See also:** [`Widget::set_focus`]
+    /// [`Widget::has_focus`]
+    /// [`focus_widget()`]
     pub fn active_window() -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
@@ -250,8 +697,26 @@ impl<'a> Application<'a> {
             Some(ret_val)
         }
     }
-    pub fn set_active_window<W: WidgetTrait<'a>>(actor: &W) {
-        let (obj_actor_1, _funcs) = actor.get_widget_obj_funcs();
+    ///
+    /// Sets the active window to the *active* widget in response to a system
+    /// event. The function is called from the platform specific event handlers.
+    ///
+    /// **Warning**: This function does *not* set the keyboard focus to the active
+    /// widget. Call QWidget::activateWindow() instead.
+    ///
+    /// It sets the activeWindow() and focusWidget() attributes and sends proper
+    /// [WindowActivate](QEvent::WindowActivate)
+    /// / [WindowDeactivate](QEvent::WindowDeactivate)
+    /// and [FocusIn](QEvent::FocusIn)
+    /// / [FocusOut](QEvent::FocusOut)
+    /// events to all appropriate widgets. The window will then be
+    /// painted in active state (e.g. cursors in line edits will blink), and it
+    /// will have tool tips enabled.
+    ///
+    /// **See also:** [`active_window()`]
+    /// [`Widget::activate_window`]
+    pub fn set_active_window<W: WidgetTrait<'a>>(act: &W) {
+        let (obj_act_1, _funcs) = act.get_widget_obj_funcs();
 
         let (obj_data, funcs) = unsafe {
             (
@@ -261,10 +726,25 @@ impl<'a> Application<'a> {
             )
         };
         unsafe {
-            ((*funcs).set_active_window)(obj_data, obj_actor_1);
+            ((*funcs).set_active_window)(obj_data, obj_act_1);
         }
     }
-    pub fn widget_at(x: i32, y: i32) -> Option<Widget<'a>> {
+    ///
+    /// Returns the widget at global screen position *point,* or 0 if there is no
+    /// Qt widget there.
+    ///
+    /// This function can be slow.
+    ///
+    /// **See also:** [`Cursor::pos`]
+    /// [`Widget::grab_mouse`]
+    /// [`Widget::grab_keyboard`]
+    ///
+    /// **Overloads**
+    /// Returns the widget at global screen position ( *x,* *y),* or 0 if there is
+    /// no Qt widget there.
+    pub fn widget_at<P: PointTrait<'a>>(p: &P) -> Option<Widget<'a>> {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
+
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -273,7 +753,7 @@ impl<'a> Application<'a> {
             )
         };
         unsafe {
-            let ret_val = ((*funcs).widget_at)(obj_data, x, y);
+            let ret_val = ((*funcs).widget_at)(obj_data, obj_p_1);
             if ret_val.qt_data == ::std::ptr::null() {
                 return None;
             }
@@ -287,7 +767,20 @@ impl<'a> Application<'a> {
             Some(ret_val)
         }
     }
-    pub fn top_level_at(x: i32, y: i32) -> Option<Widget<'a>> {
+    ///
+    /// Returns the widget at global screen position *point,* or 0 if there is no
+    /// Qt widget there.
+    ///
+    /// This function can be slow.
+    ///
+    /// **See also:** [`Cursor::pos`]
+    /// [`Widget::grab_mouse`]
+    /// [`Widget::grab_keyboard`]
+    ///
+    /// **Overloads**
+    /// Returns the widget at global screen position ( *x,* *y),* or 0 if there is
+    /// no Qt widget there.
+    pub fn widget_at_2(x: i32, y: i32) -> Option<Widget<'a>> {
         let (obj_data, funcs) = unsafe {
             (
                 ::std::ptr::null(),
@@ -296,7 +789,7 @@ impl<'a> Application<'a> {
             )
         };
         unsafe {
-            let ret_val = ((*funcs).top_level_at)(obj_data, x, y);
+            let ret_val = ((*funcs).widget_at_2)(obj_data, x, y);
             if ret_val.qt_data == ::std::ptr::null() {
                 return None;
             }
@@ -310,6 +803,71 @@ impl<'a> Application<'a> {
             Some(ret_val)
         }
     }
+    ///
+    /// Returns the top-level widget at the given *point;* returns 0 if
+    /// there is no such widget.
+    ///
+    /// **Overloads**
+    /// Returns the top-level widget at the point ( *x* , *y* ); returns
+    /// 0 if there is no such widget.
+    pub fn top_level_at<P: PointTrait<'a>>(p: &P) -> Option<Widget<'a>> {
+        let (obj_p_1, _funcs) = p.get_point_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).top_level_at)(obj_data, obj_p_1);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Returns the top-level widget at the given *point;* returns 0 if
+    /// there is no such widget.
+    ///
+    /// **Overloads**
+    /// Returns the top-level widget at the point ( *x* , *y* ); returns
+    /// 0 if there is no such widget.
+    pub fn top_level_at_2(x: i32, y: i32) -> Option<Widget<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).top_level_at_2)(obj_data, x, y);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Widget::new_from_rc(t);
+            } else {
+                ret_val = Widget::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    ///
+    /// Sounds the bell, using the default volume and sound. The function is *not*
+    /// available in Qt for Embedded Linux.
     pub fn beep() {
         let (obj_data, funcs) = unsafe {
             (
@@ -320,6 +878,38 @@ impl<'a> Application<'a> {
         };
         unsafe {
             ((*funcs).beep)(obj_data);
+        }
+    }
+    ///
+    /// Causes an alert to be shown for *widget* if the window is not the active
+    /// window. The alert is shown for *msec* miliseconds. If *msec* is zero (the
+    /// default), then the alert is shown indefinitely until the window becomes
+    /// active again.
+    ///
+    /// Currently this function does nothing on Qt for Embedded Linux.
+    ///
+    /// On MacOS , this works more at the application level and will cause the
+    /// application icon to bounce in the dock.
+    ///
+    /// On Windows, this causes the window's taskbar entry to flash for a time. If
+    /// *msec* is zero, the flashing will stop and the taskbar entry will turn a
+    /// different color (currently orange).
+    ///
+    /// On X11, this will cause the window to be marked as , the
+    /// window must not be hidden (i.e. not have hide() called on it, but be
+    /// visible in some sort of way) in order for this to work.
+    pub fn alert<W: WidgetTrait<'a>>(widget: &W, duration: i32) {
+        let (obj_widget_1, _funcs) = widget.get_widget_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).alert)(obj_data, obj_widget_1, duration);
         }
     }
     pub fn set_cursor_flash_time(arg0: i32) {
@@ -334,6 +924,20 @@ impl<'a> Application<'a> {
             ((*funcs).set_cursor_flash_time)(obj_data, arg0);
         }
     }
+    ///
+    /// The flash time is the time required to display, invert and restore the
+    /// caret display. Usually the text cursor is displayed for half the cursor
+    /// flash time, then hidden for the same amount of time, but this may vary.
+    ///
+    /// The default value on X11 is 1000 milliseconds. On Windows, the
+    /// **{Control** Panel} value is used and setting this property sets the cursor
+    /// flash time for all applications.
+    ///
+    /// We recommend that widgets do not cache this value as it may change at any
+    /// time if the user changes the global desktop settings.
+    ///
+    /// **Note**: This property may hold a negative value, for instance if cursor
+    /// blinking is disabled.
     pub fn cursor_flash_time() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -359,6 +963,9 @@ impl<'a> Application<'a> {
             ((*funcs).set_double_click_interval)(obj_data, arg0);
         }
     }
+    ///
+    /// The default value on X11 is 400 milliseconds. On Windows and Mac OS, the
+    /// operating system's value is used.
     pub fn double_click_interval() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -384,6 +991,9 @@ impl<'a> Application<'a> {
             ((*funcs).set_keyboard_input_interval)(obj_data, arg0);
         }
     }
+    ///
+    /// The default value on X11 is 400 milliseconds. On Windows and Mac OS, the
+    /// operating system's value is used.
     pub fn keyboard_input_interval() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -409,6 +1019,22 @@ impl<'a> Application<'a> {
             ((*funcs).set_wheel_scroll_lines)(obj_data, arg0);
         }
     }
+    ///
+    /// If the value exceeds the widget's number of visible lines, the widget
+    /// should interpret the scroll operation as a single *page up* or
+    /// *page down* . If the widget is an [item view class](QAbstractItemView)
+    ///
+    /// then the result of scrolling one *line* depends on the setting of the
+    /// widget's [scroll mode](QAbstractItemView::verticalScrollMode())
+    /// . Scroll
+    /// one *line* can mean [scroll one item](QAbstractItemView::ScrollPerItem)
+    ///
+    /// or [scroll one pixel](QAbstractItemView::ScrollPerPixel)
+    ///
+    ///
+    /// By default, this property has a value of 3.
+    ///
+    /// **See also:** [`StyleHints::wheel_scroll_lines`]
     pub fn wheel_scroll_lines() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -434,6 +1060,18 @@ impl<'a> Application<'a> {
             ((*funcs).set_start_drag_time)(obj_data, ms);
         }
     }
+    ///
+    /// If you support drag and drop in your application, and want to start a drag
+    /// and drop operation after the user has held down a mouse button for a
+    /// certain amount of time, you should use this property's value as the delay.
+    ///
+    /// Qt also uses this delay internally, e.g. in QTextEdit and QLineEdit, for
+    /// starting a drag.
+    ///
+    /// The default value is 500 ms.
+    ///
+    /// **See also:** [`start_drag_distance()`]
+    /// {Drag and Drop}
     pub fn start_drag_time() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -459,6 +1097,24 @@ impl<'a> Application<'a> {
             ((*funcs).set_start_drag_distance)(obj_data, l);
         }
     }
+    ///
+    /// If you support drag and drop in your application, and want to start a drag
+    /// and drop operation after the user has moved the cursor a certain distance
+    /// with a button held down, you should use this property's value as the
+    /// minimum distance required.
+    ///
+    /// For example, if the mouse position of the click is stored in `startPos`
+    /// and the current position (e.g. in the mouse move event) is `currentPos,`
+    /// you can find out if a drag should be started with code like this:
+    ///
+    /// Qt uses this value internally, e.g. in QFileDialog.
+    ///
+    /// The default value (if the platform doesn't provide a different default)
+    /// is 10 pixels.
+    ///
+    /// **See also:** [`start_drag_time()`]
+    /// [`Point::manhattan_length`]
+    /// {Drag and Drop}
     pub fn start_drag_distance() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -472,6 +1128,88 @@ impl<'a> Application<'a> {
             ret_val
         }
     }
+    ///
+    /// Returns `true` if *effect* is enabled; otherwise returns `false.`
+    ///
+    /// By default, Qt will try to use the desktop settings. To prevent this, call
+    /// setDesktopSettingsAware(false).
+    ///
+    /// **Note**: All effects are disabled on screens running at less than 16-bit color
+    /// depth.
+    ///
+    /// **See also:** [`set_effect_enabled()`]
+    /// [`t::ui_effect()`]
+    pub fn is_effect_enabled(arg0: UIEffect) -> bool {
+        let enum_arg0_1 = arg0 as i32;
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).is_effect_enabled)(obj_data, enum_arg0_1);
+            ret_val
+        }
+    }
+    ///
+    /// Enables the UI effect *effect* if *enable* is true, otherwise the effect
+    /// will not be used.
+    ///
+    /// **Note**: All effects are disabled on screens running at less than 16-bit color
+    /// depth.
+    ///
+    /// **See also:** [`is_effect_enabled()`]
+    /// [`t::ui_effect()`]
+    /// [`set_desktop_settings_aware()`]
+    pub fn set_effect_enabled(arg0: UIEffect, enable: bool) {
+        let enum_arg0_1 = arg0 as i32;
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_application)(::std::ptr::null()).all_funcs)
+                    .application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_effect_enabled)(obj_data, enum_arg0_1, enable);
+        }
+    }
+    ///
+    /// Enters the main event loop and waits until exit() is called, then returns
+    /// the value that was set to exit() (which is 0 if exit() is called via
+    /// quit()).
+    ///
+    /// It is necessary to call this function to start event handling. The main
+    /// event loop receives events from the window system and dispatches these to
+    /// the application widgets.
+    ///
+    /// Generally, no user interaction can take place before calling exec(). As a
+    /// special case, modal widgets like QMessageBox can be used before calling
+    /// exec(), because modal widgets call exec() to start a local event loop.
+    ///
+    /// To make your application perform idle processing, i.e., executing a special
+    /// function whenever there are no pending events, use a QTimer with 0 timeout.
+    /// More advanced idle processing schemes can be achieved using processEvents().
+    ///
+    /// We recommend that you connect clean-up code to the
+    /// [aboutToQuit()](QCoreApplication::)
+    /// signal, instead of putting it in your
+    /// application's `main()` function. This is because, on some platforms the
+    /// QApplication::exec() call may not return. For example, on the Windows
+    /// platform, when the user logs off, the system terminates the process after Qt
+    /// closes all top-level windows. Hence, there is *no guarantee* that the
+    /// application will have time to exit its event loop and execute code at the
+    /// end of the `main()` function, after the QApplication::exec() call.
+    ///
+    /// **See also:** quitOnLastWindowClosed
+    /// [`CoreApplication::quit`]
+    /// [`CoreApplication::exit`]
+    /// [`CoreApplication::process_events`]
+    /// [`CoreApplication::exec`]
     pub fn exec() -> i32 {
         let (obj_data, funcs) = unsafe {
             (
@@ -485,85 +1223,32 @@ impl<'a> Application<'a> {
             ret_val
         }
     }
-    pub fn set_about_to_quit_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T) + 'a,
-        T: 'a,
-    {
+    ///
+    ///
+    /// This signal is emitted when the widget that has keyboard focus changed from
+    /// *old* to *now,* i.e., because the user pressed the tab-key, clicked into
+    /// a widget or changed the active window. Both *old* and *now* can be the
+    /// null-pointer.
+    ///
+    /// The signal is emitted after both widget have been notified about the change
+    /// through QFocusEvent.
+    ///
+    /// **See also:** [`Widget::set_focus`]
+    /// [`Widget::clear_focus`]
+    /// [`t::focus_reason()`]
+    ///
+    /// By default, this property returns an empty string unless the user specifies
+    /// the `-stylesheet` option on the command line when running the application.
+    ///
+    /// **See also:** [`Widget::set_style`]
+    /// {Qt Style Sheets}
+    pub fn style_sheet(&self) -> String {
         let (obj_data, funcs) = self.get_application_obj_funcs();
-
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
         unsafe {
-            ((*funcs).set_about_to_quit_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(application_about_to_quit_trampoline_ud::<T> as usize),
-            );
+            let ret_val = ((*funcs).style_sheet)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
         }
-
-        self
-    }
-
-    pub fn set_about_to_quit_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn() + 'a,
-    {
-        let (obj_data, funcs) = self.get_application_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_about_to_quit_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(application_about_to_quit_trampoline as usize),
-            );
-        }
-
-        self
-    }
-    pub fn set_screen_added_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
-    where
-        F: Fn(&T, &Screen) + 'a,
-        T: 'a,
-    {
-        let (obj_data, funcs) = self.get_application_obj_funcs();
-
-        let f: Box<Box<Fn(&T, &Screen) + 'a>> = Box::new(Box::new(func));
-        let user_data = data as *const _ as *const c_void;
-
-        unsafe {
-            ((*funcs).set_screen_added_event)(
-                obj_data,
-                user_data,
-                Box::into_raw(f) as *const _,
-                transmute(application_screen_added_trampoline_ud::<T> as usize),
-            );
-        }
-
-        self
-    }
-
-    pub fn set_screen_added_event<F>(&self, func: F) -> &Self
-    where
-        F: Fn(&Screen) + 'a,
-    {
-        let (obj_data, funcs) = self.get_application_obj_funcs();
-        let f: Box<Box<Fn(&Screen) + 'a>> = Box::new(Box::new(func));
-
-        unsafe {
-            ((*funcs).set_screen_added_event)(
-                obj_data,
-                ::std::ptr::null(),
-                Box::into_raw(f) as *const _,
-                transmute(application_screen_added_trampoline as usize),
-            );
-        }
-
-        self
     }
     pub fn set_style_sheet(&self, sheet: &str) -> &Self {
         let str_in_sheet_1 = CString::new(sheet).unwrap();
@@ -581,6 +1266,16 @@ impl<'a> Application<'a> {
         }
         self
     }
+    ///
+    /// Set this property to `true` to automatically display the SIP when entering
+    /// widgets that accept keyboard input. This property only affects widgets with
+    /// the WA_InputMethodEnabled attribute set, and is typically used to launch
+    /// a virtual keyboard on devices which have very few or no keys.
+    ///
+    /// **The property only has an effect on platforms that use software input
+    /// panels.**
+    ///
+    /// The default is platform dependent.
     pub fn auto_sip_enabled(&self) -> bool {
         let (obj_data, funcs) = self.get_application_obj_funcs();
         unsafe {
@@ -588,6 +1283,27 @@ impl<'a> Application<'a> {
             ret_val
         }
     }
+    ///
+    /// Closes all top-level windows.
+    ///
+    /// This function is particularly useful for applications with many top-level
+    /// windows. It could, for example, be connected to a **{Exit}** entry in the
+    /// **{File}** menu:
+    ///
+    /// The windows are closed in random order, until one window does not accept
+    /// the close event. The application quits when the last window was
+    /// successfully closed; this can be turned off by setting
+    /// [quitOnLastWindowClosed](quitOnLastWindowClosed)
+    /// to false.
+    ///
+    /// **See also:** quitOnLastWindowClosed
+    /// [`last_window_closed()`]
+    /// [`Widget::close`]
+    /// [`Widget::close_event`]
+    /// [`last_window_closed()`]
+    /// [`CoreApplication::quit`]
+    /// [`top_level_widgets()`]
+    /// [`Widget::is_window`]
     pub fn close_all_windows() {
         let (obj_data, funcs) = unsafe {
             (
@@ -600,6 +1316,15 @@ impl<'a> Application<'a> {
             ((*funcs).close_all_windows)(obj_data);
         }
     }
+    ///
+    /// Displays a simple message box about Qt. The message includes the version
+    /// number of Qt being used by the application.
+    ///
+    /// This is useful for inclusion in the **Help** menu of an application, as
+    /// shown in the [Menus](mainwindows/menus)
+    /// example.
+    ///
+    /// This function is a convenience slot for QMessageBox::aboutQt().
     pub fn about_qt() {
         let (obj_data, funcs) = unsafe {
             (
@@ -612,11 +1337,1225 @@ impl<'a> Application<'a> {
             ((*funcs).about_qt)(obj_data);
         }
     }
+    #[doc(hidden)]
+    pub fn set_application_display_name(name: &str) {
+        let str_in_name_1 = CString::new(name).unwrap();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_application_display_name)(obj_data, str_in_name_1.as_ptr());
+        }
+    }
+    #[doc(hidden)]
+    pub fn application_display_name() -> String {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).application_display_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_desktop_file_name(name: &str) {
+        let str_in_name_1 = CString::new(name).unwrap();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_desktop_file_name)(obj_data, str_in_name_1.as_ptr());
+        }
+    }
+    #[doc(hidden)]
+    pub fn desktop_file_name() -> String {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).desktop_file_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn platform_name() -> String {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).platform_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn modal_window() -> Option<Window<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).modal_window)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Window::new_from_rc(t);
+            } else {
+                ret_val = Window::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn focus_window() -> Option<Window<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).focus_window)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Window::new_from_rc(t);
+            } else {
+                ret_val = Window::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn focus_object() -> Option<Object<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).focus_object)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Object::new_from_rc(t);
+            } else {
+                ret_val = Object::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn primary_screen() -> Option<Screen<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).primary_screen)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Screen::new_from_rc(t);
+            } else {
+                ret_val = Screen::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn screen_at<P: PointTrait<'a>>(point: &P) -> Option<Screen<'a>> {
+        let (obj_point_1, _funcs) = point.get_point_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).screen_at)(obj_data, obj_point_1);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Screen::new_from_rc(t);
+            } else {
+                ret_val = Screen::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn device_pixel_ratio(&self) -> f32 {
+        let (obj_data, funcs) = self.get_gui_application_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).device_pixel_ratio)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn override_cursor() -> Option<Cursor<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).override_cursor)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Cursor::new_from_rc(t);
+            } else {
+                ret_val = Cursor::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_override_cursor<C: CursorTrait<'a>>(arg0: &C) {
+        let (obj_arg0_1, _funcs) = arg0.get_cursor_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_override_cursor)(obj_data, obj_arg0_1);
+        }
+    }
+    #[doc(hidden)]
+    pub fn change_override_cursor<C: CursorTrait<'a>>(arg0: &C) {
+        let (obj_arg0_1, _funcs) = arg0.get_cursor_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).change_override_cursor)(obj_data, obj_arg0_1);
+        }
+    }
+    #[doc(hidden)]
+    pub fn restore_override_cursor() {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).restore_override_cursor)(obj_data);
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_font<F: FontTrait<'a>>(arg0: &F) {
+        let (obj_arg0_1, _funcs) = arg0.get_font_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_font)(obj_data, obj_arg0_1);
+        }
+    }
+    #[doc(hidden)]
+    pub fn clipboard() -> Option<Clipboard<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).clipboard)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Clipboard::new_from_rc(t);
+            } else {
+                ret_val = Clipboard::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_palette<P: PaletteTrait<'a>>(pal: &P) {
+        let (obj_pal_1, _funcs) = pal.get_palette_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_palette)(obj_data, obj_pal_1);
+        }
+    }
+    #[doc(hidden)]
+    pub fn keyboard_modifiers() -> KeyboardModifiers {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).keyboard_modifiers)(obj_data);
+            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn query_keyboard_modifiers() -> KeyboardModifiers {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).query_keyboard_modifiers)(obj_data);
+            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn mouse_buttons() -> MouseButtons {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).mouse_buttons)(obj_data);
+            let ret_val = { transmute::<i32, MouseButtons>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_layout_direction(direction: LayoutDirection) {
+        let enum_direction_1 = direction as i32;
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_layout_direction)(obj_data, enum_direction_1);
+        }
+    }
+    #[doc(hidden)]
+    pub fn layout_direction() -> LayoutDirection {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).layout_direction)(obj_data);
+            let ret_val = { transmute::<i32, LayoutDirection>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_right_to_left() -> bool {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).is_right_to_left)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_left_to_right() -> bool {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).is_left_to_right)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_desktop_settings_aware(on: bool) {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_desktop_settings_aware)(obj_data, on);
+        }
+    }
+    #[doc(hidden)]
+    pub fn desktop_settings_aware() -> bool {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).desktop_settings_aware)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_quit_on_last_window_closed(quit: bool) {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_quit_on_last_window_closed)(obj_data, quit);
+        }
+    }
+    #[doc(hidden)]
+    pub fn quit_on_last_window_closed() -> bool {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).quit_on_last_window_closed)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn application_state() -> ApplicationState {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).application_state)(obj_data);
+            let ret_val = { transmute::<i32, ApplicationState>(ret_val) };
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_session_restored(&self) -> bool {
+        let (obj_data, funcs) = self.get_gui_application_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_session_restored)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn session_id(&self) -> String {
+        let (obj_data, funcs) = self.get_gui_application_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).session_id)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn session_key(&self) -> String {
+        let (obj_data, funcs) = self.get_gui_application_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).session_key)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_saving_session(&self) -> bool {
+        let (obj_data, funcs) = self.get_gui_application_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_saving_session)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_fallback_session_management_enabled() -> bool {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).is_fallback_session_management_enabled)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_fallback_session_management_enabled(arg0: bool) {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_fallback_session_management_enabled)(obj_data, arg0);
+        }
+    }
+    #[doc(hidden)]
+    pub fn sync() {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_gui_application)(::std::ptr::null()).all_funcs)
+                    .gui_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).sync)(obj_data);
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_organization_domain(org_domain: &str) {
+        let str_in_org_domain_1 = CString::new(org_domain).unwrap();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_organization_domain)(obj_data, str_in_org_domain_1.as_ptr());
+        }
+    }
+    #[doc(hidden)]
+    pub fn organization_domain() -> String {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).organization_domain)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_organization_name(org_name: &str) {
+        let str_in_org_name_1 = CString::new(org_name).unwrap();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_organization_name)(obj_data, str_in_org_name_1.as_ptr());
+        }
+    }
+    #[doc(hidden)]
+    pub fn organization_name() -> String {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).organization_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_application_name(application: &str) {
+        let str_in_application_1 = CString::new(application).unwrap();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_application_name)(obj_data, str_in_application_1.as_ptr());
+        }
+    }
+    #[doc(hidden)]
+    pub fn application_name() -> String {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).application_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_application_version(version: &str) {
+        let str_in_version_1 = CString::new(version).unwrap();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_application_version)(obj_data, str_in_version_1.as_ptr());
+        }
+    }
+    #[doc(hidden)]
+    pub fn application_version() -> String {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).application_version)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_setuid_allowed(allow: bool) {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_setuid_allowed)(obj_data, allow);
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_setuid_allowed() -> bool {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).is_setuid_allowed)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn instance() -> Option<CoreApplication<'a>> {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).instance)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = CoreApplication::new_from_rc(t);
+            } else {
+                ret_val = CoreApplication::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn exit(retcode: i32) {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).exit)(obj_data, retcode);
+        }
+    }
+    #[doc(hidden)]
+    pub fn send_event<E: EventTrait<'a>, O: ObjectTrait<'a>>(receiver: &O, event: &E) -> bool {
+        let (obj_receiver_1, _funcs) = receiver.get_object_obj_funcs();
+        let (obj_event_2, _funcs) = event.get_event_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).send_event)(obj_data, obj_receiver_1, obj_event_2);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn post_event<E: EventTrait<'a>, O: ObjectTrait<'a>>(
+        receiver: &O,
+        event: &E,
+        priority: i32,
+    ) {
+        let (obj_receiver_1, _funcs) = receiver.get_object_obj_funcs();
+        let (obj_event_2, _funcs) = event.get_event_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).post_event)(obj_data, obj_receiver_1, obj_event_2, priority);
+        }
+    }
+    #[doc(hidden)]
+    pub fn send_posted_events<O: ObjectTrait<'a>>(receiver: &O, event_type: i32) {
+        let (obj_receiver_1, _funcs) = receiver.get_object_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).send_posted_events)(obj_data, obj_receiver_1, event_type);
+        }
+    }
+    #[doc(hidden)]
+    pub fn remove_posted_events<O: ObjectTrait<'a>>(receiver: &O, event_type: i32) {
+        let (obj_receiver_1, _funcs) = receiver.get_object_obj_funcs();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).remove_posted_events)(obj_data, obj_receiver_1, event_type);
+        }
+    }
+    #[doc(hidden)]
+    pub fn has_pending_events() -> bool {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).has_pending_events)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn starting_up() -> bool {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).starting_up)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn closing_down() -> bool {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).closing_down)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn application_dir_path() -> String {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).application_dir_path)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn application_file_path() -> String {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).application_file_path)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn application_pid() -> i64 {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).application_pid)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn add_library_path(arg0: &str) {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).add_library_path)(obj_data, str_in_arg0_1.as_ptr());
+        }
+    }
+    #[doc(hidden)]
+    pub fn remove_library_path(arg0: &str) {
+        let str_in_arg0_1 = CString::new(arg0).unwrap();
+
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).remove_library_path)(obj_data, str_in_arg0_1.as_ptr());
+        }
+    }
+    #[doc(hidden)]
+    pub fn flush() {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).flush)(obj_data);
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_quit_lock_enabled() -> bool {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            let ret_val = ((*funcs).is_quit_lock_enabled)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_quit_lock_enabled(enabled: bool) {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).set_quit_lock_enabled)(obj_data, enabled);
+        }
+    }
+    #[doc(hidden)]
+    pub fn quit() {
+        let (obj_data, funcs) = unsafe {
+            (
+                ::std::ptr::null(),
+                (*((*rute_ffi_get()).get_core_application)(::std::ptr::null()).all_funcs)
+                    .core_application_funcs,
+            )
+        };
+        unsafe {
+            ((*funcs).quit)(obj_data);
+        }
+    }
+    #[doc(hidden)]
+    pub fn object_name(&self) -> String {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).object_name)(obj_data);
+            let ret_val = CStr::from_ptr(ret_val).to_string_lossy().into_owned();
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn set_object_name(&self, name: &str) -> &Self {
+        let str_in_name_1 = CString::new(name).unwrap();
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).set_object_name)(obj_data, str_in_name_1.as_ptr());
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn is_widget_type(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_widget_type)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn is_window_type(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).is_window_type)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn signals_blocked(&self) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).signals_blocked)(obj_data);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn block_signals(&self, b: bool) -> bool {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).block_signals)(obj_data, b);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
+        let enum_timer_type_2 = timer_type as i32;
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).start_timer)(obj_data, interval, enum_timer_type_2);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
+        let enum_timer_type_2 = timer_type as i32;
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).start_timer_2)(obj_data, time, enum_timer_type_2);
+            ret_val
+        }
+    }
+    #[doc(hidden)]
+    pub fn kill_timer(&self, id: i32) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).kill_timer)(obj_data, id);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_parent<O: ObjectTrait<'a>>(&self, parent: &O) -> &Self {
+        let (obj_parent_1, _funcs) = parent.get_object_obj_funcs();
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).set_parent)(obj_data, obj_parent_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn install_event_filter<O: ObjectTrait<'a>>(&self, filter_obj: &O) -> &Self {
+        let (obj_filter_obj_1, _funcs) = filter_obj.get_object_obj_funcs();
+
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).install_event_filter)(obj_data, obj_filter_obj_1);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_tree(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_tree)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_info(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_info)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_tree_2(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_tree_2)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn dump_object_info_2(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).dump_object_info_2)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn parent(&self) -> Option<Object> {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).parent)(obj_data);
+            if ret_val.qt_data == ::std::ptr::null() {
+                return None;
+            }
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = Object::new_from_rc(t);
+            } else {
+                ret_val = Object::new_from_owned(t);
+            }
+            Some(ret_val)
+        }
+    }
+    #[doc(hidden)]
+    pub fn delete_later(&self) -> &Self {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        unsafe {
+            ((*funcs).delete_later)(obj_data);
+        }
+        self
+    }
+    #[doc(hidden)]
+    pub fn set_custom_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, &Event) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+
+        let f: Box<Box<Fn(&T, &Event) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_custom_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(object_custom_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_custom_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(&Event) + 'a,
+    {
+        let (obj_data, funcs) = self.get_object_obj_funcs();
+        let f: Box<Box<Fn(&Event) + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_custom_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(object_custom_trampoline as usize),
+            );
+        }
+
+        self
+    }
 }
 pub trait ApplicationTrait<'a> {
     #[inline]
     #[doc(hidden)]
     fn get_application_obj_funcs(&self) -> (*const RUBase, *const RUApplicationFuncs);
+}
+
+impl<'a> ObjectTrait<'a> for Application<'a> {
+    #[doc(hidden)]
+    fn get_object_obj_funcs(&self) -> (*const RUBase, *const RUObjectFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).object_funcs) }
+    }
+}
+
+impl<'a> CoreApplicationTrait<'a> for Application<'a> {
+    #[doc(hidden)]
+    fn get_core_application_obj_funcs(&self) -> (*const RUBase, *const RUCoreApplicationFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).core_application_funcs) }
+    }
+}
+
+impl<'a> GuiApplicationTrait<'a> for Application<'a> {
+    #[doc(hidden)]
+    fn get_gui_application_obj_funcs(&self) -> (*const RUBase, *const RUGuiApplicationFuncs) {
+        let obj = self.data.get().unwrap();
+        unsafe { (obj, (*self.all_funcs).gui_application_funcs) }
+    }
 }
 
 impl<'a> ApplicationTrait<'a> for Application<'a> {
@@ -625,4 +2564,10 @@ impl<'a> ApplicationTrait<'a> for Application<'a> {
         let obj = self.data.get().unwrap();
         unsafe { (obj, (*self.all_funcs).application_funcs) }
     }
+}
+#[repr(u32)]
+pub enum ColorSpec {
+    NormalColor = 0,
+    CustomColor = 1,
+    ManyColor = 2,
 }
