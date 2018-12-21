@@ -192,11 +192,23 @@ pub struct Struct {
 /// C/C++ style enum
 ///
 #[derive(Debug)]
-pub enum EnumEntry {
-    /// Enum in the style of: EnumEntry,
-    Enum(String),
-    /// Enum in the style of: EnumEntry = SomeValue,
-    EnumValue(String, String),
+pub struct EnumEntry {
+    /// Name of the enum entry
+    name: String,
+    /// Value of the enum entry
+    value: u64,
+}
+
+///
+/// Enums in C++ can have same value for different enum ids. This isn't supported in Rust.
+/// Also Rust doesn't support that your "or" enums flags so we need to handle that.
+///
+#[derive(Debug, Default)]
+pub enum EnumType {
+    /// All values are in sequantial order and no overlap
+    Regular,
+    /// This enum is constructed with bitflags due to being power of two or overlapping values
+    Bitflags,
 }
 
 ///
@@ -208,6 +220,8 @@ pub struct Enum {
     pub name: String,
     /// The file this enum is present in (notice if it's qnamespace we change it to rute_enums)
     pub def_file: String,
+    /// Type of enum
+    pub enum_typ: EnumType,
     /// Qt supports having a flags macro on enums being type checked with an extra name
     pub flags_name: String,
     /// Original class name (like Qt, QAccesibility)
@@ -326,11 +340,63 @@ impl ApiParser {
                         }
                     }
 
+                    // Figure out enum type
+                    let enum_type = determine_enum_type(&mut enum_def);
+                    enum_def.enum_type = enum_type;
+
                     api_def.enums.push(enum_def);
                 }
 
                 _ => (),
             }
+        }
+    }
+
+    ///
+    /// Check if the enum values overlaps
+    ///
+    fn check_overlapping(enum_def: &Enum) -> bool {
+        let mut values = HashSet::new();
+
+        for v in &enum_def.entries {
+            if values.contains(v.value) {
+                return true;
+            } else {
+                values.insert(v.value);
+            }
+        }
+
+        false
+    }
+
+    ///
+    /// check if an enum only has power of two values in it
+    ///
+    fn check_power_of_two(enum_def: &Enum) -> bool {
+        for v in &enum_def.entries {
+            if !v.value.is_power_of_two() {
+                return false;
+            }
+        }
+
+        true
+    }
+
+    ///
+    /// Figures out the type of enum 
+    ///
+    fn determine_enum_type(enum_def: &Enum) -> EnumType {
+        // if all numbers aren't overlapping 
+        let overlapping = Self::check_overlapping(enum_def);
+        // check if all values are power of two
+        let power_of_two = Self::check_overlapping(enum_def);
+
+        // if all values are power of two we assume this should be used as bitfield
+        // or has overlapping values we 
+        if power_of_two || overlapping {
+            EnumType::Bitflags
+        } else {
+            EnumType::Regular
         }
     }
 
@@ -617,20 +683,20 @@ impl ApiParser {
     ///
     fn get_enum(rule: Pair<Rule>) -> EnumEntry {
         let mut name = String::new();
-        let mut assign = String::new();
+        let mut assign = None; 
 
         for entry in rule.into_inner() {
             match entry.as_rule() {
                 Rule::name => name = entry.as_str().to_owned(),
-                Rule::enum_assign => assign = Self::get_enum_assign(entry),
+                Rule::enum_assign => assign = Some(Self::get_enum_assign(entry).parse::<u64>().unwrap()),
                 _ => (),
             }
         }
 
-        if assign.is_empty() {
-            EnumEntry::Enum(name)
+        if let Some(enum_value) = assign {
+            EnumEntry::EnumValue(name, enum_value)
         } else {
-            EnumEntry::EnumValue(name, assign)
+            panic!("Should not be here")
         }
     }
 
@@ -949,19 +1015,19 @@ impl Variable {
     pub fn get_c_primitive_type(&self) -> Cow<str> {
         let tname = self.type_name.as_str();
 
-		match tname {
-			"f32" => "float".into(),
-			"bool" => "bool".into(),
-			"f64" => "double".into(),
-			"i32" => "int".into(),
-			_ => {
-				if self.type_name.starts_with('u') {
-					format!("uint{}_t", &tname[1..]).into()
-				} else {
-					format!("int{}_t", &tname[1..]).into()
-				}
-			}
-		}
+        match tname {
+            "f32" => "float".into(),
+            "bool" => "bool".into(),
+            "f64" => "double".into(),
+            "i32" => "int".into(),
+            _ => {
+                if self.type_name.starts_with('u') {
+                    format!("uint{}_t", &tname[1..]).into()
+                } else {
+                    format!("int{}_t", &tname[1..]).into()
+                }
+            }
+        }
     }
 
     ///

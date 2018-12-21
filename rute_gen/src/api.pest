@@ -26,7 +26,7 @@ retexp       = { ("->") ~ (refexp | pointer_exp)? ~ (vtype | array) ~ enum_use? 
 var          = { name ~ (":") ~ (refexp | pointer_exp)? ~ (vtype | array) ~ enum_use? }
 varlist      = { (var | array) ~ ((",") ~ (var | array))* }
 enum_assign  = { ("=") ~ name_or_num }
-enum_type    = { name ~ enum_assign? }
+enum_type    = { name ~ enum_assign }
 namelist     = { name ~ ((",") ~ name)* }
 function     = { (static_typ | org_name | no_chain | manual | signal | event)*? ~ name ~ ("(") ~ varlist? ~ (")") ~ retexp? }
 
