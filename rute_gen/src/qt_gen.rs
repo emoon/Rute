@@ -1209,27 +1209,12 @@ impl QtGenerator {
             );
 
             let mut values = Vec::with_capacity(enum_def.entries.len());
-            let mut index = 0;
 
-            for entry in &enum_def.entries {
-                match *entry {
-                    EnumEntry::Enum(ref name) => {
-                        let mut enum_data = Object::new();
-                        enum_data.insert("name".into(), Value::scalar(name));
-                        enum_data.insert("id".into(), Value::scalar(format!("{}", index)));
-                        values.push(Value::Object(enum_data));
-                        index += 1;
-                    }
-
-                    EnumEntry::EnumValue(ref name, ref value) => {
-                        let mut enum_data = Object::new();
-                        enum_data.insert("name".into(), Value::scalar(name));
-                        enum_data.insert("id".into(), Value::scalar(value));
-                        values.push(Value::Object(enum_data));
-                        index = value.parse().unwrap();
-                        index += 1;
-                    }
-                }
+            for e in &enum_def.entries {
+                let mut enum_data = Object::new();
+                enum_data.insert("name".into(), Value::scalar(e.name.to_owned()));
+                enum_data.insert("id".into(), Value::scalar(e.value.to_string()));
+                values.push(Value::Object(enum_data));
             }
 
             template_data.insert("enums".into(), Value::Array(values));

@@ -1,7 +1,7 @@
 use pest::iterators::Pair;
 use pest::Parser;
 use std::borrow::Cow;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
@@ -194,21 +194,27 @@ pub struct Struct {
 #[derive(Debug)]
 pub struct EnumEntry {
     /// Name of the enum entry
-    name: String,
+    pub name: String,
     /// Value of the enum entry
-    value: u64,
+    pub value: u64,
 }
 
 ///
 /// Enums in C++ can have same value for different enum ids. This isn't supported in Rust.
 /// Also Rust doesn't support that your "or" enums flags so we need to handle that.
 ///
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub enum EnumType {
     /// All values are in sequantial order and no overlap
     Regular,
     /// This enum is constructed with bitflags due to being power of two or overlapping values
     Bitflags,
+}
+
+impl Default for EnumType {
+    fn default() -> EnumType {
+        EnumType::Regular
+    }
 }
 
 ///
@@ -221,7 +227,7 @@ pub struct Enum {
     /// The file this enum is present in (notice if it's qnamespace we change it to rute_enums)
     pub def_file: String,
     /// Type of enum
-    pub enum_typ: EnumType,
+    pub enum_type: EnumType,
     /// Qt supports having a flags macro on enums being type checked with an extra name
     pub flags_name: String,
     /// Original class name (like Qt, QAccesibility)
@@ -341,7 +347,7 @@ impl ApiParser {
                     }
 
                     // Figure out enum type
-                    let enum_type = determine_enum_type(&mut enum_def);
+                    let enum_type = Self::determine_enum_type(&enum_def);
                     enum_def.enum_type = enum_type;
 
                     api_def.enums.push(enum_def);
@@ -356,10 +362,10 @@ impl ApiParser {
     /// Check if the enum values overlaps
     ///
     fn check_overlapping(enum_def: &Enum) -> bool {
-        let mut values = HashSet::new();
+        let mut values = HashSet::<u64>::new();
 
         for v in &enum_def.entries {
-            if values.contains(v.value) {
+            if values.contains(&v.value) {
                 return true;
             } else {
                 values.insert(v.value);
@@ -370,29 +376,38 @@ impl ApiParser {
     }
 
     ///
-    /// check if an enum only has power of two values in it
+    /// check if an enum only has power of two values in it. This function calculate in percent how
+    /// many values that happens to be power of two and returns true if it's a above a certain
+    /// threshold. The reason for this is that some enums also combinations of other values
+    /// so it's not possible to *only* check for single power of two values.
     ///
     fn check_power_of_two(enum_def: &Enum) -> bool {
-        for v in &enum_def.entries {
-            if !v.value.is_power_of_two() {
-                return false;
-            }
+        if enum_def.entries.is_empty() {
+            return false;
         }
 
-        true
+        let power_of_two_count: u32 = enum_def.entries
+            .iter()
+            .filter(|e| e.value.is_power_of_two())
+            .map(|_v| 1)
+            .sum();
+
+        // if we have >= 50% of power of two values assume this enum is being used as bitflags
+        let percent = enum_def.entries.len() as f32 / power_of_two_count as f32;
+        percent >= 0.5
     }
 
     ///
-    /// Figures out the type of enum 
+    /// Figures out the type of enum
     ///
     fn determine_enum_type(enum_def: &Enum) -> EnumType {
-        // if all numbers aren't overlapping 
+        // if all numbers aren't overlapping
         let overlapping = Self::check_overlapping(enum_def);
         // check if all values are power of two
-        let power_of_two = Self::check_overlapping(enum_def);
+        let power_of_two = Self::check_power_of_two(enum_def);
 
         // if all values are power of two we assume this should be used as bitfield
-        // or has overlapping values we 
+        // or has overlapping values we
         if power_of_two || overlapping {
             EnumType::Bitflags
         } else {
@@ -683,7 +698,7 @@ impl ApiParser {
     ///
     fn get_enum(rule: Pair<Rule>) -> EnumEntry {
         let mut name = String::new();
-        let mut assign = None; 
+        let mut assign = None;
 
         for entry in rule.into_inner() {
             match entry.as_rule() {
@@ -693,8 +708,8 @@ impl ApiParser {
             }
         }
 
-        if let Some(enum_value) = assign {
-            EnumEntry::EnumValue(name, enum_value)
+        if let Some(value) = assign {
+            EnumEntry { name, value }
         } else {
             panic!("Should not be here")
         }
@@ -887,7 +902,7 @@ pub enum RecurseIncludeSelf {
 ///
 #[derive(PartialEq, Clone, Copy)]
 pub enum IsReturnArg {
-    Yes,
+    //Yes,
     No,
 }
 

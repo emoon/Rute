@@ -95,16 +95,8 @@ impl HeaderFFIGen for CapiHeaderGen {
     fn gen_enum<W: Write>(&mut self, dest: &mut W, enum_def: &Enum) -> io::Result<()> {
         writeln!(dest, "typedef enum RU{} {{\n", enum_def.name)?;
 
-        for entry in &enum_def.entries {
-            match *entry {
-                EnumEntry::Enum(ref name) => {
-                    writeln!(dest, "    RU{}_{},", enum_def.name, name)?;
-                }
-
-                EnumEntry::EnumValue(ref name, ref val) => {
-                    writeln!(dest, "    RU{}_{} = {},", enum_def.name, name, val)?;
-                }
-            }
+        for e in &enum_def.entries {
+            writeln!(dest, "    RU{}_{} = {},", enum_def.name, e.name, e.value)?;
         }
 
         writeln!(dest, "}} RU{};\n", enum_def.name)
@@ -205,7 +197,7 @@ impl HeaderFFIGen for CapiHeaderGen {
             FunctionType::Event => {
                 self.generate_callback_def(dest, "", func)?;
                 writeln!(dest, ");")?;
-                writeln!(dest, "    void (*remove_{})(void* object);", func.name);
+                writeln!(dest, "    void (*remove_{})(void* object);", func.name)?;
             }
         }
 

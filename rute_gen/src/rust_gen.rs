@@ -908,22 +908,14 @@ impl RustGenerator {
             writeln!(dest, "pub enum {} {{", enum_def.name)?;
 
             for e in &enum_def.entries {
-                match e {
-                    EnumEntry::Enum(name) => writeln!(dest, "    {},", name.to_camel_case())?,
-                    EnumEntry::EnumValue(name, value) => writeln!(
-                        dest,
-                        "    {} = {},",
-                        name.to_camel_case(),
-                        value.to_camel_case()
-                    )?,
-                }
+                writeln!(dest, "    {} = {},", e.name.to_camel_case(), e.value)?;
             }
 
             writeln!(dest, "}}\n")?;
 
             // if enum has a flag alias we need to generate that as well
             if !enum_def.flags_name.is_empty() {
-                writeln!(dest, "pub type {} = {};\n", enum_def.flags_name, enum_def.name);
+                writeln!(dest, "pub type {} = {};\n", enum_def.flags_name, enum_def.name)?;
             }
         }
 

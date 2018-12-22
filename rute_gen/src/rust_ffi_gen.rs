@@ -191,12 +191,7 @@ impl HeaderFFIGen for RustFFIGenerator {
         writeln!(dest, "pub enum RU{} {{", enum_def.name)?;
 
         for entry in &enum_def.entries {
-            match *entry {
-                EnumEntry::Enum(ref name) => writeln!(dest, "    {},", name.to_camel_case())?,
-                EnumEntry::EnumValue(ref name, ref val) => {
-                    writeln!(dest, "    {} = {},", name.to_camel_case(), val)?
-                }
-            }
+            writeln!(dest, "    {} = {},", entry.name.to_camel_case(), entry.value)?
         }
 
         writeln!(dest, "}}\n")
