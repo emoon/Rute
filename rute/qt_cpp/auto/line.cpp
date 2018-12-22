@@ -109,21 +109,21 @@ static struct RUPoint line_center(struct RUBase* self_c) {
 
 static void line_set_p1(struct RUBase* self_c, struct RUBase* p1) {
     WRLine* qt_value = (WRLine*)self_c;
-    qt_value->setP1(*((QPoint*)p1));
+    qt_value->setP1(*((WRPoint*)p1));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void line_set_p2(struct RUBase* self_c, struct RUBase* p2) {
     WRLine* qt_value = (WRLine*)self_c;
-    qt_value->setP2(*((QPoint*)p2));
+    qt_value->setP2(*((WRPoint*)p2));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void line_set_points(struct RUBase* self_c, struct RUBase* p1, struct RUBase* p2) {
     WRLine* qt_value = (WRLine*)self_c;
-    qt_value->setPoints(*((QPoint*)p1), *((QPoint*)p2));
+    qt_value->setPoints(*((WRPoint*)p1), *((WRPoint*)p2));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

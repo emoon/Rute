@@ -73,7 +73,7 @@ static int point_ry(struct RUBase* self_c) {
 
 static int point_dot_product(struct RUBase* self_c, struct RUBase* p1, struct RUBase* p2) {
     WRPoint* qt_value = (WRPoint*)self_c;
-    auto ret_value = qt_value->dotProduct(*((QPoint*)p1), *((QPoint*)p2));
+    auto ret_value = qt_value->dotProduct(*((WRPoint*)p1), *((WRPoint*)p2));
     return ret_value;
 }
 

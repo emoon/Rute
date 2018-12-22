@@ -23,7 +23,7 @@ static struct RUPaintDevice painter_device(struct RUBase* self_c) {
 
 static bool painter_begin(struct RUBase* self_c, struct RUBase* arg0) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    auto ret_value = qt_value->begin((QPaintDevice*)arg0);
+    auto ret_value = qt_value->begin((WRPaintDevice*)arg0);
     return ret_value;
 }
 
@@ -47,7 +47,7 @@ static bool painter_is_active(struct RUBase* self_c) {
 
 static void painter_init_from(struct RUBase* self_c, struct RUBase* device) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->initFrom((QPaintDevice*)device);
+    qt_value->initFrom((WRPaintDevice*)device);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,21 +83,21 @@ static struct RUFont painter_font(struct RUBase* self_c) {
 
 static void painter_set_font(struct RUBase* self_c, struct RUBase* f) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setFont(*((QFont*)f));
+    qt_value->setFont(*((WRFont*)f));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_set_pen(struct RUBase* self_c, struct RUBase* color) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setPen(*((QColor*)color));
+    qt_value->setPen(*((WRColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_set_pen_2(struct RUBase* self_c, struct RUBase* pen) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setPen(*((QPen*)pen));
+    qt_value->setPen(*((WRPen*)pen));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,7 +125,7 @@ static struct RUPen painter_pen(struct RUBase* self_c) {
 
 static void painter_set_brush(struct RUBase* self_c, struct RUBase* brush) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setBrush(*((QBrush*)brush));
+    qt_value->setBrush(*((WRBrush*)brush));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -189,21 +189,21 @@ static void painter_set_brush_origin(struct RUBase* self_c, int x, int y) {
 
 static void painter_set_brush_origin_2(struct RUBase* self_c, struct RUBase* arg0) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setBrushOrigin(*((QPoint*)arg0));
+    qt_value->setBrushOrigin(*((WRPoint*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_set_brush_origin_3(struct RUBase* self_c, struct RUBase* arg0) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setBrushOrigin(*((QPointF*)arg0));
+    qt_value->setBrushOrigin(*((WRPointF*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_set_background(struct RUBase* self_c, struct RUBase* bg) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setBackground(*((QBrush*)bg));
+    qt_value->setBackground(*((WRBrush*)bg));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -253,14 +253,14 @@ static struct RURegion painter_clip_region(struct RUBase* self_c) {
 
 static void painter_set_clip_rect(struct RUBase* self_c, struct RUBase* arg0, uint32_t op) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setClipRect(*((QRectF*)arg0), (Qt::ClipOperation)op);
+    qt_value->setClipRect(*((WRRectF*)arg0), (Qt::ClipOperation)op);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_set_clip_rect_2(struct RUBase* self_c, struct RUBase* arg0, uint32_t op) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setClipRect(*((QRect*)arg0), (Qt::ClipOperation)op);
+    qt_value->setClipRect(*((WRRect*)arg0), (Qt::ClipOperation)op);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -274,7 +274,7 @@ static void painter_set_clip_rect_3(struct RUBase* self_c, int x, int y, int w, 
 
 static void painter_set_clip_region(struct RUBase* self_c, struct RUBase* arg0, uint32_t op) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setClipRegion(*((QRegion*)arg0), (Qt::ClipOperation)op);
+    qt_value->setClipRegion(*((WRRegion*)arg0), (Qt::ClipOperation)op);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -324,7 +324,7 @@ static void painter_restore(struct RUBase* self_c) {
 
 static void painter_set_transform(struct RUBase* self_c, struct RUBase* transform, bool combine) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setTransform(*((QTransform*)transform), combine);
+    qt_value->setTransform(*((WRTransform*)transform), combine);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -352,7 +352,7 @@ static void painter_reset_transform(struct RUBase* self_c) {
 
 static void painter_set_world_transform(struct RUBase* self_c, struct RUBase* matrix, bool combine) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setWorldTransform(*((QTransform*)matrix), combine);
+    qt_value->setWorldTransform(*((WRTransform*)matrix), combine);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -422,7 +422,7 @@ static struct RURect painter_window(struct RUBase* self_c) {
 
 static void painter_set_window(struct RUBase* self_c, struct RUBase* window) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setWindow(*((QRect*)window));
+    qt_value->setWindow(*((WRRect*)window));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -450,7 +450,7 @@ static struct RURect painter_viewport(struct RUBase* self_c) {
 
 static void painter_set_viewport(struct RUBase* self_c, struct RUBase* viewport) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setViewport(*((QRect*)viewport));
+    qt_value->setViewport(*((WRRect*)viewport));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -479,14 +479,14 @@ static bool painter_view_transform_enabled(struct RUBase* self_c) {
 
 static void painter_draw_point(struct RUBase* self_c, struct RUBase* pt) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPoint(*((QPointF*)pt));
+    qt_value->drawPoint(*((WRPointF*)pt));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_point_2(struct RUBase* self_c, struct RUBase* p) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPoint(*((QPoint*)p));
+    qt_value->drawPoint(*((WRPoint*)p));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -500,42 +500,42 @@ static void painter_draw_point_3(struct RUBase* self_c, int x, int y) {
 
 static void painter_draw_points(struct RUBase* self_c, struct RUBase* points, int point_count) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPoints((QPointF*)points, point_count);
+    qt_value->drawPoints((WRPointF*)points, point_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_points_2(struct RUBase* self_c, struct RUBase* points) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPoints(*((QPolygonF*)points));
+    qt_value->drawPoints(*((WRPolygonF*)points));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_points_3(struct RUBase* self_c, struct RUBase* points, int point_count) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPoints((QPoint*)points, point_count);
+    qt_value->drawPoints((WRPoint*)points, point_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_points_4(struct RUBase* self_c, struct RUBase* points) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPoints(*((QPolygon*)points));
+    qt_value->drawPoints(*((WRPolygon*)points));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_line(struct RUBase* self_c, struct RUBase* line) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawLine(*((QLineF*)line));
+    qt_value->drawLine(*((WRLineF*)line));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_line_2(struct RUBase* self_c, struct RUBase* line) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawLine(*((QLine*)line));
+    qt_value->drawLine(*((WRLine*)line));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -549,42 +549,42 @@ static void painter_draw_line_3(struct RUBase* self_c, int x1, int y1, int x2, i
 
 static void painter_draw_line_4(struct RUBase* self_c, struct RUBase* p1, struct RUBase* p2) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawLine(*((QPoint*)p1), *((QPoint*)p2));
+    qt_value->drawLine(*((WRPoint*)p1), *((WRPoint*)p2));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_line_5(struct RUBase* self_c, struct RUBase* p1, struct RUBase* p2) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawLine(*((QPointF*)p1), *((QPointF*)p2));
+    qt_value->drawLine(*((WRPointF*)p1), *((WRPointF*)p2));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_lines(struct RUBase* self_c, struct RUBase* lines, int line_count) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawLines((QLineF*)lines, line_count);
+    qt_value->drawLines((WRLineF*)lines, line_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_lines_3(struct RUBase* self_c, struct RUBase* point_pairs, int line_count) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawLines((QPointF*)point_pairs, line_count);
+    qt_value->drawLines((WRPointF*)point_pairs, line_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_lines_7(struct RUBase* self_c, struct RUBase* point_pairs, int line_count) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawLines((QPoint*)point_pairs, line_count);
+    qt_value->drawLines((WRPoint*)point_pairs, line_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_rect(struct RUBase* self_c, struct RUBase* rect) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawRect(*((QRectF*)rect));
+    qt_value->drawRect(*((WRRectF*)rect));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -598,35 +598,35 @@ static void painter_draw_rect_2(struct RUBase* self_c, int x1, int y1, int w, in
 
 static void painter_draw_rect_3(struct RUBase* self_c, struct RUBase* rect) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawRect(*((QRect*)rect));
+    qt_value->drawRect(*((WRRect*)rect));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_rects(struct RUBase* self_c, struct RUBase* rects, int rect_count) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawRects((QRectF*)rects, rect_count);
+    qt_value->drawRects((WRRectF*)rects, rect_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_rects_3(struct RUBase* self_c, struct RUBase* rects, int rect_count) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawRects((QRect*)rects, rect_count);
+    qt_value->drawRects((WRRect*)rects, rect_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_ellipse(struct RUBase* self_c, struct RUBase* r) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawEllipse(*((QRectF*)r));
+    qt_value->drawEllipse(*((WRRectF*)r));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_ellipse_2(struct RUBase* self_c, struct RUBase* r) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawEllipse(*((QRect*)r));
+    qt_value->drawEllipse(*((WRRect*)r));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -640,112 +640,112 @@ static void painter_draw_ellipse_3(struct RUBase* self_c, int x, int y, int w, i
 
 static void painter_draw_ellipse_4(struct RUBase* self_c, struct RUBase* center, float rx, float ry) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawEllipse(*((QPointF*)center), rx, ry);
+    qt_value->drawEllipse(*((WRPointF*)center), rx, ry);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_ellipse_5(struct RUBase* self_c, struct RUBase* center, int rx, int ry) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawEllipse(*((QPoint*)center), rx, ry);
+    qt_value->drawEllipse(*((WRPoint*)center), rx, ry);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_polyline(struct RUBase* self_c, struct RUBase* points, int point_count) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPolyline((QPointF*)points, point_count);
+    qt_value->drawPolyline((WRPointF*)points, point_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_polyline_2(struct RUBase* self_c, struct RUBase* polyline) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPolyline(*((QPolygonF*)polyline));
+    qt_value->drawPolyline(*((WRPolygonF*)polyline));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_polyline_3(struct RUBase* self_c, struct RUBase* points, int point_count) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPolyline((QPoint*)points, point_count);
+    qt_value->drawPolyline((WRPoint*)points, point_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_polyline_4(struct RUBase* self_c, struct RUBase* polygon) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPolyline(*((QPolygon*)polygon));
+    qt_value->drawPolyline(*((WRPolygon*)polygon));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_polygon(struct RUBase* self_c, struct RUBase* points, int point_count, uint32_t fill_rule) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPolygon((QPointF*)points, point_count, (Qt::FillRule)fill_rule);
+    qt_value->drawPolygon((WRPointF*)points, point_count, (Qt::FillRule)fill_rule);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_polygon_2(struct RUBase* self_c, struct RUBase* polygon, uint32_t fill_rule) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPolygon(*((QPolygonF*)polygon), (Qt::FillRule)fill_rule);
+    qt_value->drawPolygon(*((WRPolygonF*)polygon), (Qt::FillRule)fill_rule);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_polygon_3(struct RUBase* self_c, struct RUBase* points, int point_count, uint32_t fill_rule) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPolygon((QPoint*)points, point_count, (Qt::FillRule)fill_rule);
+    qt_value->drawPolygon((WRPoint*)points, point_count, (Qt::FillRule)fill_rule);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_polygon_4(struct RUBase* self_c, struct RUBase* polygon, uint32_t fill_rule) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPolygon(*((QPolygon*)polygon), (Qt::FillRule)fill_rule);
+    qt_value->drawPolygon(*((WRPolygon*)polygon), (Qt::FillRule)fill_rule);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_convex_polygon(struct RUBase* self_c, struct RUBase* points, int point_count) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawConvexPolygon((QPointF*)points, point_count);
+    qt_value->drawConvexPolygon((WRPointF*)points, point_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_convex_polygon_2(struct RUBase* self_c, struct RUBase* polygon) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawConvexPolygon(*((QPolygonF*)polygon));
+    qt_value->drawConvexPolygon(*((WRPolygonF*)polygon));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_convex_polygon_3(struct RUBase* self_c, struct RUBase* points, int point_count) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawConvexPolygon((QPoint*)points, point_count);
+    qt_value->drawConvexPolygon((WRPoint*)points, point_count);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_convex_polygon_4(struct RUBase* self_c, struct RUBase* polygon) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawConvexPolygon(*((QPolygon*)polygon));
+    qt_value->drawConvexPolygon(*((WRPolygon*)polygon));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_arc(struct RUBase* self_c, struct RUBase* rect, int a, int alen) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawArc(*((QRectF*)rect), a, alen);
+    qt_value->drawArc(*((WRRectF*)rect), a, alen);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_arc_2(struct RUBase* self_c, struct RUBase* arg0, int a, int alen) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawArc(*((QRect*)arg0), a, alen);
+    qt_value->drawArc(*((WRRect*)arg0), a, alen);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -759,7 +759,7 @@ static void painter_draw_arc_3(struct RUBase* self_c, int x, int y, int w, int h
 
 static void painter_draw_pie(struct RUBase* self_c, struct RUBase* rect, int a, int alen) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPie(*((QRectF*)rect), a, alen);
+    qt_value->drawPie(*((WRRectF*)rect), a, alen);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -773,14 +773,14 @@ static void painter_draw_pie_2(struct RUBase* self_c, int x, int y, int w, int h
 
 static void painter_draw_pie_3(struct RUBase* self_c, struct RUBase* arg0, int a, int alen) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPie(*((QRect*)arg0), a, alen);
+    qt_value->drawPie(*((WRRect*)arg0), a, alen);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_chord(struct RUBase* self_c, struct RUBase* rect, int a, int alen) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawChord(*((QRectF*)rect), a, alen);
+    qt_value->drawChord(*((WRRectF*)rect), a, alen);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -794,14 +794,14 @@ static void painter_draw_chord_2(struct RUBase* self_c, int x, int y, int w, int
 
 static void painter_draw_chord_3(struct RUBase* self_c, struct RUBase* arg0, int a, int alen) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawChord(*((QRect*)arg0), a, alen);
+    qt_value->drawChord(*((WRRect*)arg0), a, alen);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_rounded_rect(struct RUBase* self_c, struct RUBase* rect, float x_radius, float y_radius, uint32_t mode) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawRoundedRect(*((QRectF*)rect), x_radius, y_radius, (Qt::SizeMode)mode);
+    qt_value->drawRoundedRect(*((WRRectF*)rect), x_radius, y_radius, (Qt::SizeMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -815,14 +815,14 @@ static void painter_draw_rounded_rect_2(struct RUBase* self_c, int x, int y, int
 
 static void painter_draw_rounded_rect_3(struct RUBase* self_c, struct RUBase* rect, float x_radius, float y_radius, uint32_t mode) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawRoundedRect(*((QRect*)rect), x_radius, y_radius, (Qt::SizeMode)mode);
+    qt_value->drawRoundedRect(*((WRRect*)rect), x_radius, y_radius, (Qt::SizeMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_round_rect(struct RUBase* self_c, struct RUBase* r, int xround, int yround) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawRoundRect(*((QRectF*)r), xround, yround);
+    qt_value->drawRoundRect(*((WRRectF*)r), xround, yround);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -836,168 +836,168 @@ static void painter_draw_round_rect_2(struct RUBase* self_c, int x, int y, int w
 
 static void painter_draw_round_rect_3(struct RUBase* self_c, struct RUBase* r, int xround, int yround) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawRoundRect(*((QRect*)r), xround, yround);
+    qt_value->drawRoundRect(*((WRRect*)r), xround, yround);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_tiled_pixmap(struct RUBase* self_c, struct RUBase* rect, struct RUBase* pm, struct RUBase* offset) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawTiledPixmap(*((QRectF*)rect), *((QPixmap*)pm), *((QPointF*)offset));
+    qt_value->drawTiledPixmap(*((WRRectF*)rect), *((WRPixmap*)pm), *((WRPointF*)offset));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_tiled_pixmap_2(struct RUBase* self_c, int x, int y, int w, int h, struct RUBase* arg0, int sx, int sy) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawTiledPixmap(x, y, w, h, *((QPixmap*)arg0), sx, sy);
+    qt_value->drawTiledPixmap(x, y, w, h, *((WRPixmap*)arg0), sx, sy);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_tiled_pixmap_3(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* arg1, struct RUBase* arg2) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawTiledPixmap(*((QRect*)arg0), *((QPixmap*)arg1), *((QPoint*)arg2));
+    qt_value->drawTiledPixmap(*((WRRect*)arg0), *((WRPixmap*)arg1), *((WRPoint*)arg2));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_pixmap(struct RUBase* self_c, struct RUBase* target_rect, struct RUBase* pixmap, struct RUBase* source_rect) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPixmap(*((QRectF*)target_rect), *((QPixmap*)pixmap), *((QRectF*)source_rect));
+    qt_value->drawPixmap(*((WRRectF*)target_rect), *((WRPixmap*)pixmap), *((WRRectF*)source_rect));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_pixmap_2(struct RUBase* self_c, struct RUBase* target_rect, struct RUBase* pixmap, struct RUBase* source_rect) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPixmap(*((QRect*)target_rect), *((QPixmap*)pixmap), *((QRect*)source_rect));
+    qt_value->drawPixmap(*((WRRect*)target_rect), *((WRPixmap*)pixmap), *((WRRect*)source_rect));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_pixmap_3(struct RUBase* self_c, int x, int y, int w, int h, struct RUBase* pm, int sx, int sy, int sw, int sh) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPixmap(x, y, w, h, *((QPixmap*)pm), sx, sy, sw, sh);
+    qt_value->drawPixmap(x, y, w, h, *((WRPixmap*)pm), sx, sy, sw, sh);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_pixmap_4(struct RUBase* self_c, int x, int y, struct RUBase* pm, int sx, int sy, int sw, int sh) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPixmap(x, y, *((QPixmap*)pm), sx, sy, sw, sh);
+    qt_value->drawPixmap(x, y, *((WRPixmap*)pm), sx, sy, sw, sh);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_pixmap_5(struct RUBase* self_c, struct RUBase* p, struct RUBase* pm, struct RUBase* sr) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPixmap(*((QPointF*)p), *((QPixmap*)pm), *((QRectF*)sr));
+    qt_value->drawPixmap(*((WRPointF*)p), *((WRPixmap*)pm), *((WRRectF*)sr));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_pixmap_6(struct RUBase* self_c, struct RUBase* p, struct RUBase* pm, struct RUBase* sr) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPixmap(*((QPoint*)p), *((QPixmap*)pm), *((QRect*)sr));
+    qt_value->drawPixmap(*((WRPoint*)p), *((WRPixmap*)pm), *((WRRect*)sr));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_pixmap_7(struct RUBase* self_c, struct RUBase* p, struct RUBase* pm) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPixmap(*((QPointF*)p), *((QPixmap*)pm));
+    qt_value->drawPixmap(*((WRPointF*)p), *((WRPixmap*)pm));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_pixmap_8(struct RUBase* self_c, struct RUBase* p, struct RUBase* pm) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPixmap(*((QPoint*)p), *((QPixmap*)pm));
+    qt_value->drawPixmap(*((WRPoint*)p), *((WRPixmap*)pm));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_pixmap_9(struct RUBase* self_c, int x, int y, struct RUBase* pm) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPixmap(x, y, *((QPixmap*)pm));
+    qt_value->drawPixmap(x, y, *((WRPixmap*)pm));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_pixmap_10(struct RUBase* self_c, struct RUBase* r, struct RUBase* pm) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPixmap(*((QRect*)r), *((QPixmap*)pm));
+    qt_value->drawPixmap(*((WRRect*)r), *((WRPixmap*)pm));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_pixmap_11(struct RUBase* self_c, int x, int y, int w, int h, struct RUBase* pm) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPixmap(x, y, w, h, *((QPixmap*)pm));
+    qt_value->drawPixmap(x, y, w, h, *((WRPixmap*)pm));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_image(struct RUBase* self_c, struct RUBase* target_rect, struct RUBase* image, struct RUBase* source_rect, uint32_t flags) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(*((QRectF*)target_rect), *((QImage*)image), *((QRectF*)source_rect), (Qt::ImageConversionFlags)flags);
+    qt_value->drawImage(*((WRRectF*)target_rect), *((WRImage*)image), *((WRRectF*)source_rect), (Qt::ImageConversionFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_image_2(struct RUBase* self_c, struct RUBase* target_rect, struct RUBase* image, struct RUBase* source_rect, uint32_t flags) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(*((QRect*)target_rect), *((QImage*)image), *((QRect*)source_rect), (Qt::ImageConversionFlags)flags);
+    qt_value->drawImage(*((WRRect*)target_rect), *((WRImage*)image), *((WRRect*)source_rect), (Qt::ImageConversionFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_image_3(struct RUBase* self_c, struct RUBase* p, struct RUBase* image, struct RUBase* sr, uint32_t flags) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(*((QPointF*)p), *((QImage*)image), *((QRectF*)sr), (Qt::ImageConversionFlags)flags);
+    qt_value->drawImage(*((WRPointF*)p), *((WRImage*)image), *((WRRectF*)sr), (Qt::ImageConversionFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_image_4(struct RUBase* self_c, struct RUBase* p, struct RUBase* image, struct RUBase* sr, uint32_t flags) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(*((QPoint*)p), *((QImage*)image), *((QRect*)sr), (Qt::ImageConversionFlags)flags);
+    qt_value->drawImage(*((WRPoint*)p), *((WRImage*)image), *((WRRect*)sr), (Qt::ImageConversionFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_image_5(struct RUBase* self_c, struct RUBase* r, struct RUBase* image) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(*((QRectF*)r), *((QImage*)image));
+    qt_value->drawImage(*((WRRectF*)r), *((WRImage*)image));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_image_6(struct RUBase* self_c, struct RUBase* r, struct RUBase* image) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(*((QRect*)r), *((QImage*)image));
+    qt_value->drawImage(*((WRRect*)r), *((WRImage*)image));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_image_7(struct RUBase* self_c, struct RUBase* p, struct RUBase* image) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(*((QPointF*)p), *((QImage*)image));
+    qt_value->drawImage(*((WRPointF*)p), *((WRImage*)image));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_image_8(struct RUBase* self_c, struct RUBase* p, struct RUBase* image) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(*((QPoint*)p), *((QImage*)image));
+    qt_value->drawImage(*((WRPoint*)p), *((WRImage*)image));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_image_9(struct RUBase* self_c, int x, int y, struct RUBase* image, int sx, int sy, int sw, int sh, uint32_t flags) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(x, y, *((QImage*)image), sx, sy, sw, sh, (Qt::ImageConversionFlags)flags);
+    qt_value->drawImage(x, y, *((WRImage*)image), sx, sy, sw, sh, (Qt::ImageConversionFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1019,14 +1019,14 @@ static uint32_t painter_layout_direction(struct RUBase* self_c) {
 
 static void painter_draw_text(struct RUBase* self_c, struct RUBase* p, const char* s) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawText(*((QPointF*)p), QString::fromUtf8(s));
+    qt_value->drawText(*((WRPointF*)p), QString::fromUtf8(s));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_text_2(struct RUBase* self_c, struct RUBase* p, const char* s) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawText(*((QPoint*)p), QString::fromUtf8(s));
+    qt_value->drawText(*((WRPoint*)p), QString::fromUtf8(s));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1040,35 +1040,35 @@ static void painter_draw_text_3(struct RUBase* self_c, int x, int y, const char*
 
 static void painter_draw_text_4(struct RUBase* self_c, struct RUBase* p, const char* str, int tf, int justification_padding) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawText(*((QPointF*)p), QString::fromUtf8(str), tf, justification_padding);
+    qt_value->drawText(*((WRPointF*)p), QString::fromUtf8(str), tf, justification_padding);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_text_5(struct RUBase* self_c, struct RUBase* r, int flags, const char* text, struct RUBase* br) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawText(*((QRectF*)r), flags, QString::fromUtf8(text), (QRectF*)br);
+    qt_value->drawText(*((WRRectF*)r), flags, QString::fromUtf8(text), (WRRectF*)br);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_text_6(struct RUBase* self_c, struct RUBase* r, int flags, const char* text, struct RUBase* br) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawText(*((QRect*)r), flags, QString::fromUtf8(text), (QRect*)br);
+    qt_value->drawText(*((WRRect*)r), flags, QString::fromUtf8(text), (WRRect*)br);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_draw_text_7(struct RUBase* self_c, int x, int y, int w, int h, int flags, const char* text, struct RUBase* br) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawText(x, y, w, h, flags, QString::fromUtf8(text), (QRect*)br);
+    qt_value->drawText(x, y, w, h, flags, QString::fromUtf8(text), (WRRect*)br);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RURectF painter_bounding_rect(struct RUBase* self_c, struct RUBase* rect, int flags, const char* text) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    auto ret_value = qt_value->boundingRect(*((QRectF*)rect), flags, QString::fromUtf8(text));
+    auto ret_value = qt_value->boundingRect(*((WRRectF*)rect), flags, QString::fromUtf8(text));
     WRRectF* new_val = new WRRectF();
     *new_val = ret_value;
     struct RURectF ctl;
@@ -1082,7 +1082,7 @@ static struct RURectF painter_bounding_rect(struct RUBase* self_c, struct RUBase
 
 static struct RURect painter_bounding_rect_2(struct RUBase* self_c, struct RUBase* rect, int flags, const char* text) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    auto ret_value = qt_value->boundingRect(*((QRect*)rect), flags, QString::fromUtf8(text));
+    auto ret_value = qt_value->boundingRect(*((WRRect*)rect), flags, QString::fromUtf8(text));
     WRRect* new_val = new WRRect();
     *new_val = ret_value;
     struct RURect ctl;
@@ -1110,42 +1110,42 @@ static struct RURect painter_bounding_rect_3(struct RUBase* self_c, int x, int y
 
 static void painter_fill_rect(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* arg1) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(*((QRectF*)arg0), *((QBrush*)arg1));
+    qt_value->fillRect(*((WRRectF*)arg0), *((WRBrush*)arg1));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_fill_rect_2(struct RUBase* self_c, int x, int y, int w, int h, struct RUBase* arg0) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(x, y, w, h, *((QBrush*)arg0));
+    qt_value->fillRect(x, y, w, h, *((WRBrush*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_fill_rect_3(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* arg1) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(*((QRect*)arg0), *((QBrush*)arg1));
+    qt_value->fillRect(*((WRRect*)arg0), *((WRBrush*)arg1));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_fill_rect_4(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* color) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(*((QRectF*)arg0), *((QColor*)color));
+    qt_value->fillRect(*((WRRectF*)arg0), *((WRColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_fill_rect_5(struct RUBase* self_c, int x, int y, int w, int h, struct RUBase* color) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(x, y, w, h, *((QColor*)color));
+    qt_value->fillRect(x, y, w, h, *((WRColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_fill_rect_6(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* color) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(*((QRect*)arg0), *((QColor*)color));
+    qt_value->fillRect(*((WRRect*)arg0), *((WRColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1159,14 +1159,14 @@ static void painter_fill_rect_7(struct RUBase* self_c, int x, int y, int w, int 
 
 static void painter_fill_rect_8(struct RUBase* self_c, struct RUBase* r, uint32_t c) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(*((QRect*)r), (Qt::GlobalColor)c);
+    qt_value->fillRect(*((WRRect*)r), (Qt::GlobalColor)c);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_fill_rect_9(struct RUBase* self_c, struct RUBase* r, uint32_t c) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(*((QRectF*)r), (Qt::GlobalColor)c);
+    qt_value->fillRect(*((WRRectF*)r), (Qt::GlobalColor)c);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1180,21 +1180,21 @@ static void painter_fill_rect_10(struct RUBase* self_c, int x, int y, int w, int
 
 static void painter_fill_rect_11(struct RUBase* self_c, struct RUBase* r, uint32_t style) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(*((QRect*)r), (Qt::BrushStyle)style);
+    qt_value->fillRect(*((WRRect*)r), (Qt::BrushStyle)style);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_fill_rect_12(struct RUBase* self_c, struct RUBase* r, uint32_t style) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(*((QRectF*)r), (Qt::BrushStyle)style);
+    qt_value->fillRect(*((WRRectF*)r), (Qt::BrushStyle)style);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void painter_erase_rect(struct RUBase* self_c, struct RUBase* arg0) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->eraseRect(*((QRectF*)arg0));
+    qt_value->eraseRect(*((WRRectF*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1208,7 +1208,7 @@ static void painter_erase_rect_2(struct RUBase* self_c, int x, int y, int w, int
 
 static void painter_erase_rect_3(struct RUBase* self_c, struct RUBase* arg0) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->eraseRect(*((QRect*)arg0));
+    qt_value->eraseRect(*((WRRect*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1257,14 +1257,14 @@ static struct RUPaintEngine painter_paint_engine(struct RUBase* self_c) {
 
 static void painter_set_redirected(struct RUBase* self_c, struct RUBase* device, struct RUBase* replacement, struct RUBase* offset) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setRedirected((QPaintDevice*)device, (QPaintDevice*)replacement, *((QPoint*)offset));
+    qt_value->setRedirected((WRPaintDevice*)device, (WRPaintDevice*)replacement, *((WRPoint*)offset));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RUPaintDevice painter_redirected(struct RUBase* self_c, struct RUBase* device, struct RUBase* offset) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    auto ret_value = qt_value->redirected((QPaintDevice*)device, (QPoint*)offset);
+    auto ret_value = qt_value->redirected((WRPaintDevice*)device, (WRPoint*)offset);
     struct RUPaintDevice ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
@@ -1276,7 +1276,7 @@ static struct RUPaintDevice painter_redirected(struct RUBase* self_c, struct RUB
 
 static void painter_restore_redirected(struct RUBase* self_c, struct RUBase* device) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->restoreRedirected((QPaintDevice*)device);
+    qt_value->restoreRedirected((WRPaintDevice*)device);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

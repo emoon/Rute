@@ -72,7 +72,7 @@ static void size_scale(struct RUBase* self_c, int w, int h, uint32_t mode) {
 
 static void size_scale_2(struct RUBase* self_c, struct RUBase* s, uint32_t mode) {
     WRSize* qt_value = (WRSize*)self_c;
-    qt_value->scale(*((QSize*)s), (Qt::AspectRatioMode)mode);
+    qt_value->scale(*((WRSize*)s), (Qt::AspectRatioMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,7 +93,7 @@ static struct RUSize size_scaled(struct RUBase* self_c, int w, int h, uint32_t m
 
 static struct RUSize size_scaled_2(struct RUBase* self_c, struct RUBase* s, uint32_t mode) {
     WRSize* qt_value = (WRSize*)self_c;
-    auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)mode);
+    auto ret_value = qt_value->scaled(*((WRSize*)s), (Qt::AspectRatioMode)mode);
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
     struct RUSize ctl;
@@ -107,7 +107,7 @@ static struct RUSize size_scaled_2(struct RUBase* self_c, struct RUBase* s, uint
 
 static struct RUSize size_expanded_to(struct RUBase* self_c, struct RUBase* arg0) {
     WRSize* qt_value = (WRSize*)self_c;
-    auto ret_value = qt_value->expandedTo(*((QSize*)arg0));
+    auto ret_value = qt_value->expandedTo(*((WRSize*)arg0));
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
     struct RUSize ctl;
@@ -121,7 +121,7 @@ static struct RUSize size_expanded_to(struct RUBase* self_c, struct RUBase* arg0
 
 static struct RUSize size_bounded_to(struct RUBase* self_c, struct RUBase* arg0) {
     WRSize* qt_value = (WRSize*)self_c;
-    auto ret_value = qt_value->boundedTo(*((QSize*)arg0));
+    auto ret_value = qt_value->boundedTo(*((WRSize*)arg0));
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
     struct RUSize ctl;

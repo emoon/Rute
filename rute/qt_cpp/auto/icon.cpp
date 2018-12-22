@@ -11,14 +11,14 @@
 
 static void icon_swap(struct RUBase* self_c, struct RUBase* other) {
     WRIcon* qt_value = (WRIcon*)self_c;
-    qt_value->swap(*((QIcon*)other));
+    qt_value->swap(*((WRIcon*)other));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RUPixmap icon_pixmap(struct RUBase* self_c, struct RUBase* size, uint32_t mode, uint32_t state) {
     WRIcon* qt_value = (WRIcon*)self_c;
-    auto ret_value = qt_value->pixmap(*((QSize*)size), (QIcon::Mode)mode, (QIcon::State)state);
+    auto ret_value = qt_value->pixmap(*((WRSize*)size), (QIcon::Mode)mode, (QIcon::State)state);
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -60,7 +60,7 @@ static struct RUPixmap icon_pixmap_3(struct RUBase* self_c, int extent, uint32_t
 
 static struct RUPixmap icon_pixmap_4(struct RUBase* self_c, struct RUBase* window, struct RUBase* size, uint32_t mode, uint32_t state) {
     WRIcon* qt_value = (WRIcon*)self_c;
-    auto ret_value = qt_value->pixmap((QWindow*)window, *((QSize*)size), (QIcon::Mode)mode, (QIcon::State)state);
+    auto ret_value = qt_value->pixmap((WRWindow*)window, *((WRSize*)size), (QIcon::Mode)mode, (QIcon::State)state);
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -74,7 +74,7 @@ static struct RUPixmap icon_pixmap_4(struct RUBase* self_c, struct RUBase* windo
 
 static struct RUSize icon_actual_size(struct RUBase* self_c, struct RUBase* size, uint32_t mode, uint32_t state) {
     WRIcon* qt_value = (WRIcon*)self_c;
-    auto ret_value = qt_value->actualSize(*((QSize*)size), (QIcon::Mode)mode, (QIcon::State)state);
+    auto ret_value = qt_value->actualSize(*((WRSize*)size), (QIcon::Mode)mode, (QIcon::State)state);
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
     struct RUSize ctl;
@@ -88,7 +88,7 @@ static struct RUSize icon_actual_size(struct RUBase* self_c, struct RUBase* size
 
 static struct RUSize icon_actual_size_2(struct RUBase* self_c, struct RUBase* window, struct RUBase* size, uint32_t mode, uint32_t state) {
     WRIcon* qt_value = (WRIcon*)self_c;
-    auto ret_value = qt_value->actualSize((QWindow*)window, *((QSize*)size), (QIcon::Mode)mode, (QIcon::State)state);
+    auto ret_value = qt_value->actualSize((WRWindow*)window, *((WRSize*)size), (QIcon::Mode)mode, (QIcon::State)state);
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
     struct RUSize ctl;
@@ -110,14 +110,14 @@ static const char* icon_name(struct RUBase* self_c) {
 
 static void icon_paint(struct RUBase* self_c, struct RUBase* painter, struct RUBase* rect, uint32_t alignment, uint32_t mode, uint32_t state) {
     WRIcon* qt_value = (WRIcon*)self_c;
-    qt_value->paint((QPainter*)painter, *((QRect*)rect), (Qt::Alignment)alignment, (QIcon::Mode)mode, (QIcon::State)state);
+    qt_value->paint((WRPainter*)painter, *((WRRect*)rect), (Qt::Alignment)alignment, (QIcon::Mode)mode, (QIcon::State)state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void icon_paint_2(struct RUBase* self_c, struct RUBase* painter, int x, int y, int w, int h, uint32_t alignment, uint32_t mode, uint32_t state) {
     WRIcon* qt_value = (WRIcon*)self_c;
-    qt_value->paint((QPainter*)painter, x, y, w, h, (Qt::Alignment)alignment, (QIcon::Mode)mode, (QIcon::State)state);
+    qt_value->paint((WRPainter*)painter, x, y, w, h, (Qt::Alignment)alignment, (QIcon::Mode)mode, (QIcon::State)state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,14 +155,14 @@ static int64_t icon_cache_key(struct RUBase* self_c) {
 
 static void icon_add_pixmap(struct RUBase* self_c, struct RUBase* pixmap, uint32_t mode, uint32_t state) {
     WRIcon* qt_value = (WRIcon*)self_c;
-    qt_value->addPixmap(*((QPixmap*)pixmap), (QIcon::Mode)mode, (QIcon::State)state);
+    qt_value->addPixmap(*((WRPixmap*)pixmap), (QIcon::Mode)mode, (QIcon::State)state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void icon_add_file(struct RUBase* self_c, const char* file_name, struct RUBase* size, uint32_t mode, uint32_t state) {
     WRIcon* qt_value = (WRIcon*)self_c;
-    qt_value->addFile(QString::fromUtf8(file_name), *((QSize*)size), (QIcon::Mode)mode, (QIcon::State)state);
+    qt_value->addFile(QString::fromUtf8(file_name), *((WRSize*)size), (QIcon::Mode)mode, (QIcon::State)state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -198,7 +198,7 @@ static struct RUIcon icon_from_theme(struct RUBase* self_c, const char* name) {
 
 static struct RUIcon icon_from_theme_2(struct RUBase* self_c, const char* name, struct RUBase* fallback) {
     WRIcon* qt_value = (WRIcon*)self_c;
-    auto ret_value = qt_value->fromTheme(QString::fromUtf8(name), *((QIcon*)fallback));
+    auto ret_value = qt_value->fromTheme(QString::fromUtf8(name), *((WRIcon*)fallback));
     WRIcon* new_val = new WRIcon();
     *new_val = ret_value;
     struct RUIcon ctl;

@@ -11,7 +11,7 @@
 
 static int desktop_widget_screen_number(struct RUBase* self_c, struct RUBase* widget) {
     QDesktopWidget* qt_value = (QDesktopWidget*)self_c;
-    auto ret_value = qt_value->screenNumber((QWidget*)widget);
+    auto ret_value = qt_value->screenNumber((WRWidget*)widget);
     return ret_value;
 }
 
@@ -51,7 +51,7 @@ static int desktop_widget_primary_screen(struct RUBase* self_c) {
 
 static int desktop_widget_screen_number_2(struct RUBase* self_c, struct RUBase* arg0) {
     QDesktopWidget* qt_value = (QDesktopWidget*)self_c;
-    auto ret_value = qt_value->screenNumber(*((QPoint*)arg0));
+    auto ret_value = qt_value->screenNumber(*((WRPoint*)arg0));
     return ret_value;
 }
 

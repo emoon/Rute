@@ -34,7 +34,7 @@ static uint32_t gradient_spread(struct RUBase* self_c) {
 
 static void gradient_set_color_at(struct RUBase* self_c, float pos, struct RUBase* color) {
     WRGradient* qt_value = (WRGradient*)self_c;
-    qt_value->setColorAt(pos, *((QColor*)color));
+    qt_value->setColorAt(pos, *((WRColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -11,14 +11,14 @@
 
 static void backing_store_flush(struct RUBase* self_c, struct RUBase* region, struct RUBase* window, struct RUBase* offset) {
     QBackingStore* qt_value = (QBackingStore*)self_c;
-    qt_value->flush(*((QRegion*)region), (QWindow*)window, *((QPoint*)offset));
+    qt_value->flush(*((WRRegion*)region), (WRWindow*)window, *((WRPoint*)offset));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void backing_store_resize(struct RUBase* self_c, struct RUBase* size) {
     QBackingStore* qt_value = (QBackingStore*)self_c;
-    qt_value->resize(*((QSize*)size));
+    qt_value->resize(*((WRSize*)size));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,7 +39,7 @@ static struct RUSize backing_store_size(struct RUBase* self_c) {
 
 static bool backing_store_scroll(struct RUBase* self_c, struct RUBase* area, int dx, int dy) {
     QBackingStore* qt_value = (QBackingStore*)self_c;
-    auto ret_value = qt_value->scroll(*((QRegion*)area), dx, dy);
+    auto ret_value = qt_value->scroll(*((WRRegion*)area), dx, dy);
     return ret_value;
 }
 
@@ -47,7 +47,7 @@ static bool backing_store_scroll(struct RUBase* self_c, struct RUBase* area, int
 
 static void backing_store_begin_paint(struct RUBase* self_c, struct RUBase* arg0) {
     QBackingStore* qt_value = (QBackingStore*)self_c;
-    qt_value->beginPaint(*((QRegion*)arg0));
+    qt_value->beginPaint(*((WRRegion*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ static void backing_store_end_paint(struct RUBase* self_c) {
 
 static void backing_store_set_static_contents(struct RUBase* self_c, struct RUBase* region) {
     QBackingStore* qt_value = (QBackingStore*)self_c;
-    qt_value->setStaticContents(*((QRegion*)region));
+    qt_value->setStaticContents(*((WRRegion*)region));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -120,14 +120,14 @@ static struct RUPixmap clipboard_pixmap(struct RUBase* self_c, uint32_t mode) {
 
 static void clipboard_set_image(struct RUBase* self_c, struct RUBase* arg0, uint32_t mode) {
     QClipboard* qt_value = (QClipboard*)self_c;
-    qt_value->setImage(*((QImage*)arg0), (QClipboard::Mode)mode);
+    qt_value->setImage(*((WRImage*)arg0), (QClipboard::Mode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void clipboard_set_pixmap(struct RUBase* self_c, struct RUBase* arg0, uint32_t mode) {
     QClipboard* qt_value = (QClipboard*)self_c;
-    qt_value->setPixmap(*((QPixmap*)arg0), (QClipboard::Mode)mode);
+    qt_value->setPixmap(*((WRPixmap*)arg0), (QClipboard::Mode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

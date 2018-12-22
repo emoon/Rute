@@ -296,7 +296,7 @@ static void surface_format_set_color_space(struct RUBase* self_c, uint32_t color
 
 static void surface_format_set_default_format(struct RUBase* self_c, struct RUBase* format) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
-    qt_value->setDefaultFormat(*((QSurfaceFormat*)format));
+    qt_value->setDefaultFormat(*((WRSurfaceFormat*)format));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

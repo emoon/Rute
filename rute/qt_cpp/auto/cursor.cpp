@@ -11,7 +11,7 @@
 
 static void cursor_swap(struct RUBase* self_c, struct RUBase* other) {
     WRCursor* qt_value = (WRCursor*)self_c;
-    qt_value->swap(*((QCursor*)other));
+    qt_value->swap(*((WRCursor*)other));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -127,14 +127,14 @@ static void cursor_set_pos_2(struct RUBase* self_c, struct RUBase* screen, int x
 
 static void cursor_set_pos_3(struct RUBase* self_c, struct RUBase* p) {
     WRCursor* qt_value = (WRCursor*)self_c;
-    qt_value->setPos(*((QPoint*)p));
+    qt_value->setPos(*((WRPoint*)p));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void cursor_set_pos_4(struct RUBase* self_c, struct RUBase* screen, struct RUBase* p) {
     WRCursor* qt_value = (WRCursor*)self_c;
-    qt_value->setPos((QScreen*)screen, *((QPoint*)p));
+    qt_value->setPos((QScreen*)screen, *((WRPoint*)p));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

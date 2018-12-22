@@ -116,35 +116,35 @@ static struct RURect grid_layout_cell_rect(struct RUBase* self_c, int row, int c
 
 static void grid_layout_add_widget(struct RUBase* self_c, struct RUBase* w) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
-    qt_value->addWidget((QWidget*)w);
+    qt_value->addWidget((WRWidget*)w);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void grid_layout_add_widget_row_column(struct RUBase* self_c, struct RUBase* arg0, int row, int column, uint32_t arg1) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
-    qt_value->addWidget((QWidget*)arg0, row, column, (Qt::Alignment)arg1);
+    qt_value->addWidget((WRWidget*)arg0, row, column, (Qt::Alignment)arg1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void grid_layout_add_widget_row_column_span(struct RUBase* self_c, struct RUBase* arg0, int row, int column, int row_span, int column_span, uint32_t arg1) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
-    qt_value->addWidget((QWidget*)arg0, row, column, row_span, column_span, (Qt::Alignment)arg1);
+    qt_value->addWidget((WRWidget*)arg0, row, column, row_span, column_span, (Qt::Alignment)arg1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void grid_layout_add_layout(struct RUBase* self_c, struct RUBase* arg0, int row, int column, uint32_t arg1) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
-    qt_value->addLayout((QLayout*)arg0, row, column, (Qt::Alignment)arg1);
+    qt_value->addLayout((WRLayout*)arg0, row, column, (Qt::Alignment)arg1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void grid_layout_add_layout_2(struct RUBase* self_c, struct RUBase* arg0, int row, int column, int row_span, int column_span, uint32_t arg1) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
-    qt_value->addLayout((QLayout*)arg0, row, column, row_span, column_span, (Qt::Alignment)arg1);
+    qt_value->addLayout((WRLayout*)arg0, row, column, row_span, column_span, (Qt::Alignment)arg1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

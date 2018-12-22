@@ -25,7 +25,7 @@ static void bitmap_clear(struct RUBase* self_c) {
 
 static struct RUBitmap bitmap_from_image(struct RUBase* self_c, struct RUBase* image, uint32_t flags) {
     QBitmap* qt_value = (QBitmap*)self_c;
-    auto ret_value = qt_value->fromImage(*((QImage*)image), (Qt::ImageConversionFlags)flags);
+    auto ret_value = qt_value->fromImage(*((WRImage*)image), (Qt::ImageConversionFlags)flags);
     QBitmap* new_val = new QBitmap();
     *new_val = ret_value;
     struct RUBitmap ctl;

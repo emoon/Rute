@@ -11,7 +11,7 @@
 
 static void region_swap(struct RUBase* self_c, struct RUBase* other) {
     WRRegion* qt_value = (WRRegion*)self_c;
-    qt_value->swap(*((QRegion*)other));
+    qt_value->swap(*((WRRegion*)other));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +34,7 @@ static bool region_is_null(struct RUBase* self_c) {
 
 static bool region_contains(struct RUBase* self_c, struct RUBase* p) {
     WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->contains(*((QPoint*)p));
+    auto ret_value = qt_value->contains(*((WRPoint*)p));
     return ret_value;
 }
 
@@ -42,7 +42,7 @@ static bool region_contains(struct RUBase* self_c, struct RUBase* p) {
 
 static bool region_contains_2(struct RUBase* self_c, struct RUBase* r) {
     WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->contains(*((QRect*)r));
+    auto ret_value = qt_value->contains(*((WRRect*)r));
     return ret_value;
 }
 
@@ -50,7 +50,7 @@ static bool region_contains_2(struct RUBase* self_c, struct RUBase* r) {
 
 static struct RURegion region_united(struct RUBase* self_c, struct RUBase* r) {
     WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->united(*((QRegion*)r));
+    auto ret_value = qt_value->united(*((WRRegion*)r));
     WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
     struct RURegion ctl;
@@ -64,7 +64,7 @@ static struct RURegion region_united(struct RUBase* self_c, struct RUBase* r) {
 
 static struct RURegion region_united_2(struct RUBase* self_c, struct RUBase* r) {
     WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->united(*((QRect*)r));
+    auto ret_value = qt_value->united(*((WRRect*)r));
     WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
     struct RURegion ctl;
@@ -78,7 +78,7 @@ static struct RURegion region_united_2(struct RUBase* self_c, struct RUBase* r) 
 
 static struct RURegion region_intersected(struct RUBase* self_c, struct RUBase* r) {
     WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->intersected(*((QRegion*)r));
+    auto ret_value = qt_value->intersected(*((WRRegion*)r));
     WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
     struct RURegion ctl;
@@ -92,7 +92,7 @@ static struct RURegion region_intersected(struct RUBase* self_c, struct RUBase* 
 
 static struct RURegion region_intersected_2(struct RUBase* self_c, struct RUBase* r) {
     WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->intersected(*((QRect*)r));
+    auto ret_value = qt_value->intersected(*((WRRect*)r));
     WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
     struct RURegion ctl;
@@ -106,7 +106,7 @@ static struct RURegion region_intersected_2(struct RUBase* self_c, struct RUBase
 
 static struct RURegion region_xored(struct RUBase* self_c, struct RUBase* r) {
     WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->xored(*((QRegion*)r));
+    auto ret_value = qt_value->xored(*((WRRegion*)r));
     WRRegion* new_val = new WRRegion();
     *new_val = ret_value;
     struct RURegion ctl;
@@ -120,7 +120,7 @@ static struct RURegion region_xored(struct RUBase* self_c, struct RUBase* r) {
 
 static bool region_intersects(struct RUBase* self_c, struct RUBase* r) {
     WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->intersects(*((QRegion*)r));
+    auto ret_value = qt_value->intersects(*((WRRegion*)r));
     return ret_value;
 }
 
@@ -128,7 +128,7 @@ static bool region_intersects(struct RUBase* self_c, struct RUBase* r) {
 
 static bool region_intersects_2(struct RUBase* self_c, struct RUBase* r) {
     WRRegion* qt_value = (WRRegion*)self_c;
-    auto ret_value = qt_value->intersects(*((QRect*)r));
+    auto ret_value = qt_value->intersects(*((WRRect*)r));
     return ret_value;
 }
 
@@ -150,7 +150,7 @@ static struct RURect region_bounding_rect(struct RUBase* self_c) {
 
 static void region_set_rects(struct RUBase* self_c, struct RUBase* rect, int num) {
     WRRegion* qt_value = (WRRegion*)self_c;
-    qt_value->setRects((QRect*)rect, num);
+    qt_value->setRects((WRRect*)rect, num);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

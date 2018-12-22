@@ -132,7 +132,7 @@ static void line_edit_set_cursor_position(struct RUBase* self_c, int arg0) {
 
 static int line_edit_cursor_position_at(struct RUBase* self_c, struct RUBase* pos) {
     WRLineEdit* qt_value = (WRLineEdit*)self_c;
-    auto ret_value = qt_value->cursorPositionAt(*((QPoint*)pos));
+    auto ret_value = qt_value->cursorPositionAt(*((WRPoint*)pos));
     return ret_value;
 }
 
@@ -349,7 +349,7 @@ static void line_edit_set_text_margins(struct RUBase* self_c, int left, int top,
 
 static void line_edit_set_text_margins_2(struct RUBase* self_c, struct RUBase* margins) {
     WRLineEdit* qt_value = (WRLineEdit*)self_c;
-    qt_value->setTextMargins(*((QMargins*)margins));
+    qt_value->setTextMargins(*((WRMargins*)margins));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

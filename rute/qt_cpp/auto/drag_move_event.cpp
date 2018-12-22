@@ -39,14 +39,14 @@ static void drag_move_event_ignore(struct RUBase* self_c) {
 
 static void drag_move_event_accept_2(struct RUBase* self_c, struct RUBase* r) {
     QDragMoveEvent* qt_value = (QDragMoveEvent*)self_c;
-    qt_value->accept(*((QRect*)r));
+    qt_value->accept(*((WRRect*)r));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void drag_move_event_ignore_2(struct RUBase* self_c, struct RUBase* r) {
     QDragMoveEvent* qt_value = (QDragMoveEvent*)self_c;
-    qt_value->ignore(*((QRect*)r));
+    qt_value->ignore(*((WRRect*)r));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

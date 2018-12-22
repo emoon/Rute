@@ -27,7 +27,7 @@ static bool key_sequence_is_empty(struct RUBase* self_c) {
 
 static uint32_t key_sequence_matches(struct RUBase* self_c, struct RUBase* seq) {
     WRKeySequence* qt_value = (WRKeySequence*)self_c;
-    auto ret_value = qt_value->matches(*((QKeySequence*)seq));
+    auto ret_value = qt_value->matches(*((WRKeySequence*)seq));
     return (uint32_t)ret_value;
 }
 
@@ -49,7 +49,7 @@ static struct RUKeySequence key_sequence_mnemonic(struct RUBase* self_c, const c
 
 static void key_sequence_swap(struct RUBase* self_c, struct RUBase* other) {
     WRKeySequence* qt_value = (WRKeySequence*)self_c;
-    qt_value->swap(*((QKeySequence*)other));
+    qt_value->swap(*((WRKeySequence*)other));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

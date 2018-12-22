@@ -41,7 +41,7 @@ static const char* gui_application_desktop_file_name(struct RUBase* self_c) {
 
 static struct RUWindow gui_application_top_level_at(struct RUBase* self_c, struct RUBase* pos) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
-    auto ret_value = qt_value->topLevelAt(*((QPoint*)pos));
+    auto ret_value = qt_value->topLevelAt(*((WRPoint*)pos));
     struct RUWindow ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
@@ -53,7 +53,7 @@ static struct RUWindow gui_application_top_level_at(struct RUBase* self_c, struc
 
 static void gui_application_set_window_icon(struct RUBase* self_c, struct RUBase* icon) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
-    qt_value->setWindowIcon(*((QIcon*)icon));
+    qt_value->setWindowIcon(*((WRIcon*)icon));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,7 +130,7 @@ static struct RUScreen gui_application_primary_screen(struct RUBase* self_c) {
 
 static struct RUScreen gui_application_screen_at(struct RUBase* self_c, struct RUBase* point) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
-    auto ret_value = qt_value->screenAt(*((QPoint*)point));
+    auto ret_value = qt_value->screenAt(*((WRPoint*)point));
     struct RUScreen ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
@@ -162,14 +162,14 @@ static struct RUCursor gui_application_override_cursor(struct RUBase* self_c) {
 
 static void gui_application_set_override_cursor(struct RUBase* self_c, struct RUBase* arg0) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
-    qt_value->setOverrideCursor(*((QCursor*)arg0));
+    qt_value->setOverrideCursor(*((WRCursor*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void gui_application_change_override_cursor(struct RUBase* self_c, struct RUBase* arg0) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
-    qt_value->changeOverrideCursor(*((QCursor*)arg0));
+    qt_value->changeOverrideCursor(*((WRCursor*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,7 +197,7 @@ static struct RUFont gui_application_font(struct RUBase* self_c) {
 
 static void gui_application_set_font(struct RUBase* self_c, struct RUBase* arg0) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
-    qt_value->setFont(*((QFont*)arg0));
+    qt_value->setFont(*((WRFont*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -230,7 +230,7 @@ static struct RUPalette gui_application_palette(struct RUBase* self_c) {
 
 static void gui_application_set_palette(struct RUBase* self_c, struct RUBase* pal) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
-    qt_value->setPalette(*((QPalette*)pal));
+    qt_value->setPalette(*((WRPalette*)pal));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

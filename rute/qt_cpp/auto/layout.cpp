@@ -48,7 +48,7 @@ static void layout_set_contents_margins(struct RUBase* self_c, int left, int top
 
 static void layout_set_contents_margins_2(struct RUBase* self_c, struct RUBase* margins) {
     WRLayout* qt_value = (WRLayout*)self_c;
-    qt_value->setContentsMargins(*((QMargins*)margins));
+    qt_value->setContentsMargins(*((WRMargins*)margins));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +83,7 @@ static struct RURect layout_contents_rect(struct RUBase* self_c) {
 
 static bool layout_set_alignment(struct RUBase* self_c, struct RUBase* w, uint32_t alignment) {
     WRLayout* qt_value = (WRLayout*)self_c;
-    auto ret_value = qt_value->setAlignment((QWidget*)w, (Qt::Alignment)alignment);
+    auto ret_value = qt_value->setAlignment((WRWidget*)w, (Qt::Alignment)alignment);
     return ret_value;
 }
 
@@ -91,7 +91,7 @@ static bool layout_set_alignment(struct RUBase* self_c, struct RUBase* w, uint32
 
 static bool layout_set_alignment_2(struct RUBase* self_c, struct RUBase* l, uint32_t alignment) {
     WRLayout* qt_value = (WRLayout*)self_c;
-    auto ret_value = qt_value->setAlignment((QLayout*)l, (Qt::Alignment)alignment);
+    auto ret_value = qt_value->setAlignment((WRLayout*)l, (Qt::Alignment)alignment);
     return ret_value;
 }
 
@@ -99,7 +99,7 @@ static bool layout_set_alignment_2(struct RUBase* self_c, struct RUBase* l, uint
 
 static void layout_set_menu_bar(struct RUBase* self_c, struct RUBase* w) {
     WRLayout* qt_value = (WRLayout*)self_c;
-    qt_value->setMenuBar((QWidget*)w);
+    qt_value->setMenuBar((WRWidget*)w);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,7 +152,7 @@ static void layout_update(struct RUBase* self_c) {
 
 static void layout_add_widget(struct RUBase* self_c, struct RUBase* w) {
     WRLayout* qt_value = (WRLayout*)self_c;
-    qt_value->addWidget((QWidget*)w);
+    qt_value->addWidget((WRWidget*)w);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +166,7 @@ static void layout_add_item(struct RUBase* self_c, struct RUBase* arg0) {
 
 static void layout_remove_widget(struct RUBase* self_c, struct RUBase* w) {
     WRLayout* qt_value = (WRLayout*)self_c;
-    qt_value->removeWidget((QWidget*)w);
+    qt_value->removeWidget((WRWidget*)w);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -240,7 +240,7 @@ static struct RULayoutItem layout_take_at(struct RUBase* self_c, int index) {
 
 static int layout_index_of(struct RUBase* self_c, struct RUBase* arg0) {
     WRLayout* qt_value = (WRLayout*)self_c;
-    auto ret_value = qt_value->indexOf((QWidget*)arg0);
+    auto ret_value = qt_value->indexOf((WRWidget*)arg0);
     return ret_value;
 }
 
@@ -264,7 +264,7 @@ static bool layout_is_empty(struct RUBase* self_c) {
 
 static struct RULayoutItem layout_replace_widget(struct RUBase* self_c, struct RUBase* from, struct RUBase* to, uint32_t options) {
     WRLayout* qt_value = (WRLayout*)self_c;
-    auto ret_value = qt_value->replaceWidget((QWidget*)from, (QWidget*)to, (Qt::FindChildOptions)options);
+    auto ret_value = qt_value->replaceWidget((WRWidget*)from, (WRWidget*)to, (Qt::FindChildOptions)options);
     struct RULayoutItem ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];

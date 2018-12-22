@@ -11,7 +11,7 @@
 
 static void font_swap(struct RUBase* self_c, struct RUBase* other) {
     WRFont* qt_value = (WRFont*)self_c;
-    qt_value->swap(*((QFont*)other));
+    qt_value->swap(*((WRFont*)other));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -304,7 +304,7 @@ static bool font_exact_match(struct RUBase* self_c) {
 
 static bool font_is_copy_of(struct RUBase* self_c, struct RUBase* arg0) {
     WRFont* qt_value = (WRFont*)self_c;
-    auto ret_value = qt_value->isCopyOf(*((QFont*)arg0));
+    auto ret_value = qt_value->isCopyOf(*((WRFont*)arg0));
     return ret_value;
 }
 
@@ -402,7 +402,7 @@ static const char* font_last_resort_font(struct RUBase* self_c) {
 
 static struct RUFont font_resolve(struct RUBase* self_c, struct RUBase* arg0) {
     WRFont* qt_value = (WRFont*)self_c;
-    auto ret_value = qt_value->resolve(*((QFont*)arg0));
+    auto ret_value = qt_value->resolve(*((WRFont*)arg0));
     WRFont* new_val = new WRFont();
     *new_val = ret_value;
     struct RUFont ctl;

@@ -129,7 +129,7 @@ static uint32_t mouse_event_buttons(struct RUBase* self_c) {
 
 static void mouse_event_set_local_pos(struct RUBase* self_c, struct RUBase* local_position) {
     QMouseEvent* qt_value = (QMouseEvent*)self_c;
-    qt_value->setLocalPos(*((QPointF*)local_position));
+    qt_value->setLocalPos(*((WRPointF*)local_position));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

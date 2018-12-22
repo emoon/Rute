@@ -11,14 +11,14 @@
 
 static void style_polish(struct RUBase* self_c, struct RUBase* widget) {
     WRStyle* qt_value = (WRStyle*)self_c;
-    qt_value->polish((QWidget*)widget);
+    qt_value->polish((WRWidget*)widget);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void style_unpolish(struct RUBase* self_c, struct RUBase* widget) {
     WRStyle* qt_value = (WRStyle*)self_c;
-    qt_value->unpolish((QWidget*)widget);
+    qt_value->unpolish((WRWidget*)widget);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,14 +39,14 @@ static void style_unpolish_2(struct RUBase* self_c, struct RUBase* application) 
 
 static void style_polish_3(struct RUBase* self_c, struct RUBase* palette) {
     WRStyle* qt_value = (WRStyle*)self_c;
-    qt_value->polish(*((QPalette*)palette));
+    qt_value->polish(*((WRPalette*)palette));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RURect style_item_pixmap_rect(struct RUBase* self_c, struct RUBase* r, int flags, struct RUBase* pixmap) {
     WRStyle* qt_value = (WRStyle*)self_c;
-    auto ret_value = qt_value->itemPixmapRect(*((QRect*)r), flags, *((QPixmap*)pixmap));
+    auto ret_value = qt_value->itemPixmapRect(*((WRRect*)r), flags, *((WRPixmap*)pixmap));
     WRRect* new_val = new WRRect();
     *new_val = ret_value;
     struct RURect ctl;
@@ -60,14 +60,14 @@ static struct RURect style_item_pixmap_rect(struct RUBase* self_c, struct RUBase
 
 static void style_draw_item_text(struct RUBase* self_c, struct RUBase* painter, struct RUBase* rect, int flags, struct RUBase* pal, bool enabled, const char* text, uint32_t text_role) {
     WRStyle* qt_value = (WRStyle*)self_c;
-    qt_value->drawItemText((QPainter*)painter, *((QRect*)rect), flags, *((QPalette*)pal), enabled, QString::fromUtf8(text), (QPalette::ColorRole)text_role);
+    qt_value->drawItemText((WRPainter*)painter, *((WRRect*)rect), flags, *((WRPalette*)pal), enabled, QString::fromUtf8(text), (QPalette::ColorRole)text_role);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void style_draw_item_pixmap(struct RUBase* self_c, struct RUBase* painter, struct RUBase* rect, int alignment, struct RUBase* pixmap) {
     WRStyle* qt_value = (WRStyle*)self_c;
-    qt_value->drawItemPixmap((QPainter*)painter, *((QRect*)rect), alignment, *((QPixmap*)pixmap));
+    qt_value->drawItemPixmap((WRPainter*)painter, *((WRRect*)rect), alignment, *((WRPixmap*)pixmap));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

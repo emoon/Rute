@@ -88,7 +88,7 @@ static struct RUWindow window_parent_2(struct RUBase* self_c) {
 
 static void window_set_parent(struct RUBase* self_c, struct RUBase* parent) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setParent((QWindow*)parent);
+    qt_value->setParent((WRWindow*)parent);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,7 +126,7 @@ static void window_set_modality(struct RUBase* self_c, uint32_t modality) {
 
 static void window_set_object_format(struct RUBase* self_c, struct RUBase* format) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setFormat(*((QSurfaceFormat*)format));
+    qt_value->setFormat(*((WRSurfaceFormat*)format));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,7 +199,7 @@ static float window_opacity(struct RUBase* self_c) {
 
 static void window_set_mask(struct RUBase* self_c, struct RUBase* region) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setMask(*((QRegion*)region));
+    qt_value->setMask(*((WRRegion*)region));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -281,14 +281,14 @@ static void window_set_window_states(struct RUBase* self_c, uint32_t states) {
 
 static void window_set_transient_parent(struct RUBase* self_c, struct RUBase* parent) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setTransientParent((QWindow*)parent);
+    qt_value->setTransientParent((WRWindow*)parent);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static bool window_is_ancestor_of(struct RUBase* self_c, struct RUBase* child, uint32_t mode) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    auto ret_value = qt_value->isAncestorOf((QWindow*)child, (QWindow::AncestorMode)mode);
+    auto ret_value = qt_value->isAncestorOf((WRWindow*)child, (QWindow::AncestorMode)mode);
     return ret_value;
 }
 
@@ -392,28 +392,28 @@ static struct RUSize window_size_increment(struct RUBase* self_c) {
 
 static void window_set_minimum_size(struct RUBase* self_c, struct RUBase* size) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setMinimumSize(*((QSize*)size));
+    qt_value->setMinimumSize(*((WRSize*)size));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void window_set_maximum_size(struct RUBase* self_c, struct RUBase* size) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setMaximumSize(*((QSize*)size));
+    qt_value->setMaximumSize(*((WRSize*)size));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void window_set_base_size(struct RUBase* self_c, struct RUBase* size) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setBaseSize(*((QSize*)size));
+    qt_value->setBaseSize(*((WRSize*)size));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void window_set_size_increment(struct RUBase* self_c, struct RUBase* size) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setSizeIncrement(*((QSize*)size));
+    qt_value->setSizeIncrement(*((WRSize*)size));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -448,7 +448,7 @@ static struct RUPoint window_frame_position(struct RUBase* self_c) {
 
 static void window_set_frame_position(struct RUBase* self_c, struct RUBase* point) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setFramePosition(*((QPoint*)point));
+    qt_value->setFramePosition(*((WRPoint*)point));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -515,7 +515,7 @@ static struct RUPoint window_position(struct RUBase* self_c) {
 
 static void window_set_position(struct RUBase* self_c, struct RUBase* pt) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setPosition(*((QPoint*)pt));
+    qt_value->setPosition(*((WRPoint*)pt));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -529,7 +529,7 @@ static void window_set_position_2(struct RUBase* self_c, int posx, int posy) {
 
 static void window_resize(struct RUBase* self_c, struct RUBase* new_size) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->resize(*((QSize*)new_size));
+    qt_value->resize(*((WRSize*)new_size));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -558,7 +558,7 @@ static const char* window_file_path(struct RUBase* self_c) {
 
 static void window_set_icon(struct RUBase* self_c, struct RUBase* icon) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setIcon(*((QIcon*)icon));
+    qt_value->setIcon(*((WRIcon*)icon));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -626,7 +626,7 @@ static struct RUObject window_focus_object(struct RUBase* self_c) {
 
 static struct RUPoint window_map_to_global(struct RUBase* self_c, struct RUBase* pos) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    auto ret_value = qt_value->mapToGlobal(*((QPoint*)pos));
+    auto ret_value = qt_value->mapToGlobal(*((WRPoint*)pos));
     WRPoint* new_val = new WRPoint();
     *new_val = ret_value;
     struct RUPoint ctl;
@@ -640,7 +640,7 @@ static struct RUPoint window_map_to_global(struct RUBase* self_c, struct RUBase*
 
 static struct RUPoint window_map_from_global(struct RUBase* self_c, struct RUBase* pos) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    auto ret_value = qt_value->mapFromGlobal(*((QPoint*)pos));
+    auto ret_value = qt_value->mapFromGlobal(*((WRPoint*)pos));
     WRPoint* new_val = new WRPoint();
     *new_val = ret_value;
     struct RUPoint ctl;
@@ -668,7 +668,7 @@ static struct RUCursor window_cursor(struct RUBase* self_c) {
 
 static void window_set_cursor(struct RUBase* self_c, struct RUBase* arg0) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setCursor(*((QCursor*)arg0));
+    qt_value->setCursor(*((WRCursor*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

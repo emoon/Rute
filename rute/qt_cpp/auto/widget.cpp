@@ -54,7 +54,7 @@ static struct RUStyle widget_style(struct RUBase* self_c) {
 
 static void widget_set_style(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setStyle((QStyle*)arg0);
+    qt_value->setStyle((WRStyle*)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -108,7 +108,7 @@ static bool widget_is_enabled(struct RUBase* self_c) {
 
 static bool widget_is_enabled_to(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->isEnabledTo((QWidget*)arg0);
+    auto ret_value = qt_value->isEnabledTo((WRWidget*)arg0);
     return ret_value;
 }
 
@@ -313,7 +313,7 @@ static int widget_maximum_height(struct RUBase* self_c) {
 
 static void widget_set_minimum_size(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setMinimumSize(*((QSize*)arg0));
+    qt_value->setMinimumSize(*((WRSize*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -327,7 +327,7 @@ static void widget_set_minimum_size_2(struct RUBase* self_c, int minw, int minh)
 
 static void widget_set_maximum_size(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setMaximumSize(*((QSize*)arg0));
+    qt_value->setMaximumSize(*((WRSize*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -383,7 +383,7 @@ static struct RUSize widget_size_increment(struct RUBase* self_c) {
 
 static void widget_set_size_increment(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setSizeIncrement(*((QSize*)arg0));
+    qt_value->setSizeIncrement(*((WRSize*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -411,7 +411,7 @@ static struct RUSize widget_base_size(struct RUBase* self_c) {
 
 static void widget_set_base_size(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setBaseSize(*((QSize*)arg0));
+    qt_value->setBaseSize(*((WRSize*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -425,7 +425,7 @@ static void widget_set_base_size_2(struct RUBase* self_c, int basew, int baseh) 
 
 static void widget_set_fixed_size(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setFixedSize(*((QSize*)arg0));
+    qt_value->setFixedSize(*((WRSize*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -453,7 +453,7 @@ static void widget_set_fixed_height(struct RUBase* self_c, int h) {
 
 static struct RUPoint widget_map_to_global(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->mapToGlobal(*((QPoint*)arg0));
+    auto ret_value = qt_value->mapToGlobal(*((WRPoint*)arg0));
     WRPoint* new_val = new WRPoint();
     *new_val = ret_value;
     struct RUPoint ctl;
@@ -467,7 +467,7 @@ static struct RUPoint widget_map_to_global(struct RUBase* self_c, struct RUBase*
 
 static struct RUPoint widget_map_from_global(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->mapFromGlobal(*((QPoint*)arg0));
+    auto ret_value = qt_value->mapFromGlobal(*((WRPoint*)arg0));
     WRPoint* new_val = new WRPoint();
     *new_val = ret_value;
     struct RUPoint ctl;
@@ -481,7 +481,7 @@ static struct RUPoint widget_map_from_global(struct RUBase* self_c, struct RUBas
 
 static struct RUPoint widget_map_to_parent(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->mapToParent(*((QPoint*)arg0));
+    auto ret_value = qt_value->mapToParent(*((WRPoint*)arg0));
     WRPoint* new_val = new WRPoint();
     *new_val = ret_value;
     struct RUPoint ctl;
@@ -495,7 +495,7 @@ static struct RUPoint widget_map_to_parent(struct RUBase* self_c, struct RUBase*
 
 static struct RUPoint widget_map_from_parent(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->mapFromParent(*((QPoint*)arg0));
+    auto ret_value = qt_value->mapFromParent(*((WRPoint*)arg0));
     WRPoint* new_val = new WRPoint();
     *new_val = ret_value;
     struct RUPoint ctl;
@@ -509,7 +509,7 @@ static struct RUPoint widget_map_from_parent(struct RUBase* self_c, struct RUBas
 
 static struct RUPoint widget_map_to(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* arg1) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->mapTo((QWidget*)arg0, *((QPoint*)arg1));
+    auto ret_value = qt_value->mapTo((WRWidget*)arg0, *((WRPoint*)arg1));
     WRPoint* new_val = new WRPoint();
     *new_val = ret_value;
     struct RUPoint ctl;
@@ -523,7 +523,7 @@ static struct RUPoint widget_map_to(struct RUBase* self_c, struct RUBase* arg0, 
 
 static struct RUPoint widget_map_from(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* arg1) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->mapFrom((QWidget*)arg0, *((QPoint*)arg1));
+    auto ret_value = qt_value->mapFrom((WRWidget*)arg0, *((WRPoint*)arg1));
     WRPoint* new_val = new WRPoint();
     *new_val = ret_value;
     struct RUPoint ctl;
@@ -575,7 +575,7 @@ static struct RUPalette widget_palette(struct RUBase* self_c) {
 
 static void widget_set_palette(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setPalette(*((QPalette*)arg0));
+    qt_value->setPalette(*((WRPalette*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -626,7 +626,7 @@ static struct RUFont widget_font(struct RUBase* self_c) {
 
 static void widget_set_font(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setFont(*((QFont*)arg0));
+    qt_value->setFont(*((WRFont*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -647,7 +647,7 @@ static struct RUCursor widget_cursor(struct RUBase* self_c) {
 
 static void widget_set_cursor(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setCursor(*((QCursor*)arg0));
+    qt_value->setCursor(*((WRCursor*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -706,7 +706,7 @@ static void widget_set_mask(struct RUBase* self_c, struct RUBase* arg0) {
 
 static void widget_set_mask_2(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setMask(*((QRegion*)arg0));
+    qt_value->setMask(*((WRRegion*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -734,21 +734,21 @@ static void widget_clear_mask(struct RUBase* self_c) {
 
 static void widget_render(struct RUBase* self_c, struct RUBase* target, struct RUBase* target_offset, struct RUBase* source_region, uint32_t render_flags) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->render((QPaintDevice*)target, *((QPoint*)target_offset), *((QRegion*)source_region), (QWidget::RenderFlags)render_flags);
+    qt_value->render((WRPaintDevice*)target, *((WRPoint*)target_offset), *((WRRegion*)source_region), (QWidget::RenderFlags)render_flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void widget_render_2(struct RUBase* self_c, struct RUBase* painter, struct RUBase* target_offset, struct RUBase* source_region, uint32_t render_flags) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->render((QPainter*)painter, *((QPoint*)target_offset), *((QRegion*)source_region), (QWidget::RenderFlags)render_flags);
+    qt_value->render((WRPainter*)painter, *((WRPoint*)target_offset), *((WRRegion*)source_region), (QWidget::RenderFlags)render_flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RUPixmap widget_grab(struct RUBase* self_c, struct RUBase* rectangle) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->grab(*((QRect*)rectangle));
+    auto ret_value = qt_value->grab(*((WRRect*)rectangle));
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -806,7 +806,7 @@ static const char* widget_window_title(struct RUBase* self_c) {
 
 static void widget_set_window_icon(struct RUBase* self_c, struct RUBase* icon) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setWindowIcon(*((QIcon*)icon));
+    qt_value->setWindowIcon(*((WRIcon*)icon));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1082,14 +1082,14 @@ static bool widget_has_focus(struct RUBase* self_c) {
 
 static void widget_set_tab_order(struct RUBase* self_c, struct RUBase* arg0, struct RUBase* arg1) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setTabOrder((QWidget*)arg0, (QWidget*)arg1);
+    qt_value->setTabOrder((WRWidget*)arg0, (WRWidget*)arg1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void widget_set_focus_proxy(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setFocusProxy((QWidget*)arg0);
+    qt_value->setFocusProxy((WRWidget*)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1130,7 +1130,7 @@ static void widget_grab_mouse(struct RUBase* self_c) {
 
 static void widget_grab_mouse_2(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->grabMouse(*((QCursor*)arg0));
+    qt_value->grabMouse(*((WRCursor*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1158,7 +1158,7 @@ static void widget_release_keyboard(struct RUBase* self_c) {
 
 static int widget_grab_shortcut(struct RUBase* self_c, struct RUBase* key, uint32_t context) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->grabShortcut(*((QKeySequence*)key), (Qt::ShortcutContext)context);
+    auto ret_value = qt_value->grabShortcut(*((WRKeySequence*)key), (Qt::ShortcutContext)context);
     return ret_value;
 }
 
@@ -1247,14 +1247,14 @@ static void widget_update_2(struct RUBase* self_c, int x, int y, int w, int h) {
 
 static void widget_update_3(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->update(*((QRect*)arg0));
+    qt_value->update(*((WRRect*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void widget_update_4(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->update(*((QRegion*)arg0));
+    qt_value->update(*((WRRegion*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1268,14 +1268,14 @@ static void widget_repaint_2(struct RUBase* self_c, int x, int y, int w, int h) 
 
 static void widget_repaint_3(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->repaint(*((QRect*)arg0));
+    qt_value->repaint(*((WRRect*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void widget_repaint_4(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->repaint(*((QRegion*)arg0));
+    qt_value->repaint(*((WRRegion*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1353,7 +1353,7 @@ static void widget_lower(struct RUBase* self_c) {
 
 static void widget_stack_under(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->stackUnder((QWidget*)arg0);
+    qt_value->stackUnder((WRWidget*)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1367,7 +1367,7 @@ static void widget_move_widget(struct RUBase* self_c, int x, int y) {
 
 static void widget_move_2(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->move(*((QPoint*)arg0));
+    qt_value->move(*((WRPoint*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1381,7 +1381,7 @@ static void widget_resize(struct RUBase* self_c, int w, int h) {
 
 static void widget_resize_2(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->resize(*((QSize*)arg0));
+    qt_value->resize(*((WRSize*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1403,7 +1403,7 @@ static bool widget_is_visible(struct RUBase* self_c) {
 
 static bool widget_is_visible_to(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->isVisibleTo((QWidget*)arg0);
+    auto ret_value = qt_value->isVisibleTo((WRWidget*)arg0);
     return ret_value;
 }
 
@@ -1507,7 +1507,7 @@ static struct RUSizePolicy widget_size_policy(struct RUBase* self_c) {
 
 static void widget_set_size_policy(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setSizePolicy(*((QSizePolicy*)arg0));
+    qt_value->setSizePolicy(*((WRSizePolicy*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1558,7 +1558,7 @@ static void widget_set_contents_margins(struct RUBase* self_c, int left, int top
 
 static void widget_set_contents_margins_2(struct RUBase* self_c, struct RUBase* margins) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setContentsMargins(*((QMargins*)margins));
+    qt_value->setContentsMargins(*((WRMargins*)margins));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1605,21 +1605,21 @@ static struct RULayout widget_layout(struct RUBase* self_c) {
 
 static void widget_set_layout(struct RUBase* self_c, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setLayout((QLayout*)arg0);
+    qt_value->setLayout((WRLayout*)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void widget_set_parent(struct RUBase* self_c, struct RUBase* parent) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setParent((QWidget*)parent);
+    qt_value->setParent((WRWidget*)parent);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void widget_set_parent_2(struct RUBase* self_c, struct RUBase* parent, uint32_t f) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setParent((QWidget*)parent, (Qt::WindowFlags)f);
+    qt_value->setParent((WRWidget*)parent, (Qt::WindowFlags)f);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1633,7 +1633,7 @@ static void widget_scroll(struct RUBase* self_c, int dx, int dy) {
 
 static void widget_scroll_2(struct RUBase* self_c, int dx, int dy, struct RUBase* arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->scroll(dx, dy, *((QRect*)arg0));
+    qt_value->scroll(dx, dy, *((WRRect*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1749,7 +1749,7 @@ static struct RUWidget widget_child_at(struct RUBase* self_c, int x, int y) {
 
 static struct RUWidget widget_child_at_2(struct RUBase* self_c, struct RUBase* p) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->childAt(*((QPoint*)p));
+    auto ret_value = qt_value->childAt(*((WRPoint*)p));
     struct RUWidget ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
@@ -1780,7 +1780,7 @@ static void widget_ensure_polished(struct RUBase* self_c) {
 
 static bool widget_is_ancestor_of(struct RUBase* self_c, struct RUBase* child) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->isAncestorOf((QWidget*)child);
+    auto ret_value = qt_value->isAncestorOf((WRWidget*)child);
     return ret_value;
 }
 
@@ -1827,7 +1827,7 @@ static struct RUWindow widget_window_handle(struct RUBase* self_c) {
 
 static struct RUWidget widget_create_window_container(struct RUBase* self_c, struct RUBase* window, struct RUBase* parent, uint32_t flags) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->createWindowContainer((QWindow*)window, (QWidget*)parent, (Qt::WindowFlags)flags);
+    auto ret_value = qt_value->createWindowContainer((WRWindow*)window, (WRWidget*)parent, (Qt::WindowFlags)flags);
     struct RUWidget ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];

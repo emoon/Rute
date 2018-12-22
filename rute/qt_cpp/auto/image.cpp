@@ -11,7 +11,7 @@
 
 static void image_swap(struct RUBase* self_c, struct RUBase* other) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->swap(*((QImage*)other));
+    qt_value->swap(*((WRImage*)other));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +49,7 @@ static bool image_is_detached(struct RUBase* self_c) {
 
 static struct RUImage image_copy(struct RUBase* self_c, struct RUBase* rect) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->copy(*((QRect*)rect));
+    auto ret_value = qt_value->copy(*((WRRect*)rect));
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -236,7 +236,7 @@ static bool image_valid(struct RUBase* self_c, int x, int y) {
 
 static bool image_valid_2(struct RUBase* self_c, struct RUBase* pt) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->valid(*((QPoint*)pt));
+    auto ret_value = qt_value->valid(*((WRPoint*)pt));
     return ret_value;
 }
 
@@ -252,7 +252,7 @@ static int image_pixel_index(struct RUBase* self_c, int x, int y) {
 
 static int image_pixel_index_2(struct RUBase* self_c, struct RUBase* pt) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->pixelIndex(*((QPoint*)pt));
+    auto ret_value = qt_value->pixelIndex(*((WRPoint*)pt));
     return ret_value;
 }
 
@@ -267,7 +267,7 @@ static void image_set_pixel(struct RUBase* self_c, int x, int y, uint32_t index_
 
 static void image_set_pixel_2(struct RUBase* self_c, struct RUBase* pt, uint32_t index_or_rgb) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->setPixel(*((QPoint*)pt), index_or_rgb);
+    qt_value->setPixel(*((WRPoint*)pt), index_or_rgb);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -288,7 +288,7 @@ static struct RUColor image_pixel_color(struct RUBase* self_c, int x, int y) {
 
 static struct RUColor image_pixel_color_2(struct RUBase* self_c, struct RUBase* pt) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->pixelColor(*((QPoint*)pt));
+    auto ret_value = qt_value->pixelColor(*((WRPoint*)pt));
     WRColor* new_val = new WRColor();
     *new_val = ret_value;
     struct RUColor ctl;
@@ -302,14 +302,14 @@ static struct RUColor image_pixel_color_2(struct RUBase* self_c, struct RUBase* 
 
 static void image_set_pixel_color(struct RUBase* self_c, int x, int y, struct RUBase* c) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->setPixelColor(x, y, *((QColor*)c));
+    qt_value->setPixelColor(x, y, *((WRColor*)c));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void image_set_pixel_color_2(struct RUBase* self_c, struct RUBase* pt, struct RUBase* c) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->setPixelColor(*((QPoint*)pt), *((QColor*)c));
+    qt_value->setPixelColor(*((WRPoint*)pt), *((WRColor*)c));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -338,7 +338,7 @@ static void image_fill(struct RUBase* self_c, uint32_t pixel) {
 
 static void image_fill_2(struct RUBase* self_c, struct RUBase* color) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->fill(*((QColor*)color));
+    qt_value->fill(*((WRColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -360,7 +360,7 @@ static bool image_has_alpha_channel(struct RUBase* self_c) {
 
 static void image_set_alpha_channel(struct RUBase* self_c, struct RUBase* alpha_channel) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->setAlphaChannel(*((QImage*)alpha_channel));
+    qt_value->setAlphaChannel(*((WRImage*)alpha_channel));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -423,7 +423,7 @@ static struct RUImage image_scaled(struct RUBase* self_c, int w, int h, uint32_t
 
 static struct RUImage image_scaled_2(struct RUBase* self_c, struct RUBase* s, uint32_t aspect_mode, uint32_t mode) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)aspect_mode, (Qt::TransformationMode)mode);
+    auto ret_value = qt_value->scaled(*((WRSize*)s), (Qt::AspectRatioMode)aspect_mode, (Qt::TransformationMode)mode);
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -592,7 +592,7 @@ static struct RUPoint image_offset(struct RUBase* self_c) {
 
 static void image_set_offset(struct RUBase* self_c, struct RUBase* arg0) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->setOffset(*((QPoint*)arg0));
+    qt_value->setOffset(*((WRPoint*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -113,7 +113,7 @@ static void core_application_exit(struct RUBase* self_c, int retcode) {
 
 static bool core_application_send_event(struct RUBase* self_c, struct RUBase* receiver, struct RUBase* event) {
     QCoreApplication* qt_value = (QCoreApplication*)self_c;
-    auto ret_value = qt_value->sendEvent((QObject*)receiver, (QEvent*)event);
+    auto ret_value = qt_value->sendEvent((WRObject*)receiver, (QEvent*)event);
     return ret_value;
 }
 
@@ -121,21 +121,21 @@ static bool core_application_send_event(struct RUBase* self_c, struct RUBase* re
 
 static void core_application_post_event(struct RUBase* self_c, struct RUBase* receiver, struct RUBase* event, int priority) {
     QCoreApplication* qt_value = (QCoreApplication*)self_c;
-    qt_value->postEvent((QObject*)receiver, (QEvent*)event, priority);
+    qt_value->postEvent((WRObject*)receiver, (QEvent*)event, priority);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void core_application_send_posted_events(struct RUBase* self_c, struct RUBase* receiver, int event_type) {
     QCoreApplication* qt_value = (QCoreApplication*)self_c;
-    qt_value->sendPostedEvents((QObject*)receiver, event_type);
+    qt_value->sendPostedEvents((WRObject*)receiver, event_type);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void core_application_remove_posted_events(struct RUBase* self_c, struct RUBase* receiver, int event_type) {
     QCoreApplication* qt_value = (QCoreApplication*)self_c;
-    qt_value->removePostedEvents((QObject*)receiver, event_type);
+    qt_value->removePostedEvents((WRObject*)receiver, event_type);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

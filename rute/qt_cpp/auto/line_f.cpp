@@ -139,7 +139,7 @@ static void line_f_set_angle(struct RUBase* self_c, float angle) {
 
 static float line_f_angle_to(struct RUBase* self_c, struct RUBase* l) {
     WRLineF* qt_value = (WRLineF*)self_c;
-    auto ret_value = qt_value->angleTo(*((QLineF*)l));
+    auto ret_value = qt_value->angleTo(*((WRLineF*)l));
     return ret_value;
 }
 
@@ -175,7 +175,7 @@ static struct RULineF line_f_normal_vector(struct RUBase* self_c) {
 
 static uint32_t line_f_intersect(struct RUBase* self_c, struct RUBase* l, struct RUBase* intersection_point) {
     WRLineF* qt_value = (WRLineF*)self_c;
-    auto ret_value = qt_value->intersect(*((QLineF*)l), (QPointF*)intersection_point);
+    auto ret_value = qt_value->intersect(*((WRLineF*)l), (WRPointF*)intersection_point);
     return (uint32_t)ret_value;
 }
 
@@ -183,7 +183,7 @@ static uint32_t line_f_intersect(struct RUBase* self_c, struct RUBase* l, struct
 
 static float line_f_angle_2(struct RUBase* self_c, struct RUBase* l) {
     WRLineF* qt_value = (WRLineF*)self_c;
-    auto ret_value = qt_value->angle(*((QLineF*)l));
+    auto ret_value = qt_value->angle(*((WRLineF*)l));
     return ret_value;
 }
 
@@ -219,21 +219,21 @@ static struct RUPointF line_f_center(struct RUBase* self_c) {
 
 static void line_f_set_p1(struct RUBase* self_c, struct RUBase* p1) {
     WRLineF* qt_value = (WRLineF*)self_c;
-    qt_value->setP1(*((QPointF*)p1));
+    qt_value->setP1(*((WRPointF*)p1));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void line_f_set_p2(struct RUBase* self_c, struct RUBase* p2) {
     WRLineF* qt_value = (WRLineF*)self_c;
-    qt_value->setP2(*((QPointF*)p2));
+    qt_value->setP2(*((WRPointF*)p2));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void line_f_set_points(struct RUBase* self_c, struct RUBase* p1, struct RUBase* p2) {
     WRLineF* qt_value = (WRLineF*)self_c;
-    qt_value->setPoints(*((QPointF*)p1), *((QPointF*)p2));
+    qt_value->setPoints(*((WRPointF*)p1), *((WRPointF*)p2));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

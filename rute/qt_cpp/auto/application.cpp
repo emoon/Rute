@@ -23,7 +23,7 @@ static struct RUStyle application_style(struct RUBase* self_c) {
 
 static void application_set_style(struct RUBase* self_c, struct RUBase* arg0) {
     QApplication* qt_value = (QApplication*)self_c;
-    qt_value->setStyle((QStyle*)arg0);
+    qt_value->setStyle((WRStyle*)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,7 +57,7 @@ static void application_set_color_spec(struct RUBase* self_c, int arg0) {
 
 static struct RUPalette application_palette(struct RUBase* self_c, struct RUBase* arg0) {
     QApplication* qt_value = (QApplication*)self_c;
-    auto ret_value = qt_value->palette((QWidget*)arg0);
+    auto ret_value = qt_value->palette((WRWidget*)arg0);
     WRPalette* new_val = new WRPalette();
     *new_val = ret_value;
     struct RUPalette ctl;
@@ -85,7 +85,7 @@ static struct RUFont application_font(struct RUBase* self_c) {
 
 static struct RUFont application_font_2(struct RUBase* self_c, struct RUBase* arg0) {
     QApplication* qt_value = (QApplication*)self_c;
-    auto ret_value = qt_value->font((QWidget*)arg0);
+    auto ret_value = qt_value->font((WRWidget*)arg0);
     WRFont* new_val = new WRFont();
     *new_val = ret_value;
     struct RUFont ctl;
@@ -99,7 +99,7 @@ static struct RUFont application_font_2(struct RUBase* self_c, struct RUBase* ar
 
 static void application_set_window_icon(struct RUBase* self_c, struct RUBase* icon) {
     QApplication* qt_value = (QApplication*)self_c;
-    qt_value->setWindowIcon(*((QIcon*)icon));
+    qt_value->setWindowIcon(*((WRIcon*)icon));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -180,14 +180,14 @@ static struct RUWidget application_active_window(struct RUBase* self_c) {
 
 static void application_set_active_window(struct RUBase* self_c, struct RUBase* act) {
     QApplication* qt_value = (QApplication*)self_c;
-    qt_value->setActiveWindow((QWidget*)act);
+    qt_value->setActiveWindow((WRWidget*)act);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static struct RUWidget application_widget_at(struct RUBase* self_c, struct RUBase* p) {
     QApplication* qt_value = (QApplication*)self_c;
-    auto ret_value = qt_value->widgetAt(*((QPoint*)p));
+    auto ret_value = qt_value->widgetAt(*((WRPoint*)p));
     struct RUWidget ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
@@ -211,7 +211,7 @@ static struct RUWidget application_widget_at_2(struct RUBase* self_c, int x, int
 
 static struct RUWidget application_top_level_at(struct RUBase* self_c, struct RUBase* p) {
     QApplication* qt_value = (QApplication*)self_c;
-    auto ret_value = qt_value->topLevelAt(*((QPoint*)p));
+    auto ret_value = qt_value->topLevelAt(*((WRPoint*)p));
     struct RUWidget ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
@@ -242,7 +242,7 @@ static void application_beep(struct RUBase* self_c) {
 
 static void application_alert(struct RUBase* self_c, struct RUBase* widget, int duration) {
     QApplication* qt_value = (QApplication*)self_c;
-    qt_value->alert((QWidget*)widget, duration);
+    qt_value->alert((WRWidget*)widget, duration);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

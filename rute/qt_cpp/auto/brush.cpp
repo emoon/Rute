@@ -11,7 +11,7 @@
 
 static void brush_swap(struct RUBase* self_c, struct RUBase* other) {
     WRBrush* qt_value = (WRBrush*)self_c;
-    qt_value->swap(*((QBrush*)other));
+    qt_value->swap(*((WRBrush*)other));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +33,7 @@ static void brush_set_style(struct RUBase* self_c, uint32_t arg0) {
 
 static void brush_set_transform(struct RUBase* self_c, struct RUBase* arg0) {
     WRBrush* qt_value = (WRBrush*)self_c;
-    qt_value->setTransform(*((QTransform*)arg0));
+    qt_value->setTransform(*((WRTransform*)arg0));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ static struct RUPixmap brush_texture(struct RUBase* self_c) {
 
 static void brush_set_texture(struct RUBase* self_c, struct RUBase* pixmap) {
     WRBrush* qt_value = (WRBrush*)self_c;
-    qt_value->setTexture(*((QPixmap*)pixmap));
+    qt_value->setTexture(*((WRPixmap*)pixmap));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -75,7 +75,7 @@ static struct RUImage brush_texture_image(struct RUBase* self_c) {
 
 static void brush_set_texture_image(struct RUBase* self_c, struct RUBase* image) {
     WRBrush* qt_value = (WRBrush*)self_c;
-    qt_value->setTextureImage(*((QImage*)image));
+    qt_value->setTextureImage(*((WRImage*)image));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,7 +96,7 @@ static struct RUColor brush_color(struct RUBase* self_c) {
 
 static void brush_set_color(struct RUBase* self_c, struct RUBase* color) {
     WRBrush* qt_value = (WRBrush*)self_c;
-    qt_value->setColor(*((QColor*)color));
+    qt_value->setColor(*((WRColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

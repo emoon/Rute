@@ -11,7 +11,7 @@
 
 static void polygon_swap(struct RUBase* self_c, struct RUBase* other) {
     WRPolygon* qt_value = (WRPolygon*)self_c;
-    qt_value->swap(*((QPolygon*)other));
+    qt_value->swap(*((WRPolygon*)other));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +53,7 @@ static void polygon_set_point(struct RUBase* self_c, int index, int x, int y) {
 
 static void polygon_set_point_2(struct RUBase* self_c, int index, struct RUBase* p) {
     WRPolygon* qt_value = (WRPolygon*)self_c;
-    qt_value->setPoint(index, *((QPoint*)p));
+    qt_value->setPoint(index, *((WRPoint*)p));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -74,14 +74,14 @@ static void polygon_put_points_2(struct RUBase* self_c, int index, int n_points,
 
 static void polygon_put_points_3(struct RUBase* self_c, int index, int n_points, struct RUBase* from, int from_index) {
     WRPolygon* qt_value = (WRPolygon*)self_c;
-    qt_value->putPoints(index, n_points, *((QPolygon*)from), from_index);
+    qt_value->putPoints(index, n_points, *((WRPolygon*)from), from_index);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static bool polygon_contains_point(struct RUBase* self_c, struct RUBase* pt, uint32_t fill_rule) {
     WRPolygon* qt_value = (WRPolygon*)self_c;
-    auto ret_value = qt_value->containsPoint(*((QPoint*)pt), (Qt::FillRule)fill_rule);
+    auto ret_value = qt_value->containsPoint(*((WRPoint*)pt), (Qt::FillRule)fill_rule);
     return ret_value;
 }
 
@@ -89,7 +89,7 @@ static bool polygon_contains_point(struct RUBase* self_c, struct RUBase* pt, uin
 
 static struct RUPolygon polygon_united(struct RUBase* self_c, struct RUBase* r) {
     WRPolygon* qt_value = (WRPolygon*)self_c;
-    auto ret_value = qt_value->united(*((QPolygon*)r));
+    auto ret_value = qt_value->united(*((WRPolygon*)r));
     WRPolygon* new_val = new WRPolygon();
     *new_val = ret_value;
     struct RUPolygon ctl;
@@ -103,7 +103,7 @@ static struct RUPolygon polygon_united(struct RUBase* self_c, struct RUBase* r) 
 
 static struct RUPolygon polygon_intersected(struct RUBase* self_c, struct RUBase* r) {
     WRPolygon* qt_value = (WRPolygon*)self_c;
-    auto ret_value = qt_value->intersected(*((QPolygon*)r));
+    auto ret_value = qt_value->intersected(*((WRPolygon*)r));
     WRPolygon* new_val = new WRPolygon();
     *new_val = ret_value;
     struct RUPolygon ctl;
@@ -117,7 +117,7 @@ static struct RUPolygon polygon_intersected(struct RUBase* self_c, struct RUBase
 
 static bool polygon_intersects(struct RUBase* self_c, struct RUBase* r) {
     WRPolygon* qt_value = (WRPolygon*)self_c;
-    auto ret_value = qt_value->intersects(*((QPolygon*)r));
+    auto ret_value = qt_value->intersects(*((WRPolygon*)r));
     return ret_value;
 }
 

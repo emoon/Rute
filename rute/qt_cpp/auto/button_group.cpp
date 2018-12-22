@@ -26,14 +26,14 @@ static bool button_group_exclusive(struct RUBase* self_c) {
 
 static void button_group_add_button(struct RUBase* self_c, struct RUBase* arg0, int id) {
     QButtonGroup* qt_value = (QButtonGroup*)self_c;
-    qt_value->addButton((QAbstractButton*)arg0, id);
+    qt_value->addButton((WRAbstractButton*)arg0, id);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void button_group_remove_button(struct RUBase* self_c, struct RUBase* arg0) {
     QButtonGroup* qt_value = (QButtonGroup*)self_c;
-    qt_value->removeButton((QAbstractButton*)arg0);
+    qt_value->removeButton((WRAbstractButton*)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -64,14 +64,14 @@ static struct RUAbstractButton button_group_button(struct RUBase* self_c, int id
 
 static void button_group_set_id(struct RUBase* self_c, struct RUBase* button, int id) {
     QButtonGroup* qt_value = (QButtonGroup*)self_c;
-    qt_value->setId((QAbstractButton*)button, id);
+    qt_value->setId((WRAbstractButton*)button, id);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static int button_group_id(struct RUBase* self_c, struct RUBase* button) {
     QButtonGroup* qt_value = (QButtonGroup*)self_c;
-    auto ret_value = qt_value->id((QAbstractButton*)button);
+    auto ret_value = qt_value->id((WRAbstractButton*)button);
     return ret_value;
 }
 

@@ -81,14 +81,14 @@ static void object_kill_timer(struct RUBase* self_c, int id) {
 
 static void object_set_parent(struct RUBase* self_c, struct RUBase* parent) {
     WRObject* qt_value = (WRObject*)self_c;
-    qt_value->setParent((QObject*)parent);
+    qt_value->setParent((WRObject*)parent);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 static void object_install_event_filter(struct RUBase* self_c, struct RUBase* filter_obj) {
     WRObject* qt_value = (WRObject*)self_c;
-    qt_value->installEventFilter((QObject*)filter_obj);
+    qt_value->installEventFilter((WRObject*)filter_obj);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

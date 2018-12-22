@@ -11,7 +11,7 @@
 
 static void pen_swap(struct RUBase* self_c, struct RUBase* other) {
     WRPen* qt_value = (WRPen*)self_c;
-    qt_value->swap(*((QPen*)other));
+    qt_value->swap(*((WRPen*)other));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -121,7 +121,7 @@ static struct RUColor pen_color(struct RUBase* self_c) {
 
 static void pen_set_color(struct RUBase* self_c, struct RUBase* color) {
     WRPen* qt_value = (WRPen*)self_c;
-    qt_value->setColor(*((QColor*)color));
+    qt_value->setColor(*((WRColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -142,7 +142,7 @@ static struct RUBrush pen_brush(struct RUBase* self_c) {
 
 static void pen_set_brush(struct RUBase* self_c, struct RUBase* brush) {
     WRPen* qt_value = (WRPen*)self_c;
-    qt_value->setBrush(*((QBrush*)brush));
+    qt_value->setBrush(*((WRBrush*)brush));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

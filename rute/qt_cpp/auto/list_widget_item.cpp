@@ -97,7 +97,7 @@ static struct RUIcon list_widget_item_icon(struct RUBase* self_c) {
 
 static void list_widget_item_set_icon(struct RUBase* self_c, struct RUBase* icon) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-    qt_value->setIcon(*((QIcon*)icon));
+    qt_value->setIcon(*((WRIcon*)icon));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,7 +163,7 @@ static struct RUFont list_widget_item_font(struct RUBase* self_c) {
 
 static void list_widget_item_set_font(struct RUBase* self_c, struct RUBase* font) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-    qt_value->setFont(*((QFont*)font));
+    qt_value->setFont(*((WRFont*)font));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,7 +199,7 @@ static struct RUBrush list_widget_item_background(struct RUBase* self_c) {
 
 static void list_widget_item_set_background(struct RUBase* self_c, struct RUBase* brush) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-    qt_value->setBackground(*((QBrush*)brush));
+    qt_value->setBackground(*((WRBrush*)brush));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -220,7 +220,7 @@ static struct RUColor list_widget_item_text_color(struct RUBase* self_c) {
 
 static void list_widget_item_set_text_color(struct RUBase* self_c, struct RUBase* color) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-    qt_value->setTextColor(*((QColor*)color));
+    qt_value->setTextColor(*((WRColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -241,7 +241,7 @@ static struct RUBrush list_widget_item_foreground(struct RUBase* self_c) {
 
 static void list_widget_item_set_foreground(struct RUBase* self_c, struct RUBase* brush) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-    qt_value->setForeground(*((QBrush*)brush));
+    qt_value->setForeground(*((WRBrush*)brush));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -277,7 +277,7 @@ static struct RUSize list_widget_item_size_hint(struct RUBase* self_c) {
 
 static void list_widget_item_set_size_hint(struct RUBase* self_c, struct RUBase* size) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
-    qt_value->setSizeHint(*((QSize*)size));
+    qt_value->setSizeHint(*((WRSize*)size));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

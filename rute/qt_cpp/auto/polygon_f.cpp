@@ -11,7 +11,7 @@
 
 static void polygon_f_swap(struct RUBase* self_c, struct RUBase* other) {
     WRPolygonF* qt_value = (WRPolygonF*)self_c;
-    qt_value->swap(*((QPolygonF*)other));
+    qt_value->swap(*((WRPolygonF*)other));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ static struct RURectF polygon_f_bounding_rect(struct RUBase* self_c) {
 
 static bool polygon_f_contains_point(struct RUBase* self_c, struct RUBase* pt, uint32_t fill_rule) {
     WRPolygonF* qt_value = (WRPolygonF*)self_c;
-    auto ret_value = qt_value->containsPoint(*((QPointF*)pt), (Qt::FillRule)fill_rule);
+    auto ret_value = qt_value->containsPoint(*((WRPointF*)pt), (Qt::FillRule)fill_rule);
     return ret_value;
 }
 
@@ -62,7 +62,7 @@ static bool polygon_f_contains_point(struct RUBase* self_c, struct RUBase* pt, u
 
 static struct RUPolygonF polygon_f_united(struct RUBase* self_c, struct RUBase* r) {
     WRPolygonF* qt_value = (WRPolygonF*)self_c;
-    auto ret_value = qt_value->united(*((QPolygonF*)r));
+    auto ret_value = qt_value->united(*((WRPolygonF*)r));
     WRPolygonF* new_val = new WRPolygonF();
     *new_val = ret_value;
     struct RUPolygonF ctl;
@@ -76,7 +76,7 @@ static struct RUPolygonF polygon_f_united(struct RUBase* self_c, struct RUBase* 
 
 static struct RUPolygonF polygon_f_intersected(struct RUBase* self_c, struct RUBase* r) {
     WRPolygonF* qt_value = (WRPolygonF*)self_c;
-    auto ret_value = qt_value->intersected(*((QPolygonF*)r));
+    auto ret_value = qt_value->intersected(*((WRPolygonF*)r));
     WRPolygonF* new_val = new WRPolygonF();
     *new_val = ret_value;
     struct RUPolygonF ctl;
@@ -90,7 +90,7 @@ static struct RUPolygonF polygon_f_intersected(struct RUBase* self_c, struct RUB
 
 static bool polygon_f_intersects(struct RUBase* self_c, struct RUBase* r) {
     WRPolygonF* qt_value = (WRPolygonF*)self_c;
-    auto ret_value = qt_value->intersects(*((QPolygonF*)r));
+    auto ret_value = qt_value->intersects(*((WRPolygonF*)r));
     return ret_value;
 }
 

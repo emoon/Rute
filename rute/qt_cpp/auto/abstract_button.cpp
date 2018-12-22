@@ -26,7 +26,7 @@ static const char* abstract_button_text(struct RUBase* self_c) {
 
 static void abstract_button_set_icon(struct RUBase* self_c, struct RUBase* icon) {
     WRAbstractButton* qt_value = (WRAbstractButton*)self_c;
-    qt_value->setIcon(*((QIcon*)icon));
+    qt_value->setIcon(*((WRIcon*)icon));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ static struct RUSize abstract_button_icon_size(struct RUBase* self_c) {
 
 static void abstract_button_set_shortcut(struct RUBase* self_c, struct RUBase* key) {
     WRAbstractButton* qt_value = (WRAbstractButton*)self_c;
-    qt_value->setShortcut(*((QKeySequence*)key));
+    qt_value->setShortcut(*((WRKeySequence*)key));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -192,7 +192,7 @@ static struct RUButtonGroup abstract_button_group(struct RUBase* self_c) {
 
 static void abstract_button_set_icon_size(struct RUBase* self_c, struct RUBase* size) {
     WRAbstractButton* qt_value = (WRAbstractButton*)self_c;
-    qt_value->setIconSize(*((QSize*)size));
+    qt_value->setIconSize(*((WRSize*)size));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
