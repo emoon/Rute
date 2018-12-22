@@ -98,12 +98,10 @@ struct TraitTypeHandler {
 
 impl TypeHandlerTrait for TraitTypeHandler {
     fn replace_arg(&self, arg: &Variable, _is_return_value: IsReturnArg) -> String {
-        let t_name = arg.get_untyped_name();
-        // TODO: Not hard-code to Q* type but use actual typename
         if arg.pointer {
-            format!("(Q{}*){}", t_name, &arg.name).into()
+            format!("({}*){}", arg.qt_type_name, &arg.name).into()
         } else {
-            format!("*((Q{}*){})", t_name, &arg.name).into()
+            format!("*(({}*){})", arg.qt_type_name, &arg.name).into()
         }
     }
 

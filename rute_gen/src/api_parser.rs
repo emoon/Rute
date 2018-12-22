@@ -805,7 +805,9 @@ impl ApiParser {
         type_def_file: &HashMap<String, String>,
         enum_def_file_type: &HashMap<String, (String, EnumType)>)
     {
-        if let Some(qt_name) = struct_name_map.get(&arg.type_name) {
+        let type_name = arg.get_untyped_name();
+
+        if let Some(qt_name) = struct_name_map.get(type_name) {
             arg.qt_type_name = qt_name.to_owned();
         }
 
