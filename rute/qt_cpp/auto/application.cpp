@@ -337,17 +337,17 @@ static int application_start_drag_distance(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool application_is_effect_enabled(struct RUBase* self_c, int arg0) {
+static bool application_is_effect_enabled(struct RUBase* self_c, uint32_t arg0) {
     QApplication* qt_value = (QApplication*)self_c;
-    auto ret_value = qt_value->isEffectEnabled((Qt::UIEffect)s_ui_effect_lookup[arg0]);
+    auto ret_value = qt_value->isEffectEnabled((Qt::UIEffect)arg0);
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void application_set_effect_enabled(struct RUBase* self_c, int arg0, bool enable) {
+static void application_set_effect_enabled(struct RUBase* self_c, uint32_t arg0, bool enable) {
     QApplication* qt_value = (QApplication*)self_c;
-    qt_value->setEffectEnabled((Qt::UIEffect)s_ui_effect_lookup[arg0], enable);
+    qt_value->setEffectEnabled((Qt::UIEffect)arg0, enable);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

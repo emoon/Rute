@@ -21,7 +21,7 @@ typedef struct RULayoutItemFuncs {
     struct RUSize (*size_hint)(struct RUBase* self_c);
     struct RUSize (*minimum_size)(struct RUBase* self_c);
     struct RUSize (*maximum_size)(struct RUBase* self_c);
-    int (*expanding_directions)(struct RUBase* self_c);
+    uint32_t (*expanding_directions)(struct RUBase* self_c);
     bool (*is_empty)(struct RUBase* self_c);
     bool (*has_height_for_width)(struct RUBase* self_c);
     int (*height_for_width)(struct RUBase* self_c, int arg0);
@@ -30,8 +30,8 @@ typedef struct RULayoutItemFuncs {
     struct RUWidget (*widget)(struct RUBase* self_c);
     struct RULayout (*layout)(struct RUBase* self_c);
     struct RUSpacerItem (*spacer_item)(struct RUBase* self_c);
-    int (*alignment)(struct RUBase* self_c);
-    void (*set_alignment)(struct RUBase* self_c, int a);
+    uint32_t (*alignment)(struct RUBase* self_c);
+    void (*set_alignment)(struct RUBase* self_c, uint32_t a);
 } RULayoutItemFuncs;
 
 typedef struct RULayoutItemAllFuncs {

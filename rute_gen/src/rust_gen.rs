@@ -46,7 +46,7 @@ trait TypeHandlerTrait {
         arg.type_name.clone().into()
     }
 
-    fn gen_body_return(&self, _varible: &Variable) -> Cow<str> {
+    fn gen_body_return(&self, _variable: &Variable) -> Cow<str> {
         "".into()
     }
 
@@ -81,7 +81,7 @@ impl TypeHandlerTrait for StringTypeHandler {
         }
     }
 
-    fn gen_body_return(&self, _varible: &Variable) -> Cow<str> {
+    fn gen_body_return(&self, _variable: &Variable) -> Cow<str> {
         "CStr::from_ptr(ret_val).to_string_lossy().into_owned()".into()
     }
 
@@ -150,16 +150,23 @@ struct EnumTypeHandler;
 /// Enums are being handled separately as we need to cast them between Rust and native for C++
 ///
 impl TypeHandlerTrait for EnumTypeHandler {
-    fn gen_body_return(&self, varible: &Variable) -> Cow<str> {
-        format!("{{ transmute::<i32, {}>(ret_val) }}", varible.enum_sub_type).into()
+    fn gen_body_return(&self, variable: &Variable) -> Cow<str> {
+        if variable.enum_type == EnumType::Regular {
+            format!("{{ transmute::<u32, {}>(ret_val) }}", variable.enum_sub_type).into()
+        } else {
+            format!("{}::from_bits_truncate(ret_val)", variable.enum_sub_type).into()
+        }
     }
 
     fn gen_body_to_ffi(&self, arg: &Variable, index: usize) -> (Cow<str>, Cow<str>) {
         let arg_name = format!("enum_{}_{}", arg.name, index);
-        (
-            arg_name.to_owned().into(),
-            format!("let {} = {} as i32;\n", arg_name, arg.name).into(),
-        )
+        let arg_init = if arg.enum_type == EnumType::Regular {
+            format!("let {} = {} as u32;\n", arg_name, arg.name)
+        } else {
+            format!("let {} = {}.bits();\n", arg_name, arg.name)
+        };
+
+        (arg_name.to_owned().into(), arg_init.into())
     }
 }
 
@@ -902,28 +909,53 @@ impl RustGenerator {
         Self::generate_enums(&mut dest, api_def)
     }
 
-    fn generate_enums<W: Write>(dest: &mut W, api_def: &ApiDef) -> io::Result<()> {
-        for enum_def in &api_def.enums {
-            writeln!(dest, "#[repr(u32)]")?;
-            writeln!(dest, "pub enum {} {{", enum_def.name)?;
+    fn generate_regular_enum<W: Write>(dest: &mut W, enum_def: &Enum) -> io::Result<()> {
+        writeln!(dest, "#[repr(u32)]")?;
+        writeln!(dest, "pub enum {} {{", enum_def.name)?;
+
+        for e in &enum_def.entries {
+            writeln!(dest, "    {} = {},", e.name.to_camel_case(), e.value)?;
+        }
+
+        writeln!(dest, "}}\n")?;
+
+        // if enum has a flag alias we need to generate that as well
+        if !enum_def.flags_name.is_empty() {
+            writeln!(dest, "bitflags! {{\n    pub struct {}: u32 {{", enum_def.flags_name)?;
 
             for e in &enum_def.entries {
-                match e {
-                    EnumEntry::Enum(name) => writeln!(dest, "    {},", name.to_camel_case())?,
-                    EnumEntry::EnumValue(name, value) => writeln!(
-                        dest,
-                        "    {} = {},",
-                        name.to_camel_case(),
-                        value.to_camel_case()
-                    )?,
-                }
+                writeln!(dest, "        const {} = {}::{} as u32;",
+                    e.name.to_camel_case(), enum_def.name, e.name.to_camel_case())?;
             }
 
-            writeln!(dest, "}}\n")?;
+            writeln!(dest, "    }}\n}}")?;
+        }
 
-            // if enum has a flag alias we need to generate that as well
-            if !enum_def.flags_name.is_empty() {
-                writeln!(dest, "pub type {} = {};\n", enum_def.flags_name, enum_def.name);
+        Ok(())
+    }
+
+    fn generate_bitflags_enum<W: Write>(dest: &mut W, enum_def: &Enum) -> io::Result<()> {
+        writeln!(dest, "bitflags! {{\n    pub struct {}: u32 {{", enum_def.name)?;
+
+        for e in &enum_def.entries {
+            writeln!(dest, "        const {} = 0x{:x};",
+                e.name.to_camel_case(), e.value)?;
+        }
+
+        writeln!(dest, "    }}\n}}\n")?;
+
+        if !enum_def.flags_name.is_empty() {
+            writeln!(dest, "pub type {} = {};\n", enum_def.flags_name, enum_def.name)?;
+        }
+
+        Ok(())
+    }
+
+    fn generate_enums<W: Write>(dest: &mut W, api_def: &ApiDef) -> io::Result<()> {
+        for enum_def in &api_def.enums {
+            match enum_def.enum_type {
+                EnumType::Bitflags => Self::generate_bitflags_enum(dest, &enum_def)?,
+                EnumType::Regular => Self::generate_regular_enum(dest, &enum_def)?,
             }
         }
 

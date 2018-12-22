@@ -7,11 +7,11 @@ use std::os::raw::c_void;
 #[derive(Copy, Clone)]
 pub struct RUSizePolicyFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
-    pub horizontal_policy: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub vertical_policy: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub set_horizontal_policy: extern "C" fn(self_c: *const RUBase, d: i32),
-    pub set_vertical_policy: extern "C" fn(self_c: *const RUBase, d: i32),
-    pub expanding_directions: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub horizontal_policy: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub vertical_policy: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub set_horizontal_policy: extern "C" fn(self_c: *const RUBase, d: u32),
+    pub set_vertical_policy: extern "C" fn(self_c: *const RUBase, d: u32),
+    pub expanding_directions: extern "C" fn(self_c: *const RUBase) -> u32,
     pub set_height_for_width: extern "C" fn(self_c: *const RUBase, b: bool),
     pub has_height_for_width: extern "C" fn(self_c: *const RUBase) -> bool,
     pub set_width_for_height: extern "C" fn(self_c: *const RUBase, b: bool),

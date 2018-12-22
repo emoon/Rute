@@ -44,7 +44,7 @@ typedef struct RUPixmapFuncs {
                                              bool clip_tight);
     struct RUBitmap (*create_mask_from_color)(struct RUBase* self_c,
                                               struct RUBase* mask_color,
-                                              int mode);
+                                              uint32_t mode);
     struct RUPixmap (*grab_window)(struct RUBase* self_c, uint64_t arg0, int x,
                                    int y, int w, int h);
     struct RUPixmap (*grab_widget)(struct RUBase* self_c, struct RUBase* widget,
@@ -53,18 +53,20 @@ typedef struct RUPixmapFuncs {
                                      struct RUBase* widget, int x, int y, int w,
                                      int h);
     struct RUPixmap (*scaled)(struct RUBase* self_c, int w, int h,
-                              int aspect_mode, int mode);
+                              uint32_t aspect_mode, uint32_t mode);
     struct RUPixmap (*scaled_2)(struct RUBase* self_c, struct RUBase* s,
-                                int aspect_mode, int mode);
-    struct RUPixmap (*scaled_to_width)(struct RUBase* self_c, int w, int mode);
-    struct RUPixmap (*scaled_to_height)(struct RUBase* self_c, int h, int mode);
+                                uint32_t aspect_mode, uint32_t mode);
+    struct RUPixmap (*scaled_to_width)(struct RUBase* self_c, int w,
+                                       uint32_t mode);
+    struct RUPixmap (*scaled_to_height)(struct RUBase* self_c, int h,
+                                        uint32_t mode);
     struct RUImage (*to_image)(struct RUBase* self_c);
     struct RUPixmap (*from_image)(struct RUBase* self_c, struct RUBase* image,
-                                  int flags);
+                                  uint32_t flags);
     struct RUPixmap (*from_image_2)(struct RUBase* self_c, struct RUBase* image,
-                                    int flags);
+                                    uint32_t flags);
     bool (*convert_from_image)(struct RUBase* self_c, struct RUBase* img,
-                               int flags);
+                               uint32_t flags);
     struct RUPixmap (*copy)(struct RUBase* self_c, int x, int y, int width,
                             int height);
     struct RUPixmap (*copy_2)(struct RUBase* self_c, struct RUBase* rect);

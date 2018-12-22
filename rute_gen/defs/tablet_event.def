@@ -313,30 +313,29 @@ struct TabletEvent : InputEvent {
 [org_name(QTabletEvent)]
 enum TabletDevice {
     /// No device, or an unknown device.
-    NoDevice,
+    NoDevice = 0,
     /// A Puck (a device that is similar to a flat mouse with a transparent circle with cross-hairs).
-    Puck,
+    Puck = 1,
     /// A Stylus.
-    Stylus,
+    Stylus = 2,
     /// An airbrush
-    Airbrush,
+    Airbrush = 3,
     /// A 4D Mouse.
-    FourDMouse,
-    XFreeEraser,
+    FourDMouse = 4,
+    XFreeEraser = 5,
     /// A special stylus that also knows about rotation (a 6D stylus).
-    RotationStylus,
+    RotationStylus = 6,
 }
 
 [org_name(QTabletEvent)]
 enum PointerType {
     /// An unknown device.
-    UnknownPointer,
+    UnknownPointer = 0,
     /// Tip end of a stylus-like device (the narrow end of the pen).
-    Pen,
+    Pen = 1,
     /// Any puck-like device.
-    Cursor,
+    Cursor = 2,
     /// Eraser end of a stylus-like device (the broad end of the pen).
-    Eraser,
+    Eraser = 3,
 }
-
 // vim: syntax=rust expandtab ts=4 sw=4

@@ -107,7 +107,6 @@ extern std::map<int, int> s_render_flag_lookup;
 extern std::map<int, int> s_render_hint_lookup;
 extern std::map<int, int> s_renderable_type_lookup;
 extern std::map<int, int> s_request_software_input_panel_lookup;
-extern std::map<int, int> s_resolve_properties_lookup;
 extern std::map<int, int> s_screen_orientation_lookup;
 extern std::map<int, int> s_scroll_bar_policy_lookup;
 extern std::map<int, int> s_scroll_phase_lookup;
@@ -126,6 +125,7 @@ extern std::map<int, int> s_standard_pixmap_lookup;
 extern std::map<int, int> s_state_lookup;
 extern std::map<int, int> s_state_flag_lookup;
 extern std::map<int, int> s_stretch_lookup;
+extern std::map<int, int> s_style_lookup;
 extern std::map<int, int> s_style_hint_lookup;
 extern std::map<int, int> s_style_strategy_lookup;
 extern std::map<int, int> s_sub_control_lookup;
@@ -165,7 +165,6 @@ extern std::map<int, int> s_yuv_layout_lookup;
 
 #define s_alignment_lookup s_alignment_flag_lookup
 #define s_control_types_lookup s_control_type_lookup
-#define s_dirty_flags_lookup s_dirty_flag_lookup
 #define s_drop_actions_lookup s_drop_action_lookup
 #define s_find_child_options_lookup s_find_child_option_lookup
 #define s_format_options_lookup s_format_option_lookup
@@ -176,8 +175,6 @@ extern std::map<int, int> s_yuv_layout_lookup;
 #define s_mouse_buttons_lookup s_mouse_button_lookup
 #define s_mouse_event_flags_lookup s_mouse_event_flag_lookup
 #define s_orientations_lookup s_orientation_lookup
-#define s_render_flags_lookup s_render_flag_lookup
-#define s_render_hints_lookup s_render_hint_lookup
 #define s_touch_point_states_lookup s_touch_point_state_lookup
 #define s_window_states_lookup s_window_state_lookup
 #define s_window_flags_lookup s_window_type_lookup

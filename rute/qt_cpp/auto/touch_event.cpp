@@ -33,10 +33,10 @@ static struct RUObject touch_event_target(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int touch_event_touch_point_states(struct RUBase* self_c) {
+static uint32_t touch_event_touch_point_states(struct RUBase* self_c) {
     QTouchEvent* qt_value = (QTouchEvent*)self_c;
     auto ret_value = qt_value->touchPointStates();
-    return s_touch_point_states_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

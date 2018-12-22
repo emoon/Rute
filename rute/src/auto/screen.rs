@@ -196,13 +196,13 @@ impl<'a> Screen<'a> {
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).primary_orientation)(obj_data);
-            let ret_val = { transmute::<i32, ScreenOrientation>(ret_val) };
+            let ret_val = ScreenOrientation::from_bits_truncate(ret_val);
             ret_val
         }
     }
     pub fn angle_between(&self, a: ScreenOrientation, b: ScreenOrientation) -> i32 {
-        let enum_a_1 = a as i32;
-        let enum_b_2 = b as i32;
+        let enum_a_1 = a.bits();
+        let enum_b_2 = b.bits();
 
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {
@@ -211,7 +211,7 @@ impl<'a> Screen<'a> {
         }
     }
     pub fn is_landscape(&self, orientation: ScreenOrientation) -> bool {
-        let enum_orientation_1 = orientation as i32;
+        let enum_orientation_1 = orientation.bits();
 
         let (obj_data, funcs) = self.get_screen_obj_funcs();
         unsafe {

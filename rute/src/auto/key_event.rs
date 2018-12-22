@@ -114,7 +114,7 @@ impl<'a> KeyEvent<'a> {
     /// Returns `true` if the key event matches the given standard *key;*
     /// otherwise returns `false.`
     pub fn matches(&self, key: StandardKey) -> bool {
-        let enum_key_1 = key as i32;
+        let enum_key_1 = key as u32;
 
         let (obj_data, funcs) = self.get_key_event_obj_funcs();
         unsafe {
@@ -135,7 +135,7 @@ impl<'a> KeyEvent<'a> {
         let (obj_data, funcs) = self.get_key_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).modifiers)(obj_data);
-            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            let ret_val = KeyboardModifiers::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -228,7 +228,7 @@ impl<'a> KeyEvent<'a> {
     }
     #[doc(hidden)]
     pub fn set_modifiers(&self, amodifiers: KeyboardModifiers) -> &Self {
-        let enum_amodifiers_1 = amodifiers as i32;
+        let enum_amodifiers_1 = amodifiers.bits();
 
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {

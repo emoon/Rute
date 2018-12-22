@@ -322,7 +322,7 @@ impl<'a> PaintEngine<'a> {
         mode: PolygonDrawMode,
     ) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_f_obj_funcs();
-        let enum_mode_3 = mode as i32;
+        let enum_mode_3 = mode as u32;
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
@@ -350,7 +350,7 @@ impl<'a> PaintEngine<'a> {
         mode: PolygonDrawMode,
     ) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_obj_funcs();
-        let enum_mode_3 = mode as i32;
+        let enum_mode_3 = mode as u32;
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
@@ -418,7 +418,7 @@ impl<'a> PaintEngine<'a> {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
         let (obj_pm_2, _funcs) = pm.get_image_obj_funcs();
         let (obj_sr_3, _funcs) = sr.get_rect_f_obj_funcs();
-        let enum_flags_4 = flags as i32;
+        let enum_flags_4 = flags.bits();
 
         let (obj_data, funcs) = self.get_paint_engine_obj_funcs();
         unsafe {
@@ -529,78 +529,80 @@ impl<'a> PaintEngineTrait<'a> for PaintEngine<'a> {
         unsafe { (obj, (*self.all_funcs).paint_engine_funcs) }
     }
 }
-#[repr(u32)]
-pub enum PaintEngineFeature {
-    PrimitiveTransform,
-    PatternTransform,
-    PixmapTransform,
-    PatternBrush,
-    LinearGradientFill,
-    RadialGradientFill,
-    ConicalGradientFill,
-    AlphaBlend,
-    PorterDuff,
-    PainterPaths,
-    Antialiasing,
-    BrushStroke,
-    ConstantOpacity,
-    MaskedBrush,
-    PerspectiveTransform,
-    BlendModes,
-    ObjectBoundingModeGradients,
-    RasterOpModes,
-    PaintOutsidePaintEvent,
-    AllFeatures,
+bitflags! {
+    pub struct PaintEngineFeature: u32 {
+        const PrimitiveTransform = 0x1;
+        const PatternTransform = 0x2;
+        const PixmapTransform = 0x4;
+        const PatternBrush = 0x8;
+        const LinearGradientFill = 0x10;
+        const RadialGradientFill = 0x20;
+        const ConicalGradientFill = 0x40;
+        const AlphaBlend = 0x80;
+        const PorterDuff = 0x100;
+        const PainterPaths = 0x200;
+        const Antialiasing = 0x400;
+        const BrushStroke = 0x800;
+        const ConstantOpacity = 0x1000;
+        const MaskedBrush = 0x2000;
+        const PerspectiveTransform = 0x4000;
+        const BlendModes = 0x8000;
+        const ObjectBoundingModeGradients = 0x10000;
+        const RasterOpModes = 0x20000;
+        const PaintOutsidePaintEvent = 0x20000000;
+        const AllFeatures = 0xffffffff;
+    }
 }
 
-#[repr(u32)]
-pub enum DirtyFlag {
-    DirtyPen,
-    DirtyBrush,
-    DirtyBrushOrigin,
-    DirtyFont,
-    DirtyBackground,
-    DirtyBackgroundMode,
-    DirtyTransform,
-    DirtyClipRegion,
-    DirtyClipPath,
-    DirtyHints,
-    DirtyCompositionMode,
-    DirtyClipEnabled,
-    DirtyOpacity,
-    AllDirty,
+bitflags! {
+    pub struct DirtyFlag: u32 {
+        const DirtyPen = 0x1;
+        const DirtyBrush = 0x2;
+        const DirtyBrushOrigin = 0x4;
+        const DirtyFont = 0x8;
+        const DirtyBackground = 0x10;
+        const DirtyBackgroundMode = 0x20;
+        const DirtyTransform = 0x40;
+        const DirtyClipRegion = 0x80;
+        const DirtyClipPath = 0x100;
+        const DirtyHints = 0x200;
+        const DirtyCompositionMode = 0x400;
+        const DirtyClipEnabled = 0x800;
+        const DirtyOpacity = 0x1000;
+        const AllDirty = 0xffff;
+    }
 }
 
 pub type DirtyFlags = DirtyFlag;
 
 #[repr(u32)]
 pub enum PolygonDrawMode {
-    OddEvenMode,
-    WindingMode,
-    ConvexMode,
-    PolylineMode,
+    OddEvenMode = 0,
+    WindingMode = 1,
+    ConvexMode = 2,
+    PolylineMode = 3,
 }
 
 #[repr(u32)]
 pub enum Type {
-    X11,
-    Windows,
-    QuickDraw,
-    CoreGraphics,
-    MacPrinter,
-    QWindowSystem,
-    PostScript,
-    OpenGl,
-    Picture,
-    Svg,
-    Raster,
-    Direct3D,
-    Pdf,
-    OpenVg,
-    OpenGL2,
-    PaintBuffer,
-    Blitter,
-    Direct2D,
-    User,
-    MaxUser,
+    X11 = 0,
+    Windows = 1,
+    QuickDraw = 2,
+    CoreGraphics = 3,
+    MacPrinter = 4,
+    QWindowSystem = 5,
+    PostScript = 6,
+    OpenGl = 7,
+    Picture = 8,
+    Svg = 9,
+    Raster = 10,
+    Direct3D = 11,
+    Pdf = 12,
+    OpenVg = 13,
+    OpenGL2 = 14,
+    PaintBuffer = 15,
+    Blitter = 16,
+    Direct2D = 17,
+    User = 50,
+    MaxUser = 100,
 }

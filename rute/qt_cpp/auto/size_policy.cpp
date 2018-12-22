@@ -9,40 +9,40 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int size_policy_horizontal_policy(struct RUBase* self_c) {
+static uint32_t size_policy_horizontal_policy(struct RUBase* self_c) {
     WRSizePolicy* qt_value = (WRSizePolicy*)self_c;
     auto ret_value = qt_value->horizontalPolicy();
-    return s_policy_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int size_policy_vertical_policy(struct RUBase* self_c) {
+static uint32_t size_policy_vertical_policy(struct RUBase* self_c) {
     WRSizePolicy* qt_value = (WRSizePolicy*)self_c;
     auto ret_value = qt_value->verticalPolicy();
-    return s_policy_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void size_policy_set_horizontal_policy(struct RUBase* self_c, int d) {
+static void size_policy_set_horizontal_policy(struct RUBase* self_c, uint32_t d) {
     WRSizePolicy* qt_value = (WRSizePolicy*)self_c;
-    qt_value->setHorizontalPolicy((QSizePolicy::Policy)s_policy_lookup[d]);
+    qt_value->setHorizontalPolicy((QSizePolicy::Policy)d);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void size_policy_set_vertical_policy(struct RUBase* self_c, int d) {
+static void size_policy_set_vertical_policy(struct RUBase* self_c, uint32_t d) {
     WRSizePolicy* qt_value = (WRSizePolicy*)self_c;
-    qt_value->setVerticalPolicy((QSizePolicy::Policy)s_policy_lookup[d]);
+    qt_value->setVerticalPolicy((QSizePolicy::Policy)d);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int size_policy_expanding_directions(struct RUBase* self_c) {
+static uint32_t size_policy_expanding_directions(struct RUBase* self_c) {
     WRSizePolicy* qt_value = (WRSizePolicy*)self_c;
     auto ret_value = qt_value->expandingDirections();
-    return s_orientations_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

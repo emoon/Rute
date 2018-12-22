@@ -176,7 +176,7 @@ impl<'a> PolygonF<'a> {
     /// the specified *fillRule;* otherwise returns `false.`
     pub fn contains_point<P: PointFTrait<'a>>(&self, pt: &P, fill_rule: FillRule) -> bool {
         let (obj_pt_1, _funcs) = pt.get_point_f_obj_funcs();
-        let enum_fill_rule_2 = fill_rule as i32;
+        let enum_fill_rule_2 = fill_rule as u32;
 
         let (obj_data, funcs) = self.get_polygon_f_obj_funcs();
         unsafe {

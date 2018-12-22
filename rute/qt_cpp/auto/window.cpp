@@ -9,17 +9,17 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void window_set_object_surface_type(struct RUBase* self_c, int surface_type) {
+static void window_set_object_surface_type(struct RUBase* self_c, uint32_t surface_type) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setSurfaceType((QSurface::SurfaceType)s_surface_type_lookup[surface_type]);
+    qt_value->setSurfaceType((QSurface::SurfaceType)surface_type);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int window_surface_type(struct RUBase* self_c) {
+static uint32_t window_surface_type(struct RUBase* self_c) {
     WRWindow* qt_value = (WRWindow*)self_c;
     auto ret_value = qt_value->surfaceType();
-    return s_surface_type_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,17 +32,17 @@ static bool window_is_visible(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int window_visibility(struct RUBase* self_c) {
+static uint32_t window_visibility(struct RUBase* self_c) {
     WRWindow* qt_value = (WRWindow*)self_c;
     auto ret_value = qt_value->visibility();
-    return s_visibility_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void window_set_visibility(struct RUBase* self_c, int v) {
+static void window_set_visibility(struct RUBase* self_c, uint32_t v) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setVisibility((QWindow::Visibility)s_visibility_lookup[v]);
+    qt_value->setVisibility((QWindow::Visibility)v);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,9 +62,9 @@ static uint64_t window_win_id(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUWindow window_parent(struct RUBase* self_c, int mode) {
+static struct RUWindow window_parent(struct RUBase* self_c, uint32_t mode) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    auto ret_value = qt_value->parent((QWindow::AncestorMode)s_ancestor_mode_lookup[mode]);
+    auto ret_value = qt_value->parent((QWindow::AncestorMode)mode);
     struct RUWindow ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
@@ -109,17 +109,17 @@ static bool window_is_modal(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int window_modality(struct RUBase* self_c) {
+static uint32_t window_modality(struct RUBase* self_c) {
     WRWindow* qt_value = (WRWindow*)self_c;
     auto ret_value = qt_value->modality();
-    return s_window_modality_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void window_set_modality(struct RUBase* self_c, int modality) {
+static void window_set_modality(struct RUBase* self_c, uint32_t modality) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setModality((Qt::WindowModality)s_window_modality_lookup[modality]);
+    qt_value->setModality((Qt::WindowModality)modality);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,17 +159,17 @@ static struct RUSurfaceFormat window_requested_format(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void window_set_flags(struct RUBase* self_c, int flags) {
+static void window_set_flags(struct RUBase* self_c, uint32_t flags) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setFlags((Qt::WindowFlags)s_window_flags_lookup[flags]);
+    qt_value->setFlags((Qt::WindowFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int window_flags(struct RUBase* self_c) {
+static uint32_t window_flags(struct RUBase* self_c) {
     WRWindow* qt_value = (WRWindow*)self_c;
     auto ret_value = qt_value->flags();
-    return s_window_flags_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -226,17 +226,17 @@ static bool window_is_active(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void window_report_content_orientation_change(struct RUBase* self_c, int orientation) {
+static void window_report_content_orientation_change(struct RUBase* self_c, uint32_t orientation) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->reportContentOrientationChange((Qt::ScreenOrientation)s_screen_orientation_lookup[orientation]);
+    qt_value->reportContentOrientationChange((Qt::ScreenOrientation)orientation);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int window_content_orientation(struct RUBase* self_c) {
+static uint32_t window_content_orientation(struct RUBase* self_c) {
     WRWindow* qt_value = (WRWindow*)self_c;
     auto ret_value = qt_value->contentOrientation();
-    return s_screen_orientation_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -249,32 +249,32 @@ static float window_device_pixel_ratio(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int window_window_state(struct RUBase* self_c) {
+static uint32_t window_window_state(struct RUBase* self_c) {
     WRWindow* qt_value = (WRWindow*)self_c;
     auto ret_value = qt_value->windowState();
-    return s_window_state_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int window_window_states(struct RUBase* self_c) {
+static uint32_t window_window_states(struct RUBase* self_c) {
     WRWindow* qt_value = (WRWindow*)self_c;
     auto ret_value = qt_value->windowStates();
-    return s_window_states_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void window_set_window_state(struct RUBase* self_c, int state) {
+static void window_set_window_state(struct RUBase* self_c, uint32_t state) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setWindowState((Qt::WindowState)s_window_state_lookup[state]);
+    qt_value->setWindowState((Qt::WindowState)state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void window_set_window_states(struct RUBase* self_c, int states) {
+static void window_set_window_states(struct RUBase* self_c, uint32_t states) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    qt_value->setWindowStates((Qt::WindowStates)s_window_states_lookup[states]);
+    qt_value->setWindowStates((Qt::WindowStates)states);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -286,9 +286,9 @@ static void window_set_transient_parent(struct RUBase* self_c, struct RUBase* pa
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool window_is_ancestor_of(struct RUBase* self_c, struct RUBase* child, int mode) {
+static bool window_is_ancestor_of(struct RUBase* self_c, struct RUBase* child, uint32_t mode) {
     WRWindow* qt_value = (WRWindow*)self_c;
-    auto ret_value = qt_value->isAncestorOf((QWindow*)child, (QWindow::AncestorMode)s_ancestor_mode_lookup[mode]);
+    auto ret_value = qt_value->isAncestorOf((QWindow*)child, (QWindow::AncestorMode)mode);
     return ret_value;
 }
 

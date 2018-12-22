@@ -175,16 +175,16 @@ impl<'a> PaintDeviceTrait<'a> for PaintDevice<'a> {
 }
 #[repr(u32)]
 pub enum PaintDeviceMetric {
-    PdmWidth,
-    PdmHeight,
-    PdmWidthMm,
-    PdmHeightMm,
-    PdmNumColors,
-    PdmDepth,
-    PdmDpiX,
-    PdmDpiY,
-    PdmPhysicalDpiX,
-    PdmPhysicalDpiY,
-    PdmDevicePixelRatio,
-    PdmDevicePixelRatioScaled,
+    PdmWidth = 1,
+    PdmHeight = 2,
+    PdmWidthMm = 3,
+    PdmHeightMm = 4,
+    PdmNumColors = 5,
+    PdmDepth = 6,
+    PdmDpiX = 7,
+    PdmDpiY = 8,
+    PdmPhysicalDpiX = 9,
+    PdmPhysicalDpiY = 10,
+    PdmDevicePixelRatio = 11,
+    PdmDevicePixelRatioScaled = 12,
 }

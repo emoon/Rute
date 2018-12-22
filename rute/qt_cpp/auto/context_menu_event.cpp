@@ -69,10 +69,10 @@ static struct RUPoint context_menu_event_global_pos(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int context_menu_event_reason(struct RUBase* self_c) {
+static uint32_t context_menu_event_reason(struct RUBase* self_c) {
     QContextMenuEvent* qt_value = (QContextMenuEvent*)self_c;
     auto ret_value = qt_value->reason();
-    return s_reason_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

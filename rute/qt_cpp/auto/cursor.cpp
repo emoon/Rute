@@ -16,17 +16,17 @@ static void cursor_swap(struct RUBase* self_c, struct RUBase* other) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int cursor_shape(struct RUBase* self_c) {
+static uint32_t cursor_shape(struct RUBase* self_c) {
     WRCursor* qt_value = (WRCursor*)self_c;
     auto ret_value = qt_value->shape();
-    return s_cursor_shape_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void cursor_set_shape(struct RUBase* self_c, int new_shape) {
+static void cursor_set_shape(struct RUBase* self_c, uint32_t new_shape) {
     WRCursor* qt_value = (WRCursor*)self_c;
-    qt_value->setShape((Qt::CursorShape)s_cursor_shape_lookup[new_shape]);
+    qt_value->setShape((Qt::CursorShape)new_shape);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

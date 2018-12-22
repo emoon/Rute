@@ -173,10 +173,10 @@ static struct RULineF line_f_normal_vector(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int line_f_intersect(struct RUBase* self_c, struct RUBase* l, struct RUBase* intersection_point) {
+static uint32_t line_f_intersect(struct RUBase* self_c, struct RUBase* l, struct RUBase* intersection_point) {
     WRLineF* qt_value = (WRLineF*)self_c;
     auto ret_value = qt_value->intersect(*((QLineF*)l), (QPointF*)intersection_point);
-    return s_intersect_type_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

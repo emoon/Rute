@@ -251,8 +251,10 @@ struct Region {
 
 [org_name(QRegion)]
 enum RegionType {
-    Rectangle,
-    Ellipse,
+    /// the region covers the entire rectangle.
+    Rectangle = 0,
+    /// the region is an ellipse inside the rectangle.
+    Ellipse = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

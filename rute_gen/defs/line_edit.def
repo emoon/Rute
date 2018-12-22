@@ -754,21 +754,21 @@ struct LineEdit : Widget {
 [org_name(QLineEdit)]
 enum ActionPosition {
     /// The widget is displayed to the left of the text when using layout direction `Qt::LeftToRight` or to the right when using `Qt::RightToLeft,` respectively.
-    LeadingPosition,
+    LeadingPosition = 0,
     /// The widget is displayed to the right of the text when using layout direction `Qt::LeftToRight` or to the left when using `Qt::RightToLeft,` respectively.
-    TrailingPosition,
+    TrailingPosition = 1,
 }
 
 [org_name(QLineEdit)]
 enum EchoMode {
     /// Display characters as they are entered. This is the default.
-    Normal,
+    Normal = 0,
     /// Do not display anything. This may be appropriate for passwords where even the length of the password should be kept secret.
-    NoEcho,
+    NoEcho = 1,
     /// Display platform-dependent password mask characters instead of the characters actually entered.
-    Password,
+    Password = 2,
     /// Display characters as they are entered while editing otherwise display characters as with `Password.`
-    PasswordEchoOnEdit,
+    PasswordEchoOnEdit = 3,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

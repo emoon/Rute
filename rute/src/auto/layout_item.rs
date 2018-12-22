@@ -146,7 +146,7 @@ impl<'a> LayoutItem<'a> {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).expanding_directions)(obj_data);
-            let ret_val = { transmute::<i32, Orientations>(ret_val) };
+            let ret_val = Orientations::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -298,7 +298,7 @@ impl<'a> LayoutItem<'a> {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alignment)(obj_data);
-            let ret_val = { transmute::<i32, Alignment>(ret_val) };
+            let ret_val = Alignment::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -310,7 +310,7 @@ impl<'a> LayoutItem<'a> {
     /// blank space for layouts, all public Qt classes that inherit QLayoutItem
     /// support item alignment.
     pub fn set_alignment(&self, a: Alignment) -> &Self {
-        let enum_a_1 = a as i32;
+        let enum_a_1 = a.bits();
 
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {

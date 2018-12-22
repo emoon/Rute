@@ -19,8 +19,8 @@ struct RUBrush;
 typedef struct RUBrushFuncs {
     void (*destroy)(struct RUBase* self);
     void (*swap)(struct RUBase* self_c, struct RUBase* other);
-    int (*style)(struct RUBase* self_c);
-    void (*set_style)(struct RUBase* self_c, int arg0);
+    uint32_t (*style)(struct RUBase* self_c);
+    void (*set_style)(struct RUBase* self_c, uint32_t arg0);
     void (*set_transform)(struct RUBase* self_c, struct RUBase* arg0);
     struct RUPixmap (*texture)(struct RUBase* self_c);
     void (*set_texture)(struct RUBase* self_c, struct RUBase* pixmap);
@@ -28,7 +28,7 @@ typedef struct RUBrushFuncs {
     void (*set_texture_image)(struct RUBase* self_c, struct RUBase* image);
     struct RUColor (*color)(struct RUBase* self_c);
     void (*set_color)(struct RUBase* self_c, struct RUBase* color);
-    void (*set_color_2)(struct RUBase* self_c, int color);
+    void (*set_color_2)(struct RUBase* self_c, uint32_t color);
     bool (*is_opaque)(struct RUBase* self_c);
     bool (*is_detached)(struct RUBase* self_c);
 } RUBrushFuncs;

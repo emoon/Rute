@@ -113,7 +113,7 @@ impl<'a> PixelFormat<'a> {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).color_model)(obj_data);
-            let ret_val = { transmute::<i32, ColorModel>(ret_val) };
+            let ret_val = { transmute::<u32, ColorModel>(ret_val) };
             ret_val
         }
     }
@@ -251,7 +251,7 @@ impl<'a> PixelFormat<'a> {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alpha_usage)(obj_data);
-            let ret_val = { transmute::<i32, AlphaUsage>(ret_val) };
+            let ret_val = { transmute::<u32, AlphaUsage>(ret_val) };
             ret_val
         }
     }
@@ -261,7 +261,7 @@ impl<'a> PixelFormat<'a> {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alpha_position)(obj_data);
-            let ret_val = { transmute::<i32, AlphaPosition>(ret_val) };
+            let ret_val = { transmute::<u32, AlphaPosition>(ret_val) };
             ret_val
         }
     }
@@ -273,7 +273,7 @@ impl<'a> PixelFormat<'a> {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).premultiplied)(obj_data);
-            let ret_val = { transmute::<i32, AlphaPremultiplied>(ret_val) };
+            let ret_val = { transmute::<u32, AlphaPremultiplied>(ret_val) };
             ret_val
         }
     }
@@ -285,7 +285,7 @@ impl<'a> PixelFormat<'a> {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).type_interpretation)(obj_data);
-            let ret_val = { transmute::<i32, TypeInterpretation>(ret_val) };
+            let ret_val = { transmute::<u32, TypeInterpretation>(ret_val) };
             ret_val
         }
     }
@@ -298,7 +298,7 @@ impl<'a> PixelFormat<'a> {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).byte_order)(obj_data);
-            let ret_val = { transmute::<i32, ByteOrder>(ret_val) };
+            let ret_val = { transmute::<u32, ByteOrder>(ret_val) };
             ret_val
         }
     }
@@ -310,7 +310,7 @@ impl<'a> PixelFormat<'a> {
         let (obj_data, funcs) = self.get_pixel_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).yuv_layout)(obj_data);
-            let ret_val = { transmute::<i32, YUVLayout>(ret_val) };
+            let ret_val = { transmute::<u32, YUVLayout>(ret_val) };
             ret_val
         }
     }
@@ -337,66 +337,66 @@ impl<'a> PixelFormatTrait<'a> for PixelFormat<'a> {
 }
 #[repr(u32)]
 pub enum ColorModel {
-    Rgb,
-    Bgr,
-    Indexed,
-    Grayscale,
-    Cmyk,
-    Hsl,
-    Hsv,
-    Yuv,
-    Alpha,
+    Rgb = 0,
+    Bgr = 1,
+    Indexed = 2,
+    Grayscale = 3,
+    Cmyk = 4,
+    Hsl = 5,
+    Hsv = 6,
+    Yuv = 7,
+    Alpha = 8,
 }
 
 #[repr(u32)]
 pub enum AlphaUsage {
-    UsesAlpha,
-    IgnoresAlpha,
+    UsesAlpha = 0,
+    IgnoresAlpha = 1,
 }
 
 #[repr(u32)]
 pub enum AlphaPosition {
-    AtBeginning,
-    AtEnd,
+    AtBeginning = 0,
+    AtEnd = 1,
 }
 
 #[repr(u32)]
 pub enum AlphaPremultiplied {
-    NotPremultiplied,
-    Premultiplied,
+    NotPremultiplied = 0,
+    Premultiplied = 1,
 }
 
 #[repr(u32)]
 pub enum TypeInterpretation {
-    UnsignedInteger,
-    UnsignedShort,
-    UnsignedByte,
-    FloatingPoint,
+    UnsignedInteger = 0,
+    UnsignedShort = 1,
+    UnsignedByte = 2,
+    FloatingPoint = 3,
 }
 
 #[repr(u32)]
 pub enum YUVLayout {
-    YuV444,
-    YuV422,
-    YuV411,
-    YuV420P,
-    YuV420Sp,
-    YV12,
-    Uyvy,
-    Yuyv,
-    NV12,
-    NV21,
-    ImC1,
-    ImC2,
-    ImC3,
-    ImC4,
-    Y8,
-    Y16,
+    YuV444 = 0,
+    YuV422 = 1,
+    YuV411 = 2,
+    YuV420P = 3,
+    YuV420Sp = 4,
+    YV12 = 5,
+    Uyvy = 6,
+    Yuyv = 7,
+    NV12 = 8,
+    NV21 = 9,
+    ImC1 = 10,
+    ImC2 = 11,
+    ImC3 = 12,
+    ImC4 = 13,
+    Y8 = 14,
+    Y16 = 15,
 }
 
 #[repr(u32)]
 pub enum ByteOrder {
-    LittleEndian,
-    BigEndian,
-    CurrentSystemEndian,
+    LittleEndian = 0,
+    BigEndian = 1,
+    CurrentSystemEndian = 2,
 }

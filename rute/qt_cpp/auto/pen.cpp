@@ -16,17 +16,17 @@ static void pen_swap(struct RUBase* self_c, struct RUBase* other) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int pen_style(struct RUBase* self_c) {
+static uint32_t pen_style(struct RUBase* self_c) {
     WRPen* qt_value = (WRPen*)self_c;
     auto ret_value = qt_value->style();
-    return s_pen_style_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void pen_set_style(struct RUBase* self_c, int arg0) {
+static void pen_set_style(struct RUBase* self_c, uint32_t arg0) {
     WRPen* qt_value = (WRPen*)self_c;
-    qt_value->setStyle((Qt::PenStyle)s_pen_style_lookup[arg0]);
+    qt_value->setStyle((Qt::PenStyle)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -155,32 +155,32 @@ static bool pen_is_solid(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int pen_cap_style(struct RUBase* self_c) {
+static uint32_t pen_cap_style(struct RUBase* self_c) {
     WRPen* qt_value = (WRPen*)self_c;
     auto ret_value = qt_value->capStyle();
-    return s_pen_cap_style_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void pen_set_cap_style(struct RUBase* self_c, int pcs) {
+static void pen_set_cap_style(struct RUBase* self_c, uint32_t pcs) {
     WRPen* qt_value = (WRPen*)self_c;
-    qt_value->setCapStyle((Qt::PenCapStyle)s_pen_cap_style_lookup[pcs]);
+    qt_value->setCapStyle((Qt::PenCapStyle)pcs);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int pen_join_style(struct RUBase* self_c) {
+static uint32_t pen_join_style(struct RUBase* self_c) {
     WRPen* qt_value = (WRPen*)self_c;
     auto ret_value = qt_value->joinStyle();
-    return s_pen_join_style_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void pen_set_join_style(struct RUBase* self_c, int pcs) {
+static void pen_set_join_style(struct RUBase* self_c, uint32_t pcs) {
     WRPen* qt_value = (WRPen*)self_c;
-    qt_value->setJoinStyle((Qt::PenJoinStyle)s_pen_join_style_lookup[pcs]);
+    qt_value->setJoinStyle((Qt::PenJoinStyle)pcs);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

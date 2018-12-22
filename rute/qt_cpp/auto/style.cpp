@@ -58,9 +58,9 @@ static struct RURect style_item_pixmap_rect(struct RUBase* self_c, struct RUBase
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void style_draw_item_text(struct RUBase* self_c, struct RUBase* painter, struct RUBase* rect, int flags, struct RUBase* pal, bool enabled, const char* text, int text_role) {
+static void style_draw_item_text(struct RUBase* self_c, struct RUBase* painter, struct RUBase* rect, int flags, struct RUBase* pal, bool enabled, const char* text, uint32_t text_role) {
     WRStyle* qt_value = (WRStyle*)self_c;
-    qt_value->drawItemText((QPainter*)painter, *((QRect*)rect), flags, *((QPalette*)pal), enabled, QString::fromUtf8(text), (QPalette::ColorRole)s_color_role_lookup[text_role]);
+    qt_value->drawItemText((QPainter*)painter, *((QRect*)rect), flags, *((QPalette*)pal), enabled, QString::fromUtf8(text), (QPalette::ColorRole)text_role);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

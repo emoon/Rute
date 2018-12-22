@@ -19,8 +19,8 @@ struct RUCursor;
 typedef struct RUCursorFuncs {
     void (*destroy)(struct RUBase* self);
     void (*swap)(struct RUBase* self_c, struct RUBase* other);
-    int (*shape)(struct RUBase* self_c);
-    void (*set_shape)(struct RUBase* self_c, int new_shape);
+    uint32_t (*shape)(struct RUBase* self_c);
+    void (*set_shape)(struct RUBase* self_c, uint32_t new_shape);
     struct RUBitmap (*bitmap)(struct RUBase* self_c);
     struct RUBitmap (*mask)(struct RUBase* self_c);
     struct RUPixmap (*pixmap)(struct RUBase* self_c);

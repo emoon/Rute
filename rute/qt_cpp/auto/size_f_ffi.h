@@ -24,11 +24,12 @@ typedef struct RUSizeFFuncs {
     float (*height)(struct RUBase* self_c);
     void (*set_width)(struct RUBase* self_c, float w);
     void (*set_height)(struct RUBase* self_c, float h);
-    void (*scale)(struct RUBase* self_c, float w, float h, int mode);
-    void (*scale_2)(struct RUBase* self_c, struct RUBase* s, int mode);
-    struct RUSizeF (*scaled)(struct RUBase* self_c, float w, float h, int mode);
+    void (*scale)(struct RUBase* self_c, float w, float h, uint32_t mode);
+    void (*scale_2)(struct RUBase* self_c, struct RUBase* s, uint32_t mode);
+    struct RUSizeF (*scaled)(struct RUBase* self_c, float w, float h,
+                             uint32_t mode);
     struct RUSizeF (*scaled_2)(struct RUBase* self_c, struct RUBase* s,
-                               int mode);
+                               uint32_t mode);
     struct RUSizeF (*expanded_to)(struct RUBase* self_c, struct RUBase* arg0);
     struct RUSizeF (*bounded_to)(struct RUBase* self_c, struct RUBase* arg0);
     float (*rwidth)(struct RUBase* self_c);

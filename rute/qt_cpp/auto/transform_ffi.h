@@ -32,7 +32,7 @@ typedef struct RUTransformFuncs {
     bool (*is_scaling)(struct RUBase* self_c);
     bool (*is_rotating)(struct RUBase* self_c);
     bool (*is_translating)(struct RUBase* self_c);
-    int (*get_type)(struct RUBase* self_c);
+    uint32_t (*get_type)(struct RUBase* self_c);
     float (*determinant)(struct RUBase* self_c);
     float (*det)(struct RUBase* self_c);
     float (*m11)(struct RUBase* self_c);
@@ -49,9 +49,9 @@ typedef struct RUTransformFuncs {
     struct RUTransform (*adjoint)(struct RUBase* self_c);
     struct RUTransform (*scale)(struct RUBase* self_c, float sx, float sy);
     struct RUTransform (*shear)(struct RUBase* self_c, float sh, float sv);
-    struct RUTransform (*rotate)(struct RUBase* self_c, float a, int axis);
+    struct RUTransform (*rotate)(struct RUBase* self_c, float a, uint32_t axis);
     struct RUTransform (*rotate_radians)(struct RUBase* self_c, float a,
-                                         int axis);
+                                         uint32_t axis);
     bool (*square_to_quad)(struct RUBase* self_c, struct RUBase* square,
                            struct RUBase* result);
     bool (*quad_to_square)(struct RUBase* self_c, struct RUBase* quad,

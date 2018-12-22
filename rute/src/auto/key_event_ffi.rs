@@ -11,8 +11,8 @@ use std::os::raw::c_void;
 #[derive(Copy, Clone)]
 pub struct RUKeyEventFuncs {
     pub key: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub matches: extern "C" fn(self_c: *const RUBase, key: i32) -> bool,
-    pub modifiers: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub matches: extern "C" fn(self_c: *const RUBase, key: u32) -> bool,
+    pub modifiers: extern "C" fn(self_c: *const RUBase) -> u32,
     pub text: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
     pub is_auto_repeat: extern "C" fn(self_c: *const RUBase) -> bool,
     pub count: extern "C" fn(self_c: *const RUBase) -> i32,

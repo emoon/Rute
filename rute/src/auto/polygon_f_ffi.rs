@@ -16,7 +16,7 @@ pub struct RUPolygonFFuncs {
     pub is_closed: extern "C" fn(self_c: *const RUBase) -> bool,
     pub bounding_rect: extern "C" fn(self_c: *const RUBase) -> RURectF,
     pub contains_point:
-        extern "C" fn(self_c: *const RUBase, pt: *const RUBase, fill_rule: i32) -> bool,
+        extern "C" fn(self_c: *const RUBase, pt: *const RUBase, fill_rule: u32) -> bool,
     pub united: extern "C" fn(self_c: *const RUBase, r: *const RUBase) -> RUPolygonF,
     pub intersected: extern "C" fn(self_c: *const RUBase, r: *const RUBase) -> RUPolygonF,
     pub intersects: extern "C" fn(self_c: *const RUBase, r: *const RUBase) -> bool,

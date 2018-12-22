@@ -51,6 +51,21 @@ static bool list_widget_item_is_hidden(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static uint32_t list_widget_item_flags(struct RUBase* self_c) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    auto ret_value = qt_value->flags();
+    return (uint32_t)ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_item_set_flags(struct RUBase* self_c, uint32_t flags) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    qt_value->setFlags((Qt::ItemFlags)flags);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static const char* list_widget_item_text(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
     auto ret_value = qt_value->text();
@@ -62,6 +77,27 @@ static const char* list_widget_item_text(struct RUBase* self_c) {
 static void list_widget_item_set_text(struct RUBase* self_c, const char* text) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
     qt_value->setText(QString::fromUtf8(text));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUIcon list_widget_item_icon(struct RUBase* self_c) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    auto ret_value = qt_value->icon();
+    WRIcon* new_val = new WRIcon();
+    *new_val = ret_value;
+    struct RUIcon ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_icon_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_item_set_icon(struct RUBase* self_c, struct RUBase* icon) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    qt_value->setIcon(*((QIcon*)icon));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,6 +147,27 @@ static void list_widget_item_set_whats_this(struct RUBase* self_c, const char* w
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct RUFont list_widget_item_font(struct RUBase* self_c) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    auto ret_value = qt_value->font();
+    WRFont* new_val = new WRFont();
+    *new_val = ret_value;
+    struct RUFont ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_font_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_item_set_font(struct RUBase* self_c, struct RUBase* font) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    qt_value->setFont(*((QFont*)font));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static int list_widget_item_text_alignment(struct RUBase* self_c) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
     auto ret_value = qt_value->textAlignment();
@@ -122,6 +179,105 @@ static int list_widget_item_text_alignment(struct RUBase* self_c) {
 static void list_widget_item_set_text_alignment(struct RUBase* self_c, int alignment) {
     WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
     qt_value->setTextAlignment(alignment);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUBrush list_widget_item_background(struct RUBase* self_c) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    auto ret_value = qt_value->background();
+    WRBrush* new_val = new WRBrush();
+    *new_val = ret_value;
+    struct RUBrush ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_brush_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_item_set_background(struct RUBase* self_c, struct RUBase* brush) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    qt_value->setBackground(*((QBrush*)brush));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUColor list_widget_item_text_color(struct RUBase* self_c) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    auto ret_value = qt_value->textColor();
+    WRColor* new_val = new WRColor();
+    *new_val = ret_value;
+    struct RUColor ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_color_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_item_set_text_color(struct RUBase* self_c, struct RUBase* color) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    qt_value->setTextColor(*((QColor*)color));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUBrush list_widget_item_foreground(struct RUBase* self_c) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    auto ret_value = qt_value->foreground();
+    WRBrush* new_val = new WRBrush();
+    *new_val = ret_value;
+    struct RUBrush ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_brush_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_item_set_foreground(struct RUBase* self_c, struct RUBase* brush) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    qt_value->setForeground(*((QBrush*)brush));
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static uint32_t list_widget_item_check_state(struct RUBase* self_c) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    auto ret_value = qt_value->checkState();
+    return (uint32_t)ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_item_set_check_state(struct RUBase* self_c, uint32_t state) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    qt_value->setCheckState((Qt::CheckState)state);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static struct RUSize list_widget_item_size_hint(struct RUBase* self_c) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    auto ret_value = qt_value->sizeHint();
+    WRSize* new_val = new WRSize();
+    *new_val = ret_value;
+    struct RUSize ctl;
+    ctl.qt_data = (struct RUBase*)new_val;
+    ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)new_val];
+    ctl.all_funcs = &s_size_all_funcs;
+    return ctl;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void list_widget_item_set_size_hint(struct RUBase* self_c, struct RUBase* size) {
+    WRListWidgetItem* qt_value = (WRListWidgetItem*)self_c;
+    qt_value->setSizeHint(*((QSize*)size));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,16 +307,32 @@ struct RUListWidgetItemFuncs s_list_widget_item_funcs = {
     list_widget_item_is_selected,
     list_widget_item_set_hidden,
     list_widget_item_is_hidden,
+    list_widget_item_flags,
+    list_widget_item_set_flags,
     list_widget_item_text,
     list_widget_item_set_text,
+    list_widget_item_icon,
+    list_widget_item_set_icon,
     list_widget_item_status_tip,
     list_widget_item_set_status_tip,
     list_widget_item_tool_tip,
     list_widget_item_set_tool_tip,
     list_widget_item_whats_this,
     list_widget_item_set_whats_this,
+    list_widget_item_font,
+    list_widget_item_set_font,
     list_widget_item_text_alignment,
     list_widget_item_set_text_alignment,
+    list_widget_item_background,
+    list_widget_item_set_background,
+    list_widget_item_text_color,
+    list_widget_item_set_text_color,
+    list_widget_item_foreground,
+    list_widget_item_set_foreground,
+    list_widget_item_check_state,
+    list_widget_item_set_check_state,
+    list_widget_item_size_hint,
+    list_widget_item_set_size_hint,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

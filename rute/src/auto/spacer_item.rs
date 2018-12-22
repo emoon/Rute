@@ -101,8 +101,8 @@ impl<'a> SpacerItem<'a> {
     ///
     /// **See also:** [`SpacerItem::invalidate`]
     pub fn change_size(&self, w: i32, h: i32, h_data: Policy, v_data: Policy) -> &Self {
-        let enum_h_data_3 = h_data as i32;
-        let enum_v_data_4 = v_data as i32;
+        let enum_h_data_3 = h_data as u32;
+        let enum_v_data_4 = v_data as u32;
 
         let (obj_data, funcs) = self.get_spacer_item_obj_funcs();
         unsafe {
@@ -160,7 +160,7 @@ impl<'a> SpacerItem<'a> {
         let (obj_data, funcs) = self.get_spacer_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).expanding_directions)(obj_data);
-            let ret_val = { transmute::<i32, Orientations>(ret_val) };
+            let ret_val = Orientations::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -281,13 +281,13 @@ impl<'a> SpacerItem<'a> {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alignment)(obj_data);
-            let ret_val = { transmute::<i32, Alignment>(ret_val) };
+            let ret_val = Alignment::from_bits_truncate(ret_val);
             ret_val
         }
     }
     #[doc(hidden)]
     pub fn set_alignment(&self, a: Alignment) -> &Self {
-        let enum_a_1 = a as i32;
+        let enum_a_1 = a.bits();
 
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {

@@ -33,7 +33,7 @@ pub struct RUTransformFuncs {
     pub is_scaling: extern "C" fn(self_c: *const RUBase) -> bool,
     pub is_rotating: extern "C" fn(self_c: *const RUBase) -> bool,
     pub is_translating: extern "C" fn(self_c: *const RUBase) -> bool,
-    pub get_type: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub get_type: extern "C" fn(self_c: *const RUBase) -> u32,
     pub determinant: extern "C" fn(self_c: *const RUBase) -> f32,
     pub det: extern "C" fn(self_c: *const RUBase) -> f32,
     pub m11: extern "C" fn(self_c: *const RUBase) -> f32,
@@ -50,8 +50,8 @@ pub struct RUTransformFuncs {
     pub adjoint: extern "C" fn(self_c: *const RUBase) -> RUTransform,
     pub scale: extern "C" fn(self_c: *const RUBase, sx: f32, sy: f32) -> RUTransform,
     pub shear: extern "C" fn(self_c: *const RUBase, sh: f32, sv: f32) -> RUTransform,
-    pub rotate: extern "C" fn(self_c: *const RUBase, a: f32, axis: i32) -> RUTransform,
-    pub rotate_radians: extern "C" fn(self_c: *const RUBase, a: f32, axis: i32) -> RUTransform,
+    pub rotate: extern "C" fn(self_c: *const RUBase, a: f32, axis: u32) -> RUTransform,
+    pub rotate_radians: extern "C" fn(self_c: *const RUBase, a: f32, axis: u32) -> RUTransform,
     pub square_to_quad:
         extern "C" fn(self_c: *const RUBase, square: *const RUBase, result: *const RUBase) -> bool,
     pub quad_to_square:

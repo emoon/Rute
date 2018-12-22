@@ -31,7 +31,7 @@ pub struct RUStyleFuncs {
         pal: *const RUBase,
         enabled: bool,
         text: *const ::std::os::raw::c_char,
-        text_role: i32,
+        text_role: u32,
     ),
     pub draw_item_pixmap: extern "C" fn(
         self_c: *const RUBase,

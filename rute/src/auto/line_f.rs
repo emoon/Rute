@@ -434,7 +434,7 @@ impl<'a> LineF<'a> {
         let (obj_data, funcs) = self.get_line_f_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).intersect)(obj_data, obj_l_1, obj_intersection_point_2);
-            let ret_val = { transmute::<i32, IntersectType>(ret_val) };
+            let ret_val = { transmute::<u32, IntersectType>(ret_val) };
             ret_val
         }
     }
@@ -613,7 +613,7 @@ impl<'a> LineFTrait<'a> for LineF<'a> {
 }
 #[repr(u32)]
 pub enum IntersectType {
-    NoIntersection,
-    BoundedIntersection,
-    UnboundedIntersection,
+    NoIntersection = 0,
+    BoundedIntersection = 1,
+    UnboundedIntersection = 2,
 }

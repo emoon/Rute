@@ -9,10 +9,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int paint_engine_state_state(struct RUBase* self_c) {
+static uint32_t paint_engine_state_state(struct RUBase* self_c) {
     WRPaintEngineState* qt_value = (WRPaintEngineState*)self_c;
     auto ret_value = qt_value->state();
-    return s_dirty_flags_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -73,10 +73,10 @@ static struct RUBrush paint_engine_state_background_brush(struct RUBase* self_c)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int paint_engine_state_background_mode(struct RUBase* self_c) {
+static uint32_t paint_engine_state_background_mode(struct RUBase* self_c) {
     WRPaintEngineState* qt_value = (WRPaintEngineState*)self_c;
     auto ret_value = qt_value->backgroundMode();
-    return s_bg_mode_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -95,10 +95,10 @@ static struct RUFont paint_engine_state_font(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int paint_engine_state_clip_operation(struct RUBase* self_c) {
+static uint32_t paint_engine_state_clip_operation(struct RUBase* self_c) {
     WRPaintEngineState* qt_value = (WRPaintEngineState*)self_c;
     auto ret_value = qt_value->clipOperation();
-    return s_clip_operation_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -125,18 +125,18 @@ static bool paint_engine_state_is_clip_enabled(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int paint_engine_state_render_hints(struct RUBase* self_c) {
+static uint32_t paint_engine_state_render_hints(struct RUBase* self_c) {
     WRPaintEngineState* qt_value = (WRPaintEngineState*)self_c;
     auto ret_value = qt_value->renderHints();
-    return s_render_hints_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int paint_engine_state_composition_mode(struct RUBase* self_c) {
+static uint32_t paint_engine_state_composition_mode(struct RUBase* self_c) {
     WRPaintEngineState* qt_value = (WRPaintEngineState*)self_c;
     auto ret_value = qt_value->compositionMode();
-    return s_composition_mode_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

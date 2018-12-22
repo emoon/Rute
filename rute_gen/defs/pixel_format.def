@@ -104,105 +104,106 @@ struct PixelFormat {
 [org_name(QPixelFormat)]
 enum ColorModel {
     /// The color model is RGB.
-    RGB,
+    RGB = 0,
     /// This is logically the opposite endian version of RGB. However, for ease of use it has its own model.
-    BGR,
+    BGR = 1,
     /// The color model uses a color palette.
-    Indexed,
+    Indexed = 2,
     /// The color model is Grayscale.
-    Grayscale,
+    Grayscale = 3,
     /// The color model is CMYK.
-    CMYK,
+    CMYK = 4,
     /// The color model is HSL.
-    HSL,
+    HSL = 5,
     /// The color model is HSV.
-    HSV,
+    HSV = 6,
     /// The color model is YUV.
-    YUV,
+    YUV = 7,
     /// There is no color model, only alpha is used.
-    Alpha,
+    Alpha = 8,
 }
 
 [org_name(QPixelFormat)]
 enum AlphaUsage {
     /// The alpha channel is used.
-    UsesAlpha,
+    UsesAlpha = 0,
     /// The alpha channel is not used.
-    IgnoresAlpha,
+    IgnoresAlpha = 1,
 }
 
 [org_name(QPixelFormat)]
 enum AlphaPosition {
     /// The alpha channel will be put in front of the color channels . E.g. ARGB.
-    AtBeginning,
+    AtBeginning = 0,
     /// The alpha channel will be put in the back of the color channels. E.g. RGBA.
-    AtEnd,
+    AtEnd = 1,
 }
 
 [org_name(QPixelFormat)]
 enum AlphaPremultiplied {
     /// The alpha channel is not multiplied into the color channels.
-    NotPremultiplied,
+    NotPremultiplied = 0,
     /// The alpha channel is multiplied into the color channels.
-    Premultiplied,
+    Premultiplied = 1,
 }
 
 [org_name(QPixelFormat)]
 enum TypeInterpretation {
     ///
-    UnsignedInteger,
+    UnsignedInteger = 0,
     ///
-    UnsignedShort,
+    UnsignedShort = 1,
     ///
-    UnsignedByte,
+    UnsignedByte = 2,
     ///
-    FloatingPoint,
+    FloatingPoint = 3,
 }
 
 [org_name(QPixelFormat)]
 enum YUVLayout {
     ///
-    YUV444,
+    YUV444 = 0,
     ///
-    YUV422,
+    YUV422 = 1,
     ///
-    YUV411,
+    YUV411 = 2,
     ///
-    YUV420P,
+    YUV420P = 3,
     ///
-    YUV420SP,
+    YUV420SP = 4,
     ///
-    YV12,
+    YV12 = 5,
     ///
-    UYVY,
+    UYVY = 6,
     ///
-    YUYV,
+    YUYV = 7,
     ///
-    NV12,
+    NV12 = 8,
     ///
-    NV21,
+    NV21 = 9,
     ///
-    IMC1,
+    IMC1 = 10,
     ///
-    IMC2,
+    IMC2 = 11,
     ///
-    IMC3,
+    IMC3 = 12,
     ///
-    IMC4,
+    IMC4 = 13,
     ///
-    Y8,
+    Y8 = 14,
     ///
-    Y16,
+    Y16 = 15,
 }
 
 [org_name(QPixelFormat)]
 enum ByteOrder {
     /// The byte order is little endian.
-    LittleEndian,
+    LittleEndian = 0,
     /// The byte order is big endian.
-    BigEndian,
+    BigEndian = 1,
     /// This enum will not be stored, but is converted in the constructor to the endian enum that matches the enum of the current system.
-    CurrentSystemEndian,
+    CurrentSystemEndian = 2,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
+

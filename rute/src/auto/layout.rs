@@ -258,7 +258,7 @@ impl<'a> Layout<'a> {
     /// layouts); otherwise returns `false.`
     pub fn set_alignment<W: WidgetTrait<'a>>(&self, w: &W, alignment: Alignment) -> bool {
         let (obj_w_1, _funcs) = w.get_widget_obj_funcs();
-        let enum_alignment_2 = alignment as i32;
+        let enum_alignment_2 = alignment.bits();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
@@ -277,7 +277,7 @@ impl<'a> Layout<'a> {
     /// layouts); otherwise returns `false.`
     pub fn set_alignment_2<L: LayoutTrait<'a>>(&self, l: &L, alignment: Alignment) -> bool {
         let (obj_l_1, _funcs) = l.get_layout_obj_funcs();
-        let enum_alignment_2 = alignment as i32;
+        let enum_alignment_2 = alignment.bits();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
@@ -472,7 +472,7 @@ impl<'a> Layout<'a> {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).expanding_directions)(obj_data);
-            let ret_val = { transmute::<i32, Orientations>(ret_val) };
+            let ret_val = Orientations::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -639,7 +639,7 @@ impl<'a> Layout<'a> {
     ) -> Option<LayoutItem> {
         let (obj_from_1, _funcs) = from.get_widget_obj_funcs();
         let (obj_to_2, _funcs) = to.get_widget_obj_funcs();
-        let enum_options_3 = options as i32;
+        let enum_options_3 = options.bits();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
@@ -831,7 +831,7 @@ impl<'a> Layout<'a> {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alignment)(obj_data);
-            let ret_val = { transmute::<i32, Alignment>(ret_val) };
+            let ret_val = Alignment::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -888,7 +888,7 @@ impl<'a> Layout<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
@@ -898,7 +898,7 @@ impl<'a> Layout<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
@@ -1065,10 +1065,10 @@ impl<'a> LayoutTrait<'a> for Layout<'a> {
 }
 #[repr(u32)]
 pub enum SizeConstraint {
-    SetDefaultConstraint,
-    SetNoConstraint,
-    SetMinimumSize,
-    SetFixedSize,
-    SetMaximumSize,
-    SetMinAndMaxSize,
+    SetDefaultConstraint = 0,
+    SetNoConstraint = 1,
+    SetMinimumSize = 2,
+    SetFixedSize = 3,
+    SetMaximumSize = 4,
+    SetMinAndMaxSize = 5,
 }

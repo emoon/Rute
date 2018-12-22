@@ -9,40 +9,40 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int tool_button_tool_button_style(struct RUBase* self_c) {
+static uint32_t tool_button_tool_button_style(struct RUBase* self_c) {
     WRToolButton* qt_value = (WRToolButton*)self_c;
     auto ret_value = qt_value->toolButtonStyle();
-    return s_tool_button_style_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int tool_button_arrow_type(struct RUBase* self_c) {
+static uint32_t tool_button_arrow_type(struct RUBase* self_c) {
     WRToolButton* qt_value = (WRToolButton*)self_c;
     auto ret_value = qt_value->arrowType();
-    return s_arrow_type_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void tool_button_set_arrow_type(struct RUBase* self_c, int arrow_type) {
+static void tool_button_set_arrow_type(struct RUBase* self_c, uint32_t arrow_type) {
     WRToolButton* qt_value = (WRToolButton*)self_c;
-    qt_value->setArrowType((Qt::ArrowType)s_arrow_type_lookup[arrow_type]);
+    qt_value->setArrowType((Qt::ArrowType)arrow_type);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void tool_button_set_popup_mode(struct RUBase* self_c, int mode) {
+static void tool_button_set_popup_mode(struct RUBase* self_c, uint32_t mode) {
     WRToolButton* qt_value = (WRToolButton*)self_c;
-    qt_value->setPopupMode((QToolButton::ToolButtonPopupMode)s_tool_button_popup_mode_lookup[mode]);
+    qt_value->setPopupMode((QToolButton::ToolButtonPopupMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int tool_button_popup_mode(struct RUBase* self_c) {
+static uint32_t tool_button_popup_mode(struct RUBase* self_c) {
     WRToolButton* qt_value = (WRToolButton*)self_c;
     auto ret_value = qt_value->popupMode();
-    return s_tool_button_popup_mode_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,9 +62,9 @@ static void tool_button_show_menu(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void tool_button_set_tool_button_style(struct RUBase* self_c, int style) {
+static void tool_button_set_tool_button_style(struct RUBase* self_c, uint32_t style) {
     WRToolButton* qt_value = (WRToolButton*)self_c;
-    qt_value->setToolButtonStyle((Qt::ToolButtonStyle)s_tool_button_style_lookup[style]);
+    qt_value->setToolButtonStyle((Qt::ToolButtonStyle)style);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

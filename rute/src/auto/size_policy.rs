@@ -141,7 +141,7 @@ impl<'a> SizePolicy<'a> {
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).horizontal_policy)(obj_data);
-            let ret_val = { transmute::<i32, Policy>(ret_val) };
+            let ret_val = { transmute::<u32, Policy>(ret_val) };
             ret_val
         }
     }
@@ -155,7 +155,7 @@ impl<'a> SizePolicy<'a> {
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).vertical_policy)(obj_data);
-            let ret_val = { transmute::<i32, Policy>(ret_val) };
+            let ret_val = { transmute::<u32, Policy>(ret_val) };
             ret_val
         }
     }
@@ -166,7 +166,7 @@ impl<'a> SizePolicy<'a> {
     /// [`set_vertical_policy()`]
     /// [`set_horizontal_stretch()`]
     pub fn set_horizontal_policy(&self, d: Policy) -> &Self {
-        let enum_d_1 = d as i32;
+        let enum_d_1 = d as u32;
 
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
@@ -181,7 +181,7 @@ impl<'a> SizePolicy<'a> {
     /// [`set_horizontal_policy()`]
     /// [`set_vertical_stretch()`]
     pub fn set_vertical_policy(&self, d: Policy) -> &Self {
-        let enum_d_1 = d as i32;
+        let enum_d_1 = d as u32;
 
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
@@ -207,7 +207,7 @@ impl<'a> SizePolicy<'a> {
         let (obj_data, funcs) = self.get_size_policy_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).expanding_directions)(obj_data);
-            let ret_val = { transmute::<i32, Orientations>(ret_val) };
+            let ret_val = Orientations::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -303,42 +303,44 @@ impl<'a> SizePolicyTrait<'a> for SizePolicy<'a> {
         unsafe { (obj, (*self.all_funcs).size_policy_funcs) }
     }
 }
-#[repr(u32)]
-pub enum PolicyFlag {
-    GrowFlag,
-    ExpandFlag,
-    ShrinkFlag,
-    IgnoreFlag,
+bitflags! {
+    pub struct PolicyFlag: u32 {
+        const GrowFlag = 0x1;
+        const ExpandFlag = 0x2;
+        const ShrinkFlag = 0x4;
+        const IgnoreFlag = 0x8;
+    }
 }
 
 #[repr(u32)]
 pub enum Policy {
-    Fixed,
-    Minimum,
-    Maximum,
-    Preferred,
-    MinimumExpanding,
-    Expanding,
-    Ignored,
+    Fixed = 0,
+    Minimum = 1,
+    Maximum = 4,
+    Preferred = 5,
+    MinimumExpanding = 3,
+    Expanding = 7,
+    Ignored = 13,
 }
 
-#[repr(u32)]
-pub enum ControlType {
-    DefaultType,
-    ButtonBox,
-    CheckBox,
-    ComboBox,
-    Frame,
-    GroupBox,
-    Label,
-    Line,
-    LineEdit,
-    PushButton,
-    RadioButton,
-    Slider,
-    SpinBox,
-    TabWidget,
-    ToolButton,
+bitflags! {
+    pub struct ControlType: u32 {
+        const DefaultType = 0x1;
+        const ButtonBox = 0x2;
+        const CheckBox = 0x4;
+        const ComboBox = 0x8;
+        const Frame = 0x10;
+        const GroupBox = 0x20;
+        const Label = 0x40;
+        const Line = 0x80;
+        const LineEdit = 0x100;
+        const PushButton = 0x200;
+        const RadioButton = 0x400;
+        const Slider = 0x800;
+        const SpinBox = 0x1000;
+        const TabWidget = 0x2000;
+        const ToolButton = 0x4000;
+    }
 }
 
 pub type ControlTypes = ControlType;

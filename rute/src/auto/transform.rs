@@ -289,7 +289,7 @@ impl<'a> Transform<'a> {
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).get_type)(obj_data);
-            let ret_val = { transmute::<i32, TransformationType>(ret_val) };
+            let ret_val = TransformationType::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -542,7 +542,7 @@ impl<'a> Transform<'a> {
     ///
     /// **See also:** [`set_matrix()`]
     pub fn rotate(&self, a: f32, axis: Axis) -> Option<Transform> {
-        let enum_axis_2 = axis as i32;
+        let enum_axis_2 = axis as u32;
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
@@ -572,7 +572,7 @@ impl<'a> Transform<'a> {
     ///
     /// **See also:** [`set_matrix()`]
     pub fn rotate_radians(&self, a: f32, axis: Axis) -> Option<Transform> {
-        let enum_axis_2 = axis as i32;
+        let enum_axis_2 = axis as u32;
 
         let (obj_data, funcs) = self.get_transform_obj_funcs();
         unsafe {
@@ -1895,12 +1895,13 @@ impl<'a> TransformTrait<'a> for Transform<'a> {
         unsafe { (obj, (*self.all_funcs).transform_funcs) }
     }
 }
-#[repr(u32)]
-pub enum TransformationType {
-    TxNone,
-    TxTranslate,
-    TxScale,
-    TxRotate,
-    TxShear,
-    TxProject,
+bitflags! {
+    pub struct TransformationType: u32 {
+        const TxNone = 0x0;
+        const TxTranslate = 0x1;
+        const TxScale = 0x2;
+        const TxRotate = 0x4;
+        const TxShear = 0x8;
+        const TxProject = 0x10;
+    }
 }

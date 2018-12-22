@@ -104,10 +104,10 @@ static bool font_info_fixed_pitch(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int font_info_style_hint(struct RUBase* self_c) {
+static uint32_t font_info_style_hint(struct RUBase* self_c) {
     QFontInfo* qt_value = (QFontInfo*)self_c;
     auto ret_value = qt_value->styleHint();
-    return s_style_hint_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

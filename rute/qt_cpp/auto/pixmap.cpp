@@ -171,9 +171,9 @@ static struct RUBitmap pixmap_create_heuristic_mask(struct RUBase* self_c, bool 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUBitmap pixmap_create_mask_from_color(struct RUBase* self_c, struct RUBase* mask_color, int mode) {
+static struct RUBitmap pixmap_create_mask_from_color(struct RUBase* self_c, struct RUBase* mask_color, uint32_t mode) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->createMaskFromColor(*((QColor*)mask_color), (Qt::MaskMode)s_mask_mode_lookup[mode]);
+    auto ret_value = qt_value->createMaskFromColor(*((QColor*)mask_color), (Qt::MaskMode)mode);
     QBitmap* new_val = new QBitmap();
     *new_val = ret_value;
     struct RUBitmap ctl;
@@ -227,9 +227,9 @@ static struct RUPixmap pixmap_grab_widget_2(struct RUBase* self_c, struct RUBase
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_scaled(struct RUBase* self_c, int w, int h, int aspect_mode, int mode) {
+static struct RUPixmap pixmap_scaled(struct RUBase* self_c, int w, int h, uint32_t aspect_mode, uint32_t mode) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->scaled(w, h, (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[aspect_mode], (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
+    auto ret_value = qt_value->scaled(w, h, (Qt::AspectRatioMode)aspect_mode, (Qt::TransformationMode)mode);
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -241,9 +241,9 @@ static struct RUPixmap pixmap_scaled(struct RUBase* self_c, int w, int h, int as
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_scaled_2(struct RUBase* self_c, struct RUBase* s, int aspect_mode, int mode) {
+static struct RUPixmap pixmap_scaled_2(struct RUBase* self_c, struct RUBase* s, uint32_t aspect_mode, uint32_t mode) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[aspect_mode], (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
+    auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)aspect_mode, (Qt::TransformationMode)mode);
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -255,9 +255,9 @@ static struct RUPixmap pixmap_scaled_2(struct RUBase* self_c, struct RUBase* s, 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_scaled_to_width(struct RUBase* self_c, int w, int mode) {
+static struct RUPixmap pixmap_scaled_to_width(struct RUBase* self_c, int w, uint32_t mode) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->scaledToWidth(w, (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
+    auto ret_value = qt_value->scaledToWidth(w, (Qt::TransformationMode)mode);
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -269,9 +269,9 @@ static struct RUPixmap pixmap_scaled_to_width(struct RUBase* self_c, int w, int 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_scaled_to_height(struct RUBase* self_c, int h, int mode) {
+static struct RUPixmap pixmap_scaled_to_height(struct RUBase* self_c, int h, uint32_t mode) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->scaledToHeight(h, (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
+    auto ret_value = qt_value->scaledToHeight(h, (Qt::TransformationMode)mode);
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -297,9 +297,9 @@ static struct RUImage pixmap_to_image(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_from_image(struct RUBase* self_c, struct RUBase* image, int flags) {
+static struct RUPixmap pixmap_from_image(struct RUBase* self_c, struct RUBase* image, uint32_t flags) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->fromImage(*((QImage*)image), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    auto ret_value = qt_value->fromImage(*((QImage*)image), (Qt::ImageConversionFlags)flags);
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -311,9 +311,9 @@ static struct RUPixmap pixmap_from_image(struct RUBase* self_c, struct RUBase* i
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap pixmap_from_image_2(struct RUBase* self_c, struct RUBase* image, int flags) {
+static struct RUPixmap pixmap_from_image_2(struct RUBase* self_c, struct RUBase* image, uint32_t flags) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->fromImage(*((QImage*)image), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    auto ret_value = qt_value->fromImage(*((QImage*)image), (Qt::ImageConversionFlags)flags);
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -325,9 +325,9 @@ static struct RUPixmap pixmap_from_image_2(struct RUBase* self_c, struct RUBase*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool pixmap_convert_from_image(struct RUBase* self_c, struct RUBase* img, int flags) {
+static bool pixmap_convert_from_image(struct RUBase* self_c, struct RUBase* img, uint32_t flags) {
     WRPixmap* qt_value = (WRPixmap*)self_c;
-    auto ret_value = qt_value->convertFromImage(*((QImage*)img), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    auto ret_value = qt_value->convertFromImage(*((QImage*)img), (Qt::ImageConversionFlags)flags);
     return ret_value;
 }
 

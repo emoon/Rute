@@ -833,7 +833,7 @@ impl<'a> Window<'a> {
     /// [`create()`]
     /// [`destroy()`]
     pub fn set_object_surface_type(&self, surface_type: SurfaceType) -> &Self {
-        let enum_surface_type_1 = surface_type as i32;
+        let enum_surface_type_1 = surface_type as u32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
@@ -849,7 +849,7 @@ impl<'a> Window<'a> {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).surface_type)(obj_data);
-            let ret_val = { transmute::<i32, SurfaceType>(ret_val) };
+            let ret_val = { transmute::<u32, SurfaceType>(ret_val) };
             ret_val
         }
     }
@@ -873,12 +873,12 @@ impl<'a> Window<'a> {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).visibility)(obj_data);
-            let ret_val = { transmute::<i32, Visibility>(ret_val) };
+            let ret_val = { transmute::<u32, Visibility>(ret_val) };
             ret_val
         }
     }
     pub fn set_visibility(&self, v: Visibility) -> &Self {
-        let enum_v_1 = v as i32;
+        let enum_v_1 = v as u32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
@@ -933,7 +933,7 @@ impl<'a> Window<'a> {
     ///
     /// A window without a parent is known as a top level window.
     pub fn parent(&self, mode: AncestorMode) -> Option<Window> {
-        let enum_mode_1 = mode as i32;
+        let enum_mode_1 = mode as u32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
@@ -1032,12 +1032,12 @@ impl<'a> Window<'a> {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).modality)(obj_data);
-            let ret_val = { transmute::<i32, WindowModality>(ret_val) };
+            let ret_val = { transmute::<u32, WindowModality>(ret_val) };
             ret_val
         }
     }
     pub fn set_modality(&self, modality: WindowModality) -> &Self {
-        let enum_modality_1 = modality as i32;
+        let enum_modality_1 = modality as u32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
@@ -1138,7 +1138,7 @@ impl<'a> Window<'a> {
         }
     }
     pub fn set_flags(&self, flags: WindowFlags) -> &Self {
-        let enum_flags_1 = flags as i32;
+        let enum_flags_1 = flags.bits();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
@@ -1159,7 +1159,7 @@ impl<'a> Window<'a> {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).flags)(obj_data);
-            let ret_val = { transmute::<i32, WindowFlags>(ret_val) };
+            let ret_val = WindowFlags::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -1268,7 +1268,7 @@ impl<'a> Window<'a> {
         }
     }
     pub fn report_content_orientation_change(&self, orientation: ScreenOrientation) -> &Self {
-        let enum_orientation_1 = orientation as i32;
+        let enum_orientation_1 = orientation.bits();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
@@ -1295,7 +1295,7 @@ impl<'a> Window<'a> {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).content_orientation)(obj_data);
-            let ret_val = { transmute::<i32, ScreenOrientation>(ret_val) };
+            let ret_val = ScreenOrientation::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -1335,7 +1335,7 @@ impl<'a> Window<'a> {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).window_state)(obj_data);
-            let ret_val = { transmute::<i32, WindowState>(ret_val) };
+            let ret_val = WindowState::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -1350,7 +1350,7 @@ impl<'a> Window<'a> {
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).window_states)(obj_data);
-            let ret_val = { transmute::<i32, WindowStates>(ret_val) };
+            let ret_val = WindowStates::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -1381,7 +1381,7 @@ impl<'a> Window<'a> {
     /// [`show_minimized()`]
     /// [`show_maximized()`]
     pub fn set_window_state(&self, state: WindowState) -> &Self {
-        let enum_state_1 = state as i32;
+        let enum_state_1 = state.bits();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
@@ -1405,7 +1405,7 @@ impl<'a> Window<'a> {
     /// [`show_minimized()`]
     /// [`show_maximized()`]
     pub fn set_window_states(&self, states: WindowStates) -> &Self {
-        let enum_states_1 = states as i32;
+        let enum_states_1 = states.bits();
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
@@ -1440,7 +1440,7 @@ impl<'a> Window<'a> {
     /// is IncludeTransients, then transient parents are also considered ancestors.
     pub fn is_ancestor_of<W: WindowTrait<'a>>(&self, child: &W, mode: AncestorMode) -> bool {
         let (obj_child_1, _funcs) = child.get_window_obj_funcs();
-        let enum_mode_2 = mode as i32;
+        let enum_mode_2 = mode as u32;
 
         let (obj_data, funcs) = self.get_window_obj_funcs();
         unsafe {
@@ -3766,7 +3766,7 @@ impl<'a> Window<'a> {
         let (obj_data, funcs) = self.get_surface_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).surface_class)(obj_data);
-            let ret_val = { transmute::<i32, SurfaceClass>(ret_val) };
+            let ret_val = { transmute::<u32, SurfaceClass>(ret_val) };
             ret_val
         }
     }
@@ -3823,7 +3823,7 @@ impl<'a> Window<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
@@ -3833,7 +3833,7 @@ impl<'a> Window<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
@@ -3972,16 +3972,16 @@ impl<'a> WindowTrait<'a> for Window<'a> {
 }
 #[repr(u32)]
 pub enum Visibility {
-    Hidden,
-    AutomaticVisibility,
-    Windowed,
-    Minimized,
-    Maximized,
-    FullScreen,
+    Hidden = 0,
+    AutomaticVisibility = 1,
+    Windowed = 2,
+    Minimized = 3,
+    Maximized = 4,
+    FullScreen = 5,
 }
 
 #[repr(u32)]
 pub enum AncestorMode {
-    ExcludeTransients,
-    IncludeTransients,
+    ExcludeTransients = 0,
+    IncludeTransients = 1,
 }

@@ -35,23 +35,23 @@ struct Surface {
 [org_name(QSurface)]
 enum SurfaceClass {
     /// The surface is an instance of QWindow.
-    Window,
+    Window = 0,
     /// The surface is an instance of QOffscreenSurface.
-    Offscreen,
+    Offscreen = 1,
 }
 
 [org_name(QSurface)]
 enum SurfaceType {
     /// The surface is is composed of pixels and can be rendered to using a software rasterizer like Qt's raster paint engine.
-    RasterSurface,
+    RasterSurface = 0,
     /// The surface is an OpenGL compatible surface and can be used in conjunction with QOpenGLContext.
-    OpenGLSurface,
+    OpenGLSurface = 1,
     /// The surface can be rendered to using a software rasterizer, and also supports OpenGL. This surface type is intended for internal Qt use, and requires the use of private API.
-    RasterGLSurface,
+    RasterGLSurface = 2,
     /// The surface is an OpenVG compatible surface and can be used in conjunction with OpenVG contexts.
-    OpenVGSurface,
+    OpenVGSurface = 3,
     /// The surface is a Vulkan compatible surface and can be used in conjunction with the Vulkan graphics API.
-    VulkanSurface,
+    VulkanSurface = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

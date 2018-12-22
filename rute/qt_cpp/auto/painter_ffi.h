@@ -30,19 +30,19 @@ typedef struct RUPainterFuncs {
     bool (*end)(struct RUBase* self_c);
     bool (*is_active)(struct RUBase* self_c);
     void (*init_from)(struct RUBase* self_c, struct RUBase* device);
-    void (*set_composition_mode)(struct RUBase* self_c, int mode);
-    int (*composition_mode)(struct RUBase* self_c);
+    void (*set_composition_mode)(struct RUBase* self_c, uint32_t mode);
+    uint32_t (*composition_mode)(struct RUBase* self_c);
     struct RUFont (*font)(struct RUBase* self_c);
     void (*set_font)(struct RUBase* self_c, struct RUBase* f);
     void (*set_pen)(struct RUBase* self_c, struct RUBase* color);
     void (*set_pen_2)(struct RUBase* self_c, struct RUBase* pen);
-    void (*set_pen_3)(struct RUBase* self_c, int style);
+    void (*set_pen_3)(struct RUBase* self_c, uint32_t style);
     struct RUPen (*pen)(struct RUBase* self_c);
     void (*set_brush)(struct RUBase* self_c, struct RUBase* brush);
-    void (*set_brush_2)(struct RUBase* self_c, int style);
+    void (*set_brush_2)(struct RUBase* self_c, uint32_t style);
     struct RUBrush (*brush)(struct RUBase* self_c);
-    void (*set_background_mode)(struct RUBase* self_c, int mode);
-    int (*background_mode)(struct RUBase* self_c);
+    void (*set_background_mode)(struct RUBase* self_c, uint32_t mode);
+    uint32_t (*background_mode)(struct RUBase* self_c);
     struct RUPoint (*brush_origin)(struct RUBase* self_c);
     void (*set_brush_origin)(struct RUBase* self_c, int x, int y);
     void (*set_brush_origin_2)(struct RUBase* self_c, struct RUBase* arg0);
@@ -52,11 +52,14 @@ typedef struct RUPainterFuncs {
     float (*opacity)(struct RUBase* self_c);
     void (*set_opacity)(struct RUBase* self_c, float opacity);
     struct RURegion (*clip_region)(struct RUBase* self_c);
-    void (*set_clip_rect)(struct RUBase* self_c, struct RUBase* arg0, int op);
-    void (*set_clip_rect_2)(struct RUBase* self_c, struct RUBase* arg0, int op);
+    void (*set_clip_rect)(struct RUBase* self_c, struct RUBase* arg0,
+                          uint32_t op);
+    void (*set_clip_rect_2)(struct RUBase* self_c, struct RUBase* arg0,
+                            uint32_t op);
     void (*set_clip_rect_3)(struct RUBase* self_c, int x, int y, int w, int h,
-                            int op);
-    void (*set_clip_region)(struct RUBase* self_c, struct RUBase* arg0, int op);
+                            uint32_t op);
+    void (*set_clip_region)(struct RUBase* self_c, struct RUBase* arg0,
+                            uint32_t op);
     void (*set_clipping)(struct RUBase* self_c, bool enable);
     bool (*has_clipping)(struct RUBase* self_c);
     struct RURectF (*clip_bounding_rect)(struct RUBase* self_c);
@@ -124,13 +127,13 @@ typedef struct RUPainterFuncs {
                             int point_count);
     void (*draw_polyline_4)(struct RUBase* self_c, struct RUBase* polygon);
     void (*draw_polygon)(struct RUBase* self_c, struct RUBase* points,
-                         int point_count, int fill_rule);
+                         int point_count, uint32_t fill_rule);
     void (*draw_polygon_2)(struct RUBase* self_c, struct RUBase* polygon,
-                           int fill_rule);
+                           uint32_t fill_rule);
     void (*draw_polygon_3)(struct RUBase* self_c, struct RUBase* points,
-                           int point_count, int fill_rule);
+                           int point_count, uint32_t fill_rule);
     void (*draw_polygon_4)(struct RUBase* self_c, struct RUBase* polygon,
-                           int fill_rule);
+                           uint32_t fill_rule);
     void (*draw_convex_polygon)(struct RUBase* self_c, struct RUBase* points,
                                 int point_count);
     void (*draw_convex_polygon_2)(struct RUBase* self_c,
@@ -158,12 +161,12 @@ typedef struct RUPainterFuncs {
     void (*draw_chord_3)(struct RUBase* self_c, struct RUBase* arg0, int a,
                          int alen);
     void (*draw_rounded_rect)(struct RUBase* self_c, struct RUBase* rect,
-                              float x_radius, float y_radius, int mode);
+                              float x_radius, float y_radius, uint32_t mode);
     void (*draw_rounded_rect_2)(struct RUBase* self_c, int x, int y, int w,
                                 int h, float x_radius, float y_radius,
-                                int mode);
+                                uint32_t mode);
     void (*draw_rounded_rect_3)(struct RUBase* self_c, struct RUBase* rect,
-                                float x_radius, float y_radius, int mode);
+                                float x_radius, float y_radius, uint32_t mode);
     void (*draw_round_rect)(struct RUBase* self_c, struct RUBase* r, int xround,
                             int yround);
     void (*draw_round_rect_2)(struct RUBase* self_c, int x, int y, int w, int h,
@@ -200,14 +203,16 @@ typedef struct RUPainterFuncs {
                            struct RUBase* pm);
     void (*draw_image)(struct RUBase* self_c, struct RUBase* target_rect,
                        struct RUBase* image, struct RUBase* source_rect,
-                       int flags);
+                       uint32_t flags);
     void (*draw_image_2)(struct RUBase* self_c, struct RUBase* target_rect,
                          struct RUBase* image, struct RUBase* source_rect,
-                         int flags);
+                         uint32_t flags);
     void (*draw_image_3)(struct RUBase* self_c, struct RUBase* p,
-                         struct RUBase* image, struct RUBase* sr, int flags);
+                         struct RUBase* image, struct RUBase* sr,
+                         uint32_t flags);
     void (*draw_image_4)(struct RUBase* self_c, struct RUBase* p,
-                         struct RUBase* image, struct RUBase* sr, int flags);
+                         struct RUBase* image, struct RUBase* sr,
+                         uint32_t flags);
     void (*draw_image_5)(struct RUBase* self_c, struct RUBase* r,
                          struct RUBase* image);
     void (*draw_image_6)(struct RUBase* self_c, struct RUBase* r,
@@ -218,9 +223,9 @@ typedef struct RUPainterFuncs {
                          struct RUBase* image);
     void (*draw_image_9)(struct RUBase* self_c, int x, int y,
                          struct RUBase* image, int sx, int sy, int sw, int sh,
-                         int flags);
-    void (*set_layout_direction)(struct RUBase* self_c, int direction);
-    int (*layout_direction)(struct RUBase* self_c);
+                         uint32_t flags);
+    void (*set_layout_direction)(struct RUBase* self_c, uint32_t direction);
+    uint32_t (*layout_direction)(struct RUBase* self_c);
     void (*draw_text)(struct RUBase* self_c, struct RUBase* p, const char* s);
     void (*draw_text_2)(struct RUBase* self_c, struct RUBase* p, const char* s);
     void (*draw_text_3)(struct RUBase* self_c, int x, int y, const char* s);
@@ -251,20 +256,22 @@ typedef struct RUPainterFuncs {
     void (*fill_rect_6)(struct RUBase* self_c, struct RUBase* arg0,
                         struct RUBase* color);
     void (*fill_rect_7)(struct RUBase* self_c, int x, int y, int w, int h,
-                        int c);
-    void (*fill_rect_8)(struct RUBase* self_c, struct RUBase* r, int c);
-    void (*fill_rect_9)(struct RUBase* self_c, struct RUBase* r, int c);
+                        uint32_t c);
+    void (*fill_rect_8)(struct RUBase* self_c, struct RUBase* r, uint32_t c);
+    void (*fill_rect_9)(struct RUBase* self_c, struct RUBase* r, uint32_t c);
     void (*fill_rect_10)(struct RUBase* self_c, int x, int y, int w, int h,
-                         int style);
-    void (*fill_rect_11)(struct RUBase* self_c, struct RUBase* r, int style);
-    void (*fill_rect_12)(struct RUBase* self_c, struct RUBase* r, int style);
+                         uint32_t style);
+    void (*fill_rect_11)(struct RUBase* self_c, struct RUBase* r,
+                         uint32_t style);
+    void (*fill_rect_12)(struct RUBase* self_c, struct RUBase* r,
+                         uint32_t style);
     void (*erase_rect)(struct RUBase* self_c, struct RUBase* arg0);
     void (*erase_rect_2)(struct RUBase* self_c, int x, int y, int w, int h);
     void (*erase_rect_3)(struct RUBase* self_c, struct RUBase* arg0);
-    void (*set_render_hint)(struct RUBase* self_c, int hint, bool on);
-    void (*set_render_hints)(struct RUBase* self_c, int hints, bool on);
-    int (*render_hints)(struct RUBase* self_c);
-    bool (*test_render_hint)(struct RUBase* self_c, int hint);
+    void (*set_render_hint)(struct RUBase* self_c, uint32_t hint, bool on);
+    void (*set_render_hints)(struct RUBase* self_c, uint32_t hints, bool on);
+    uint32_t (*render_hints)(struct RUBase* self_c);
+    bool (*test_render_hint)(struct RUBase* self_c, uint32_t hint);
     struct RUPaintEngine (*paint_engine)(struct RUBase* self_c);
     void (*set_redirected)(struct RUBase* self_c, struct RUBase* device,
                            struct RUBase* replacement, struct RUBase* offset);

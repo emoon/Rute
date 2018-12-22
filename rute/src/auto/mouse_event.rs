@@ -320,7 +320,7 @@ impl<'a> MouseEvent<'a> {
         let (obj_data, funcs) = self.get_mouse_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).button)(obj_data);
-            let ret_val = { transmute::<i32, MouseButton>(ret_val) };
+            let ret_val = MouseButton::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -339,7 +339,7 @@ impl<'a> MouseEvent<'a> {
         let (obj_data, funcs) = self.get_mouse_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).buttons)(obj_data);
-            let ret_val = { transmute::<i32, MouseButtons>(ret_val) };
+            let ret_val = MouseButtons::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -369,7 +369,7 @@ impl<'a> MouseEvent<'a> {
         let (obj_data, funcs) = self.get_mouse_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).source)(obj_data);
-            let ret_val = { transmute::<i32, MouseEventSource>(ret_val) };
+            let ret_val = { transmute::<u32, MouseEventSource>(ret_val) };
             ret_val
         }
     }
@@ -384,7 +384,7 @@ impl<'a> MouseEvent<'a> {
         let (obj_data, funcs) = self.get_mouse_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).flags)(obj_data);
-            let ret_val = { transmute::<i32, MouseEventFlags>(ret_val) };
+            let ret_val = MouseEventFlags::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -393,13 +393,13 @@ impl<'a> MouseEvent<'a> {
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).modifiers)(obj_data);
-            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            let ret_val = KeyboardModifiers::from_bits_truncate(ret_val);
             ret_val
         }
     }
     #[doc(hidden)]
     pub fn set_modifiers(&self, amodifiers: KeyboardModifiers) -> &Self {
-        let enum_amodifiers_1 = amodifiers as i32;
+        let enum_amodifiers_1 = amodifiers.bits();
 
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {

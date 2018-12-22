@@ -16,17 +16,17 @@ static void brush_swap(struct RUBase* self_c, struct RUBase* other) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int brush_style(struct RUBase* self_c) {
+static uint32_t brush_style(struct RUBase* self_c) {
     WRBrush* qt_value = (WRBrush*)self_c;
     auto ret_value = qt_value->style();
-    return s_brush_style_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void brush_set_style(struct RUBase* self_c, int arg0) {
+static void brush_set_style(struct RUBase* self_c, uint32_t arg0) {
     WRBrush* qt_value = (WRBrush*)self_c;
-    qt_value->setStyle((Qt::BrushStyle)s_brush_style_lookup[arg0]);
+    qt_value->setStyle((Qt::BrushStyle)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -101,9 +101,9 @@ static void brush_set_color(struct RUBase* self_c, struct RUBase* color) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void brush_set_color_2(struct RUBase* self_c, int color) {
+static void brush_set_color_2(struct RUBase* self_c, uint32_t color) {
     WRBrush* qt_value = (WRBrush*)self_c;
-    qt_value->setColor((Qt::GlobalColor)s_global_color_lookup[color]);
+    qt_value->setColor((Qt::GlobalColor)color);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

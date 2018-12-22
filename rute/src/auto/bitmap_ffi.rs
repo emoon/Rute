@@ -14,7 +14,7 @@ pub struct RUBitmapFuncs {
     pub swap: extern "C" fn(self_c: *const RUBase, other: *const RUBase),
     pub clear: extern "C" fn(self_c: *const RUBase),
     pub from_image:
-        extern "C" fn(self_c: *const RUBase, image: *const RUBase, flags: i32) -> RUBitmap,
+        extern "C" fn(self_c: *const RUBase, image: *const RUBase, flags: u32) -> RUBitmap,
 }
 
 #[repr(C)]

@@ -18,7 +18,7 @@ pub struct RUFontInfoFuncs {
     pub underline: extern "C" fn(self_c: *const RUBase) -> bool,
     pub overline: extern "C" fn(self_c: *const RUBase) -> bool,
     pub fixed_pitch: extern "C" fn(self_c: *const RUBase) -> bool,
-    pub style_hint: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub style_hint: extern "C" fn(self_c: *const RUBase) -> u32,
     pub raw_mode: extern "C" fn(self_c: *const RUBase) -> bool,
     pub exact_match: extern "C" fn(self_c: *const RUBase) -> bool,
 }

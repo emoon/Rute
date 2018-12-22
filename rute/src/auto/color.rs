@@ -319,7 +319,7 @@ impl<'a> Color<'a> {
     /// **See also:** [`set_named_color()`]
     /// NameFormat
     pub fn name_2(&self, format: NameFormat) -> String {
-        let enum_format_1 = format as i32;
+        let enum_format_1 = format as u32;
 
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -412,7 +412,7 @@ impl<'a> Color<'a> {
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).spec)(obj_data);
-            let ret_val = { transmute::<i32, Spec>(ret_val) };
+            let ret_val = { transmute::<u32, Spec>(ret_val) };
             ret_val
         }
     }
@@ -1464,7 +1464,7 @@ impl<'a> Color<'a> {
     /// [`to_rgb()`]
     /// [`is_valid()`]
     pub fn convert_to(&self, color_spec: Spec) -> Color {
-        let enum_color_spec_1 = color_spec as i32;
+        let enum_color_spec_1 = color_spec as u32;
 
         let (obj_data, funcs) = self.get_color_obj_funcs();
         unsafe {
@@ -2116,15 +2116,15 @@ impl<'a> ColorTrait<'a> for Color<'a> {
 }
 #[repr(u32)]
 pub enum Spec {
-    Invalid,
-    Rgb,
-    Hsv,
-    Cmyk,
-    Hsl,
+    Invalid = 0,
+    Rgb = 1,
+    Hsv = 2,
+    Cmyk = 3,
+    Hsl = 4,
 }
 
 #[repr(u32)]
 pub enum NameFormat {
-    HexRgb,
-    HexArgb,
+    HexRgb = 0,
+    HexArgb = 1,
 }

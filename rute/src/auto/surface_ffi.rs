@@ -10,9 +10,9 @@ use std::os::raw::c_void;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUSurfaceFuncs {
-    pub surface_class: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub surface_class: extern "C" fn(self_c: *const RUBase) -> u32,
     pub format: extern "C" fn(self_c: *const RUBase) -> RUSurfaceFormat,
-    pub surface_type: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub surface_type: extern "C" fn(self_c: *const RUBase) -> u32,
     pub size: extern "C" fn(self_c: *const RUBase) -> RUSize,
 }
 

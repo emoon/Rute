@@ -81,17 +81,17 @@ static struct RURect layout_contents_rect(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool layout_set_alignment(struct RUBase* self_c, struct RUBase* w, int alignment) {
+static bool layout_set_alignment(struct RUBase* self_c, struct RUBase* w, uint32_t alignment) {
     WRLayout* qt_value = (WRLayout*)self_c;
-    auto ret_value = qt_value->setAlignment((QWidget*)w, (Qt::Alignment)s_alignment_lookup[alignment]);
+    auto ret_value = qt_value->setAlignment((QWidget*)w, (Qt::Alignment)alignment);
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool layout_set_alignment_2(struct RUBase* self_c, struct RUBase* l, int alignment) {
+static bool layout_set_alignment_2(struct RUBase* self_c, struct RUBase* l, uint32_t alignment) {
     WRLayout* qt_value = (WRLayout*)self_c;
-    auto ret_value = qt_value->setAlignment((QLayout*)l, (Qt::Alignment)s_alignment_lookup[alignment]);
+    auto ret_value = qt_value->setAlignment((QLayout*)l, (Qt::Alignment)alignment);
     return ret_value;
 }
 
@@ -178,10 +178,10 @@ static void layout_remove_item(struct RUBase* self_c, struct RUBase* arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int layout_expanding_directions(struct RUBase* self_c) {
+static uint32_t layout_expanding_directions(struct RUBase* self_c) {
     WRLayout* qt_value = (WRLayout*)self_c;
     auto ret_value = qt_value->expandingDirections();
-    return s_orientations_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -262,9 +262,9 @@ static bool layout_is_empty(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RULayoutItem layout_replace_widget(struct RUBase* self_c, struct RUBase* from, struct RUBase* to, int options) {
+static struct RULayoutItem layout_replace_widget(struct RUBase* self_c, struct RUBase* from, struct RUBase* to, uint32_t options) {
     WRLayout* qt_value = (WRLayout*)self_c;
-    auto ret_value = qt_value->replaceWidget((QWidget*)from, (QWidget*)to, (Qt::FindChildOptions)s_find_child_options_lookup[options]);
+    auto ret_value = qt_value->replaceWidget((QWidget*)from, (QWidget*)to, (Qt::FindChildOptions)options);
     struct RULayoutItem ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];

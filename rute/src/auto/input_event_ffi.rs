@@ -8,8 +8,8 @@ use std::os::raw::c_void;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUInputEventFuncs {
-    pub modifiers: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub set_modifiers: extern "C" fn(self_c: *const RUBase, amodifiers: i32),
+    pub modifiers: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub set_modifiers: extern "C" fn(self_c: *const RUBase, amodifiers: u32),
     pub timestamp: extern "C" fn(self_c: *const RUBase) -> u64,
     pub set_timestamp: extern "C" fn(self_c: *const RUBase, atimestamp: u64),
 }

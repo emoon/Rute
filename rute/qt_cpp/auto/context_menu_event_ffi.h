@@ -21,7 +21,7 @@ typedef struct RUContextMenuEventFuncs {
     int (*global_y)(struct RUBase* self_c);
     struct RUPoint (*pos)(struct RUBase* self_c);
     struct RUPoint (*global_pos)(struct RUBase* self_c);
-    int (*reason)(struct RUBase* self_c);
+    uint32_t (*reason)(struct RUBase* self_c);
 } RUContextMenuEventFuncs;
 
 typedef struct RUContextMenuEventAllFuncs {

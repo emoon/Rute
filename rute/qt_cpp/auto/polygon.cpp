@@ -79,9 +79,9 @@ static void polygon_put_points_3(struct RUBase* self_c, int index, int n_points,
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool polygon_contains_point(struct RUBase* self_c, struct RUBase* pt, int fill_rule) {
+static bool polygon_contains_point(struct RUBase* self_c, struct RUBase* pt, uint32_t fill_rule) {
     WRPolygon* qt_value = (WRPolygon*)self_c;
-    auto ret_value = qt_value->containsPoint(*((QPoint*)pt), (Qt::FillRule)s_fill_rule_lookup[fill_rule]);
+    auto ret_value = qt_value->containsPoint(*((QPoint*)pt), (Qt::FillRule)fill_rule);
     return ret_value;
 }
 

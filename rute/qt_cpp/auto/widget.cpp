@@ -83,17 +83,17 @@ static bool widget_is_modal(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int widget_window_modality(struct RUBase* self_c) {
+static uint32_t widget_window_modality(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->windowModality();
-    return s_window_modality_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_window_modality(struct RUBase* self_c, int window_modality) {
+static void widget_set_window_modality(struct RUBase* self_c, uint32_t window_modality) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setWindowModality((Qt::WindowModality)s_window_modality_lookup[window_modality]);
+    qt_value->setWindowModality((Qt::WindowModality)window_modality);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -580,32 +580,32 @@ static void widget_set_palette(struct RUBase* self_c, struct RUBase* arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_background_role(struct RUBase* self_c, int arg0) {
+static void widget_set_background_role(struct RUBase* self_c, uint32_t arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setBackgroundRole((QPalette::ColorRole)s_color_role_lookup[arg0]);
+    qt_value->setBackgroundRole((QPalette::ColorRole)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int widget_background_role(struct RUBase* self_c) {
+static uint32_t widget_background_role(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->backgroundRole();
-    return s_color_role_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_foreground_role(struct RUBase* self_c, int arg0) {
+static void widget_set_foreground_role(struct RUBase* self_c, uint32_t arg0) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setForegroundRole((QPalette::ColorRole)s_color_role_lookup[arg0]);
+    qt_value->setForegroundRole((QPalette::ColorRole)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int widget_foreground_role(struct RUBase* self_c) {
+static uint32_t widget_foreground_role(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->foregroundRole();
-    return s_color_role_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -732,16 +732,16 @@ static void widget_clear_mask(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_render(struct RUBase* self_c, struct RUBase* target, struct RUBase* target_offset, struct RUBase* source_region, int render_flags) {
+static void widget_render(struct RUBase* self_c, struct RUBase* target, struct RUBase* target_offset, struct RUBase* source_region, uint32_t render_flags) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->render((QPaintDevice*)target, *((QPoint*)target_offset), *((QRegion*)source_region), (QWidget::RenderFlags)s_render_flags_lookup[render_flags]);
+    qt_value->render((QPaintDevice*)target, *((QPoint*)target_offset), *((QRegion*)source_region), (QWidget::RenderFlags)render_flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_render_2(struct RUBase* self_c, struct RUBase* painter, struct RUBase* target_offset, struct RUBase* source_region, int render_flags) {
+static void widget_render_2(struct RUBase* self_c, struct RUBase* painter, struct RUBase* target_offset, struct RUBase* source_region, uint32_t render_flags) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->render((QPainter*)painter, *((QPoint*)target_offset), *((QRegion*)source_region), (QWidget::RenderFlags)s_render_flags_lookup[render_flags]);
+    qt_value->render((QPainter*)painter, *((QPoint*)target_offset), *((QRegion*)source_region), (QWidget::RenderFlags)render_flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -760,16 +760,16 @@ static struct RUPixmap widget_grab(struct RUBase* self_c, struct RUBase* rectang
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_grab_gesture(struct RUBase* self_c, int gtype, int flags) {
+static void widget_grab_gesture(struct RUBase* self_c, uint32_t gtype, uint32_t flags) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->grabGesture((Qt::GestureType)s_gesture_type_lookup[gtype], (Qt::GestureFlags)s_gesture_flags_lookup[flags]);
+    qt_value->grabGesture((Qt::GestureType)gtype, (Qt::GestureFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_ungrab_gesture(struct RUBase* self_c, int gtype) {
+static void widget_ungrab_gesture(struct RUBase* self_c, uint32_t gtype) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->ungrabGesture((Qt::GestureType)s_gesture_type_lookup[gtype]);
+    qt_value->ungrabGesture((Qt::GestureType)gtype);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -983,17 +983,17 @@ static void widget_set_accessible_description(struct RUBase* self_c, const char*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_layout_direction(struct RUBase* self_c, int direction) {
+static void widget_set_layout_direction(struct RUBase* self_c, uint32_t direction) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setLayoutDirection((Qt::LayoutDirection)s_layout_direction_lookup[direction]);
+    qt_value->setLayoutDirection((Qt::LayoutDirection)direction);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int widget_layout_direction(struct RUBase* self_c) {
+static uint32_t widget_layout_direction(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->layoutDirection();
-    return s_layout_direction_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1050,24 +1050,24 @@ static void widget_clear_focus(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_focus_2(struct RUBase* self_c, int reason) {
+static void widget_set_focus_2(struct RUBase* self_c, uint32_t reason) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setFocus((Qt::FocusReason)s_focus_reason_lookup[reason]);
+    qt_value->setFocus((Qt::FocusReason)reason);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int widget_focus_policy(struct RUBase* self_c) {
+static uint32_t widget_focus_policy(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->focusPolicy();
-    return s_focus_policy_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_focus_policy(struct RUBase* self_c, int policy) {
+static void widget_set_focus_policy(struct RUBase* self_c, uint32_t policy) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setFocusPolicy((Qt::FocusPolicy)s_focus_policy_lookup[policy]);
+    qt_value->setFocusPolicy((Qt::FocusPolicy)policy);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1106,17 +1106,17 @@ static struct RUWidget widget_focus_proxy(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int widget_context_menu_policy(struct RUBase* self_c) {
+static uint32_t widget_context_menu_policy(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->contextMenuPolicy();
-    return s_context_menu_policy_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_context_menu_policy(struct RUBase* self_c, int policy) {
+static void widget_set_context_menu_policy(struct RUBase* self_c, uint32_t policy) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setContextMenuPolicy((Qt::ContextMenuPolicy)s_context_menu_policy_lookup[policy]);
+    qt_value->setContextMenuPolicy((Qt::ContextMenuPolicy)policy);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1156,9 +1156,9 @@ static void widget_release_keyboard(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int widget_grab_shortcut(struct RUBase* self_c, struct RUBase* key, int context) {
+static int widget_grab_shortcut(struct RUBase* self_c, struct RUBase* key, uint32_t context) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->grabShortcut(*((QKeySequence*)key), (Qt::ShortcutContext)s_shortcut_context_lookup[context]);
+    auto ret_value = qt_value->grabShortcut(*((QKeySequence*)key), (Qt::ShortcutContext)context);
     return ret_value;
 }
 
@@ -1441,24 +1441,24 @@ static bool widget_is_full_screen(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int widget_window_state(struct RUBase* self_c) {
+static uint32_t widget_window_state(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->windowState();
-    return s_window_states_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_window_state(struct RUBase* self_c, int state) {
+static void widget_set_window_state(struct RUBase* self_c, uint32_t state) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setWindowState((Qt::WindowStates)s_window_states_lookup[state]);
+    qt_value->setWindowState((Qt::WindowStates)state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_override_window_state(struct RUBase* self_c, int state) {
+static void widget_override_window_state(struct RUBase* self_c, uint32_t state) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->overrideWindowState((Qt::WindowStates)s_window_states_lookup[state]);
+    qt_value->overrideWindowState((Qt::WindowStates)state);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1512,9 +1512,9 @@ static void widget_set_size_policy(struct RUBase* self_c, struct RUBase* arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_size_policy_2(struct RUBase* self_c, int horizontal, int vertical) {
+static void widget_set_size_policy_2(struct RUBase* self_c, uint32_t horizontal, uint32_t vertical) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setSizePolicy((QSizePolicy::Policy)s_policy_lookup[horizontal], (QSizePolicy::Policy)s_policy_lookup[vertical]);
+    qt_value->setSizePolicy((QSizePolicy::Policy)horizontal, (QSizePolicy::Policy)vertical);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1617,9 +1617,9 @@ static void widget_set_parent(struct RUBase* self_c, struct RUBase* parent) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_parent_2(struct RUBase* self_c, struct RUBase* parent, int f) {
+static void widget_set_parent_2(struct RUBase* self_c, struct RUBase* parent, uint32_t f) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setParent((QWidget*)parent, (Qt::WindowFlags)s_window_flags_lookup[f]);
+    qt_value->setParent((QWidget*)parent, (Qt::WindowFlags)f);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1701,24 +1701,24 @@ static struct RUWidget widget_parent_widget(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_window_flags(struct RUBase* self_c, int gtype) {
+static void widget_set_window_flags(struct RUBase* self_c, uint32_t gtype) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setWindowFlags((Qt::WindowFlags)s_window_flags_lookup[gtype]);
+    qt_value->setWindowFlags((Qt::WindowFlags)gtype);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int widget_window_flags(struct RUBase* self_c) {
+static uint32_t widget_window_flags(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->windowFlags();
-    return s_window_flags_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_override_window_flags(struct RUBase* self_c, int wtype) {
+static void widget_override_window_flags(struct RUBase* self_c, uint32_t wtype) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->overrideWindowFlags((Qt::WindowFlags)s_window_flags_lookup[wtype]);
+    qt_value->overrideWindowFlags((Qt::WindowFlags)wtype);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1825,9 +1825,9 @@ static struct RUWindow widget_window_handle(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUWidget widget_create_window_container(struct RUBase* self_c, struct RUBase* window, struct RUBase* parent, int flags) {
+static struct RUWidget widget_create_window_container(struct RUBase* self_c, struct RUBase* window, struct RUBase* parent, uint32_t flags) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    auto ret_value = qt_value->createWindowContainer((QWindow*)window, (QWidget*)parent, (Qt::WindowFlags)s_window_flags_lookup[flags]);
+    auto ret_value = qt_value->createWindowContainer((QWindow*)window, (QWidget*)parent, (Qt::WindowFlags)flags);
     struct RUWidget ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
@@ -2301,17 +2301,17 @@ static void remove_widget_change_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int widget_input_method_hints(struct RUBase* self_c) {
+static uint32_t widget_input_method_hints(struct RUBase* self_c) {
     WRWidget* qt_value = (WRWidget*)self_c;
     auto ret_value = qt_value->inputMethodHints();
-    return s_input_method_hints_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void widget_set_input_method_hints(struct RUBase* self_c, int hints) {
+static void widget_set_input_method_hints(struct RUBase* self_c, uint32_t hints) {
     WRWidget* qt_value = (WRWidget*)self_c;
-    qt_value->setInputMethodHints((Qt::InputMethodHints)s_input_method_hints_lookup[hints]);
+    qt_value->setInputMethodHints((Qt::InputMethodHints)hints);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

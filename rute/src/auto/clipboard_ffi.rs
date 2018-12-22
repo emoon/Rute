@@ -14,21 +14,21 @@ use std::os::raw::c_void;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUClipboardFuncs {
-    pub clear: extern "C" fn(self_c: *const RUBase, mode: i32),
+    pub clear: extern "C" fn(self_c: *const RUBase, mode: u32),
     pub supports_selection: extern "C" fn(self_c: *const RUBase) -> bool,
     pub supports_find_buffer: extern "C" fn(self_c: *const RUBase) -> bool,
     pub owns_selection: extern "C" fn(self_c: *const RUBase) -> bool,
     pub owns_clipboard: extern "C" fn(self_c: *const RUBase) -> bool,
     pub owns_find_buffer: extern "C" fn(self_c: *const RUBase) -> bool,
-    pub text: extern "C" fn(self_c: *const RUBase, mode: i32) -> *const ::std::os::raw::c_char,
+    pub text: extern "C" fn(self_c: *const RUBase, mode: u32) -> *const ::std::os::raw::c_char,
     pub set_text:
-        extern "C" fn(self_c: *const RUBase, arg0: *const ::std::os::raw::c_char, mode: i32),
-    pub mime_data: extern "C" fn(self_c: *const RUBase, mode: i32) -> RUMimeData,
-    pub set_mime_data: extern "C" fn(self_c: *const RUBase, data: *const RUBase, mode: i32),
-    pub image: extern "C" fn(self_c: *const RUBase, mode: i32) -> RUImage,
-    pub pixmap: extern "C" fn(self_c: *const RUBase, mode: i32) -> RUPixmap,
-    pub set_image: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase, mode: i32),
-    pub set_pixmap: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase, mode: i32),
+        extern "C" fn(self_c: *const RUBase, arg0: *const ::std::os::raw::c_char, mode: u32),
+    pub mime_data: extern "C" fn(self_c: *const RUBase, mode: u32) -> RUMimeData,
+    pub set_mime_data: extern "C" fn(self_c: *const RUBase, data: *const RUBase, mode: u32),
+    pub image: extern "C" fn(self_c: *const RUBase, mode: u32) -> RUImage,
+    pub pixmap: extern "C" fn(self_c: *const RUBase, mode: u32) -> RUPixmap,
+    pub set_image: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase, mode: u32),
+    pub set_pixmap: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase, mode: u32),
 }
 
 #[repr(C)]

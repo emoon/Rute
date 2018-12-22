@@ -15,7 +15,7 @@ struct RUPixelFormat;
 
 typedef struct RUPixelFormatFuncs {
     void (*destroy)(struct RUBase* self);
-    int (*color_model)(struct RUBase* self_c);
+    uint32_t (*color_model)(struct RUBase* self_c);
     uint8_t (*channel_count)(struct RUBase* self_c);
     uint8_t (*red_size)(struct RUBase* self_c);
     uint8_t (*green_size)(struct RUBase* self_c);
@@ -30,12 +30,12 @@ typedef struct RUPixelFormatFuncs {
     uint8_t (*brightness_size)(struct RUBase* self_c);
     uint8_t (*alpha_size)(struct RUBase* self_c);
     uint8_t (*bits_per_pixel)(struct RUBase* self_c);
-    int (*alpha_usage)(struct RUBase* self_c);
-    int (*alpha_position)(struct RUBase* self_c);
-    int (*premultiplied)(struct RUBase* self_c);
-    int (*type_interpretation)(struct RUBase* self_c);
-    int (*byte_order)(struct RUBase* self_c);
-    int (*yuv_layout)(struct RUBase* self_c);
+    uint32_t (*alpha_usage)(struct RUBase* self_c);
+    uint32_t (*alpha_position)(struct RUBase* self_c);
+    uint32_t (*premultiplied)(struct RUBase* self_c);
+    uint32_t (*type_interpretation)(struct RUBase* self_c);
+    uint32_t (*byte_order)(struct RUBase* self_c);
+    uint32_t (*yuv_layout)(struct RUBase* self_c);
     uint8_t (*sub_enum)(struct RUBase* self_c);
 } RUPixelFormatFuncs;
 

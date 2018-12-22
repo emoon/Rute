@@ -24,8 +24,8 @@ pub struct RUTabletEventFuncs {
     pub global_y: extern "C" fn(self_c: *const RUBase) -> i32,
     pub hi_res_global_x: extern "C" fn(self_c: *const RUBase) -> f32,
     pub hi_res_global_y: extern "C" fn(self_c: *const RUBase) -> f32,
-    pub device: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub pointer_type: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub device: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub pointer_type: extern "C" fn(self_c: *const RUBase) -> u32,
     pub unique_id: extern "C" fn(self_c: *const RUBase) -> i64,
     pub pressure: extern "C" fn(self_c: *const RUBase) -> f32,
     pub z: extern "C" fn(self_c: *const RUBase) -> i32,
@@ -33,8 +33,8 @@ pub struct RUTabletEventFuncs {
     pub rotation: extern "C" fn(self_c: *const RUBase) -> f32,
     pub x_tilt: extern "C" fn(self_c: *const RUBase) -> i32,
     pub y_tilt: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub button: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub buttons: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub button: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub buttons: extern "C" fn(self_c: *const RUBase) -> u32,
 }
 
 #[repr(C)]

@@ -355,7 +355,7 @@ impl<'a> TabletEvent<'a> {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).device)(obj_data);
-            let ret_val = { transmute::<i32, TabletDevice>(ret_val) };
+            let ret_val = { transmute::<u32, TabletDevice>(ret_val) };
             ret_val
         }
     }
@@ -365,7 +365,7 @@ impl<'a> TabletEvent<'a> {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).pointer_type)(obj_data);
-            let ret_val = { transmute::<i32, PointerType>(ret_val) };
+            let ret_val = { transmute::<u32, PointerType>(ret_val) };
             ret_val
         }
     }
@@ -508,7 +508,7 @@ impl<'a> TabletEvent<'a> {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).button)(obj_data);
-            let ret_val = { transmute::<i32, MouseButton>(ret_val) };
+            let ret_val = MouseButton::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -530,7 +530,7 @@ impl<'a> TabletEvent<'a> {
         let (obj_data, funcs) = self.get_tablet_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).buttons)(obj_data);
-            let ret_val = { transmute::<i32, MouseButtons>(ret_val) };
+            let ret_val = MouseButtons::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -539,13 +539,13 @@ impl<'a> TabletEvent<'a> {
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).modifiers)(obj_data);
-            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            let ret_val = KeyboardModifiers::from_bits_truncate(ret_val);
             ret_val
         }
     }
     #[doc(hidden)]
     pub fn set_modifiers(&self, amodifiers: KeyboardModifiers) -> &Self {
-        let enum_amodifiers_1 = amodifiers as i32;
+        let enum_amodifiers_1 = amodifiers.bits();
 
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {
@@ -641,19 +641,19 @@ impl<'a> TabletEventTrait<'a> for TabletEvent<'a> {
 }
 #[repr(u32)]
 pub enum TabletDevice {
-    NoDevice,
-    Puck,
-    Stylus,
-    Airbrush,
-    FourDMouse,
-    XFreeEraser,
-    RotationStylus,
+    NoDevice = 0,
+    Puck = 1,
+    Stylus = 2,
+    Airbrush = 3,
+    FourDMouse = 4,
+    XFreeEraser = 5,
+    RotationStylus = 6,
 }
 
 #[repr(u32)]
 pub enum PointerType {
-    UnknownPointer,
-    Pen,
-    Cursor,
-    Eraser,
+    UnknownPointer = 0,
+    Pen = 1,
+    Cursor = 2,
+    Eraser = 3,
 }

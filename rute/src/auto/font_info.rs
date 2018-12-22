@@ -249,7 +249,7 @@ impl<'a> FontInfo<'a> {
         let (obj_data, funcs) = self.get_font_info_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).style_hint)(obj_data);
-            let ret_val = { transmute::<i32, StyleHint>(ret_val) };
+            let ret_val = StyleHint::from_bits_truncate(ret_val);
             ret_val
         }
     }

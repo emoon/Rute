@@ -9,9 +9,9 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void clipboard_clear(struct RUBase* self_c, int mode) {
+static void clipboard_clear(struct RUBase* self_c, uint32_t mode) {
     QClipboard* qt_value = (QClipboard*)self_c;
-    qt_value->clear((QClipboard::Mode)s_mode_lookup[mode]);
+    qt_value->clear((QClipboard::Mode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -56,24 +56,24 @@ static bool clipboard_owns_find_buffer(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static const char* clipboard_text(struct RUBase* self_c, int mode) {
+static const char* clipboard_text(struct RUBase* self_c, uint32_t mode) {
     QClipboard* qt_value = (QClipboard*)self_c;
-    auto ret_value = qt_value->text((QClipboard::Mode)s_mode_lookup[mode]);
+    auto ret_value = qt_value->text((QClipboard::Mode)mode);
     return q_string_to_const_char(ret_value);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void clipboard_set_text(struct RUBase* self_c, const char* arg0, int mode) {
+static void clipboard_set_text(struct RUBase* self_c, const char* arg0, uint32_t mode) {
     QClipboard* qt_value = (QClipboard*)self_c;
-    qt_value->setText(QString::fromUtf8(arg0), (QClipboard::Mode)s_mode_lookup[mode]);
+    qt_value->setText(QString::fromUtf8(arg0), (QClipboard::Mode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUMimeData clipboard_mime_data(struct RUBase* self_c, int mode) {
+static struct RUMimeData clipboard_mime_data(struct RUBase* self_c, uint32_t mode) {
     QClipboard* qt_value = (QClipboard*)self_c;
-    auto ret_value = qt_value->mimeData((QClipboard::Mode)s_mode_lookup[mode]);
+    auto ret_value = qt_value->mimeData((QClipboard::Mode)mode);
     struct RUMimeData ctl;
     ctl.qt_data = (struct RUBase*)ret_value;
     ctl.host_data = (struct RUBase*)s_host_data_lookup[(void*)ret_value];
@@ -83,16 +83,16 @@ static struct RUMimeData clipboard_mime_data(struct RUBase* self_c, int mode) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void clipboard_set_mime_data(struct RUBase* self_c, struct RUBase* data, int mode) {
+static void clipboard_set_mime_data(struct RUBase* self_c, struct RUBase* data, uint32_t mode) {
     QClipboard* qt_value = (QClipboard*)self_c;
-    qt_value->setMimeData((QMimeData*)data, (QClipboard::Mode)s_mode_lookup[mode]);
+    qt_value->setMimeData((QMimeData*)data, (QClipboard::Mode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUImage clipboard_image(struct RUBase* self_c, int mode) {
+static struct RUImage clipboard_image(struct RUBase* self_c, uint32_t mode) {
     QClipboard* qt_value = (QClipboard*)self_c;
-    auto ret_value = qt_value->image((QClipboard::Mode)s_mode_lookup[mode]);
+    auto ret_value = qt_value->image((QClipboard::Mode)mode);
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -104,9 +104,9 @@ static struct RUImage clipboard_image(struct RUBase* self_c, int mode) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixmap clipboard_pixmap(struct RUBase* self_c, int mode) {
+static struct RUPixmap clipboard_pixmap(struct RUBase* self_c, uint32_t mode) {
     QClipboard* qt_value = (QClipboard*)self_c;
-    auto ret_value = qt_value->pixmap((QClipboard::Mode)s_mode_lookup[mode]);
+    auto ret_value = qt_value->pixmap((QClipboard::Mode)mode);
     WRPixmap* new_val = new WRPixmap();
     *new_val = ret_value;
     struct RUPixmap ctl;
@@ -118,16 +118,16 @@ static struct RUPixmap clipboard_pixmap(struct RUBase* self_c, int mode) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void clipboard_set_image(struct RUBase* self_c, struct RUBase* arg0, int mode) {
+static void clipboard_set_image(struct RUBase* self_c, struct RUBase* arg0, uint32_t mode) {
     QClipboard* qt_value = (QClipboard*)self_c;
-    qt_value->setImage(*((QImage*)arg0), (QClipboard::Mode)s_mode_lookup[mode]);
+    qt_value->setImage(*((QImage*)arg0), (QClipboard::Mode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void clipboard_set_pixmap(struct RUBase* self_c, struct RUBase* arg0, int mode) {
+static void clipboard_set_pixmap(struct RUBase* self_c, struct RUBase* arg0, uint32_t mode) {
     QClipboard* qt_value = (QClipboard*)self_c;
-    qt_value->setPixmap(*((QPixmap*)arg0), (QClipboard::Mode)s_mode_lookup[mode]);
+    qt_value->setPixmap(*((QPixmap*)arg0), (QClipboard::Mode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

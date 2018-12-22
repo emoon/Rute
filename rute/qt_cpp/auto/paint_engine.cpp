@@ -103,16 +103,16 @@ static void paint_engine_draw_points_2(struct RUBase* self_c, struct RUBase* poi
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void paint_engine_draw_polygon(struct RUBase* self_c, struct RUBase* points, int point_count, int mode) {
+static void paint_engine_draw_polygon(struct RUBase* self_c, struct RUBase* points, int point_count, uint32_t mode) {
     QPaintEngine* qt_value = (QPaintEngine*)self_c;
-    qt_value->drawPolygon((QPointF*)points, point_count, (QPaintEngine::PolygonDrawMode)s_polygon_draw_mode_lookup[mode]);
+    qt_value->drawPolygon((QPointF*)points, point_count, (QPaintEngine::PolygonDrawMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void paint_engine_draw_polygon_2(struct RUBase* self_c, struct RUBase* points, int point_count, int mode) {
+static void paint_engine_draw_polygon_2(struct RUBase* self_c, struct RUBase* points, int point_count, uint32_t mode) {
     QPaintEngine* qt_value = (QPaintEngine*)self_c;
-    qt_value->drawPolygon((QPoint*)points, point_count, (QPaintEngine::PolygonDrawMode)s_polygon_draw_mode_lookup[mode]);
+    qt_value->drawPolygon((QPoint*)points, point_count, (QPaintEngine::PolygonDrawMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -131,9 +131,9 @@ static void paint_engine_draw_tiled_pixmap(struct RUBase* self_c, struct RUBase*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void paint_engine_draw_image(struct RUBase* self_c, struct RUBase* r, struct RUBase* pm, struct RUBase* sr, int flags) {
+static void paint_engine_draw_image(struct RUBase* self_c, struct RUBase* r, struct RUBase* pm, struct RUBase* sr, uint32_t flags) {
     QPaintEngine* qt_value = (QPaintEngine*)self_c;
-    qt_value->drawImage(*((QRectF*)r), *((QImage*)pm), *((QRectF*)sr), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    qt_value->drawImage(*((QRectF*)r), *((QImage*)pm), *((QRectF*)sr), (Qt::ImageConversionFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

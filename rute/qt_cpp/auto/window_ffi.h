@@ -25,25 +25,26 @@ struct RUWindow;
 
 typedef struct RUWindowFuncs {
     void (*destroy)(struct RUBase* self);
-    void (*set_object_surface_type)(struct RUBase* self_c, int surface_type);
-    int (*surface_type)(struct RUBase* self_c);
+    void (*set_object_surface_type)(struct RUBase* self_c,
+                                    uint32_t surface_type);
+    uint32_t (*surface_type)(struct RUBase* self_c);
     bool (*is_visible)(struct RUBase* self_c);
-    int (*visibility)(struct RUBase* self_c);
-    void (*set_visibility)(struct RUBase* self_c, int v);
+    uint32_t (*visibility)(struct RUBase* self_c);
+    void (*set_visibility)(struct RUBase* self_c, uint32_t v);
     void (*create)(struct RUBase* self_c);
     uint64_t (*win_id)(struct RUBase* self_c);
-    struct RUWindow (*parent)(struct RUBase* self_c, int mode);
+    struct RUWindow (*parent)(struct RUBase* self_c, uint32_t mode);
     struct RUWindow (*parent_2)(struct RUBase* self_c);
     void (*set_parent)(struct RUBase* self_c, struct RUBase* parent);
     bool (*is_top_level)(struct RUBase* self_c);
     bool (*is_modal)(struct RUBase* self_c);
-    int (*modality)(struct RUBase* self_c);
-    void (*set_modality)(struct RUBase* self_c, int modality);
+    uint32_t (*modality)(struct RUBase* self_c);
+    void (*set_modality)(struct RUBase* self_c, uint32_t modality);
     void (*set_object_format)(struct RUBase* self_c, struct RUBase* format);
     struct RUSurfaceFormat (*format)(struct RUBase* self_c);
     struct RUSurfaceFormat (*requested_format)(struct RUBase* self_c);
-    void (*set_flags)(struct RUBase* self_c, int flags);
-    int (*flags)(struct RUBase* self_c);
+    void (*set_flags)(struct RUBase* self_c, uint32_t flags);
+    uint32_t (*flags)(struct RUBase* self_c);
     const char* (*title)(struct RUBase* self_c);
     void (*set_opacity)(struct RUBase* self_c, float level);
     float (*opacity)(struct RUBase* self_c);
@@ -51,16 +52,16 @@ typedef struct RUWindowFuncs {
     struct RURegion (*mask)(struct RUBase* self_c);
     bool (*is_active)(struct RUBase* self_c);
     void (*report_content_orientation_change)(struct RUBase* self_c,
-                                              int orientation);
-    int (*content_orientation)(struct RUBase* self_c);
+                                              uint32_t orientation);
+    uint32_t (*content_orientation)(struct RUBase* self_c);
     float (*device_pixel_ratio)(struct RUBase* self_c);
-    int (*window_state)(struct RUBase* self_c);
-    int (*window_states)(struct RUBase* self_c);
-    void (*set_window_state)(struct RUBase* self_c, int state);
-    void (*set_window_states)(struct RUBase* self_c, int states);
+    uint32_t (*window_state)(struct RUBase* self_c);
+    uint32_t (*window_states)(struct RUBase* self_c);
+    void (*set_window_state)(struct RUBase* self_c, uint32_t state);
+    void (*set_window_states)(struct RUBase* self_c, uint32_t states);
     void (*set_transient_parent)(struct RUBase* self_c, struct RUBase* parent);
     bool (*is_ancestor_of)(struct RUBase* self_c, struct RUBase* child,
-                           int mode);
+                           uint32_t mode);
     bool (*is_exposed)(struct RUBase* self_c);
     int (*minimum_width)(struct RUBase* self_c);
     int (*minimum_height)(struct RUBase* self_c);

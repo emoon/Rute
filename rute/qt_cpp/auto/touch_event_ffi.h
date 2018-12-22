@@ -18,7 +18,7 @@ struct RUTouchEvent;
 typedef struct RUTouchEventFuncs {
     struct RUWindow (*window)(struct RUBase* self_c);
     struct RUObject (*target)(struct RUBase* self_c);
-    int (*touch_point_states)(struct RUBase* self_c);
+    uint32_t (*touch_point_states)(struct RUBase* self_c);
 } RUTouchEventFuncs;
 
 typedef struct RUTouchEventAllFuncs {

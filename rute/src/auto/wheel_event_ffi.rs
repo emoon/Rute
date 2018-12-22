@@ -17,7 +17,7 @@ pub struct RUWheelEventFuncs {
     pub pixel_delta: extern "C" fn(self_c: *const RUBase) -> RUPoint,
     pub angle_delta: extern "C" fn(self_c: *const RUBase) -> RUPoint,
     pub delta: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub orientation: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub orientation: extern "C" fn(self_c: *const RUBase) -> u32,
     pub pos: extern "C" fn(self_c: *const RUBase) -> RUPoint,
     pub global_pos: extern "C" fn(self_c: *const RUBase) -> RUPoint,
     pub x: extern "C" fn(self_c: *const RUBase) -> i32,
@@ -26,10 +26,10 @@ pub struct RUWheelEventFuncs {
     pub global_y: extern "C" fn(self_c: *const RUBase) -> i32,
     pub pos_f: extern "C" fn(self_c: *const RUBase) -> RUPointF,
     pub global_pos_f: extern "C" fn(self_c: *const RUBase) -> RUPointF,
-    pub buttons: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub phase: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub buttons: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub phase: extern "C" fn(self_c: *const RUBase) -> u32,
     pub inverted: extern "C" fn(self_c: *const RUBase) -> bool,
-    pub source: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub source: extern "C" fn(self_c: *const RUBase) -> u32,
 }
 
 #[repr(C)]

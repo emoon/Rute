@@ -75,17 +75,17 @@ static struct RUImage image_copy_2(struct RUBase* self_c, int x, int y, int w, i
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int image_format(struct RUBase* self_c) {
+static uint32_t image_format(struct RUBase* self_c) {
     WRImage* qt_value = (WRImage*)self_c;
     auto ret_value = qt_value->format();
-    return s_format_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUImage image_convert_to_format(struct RUBase* self_c, int f, int flags) {
+static struct RUImage image_convert_to_format(struct RUBase* self_c, uint32_t f, uint32_t flags) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->convertToFormat((QImage::Format)s_format_lookup[f], (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    auto ret_value = qt_value->convertToFormat((QImage::Format)f, (Qt::ImageConversionFlags)flags);
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -97,9 +97,9 @@ static struct RUImage image_convert_to_format(struct RUBase* self_c, int f, int 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUImage image_convert_to_format_2(struct RUBase* self_c, int f, int flags) {
+static struct RUImage image_convert_to_format_2(struct RUBase* self_c, uint32_t f, uint32_t flags) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->convertToFormat((QImage::Format)s_format_lookup[f], (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    auto ret_value = qt_value->convertToFormat((QImage::Format)f, (Qt::ImageConversionFlags)flags);
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -111,9 +111,9 @@ static struct RUImage image_convert_to_format_2(struct RUBase* self_c, int f, in
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool image_reinterpret_as_format(struct RUBase* self_c, int f) {
+static bool image_reinterpret_as_format(struct RUBase* self_c, uint32_t f) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->reinterpretAsFormat((QImage::Format)s_format_lookup[f]);
+    auto ret_value = qt_value->reinterpretAsFormat((QImage::Format)f);
     return ret_value;
 }
 
@@ -343,9 +343,9 @@ static void image_fill_2(struct RUBase* self_c, struct RUBase* color) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void image_fill_3(struct RUBase* self_c, int color) {
+static void image_fill_3(struct RUBase* self_c, uint32_t color) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->fill((Qt::GlobalColor)s_global_color_lookup[color]);
+    qt_value->fill((Qt::GlobalColor)color);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -379,9 +379,9 @@ static struct RUImage image_alpha_channel(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUImage image_create_alpha_mask(struct RUBase* self_c, int flags) {
+static struct RUImage image_create_alpha_mask(struct RUBase* self_c, uint32_t flags) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->createAlphaMask((Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    auto ret_value = qt_value->createAlphaMask((Qt::ImageConversionFlags)flags);
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -407,9 +407,9 @@ static struct RUImage image_create_heuristic_mask(struct RUBase* self_c, bool cl
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUImage image_scaled(struct RUBase* self_c, int w, int h, int aspect_mode, int mode) {
+static struct RUImage image_scaled(struct RUBase* self_c, int w, int h, uint32_t aspect_mode, uint32_t mode) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->scaled(w, h, (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[aspect_mode], (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
+    auto ret_value = qt_value->scaled(w, h, (Qt::AspectRatioMode)aspect_mode, (Qt::TransformationMode)mode);
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -421,9 +421,9 @@ static struct RUImage image_scaled(struct RUBase* self_c, int w, int h, int aspe
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUImage image_scaled_2(struct RUBase* self_c, struct RUBase* s, int aspect_mode, int mode) {
+static struct RUImage image_scaled_2(struct RUBase* self_c, struct RUBase* s, uint32_t aspect_mode, uint32_t mode) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[aspect_mode], (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
+    auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)aspect_mode, (Qt::TransformationMode)mode);
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -435,9 +435,9 @@ static struct RUImage image_scaled_2(struct RUBase* self_c, struct RUBase* s, in
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUImage image_scaled_to_width(struct RUBase* self_c, int w, int mode) {
+static struct RUImage image_scaled_to_width(struct RUBase* self_c, int w, uint32_t mode) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->scaledToWidth(w, (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
+    auto ret_value = qt_value->scaledToWidth(w, (Qt::TransformationMode)mode);
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -449,9 +449,9 @@ static struct RUImage image_scaled_to_width(struct RUBase* self_c, int w, int mo
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUImage image_scaled_to_height(struct RUBase* self_c, int h, int mode) {
+static struct RUImage image_scaled_to_height(struct RUBase* self_c, int h, uint32_t mode) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->scaledToHeight(h, (Qt::TransformationMode)s_transformation_mode_lookup[mode]);
+    auto ret_value = qt_value->scaledToHeight(h, (Qt::TransformationMode)mode);
     WRImage* new_val = new WRImage();
     *new_val = ret_value;
     struct RUImage ctl;
@@ -519,9 +519,9 @@ static struct RUImage image_rgb_swapped_2(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void image_invert_pixels(struct RUBase* self_c, int arg0) {
+static void image_invert_pixels(struct RUBase* self_c, uint32_t arg0) {
     WRImage* qt_value = (WRImage*)self_c;
-    qt_value->invertPixels((QImage::InvertMode)s_invert_mode_lookup[arg0]);
+    qt_value->invertPixels((QImage::InvertMode)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -626,9 +626,9 @@ static struct RUPixelFormat image_pixel_format(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUPixelFormat image_to_pixel_format(struct RUBase* self_c, int format) {
+static struct RUPixelFormat image_to_pixel_format(struct RUBase* self_c, uint32_t format) {
     WRImage* qt_value = (WRImage*)self_c;
-    auto ret_value = qt_value->toPixelFormat((QImage::Format)s_format_lookup[format]);
+    auto ret_value = qt_value->toPixelFormat((QImage::Format)format);
     WRPixelFormat* new_val = new WRPixelFormat();
     *new_val = ret_value;
     struct RUPixelFormat ctl;

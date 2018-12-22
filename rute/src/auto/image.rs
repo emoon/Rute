@@ -465,7 +465,7 @@ impl<'a> Image<'a> {
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).format)(obj_data);
-            let ret_val = { transmute::<i32, Format>(ret_val) };
+            let ret_val = { transmute::<u32, Format>(ret_val) };
             ret_val
         }
     }
@@ -485,8 +485,8 @@ impl<'a> Image<'a> {
     /// and will use a straightforward nearest color approach, with no
     /// dithering.
     pub fn convert_to_format(&self, f: Format, flags: ImageConversionFlags) -> Image {
-        let enum_f_1 = f as i32;
-        let enum_flags_2 = flags as i32;
+        let enum_f_1 = f as u32;
+        let enum_flags_2 = flags.bits();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -517,8 +517,8 @@ impl<'a> Image<'a> {
     /// and will use a straightforward nearest color approach, with no
     /// dithering.
     pub fn convert_to_format_2(&self, f: Format, flags: ImageConversionFlags) -> Image {
-        let enum_f_1 = f as i32;
-        let enum_flags_2 = flags as i32;
+        let enum_f_1 = f as u32;
+        let enum_flags_2 = flags.bits();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -569,7 +569,7 @@ impl<'a> Image<'a> {
     /// **See also:** [`has_alpha_channel()`]
     /// [`convert_to_format()`]
     pub fn reinterpret_as_format(&self, f: Format) -> bool {
-        let enum_f_1 = f as i32;
+        let enum_f_1 = f as u32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -1490,7 +1490,7 @@ impl<'a> Image<'a> {
     /// will otherwise be filled with 0.
     ///
     pub fn fill_3(&self, color: GlobalColor) -> &Self {
-        let enum_color_1 = color as i32;
+        let enum_color_1 = color as u32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -1592,7 +1592,7 @@ impl<'a> Image<'a> {
     /// {QImage#Image Transformations}{Image
     /// Transformations}
     pub fn create_alpha_mask(&self, flags: ImageConversionFlags) -> Image {
-        let enum_flags_1 = flags as i32;
+        let enum_flags_1 = flags.bits();
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -1705,8 +1705,8 @@ impl<'a> Image<'a> {
         aspect_mode: AspectRatioMode,
         mode: TransformationMode,
     ) -> Image {
-        let enum_aspect_mode_3 = aspect_mode as i32;
-        let enum_mode_4 = mode as i32;
+        let enum_aspect_mode_3 = aspect_mode as u32;
+        let enum_mode_4 = mode as u32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -1774,8 +1774,8 @@ impl<'a> Image<'a> {
         mode: TransformationMode,
     ) -> Image {
         let (obj_s_1, _funcs) = s.get_size_obj_funcs();
-        let enum_aspect_mode_2 = aspect_mode as i32;
-        let enum_mode_3 = mode as i32;
+        let enum_aspect_mode_2 = aspect_mode as u32;
+        let enum_mode_3 = mode as u32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -1801,7 +1801,7 @@ impl<'a> Image<'a> {
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
     pub fn scaled_to_width(&self, w: i32, mode: TransformationMode) -> Image {
-        let enum_mode_2 = mode as i32;
+        let enum_mode_2 = mode as u32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -1827,7 +1827,7 @@ impl<'a> Image<'a> {
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
     pub fn scaled_to_height(&self, h: i32, mode: TransformationMode) -> Image {
-        let enum_mode_2 = mode as i32;
+        let enum_mode_2 = mode as u32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -1952,7 +1952,7 @@ impl<'a> Image<'a> {
     ///
     /// **See also:** {QImage#Image Transformations}{Image Transformations}
     pub fn invert_pixels(&self, arg0: InvertMode) -> &Self {
-        let enum_arg0_1 = arg0 as i32;
+        let enum_arg0_1 = arg0 as u32;
 
         let (obj_data, funcs) = self.get_image_obj_funcs();
         unsafe {
@@ -2384,7 +2384,7 @@ impl<'a> Image<'a> {
     ///
     /// Converts *format* into a QPixelFormat
     pub fn to_pixel_format(format: Format) -> PixelFormat<'a> {
-        let enum_format_1 = format as i32;
+        let enum_format_1 = format as u32;
 
         let (obj_data, funcs) = unsafe {
             (
@@ -2476,36 +2476,36 @@ impl<'a> ImageTrait<'a> for Image<'a> {
 }
 #[repr(u32)]
 pub enum InvertMode {
-    InvertRgb,
-    InvertRgba,
+    InvertRgb = 0,
+    InvertRgba = 1,
 }
 
 #[repr(u32)]
 pub enum Format {
-    FormatInvalid,
-    FormatMono,
-    FormatMonoLsb,
-    FormatIndexed8,
-    FormatRgB32,
-    FormatArgB32,
-    FormatArgB32Premultiplied,
-    FormatRgB16,
-    FormatArgB8565Premultiplied,
-    FormatRgB666,
-    FormatArgB6666Premultiplied,
-    FormatRgB555,
-    FormatArgB8555Premultiplied,
-    FormatRgB888,
-    FormatRgB444,
-    FormatArgB4444Premultiplied,
-    FormatRgbX8888,
-    FormatRgbA8888,
-    FormatRgbA8888Premultiplied,
-    FormatBgR30,
-    FormatA2BgR30Premultiplied,
-    FormatRgB30,
-    FormatA2RgB30Premultiplied,
-    FormatAlpha8,
-    FormatGrayscale8,
-    NImageFormats,
+    FormatInvalid = 0,
+    FormatMono = 1,
+    FormatMonoLsb = 2,
+    FormatIndexed8 = 3,
+    FormatRgB32 = 4,
+    FormatArgB32 = 5,
+    FormatArgB32Premultiplied = 6,
+    FormatRgB16 = 7,
+    FormatArgB8565Premultiplied = 8,
+    FormatRgB666 = 9,
+    FormatArgB6666Premultiplied = 10,
+    FormatRgB555 = 11,
+    FormatArgB8555Premultiplied = 12,
+    FormatRgB888 = 13,
+    FormatRgB444 = 14,
+    FormatArgB4444Premultiplied = 15,
+    FormatRgbX8888 = 16,
+    FormatRgbA8888 = 17,
+    FormatRgbA8888Premultiplied = 18,
+    FormatBgR30 = 19,
+    FormatA2BgR30Premultiplied = 20,
+    FormatRgB30 = 21,
+    FormatA2RgB30Premultiplied = 22,
+    FormatAlpha8 = 23,
+    FormatGrayscale8 = 24,
+    NImageFormats = 25,
 }

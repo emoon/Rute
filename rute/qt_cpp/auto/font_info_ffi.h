@@ -26,7 +26,7 @@ typedef struct RUFontInfoFuncs {
     bool (*underline)(struct RUBase* self_c);
     bool (*overline)(struct RUBase* self_c);
     bool (*fixed_pitch)(struct RUBase* self_c);
-    int (*style_hint)(struct RUBase* self_c);
+    uint32_t (*style_hint)(struct RUBase* self_c);
     bool (*raw_mode)(struct RUBase* self_c);
     bool (*exact_match)(struct RUBase* self_c);
 } RUFontInfoFuncs;

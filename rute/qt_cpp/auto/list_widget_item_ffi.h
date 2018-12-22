@@ -9,7 +9,12 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#include "brush_ffi.h"
+#include "color_ffi.h"
+#include "font_ffi.h"
+#include "icon_ffi.h"
 #include "list_widget_ffi.h"
+#include "size_ffi.h"
 
 struct RUListWidgetItemFuncs;
 struct RUListWidgetItem;
@@ -21,16 +26,32 @@ typedef struct RUListWidgetItemFuncs {
     bool (*is_selected)(struct RUBase* self_c);
     void (*set_hidden)(struct RUBase* self_c, bool hide);
     bool (*is_hidden)(struct RUBase* self_c);
+    uint32_t (*flags)(struct RUBase* self_c);
+    void (*set_flags)(struct RUBase* self_c, uint32_t flags);
     const char* (*text)(struct RUBase* self_c);
     void (*set_text)(struct RUBase* self_c, const char* text);
+    struct RUIcon (*icon)(struct RUBase* self_c);
+    void (*set_icon)(struct RUBase* self_c, struct RUBase* icon);
     const char* (*status_tip)(struct RUBase* self_c);
     void (*set_status_tip)(struct RUBase* self_c, const char* status_tip);
     const char* (*tool_tip)(struct RUBase* self_c);
     void (*set_tool_tip)(struct RUBase* self_c, const char* tool_tip);
     const char* (*whats_this)(struct RUBase* self_c);
     void (*set_whats_this)(struct RUBase* self_c, const char* whats_this);
+    struct RUFont (*font)(struct RUBase* self_c);
+    void (*set_font)(struct RUBase* self_c, struct RUBase* font);
     int (*text_alignment)(struct RUBase* self_c);
     void (*set_text_alignment)(struct RUBase* self_c, int alignment);
+    struct RUBrush (*background)(struct RUBase* self_c);
+    void (*set_background)(struct RUBase* self_c, struct RUBase* brush);
+    struct RUColor (*text_color)(struct RUBase* self_c);
+    void (*set_text_color)(struct RUBase* self_c, struct RUBase* color);
+    struct RUBrush (*foreground)(struct RUBase* self_c);
+    void (*set_foreground)(struct RUBase* self_c, struct RUBase* brush);
+    uint32_t (*check_state)(struct RUBase* self_c);
+    void (*set_check_state)(struct RUBase* self_c, uint32_t state);
+    struct RUSize (*size_hint)(struct RUBase* self_c);
+    void (*set_size_hint)(struct RUBase* self_c, struct RUBase* size);
 } RUListWidgetItemFuncs;
 
 typedef struct RUListWidgetItemAllFuncs {

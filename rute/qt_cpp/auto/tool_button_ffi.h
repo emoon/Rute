@@ -15,14 +15,14 @@ struct RUToolButton;
 
 typedef struct RUToolButtonFuncs {
     void (*destroy)(struct RUBase* self);
-    int (*tool_button_style)(struct RUBase* self_c);
-    int (*arrow_type)(struct RUBase* self_c);
-    void (*set_arrow_type)(struct RUBase* self_c, int arrow_type);
-    void (*set_popup_mode)(struct RUBase* self_c, int mode);
-    int (*popup_mode)(struct RUBase* self_c);
+    uint32_t (*tool_button_style)(struct RUBase* self_c);
+    uint32_t (*arrow_type)(struct RUBase* self_c);
+    void (*set_arrow_type)(struct RUBase* self_c, uint32_t arrow_type);
+    void (*set_popup_mode)(struct RUBase* self_c, uint32_t mode);
+    uint32_t (*popup_mode)(struct RUBase* self_c);
     bool (*auto_raise)(struct RUBase* self_c);
     void (*show_menu)(struct RUBase* self_c);
-    void (*set_tool_button_style)(struct RUBase* self_c, int style);
+    void (*set_tool_button_style)(struct RUBase* self_c, uint32_t style);
     void (*set_mouse_press_event)(void* object, void* user_data,
                                   void* wrapped_func,
                                   void (*event)(void*, void* self_c,

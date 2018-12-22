@@ -196,17 +196,17 @@ static void font_set_kerning(struct RUBase* self_c, bool arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int font_style_hint(struct RUBase* self_c) {
+static uint32_t font_style_hint(struct RUBase* self_c) {
     WRFont* qt_value = (WRFont*)self_c;
     auto ret_value = qt_value->styleHint();
-    return s_style_hint_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void font_set_style_hint(struct RUBase* self_c, int arg0, int arg1) {
+static void font_set_style_hint(struct RUBase* self_c, uint32_t arg0, uint32_t arg1) {
     WRFont* qt_value = (WRFont*)self_c;
-    qt_value->setStyleHint((QFont::StyleHint)s_style_hint_lookup[arg0], (QFont::StyleStrategy)s_style_strategy_lookup[arg1]);
+    qt_value->setStyleHint((QFont::StyleHint)arg0, (QFont::StyleStrategy)arg1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -219,17 +219,17 @@ static float font_letter_spacing(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int font_letter_spacing_type(struct RUBase* self_c) {
+static uint32_t font_letter_spacing_type(struct RUBase* self_c) {
     WRFont* qt_value = (WRFont*)self_c;
     auto ret_value = qt_value->letterSpacingType();
-    return s_spacing_type_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void font_set_letter_spacing(struct RUBase* self_c, int stype, float spacing) {
+static void font_set_letter_spacing(struct RUBase* self_c, uint32_t stype, float spacing) {
     WRFont* qt_value = (WRFont*)self_c;
-    qt_value->setLetterSpacing((QFont::SpacingType)s_spacing_type_lookup[stype], spacing);
+    qt_value->setLetterSpacing((QFont::SpacingType)stype, spacing);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -249,32 +249,32 @@ static void font_set_word_spacing(struct RUBase* self_c, float spacing) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void font_set_capitalization(struct RUBase* self_c, int arg0) {
+static void font_set_capitalization(struct RUBase* self_c, uint32_t arg0) {
     WRFont* qt_value = (WRFont*)self_c;
-    qt_value->setCapitalization((QFont::Capitalization)s_capitalization_lookup[arg0]);
+    qt_value->setCapitalization((QFont::Capitalization)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int font_capitalization(struct RUBase* self_c) {
+static uint32_t font_capitalization(struct RUBase* self_c) {
     WRFont* qt_value = (WRFont*)self_c;
     auto ret_value = qt_value->capitalization();
-    return s_capitalization_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void font_set_hinting_preference(struct RUBase* self_c, int hinting_preference) {
+static void font_set_hinting_preference(struct RUBase* self_c, uint32_t hinting_preference) {
     WRFont* qt_value = (WRFont*)self_c;
-    qt_value->setHintingPreference((QFont::HintingPreference)s_hinting_preference_lookup[hinting_preference]);
+    qt_value->setHintingPreference((QFont::HintingPreference)hinting_preference);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int font_hinting_preference(struct RUBase* self_c) {
+static uint32_t font_hinting_preference(struct RUBase* self_c) {
     WRFont* qt_value = (WRFont*)self_c;
     auto ret_value = qt_value->hintingPreference();
-    return s_hinting_preference_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

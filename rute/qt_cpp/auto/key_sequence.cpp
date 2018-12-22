@@ -25,10 +25,10 @@ static bool key_sequence_is_empty(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int key_sequence_matches(struct RUBase* self_c, struct RUBase* seq) {
+static uint32_t key_sequence_matches(struct RUBase* self_c, struct RUBase* seq) {
     WRKeySequence* qt_value = (WRKeySequence*)self_c;
     auto ret_value = qt_value->matches(*((QKeySequence*)seq));
-    return s_sequence_match_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

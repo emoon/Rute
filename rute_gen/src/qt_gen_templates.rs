@@ -95,20 +95,6 @@ public:
 };
 ";
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-pub static QT_ENUM_MAPPING_TEMPLATE: &str = "
-    static KeyVal {{enum_name}}_vals[] =
-    {
-    {%- for enum in enums -%}
-        {  (int){{qt_class}}::{{enum.name}}, {{enum.id}} },
-    {% endfor %}};
-
-    for (int i = 0; i < {{enums | size }}; ++i) {
-        s_{{enum_name}}_lookup[{{enum_name}}_vals[i].key] = {{enum_name}}_vals[i].val;
-    }
-";
-
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 pub static SIGNAL_WRAPPER_TEMPLATE: &str = "
@@ -235,7 +221,7 @@ pub static QT_FUNC_DEF_TEMPLATE: &str = "{% if c_return_type != 'void' %}
 {%- when 'primitive' %}
     return ret_value;
 {%- when 'enum_type' %}
-    return s_{{enum_type_name}}_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 {%- when 'reference' %}
     {{c_return_type}} ctl;
     ctl.qt_data = (struct RUBase*){{qt_ret_value}};

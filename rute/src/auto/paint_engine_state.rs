@@ -150,7 +150,7 @@ impl<'a> PaintEngineState<'a> {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).state)(obj_data);
-            let ret_val = { transmute::<i32, DirtyFlags>(ret_val) };
+            let ret_val = DirtyFlags::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -271,7 +271,7 @@ impl<'a> PaintEngineState<'a> {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).background_mode)(obj_data);
-            let ret_val = { transmute::<i32, BGMode>(ret_val) };
+            let ret_val = { transmute::<u32, BGMode>(ret_val) };
             ret_val
         }
     }
@@ -312,7 +312,7 @@ impl<'a> PaintEngineState<'a> {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).clip_operation)(obj_data);
-            let ret_val = { transmute::<i32, ClipOperation>(ret_val) };
+            let ret_val = { transmute::<u32, ClipOperation>(ret_val) };
             ret_val
         }
     }
@@ -368,7 +368,7 @@ impl<'a> PaintEngineState<'a> {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).render_hints)(obj_data);
-            let ret_val = { transmute::<i32, RenderHints>(ret_val) };
+            let ret_val = RenderHints::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -385,7 +385,7 @@ impl<'a> PaintEngineState<'a> {
         let (obj_data, funcs) = self.get_paint_engine_state_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).composition_mode)(obj_data);
-            let ret_val = { transmute::<i32, CompositionMode>(ret_val) };
+            let ret_val = { transmute::<u32, CompositionMode>(ret_val) };
             ret_val
         }
     }

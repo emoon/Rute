@@ -57,10 +57,10 @@ static bool transform_is_translating(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int transform_get_type(struct RUBase* self_c) {
+static uint32_t transform_get_type(struct RUBase* self_c) {
     WRTransform* qt_value = (WRTransform*)self_c;
     auto ret_value = qt_value->type();
-    return s_transformation_type_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -211,9 +211,9 @@ static struct RUTransform transform_shear(struct RUBase* self_c, float sh, float
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUTransform transform_rotate(struct RUBase* self_c, float a, int axis) {
+static struct RUTransform transform_rotate(struct RUBase* self_c, float a, uint32_t axis) {
     WRTransform* qt_value = (WRTransform*)self_c;
-    auto ret_value = qt_value->rotate(a, (Qt::Axis)s_axis_lookup[axis]);
+    auto ret_value = qt_value->rotate(a, (Qt::Axis)axis);
     WRTransform* new_val = new WRTransform();
     *new_val = ret_value;
     struct RUTransform ctl;
@@ -225,9 +225,9 @@ static struct RUTransform transform_rotate(struct RUBase* self_c, float a, int a
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUTransform transform_rotate_radians(struct RUBase* self_c, float a, int axis) {
+static struct RUTransform transform_rotate_radians(struct RUBase* self_c, float a, uint32_t axis) {
     WRTransform* qt_value = (WRTransform*)self_c;
-    auto ret_value = qt_value->rotateRadians(a, (Qt::Axis)s_axis_lookup[axis]);
+    auto ret_value = qt_value->rotateRadians(a, (Qt::Axis)axis);
     WRTransform* new_val = new WRTransform();
     *new_val = ret_value;
     struct RUTransform ctl;

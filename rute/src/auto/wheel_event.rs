@@ -170,7 +170,7 @@ impl<'a> WheelEvent<'a> {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).orientation)(obj_data);
-            let ret_val = { transmute::<i32, Orientation>(ret_val) };
+            let ret_val = { transmute::<u32, Orientation>(ret_val) };
             ret_val
         }
     }
@@ -345,7 +345,7 @@ impl<'a> WheelEvent<'a> {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).buttons)(obj_data);
-            let ret_val = { transmute::<i32, MouseButtons>(ret_val) };
+            let ret_val = MouseButtons::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -358,7 +358,7 @@ impl<'a> WheelEvent<'a> {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).phase)(obj_data);
-            let ret_val = { transmute::<i32, ScrollPhase>(ret_val) };
+            let ret_val = { transmute::<u32, ScrollPhase>(ret_val) };
             ret_val
         }
     }
@@ -406,7 +406,7 @@ impl<'a> WheelEvent<'a> {
         let (obj_data, funcs) = self.get_wheel_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).source)(obj_data);
-            let ret_val = { transmute::<i32, MouseEventSource>(ret_val) };
+            let ret_val = { transmute::<u32, MouseEventSource>(ret_val) };
             ret_val
         }
     }
@@ -415,13 +415,13 @@ impl<'a> WheelEvent<'a> {
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).modifiers)(obj_data);
-            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            let ret_val = KeyboardModifiers::from_bits_truncate(ret_val);
             ret_val
         }
     }
     #[doc(hidden)]
     pub fn set_modifiers(&self, amodifiers: KeyboardModifiers) -> &Self {
-        let enum_amodifiers_1 = amodifiers as i32;
+        let enum_amodifiers_1 = amodifiers.bits();
 
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {
@@ -517,5 +517,5 @@ impl<'a> WheelEventTrait<'a> for WheelEvent<'a> {
 }
 #[repr(u32)]
 pub enum WheelEventFixMeEnums {
-    DefaultDeltasPerStep,
+    DefaultDeltasPerStep = 120,
 }

@@ -56,17 +56,17 @@ static bool object_block_signals(struct RUBase* self_c, bool b) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int object_start_timer(struct RUBase* self_c, int interval, int timer_type) {
+static int object_start_timer(struct RUBase* self_c, int interval, uint32_t timer_type) {
     WRObject* qt_value = (WRObject*)self_c;
-    auto ret_value = qt_value->startTimer(interval, (Qt::TimerType)s_timer_type_lookup[timer_type]);
+    auto ret_value = qt_value->startTimer(interval, (Qt::TimerType)timer_type);
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int object_start_timer_2(struct RUBase* self_c, uint32_t time, int timer_type) {
+static int object_start_timer_2(struct RUBase* self_c, uint32_t time, uint32_t timer_type) {
     WRObject* qt_value = (WRObject*)self_c;
-    auto ret_value = qt_value->startTimer(time, (Qt::TimerType)s_timer_type_lookup[timer_type]);
+    auto ret_value = qt_value->startTimer(time, (Qt::TimerType)timer_type);
     return ret_value;
 }
 

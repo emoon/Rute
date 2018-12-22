@@ -147,25 +147,25 @@ static struct RUSize screen_available_virtual_size(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int screen_primary_orientation(struct RUBase* self_c) {
+static uint32_t screen_primary_orientation(struct RUBase* self_c) {
     QScreen* qt_value = (QScreen*)self_c;
     auto ret_value = qt_value->primaryOrientation();
-    return s_screen_orientation_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int screen_angle_between(struct RUBase* self_c, int a, int b) {
+static int screen_angle_between(struct RUBase* self_c, uint32_t a, uint32_t b) {
     QScreen* qt_value = (QScreen*)self_c;
-    auto ret_value = qt_value->angleBetween((Qt::ScreenOrientation)s_screen_orientation_lookup[a], (Qt::ScreenOrientation)s_screen_orientation_lookup[b]);
+    auto ret_value = qt_value->angleBetween((Qt::ScreenOrientation)a, (Qt::ScreenOrientation)b);
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool screen_is_landscape(struct RUBase* self_c, int orientation) {
+static bool screen_is_landscape(struct RUBase* self_c, uint32_t orientation) {
     QScreen* qt_value = (QScreen*)self_c;
-    auto ret_value = qt_value->isLandscape((Qt::ScreenOrientation)s_screen_orientation_lookup[orientation]);
+    auto ret_value = qt_value->isLandscape((Qt::ScreenOrientation)orientation);
     return ret_value;
 }
 

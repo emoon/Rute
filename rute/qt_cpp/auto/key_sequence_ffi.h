@@ -18,7 +18,7 @@ typedef struct RUKeySequenceFuncs {
     void (*destroy)(struct RUBase* self);
     int (*count)(struct RUBase* self_c);
     bool (*is_empty)(struct RUBase* self_c);
-    int (*matches)(struct RUBase* self_c, struct RUBase* seq);
+    uint32_t (*matches)(struct RUBase* self_c, struct RUBase* seq);
     struct RUKeySequence (*mnemonic)(struct RUBase* self_c, const char* text);
     void (*swap)(struct RUBase* self_c, struct RUBase* other);
     bool (*is_detached)(struct RUBase* self_c);

@@ -14,8 +14,8 @@ struct RUInputEventFuncs;
 struct RUInputEvent;
 
 typedef struct RUInputEventFuncs {
-    int (*modifiers)(struct RUBase* self_c);
-    void (*set_modifiers)(struct RUBase* self_c, int amodifiers);
+    uint32_t (*modifiers)(struct RUBase* self_c);
+    void (*set_modifiers)(struct RUBase* self_c, uint32_t amodifiers);
     uint64_t (*timestamp)(struct RUBase* self_c);
     void (*set_timestamp)(struct RUBase* self_c, uint64_t atimestamp);
 } RUInputEventFuncs;

@@ -15,8 +15,8 @@ struct RUKeyEvent;
 
 typedef struct RUKeyEventFuncs {
     int (*key)(struct RUBase* self_c);
-    bool (*matches)(struct RUBase* self_c, int key);
-    int (*modifiers)(struct RUBase* self_c);
+    bool (*matches)(struct RUBase* self_c, uint32_t key);
+    uint32_t (*modifiers)(struct RUBase* self_c);
     const char* (*text)(struct RUBase* self_c);
     bool (*is_auto_repeat)(struct RUBase* self_c);
     int (*count)(struct RUBase* self_c);

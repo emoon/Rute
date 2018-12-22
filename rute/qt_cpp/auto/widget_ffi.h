@@ -41,8 +41,9 @@ typedef struct RUWidgetFuncs {
     bool (*is_top_level)(struct RUBase* self_c);
     bool (*is_window)(struct RUBase* self_c);
     bool (*is_modal)(struct RUBase* self_c);
-    int (*window_modality)(struct RUBase* self_c);
-    void (*set_window_modality)(struct RUBase* self_c, int window_modality);
+    uint32_t (*window_modality)(struct RUBase* self_c);
+    void (*set_window_modality)(struct RUBase* self_c,
+                                uint32_t window_modality);
     bool (*is_enabled)(struct RUBase* self_c);
     bool (*is_enabled_to)(struct RUBase* self_c, struct RUBase* arg0);
     void (*set_enabled)(struct RUBase* self_c, bool arg0);
@@ -96,10 +97,10 @@ typedef struct RUWidgetFuncs {
     struct RUWidget (*native_parent_widget)(struct RUBase* self_c);
     struct RUPalette (*palette)(struct RUBase* self_c);
     void (*set_palette)(struct RUBase* self_c, struct RUBase* arg0);
-    void (*set_background_role)(struct RUBase* self_c, int arg0);
-    int (*background_role)(struct RUBase* self_c);
-    void (*set_foreground_role)(struct RUBase* self_c, int arg0);
-    int (*foreground_role)(struct RUBase* self_c);
+    void (*set_background_role)(struct RUBase* self_c, uint32_t arg0);
+    uint32_t (*background_role)(struct RUBase* self_c);
+    void (*set_foreground_role)(struct RUBase* self_c, uint32_t arg0);
+    uint32_t (*foreground_role)(struct RUBase* self_c);
     struct RUFont (*font)(struct RUBase* self_c);
     void (*set_font)(struct RUBase* self_c, struct RUBase* arg0);
     struct RUCursor (*cursor)(struct RUBase* self_c);
@@ -116,13 +117,13 @@ typedef struct RUWidgetFuncs {
     void (*clear_mask)(struct RUBase* self_c);
     void (*render)(struct RUBase* self_c, struct RUBase* target,
                    struct RUBase* target_offset, struct RUBase* source_region,
-                   int render_flags);
+                   uint32_t render_flags);
     void (*render_2)(struct RUBase* self_c, struct RUBase* painter,
                      struct RUBase* target_offset, struct RUBase* source_region,
-                     int render_flags);
+                     uint32_t render_flags);
     struct RUPixmap (*grab)(struct RUBase* self_c, struct RUBase* rectangle);
-    void (*grab_gesture)(struct RUBase* self_c, int gtype, int flags);
-    void (*ungrab_gesture)(struct RUBase* self_c, int gtype);
+    void (*grab_gesture)(struct RUBase* self_c, uint32_t gtype, uint32_t flags);
+    void (*ungrab_gesture)(struct RUBase* self_c, uint32_t gtype);
     void (*set_window_title)(struct RUBase* self_c, const char* arg0);
     void (*set_style_sheet)(struct RUBase* self_c, const char* style_sheet);
     const char* (*style_sheet)(struct RUBase* self_c);
@@ -151,8 +152,8 @@ typedef struct RUWidgetFuncs {
     const char* (*accessible_description)(struct RUBase* self_c);
     void (*set_accessible_description)(struct RUBase* self_c,
                                        const char* description);
-    void (*set_layout_direction)(struct RUBase* self_c, int direction);
-    int (*layout_direction)(struct RUBase* self_c);
+    void (*set_layout_direction)(struct RUBase* self_c, uint32_t direction);
+    uint32_t (*layout_direction)(struct RUBase* self_c);
     void (*unset_layout_direction)(struct RUBase* self_c);
     bool (*is_right_to_left)(struct RUBase* self_c);
     bool (*is_left_to_right)(struct RUBase* self_c);
@@ -160,23 +161,23 @@ typedef struct RUWidgetFuncs {
     bool (*is_active_window)(struct RUBase* self_c);
     void (*activate_window)(struct RUBase* self_c);
     void (*clear_focus)(struct RUBase* self_c);
-    void (*set_focus_2)(struct RUBase* self_c, int reason);
-    int (*focus_policy)(struct RUBase* self_c);
-    void (*set_focus_policy)(struct RUBase* self_c, int policy);
+    void (*set_focus_2)(struct RUBase* self_c, uint32_t reason);
+    uint32_t (*focus_policy)(struct RUBase* self_c);
+    void (*set_focus_policy)(struct RUBase* self_c, uint32_t policy);
     bool (*has_focus)(struct RUBase* self_c);
     void (*set_tab_order)(struct RUBase* self_c, struct RUBase* arg0,
                           struct RUBase* arg1);
     void (*set_focus_proxy)(struct RUBase* self_c, struct RUBase* arg0);
     struct RUWidget (*focus_proxy)(struct RUBase* self_c);
-    int (*context_menu_policy)(struct RUBase* self_c);
-    void (*set_context_menu_policy)(struct RUBase* self_c, int policy);
+    uint32_t (*context_menu_policy)(struct RUBase* self_c);
+    void (*set_context_menu_policy)(struct RUBase* self_c, uint32_t policy);
     void (*grab_mouse)(struct RUBase* self_c);
     void (*grab_mouse_2)(struct RUBase* self_c, struct RUBase* arg0);
     void (*release_mouse)(struct RUBase* self_c);
     void (*grab_keyboard)(struct RUBase* self_c);
     void (*release_keyboard)(struct RUBase* self_c);
     int (*grab_shortcut)(struct RUBase* self_c, struct RUBase* key,
-                         int context);
+                         uint32_t context);
     void (*release_shortcut)(struct RUBase* self_c, int id);
     void (*set_shortcut_enabled)(struct RUBase* self_c, int id, bool enable);
     void (*set_shortcut_auto_repeat)(struct RUBase* self_c, int id,
@@ -215,15 +216,15 @@ typedef struct RUWidgetFuncs {
     bool (*is_minimized)(struct RUBase* self_c);
     bool (*is_maximized)(struct RUBase* self_c);
     bool (*is_full_screen)(struct RUBase* self_c);
-    int (*window_state)(struct RUBase* self_c);
-    void (*set_window_state)(struct RUBase* self_c, int state);
-    void (*override_window_state)(struct RUBase* self_c, int state);
+    uint32_t (*window_state)(struct RUBase* self_c);
+    void (*set_window_state)(struct RUBase* self_c, uint32_t state);
+    void (*override_window_state)(struct RUBase* self_c, uint32_t state);
     struct RUSize (*size_hint)(struct RUBase* self_c);
     struct RUSize (*minimum_size_hint)(struct RUBase* self_c);
     struct RUSizePolicy (*size_policy)(struct RUBase* self_c);
     void (*set_size_policy)(struct RUBase* self_c, struct RUBase* arg0);
-    void (*set_size_policy_2)(struct RUBase* self_c, int horizontal,
-                              int vertical);
+    void (*set_size_policy_2)(struct RUBase* self_c, uint32_t horizontal,
+                              uint32_t vertical);
     int (*height_for_width)(struct RUBase* self_c, int arg0);
     bool (*has_height_for_width)(struct RUBase* self_c);
     struct RURegion (*visible_region)(struct RUBase* self_c);
@@ -236,7 +237,8 @@ typedef struct RUWidgetFuncs {
     struct RULayout (*layout)(struct RUBase* self_c);
     void (*set_layout)(struct RUBase* self_c, struct RUBase* arg0);
     void (*set_parent)(struct RUBase* self_c, struct RUBase* parent);
-    void (*set_parent_2)(struct RUBase* self_c, struct RUBase* parent, int f);
+    void (*set_parent_2)(struct RUBase* self_c, struct RUBase* parent,
+                         uint32_t f);
     void (*scroll)(struct RUBase* self_c, int dx, int dy);
     void (*scroll_2)(struct RUBase* self_c, int dx, int dy,
                      struct RUBase* arg0);
@@ -246,9 +248,9 @@ typedef struct RUWidgetFuncs {
     bool (*accept_drops)(struct RUBase* self_c);
     void (*set_accept_drops)(struct RUBase* self_c, bool on);
     struct RUWidget (*parent_widget)(struct RUBase* self_c);
-    void (*set_window_flags)(struct RUBase* self_c, int gtype);
-    int (*window_flags)(struct RUBase* self_c);
-    void (*override_window_flags)(struct RUBase* self_c, int wtype);
+    void (*set_window_flags)(struct RUBase* self_c, uint32_t gtype);
+    uint32_t (*window_flags)(struct RUBase* self_c);
+    void (*override_window_flags)(struct RUBase* self_c, uint32_t wtype);
     struct RUWidget (*find)(struct RUBase* self_c, uint64_t arg0);
     struct RUWidget (*child_at)(struct RUBase* self_c, int x, int y);
     struct RUWidget (*child_at_2)(struct RUBase* self_c, struct RUBase* p);
@@ -262,7 +264,7 @@ typedef struct RUWidgetFuncs {
     struct RUWidget (*create_window_container)(struct RUBase* self_c,
                                                struct RUBase* window,
                                                struct RUBase* parent,
-                                               int flags);
+                                               uint32_t flags);
     void (*set_window_title_changed_event)(void* object, void* user_data,
                                            void* wrapped_func,
                                            void (*event)(void*, void* self_c,
@@ -385,8 +387,8 @@ typedef struct RUWidgetFuncs {
                              void (*event)(void*, void* self_c,
                                            struct RUBase* arg0));
     void (*remove_change_event)(void* object);
-    int (*input_method_hints)(struct RUBase* self_c);
-    void (*set_input_method_hints)(struct RUBase* self_c, int hints);
+    uint32_t (*input_method_hints)(struct RUBase* self_c);
+    void (*set_input_method_hints)(struct RUBase* self_c, uint32_t hints);
 } RUWidgetFuncs;
 
 typedef struct RUWidgetAllFuncs {

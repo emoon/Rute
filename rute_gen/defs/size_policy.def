@@ -134,70 +134,69 @@ struct SizePolicy {
     /// **See also:** [`retain_size_when_hidden()`]
     set_retain_size_when_hidden(retain_size: bool),
 }
-
 [org_name(QSizePolicy)]
 enum PolicyFlag {
     /// The widget can grow beyond its size hint if necessary.
-    GrowFlag,
+    GrowFlag = 1,
     /// The widget should get as much space as possible.
-    ExpandFlag,
+    ExpandFlag = 2,
     /// The widget can shrink below its size hint if necessary.
-    ShrinkFlag,
+    ShrinkFlag = 4,
     /// The widget's size hint is ignored. The widget will get as much space as possible.
-    IgnoreFlag,
+    IgnoreFlag = 8,
 }
 
 [org_name(QSizePolicy)]
 enum Policy {
     /// The QWidget::sizeHint() is the only acceptable alternative, so the widget can never grow or shrink (e.g. the vertical direction of a push button).
-    Fixed,
+    Fixed = 0,
     /// The sizeHint() is minimal, and sufficient. The widget can be expanded, but there is no advantage to it being larger (e.g. the horizontal direction of a push button). It cannot be smaller than the size provided by sizeHint().
-    Minimum,
+    Minimum = 1,
     /// The sizeHint() is a maximum. The widget can be shrunk any amount without detriment if other widgets need the space (e.g. a separator line). It cannot be larger than the size provided by sizeHint().
-    Maximum,
+    Maximum = 4,
     /// The sizeHint() is best, but the widget can be shrunk and still be useful. The widget can be expanded, but there is no advantage to it being larger than sizeHint() (the default QWidget policy).
-    Preferred,
+    Preferred = 5,
     /// The sizeHint() is minimal, and sufficient. The widget can make use of extra space, so it should get as much space as possible (e.g. the horizontal direction of a horizontal slider).
-    MinimumExpanding,
+    MinimumExpanding = 3,
     /// The sizeHint() is a sensible size, but the widget can be shrunk and still be useful. The widget can make use of extra space, so it should get as much space as possible (e.g. the horizontal direction of a horizontal slider).
-    Expanding,
+    Expanding = 7,
     /// The sizeHint() is ignored. The widget will get as much space as possible.
-    Ignored,
+    Ignored = 13,
 }
 
 [org_name(QSizePolicy)]
 [enum_flags(ControlTypes)]
 enum ControlType {
     /// The default type, when none is specified.
-    DefaultType,
+    DefaultType = 1,
     /// A QDialogButtonBox instance.
-    ButtonBox,
+    ButtonBox = 2,
     /// A QCheckBox instance.
-    CheckBox,
+    CheckBox = 4,
     /// A QComboBox instance.
-    ComboBox,
+    ComboBox = 8,
     /// A QFrame instance.
-    Frame,
+    Frame = 16,
     /// A QGroupBox instance.
-    GroupBox,
+    GroupBox = 32,
     /// A QLabel instance.
-    Label,
+    Label = 64,
     /// A QFrame instance with QFrame::HLine or QFrame::VLine.
-    Line,
+    Line = 128,
     /// A QLineEdit instance.
-    LineEdit,
+    LineEdit = 256,
     /// A QPushButton instance.
-    PushButton,
+    PushButton = 512,
     /// A QRadioButton instance.
-    RadioButton,
+    RadioButton = 1024,
     /// A QAbstractSlider instance.
-    Slider,
+    Slider = 2048,
     /// A QAbstractSpinBox instance.
-    SpinBox,
+    SpinBox = 4096,
     /// A QTabWidget instance.
-    TabWidget,
+    TabWidget = 8192,
     /// A QToolButton instance.
-    ToolButton,
+    ToolButton = 16384,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

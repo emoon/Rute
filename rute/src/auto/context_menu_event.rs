@@ -185,7 +185,7 @@ impl<'a> ContextMenuEvent<'a> {
         let (obj_data, funcs) = self.get_context_menu_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).reason)(obj_data);
-            let ret_val = { transmute::<i32, Reason>(ret_val) };
+            let ret_val = { transmute::<u32, Reason>(ret_val) };
             ret_val
         }
     }
@@ -194,13 +194,13 @@ impl<'a> ContextMenuEvent<'a> {
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).modifiers)(obj_data);
-            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            let ret_val = KeyboardModifiers::from_bits_truncate(ret_val);
             ret_val
         }
     }
     #[doc(hidden)]
     pub fn set_modifiers(&self, amodifiers: KeyboardModifiers) -> &Self {
-        let enum_amodifiers_1 = amodifiers as i32;
+        let enum_amodifiers_1 = amodifiers.bits();
 
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {
@@ -296,7 +296,7 @@ impl<'a> ContextMenuEventTrait<'a> for ContextMenuEvent<'a> {
 }
 #[repr(u32)]
 pub enum Reason {
-    Mouse,
-    Keyboard,
-    Other,
+    Mouse = 0,
+    Keyboard = 1,
+    Other = 2,
 }

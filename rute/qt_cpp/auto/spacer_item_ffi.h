@@ -17,12 +17,12 @@ struct RUSpacerItemFuncs;
 struct RUSpacerItem;
 
 typedef struct RUSpacerItemFuncs {
-    void (*change_size)(struct RUBase* self_c, int w, int h, int h_data,
-                        int v_data);
+    void (*change_size)(struct RUBase* self_c, int w, int h, uint32_t h_data,
+                        uint32_t v_data);
     struct RUSize (*size_hint)(struct RUBase* self_c);
     struct RUSize (*minimum_size)(struct RUBase* self_c);
     struct RUSize (*maximum_size)(struct RUBase* self_c);
-    int (*expanding_directions)(struct RUBase* self_c);
+    uint32_t (*expanding_directions)(struct RUBase* self_c);
     bool (*is_empty)(struct RUBase* self_c);
     struct RUSpacerItem (*spacer_item)(struct RUBase* self_c);
     struct RUSizePolicy (*size_policy)(struct RUBase* self_c);
