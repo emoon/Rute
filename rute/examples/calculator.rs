@@ -51,12 +51,10 @@ impl<'a> Calculator<'a> {
             .set_max_length(15);
 
         // Bump the size of the font
-        /*
         if let Some(font) = self.display.font() {
             font.set_point_size(font.point_size() + 8);
             self.display.set_font(&font);
         }
-        */
 
         let layout = GridLayout::new();
 
