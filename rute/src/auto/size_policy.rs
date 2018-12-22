@@ -289,6 +289,10 @@ impl<'a> SizePolicy<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait SizePolicyTrait<'a> {
     #[inline]

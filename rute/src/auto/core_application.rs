@@ -1292,6 +1292,10 @@ impl<'a> CoreApplication<'a> {
 
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait CoreApplicationTrait<'a> {
     #[inline]

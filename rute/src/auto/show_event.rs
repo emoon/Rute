@@ -114,6 +114,10 @@ impl<'a> ShowEvent<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait ShowEventTrait<'a> {
     #[inline]

@@ -340,6 +340,10 @@ struct Layout : Object, LayoutItem {
     ///
     //[event]
     layout() -> *Layout?,
+    /// Sets the constraint of the layout.
+    set_size_constraint(constraint: Layout::SizeConstraint),
+    /// Sets the constraint( of the layout.
+    size_constraint() -> Layout::SizeConstraint,
     ///
     /// Enables this layout if *enable* is true, otherwise disables it.
     ///

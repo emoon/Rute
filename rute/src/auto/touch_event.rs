@@ -290,6 +290,10 @@ impl<'a> TouchEvent<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait TouchEventTrait<'a> {
     #[inline]

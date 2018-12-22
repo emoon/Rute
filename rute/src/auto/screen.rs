@@ -226,6 +226,10 @@ impl<'a> Screen<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait ScreenTrait<'a> {
     #[inline]

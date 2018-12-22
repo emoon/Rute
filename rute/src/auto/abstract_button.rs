@@ -4720,6 +4720,10 @@ impl<'a> AbstractButton<'a> {
 
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait AbstractButtonTrait<'a> {
     #[inline]

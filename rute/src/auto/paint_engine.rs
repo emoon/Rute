@@ -515,6 +515,10 @@ impl<'a> PaintEngine<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait PaintEngineTrait<'a> {
     #[inline]

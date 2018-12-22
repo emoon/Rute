@@ -440,6 +440,10 @@ impl<'a> PaintEngineState<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait PaintEngineStateTrait<'a> {
     #[inline]

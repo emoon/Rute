@@ -178,6 +178,10 @@ impl<'a> Margins<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait MarginsTrait<'a> {
     #[inline]

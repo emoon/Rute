@@ -159,6 +159,10 @@ impl<'a> PaintDevice<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait PaintDeviceTrait<'a> {
     #[inline]

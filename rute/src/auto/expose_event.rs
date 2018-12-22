@@ -133,6 +133,10 @@ impl<'a> ExposeEvent<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait ExposeEventTrait<'a> {
     #[inline]

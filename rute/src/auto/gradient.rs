@@ -256,6 +256,10 @@ impl<'a> Gradient<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait GradientTrait<'a> {
     #[inline]

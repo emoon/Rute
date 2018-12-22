@@ -56,7 +56,18 @@ impl<'a> Calculator<'a> {
             self.display.set_font(&font);
         }
 
-        let layout = GridLayout::new();
+        let layout = GridLayout::new()
+            .set_size_constraint(SizeConstraint::SetFixedSize)
+            .build();
+
+        layout.add_widget_row_column_span(
+            &self.display,
+            0,
+            0,
+            1,
+            6,
+            rute::AlignmentFlag::AlignDefault,
+        );
 
         // Construct the digit buttons
         for i in 0..NUM_DIGI_BUTTONS {
@@ -66,7 +77,7 @@ impl<'a> Calculator<'a> {
 
             // place the zero at the bottom
             if i == 0 {
-                layout.add_widget_row_column(&button, 5, 1, rute::AlignmentFlag::AlignDefault);
+                layout.add_widget_row_column(&button, 5, 1, AlignmentFlag::AlignDefault);
             } else {
                 let row = ((9 - i) / 3) + 2;
                 let column = ((i - 1) % 3) + 1;
@@ -74,7 +85,7 @@ impl<'a> Calculator<'a> {
                     &button,
                     row as i32,
                     column as i32,
-                    rute::AlignmentFlag::AlignDefault,
+                    AlignmentFlag::AlignDefault,
                 );
             }
         }
@@ -97,21 +108,8 @@ impl<'a> Calculator<'a> {
             calculator.unaray_operator(UnaryOperator::Recip)
         });
 
-        // let backspace_button = ToolButton::new()
-        //  .set_text("Backspace")
-        //  .set_pressed_event_ud(self, Self::change_sign_clicked)
-        //  .build();
-
         // Add the remaining buttons to the layout
 
-        layout.add_widget_row_column_span(
-            &self.display,
-            0,
-            0,
-            1,
-            6,
-            rute::AlignmentFlag::AlignRight,
-        );
 
         // Set layout and show
         self.main_widget
@@ -207,12 +205,11 @@ impl<'a> Calculator<'a> {
     where
         F: Fn(&Self) + 'a,
     {
-        let button = ToolButton::new();
-        button
-            .set_size_policy_2(rute::Policy::Expanding, rute::Policy::Preferred)
-            .set_pressed_event_ud(self, func);
-        button.set_text(text);
-        button
+        ToolButton::new()
+            .set_size_policy_2(rute::Policy::Preferred, rute::Policy::Preferred)
+            .set_pressed_event_ud(self, func)
+            .set_text(text)
+            .build()
     }
 }
 

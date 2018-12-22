@@ -389,6 +389,10 @@ impl<'a> Size<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait SizeTrait<'a> {
     #[inline]

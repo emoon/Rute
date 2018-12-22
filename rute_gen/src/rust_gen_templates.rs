@@ -139,6 +139,8 @@ impl <'a>{{struct_name}}<'a> {
     }
 
     {{-event_funcs}}
+
+    pub fn build(&self) -> Self { self.clone() }
 }
 ";
 

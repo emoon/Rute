@@ -742,6 +742,10 @@ impl<'a> Bitmap<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait BitmapTrait<'a> {
     #[inline]

@@ -299,6 +299,10 @@ impl<'a> Line<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait LineTrait<'a> {
     #[inline]

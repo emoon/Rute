@@ -8293,6 +8293,10 @@ impl<'a> Widget<'a> {
 
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait WidgetTrait<'a> {
     #[inline]

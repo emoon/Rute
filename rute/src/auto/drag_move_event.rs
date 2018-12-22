@@ -332,6 +332,10 @@ impl<'a> DragMoveEvent<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait DragMoveEventTrait<'a> {
     #[inline]

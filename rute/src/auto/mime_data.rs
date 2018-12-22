@@ -595,6 +595,10 @@ impl<'a> MimeData<'a> {
 
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait MimeDataTrait<'a> {
     #[inline]

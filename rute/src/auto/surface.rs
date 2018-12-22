@@ -124,6 +124,10 @@ impl<'a> Surface<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait SurfaceTrait<'a> {
     #[inline]

@@ -479,6 +479,10 @@ impl<'a> Region<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait RegionTrait<'a> {
     #[inline]

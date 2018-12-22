@@ -295,6 +295,10 @@ impl<'a> SpacerItem<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait SpacerItemTrait<'a> {
     #[inline]

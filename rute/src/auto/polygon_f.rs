@@ -248,6 +248,10 @@ impl<'a> PolygonF<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait PolygonFTrait<'a> {
     #[inline]

@@ -597,6 +597,10 @@ impl<'a> LineF<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait LineFTrait<'a> {
     #[inline]

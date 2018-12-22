@@ -2100,6 +2100,10 @@ impl<'a> Color<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait ColorTrait<'a> {
     #[inline]

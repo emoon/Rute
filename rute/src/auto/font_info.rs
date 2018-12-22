@@ -281,6 +281,10 @@ impl<'a> FontInfo<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait FontInfoTrait<'a> {
     #[inline]

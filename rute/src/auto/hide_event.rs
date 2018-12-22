@@ -117,6 +117,10 @@ impl<'a> HideEvent<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait HideEventTrait<'a> {
     #[inline]

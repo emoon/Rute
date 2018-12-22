@@ -150,6 +150,10 @@ impl<'a> FocusEvent<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait FocusEventTrait<'a> {
     #[inline]

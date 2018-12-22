@@ -2599,6 +2599,10 @@ impl<'a> Application<'a> {
 
         self
     }
+
+    pub fn build(self) -> Self {
+        self.clone()
+    }
 }
 pub trait ApplicationTrait<'a> {
     #[inline]

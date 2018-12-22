@@ -264,6 +264,10 @@ impl<'a> ContextMenuEvent<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait ContextMenuEventTrait<'a> {
     #[inline]

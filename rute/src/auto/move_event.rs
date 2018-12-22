@@ -152,6 +152,10 @@ impl<'a> MoveEvent<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait MoveEventTrait<'a> {
     #[inline]

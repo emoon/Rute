@@ -724,6 +724,25 @@ impl<'a> Layout<'a> {
             Some(ret_val)
         }
     }
+    /// Sets the constraint of the layout.
+    pub fn set_size_constraint(&self, constraint: SizeConstraint) -> &Self {
+        let enum_constraint_1 = constraint as u32;
+
+        let (obj_data, funcs) = self.get_layout_obj_funcs();
+        unsafe {
+            ((*funcs).set_size_constraint)(obj_data, enum_constraint_1);
+        }
+        self
+    }
+    /// Sets the constraint( of the layout.
+    pub fn size_constraint(&self) -> SizeConstraint {
+        let (obj_data, funcs) = self.get_layout_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).size_constraint)(obj_data);
+            let ret_val = { transmute::<u32, SizeConstraint>(ret_val) };
+            ret_val
+        }
+    }
     ///
     /// Enables this layout if *enable* is true, otherwise disables it.
     ///
@@ -1032,6 +1051,10 @@ impl<'a> Layout<'a> {
         }
 
         self
+    }
+
+    pub fn build(&self) -> Self {
+        self.clone()
     }
 }
 pub trait LayoutTrait<'a> {

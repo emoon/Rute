@@ -230,6 +230,10 @@ impl<'a> Point<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait PointTrait<'a> {
     #[inline]

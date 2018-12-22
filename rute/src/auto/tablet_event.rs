@@ -609,6 +609,10 @@ impl<'a> TabletEvent<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait TabletEventTrait<'a> {
     #[inline]

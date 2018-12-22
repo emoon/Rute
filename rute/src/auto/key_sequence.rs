@@ -556,6 +556,10 @@ impl<'a> KeySequence<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait KeySequenceTrait<'a> {
     #[inline]

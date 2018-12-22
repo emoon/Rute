@@ -60,6 +60,8 @@ typedef struct RULayoutFuncs {
     struct RUSize (*total_maximum_size)(struct RUBase* self_c);
     struct RUSize (*total_size_hint)(struct RUBase* self_c);
     struct RULayout (*layout)(struct RUBase* self_c);
+    void (*set_size_constraint)(struct RUBase* self_c, uint32_t constraint);
+    uint32_t (*size_constraint)(struct RUBase* self_c);
     void (*set_enabled)(struct RUBase* self_c, bool arg0);
     bool (*is_enabled)(struct RUBase* self_c);
 } RULayoutFuncs;

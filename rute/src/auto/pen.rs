@@ -611,6 +611,10 @@ impl<'a> Pen<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait PenTrait<'a> {
     #[inline]

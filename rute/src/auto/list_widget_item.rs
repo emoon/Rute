@@ -579,6 +579,10 @@ impl<'a> ListWidgetItem<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait ListWidgetItemTrait<'a> {
     #[inline]

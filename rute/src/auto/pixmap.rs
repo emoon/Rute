@@ -1369,6 +1369,10 @@ impl<'a> Pixmap<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait PixmapTrait<'a> {
     #[inline]

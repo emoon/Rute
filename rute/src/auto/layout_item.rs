@@ -318,6 +318,10 @@ impl<'a> LayoutItem<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait LayoutItemTrait<'a> {
     #[inline]

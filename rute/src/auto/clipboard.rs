@@ -659,6 +659,10 @@ impl<'a> Clipboard<'a> {
 
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait ClipboardTrait<'a> {
     #[inline]

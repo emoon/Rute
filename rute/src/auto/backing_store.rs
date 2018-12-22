@@ -230,6 +230,10 @@ impl<'a> BackingStore<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait BackingStoreTrait<'a> {
     #[inline]

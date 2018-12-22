@@ -901,6 +901,10 @@ impl<'a> Icon<'a> {
             ((*funcs).set_theme_name)(obj_data, str_in_path_1.as_ptr());
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait IconTrait<'a> {
     #[inline]

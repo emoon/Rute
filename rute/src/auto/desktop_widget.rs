@@ -3857,6 +3857,10 @@ impl<'a> DesktopWidget<'a> {
 
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait DesktopWidgetTrait<'a> {
     #[inline]

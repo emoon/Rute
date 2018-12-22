@@ -146,6 +146,10 @@ impl<'a> InputEvent<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait InputEventTrait<'a> {
     #[inline]

@@ -1236,6 +1236,10 @@ impl<'a> Style<'a> {
 
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait StyleTrait<'a> {
     #[inline]

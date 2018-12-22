@@ -292,6 +292,10 @@ impl<'a> KeyEvent<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait KeyEventTrait<'a> {
     #[inline]

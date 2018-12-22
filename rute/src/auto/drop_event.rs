@@ -313,6 +313,10 @@ impl<'a> DropEvent<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait DropEventTrait<'a> {
     #[inline]

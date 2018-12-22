@@ -8686,6 +8686,10 @@ impl<'a> Painter<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait PainterTrait<'a> {
     #[inline]

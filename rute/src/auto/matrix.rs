@@ -1505,6 +1505,10 @@ impl<'a> Matrix<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait MatrixTrait<'a> {
     #[inline]

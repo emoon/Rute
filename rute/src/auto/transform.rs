@@ -1881,6 +1881,10 @@ impl<'a> Transform<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait TransformTrait<'a> {
     #[inline]

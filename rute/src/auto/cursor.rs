@@ -635,6 +635,10 @@ impl<'a> Cursor<'a> {
             ((*funcs).set_pos_4)(obj_data, obj_screen_1, obj_p_2);
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait CursorTrait<'a> {
     #[inline]

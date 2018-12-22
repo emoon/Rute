@@ -321,6 +321,10 @@ impl<'a> PixelFormat<'a> {
             ret_val
         }
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait PixelFormatTrait<'a> {
     #[inline]

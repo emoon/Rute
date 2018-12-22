@@ -62,6 +62,8 @@ pub struct RULayoutFuncs {
     pub total_maximum_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
     pub total_size_hint: extern "C" fn(self_c: *const RUBase) -> RUSize,
     pub layout: extern "C" fn(self_c: *const RUBase) -> RULayout,
+    pub set_size_constraint: extern "C" fn(self_c: *const RUBase, constraint: u32),
+    pub size_constraint: extern "C" fn(self_c: *const RUBase) -> u32,
     pub set_enabled: extern "C" fn(self_c: *const RUBase, arg0: bool),
     pub is_enabled: extern "C" fn(self_c: *const RUBase) -> bool,
 }

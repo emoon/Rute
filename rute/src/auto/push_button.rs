@@ -4121,6 +4121,10 @@ impl<'a> PushButton<'a> {
 
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait PushButtonTrait<'a> {
     #[inline]

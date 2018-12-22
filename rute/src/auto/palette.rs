@@ -1058,6 +1058,10 @@ impl<'a> Palette<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait PaletteTrait<'a> {
     #[inline]

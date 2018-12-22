@@ -336,6 +336,21 @@ static struct RULayout layout_layout(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void layout_set_size_constraint(struct RUBase* self_c, uint32_t constraint) {
+    WRLayout* qt_value = (WRLayout*)self_c;
+    qt_value->setSizeConstraint((QLayout::SizeConstraint)constraint);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static uint32_t layout_size_constraint(struct RUBase* self_c) {
+    WRLayout* qt_value = (WRLayout*)self_c;
+    auto ret_value = qt_value->sizeConstraint();
+    return (uint32_t)ret_value;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void layout_set_enabled(struct RUBase* self_c, bool arg0) {
     WRLayout* qt_value = (WRLayout*)self_c;
     qt_value->setEnabled(arg0);
@@ -386,6 +401,8 @@ struct RULayoutFuncs s_layout_funcs = {
     layout_total_maximum_size,
     layout_total_size_hint,
     layout_layout,
+    layout_set_size_constraint,
+    layout_size_constraint,
     layout_set_enabled,
     layout_is_enabled,
 };

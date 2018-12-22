@@ -153,6 +153,10 @@ impl<'a> CloseEvent<'a> {
         }
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait CloseEventTrait<'a> {
     #[inline]

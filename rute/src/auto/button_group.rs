@@ -1072,6 +1072,10 @@ impl<'a> ButtonGroup<'a> {
 
         self
     }
+
+    pub fn build(&self) -> Self {
+        self.clone()
+    }
 }
 pub trait ButtonGroupTrait<'a> {
     #[inline]
