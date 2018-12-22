@@ -210,6 +210,8 @@ enum TileRule {
 [org_name(Qt)]
 [enum_flags(Alignment)]
 enum AlignmentFlag {
+    /// Expanding by default
+    AlignDefault = 0,
     /// Aligns with the left edge.
     AlignLeft = 1,
     /// Synonym for Qt::AlignLeft.
