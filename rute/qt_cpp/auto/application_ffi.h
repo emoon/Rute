@@ -55,8 +55,9 @@ typedef struct RUApplicationFuncs {
     int (*start_drag_time)(struct RUBase* self_c);
     void (*set_start_drag_distance)(struct RUBase* self_c, int l);
     int (*start_drag_distance)(struct RUBase* self_c);
-    bool (*is_effect_enabled)(struct RUBase* self_c, int arg0);
-    void (*set_effect_enabled)(struct RUBase* self_c, int arg0, bool enable);
+    bool (*is_effect_enabled)(struct RUBase* self_c, uint32_t arg0);
+    void (*set_effect_enabled)(struct RUBase* self_c, uint32_t arg0,
+                               bool enable);
     int (*exec)(struct RUBase* self_c);
     const char* (*style_sheet)(struct RUBase* self_c);
     void (*set_style_sheet)(struct RUBase* self_c, const char* sheet);

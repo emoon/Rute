@@ -16,7 +16,7 @@ use std::os::raw::c_void;
 pub struct RUTouchEventFuncs {
     pub window: extern "C" fn(self_c: *const RUBase) -> RUWindow,
     pub target: extern "C" fn(self_c: *const RUBase) -> RUObject,
-    pub touch_point_states: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub touch_point_states: extern "C" fn(self_c: *const RUBase) -> u32,
 }
 
 #[repr(C)]

@@ -17,20 +17,23 @@ struct RUClipboardFuncs;
 struct RUClipboard;
 
 typedef struct RUClipboardFuncs {
-    void (*clear)(struct RUBase* self_c, int mode);
+    void (*clear)(struct RUBase* self_c, uint32_t mode);
     bool (*supports_selection)(struct RUBase* self_c);
     bool (*supports_find_buffer)(struct RUBase* self_c);
     bool (*owns_selection)(struct RUBase* self_c);
     bool (*owns_clipboard)(struct RUBase* self_c);
     bool (*owns_find_buffer)(struct RUBase* self_c);
-    const char* (*text)(struct RUBase* self_c, int mode);
-    void (*set_text)(struct RUBase* self_c, const char* arg0, int mode);
-    struct RUMimeData (*mime_data)(struct RUBase* self_c, int mode);
-    void (*set_mime_data)(struct RUBase* self_c, struct RUBase* data, int mode);
-    struct RUImage (*image)(struct RUBase* self_c, int mode);
-    struct RUPixmap (*pixmap)(struct RUBase* self_c, int mode);
-    void (*set_image)(struct RUBase* self_c, struct RUBase* arg0, int mode);
-    void (*set_pixmap)(struct RUBase* self_c, struct RUBase* arg0, int mode);
+    const char* (*text)(struct RUBase* self_c, uint32_t mode);
+    void (*set_text)(struct RUBase* self_c, const char* arg0, uint32_t mode);
+    struct RUMimeData (*mime_data)(struct RUBase* self_c, uint32_t mode);
+    void (*set_mime_data)(struct RUBase* self_c, struct RUBase* data,
+                          uint32_t mode);
+    struct RUImage (*image)(struct RUBase* self_c, uint32_t mode);
+    struct RUPixmap (*pixmap)(struct RUBase* self_c, uint32_t mode);
+    void (*set_image)(struct RUBase* self_c, struct RUBase* arg0,
+                      uint32_t mode);
+    void (*set_pixmap)(struct RUBase* self_c, struct RUBase* arg0,
+                       uint32_t mode);
 } RUClipboardFuncs;
 
 typedef struct RUClipboardAllFuncs {

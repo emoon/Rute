@@ -17,18 +17,18 @@ static int key_event_key(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool key_event_matches(struct RUBase* self_c, int key) {
+static bool key_event_matches(struct RUBase* self_c, uint32_t key) {
     QKeyEvent* qt_value = (QKeyEvent*)self_c;
-    auto ret_value = qt_value->matches((QKeySequence::StandardKey)s_standard_key_lookup[key]);
+    auto ret_value = qt_value->matches((QKeySequence::StandardKey)key);
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int key_event_modifiers(struct RUBase* self_c) {
+static uint32_t key_event_modifiers(struct RUBase* self_c) {
     QKeyEvent* qt_value = (QKeyEvent*)self_c;
     auto ret_value = qt_value->modifiers();
-    return s_keyboard_modifiers_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -52,17 +52,17 @@ static void painter_init_from(struct RUBase* self_c, struct RUBase* device) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_set_composition_mode(struct RUBase* self_c, int mode) {
+static void painter_set_composition_mode(struct RUBase* self_c, uint32_t mode) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setCompositionMode((QPainter::CompositionMode)s_composition_mode_lookup[mode]);
+    qt_value->setCompositionMode((QPainter::CompositionMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int painter_composition_mode(struct RUBase* self_c) {
+static uint32_t painter_composition_mode(struct RUBase* self_c) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->compositionMode();
-    return s_composition_mode_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -102,9 +102,9 @@ static void painter_set_pen_2(struct RUBase* self_c, struct RUBase* pen) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_set_pen_3(struct RUBase* self_c, int style) {
+static void painter_set_pen_3(struct RUBase* self_c, uint32_t style) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setPen((Qt::PenStyle)s_pen_style_lookup[style]);
+    qt_value->setPen((Qt::PenStyle)style);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -130,9 +130,9 @@ static void painter_set_brush(struct RUBase* self_c, struct RUBase* brush) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_set_brush_2(struct RUBase* self_c, int style) {
+static void painter_set_brush_2(struct RUBase* self_c, uint32_t style) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setBrush((Qt::BrushStyle)s_brush_style_lookup[style]);
+    qt_value->setBrush((Qt::BrushStyle)style);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -151,17 +151,17 @@ static struct RUBrush painter_brush(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_set_background_mode(struct RUBase* self_c, int mode) {
+static void painter_set_background_mode(struct RUBase* self_c, uint32_t mode) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setBackgroundMode((Qt::BGMode)s_bg_mode_lookup[mode]);
+    qt_value->setBackgroundMode((Qt::BGMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int painter_background_mode(struct RUBase* self_c) {
+static uint32_t painter_background_mode(struct RUBase* self_c) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->backgroundMode();
-    return s_bg_mode_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -251,30 +251,30 @@ static struct RURegion painter_clip_region(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_set_clip_rect(struct RUBase* self_c, struct RUBase* arg0, int op) {
+static void painter_set_clip_rect(struct RUBase* self_c, struct RUBase* arg0, uint32_t op) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setClipRect(*((QRectF*)arg0), (Qt::ClipOperation)s_clip_operation_lookup[op]);
+    qt_value->setClipRect(*((QRectF*)arg0), (Qt::ClipOperation)op);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_set_clip_rect_2(struct RUBase* self_c, struct RUBase* arg0, int op) {
+static void painter_set_clip_rect_2(struct RUBase* self_c, struct RUBase* arg0, uint32_t op) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setClipRect(*((QRect*)arg0), (Qt::ClipOperation)s_clip_operation_lookup[op]);
+    qt_value->setClipRect(*((QRect*)arg0), (Qt::ClipOperation)op);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_set_clip_rect_3(struct RUBase* self_c, int x, int y, int w, int h, int op) {
+static void painter_set_clip_rect_3(struct RUBase* self_c, int x, int y, int w, int h, uint32_t op) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setClipRect(x, y, w, h, (Qt::ClipOperation)s_clip_operation_lookup[op]);
+    qt_value->setClipRect(x, y, w, h, (Qt::ClipOperation)op);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_set_clip_region(struct RUBase* self_c, struct RUBase* arg0, int op) {
+static void painter_set_clip_region(struct RUBase* self_c, struct RUBase* arg0, uint32_t op) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setClipRegion(*((QRegion*)arg0), (Qt::ClipOperation)s_clip_operation_lookup[op]);
+    qt_value->setClipRegion(*((QRegion*)arg0), (Qt::ClipOperation)op);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -680,30 +680,30 @@ static void painter_draw_polyline_4(struct RUBase* self_c, struct RUBase* polygo
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_polygon(struct RUBase* self_c, struct RUBase* points, int point_count, int fill_rule) {
+static void painter_draw_polygon(struct RUBase* self_c, struct RUBase* points, int point_count, uint32_t fill_rule) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPolygon((QPointF*)points, point_count, (Qt::FillRule)s_fill_rule_lookup[fill_rule]);
+    qt_value->drawPolygon((QPointF*)points, point_count, (Qt::FillRule)fill_rule);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_polygon_2(struct RUBase* self_c, struct RUBase* polygon, int fill_rule) {
+static void painter_draw_polygon_2(struct RUBase* self_c, struct RUBase* polygon, uint32_t fill_rule) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPolygon(*((QPolygonF*)polygon), (Qt::FillRule)s_fill_rule_lookup[fill_rule]);
+    qt_value->drawPolygon(*((QPolygonF*)polygon), (Qt::FillRule)fill_rule);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_polygon_3(struct RUBase* self_c, struct RUBase* points, int point_count, int fill_rule) {
+static void painter_draw_polygon_3(struct RUBase* self_c, struct RUBase* points, int point_count, uint32_t fill_rule) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPolygon((QPoint*)points, point_count, (Qt::FillRule)s_fill_rule_lookup[fill_rule]);
+    qt_value->drawPolygon((QPoint*)points, point_count, (Qt::FillRule)fill_rule);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_polygon_4(struct RUBase* self_c, struct RUBase* polygon, int fill_rule) {
+static void painter_draw_polygon_4(struct RUBase* self_c, struct RUBase* polygon, uint32_t fill_rule) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawPolygon(*((QPolygon*)polygon), (Qt::FillRule)s_fill_rule_lookup[fill_rule]);
+    qt_value->drawPolygon(*((QPolygon*)polygon), (Qt::FillRule)fill_rule);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -799,23 +799,23 @@ static void painter_draw_chord_3(struct RUBase* self_c, struct RUBase* arg0, int
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_rounded_rect(struct RUBase* self_c, struct RUBase* rect, float x_radius, float y_radius, int mode) {
+static void painter_draw_rounded_rect(struct RUBase* self_c, struct RUBase* rect, float x_radius, float y_radius, uint32_t mode) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawRoundedRect(*((QRectF*)rect), x_radius, y_radius, (Qt::SizeMode)s_size_mode_lookup[mode]);
+    qt_value->drawRoundedRect(*((QRectF*)rect), x_radius, y_radius, (Qt::SizeMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_rounded_rect_2(struct RUBase* self_c, int x, int y, int w, int h, float x_radius, float y_radius, int mode) {
+static void painter_draw_rounded_rect_2(struct RUBase* self_c, int x, int y, int w, int h, float x_radius, float y_radius, uint32_t mode) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawRoundedRect(x, y, w, h, x_radius, y_radius, (Qt::SizeMode)s_size_mode_lookup[mode]);
+    qt_value->drawRoundedRect(x, y, w, h, x_radius, y_radius, (Qt::SizeMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_rounded_rect_3(struct RUBase* self_c, struct RUBase* rect, float x_radius, float y_radius, int mode) {
+static void painter_draw_rounded_rect_3(struct RUBase* self_c, struct RUBase* rect, float x_radius, float y_radius, uint32_t mode) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawRoundedRect(*((QRect*)rect), x_radius, y_radius, (Qt::SizeMode)s_size_mode_lookup[mode]);
+    qt_value->drawRoundedRect(*((QRect*)rect), x_radius, y_radius, (Qt::SizeMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -939,30 +939,30 @@ static void painter_draw_pixmap_11(struct RUBase* self_c, int x, int y, int w, i
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_image(struct RUBase* self_c, struct RUBase* target_rect, struct RUBase* image, struct RUBase* source_rect, int flags) {
+static void painter_draw_image(struct RUBase* self_c, struct RUBase* target_rect, struct RUBase* image, struct RUBase* source_rect, uint32_t flags) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(*((QRectF*)target_rect), *((QImage*)image), *((QRectF*)source_rect), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    qt_value->drawImage(*((QRectF*)target_rect), *((QImage*)image), *((QRectF*)source_rect), (Qt::ImageConversionFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_image_2(struct RUBase* self_c, struct RUBase* target_rect, struct RUBase* image, struct RUBase* source_rect, int flags) {
+static void painter_draw_image_2(struct RUBase* self_c, struct RUBase* target_rect, struct RUBase* image, struct RUBase* source_rect, uint32_t flags) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(*((QRect*)target_rect), *((QImage*)image), *((QRect*)source_rect), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    qt_value->drawImage(*((QRect*)target_rect), *((QImage*)image), *((QRect*)source_rect), (Qt::ImageConversionFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_image_3(struct RUBase* self_c, struct RUBase* p, struct RUBase* image, struct RUBase* sr, int flags) {
+static void painter_draw_image_3(struct RUBase* self_c, struct RUBase* p, struct RUBase* image, struct RUBase* sr, uint32_t flags) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(*((QPointF*)p), *((QImage*)image), *((QRectF*)sr), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    qt_value->drawImage(*((QPointF*)p), *((QImage*)image), *((QRectF*)sr), (Qt::ImageConversionFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_image_4(struct RUBase* self_c, struct RUBase* p, struct RUBase* image, struct RUBase* sr, int flags) {
+static void painter_draw_image_4(struct RUBase* self_c, struct RUBase* p, struct RUBase* image, struct RUBase* sr, uint32_t flags) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(*((QPoint*)p), *((QImage*)image), *((QRect*)sr), (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    qt_value->drawImage(*((QPoint*)p), *((QImage*)image), *((QRect*)sr), (Qt::ImageConversionFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -995,24 +995,24 @@ static void painter_draw_image_8(struct RUBase* self_c, struct RUBase* p, struct
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_draw_image_9(struct RUBase* self_c, int x, int y, struct RUBase* image, int sx, int sy, int sw, int sh, int flags) {
+static void painter_draw_image_9(struct RUBase* self_c, int x, int y, struct RUBase* image, int sx, int sy, int sw, int sh, uint32_t flags) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->drawImage(x, y, *((QImage*)image), sx, sy, sw, sh, (Qt::ImageConversionFlags)s_image_conversion_flags_lookup[flags]);
+    qt_value->drawImage(x, y, *((QImage*)image), sx, sy, sw, sh, (Qt::ImageConversionFlags)flags);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_set_layout_direction(struct RUBase* self_c, int direction) {
+static void painter_set_layout_direction(struct RUBase* self_c, uint32_t direction) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setLayoutDirection((Qt::LayoutDirection)s_layout_direction_lookup[direction]);
+    qt_value->setLayoutDirection((Qt::LayoutDirection)direction);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int painter_layout_direction(struct RUBase* self_c) {
+static uint32_t painter_layout_direction(struct RUBase* self_c) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->layoutDirection();
-    return s_layout_direction_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1150,44 +1150,44 @@ static void painter_fill_rect_6(struct RUBase* self_c, struct RUBase* arg0, stru
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_fill_rect_7(struct RUBase* self_c, int x, int y, int w, int h, int c) {
+static void painter_fill_rect_7(struct RUBase* self_c, int x, int y, int w, int h, uint32_t c) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(x, y, w, h, (Qt::GlobalColor)s_global_color_lookup[c]);
+    qt_value->fillRect(x, y, w, h, (Qt::GlobalColor)c);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_fill_rect_8(struct RUBase* self_c, struct RUBase* r, int c) {
+static void painter_fill_rect_8(struct RUBase* self_c, struct RUBase* r, uint32_t c) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(*((QRect*)r), (Qt::GlobalColor)s_global_color_lookup[c]);
+    qt_value->fillRect(*((QRect*)r), (Qt::GlobalColor)c);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_fill_rect_9(struct RUBase* self_c, struct RUBase* r, int c) {
+static void painter_fill_rect_9(struct RUBase* self_c, struct RUBase* r, uint32_t c) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(*((QRectF*)r), (Qt::GlobalColor)s_global_color_lookup[c]);
+    qt_value->fillRect(*((QRectF*)r), (Qt::GlobalColor)c);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_fill_rect_10(struct RUBase* self_c, int x, int y, int w, int h, int style) {
+static void painter_fill_rect_10(struct RUBase* self_c, int x, int y, int w, int h, uint32_t style) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(x, y, w, h, (Qt::BrushStyle)s_brush_style_lookup[style]);
+    qt_value->fillRect(x, y, w, h, (Qt::BrushStyle)style);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_fill_rect_11(struct RUBase* self_c, struct RUBase* r, int style) {
+static void painter_fill_rect_11(struct RUBase* self_c, struct RUBase* r, uint32_t style) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(*((QRect*)r), (Qt::BrushStyle)s_brush_style_lookup[style]);
+    qt_value->fillRect(*((QRect*)r), (Qt::BrushStyle)style);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_fill_rect_12(struct RUBase* self_c, struct RUBase* r, int style) {
+static void painter_fill_rect_12(struct RUBase* self_c, struct RUBase* r, uint32_t style) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->fillRect(*((QRectF*)r), (Qt::BrushStyle)s_brush_style_lookup[style]);
+    qt_value->fillRect(*((QRectF*)r), (Qt::BrushStyle)style);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1213,31 +1213,31 @@ static void painter_erase_rect_3(struct RUBase* self_c, struct RUBase* arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_set_render_hint(struct RUBase* self_c, int hint, bool on) {
+static void painter_set_render_hint(struct RUBase* self_c, uint32_t hint, bool on) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setRenderHint((QPainter::RenderHint)s_render_hint_lookup[hint], on);
+    qt_value->setRenderHint((QPainter::RenderHint)hint, on);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void painter_set_render_hints(struct RUBase* self_c, int hints, bool on) {
+static void painter_set_render_hints(struct RUBase* self_c, uint32_t hints, bool on) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    qt_value->setRenderHints((QPainter::RenderHints)s_render_hints_lookup[hints], on);
+    qt_value->setRenderHints((QPainter::RenderHints)hints, on);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int painter_render_hints(struct RUBase* self_c) {
+static uint32_t painter_render_hints(struct RUBase* self_c) {
     WRPainter* qt_value = (WRPainter*)self_c;
     auto ret_value = qt_value->renderHints();
-    return s_render_hints_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool painter_test_render_hint(struct RUBase* self_c, int hint) {
+static bool painter_test_render_hint(struct RUBase* self_c, uint32_t hint) {
     WRPainter* qt_value = (WRPainter*)self_c;
-    auto ret_value = qt_value->testRenderHint((QPainter::RenderHint)s_render_hint_lookup[hint]);
+    auto ret_value = qt_value->testRenderHint((QPainter::RenderHint)hint);
     return ret_value;
 }
 

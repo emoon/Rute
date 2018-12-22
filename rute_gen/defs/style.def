@@ -876,1150 +876,1150 @@ struct Style : Object {
 [org_name(QStyle)]
 enum StateFlag {
     /// Indicates that the widget does not have a state.
-    State_None,
+    State_None = 0,
     /// Used to indicate if the widget is enabled.
-    State_Enabled,
+    State_Enabled = 1,
     /// Used to indicate if a button is raised.
-    State_Raised,
+    State_Raised = 2,
     /// Used to indicate if the widget is sunken or pressed.
-    State_Sunken,
+    State_Sunken = 4,
     /// Used to indicate if the widget is not checked.
-    State_Off,
+    State_Off = 8,
     /// Used to indicate a tri-state checkbox.
-    State_NoChange,
+    State_NoChange = 16,
     /// Used to indicate if the widget is checked.
-    State_On,
+    State_On = 32,
     /// Used to indicate if a down arrow should be visible on the widget.
-    State_DownArrow,
+    State_DownArrow = 64,
     /// Used to indicate if the widget is laid out horizontally, for example. a tool bar.
-    State_Horizontal,
+    State_Horizontal = 128,
     /// Used to indicate if the widget has focus.
-    State_HasFocus,
-    State_Top,
-    State_Bottom,
-    State_FocusAtBorder,
+    State_HasFocus = 256,
+    State_Top = 512,
+    State_Bottom = 1024,
+    State_FocusAtBorder = 2048,
     /// Used to indicate if auto-raise appearance should be used on a tool button.
-    State_AutoRaise,
+    State_AutoRaise = 4096,
     /// Used to indicate if the widget is under the mouse.
-    State_MouseOver,
+    State_MouseOver = 8192,
     /// Used to indicate if an up arrow should be visible on the widget.
-    State_UpArrow,
+    State_UpArrow = 16384,
     /// Used to indicate if a widget is selected.
-    State_Selected,
+    State_Selected = 32768,
     /// Indicates that the widget is active.
-    State_Active,
-    State_Window,
+    State_Active = 65536,
+    State_Window = 131072,
     /// Used by item views to indicate if the tree branch is open.
-    State_Open,
+    State_Open = 262144,
     /// Used to indicate if an item view branch has children.
-    State_Children,
+    State_Children = 524288,
     /// Used by item views to indicate if a horizontal branch should be drawn.
-    State_Item,
+    State_Item = 1048576,
     /// Used by item views to indicate if a vertical line needs to be drawn (for siblings).
-    State_Sibling,
+    State_Sibling = 2097152,
     /// Used to indicate if an editor is opened on the widget.
-    State_Editing,
+    State_Editing = 4194304,
     /// Used to indicate if the focus was changed with the keyboard, e.g., tab, backtab or shortcut.
-    State_KeyboardFocusChange,
+    State_KeyboardFocusChange = 8388608,
     /// Used to indicate if a widget is read-only.
-    State_ReadOnly,
+    State_ReadOnly = 33554432,
     /// Used to indicate a small style Mac widget or button.
-    State_Small,
+    State_Small = 67108864,
     /// Used to indicate a mini style Mac widget or button.
-    State_Mini,
+    State_Mini = 134217728,
 }
 
 [org_name(QStyle)]
 enum PrimitiveElement {
     /// Generic frame
-    PE_Frame,
+    PE_Frame = 0,
     /// This frame around a default button, e.g. in a dialog.
-    PE_FrameDefaultButton,
+    PE_FrameDefaultButton = 1,
     /// Panel frame for dock windows and toolbars.
-    PE_FrameDockWidget,
+    PE_FrameDockWidget = 2,
     /// Generic focus indicator.
-    PE_FrameFocusRect,
+    PE_FrameFocusRect = 3,
     /// Panel frame around group boxes.
-    PE_FrameGroupBox,
+    PE_FrameGroupBox = 4,
     /// Panel frame for line edits.
-    PE_FrameLineEdit,
+    PE_FrameLineEdit = 5,
     /// Frame for popup windows/menus; see also QMenu.
-    PE_FrameMenu,
+    PE_FrameMenu = 6,
     /// Obsolete. Use PE_FrameStatusBarItem instead.
-    PE_FrameStatusBar,
+    PE_FrameStatusBar = 7,
     /// Frame for an item of a status bar; see also QStatusBar.
-    PE_FrameStatusBarItem,
+    PE_FrameStatusBarItem = 7,
     /// Frame for tab widgets.
-    PE_FrameTabWidget,
+    PE_FrameTabWidget = 8,
     /// Frame around a MDI window or a docking window.
-    PE_FrameWindow,
+    PE_FrameWindow = 9,
     /// Panel frame for a button bevel.
-    PE_FrameButtonBevel,
+    PE_FrameButtonBevel = 10,
     /// Panel frame for a tool button.
-    PE_FrameButtonTool,
+    PE_FrameButtonTool = 11,
     /// The frame that is drawn for a tab bar, ususally drawn for a tab bar that isn't part of a tab widget.
-    PE_FrameTabBarBase,
+    PE_FrameTabBarBase = 12,
     /// Button used to initiate an action, for example, a QPushButton.
-    PE_PanelButtonCommand,
+    PE_PanelButtonCommand = 13,
     /// Generic panel with a button bevel.
-    PE_PanelButtonBevel,
+    PE_PanelButtonBevel = 14,
     /// Panel for a Tool button, used with QToolButton.
-    PE_PanelButtonTool,
+    PE_PanelButtonTool = 15,
     /// Panel for menu bars.
-    PE_PanelMenuBar,
+    PE_PanelMenuBar = 16,
     /// The panel for a toolbar.
-    PE_PanelToolBar,
+    PE_PanelToolBar = 17,
     /// Panel for a QLineEdit.
-    PE_PanelLineEdit,
+    PE_PanelLineEdit = 18,
     /// Generic Down arrow.
-    PE_IndicatorArrowDown,
+    PE_IndicatorArrowDown = 19,
     /// Generic Left arrow.
-    PE_IndicatorArrowLeft,
+    PE_IndicatorArrowLeft = 20,
     /// Generic Right arrow.
-    PE_IndicatorArrowRight,
+    PE_IndicatorArrowRight = 21,
     /// Generic Up arrow.
-    PE_IndicatorArrowUp,
+    PE_IndicatorArrowUp = 22,
     /// Lines used to represent the branch of a tree in a tree view.
-    PE_IndicatorBranch,
+    PE_IndicatorBranch = 23,
     /// Indicator for a drop down button, for example, a tool button that displays a menu.
-    PE_IndicatorButtonDropDown,
-    PE_IndicatorViewItemCheck,
+    PE_IndicatorButtonDropDown = 24,
+    PE_IndicatorViewItemCheck = 25,
     /// On/off indicator for a view item.
-    PE_IndicatorItemViewItemCheck,
+    PE_IndicatorItemViewItemCheck = 25,
     /// On/off indicator, for example, a QCheckBox.
-    PE_IndicatorCheckBox,
+    PE_IndicatorCheckBox = 26,
     /// Resize handle for dock windows.
-    PE_IndicatorDockWidgetResizeHandle,
+    PE_IndicatorDockWidgetResizeHandle = 27,
     /// Arrow used to indicate sorting on a list or table header.
-    PE_IndicatorHeaderArrow,
+    PE_IndicatorHeaderArrow = 28,
     /// Check mark used in a menu.
-    PE_IndicatorMenuCheckMark,
+    PE_IndicatorMenuCheckMark = 29,
     /// Section of a progress bar indicator; see also QProgressBar.
-    PE_IndicatorProgressChunk,
+    PE_IndicatorProgressChunk = 30,
     /// Exclusive on/off indicator, for example, a QRadioButton.
-    PE_IndicatorRadioButton,
+    PE_IndicatorRadioButton = 31,
     /// Down symbol for a spin widget.
-    PE_IndicatorSpinDown,
+    PE_IndicatorSpinDown = 32,
     /// Decrease symbol for a spin widget.
-    PE_IndicatorSpinMinus,
+    PE_IndicatorSpinMinus = 33,
     /// Increase symbol for a spin widget.
-    PE_IndicatorSpinPlus,
+    PE_IndicatorSpinPlus = 34,
     /// Up symbol for a spin widget, for example a QSpinBox.
-    PE_IndicatorSpinUp,
+    PE_IndicatorSpinUp = 35,
     /// The handle of a toolbar.
-    PE_IndicatorToolBarHandle,
+    PE_IndicatorToolBarHandle = 36,
     /// The separator in a toolbar.
-    PE_IndicatorToolBarSeparator,
+    PE_IndicatorToolBarSeparator = 37,
     /// The panel for a tip label.
-    PE_PanelTipLabel,
+    PE_PanelTipLabel = 38,
     /// Deprecated. Use [PE_IndicatorTabTearLeft](PE_IndicatorTabTearLeft) instead.
-    PE_IndicatorTabTear,
+    PE_IndicatorTabTear = 39,
     /// An indicator that a tab is partially scrolled out on the left side of the visible tab bar when there are many tabs.
-    PE_IndicatorTabTearLeft,
+    PE_IndicatorTabTearLeft = 39,
     /// Panel at the bottom-right (or bottom-left) corner of a scroll area.
-    PE_PanelScrollAreaCorner,
+    PE_PanelScrollAreaCorner = 40,
     /// A plain QWidget.
-    PE_Widget,
+    PE_Widget = 41,
     /// An arrow in a QColumnView.
-    PE_IndicatorColumnViewArrow,
+    PE_IndicatorColumnViewArrow = 42,
     /// An indicator that is drawn to show where an item in an item view is about to be dropped during a drag-and-drop operation in an item view.
-    PE_IndicatorItemViewItemDrop,
+    PE_IndicatorItemViewItemDrop = 43,
     /// The background for an item in an item view.
-    PE_PanelItemViewItem,
+    PE_PanelItemViewItem = 44,
     /// The background of a row in an item view.
-    PE_PanelItemViewRow,
+    PE_PanelItemViewRow = 45,
     /// The panel for a status bar.
-    PE_PanelStatusBar,
+    PE_PanelStatusBar = 46,
     /// The close button on a tab bar.
-    PE_IndicatorTabClose,
+    PE_IndicatorTabClose = 47,
     /// The panel for a menu.
-    PE_PanelMenu,
+    PE_PanelMenu = 48,
     /// An indicator that a tab is partially scrolled out on the right side of the visible tab bar when there are many tabs.
-    PE_IndicatorTabTearRight,
+    PE_IndicatorTabTearRight = 49,
     /// Base value for custom primitive elements. All values above this are reserved for custom use. Custom values must be greater than this value.
-    PE_CustomBase,
+    PE_CustomBase = 251658240,
 }
 
 [org_name(QStyle)]
 enum ControlElement {
     /// A QPushButton, draws CE_PushButtonBevel, CE_PushButtonLabel and PE_FrameFocusRect.
-    CE_PushButton,
+    CE_PushButton = 0,
     /// The bevel and default indicator of a QPushButton.
-    CE_PushButtonBevel,
+    CE_PushButtonBevel = 1,
     /// The label (an icon with text or pixmap) of a QPushButton.
-    CE_PushButtonLabel,
+    CE_PushButtonLabel = 2,
     /// A QCheckBox, draws a PE_IndicatorCheckBox, a CE_CheckBoxLabel and a PE_FrameFocusRect.
-    CE_CheckBox,
+    CE_CheckBox = 3,
     /// The label (text or pixmap) of a QCheckBox.
-    CE_CheckBoxLabel,
+    CE_CheckBoxLabel = 4,
     /// A QRadioButton, draws a PE_IndicatorRadioButton, a CE_RadioButtonLabel and a PE_FrameFocusRect.
-    CE_RadioButton,
+    CE_RadioButton = 5,
     /// The label (text or pixmap) of a QRadioButton.
-    CE_RadioButtonLabel,
+    CE_RadioButtonLabel = 6,
     /// The tab and label within a QTabBar.
-    CE_TabBarTab,
+    CE_TabBarTab = 7,
     /// The tab shape within a tab bar.
-    CE_TabBarTabShape,
+    CE_TabBarTabShape = 8,
     /// The label within a tab.
-    CE_TabBarTabLabel,
+    CE_TabBarTabLabel = 9,
     /// A QProgressBar, draws CE_ProgressBarGroove, CE_ProgressBarContents and CE_ProgressBarLabel.
-    CE_ProgressBar,
+    CE_ProgressBar = 10,
     /// The groove where the progress indicator is drawn in a QProgressBar.
-    CE_ProgressBarGroove,
+    CE_ProgressBarGroove = 11,
     /// The progress indicator of a QProgressBar.
-    CE_ProgressBarContents,
+    CE_ProgressBarContents = 12,
     /// The text label of a QProgressBar.
-    CE_ProgressBarLabel,
+    CE_ProgressBarLabel = 13,
     /// A menu item in a QMenu.
-    CE_MenuItem,
+    CE_MenuItem = 14,
     /// Scrolling areas in a QMenu when the style supports scrolling.
-    CE_MenuScroller,
+    CE_MenuScroller = 15,
     /// The vertical extra space on the top/bottom of a menu.
-    CE_MenuVMargin,
+    CE_MenuVMargin = 16,
     /// The horizontal extra space on the left/right of a menu.
-    CE_MenuHMargin,
+    CE_MenuHMargin = 17,
     /// A menu item representing the tear off section of a QMenu.
-    CE_MenuTearoff,
+    CE_MenuTearoff = 18,
     /// The area in a menu without menu items.
-    CE_MenuEmptyArea,
+    CE_MenuEmptyArea = 19,
     /// A menu item in a QMenuBar.
-    CE_MenuBarItem,
+    CE_MenuBarItem = 20,
     /// The empty area of a QMenuBar.
-    CE_MenuBarEmptyArea,
+    CE_MenuBarEmptyArea = 21,
     /// A tool button's label.
-    CE_ToolButtonLabel,
+    CE_ToolButtonLabel = 22,
     /// A header.
-    CE_Header,
+    CE_Header = 23,
     /// A header section.
-    CE_HeaderSection,
+    CE_HeaderSection = 24,
     /// The header's label.
-    CE_HeaderLabel,
+    CE_HeaderLabel = 25,
     /// The toolbox's tab and label within a QToolBox.
-    CE_ToolBoxTab,
+    CE_ToolBoxTab = 26,
     /// Window resize handle; see also QSizeGrip.
-    CE_SizeGrip,
+    CE_SizeGrip = 27,
     /// Splitter handle; see also QSplitter.
-    CE_Splitter,
+    CE_Splitter = 28,
     /// Rubber band used in for example an icon view.
-    CE_RubberBand,
+    CE_RubberBand = 29,
     /// Dock window title.
-    CE_DockWidgetTitle,
+    CE_DockWidgetTitle = 30,
     /// Scroll bar line increase indicator. (i.e., scroll down); see also QScrollBar.
-    CE_ScrollBarAddLine,
+    CE_ScrollBarAddLine = 31,
     /// Scroll bar line decrease indicator (i.e., scroll up).
-    CE_ScrollBarSubLine,
+    CE_ScrollBarSubLine = 32,
     /// Scolllbar page increase indicator (i.e., page down).
-    CE_ScrollBarAddPage,
+    CE_ScrollBarAddPage = 33,
     /// Scroll bar page decrease indicator (i.e., page up).
-    CE_ScrollBarSubPage,
+    CE_ScrollBarSubPage = 34,
     /// Scroll bar slider.
-    CE_ScrollBarSlider,
+    CE_ScrollBarSlider = 35,
     /// Scroll bar first line indicator (i.e., home).
-    CE_ScrollBarFirst,
+    CE_ScrollBarFirst = 36,
     /// Scroll bar last line indicator (i.e., end).
-    CE_ScrollBarLast,
+    CE_ScrollBarLast = 37,
     /// Focus frame that is style controlled.
-    CE_FocusFrame,
+    CE_FocusFrame = 38,
     /// The label of a non-editable QComboBox.
-    CE_ComboBoxLabel,
+    CE_ComboBoxLabel = 39,
     /// A toolbar like QToolBar.
-    CE_ToolBar,
+    CE_ToolBar = 40,
     /// The toolbox's tab shape.
-    CE_ToolBoxTabShape,
+    CE_ToolBoxTabShape = 41,
     /// The toolbox's tab label.
-    CE_ToolBoxTabLabel,
+    CE_ToolBoxTabLabel = 42,
     /// The area of a header view where there are no header sections.
-    CE_HeaderEmptyArea,
-    CE_ColumnViewGrip,
+    CE_HeaderEmptyArea = 43,
+    CE_ColumnViewGrip = 44,
     /// An item inside an item view.
-    CE_ItemViewItem,
+    CE_ItemViewItem = 45,
     /// The frame with the shape specified in the QStyleOptionFrame; see QFrame.
-    CE_ShapedFrame,
+    CE_ShapedFrame = 46,
     /// Base value for custom control elements; custom values must be greater than this value.
-    CE_CustomBase,
+    CE_CustomBase = 4026531840,
 }
 
 [org_name(QStyle)]
 enum SubElement {
     /// Area containing the label (icon with text or pixmap).
-    SE_PushButtonContents,
+    SE_PushButtonContents = 0,
     /// Area for the focus rect (usually larger than the contents rect).
-    SE_PushButtonFocusRect,
+    SE_PushButtonFocusRect = 1,
     /// Area for the state indicator (e.g., check mark).
-    SE_CheckBoxIndicator,
+    SE_CheckBoxIndicator = 2,
     /// Area for the label (text or pixmap).
-    SE_CheckBoxContents,
+    SE_CheckBoxContents = 3,
     /// Area for the focus indicator.
-    SE_CheckBoxFocusRect,
+    SE_CheckBoxFocusRect = 4,
     /// Clickable area, defaults to SE_CheckBoxFocusRect.
-    SE_CheckBoxClickRect,
+    SE_CheckBoxClickRect = 5,
     /// Area for the state indicator.
-    SE_RadioButtonIndicator,
+    SE_RadioButtonIndicator = 6,
     /// Area for the label.
-    SE_RadioButtonContents,
+    SE_RadioButtonContents = 7,
     /// Area for the focus indicator.
-    SE_RadioButtonFocusRect,
+    SE_RadioButtonFocusRect = 8,
     /// Clickable area, defaults to SE_RadioButtonFocusRect.
-    SE_RadioButtonClickRect,
+    SE_RadioButtonClickRect = 9,
     /// Area for the focus indicator.
-    SE_ComboBoxFocusRect,
+    SE_ComboBoxFocusRect = 10,
     /// Area for the focus indicator.
-    SE_SliderFocusRect,
+    SE_SliderFocusRect = 11,
     /// Area for the groove.
-    SE_ProgressBarGroove,
+    SE_ProgressBarGroove = 12,
     /// Area for the progress indicator.
-    SE_ProgressBarContents,
+    SE_ProgressBarContents = 13,
     /// Area for the text label.
-    SE_ProgressBarLabel,
+    SE_ProgressBarLabel = 14,
     /// Area for a toolbox tab's icon and label.
-    SE_ToolBoxTabContents,
+    SE_ToolBoxTabContents = 15,
     /// Area for the label in a header.
-    SE_HeaderLabel,
+    SE_HeaderLabel = 16,
     /// Area for the sort indicator for a header.
-    SE_HeaderArrow,
+    SE_HeaderArrow = 17,
     /// Area for the tab bar widget in a tab widget.
-    SE_TabWidgetTabBar,
+    SE_TabWidgetTabBar = 18,
     /// Area for the pane of a tab widget.
-    SE_TabWidgetTabPane,
+    SE_TabWidgetTabPane = 19,
     /// Area for the contents of the tab widget.
-    SE_TabWidgetTabContents,
+    SE_TabWidgetTabContents = 20,
     /// Area for the left corner widget in a tab widget.
-    SE_TabWidgetLeftCorner,
+    SE_TabWidgetLeftCorner = 21,
     /// Area for the right corner widget in a tab widget.
-    SE_TabWidgetRightCorner,
-    SE_ViewItemCheckIndicator,
+    SE_TabWidgetRightCorner = 22,
+    SE_ViewItemCheckIndicator = 23,
     /// Area for a view item's check mark.
-    SE_ItemViewItemCheckIndicator,
+    SE_ItemViewItemCheckIndicator = 23,
     /// Deprecated. Use SE_TabBarTearIndicatorLeft instead.
-    SE_TabBarTearIndicator,
+    SE_TabBarTearIndicator = 24,
     /// Area for the tear indicator on the left side of a tab bar with scroll arrows.
-    SE_TabBarTearIndicatorLeft,
+    SE_TabBarTearIndicatorLeft = 24,
     /// Area for the actual disclosure item in a tree branch.
-    SE_TreeViewDisclosureItem,
+    SE_TreeViewDisclosureItem = 25,
     /// Area for a line edit's contents.
-    SE_LineEditContents,
+    SE_LineEditContents = 26,
     /// Area for a frame's contents.
-    SE_FrameContents,
+    SE_FrameContents = 27,
     /// The close button of a dock widget.
-    SE_DockWidgetCloseButton,
+    SE_DockWidgetCloseButton = 28,
     /// The float button of a dock widget.
-    SE_DockWidgetFloatButton,
+    SE_DockWidgetFloatButton = 29,
     /// The text bounds of the dock widgets title.
-    SE_DockWidgetTitleBarText,
+    SE_DockWidgetTitleBarText = 30,
     /// The icon of a dock widget.
-    SE_DockWidgetIcon,
+    SE_DockWidgetIcon = 31,
     /// Area that counts for the parent layout.
-    SE_CheckBoxLayoutItem,
+    SE_CheckBoxLayoutItem = 32,
     /// Area that counts for the parent layout.
-    SE_ComboBoxLayoutItem,
+    SE_ComboBoxLayoutItem = 33,
     /// Area that counts for the parent layout.
-    SE_DateTimeEditLayoutItem,
+    SE_DateTimeEditLayoutItem = 34,
     /// Area that counts for the parent layout.
-    SE_DialogButtonBoxLayoutItem,
+    SE_DialogButtonBoxLayoutItem = 35,
     /// Area that counts for the parent layout.
-    SE_LabelLayoutItem,
+    SE_LabelLayoutItem = 36,
     /// Area that counts for the parent layout.
-    SE_ProgressBarLayoutItem,
+    SE_ProgressBarLayoutItem = 37,
     /// Area that counts for the parent layout.
-    SE_PushButtonLayoutItem,
+    SE_PushButtonLayoutItem = 38,
     /// Area that counts for the parent layout.
-    SE_RadioButtonLayoutItem,
+    SE_RadioButtonLayoutItem = 39,
     /// Area that counts for the parent layout.
-    SE_SliderLayoutItem,
+    SE_SliderLayoutItem = 40,
     /// Area that counts for the parent layout.
-    SE_SpinBoxLayoutItem,
+    SE_SpinBoxLayoutItem = 41,
     /// Area that counts for the parent layout.
-    SE_ToolButtonLayoutItem,
+    SE_ToolButtonLayoutItem = 42,
     /// Area that counts for the parent layout.
-    SE_FrameLayoutItem,
+    SE_FrameLayoutItem = 43,
     /// Area that counts for the parent layout.
-    SE_GroupBoxLayoutItem,
+    SE_GroupBoxLayoutItem = 44,
     /// Area that counts for the parent layout.
-    SE_TabWidgetLayoutItem,
+    SE_TabWidgetLayoutItem = 45,
     /// Area for a view item's decoration (icon).
-    SE_ItemViewItemDecoration,
+    SE_ItemViewItemDecoration = 46,
     /// Area for a view item's text.
-    SE_ItemViewItemText,
+    SE_ItemViewItemText = 47,
     /// Area for a view item's focus rect.
-    SE_ItemViewItemFocusRect,
+    SE_ItemViewItemFocusRect = 48,
     /// Area for a widget on the left side of a tab in a tab bar.
-    SE_TabBarTabLeftButton,
+    SE_TabBarTabLeftButton = 49,
     /// Area for a widget on the right side of a tab in a tab bar.
-    SE_TabBarTabRightButton,
+    SE_TabBarTabRightButton = 50,
     /// Area for the text on a tab in a tab bar.
-    SE_TabBarTabText,
+    SE_TabBarTabText = 51,
     /// Area for a frame's contents using the shape in QStyleOptionFrame; see QFrame
-    SE_ShapedFrameContents,
+    SE_ShapedFrameContents = 52,
     /// Area for the handle of a tool bar.
-    SE_ToolBarHandle,
+    SE_ToolBarHandle = 53,
     /// Area for the scroll left button on a tab bar with scroll buttons.
-    SE_TabBarScrollLeftButton,
+    SE_TabBarScrollLeftButton = 54,
     /// Area for the scroll right button on a tab bar with scroll buttons.
-    SE_TabBarScrollRightButton,
+    SE_TabBarScrollRightButton = 55,
     /// Area for the tear indicator on the right side of a tab bar with scroll arrows.
-    SE_TabBarTearIndicatorRight,
+    SE_TabBarTearIndicatorRight = 56,
     /// Base value for custom sub-elements. Custom values must be greater than this value.
-    SE_CustomBase,
+    SE_CustomBase = 4026531840,
 }
 
 [org_name(QStyle)]
 enum ComplexControl {
     /// A spinbox, like QSpinBox.
-    CC_SpinBox,
+    CC_SpinBox = 0,
     /// A combobox, like QComboBox.
-    CC_ComboBox,
+    CC_ComboBox = 1,
     /// A scroll bar, like QScrollBar.
-    CC_ScrollBar,
+    CC_ScrollBar = 2,
     /// A slider, like QSlider.
-    CC_Slider,
+    CC_Slider = 3,
     /// A tool button, like QToolButton.
-    CC_ToolButton,
+    CC_ToolButton = 4,
     /// A Title bar, like those used in QMdiSubWindow.
-    CC_TitleBar,
+    CC_TitleBar = 5,
     /// A dial, like QDial.
-    CC_Dial,
+    CC_Dial = 6,
     /// A group box, like QGroupBox.
-    CC_GroupBox,
+    CC_GroupBox = 7,
     /// The minimize, close, and normal button in the menu bar for a maximized MDI subwindow.
-    CC_MdiControls,
+    CC_MdiControls = 8,
     /// Base value for custom complex controls. Custom values must be greater than this value.
-    CC_CustomBase,
+    CC_CustomBase = 4026531840,
 }
 
 [org_name(QStyle)]
 enum SubControl {
     /// Special value that matches no other sub control.
-    SC_None,
+    SC_None = 0,
     /// Scroll bar add line (i.e., down/right arrow); see also QScrollBar.
-    SC_ScrollBarAddLine,
+    SC_ScrollBarAddLine = 1,
     /// Scroll bar sub line (i.e., up/left arrow).
-    SC_ScrollBarSubLine,
+    SC_ScrollBarSubLine = 2,
     /// Scroll bar add page (i.e., page down).
-    SC_ScrollBarAddPage,
+    SC_ScrollBarAddPage = 4,
     /// Scroll bar sub page (i.e., page up).
-    SC_ScrollBarSubPage,
+    SC_ScrollBarSubPage = 8,
     /// Scroll bar first line (i.e., home).
-    SC_ScrollBarFirst,
+    SC_ScrollBarFirst = 16,
     /// Scroll bar last line (i.e., end).
-    SC_ScrollBarLast,
+    SC_ScrollBarLast = 32,
     /// Scroll bar slider handle.
-    SC_ScrollBarSlider,
+    SC_ScrollBarSlider = 64,
     /// Special sub-control which contains the area in which the slider handle may move.
-    SC_ScrollBarGroove,
+    SC_ScrollBarGroove = 128,
     /// Spin widget up/increase; see also QSpinBox.
-    SC_SpinBoxUp,
+    SC_SpinBoxUp = 1,
     /// Spin widget down/decrease.
-    SC_SpinBoxDown,
+    SC_SpinBoxDown = 2,
     /// Spin widget frame.
-    SC_SpinBoxFrame,
+    SC_SpinBoxFrame = 4,
     /// Spin widget edit field.
-    SC_SpinBoxEditField,
+    SC_SpinBoxEditField = 8,
     /// Combobox frame.
-    SC_ComboBoxFrame,
+    SC_ComboBoxFrame = 1,
     /// Combobox edit field; see also QComboBox.
-    SC_ComboBoxEditField,
+    SC_ComboBoxEditField = 2,
     /// Combobox arrow button.
-    SC_ComboBoxArrow,
+    SC_ComboBoxArrow = 4,
     /// The reference rectangle for the combobox popup. Used to calculate the position of the popup.
-    SC_ComboBoxListBoxPopup,
+    SC_ComboBoxListBoxPopup = 8,
     /// Special sub-control which contains the area in which the slider handle may move.
-    SC_SliderGroove,
+    SC_SliderGroove = 1,
     /// Slider handle.
-    SC_SliderHandle,
+    SC_SliderHandle = 2,
     /// Slider tickmarks.
-    SC_SliderTickmarks,
+    SC_SliderTickmarks = 4,
     /// Tool button (see also QToolButton).
-    SC_ToolButton,
+    SC_ToolButton = 1,
     /// Sub-control for opening a popup menu in a tool button.
-    SC_ToolButtonMenu,
+    SC_ToolButtonMenu = 2,
     /// System menu button (i.e., restore, close, etc.).
-    SC_TitleBarSysMenu,
+    SC_TitleBarSysMenu = 1,
     /// Minimize button.
-    SC_TitleBarMinButton,
+    SC_TitleBarMinButton = 2,
     /// Maximize button.
-    SC_TitleBarMaxButton,
+    SC_TitleBarMaxButton = 4,
     /// Close button.
-    SC_TitleBarCloseButton,
+    SC_TitleBarCloseButton = 8,
     /// Normal (restore) button.
-    SC_TitleBarNormalButton,
+    SC_TitleBarNormalButton = 16,
     /// Shade button.
-    SC_TitleBarShadeButton,
+    SC_TitleBarShadeButton = 32,
     /// Unshade button.
-    SC_TitleBarUnshadeButton,
+    SC_TitleBarUnshadeButton = 64,
     /// Context Help button.
-    SC_TitleBarContextHelpButton,
+    SC_TitleBarContextHelpButton = 128,
     /// Window title label.
-    SC_TitleBarLabel,
+    SC_TitleBarLabel = 256,
     /// The groove for the dial.
-    SC_DialGroove,
+    SC_DialGroove = 1,
     /// The handle of the dial (i.e. what you use to control the dial).
-    SC_DialHandle,
+    SC_DialHandle = 2,
     /// The tickmarks for the dial.
-    SC_DialTickmarks,
+    SC_DialTickmarks = 4,
     /// The optional check box of a group box.
-    SC_GroupBoxCheckBox,
+    SC_GroupBoxCheckBox = 1,
     /// The title of a group box.
-    SC_GroupBoxLabel,
+    SC_GroupBoxLabel = 2,
     /// The group box contents.
-    SC_GroupBoxContents,
+    SC_GroupBoxContents = 4,
     /// The frame of a group box.
-    SC_GroupBoxFrame,
+    SC_GroupBoxFrame = 8,
     /// The minimize button for a MDI subwindow in the menu bar.
-    SC_MdiMinButton,
+    SC_MdiMinButton = 1,
     /// The normal button for a MDI subwindow in the menu bar.
-    SC_MdiNormalButton,
+    SC_MdiNormalButton = 2,
     /// The close button for a MDI subwindow in the menu bar.
-    SC_MdiCloseButton,
-    SC_CustomBase,
+    SC_MdiCloseButton = 4,
+    SC_CustomBase = 4026531840,
     /// Special value that matches all sub-controls.
-    SC_All,
+    SC_All = 4294967295,
 }
 
 [org_name(QStyle)]
 enum PixelMetric {
     /// Amount of whitespace between push button labels and the frame.
-    PM_ButtonMargin,
+    PM_ButtonMargin = 0,
     /// Width of the default-button indicator frame.
-    PM_ButtonDefaultIndicator,
+    PM_ButtonDefaultIndicator = 1,
     /// Width of the menu button indicator proportional to the widget height.
-    PM_MenuButtonIndicator,
+    PM_MenuButtonIndicator = 2,
     /// Horizontal contents shift of a button when the button is down.
-    PM_ButtonShiftHorizontal,
+    PM_ButtonShiftHorizontal = 3,
     /// Vertical contents shift of a button when the button is down.
-    PM_ButtonShiftVertical,
+    PM_ButtonShiftVertical = 4,
     /// Default frame width (usually 2).
-    PM_DefaultFrameWidth,
+    PM_DefaultFrameWidth = 5,
     /// Frame width of a spin box, defaults to PM_DefaultFrameWidth.
-    PM_SpinBoxFrameWidth,
+    PM_SpinBoxFrameWidth = 6,
     /// Frame width of a combo box, defaults to PM_DefaultFrameWidth.
-    PM_ComboBoxFrameWidth,
+    PM_ComboBoxFrameWidth = 7,
     /// The maximum allowed distance between the mouse and a scrollbar when dragging. Exceeding the specified distance will cause the slider to jump back to the original position; a value of -1 disables this behavior.
-    PM_MaximumDragDistance,
+    PM_MaximumDragDistance = 8,
     /// Width of a vertical scroll bar and the height of a horizontal scroll bar.
-    PM_ScrollBarExtent,
+    PM_ScrollBarExtent = 9,
     /// The minimum height of a vertical scroll bar's slider and the minimum width of a horizontal scroll bar's slider.
-    PM_ScrollBarSliderMin,
+    PM_ScrollBarSliderMin = 10,
     /// Total slider thickness.
-    PM_SliderThickness,
+    PM_SliderThickness = 11,
     /// Thickness of the slider handle.
-    PM_SliderControlThickness,
+    PM_SliderControlThickness = 12,
     /// Length of the slider.
-    PM_SliderLength,
+    PM_SliderLength = 13,
     /// The offset between the tickmarks and the slider.
-    PM_SliderTickmarkOffset,
+    PM_SliderTickmarkOffset = 14,
     /// The available space for the slider to move.
-    PM_SliderSpaceAvailable,
+    PM_SliderSpaceAvailable = 15,
     /// Width of a separator in a horizontal dock window and the height of a separator in a vertical dock window.
-    PM_DockWidgetSeparatorExtent,
+    PM_DockWidgetSeparatorExtent = 16,
     /// Width of the handle in a horizontal dock window and the height of the handle in a vertical dock window.
-    PM_DockWidgetHandleExtent,
+    PM_DockWidgetHandleExtent = 17,
     /// Frame width of a dock window.
-    PM_DockWidgetFrameWidth,
+    PM_DockWidgetFrameWidth = 18,
     /// Number of pixels the tabs should overlap. (Currently only used in styles, not inside of QTabBar)
-    PM_TabBarTabOverlap,
+    PM_TabBarTabOverlap = 19,
     /// Extra space added to the tab width.
-    PM_TabBarTabHSpace,
+    PM_TabBarTabHSpace = 20,
     /// Extra space added to the tab height.
-    PM_TabBarTabVSpace,
+    PM_TabBarTabVSpace = 21,
     /// Height of the area between the tab bar and the tab pages.
-    PM_TabBarBaseHeight,
+    PM_TabBarBaseHeight = 22,
     /// Number of pixels the tab bar overlaps the tab bar base.
-    PM_TabBarBaseOverlap,
+    PM_TabBarBaseOverlap = 23,
     /// Width of a chunk in a progress bar indicator.
-    PM_ProgressBarChunkWidth,
+    PM_ProgressBarChunkWidth = 24,
     /// Width of a splitter.
-    PM_SplitterWidth,
+    PM_SplitterWidth = 25,
     /// Height of the title bar.
-    PM_TitleBarHeight,
+    PM_TitleBarHeight = 26,
     /// Height of the scroller area in a QMenu.
-    PM_MenuScrollerHeight,
+    PM_MenuScrollerHeight = 27,
     /// Additional border (used on left and right) for a QMenu.
-    PM_MenuHMargin,
+    PM_MenuHMargin = 28,
     /// Additional border (used for bottom and top) for a QMenu.
-    PM_MenuVMargin,
+    PM_MenuVMargin = 29,
     /// Border width (applied on all sides) for a QMenu.
-    PM_MenuPanelWidth,
+    PM_MenuPanelWidth = 30,
     /// Height of a tear off area in a QMenu.
-    PM_MenuTearoffHeight,
+    PM_MenuTearoffHeight = 31,
     /// The frame width for the menu on the desktop.
-    PM_MenuDesktopFrameWidth,
+    PM_MenuDesktopFrameWidth = 32,
     /// Frame width of a menu bar, defaults to PM_DefaultFrameWidth.
-    PM_MenuBarPanelWidth,
+    PM_MenuBarPanelWidth = 33,
     /// Spacing between menu bar items.
-    PM_MenuBarItemSpacing,
+    PM_MenuBarItemSpacing = 34,
     /// Spacing between menu bar items and top/bottom of bar.
-    PM_MenuBarVMargin,
+    PM_MenuBarVMargin = 35,
     /// Spacing between menu bar items and left/right of bar.
-    PM_MenuBarHMargin,
+    PM_MenuBarHMargin = 36,
     /// Width of a check box indicator.
-    PM_IndicatorWidth,
+    PM_IndicatorWidth = 37,
     /// Height of a checkbox indicator.
-    PM_IndicatorHeight,
+    PM_IndicatorHeight = 38,
     /// Width of a radio button indicator.
-    PM_ExclusiveIndicatorWidth,
+    PM_ExclusiveIndicatorWidth = 39,
     /// Height of a radio button indicator.
-    PM_ExclusiveIndicatorHeight,
-    PM_DialogButtonsSeparator,
-    PM_DialogButtonsButtonWidth,
-    PM_DialogButtonsButtonHeight,
+    PM_ExclusiveIndicatorHeight = 40,
+    PM_DialogButtonsSeparator = 41,
+    PM_DialogButtonsButtonWidth = 42,
+    PM_DialogButtonsButtonHeight = 43,
     /// Frame width of an MDI window.
-    PM_MdiSubWindowFrameWidth,
+    PM_MdiSubWindowFrameWidth = 44,
     /// Obsolete. Use PM_MdiSubWindowFrameWidth instead.
-    PM_MDIFrameWidth,
+    PM_MDIFrameWidth = 44,
     /// Width of a minimized MDI window.
-    PM_MdiSubWindowMinimizedWidth,
+    PM_MdiSubWindowMinimizedWidth = 45,
     /// Obsolete. Use PM_MdiSubWindowMinimizedWidth instead.
-    PM_MDIMinimizedWidth,
+    PM_MDIMinimizedWidth = 45,
     /// The size of the margin between the sort indicator and the text.
-    PM_HeaderMargin,
+    PM_HeaderMargin = 46,
     /// The size of the sort indicator in a header.
-    PM_HeaderMarkSize,
+    PM_HeaderMarkSize = 47,
     /// The size of the resize grip in a header.
-    PM_HeaderGripMargin,
+    PM_HeaderGripMargin = 48,
     /// Horizontal pixel shift when a tab is selected.
-    PM_TabBarTabShiftHorizontal,
+    PM_TabBarTabShiftHorizontal = 49,
     /// Vertical pixel shift when a tab is selected.
-    PM_TabBarTabShiftVertical,
+    PM_TabBarTabShiftVertical = 50,
     ///
-    PM_TabBarScrollButtonWidth,
+    PM_TabBarScrollButtonWidth = 51,
     /// Width of the frame around toolbars.
-    PM_ToolBarFrameWidth,
+    PM_ToolBarFrameWidth = 52,
     /// Width of a toolbar handle in a horizontal toolbar and the height of the handle in a vertical toolbar.
-    PM_ToolBarHandleExtent,
+    PM_ToolBarHandleExtent = 53,
     /// Spacing between toolbar items.
-    PM_ToolBarItemSpacing,
+    PM_ToolBarItemSpacing = 54,
     /// Spacing between the toolbar frame and the items.
-    PM_ToolBarItemMargin,
+    PM_ToolBarItemMargin = 55,
     /// Width of a toolbar separator in a horizontal toolbar and the height of a separator in a vertical toolbar.
-    PM_ToolBarSeparatorExtent,
+    PM_ToolBarSeparatorExtent = 56,
     /// Width of a toolbar extension button in a horizontal toolbar and the height of the button in a vertical toolbar.
-    PM_ToolBarExtensionExtent,
+    PM_ToolBarExtensionExtent = 57,
     /// The height of the optional spin box slider.
-    PM_SpinBoxSliderHeight,
+    PM_SpinBoxSliderHeight = 58,
     /// Use PM_LayoutLeftMargin, PM_LayoutTopMargin, PM_LayoutRightMargin, and PM_LayoutBottomMargin instead.
-    PM_DefaultTopLevelMargin,
+    PM_DefaultTopLevelMargin = 59,
     /// Use PM_LayoutLeftMargin, PM_LayoutTopMargin, PM_LayoutRightMargin, and PM_LayoutBottomMargin instead.
-    PM_DefaultChildMargin,
+    PM_DefaultChildMargin = 60,
     /// Use PM_LayoutHorizontalSpacing and PM_LayoutVerticalSpacing instead.
-    PM_DefaultLayoutSpacing,
+    PM_DefaultLayoutSpacing = 61,
     /// Default tool bar icon size
-    PM_ToolBarIconSize,
+    PM_ToolBarIconSize = 62,
     /// The default size for icons in a list view.
-    PM_ListViewIconSize,
+    PM_ListViewIconSize = 63,
     /// The default size for icons in an icon view.
-    PM_IconViewIconSize,
+    PM_IconViewIconSize = 64,
     /// Default small icon size
-    PM_SmallIconSize,
+    PM_SmallIconSize = 65,
     /// Default large icon size
-    PM_LargeIconSize,
+    PM_LargeIconSize = 66,
     /// Vertical margin that the focus frame will outset the widget by.
-    PM_FocusFrameVMargin,
+    PM_FocusFrameVMargin = 67,
     /// Horizontal margin that the focus frame will outset the widget by.
-    PM_FocusFrameHMargin,
+    PM_FocusFrameHMargin = 68,
     /// The frame width for a tool tip label.
-    PM_ToolTipLabelFrameWidth,
+    PM_ToolTipLabelFrameWidth = 69,
     /// The spacing between a check box indicator and its label.
-    PM_CheckBoxLabelSpacing,
+    PM_CheckBoxLabelSpacing = 70,
     /// The default icon size for a tab bar.
-    PM_TabBarIconSize,
+    PM_TabBarIconSize = 71,
     /// The size of a size grip.
-    PM_SizeGripSize,
+    PM_SizeGripSize = 72,
     /// Margin of the dock window title.
-    PM_DockWidgetTitleMargin,
+    PM_DockWidgetTitleMargin = 73,
     /// The size of the standard icons in a message box
-    PM_MessageBoxIconSize,
+    PM_MessageBoxIconSize = 74,
     /// The default size of button icons
-    PM_ButtonIconSize,
+    PM_ButtonIconSize = 75,
     /// Amount of whitespace between dock widget's title bar button labels and the frame.
-    PM_DockWidgetTitleBarButtonMargin,
+    PM_DockWidgetTitleBarButtonMargin = 76,
     /// The spacing between a radio button indicator and its label.
-    PM_RadioButtonLabelSpacing,
+    PM_RadioButtonLabelSpacing = 77,
     /// Default [left margin](QLayout::setContentsMargins()) for a QLayout.
-    PM_LayoutLeftMargin,
+    PM_LayoutLeftMargin = 78,
     /// Default [top margin](QLayout::setContentsMargins()) for a QLayout.
-    PM_LayoutTopMargin,
+    PM_LayoutTopMargin = 79,
     /// Default [right margin](QLayout::setContentsMargins()) for a QLayout.
-    PM_LayoutRightMargin,
+    PM_LayoutRightMargin = 80,
     /// Default [bottom margin](QLayout::setContentsMargins()) for a QLayout.
-    PM_LayoutBottomMargin,
+    PM_LayoutBottomMargin = 81,
     /// Default [horizontal spacing](QLayout::spacing) for a QLayout.
-    PM_LayoutHorizontalSpacing,
+    PM_LayoutHorizontalSpacing = 82,
     /// Default [vertical spacing](QLayout::spacing) for a QLayout.
-    PM_LayoutVerticalSpacing,
+    PM_LayoutVerticalSpacing = 83,
     /// The distance between the left and right buttons in a tab bar.
-    PM_TabBar_ScrollButtonOverlap,
+    PM_TabBar_ScrollButtonOverlap = 84,
     /// The width of the cursor in a line edit or text edit
-    PM_TextCursorWidth,
+    PM_TextCursorWidth = 85,
     /// The default width of a close button on a tab in a tab bar.
-    PM_TabCloseIndicatorWidth,
+    PM_TabCloseIndicatorWidth = 86,
     /// The default height of a close button on a tab in a tab bar.
-    PM_TabCloseIndicatorHeight,
+    PM_TabCloseIndicatorHeight = 87,
     /// Distance between frame and scrollbar with SH_ScrollView_FrameOnlyAroundContents set.
-    PM_ScrollView_ScrollBarSpacing,
+    PM_ScrollView_ScrollBarSpacing = 88,
     /// Overlap between scroll bars and scroll content
-    PM_ScrollView_ScrollBarOverlap,
+    PM_ScrollView_ScrollBarOverlap = 89,
     /// The horizontal overlap between a submenu and its parent.
-    PM_SubMenuOverlap,
+    PM_SubMenuOverlap = 90,
     /// The indentation of items in a tree view. This enum value has been introduced in Qt 5.4.
-    PM_TreeViewIndentation,
+    PM_TreeViewIndentation = 91,
     /// The default size of sections in a horizontal header. This enum value has been introduced in Qt 5.5.
-    PM_HeaderDefaultSectionSizeHorizontal,
+    PM_HeaderDefaultSectionSizeHorizontal = 92,
     /// The default size of sections in a vertical header. This enum value has been introduced in Qt 5.5.
-    PM_HeaderDefaultSectionSizeVertical,
+    PM_HeaderDefaultSectionSizeVertical = 93,
     /// The size of button icons on a title bar. This enum value has been introduced in Qt 5.8.
-    PM_TitleBarButtonIconSize,
+    PM_TitleBarButtonIconSize = 94,
     /// The size of buttons on a title bar. This enum value has been introduced in Qt 5.8.
-    PM_TitleBarButtonSize,
+    PM_TitleBarButtonSize = 95,
     /// Base value for custom pixel metrics. Custom values must be greater than this value. The following values are obsolete:
-    PM_CustomBase,
+    PM_CustomBase = 4026531840,
 }
 
 [org_name(QStyle)]
 enum ContentsType {
     /// A push button, like QPushButton.
-    CT_PushButton,
+    CT_PushButton = 0,
     /// A check box, like QCheckBox.
-    CT_CheckBox,
+    CT_CheckBox = 1,
     /// A radio button, like QRadioButton.
-    CT_RadioButton,
+    CT_RadioButton = 2,
     /// A tool button, like QToolButton.
-    CT_ToolButton,
+    CT_ToolButton = 3,
     /// A combo box, like QComboBox.
-    CT_ComboBox,
+    CT_ComboBox = 4,
     /// A splitter, like QSplitter.
-    CT_Splitter,
+    CT_Splitter = 5,
     /// A progress bar, like QProgressBar.
-    CT_ProgressBar,
+    CT_ProgressBar = 6,
     /// A menu item, like QMenuItem.
-    CT_MenuItem,
+    CT_MenuItem = 7,
     /// A menu bar item, like the buttons in a QMenuBar.
-    CT_MenuBarItem,
+    CT_MenuBarItem = 8,
     /// A menu bar, like QMenuBar.
-    CT_MenuBar,
+    CT_MenuBar = 9,
     /// A menu, like QMenu.
-    CT_Menu,
+    CT_Menu = 10,
     /// A tab on a tab bar, like QTabBar.
-    CT_TabBarTab,
+    CT_TabBarTab = 11,
     /// A slider, like QSlider.
-    CT_Slider,
+    CT_Slider = 12,
     /// A scroll bar, like QScrollBar.
-    CT_ScrollBar,
+    CT_ScrollBar = 13,
     /// A line edit, like QLineEdit.
-    CT_LineEdit,
+    CT_LineEdit = 14,
     /// A spin box, like QSpinBox.
-    CT_SpinBox,
+    CT_SpinBox = 15,
     /// A size grip, like QSizeGrip.
-    CT_SizeGrip,
+    CT_SizeGrip = 16,
     /// A tab widget, like QTabWidget.
-    CT_TabWidget,
-    CT_DialogButtons,
+    CT_TabWidget = 17,
+    CT_DialogButtons = 18,
     /// A header section, like QHeader.
-    CT_HeaderSection,
+    CT_HeaderSection = 19,
     /// A group box, like QGroupBox.
-    CT_GroupBox,
+    CT_GroupBox = 20,
     /// The minimize, normal, and close button in the menu bar for a maximized MDI subwindow.
-    CT_MdiControls,
+    CT_MdiControls = 21,
     /// An item inside an item view.
-    CT_ItemViewItem,
+    CT_ItemViewItem = 22,
     /// Base value for custom contents types. Custom values must be greater than this value.
-    CT_CustomBase,
+    CT_CustomBase = 4026531840,
 }
 
 [org_name(QStyle)]
 enum RequestSoftwareInputPanel {
     /// Requests an input panel if the user clicks on the widget, but only if it is already focused.
-    RSIP_OnMouseClickAndAlreadyFocused,
+    RSIP_OnMouseClickAndAlreadyFocused = 0,
     /// Requests an input panel if the user clicks on the widget.
-    RSIP_OnMouseClick,
+    RSIP_OnMouseClick = 1,
 }
 
 [org_name(QStyle)]
 enum StyleHint {
     /// Disabled text is "etched" as it is on Windows.
-    SH_EtchDisabledText,
+    SH_EtchDisabledText = 0,
     /// Disabled text is dithered as it is on Motif.
-    SH_DitherDisabledText,
+    SH_DitherDisabledText = 1,
     /// A boolean value. If true, middle clicking on a scroll bar causes the slider to jump to that position. If false, middle clicking is ignored.
-    SH_ScrollBar_MiddleClickAbsolutePosition,
+    SH_ScrollBar_MiddleClickAbsolutePosition = 2,
     /// A boolean value. If true, when clicking a scroll bar SubControl, holding the mouse button down and moving the pointer outside the SubControl, the scroll bar continues to scroll. If false, the scollbar stops scrolling when the pointer leaves the SubControl.
-    SH_ScrollBar_ScrollWhenPointerLeavesControl,
+    SH_ScrollBar_ScrollWhenPointerLeavesControl = 3,
     /// Which type of mouse event should cause a tab to be selected.
-    SH_TabBar_SelectMouseType,
+    SH_TabBar_SelectMouseType = 4,
     /// The alignment for tabs in a QTabWidget. Possible values are Qt::AlignLeft, Qt::AlignCenter and Qt::AlignRight.
-    SH_TabBar_Alignment,
+    SH_TabBar_Alignment = 5,
     /// The placement of the sorting indicator may appear in list or table headers. Possible values are Qt::Alignment values (that is, an OR combination of Qt::AlignmentFlag flags).
-    SH_Header_ArrowAlignment,
+    SH_Header_ArrowAlignment = 6,
     /// Sliders snap to values while moving, as they do on Windows.
-    SH_Slider_SnapToValue,
+    SH_Slider_SnapToValue = 7,
     /// Key presses handled in a sloppy manner, i.e., left on a vertical slider subtracts a line.
-    SH_Slider_SloppyKeyEvents,
+    SH_Slider_SloppyKeyEvents = 8,
     /// Center button on progress dialogs, otherwise right aligned.
-    SH_ProgressDialog_CenterCancelButton,
+    SH_ProgressDialog_CenterCancelButton = 9,
     /// The alignment for text labels in progress dialogs; Qt::AlignCenter on Windows, Qt::AlignVCenter otherwise.
-    SH_ProgressDialog_TextLabelAlignment,
+    SH_ProgressDialog_TextLabelAlignment = 10,
     /// Right align buttons in the print dialog, as done on Windows.
-    SH_PrintDialog_RightAlignButtons,
+    SH_PrintDialog_RightAlignButtons = 11,
     /// One or two pixel space between the menu bar and the dockarea, as done on Windows.
-    SH_MainWindow_SpaceBelowMenuBar,
+    SH_MainWindow_SpaceBelowMenuBar = 12,
     /// Select the text in the line edit, or when selecting an item from the listbox, or when the line edit receives focus, as done on Windows.
-    SH_FontDialog_SelectAssociatedText,
+    SH_FontDialog_SelectAssociatedText = 13,
     /// Allows disabled menu items to be active.
-    SH_Menu_AllowActiveAndDisabled,
+    SH_Menu_AllowActiveAndDisabled = 14,
     /// Pressing the space bar activates the item, as done on Motif.
-    SH_Menu_SpaceActivatesItem,
+    SH_Menu_SpaceActivatesItem = 15,
     /// The number of milliseconds to wait before opening a submenu (256 on Windows, 96 on Motif).
-    SH_Menu_SubMenuPopupDelay,
+    SH_Menu_SubMenuPopupDelay = 16,
     /// Whether scrollviews draw their frame only around contents (like Motif), or around contents, scroll bars and corner widgets (like Windows).
-    SH_ScrollView_FrameOnlyAroundContents,
+    SH_ScrollView_FrameOnlyAroundContents = 17,
     /// Menu bars items are navigable by pressing Alt, followed by using the arrow keys to select the desired item.
-    SH_MenuBar_AltKeyNavigation,
+    SH_MenuBar_AltKeyNavigation = 18,
     /// Mouse tracking in combobox drop-down lists.
-    SH_ComboBox_ListMouseTracking,
+    SH_ComboBox_ListMouseTracking = 19,
     /// Mouse tracking in popup menus.
-    SH_Menu_MouseTracking,
+    SH_Menu_MouseTracking = 20,
     /// Mouse tracking in menu bars.
-    SH_MenuBar_MouseTracking,
+    SH_MenuBar_MouseTracking = 21,
     /// Gray out selected items when losing focus.
-    SH_ItemView_ChangeHighlightOnFocus,
+    SH_ItemView_ChangeHighlightOnFocus = 22,
     /// Turn on sharing activation with floating modeless dialogs.
-    SH_Widget_ShareActivation,
+    SH_Widget_ShareActivation = 23,
     /// The workspace should maximize the client area.
-    SH_Workspace_FillSpaceOnMaximize,
+    SH_Workspace_FillSpaceOnMaximize = 24,
     /// Allows popups as a combobox drop-down menu.
-    SH_ComboBox_Popup,
+    SH_ComboBox_Popup = 25,
     /// The title bar has no border.
-    SH_TitleBar_NoBorder,
+    SH_TitleBar_NoBorder = 26,
     /// Stops auto-repeat when the slider reaches the mouse position.
-    SH_Slider_StopMouseOverSlider,
+    SH_Slider_StopMouseOverSlider = 27,
     /// Obsolete. Use SH_Slider_StopMouseOverSlider instead.
-    SH_ScrollBar_StopMouseOverSlider,
+    SH_ScrollBar_StopMouseOverSlider = 27,
     /// Whether cursor should blink when text is selected.
-    SH_BlinkCursorWhenTextSelected,
+    SH_BlinkCursorWhenTextSelected = 28,
     /// Whether richtext selections should extend to the full width of the document.
-    SH_RichText_FullWidthSelection,
+    SH_RichText_FullWidthSelection = 29,
     /// Whether popup menus must support scrolling.
-    SH_Menu_Scrollable,
+    SH_Menu_Scrollable = 30,
     /// How to vertically align a group box's text label.
-    SH_GroupBox_TextLabelVerticalAlignment,
+    SH_GroupBox_TextLabelVerticalAlignment = 31,
     /// How to paint a group box's text label.
-    SH_GroupBox_TextLabelColor,
+    SH_GroupBox_TextLabelColor = 32,
     /// Whether popup menus must support the user moving the mouse cursor to a submenu while crossing other items of the menu. This is supported on most modern desktop platforms.
-    SH_Menu_SloppySubMenus,
+    SH_Menu_SloppySubMenus = 33,
     /// The RGB value of the grid for a table.
-    SH_Table_GridLineColor,
+    SH_Table_GridLineColor = 34,
     /// The Unicode character to be used for passwords.
-    SH_LineEdit_PasswordCharacter,
+    SH_LineEdit_PasswordCharacter = 35,
     /// Which button gets the default status in a dialog's button widget.
-    SH_DialogButtons_DefaultButton,
+    SH_DialogButtons_DefaultButton = 36,
     /// Boldness of the selected page title in a QToolBox.
-    SH_ToolBox_SelectedPageTitleBold,
+    SH_ToolBox_SelectedPageTitleBold = 37,
     /// Whether a tab bar should suggest a size to prevent scoll arrows.
-    SH_TabBar_PreferNoArrows,
+    SH_TabBar_PreferNoArrows = 38,
     /// A boolean value. If true, left clicking on a scroll bar causes the slider to jump to that position. If false, left clicking will behave as appropriate for each control.
-    SH_ScrollBar_LeftClickAbsolutePosition,
+    SH_ScrollBar_LeftClickAbsolutePosition = 39,
     /// Which type of mouse event should cause a list view expansion to be selected.
-    SH_ListViewExpand_SelectMouseType,
+    SH_ListViewExpand_SelectMouseType = 40,
     /// Whether shortcuts are underlined.
-    SH_UnderlineShortcut,
+    SH_UnderlineShortcut = 41,
     /// Animate a click when up or down is pressed in a spin box.
-    SH_SpinBox_AnimateButton,
+    SH_SpinBox_AnimateButton = 42,
     /// Auto-repeat interval for spinbox key presses.
-    SH_SpinBox_KeyPressAutoRepeatRate,
+    SH_SpinBox_KeyPressAutoRepeatRate = 43,
     /// Auto-repeat interval for spinbox mouse clicks.
-    SH_SpinBox_ClickAutoRepeatRate,
+    SH_SpinBox_ClickAutoRepeatRate = 44,
     /// Whether scrolling popups should fill the screen as they are scrolled.
-    SH_Menu_FillScreenWithScroll,
+    SH_Menu_FillScreenWithScroll = 45,
     /// An integer indicating the opacity for the tip label, 0 is completely transparent, 255 is completely opaque.
-    SH_ToolTipLabel_Opacity,
+    SH_ToolTipLabel_Opacity = 46,
     /// Indicates whether or not the menu bar draws separators.
-    SH_DrawMenuBarSeparator,
+    SH_DrawMenuBarSeparator = 47,
     /// Indicates if the title bar should show a '*' for windows that are modified.
-    SH_TitleBar_ModifyNotification,
+    SH_TitleBar_ModifyNotification = 48,
     /// The default focus policy for buttons.
-    SH_Button_FocusPolicy,
+    SH_Button_FocusPolicy = 49,
     /// A boolean indicating what the to use the border of the buttons (computed as half the button height) for the spacing of the button in a message box.
-    SH_MessageBox_UseBorderForButtonSpacing,
+    SH_MessageBox_UseBorderForButtonSpacing = 50,
     /// A boolean indicating whether controls on a title bar ought to update when the mouse is over them.
-    SH_TitleBar_AutoRaise,
+    SH_TitleBar_AutoRaise = 51,
     /// An int indicating the popup delay in milliseconds for menus attached to tool buttons.
-    SH_ToolButton_PopupDelay,
+    SH_ToolButton_PopupDelay = 52,
     /// The mask of the focus frame.
-    SH_FocusFrame_Mask,
+    SH_FocusFrame_Mask = 53,
     /// The mask of the rubber band.
-    SH_RubberBand_Mask,
+    SH_RubberBand_Mask = 54,
     /// The mask of the window frame.
-    SH_WindowFrame_Mask,
+    SH_WindowFrame_Mask = 55,
     /// Determines if the spin controls will shown as disabled when reaching the spin range boundary.
-    SH_SpinControls_DisableOnBounds,
+    SH_SpinControls_DisableOnBounds = 56,
     /// Defines the style's preferred background role (as QPalette::ColorRole) for a dial widget.
-    SH_Dial_BackgroundRole,
+    SH_Dial_BackgroundRole = 57,
     /// The layout direction for the combo box. By default it should be the same as indicated by the QStyleOption::direction variable.
-    SH_ComboBox_LayoutDirection,
+    SH_ComboBox_LayoutDirection = 58,
     /// The location where ellipses should be added for item text that is too long to fit in an view item.
-    SH_ItemView_EllipsisLocation,
+    SH_ItemView_EllipsisLocation = 59,
     /// When an item in an item view is selected, also highlight the branch or other decoration.
-    SH_ItemView_ShowDecorationSelected,
+    SH_ItemView_ShowDecorationSelected = 60,
     /// Emit the activated signal when the user single clicks on an item in an item in an item view. Otherwise the signal is emitted when the user double clicks on an item.
-    SH_ItemView_ActivateItemOnSingleClick,
+    SH_ItemView_ActivateItemOnSingleClick = 61,
     /// Whether or not a scroll bar has a context menu.
-    SH_ScrollBar_ContextMenu,
+    SH_ScrollBar_ContextMenu = 62,
     /// A boolean value. If true, when clicking a scroll bar button (SC_ScrollBarAddLine or SC_ScrollBarSubLine) and dragging over to the opposite button (rolling) will press the new button and release the old one. When it is false, the original button is released and nothing happens (like a push button).
-    SH_ScrollBar_RollBetweenButtons,
+    SH_ScrollBar_RollBetweenButtons = 63,
     /// Which mouse buttons cause a slider to set the value to the position clicked on.
-    SH_Slider_AbsoluteSetButtons,
+    SH_Slider_AbsoluteSetButtons = 64,
     /// Which mouse buttons cause a slider to page step the value.
-    SH_Slider_PageSetButtons,
+    SH_Slider_PageSetButtons = 65,
     /// Typing causes a menu to be search for relevant items, otherwise only mnemnonic is considered.
-    SH_Menu_KeyboardSearch,
+    SH_Menu_KeyboardSearch = 66,
     /// The default eliding style for a tab bar.
-    SH_TabBar_ElideMode,
+    SH_TabBar_ElideMode = 67,
     /// Controls how buttons are laid out in a QDialogButtonBox, returns a QDialogButtonBox::ButtonLayout enum.
-    SH_DialogButtonLayout,
+    SH_DialogButtonLayout = 68,
     /// The frame style used when drawing a combobox popup menu.
-    SH_ComboBox_PopupFrameStyle,
+    SH_ComboBox_PopupFrameStyle = 69,
     /// A boolean indicating if the text in a message box should allow user interfactions (e.g. selection) or not.
-    SH_MessageBox_TextInteractionFlags,
+    SH_MessageBox_TextInteractionFlags = 70,
     /// Indicates whether or not StandardButtons in QDialogButtonBox should have icons or not.
-    SH_DialogButtonBox_ButtonsHaveIcons,
+    SH_DialogButtonBox_ButtonsHaveIcons = 71,
     /// Obsolete. Use SpellCheckUnderlineStyle hint in QPlatformTheme instead.
-    SH_SpellCheckUnderlineStyle,
+    SH_SpellCheckUnderlineStyle = 72,
     /// A boolean indicating whether the buttons in the message box should be centered or not (see QDialogButtonBox::setCentered()).
-    SH_MessageBox_CenterButtons,
+    SH_MessageBox_CenterButtons = 73,
     /// Whether popups should allow the selections to wrap, that is when selection should the next item be the first item.
-    SH_Menu_SelectionWrap,
+    SH_Menu_SelectionWrap = 74,
     /// The item view is able to indicate a current item without changing the selection.
-    SH_ItemView_MovementWithoutUpdatingSelection,
+    SH_ItemView_MovementWithoutUpdatingSelection = 75,
     /// The mask of a tool tip.
-    SH_ToolTip_Mask,
+    SH_ToolTip_Mask = 76,
     /// The FocusFrame is stacked above the widget that it is "focusing on".
-    SH_FocusFrame_AboveWidget,
+    SH_FocusFrame_AboveWidget = 77,
     /// Specifies the text format used to highlight focused anchors in rich text documents displayed for example in QTextBrowser. The format has to be a QTextCharFormat returned in the variant of the QStyleHintReturnVariant return value. The QTextFormat::OutlinePen property is used for the outline and QTextFormat::BackgroundBrush for the background of the highlighted area.
-    SH_TextControl_FocusIndicatorTextCharFormat,
+    SH_TextControl_FocusIndicatorTextCharFormat = 78,
     /// Controls the look and feel of a QWizard. Returns a QWizard::WizardStyle enum.
-    SH_WizardStyle,
+    SH_WizardStyle = 79,
     /// Controls whether the tree view will select the first child when it is exapanded and the right arrow key is pressed.
-    SH_ItemView_ArrowKeysNavigateIntoChildren,
+    SH_ItemView_ArrowKeysNavigateIntoChildren = 80,
     /// The mask for a popup menu.
-    SH_Menu_Mask,
+    SH_Menu_Mask = 81,
     /// Flash triggered item.
-    SH_Menu_FlashTriggeredItem,
+    SH_Menu_FlashTriggeredItem = 82,
     /// Fade out the menu instead of hiding it immediately.
-    SH_Menu_FadeOutOnHide,
+    SH_Menu_FadeOutOnHide = 83,
     /// Auto-repeat threshold for spinbox mouse clicks.
-    SH_SpinBox_ClickAutoRepeatThreshold,
+    SH_SpinBox_ClickAutoRepeatThreshold = 84,
     /// Whether QTreeView paints alternating row colors for the area that does not have any items.
-    SH_ItemView_PaintAlternatingRowColorsForEmptyArea,
+    SH_ItemView_PaintAlternatingRowColorsForEmptyArea = 85,
     /// Provides a default for how rows are wrapped in a QFormLayout. Returns a QFormLayout::RowWrapPolicy enum.
-    SH_FormLayoutWrapPolicy,
+    SH_FormLayoutWrapPolicy = 86,
     /// Default position of the tab bar in a tab widget.
-    SH_TabWidget_DefaultTabPosition,
+    SH_TabWidget_DefaultTabPosition = 87,
     /// Determines if the tool bar is movable by default.
-    SH_ToolBar_Movable,
+    SH_ToolBar_Movable = 88,
     /// Provides a default for how fields can grow in a QFormLayout. Returns a QFormLayout::FieldGrowthPolicy enum.
-    SH_FormLayoutFieldGrowthPolicy,
+    SH_FormLayoutFieldGrowthPolicy = 89,
     /// Provides a default for how a QFormLayout aligns its contents within the available space. Returns a Qt::Alignment enum.
-    SH_FormLayoutFormAlignment,
+    SH_FormLayoutFormAlignment = 90,
     /// Provides a default for how a QFormLayout aligns labels within the available space. Returns a Qt::Alignment enum.
-    SH_FormLayoutLabelAlignment,
+    SH_FormLayoutLabelAlignment = 91,
     /// Determines if there should be a frame for a delegate widget.
-    SH_ItemView_DrawDelegateFrame,
+    SH_ItemView_DrawDelegateFrame = 92,
     /// Determines the position of the close button on a tab in a tab bar.
-    SH_TabBar_CloseButtonPosition,
+    SH_TabBar_CloseButtonPosition = 93,
     /// Determines if dockwidget buttons should have frames. Default is true.
-    SH_DockWidget_ButtonsHaveFrame,
+    SH_DockWidget_ButtonsHaveFrame = 94,
     /// Determines the default system style for tool buttons that uses Qt::ToolButtonFollowStyle.
-    SH_ToolButtonStyle,
+    SH_ToolButtonStyle = 95,
     /// Determines when a software input panel should be requested by input widgets. Returns an enum of type QStyle::RequestSoftwareInputPanel.
-    SH_RequestSoftwareInputPanel,
+    SH_RequestSoftwareInputPanel = 96,
     /// Determines if the style supports transient scroll bars. Transient scroll bars appear when the content is scrolled and disappear when they are no longer needed.
-    SH_ScrollBar_Transient,
+    SH_ScrollBar_Transient = 97,
     /// Determines if the style displays sections in menus or treat them as plain separators. Sections are separators with a text and icon hint.
-    SH_Menu_SupportsSections,
+    SH_Menu_SupportsSections = 98,
     /// Determines the delay before a tooltip is shown, in milliseconds.
-    SH_ToolTip_WakeUpDelay,
+    SH_ToolTip_WakeUpDelay = 99,
     /// Determines the delay (in milliseconds) before a new wake time is needed when a tooltip is shown (notice: shown, not hidden). When a new wake isn't needed, a user-requested tooltip will be shown nearly instantly.
-    SH_ToolTip_FallAsleepDelay,
+    SH_ToolTip_FallAsleepDelay = 100,
     /// Deprecated. Use [SH_Widget_Animation_Duration](SH_Widget_Animation_Duration) instead.
-    SH_Widget_Animate,
+    SH_Widget_Animate = 101,
     /// Determines if resizing is opaque This enum value has been introduced in Qt 5.2
-    SH_Splitter_OpaqueResize,
-    SH_ComboBox_UseNativePopup,
+    SH_Splitter_OpaqueResize = 102,
+    SH_ComboBox_UseNativePopup = 103,
     /// Determines the delay before visible character is masked with password character, in milliseconds. This enum value was added in Qt 5.4.
-    SH_LineEdit_PasswordMaskDelay,
+    SH_LineEdit_PasswordMaskDelay = 104,
     /// Determines the delay before the current tab is changed while dragging over the tabbar, in milliseconds. This enum value has been introduced in Qt 5.4
-    SH_TabBar_ChangeCurrentDelay,
+    SH_TabBar_ChangeCurrentDelay = 105,
     /// Since Qt 5.5. If the cursor has to move towards the submenu (like it is on MacOS ), or if the cursor can move in any direction as long as it reaches the submenu before the sloppy timeout.
-    SH_Menu_SubMenuUniDirection,
+    SH_Menu_SubMenuUniDirection = 106,
     /// Since Qt 5.5. When SH_Menu_SubMenuUniDirection is defined this enum defines the number of failed mouse moves before the sloppy submenu is discarded. This can be used to control the "strictness" of the uni direction algorithm.
-    SH_Menu_SubMenuUniDirectionFailCount,
+    SH_Menu_SubMenuUniDirectionFailCount = 107,
     /// Since Qt 5.5. Should other action items be selected when the mouse moves towards a sloppy submenu.
-    SH_Menu_SubMenuSloppySelectOtherActions,
+    SH_Menu_SubMenuSloppySelectOtherActions = 108,
     /// Since Qt 5.5. The timeout used to close sloppy submenus.
-    SH_Menu_SubMenuSloppyCloseTimeout,
+    SH_Menu_SubMenuSloppyCloseTimeout = 109,
     /// Since Qt 5.5. When entering parent from child submenu, should the sloppy state be reset, effectively closing the child and making the current submenu active.
-    SH_Menu_SubMenuResetWhenReenteringParent,
+    SH_Menu_SubMenuResetWhenReenteringParent = 110,
     /// Since Qt 5.5. Do not start sloppy timers when the mouse leaves a sub-menu.
-    SH_Menu_SubMenuDontStartSloppyOnLeave,
+    SH_Menu_SubMenuDontStartSloppyOnLeave = 111,
     /// The default vertical and horizontal scroll mode as specified by the style. Can be overridden with QAbstractItemView::setVerticalScrollMode() and QAbstractItemView::setHorizontalScrollMode(). This enum value has been introduced in Qt 5.7.
-    SH_ItemView_ScrollMode,
+    SH_ItemView_ScrollMode = 112,
     /// Determines if tool tips are shown on window title bar buttons. The Mac style, for example, sets this to false. This enum value has been introduced in Qt 5.10.
-    SH_TitleBar_ShowToolTipsOnButtons,
+    SH_TitleBar_ShowToolTipsOnButtons = 113,
     /// Determines how much an animation should last (in ms). A value equal to zero means that the animations will be disabled. This enum value has been introduced in Qt 5.10.
-    SH_Widget_Animation_Duration,
+    SH_Widget_Animation_Duration = 114,
     /// Determines if the mouse wheel can be used to scroll inside a QComboBox. This is on by default in all styles except the Mac style. This enum value has been introduced in Qt 5.10.
-    SH_ComboBox_AllowWheelScrolling,
+    SH_ComboBox_AllowWheelScrolling = 115,
     /// Determnines if the spin box buttons are inside the line edit frame. This enum value has been introduced in Qt 5.11.
-    SH_SpinBox_ButtonsInsideFrame,
+    SH_SpinBox_ButtonsInsideFrame = 116,
     /// Base value for custom style hints. Custom values must be greater than this value.
-    SH_CustomBase,
+    SH_CustomBase = 4026531840,
 }
 
 [org_name(QStyle)]
 enum StandardPixmap {
     /// Menu button on a title bar.
-    SP_TitleBarMenuButton,
+    SP_TitleBarMenuButton = 0,
     /// Minimize button on title bars (e.g., in QMdiSubWindow).
-    SP_TitleBarMinButton,
+    SP_TitleBarMinButton = 1,
     /// Maximize button on title bars.
-    SP_TitleBarMaxButton,
+    SP_TitleBarMaxButton = 2,
     /// Close button on title bars.
-    SP_TitleBarCloseButton,
+    SP_TitleBarCloseButton = 3,
     /// Normal (restore) button on title bars.
-    SP_TitleBarNormalButton,
+    SP_TitleBarNormalButton = 4,
     /// Shade button on title bars.
-    SP_TitleBarShadeButton,
+    SP_TitleBarShadeButton = 5,
     /// Unshade button on title bars.
-    SP_TitleBarUnshadeButton,
+    SP_TitleBarUnshadeButton = 6,
     /// The Context help button on title bars.
-    SP_TitleBarContextHelpButton,
+    SP_TitleBarContextHelpButton = 7,
     /// Close button on dock windows (see also QDockWidget).
-    SP_DockWidgetCloseButton,
+    SP_DockWidgetCloseButton = 8,
     /// The "information" icon.
-    SP_MessageBoxInformation,
+    SP_MessageBoxInformation = 9,
     /// The "warning" icon.
-    SP_MessageBoxWarning,
+    SP_MessageBoxWarning = 10,
     /// The "critical" icon.
-    SP_MessageBoxCritical,
+    SP_MessageBoxCritical = 11,
     /// The "question" icon.
-    SP_MessageBoxQuestion,
+    SP_MessageBoxQuestion = 12,
     /// The "desktop" icon.
-    SP_DesktopIcon,
+    SP_DesktopIcon = 13,
     /// The "trash" icon.
-    SP_TrashIcon,
+    SP_TrashIcon = 14,
     /// The "My computer" icon.
-    SP_ComputerIcon,
+    SP_ComputerIcon = 15,
     /// The floppy icon.
-    SP_DriveFDIcon,
+    SP_DriveFDIcon = 16,
     /// The harddrive icon.
-    SP_DriveHDIcon,
+    SP_DriveHDIcon = 17,
     /// The CD icon.
-    SP_DriveCDIcon,
+    SP_DriveCDIcon = 18,
     /// The DVD icon.
-    SP_DriveDVDIcon,
+    SP_DriveDVDIcon = 19,
     /// The network icon.
-    SP_DriveNetIcon,
+    SP_DriveNetIcon = 20,
     /// The open directory icon.
-    SP_DirOpenIcon,
+    SP_DirOpenIcon = 21,
     /// The closed directory icon.
-    SP_DirClosedIcon,
+    SP_DirClosedIcon = 22,
     /// The link to directory icon.
-    SP_DirLinkIcon,
+    SP_DirLinkIcon = 23,
     /// The link to open directory icon.
-    SP_DirLinkOpenIcon,
+    SP_DirLinkOpenIcon = 24,
     /// The file icon.
-    SP_FileIcon,
+    SP_FileIcon = 25,
     /// The link to file icon.
-    SP_FileLinkIcon,
+    SP_FileLinkIcon = 26,
     /// Extension button for horizontal toolbars.
-    SP_ToolBarHorizontalExtensionButton,
+    SP_ToolBarHorizontalExtensionButton = 27,
     /// Extension button for vertical toolbars.
-    SP_ToolBarVerticalExtensionButton,
+    SP_ToolBarVerticalExtensionButton = 28,
     /// The "start" icon in a file dialog.
-    SP_FileDialogStart,
+    SP_FileDialogStart = 29,
     /// The "end" icon in a file dialog.
-    SP_FileDialogEnd,
+    SP_FileDialogEnd = 30,
     /// The "parent directory" icon in a file dialog.
-    SP_FileDialogToParent,
+    SP_FileDialogToParent = 31,
     /// The "create new folder" icon in a file dialog.
-    SP_FileDialogNewFolder,
+    SP_FileDialogNewFolder = 32,
     /// The detailed view icon in a file dialog.
-    SP_FileDialogDetailedView,
+    SP_FileDialogDetailedView = 33,
     /// The file info icon in a file dialog.
-    SP_FileDialogInfoView,
+    SP_FileDialogInfoView = 34,
     /// The contents view icon in a file dialog.
-    SP_FileDialogContentsView,
+    SP_FileDialogContentsView = 35,
     /// The list view icon in a file dialog.
-    SP_FileDialogListView,
+    SP_FileDialogListView = 36,
     /// The back arrow in a file dialog.
-    SP_FileDialogBack,
+    SP_FileDialogBack = 37,
     /// The directory icon.
-    SP_DirIcon,
+    SP_DirIcon = 38,
     /// Icon for a standard OK button in a QDialogButtonBox.
-    SP_DialogOkButton,
+    SP_DialogOkButton = 39,
     /// Icon for a standard Cancel button in a QDialogButtonBox.
-    SP_DialogCancelButton,
+    SP_DialogCancelButton = 40,
     /// Icon for a standard Help button in a QDialogButtonBox.
-    SP_DialogHelpButton,
+    SP_DialogHelpButton = 41,
     /// Icon for a standard Open button in a QDialogButtonBox.
-    SP_DialogOpenButton,
+    SP_DialogOpenButton = 42,
     /// Icon for a standard Save button in a QDialogButtonBox.
-    SP_DialogSaveButton,
+    SP_DialogSaveButton = 43,
     /// Icon for a standard Close button in a QDialogButtonBox.
-    SP_DialogCloseButton,
+    SP_DialogCloseButton = 44,
     /// Icon for a standard Apply button in a QDialogButtonBox.
-    SP_DialogApplyButton,
+    SP_DialogApplyButton = 45,
     /// Icon for a standard Reset button in a QDialogButtonBox.
-    SP_DialogResetButton,
+    SP_DialogResetButton = 46,
     /// Icon for a standard Discard button in a QDialogButtonBox.
-    SP_DialogDiscardButton,
+    SP_DialogDiscardButton = 47,
     /// Icon for a standard Yes button in a QDialogButtonBox.
-    SP_DialogYesButton,
+    SP_DialogYesButton = 48,
     /// Icon for a standard No button in a QDialogButtonBox.
-    SP_DialogNoButton,
+    SP_DialogNoButton = 49,
     /// Icon arrow pointing up.
-    SP_ArrowUp,
+    SP_ArrowUp = 50,
     /// Icon arrow pointing down.
-    SP_ArrowDown,
+    SP_ArrowDown = 51,
     /// Icon arrow pointing left.
-    SP_ArrowLeft,
+    SP_ArrowLeft = 52,
     /// Icon arrow pointing right.
-    SP_ArrowRight,
+    SP_ArrowRight = 53,
     /// Equivalent to SP_ArrowLeft when the current layout direction is Qt::LeftToRight, otherwise SP_ArrowRight.
-    SP_ArrowBack,
+    SP_ArrowBack = 54,
     /// Equivalent to SP_ArrowRight when the current layout direction is Qt::LeftToRight, otherwise SP_ArrowLeft.
-    SP_ArrowForward,
+    SP_ArrowForward = 55,
     /// The home directory icon.
-    SP_DirHomeIcon,
+    SP_DirHomeIcon = 56,
     /// Icon used to indicate a Vista style command link glyph.
-    SP_CommandLink,
+    SP_CommandLink = 57,
     /// Icon used to indicate UAC prompts on Windows Vista. This will return a null pixmap or icon on all other platforms.
-    SP_VistaShield,
+    SP_VistaShield = 58,
     /// Icon indicating that the current page should be reloaded.
-    SP_BrowserReload,
+    SP_BrowserReload = 59,
     /// Icon indicating that the page loading should stop.
-    SP_BrowserStop,
+    SP_BrowserStop = 60,
     /// Icon indicating that media should begin playback.
-    SP_MediaPlay,
+    SP_MediaPlay = 61,
     /// Icon indicating that media should stop playback.
-    SP_MediaStop,
+    SP_MediaStop = 62,
     /// Icon indicating that media should pause playback.
-    SP_MediaPause,
+    SP_MediaPause = 63,
     /// Icon indicating that media should skip forward.
-    SP_MediaSkipForward,
+    SP_MediaSkipForward = 64,
     /// Icon indicating that media should skip backward.
-    SP_MediaSkipBackward,
+    SP_MediaSkipBackward = 65,
     /// Icon indicating that media should seek forward.
-    SP_MediaSeekForward,
+    SP_MediaSeekForward = 66,
     /// Icon indicating that media should seek backward.
-    SP_MediaSeekBackward,
+    SP_MediaSeekBackward = 67,
     /// Icon indicating a volume control.
-    SP_MediaVolume,
+    SP_MediaVolume = 68,
     /// Icon indicating a muted volume control.
-    SP_MediaVolumeMuted,
+    SP_MediaVolumeMuted = 69,
     /// Icon for a standard clear button in a QLineEdit. This enum value was added in Qt 5.2.
-    SP_LineEditClearButton,
+    SP_LineEditClearButton = 70,
     /// Base value for custom standard pixmaps; custom values must be greater than this value.
-    SP_CustomBase,
+    SP_CustomBase = 4026531840,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

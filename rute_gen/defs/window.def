@@ -1081,18 +1081,26 @@ struct Window : Object, Surface {
 
 [org_name(QWindow)]
 enum Visibility {
-    Hidden,
-    AutomaticVisibility,
-    Windowed,
-    Minimized,
-    Maximized,
-    FullScreen,
+    /// The window is not visible in any way, however it may remember a latent visibility which can be restored by setting AutomaticVisibility.
+    Hidden = 0,
+    /// This means to give the window a default visible state, which might be fullscreen or windowed depending on the platform. It can be given as a parameter to setVisibility but will never be read back from the visibility accessor.
+    AutomaticVisibility = 1,
+    /// The window occupies part of the screen, but not necessarily the entire screen. This state will occur only on windowing systems which support showing multiple windows simultaneously. In this state it is possible for the user to move and resize the window manually, if WindowFlags permit it and if it is supported by the windowing system.
+    Windowed = 2,
+    /// The window is reduced to an entry or icon on the task bar, dock, task list or desktop, depending on how the windowing system handles minimized windows.
+    Minimized = 3,
+    /// The window occupies one entire screen, and the titlebar is still visible. On most windowing systems this is the state achieved by clicking the maximize button on the toolbar.
+    Maximized = 4,
+    /// The window occupies one entire screen, is not resizable, and there is no titlebar. On some platforms which do not support showing multiple simultaneous windows, this can be the usual visibility when the window is not hidden.
+    FullScreen = 5,
 }
 
 [org_name(QWindow)]
 enum AncestorMode {
-    ExcludeTransients,
-    IncludeTransients,
+    /// Transient parents are not considered ancestors.
+    ExcludeTransients = 0,
+    /// Transient parents are considered ancestors.
+    IncludeTransients = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

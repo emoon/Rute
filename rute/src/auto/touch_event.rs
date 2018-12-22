@@ -211,7 +211,7 @@ impl<'a> TouchEvent<'a> {
         let (obj_data, funcs) = self.get_touch_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).touch_point_states)(obj_data);
-            let ret_val = { transmute::<i32, TouchPointStates>(ret_val) };
+            let ret_val = TouchPointStates::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -220,13 +220,13 @@ impl<'a> TouchEvent<'a> {
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).modifiers)(obj_data);
-            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            let ret_val = KeyboardModifiers::from_bits_truncate(ret_val);
             ret_val
         }
     }
     #[doc(hidden)]
     pub fn set_modifiers(&self, amodifiers: KeyboardModifiers) -> &Self {
-        let enum_amodifiers_1 = amodifiers as i32;
+        let enum_amodifiers_1 = amodifiers.bits();
 
         let (obj_data, funcs) = self.get_input_event_obj_funcs();
         unsafe {

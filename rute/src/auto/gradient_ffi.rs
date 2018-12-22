@@ -7,14 +7,14 @@ use std::os::raw::c_void;
 #[derive(Copy, Clone)]
 pub struct RUGradientFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
-    pub get_type: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub set_spread: extern "C" fn(self_c: *const RUBase, spread: i32),
-    pub spread: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub get_type: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub set_spread: extern "C" fn(self_c: *const RUBase, spread: u32),
+    pub spread: extern "C" fn(self_c: *const RUBase) -> u32,
     pub set_color_at: extern "C" fn(self_c: *const RUBase, pos: f32, color: *const RUBase),
-    pub coordinate_mode: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub set_coordinate_mode: extern "C" fn(self_c: *const RUBase, mode: i32),
-    pub interpolation_mode: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub set_interpolation_mode: extern "C" fn(self_c: *const RUBase, mode: i32),
+    pub coordinate_mode: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub set_coordinate_mode: extern "C" fn(self_c: *const RUBase, mode: u32),
+    pub interpolation_mode: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub set_interpolation_mode: extern "C" fn(self_c: *const RUBase, mode: u32),
 }
 
 #[repr(C)]

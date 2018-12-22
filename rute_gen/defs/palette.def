@@ -410,65 +410,66 @@ struct Palette {
 [org_name(QPalette)]
 enum ColorGroup {
     ///
-    Active,
+    Active = 0,
     ///
-    Disabled,
+    Disabled = 1,
     ///
-    Inactive,
-    NColorGroups,
-    Current,
-    All,
+    Inactive = 2,
+    NColorGroups = 3,
+    Current = 4,
+    All = 5,
     /// synonym for Active
-    Normal,
+    Normal = 0,
 }
 
 [org_name(QPalette)]
 enum ColorRole {
     /// A general foreground color.
-    WindowText,
+    WindowText = 0,
     /// The general button background color. This background can be different from `Window` as some styles require a different background color for buttons.
-    Button,
+    Button = 1,
     /// Lighter than `Button` color.
-    Light,
+    Light = 2,
     /// Between `Button` and `Light.`
-    Midlight,
+    Midlight = 3,
     /// Darker than `Button.`
-    Dark,
+    Dark = 4,
     /// Between `Button` and `Dark.`
-    Mid,
+    Mid = 5,
     /// The foreground color used with `Base.` This is usually the same as the `WindowText,` in which case it must provide good contrast with `Window` and `Base.`
-    Text,
+    Text = 6,
     /// A text color that is very different from `WindowText,` and contrasts well with e.g. `Dark.` Typically used for text that needs to be drawn where `Text` or `WindowText` would give poor contrast, such as on pressed push buttons. Note that text colors can be used for things other than just words; text colors are *usually* used for text, but it's quite common to use the text color roles for lines, icons, etc. There are some color roles used mostly for 3D bevel and shadow effects. All of these are normally derived from `Window,` and used in ways that depend on that relationship. For example, buttons depend on it to make the bevels look attractive, and Motif scroll bars depend on `Mid` to be slightly different from `Window.`
-    BrightText,
+    BrightText = 7,
     /// A foreground color used with the `Button` color.
-    ButtonText,
+    ButtonText = 8,
     /// Used mostly as the background color for text entry widgets, but can also be used for other painting - such as the background of combobox drop down lists and toolbar handles. It is usually white or another light color.
-    Base,
+    Base = 9,
     /// A general background color.
-    Window,
+    Window = 10,
     /// A very dark color. By default, the shadow color is Qt::black. Selected (marked) items have two roles:
-    Shadow,
+    Shadow = 11,
     /// A color to indicate a selected item or the current item. By default, the highlight color is Qt::darkBlue.
-    Highlight,
+    Highlight = 12,
     /// A text color that contrasts with `Highlight.` By default, the highlighted text color is Qt::white. There are two color roles related to hyperlinks:
-    HighlightedText,
+    HighlightedText = 13,
     /// A text color used for unvisited hyperlinks. By default, the link color is Qt::blue.
-    Link,
+    Link = 14,
     /// A text color used for already visited hyperlinks. By default, the linkvisited color is Qt::magenta. Note that we do not use the `Link` and `LinkVisited` roles when rendering rich text in Qt, and that we recommend that you use CSS and the QTextDocument::setDefaultStyleSheet() function to alter the appearance of links. For example:
-    LinkVisited,
+    LinkVisited = 15,
     /// Used as the alternate background color in views with alternating row colors (see QAbstractItemView::setAlternatingRowColors()).
-    AlternateBase,
+    AlternateBase = 16,
     /// No role; this special role is often used to indicate that a role has not been assigned.
-    NoRole,
+    NoRole = 17,
     /// Used as the background color for QToolTip and QWhatsThis. Tool tips use the Inactive color group of QPalette, because tool tips are not active windows.
-    ToolTipBase,
+    ToolTipBase = 18,
     /// Used as the foreground color for QToolTip and QWhatsThis. Tool tips use the Inactive color group of QPalette, because tool tips are not active windows.
-    ToolTipText,
-    NColorRoles,
+    ToolTipText = 19,
+    NColorRoles = 20,
     /// This value is obsolete. Use WindowText instead.
-    Foreground,
+    Foreground = 0,
     /// This value is obsolete. Use Window instead.
-    Background,
+    Background = 10,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4
+

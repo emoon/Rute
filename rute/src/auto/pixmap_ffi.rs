@@ -38,7 +38,7 @@ pub struct RUPixmapFuncs {
     pub has_alpha_channel: extern "C" fn(self_c: *const RUBase) -> bool,
     pub create_heuristic_mask: extern "C" fn(self_c: *const RUBase, clip_tight: bool) -> RUBitmap,
     pub create_mask_from_color:
-        extern "C" fn(self_c: *const RUBase, mask_color: *const RUBase, mode: i32) -> RUBitmap,
+        extern "C" fn(self_c: *const RUBase, mask_color: *const RUBase, mode: u32) -> RUBitmap,
     pub grab_window:
         extern "C" fn(self_c: *const RUBase, arg0: u64, x: i32, y: i32, w: i32, h: i32) -> RUPixmap,
     pub grab_widget: extern "C" fn(
@@ -58,24 +58,24 @@ pub struct RUPixmapFuncs {
         self_c: *const RUBase,
         w: i32,
         h: i32,
-        aspect_mode: i32,
-        mode: i32,
+        aspect_mode: u32,
+        mode: u32,
     ) -> RUPixmap,
     pub scaled_2: extern "C" fn(
         self_c: *const RUBase,
         s: *const RUBase,
-        aspect_mode: i32,
-        mode: i32,
+        aspect_mode: u32,
+        mode: u32,
     ) -> RUPixmap,
-    pub scaled_to_width: extern "C" fn(self_c: *const RUBase, w: i32, mode: i32) -> RUPixmap,
-    pub scaled_to_height: extern "C" fn(self_c: *const RUBase, h: i32, mode: i32) -> RUPixmap,
+    pub scaled_to_width: extern "C" fn(self_c: *const RUBase, w: i32, mode: u32) -> RUPixmap,
+    pub scaled_to_height: extern "C" fn(self_c: *const RUBase, h: i32, mode: u32) -> RUPixmap,
     pub to_image: extern "C" fn(self_c: *const RUBase) -> RUImage,
     pub from_image:
-        extern "C" fn(self_c: *const RUBase, image: *const RUBase, flags: i32) -> RUPixmap,
+        extern "C" fn(self_c: *const RUBase, image: *const RUBase, flags: u32) -> RUPixmap,
     pub from_image_2:
-        extern "C" fn(self_c: *const RUBase, image: *const RUBase, flags: i32) -> RUPixmap,
+        extern "C" fn(self_c: *const RUBase, image: *const RUBase, flags: u32) -> RUPixmap,
     pub convert_from_image:
-        extern "C" fn(self_c: *const RUBase, img: *const RUBase, flags: i32) -> bool,
+        extern "C" fn(self_c: *const RUBase, img: *const RUBase, flags: u32) -> bool,
     pub copy:
         extern "C" fn(self_c: *const RUBase, x: i32, y: i32, width: i32, height: i32) -> RUPixmap,
     pub copy_2: extern "C" fn(self_c: *const RUBase, rect: *const RUBase) -> RUPixmap,

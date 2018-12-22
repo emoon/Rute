@@ -207,8 +207,8 @@ impl<'a> Icon<'a> {
     /// [`paint()`]
     pub fn pixmap<S: SizeTrait<'a>>(&self, size: &S, mode: Mode, state: State) -> Pixmap {
         let (obj_size_1, _funcs) = size.get_size_obj_funcs();
-        let enum_mode_2 = mode as i32;
-        let enum_state_3 = state as i32;
+        let enum_mode_2 = mode as u32;
+        let enum_state_3 = state as u32;
 
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
@@ -259,8 +259,8 @@ impl<'a> Icon<'a> {
     /// **See also:** [`actual_size()`]
     /// [`paint()`]
     pub fn pixmap_2(&self, w: i32, h: i32, mode: Mode, state: State) -> Pixmap {
-        let enum_mode_3 = mode as i32;
-        let enum_state_4 = state as i32;
+        let enum_mode_3 = mode as u32;
+        let enum_state_4 = state as u32;
 
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
@@ -311,8 +311,8 @@ impl<'a> Icon<'a> {
     /// **See also:** [`actual_size()`]
     /// [`paint()`]
     pub fn pixmap_3(&self, extent: i32, mode: Mode, state: State) -> Pixmap {
-        let enum_mode_2 = mode as i32;
-        let enum_state_3 = state as i32;
+        let enum_mode_2 = mode as u32;
+        let enum_state_3 = state as u32;
 
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
@@ -371,8 +371,8 @@ impl<'a> Icon<'a> {
     ) -> Pixmap {
         let (obj_window_1, _funcs) = window.get_window_obj_funcs();
         let (obj_size_2, _funcs) = size.get_size_obj_funcs();
-        let enum_mode_3 = mode as i32;
-        let enum_state_4 = state as i32;
+        let enum_mode_3 = mode as u32;
+        let enum_state_4 = state as u32;
 
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
@@ -410,8 +410,8 @@ impl<'a> Icon<'a> {
     /// [`paint()`]
     pub fn actual_size<S: SizeTrait<'a>>(&self, size: &S, mode: Mode, state: State) -> Size {
         let (obj_size_1, _funcs) = size.get_size_obj_funcs();
-        let enum_mode_2 = mode as i32;
-        let enum_state_3 = state as i32;
+        let enum_mode_2 = mode as u32;
+        let enum_state_3 = state as u32;
 
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
@@ -450,8 +450,8 @@ impl<'a> Icon<'a> {
     ) -> Size {
         let (obj_window_1, _funcs) = window.get_window_obj_funcs();
         let (obj_size_2, _funcs) = size.get_size_obj_funcs();
-        let enum_mode_3 = mode as i32;
-        let enum_state_4 = state as i32;
+        let enum_mode_3 = mode as u32;
+        let enum_state_4 = state as u32;
 
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
@@ -510,9 +510,9 @@ impl<'a> Icon<'a> {
     ) -> &Self {
         let (obj_painter_1, _funcs) = painter.get_painter_obj_funcs();
         let (obj_rect_2, _funcs) = rect.get_rect_obj_funcs();
-        let enum_alignment_3 = alignment as i32;
-        let enum_mode_4 = mode as i32;
-        let enum_state_5 = state as i32;
+        let enum_alignment_3 = alignment.bits();
+        let enum_mode_4 = mode as u32;
+        let enum_state_5 = state as u32;
 
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
@@ -550,9 +550,9 @@ impl<'a> Icon<'a> {
         state: State,
     ) -> &Self {
         let (obj_painter_1, _funcs) = painter.get_painter_obj_funcs();
-        let enum_alignment_6 = alignment as i32;
-        let enum_mode_7 = mode as i32;
-        let enum_state_8 = state as i32;
+        let enum_alignment_6 = alignment.bits();
+        let enum_mode_7 = mode as u32;
+        let enum_state_8 = state as u32;
 
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
@@ -626,8 +626,8 @@ impl<'a> Icon<'a> {
     /// **See also:** [`add_file()`]
     pub fn add_pixmap<P: PixmapTrait<'a>>(&self, pixmap: &P, mode: Mode, state: State) -> &Self {
         let (obj_pixmap_1, _funcs) = pixmap.get_pixmap_obj_funcs();
-        let enum_mode_2 = mode as i32;
-        let enum_state_3 = state as i32;
+        let enum_mode_2 = mode as u32;
+        let enum_state_3 = state as u32;
 
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
@@ -675,8 +675,8 @@ impl<'a> Icon<'a> {
     ) -> &Self {
         let str_in_file_name_1 = CString::new(file_name).unwrap();
         let (obj_size_2, _funcs) = size.get_size_obj_funcs();
-        let enum_mode_3 = mode as i32;
-        let enum_state_4 = state as i32;
+        let enum_mode_3 = mode as u32;
+        let enum_state_4 = state as u32;
 
         let (obj_data, funcs) = self.get_icon_obj_funcs();
         unsafe {
@@ -917,14 +917,14 @@ impl<'a> IconTrait<'a> for Icon<'a> {
 }
 #[repr(u32)]
 pub enum Mode {
-    Normal,
-    Disabled,
-    Active,
-    Selected,
+    Normal = 0,
+    Disabled = 1,
+    Active = 2,
+    Selected = 3,
 }
 
 #[repr(u32)]
 pub enum State {
-    On,
-    Off,
+    On = 0,
+    Off = 1,
 }

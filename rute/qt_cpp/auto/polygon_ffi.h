@@ -30,7 +30,7 @@ typedef struct RUPolygonFuncs {
     void (*put_points_3)(struct RUBase* self_c, int index, int n_points,
                          struct RUBase* from, int from_index);
     bool (*contains_point)(struct RUBase* self_c, struct RUBase* pt,
-                           int fill_rule);
+                           uint32_t fill_rule);
     struct RUPolygon (*united)(struct RUBase* self_c, struct RUBase* r);
     struct RUPolygon (*intersected)(struct RUBase* self_c, struct RUBase* r);
     bool (*intersects)(struct RUBase* self_c, struct RUBase* r);

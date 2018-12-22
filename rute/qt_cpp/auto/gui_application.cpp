@@ -235,41 +235,41 @@ static void gui_application_set_palette(struct RUBase* self_c, struct RUBase* pa
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int gui_application_keyboard_modifiers(struct RUBase* self_c) {
+static uint32_t gui_application_keyboard_modifiers(struct RUBase* self_c) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
     auto ret_value = qt_value->keyboardModifiers();
-    return s_keyboard_modifiers_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int gui_application_query_keyboard_modifiers(struct RUBase* self_c) {
+static uint32_t gui_application_query_keyboard_modifiers(struct RUBase* self_c) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
     auto ret_value = qt_value->queryKeyboardModifiers();
-    return s_keyboard_modifiers_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int gui_application_mouse_buttons(struct RUBase* self_c) {
+static uint32_t gui_application_mouse_buttons(struct RUBase* self_c) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
     auto ret_value = qt_value->mouseButtons();
-    return s_mouse_buttons_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void gui_application_set_layout_direction(struct RUBase* self_c, int direction) {
+static void gui_application_set_layout_direction(struct RUBase* self_c, uint32_t direction) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
-    qt_value->setLayoutDirection((Qt::LayoutDirection)s_layout_direction_lookup[direction]);
+    qt_value->setLayoutDirection((Qt::LayoutDirection)direction);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int gui_application_layout_direction(struct RUBase* self_c) {
+static uint32_t gui_application_layout_direction(struct RUBase* self_c) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
     auto ret_value = qt_value->layoutDirection();
-    return s_layout_direction_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -320,10 +320,10 @@ static bool gui_application_quit_on_last_window_closed(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int gui_application_application_state(struct RUBase* self_c) {
+static uint32_t gui_application_application_state(struct RUBase* self_c) {
     QGuiApplication* qt_value = (QGuiApplication*)self_c;
     auto ret_value = qt_value->applicationState();
-    return s_application_state_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

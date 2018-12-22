@@ -52,9 +52,9 @@ static struct RURectF polygon_f_bounding_rect(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool polygon_f_contains_point(struct RUBase* self_c, struct RUBase* pt, int fill_rule) {
+static bool polygon_f_contains_point(struct RUBase* self_c, struct RUBase* pt, uint32_t fill_rule) {
     WRPolygonF* qt_value = (WRPolygonF*)self_c;
-    auto ret_value = qt_value->containsPoint(*((QPointF*)pt), (Qt::FillRule)s_fill_rule_lookup[fill_rule]);
+    auto ret_value = qt_value->containsPoint(*((QPointF*)pt), (Qt::FillRule)fill_rule);
     return ret_value;
 }
 

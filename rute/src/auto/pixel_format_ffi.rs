@@ -7,7 +7,7 @@ use std::os::raw::c_void;
 #[derive(Copy, Clone)]
 pub struct RUPixelFormatFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
-    pub color_model: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub color_model: extern "C" fn(self_c: *const RUBase) -> u32,
     pub channel_count: extern "C" fn(self_c: *const RUBase) -> u8,
     pub red_size: extern "C" fn(self_c: *const RUBase) -> u8,
     pub green_size: extern "C" fn(self_c: *const RUBase) -> u8,
@@ -22,12 +22,12 @@ pub struct RUPixelFormatFuncs {
     pub brightness_size: extern "C" fn(self_c: *const RUBase) -> u8,
     pub alpha_size: extern "C" fn(self_c: *const RUBase) -> u8,
     pub bits_per_pixel: extern "C" fn(self_c: *const RUBase) -> u8,
-    pub alpha_usage: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub alpha_position: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub premultiplied: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub type_interpretation: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub byte_order: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub yuv_layout: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub alpha_usage: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub alpha_position: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub premultiplied: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub type_interpretation: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub byte_order: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub yuv_layout: extern "C" fn(self_c: *const RUBase) -> u32,
     pub sub_enum: extern "C" fn(self_c: *const RUBase) -> u8,
 }
 

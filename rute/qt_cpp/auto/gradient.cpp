@@ -9,25 +9,25 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int gradient_get_type(struct RUBase* self_c) {
+static uint32_t gradient_get_type(struct RUBase* self_c) {
     WRGradient* qt_value = (WRGradient*)self_c;
     auto ret_value = qt_value->type();
-    return s_type_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void gradient_set_spread(struct RUBase* self_c, int spread) {
+static void gradient_set_spread(struct RUBase* self_c, uint32_t spread) {
     WRGradient* qt_value = (WRGradient*)self_c;
-    qt_value->setSpread((QGradient::Spread)s_spread_lookup[spread]);
+    qt_value->setSpread((QGradient::Spread)spread);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int gradient_spread(struct RUBase* self_c) {
+static uint32_t gradient_spread(struct RUBase* self_c) {
     WRGradient* qt_value = (WRGradient*)self_c;
     auto ret_value = qt_value->spread();
-    return s_spread_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,32 +39,32 @@ static void gradient_set_color_at(struct RUBase* self_c, float pos, struct RUBas
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int gradient_coordinate_mode(struct RUBase* self_c) {
+static uint32_t gradient_coordinate_mode(struct RUBase* self_c) {
     WRGradient* qt_value = (WRGradient*)self_c;
     auto ret_value = qt_value->coordinateMode();
-    return s_coordinate_mode_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void gradient_set_coordinate_mode(struct RUBase* self_c, int mode) {
+static void gradient_set_coordinate_mode(struct RUBase* self_c, uint32_t mode) {
     WRGradient* qt_value = (WRGradient*)self_c;
-    qt_value->setCoordinateMode((QGradient::CoordinateMode)s_coordinate_mode_lookup[mode]);
+    qt_value->setCoordinateMode((QGradient::CoordinateMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int gradient_interpolation_mode(struct RUBase* self_c) {
+static uint32_t gradient_interpolation_mode(struct RUBase* self_c) {
     WRGradient* qt_value = (WRGradient*)self_c;
     auto ret_value = qt_value->interpolationMode();
-    return s_interpolation_mode_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void gradient_set_interpolation_mode(struct RUBase* self_c, int mode) {
+static void gradient_set_interpolation_mode(struct RUBase* self_c, uint32_t mode) {
     WRGradient* qt_value = (WRGradient*)self_c;
-    qt_value->setInterpolationMode((QGradient::InterpolationMode)s_interpolation_mode_lookup[mode]);
+    qt_value->setInterpolationMode((QGradient::InterpolationMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

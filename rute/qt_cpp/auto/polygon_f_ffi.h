@@ -23,7 +23,7 @@ typedef struct RUPolygonFFuncs {
     bool (*is_closed)(struct RUBase* self_c);
     struct RURectF (*bounding_rect)(struct RUBase* self_c);
     bool (*contains_point)(struct RUBase* self_c, struct RUBase* pt,
-                           int fill_rule);
+                           uint32_t fill_rule);
     struct RUPolygonF (*united)(struct RUBase* self_c, struct RUBase* r);
     struct RUPolygonF (*intersected)(struct RUBase* self_c, struct RUBase* r);
     bool (*intersects)(struct RUBase* self_c, struct RUBase* r);

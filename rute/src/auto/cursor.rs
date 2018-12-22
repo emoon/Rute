@@ -238,7 +238,7 @@ impl<'a> Cursor<'a> {
         let (obj_data, funcs) = self.get_cursor_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).shape)(obj_data);
-            let ret_val = { transmute::<i32, CursorShape>(ret_val) };
+            let ret_val = CursorShape::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -250,7 +250,7 @@ impl<'a> Cursor<'a> {
     ///
     /// **See also:** [`shape()`]
     pub fn set_shape(&self, new_shape: CursorShape) -> &Self {
-        let enum_new_shape_1 = new_shape as i32;
+        let enum_new_shape_1 = new_shape.bits();
 
         let (obj_data, funcs) = self.get_cursor_obj_funcs();
         unsafe {

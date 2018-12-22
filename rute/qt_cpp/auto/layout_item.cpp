@@ -51,10 +51,10 @@ static struct RUSize layout_item_maximum_size(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int layout_item_expanding_directions(struct RUBase* self_c) {
+static uint32_t layout_item_expanding_directions(struct RUBase* self_c) {
     QLayoutItem* qt_value = (QLayoutItem*)self_c;
     auto ret_value = qt_value->expandingDirections();
-    return s_orientations_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,17 +134,17 @@ static struct RUSpacerItem layout_item_spacer_item(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int layout_item_alignment(struct RUBase* self_c) {
+static uint32_t layout_item_alignment(struct RUBase* self_c) {
     QLayoutItem* qt_value = (QLayoutItem*)self_c;
     auto ret_value = qt_value->alignment();
-    return s_alignment_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void layout_item_set_alignment(struct RUBase* self_c, int a) {
+static void layout_item_set_alignment(struct RUBase* self_c, uint32_t a) {
     QLayoutItem* qt_value = (QLayoutItem*)self_c;
-    qt_value->setAlignment((Qt::Alignment)s_alignment_lookup[a]);
+    qt_value->setAlignment((Qt::Alignment)a);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -495,6 +495,6 @@ impl<'a> RegionTrait<'a> for Region<'a> {
 }
 #[repr(u32)]
 pub enum RegionType {
-    Rectangle,
-    Ellipse,
+    Rectangle = 0,
+    Ellipse = 1,
 }

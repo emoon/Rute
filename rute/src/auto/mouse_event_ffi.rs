@@ -23,11 +23,11 @@ pub struct RUMouseEventFuncs {
     pub local_pos: extern "C" fn(self_c: *const RUBase) -> RUPointF,
     pub window_pos: extern "C" fn(self_c: *const RUBase) -> RUPointF,
     pub screen_pos: extern "C" fn(self_c: *const RUBase) -> RUPointF,
-    pub button: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub buttons: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub button: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub buttons: extern "C" fn(self_c: *const RUBase) -> u32,
     pub set_local_pos: extern "C" fn(self_c: *const RUBase, local_position: *const RUBase),
-    pub source: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub flags: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub source: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub flags: extern "C" fn(self_c: *const RUBase) -> u32,
 }
 
 #[repr(C)]

@@ -32,7 +32,7 @@ pub struct RULineFFuncs {
         self_c: *const RUBase,
         l: *const RUBase,
         intersection_point: *const RUBase,
-    ) -> i32,
+    ) -> u32,
     pub angle_2: extern "C" fn(self_c: *const RUBase, l: *const RUBase) -> f32,
     pub point_at: extern "C" fn(self_c: *const RUBase, t: f32) -> RUPointF,
     pub center: extern "C" fn(self_c: *const RUBase) -> RUPointF,

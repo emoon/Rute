@@ -590,7 +590,7 @@ impl<'a> Painter<'a> {
     ///
     /// **See also:** [`composition_mode()`]
     pub fn set_composition_mode(&self, mode: CompositionMode) -> &Self {
-        let enum_mode_1 = mode as i32;
+        let enum_mode_1 = mode as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -607,7 +607,7 @@ impl<'a> Painter<'a> {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).composition_mode)(obj_data);
-            let ret_val = { transmute::<i32, CompositionMode>(ret_val) };
+            let ret_val = { transmute::<u32, CompositionMode>(ret_val) };
             ret_val
         }
     }
@@ -744,7 +744,7 @@ impl<'a> Painter<'a> {
     /// Sets the painter's pen to have the given *style,* width 1 and
     /// black color.
     pub fn set_pen_3(&self, style: PenStyle) -> &Self {
-        let enum_style_1 = style as i32;
+        let enum_style_1 = style as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -846,7 +846,7 @@ impl<'a> Painter<'a> {
     /// **Overloads**
     /// Sets the painter's brush to black color and the specified *style.*
     pub fn set_brush_2(&self, style: BrushStyle) -> &Self {
-        let enum_style_1 = style as i32;
+        let enum_style_1 = style as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -895,7 +895,7 @@ impl<'a> Painter<'a> {
     /// [`set_background()`]
     /// {QPainter#Settings}{Settings}
     pub fn set_background_mode(&self, mode: BGMode) -> &Self {
-        let enum_mode_1 = mode as i32;
+        let enum_mode_1 = mode as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -912,7 +912,7 @@ impl<'a> Painter<'a> {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).background_mode)(obj_data);
-            let ret_val = { transmute::<i32, BGMode>(ret_val) };
+            let ret_val = { transmute::<u32, BGMode>(ret_val) };
             ret_val
         }
     }
@@ -1151,7 +1151,7 @@ impl<'a> Painter<'a> {
     /// with the given *width* and *height.*
     pub fn set_clip_rect<R: RectFTrait<'a>>(&self, arg0: &R, op: ClipOperation) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_f_obj_funcs();
-        let enum_op_2 = op as i32;
+        let enum_op_2 = op as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -1178,7 +1178,7 @@ impl<'a> Painter<'a> {
     /// with the given *width* and *height.*
     pub fn set_clip_rect_2<R: RectTrait<'a>>(&self, arg0: &R, op: ClipOperation) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_rect_obj_funcs();
-        let enum_op_2 = op as i32;
+        let enum_op_2 = op as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -1204,7 +1204,7 @@ impl<'a> Painter<'a> {
     /// Enables clipping, and sets the clip region to the rectangle beginning at ( *x,* *y)*
     /// with the given *width* and *height.*
     pub fn set_clip_rect_3(&self, x: i32, y: i32, w: i32, h: i32, op: ClipOperation) -> &Self {
-        let enum_op_5 = op as i32;
+        let enum_op_5 = op as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -1224,7 +1224,7 @@ impl<'a> Painter<'a> {
     /// {QPainter#Clipping}{Clipping}
     pub fn set_clip_region<R: RegionTrait<'a>>(&self, arg0: &R, op: ClipOperation) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_region_obj_funcs();
-        let enum_op_2 = op as i32;
+        let enum_op_2 = op as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -3050,7 +3050,7 @@ impl<'a> Painter<'a> {
         fill_rule: FillRule,
     ) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_f_obj_funcs();
-        let enum_fill_rule_3 = fill_rule as i32;
+        let enum_fill_rule_3 = fill_rule as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -3092,7 +3092,7 @@ impl<'a> Painter<'a> {
     /// rule *fillRule.*
     pub fn draw_polygon_2<P: PolygonFTrait<'a>>(&self, polygon: &P, fill_rule: FillRule) -> &Self {
         let (obj_polygon_1, _funcs) = polygon.get_polygon_f_obj_funcs();
-        let enum_fill_rule_2 = fill_rule as i32;
+        let enum_fill_rule_2 = fill_rule as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -3139,7 +3139,7 @@ impl<'a> Painter<'a> {
         fill_rule: FillRule,
     ) -> &Self {
         let (obj_points_1, _funcs) = points.get_point_obj_funcs();
-        let enum_fill_rule_3 = fill_rule as i32;
+        let enum_fill_rule_3 = fill_rule as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -3181,7 +3181,7 @@ impl<'a> Painter<'a> {
     /// rule *fillRule.*
     pub fn draw_polygon_4<P: PolygonTrait<'a>>(&self, polygon: &P, fill_rule: FillRule) -> &Self {
         let (obj_polygon_1, _funcs) = polygon.get_polygon_obj_funcs();
-        let enum_fill_rule_2 = fill_rule as i32;
+        let enum_fill_rule_2 = fill_rule as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -3711,7 +3711,7 @@ impl<'a> Painter<'a> {
         mode: SizeMode,
     ) -> &Self {
         let (obj_rect_1, _funcs) = rect.get_rect_f_obj_funcs();
-        let enum_mode_4 = mode as i32;
+        let enum_mode_4 = mode as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -3756,7 +3756,7 @@ impl<'a> Painter<'a> {
         y_radius: f32,
         mode: SizeMode,
     ) -> &Self {
-        let enum_mode_7 = mode as i32;
+        let enum_mode_7 = mode as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -3799,7 +3799,7 @@ impl<'a> Painter<'a> {
         mode: SizeMode,
     ) -> &Self {
         let (obj_rect_1, _funcs) = rect.get_rect_obj_funcs();
-        let enum_mode_4 = mode as i32;
+        let enum_mode_4 = mode as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -5279,7 +5279,7 @@ impl<'a> Painter<'a> {
         let (obj_target_rect_1, _funcs) = target_rect.get_rect_f_obj_funcs();
         let (obj_image_2, _funcs) = image.get_image_obj_funcs();
         let (obj_source_rect_3, _funcs) = source_rect.get_rect_f_obj_funcs();
-        let enum_flags_4 = flags as i32;
+        let enum_flags_4 = flags.bits();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -5369,7 +5369,7 @@ impl<'a> Painter<'a> {
         let (obj_target_rect_1, _funcs) = target_rect.get_rect_obj_funcs();
         let (obj_image_2, _funcs) = image.get_image_obj_funcs();
         let (obj_source_rect_3, _funcs) = source_rect.get_rect_obj_funcs();
-        let enum_flags_4 = flags as i32;
+        let enum_flags_4 = flags.bits();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -5459,7 +5459,7 @@ impl<'a> Painter<'a> {
         let (obj_p_1, _funcs) = p.get_point_f_obj_funcs();
         let (obj_image_2, _funcs) = image.get_image_obj_funcs();
         let (obj_sr_3, _funcs) = sr.get_rect_f_obj_funcs();
-        let enum_flags_4 = flags as i32;
+        let enum_flags_4 = flags.bits();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -5543,7 +5543,7 @@ impl<'a> Painter<'a> {
         let (obj_p_1, _funcs) = p.get_point_obj_funcs();
         let (obj_image_2, _funcs) = image.get_image_obj_funcs();
         let (obj_sr_3, _funcs) = sr.get_rect_obj_funcs();
-        let enum_flags_4 = flags as i32;
+        let enum_flags_4 = flags.bits();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -5933,7 +5933,7 @@ impl<'a> Painter<'a> {
         flags: ImageConversionFlags,
     ) -> &Self {
         let (obj_image_3, _funcs) = image.get_image_obj_funcs();
-        let enum_flags_8 = flags as i32;
+        let enum_flags_8 = flags.bits();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -5953,7 +5953,7 @@ impl<'a> Painter<'a> {
     /// [`draw_text()`]
     /// {QPainter#Settings}{Settings}
     pub fn set_layout_direction(&self, direction: LayoutDirection) -> &Self {
-        let enum_direction_1 = direction as i32;
+        let enum_direction_1 = direction as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -5972,7 +5972,7 @@ impl<'a> Painter<'a> {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).layout_direction)(obj_data);
-            let ret_val = { transmute::<i32, LayoutDirection>(ret_val) };
+            let ret_val = { transmute::<u32, LayoutDirection>(ret_val) };
             ret_val
         }
     }
@@ -8080,7 +8080,7 @@ impl<'a> Painter<'a> {
     /// Fills the given *rectangle* with the specified *color.*
     ///
     pub fn fill_rect_7(&self, x: i32, y: i32, w: i32, h: i32, c: GlobalColor) -> &Self {
-        let enum_c_5 = c as i32;
+        let enum_c_5 = c as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -8140,7 +8140,7 @@ impl<'a> Painter<'a> {
     ///
     pub fn fill_rect_8<R: RectTrait<'a>>(&self, r: &R, c: GlobalColor) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
-        let enum_c_2 = c as i32;
+        let enum_c_2 = c as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -8200,7 +8200,7 @@ impl<'a> Painter<'a> {
     ///
     pub fn fill_rect_9<R: RectFTrait<'a>>(&self, r: &R, c: GlobalColor) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
-        let enum_c_2 = c as i32;
+        let enum_c_2 = c as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -8259,7 +8259,7 @@ impl<'a> Painter<'a> {
     /// Fills the given *rectangle* with the specified *color.*
     ///
     pub fn fill_rect_10(&self, x: i32, y: i32, w: i32, h: i32, style: BrushStyle) -> &Self {
-        let enum_style_5 = style as i32;
+        let enum_style_5 = style as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -8319,7 +8319,7 @@ impl<'a> Painter<'a> {
     ///
     pub fn fill_rect_11<R: RectTrait<'a>>(&self, r: &R, style: BrushStyle) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_obj_funcs();
-        let enum_style_2 = style as i32;
+        let enum_style_2 = style as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -8379,7 +8379,7 @@ impl<'a> Painter<'a> {
     ///
     pub fn fill_rect_12<R: RectFTrait<'a>>(&self, r: &R, style: BrushStyle) -> &Self {
         let (obj_r_1, _funcs) = r.get_rect_f_obj_funcs();
-        let enum_style_2 = style as i32;
+        let enum_style_2 = style as u32;
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -8465,7 +8465,7 @@ impl<'a> Painter<'a> {
     /// {QPainter#Rendering
     /// Quality}{Rendering Quality}
     pub fn set_render_hint(&self, hint: RenderHint, on: bool) -> &Self {
-        let enum_hint_1 = hint as i32;
+        let enum_hint_1 = hint.bits();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -8482,7 +8482,7 @@ impl<'a> Painter<'a> {
     /// {QPainter#Rendering
     /// Quality}{Rendering Quality}
     pub fn set_render_hints(&self, hints: RenderHints, on: bool) -> &Self {
-        let enum_hints_1 = hints as i32;
+        let enum_hints_1 = hints.bits();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -8500,7 +8500,7 @@ impl<'a> Painter<'a> {
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).render_hints)(obj_data);
-            let ret_val = { transmute::<i32, RenderHints>(ret_val) };
+            let ret_val = RenderHints::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -8510,7 +8510,7 @@ impl<'a> Painter<'a> {
     /// **See also:** [`render_hints()`]
     /// [`set_render_hint()`]
     pub fn test_render_hint(&self, hint: RenderHint) -> bool {
-        let enum_hint_1 = hint as i32;
+        let enum_hint_1 = hint.bits();
 
         let (obj_data, funcs) = self.get_painter_obj_funcs();
         unsafe {
@@ -8700,61 +8700,62 @@ impl<'a> PainterTrait<'a> for Painter<'a> {
         unsafe { (obj, (*self.all_funcs).painter_funcs) }
     }
 }
-#[repr(u32)]
-pub enum RenderHint {
-    Antialiasing,
-    TextAntialiasing,
-    SmoothPixmapTransform,
-    HighQualityAntialiasing,
-    NonCosmeticDefaultPen,
-    Qt4CompatiblePainting,
+bitflags! {
+    pub struct RenderHint: u32 {
+        const Antialiasing = 0x1;
+        const TextAntialiasing = 0x2;
+        const SmoothPixmapTransform = 0x4;
+        const HighQualityAntialiasing = 0x8;
+        const NonCosmeticDefaultPen = 0x10;
+        const Qt4CompatiblePainting = 0x20;
+    }
 }
 
 pub type RenderHints = RenderHint;
 
 #[repr(u32)]
 pub enum PixmapFragmentHint {
-    OpaqueHint,
+    OpaqueHint = 1,
 }
 
 #[repr(u32)]
 pub enum CompositionMode {
-    CompositionModeSourceOver,
-    CompositionModeDestinationOver,
-    CompositionModeClear,
-    CompositionModeSource,
-    CompositionModeDestination,
-    CompositionModeSourceIn,
-    CompositionModeDestinationIn,
-    CompositionModeSourceOut,
-    CompositionModeDestinationOut,
-    CompositionModeSourceAtop,
-    CompositionModeDestinationAtop,
-    CompositionModeXor,
-    CompositionModePlus,
-    CompositionModeMultiply,
-    CompositionModeScreen,
-    CompositionModeOverlay,
-    CompositionModeDarken,
-    CompositionModeLighten,
-    CompositionModeColorDodge,
-    CompositionModeColorBurn,
-    CompositionModeHardLight,
-    CompositionModeSoftLight,
-    CompositionModeDifference,
-    CompositionModeExclusion,
-    RasterOpSourceOrDestination,
-    RasterOpSourceAndDestination,
-    RasterOpSourceXorDestination,
-    RasterOpNotSourceAndNotDestination,
-    RasterOpNotSourceOrNotDestination,
-    RasterOpNotSourceXorDestination,
-    RasterOpNotSource,
-    RasterOpNotSourceAndDestination,
-    RasterOpSourceAndNotDestination,
-    RasterOpNotSourceOrDestination,
-    RasterOpSourceOrNotDestination,
-    RasterOpClearDestination,
-    RasterOpSetDestination,
-    RasterOpNotDestination,
+    CompositionModeSourceOver = 0,
+    CompositionModeDestinationOver = 1,
+    CompositionModeClear = 2,
+    CompositionModeSource = 3,
+    CompositionModeDestination = 4,
+    CompositionModeSourceIn = 5,
+    CompositionModeDestinationIn = 6,
+    CompositionModeSourceOut = 7,
+    CompositionModeDestinationOut = 8,
+    CompositionModeSourceAtop = 9,
+    CompositionModeDestinationAtop = 10,
+    CompositionModeXor = 11,
+    CompositionModePlus = 12,
+    CompositionModeMultiply = 13,
+    CompositionModeScreen = 14,
+    CompositionModeOverlay = 15,
+    CompositionModeDarken = 16,
+    CompositionModeLighten = 17,
+    CompositionModeColorDodge = 18,
+    CompositionModeColorBurn = 19,
+    CompositionModeHardLight = 20,
+    CompositionModeSoftLight = 21,
+    CompositionModeDifference = 22,
+    CompositionModeExclusion = 23,
+    RasterOpSourceOrDestination = 24,
+    RasterOpSourceAndDestination = 25,
+    RasterOpSourceXorDestination = 26,
+    RasterOpNotSourceAndNotDestination = 27,
+    RasterOpNotSourceOrNotDestination = 28,
+    RasterOpNotSourceXorDestination = 29,
+    RasterOpNotSource = 30,
+    RasterOpNotSourceAndDestination = 31,
+    RasterOpSourceAndNotDestination = 32,
+    RasterOpNotSourceOrDestination = 33,
+    RasterOpSourceOrNotDestination = 34,
+    RasterOpClearDestination = 35,
+    RasterOpSetDestination = 36,
+    RasterOpNotDestination = 37,
 }

@@ -29,7 +29,7 @@ pub struct RUPolygonFuncs {
         from_index: i32,
     ),
     pub contains_point:
-        extern "C" fn(self_c: *const RUBase, pt: *const RUBase, fill_rule: i32) -> bool,
+        extern "C" fn(self_c: *const RUBase, pt: *const RUBase, fill_rule: u32) -> bool,
     pub united: extern "C" fn(self_c: *const RUBase, r: *const RUBase) -> RUPolygon,
     pub intersected: extern "C" fn(self_c: *const RUBase, r: *const RUBase) -> RUPolygon,
     pub intersects: extern "C" fn(self_c: *const RUBase, r: *const RUBase) -> bool,

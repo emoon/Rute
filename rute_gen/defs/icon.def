@@ -525,22 +525,22 @@ struct Icon {
 
 [org_name(QIcon)]
 enum Mode {
-    /// Display the pixmap when the user is
-    Normal,
-    /// Display the pixmap when the
-    Disabled,
-    /// Display the pixmap when the
-    Active,
-    /// Display the pixmap when the item represented by the icon is
-    Selected,
+    /// Display the pixmap when the user is not interacting with the icon, but the functionality represented by the icon is available.
+    Normal = 0,
+    /// Display the pixmap when the functionality represented by the icon is not available.
+    Disabled = 1,
+    /// Display the pixmap when the functionality represented by the icon is available and the user is interacting with the icon, for example, moving the mouse over it or clicking it.
+    Active = 2,
+    /// Display the pixmap when the item represented by the icon is selected.
+    Selected = 3,
 }
 
 [org_name(QIcon)]
 enum State {
     /// Display the pixmap when the widget is in an "on" state
-    On,
+    On = 0,
     /// Display the pixmap when the widget is in an "off" state
-    Off,
+    Off = 1,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

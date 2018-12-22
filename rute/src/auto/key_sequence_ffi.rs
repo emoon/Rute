@@ -9,7 +9,7 @@ pub struct RUKeySequenceFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub count: extern "C" fn(self_c: *const RUBase) -> i32,
     pub is_empty: extern "C" fn(self_c: *const RUBase) -> bool,
-    pub matches: extern "C" fn(self_c: *const RUBase, seq: *const RUBase) -> i32,
+    pub matches: extern "C" fn(self_c: *const RUBase, seq: *const RUBase) -> u32,
     pub mnemonic:
         extern "C" fn(self_c: *const RUBase, text: *const ::std::os::raw::c_char) -> RUKeySequence,
     pub swap: extern "C" fn(self_c: *const RUBase, other: *const RUBase),

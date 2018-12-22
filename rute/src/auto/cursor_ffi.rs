@@ -14,8 +14,8 @@ use std::os::raw::c_void;
 pub struct RUCursorFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub swap: extern "C" fn(self_c: *const RUBase, other: *const RUBase),
-    pub shape: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub set_shape: extern "C" fn(self_c: *const RUBase, new_shape: i32),
+    pub shape: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub set_shape: extern "C" fn(self_c: *const RUBase, new_shape: u32),
     pub bitmap: extern "C" fn(self_c: *const RUBase) -> RUBitmap,
     pub mask: extern "C" fn(self_c: *const RUBase) -> RUBitmap,
     pub pixmap: extern "C" fn(self_c: *const RUBase) -> RUPixmap,

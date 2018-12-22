@@ -45,10 +45,10 @@ static int wheel_event_delta(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int wheel_event_orientation(struct RUBase* self_c) {
+static uint32_t wheel_event_orientation(struct RUBase* self_c) {
     QWheelEvent* qt_value = (QWheelEvent*)self_c;
     auto ret_value = qt_value->orientation();
-    return s_orientation_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -141,18 +141,18 @@ static struct RUPointF wheel_event_global_pos_f(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int wheel_event_buttons(struct RUBase* self_c) {
+static uint32_t wheel_event_buttons(struct RUBase* self_c) {
     QWheelEvent* qt_value = (QWheelEvent*)self_c;
     auto ret_value = qt_value->buttons();
-    return s_mouse_buttons_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int wheel_event_phase(struct RUBase* self_c) {
+static uint32_t wheel_event_phase(struct RUBase* self_c) {
     QWheelEvent* qt_value = (QWheelEvent*)self_c;
     auto ret_value = qt_value->phase();
-    return s_scroll_phase_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -165,10 +165,10 @@ static bool wheel_event_inverted(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int wheel_event_source(struct RUBase* self_c) {
+static uint32_t wheel_event_source(struct RUBase* self_c) {
     QWheelEvent* qt_value = (QWheelEvent*)self_c;
     auto ret_value = qt_value->source();
-    return s_mouse_event_source_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

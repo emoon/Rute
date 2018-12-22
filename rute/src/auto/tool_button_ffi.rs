@@ -15,14 +15,14 @@ use std::os::raw::c_void;
 #[derive(Copy, Clone)]
 pub struct RUToolButtonFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
-    pub tool_button_style: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub arrow_type: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub set_arrow_type: extern "C" fn(self_c: *const RUBase, arrow_type: i32),
-    pub set_popup_mode: extern "C" fn(self_c: *const RUBase, mode: i32),
-    pub popup_mode: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub tool_button_style: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub arrow_type: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub set_arrow_type: extern "C" fn(self_c: *const RUBase, arrow_type: u32),
+    pub set_popup_mode: extern "C" fn(self_c: *const RUBase, mode: u32),
+    pub popup_mode: extern "C" fn(self_c: *const RUBase) -> u32,
     pub auto_raise: extern "C" fn(self_c: *const RUBase) -> bool,
     pub show_menu: extern "C" fn(self_c: *const RUBase),
-    pub set_tool_button_style: extern "C" fn(self_c: *const RUBase, style: i32),
+    pub set_tool_button_style: extern "C" fn(self_c: *const RUBase, style: u32),
     pub set_mouse_press_event: extern "C" fn(
         object: *const RUBase,
         user_data: *const c_void,

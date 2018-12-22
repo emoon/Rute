@@ -26,7 +26,7 @@ typedef struct RUStyleFuncs {
                                       int flags, struct RUBase* pixmap);
     void (*draw_item_text)(struct RUBase* self_c, struct RUBase* painter,
                            struct RUBase* rect, int flags, struct RUBase* pal,
-                           bool enabled, const char* text, int text_role);
+                           bool enabled, const char* text, uint32_t text_role);
     void (*draw_item_pixmap)(struct RUBase* self_c, struct RUBase* painter,
                              struct RUBase* rect, int alignment,
                              struct RUBase* pixmap);

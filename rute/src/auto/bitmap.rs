@@ -141,7 +141,7 @@ impl<'a> Bitmap<'a> {
     /// **See also:** [`from_data()`]
     pub fn from_image<I: ImageTrait<'a>>(image: &I, flags: ImageConversionFlags) -> Bitmap<'a> {
         let (obj_image_1, _funcs) = image.get_image_obj_funcs();
-        let enum_flags_2 = flags as i32;
+        let enum_flags_2 = flags.bits();
 
         let (obj_data, funcs) = unsafe {
             (
@@ -346,7 +346,7 @@ impl<'a> Bitmap<'a> {
         mode: MaskMode,
     ) -> Bitmap {
         let (obj_mask_color_1, _funcs) = mask_color.get_color_obj_funcs();
-        let enum_mode_2 = mode as i32;
+        let enum_mode_2 = mode as u32;
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
@@ -441,8 +441,8 @@ impl<'a> Bitmap<'a> {
         aspect_mode: AspectRatioMode,
         mode: TransformationMode,
     ) -> Pixmap {
-        let enum_aspect_mode_3 = aspect_mode as i32;
-        let enum_mode_4 = mode as i32;
+        let enum_aspect_mode_3 = aspect_mode as u32;
+        let enum_mode_4 = mode as u32;
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
@@ -465,8 +465,8 @@ impl<'a> Bitmap<'a> {
         mode: TransformationMode,
     ) -> Pixmap {
         let (obj_s_1, _funcs) = s.get_size_obj_funcs();
-        let enum_aspect_mode_2 = aspect_mode as i32;
-        let enum_mode_3 = mode as i32;
+        let enum_aspect_mode_2 = aspect_mode as u32;
+        let enum_mode_3 = mode as u32;
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
@@ -483,7 +483,7 @@ impl<'a> Bitmap<'a> {
     }
     #[doc(hidden)]
     pub fn scaled_to_width(&self, w: i32, mode: TransformationMode) -> Pixmap {
-        let enum_mode_2 = mode as i32;
+        let enum_mode_2 = mode as u32;
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
@@ -500,7 +500,7 @@ impl<'a> Bitmap<'a> {
     }
     #[doc(hidden)]
     pub fn scaled_to_height(&self, h: i32, mode: TransformationMode) -> Pixmap {
-        let enum_mode_2 = mode as i32;
+        let enum_mode_2 = mode as u32;
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {
@@ -533,7 +533,7 @@ impl<'a> Bitmap<'a> {
     #[doc(hidden)]
     pub fn from_image_2<I: ImageTrait<'a>>(image: &I, flags: ImageConversionFlags) -> Pixmap<'a> {
         let (obj_image_1, _funcs) = image.get_image_obj_funcs();
-        let enum_flags_2 = flags as i32;
+        let enum_flags_2 = flags.bits();
 
         let (obj_data, funcs) = unsafe {
             (
@@ -560,7 +560,7 @@ impl<'a> Bitmap<'a> {
         flags: ImageConversionFlags,
     ) -> bool {
         let (obj_img_1, _funcs) = img.get_image_obj_funcs();
-        let enum_flags_2 = flags as i32;
+        let enum_flags_2 = flags.bits();
 
         let (obj_data, funcs) = self.get_pixmap_obj_funcs();
         unsafe {

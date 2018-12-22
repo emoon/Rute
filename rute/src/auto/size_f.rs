@@ -228,7 +228,7 @@ impl<'a> SizeF<'a> {
     /// Returns a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
     pub fn scale(&self, w: f32, h: f32, mode: AspectRatioMode) -> &Self {
-        let enum_mode_3 = mode as i32;
+        let enum_mode_3 = mode as u32;
 
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
@@ -263,7 +263,7 @@ impl<'a> SizeF<'a> {
     /// according to the specified *mode.*
     pub fn scale_2<S: SizeFTrait<'a>>(&self, s: &S, mode: AspectRatioMode) -> &Self {
         let (obj_s_1, _funcs) = s.get_size_f_obj_funcs();
-        let enum_mode_2 = mode as i32;
+        let enum_mode_2 = mode as u32;
 
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
@@ -281,7 +281,7 @@ impl<'a> SizeF<'a> {
     /// Returns a size scaled to a rectangle with the given size *s,*
     /// according to the specified *mode.*
     pub fn scaled(&self, w: f32, h: f32, mode: AspectRatioMode) -> SizeF {
-        let enum_mode_3 = mode as i32;
+        let enum_mode_3 = mode as u32;
 
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {
@@ -307,7 +307,7 @@ impl<'a> SizeF<'a> {
     /// according to the specified *mode.*
     pub fn scaled_2<S: SizeFTrait<'a>>(&self, s: &S, mode: AspectRatioMode) -> SizeF {
         let (obj_s_1, _funcs) = s.get_size_f_obj_funcs();
-        let enum_mode_2 = mode as i32;
+        let enum_mode_2 = mode as u32;
 
         let (obj_data, funcs) = self.get_size_f_obj_funcs();
         unsafe {

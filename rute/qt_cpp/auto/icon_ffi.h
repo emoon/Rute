@@ -20,30 +20,34 @@ typedef struct RUIconFuncs {
     void (*destroy)(struct RUBase* self);
     void (*swap)(struct RUBase* self_c, struct RUBase* other);
     struct RUPixmap (*pixmap)(struct RUBase* self_c, struct RUBase* size,
-                              int mode, int state);
-    struct RUPixmap (*pixmap_2)(struct RUBase* self_c, int w, int h, int mode,
-                                int state);
-    struct RUPixmap (*pixmap_3)(struct RUBase* self_c, int extent, int mode,
-                                int state);
+                              uint32_t mode, uint32_t state);
+    struct RUPixmap (*pixmap_2)(struct RUBase* self_c, int w, int h,
+                                uint32_t mode, uint32_t state);
+    struct RUPixmap (*pixmap_3)(struct RUBase* self_c, int extent,
+                                uint32_t mode, uint32_t state);
     struct RUPixmap (*pixmap_4)(struct RUBase* self_c, struct RUBase* window,
-                                struct RUBase* size, int mode, int state);
+                                struct RUBase* size, uint32_t mode,
+                                uint32_t state);
     struct RUSize (*actual_size)(struct RUBase* self_c, struct RUBase* size,
-                                 int mode, int state);
+                                 uint32_t mode, uint32_t state);
     struct RUSize (*actual_size_2)(struct RUBase* self_c, struct RUBase* window,
-                                   struct RUBase* size, int mode, int state);
+                                   struct RUBase* size, uint32_t mode,
+                                   uint32_t state);
     const char* (*name)(struct RUBase* self_c);
     void (*paint)(struct RUBase* self_c, struct RUBase* painter,
-                  struct RUBase* rect, int alignment, int mode, int state);
+                  struct RUBase* rect, uint32_t alignment, uint32_t mode,
+                  uint32_t state);
     void (*paint_2)(struct RUBase* self_c, struct RUBase* painter, int x, int y,
-                    int w, int h, int alignment, int mode, int state);
+                    int w, int h, uint32_t alignment, uint32_t mode,
+                    uint32_t state);
     bool (*is_null)(struct RUBase* self_c);
     bool (*is_detached)(struct RUBase* self_c);
     void (*detach)(struct RUBase* self_c);
     int64_t (*cache_key)(struct RUBase* self_c);
-    void (*add_pixmap)(struct RUBase* self_c, struct RUBase* pixmap, int mode,
-                       int state);
+    void (*add_pixmap)(struct RUBase* self_c, struct RUBase* pixmap,
+                       uint32_t mode, uint32_t state);
     void (*add_file)(struct RUBase* self_c, const char* file_name,
-                     struct RUBase* size, int mode, int state);
+                     struct RUBase* size, uint32_t mode, uint32_t state);
     void (*set_is_mask)(struct RUBase* self_c, bool is_mask);
     bool (*is_mask)(struct RUBase* self_c);
     struct RUIcon (*from_theme)(struct RUBase* self_c, const char* name);

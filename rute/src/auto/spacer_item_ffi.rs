@@ -12,11 +12,11 @@ use std::os::raw::c_void;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct RUSpacerItemFuncs {
-    pub change_size: extern "C" fn(self_c: *const RUBase, w: i32, h: i32, h_data: i32, v_data: i32),
+    pub change_size: extern "C" fn(self_c: *const RUBase, w: i32, h: i32, h_data: u32, v_data: u32),
     pub size_hint: extern "C" fn(self_c: *const RUBase) -> RUSize,
     pub minimum_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
     pub maximum_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
-    pub expanding_directions: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub expanding_directions: extern "C" fn(self_c: *const RUBase) -> u32,
     pub is_empty: extern "C" fn(self_c: *const RUBase) -> bool,
     pub spacer_item: extern "C" fn(self_c: *const RUBase) -> RUSpacerItem,
     pub size_policy: extern "C" fn(self_c: *const RUBase) -> RUSizePolicy,

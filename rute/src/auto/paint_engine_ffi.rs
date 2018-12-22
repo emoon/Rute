@@ -29,9 +29,9 @@ pub struct RUPaintEngineFuncs {
     pub draw_points_2:
         extern "C" fn(self_c: *const RUBase, points: *const RUBase, point_count: i32),
     pub draw_polygon:
-        extern "C" fn(self_c: *const RUBase, points: *const RUBase, point_count: i32, mode: i32),
+        extern "C" fn(self_c: *const RUBase, points: *const RUBase, point_count: i32, mode: u32),
     pub draw_polygon_2:
-        extern "C" fn(self_c: *const RUBase, points: *const RUBase, point_count: i32, mode: i32),
+        extern "C" fn(self_c: *const RUBase, points: *const RUBase, point_count: i32, mode: u32),
     pub draw_pixmap: extern "C" fn(
         self_c: *const RUBase,
         r: *const RUBase,
@@ -49,7 +49,7 @@ pub struct RUPaintEngineFuncs {
         r: *const RUBase,
         pm: *const RUBase,
         sr: *const RUBase,
-        flags: i32,
+        flags: u32,
     ),
     pub set_paint_device: extern "C" fn(self_c: *const RUBase, device: *const RUBase),
     pub paint_device: extern "C" fn(self_c: *const RUBase) -> RUPaintDevice,

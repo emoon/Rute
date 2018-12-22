@@ -168,7 +168,7 @@ impl<'a> Gradient<'a> {
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).get_type)(obj_data);
-            let ret_val = { transmute::<i32, Type>(ret_val) };
+            let ret_val = { transmute::<u32, Type>(ret_val) };
             ret_val
         }
     }
@@ -181,7 +181,7 @@ impl<'a> Gradient<'a> {
     ///
     /// **See also:** spread()
     pub fn set_spread(&self, spread: Spread) -> &Self {
-        let enum_spread_1 = spread as i32;
+        let enum_spread_1 = spread as u32;
 
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
@@ -198,7 +198,7 @@ impl<'a> Gradient<'a> {
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).spread)(obj_data);
-            let ret_val = { transmute::<i32, Spread>(ret_val) };
+            let ret_val = { transmute::<u32, Spread>(ret_val) };
             ret_val
         }
     }
@@ -223,7 +223,7 @@ impl<'a> Gradient<'a> {
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).coordinate_mode)(obj_data);
-            let ret_val = { transmute::<i32, CoordinateMode>(ret_val) };
+            let ret_val = { transmute::<u32, CoordinateMode>(ret_val) };
             ret_val
         }
     }
@@ -231,7 +231,7 @@ impl<'a> Gradient<'a> {
     /// Sets the coordinate mode of this gradient to *mode.* The default
     /// mode is LogicalMode.
     pub fn set_coordinate_mode(&self, mode: CoordinateMode) -> &Self {
-        let enum_mode_1 = mode as i32;
+        let enum_mode_1 = mode as u32;
 
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
@@ -243,12 +243,12 @@ impl<'a> Gradient<'a> {
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).interpolation_mode)(obj_data);
-            let ret_val = { transmute::<i32, InterpolationMode>(ret_val) };
+            let ret_val = { transmute::<u32, InterpolationMode>(ret_val) };
             ret_val
         }
     }
     pub fn set_interpolation_mode(&self, mode: InterpolationMode) -> &Self {
-        let enum_mode_1 = mode as i32;
+        let enum_mode_1 = mode as u32;
 
         let (obj_data, funcs) = self.get_gradient_obj_funcs();
         unsafe {
@@ -272,28 +272,28 @@ impl<'a> GradientTrait<'a> for Gradient<'a> {
 }
 #[repr(u32)]
 pub enum Type {
-    LinearGradient,
-    RadialGradient,
-    ConicalGradient,
-    NoGradient,
+    LinearGradient = 0,
+    RadialGradient = 1,
+    ConicalGradient = 2,
+    NoGradient = 3,
 }
 
 #[repr(u32)]
 pub enum Spread {
-    PadSpread,
-    ReflectSpread,
-    RepeatSpread,
+    PadSpread = 0,
+    ReflectSpread = 1,
+    RepeatSpread = 2,
 }
 
 #[repr(u32)]
 pub enum CoordinateMode {
-    LogicalMode,
-    StretchToDeviceMode,
-    ObjectBoundingMode,
+    LogicalMode = 0,
+    StretchToDeviceMode = 1,
+    ObjectBoundingMode = 2,
 }
 
 #[repr(u32)]
 pub enum InterpolationMode {
-    ColorInterpolation,
-    ComponentInterpolation,
+    ColorInterpolation = 0,
+    ComponentInterpolation = 1,
 }

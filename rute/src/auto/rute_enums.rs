@@ -2,1549 +2,1598 @@
 
 #[repr(u32)]
 pub enum GlobalColor {
-    Color0,
-    Color1,
-    Black,
-    White,
-    DarkGray,
-    Gray,
-    LightGray,
-    Red,
-    Green,
-    Blue,
-    Cyan,
-    Magenta,
-    Yellow,
-    DarkRed,
-    DarkGreen,
-    DarkBlue,
-    DarkCyan,
-    DarkMagenta,
-    DarkYellow,
-    Transparent,
+    Color0 = 0,
+    Color1 = 1,
+    Black = 2,
+    White = 3,
+    DarkGray = 4,
+    Gray = 5,
+    LightGray = 6,
+    Red = 7,
+    Green = 8,
+    Blue = 9,
+    Cyan = 10,
+    Magenta = 11,
+    Yellow = 12,
+    DarkRed = 13,
+    DarkGreen = 14,
+    DarkBlue = 15,
+    DarkCyan = 16,
+    DarkMagenta = 17,
+    DarkYellow = 18,
+    Transparent = 19,
 }
 
-#[repr(u32)]
-pub enum KeyboardModifier {
-    NoModifier,
-    ShiftModifier,
-    ControlModifier,
-    AltModifier,
-    MetaModifier,
-    KeypadModifier,
-    GroupSwitchModifier,
-    KeyboardModifierMask,
+bitflags! {
+    pub struct KeyboardModifier: u32 {
+        const NoModifier = 0x0;
+        const ShiftModifier = 0x2000000;
+        const ControlModifier = 0x4000000;
+        const AltModifier = 0x8000000;
+        const MetaModifier = 0x10000000;
+        const KeypadModifier = 0x20000000;
+        const GroupSwitchModifier = 0x40000000;
+        const KeyboardModifierMask = 0xfe000000;
+    }
 }
 
 pub type KeyboardModifiers = KeyboardModifier;
 
-#[repr(u32)]
-pub enum Modifier {
-    Meta,
-    Shift,
-    Ctrl,
-    Alt,
-    ModifierMask,
-    UnicodeAccel,
+bitflags! {
+    pub struct Modifier: u32 {
+        const Meta = 0x10000000;
+        const Shift = 0x2000000;
+        const Ctrl = 0x4000000;
+        const Alt = 0x8000000;
+        const ModifierMask = 0xfe000000;
+        const UnicodeAccel = 0x0;
+    }
 }
 
-#[repr(u32)]
-pub enum MouseButton {
-    NoButton,
-    LeftButton,
-    RightButton,
-    MidButton,
-    MiddleButton,
-    BackButton,
-    XButton1,
-    ExtraButton1,
-    ForwardButton,
-    XButton2,
-    ExtraButton2,
-    TaskButton,
-    ExtraButton3,
-    ExtraButton4,
-    ExtraButton5,
-    ExtraButton6,
-    ExtraButton7,
-    ExtraButton8,
-    ExtraButton9,
-    ExtraButton10,
-    ExtraButton11,
-    ExtraButton12,
-    ExtraButton13,
-    ExtraButton14,
-    ExtraButton15,
-    ExtraButton16,
-    ExtraButton17,
-    ExtraButton18,
-    ExtraButton19,
-    ExtraButton20,
-    ExtraButton21,
-    ExtraButton22,
-    ExtraButton23,
-    ExtraButton24,
-    AllButtons,
-    MaxMouseButton,
-    MouseButtonMask,
+bitflags! {
+    pub struct MouseButton: u32 {
+        const NoButton = 0x0;
+        const LeftButton = 0x1;
+        const RightButton = 0x2;
+        const MidButton = 0x4;
+        const MiddleButton = 0x4;
+        const BackButton = 0x8;
+        const XButton1 = 0x8;
+        const ExtraButton1 = 0x8;
+        const ForwardButton = 0x10;
+        const XButton2 = 0x10;
+        const ExtraButton2 = 0x10;
+        const TaskButton = 0x20;
+        const ExtraButton3 = 0x20;
+        const ExtraButton4 = 0x40;
+        const ExtraButton5 = 0x80;
+        const ExtraButton6 = 0x100;
+        const ExtraButton7 = 0x200;
+        const ExtraButton8 = 0x400;
+        const ExtraButton9 = 0x800;
+        const ExtraButton10 = 0x1000;
+        const ExtraButton11 = 0x2000;
+        const ExtraButton12 = 0x4000;
+        const ExtraButton13 = 0x8000;
+        const ExtraButton14 = 0x10000;
+        const ExtraButton15 = 0x20000;
+        const ExtraButton16 = 0x40000;
+        const ExtraButton17 = 0x80000;
+        const ExtraButton18 = 0x100000;
+        const ExtraButton19 = 0x200000;
+        const ExtraButton20 = 0x400000;
+        const ExtraButton21 = 0x800000;
+        const ExtraButton22 = 0x1000000;
+        const ExtraButton23 = 0x2000000;
+        const ExtraButton24 = 0x4000000;
+        const AllButtons = 0x7ffffff;
+        const MaxMouseButton = 0x4000000;
+        const MouseButtonMask = 0xffffffff;
+    }
 }
 
 pub type MouseButtons = MouseButton;
 
 #[repr(u32)]
 pub enum Orientation {
-    Horizontal,
-    Vertical,
+    Horizontal = 1,
+    Vertical = 2,
 }
 
-pub type Orientations = Orientation;
-
+bitflags! {
+    pub struct Orientations: u32 {
+        const Horizontal = Orientation::Horizontal as u32;
+        const Vertical = Orientation::Vertical as u32;
+    }
+}
 #[repr(u32)]
 pub enum FocusPolicy {
-    NoFocus,
-    TabFocus,
-    ClickFocus,
-    StrongFocus,
-    WheelFocus,
+    NoFocus = 0,
+    TabFocus = 1,
+    ClickFocus = 2,
+    StrongFocus = 11,
+    WheelFocus = 15,
 }
 
 #[repr(u32)]
 pub enum TabFocusBehavior {
-    NoTabFocus,
-    TabFocusTextControls,
-    TabFocusListControls,
-    TabFocusAllControls,
+    NoTabFocus = 0,
+    TabFocusTextControls = 1,
+    TabFocusListControls = 2,
+    TabFocusAllControls = 255,
 }
 
 #[repr(u32)]
 pub enum SortOrder {
-    AscendingOrder,
-    DescendingOrder,
+    AscendingOrder = 0,
+    DescendingOrder = 1,
 }
 
 #[repr(u32)]
 pub enum TileRule {
-    StretchTile,
-    RepeatTile,
-    RoundTile,
+    StretchTile = 0,
+    RepeatTile = 1,
+    RoundTile = 2,
 }
 
-#[repr(u32)]
-pub enum AlignmentFlag {
-    AlignLeft,
-    AlignLeading,
-    AlignRight,
-    AlignTrailing,
-    AlignHCenter,
-    AlignJustify,
-    AlignAbsolute,
-    AlignHorizontalMask,
-    AlignTop,
-    AlignBottom,
-    AlignVCenter,
-    AlignBaseline,
-    AlignVerticalMask,
-    AlignCenter,
+bitflags! {
+    pub struct AlignmentFlag: u32 {
+        const AlignLeft = 0x1;
+        const AlignLeading = 0x1;
+        const AlignRight = 0x2;
+        const AlignTrailing = 0x2;
+        const AlignHCenter = 0x4;
+        const AlignJustify = 0x8;
+        const AlignAbsolute = 0x10;
+        const AlignHorizontalMask = 0x1f;
+        const AlignTop = 0x20;
+        const AlignBottom = 0x40;
+        const AlignVCenter = 0x80;
+        const AlignBaseline = 0x100;
+        const AlignVerticalMask = 0x1e0;
+        const AlignCenter = 0x84;
+    }
 }
 
 pub type Alignment = AlignmentFlag;
 
-#[repr(u32)]
-pub enum TextFlag {
-    TextSingleLine,
-    TextDontClip,
-    TextExpandTabs,
-    TextShowMnemonic,
-    TextWordWrap,
-    TextWrapAnywhere,
-    TextDontPrint,
-    TextIncludeTrailingSpaces,
-    TextHideMnemonic,
-    TextJustificationForced,
-    TextForceLeftToRight,
-    TextForceRightToLeft,
-    TextLongestVariant,
-    TextBypassShaping,
+bitflags! {
+    pub struct TextFlag: u32 {
+        const TextSingleLine = 0x100;
+        const TextDontClip = 0x200;
+        const TextExpandTabs = 0x400;
+        const TextShowMnemonic = 0x800;
+        const TextWordWrap = 0x1000;
+        const TextWrapAnywhere = 0x2000;
+        const TextDontPrint = 0x4000;
+        const TextIncludeTrailingSpaces = 0x8000000;
+        const TextHideMnemonic = 0x8000;
+        const TextJustificationForced = 0x10000;
+        const TextForceLeftToRight = 0x20000;
+        const TextForceRightToLeft = 0x40000;
+        const TextLongestVariant = 0x80000;
+        const TextBypassShaping = 0x100000;
+    }
 }
 
 #[repr(u32)]
 pub enum TextElideMode {
-    ElideLeft,
-    ElideRight,
-    ElideMiddle,
-    ElideNone,
+    ElideLeft = 0,
+    ElideRight = 1,
+    ElideMiddle = 2,
+    ElideNone = 3,
 }
 
 #[repr(u32)]
 pub enum WhiteSpaceMode {
-    WhiteSpaceNormal,
-    WhiteSpacePre,
-    WhiteSpaceNoWrap,
-    WhiteSpaceModeUndefined,
+    WhiteSpaceNormal = 0,
+    WhiteSpacePre = 1,
+    WhiteSpaceNoWrap = 2,
+    WhiteSpaceModeUndefined = 4294967295,
 }
 
 #[repr(u32)]
 pub enum HitTestAccuracy {
-    ExactHit,
-    FuzzyHit,
+    ExactHit = 0,
+    FuzzyHit = 1,
 }
 
-#[repr(u32)]
-pub enum WindowType {
-    Widget,
-    Window,
-    Dialog,
-    Sheet,
-    Drawer,
-    Popup,
-    Tool,
-    ToolTip,
-    SplashScreen,
-    Desktop,
-    SubWindow,
-    ForeignWindow,
-    CoverWindow,
-    WindowTypeMask,
-    MsWindowsFixedSizeDialogHint,
-    MsWindowsOwnDc,
-    BypassWindowManagerHint,
-    X11BypassWindowManagerHint,
-    FramelessWindowHint,
-    WindowTitleHint,
-    WindowSystemMenuHint,
-    WindowMinimizeButtonHint,
-    WindowMaximizeButtonHint,
-    WindowMinMaxButtonsHint,
-    WindowContextHelpButtonHint,
-    WindowShadeButtonHint,
-    WindowStaysOnTopHint,
-    WindowTransparentForInput,
-    WindowOverridesSystemGestures,
-    WindowDoesNotAcceptFocus,
-    MaximizeUsingFullscreenGeometryHint,
-    CustomizeWindowHint,
-    WindowStaysOnBottomHint,
-    WindowCloseButtonHint,
-    MacWindowToolBarButtonHint,
-    BypassGraphicsProxyWidget,
-    NoDropShadowWindowHint,
-    WindowFullscreenButtonHint,
+bitflags! {
+    pub struct WindowType: u32 {
+        const Widget = 0x0;
+        const Window = 0x1;
+        const Dialog = 0x3;
+        const Sheet = 0x5;
+        const Drawer = 0x7;
+        const Popup = 0x9;
+        const Tool = 0xb;
+        const ToolTip = 0xd;
+        const SplashScreen = 0xf;
+        const Desktop = 0x11;
+        const SubWindow = 0x12;
+        const ForeignWindow = 0x21;
+        const CoverWindow = 0x41;
+        const WindowTypeMask = 0xff;
+        const MsWindowsFixedSizeDialogHint = 0x100;
+        const MsWindowsOwnDc = 0x200;
+        const BypassWindowManagerHint = 0x400;
+        const X11BypassWindowManagerHint = 0x400;
+        const FramelessWindowHint = 0x800;
+        const WindowTitleHint = 0x1000;
+        const WindowSystemMenuHint = 0x2000;
+        const WindowMinimizeButtonHint = 0x4000;
+        const WindowMaximizeButtonHint = 0x8000;
+        const WindowMinMaxButtonsHint = 0xc000;
+        const WindowContextHelpButtonHint = 0x10000;
+        const WindowShadeButtonHint = 0x20000;
+        const WindowStaysOnTopHint = 0x40000;
+        const WindowTransparentForInput = 0x80000;
+        const WindowOverridesSystemGestures = 0x100000;
+        const WindowDoesNotAcceptFocus = 0x200000;
+        const MaximizeUsingFullscreenGeometryHint = 0x400000;
+        const CustomizeWindowHint = 0x2000000;
+        const WindowStaysOnBottomHint = 0x4000000;
+        const WindowCloseButtonHint = 0x8000000;
+        const MacWindowToolBarButtonHint = 0x10000000;
+        const BypassGraphicsProxyWidget = 0x20000000;
+        const NoDropShadowWindowHint = 0x40000000;
+        const WindowFullscreenButtonHint = 0x80000000;
+    }
 }
 
 pub type WindowFlags = WindowType;
 
-#[repr(u32)]
-pub enum WindowState {
-    WindowNoState,
-    WindowMinimized,
-    WindowMaximized,
-    WindowFullScreen,
-    WindowActive,
+bitflags! {
+    pub struct WindowState: u32 {
+        const WindowNoState = 0x0;
+        const WindowMinimized = 0x1;
+        const WindowMaximized = 0x2;
+        const WindowFullScreen = 0x4;
+        const WindowActive = 0x8;
+    }
 }
 
 pub type WindowStates = WindowState;
 
-#[repr(u32)]
-pub enum ApplicationState {
-    ApplicationSuspended,
-    ApplicationHidden,
-    ApplicationInactive,
-    ApplicationActive,
+bitflags! {
+    pub struct ApplicationState: u32 {
+        const ApplicationSuspended = 0x0;
+        const ApplicationHidden = 0x1;
+        const ApplicationInactive = 0x2;
+        const ApplicationActive = 0x4;
+    }
 }
 
-#[repr(u32)]
-pub enum ScreenOrientation {
-    PrimaryOrientation,
-    PortraitOrientation,
-    LandscapeOrientation,
-    InvertedPortraitOrientation,
-    InvertedLandscapeOrientation,
+bitflags! {
+    pub struct ScreenOrientation: u32 {
+        const PrimaryOrientation = 0x0;
+        const PortraitOrientation = 0x1;
+        const LandscapeOrientation = 0x2;
+        const InvertedPortraitOrientation = 0x4;
+        const InvertedLandscapeOrientation = 0x8;
+    }
 }
 
-#[repr(u32)]
-pub enum WidgetAttribute {
-    WaDisabled,
-    WaUnderMouse,
-    WaMouseTracking,
-    WaContentsPropagated,
-    WaOpaquePaintEvent,
-    WaNoBackground,
-    WaStaticContents,
-    WaLaidOut,
-    WaPaintOnScreen,
-    WaNoSystemBackground,
-    WaUpdatesDisabled,
-    WaMapped,
-    WaMacNoClickThrough,
-    WaInputMethodEnabled,
-    WaWStateVisible,
-    WaWStateHidden,
-    WaForceDisabled,
-    WaKeyCompression,
-    WaPendingMoveEvent,
-    WaPendingResizeEvent,
-    WaSetPalette,
-    WaSetFont,
-    WaSetCursor,
-    WaNoChildEventsFromChildren,
-    WaWindowModified,
-    WaResized,
-    WaMoved,
-    WaPendingUpdate,
-    WaInvalidSize,
-    WaMacBrushedMetal,
-    WaMacMetalStyle,
-    WaCustomWhatsThis,
-    WaLayoutOnEntireRect,
-    WaOutsideWsRange,
-    WaGrabbedShortcut,
-    WaTransparentForMouseEvents,
-    WaPaintUnclipped,
-    WaSetWindowIcon,
-    WaNoMouseReplay,
-    WaDeleteOnClose,
-    WaRightToLeft,
-    WaSetLayoutDirection,
-    WaNoChildEventsForParent,
-    WaForceUpdatesDisabled,
-    WaWStateCreated,
-    WaWStateCompressKeys,
-    WaWStateInPaintEvent,
-    WaWStateReparented,
-    WaWStateConfigPending,
-    WaWStatePolished,
-    WaWStateDnd,
-    WaWStateOwnSizePolicy,
-    WaWStateExplicitShowHide,
-    WaShowModal,
-    WaMouseNoMask,
-    WaGroupLeader,
-    WaNoMousePropagation,
-    WaHover,
-    WaInputMethodTransparent,
-    WaQuitOnClose,
-    WaKeyboardFocusChange,
-    WaAcceptDrops,
-    WaDropSiteRegistered,
-    WaForceAcceptDrops,
-    WaWindowPropagation,
-    WaNoX11EventCompression,
-    WaTintedBackground,
-    WaX11OpenGlOverlay,
-    WaAlwaysShowToolTips,
-    WaMacOpaqueSizeGrip,
-    WaSetStyle,
-    WaSetLocale,
-    WaMacShowFocusRect,
-    WaMacNormalSize,
-    WaMacSmallSize,
-    WaMacMiniSize,
-    WaLayoutUsesWidgetRect,
-    WaStyledBackground,
-    WaMsWindowsUseDirect3D,
-    WaCanHostQMdiSubWindowTitleBar,
-    WaMacAlwaysShowToolWindow,
-    WaStyleSheet,
-    WaShowWithoutActivating,
-    WaX11BypassTransientForHint,
-    WaNativeWindow,
-    WaDontCreateNativeAncestors,
-    WaMacVariableSize,
-    WaDontShowOnScreen,
-    WaX11NetWmWindowTypeDesktop,
-    WaX11NetWmWindowTypeDock,
-    WaX11NetWmWindowTypeToolBar,
-    WaX11NetWmWindowTypeMenu,
-    WaX11NetWmWindowTypeUtility,
-    WaX11NetWmWindowTypeSplash,
-    WaX11NetWmWindowTypeDialog,
-    WaX11NetWmWindowTypeDropDownMenu,
-    WaX11NetWmWindowTypePopupMenu,
-    WaX11NetWmWindowTypeToolTip,
-    WaX11NetWmWindowTypeNotification,
-    WaX11NetWmWindowTypeCombo,
-    WaX11NetWmWindowTypeDnd,
-    WaMacFrameworkScaled,
-    WaSetWindowModality,
-    WaWStateWindowOpacitySet,
-    WaTranslucentBackground,
-    WaAcceptTouchEvents,
-    WaWStateAcceptedTouchBeginEvent,
-    WaTouchPadAcceptSingleTouchEvents,
-    WaX11DoNotAcceptFocus,
-    WaMacNoShadow,
-    WaAlwaysStackOnTop,
-    WaTabletTracking,
-    WaContentsMarginsRespectsSafeArea,
-    WaAttributeCount,
+bitflags! {
+    pub struct WidgetAttribute: u32 {
+        const WaDisabled = 0x0;
+        const WaUnderMouse = 0x1;
+        const WaMouseTracking = 0x2;
+        const WaContentsPropagated = 0x3;
+        const WaOpaquePaintEvent = 0x4;
+        const WaNoBackground = 0x4;
+        const WaStaticContents = 0x5;
+        const WaLaidOut = 0x7;
+        const WaPaintOnScreen = 0x8;
+        const WaNoSystemBackground = 0x9;
+        const WaUpdatesDisabled = 0xa;
+        const WaMapped = 0xb;
+        const WaMacNoClickThrough = 0xc;
+        const WaInputMethodEnabled = 0xe;
+        const WaWStateVisible = 0xf;
+        const WaWStateHidden = 0x10;
+        const WaForceDisabled = 0x20;
+        const WaKeyCompression = 0x21;
+        const WaPendingMoveEvent = 0x22;
+        const WaPendingResizeEvent = 0x23;
+        const WaSetPalette = 0x24;
+        const WaSetFont = 0x25;
+        const WaSetCursor = 0x26;
+        const WaNoChildEventsFromChildren = 0x27;
+        const WaWindowModified = 0x29;
+        const WaResized = 0x2a;
+        const WaMoved = 0x2b;
+        const WaPendingUpdate = 0x2c;
+        const WaInvalidSize = 0x2d;
+        const WaMacBrushedMetal = 0x2e;
+        const WaMacMetalStyle = 0x2e;
+        const WaCustomWhatsThis = 0x2f;
+        const WaLayoutOnEntireRect = 0x30;
+        const WaOutsideWsRange = 0x31;
+        const WaGrabbedShortcut = 0x32;
+        const WaTransparentForMouseEvents = 0x33;
+        const WaPaintUnclipped = 0x34;
+        const WaSetWindowIcon = 0x35;
+        const WaNoMouseReplay = 0x36;
+        const WaDeleteOnClose = 0x37;
+        const WaRightToLeft = 0x38;
+        const WaSetLayoutDirection = 0x39;
+        const WaNoChildEventsForParent = 0x3a;
+        const WaForceUpdatesDisabled = 0x3b;
+        const WaWStateCreated = 0x3c;
+        const WaWStateCompressKeys = 0x3d;
+        const WaWStateInPaintEvent = 0x3e;
+        const WaWStateReparented = 0x3f;
+        const WaWStateConfigPending = 0x40;
+        const WaWStatePolished = 0x42;
+        const WaWStateDnd = 0x43;
+        const WaWStateOwnSizePolicy = 0x44;
+        const WaWStateExplicitShowHide = 0x45;
+        const WaShowModal = 0x46;
+        const WaMouseNoMask = 0x47;
+        const WaGroupLeader = 0x48;
+        const WaNoMousePropagation = 0x49;
+        const WaHover = 0x4a;
+        const WaInputMethodTransparent = 0x4b;
+        const WaQuitOnClose = 0x4c;
+        const WaKeyboardFocusChange = 0x4d;
+        const WaAcceptDrops = 0x4e;
+        const WaDropSiteRegistered = 0x4f;
+        const WaForceAcceptDrops = 0x4f;
+        const WaWindowPropagation = 0x50;
+        const WaNoX11EventCompression = 0x51;
+        const WaTintedBackground = 0x52;
+        const WaX11OpenGlOverlay = 0x53;
+        const WaAlwaysShowToolTips = 0x54;
+        const WaMacOpaqueSizeGrip = 0x55;
+        const WaSetStyle = 0x56;
+        const WaSetLocale = 0x57;
+        const WaMacShowFocusRect = 0x58;
+        const WaMacNormalSize = 0x59;
+        const WaMacSmallSize = 0x5a;
+        const WaMacMiniSize = 0x5b;
+        const WaLayoutUsesWidgetRect = 0x5c;
+        const WaStyledBackground = 0x5d;
+        const WaMsWindowsUseDirect3D = 0x5e;
+        const WaCanHostQMdiSubWindowTitleBar = 0x5f;
+        const WaMacAlwaysShowToolWindow = 0x60;
+        const WaStyleSheet = 0x61;
+        const WaShowWithoutActivating = 0x62;
+        const WaX11BypassTransientForHint = 0x63;
+        const WaNativeWindow = 0x64;
+        const WaDontCreateNativeAncestors = 0x65;
+        const WaMacVariableSize = 0x66;
+        const WaDontShowOnScreen = 0x67;
+        const WaX11NetWmWindowTypeDesktop = 0x68;
+        const WaX11NetWmWindowTypeDock = 0x69;
+        const WaX11NetWmWindowTypeToolBar = 0x6a;
+        const WaX11NetWmWindowTypeMenu = 0x6b;
+        const WaX11NetWmWindowTypeUtility = 0x6c;
+        const WaX11NetWmWindowTypeSplash = 0x6d;
+        const WaX11NetWmWindowTypeDialog = 0x6e;
+        const WaX11NetWmWindowTypeDropDownMenu = 0x6f;
+        const WaX11NetWmWindowTypePopupMenu = 0x70;
+        const WaX11NetWmWindowTypeToolTip = 0x71;
+        const WaX11NetWmWindowTypeNotification = 0x72;
+        const WaX11NetWmWindowTypeCombo = 0x73;
+        const WaX11NetWmWindowTypeDnd = 0x74;
+        const WaMacFrameworkScaled = 0x75;
+        const WaSetWindowModality = 0x76;
+        const WaWStateWindowOpacitySet = 0x77;
+        const WaTranslucentBackground = 0x78;
+        const WaAcceptTouchEvents = 0x79;
+        const WaWStateAcceptedTouchBeginEvent = 0x7a;
+        const WaTouchPadAcceptSingleTouchEvents = 0x7b;
+        const WaX11DoNotAcceptFocus = 0x7e;
+        const WaMacNoShadow = 0x7f;
+        const WaAlwaysStackOnTop = 0x80;
+        const WaTabletTracking = 0x81;
+        const WaContentsMarginsRespectsSafeArea = 0x82;
+        const WaAttributeCount = 0x83;
+    }
 }
 
 #[repr(u32)]
 pub enum ApplicationAttribute {
-    AaImmediateWidgetCreation,
-    AaMsWindowsUseDirect3DByDefault,
-    AaDontShowIconsInMenus,
-    AaNativeWindows,
-    AaDontCreateNativeWidgetSiblings,
-    AaPluginApplication,
-    AaMacPluginApplication,
-    AaDontUseNativeMenuBar,
-    AaUse96Dpi,
-    AaX11InitThreads,
-    AaSynthesizeTouchForUnhandledMouseEvents,
-    AaSynthesizeMouseForUnhandledTouchEvents,
-    AaUseHighDpiPixmaps,
-    AaForceRasterWidgets,
-    AaUseDesktopOpenGl,
-    AaUseOpenGles,
-    AaUseSoftwareOpenGl,
-    AaShareOpenGlContexts,
-    AaSetPalette,
-    AaEnableHighDpiScaling,
-    AaDisableHighDpiScaling,
-    AaUseStyleSheetPropagationInWidgetStyles,
-    AaDontUseNativeDialogs,
-    AaSynthesizeMouseForUnhandledTabletEvents,
-    AaCompressHighFrequencyEvents,
-    AaDontCheckOpenGlContextThreadAffinity,
-    AaDisableShaderDiskCache,
-    AaDontShowShortcutsInContextMenus,
-    AaCompressTabletEvents,
-    AaDisableWindowContextHelpButton,
-    AaAttributeCount,
+    AaImmediateWidgetCreation = 0,
+    AaMsWindowsUseDirect3DByDefault = 1,
+    AaDontShowIconsInMenus = 2,
+    AaNativeWindows = 3,
+    AaDontCreateNativeWidgetSiblings = 4,
+    AaPluginApplication = 5,
+    AaDontUseNativeMenuBar = 6,
+    AaMacDontSwapCtrlAndMeta = 7,
+    AaUse96Dpi = 8,
+    AaX11InitThreads = 10,
+    AaSynthesizeTouchForUnhandledMouseEvents = 11,
+    AaSynthesizeMouseForUnhandledTouchEvents = 12,
+    AaUseHighDpiPixmaps = 13,
+    AaForceRasterWidgets = 14,
+    AaUseDesktopOpenGl = 15,
+    AaUseOpenGles = 16,
+    AaUseSoftwareOpenGl = 17,
+    AaShareOpenGlContexts = 18,
+    AaSetPalette = 19,
+    AaDisableHighDpiScaling = 21,
+    AaUseStyleSheetPropagationInWidgetStyles = 22,
+    AaDontUseNativeDialogs = 23,
+    AaSynthesizeMouseForUnhandledTabletEvents = 24,
+    AaCompressHighFrequencyEvents = 25,
+    AaDontCheckOpenGlContextThreadAffinity = 26,
+    AaDisableShaderDiskCache = 27,
+    AaDontShowShortcutsInContextMenus = 28,
+    AaCompressTabletEvents = 29,
+    AaDisableWindowContextHelpButton = 30,
+    AaAttributeCount = 31,
 }
 
-#[repr(u32)]
-pub enum ImageConversionFlag {
-    ColorModeMask,
-    AutoColor,
-    ColorOnly,
-    MonoOnly,
-    AlphaDitherMask,
-    ThresholdAlphaDither,
-    OrderedAlphaDither,
-    DiffuseAlphaDither,
-    NoAlpha,
-    DitherMask,
-    DiffuseDither,
-    OrderedDither,
-    ThresholdDither,
-    DitherModeMask,
-    AutoDither,
-    PreferDither,
-    AvoidDither,
-    NoOpaqueDetection,
-    NoFormatConversion,
+bitflags! {
+    pub struct ImageConversionFlag: u32 {
+        const ColorModeMask = 0x3;
+        const AutoColor = 0x0;
+        const ColorOnly = 0x3;
+        const MonoOnly = 0x2;
+        const AlphaDitherMask = 0xc;
+        const ThresholdAlphaDither = 0x0;
+        const OrderedAlphaDither = 0x4;
+        const DiffuseAlphaDither = 0x8;
+        const NoAlpha = 0xc;
+        const DitherMask = 0x30;
+        const DiffuseDither = 0x0;
+        const OrderedDither = 0x10;
+        const ThresholdDither = 0x20;
+        const DitherModeMask = 0xc0;
+        const AutoDither = 0x0;
+        const PreferDither = 0x40;
+        const AvoidDither = 0x80;
+        const NoOpaqueDetection = 0x100;
+        const NoFormatConversion = 0x200;
+    }
 }
 
 pub type ImageConversionFlags = ImageConversionFlag;
 
 #[repr(u32)]
 pub enum BGMode {
-    TransparentMode,
-    OpaqueMode,
+    TransparentMode = 0,
+    OpaqueMode = 1,
 }
 
-#[repr(u32)]
-pub enum Key {
-    KeyEscape,
-    KeyTab,
-    KeyBacktab,
-    KeyBackspace,
-    KeyReturn,
-    KeyEnter,
-    KeyInsert,
-    KeyDelete,
-    KeyPause,
-    KeyPrint,
-    KeySysReq,
-    KeyClear,
-    KeyHome,
-    KeyEnd,
-    KeyLeft,
-    KeyUp,
-    KeyRight,
-    KeyDown,
-    KeyPageUp,
-    KeyPageDown,
-    KeyShift,
-    KeyControl,
-    KeyMeta,
-    KeyAlt,
-    KeyCapsLock,
-    KeyNumLock,
-    KeyScrollLock,
-    KeyF1,
-    KeyF2,
-    KeyF3,
-    KeyF4,
-    KeyF5,
-    KeyF6,
-    KeyF7,
-    KeyF8,
-    KeyF9,
-    KeyF10,
-    KeyF11,
-    KeyF12,
-    KeyF13,
-    KeyF14,
-    KeyF15,
-    KeyF16,
-    KeyF17,
-    KeyF18,
-    KeyF19,
-    KeyF20,
-    KeyF21,
-    KeyF22,
-    KeyF23,
-    KeyF24,
-    KeyF25,
-    KeyF26,
-    KeyF27,
-    KeyF28,
-    KeyF29,
-    KeyF30,
-    KeyF31,
-    KeyF32,
-    KeyF33,
-    KeyF34,
-    KeyF35,
-    KeySuperL,
-    KeySuperR,
-    KeyMenu,
-    KeyHyperL,
-    KeyHyperR,
-    KeyHelp,
-    KeyDirectionL,
-    KeyDirectionR,
-    KeySpace,
-    KeyAny,
-    KeyExclam,
-    KeyQuoteDbl,
-    KeyNumberSign,
-    KeyDollar,
-    KeyPercent,
-    KeyAmpersand,
-    KeyApostrophe,
-    KeyParenLeft,
-    KeyParenRight,
-    KeyAsterisk,
-    KeyPlus,
-    KeyComma,
-    KeyMinus,
-    KeyPeriod,
-    KeySlash,
-    Key0,
-    Key1,
-    Key2,
-    Key3,
-    Key4,
-    Key5,
-    Key6,
-    Key7,
-    Key8,
-    Key9,
-    KeyColon,
-    KeySemicolon,
-    KeyLess,
-    KeyEqual,
-    KeyGreater,
-    KeyQuestion,
-    KeyAt,
-    KeyA,
-    KeyB,
-    KeyC,
-    KeyD,
-    KeyE,
-    KeyF,
-    KeyG,
-    KeyH,
-    KeyI,
-    KeyJ,
-    KeyK,
-    KeyL,
-    KeyM,
-    KeyN,
-    KeyO,
-    KeyP,
-    KeyQ,
-    KeyR,
-    KeyS,
-    KeyT,
-    KeyU,
-    KeyV,
-    KeyW,
-    KeyX,
-    KeyY,
-    KeyZ,
-    KeyBracketLeft,
-    KeyBackslash,
-    KeyBracketRight,
-    KeyAsciiCircum,
-    KeyUnderscore,
-    KeyQuoteLeft,
-    KeyBraceLeft,
-    KeyBar,
-    KeyBraceRight,
-    KeyAsciiTilde,
-    KeyNobreakspace,
-    KeyExclamdown,
-    KeyCent,
-    KeySterling,
-    KeyCurrency,
-    KeyYen,
-    KeyBrokenbar,
-    KeySection,
-    KeyDiaeresis,
-    KeyCopyright,
-    KeyOrdfeminine,
-    KeyGuillemotleft,
-    KeyNotsign,
-    KeyHyphen,
-    KeyRegistered,
-    KeyMacron,
-    KeyDegree,
-    KeyPlusminus,
-    KeyTwosuperior,
-    KeyThreesuperior,
-    KeyAcute,
-    KeyMu,
-    KeyParagraph,
-    KeyPeriodcentered,
-    KeyCedilla,
-    KeyOnesuperior,
-    KeyMasculine,
-    KeyGuillemotright,
-    KeyOnequarter,
-    KeyOnehalf,
-    KeyThreequarters,
-    KeyQuestiondown,
-    KeyAgrave,
-    KeyAacute,
-    KeyAcircumflex,
-    KeyAtilde,
-    KeyAdiaeresis,
-    KeyAring,
-    KeyAe,
-    KeyCcedilla,
-    KeyEgrave,
-    KeyEacute,
-    KeyEcircumflex,
-    KeyEdiaeresis,
-    KeyIgrave,
-    KeyIacute,
-    KeyIcircumflex,
-    KeyIdiaeresis,
-    KeyEth,
-    KeyNtilde,
-    KeyOgrave,
-    KeyOacute,
-    KeyOcircumflex,
-    KeyOtilde,
-    KeyOdiaeresis,
-    KeyMultiply,
-    KeyOoblique,
-    KeyUgrave,
-    KeyUacute,
-    KeyUcircumflex,
-    KeyUdiaeresis,
-    KeyYacute,
-    KeyThorn,
-    KeySsharp,
-    KeyDivision,
-    KeyYdiaeresis,
-    KeyAltGr,
-    KeyMultiKey,
-    KeyCodeinput,
-    KeySingleCandidate,
-    KeyMultipleCandidate,
-    KeyPreviousCandidate,
-    KeyModeSwitch,
-    KeyKanji,
-    KeyMuhenkan,
-    KeyHenkan,
-    KeyRomaji,
-    KeyHiragana,
-    KeyKatakana,
-    KeyHiraganaKatakana,
-    KeyZenkaku,
-    KeyHankaku,
-    KeyZenkakuHankaku,
-    KeyTouroku,
-    KeyMassyo,
-    KeyKanaLock,
-    KeyKanaShift,
-    KeyEisuShift,
-    KeyEisuToggle,
-    KeyHangul,
-    KeyHangulStart,
-    KeyHangulEnd,
-    KeyHangulHanja,
-    KeyHangulJamo,
-    KeyHangulRomaja,
-    KeyHangulJeonja,
-    KeyHangulBanja,
-    KeyHangulPreHanja,
-    KeyHangulPostHanja,
-    KeyHangulSpecial,
-    KeyDeadGrave,
-    KeyDeadAcute,
-    KeyDeadCircumflex,
-    KeyDeadTilde,
-    KeyDeadMacron,
-    KeyDeadBreve,
-    KeyDeadAbovedot,
-    KeyDeadDiaeresis,
-    KeyDeadAbovering,
-    KeyDeadDoubleacute,
-    KeyDeadCaron,
-    KeyDeadCedilla,
-    KeyDeadOgonek,
-    KeyDeadIota,
-    KeyDeadVoicedSound,
-    KeyDeadSemivoicedSound,
-    KeyDeadBelowdot,
-    KeyDeadHook,
-    KeyDeadHorn,
-    KeyDeadStroke,
-    KeyDeadAbovecomma,
-    KeyDeadAbovereversedcomma,
-    KeyDeadDoublegrave,
-    KeyDeadBelowring,
-    KeyDeadBelowmacron,
-    KeyDeadBelowcircumflex,
-    KeyDeadBelowtilde,
-    KeyDeadBelowbreve,
-    KeyDeadBelowdiaeresis,
-    KeyDeadInvertedbreve,
-    KeyDeadBelowcomma,
-    KeyDeadCurrency,
-    KeyDeadA,
-    KeyDeadE,
-    KeyDeadI,
-    KeyDeadO,
-    KeyDeadU,
-    KeyDeadSmallSchwa,
-    KeyDeadCapitalSchwa,
-    KeyDeadGreek,
-    KeyDeadLowline,
-    KeyDeadAboveverticalline,
-    KeyDeadBelowverticalline,
-    KeyDeadLongsolidusoverlay,
-    KeyBack,
-    KeyForward,
-    KeyStop,
-    KeyRefresh,
-    KeyVolumeDown,
-    KeyVolumeMute,
-    KeyVolumeUp,
-    KeyBassBoost,
-    KeyBassUp,
-    KeyBassDown,
-    KeyTrebleUp,
-    KeyTrebleDown,
-    KeyMediaPlay,
-    KeyMediaStop,
-    KeyMediaPrevious,
-    KeyMediaNext,
-    KeyMediaRecord,
-    KeyMediaPause,
-    KeyMediaTogglePlayPause,
-    KeyHomePage,
-    KeyFavorites,
-    KeySearch,
-    KeyStandby,
-    KeyOpenUrl,
-    KeyLaunchMail,
-    KeyLaunchMedia,
-    KeyLaunch0,
-    KeyLaunch1,
-    KeyLaunch2,
-    KeyLaunch3,
-    KeyLaunch4,
-    KeyLaunch5,
-    KeyLaunch6,
-    KeyLaunch7,
-    KeyLaunch8,
-    KeyLaunch9,
-    KeyLaunchA,
-    KeyLaunchB,
-    KeyLaunchC,
-    KeyLaunchD,
-    KeyLaunchE,
-    KeyLaunchF,
-    KeyMonBrightnessUp,
-    KeyMonBrightnessDown,
-    KeyKeyboardLightOnOff,
-    KeyKeyboardBrightnessUp,
-    KeyKeyboardBrightnessDown,
-    KeyPowerOff,
-    KeyWakeUp,
-    KeyEject,
-    KeyScreenSaver,
-    KeyWww,
-    KeyMemo,
-    KeyLightBulb,
-    KeyShop,
-    KeyHistory,
-    KeyAddFavorite,
-    KeyHotLinks,
-    KeyBrightnessAdjust,
-    KeyFinance,
-    KeyCommunity,
-    KeyAudioRewind,
-    KeyBackForward,
-    KeyApplicationLeft,
-    KeyApplicationRight,
-    KeyBook,
-    KeyCd,
-    KeyCalculator,
-    KeyToDoList,
-    KeyClearGrab,
-    KeyClose,
-    KeyCopy,
-    KeyCut,
-    KeyDisplay,
-    KeyDos,
-    KeyDocuments,
-    KeyExcel,
-    KeyExplorer,
-    KeyGame,
-    KeyGo,
-    KeyITouch,
-    KeyLogOff,
-    KeyMarket,
-    KeyMeeting,
-    KeyMenuKb,
-    KeyMenuPb,
-    KeyMySites,
-    KeyNews,
-    KeyOfficeHome,
-    KeyOption,
-    KeyPaste,
-    KeyPhone,
-    KeyCalendar,
-    KeyReply,
-    KeyReload,
-    KeyRotateWindows,
-    KeyRotationPb,
-    KeyRotationKb,
-    KeySave,
-    KeySend,
-    KeySpell,
-    KeySplitScreen,
-    KeySupport,
-    KeyTaskPane,
-    KeyTerminal,
-    KeyTools,
-    KeyTravel,
-    KeyVideo,
-    KeyWord,
-    KeyXfer,
-    KeyZoomIn,
-    KeyZoomOut,
-    KeyAway,
-    KeyMessenger,
-    KeyWebCam,
-    KeyMailForward,
-    KeyPictures,
-    KeyMusic,
-    KeyBattery,
-    KeyBluetooth,
-    KeyWlan,
-    KeyUwb,
-    KeyAudioForward,
-    KeyAudioRepeat,
-    KeyAudioRandomPlay,
-    KeySubtitle,
-    KeyAudioCycleTrack,
-    KeyTime,
-    KeyHibernate,
-    KeyView,
-    KeyTopMenu,
-    KeyPowerDown,
-    KeySuspend,
-    KeyContrastAdjust,
-    KeyLaunchG,
-    KeyLaunchH,
-    KeyTouchpadToggle,
-    KeyTouchpadOn,
-    KeyTouchpadOff,
-    KeyMicMute,
-    KeyRed,
-    KeyGreen,
-    KeyYellow,
-    KeyBlue,
-    KeyChannelUp,
-    KeyChannelDown,
-    KeyGuide,
-    KeyInfo,
-    KeySettings,
-    KeyMicVolumeUp,
-    KeyMicVolumeDown,
-    KeyNew,
-    KeyOpen,
-    KeyFind,
-    KeyUndo,
-    KeyRedo,
-    KeyMediaLast,
-    KeySelect,
-    KeyYes,
-    KeyNo,
-    KeyCancel,
-    KeyPrinter,
-    KeyExecute,
-    KeySleep,
-    KeyPlay,
-    KeyZoom,
-    KeyExit,
-    KeyContext1,
-    KeyContext2,
-    KeyContext3,
-    KeyContext4,
-    KeyCall,
-    KeyHangup,
-    KeyFlip,
-    KeyToggleCallHangup,
-    KeyVoiceDial,
-    KeyLastNumberRedial,
-    KeyCamera,
-    KeyCameraFocus,
-    KeyUnknown,
+bitflags! {
+    pub struct Key: u32 {
+        const KeyEscape = 0x1000000;
+        const KeyTab = 0x1000001;
+        const KeyBacktab = 0x1000002;
+        const KeyBackspace = 0x1000003;
+        const KeyReturn = 0x1000004;
+        const KeyEnter = 0x1000005;
+        const KeyInsert = 0x1000006;
+        const KeyDelete = 0x1000007;
+        const KeyPause = 0x1000008;
+        const KeyPrint = 0x1000009;
+        const KeySysReq = 0x100000a;
+        const KeyClear = 0x100000b;
+        const KeyHome = 0x1000010;
+        const KeyEnd = 0x1000011;
+        const KeyLeft = 0x1000012;
+        const KeyUp = 0x1000013;
+        const KeyRight = 0x1000014;
+        const KeyDown = 0x1000015;
+        const KeyPageUp = 0x1000016;
+        const KeyPageDown = 0x1000017;
+        const KeyShift = 0x1000020;
+        const KeyControl = 0x1000021;
+        const KeyMeta = 0x1000022;
+        const KeyAlt = 0x1000023;
+        const KeyCapsLock = 0x1000024;
+        const KeyNumLock = 0x1000025;
+        const KeyScrollLock = 0x1000026;
+        const KeyF1 = 0x1000030;
+        const KeyF2 = 0x1000031;
+        const KeyF3 = 0x1000032;
+        const KeyF4 = 0x1000033;
+        const KeyF5 = 0x1000034;
+        const KeyF6 = 0x1000035;
+        const KeyF7 = 0x1000036;
+        const KeyF8 = 0x1000037;
+        const KeyF9 = 0x1000038;
+        const KeyF10 = 0x1000039;
+        const KeyF11 = 0x100003a;
+        const KeyF12 = 0x100003b;
+        const KeyF13 = 0x100003c;
+        const KeyF14 = 0x100003d;
+        const KeyF15 = 0x100003e;
+        const KeyF16 = 0x100003f;
+        const KeyF17 = 0x1000040;
+        const KeyF18 = 0x1000041;
+        const KeyF19 = 0x1000042;
+        const KeyF20 = 0x1000043;
+        const KeyF21 = 0x1000044;
+        const KeyF22 = 0x1000045;
+        const KeyF23 = 0x1000046;
+        const KeyF24 = 0x1000047;
+        const KeyF25 = 0x1000048;
+        const KeyF26 = 0x1000049;
+        const KeyF27 = 0x100004a;
+        const KeyF28 = 0x100004b;
+        const KeyF29 = 0x100004c;
+        const KeyF30 = 0x100004d;
+        const KeyF31 = 0x100004e;
+        const KeyF32 = 0x100004f;
+        const KeyF33 = 0x1000050;
+        const KeyF34 = 0x1000051;
+        const KeyF35 = 0x1000052;
+        const KeySuperL = 0x1000053;
+        const KeySuperR = 0x1000054;
+        const KeyMenu = 0x1000055;
+        const KeyHyperL = 0x1000056;
+        const KeyHyperR = 0x1000057;
+        const KeyHelp = 0x1000058;
+        const KeyDirectionL = 0x1000059;
+        const KeyDirectionR = 0x1000060;
+        const KeySpace = 0x20;
+        const KeyAny = 0x20;
+        const KeyExclam = 0x21;
+        const KeyQuoteDbl = 0x22;
+        const KeyNumberSign = 0x23;
+        const KeyDollar = 0x24;
+        const KeyPercent = 0x25;
+        const KeyAmpersand = 0x26;
+        const KeyApostrophe = 0x27;
+        const KeyParenLeft = 0x28;
+        const KeyParenRight = 0x29;
+        const KeyAsterisk = 0x2a;
+        const KeyPlus = 0x2b;
+        const KeyComma = 0x2c;
+        const KeyMinus = 0x2d;
+        const KeyPeriod = 0x2e;
+        const KeySlash = 0x2f;
+        const Key0 = 0x30;
+        const Key1 = 0x31;
+        const Key2 = 0x32;
+        const Key3 = 0x33;
+        const Key4 = 0x34;
+        const Key5 = 0x35;
+        const Key6 = 0x36;
+        const Key7 = 0x37;
+        const Key8 = 0x38;
+        const Key9 = 0x39;
+        const KeyColon = 0x3a;
+        const KeySemicolon = 0x3b;
+        const KeyLess = 0x3c;
+        const KeyEqual = 0x3d;
+        const KeyGreater = 0x3e;
+        const KeyQuestion = 0x3f;
+        const KeyAt = 0x40;
+        const KeyA = 0x41;
+        const KeyB = 0x42;
+        const KeyC = 0x43;
+        const KeyD = 0x44;
+        const KeyE = 0x45;
+        const KeyF = 0x46;
+        const KeyG = 0x47;
+        const KeyH = 0x48;
+        const KeyI = 0x49;
+        const KeyJ = 0x4a;
+        const KeyK = 0x4b;
+        const KeyL = 0x4c;
+        const KeyM = 0x4d;
+        const KeyN = 0x4e;
+        const KeyO = 0x4f;
+        const KeyP = 0x50;
+        const KeyQ = 0x51;
+        const KeyR = 0x52;
+        const KeyS = 0x53;
+        const KeyT = 0x54;
+        const KeyU = 0x55;
+        const KeyV = 0x56;
+        const KeyW = 0x57;
+        const KeyX = 0x58;
+        const KeyY = 0x59;
+        const KeyZ = 0x5a;
+        const KeyBracketLeft = 0x5b;
+        const KeyBackslash = 0x5c;
+        const KeyBracketRight = 0x5d;
+        const KeyAsciiCircum = 0x5e;
+        const KeyUnderscore = 0x5f;
+        const KeyQuoteLeft = 0x60;
+        const KeyBraceLeft = 0x7b;
+        const KeyBar = 0x7c;
+        const KeyBraceRight = 0x7d;
+        const KeyAsciiTilde = 0x7e;
+        const KeyNobreakspace = 0xa0;
+        const KeyExclamdown = 0xa1;
+        const KeyCent = 0xa2;
+        const KeySterling = 0xa3;
+        const KeyCurrency = 0xa4;
+        const KeyYen = 0xa5;
+        const KeyBrokenbar = 0xa6;
+        const KeySection = 0xa7;
+        const KeyDiaeresis = 0xa8;
+        const KeyCopyright = 0xa9;
+        const KeyOrdfeminine = 0xaa;
+        const KeyGuillemotleft = 0xab;
+        const KeyNotsign = 0xac;
+        const KeyHyphen = 0xad;
+        const KeyRegistered = 0xae;
+        const KeyMacron = 0xaf;
+        const KeyDegree = 0xb0;
+        const KeyPlusminus = 0xb1;
+        const KeyTwosuperior = 0xb2;
+        const KeyThreesuperior = 0xb3;
+        const KeyAcute = 0xb4;
+        const KeyMu = 0xb5;
+        const KeyParagraph = 0xb6;
+        const KeyPeriodcentered = 0xb7;
+        const KeyCedilla = 0xb8;
+        const KeyOnesuperior = 0xb9;
+        const KeyMasculine = 0xba;
+        const KeyGuillemotright = 0xbb;
+        const KeyOnequarter = 0xbc;
+        const KeyOnehalf = 0xbd;
+        const KeyThreequarters = 0xbe;
+        const KeyQuestiondown = 0xbf;
+        const KeyAgrave = 0xc0;
+        const KeyAacute = 0xc1;
+        const KeyAcircumflex = 0xc2;
+        const KeyAtilde = 0xc3;
+        const KeyAdiaeresis = 0xc4;
+        const KeyAring = 0xc5;
+        const KeyAe = 0xc6;
+        const KeyCcedilla = 0xc7;
+        const KeyEgrave = 0xc8;
+        const KeyEacute = 0xc9;
+        const KeyEcircumflex = 0xca;
+        const KeyEdiaeresis = 0xcb;
+        const KeyIgrave = 0xcc;
+        const KeyIacute = 0xcd;
+        const KeyIcircumflex = 0xce;
+        const KeyIdiaeresis = 0xcf;
+        const KeyEth = 0xd0;
+        const KeyNtilde = 0xd1;
+        const KeyOgrave = 0xd2;
+        const KeyOacute = 0xd3;
+        const KeyOcircumflex = 0xd4;
+        const KeyOtilde = 0xd5;
+        const KeyOdiaeresis = 0xd6;
+        const KeyMultiply = 0xd7;
+        const KeyOoblique = 0xd8;
+        const KeyUgrave = 0xd9;
+        const KeyUacute = 0xda;
+        const KeyUcircumflex = 0xdb;
+        const KeyUdiaeresis = 0xdc;
+        const KeyYacute = 0xdd;
+        const KeyThorn = 0xde;
+        const KeySsharp = 0xdf;
+        const KeyDivision = 0xf7;
+        const KeyYdiaeresis = 0xff;
+        const KeyAltGr = 0x1001103;
+        const KeyMultiKey = 0x1001120;
+        const KeyCodeinput = 0x1001137;
+        const KeySingleCandidate = 0x100113c;
+        const KeyMultipleCandidate = 0x100113d;
+        const KeyPreviousCandidate = 0x100113e;
+        const KeyModeSwitch = 0x100117e;
+        const KeyKanji = 0x1001121;
+        const KeyMuhenkan = 0x1001122;
+        const KeyHenkan = 0x1001123;
+        const KeyRomaji = 0x1001124;
+        const KeyHiragana = 0x1001125;
+        const KeyKatakana = 0x1001126;
+        const KeyHiraganaKatakana = 0x1001127;
+        const KeyZenkaku = 0x1001128;
+        const KeyHankaku = 0x1001129;
+        const KeyZenkakuHankaku = 0x100112a;
+        const KeyTouroku = 0x100112b;
+        const KeyMassyo = 0x100112c;
+        const KeyKanaLock = 0x100112d;
+        const KeyKanaShift = 0x100112e;
+        const KeyEisuShift = 0x100112f;
+        const KeyEisuToggle = 0x1001130;
+        const KeyHangul = 0x1001131;
+        const KeyHangulStart = 0x1001132;
+        const KeyHangulEnd = 0x1001133;
+        const KeyHangulHanja = 0x1001134;
+        const KeyHangulJamo = 0x1001135;
+        const KeyHangulRomaja = 0x1001136;
+        const KeyHangulJeonja = 0x1001138;
+        const KeyHangulBanja = 0x1001139;
+        const KeyHangulPreHanja = 0x100113a;
+        const KeyHangulPostHanja = 0x100113b;
+        const KeyHangulSpecial = 0x100113f;
+        const KeyDeadGrave = 0x1001250;
+        const KeyDeadAcute = 0x1001251;
+        const KeyDeadCircumflex = 0x1001252;
+        const KeyDeadTilde = 0x1001253;
+        const KeyDeadMacron = 0x1001254;
+        const KeyDeadBreve = 0x1001255;
+        const KeyDeadAbovedot = 0x1001256;
+        const KeyDeadDiaeresis = 0x1001257;
+        const KeyDeadAbovering = 0x1001258;
+        const KeyDeadDoubleacute = 0x1001259;
+        const KeyDeadCaron = 0x100125a;
+        const KeyDeadCedilla = 0x100125b;
+        const KeyDeadOgonek = 0x100125c;
+        const KeyDeadIota = 0x100125d;
+        const KeyDeadVoicedSound = 0x100125e;
+        const KeyDeadSemivoicedSound = 0x100125f;
+        const KeyDeadBelowdot = 0x1001260;
+        const KeyDeadHook = 0x1001261;
+        const KeyDeadHorn = 0x1001262;
+        const KeyDeadStroke = 0x1001263;
+        const KeyDeadAbovecomma = 0x1001264;
+        const KeyDeadAbovereversedcomma = 0x1001265;
+        const KeyDeadDoublegrave = 0x1001266;
+        const KeyDeadBelowring = 0x1001267;
+        const KeyDeadBelowmacron = 0x1001268;
+        const KeyDeadBelowcircumflex = 0x1001269;
+        const KeyDeadBelowtilde = 0x100126a;
+        const KeyDeadBelowbreve = 0x100126b;
+        const KeyDeadBelowdiaeresis = 0x100126c;
+        const KeyDeadInvertedbreve = 0x100126d;
+        const KeyDeadBelowcomma = 0x100126e;
+        const KeyDeadCurrency = 0x100126f;
+        const KeyDeadA = 0x1001281;
+        const KeyDeadE = 0x1001283;
+        const KeyDeadI = 0x1001285;
+        const KeyDeadO = 0x1001287;
+        const KeyDeadU = 0x1001289;
+        const KeyDeadSmallSchwa = 0x100128a;
+        const KeyDeadCapitalSchwa = 0x100128b;
+        const KeyDeadGreek = 0x100128c;
+        const KeyDeadLowline = 0x1001290;
+        const KeyDeadAboveverticalline = 0x1001291;
+        const KeyDeadBelowverticalline = 0x1001292;
+        const KeyDeadLongsolidusoverlay = 0x1001293;
+        const KeyBack = 0x1000061;
+        const KeyForward = 0x1000062;
+        const KeyStop = 0x1000063;
+        const KeyRefresh = 0x1000064;
+        const KeyVolumeDown = 0x1000070;
+        const KeyVolumeMute = 0x1000071;
+        const KeyVolumeUp = 0x1000072;
+        const KeyBassBoost = 0x1000073;
+        const KeyBassUp = 0x1000074;
+        const KeyBassDown = 0x1000075;
+        const KeyTrebleUp = 0x1000076;
+        const KeyTrebleDown = 0x1000077;
+        const KeyMediaPlay = 0x1000080;
+        const KeyMediaStop = 0x1000081;
+        const KeyMediaPrevious = 0x1000082;
+        const KeyMediaNext = 0x1000083;
+        const KeyMediaRecord = 0x1000084;
+        const KeyMediaPause = 0x1000085;
+        const KeyMediaTogglePlayPause = 0x1000086;
+        const KeyHomePage = 0x1000090;
+        const KeyFavorites = 0x1000091;
+        const KeySearch = 0x1000092;
+        const KeyStandby = 0x1000093;
+        const KeyOpenUrl = 0x1000094;
+        const KeyLaunchMail = 0x10000a0;
+        const KeyLaunchMedia = 0x10000a1;
+        const KeyLaunch0 = 0x10000a2;
+        const KeyLaunch1 = 0x10000a3;
+        const KeyLaunch2 = 0x10000a4;
+        const KeyLaunch3 = 0x10000a5;
+        const KeyLaunch4 = 0x10000a6;
+        const KeyLaunch5 = 0x10000a7;
+        const KeyLaunch6 = 0x10000a8;
+        const KeyLaunch7 = 0x10000a9;
+        const KeyLaunch8 = 0x10000aa;
+        const KeyLaunch9 = 0x10000ab;
+        const KeyLaunchA = 0x10000ac;
+        const KeyLaunchB = 0x10000ad;
+        const KeyLaunchC = 0x10000ae;
+        const KeyLaunchD = 0x10000af;
+        const KeyLaunchE = 0x10000b0;
+        const KeyLaunchF = 0x10000b1;
+        const KeyMonBrightnessUp = 0x10000b2;
+        const KeyMonBrightnessDown = 0x10000b3;
+        const KeyKeyboardLightOnOff = 0x10000b4;
+        const KeyKeyboardBrightnessUp = 0x10000b5;
+        const KeyKeyboardBrightnessDown = 0x10000b6;
+        const KeyPowerOff = 0x10000b7;
+        const KeyWakeUp = 0x10000b8;
+        const KeyEject = 0x10000b9;
+        const KeyScreenSaver = 0x10000ba;
+        const KeyWww = 0x10000bb;
+        const KeyMemo = 0x10000bc;
+        const KeyLightBulb = 0x10000bd;
+        const KeyShop = 0x10000be;
+        const KeyHistory = 0x10000bf;
+        const KeyAddFavorite = 0x10000c0;
+        const KeyHotLinks = 0x10000c1;
+        const KeyBrightnessAdjust = 0x10000c2;
+        const KeyFinance = 0x10000c3;
+        const KeyCommunity = 0x10000c4;
+        const KeyAudioRewind = 0x10000c5;
+        const KeyBackForward = 0x10000c6;
+        const KeyApplicationLeft = 0x10000c7;
+        const KeyApplicationRight = 0x10000c8;
+        const KeyBook = 0x10000c9;
+        const KeyCd = 0x10000ca;
+        const KeyCalculator = 0x10000cb;
+        const KeyToDoList = 0x10000cc;
+        const KeyClearGrab = 0x10000cd;
+        const KeyClose = 0x10000ce;
+        const KeyCopy = 0x10000cf;
+        const KeyCut = 0x10000d0;
+        const KeyDisplay = 0x10000d1;
+        const KeyDos = 0x10000d2;
+        const KeyDocuments = 0x10000d3;
+        const KeyExcel = 0x10000d4;
+        const KeyExplorer = 0x10000d5;
+        const KeyGame = 0x10000d6;
+        const KeyGo = 0x10000d7;
+        const KeyITouch = 0x10000d8;
+        const KeyLogOff = 0x10000d9;
+        const KeyMarket = 0x10000da;
+        const KeyMeeting = 0x10000db;
+        const KeyMenuKb = 0x10000dc;
+        const KeyMenuPb = 0x10000dd;
+        const KeyMySites = 0x10000de;
+        const KeyNews = 0x10000df;
+        const KeyOfficeHome = 0x10000e0;
+        const KeyOption = 0x10000e1;
+        const KeyPaste = 0x10000e2;
+        const KeyPhone = 0x10000e3;
+        const KeyCalendar = 0x10000e4;
+        const KeyReply = 0x10000e5;
+        const KeyReload = 0x10000e6;
+        const KeyRotateWindows = 0x10000e7;
+        const KeyRotationPb = 0x10000e8;
+        const KeyRotationKb = 0x10000e9;
+        const KeySave = 0x10000ea;
+        const KeySend = 0x10000eb;
+        const KeySpell = 0x10000ec;
+        const KeySplitScreen = 0x10000ed;
+        const KeySupport = 0x10000ee;
+        const KeyTaskPane = 0x10000ef;
+        const KeyTerminal = 0x10000f0;
+        const KeyTools = 0x10000f1;
+        const KeyTravel = 0x10000f2;
+        const KeyVideo = 0x10000f3;
+        const KeyWord = 0x10000f4;
+        const KeyXfer = 0x10000f5;
+        const KeyZoomIn = 0x10000f6;
+        const KeyZoomOut = 0x10000f7;
+        const KeyAway = 0x10000f8;
+        const KeyMessenger = 0x10000f9;
+        const KeyWebCam = 0x10000fa;
+        const KeyMailForward = 0x10000fb;
+        const KeyPictures = 0x10000fc;
+        const KeyMusic = 0x10000fd;
+        const KeyBattery = 0x10000fe;
+        const KeyBluetooth = 0x10000ff;
+        const KeyWlan = 0x1000100;
+        const KeyUwb = 0x1000101;
+        const KeyAudioForward = 0x1000102;
+        const KeyAudioRepeat = 0x1000103;
+        const KeyAudioRandomPlay = 0x1000104;
+        const KeySubtitle = 0x1000105;
+        const KeyAudioCycleTrack = 0x1000106;
+        const KeyTime = 0x1000107;
+        const KeyHibernate = 0x1000108;
+        const KeyView = 0x1000109;
+        const KeyTopMenu = 0x100010a;
+        const KeyPowerDown = 0x100010b;
+        const KeySuspend = 0x100010c;
+        const KeyContrastAdjust = 0x100010d;
+        const KeyLaunchG = 0x100010e;
+        const KeyLaunchH = 0x100010f;
+        const KeyTouchpadToggle = 0x1000110;
+        const KeyTouchpadOn = 0x1000111;
+        const KeyTouchpadOff = 0x1000112;
+        const KeyMicMute = 0x1000113;
+        const KeyRed = 0x1000114;
+        const KeyGreen = 0x1000115;
+        const KeyYellow = 0x1000116;
+        const KeyBlue = 0x1000117;
+        const KeyChannelUp = 0x1000118;
+        const KeyChannelDown = 0x1000119;
+        const KeyGuide = 0x100011a;
+        const KeyInfo = 0x100011b;
+        const KeySettings = 0x100011c;
+        const KeyMicVolumeUp = 0x100011d;
+        const KeyMicVolumeDown = 0x100011e;
+        const KeyNew = 0x1000120;
+        const KeyOpen = 0x1000121;
+        const KeyFind = 0x1000122;
+        const KeyUndo = 0x1000123;
+        const KeyRedo = 0x1000124;
+        const KeyMediaLast = 0x100ffff;
+        const KeySelect = 0x1010000;
+        const KeyYes = 0x1010001;
+        const KeyNo = 0x1010002;
+        const KeyCancel = 0x1020001;
+        const KeyPrinter = 0x1020002;
+        const KeyExecute = 0x1020003;
+        const KeySleep = 0x1020004;
+        const KeyPlay = 0x1020005;
+        const KeyZoom = 0x1020006;
+        const KeyExit = 0x102000a;
+        const KeyContext1 = 0x1100000;
+        const KeyContext2 = 0x1100001;
+        const KeyContext3 = 0x1100002;
+        const KeyContext4 = 0x1100003;
+        const KeyCall = 0x1100004;
+        const KeyHangup = 0x1100005;
+        const KeyFlip = 0x1100006;
+        const KeyToggleCallHangup = 0x1100007;
+        const KeyVoiceDial = 0x1100008;
+        const KeyLastNumberRedial = 0x1100009;
+        const KeyCamera = 0x1100020;
+        const KeyCameraFocus = 0x1100021;
+        const KeyUnknown = 0x1ffffff;
+    }
 }
 
 #[repr(u32)]
 pub enum ArrowType {
-    NoArrow,
-    UpArrow,
-    DownArrow,
-    LeftArrow,
-    RightArrow,
+    NoArrow = 0,
+    UpArrow = 1,
+    DownArrow = 2,
+    LeftArrow = 3,
+    RightArrow = 4,
 }
 
 #[repr(u32)]
 pub enum PenStyle {
-    NoPen,
-    SolidLine,
-    DashLine,
-    DotLine,
-    DashDotLine,
-    DashDotDotLine,
-    CustomDashLine,
-    MPenStyle,
+    NoPen = 0,
+    SolidLine = 1,
+    DashLine = 2,
+    DotLine = 3,
+    DashDotLine = 4,
+    DashDotDotLine = 5,
+    CustomDashLine = 6,
+    MPenStyle = 15,
 }
 
 #[repr(u32)]
 pub enum PenCapStyle {
-    FlatCap,
-    SquareCap,
-    RoundCap,
-    MPenCapStyle,
+    FlatCap = 0,
+    SquareCap = 16,
+    RoundCap = 32,
+    MPenCapStyle = 48,
 }
 
-#[repr(u32)]
-pub enum PenJoinStyle {
-    MiterJoin,
-    BevelJoin,
-    RoundJoin,
-    SvgMiterJoin,
-    MPenJoinStyle,
+bitflags! {
+    pub struct PenJoinStyle: u32 {
+        const MiterJoin = 0x0;
+        const BevelJoin = 0x40;
+        const RoundJoin = 0x80;
+        const SvgMiterJoin = 0x100;
+        const MPenJoinStyle = 0x1c0;
+    }
 }
 
 #[repr(u32)]
 pub enum BrushStyle {
-    NoBrush,
-    SolidPattern,
-    Dense1Pattern,
-    Dense2Pattern,
-    Dense3Pattern,
-    Dense4Pattern,
-    Dense5Pattern,
-    Dense6Pattern,
-    Dense7Pattern,
-    HorPattern,
-    VerPattern,
-    CrossPattern,
-    BDiagPattern,
-    FDiagPattern,
-    DiagCrossPattern,
-    LinearGradientPattern,
-    RadialGradientPattern,
-    ConicalGradientPattern,
-    TexturePattern,
+    NoBrush = 0,
+    SolidPattern = 1,
+    Dense1Pattern = 2,
+    Dense2Pattern = 3,
+    Dense3Pattern = 4,
+    Dense4Pattern = 5,
+    Dense5Pattern = 6,
+    Dense6Pattern = 7,
+    Dense7Pattern = 8,
+    HorPattern = 9,
+    VerPattern = 10,
+    CrossPattern = 11,
+    BDiagPattern = 12,
+    FDiagPattern = 13,
+    DiagCrossPattern = 14,
+    LinearGradientPattern = 15,
+    RadialGradientPattern = 16,
+    ConicalGradientPattern = 17,
+    TexturePattern = 24,
 }
 
 #[repr(u32)]
 pub enum SizeMode {
-    AbsoluteSize,
-    RelativeSize,
+    AbsoluteSize = 0,
+    RelativeSize = 1,
 }
 
 #[repr(u32)]
 pub enum UIEffect {
-    UiGeneral,
-    UiAnimateMenu,
-    UiFadeMenu,
-    UiAnimateCombo,
-    UiAnimateTooltip,
-    UiFadeTooltip,
-    UiAnimateToolBox,
+    UiGeneral = 0,
+    UiAnimateMenu = 1,
+    UiFadeMenu = 2,
+    UiAnimateCombo = 3,
+    UiAnimateTooltip = 4,
+    UiFadeTooltip = 5,
+    UiAnimateToolBox = 6,
 }
 
-#[repr(u32)]
-pub enum CursorShape {
-    ArrowCursor,
-    UpArrowCursor,
-    CrossCursor,
-    WaitCursor,
-    IBeamCursor,
-    SizeVerCursor,
-    SizeHorCursor,
-    SizeBDiagCursor,
-    SizeFDiagCursor,
-    SizeAllCursor,
-    BlankCursor,
-    SplitVCursor,
-    SplitHCursor,
-    PointingHandCursor,
-    ForbiddenCursor,
-    WhatsThisCursor,
-    BusyCursor,
-    OpenHandCursor,
-    ClosedHandCursor,
-    DragCopyCursor,
-    DragMoveCursor,
-    DragLinkCursor,
-    LastCursor,
-    BitmapCursor,
-    CustomCursor,
+bitflags! {
+    pub struct CursorShape: u32 {
+        const ArrowCursor = 0x0;
+        const UpArrowCursor = 0x1;
+        const CrossCursor = 0x2;
+        const WaitCursor = 0x3;
+        const IBeamCursor = 0x4;
+        const SizeVerCursor = 0x5;
+        const SizeHorCursor = 0x6;
+        const SizeBDiagCursor = 0x7;
+        const SizeFDiagCursor = 0x8;
+        const SizeAllCursor = 0x9;
+        const BlankCursor = 0xa;
+        const SplitVCursor = 0xb;
+        const SplitHCursor = 0xc;
+        const PointingHandCursor = 0xd;
+        const ForbiddenCursor = 0xe;
+        const WhatsThisCursor = 0xf;
+        const BusyCursor = 0x10;
+        const OpenHandCursor = 0x11;
+        const ClosedHandCursor = 0x12;
+        const DragCopyCursor = 0x13;
+        const DragMoveCursor = 0x14;
+        const DragLinkCursor = 0x15;
+        const LastCursor = 0x15;
+        const BitmapCursor = 0x18;
+        const CustomCursor = 0x19;
+    }
 }
 
 #[repr(u32)]
 pub enum TextFormat {
-    PlainText,
-    RichText,
-    AutoText,
+    PlainText = 0,
+    RichText = 1,
+    AutoText = 2,
 }
 
 #[repr(u32)]
 pub enum AspectRatioMode {
-    IgnoreAspectRatio,
-    KeepAspectRatio,
-    KeepAspectRatioByExpanding,
+    IgnoreAspectRatio = 0,
+    KeepAspectRatio = 1,
+    KeepAspectRatioByExpanding = 2,
 }
 
-#[repr(u32)]
-pub enum DockWidgetArea {
-    LeftDockWidgetArea,
-    RightDockWidgetArea,
-    TopDockWidgetArea,
-    BottomDockWidgetArea,
-    DockWidgetAreaMask,
-    AllDockWidgetAreas,
-    NoDockWidgetArea,
+bitflags! {
+    pub struct DockWidgetArea: u32 {
+        const LeftDockWidgetArea = 0x1;
+        const RightDockWidgetArea = 0x2;
+        const TopDockWidgetArea = 0x4;
+        const BottomDockWidgetArea = 0x8;
+        const DockWidgetAreaMask = 0xf;
+        const AllDockWidgetAreas = 0xf;
+        const NoDockWidgetArea = 0x0;
+    }
 }
 
 #[repr(u32)]
 pub enum DockWidgetAreaSizes {
-    NDockWidgetAreas,
+    NDockWidgetAreas = 4,
 }
 
-#[repr(u32)]
-pub enum ToolBarArea {
-    LeftToolBarArea,
-    RightToolBarArea,
-    TopToolBarArea,
-    BottomToolBarArea,
-    ToolBarAreaMask,
-    AllToolBarAreas,
-    NoToolBarArea,
+bitflags! {
+    pub struct ToolBarArea: u32 {
+        const LeftToolBarArea = 0x1;
+        const RightToolBarArea = 0x2;
+        const TopToolBarArea = 0x4;
+        const BottomToolBarArea = 0x8;
+        const ToolBarAreaMask = 0xf;
+        const AllToolBarAreas = 0xf;
+        const NoToolBarArea = 0x0;
+    }
 }
 
 #[repr(u32)]
 pub enum ToolBarAreaSizes {
-    NToolBarAreas,
+    NToolBarAreas = 4,
 }
 
-#[repr(u32)]
-pub enum DateFormat {
-    TextDate,
-    IsoDate,
-    SystemLocaleDate,
-    LocalDate,
-    LocaleDate,
-    SystemLocaleShortDate,
-    SystemLocaleLongDate,
-    DefaultLocaleShortDate,
-    DefaultLocaleLongDate,
-    RfC2822Date,
-    IsoDateWithMs,
+bitflags! {
+    pub struct DateFormat: u32 {
+        const TextDate = 0x0;
+        const IsoDate = 0x1;
+        const SystemLocaleDate = 0x2;
+        const LocalDate = 0x2;
+        const LocaleDate = 0x3;
+        const SystemLocaleShortDate = 0x4;
+        const SystemLocaleLongDate = 0x5;
+        const DefaultLocaleShortDate = 0x6;
+        const DefaultLocaleLongDate = 0x7;
+        const IsoDateWithMs = 0x9;
+    }
 }
 
 #[repr(u32)]
 pub enum TimeSpec {
-    LocalTime,
-    Utc,
-    OffsetFromUtc,
-    TimeZone,
+    LocalTime = 0,
+    Utc = 1,
+    OffsetFromUtc = 2,
+    TimeZone = 3,
 }
 
 #[repr(u32)]
 pub enum DayOfWeek {
-    Monday,
-    Tuesday,
-    Wednesday,
-    Thursday,
-    Friday,
-    Saturday,
-    Sunday,
+    Monday = 1,
+    Tuesday = 2,
+    Wednesday = 3,
+    Thursday = 4,
+    Friday = 5,
+    Saturday = 6,
+    Sunday = 7,
 }
 
 #[repr(u32)]
 pub enum ScrollBarPolicy {
-    ScrollBarAsNeeded,
-    ScrollBarAlwaysOff,
-    ScrollBarAlwaysOn,
+    ScrollBarAsNeeded = 0,
+    ScrollBarAlwaysOff = 1,
+    ScrollBarAlwaysOn = 2,
 }
 
 #[repr(u32)]
 pub enum CaseSensitivity {
-    CaseInsensitive,
-    CaseSensitive,
+    CaseInsensitive = 0,
+    CaseSensitive = 1,
 }
 
 #[repr(u32)]
 pub enum Corner {
-    TopLeftCorner,
-    TopRightCorner,
-    BottomLeftCorner,
-    BottomRightCorner,
+    TopLeftCorner = 0,
+    TopRightCorner = 1,
+    BottomLeftCorner = 2,
+    BottomRightCorner = 3,
 }
 
-#[repr(u32)]
-pub enum Edge {
-    TopEdge,
-    LeftEdge,
-    RightEdge,
-    BottomEdge,
+bitflags! {
+    pub struct Edge: u32 {
+        const TopEdge = 0x1;
+        const LeftEdge = 0x2;
+        const RightEdge = 0x4;
+        const BottomEdge = 0x8;
+    }
 }
 
-#[repr(u32)]
-pub enum ConnectionType {
-    AutoConnection,
-    DirectConnection,
-    QueuedConnection,
-    BlockingQueuedConnection,
-    UniqueConnection,
+bitflags! {
+    pub struct ConnectionType: u32 {
+        const AutoConnection = 0x0;
+        const DirectConnection = 0x1;
+        const QueuedConnection = 0x2;
+        const BlockingQueuedConnection = 0x3;
+        const UniqueConnection = 0x80;
+    }
 }
 
 #[repr(u32)]
 pub enum ShortcutContext {
-    WidgetShortcut,
-    WindowShortcut,
-    ApplicationShortcut,
-    WidgetWithChildrenShortcut,
+    WidgetShortcut = 0,
+    WindowShortcut = 1,
+    ApplicationShortcut = 2,
+    WidgetWithChildrenShortcut = 3,
 }
 
 #[repr(u32)]
 pub enum FillRule {
-    OddEvenFill,
-    WindingFill,
+    OddEvenFill = 0,
+    WindingFill = 1,
 }
 
 #[repr(u32)]
 pub enum MaskMode {
-    MaskInColor,
-    MaskOutColor,
+    MaskInColor = 0,
+    MaskOutColor = 1,
 }
 
 #[repr(u32)]
 pub enum ClipOperation {
-    NoClip,
-    ReplaceClip,
-    IntersectClip,
+    NoClip = 0,
+    ReplaceClip = 1,
+    IntersectClip = 2,
 }
 
 #[repr(u32)]
 pub enum ItemSelectionMode {
-    ContainsItemShape,
-    IntersectsItemShape,
-    ContainsItemBoundingRect,
-    IntersectsItemBoundingRect,
+    ContainsItemShape = 0,
+    IntersectsItemShape = 1,
+    ContainsItemBoundingRect = 2,
+    IntersectsItemBoundingRect = 3,
 }
 
 #[repr(u32)]
 pub enum ItemSelectionOperation {
-    ReplaceSelection,
-    AddToSelection,
+    ReplaceSelection = 0,
+    AddToSelection = 1,
 }
 
 #[repr(u32)]
 pub enum TransformationMode {
-    FastTransformation,
-    SmoothTransformation,
+    FastTransformation = 0,
+    SmoothTransformation = 1,
 }
 
 #[repr(u32)]
 pub enum Axis {
-    XAxis,
-    YAxis,
-    ZAxis,
+    XAxis = 0,
+    YAxis = 1,
+    ZAxis = 2,
 }
 
 #[repr(u32)]
 pub enum FocusReason {
-    MouseFocusReason,
-    TabFocusReason,
-    BacktabFocusReason,
-    ActiveWindowFocusReason,
-    PopupFocusReason,
-    ShortcutFocusReason,
-    MenuBarFocusReason,
-    OtherFocusReason,
-    NoFocusReason,
+    MouseFocusReason = 0,
+    TabFocusReason = 1,
+    BacktabFocusReason = 2,
+    ActiveWindowFocusReason = 3,
+    PopupFocusReason = 4,
+    ShortcutFocusReason = 5,
+    MenuBarFocusReason = 6,
+    OtherFocusReason = 7,
+    NoFocusReason = 8,
 }
 
 #[repr(u32)]
 pub enum ContextMenuPolicy {
-    NoContextMenu,
-    DefaultContextMenu,
-    ActionsContextMenu,
-    CustomContextMenu,
-    PreventContextMenu,
+    NoContextMenu = 0,
+    DefaultContextMenu = 1,
+    ActionsContextMenu = 2,
+    CustomContextMenu = 3,
+    PreventContextMenu = 4,
 }
 
-#[repr(u32)]
-pub enum InputMethodQuery {
-    ImEnabled,
-    ImCursorRectangle,
-    ImMicroFocus,
-    ImFont,
-    ImCursorPosition,
-    ImSurroundingText,
-    ImCurrentSelection,
-    ImMaximumTextLength,
-    ImAnchorPosition,
-    ImHints,
-    ImPreferredLanguage,
-    ImAbsolutePosition,
-    ImTextBeforeCursor,
-    ImTextAfterCursor,
-    ImEnterKeyType,
-    ImAnchorRectangle,
-    ImInputItemClipRectangle,
-    ImPlatformData,
-    ImQueryInput,
-    ImQueryAll,
+bitflags! {
+    pub struct InputMethodQuery: u32 {
+        const ImEnabled = 0x1;
+        const ImCursorRectangle = 0x2;
+        const ImMicroFocus = 0x2;
+        const ImFont = 0x4;
+        const ImCursorPosition = 0x8;
+        const ImSurroundingText = 0x10;
+        const ImCurrentSelection = 0x20;
+        const ImMaximumTextLength = 0x40;
+        const ImAnchorPosition = 0x80;
+        const ImHints = 0x100;
+        const ImPreferredLanguage = 0x200;
+        const ImAbsolutePosition = 0x400;
+        const ImTextBeforeCursor = 0x800;
+        const ImTextAfterCursor = 0x1000;
+        const ImEnterKeyType = 0x2000;
+        const ImAnchorRectangle = 0x4000;
+        const ImInputItemClipRectangle = 0x8000;
+        const ImPlatformData = 0x80000000;
+        const ImQueryInput = 0x40ba;
+        const ImQueryAll = 0xffffffff;
+    }
 }
 
-#[repr(u32)]
-pub enum InputMethodHint {
-    ImhNone,
-    ImhHiddenText,
-    ImhSensitiveData,
-    ImhNoAutoUppercase,
-    ImhPreferNumbers,
-    ImhPreferUppercase,
-    ImhPreferLowercase,
-    ImhNoPredictiveText,
-    ImhDate,
-    ImhTime,
-    ImhPreferLatin,
-    ImhMultiLine,
-    ImhNoEditMenu,
-    ImhNoTextHandles,
-    ImhDigitsOnly,
-    ImhFormattedNumbersOnly,
-    ImhUppercaseOnly,
-    ImhLowercaseOnly,
-    ImhDialableCharactersOnly,
-    ImhEmailCharactersOnly,
-    ImhUrlCharactersOnly,
-    ImhLatinOnly,
-    ImhExclusiveInputMask,
+bitflags! {
+    pub struct InputMethodHint: u32 {
+        const ImhNone = 0x0;
+        const ImhHiddenText = 0x1;
+        const ImhSensitiveData = 0x2;
+        const ImhNoAutoUppercase = 0x4;
+        const ImhPreferNumbers = 0x8;
+        const ImhPreferUppercase = 0x10;
+        const ImhPreferLowercase = 0x20;
+        const ImhNoPredictiveText = 0x40;
+        const ImhDate = 0x80;
+        const ImhTime = 0x100;
+        const ImhPreferLatin = 0x200;
+        const ImhMultiLine = 0x400;
+        const ImhNoEditMenu = 0x800;
+        const ImhNoTextHandles = 0x1000;
+        const ImhDigitsOnly = 0x10000;
+        const ImhFormattedNumbersOnly = 0x20000;
+        const ImhUppercaseOnly = 0x40000;
+        const ImhLowercaseOnly = 0x80000;
+        const ImhDialableCharactersOnly = 0x100000;
+        const ImhEmailCharactersOnly = 0x200000;
+        const ImhUrlCharactersOnly = 0x400000;
+        const ImhLatinOnly = 0x800000;
+        const ImhExclusiveInputMask = 0xffff0000;
+    }
 }
 
 pub type InputMethodHints = InputMethodHint;
 
 #[repr(u32)]
 pub enum EnterKeyType {
-    EnterKeyDefault,
-    EnterKeyReturn,
-    EnterKeyDone,
-    EnterKeyGo,
-    EnterKeySend,
-    EnterKeySearch,
-    EnterKeyNext,
-    EnterKeyPrevious,
+    EnterKeyDefault = 0,
+    EnterKeyReturn = 1,
+    EnterKeyDone = 2,
+    EnterKeyGo = 3,
+    EnterKeySend = 4,
+    EnterKeySearch = 5,
+    EnterKeyNext = 6,
+    EnterKeyPrevious = 7,
 }
 
 #[repr(u32)]
 pub enum ToolButtonStyle {
-    ToolButtonIconOnly,
-    ToolButtonTextOnly,
-    ToolButtonTextBesideIcon,
-    ToolButtonTextUnderIcon,
-    ToolButtonFollowStyle,
+    ToolButtonIconOnly = 0,
+    ToolButtonTextOnly = 1,
+    ToolButtonTextBesideIcon = 2,
+    ToolButtonTextUnderIcon = 3,
+    ToolButtonFollowStyle = 4,
 }
 
 #[repr(u32)]
 pub enum LayoutDirection {
-    LeftToRight,
-    RightToLeft,
-    LayoutDirectionAuto,
+    LeftToRight = 0,
+    RightToLeft = 1,
+    LayoutDirectionAuto = 2,
 }
 
 #[repr(u32)]
 pub enum AnchorPoint {
-    AnchorLeft,
-    AnchorHorizontalCenter,
-    AnchorRight,
-    AnchorTop,
-    AnchorVerticalCenter,
-    AnchorBottom,
+    AnchorLeft = 0,
+    AnchorHorizontalCenter = 1,
+    AnchorRight = 2,
+    AnchorTop = 3,
+    AnchorVerticalCenter = 4,
+    AnchorBottom = 5,
 }
 
 #[repr(u32)]
 pub enum FindChildOption {
-    FindDirectChildrenOnly,
-    FindChildrenRecursively,
+    FindDirectChildrenOnly = 0,
+    FindChildrenRecursively = 1,
 }
 
-pub type FindChildOptions = FindChildOption;
-
+bitflags! {
+    pub struct FindChildOptions: u32 {
+        const FindDirectChildrenOnly = FindChildOption::FindDirectChildrenOnly as u32;
+        const FindChildrenRecursively = FindChildOption::FindChildrenRecursively as u32;
+    }
+}
 #[repr(u32)]
 pub enum DropAction {
-    CopyAction,
-    MoveAction,
-    LinkAction,
-    ActionMask,
-    TargetMoveAction,
-    IgnoreAction,
+    CopyAction = 1,
+    MoveAction = 2,
+    LinkAction = 4,
+    ActionMask = 255,
+    TargetMoveAction = 32770,
+    IgnoreAction = 0,
 }
 
-pub type DropActions = DropAction;
-
+bitflags! {
+    pub struct DropActions: u32 {
+        const CopyAction = DropAction::CopyAction as u32;
+        const MoveAction = DropAction::MoveAction as u32;
+        const LinkAction = DropAction::LinkAction as u32;
+        const ActionMask = DropAction::ActionMask as u32;
+        const TargetMoveAction = DropAction::TargetMoveAction as u32;
+        const IgnoreAction = DropAction::IgnoreAction as u32;
+    }
+}
 #[repr(u32)]
 pub enum CheckState {
-    Unchecked,
-    PartiallyChecked,
-    Checked,
+    Unchecked = 0,
+    PartiallyChecked = 1,
+    Checked = 2,
 }
 
-#[repr(u32)]
-pub enum ItemDataRole {
-    DisplayRole,
-    DecorationRole,
-    EditRole,
-    ToolTipRole,
-    StatusTipRole,
-    WhatsThisRole,
-    FontRole,
-    TextAlignmentRole,
-    BackgroundColorRole,
-    BackgroundRole,
-    TextColorRole,
-    ForegroundRole,
-    CheckStateRole,
-    AccessibleTextRole,
-    AccessibleDescriptionRole,
-    SizeHintRole,
-    InitialSortOrderRole,
-    DisplayPropertyRole,
-    DecorationPropertyRole,
-    ToolTipPropertyRole,
-    StatusTipPropertyRole,
-    WhatsThisPropertyRole,
-    UserRole,
+bitflags! {
+    pub struct ItemDataRole: u32 {
+        const DisplayRole = 0x0;
+        const DecorationRole = 0x1;
+        const EditRole = 0x2;
+        const ToolTipRole = 0x3;
+        const StatusTipRole = 0x4;
+        const WhatsThisRole = 0x5;
+        const FontRole = 0x6;
+        const TextAlignmentRole = 0x7;
+        const BackgroundColorRole = 0x8;
+        const BackgroundRole = 0x8;
+        const TextColorRole = 0x9;
+        const ForegroundRole = 0x9;
+        const CheckStateRole = 0xa;
+        const AccessibleTextRole = 0xb;
+        const AccessibleDescriptionRole = 0xc;
+        const SizeHintRole = 0xd;
+        const InitialSortOrderRole = 0xe;
+        const DisplayPropertyRole = 0x1b;
+        const DecorationPropertyRole = 0x1c;
+        const ToolTipPropertyRole = 0x1d;
+        const StatusTipPropertyRole = 0x1e;
+        const WhatsThisPropertyRole = 0x1f;
+        const UserRole = 0x100;
+    }
 }
 
-#[repr(u32)]
-pub enum ItemFlag {
-    NoItemFlags,
-    ItemIsSelectable,
-    ItemIsEditable,
-    ItemIsDragEnabled,
-    ItemIsDropEnabled,
-    ItemIsUserCheckable,
-    ItemIsEnabled,
-    ItemIsAutoTristate,
-    ItemIsTristate,
-    ItemNeverHasChildren,
-    ItemIsUserTristate,
+bitflags! {
+    pub struct ItemFlag: u32 {
+        const NoItemFlags = 0x0;
+        const ItemIsSelectable = 0x1;
+        const ItemIsEditable = 0x2;
+        const ItemIsDragEnabled = 0x4;
+        const ItemIsDropEnabled = 0x8;
+        const ItemIsUserCheckable = 0x10;
+        const ItemIsEnabled = 0x20;
+        const ItemIsAutoTristate = 0x40;
+        const ItemIsTristate = 0x40;
+        const ItemNeverHasChildren = 0x80;
+        const ItemIsUserTristate = 0x100;
+    }
 }
 
-#[repr(u32)]
-pub enum MatchFlag {
-    MatchExactly,
-    MatchContains,
-    MatchStartsWith,
-    MatchEndsWith,
-    MatchRegExp,
-    MatchWildcard,
-    MatchFixedString,
-    MatchCaseSensitive,
-    MatchWrap,
-    MatchRecursive,
+pub type ItemFlags = ItemFlag;
+
+bitflags! {
+    pub struct MatchFlag: u32 {
+        const MatchExactly = 0x0;
+        const MatchContains = 0x1;
+        const MatchStartsWith = 0x2;
+        const MatchEndsWith = 0x3;
+        const MatchRegExp = 0x4;
+        const MatchWildcard = 0x5;
+        const MatchFixedString = 0x8;
+        const MatchCaseSensitive = 0x10;
+        const MatchWrap = 0x20;
+        const MatchRecursive = 0x40;
+    }
 }
 
 #[repr(u32)]
 pub enum WindowModality {
-    NonModal,
-    WindowModal,
-    ApplicationModal,
+    NonModal = 0,
+    WindowModal = 1,
+    ApplicationModal = 2,
 }
 
-#[repr(u32)]
-pub enum TextInteractionFlag {
-    NoTextInteraction,
-    TextSelectableByMouse,
-    TextSelectableByKeyboard,
-    LinksAccessibleByMouse,
-    LinksAccessibleByKeyboard,
-    TextEditable,
-    TextEditorInteraction,
-    TextBrowserInteraction,
+bitflags! {
+    pub struct TextInteractionFlag: u32 {
+        const NoTextInteraction = 0x0;
+        const TextSelectableByMouse = 0x1;
+        const TextSelectableByKeyboard = 0x2;
+        const LinksAccessibleByMouse = 0x4;
+        const LinksAccessibleByKeyboard = 0x8;
+        const TextEditable = 0x10;
+        const TextEditorInteraction = 0x13;
+        const TextBrowserInteraction = 0xd;
+    }
 }
 
 #[repr(u32)]
 pub enum EventPriority {
-    HighEventPriority,
-    NormalEventPriority,
-    LowEventPriority,
+    HighEventPriority = 1,
+    NormalEventPriority = 0,
+    LowEventPriority = 4294967295,
 }
 
 #[repr(u32)]
 pub enum SizeHint {
-    MinimumSize,
-    PreferredSize,
-    MaximumSize,
-    MinimumDescent,
-    NSizeHints,
+    MinimumSize = 0,
+    PreferredSize = 1,
+    MaximumSize = 2,
+    MinimumDescent = 3,
+    NSizeHints = 4,
 }
 
 #[repr(u32)]
 pub enum WindowFrameSection {
-    NoSection,
-    LeftSection,
-    TopLeftSection,
-    TopSection,
-    TopRightSection,
-    RightSection,
-    BottomRightSection,
-    BottomSection,
-    BottomLeftSection,
-    TitleBarArea,
+    NoSection = 0,
+    LeftSection = 1,
+    TopLeftSection = 2,
+    TopSection = 3,
+    TopRightSection = 4,
+    RightSection = 5,
+    BottomRightSection = 6,
+    BottomSection = 7,
+    BottomLeftSection = 8,
+    TitleBarArea = 9,
 }
 
 #[repr(u32)]
 pub enum Initialization {
-    Uninitialized,
+    Uninitialized = 0,
 }
 
 #[repr(u32)]
 pub enum CoordinateSystem {
-    DeviceCoordinates,
-    LogicalCoordinates,
+    DeviceCoordinates = 0,
+    LogicalCoordinates = 1,
 }
 
-#[repr(u32)]
-pub enum TouchPointState {
-    TouchPointPressed,
-    TouchPointMoved,
-    TouchPointStationary,
-    TouchPointReleased,
+bitflags! {
+    pub struct TouchPointState: u32 {
+        const TouchPointPressed = 0x1;
+        const TouchPointMoved = 0x2;
+        const TouchPointStationary = 0x4;
+        const TouchPointReleased = 0x8;
+    }
 }
 
 pub type TouchPointStates = TouchPointState;
 
 #[repr(u32)]
 pub enum GestureState {
-    NoGesture,
-    GestureStarted,
-    GestureUpdated,
-    GestureFinished,
-    GestureCanceled,
+    NoGesture = 0,
+    GestureStarted = 1,
+    GestureUpdated = 2,
+    GestureFinished = 3,
+    GestureCanceled = 4,
 }
 
-#[repr(u32)]
-pub enum GestureType {
-    TapGesture,
-    TapAndHoldGesture,
-    PanGesture,
-    PinchGesture,
-    SwipeGesture,
-    CustomGesture,
-    LastGestureType,
+bitflags! {
+    pub struct GestureType: u32 {
+        const TapGesture = 0x1;
+        const TapAndHoldGesture = 0x2;
+        const PanGesture = 0x3;
+        const PinchGesture = 0x4;
+        const SwipeGesture = 0x5;
+        const CustomGesture = 0x100;
+        const LastGestureType = 0xffffffff;
+    }
 }
 
-#[repr(u32)]
-pub enum GestureFlag {
-    DontStartGestureOnChildren,
-    ReceivePartialGestures,
+bitflags! {
+    pub struct GestureFlag: u32 {
+        const DontStartGestureOnChildren = 0x1;
+        const ReceivePartialGestures = 0x2;
+        const IgnoredGesturesPropagateToParent = 0x4;
+    }
 }
 
 pub type GestureFlags = GestureFlag;
 
 #[repr(u32)]
 pub enum NativeGestureType {
-    BeginNativeGesture,
-    EndNativeGesture,
-    PanNativeGesture,
-    ZoomNativeGesture,
-    SmartZoomNativeGesture,
-    RotateNativeGesture,
-    SwipeNativeGesture,
+    BeginNativeGesture = 0,
+    EndNativeGesture = 1,
+    PanNativeGesture = 2,
+    ZoomNativeGesture = 3,
+    SmartZoomNativeGesture = 4,
+    RotateNativeGesture = 5,
+    SwipeNativeGesture = 6,
 }
 
 #[repr(u32)]
 pub enum NavigationMode {
-    NavigationModeNone,
-    NavigationModeKeypadTabOrder,
-    NavigationModeKeypadDirectional,
-    NavigationModeCursorAuto,
-    NavigationModeCursorForceVisible,
+    NavigationModeNone = 0,
+    NavigationModeKeypadTabOrder = 1,
+    NavigationModeKeypadDirectional = 2,
+    NavigationModeCursorAuto = 3,
+    NavigationModeCursorForceVisible = 4,
 }
 
 #[repr(u32)]
 pub enum CursorMoveStyle {
-    LogicalMoveStyle,
-    VisualMoveStyle,
+    LogicalMoveStyle = 0,
+    VisualMoveStyle = 1,
 }
 
 #[repr(u32)]
 pub enum TimerType {
-    PreciseTimer,
-    CoarseTimer,
-    VeryCoarseTimer,
+    PreciseTimer = 0,
+    CoarseTimer = 1,
+    VeryCoarseTimer = 2,
 }
 
 #[repr(u32)]
 pub enum ScrollPhase {
-    NoScrollPhase,
-    ScrollBegin,
-    ScrollUpdate,
-    ScrollEnd,
+    NoScrollPhase = 0,
+    ScrollBegin = 1,
+    ScrollUpdate = 2,
+    ScrollEnd = 3,
 }
 
 #[repr(u32)]
 pub enum MouseEventSource {
-    MouseEventNotSynthesized,
-    MouseEventSynthesizedBySystem,
-    MouseEventSynthesizedByQt,
-    MouseEventSynthesizedByApplication,
+    MouseEventNotSynthesized = 0,
+    MouseEventSynthesizedBySystem = 1,
+    MouseEventSynthesizedByQt = 2,
+    MouseEventSynthesizedByApplication = 3,
 }
 
 #[repr(u32)]
 pub enum MouseEventFlag {
-    MouseEventCreatedDoubleClick,
-    MouseEventFlagMask,
+    MouseEventCreatedDoubleClick = 1,
+    MouseEventFlagMask = 255,
 }
 
-pub type MouseEventFlags = MouseEventFlag;
-
+bitflags! {
+    pub struct MouseEventFlags: u32 {
+        const MouseEventCreatedDoubleClick = MouseEventFlag::MouseEventCreatedDoubleClick as u32;
+        const MouseEventFlagMask = MouseEventFlag::MouseEventFlagMask as u32;
+    }
+}
 #[repr(u32)]
 pub enum ChecksumType {
-    ChecksumIso3309,
-    ChecksumItuV41,
+    ChecksumIso3309 = 0,
+    ChecksumItuV41 = 1,
 }

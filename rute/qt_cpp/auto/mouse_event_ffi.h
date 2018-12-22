@@ -25,11 +25,11 @@ typedef struct RUMouseEventFuncs {
     struct RUPointF (*local_pos)(struct RUBase* self_c);
     struct RUPointF (*window_pos)(struct RUBase* self_c);
     struct RUPointF (*screen_pos)(struct RUBase* self_c);
-    int (*button)(struct RUBase* self_c);
-    int (*buttons)(struct RUBase* self_c);
+    uint32_t (*button)(struct RUBase* self_c);
+    uint32_t (*buttons)(struct RUBase* self_c);
     void (*set_local_pos)(struct RUBase* self_c, struct RUBase* local_position);
-    int (*source)(struct RUBase* self_c);
-    int (*flags)(struct RUBase* self_c);
+    uint32_t (*source)(struct RUBase* self_c);
+    uint32_t (*flags)(struct RUBase* self_c);
 } RUMouseEventFuncs;
 
 typedef struct RUMouseEventAllFuncs {

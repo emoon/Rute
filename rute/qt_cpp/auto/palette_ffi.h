@@ -19,26 +19,27 @@ struct RUPalette;
 typedef struct RUPaletteFuncs {
     void (*destroy)(struct RUBase* self);
     void (*swap)(struct RUBase* self_c, struct RUBase* other);
-    int (*current_color_group)(struct RUBase* self_c);
-    void (*set_current_color_group)(struct RUBase* self_c, int cg);
-    struct RUColor (*color)(struct RUBase* self_c, int cg, int cr);
-    struct RUBrush (*brush)(struct RUBase* self_c, int cg, int cr);
-    void (*set_color)(struct RUBase* self_c, int cg, int cr,
+    uint32_t (*current_color_group)(struct RUBase* self_c);
+    void (*set_current_color_group)(struct RUBase* self_c, uint32_t cg);
+    struct RUColor (*color)(struct RUBase* self_c, uint32_t cg, uint32_t cr);
+    struct RUBrush (*brush)(struct RUBase* self_c, uint32_t cg, uint32_t cr);
+    void (*set_color)(struct RUBase* self_c, uint32_t cg, uint32_t cr,
                       struct RUBase* color);
-    void (*set_color_2)(struct RUBase* self_c, int cr, struct RUBase* color);
-    void (*set_brush)(struct RUBase* self_c, int cr, struct RUBase* brush);
-    bool (*is_brush_set)(struct RUBase* self_c, int cg, int cr);
-    void (*set_brush_2)(struct RUBase* self_c, int cg, int cr,
+    void (*set_color_2)(struct RUBase* self_c, uint32_t cr,
+                        struct RUBase* color);
+    void (*set_brush)(struct RUBase* self_c, uint32_t cr, struct RUBase* brush);
+    bool (*is_brush_set)(struct RUBase* self_c, uint32_t cg, uint32_t cr);
+    void (*set_brush_2)(struct RUBase* self_c, uint32_t cg, uint32_t cr,
                         struct RUBase* brush);
-    void (*set_color_group)(struct RUBase* self_c, int cr,
+    void (*set_color_group)(struct RUBase* self_c, uint32_t cr,
                             struct RUBase* window_text, struct RUBase* button,
                             struct RUBase* light, struct RUBase* dark,
                             struct RUBase* mid, struct RUBase* text,
                             struct RUBase* bright_text, struct RUBase* base,
                             struct RUBase* window);
-    bool (*is_equal)(struct RUBase* self_c, int cr1, int cr2);
-    struct RUColor (*color_2)(struct RUBase* self_c, int cr);
-    struct RUBrush (*brush_2)(struct RUBase* self_c, int cr);
+    bool (*is_equal)(struct RUBase* self_c, uint32_t cr1, uint32_t cr2);
+    struct RUColor (*color_2)(struct RUBase* self_c, uint32_t cr);
+    struct RUBrush (*brush_2)(struct RUBase* self_c, uint32_t cr);
     struct RUBrush (*foreground)(struct RUBase* self_c);
     struct RUBrush (*window_text)(struct RUBase* self_c);
     struct RUBrush (*button)(struct RUBase* self_c);

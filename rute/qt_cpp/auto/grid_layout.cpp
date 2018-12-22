@@ -121,45 +121,45 @@ static void grid_layout_add_widget(struct RUBase* self_c, struct RUBase* w) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void grid_layout_add_widget_row_column(struct RUBase* self_c, struct RUBase* arg0, int row, int column, int arg1) {
+static void grid_layout_add_widget_row_column(struct RUBase* self_c, struct RUBase* arg0, int row, int column, uint32_t arg1) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
-    qt_value->addWidget((QWidget*)arg0, row, column, (Qt::Alignment)s_alignment_lookup[arg1]);
+    qt_value->addWidget((QWidget*)arg0, row, column, (Qt::Alignment)arg1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void grid_layout_add_widget_row_column_span(struct RUBase* self_c, struct RUBase* arg0, int row, int column, int row_span, int column_span, int arg1) {
+static void grid_layout_add_widget_row_column_span(struct RUBase* self_c, struct RUBase* arg0, int row, int column, int row_span, int column_span, uint32_t arg1) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
-    qt_value->addWidget((QWidget*)arg0, row, column, row_span, column_span, (Qt::Alignment)s_alignment_lookup[arg1]);
+    qt_value->addWidget((QWidget*)arg0, row, column, row_span, column_span, (Qt::Alignment)arg1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void grid_layout_add_layout(struct RUBase* self_c, struct RUBase* arg0, int row, int column, int arg1) {
+static void grid_layout_add_layout(struct RUBase* self_c, struct RUBase* arg0, int row, int column, uint32_t arg1) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
-    qt_value->addLayout((QLayout*)arg0, row, column, (Qt::Alignment)s_alignment_lookup[arg1]);
+    qt_value->addLayout((QLayout*)arg0, row, column, (Qt::Alignment)arg1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void grid_layout_add_layout_2(struct RUBase* self_c, struct RUBase* arg0, int row, int column, int row_span, int column_span, int arg1) {
+static void grid_layout_add_layout_2(struct RUBase* self_c, struct RUBase* arg0, int row, int column, int row_span, int column_span, uint32_t arg1) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
-    qt_value->addLayout((QLayout*)arg0, row, column, row_span, column_span, (Qt::Alignment)s_alignment_lookup[arg1]);
+    qt_value->addLayout((QLayout*)arg0, row, column, row_span, column_span, (Qt::Alignment)arg1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void grid_layout_set_origin_corner(struct RUBase* self_c, int arg0) {
+static void grid_layout_set_origin_corner(struct RUBase* self_c, uint32_t arg0) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
-    qt_value->setOriginCorner((Qt::Corner)s_corner_lookup[arg0]);
+    qt_value->setOriginCorner((Qt::Corner)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int grid_layout_origin_corner(struct RUBase* self_c) {
+static uint32_t grid_layout_origin_corner(struct RUBase* self_c) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
     auto ret_value = qt_value->originCorner();
-    return s_corner_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,9 +184,9 @@ static int grid_layout_count(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void grid_layout_set_default_positioning(struct RUBase* self_c, int n, int orient) {
+static void grid_layout_set_default_positioning(struct RUBase* self_c, int n, uint32_t orient) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
-    qt_value->setDefaultPositioning(n, (Qt::Orientation)s_orientation_lookup[orient]);
+    qt_value->setDefaultPositioning(n, (Qt::Orientation)orient);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

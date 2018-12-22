@@ -257,7 +257,7 @@ impl<'a> SurfaceFormat<'a> {
     /// buffering is desired. The default, DefaultSwapBehavior,
     /// gives the default swap behavior of the platform.
     pub fn set_swap_behavior(&self, behavior: SwapBehavior) -> &Self {
-        let enum_behavior_1 = behavior as i32;
+        let enum_behavior_1 = behavior as u32;
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
@@ -273,7 +273,7 @@ impl<'a> SurfaceFormat<'a> {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).swap_behavior)(obj_data);
-            let ret_val = { transmute::<i32, SwapBehavior>(ret_val) };
+            let ret_val = { transmute::<u32, SwapBehavior>(ret_val) };
             ret_val
         }
     }
@@ -295,7 +295,7 @@ impl<'a> SurfaceFormat<'a> {
     /// This setting is ignored if the requested OpenGL version is
     /// less than 3.2.
     pub fn set_profile(&self, profile: OpenGLContextProfile) -> &Self {
-        let enum_profile_1 = profile as i32;
+        let enum_profile_1 = profile as u32;
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
@@ -312,7 +312,7 @@ impl<'a> SurfaceFormat<'a> {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).profile)(obj_data);
-            let ret_val = { transmute::<i32, OpenGLContextProfile>(ret_val) };
+            let ret_val = { transmute::<u32, OpenGLContextProfile>(ret_val) };
             ret_val
         }
     }
@@ -321,7 +321,7 @@ impl<'a> SurfaceFormat<'a> {
     ///
     /// Chooses between desktop OpenGL, OpenGL ES, and OpenVG.
     pub fn set_renderable_type(&self, stype: RenderableType) -> &Self {
-        let enum_stype_1 = stype as i32;
+        let enum_stype_1 = stype.bits();
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
@@ -337,7 +337,7 @@ impl<'a> SurfaceFormat<'a> {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).renderable_type)(obj_data);
-            let ret_val = { transmute::<i32, RenderableType>(ret_val) };
+            let ret_val = RenderableType::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -442,7 +442,7 @@ impl<'a> SurfaceFormat<'a> {
     /// [`options()`]
     /// [`test_option()`]
     pub fn set_option(&self, opt: FormatOptions) -> &Self {
-        let enum_opt_1 = opt as i32;
+        let enum_opt_1 = opt.bits();
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
@@ -463,7 +463,7 @@ impl<'a> SurfaceFormat<'a> {
     ///
     /// **See also:** [`options()`]
     pub fn test_option(&self, opt: FormatOptions) -> bool {
-        let enum_opt_1 = opt as i32;
+        let enum_opt_1 = opt.bits();
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
@@ -477,7 +477,7 @@ impl<'a> SurfaceFormat<'a> {
     /// **See also:** [`options()`]
     /// [`test_option()`]
     pub fn set_options(&self, options: FormatOptions) -> &Self {
-        let enum_options_1 = options as i32;
+        let enum_options_1 = options.bits();
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
@@ -506,7 +506,7 @@ impl<'a> SurfaceFormat<'a> {
     /// [`options()`]
     /// [`test_option()`]
     pub fn set_option_2(&self, option: FormatOption, on: bool) -> &Self {
-        let enum_option_1 = option as i32;
+        let enum_option_1 = option.bits();
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
@@ -527,7 +527,7 @@ impl<'a> SurfaceFormat<'a> {
     ///
     /// **See also:** [`options()`]
     pub fn test_option_2(&self, option: FormatOption) -> bool {
-        let enum_option_1 = option as i32;
+        let enum_option_1 = option.bits();
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
@@ -545,7 +545,7 @@ impl<'a> SurfaceFormat<'a> {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).options)(obj_data);
-            let ret_val = { transmute::<i32, FormatOptions>(ret_val) };
+            let ret_val = FormatOptions::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -592,7 +592,7 @@ impl<'a> SurfaceFormat<'a> {
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).color_space)(obj_data);
-            let ret_val = { transmute::<i32, ColorSpace>(ret_val) };
+            let ret_val = { transmute::<u32, ColorSpace>(ret_val) };
             ret_val
         }
     }
@@ -615,7 +615,7 @@ impl<'a> SurfaceFormat<'a> {
     ///
     /// **See also:** [`color_space()`]
     pub fn set_color_space(&self, color_space: ColorSpace) -> &Self {
-        let enum_color_space_1 = color_space as i32;
+        let enum_color_space_1 = color_space as u32;
 
         let (obj_data, funcs) = self.get_surface_format_obj_funcs();
         unsafe {
@@ -698,41 +698,43 @@ impl<'a> SurfaceFormatTrait<'a> for SurfaceFormat<'a> {
         unsafe { (obj, (*self.all_funcs).surface_format_funcs) }
     }
 }
-#[repr(u32)]
-pub enum FormatOption {
-    StereoBuffers,
-    DebugContext,
-    DeprecatedFunctions,
-    ResetNotification,
+bitflags! {
+    pub struct FormatOption: u32 {
+        const StereoBuffers = 0x1;
+        const DebugContext = 0x2;
+        const DeprecatedFunctions = 0x4;
+        const ResetNotification = 0x8;
+    }
 }
 
 pub type FormatOptions = FormatOption;
 
 #[repr(u32)]
 pub enum SwapBehavior {
-    DefaultSwapBehavior,
-    SingleBuffer,
-    DoubleBuffer,
-    TripleBuffer,
+    DefaultSwapBehavior = 0,
+    SingleBuffer = 1,
+    DoubleBuffer = 2,
+    TripleBuffer = 3,
 }
 
-#[repr(u32)]
-pub enum RenderableType {
-    DefaultRenderableType,
-    OpenGl,
-    OpenGles,
-    OpenVg,
+bitflags! {
+    pub struct RenderableType: u32 {
+        const DefaultRenderableType = 0x0;
+        const OpenGl = 0x1;
+        const OpenGles = 0x2;
+        const OpenVg = 0x4;
+    }
 }
 
 #[repr(u32)]
 pub enum OpenGLContextProfile {
-    NoProfile,
-    CoreProfile,
-    CompatibilityProfile,
+    NoProfile = 0,
+    CoreProfile = 1,
+    CompatibilityProfile = 2,
 }
 
 #[repr(u32)]
 pub enum ColorSpace {
-    DefaultColorSpace,
-    SRgbColorSpace,
+    DefaultColorSpace = 0,
+    SRgbColorSpace = 1,
 }

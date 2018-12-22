@@ -22,8 +22,10 @@ typedef struct RUObjectFuncs {
     bool (*is_window_type)(struct RUBase* self_c);
     bool (*signals_blocked)(struct RUBase* self_c);
     bool (*block_signals)(struct RUBase* self_c, bool b);
-    int (*start_timer)(struct RUBase* self_c, int interval, int timer_type);
-    int (*start_timer_2)(struct RUBase* self_c, uint32_t time, int timer_type);
+    int (*start_timer)(struct RUBase* self_c, int interval,
+                       uint32_t timer_type);
+    int (*start_timer_2)(struct RUBase* self_c, uint32_t time,
+                         uint32_t timer_type);
     void (*kill_timer)(struct RUBase* self_c, int id);
     void (*set_parent)(struct RUBase* self_c, struct RUBase* parent);
     void (*install_event_filter)(struct RUBase* self_c,

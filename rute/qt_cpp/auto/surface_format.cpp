@@ -114,17 +114,17 @@ static int surface_format_samples(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void surface_format_set_swap_behavior(struct RUBase* self_c, int behavior) {
+static void surface_format_set_swap_behavior(struct RUBase* self_c, uint32_t behavior) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
-    qt_value->setSwapBehavior((QSurfaceFormat::SwapBehavior)s_swap_behavior_lookup[behavior]);
+    qt_value->setSwapBehavior((QSurfaceFormat::SwapBehavior)behavior);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int surface_format_swap_behavior(struct RUBase* self_c) {
+static uint32_t surface_format_swap_behavior(struct RUBase* self_c) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
     auto ret_value = qt_value->swapBehavior();
-    return s_swap_behavior_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -137,32 +137,32 @@ static bool surface_format_has_alpha(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void surface_format_set_profile(struct RUBase* self_c, int profile) {
+static void surface_format_set_profile(struct RUBase* self_c, uint32_t profile) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
-    qt_value->setProfile((QSurfaceFormat::OpenGLContextProfile)s_open_gl_context_profile_lookup[profile]);
+    qt_value->setProfile((QSurfaceFormat::OpenGLContextProfile)profile);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int surface_format_profile(struct RUBase* self_c) {
+static uint32_t surface_format_profile(struct RUBase* self_c) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
     auto ret_value = qt_value->profile();
-    return s_open_gl_context_profile_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void surface_format_set_renderable_type(struct RUBase* self_c, int stype) {
+static void surface_format_set_renderable_type(struct RUBase* self_c, uint32_t stype) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
-    qt_value->setRenderableType((QSurfaceFormat::RenderableType)s_renderable_type_lookup[stype]);
+    qt_value->setRenderableType((QSurfaceFormat::RenderableType)stype);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int surface_format_renderable_type(struct RUBase* self_c) {
+static uint32_t surface_format_renderable_type(struct RUBase* self_c) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
     auto ret_value = qt_value->renderableType();
-    return s_renderable_type_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -219,47 +219,47 @@ static void surface_format_set_stereo(struct RUBase* self_c, bool enable) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void surface_format_set_option(struct RUBase* self_c, int opt) {
+static void surface_format_set_option(struct RUBase* self_c, uint32_t opt) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
-    qt_value->setOption((QSurfaceFormat::FormatOptions)s_format_options_lookup[opt]);
+    qt_value->setOption((QSurfaceFormat::FormatOptions)opt);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool surface_format_test_option(struct RUBase* self_c, int opt) {
+static bool surface_format_test_option(struct RUBase* self_c, uint32_t opt) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
-    auto ret_value = qt_value->testOption((QSurfaceFormat::FormatOptions)s_format_options_lookup[opt]);
+    auto ret_value = qt_value->testOption((QSurfaceFormat::FormatOptions)opt);
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void surface_format_set_options(struct RUBase* self_c, int options) {
+static void surface_format_set_options(struct RUBase* self_c, uint32_t options) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
-    qt_value->setOptions((QSurfaceFormat::FormatOptions)s_format_options_lookup[options]);
+    qt_value->setOptions((QSurfaceFormat::FormatOptions)options);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void surface_format_set_option_2(struct RUBase* self_c, int option, bool on) {
+static void surface_format_set_option_2(struct RUBase* self_c, uint32_t option, bool on) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
-    qt_value->setOption((QSurfaceFormat::FormatOption)s_format_option_lookup[option], on);
+    qt_value->setOption((QSurfaceFormat::FormatOption)option, on);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool surface_format_test_option_2(struct RUBase* self_c, int option) {
+static bool surface_format_test_option_2(struct RUBase* self_c, uint32_t option) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
-    auto ret_value = qt_value->testOption((QSurfaceFormat::FormatOption)s_format_option_lookup[option]);
+    auto ret_value = qt_value->testOption((QSurfaceFormat::FormatOption)option);
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int surface_format_options(struct RUBase* self_c) {
+static uint32_t surface_format_options(struct RUBase* self_c) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
     auto ret_value = qt_value->options();
-    return s_format_options_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -279,17 +279,17 @@ static void surface_format_set_swap_interval(struct RUBase* self_c, int interval
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int surface_format_color_space(struct RUBase* self_c) {
+static uint32_t surface_format_color_space(struct RUBase* self_c) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
     auto ret_value = qt_value->colorSpace();
-    return s_color_space_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void surface_format_set_color_space(struct RUBase* self_c, int color_space) {
+static void surface_format_set_color_space(struct RUBase* self_c, uint32_t color_space) {
     WRSurfaceFormat* qt_value = (WRSurfaceFormat*)self_c;
-    qt_value->setColorSpace((QSurfaceFormat::ColorSpace)s_color_space_lookup[color_space]);
+    qt_value->setColorSpace((QSurfaceFormat::ColorSpace)color_space);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

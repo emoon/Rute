@@ -260,7 +260,7 @@ impl<'a> Pen<'a> {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).style)(obj_data);
-            let ret_val = { transmute::<i32, PenStyle>(ret_val) };
+            let ret_val = { transmute::<u32, PenStyle>(ret_val) };
             ret_val
         }
     }
@@ -278,7 +278,7 @@ impl<'a> Pen<'a> {
     /// **See also:** [`style()`]
     /// {QPen#Pen Style}{Pen Style}
     pub fn set_style(&self, arg0: PenStyle) -> &Self {
-        let enum_arg0_1 = arg0 as i32;
+        let enum_arg0_1 = arg0 as u32;
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
@@ -526,7 +526,7 @@ impl<'a> Pen<'a> {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).cap_style)(obj_data);
-            let ret_val = { transmute::<i32, PenCapStyle>(ret_val) };
+            let ret_val = { transmute::<u32, PenCapStyle>(ret_val) };
             ret_val
         }
     }
@@ -537,7 +537,7 @@ impl<'a> Pen<'a> {
     /// **See also:** [`cap_style()`]
     /// {QPen#Cap Style}{Cap Style}
     pub fn set_cap_style(&self, pcs: PenCapStyle) -> &Self {
-        let enum_pcs_1 = pcs as i32;
+        let enum_pcs_1 = pcs as u32;
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
@@ -554,7 +554,7 @@ impl<'a> Pen<'a> {
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).join_style)(obj_data);
-            let ret_val = { transmute::<i32, PenJoinStyle>(ret_val) };
+            let ret_val = PenJoinStyle::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -565,7 +565,7 @@ impl<'a> Pen<'a> {
     /// **See also:** [`join_style()`]
     /// {QPen#Join Style}{Join Style}
     pub fn set_join_style(&self, pcs: PenJoinStyle) -> &Self {
-        let enum_pcs_1 = pcs as i32;
+        let enum_pcs_1 = pcs.bits();
 
         let (obj_data, funcs) = self.get_pen_obj_funcs();
         unsafe {

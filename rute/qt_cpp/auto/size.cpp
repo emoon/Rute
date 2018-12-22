@@ -63,23 +63,23 @@ static void size_set_height(struct RUBase* self_c, int h) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void size_scale(struct RUBase* self_c, int w, int h, int mode) {
+static void size_scale(struct RUBase* self_c, int w, int h, uint32_t mode) {
     WRSize* qt_value = (WRSize*)self_c;
-    qt_value->scale(w, h, (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
+    qt_value->scale(w, h, (Qt::AspectRatioMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void size_scale_2(struct RUBase* self_c, struct RUBase* s, int mode) {
+static void size_scale_2(struct RUBase* self_c, struct RUBase* s, uint32_t mode) {
     WRSize* qt_value = (WRSize*)self_c;
-    qt_value->scale(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
+    qt_value->scale(*((QSize*)s), (Qt::AspectRatioMode)mode);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUSize size_scaled(struct RUBase* self_c, int w, int h, int mode) {
+static struct RUSize size_scaled(struct RUBase* self_c, int w, int h, uint32_t mode) {
     WRSize* qt_value = (WRSize*)self_c;
-    auto ret_value = qt_value->scaled(w, h, (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
+    auto ret_value = qt_value->scaled(w, h, (Qt::AspectRatioMode)mode);
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
     struct RUSize ctl;
@@ -91,9 +91,9 @@ static struct RUSize size_scaled(struct RUBase* self_c, int w, int h, int mode) 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUSize size_scaled_2(struct RUBase* self_c, struct RUBase* s, int mode) {
+static struct RUSize size_scaled_2(struct RUBase* self_c, struct RUBase* s, uint32_t mode) {
     WRSize* qt_value = (WRSize*)self_c;
-    auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)s_aspect_ratio_mode_lookup[mode]);
+    auto ret_value = qt_value->scaled(*((QSize*)s), (Qt::AspectRatioMode)mode);
     WRSize* new_val = new WRSize();
     *new_val = ret_value;
     struct RUSize ctl;

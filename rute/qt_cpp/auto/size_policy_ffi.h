@@ -15,11 +15,11 @@ struct RUSizePolicy;
 
 typedef struct RUSizePolicyFuncs {
     void (*destroy)(struct RUBase* self);
-    int (*horizontal_policy)(struct RUBase* self_c);
-    int (*vertical_policy)(struct RUBase* self_c);
-    void (*set_horizontal_policy)(struct RUBase* self_c, int d);
-    void (*set_vertical_policy)(struct RUBase* self_c, int d);
-    int (*expanding_directions)(struct RUBase* self_c);
+    uint32_t (*horizontal_policy)(struct RUBase* self_c);
+    uint32_t (*vertical_policy)(struct RUBase* self_c);
+    void (*set_horizontal_policy)(struct RUBase* self_c, uint32_t d);
+    void (*set_vertical_policy)(struct RUBase* self_c, uint32_t d);
+    uint32_t (*expanding_directions)(struct RUBase* self_c);
     void (*set_height_for_width)(struct RUBase* self_c, bool b);
     bool (*has_height_for_width)(struct RUBase* self_c);
     void (*set_width_for_height)(struct RUBase* self_c, bool b);

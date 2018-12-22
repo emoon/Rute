@@ -10,7 +10,7 @@ use std::os::raw::c_void;
 pub struct RUFocusEventFuncs {
     pub got_focus: extern "C" fn(self_c: *const RUBase) -> bool,
     pub lost_focus: extern "C" fn(self_c: *const RUBase) -> bool,
-    pub reason: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub reason: extern "C" fn(self_c: *const RUBase) -> u32,
 }
 
 #[repr(C)]

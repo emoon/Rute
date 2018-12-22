@@ -9,10 +9,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int pixel_format_color_model(struct RUBase* self_c) {
+static uint32_t pixel_format_color_model(struct RUBase* self_c) {
     WRPixelFormat* qt_value = (WRPixelFormat*)self_c;
     auto ret_value = qt_value->colorModel();
-    return s_color_model_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -129,50 +129,50 @@ static uint8_t pixel_format_bits_per_pixel(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int pixel_format_alpha_usage(struct RUBase* self_c) {
+static uint32_t pixel_format_alpha_usage(struct RUBase* self_c) {
     WRPixelFormat* qt_value = (WRPixelFormat*)self_c;
     auto ret_value = qt_value->alphaUsage();
-    return s_alpha_usage_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int pixel_format_alpha_position(struct RUBase* self_c) {
+static uint32_t pixel_format_alpha_position(struct RUBase* self_c) {
     WRPixelFormat* qt_value = (WRPixelFormat*)self_c;
     auto ret_value = qt_value->alphaPosition();
-    return s_alpha_position_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int pixel_format_premultiplied(struct RUBase* self_c) {
+static uint32_t pixel_format_premultiplied(struct RUBase* self_c) {
     WRPixelFormat* qt_value = (WRPixelFormat*)self_c;
     auto ret_value = qt_value->premultiplied();
-    return s_alpha_premultiplied_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int pixel_format_type_interpretation(struct RUBase* self_c) {
+static uint32_t pixel_format_type_interpretation(struct RUBase* self_c) {
     WRPixelFormat* qt_value = (WRPixelFormat*)self_c;
     auto ret_value = qt_value->typeInterpretation();
-    return s_type_interpretation_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int pixel_format_byte_order(struct RUBase* self_c) {
+static uint32_t pixel_format_byte_order(struct RUBase* self_c) {
     WRPixelFormat* qt_value = (WRPixelFormat*)self_c;
     auto ret_value = qt_value->byteOrder();
-    return s_byte_order_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int pixel_format_yuv_layout(struct RUBase* self_c) {
+static uint32_t pixel_format_yuv_layout(struct RUBase* self_c) {
     WRPixelFormat* qt_value = (WRPixelFormat*)self_c;
     auto ret_value = qt_value->yuvLayout();
-    return s_yuv_layout_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

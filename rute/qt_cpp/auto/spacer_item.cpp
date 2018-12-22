@@ -9,9 +9,9 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void spacer_item_change_size(struct RUBase* self_c, int w, int h, int h_data, int v_data) {
+static void spacer_item_change_size(struct RUBase* self_c, int w, int h, uint32_t h_data, uint32_t v_data) {
     QSpacerItem* qt_value = (QSpacerItem*)self_c;
-    qt_value->changeSize(w, h, (QSizePolicy::Policy)s_policy_lookup[h_data], (QSizePolicy::Policy)s_policy_lookup[v_data]);
+    qt_value->changeSize(w, h, (QSizePolicy::Policy)h_data, (QSizePolicy::Policy)v_data);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,10 +58,10 @@ static struct RUSize spacer_item_maximum_size(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int spacer_item_expanding_directions(struct RUBase* self_c) {
+static uint32_t spacer_item_expanding_directions(struct RUBase* self_c) {
     QSpacerItem* qt_value = (QSpacerItem*)self_c;
     auto ret_value = qt_value->expandingDirections();
-    return s_orientations_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

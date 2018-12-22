@@ -9,17 +9,17 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int input_event_modifiers(struct RUBase* self_c) {
+static uint32_t input_event_modifiers(struct RUBase* self_c) {
     QInputEvent* qt_value = (QInputEvent*)self_c;
     auto ret_value = qt_value->modifiers();
-    return s_keyboard_modifiers_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void input_event_set_modifiers(struct RUBase* self_c, int amodifiers) {
+static void input_event_set_modifiers(struct RUBase* self_c, uint32_t amodifiers) {
     QInputEvent* qt_value = (QInputEvent*)self_c;
-    qt_value->setModifiers((Qt::KeyboardModifiers)s_keyboard_modifiers_lookup[amodifiers]);
+    qt_value->setModifiers((Qt::KeyboardModifiers)amodifiers);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

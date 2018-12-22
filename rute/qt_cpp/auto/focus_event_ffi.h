@@ -16,7 +16,7 @@ struct RUFocusEvent;
 typedef struct RUFocusEventFuncs {
     bool (*got_focus)(struct RUBase* self_c);
     bool (*lost_focus)(struct RUBase* self_c);
-    int (*reason)(struct RUBase* self_c);
+    uint32_t (*reason)(struct RUBase* self_c);
 } RUFocusEventFuncs;
 
 typedef struct RUFocusEventAllFuncs {

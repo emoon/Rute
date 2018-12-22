@@ -688,7 +688,7 @@ impl<'a> Font<'a> {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).style_hint)(obj_data);
-            let ret_val = { transmute::<i32, StyleHint>(ret_val) };
+            let ret_val = StyleHint::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -708,8 +708,8 @@ impl<'a> Font<'a> {
     /// [`style_strategy()`]
     /// [`FontInfo`]
     pub fn set_style_hint(&self, arg0: StyleHint, arg1: StyleStrategy) -> &Self {
-        let enum_arg0_1 = arg0 as i32;
-        let enum_arg1_2 = arg1 as i32;
+        let enum_arg0_1 = arg0.bits();
+        let enum_arg1_2 = arg1.bits();
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
@@ -746,7 +746,7 @@ impl<'a> Font<'a> {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).letter_spacing_type)(obj_data);
-            let ret_val = { transmute::<i32, SpacingType>(ret_val) };
+            let ret_val = { transmute::<u32, SpacingType>(ret_val) };
             ret_val
         }
     }
@@ -763,7 +763,7 @@ impl<'a> Font<'a> {
     /// [`letter_spacing_type()`]
     /// [`set_word_spacing()`]
     pub fn set_letter_spacing(&self, stype: SpacingType, spacing: f32) -> &Self {
-        let enum_stype_1 = stype as i32;
+        let enum_stype_1 = stype as u32;
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
@@ -810,7 +810,7 @@ impl<'a> Font<'a> {
     ///
     /// **See also:** [`capitalization()`]
     pub fn set_capitalization(&self, arg0: Capitalization) -> &Self {
-        let enum_arg0_1 = arg0 as i32;
+        let enum_arg0_1 = arg0 as u32;
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
@@ -826,7 +826,7 @@ impl<'a> Font<'a> {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).capitalization)(obj_data);
-            let ret_val = { transmute::<i32, Capitalization>(ret_val) };
+            let ret_val = { transmute::<u32, Capitalization>(ret_val) };
             ret_val
         }
     }
@@ -838,7 +838,7 @@ impl<'a> Font<'a> {
     ///
     /// The default hinting preference is QFont::PreferDefaultHinting.
     pub fn set_hinting_preference(&self, hinting_preference: HintingPreference) -> &Self {
-        let enum_hinting_preference_1 = hinting_preference as i32;
+        let enum_hinting_preference_1 = hinting_preference as u32;
 
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
@@ -852,7 +852,7 @@ impl<'a> Font<'a> {
         let (obj_data, funcs) = self.get_font_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).hinting_preference)(obj_data);
-            let ret_val = { transmute::<i32, HintingPreference>(ret_val) };
+            let ret_val = { transmute::<u32, HintingPreference>(ret_val) };
             ret_val
         }
     }
@@ -1206,109 +1206,96 @@ impl<'a> FontTrait<'a> for Font<'a> {
         unsafe { (obj, (*self.all_funcs).font_funcs) }
     }
 }
-#[repr(u32)]
-pub enum StyleHint {
-    Helvetica,
-    SansSerif,
-    Times,
-    Serif,
-    Courier,
-    TypeWriter,
-    OldEnglish,
-    Decorative,
-    System,
-    AnyStyle,
-    Cursive,
-    Monospace,
-    Fantasy,
+bitflags! {
+    pub struct StyleHint: u32 {
+        const Helvetica = 0x0;
+        const SansSerif = 0x0;
+        const Times = 0x1;
+        const Serif = 0x1;
+        const Courier = 0x2;
+        const TypeWriter = 0x2;
+        const OldEnglish = 0x3;
+        const Decorative = 0x3;
+        const System = 0x4;
+        const AnyStyle = 0x5;
+        const Cursive = 0x6;
+        const Monospace = 0x7;
+        const Fantasy = 0x8;
+    }
 }
 
-#[repr(u32)]
-pub enum StyleStrategy {
-    PreferDefault,
-    PreferBitmap,
-    PreferDevice,
-    PreferOutline,
-    ForceOutline,
-    PreferMatch,
-    PreferQuality,
-    PreferAntialias,
-    NoAntialias,
-    OpenGlCompatible,
-    ForceIntegerMetrics,
-    NoSubpixelAntialias,
-    PreferNoShaping,
-    NoFontMerging,
+bitflags! {
+    pub struct StyleStrategy: u32 {
+        const PreferDefault = 0x1;
+        const PreferBitmap = 0x2;
+        const PreferDevice = 0x4;
+        const PreferOutline = 0x8;
+        const ForceOutline = 0x10;
+        const PreferMatch = 0x20;
+        const PreferQuality = 0x40;
+        const PreferAntialias = 0x80;
+        const NoAntialias = 0x100;
+        const OpenGlCompatible = 0x200;
+        const ForceIntegerMetrics = 0x400;
+        const NoSubpixelAntialias = 0x800;
+        const PreferNoShaping = 0x1000;
+        const NoFontMerging = 0x8000;
+    }
 }
 
 #[repr(u32)]
 pub enum HintingPreference {
-    PreferDefaultHinting,
-    PreferNoHinting,
-    PreferVerticalHinting,
-    PreferFullHinting,
+    PreferDefaultHinting = 0,
+    PreferNoHinting = 1,
+    PreferVerticalHinting = 2,
+    PreferFullHinting = 3,
 }
 
 #[repr(u32)]
 pub enum Weight {
-    Thin,
-    ExtraLight,
-    Light,
-    Normal,
-    Medium,
-    DemiBold,
-    Bold,
-    ExtraBold,
-    Black,
+    Thin = 0,
+    ExtraLight = 12,
+    Light = 25,
+    Normal = 50,
+    Medium = 57,
+    DemiBold = 63,
+    Bold = 75,
+    ExtraBold = 81,
+    Black = 87,
+}
+
+#[repr(u32)]
+pub enum FontStyle {
+    StyleNormal = 0,
+    StyleItalic = 1,
+    StyleOblique = 2,
 }
 
 #[repr(u32)]
 pub enum Stretch {
-    AnyStretch,
-    UltraCondensed,
-    ExtraCondensed,
-    Condensed,
-    SemiCondensed,
-    Unstretched,
-    SemiExpanded,
-    Expanded,
-    ExtraExpanded,
-    UltraExpanded,
+    AnyStretch = 0,
+    UltraCondensed = 50,
+    ExtraCondensed = 62,
+    Condensed = 75,
+    SemiCondensed = 87,
+    Unstretched = 100,
+    SemiExpanded = 112,
+    Expanded = 125,
+    ExtraExpanded = 150,
+    UltraExpanded = 200,
 }
 
 #[repr(u32)]
 pub enum Capitalization {
-    MixedCase,
-    AllUppercase,
-    AllLowercase,
-    SmallCaps,
-    Capitalize,
+    MixedCase = 0,
+    AllUppercase = 1,
+    AllLowercase = 2,
+    SmallCaps = 3,
+    Capitalize = 4,
 }
 
 #[repr(u32)]
 pub enum SpacingType {
-    PercentageSpacing,
-    AbsoluteSpacing,
-}
-
-#[repr(u32)]
-pub enum ResolveProperties {
-    FamilyResolved,
-    SizeResolved,
-    StyleHintResolved,
-    StyleStrategyResolved,
-    WeightResolved,
-    StyleResolved,
-    UnderlineResolved,
-    OverlineResolved,
-    StrikeOutResolved,
-    FixedPitchResolved,
-    StretchResolved,
-    KerningResolved,
-    CapitalizationResolved,
-    LetterSpacingResolved,
-    WordSpacingResolved,
-    HintingPreferenceResolved,
-    StyleNameResolved,
-    AllPropertiesResolved,
+    PercentageSpacing = 0,
+    AbsoluteSpacing = 1,
 }

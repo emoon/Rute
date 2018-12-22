@@ -113,18 +113,18 @@ static float tablet_event_hi_res_global_y(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int tablet_event_device(struct RUBase* self_c) {
+static uint32_t tablet_event_device(struct RUBase* self_c) {
     QTabletEvent* qt_value = (QTabletEvent*)self_c;
     auto ret_value = qt_value->device();
-    return s_tablet_device_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int tablet_event_pointer_type(struct RUBase* self_c) {
+static uint32_t tablet_event_pointer_type(struct RUBase* self_c) {
     QTabletEvent* qt_value = (QTabletEvent*)self_c;
     auto ret_value = qt_value->pointerType();
-    return s_pointer_type_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -185,18 +185,18 @@ static int tablet_event_y_tilt(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int tablet_event_button(struct RUBase* self_c) {
+static uint32_t tablet_event_button(struct RUBase* self_c) {
     QTabletEvent* qt_value = (QTabletEvent*)self_c;
     auto ret_value = qt_value->button();
-    return s_mouse_button_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int tablet_event_buttons(struct RUBase* self_c) {
+static uint32_t tablet_event_buttons(struct RUBase* self_c) {
     QTabletEvent* qt_value = (QTabletEvent*)self_c;
     auto ret_value = qt_value->buttons();
-    return s_mouse_buttons_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

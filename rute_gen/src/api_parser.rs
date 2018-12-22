@@ -63,6 +63,8 @@ pub struct Variable {
     pub type_name: String,
     /// Name that maps to the QClass/Typename
     pub qt_type_name: String,
+    /// Type of enum
+    pub enum_type: EnumType,
     /// Rest name of a enum. "test" in the case of Rute::test
     pub enum_sub_type: String,
     /// If variable is an array
@@ -88,6 +90,7 @@ impl Default for Variable {
             vtype: VariableType::None,
             type_name: String::new(),
             enum_sub_type: String::new(),
+            enum_type: EnumType::Regular,
             qt_type_name: String::new(),
             array: false,
             optional: false,
@@ -203,7 +206,7 @@ pub struct EnumEntry {
 /// Enums in C++ can have same value for different enum ids. This isn't supported in Rust.
 /// Also Rust doesn't support that your "or" enums flags so we need to handle that.
 ///
-#[derive(Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum EnumType {
     /// All values are in sequantial order and no overlap
     Regular,
@@ -347,15 +350,33 @@ impl ApiParser {
                     }
 
                     // Figure out enum type
-                    let enum_type = Self::determine_enum_type(&enum_def);
-                    enum_def.enum_type = enum_type;
-
+                    enum_def.enum_type = Self::determine_enum_type(&enum_def);
                     api_def.enums.push(enum_def);
                 }
 
                 _ => (),
             }
         }
+    }
+    ///
+    /// Check if the enum values are in a single sequnce
+    ///
+    fn check_sequential(enum_def: &Enum) -> bool {
+        if enum_def.entries.is_empty() {
+            return false;
+        }
+
+        let mut current = enum_def.entries[0].value;
+
+        for e in &enum_def.entries {
+            if current != e.value {
+                return false;
+            }
+
+            current += 1;
+        }
+
+        true
     }
 
     ///
@@ -393,18 +414,26 @@ impl ApiParser {
             .sum();
 
         // if we have >= 50% of power of two values assume this enum is being used as bitflags
-        let percent = enum_def.entries.len() as f32 / power_of_two_count as f32;
-        percent >= 0.5
+        let percent = power_of_two_count as f32 / enum_def.entries.len() as f32;
+        percent > 0.5
     }
 
     ///
     /// Figures out the type of enum
     ///
     fn determine_enum_type(enum_def: &Enum) -> EnumType {
+        // if all number is in a single linear sequence. This currently misses if
+        // valid "breaks" in sequences
+        let sequential = Self::check_sequential(enum_def);
         // if all numbers aren't overlapping
         let overlapping = Self::check_overlapping(enum_def);
         // check if all values are power of two
         let power_of_two = Self::check_power_of_two(enum_def);
+
+        // If enum is sequential and has no overlapping we can use it as a regular enum
+        if sequential && !overlapping {
+            return EnumType::Regular;
+        }
 
         // if all values are power of two we assume this should be used as bitfield
         // or has overlapping values we
@@ -774,7 +803,7 @@ impl ApiParser {
     fn update_variable(arg: &mut Variable,
         struct_name_map: &HashMap<String, String>,
         type_def_file: &HashMap<String, String>,
-        enum_def_file: &HashMap<String, String>)
+        enum_def_file_type: &HashMap<String, (String, EnumType)>)
     {
         if let Some(qt_name) = struct_name_map.get(&arg.type_name) {
             arg.qt_type_name = qt_name.to_owned();
@@ -782,8 +811,9 @@ impl ApiParser {
 
         match arg.vtype {
             VariableType::Enum => {
-                if let Some(def_file) = enum_def_file.get(&arg.enum_sub_type) {
+                if let Some((def_file, enum_type)) = enum_def_file_type.get(&arg.enum_sub_type) {
                     arg.def_file = def_file.to_owned();
+                    arg.enum_type = *enum_type;
                 } else {
                     println!("--> enum {} wasn't found in lookup", arg.enum_sub_type);
                 }
@@ -854,7 +884,7 @@ impl ApiParser {
         // and they are separate for structs and enums
         let mut struct_name_map = HashMap::new();
         let mut type_def_file = HashMap::new();
-        let mut enum_def_file = HashMap::new();
+        let mut enum_def_file_type = HashMap::new();
 
         for api_def in api_defs.iter() {
             api_def.class_structs.iter().for_each(|s| {
@@ -863,11 +893,11 @@ impl ApiParser {
                 type_def_file.insert(format!("{}Trait",s.name), s.def_file.to_owned());
             });
 
-            api_def.enums.iter().for_each(|s| {
-                enum_def_file.insert(s.name.to_owned(), s.def_file.to_owned());
+            api_def.enums.iter().for_each(|e| {
+                enum_def_file_type.insert(e.name.to_owned(), (e.def_file.to_owned(), e.enum_type));
 
-                if !s.flags_name.is_empty() {
-                    enum_def_file.insert(s.flags_name.to_owned(), s.def_file.to_owned());
+                if !e.flags_name.is_empty() {
+                    enum_def_file_type.insert(e.flags_name.to_owned(), (e.def_file.to_owned(), EnumType::Bitflags));
                 }
             });
         }
@@ -879,11 +909,11 @@ impl ApiParser {
             .flat_map(|s| s.functions.iter_mut())
         {
             for arg in func.function_args.iter_mut() {
-                Self::update_variable(arg, &struct_name_map, &type_def_file, &enum_def_file);
+                Self::update_variable(arg, &struct_name_map, &type_def_file, &enum_def_file_type);
             }
 
             if let Some(ref mut ret_val) = func.return_val {
-                Self::update_variable(ret_val, &struct_name_map, &type_def_file, &enum_def_file);
+                Self::update_variable(ret_val, &struct_name_map, &type_def_file, &enum_def_file_type);
             }
         }
     }
@@ -1017,7 +1047,7 @@ impl Variable {
                 }
             }
 
-            VariableType::Enum => "int".into(),
+            VariableType::Enum => "uint32_t".into(),
             VariableType::Str => "const char*".into(),
 
             _ => {

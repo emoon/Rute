@@ -25,9 +25,9 @@ static const char* color_name(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static const char* color_name_2(struct RUBase* self_c, int format) {
+static const char* color_name_2(struct RUBase* self_c, uint32_t format) {
     WRColor* qt_value = (WRColor*)self_c;
-    auto ret_value = qt_value->name((QColor::NameFormat)s_name_format_lookup[format]);
+    auto ret_value = qt_value->name((QColor::NameFormat)format);
     return q_string_to_const_char(ret_value);
 }
 
@@ -40,10 +40,10 @@ static void color_set_named_color(struct RUBase* self_c, const char* name) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int color_spec(struct RUBase* self_c) {
+static uint32_t color_spec(struct RUBase* self_c) {
     WRColor* qt_value = (WRColor*)self_c;
     auto ret_value = qt_value->spec();
-    return s_spec_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -472,9 +472,9 @@ static struct RUColor color_to_hsl(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUColor color_convert_to(struct RUBase* self_c, int color_spec) {
+static struct RUColor color_convert_to(struct RUBase* self_c, uint32_t color_spec) {
     WRColor* qt_value = (WRColor*)self_c;
-    auto ret_value = qt_value->convertTo((QColor::Spec)s_spec_lookup[color_spec]);
+    auto ret_value = qt_value->convertTo((QColor::Spec)color_spec);
     WRColor* new_val = new WRColor();
     *new_val = ret_value;
     struct RUColor ctl;

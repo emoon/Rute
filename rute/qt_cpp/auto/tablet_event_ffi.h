@@ -26,8 +26,8 @@ typedef struct RUTabletEventFuncs {
     int (*global_y)(struct RUBase* self_c);
     float (*hi_res_global_x)(struct RUBase* self_c);
     float (*hi_res_global_y)(struct RUBase* self_c);
-    int (*device)(struct RUBase* self_c);
-    int (*pointer_type)(struct RUBase* self_c);
+    uint32_t (*device)(struct RUBase* self_c);
+    uint32_t (*pointer_type)(struct RUBase* self_c);
     int64_t (*unique_id)(struct RUBase* self_c);
     float (*pressure)(struct RUBase* self_c);
     int (*z)(struct RUBase* self_c);
@@ -35,8 +35,8 @@ typedef struct RUTabletEventFuncs {
     float (*rotation)(struct RUBase* self_c);
     int (*x_tilt)(struct RUBase* self_c);
     int (*y_tilt)(struct RUBase* self_c);
-    int (*button)(struct RUBase* self_c);
-    int (*buttons)(struct RUBase* self_c);
+    uint32_t (*button)(struct RUBase* self_c);
+    uint32_t (*buttons)(struct RUBase* self_c);
 } RUTabletEventFuncs;
 
 typedef struct RUTabletEventAllFuncs {

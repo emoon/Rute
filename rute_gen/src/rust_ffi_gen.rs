@@ -34,7 +34,7 @@ impl Variable {
 
         match &self.vtype {
             VariableType::None => "<illegal type>".into(),
-            VariableType::Enum => "i32".into(),
+            VariableType::Enum => "u32".into(),
             VariableType::SelfType => "*const RUBase".into(),
             VariableType::Primitive => name.to_owned().into(),
             VariableType::Reference => {

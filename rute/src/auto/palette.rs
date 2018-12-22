@@ -159,14 +159,14 @@ impl<'a> Palette<'a> {
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).current_color_group)(obj_data);
-            let ret_val = { transmute::<i32, ColorGroup>(ret_val) };
+            let ret_val = ColorGroup::from_bits_truncate(ret_val);
             ret_val
         }
     }
     ///
     /// Set the palette's current color group to *cg.*
     pub fn set_current_color_group(&self, cg: ColorGroup) -> &Self {
-        let enum_cg_1 = cg as i32;
+        let enum_cg_1 = cg.bits();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
@@ -189,8 +189,8 @@ impl<'a> Palette<'a> {
     /// [`set_color()`]
     /// ColorRole
     pub fn color(&self, cg: ColorGroup, cr: ColorRole) -> Option<Color> {
-        let enum_cg_1 = cg as i32;
-        let enum_cr_2 = cr as i32;
+        let enum_cg_1 = cg.bits();
+        let enum_cr_2 = cr.bits();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
@@ -224,8 +224,8 @@ impl<'a> Palette<'a> {
     /// [`set_brush()`]
     /// ColorRole
     pub fn brush(&self, cg: ColorGroup, cr: ColorRole) -> Option<Brush> {
-        let enum_cg_1 = cg as i32;
-        let enum_cr_2 = cr as i32;
+        let enum_cg_1 = cg.bits();
+        let enum_cr_2 = cr.bits();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
@@ -264,8 +264,8 @@ impl<'a> Palette<'a> {
     ///
     /// **See also:** [`Brush`]
     pub fn set_color<C: ColorTrait<'a>>(&self, cg: ColorGroup, cr: ColorRole, color: &C) -> &Self {
-        let enum_cg_1 = cg as i32;
-        let enum_cr_2 = cr as i32;
+        let enum_cg_1 = cg.bits();
+        let enum_cr_2 = cr.bits();
         let (obj_color_3, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
@@ -295,7 +295,7 @@ impl<'a> Palette<'a> {
     ///
     /// **See also:** [`Brush`]
     pub fn set_color_2<C: ColorTrait<'a>>(&self, cr: ColorRole, color: &C) -> &Self {
-        let enum_cr_1 = cr as i32;
+        let enum_cr_1 = cr.bits();
         let (obj_color_2, _funcs) = color.get_color_obj_funcs();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
@@ -319,7 +319,7 @@ impl<'a> Palette<'a> {
     /// [`set_color()`]
     /// ColorRole
     pub fn set_brush<B: BrushTrait<'a>>(&self, cr: ColorRole, brush: &B) -> &Self {
-        let enum_cr_1 = cr as i32;
+        let enum_cr_1 = cr.bits();
         let (obj_brush_2, _funcs) = brush.get_brush_obj_funcs();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
@@ -334,8 +334,8 @@ impl<'a> Palette<'a> {
     ///
     /// **See also:** [`set_brush()`]
     pub fn is_brush_set(&self, cg: ColorGroup, cr: ColorRole) -> bool {
-        let enum_cg_1 = cg as i32;
-        let enum_cr_2 = cr as i32;
+        let enum_cg_1 = cg.bits();
+        let enum_cr_2 = cr.bits();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
@@ -363,8 +363,8 @@ impl<'a> Palette<'a> {
         cr: ColorRole,
         brush: &B,
     ) -> &Self {
-        let enum_cg_1 = cg as i32;
-        let enum_cr_2 = cr as i32;
+        let enum_cg_1 = cg.bits();
+        let enum_cr_2 = cr.bits();
         let (obj_brush_3, _funcs) = brush.get_brush_obj_funcs();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
@@ -391,7 +391,7 @@ impl<'a> Palette<'a> {
         base: &B,
         window: &B,
     ) -> &Self {
-        let enum_cr_1 = cr as i32;
+        let enum_cr_1 = cr.bits();
         let (obj_window_text_2, _funcs) = window_text.get_brush_obj_funcs();
         let (obj_button_3, _funcs) = button.get_brush_obj_funcs();
         let (obj_light_4, _funcs) = light.get_brush_obj_funcs();
@@ -424,8 +424,8 @@ impl<'a> Palette<'a> {
     /// Returns `true` (usually quickly) if color group *cg1* is equal to
     /// *cg2;* otherwise returns `false.`
     pub fn is_equal(&self, cr1: ColorGroup, cr2: ColorGroup) -> bool {
-        let enum_cr1_1 = cr1 as i32;
-        let enum_cr2_2 = cr2 as i32;
+        let enum_cr1_1 = cr1.bits();
+        let enum_cr2_2 = cr2.bits();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
@@ -448,7 +448,7 @@ impl<'a> Palette<'a> {
     /// [`set_color()`]
     /// ColorRole
     pub fn color_2(&self, cr: ColorRole) -> Option<Color> {
-        let enum_cr_1 = cr as i32;
+        let enum_cr_1 = cr.bits();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
@@ -482,7 +482,7 @@ impl<'a> Palette<'a> {
     /// [`set_brush()`]
     /// ColorRole
     pub fn brush_2(&self, cr: ColorRole) -> Option<Brush> {
-        let enum_cr_1 = cr as i32;
+        let enum_cr_1 = cr.bits();
 
         let (obj_data, funcs) = self.get_palette_obj_funcs();
         unsafe {
@@ -1072,40 +1072,42 @@ impl<'a> PaletteTrait<'a> for Palette<'a> {
         unsafe { (obj, (*self.all_funcs).palette_funcs) }
     }
 }
-#[repr(u32)]
-pub enum ColorGroup {
-    Active,
-    Disabled,
-    Inactive,
-    NColorGroups,
-    Current,
-    All,
-    Normal,
+bitflags! {
+    pub struct ColorGroup: u32 {
+        const Active = 0x0;
+        const Disabled = 0x1;
+        const Inactive = 0x2;
+        const NColorGroups = 0x3;
+        const Current = 0x4;
+        const All = 0x5;
+        const Normal = 0x0;
+    }
 }
 
-#[repr(u32)]
-pub enum ColorRole {
-    WindowText,
-    Button,
-    Light,
-    Midlight,
-    Dark,
-    Mid,
-    Text,
-    BrightText,
-    ButtonText,
-    Base,
-    Window,
-    Shadow,
-    Highlight,
-    HighlightedText,
-    Link,
-    LinkVisited,
-    AlternateBase,
-    NoRole,
-    ToolTipBase,
-    ToolTipText,
-    NColorRoles,
-    Foreground,
-    Background,
+bitflags! {
+    pub struct ColorRole: u32 {
+        const WindowText = 0x0;
+        const Button = 0x1;
+        const Light = 0x2;
+        const Midlight = 0x3;
+        const Dark = 0x4;
+        const Mid = 0x5;
+        const Text = 0x6;
+        const BrightText = 0x7;
+        const ButtonText = 0x8;
+        const Base = 0x9;
+        const Window = 0xa;
+        const Shadow = 0xb;
+        const Highlight = 0xc;
+        const HighlightedText = 0xd;
+        const Link = 0xe;
+        const LinkVisited = 0xf;
+        const AlternateBase = 0x10;
+        const NoRole = 0x11;
+        const ToolTipBase = 0x12;
+        const ToolTipText = 0x13;
+        const NColorRoles = 0x14;
+        const Foreground = 0x0;
+        const Background = 0xa;
+    }
 }

@@ -14,8 +14,8 @@ use std::os::raw::c_void;
 pub struct RUBrushFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub swap: extern "C" fn(self_c: *const RUBase, other: *const RUBase),
-    pub style: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub set_style: extern "C" fn(self_c: *const RUBase, arg0: i32),
+    pub style: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub set_style: extern "C" fn(self_c: *const RUBase, arg0: u32),
     pub set_transform: extern "C" fn(self_c: *const RUBase, arg0: *const RUBase),
     pub texture: extern "C" fn(self_c: *const RUBase) -> RUPixmap,
     pub set_texture: extern "C" fn(self_c: *const RUBase, pixmap: *const RUBase),
@@ -23,7 +23,7 @@ pub struct RUBrushFuncs {
     pub set_texture_image: extern "C" fn(self_c: *const RUBase, image: *const RUBase),
     pub color: extern "C" fn(self_c: *const RUBase) -> RUColor,
     pub set_color: extern "C" fn(self_c: *const RUBase, color: *const RUBase),
-    pub set_color_2: extern "C" fn(self_c: *const RUBase, color: i32),
+    pub set_color_2: extern "C" fn(self_c: *const RUBase, color: u32),
     pub is_opaque: extern "C" fn(self_c: *const RUBase) -> bool,
     pub is_detached: extern "C" fn(self_c: *const RUBase) -> bool,
 }

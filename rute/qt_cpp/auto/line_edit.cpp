@@ -85,17 +85,17 @@ static bool line_edit_is_clear_button_enabled(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int line_edit_echo_mode(struct RUBase* self_c) {
+static uint32_t line_edit_echo_mode(struct RUBase* self_c) {
     WRLineEdit* qt_value = (WRLineEdit*)self_c;
     auto ret_value = qt_value->echoMode();
-    return s_echo_mode_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void line_edit_set_echo_mode(struct RUBase* self_c, int arg0) {
+static void line_edit_set_echo_mode(struct RUBase* self_c, uint32_t arg0) {
     WRLineEdit* qt_value = (WRLineEdit*)self_c;
-    qt_value->setEchoMode((QLineEdit::EchoMode)s_echo_mode_lookup[arg0]);
+    qt_value->setEchoMode((QLineEdit::EchoMode)arg0);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -138,17 +138,17 @@ static int line_edit_cursor_position_at(struct RUBase* self_c, struct RUBase* po
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void line_edit_set_alignment(struct RUBase* self_c, int flag) {
+static void line_edit_set_alignment(struct RUBase* self_c, uint32_t flag) {
     WRLineEdit* qt_value = (WRLineEdit*)self_c;
-    qt_value->setAlignment((Qt::Alignment)s_alignment_lookup[flag]);
+    qt_value->setAlignment((Qt::Alignment)flag);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int line_edit_alignment(struct RUBase* self_c) {
+static uint32_t line_edit_alignment(struct RUBase* self_c) {
     WRLineEdit* qt_value = (WRLineEdit*)self_c;
     auto ret_value = qt_value->alignment();
-    return s_alignment_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -302,17 +302,17 @@ static bool line_edit_drag_enabled(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void line_edit_set_cursor_move_style(struct RUBase* self_c, int style) {
+static void line_edit_set_cursor_move_style(struct RUBase* self_c, uint32_t style) {
     WRLineEdit* qt_value = (WRLineEdit*)self_c;
-    qt_value->setCursorMoveStyle((Qt::CursorMoveStyle)s_cursor_move_style_lookup[style]);
+    qt_value->setCursorMoveStyle((Qt::CursorMoveStyle)style);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int line_edit_cursor_move_style(struct RUBase* self_c) {
+static uint32_t line_edit_cursor_move_style(struct RUBase* self_c) {
     WRLineEdit* qt_value = (WRLineEdit*)self_c;
     auto ret_value = qt_value->cursorMoveStyle();
-    return s_cursor_move_style_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -167,7 +167,7 @@ impl<'a> DragEnterEvent<'a> {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).mouse_buttons)(obj_data);
-            let ret_val = { transmute::<i32, MouseButtons>(ret_val) };
+            let ret_val = MouseButtons::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -176,7 +176,7 @@ impl<'a> DragEnterEvent<'a> {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).keyboard_modifiers)(obj_data);
-            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            let ret_val = KeyboardModifiers::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -185,7 +185,7 @@ impl<'a> DragEnterEvent<'a> {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).possible_actions)(obj_data);
-            let ret_val = { transmute::<i32, DropActions>(ret_val) };
+            let ret_val = DropActions::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -194,7 +194,7 @@ impl<'a> DragEnterEvent<'a> {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).proposed_action)(obj_data);
-            let ret_val = { transmute::<i32, DropAction>(ret_val) };
+            let ret_val = { transmute::<u32, DropAction>(ret_val) };
             ret_val
         }
     }
@@ -211,13 +211,13 @@ impl<'a> DragEnterEvent<'a> {
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).drop_action)(obj_data);
-            let ret_val = { transmute::<i32, DropAction>(ret_val) };
+            let ret_val = { transmute::<u32, DropAction>(ret_val) };
             ret_val
         }
     }
     #[doc(hidden)]
     pub fn set_drop_action(&self, action: DropAction) -> &Self {
-        let enum_action_1 = action as i32;
+        let enum_action_1 = action as u32;
 
         let (obj_data, funcs) = self.get_drop_event_obj_funcs();
         unsafe {

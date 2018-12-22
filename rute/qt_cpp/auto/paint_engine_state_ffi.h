@@ -21,18 +21,18 @@ struct RUPaintEngineState;
 
 typedef struct RUPaintEngineStateFuncs {
     void (*destroy)(struct RUBase* self);
-    int (*state)(struct RUBase* self_c);
+    uint32_t (*state)(struct RUBase* self_c);
     struct RUPen (*pen)(struct RUBase* self_c);
     struct RUBrush (*brush)(struct RUBase* self_c);
     struct RUPointF (*brush_origin)(struct RUBase* self_c);
     struct RUBrush (*background_brush)(struct RUBase* self_c);
-    int (*background_mode)(struct RUBase* self_c);
+    uint32_t (*background_mode)(struct RUBase* self_c);
     struct RUFont (*font)(struct RUBase* self_c);
-    int (*clip_operation)(struct RUBase* self_c);
+    uint32_t (*clip_operation)(struct RUBase* self_c);
     struct RURegion (*clip_region)(struct RUBase* self_c);
     bool (*is_clip_enabled)(struct RUBase* self_c);
-    int (*render_hints)(struct RUBase* self_c);
-    int (*composition_mode)(struct RUBase* self_c);
+    uint32_t (*render_hints)(struct RUBase* self_c);
+    uint32_t (*composition_mode)(struct RUBase* self_c);
     float (*opacity)(struct RUBase* self_c);
     struct RUPainter (*painter)(struct RUBase* self_c);
     bool (*brush_needs_resolving)(struct RUBase* self_c);

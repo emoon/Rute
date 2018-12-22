@@ -174,12 +174,12 @@ fn main() {
             QtGenerator::new().generate_all_signal_wrappers(&signal_wrappers, &api_defs_read).unwrap();
 
             // Generate all the signal wrappers for Qt C++
-            println!("    Generating Qt enum mapping: {}", enum_mapping);
-            QtGenerator::new().generate_enum_mappings(&enum_mapping, &api_defs_read).unwrap();
+            //println!("    Generating Qt enum mapping: {}", enum_mapping);
+            //QtGenerator::new().generate_enum_mappings(&enum_mapping, &api_defs_read).unwrap();
 
             // Generate all the signal wrappers for Qt C++
-            println!("    Generating Qt enum mapping header: {}", enum_mapping_header);
-            QtGenerator::new().generate_enum_mappings_header(&enum_mapping_header, &api_defs_read).unwrap();
+            //println!("    Generating Qt enum mapping header: {}", enum_mapping_header);
+            //QtGenerator::new().generate_enum_mappings_header(&enum_mapping_header, &api_defs_read).unwrap();
 
             // Generate bulk cpp file for Qt C++ wrapper code
             println!("    Generating Qt bulk file mapping: {}", qt_bulk_cpp);

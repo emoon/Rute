@@ -927,7 +927,7 @@ impl<'a> ButtonGroup<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
@@ -937,7 +937,7 @@ impl<'a> ButtonGroup<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {

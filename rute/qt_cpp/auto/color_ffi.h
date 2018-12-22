@@ -18,9 +18,9 @@ typedef struct RUColorFuncs {
     void (*destroy)(struct RUBase* self);
     bool (*is_valid)(struct RUBase* self_c);
     const char* (*name)(struct RUBase* self_c);
-    const char* (*name_2)(struct RUBase* self_c, int format);
+    const char* (*name_2)(struct RUBase* self_c, uint32_t format);
     void (*set_named_color)(struct RUBase* self_c, const char* name);
-    int (*spec)(struct RUBase* self_c);
+    uint32_t (*spec)(struct RUBase* self_c);
     int (*alpha)(struct RUBase* self_c);
     void (*set_alpha)(struct RUBase* self_c, int alpha);
     float (*alpha_f)(struct RUBase* self_c);
@@ -77,7 +77,7 @@ typedef struct RUColorFuncs {
     struct RUColor (*to_hsv)(struct RUBase* self_c);
     struct RUColor (*to_cmyk)(struct RUBase* self_c);
     struct RUColor (*to_hsl)(struct RUBase* self_c);
-    struct RUColor (*convert_to)(struct RUBase* self_c, int color_spec);
+    struct RUColor (*convert_to)(struct RUBase* self_c, uint32_t color_spec);
     struct RUColor (*from_rgb_2)(struct RUBase* self_c, int r, int g, int b,
                                  int a);
     struct RUColor (*from_rgb_f)(struct RUBase* self_c, float r, float g,

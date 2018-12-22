@@ -30,9 +30,9 @@ typedef struct RUScreenFuncs {
     struct RUSize (*available_size)(struct RUBase* self_c);
     struct RUSize (*virtual_size)(struct RUBase* self_c);
     struct RUSize (*available_virtual_size)(struct RUBase* self_c);
-    int (*primary_orientation)(struct RUBase* self_c);
-    int (*angle_between)(struct RUBase* self_c, int a, int b);
-    bool (*is_landscape)(struct RUBase* self_c, int orientation);
+    uint32_t (*primary_orientation)(struct RUBase* self_c);
+    int (*angle_between)(struct RUBase* self_c, uint32_t a, uint32_t b);
+    bool (*is_landscape)(struct RUBase* self_c, uint32_t orientation);
     float (*refresh_rate)(struct RUBase* self_c);
 } RUScreenFuncs;
 

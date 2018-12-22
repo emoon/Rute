@@ -743,7 +743,7 @@ impl<'a> GuiApplication<'a> {
         };
         unsafe {
             let ret_val = ((*funcs).keyboard_modifiers)(obj_data);
-            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            let ret_val = KeyboardModifiers::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -770,7 +770,7 @@ impl<'a> GuiApplication<'a> {
         };
         unsafe {
             let ret_val = ((*funcs).query_keyboard_modifiers)(obj_data);
-            let ret_val = { transmute::<i32, KeyboardModifiers>(ret_val) };
+            let ret_val = KeyboardModifiers::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -796,12 +796,12 @@ impl<'a> GuiApplication<'a> {
         };
         unsafe {
             let ret_val = ((*funcs).mouse_buttons)(obj_data);
-            let ret_val = { transmute::<i32, MouseButtons>(ret_val) };
+            let ret_val = MouseButtons::from_bits_truncate(ret_val);
             ret_val
         }
     }
     pub fn set_layout_direction(direction: LayoutDirection) {
-        let enum_direction_1 = direction as i32;
+        let enum_direction_1 = direction as u32;
 
         let (obj_data, funcs) = unsafe {
             (
@@ -833,7 +833,7 @@ impl<'a> GuiApplication<'a> {
         };
         unsafe {
             let ret_val = ((*funcs).layout_direction)(obj_data);
-            let ret_val = { transmute::<i32, LayoutDirection>(ret_val) };
+            let ret_val = { transmute::<u32, LayoutDirection>(ret_val) };
             ret_val
         }
     }
@@ -966,7 +966,7 @@ impl<'a> GuiApplication<'a> {
         };
         unsafe {
             let ret_val = ((*funcs).application_state)(obj_data);
-            let ret_val = { transmute::<i32, ApplicationState>(ret_val) };
+            let ret_val = ApplicationState::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -1679,7 +1679,7 @@ impl<'a> GuiApplication<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
@@ -1689,7 +1689,7 @@ impl<'a> GuiApplication<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {

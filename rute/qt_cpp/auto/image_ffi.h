@@ -29,12 +29,12 @@ typedef struct RUImageFuncs {
     bool (*is_detached)(struct RUBase* self_c);
     struct RUImage (*copy)(struct RUBase* self_c, struct RUBase* rect);
     struct RUImage (*copy_2)(struct RUBase* self_c, int x, int y, int w, int h);
-    int (*format)(struct RUBase* self_c);
-    struct RUImage (*convert_to_format)(struct RUBase* self_c, int f,
-                                        int flags);
-    struct RUImage (*convert_to_format_2)(struct RUBase* self_c, int f,
-                                          int flags);
-    bool (*reinterpret_as_format)(struct RUBase* self_c, int f);
+    uint32_t (*format)(struct RUBase* self_c);
+    struct RUImage (*convert_to_format)(struct RUBase* self_c, uint32_t f,
+                                        uint32_t flags);
+    struct RUImage (*convert_to_format_2)(struct RUBase* self_c, uint32_t f,
+                                          uint32_t flags);
+    bool (*reinterpret_as_format)(struct RUBase* self_c, uint32_t f);
     int (*width)(struct RUBase* self_c);
     int (*height)(struct RUBase* self_c);
     struct RUSize (*size)(struct RUBase* self_c);
@@ -65,27 +65,29 @@ typedef struct RUImageFuncs {
     void (*set_device_pixel_ratio)(struct RUBase* self_c, float scale_factor);
     void (*fill)(struct RUBase* self_c, uint32_t pixel);
     void (*fill_2)(struct RUBase* self_c, struct RUBase* color);
-    void (*fill_3)(struct RUBase* self_c, int color);
+    void (*fill_3)(struct RUBase* self_c, uint32_t color);
     bool (*has_alpha_channel)(struct RUBase* self_c);
     void (*set_alpha_channel)(struct RUBase* self_c,
                               struct RUBase* alpha_channel);
     struct RUImage (*alpha_channel)(struct RUBase* self_c);
-    struct RUImage (*create_alpha_mask)(struct RUBase* self_c, int flags);
+    struct RUImage (*create_alpha_mask)(struct RUBase* self_c, uint32_t flags);
     struct RUImage (*create_heuristic_mask)(struct RUBase* self_c,
                                             bool clip_tight);
     struct RUImage (*scaled)(struct RUBase* self_c, int w, int h,
-                             int aspect_mode, int mode);
+                             uint32_t aspect_mode, uint32_t mode);
     struct RUImage (*scaled_2)(struct RUBase* self_c, struct RUBase* s,
-                               int aspect_mode, int mode);
-    struct RUImage (*scaled_to_width)(struct RUBase* self_c, int w, int mode);
-    struct RUImage (*scaled_to_height)(struct RUBase* self_c, int h, int mode);
+                               uint32_t aspect_mode, uint32_t mode);
+    struct RUImage (*scaled_to_width)(struct RUBase* self_c, int w,
+                                      uint32_t mode);
+    struct RUImage (*scaled_to_height)(struct RUBase* self_c, int h,
+                                       uint32_t mode);
     struct RUImage (*mirrored)(struct RUBase* self_c, bool horizontally,
                                bool vertically);
     struct RUImage (*mirrored_2)(struct RUBase* self_c, bool horizontally,
                                  bool vertically);
     struct RUImage (*rgb_swapped)(struct RUBase* self_c);
     struct RUImage (*rgb_swapped_2)(struct RUBase* self_c);
-    void (*invert_pixels)(struct RUBase* self_c, int arg0);
+    void (*invert_pixels)(struct RUBase* self_c, uint32_t arg0);
     int64_t (*cache_key)(struct RUBase* self_c);
     struct RUPaintEngine (*paint_engine)(struct RUBase* self_c);
     int (*dots_per_meter_x)(struct RUBase* self_c);
@@ -97,7 +99,8 @@ typedef struct RUImageFuncs {
     const char* (*text)(struct RUBase* self_c, const char* key);
     void (*set_text)(struct RUBase* self_c, const char* key, const char* value);
     struct RUPixelFormat (*pixel_format)(struct RUBase* self_c);
-    struct RUPixelFormat (*to_pixel_format)(struct RUBase* self_c, int format);
+    struct RUPixelFormat (*to_pixel_format)(struct RUBase* self_c,
+                                            uint32_t format);
 } RUImageFuncs;
 
 typedef struct RUImageAllFuncs {

@@ -37,34 +37,34 @@ static struct RUPointF drop_event_pos_f(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int drop_event_mouse_buttons(struct RUBase* self_c) {
+static uint32_t drop_event_mouse_buttons(struct RUBase* self_c) {
     QDropEvent* qt_value = (QDropEvent*)self_c;
     auto ret_value = qt_value->mouseButtons();
-    return s_mouse_buttons_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int drop_event_keyboard_modifiers(struct RUBase* self_c) {
+static uint32_t drop_event_keyboard_modifiers(struct RUBase* self_c) {
     QDropEvent* qt_value = (QDropEvent*)self_c;
     auto ret_value = qt_value->keyboardModifiers();
-    return s_keyboard_modifiers_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int drop_event_possible_actions(struct RUBase* self_c) {
+static uint32_t drop_event_possible_actions(struct RUBase* self_c) {
     QDropEvent* qt_value = (QDropEvent*)self_c;
     auto ret_value = qt_value->possibleActions();
-    return s_drop_actions_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int drop_event_proposed_action(struct RUBase* self_c) {
+static uint32_t drop_event_proposed_action(struct RUBase* self_c) {
     QDropEvent* qt_value = (QDropEvent*)self_c;
     auto ret_value = qt_value->proposedAction();
-    return s_drop_action_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,17 +76,17 @@ static void drop_event_accept_proposed_action(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int drop_event_drop_action(struct RUBase* self_c) {
+static uint32_t drop_event_drop_action(struct RUBase* self_c) {
     QDropEvent* qt_value = (QDropEvent*)self_c;
     auto ret_value = qt_value->dropAction();
-    return s_drop_action_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void drop_event_set_drop_action(struct RUBase* self_c, int action) {
+static void drop_event_set_drop_action(struct RUBase* self_c, uint32_t action) {
     QDropEvent* qt_value = (QDropEvent*)self_c;
-    qt_value->setDropAction((Qt::DropAction)s_drop_action_lookup[action]);
+    qt_value->setDropAction((Qt::DropAction)action);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

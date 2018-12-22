@@ -36,8 +36,8 @@ typedef struct RULineFFuncs {
     float (*angle_to)(struct RUBase* self_c, struct RUBase* l);
     struct RULineF (*unit_vector)(struct RUBase* self_c);
     struct RULineF (*normal_vector)(struct RUBase* self_c);
-    int (*intersect)(struct RUBase* self_c, struct RUBase* l,
-                     struct RUBase* intersection_point);
+    uint32_t (*intersect)(struct RUBase* self_c, struct RUBase* l,
+                          struct RUBase* intersection_point);
     float (*angle_2)(struct RUBase* self_c, struct RUBase* l);
     struct RUPointF (*point_at)(struct RUBase* self_c, float t);
     struct RUPointF (*center)(struct RUBase* self_c);

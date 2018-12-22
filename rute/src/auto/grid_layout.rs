@@ -361,7 +361,7 @@ impl<'a> GridLayout<'a> {
         arg1: Alignment,
     ) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
-        let enum_arg1_4 = arg1 as i32;
+        let enum_arg1_4 = arg1.bits();
 
         let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
         unsafe {
@@ -395,7 +395,7 @@ impl<'a> GridLayout<'a> {
         arg1: Alignment,
     ) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_widget_obj_funcs();
-        let enum_arg1_6 = arg1 as i32;
+        let enum_arg1_6 = arg1.bits();
 
         let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
         unsafe {
@@ -437,7 +437,7 @@ impl<'a> GridLayout<'a> {
         arg1: Alignment,
     ) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_layout_obj_funcs();
-        let enum_arg1_4 = arg1 as i32;
+        let enum_arg1_4 = arg1.bits();
 
         let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
         unsafe {
@@ -473,7 +473,7 @@ impl<'a> GridLayout<'a> {
         arg1: Alignment,
     ) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_layout_obj_funcs();
-        let enum_arg1_6 = arg1 as i32;
+        let enum_arg1_6 = arg1.bits();
 
         let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
         unsafe {
@@ -492,7 +492,7 @@ impl<'a> GridLayout<'a> {
     ///
     /// Sets the grid's origin corner, i.e. position (0, 0), to *corner.*
     pub fn set_origin_corner(&self, arg0: Corner) -> &Self {
-        let enum_arg0_1 = arg0 as i32;
+        let enum_arg0_1 = arg0 as u32;
 
         let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
         unsafe {
@@ -507,7 +507,7 @@ impl<'a> GridLayout<'a> {
         let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).origin_corner)(obj_data);
-            let ret_val = { transmute::<i32, Corner>(ret_val) };
+            let ret_val = { transmute::<u32, Corner>(ret_val) };
             ret_val
         }
     }
@@ -542,7 +542,7 @@ impl<'a> GridLayout<'a> {
         }
     }
     pub fn set_default_positioning(&self, n: i32, orient: Orientation) -> &Self {
-        let enum_orient_2 = orient as i32;
+        let enum_orient_2 = orient as u32;
 
         let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
         unsafe {
@@ -617,7 +617,7 @@ impl<'a> GridLayout<'a> {
     #[doc(hidden)]
     pub fn set_alignment<W: WidgetTrait<'a>>(&self, w: &W, alignment: Alignment) -> bool {
         let (obj_w_1, _funcs) = w.get_widget_obj_funcs();
-        let enum_alignment_2 = alignment as i32;
+        let enum_alignment_2 = alignment.bits();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
@@ -628,7 +628,7 @@ impl<'a> GridLayout<'a> {
     #[doc(hidden)]
     pub fn set_alignment_2<L: LayoutTrait<'a>>(&self, l: &L, alignment: Alignment) -> bool {
         let (obj_l_1, _funcs) = l.get_layout_obj_funcs();
-        let enum_alignment_2 = alignment as i32;
+        let enum_alignment_2 = alignment.bits();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
@@ -741,7 +741,7 @@ impl<'a> GridLayout<'a> {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).expanding_directions)(obj_data);
-            let ret_val = { transmute::<i32, Orientations>(ret_val) };
+            let ret_val = Orientations::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -838,7 +838,7 @@ impl<'a> GridLayout<'a> {
     ) -> Option<LayoutItem> {
         let (obj_from_1, _funcs) = from.get_widget_obj_funcs();
         let (obj_to_2, _funcs) = to.get_widget_obj_funcs();
-        let enum_options_3 = options as i32;
+        let enum_options_3 = options.bits();
 
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
@@ -1023,7 +1023,7 @@ impl<'a> GridLayout<'a> {
         let (obj_data, funcs) = self.get_layout_item_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).alignment)(obj_data);
-            let ret_val = { transmute::<i32, Alignment>(ret_val) };
+            let ret_val = Alignment::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -1080,7 +1080,7 @@ impl<'a> GridLayout<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
@@ -1090,7 +1090,7 @@ impl<'a> GridLayout<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {

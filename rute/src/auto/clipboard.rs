@@ -126,7 +126,7 @@ impl<'a> Clipboard<'a> {
     /// **See also:** [`Clipboard::mode()`]
     /// [`supports_selection()`]
     pub fn clear(&self, mode: Mode) -> &Self {
-        let enum_mode_1 = mode as i32;
+        let enum_mode_1 = mode as u32;
 
         let (obj_data, funcs) = self.get_clipboard_obj_funcs();
         unsafe {
@@ -219,7 +219,7 @@ impl<'a> Clipboard<'a> {
     /// **See also:** [`set_text()`]
     /// [`mime_data()`]
     pub fn text(&self, mode: Mode) -> String {
-        let enum_mode_1 = mode as i32;
+        let enum_mode_1 = mode as u32;
 
         let (obj_data, funcs) = self.get_clipboard_obj_funcs();
         unsafe {
@@ -276,7 +276,7 @@ impl<'a> Clipboard<'a> {
     /// [`set_mime_data()`]
     pub fn set_text(&self, arg0: &str, mode: Mode) -> &Self {
         let str_in_arg0_1 = CString::new(arg0).unwrap();
-        let enum_mode_2 = mode as i32;
+        let enum_mode_2 = mode as u32;
 
         let (obj_data, funcs) = self.get_clipboard_obj_funcs();
         unsafe {
@@ -305,7 +305,7 @@ impl<'a> Clipboard<'a> {
     ///
     /// **See also:** [`set_mime_data()`]
     pub fn mime_data(&self, mode: Mode) -> Option<MimeData> {
-        let enum_mode_1 = mode as i32;
+        let enum_mode_1 = mode as u32;
 
         let (obj_data, funcs) = self.get_clipboard_obj_funcs();
         unsafe {
@@ -341,7 +341,7 @@ impl<'a> Clipboard<'a> {
     /// **See also:** [`mime_data()`]
     pub fn set_mime_data<M: MimeDataTrait<'a>>(&self, data: &M, mode: Mode) -> &Self {
         let (obj_data_1, _funcs) = data.get_mime_data_obj_funcs();
-        let enum_mode_2 = mode as i32;
+        let enum_mode_2 = mode as u32;
 
         let (obj_data, funcs) = self.get_clipboard_obj_funcs();
         unsafe {
@@ -365,7 +365,7 @@ impl<'a> Clipboard<'a> {
     /// [`mime_data()`]
     /// [`Image::is_null`]
     pub fn image(&self, mode: Mode) -> Image {
-        let enum_mode_1 = mode as i32;
+        let enum_mode_1 = mode as u32;
 
         let (obj_data, funcs) = self.get_clipboard_obj_funcs();
         unsafe {
@@ -398,7 +398,7 @@ impl<'a> Clipboard<'a> {
     /// [`mime_data()`]
     /// [`Pixmap::convert_from_image`]
     pub fn pixmap(&self, mode: Mode) -> Pixmap {
-        let enum_mode_1 = mode as i32;
+        let enum_mode_1 = mode as u32;
 
         let (obj_data, funcs) = self.get_clipboard_obj_funcs();
         unsafe {
@@ -429,7 +429,7 @@ impl<'a> Clipboard<'a> {
     /// [`set_mime_data()`]
     pub fn set_image<I: ImageTrait<'a>>(&self, arg0: &I, mode: Mode) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_image_obj_funcs();
-        let enum_mode_2 = mode as i32;
+        let enum_mode_2 = mode as u32;
 
         let (obj_data, funcs) = self.get_clipboard_obj_funcs();
         unsafe {
@@ -453,7 +453,7 @@ impl<'a> Clipboard<'a> {
     /// [`set_mime_data()`]
     pub fn set_pixmap<P: PixmapTrait<'a>>(&self, arg0: &P, mode: Mode) -> &Self {
         let (obj_arg0_1, _funcs) = arg0.get_pixmap_obj_funcs();
-        let enum_mode_2 = mode as i32;
+        let enum_mode_2 = mode as u32;
 
         let (obj_data, funcs) = self.get_clipboard_obj_funcs();
         unsafe {
@@ -514,7 +514,7 @@ impl<'a> Clipboard<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
@@ -524,7 +524,7 @@ impl<'a> Clipboard<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {

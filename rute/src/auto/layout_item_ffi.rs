@@ -17,7 +17,7 @@ pub struct RULayoutItemFuncs {
     pub size_hint: extern "C" fn(self_c: *const RUBase) -> RUSize,
     pub minimum_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
     pub maximum_size: extern "C" fn(self_c: *const RUBase) -> RUSize,
-    pub expanding_directions: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub expanding_directions: extern "C" fn(self_c: *const RUBase) -> u32,
     pub is_empty: extern "C" fn(self_c: *const RUBase) -> bool,
     pub has_height_for_width: extern "C" fn(self_c: *const RUBase) -> bool,
     pub height_for_width: extern "C" fn(self_c: *const RUBase, arg0: i32) -> i32,
@@ -26,8 +26,8 @@ pub struct RULayoutItemFuncs {
     pub widget: extern "C" fn(self_c: *const RUBase) -> RUWidget,
     pub layout: extern "C" fn(self_c: *const RUBase) -> RULayout,
     pub spacer_item: extern "C" fn(self_c: *const RUBase) -> RUSpacerItem,
-    pub alignment: extern "C" fn(self_c: *const RUBase) -> i32,
-    pub set_alignment: extern "C" fn(self_c: *const RUBase, a: i32),
+    pub alignment: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub set_alignment: extern "C" fn(self_c: *const RUBase, a: u32),
 }
 
 #[repr(C)]

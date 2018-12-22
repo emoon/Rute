@@ -16,24 +16,24 @@ static void palette_swap(struct RUBase* self_c, struct RUBase* other) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int palette_current_color_group(struct RUBase* self_c) {
+static uint32_t palette_current_color_group(struct RUBase* self_c) {
     WRPalette* qt_value = (WRPalette*)self_c;
     auto ret_value = qt_value->currentColorGroup();
-    return s_color_group_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void palette_set_current_color_group(struct RUBase* self_c, int cg) {
+static void palette_set_current_color_group(struct RUBase* self_c, uint32_t cg) {
     WRPalette* qt_value = (WRPalette*)self_c;
-    qt_value->setCurrentColorGroup((QPalette::ColorGroup)s_color_group_lookup[cg]);
+    qt_value->setCurrentColorGroup((QPalette::ColorGroup)cg);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUColor palette_color(struct RUBase* self_c, int cg, int cr) {
+static struct RUColor palette_color(struct RUBase* self_c, uint32_t cg, uint32_t cr) {
     WRPalette* qt_value = (WRPalette*)self_c;
-    auto ret_value = qt_value->color((QPalette::ColorGroup)s_color_group_lookup[cg], (QPalette::ColorRole)s_color_role_lookup[cr]);
+    auto ret_value = qt_value->color((QPalette::ColorGroup)cg, (QPalette::ColorRole)cr);
     WRColor* new_val = new WRColor();
     *new_val = ret_value;
     struct RUColor ctl;
@@ -45,9 +45,9 @@ static struct RUColor palette_color(struct RUBase* self_c, int cg, int cr) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUBrush palette_brush(struct RUBase* self_c, int cg, int cr) {
+static struct RUBrush palette_brush(struct RUBase* self_c, uint32_t cg, uint32_t cr) {
     WRPalette* qt_value = (WRPalette*)self_c;
-    auto ret_value = qt_value->brush((QPalette::ColorGroup)s_color_group_lookup[cg], (QPalette::ColorRole)s_color_role_lookup[cr]);
+    auto ret_value = qt_value->brush((QPalette::ColorGroup)cg, (QPalette::ColorRole)cr);
     WRBrush* new_val = new WRBrush();
     *new_val = ret_value;
     struct RUBrush ctl;
@@ -59,60 +59,60 @@ static struct RUBrush palette_brush(struct RUBase* self_c, int cg, int cr) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void palette_set_color(struct RUBase* self_c, int cg, int cr, struct RUBase* color) {
+static void palette_set_color(struct RUBase* self_c, uint32_t cg, uint32_t cr, struct RUBase* color) {
     WRPalette* qt_value = (WRPalette*)self_c;
-    qt_value->setColor((QPalette::ColorGroup)s_color_group_lookup[cg], (QPalette::ColorRole)s_color_role_lookup[cr], *((QColor*)color));
+    qt_value->setColor((QPalette::ColorGroup)cg, (QPalette::ColorRole)cr, *((QColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void palette_set_color_2(struct RUBase* self_c, int cr, struct RUBase* color) {
+static void palette_set_color_2(struct RUBase* self_c, uint32_t cr, struct RUBase* color) {
     WRPalette* qt_value = (WRPalette*)self_c;
-    qt_value->setColor((QPalette::ColorRole)s_color_role_lookup[cr], *((QColor*)color));
+    qt_value->setColor((QPalette::ColorRole)cr, *((QColor*)color));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void palette_set_brush(struct RUBase* self_c, int cr, struct RUBase* brush) {
+static void palette_set_brush(struct RUBase* self_c, uint32_t cr, struct RUBase* brush) {
     WRPalette* qt_value = (WRPalette*)self_c;
-    qt_value->setBrush((QPalette::ColorRole)s_color_role_lookup[cr], *((QBrush*)brush));
+    qt_value->setBrush((QPalette::ColorRole)cr, *((QBrush*)brush));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool palette_is_brush_set(struct RUBase* self_c, int cg, int cr) {
+static bool palette_is_brush_set(struct RUBase* self_c, uint32_t cg, uint32_t cr) {
     WRPalette* qt_value = (WRPalette*)self_c;
-    auto ret_value = qt_value->isBrushSet((QPalette::ColorGroup)s_color_group_lookup[cg], (QPalette::ColorRole)s_color_role_lookup[cr]);
+    auto ret_value = qt_value->isBrushSet((QPalette::ColorGroup)cg, (QPalette::ColorRole)cr);
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void palette_set_brush_2(struct RUBase* self_c, int cg, int cr, struct RUBase* brush) {
+static void palette_set_brush_2(struct RUBase* self_c, uint32_t cg, uint32_t cr, struct RUBase* brush) {
     WRPalette* qt_value = (WRPalette*)self_c;
-    qt_value->setBrush((QPalette::ColorGroup)s_color_group_lookup[cg], (QPalette::ColorRole)s_color_role_lookup[cr], *((QBrush*)brush));
+    qt_value->setBrush((QPalette::ColorGroup)cg, (QPalette::ColorRole)cr, *((QBrush*)brush));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void palette_set_color_group(struct RUBase* self_c, int cr, struct RUBase* window_text, struct RUBase* button, struct RUBase* light, struct RUBase* dark, struct RUBase* mid, struct RUBase* text, struct RUBase* bright_text, struct RUBase* base, struct RUBase* window) {
+static void palette_set_color_group(struct RUBase* self_c, uint32_t cr, struct RUBase* window_text, struct RUBase* button, struct RUBase* light, struct RUBase* dark, struct RUBase* mid, struct RUBase* text, struct RUBase* bright_text, struct RUBase* base, struct RUBase* window) {
     WRPalette* qt_value = (WRPalette*)self_c;
-    qt_value->setColorGroup((QPalette::ColorGroup)s_color_group_lookup[cr], *((QBrush*)window_text), *((QBrush*)button), *((QBrush*)light), *((QBrush*)dark), *((QBrush*)mid), *((QBrush*)text), *((QBrush*)bright_text), *((QBrush*)base), *((QBrush*)window));
+    qt_value->setColorGroup((QPalette::ColorGroup)cr, *((QBrush*)window_text), *((QBrush*)button), *((QBrush*)light), *((QBrush*)dark), *((QBrush*)mid), *((QBrush*)text), *((QBrush*)bright_text), *((QBrush*)base), *((QBrush*)window));
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static bool palette_is_equal(struct RUBase* self_c, int cr1, int cr2) {
+static bool palette_is_equal(struct RUBase* self_c, uint32_t cr1, uint32_t cr2) {
     WRPalette* qt_value = (WRPalette*)self_c;
-    auto ret_value = qt_value->isEqual((QPalette::ColorGroup)s_color_group_lookup[cr1], (QPalette::ColorGroup)s_color_group_lookup[cr2]);
+    auto ret_value = qt_value->isEqual((QPalette::ColorGroup)cr1, (QPalette::ColorGroup)cr2);
     return ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUColor palette_color_2(struct RUBase* self_c, int cr) {
+static struct RUColor palette_color_2(struct RUBase* self_c, uint32_t cr) {
     WRPalette* qt_value = (WRPalette*)self_c;
-    auto ret_value = qt_value->color((QPalette::ColorRole)s_color_role_lookup[cr]);
+    auto ret_value = qt_value->color((QPalette::ColorRole)cr);
     WRColor* new_val = new WRColor();
     *new_val = ret_value;
     struct RUColor ctl;
@@ -124,9 +124,9 @@ static struct RUColor palette_color_2(struct RUBase* self_c, int cr) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static struct RUBrush palette_brush_2(struct RUBase* self_c, int cr) {
+static struct RUBrush palette_brush_2(struct RUBase* self_c, uint32_t cr) {
     WRPalette* qt_value = (WRPalette*)self_c;
-    auto ret_value = qt_value->brush((QPalette::ColorRole)s_color_role_lookup[cr]);
+    auto ret_value = qt_value->brush((QPalette::ColorRole)cr);
     WRBrush* new_val = new WRBrush();
     *new_val = ret_value;
     struct RUBrush ctl;

@@ -19,7 +19,7 @@ typedef struct RUWheelEventFuncs {
     struct RUPoint (*pixel_delta)(struct RUBase* self_c);
     struct RUPoint (*angle_delta)(struct RUBase* self_c);
     int (*delta)(struct RUBase* self_c);
-    int (*orientation)(struct RUBase* self_c);
+    uint32_t (*orientation)(struct RUBase* self_c);
     struct RUPoint (*pos)(struct RUBase* self_c);
     struct RUPoint (*global_pos)(struct RUBase* self_c);
     int (*x)(struct RUBase* self_c);
@@ -28,10 +28,10 @@ typedef struct RUWheelEventFuncs {
     int (*global_y)(struct RUBase* self_c);
     struct RUPointF (*pos_f)(struct RUBase* self_c);
     struct RUPointF (*global_pos_f)(struct RUBase* self_c);
-    int (*buttons)(struct RUBase* self_c);
-    int (*phase)(struct RUBase* self_c);
+    uint32_t (*buttons)(struct RUBase* self_c);
+    uint32_t (*phase)(struct RUBase* self_c);
     bool (*inverted)(struct RUBase* self_c);
-    int (*source)(struct RUBase* self_c);
+    uint32_t (*source)(struct RUBase* self_c);
 } RUWheelEventFuncs;
 
 typedef struct RUWheelEventAllFuncs {

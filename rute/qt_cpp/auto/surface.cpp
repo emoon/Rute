@@ -9,10 +9,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int surface_surface_class(struct RUBase* self_c) {
+static uint32_t surface_surface_class(struct RUBase* self_c) {
     QSurface* qt_value = (QSurface*)self_c;
     auto ret_value = qt_value->surfaceClass();
-    return s_surface_class_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -31,10 +31,10 @@ static struct RUSurfaceFormat surface_format(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int surface_surface_type(struct RUBase* self_c) {
+static uint32_t surface_surface_type(struct RUBase* self_c) {
     QSurface* qt_value = (QSurface*)self_c;
     auto ret_value = qt_value->surfaceType();
-    return s_surface_type_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

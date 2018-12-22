@@ -1203,12 +1203,12 @@ impl<'a> Widget<'a> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).window_modality)(obj_data);
-            let ret_val = { transmute::<i32, WindowModality>(ret_val) };
+            let ret_val = { transmute::<u32, WindowModality>(ret_val) };
             ret_val
         }
     }
     pub fn set_window_modality(&self, window_modality: WindowModality) -> &Self {
-        let enum_window_modality_1 = window_modality as i32;
+        let enum_window_modality_1 = window_modality as u32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -2505,7 +2505,7 @@ impl<'a> Widget<'a> {
     /// **See also:** [`background_role()`]
     /// [`foreground_role()`]
     pub fn set_background_role(&self, arg0: ColorRole) -> &Self {
-        let enum_arg0_1 = arg0 as i32;
+        let enum_arg0_1 = arg0.bits();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -2529,7 +2529,7 @@ impl<'a> Widget<'a> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).background_role)(obj_data);
-            let ret_val = { transmute::<i32, ColorRole>(ret_val) };
+            let ret_val = ColorRole::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -2550,7 +2550,7 @@ impl<'a> Widget<'a> {
     /// **See also:** [`foreground_role()`]
     /// [`background_role()`]
     pub fn set_foreground_role(&self, arg0: ColorRole) -> &Self {
-        let enum_arg0_1 = arg0 as i32;
+        let enum_arg0_1 = arg0.bits();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -2574,7 +2574,7 @@ impl<'a> Widget<'a> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).foreground_role)(obj_data);
-            let ret_val = { transmute::<i32, ColorRole>(ret_val) };
+            let ret_val = ColorRole::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -2908,7 +2908,7 @@ impl<'a> Widget<'a> {
         let (obj_target_1, _funcs) = target.get_paint_device_obj_funcs();
         let (obj_target_offset_2, _funcs) = target_offset.get_point_obj_funcs();
         let (obj_source_region_3, _funcs) = source_region.get_region_obj_funcs();
-        let enum_render_flags_4 = render_flags as i32;
+        let enum_render_flags_4 = render_flags.bits();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -2959,7 +2959,7 @@ impl<'a> Widget<'a> {
         let (obj_painter_1, _funcs) = painter.get_painter_obj_funcs();
         let (obj_target_offset_2, _funcs) = target_offset.get_point_obj_funcs();
         let (obj_source_region_3, _funcs) = source_region.get_region_obj_funcs();
-        let enum_render_flags_4 = render_flags as i32;
+        let enum_render_flags_4 = render_flags.bits();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -3097,8 +3097,8 @@ impl<'a> Widget<'a> {
     /// **See also:** [`ungrab_gesture()`]
     /// [`GestureEvent`]
     pub fn grab_gesture(&self, gtype: GestureType, flags: GestureFlags) -> &Self {
-        let enum_gtype_1 = gtype as i32;
-        let enum_flags_2 = flags as i32;
+        let enum_gtype_1 = gtype.bits();
+        let enum_flags_2 = flags.bits();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -3112,7 +3112,7 @@ impl<'a> Widget<'a> {
     /// **See also:** [`grab_gesture()`]
     /// [`GestureEvent`]
     pub fn ungrab_gesture(&self, gtype: GestureType) -> &Self {
-        let enum_gtype_1 = gtype as i32;
+        let enum_gtype_1 = gtype.bits();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -3545,7 +3545,7 @@ impl<'a> Widget<'a> {
         self
     }
     pub fn set_layout_direction(&self, direction: LayoutDirection) -> &Self {
-        let enum_direction_1 = direction as i32;
+        let enum_direction_1 = direction as u32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -3570,7 +3570,7 @@ impl<'a> Widget<'a> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).layout_direction)(obj_data);
-            let ret_val = { transmute::<i32, LayoutDirection>(ret_val) };
+            let ret_val = { transmute::<u32, LayoutDirection>(ret_val) };
             ret_val
         }
     }
@@ -3808,7 +3808,7 @@ impl<'a> Widget<'a> {
     /// [active window](isActiveWindow())
     ///
     pub fn set_focus_2(&self, reason: FocusReason) -> &Self {
-        let enum_reason_1 = reason as i32;
+        let enum_reason_1 = reason as u32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -3840,12 +3840,12 @@ impl<'a> Widget<'a> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).focus_policy)(obj_data);
-            let ret_val = { transmute::<i32, FocusPolicy>(ret_val) };
+            let ret_val = { transmute::<u32, FocusPolicy>(ret_val) };
             ret_val
         }
     }
     pub fn set_focus_policy(&self, policy: FocusPolicy) -> &Self {
-        let enum_policy_1 = policy as i32;
+        let enum_policy_1 = policy as u32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -3955,12 +3955,12 @@ impl<'a> Widget<'a> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).context_menu_policy)(obj_data);
-            let ret_val = { transmute::<i32, ContextMenuPolicy>(ret_val) };
+            let ret_val = { transmute::<u32, ContextMenuPolicy>(ret_val) };
             ret_val
         }
     }
     pub fn set_context_menu_policy(&self, policy: ContextMenuPolicy) -> &Self {
-        let enum_policy_1 = policy as i32;
+        let enum_policy_1 = policy as u32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -4149,7 +4149,7 @@ impl<'a> Widget<'a> {
     /// [`set_shortcut_enabled()`]
     pub fn grab_shortcut<K: KeySequenceTrait<'a>>(&self, key: &K, context: ShortcutContext) -> i32 {
         let (obj_key_1, _funcs) = key.get_key_sequence_obj_funcs();
-        let enum_context_2 = context as i32;
+        let enum_context_2 = context as u32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -5315,7 +5315,7 @@ impl<'a> Widget<'a> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).window_state)(obj_data);
-            let ret_val = { transmute::<i32, WindowStates>(ret_val) };
+            let ret_val = WindowStates::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -5344,7 +5344,7 @@ impl<'a> Widget<'a> {
     /// **See also:** [`t::window_state()`]
     /// [`window_state()`]
     pub fn set_window_state(&self, state: WindowStates) -> &Self {
-        let enum_state_1 = state as i32;
+        let enum_state_1 = state.bits();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -5353,7 +5353,7 @@ impl<'a> Widget<'a> {
         self
     }
     pub fn override_window_state(&self, state: WindowStates) -> &Self {
-        let enum_state_1 = state as i32;
+        let enum_state_1 = state.bits();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -5479,8 +5479,8 @@ impl<'a> Widget<'a> {
     ///
     /// **See also:** [`SizePolicy::q_size_policy`]
     pub fn set_size_policy_2(&self, horizontal: Policy, vertical: Policy) -> &Self {
-        let enum_horizontal_1 = horizontal as i32;
-        let enum_vertical_2 = vertical as i32;
+        let enum_horizontal_1 = horizontal as u32;
+        let enum_vertical_2 = vertical as u32;
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -5773,7 +5773,7 @@ impl<'a> Widget<'a> {
     /// This function also takes widget flags, *f* as an argument.
     pub fn set_parent_2<W: WidgetTrait<'a>>(&self, parent: &W, f: WindowFlags) -> &Self {
         let (obj_parent_1, _funcs) = parent.get_widget_obj_funcs();
-        let enum_f_2 = f as i32;
+        let enum_f_2 = f.bits();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -6001,7 +6001,7 @@ impl<'a> Widget<'a> {
         }
     }
     pub fn set_window_flags(&self, gtype: WindowFlags) -> &Self {
-        let enum_gtype_1 = gtype as i32;
+        let enum_gtype_1 = gtype.bits();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -6031,7 +6031,7 @@ impl<'a> Widget<'a> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).window_flags)(obj_data);
-            let ret_val = { transmute::<i32, WindowFlags>(ret_val) };
+            let ret_val = WindowFlags::from_bits_truncate(ret_val);
             ret_val
         }
     }
@@ -6051,7 +6051,7 @@ impl<'a> Widget<'a> {
     ///
     /// **See also:** [`set_window_flags()`]
     pub fn override_window_flags(&self, wtype: WindowFlags) -> &Self {
-        let enum_wtype_1 = wtype as i32;
+        let enum_wtype_1 = wtype.bits();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -6331,7 +6331,7 @@ impl<'a> Widget<'a> {
     ) -> Option<Widget<'a>> {
         let (obj_window_1, _funcs) = window.get_window_obj_funcs();
         let (obj_parent_2, _funcs) = parent.get_widget_obj_funcs();
-        let enum_flags_3 = flags as i32;
+        let enum_flags_3 = flags.bits();
 
         let (obj_data, funcs) = unsafe {
             (
@@ -8020,12 +8020,12 @@ impl<'a> Widget<'a> {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).input_method_hints)(obj_data);
-            let ret_val = { transmute::<i32, InputMethodHints>(ret_val) };
+            let ret_val = InputMethodHints::from_bits_truncate(ret_val);
             ret_val
         }
     }
     pub fn set_input_method_hints(&self, hints: InputMethodHints) -> &Self {
-        let enum_hints_1 = hints as i32;
+        let enum_hints_1 = hints.bits();
 
         let (obj_data, funcs) = self.get_widget_obj_funcs();
         unsafe {
@@ -8158,7 +8158,7 @@ impl<'a> Widget<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
@@ -8168,7 +8168,7 @@ impl<'a> Widget<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
@@ -8323,11 +8323,12 @@ impl<'a> WidgetTrait<'a> for Widget<'a> {
         unsafe { (obj, (*self.all_funcs).widget_funcs) }
     }
 }
-#[repr(u32)]
-pub enum RenderFlag {
-    DrawWindowBackground,
-    DrawChildren,
-    IgnoreMask,
+bitflags! {
+    pub struct RenderFlag: u32 {
+        const DrawWindowBackground = 0x1;
+        const DrawChildren = 0x2;
+        const IgnoreMask = 0x4;
+    }
 }
 
 pub type RenderFlags = RenderFlag;

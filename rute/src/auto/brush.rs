@@ -165,7 +165,7 @@ impl<'a> Brush<'a> {
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).style)(obj_data);
-            let ret_val = { transmute::<i32, BrushStyle>(ret_val) };
+            let ret_val = { transmute::<u32, BrushStyle>(ret_val) };
             ret_val
         }
     }
@@ -174,7 +174,7 @@ impl<'a> Brush<'a> {
     ///
     /// **See also:** [`style()`]
     pub fn set_style(&self, arg0: BrushStyle) -> &Self {
-        let enum_arg0_1 = arg0 as i32;
+        let enum_arg0_1 = arg0 as u32;
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {
@@ -350,7 +350,7 @@ impl<'a> Brush<'a> {
     /// **Overloads**
     /// Sets the brush color to the given *color.*
     pub fn set_color_2(&self, color: GlobalColor) -> &Self {
-        let enum_color_1 = color as i32;
+        let enum_color_1 = color as u32;
 
         let (obj_data, funcs) = self.get_brush_obj_funcs();
         unsafe {

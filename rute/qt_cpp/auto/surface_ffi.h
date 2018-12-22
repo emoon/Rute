@@ -16,9 +16,9 @@ struct RUSurfaceFuncs;
 struct RUSurface;
 
 typedef struct RUSurfaceFuncs {
-    int (*surface_class)(struct RUBase* self_c);
+    uint32_t (*surface_class)(struct RUBase* self_c);
     struct RUSurfaceFormat (*format)(struct RUBase* self_c);
-    int (*surface_type)(struct RUBase* self_c);
+    uint32_t (*surface_type)(struct RUBase* self_c);
     struct RUSize (*size)(struct RUBase* self_c);
 } RUSurfaceFuncs;
 

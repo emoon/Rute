@@ -4500,21 +4500,17 @@ struct Widget : Object, PaintDevice {
     //
     // **See also:** [`focus_previous_child()`]
     //focus_next_child() -> bool,
-    //
-    // Finds a new widget to give the keyboard focus to, as appropriate
-    // for **Shift+Tab,** and returns `true` if it can find a new widget,
-    // or false if it can't.
-    //
-    // **See also:** [`focus_next_child()`]
-    //focus_previous_child() -> bool,
 }
 
 [org_name(QWidget)]
 [enum_flags(RenderFlags)]
 enum RenderFlag {
-    DrawWindowBackground,
-    DrawChildren,
-    IgnoreMask,
+    /// If you enable this option, the widget's background is rendered into the target even if autoFillBackground is not set. By default, this option is enabled.
+    DrawWindowBackground = 1,
+    /// If you enable this option, the widget's children are rendered recursively into the target. By default, this option is enabled.
+    DrawChildren = 2,
+    /// If you enable this option, the widget's QWidget::mask() is ignored when rendering into the target. By default, this option is disabled.
+    IgnoreMask = 4,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

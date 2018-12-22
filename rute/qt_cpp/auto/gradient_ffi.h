@@ -15,15 +15,15 @@ struct RUGradient;
 
 typedef struct RUGradientFuncs {
     void (*destroy)(struct RUBase* self);
-    int (*get_type)(struct RUBase* self_c);
-    void (*set_spread)(struct RUBase* self_c, int spread);
-    int (*spread)(struct RUBase* self_c);
+    uint32_t (*get_type)(struct RUBase* self_c);
+    void (*set_spread)(struct RUBase* self_c, uint32_t spread);
+    uint32_t (*spread)(struct RUBase* self_c);
     void (*set_color_at)(struct RUBase* self_c, float pos,
                          struct RUBase* color);
-    int (*coordinate_mode)(struct RUBase* self_c);
-    void (*set_coordinate_mode)(struct RUBase* self_c, int mode);
-    int (*interpolation_mode)(struct RUBase* self_c);
-    void (*set_interpolation_mode)(struct RUBase* self_c, int mode);
+    uint32_t (*coordinate_mode)(struct RUBase* self_c);
+    void (*set_coordinate_mode)(struct RUBase* self_c, uint32_t mode);
+    uint32_t (*interpolation_mode)(struct RUBase* self_c);
+    void (*set_interpolation_mode)(struct RUBase* self_c, uint32_t mode);
 } RUGradientFuncs;
 
 typedef struct RUGradientAllFuncs {

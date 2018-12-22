@@ -31,9 +31,9 @@ typedef struct RULayoutFuncs {
     struct RUMargins (*contents_margins)(struct RUBase* self_c);
     struct RURect (*contents_rect)(struct RUBase* self_c);
     bool (*set_alignment)(struct RUBase* self_c, struct RUBase* w,
-                          int alignment);
+                          uint32_t alignment);
     bool (*set_alignment_2)(struct RUBase* self_c, struct RUBase* l,
-                            int alignment);
+                            uint32_t alignment);
     void (*set_menu_bar)(struct RUBase* self_c, struct RUBase* w);
     struct RUWidget (*menu_bar)(struct RUBase* self_c);
     struct RUWidget (*parent_widget)(struct RUBase* self_c);
@@ -44,7 +44,7 @@ typedef struct RULayoutFuncs {
     void (*add_item)(struct RUBase* self_c, struct RUBase* arg0);
     void (*remove_widget)(struct RUBase* self_c, struct RUBase* w);
     void (*remove_item)(struct RUBase* self_c, struct RUBase* arg0);
-    int (*expanding_directions)(struct RUBase* self_c);
+    uint32_t (*expanding_directions)(struct RUBase* self_c);
     struct RUSize (*minimum_size)(struct RUBase* self_c);
     struct RUSize (*maximum_size)(struct RUBase* self_c);
     struct RULayoutItem (*item_at)(struct RUBase* self_c, int index);
@@ -54,7 +54,7 @@ typedef struct RULayoutFuncs {
     bool (*is_empty)(struct RUBase* self_c);
     struct RULayoutItem (*replace_widget)(struct RUBase* self_c,
                                           struct RUBase* from,
-                                          struct RUBase* to, int options);
+                                          struct RUBase* to, uint32_t options);
     int (*total_height_for_width)(struct RUBase* self_c, int w);
     struct RUSize (*total_minimum_size)(struct RUBase* self_c);
     struct RUSize (*total_maximum_size)(struct RUBase* self_c);

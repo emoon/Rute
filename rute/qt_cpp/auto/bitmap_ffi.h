@@ -19,7 +19,7 @@ typedef struct RUBitmapFuncs {
     void (*swap)(struct RUBase* self_c, struct RUBase* other);
     void (*clear)(struct RUBase* self_c);
     struct RUBitmap (*from_image)(struct RUBase* self_c, struct RUBase* image,
-                                  int flags);
+                                  uint32_t flags);
 } RUBitmapFuncs;
 
 typedef struct RUBitmapAllFuncs {

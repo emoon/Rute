@@ -527,7 +527,7 @@ impl<'a> Style<'a> {
         let (obj_rect_2, _funcs) = rect.get_rect_obj_funcs();
         let (obj_pal_4, _funcs) = pal.get_palette_obj_funcs();
         let str_in_text_6 = CString::new(text).unwrap();
-        let enum_text_role_7 = text_role as i32;
+        let enum_text_role_7 = text_role.bits();
 
         let (obj_data, funcs) = self.get_style_obj_funcs();
         unsafe {
@@ -1091,7 +1091,7 @@ impl<'a> Style<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer(&self, interval: i32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
@@ -1101,7 +1101,7 @@ impl<'a> Style<'a> {
     }
     #[doc(hidden)]
     pub fn start_timer_2(&self, time: u32, timer_type: TimerType) -> i32 {
-        let enum_timer_type_2 = timer_type as i32;
+        let enum_timer_type_2 = timer_type as u32;
 
         let (obj_data, funcs) = self.get_object_obj_funcs();
         unsafe {
@@ -1258,605 +1258,611 @@ impl<'a> StyleTrait<'a> for Style<'a> {
         unsafe { (obj, (*self.all_funcs).style_funcs) }
     }
 }
-#[repr(u32)]
-pub enum StateFlag {
-    StateNone,
-    StateEnabled,
-    StateRaised,
-    StateSunken,
-    StateOff,
-    StateNoChange,
-    StateOn,
-    StateDownArrow,
-    StateHorizontal,
-    StateHasFocus,
-    StateTop,
-    StateBottom,
-    StateFocusAtBorder,
-    StateAutoRaise,
-    StateMouseOver,
-    StateUpArrow,
-    StateSelected,
-    StateActive,
-    StateWindow,
-    StateOpen,
-    StateChildren,
-    StateItem,
-    StateSibling,
-    StateEditing,
-    StateKeyboardFocusChange,
-    StateReadOnly,
-    StateSmall,
-    StateMini,
+bitflags! {
+    pub struct StateFlag: u32 {
+        const StateNone = 0x0;
+        const StateEnabled = 0x1;
+        const StateRaised = 0x2;
+        const StateSunken = 0x4;
+        const StateOff = 0x8;
+        const StateNoChange = 0x10;
+        const StateOn = 0x20;
+        const StateDownArrow = 0x40;
+        const StateHorizontal = 0x80;
+        const StateHasFocus = 0x100;
+        const StateTop = 0x200;
+        const StateBottom = 0x400;
+        const StateFocusAtBorder = 0x800;
+        const StateAutoRaise = 0x1000;
+        const StateMouseOver = 0x2000;
+        const StateUpArrow = 0x4000;
+        const StateSelected = 0x8000;
+        const StateActive = 0x10000;
+        const StateWindow = 0x20000;
+        const StateOpen = 0x40000;
+        const StateChildren = 0x80000;
+        const StateItem = 0x100000;
+        const StateSibling = 0x200000;
+        const StateEditing = 0x400000;
+        const StateKeyboardFocusChange = 0x800000;
+        const StateReadOnly = 0x2000000;
+        const StateSmall = 0x4000000;
+        const StateMini = 0x8000000;
+    }
 }
 
-#[repr(u32)]
-pub enum PrimitiveElement {
-    PeFrame,
-    PeFrameDefaultButton,
-    PeFrameDockWidget,
-    PeFrameFocusRect,
-    PeFrameGroupBox,
-    PeFrameLineEdit,
-    PeFrameMenu,
-    PeFrameStatusBar,
-    PeFrameStatusBarItem,
-    PeFrameTabWidget,
-    PeFrameWindow,
-    PeFrameButtonBevel,
-    PeFrameButtonTool,
-    PeFrameTabBarBase,
-    PePanelButtonCommand,
-    PePanelButtonBevel,
-    PePanelButtonTool,
-    PePanelMenuBar,
-    PePanelToolBar,
-    PePanelLineEdit,
-    PeIndicatorArrowDown,
-    PeIndicatorArrowLeft,
-    PeIndicatorArrowRight,
-    PeIndicatorArrowUp,
-    PeIndicatorBranch,
-    PeIndicatorButtonDropDown,
-    PeIndicatorViewItemCheck,
-    PeIndicatorItemViewItemCheck,
-    PeIndicatorCheckBox,
-    PeIndicatorDockWidgetResizeHandle,
-    PeIndicatorHeaderArrow,
-    PeIndicatorMenuCheckMark,
-    PeIndicatorProgressChunk,
-    PeIndicatorRadioButton,
-    PeIndicatorSpinDown,
-    PeIndicatorSpinMinus,
-    PeIndicatorSpinPlus,
-    PeIndicatorSpinUp,
-    PeIndicatorToolBarHandle,
-    PeIndicatorToolBarSeparator,
-    PePanelTipLabel,
-    PeIndicatorTabTear,
-    PeIndicatorTabTearLeft,
-    PePanelScrollAreaCorner,
-    PeWidget,
-    PeIndicatorColumnViewArrow,
-    PeIndicatorItemViewItemDrop,
-    PePanelItemViewItem,
-    PePanelItemViewRow,
-    PePanelStatusBar,
-    PeIndicatorTabClose,
-    PePanelMenu,
-    PeIndicatorTabTearRight,
-    PeCustomBase,
+bitflags! {
+    pub struct PrimitiveElement: u32 {
+        const PeFrame = 0x0;
+        const PeFrameDefaultButton = 0x1;
+        const PeFrameDockWidget = 0x2;
+        const PeFrameFocusRect = 0x3;
+        const PeFrameGroupBox = 0x4;
+        const PeFrameLineEdit = 0x5;
+        const PeFrameMenu = 0x6;
+        const PeFrameStatusBar = 0x7;
+        const PeFrameStatusBarItem = 0x7;
+        const PeFrameTabWidget = 0x8;
+        const PeFrameWindow = 0x9;
+        const PeFrameButtonBevel = 0xa;
+        const PeFrameButtonTool = 0xb;
+        const PeFrameTabBarBase = 0xc;
+        const PePanelButtonCommand = 0xd;
+        const PePanelButtonBevel = 0xe;
+        const PePanelButtonTool = 0xf;
+        const PePanelMenuBar = 0x10;
+        const PePanelToolBar = 0x11;
+        const PePanelLineEdit = 0x12;
+        const PeIndicatorArrowDown = 0x13;
+        const PeIndicatorArrowLeft = 0x14;
+        const PeIndicatorArrowRight = 0x15;
+        const PeIndicatorArrowUp = 0x16;
+        const PeIndicatorBranch = 0x17;
+        const PeIndicatorButtonDropDown = 0x18;
+        const PeIndicatorViewItemCheck = 0x19;
+        const PeIndicatorItemViewItemCheck = 0x19;
+        const PeIndicatorCheckBox = 0x1a;
+        const PeIndicatorDockWidgetResizeHandle = 0x1b;
+        const PeIndicatorHeaderArrow = 0x1c;
+        const PeIndicatorMenuCheckMark = 0x1d;
+        const PeIndicatorProgressChunk = 0x1e;
+        const PeIndicatorRadioButton = 0x1f;
+        const PeIndicatorSpinDown = 0x20;
+        const PeIndicatorSpinMinus = 0x21;
+        const PeIndicatorSpinPlus = 0x22;
+        const PeIndicatorSpinUp = 0x23;
+        const PeIndicatorToolBarHandle = 0x24;
+        const PeIndicatorToolBarSeparator = 0x25;
+        const PePanelTipLabel = 0x26;
+        const PeIndicatorTabTear = 0x27;
+        const PeIndicatorTabTearLeft = 0x27;
+        const PePanelScrollAreaCorner = 0x28;
+        const PeWidget = 0x29;
+        const PeIndicatorColumnViewArrow = 0x2a;
+        const PeIndicatorItemViewItemDrop = 0x2b;
+        const PePanelItemViewItem = 0x2c;
+        const PePanelItemViewRow = 0x2d;
+        const PePanelStatusBar = 0x2e;
+        const PeIndicatorTabClose = 0x2f;
+        const PePanelMenu = 0x30;
+        const PeIndicatorTabTearRight = 0x31;
+        const PeCustomBase = 0xf000000;
+    }
 }
 
 #[repr(u32)]
 pub enum ControlElement {
-    CePushButton,
-    CePushButtonBevel,
-    CePushButtonLabel,
-    CeCheckBox,
-    CeCheckBoxLabel,
-    CeRadioButton,
-    CeRadioButtonLabel,
-    CeTabBarTab,
-    CeTabBarTabShape,
-    CeTabBarTabLabel,
-    CeProgressBar,
-    CeProgressBarGroove,
-    CeProgressBarContents,
-    CeProgressBarLabel,
-    CeMenuItem,
-    CeMenuScroller,
-    CeMenuVMargin,
-    CeMenuHMargin,
-    CeMenuTearoff,
-    CeMenuEmptyArea,
-    CeMenuBarItem,
-    CeMenuBarEmptyArea,
-    CeToolButtonLabel,
-    CeHeader,
-    CeHeaderSection,
-    CeHeaderLabel,
-    CeToolBoxTab,
-    CeSizeGrip,
-    CeSplitter,
-    CeRubberBand,
-    CeDockWidgetTitle,
-    CeScrollBarAddLine,
-    CeScrollBarSubLine,
-    CeScrollBarAddPage,
-    CeScrollBarSubPage,
-    CeScrollBarSlider,
-    CeScrollBarFirst,
-    CeScrollBarLast,
-    CeFocusFrame,
-    CeComboBoxLabel,
-    CeToolBar,
-    CeToolBoxTabShape,
-    CeToolBoxTabLabel,
-    CeHeaderEmptyArea,
-    CeColumnViewGrip,
-    CeItemViewItem,
-    CeShapedFrame,
-    CeCustomBase,
+    CePushButton = 0,
+    CePushButtonBevel = 1,
+    CePushButtonLabel = 2,
+    CeCheckBox = 3,
+    CeCheckBoxLabel = 4,
+    CeRadioButton = 5,
+    CeRadioButtonLabel = 6,
+    CeTabBarTab = 7,
+    CeTabBarTabShape = 8,
+    CeTabBarTabLabel = 9,
+    CeProgressBar = 10,
+    CeProgressBarGroove = 11,
+    CeProgressBarContents = 12,
+    CeProgressBarLabel = 13,
+    CeMenuItem = 14,
+    CeMenuScroller = 15,
+    CeMenuVMargin = 16,
+    CeMenuHMargin = 17,
+    CeMenuTearoff = 18,
+    CeMenuEmptyArea = 19,
+    CeMenuBarItem = 20,
+    CeMenuBarEmptyArea = 21,
+    CeToolButtonLabel = 22,
+    CeHeader = 23,
+    CeHeaderSection = 24,
+    CeHeaderLabel = 25,
+    CeToolBoxTab = 26,
+    CeSizeGrip = 27,
+    CeSplitter = 28,
+    CeRubberBand = 29,
+    CeDockWidgetTitle = 30,
+    CeScrollBarAddLine = 31,
+    CeScrollBarSubLine = 32,
+    CeScrollBarAddPage = 33,
+    CeScrollBarSubPage = 34,
+    CeScrollBarSlider = 35,
+    CeScrollBarFirst = 36,
+    CeScrollBarLast = 37,
+    CeFocusFrame = 38,
+    CeComboBoxLabel = 39,
+    CeToolBar = 40,
+    CeToolBoxTabShape = 41,
+    CeToolBoxTabLabel = 42,
+    CeHeaderEmptyArea = 43,
+    CeColumnViewGrip = 44,
+    CeItemViewItem = 45,
+    CeShapedFrame = 46,
+    CeCustomBase = 4026531840,
 }
 
-#[repr(u32)]
-pub enum SubElement {
-    SePushButtonContents,
-    SePushButtonFocusRect,
-    SeCheckBoxIndicator,
-    SeCheckBoxContents,
-    SeCheckBoxFocusRect,
-    SeCheckBoxClickRect,
-    SeRadioButtonIndicator,
-    SeRadioButtonContents,
-    SeRadioButtonFocusRect,
-    SeRadioButtonClickRect,
-    SeComboBoxFocusRect,
-    SeSliderFocusRect,
-    SeProgressBarGroove,
-    SeProgressBarContents,
-    SeProgressBarLabel,
-    SeToolBoxTabContents,
-    SeHeaderLabel,
-    SeHeaderArrow,
-    SeTabWidgetTabBar,
-    SeTabWidgetTabPane,
-    SeTabWidgetTabContents,
-    SeTabWidgetLeftCorner,
-    SeTabWidgetRightCorner,
-    SeViewItemCheckIndicator,
-    SeItemViewItemCheckIndicator,
-    SeTabBarTearIndicator,
-    SeTabBarTearIndicatorLeft,
-    SeTreeViewDisclosureItem,
-    SeLineEditContents,
-    SeFrameContents,
-    SeDockWidgetCloseButton,
-    SeDockWidgetFloatButton,
-    SeDockWidgetTitleBarText,
-    SeDockWidgetIcon,
-    SeCheckBoxLayoutItem,
-    SeComboBoxLayoutItem,
-    SeDateTimeEditLayoutItem,
-    SeDialogButtonBoxLayoutItem,
-    SeLabelLayoutItem,
-    SeProgressBarLayoutItem,
-    SePushButtonLayoutItem,
-    SeRadioButtonLayoutItem,
-    SeSliderLayoutItem,
-    SeSpinBoxLayoutItem,
-    SeToolButtonLayoutItem,
-    SeFrameLayoutItem,
-    SeGroupBoxLayoutItem,
-    SeTabWidgetLayoutItem,
-    SeItemViewItemDecoration,
-    SeItemViewItemText,
-    SeItemViewItemFocusRect,
-    SeTabBarTabLeftButton,
-    SeTabBarTabRightButton,
-    SeTabBarTabText,
-    SeShapedFrameContents,
-    SeToolBarHandle,
-    SeTabBarScrollLeftButton,
-    SeTabBarScrollRightButton,
-    SeTabBarTearIndicatorRight,
-    SeCustomBase,
+bitflags! {
+    pub struct SubElement: u32 {
+        const SePushButtonContents = 0x0;
+        const SePushButtonFocusRect = 0x1;
+        const SeCheckBoxIndicator = 0x2;
+        const SeCheckBoxContents = 0x3;
+        const SeCheckBoxFocusRect = 0x4;
+        const SeCheckBoxClickRect = 0x5;
+        const SeRadioButtonIndicator = 0x6;
+        const SeRadioButtonContents = 0x7;
+        const SeRadioButtonFocusRect = 0x8;
+        const SeRadioButtonClickRect = 0x9;
+        const SeComboBoxFocusRect = 0xa;
+        const SeSliderFocusRect = 0xb;
+        const SeProgressBarGroove = 0xc;
+        const SeProgressBarContents = 0xd;
+        const SeProgressBarLabel = 0xe;
+        const SeToolBoxTabContents = 0xf;
+        const SeHeaderLabel = 0x10;
+        const SeHeaderArrow = 0x11;
+        const SeTabWidgetTabBar = 0x12;
+        const SeTabWidgetTabPane = 0x13;
+        const SeTabWidgetTabContents = 0x14;
+        const SeTabWidgetLeftCorner = 0x15;
+        const SeTabWidgetRightCorner = 0x16;
+        const SeViewItemCheckIndicator = 0x17;
+        const SeItemViewItemCheckIndicator = 0x17;
+        const SeTabBarTearIndicator = 0x18;
+        const SeTabBarTearIndicatorLeft = 0x18;
+        const SeTreeViewDisclosureItem = 0x19;
+        const SeLineEditContents = 0x1a;
+        const SeFrameContents = 0x1b;
+        const SeDockWidgetCloseButton = 0x1c;
+        const SeDockWidgetFloatButton = 0x1d;
+        const SeDockWidgetTitleBarText = 0x1e;
+        const SeDockWidgetIcon = 0x1f;
+        const SeCheckBoxLayoutItem = 0x20;
+        const SeComboBoxLayoutItem = 0x21;
+        const SeDateTimeEditLayoutItem = 0x22;
+        const SeDialogButtonBoxLayoutItem = 0x23;
+        const SeLabelLayoutItem = 0x24;
+        const SeProgressBarLayoutItem = 0x25;
+        const SePushButtonLayoutItem = 0x26;
+        const SeRadioButtonLayoutItem = 0x27;
+        const SeSliderLayoutItem = 0x28;
+        const SeSpinBoxLayoutItem = 0x29;
+        const SeToolButtonLayoutItem = 0x2a;
+        const SeFrameLayoutItem = 0x2b;
+        const SeGroupBoxLayoutItem = 0x2c;
+        const SeTabWidgetLayoutItem = 0x2d;
+        const SeItemViewItemDecoration = 0x2e;
+        const SeItemViewItemText = 0x2f;
+        const SeItemViewItemFocusRect = 0x30;
+        const SeTabBarTabLeftButton = 0x31;
+        const SeTabBarTabRightButton = 0x32;
+        const SeTabBarTabText = 0x33;
+        const SeShapedFrameContents = 0x34;
+        const SeToolBarHandle = 0x35;
+        const SeTabBarScrollLeftButton = 0x36;
+        const SeTabBarScrollRightButton = 0x37;
+        const SeTabBarTearIndicatorRight = 0x38;
+        const SeCustomBase = 0xf0000000;
+    }
 }
 
 #[repr(u32)]
 pub enum ComplexControl {
-    CcSpinBox,
-    CcComboBox,
-    CcScrollBar,
-    CcSlider,
-    CcToolButton,
-    CcTitleBar,
-    CcDial,
-    CcGroupBox,
-    CcMdiControls,
-    CcCustomBase,
+    CcSpinBox = 0,
+    CcComboBox = 1,
+    CcScrollBar = 2,
+    CcSlider = 3,
+    CcToolButton = 4,
+    CcTitleBar = 5,
+    CcDial = 6,
+    CcGroupBox = 7,
+    CcMdiControls = 8,
+    CcCustomBase = 4026531840,
 }
 
-#[repr(u32)]
-pub enum SubControl {
-    ScNone,
-    ScScrollBarAddLine,
-    ScScrollBarSubLine,
-    ScScrollBarAddPage,
-    ScScrollBarSubPage,
-    ScScrollBarFirst,
-    ScScrollBarLast,
-    ScScrollBarSlider,
-    ScScrollBarGroove,
-    ScSpinBoxUp,
-    ScSpinBoxDown,
-    ScSpinBoxFrame,
-    ScSpinBoxEditField,
-    ScComboBoxFrame,
-    ScComboBoxEditField,
-    ScComboBoxArrow,
-    ScComboBoxListBoxPopup,
-    ScSliderGroove,
-    ScSliderHandle,
-    ScSliderTickmarks,
-    ScToolButton,
-    ScToolButtonMenu,
-    ScTitleBarSysMenu,
-    ScTitleBarMinButton,
-    ScTitleBarMaxButton,
-    ScTitleBarCloseButton,
-    ScTitleBarNormalButton,
-    ScTitleBarShadeButton,
-    ScTitleBarUnshadeButton,
-    ScTitleBarContextHelpButton,
-    ScTitleBarLabel,
-    ScDialGroove,
-    ScDialHandle,
-    ScDialTickmarks,
-    ScGroupBoxCheckBox,
-    ScGroupBoxLabel,
-    ScGroupBoxContents,
-    ScGroupBoxFrame,
-    ScMdiMinButton,
-    ScMdiNormalButton,
-    ScMdiCloseButton,
-    ScCustomBase,
-    ScAll,
+bitflags! {
+    pub struct SubControl: u32 {
+        const ScNone = 0x0;
+        const ScScrollBarAddLine = 0x1;
+        const ScScrollBarSubLine = 0x2;
+        const ScScrollBarAddPage = 0x4;
+        const ScScrollBarSubPage = 0x8;
+        const ScScrollBarFirst = 0x10;
+        const ScScrollBarLast = 0x20;
+        const ScScrollBarSlider = 0x40;
+        const ScScrollBarGroove = 0x80;
+        const ScSpinBoxUp = 0x1;
+        const ScSpinBoxDown = 0x2;
+        const ScSpinBoxFrame = 0x4;
+        const ScSpinBoxEditField = 0x8;
+        const ScComboBoxFrame = 0x1;
+        const ScComboBoxEditField = 0x2;
+        const ScComboBoxArrow = 0x4;
+        const ScComboBoxListBoxPopup = 0x8;
+        const ScSliderGroove = 0x1;
+        const ScSliderHandle = 0x2;
+        const ScSliderTickmarks = 0x4;
+        const ScToolButton = 0x1;
+        const ScToolButtonMenu = 0x2;
+        const ScTitleBarSysMenu = 0x1;
+        const ScTitleBarMinButton = 0x2;
+        const ScTitleBarMaxButton = 0x4;
+        const ScTitleBarCloseButton = 0x8;
+        const ScTitleBarNormalButton = 0x10;
+        const ScTitleBarShadeButton = 0x20;
+        const ScTitleBarUnshadeButton = 0x40;
+        const ScTitleBarContextHelpButton = 0x80;
+        const ScTitleBarLabel = 0x100;
+        const ScDialGroove = 0x1;
+        const ScDialHandle = 0x2;
+        const ScDialTickmarks = 0x4;
+        const ScGroupBoxCheckBox = 0x1;
+        const ScGroupBoxLabel = 0x2;
+        const ScGroupBoxContents = 0x4;
+        const ScGroupBoxFrame = 0x8;
+        const ScMdiMinButton = 0x1;
+        const ScMdiNormalButton = 0x2;
+        const ScMdiCloseButton = 0x4;
+        const ScCustomBase = 0xf0000000;
+        const ScAll = 0xffffffff;
+    }
 }
 
-#[repr(u32)]
-pub enum PixelMetric {
-    PmButtonMargin,
-    PmButtonDefaultIndicator,
-    PmMenuButtonIndicator,
-    PmButtonShiftHorizontal,
-    PmButtonShiftVertical,
-    PmDefaultFrameWidth,
-    PmSpinBoxFrameWidth,
-    PmComboBoxFrameWidth,
-    PmMaximumDragDistance,
-    PmScrollBarExtent,
-    PmScrollBarSliderMin,
-    PmSliderThickness,
-    PmSliderControlThickness,
-    PmSliderLength,
-    PmSliderTickmarkOffset,
-    PmSliderSpaceAvailable,
-    PmDockWidgetSeparatorExtent,
-    PmDockWidgetHandleExtent,
-    PmDockWidgetFrameWidth,
-    PmTabBarTabOverlap,
-    PmTabBarTabHSpace,
-    PmTabBarTabVSpace,
-    PmTabBarBaseHeight,
-    PmTabBarBaseOverlap,
-    PmProgressBarChunkWidth,
-    PmSplitterWidth,
-    PmTitleBarHeight,
-    PmMenuScrollerHeight,
-    PmMenuHMargin,
-    PmMenuVMargin,
-    PmMenuPanelWidth,
-    PmMenuTearoffHeight,
-    PmMenuDesktopFrameWidth,
-    PmMenuBarPanelWidth,
-    PmMenuBarItemSpacing,
-    PmMenuBarVMargin,
-    PmMenuBarHMargin,
-    PmIndicatorWidth,
-    PmIndicatorHeight,
-    PmExclusiveIndicatorWidth,
-    PmExclusiveIndicatorHeight,
-    PmDialogButtonsSeparator,
-    PmDialogButtonsButtonWidth,
-    PmDialogButtonsButtonHeight,
-    PmMdiSubWindowFrameWidth,
-    PmMdiFrameWidth,
-    PmMdiSubWindowMinimizedWidth,
-    PmMdiMinimizedWidth,
-    PmHeaderMargin,
-    PmHeaderMarkSize,
-    PmHeaderGripMargin,
-    PmTabBarTabShiftHorizontal,
-    PmTabBarTabShiftVertical,
-    PmTabBarScrollButtonWidth,
-    PmToolBarFrameWidth,
-    PmToolBarHandleExtent,
-    PmToolBarItemSpacing,
-    PmToolBarItemMargin,
-    PmToolBarSeparatorExtent,
-    PmToolBarExtensionExtent,
-    PmSpinBoxSliderHeight,
-    PmDefaultTopLevelMargin,
-    PmDefaultChildMargin,
-    PmDefaultLayoutSpacing,
-    PmToolBarIconSize,
-    PmListViewIconSize,
-    PmIconViewIconSize,
-    PmSmallIconSize,
-    PmLargeIconSize,
-    PmFocusFrameVMargin,
-    PmFocusFrameHMargin,
-    PmToolTipLabelFrameWidth,
-    PmCheckBoxLabelSpacing,
-    PmTabBarIconSize,
-    PmSizeGripSize,
-    PmDockWidgetTitleMargin,
-    PmMessageBoxIconSize,
-    PmButtonIconSize,
-    PmDockWidgetTitleBarButtonMargin,
-    PmRadioButtonLabelSpacing,
-    PmLayoutLeftMargin,
-    PmLayoutTopMargin,
-    PmLayoutRightMargin,
-    PmLayoutBottomMargin,
-    PmLayoutHorizontalSpacing,
-    PmLayoutVerticalSpacing,
-    PmTabBarScrollButtonOverlap,
-    PmTextCursorWidth,
-    PmTabCloseIndicatorWidth,
-    PmTabCloseIndicatorHeight,
-    PmScrollViewScrollBarSpacing,
-    PmScrollViewScrollBarOverlap,
-    PmSubMenuOverlap,
-    PmTreeViewIndentation,
-    PmHeaderDefaultSectionSizeHorizontal,
-    PmHeaderDefaultSectionSizeVertical,
-    PmTitleBarButtonIconSize,
-    PmTitleBarButtonSize,
-    PmCustomBase,
+bitflags! {
+    pub struct PixelMetric: u32 {
+        const PmButtonMargin = 0x0;
+        const PmButtonDefaultIndicator = 0x1;
+        const PmMenuButtonIndicator = 0x2;
+        const PmButtonShiftHorizontal = 0x3;
+        const PmButtonShiftVertical = 0x4;
+        const PmDefaultFrameWidth = 0x5;
+        const PmSpinBoxFrameWidth = 0x6;
+        const PmComboBoxFrameWidth = 0x7;
+        const PmMaximumDragDistance = 0x8;
+        const PmScrollBarExtent = 0x9;
+        const PmScrollBarSliderMin = 0xa;
+        const PmSliderThickness = 0xb;
+        const PmSliderControlThickness = 0xc;
+        const PmSliderLength = 0xd;
+        const PmSliderTickmarkOffset = 0xe;
+        const PmSliderSpaceAvailable = 0xf;
+        const PmDockWidgetSeparatorExtent = 0x10;
+        const PmDockWidgetHandleExtent = 0x11;
+        const PmDockWidgetFrameWidth = 0x12;
+        const PmTabBarTabOverlap = 0x13;
+        const PmTabBarTabHSpace = 0x14;
+        const PmTabBarTabVSpace = 0x15;
+        const PmTabBarBaseHeight = 0x16;
+        const PmTabBarBaseOverlap = 0x17;
+        const PmProgressBarChunkWidth = 0x18;
+        const PmSplitterWidth = 0x19;
+        const PmTitleBarHeight = 0x1a;
+        const PmMenuScrollerHeight = 0x1b;
+        const PmMenuHMargin = 0x1c;
+        const PmMenuVMargin = 0x1d;
+        const PmMenuPanelWidth = 0x1e;
+        const PmMenuTearoffHeight = 0x1f;
+        const PmMenuDesktopFrameWidth = 0x20;
+        const PmMenuBarPanelWidth = 0x21;
+        const PmMenuBarItemSpacing = 0x22;
+        const PmMenuBarVMargin = 0x23;
+        const PmMenuBarHMargin = 0x24;
+        const PmIndicatorWidth = 0x25;
+        const PmIndicatorHeight = 0x26;
+        const PmExclusiveIndicatorWidth = 0x27;
+        const PmExclusiveIndicatorHeight = 0x28;
+        const PmDialogButtonsSeparator = 0x29;
+        const PmDialogButtonsButtonWidth = 0x2a;
+        const PmDialogButtonsButtonHeight = 0x2b;
+        const PmMdiSubWindowFrameWidth = 0x2c;
+        const PmMdiFrameWidth = 0x2c;
+        const PmMdiSubWindowMinimizedWidth = 0x2d;
+        const PmMdiMinimizedWidth = 0x2d;
+        const PmHeaderMargin = 0x2e;
+        const PmHeaderMarkSize = 0x2f;
+        const PmHeaderGripMargin = 0x30;
+        const PmTabBarTabShiftHorizontal = 0x31;
+        const PmTabBarTabShiftVertical = 0x32;
+        const PmTabBarScrollButtonWidth = 0x33;
+        const PmToolBarFrameWidth = 0x34;
+        const PmToolBarHandleExtent = 0x35;
+        const PmToolBarItemSpacing = 0x36;
+        const PmToolBarItemMargin = 0x37;
+        const PmToolBarSeparatorExtent = 0x38;
+        const PmToolBarExtensionExtent = 0x39;
+        const PmSpinBoxSliderHeight = 0x3a;
+        const PmDefaultTopLevelMargin = 0x3b;
+        const PmDefaultChildMargin = 0x3c;
+        const PmDefaultLayoutSpacing = 0x3d;
+        const PmToolBarIconSize = 0x3e;
+        const PmListViewIconSize = 0x3f;
+        const PmIconViewIconSize = 0x40;
+        const PmSmallIconSize = 0x41;
+        const PmLargeIconSize = 0x42;
+        const PmFocusFrameVMargin = 0x43;
+        const PmFocusFrameHMargin = 0x44;
+        const PmToolTipLabelFrameWidth = 0x45;
+        const PmCheckBoxLabelSpacing = 0x46;
+        const PmTabBarIconSize = 0x47;
+        const PmSizeGripSize = 0x48;
+        const PmDockWidgetTitleMargin = 0x49;
+        const PmMessageBoxIconSize = 0x4a;
+        const PmButtonIconSize = 0x4b;
+        const PmDockWidgetTitleBarButtonMargin = 0x4c;
+        const PmRadioButtonLabelSpacing = 0x4d;
+        const PmLayoutLeftMargin = 0x4e;
+        const PmLayoutTopMargin = 0x4f;
+        const PmLayoutRightMargin = 0x50;
+        const PmLayoutBottomMargin = 0x51;
+        const PmLayoutHorizontalSpacing = 0x52;
+        const PmLayoutVerticalSpacing = 0x53;
+        const PmTabBarScrollButtonOverlap = 0x54;
+        const PmTextCursorWidth = 0x55;
+        const PmTabCloseIndicatorWidth = 0x56;
+        const PmTabCloseIndicatorHeight = 0x57;
+        const PmScrollViewScrollBarSpacing = 0x58;
+        const PmScrollViewScrollBarOverlap = 0x59;
+        const PmSubMenuOverlap = 0x5a;
+        const PmTreeViewIndentation = 0x5b;
+        const PmHeaderDefaultSectionSizeHorizontal = 0x5c;
+        const PmHeaderDefaultSectionSizeVertical = 0x5d;
+        const PmTitleBarButtonIconSize = 0x5e;
+        const PmTitleBarButtonSize = 0x5f;
+        const PmCustomBase = 0xf0000000;
+    }
 }
 
 #[repr(u32)]
 pub enum ContentsType {
-    CtPushButton,
-    CtCheckBox,
-    CtRadioButton,
-    CtToolButton,
-    CtComboBox,
-    CtSplitter,
-    CtProgressBar,
-    CtMenuItem,
-    CtMenuBarItem,
-    CtMenuBar,
-    CtMenu,
-    CtTabBarTab,
-    CtSlider,
-    CtScrollBar,
-    CtLineEdit,
-    CtSpinBox,
-    CtSizeGrip,
-    CtTabWidget,
-    CtDialogButtons,
-    CtHeaderSection,
-    CtGroupBox,
-    CtMdiControls,
-    CtItemViewItem,
-    CtCustomBase,
+    CtPushButton = 0,
+    CtCheckBox = 1,
+    CtRadioButton = 2,
+    CtToolButton = 3,
+    CtComboBox = 4,
+    CtSplitter = 5,
+    CtProgressBar = 6,
+    CtMenuItem = 7,
+    CtMenuBarItem = 8,
+    CtMenuBar = 9,
+    CtMenu = 10,
+    CtTabBarTab = 11,
+    CtSlider = 12,
+    CtScrollBar = 13,
+    CtLineEdit = 14,
+    CtSpinBox = 15,
+    CtSizeGrip = 16,
+    CtTabWidget = 17,
+    CtDialogButtons = 18,
+    CtHeaderSection = 19,
+    CtGroupBox = 20,
+    CtMdiControls = 21,
+    CtItemViewItem = 22,
+    CtCustomBase = 4026531840,
 }
 
 #[repr(u32)]
 pub enum RequestSoftwareInputPanel {
-    RsipOnMouseClickAndAlreadyFocused,
-    RsipOnMouseClick,
+    RsipOnMouseClickAndAlreadyFocused = 0,
+    RsipOnMouseClick = 1,
 }
 
-#[repr(u32)]
-pub enum StyleHint {
-    ShEtchDisabledText,
-    ShDitherDisabledText,
-    ShScrollBarMiddleClickAbsolutePosition,
-    ShScrollBarScrollWhenPointerLeavesControl,
-    ShTabBarSelectMouseType,
-    ShTabBarAlignment,
-    ShHeaderArrowAlignment,
-    ShSliderSnapToValue,
-    ShSliderSloppyKeyEvents,
-    ShProgressDialogCenterCancelButton,
-    ShProgressDialogTextLabelAlignment,
-    ShPrintDialogRightAlignButtons,
-    ShMainWindowSpaceBelowMenuBar,
-    ShFontDialogSelectAssociatedText,
-    ShMenuAllowActiveAndDisabled,
-    ShMenuSpaceActivatesItem,
-    ShMenuSubMenuPopupDelay,
-    ShScrollViewFrameOnlyAroundContents,
-    ShMenuBarAltKeyNavigation,
-    ShComboBoxListMouseTracking,
-    ShMenuMouseTracking,
-    ShMenuBarMouseTracking,
-    ShItemViewChangeHighlightOnFocus,
-    ShWidgetShareActivation,
-    ShWorkspaceFillSpaceOnMaximize,
-    ShComboBoxPopup,
-    ShTitleBarNoBorder,
-    ShSliderStopMouseOverSlider,
-    ShScrollBarStopMouseOverSlider,
-    ShBlinkCursorWhenTextSelected,
-    ShRichTextFullWidthSelection,
-    ShMenuScrollable,
-    ShGroupBoxTextLabelVerticalAlignment,
-    ShGroupBoxTextLabelColor,
-    ShMenuSloppySubMenus,
-    ShTableGridLineColor,
-    ShLineEditPasswordCharacter,
-    ShDialogButtonsDefaultButton,
-    ShToolBoxSelectedPageTitleBold,
-    ShTabBarPreferNoArrows,
-    ShScrollBarLeftClickAbsolutePosition,
-    ShListViewExpandSelectMouseType,
-    ShUnderlineShortcut,
-    ShSpinBoxAnimateButton,
-    ShSpinBoxKeyPressAutoRepeatRate,
-    ShSpinBoxClickAutoRepeatRate,
-    ShMenuFillScreenWithScroll,
-    ShToolTipLabelOpacity,
-    ShDrawMenuBarSeparator,
-    ShTitleBarModifyNotification,
-    ShButtonFocusPolicy,
-    ShMessageBoxUseBorderForButtonSpacing,
-    ShTitleBarAutoRaise,
-    ShToolButtonPopupDelay,
-    ShFocusFrameMask,
-    ShRubberBandMask,
-    ShWindowFrameMask,
-    ShSpinControlsDisableOnBounds,
-    ShDialBackgroundRole,
-    ShComboBoxLayoutDirection,
-    ShItemViewEllipsisLocation,
-    ShItemViewShowDecorationSelected,
-    ShItemViewActivateItemOnSingleClick,
-    ShScrollBarContextMenu,
-    ShScrollBarRollBetweenButtons,
-    ShSliderAbsoluteSetButtons,
-    ShSliderPageSetButtons,
-    ShMenuKeyboardSearch,
-    ShTabBarElideMode,
-    ShDialogButtonLayout,
-    ShComboBoxPopupFrameStyle,
-    ShMessageBoxTextInteractionFlags,
-    ShDialogButtonBoxButtonsHaveIcons,
-    ShSpellCheckUnderlineStyle,
-    ShMessageBoxCenterButtons,
-    ShMenuSelectionWrap,
-    ShItemViewMovementWithoutUpdatingSelection,
-    ShToolTipMask,
-    ShFocusFrameAboveWidget,
-    ShTextControlFocusIndicatorTextCharFormat,
-    ShWizardStyle,
-    ShItemViewArrowKeysNavigateIntoChildren,
-    ShMenuMask,
-    ShMenuFlashTriggeredItem,
-    ShMenuFadeOutOnHide,
-    ShSpinBoxClickAutoRepeatThreshold,
-    ShItemViewPaintAlternatingRowColorsForEmptyArea,
-    ShFormLayoutWrapPolicy,
-    ShTabWidgetDefaultTabPosition,
-    ShToolBarMovable,
-    ShFormLayoutFieldGrowthPolicy,
-    ShFormLayoutFormAlignment,
-    ShFormLayoutLabelAlignment,
-    ShItemViewDrawDelegateFrame,
-    ShTabBarCloseButtonPosition,
-    ShDockWidgetButtonsHaveFrame,
-    ShToolButtonStyle,
-    ShRequestSoftwareInputPanel,
-    ShScrollBarTransient,
-    ShMenuSupportsSections,
-    ShToolTipWakeUpDelay,
-    ShToolTipFallAsleepDelay,
-    ShWidgetAnimate,
-    ShSplitterOpaqueResize,
-    ShComboBoxUseNativePopup,
-    ShLineEditPasswordMaskDelay,
-    ShTabBarChangeCurrentDelay,
-    ShMenuSubMenuUniDirection,
-    ShMenuSubMenuUniDirectionFailCount,
-    ShMenuSubMenuSloppySelectOtherActions,
-    ShMenuSubMenuSloppyCloseTimeout,
-    ShMenuSubMenuResetWhenReenteringParent,
-    ShMenuSubMenuDontStartSloppyOnLeave,
-    ShItemViewScrollMode,
-    ShTitleBarShowToolTipsOnButtons,
-    ShWidgetAnimationDuration,
-    ShComboBoxAllowWheelScrolling,
-    ShSpinBoxButtonsInsideFrame,
-    ShCustomBase,
+bitflags! {
+    pub struct StyleHint: u32 {
+        const ShEtchDisabledText = 0x0;
+        const ShDitherDisabledText = 0x1;
+        const ShScrollBarMiddleClickAbsolutePosition = 0x2;
+        const ShScrollBarScrollWhenPointerLeavesControl = 0x3;
+        const ShTabBarSelectMouseType = 0x4;
+        const ShTabBarAlignment = 0x5;
+        const ShHeaderArrowAlignment = 0x6;
+        const ShSliderSnapToValue = 0x7;
+        const ShSliderSloppyKeyEvents = 0x8;
+        const ShProgressDialogCenterCancelButton = 0x9;
+        const ShProgressDialogTextLabelAlignment = 0xa;
+        const ShPrintDialogRightAlignButtons = 0xb;
+        const ShMainWindowSpaceBelowMenuBar = 0xc;
+        const ShFontDialogSelectAssociatedText = 0xd;
+        const ShMenuAllowActiveAndDisabled = 0xe;
+        const ShMenuSpaceActivatesItem = 0xf;
+        const ShMenuSubMenuPopupDelay = 0x10;
+        const ShScrollViewFrameOnlyAroundContents = 0x11;
+        const ShMenuBarAltKeyNavigation = 0x12;
+        const ShComboBoxListMouseTracking = 0x13;
+        const ShMenuMouseTracking = 0x14;
+        const ShMenuBarMouseTracking = 0x15;
+        const ShItemViewChangeHighlightOnFocus = 0x16;
+        const ShWidgetShareActivation = 0x17;
+        const ShWorkspaceFillSpaceOnMaximize = 0x18;
+        const ShComboBoxPopup = 0x19;
+        const ShTitleBarNoBorder = 0x1a;
+        const ShSliderStopMouseOverSlider = 0x1b;
+        const ShScrollBarStopMouseOverSlider = 0x1b;
+        const ShBlinkCursorWhenTextSelected = 0x1c;
+        const ShRichTextFullWidthSelection = 0x1d;
+        const ShMenuScrollable = 0x1e;
+        const ShGroupBoxTextLabelVerticalAlignment = 0x1f;
+        const ShGroupBoxTextLabelColor = 0x20;
+        const ShMenuSloppySubMenus = 0x21;
+        const ShTableGridLineColor = 0x22;
+        const ShLineEditPasswordCharacter = 0x23;
+        const ShDialogButtonsDefaultButton = 0x24;
+        const ShToolBoxSelectedPageTitleBold = 0x25;
+        const ShTabBarPreferNoArrows = 0x26;
+        const ShScrollBarLeftClickAbsolutePosition = 0x27;
+        const ShListViewExpandSelectMouseType = 0x28;
+        const ShUnderlineShortcut = 0x29;
+        const ShSpinBoxAnimateButton = 0x2a;
+        const ShSpinBoxKeyPressAutoRepeatRate = 0x2b;
+        const ShSpinBoxClickAutoRepeatRate = 0x2c;
+        const ShMenuFillScreenWithScroll = 0x2d;
+        const ShToolTipLabelOpacity = 0x2e;
+        const ShDrawMenuBarSeparator = 0x2f;
+        const ShTitleBarModifyNotification = 0x30;
+        const ShButtonFocusPolicy = 0x31;
+        const ShMessageBoxUseBorderForButtonSpacing = 0x32;
+        const ShTitleBarAutoRaise = 0x33;
+        const ShToolButtonPopupDelay = 0x34;
+        const ShFocusFrameMask = 0x35;
+        const ShRubberBandMask = 0x36;
+        const ShWindowFrameMask = 0x37;
+        const ShSpinControlsDisableOnBounds = 0x38;
+        const ShDialBackgroundRole = 0x39;
+        const ShComboBoxLayoutDirection = 0x3a;
+        const ShItemViewEllipsisLocation = 0x3b;
+        const ShItemViewShowDecorationSelected = 0x3c;
+        const ShItemViewActivateItemOnSingleClick = 0x3d;
+        const ShScrollBarContextMenu = 0x3e;
+        const ShScrollBarRollBetweenButtons = 0x3f;
+        const ShSliderAbsoluteSetButtons = 0x40;
+        const ShSliderPageSetButtons = 0x41;
+        const ShMenuKeyboardSearch = 0x42;
+        const ShTabBarElideMode = 0x43;
+        const ShDialogButtonLayout = 0x44;
+        const ShComboBoxPopupFrameStyle = 0x45;
+        const ShMessageBoxTextInteractionFlags = 0x46;
+        const ShDialogButtonBoxButtonsHaveIcons = 0x47;
+        const ShSpellCheckUnderlineStyle = 0x48;
+        const ShMessageBoxCenterButtons = 0x49;
+        const ShMenuSelectionWrap = 0x4a;
+        const ShItemViewMovementWithoutUpdatingSelection = 0x4b;
+        const ShToolTipMask = 0x4c;
+        const ShFocusFrameAboveWidget = 0x4d;
+        const ShTextControlFocusIndicatorTextCharFormat = 0x4e;
+        const ShWizardStyle = 0x4f;
+        const ShItemViewArrowKeysNavigateIntoChildren = 0x50;
+        const ShMenuMask = 0x51;
+        const ShMenuFlashTriggeredItem = 0x52;
+        const ShMenuFadeOutOnHide = 0x53;
+        const ShSpinBoxClickAutoRepeatThreshold = 0x54;
+        const ShItemViewPaintAlternatingRowColorsForEmptyArea = 0x55;
+        const ShFormLayoutWrapPolicy = 0x56;
+        const ShTabWidgetDefaultTabPosition = 0x57;
+        const ShToolBarMovable = 0x58;
+        const ShFormLayoutFieldGrowthPolicy = 0x59;
+        const ShFormLayoutFormAlignment = 0x5a;
+        const ShFormLayoutLabelAlignment = 0x5b;
+        const ShItemViewDrawDelegateFrame = 0x5c;
+        const ShTabBarCloseButtonPosition = 0x5d;
+        const ShDockWidgetButtonsHaveFrame = 0x5e;
+        const ShToolButtonStyle = 0x5f;
+        const ShRequestSoftwareInputPanel = 0x60;
+        const ShScrollBarTransient = 0x61;
+        const ShMenuSupportsSections = 0x62;
+        const ShToolTipWakeUpDelay = 0x63;
+        const ShToolTipFallAsleepDelay = 0x64;
+        const ShWidgetAnimate = 0x65;
+        const ShSplitterOpaqueResize = 0x66;
+        const ShComboBoxUseNativePopup = 0x67;
+        const ShLineEditPasswordMaskDelay = 0x68;
+        const ShTabBarChangeCurrentDelay = 0x69;
+        const ShMenuSubMenuUniDirection = 0x6a;
+        const ShMenuSubMenuUniDirectionFailCount = 0x6b;
+        const ShMenuSubMenuSloppySelectOtherActions = 0x6c;
+        const ShMenuSubMenuSloppyCloseTimeout = 0x6d;
+        const ShMenuSubMenuResetWhenReenteringParent = 0x6e;
+        const ShMenuSubMenuDontStartSloppyOnLeave = 0x6f;
+        const ShItemViewScrollMode = 0x70;
+        const ShTitleBarShowToolTipsOnButtons = 0x71;
+        const ShWidgetAnimationDuration = 0x72;
+        const ShComboBoxAllowWheelScrolling = 0x73;
+        const ShSpinBoxButtonsInsideFrame = 0x74;
+        const ShCustomBase = 0xf0000000;
+    }
 }
 
 #[repr(u32)]
 pub enum StandardPixmap {
-    SpTitleBarMenuButton,
-    SpTitleBarMinButton,
-    SpTitleBarMaxButton,
-    SpTitleBarCloseButton,
-    SpTitleBarNormalButton,
-    SpTitleBarShadeButton,
-    SpTitleBarUnshadeButton,
-    SpTitleBarContextHelpButton,
-    SpDockWidgetCloseButton,
-    SpMessageBoxInformation,
-    SpMessageBoxWarning,
-    SpMessageBoxCritical,
-    SpMessageBoxQuestion,
-    SpDesktopIcon,
-    SpTrashIcon,
-    SpComputerIcon,
-    SpDriveFdIcon,
-    SpDriveHdIcon,
-    SpDriveCdIcon,
-    SpDriveDvdIcon,
-    SpDriveNetIcon,
-    SpDirOpenIcon,
-    SpDirClosedIcon,
-    SpDirLinkIcon,
-    SpDirLinkOpenIcon,
-    SpFileIcon,
-    SpFileLinkIcon,
-    SpToolBarHorizontalExtensionButton,
-    SpToolBarVerticalExtensionButton,
-    SpFileDialogStart,
-    SpFileDialogEnd,
-    SpFileDialogToParent,
-    SpFileDialogNewFolder,
-    SpFileDialogDetailedView,
-    SpFileDialogInfoView,
-    SpFileDialogContentsView,
-    SpFileDialogListView,
-    SpFileDialogBack,
-    SpDirIcon,
-    SpDialogOkButton,
-    SpDialogCancelButton,
-    SpDialogHelpButton,
-    SpDialogOpenButton,
-    SpDialogSaveButton,
-    SpDialogCloseButton,
-    SpDialogApplyButton,
-    SpDialogResetButton,
-    SpDialogDiscardButton,
-    SpDialogYesButton,
-    SpDialogNoButton,
-    SpArrowUp,
-    SpArrowDown,
-    SpArrowLeft,
-    SpArrowRight,
-    SpArrowBack,
-    SpArrowForward,
-    SpDirHomeIcon,
-    SpCommandLink,
-    SpVistaShield,
-    SpBrowserReload,
-    SpBrowserStop,
-    SpMediaPlay,
-    SpMediaStop,
-    SpMediaPause,
-    SpMediaSkipForward,
-    SpMediaSkipBackward,
-    SpMediaSeekForward,
-    SpMediaSeekBackward,
-    SpMediaVolume,
-    SpMediaVolumeMuted,
-    SpLineEditClearButton,
-    SpCustomBase,
+    SpTitleBarMenuButton = 0,
+    SpTitleBarMinButton = 1,
+    SpTitleBarMaxButton = 2,
+    SpTitleBarCloseButton = 3,
+    SpTitleBarNormalButton = 4,
+    SpTitleBarShadeButton = 5,
+    SpTitleBarUnshadeButton = 6,
+    SpTitleBarContextHelpButton = 7,
+    SpDockWidgetCloseButton = 8,
+    SpMessageBoxInformation = 9,
+    SpMessageBoxWarning = 10,
+    SpMessageBoxCritical = 11,
+    SpMessageBoxQuestion = 12,
+    SpDesktopIcon = 13,
+    SpTrashIcon = 14,
+    SpComputerIcon = 15,
+    SpDriveFdIcon = 16,
+    SpDriveHdIcon = 17,
+    SpDriveCdIcon = 18,
+    SpDriveDvdIcon = 19,
+    SpDriveNetIcon = 20,
+    SpDirOpenIcon = 21,
+    SpDirClosedIcon = 22,
+    SpDirLinkIcon = 23,
+    SpDirLinkOpenIcon = 24,
+    SpFileIcon = 25,
+    SpFileLinkIcon = 26,
+    SpToolBarHorizontalExtensionButton = 27,
+    SpToolBarVerticalExtensionButton = 28,
+    SpFileDialogStart = 29,
+    SpFileDialogEnd = 30,
+    SpFileDialogToParent = 31,
+    SpFileDialogNewFolder = 32,
+    SpFileDialogDetailedView = 33,
+    SpFileDialogInfoView = 34,
+    SpFileDialogContentsView = 35,
+    SpFileDialogListView = 36,
+    SpFileDialogBack = 37,
+    SpDirIcon = 38,
+    SpDialogOkButton = 39,
+    SpDialogCancelButton = 40,
+    SpDialogHelpButton = 41,
+    SpDialogOpenButton = 42,
+    SpDialogSaveButton = 43,
+    SpDialogCloseButton = 44,
+    SpDialogApplyButton = 45,
+    SpDialogResetButton = 46,
+    SpDialogDiscardButton = 47,
+    SpDialogYesButton = 48,
+    SpDialogNoButton = 49,
+    SpArrowUp = 50,
+    SpArrowDown = 51,
+    SpArrowLeft = 52,
+    SpArrowRight = 53,
+    SpArrowBack = 54,
+    SpArrowForward = 55,
+    SpDirHomeIcon = 56,
+    SpCommandLink = 57,
+    SpVistaShield = 58,
+    SpBrowserReload = 59,
+    SpBrowserStop = 60,
+    SpMediaPlay = 61,
+    SpMediaStop = 62,
+    SpMediaPause = 63,
+    SpMediaSkipForward = 64,
+    SpMediaSkipBackward = 65,
+    SpMediaSeekForward = 66,
+    SpMediaSeekBackward = 67,
+    SpMediaVolume = 68,
+    SpMediaVolumeMuted = 69,
+    SpLineEditClearButton = 70,
+    SpCustomBase = 4026531840,
 }

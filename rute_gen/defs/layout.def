@@ -395,12 +395,18 @@ struct Layout : Object, LayoutItem {
 
 [org_name(QLayout)]
 enum SizeConstraint {
-    SetDefaultConstraint,
-    SetNoConstraint,
-    SetMinimumSize,
-    SetFixedSize,
-    SetMaximumSize,
-    SetMinAndMaxSize,
+    /// The main widget's minimum size is set to minimumSize(), unless the widget already has a minimum size.
+    SetDefaultConstraint = 0,
+    /// The widget is not constrained.
+    SetNoConstraint = 1,
+    /// The main widget's minimum size is set to minimumSize(); it cannot be smaller.
+    SetMinimumSize = 2,
+    /// The main widget's size is set to sizeHint(); it cannot be resized at all.
+    SetFixedSize = 3,
+    /// The main widget's maximum size is set to maximumSize(); it cannot be larger.
+    SetMaximumSize = 4,
+    /// The main widget's minimum size is set to minimumSize() and its maximum size is set to maximumSize().
+    SetMinAndMaxSize = 5,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

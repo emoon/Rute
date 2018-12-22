@@ -38,15 +38,15 @@ typedef struct RUPaintEngineFuncs {
     void (*draw_points_2)(struct RUBase* self_c, struct RUBase* points,
                           int point_count);
     void (*draw_polygon)(struct RUBase* self_c, struct RUBase* points,
-                         int point_count, int mode);
+                         int point_count, uint32_t mode);
     void (*draw_polygon_2)(struct RUBase* self_c, struct RUBase* points,
-                           int point_count, int mode);
+                           int point_count, uint32_t mode);
     void (*draw_pixmap)(struct RUBase* self_c, struct RUBase* r,
                         struct RUBase* pm, struct RUBase* sr);
     void (*draw_tiled_pixmap)(struct RUBase* self_c, struct RUBase* r,
                               struct RUBase* pixmap, struct RUBase* s);
     void (*draw_image)(struct RUBase* self_c, struct RUBase* r,
-                       struct RUBase* pm, struct RUBase* sr, int flags);
+                       struct RUBase* pm, struct RUBase* sr, uint32_t flags);
     void (*set_paint_device)(struct RUBase* self_c, struct RUBase* device);
     struct RUPaintDevice (*paint_device)(struct RUBase* self_c);
     void (*set_system_clip)(struct RUBase* self_c, struct RUBase* base_clip);

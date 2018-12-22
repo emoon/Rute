@@ -74,7 +74,7 @@ impl<'a> Surface<'a> {
         let (obj_data, funcs) = self.get_surface_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).surface_class)(obj_data);
-            let ret_val = { transmute::<i32, SurfaceClass>(ret_val) };
+            let ret_val = { transmute::<u32, SurfaceClass>(ret_val) };
             ret_val
         }
     }
@@ -100,7 +100,7 @@ impl<'a> Surface<'a> {
         let (obj_data, funcs) = self.get_surface_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).surface_type)(obj_data);
-            let ret_val = { transmute::<i32, SurfaceType>(ret_val) };
+            let ret_val = { transmute::<u32, SurfaceType>(ret_val) };
             ret_val
         }
     }
@@ -140,15 +140,15 @@ impl<'a> SurfaceTrait<'a> for Surface<'a> {
 }
 #[repr(u32)]
 pub enum SurfaceClass {
-    Window,
-    Offscreen,
+    Window = 0,
+    Offscreen = 1,
 }
 
 #[repr(u32)]
 pub enum SurfaceType {
-    RasterSurface,
-    OpenGlSurface,
-    RasterGlSurface,
-    OpenVgSurface,
-    VulkanSurface,
+    RasterSurface = 0,
+    OpenGlSurface = 1,
+    RasterGlSurface = 2,
+    OpenVgSurface = 3,
+    VulkanSurface = 4,
 }

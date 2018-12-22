@@ -80,11 +80,10 @@ impl TypeHandlerTrait for EnumTypeHandler {
         }
 
         format!(
-            "({}{}::{})s_{}_lookup[{}]",
+            "({}{}::{}){}",
             prefix_char,
             base_name,
             arg.enum_sub_type,
-            arg.enum_sub_type.to_snake_case(),
             &arg.name
         ).into()
     }
@@ -607,7 +606,6 @@ fn generate_struct_defs<W: Write>(f: &mut W, api_def: &ApiDef) -> io::Result<()>
 pub struct QtGenerator {
     wrapper_template: Template,
     signal_wrapper_template: Template,
-    enum_mapping_template: Template,
     func_def_template: Template,
     set_signal_template: Template,
     wrap_event_template: Template,
@@ -629,7 +627,6 @@ impl QtGenerator {
         QtGenerator {
             wrapper_template: parser.parse(QT_GEN_WRAPPER_TEMPLATE).unwrap(),
             signal_wrapper_template: parser.parse(SIGNAL_WRAPPER_TEMPLATE).unwrap(),
-            enum_mapping_template: parser.parse(QT_ENUM_MAPPING_TEMPLATE).unwrap(),
             func_def_template: parser.parse(QT_FUNC_DEF_TEMPLATE).unwrap(),
             set_signal_template: parser.parse(SET_SIGNAL_TEMPLATE).unwrap(),
             wrap_event_template: parser.parse(WRAP_EVENT_TEMPLATE).unwrap(),
@@ -1164,6 +1161,7 @@ impl QtGenerator {
     ///
     /// Generate enum remappings from rute enums to Qt
     ///
+    /*
     pub fn generate_enum_mappings(&self, target_name: &str, api_defs: &[ApiDef]) -> io::Result<()> {
         let mut dest = BufWriter::with_capacity(512 * 1024, File::create(target_name)?);
         let mut enums = BTreeMap::new();
@@ -1185,7 +1183,7 @@ impl QtGenerator {
         }
 
         dest.write_all(b"#include <map>\n\n")?;
-        dest.write_all(b"struct KeyVal { int val, key; };\n\n")?;
+        dest.write_all(b"struct KeyVal { unsigned int val, key; };\n\n")?;
 
         for (name, _) in &enums {
             dest.write_fmt(format_args!(
@@ -1272,6 +1270,7 @@ impl QtGenerator {
 
         Ok(())
     }
+    */
 
     ///
     /// Generate the function struct defs in the following style

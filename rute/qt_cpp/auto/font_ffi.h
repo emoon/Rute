@@ -41,18 +41,19 @@ typedef struct RUFontFuncs {
     void (*set_fixed_pitch)(struct RUBase* self_c, bool arg0);
     bool (*kerning)(struct RUBase* self_c);
     void (*set_kerning)(struct RUBase* self_c, bool arg0);
-    int (*style_hint)(struct RUBase* self_c);
-    void (*set_style_hint)(struct RUBase* self_c, int arg0, int arg1);
+    uint32_t (*style_hint)(struct RUBase* self_c);
+    void (*set_style_hint)(struct RUBase* self_c, uint32_t arg0, uint32_t arg1);
     float (*letter_spacing)(struct RUBase* self_c);
-    int (*letter_spacing_type)(struct RUBase* self_c);
-    void (*set_letter_spacing)(struct RUBase* self_c, int stype, float spacing);
+    uint32_t (*letter_spacing_type)(struct RUBase* self_c);
+    void (*set_letter_spacing)(struct RUBase* self_c, uint32_t stype,
+                               float spacing);
     float (*word_spacing)(struct RUBase* self_c);
     void (*set_word_spacing)(struct RUBase* self_c, float spacing);
-    void (*set_capitalization)(struct RUBase* self_c, int arg0);
-    int (*capitalization)(struct RUBase* self_c);
+    void (*set_capitalization)(struct RUBase* self_c, uint32_t arg0);
+    uint32_t (*capitalization)(struct RUBase* self_c);
     void (*set_hinting_preference)(struct RUBase* self_c,
-                                   int hinting_preference);
-    int (*hinting_preference)(struct RUBase* self_c);
+                                   uint32_t hinting_preference);
+    uint32_t (*hinting_preference)(struct RUBase* self_c);
     bool (*raw_mode)(struct RUBase* self_c);
     void (*set_raw_mode)(struct RUBase* self_c, bool arg0);
     bool (*exact_match)(struct RUBase* self_c);

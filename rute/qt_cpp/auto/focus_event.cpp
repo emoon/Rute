@@ -25,10 +25,10 @@ static bool focus_event_lost_focus(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static int focus_event_reason(struct RUBase* self_c) {
+static uint32_t focus_event_reason(struct RUBase* self_c) {
     QFocusEvent* qt_value = (QFocusEvent*)self_c;
     auto ret_value = qt_value->reason();
-    return s_focus_reason_lookup[(int)ret_value];
+    return (uint32_t)ret_value;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

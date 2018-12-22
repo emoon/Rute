@@ -18,8 +18,8 @@ struct RUPen;
 typedef struct RUPenFuncs {
     void (*destroy)(struct RUBase* self);
     void (*swap)(struct RUBase* self_c, struct RUBase* other);
-    int (*style)(struct RUBase* self_c);
-    void (*set_style)(struct RUBase* self_c, int arg0);
+    uint32_t (*style)(struct RUBase* self_c);
+    void (*set_style)(struct RUBase* self_c, uint32_t arg0);
     struct RUArray (*dash_pattern)(struct RUBase* self_c);
     float (*dash_offset)(struct RUBase* self_c);
     void (*set_dash_offset)(struct RUBase* self_c, float doffset);
@@ -34,10 +34,10 @@ typedef struct RUPenFuncs {
     struct RUBrush (*brush)(struct RUBase* self_c);
     void (*set_brush)(struct RUBase* self_c, struct RUBase* brush);
     bool (*is_solid)(struct RUBase* self_c);
-    int (*cap_style)(struct RUBase* self_c);
-    void (*set_cap_style)(struct RUBase* self_c, int pcs);
-    int (*join_style)(struct RUBase* self_c);
-    void (*set_join_style)(struct RUBase* self_c, int pcs);
+    uint32_t (*cap_style)(struct RUBase* self_c);
+    void (*set_cap_style)(struct RUBase* self_c, uint32_t pcs);
+    uint32_t (*join_style)(struct RUBase* self_c);
+    void (*set_join_style)(struct RUBase* self_c, uint32_t pcs);
     bool (*is_cosmetic)(struct RUBase* self_c);
     void (*set_cosmetic)(struct RUBase* self_c, bool cosmetic);
     bool (*is_detached)(struct RUBase* self_c);

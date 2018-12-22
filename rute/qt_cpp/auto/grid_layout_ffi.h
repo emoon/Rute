@@ -34,20 +34,23 @@ typedef struct RUGridLayoutFuncs {
     struct RURect (*cell_rect)(struct RUBase* self_c, int row, int column);
     void (*add_widget)(struct RUBase* self_c, struct RUBase* w);
     void (*add_widget_row_column)(struct RUBase* self_c, struct RUBase* arg0,
-                                  int row, int column, int arg1);
+                                  int row, int column, uint32_t arg1);
     void (*add_widget_row_column_span)(struct RUBase* self_c,
                                        struct RUBase* arg0, int row, int column,
-                                       int row_span, int column_span, int arg1);
+                                       int row_span, int column_span,
+                                       uint32_t arg1);
     void (*add_layout)(struct RUBase* self_c, struct RUBase* arg0, int row,
-                       int column, int arg1);
+                       int column, uint32_t arg1);
     void (*add_layout_2)(struct RUBase* self_c, struct RUBase* arg0, int row,
-                         int column, int row_span, int column_span, int arg1);
-    void (*set_origin_corner)(struct RUBase* self_c, int arg0);
-    int (*origin_corner)(struct RUBase* self_c);
+                         int column, int row_span, int column_span,
+                         uint32_t arg1);
+    void (*set_origin_corner)(struct RUBase* self_c, uint32_t arg0);
+    uint32_t (*origin_corner)(struct RUBase* self_c);
     struct RULayoutItem (*item_at_position)(struct RUBase* self_c, int row,
                                             int column);
     int (*count)(struct RUBase* self_c);
-    void (*set_default_positioning)(struct RUBase* self_c, int n, int orient);
+    void (*set_default_positioning)(struct RUBase* self_c, int n,
+                                    uint32_t orient);
 } RUGridLayoutFuncs;
 
 typedef struct RUGridLayoutAllFuncs {

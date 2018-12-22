@@ -2,7 +2,17 @@
 use rute_ffi_base::*;
 
 #[allow(unused_imports)]
+use auto::brush_ffi::RUBrush;
+#[allow(unused_imports)]
+use auto::color_ffi::RUColor;
+#[allow(unused_imports)]
+use auto::font_ffi::RUFont;
+#[allow(unused_imports)]
+use auto::icon_ffi::RUIcon;
+#[allow(unused_imports)]
 use auto::list_widget_ffi::RUListWidget;
+#[allow(unused_imports)]
+use auto::size_ffi::RUSize;
 #[allow(unused_imports)]
 use std::os::raw::c_void;
 #[repr(C)]
@@ -14,8 +24,12 @@ pub struct RUListWidgetItemFuncs {
     pub is_selected: extern "C" fn(self_c: *const RUBase) -> bool,
     pub set_hidden: extern "C" fn(self_c: *const RUBase, hide: bool),
     pub is_hidden: extern "C" fn(self_c: *const RUBase) -> bool,
+    pub flags: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub set_flags: extern "C" fn(self_c: *const RUBase, flags: u32),
     pub text: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
     pub set_text: extern "C" fn(self_c: *const RUBase, text: *const ::std::os::raw::c_char),
+    pub icon: extern "C" fn(self_c: *const RUBase) -> RUIcon,
+    pub set_icon: extern "C" fn(self_c: *const RUBase, icon: *const RUBase),
     pub status_tip: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
     pub set_status_tip:
         extern "C" fn(self_c: *const RUBase, status_tip: *const ::std::os::raw::c_char),
@@ -24,8 +38,20 @@ pub struct RUListWidgetItemFuncs {
     pub whats_this: extern "C" fn(self_c: *const RUBase) -> *const ::std::os::raw::c_char,
     pub set_whats_this:
         extern "C" fn(self_c: *const RUBase, whats_this: *const ::std::os::raw::c_char),
+    pub font: extern "C" fn(self_c: *const RUBase) -> RUFont,
+    pub set_font: extern "C" fn(self_c: *const RUBase, font: *const RUBase),
     pub text_alignment: extern "C" fn(self_c: *const RUBase) -> i32,
     pub set_text_alignment: extern "C" fn(self_c: *const RUBase, alignment: i32),
+    pub background: extern "C" fn(self_c: *const RUBase) -> RUBrush,
+    pub set_background: extern "C" fn(self_c: *const RUBase, brush: *const RUBase),
+    pub text_color: extern "C" fn(self_c: *const RUBase) -> RUColor,
+    pub set_text_color: extern "C" fn(self_c: *const RUBase, color: *const RUBase),
+    pub foreground: extern "C" fn(self_c: *const RUBase) -> RUBrush,
+    pub set_foreground: extern "C" fn(self_c: *const RUBase, brush: *const RUBase),
+    pub check_state: extern "C" fn(self_c: *const RUBase) -> u32,
+    pub set_check_state: extern "C" fn(self_c: *const RUBase, state: u32),
+    pub size_hint: extern "C" fn(self_c: *const RUBase) -> RUSize,
+    pub set_size_hint: extern "C" fn(self_c: *const RUBase, size: *const RUBase),
 }
 
 #[repr(C)]

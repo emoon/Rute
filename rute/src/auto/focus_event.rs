@@ -106,7 +106,7 @@ impl<'a> FocusEvent<'a> {
         let (obj_data, funcs) = self.get_focus_event_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).reason)(obj_data);
-            let ret_val = { transmute::<i32, FocusReason>(ret_val) };
+            let ret_val = { transmute::<u32, FocusReason>(ret_val) };
             ret_val
         }
     }

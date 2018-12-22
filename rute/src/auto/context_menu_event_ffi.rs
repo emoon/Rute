@@ -18,7 +18,7 @@ pub struct RUContextMenuEventFuncs {
     pub global_y: extern "C" fn(self_c: *const RUBase) -> i32,
     pub pos: extern "C" fn(self_c: *const RUBase) -> RUPoint,
     pub global_pos: extern "C" fn(self_c: *const RUBase) -> RUPoint,
-    pub reason: extern "C" fn(self_c: *const RUBase) -> i32,
+    pub reason: extern "C" fn(self_c: *const RUBase) -> u32,
 }
 
 #[repr(C)]
