@@ -138,6 +138,7 @@ pub enum TileRule {
 
 bitflags! {
     pub struct AlignmentFlag: u32 {
+        const AlignDefault = 0x0;
         const AlignLeft = 0x1;
         const AlignLeading = 0x1;
         const AlignRight = 0x2;
