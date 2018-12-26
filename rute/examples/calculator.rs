@@ -18,14 +18,14 @@ enum UnaryOperator {
 
 #[derive(Clone, Copy, Debug)]
 enum Operator {
-	/// Addition
-	Add,
-	/// Subtraction
-	Sub,
-	/// Dividec
-	Div,
-	/// Multiply
-	Mul,
+    /// Addition
+    Add,
+    /// Subtraction
+    Sub,
+    /// Dividec
+    Div,
+    /// Multiply
+    Mul,
 }
 
 #[derive(Default)]
@@ -112,23 +112,19 @@ impl<'a> Calculator<'a> {
 
         // Div/Mul buttons
 
-        let divide_button = self.create_button("/", |calculator| {
-        	calculator.mul_div_operator(Operator::Div)
-        });
+        let divide_button =
+            self.create_button("/", |calculator| calculator.mul_div_operator(Operator::Div));
 
-        let multiply_button = self.create_button("*", |calculator| {
-        	calculator.mul_div_operator(Operator::Mul)
-        });
+        let multiply_button =
+            self.create_button("*", |calculator| calculator.mul_div_operator(Operator::Mul));
 
         // Add/Sub buttons
 
-        let addition_button = self.create_button("+", |calculator| {
-        	calculator.add_sub_operator(Operator::Add)
-        });
+        let addition_button =
+            self.create_button("+", |calculator| calculator.add_sub_operator(Operator::Add));
 
-        let subtract_button = self.create_button("-", |calculator| {
-        	calculator.add_sub_operator(Operator::Sub)
-        });
+        let subtract_button =
+            self.create_button("-", |calculator| calculator.add_sub_operator(Operator::Sub));
 
         // Unray buttons
 
@@ -148,31 +144,50 @@ impl<'a> Calculator<'a> {
 
         layout.add_widget_row_column_span(
             &self.display,
-            0, 0, 1, 6,
+            0,
+            0,
+            1,
+            6,
             rute::AlignmentFlag::AlignDefault,
         );
 
-		layout.add_widget_row_column_span(&backspace_button, 1, 0, 1, 2, AlignmentFlag::AlignDefault);
-		layout.add_widget_row_column_span(&clear_button, 1, 2, 1, 2, AlignmentFlag::AlignDefault);
-		layout.add_widget_row_column_span(&clear_all_button, 1, 4, 1, 2, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column_span(
+            &backspace_button,
+            1,
+            0,
+            1,
+            2,
+            AlignmentFlag::AlignDefault,
+        );
 
-		layout.add_widget_row_column(&clear_memory_button, 2, 0, AlignmentFlag::AlignDefault);
-		layout.add_widget_row_column(&read_memory_button, 3, 0, AlignmentFlag::AlignDefault);
-		layout.add_widget_row_column(&set_memory_button, 4, 0, AlignmentFlag::AlignDefault);
-		layout.add_widget_row_column(&add_to_memory_button, 5, 0, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column_span(
+            &clear_all_button,
+            1,
+            4,
+            1,
+            2,
+            AlignmentFlag::AlignDefault,
+        );
 
-		layout.add_widget_row_column(&point_button, 5, 2, AlignmentFlag::AlignDefault);
-		layout.add_widget_row_column(&change_sign_button, 5, 3, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column_span(&clear_button, 1, 2, 1, 2, AlignmentFlag::AlignDefault);
 
-		layout.add_widget_row_column(&divide_button, 2, 4, AlignmentFlag::AlignDefault);
-		layout.add_widget_row_column(&multiply_button, 3, 4, AlignmentFlag::AlignDefault);
-		layout.add_widget_row_column(&subtract_button, 4, 4, AlignmentFlag::AlignDefault);
-		layout.add_widget_row_column(&addition_button, 5, 4, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column(&clear_memory_button, 2, 0, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column(&read_memory_button, 3, 0, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column(&set_memory_button, 4, 0, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column(&add_to_memory_button, 5, 0, AlignmentFlag::AlignDefault);
 
-		layout.add_widget_row_column(&sqrt_button, 2, 5, AlignmentFlag::AlignDefault);
-		layout.add_widget_row_column(&pow_button, 3, 5, AlignmentFlag::AlignDefault);
-		layout.add_widget_row_column(&recip_button, 4, 5,AlignmentFlag::AlignDefault);
-		layout.add_widget_row_column(&equal_button, 5, 5, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column(&point_button, 5, 2, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column(&change_sign_button, 5, 3, AlignmentFlag::AlignDefault);
+
+        layout.add_widget_row_column(&divide_button, 2, 4, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column(&multiply_button, 3, 4, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column(&subtract_button, 4, 4, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column(&addition_button, 5, 4, AlignmentFlag::AlignDefault);
+
+        layout.add_widget_row_column(&sqrt_button, 2, 5, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column(&pow_button, 3, 5, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column(&recip_button, 4, 5, AlignmentFlag::AlignDefault);
+        layout.add_widget_row_column(&equal_button, 5, 5, AlignmentFlag::AlignDefault);
 
         // Set layout and show
         self.main_widget
@@ -204,28 +219,19 @@ impl<'a> Calculator<'a> {
         let mut state = self.state.borrow_mut();
 
         if state.waiting_for_operand {
-        	return;
+            return;
         }
 
         let text = self.display.text();
-
     }
 
-    fn clear_memory(&self) {
+    fn clear_memory(&self) {}
 
-    }
+    fn read_memory(&self) {}
 
-    fn read_memory(&self) {
+    fn set_memory(&self) {}
 
-    }
-
-    fn set_memory(&self) {
-
-    }
-
-    fn add_to_memory(&self) {
-
-    }
+    fn add_to_memory(&self) {}
 
     /// Called when "." is clicked
     fn point_clicked(&self) {
@@ -260,12 +266,12 @@ impl<'a> Calculator<'a> {
         let mut operand = self.display.text().parse::<f64>().unwrap();
 
         if let Some(operator) = state.pending_multiplicative_operator {
-        	if !Self::calculate(&mut state, operand, operator) {
-        		self.abort_operation();
-        		return;
-        	}
+            if !Self::calculate(&mut state, operand, operator) {
+                self.abort_operation();
+                return;
+            }
 
-        	self.display.set_text(&state.factor_so_far.to_string());
+            self.display.set_text(&state.factor_so_far.to_string());
         }
 
         state.pending_multiplicative_operator = Some(operator);
@@ -277,25 +283,25 @@ impl<'a> Calculator<'a> {
         let mut operand = self.display.text().parse::<f64>().unwrap();
 
         if let Some(operator) = state.pending_multiplicative_operator {
-        	if !Self::calculate(&mut state, operand, operator) {
-        		self.abort_operation();
-        		return;
-        	}
+            if !Self::calculate(&mut state, operand, operator) {
+                self.abort_operation();
+                return;
+            }
 
-        	self.display.set_text(&state.factor_so_far.to_string());
-        	operand = state.factor_so_far;
-        	state.factor_so_far = 0.0;
-        	state.pending_multiplicative_operator = None;
+            self.display.set_text(&state.factor_so_far.to_string());
+            operand = state.factor_so_far;
+            state.factor_so_far = 0.0;
+            state.pending_multiplicative_operator = None;
         }
 
         if let Some(operator) = state.pending_additive_aperator {
-        	if !Self::calculate(&mut state, operand, operator) {
-        		return self.abort_operation();
-        	}
+            if !Self::calculate(&mut state, operand, operator) {
+                return self.abort_operation();
+            }
 
-        	self.display.set_text(&state.sum_so_far.to_string());
+            self.display.set_text(&state.sum_so_far.to_string());
         } else {
-        	state.sum_so_far = operand;
+            state.sum_so_far = operand;
         }
 
         state.pending_multiplicative_operator = Some(clicked_operator);
@@ -335,23 +341,23 @@ impl<'a> Calculator<'a> {
         let mut state = self.state.borrow_mut();
 
         if let Some(operator) = state.pending_multiplicative_operator {
-        	if !Self::calculate(&mut state, operand, operator) {
-        		return self.abort_operation();
-        	}
+            if !Self::calculate(&mut state, operand, operator) {
+                return self.abort_operation();
+            }
 
-			operand = state.factor_so_far;
-			state.factor_so_far = 0.0;
-			state.pending_multiplicative_operator = None;
+            operand = state.factor_so_far;
+            state.factor_so_far = 0.0;
+            state.pending_multiplicative_operator = None;
         }
 
         if let Some(operator) = state.pending_additive_aperator {
-        	if !Self::calculate(&mut state, operand, operator) {
-        		return self.abort_operation();
-        	}
+            if !Self::calculate(&mut state, operand, operator) {
+                return self.abort_operation();
+            }
 
-        	state.pending_additive_aperator = None;
+            state.pending_additive_aperator = None;
         } else {
-        	state.sum_so_far = operand;
+            state.sum_so_far = operand;
         }
 
         self.display.set_text(&state.sum_so_far.to_string());
@@ -360,19 +366,19 @@ impl<'a> Calculator<'a> {
     }
 
     fn calculate(state: &mut CalculatorState, right: f64, operator: Operator) -> bool {
-    	match operator {
-    		Operator::Add => state.sum_so_far += right, 
-    		Operator::Sub => state.sum_so_far -= right, 
-    		Operator::Mul => state.factor_so_far *= right, 
-    		Operator::Div => {
-    			if right == 0.0 {
-    				return false;
-    			}
+        match operator {
+            Operator::Add => state.sum_so_far += right,
+            Operator::Sub => state.sum_so_far -= right,
+            Operator::Mul => state.factor_so_far *= right,
+            Operator::Div => {
+                if right == 0.0 {
+                    return false;
+                }
 
-    			state.factor_so_far /= right;
-    		}
-    	}
-    	true
+                state.factor_so_far /= right;
+            }
+        }
+        true
     }
 
     fn abort_operation(&self) {
@@ -390,10 +396,10 @@ impl<'a> Calculator<'a> {
         F: Fn(&Self) + 'a,
     {
         ToolButton::new()
-			.set_size_policy_2(rute::Policy::Preferred, rute::Policy::Preferred)
-			.set_pressed_event_ud(self, func)
-			.set_text(text)
-			.build()
+            .set_size_policy_2(rute::Policy::Preferred, rute::Policy::Preferred)
+            .set_pressed_event_ud(self, func)
+            .set_text(text)
+            .build()
     }
 }
 
