@@ -102,6 +102,17 @@ impl<'a> Event<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Event<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Event::new_from_rc(t.0 as *const RUEvent)
+        } else {
+            Event::new_from_temporary(t.0 as *const RUEvent)
+        }
+    }
+}
+
 pub trait EventTrait<'a> {
     #[inline]
     #[doc(hidden)]

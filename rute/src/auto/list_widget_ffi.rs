@@ -2,6 +2,8 @@
 use rute_ffi_base::*;
 
 #[allow(unused_imports)]
+use auto::list_widget_item_ffi::RUListWidgetItem;
+#[allow(unused_imports)]
 use auto::object_ffi::*;
 #[allow(unused_imports)]
 use auto::paint_device_ffi::*;
@@ -15,6 +17,7 @@ pub struct RUListWidgetFuncs {
     pub destroy: extern "C" fn(self_c: *const RUBase),
     pub add_item: extern "C" fn(self_c: *const RUBase, label: *const ::std::os::raw::c_char),
     pub clear: extern "C" fn(self_c: *const RUBase),
+    pub selected_items: extern "C" fn(self_c: *const RUBase) -> RUArray,
 }
 
 #[repr(C)]

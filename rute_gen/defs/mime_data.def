@@ -93,8 +93,7 @@ struct MimeData : Object {
     ///
     /// URLs correspond to the MIME type `text/uri-list.`
     ///
-    /// **See also:** [`has_urls()`]
-    /// [`data()`]
+    /// **See also:** [`MineData::has_urls()`] [`MineData::data()`]
     //urls() -> [Url],
     ///
     /// Sets the URLs stored in the MIME data object to those specified by *urls.*
@@ -105,7 +104,7 @@ struct MimeData : Object {
     /// was not called before, to make it possible to drop them into any lineedit
     /// and text editor.
     ///
-    /// **See also:** [`has_urls()`]
+    /// **See also:** [`MineData::has_urls()`]
     /// [`set_data()`]
     //set_urls(urls: [UrlType]),
     ///

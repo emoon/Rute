@@ -1334,6 +1334,17 @@ impl<'a> Rect<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Rect<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Rect::new_from_rc(t.0 as *const RURect)
+        } else {
+            Rect::new_from_temporary(t.0 as *const RURect)
+        }
+    }
+}
+
 pub trait RectTrait<'a> {
     #[inline]
     #[doc(hidden)]

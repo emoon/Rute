@@ -5489,6 +5489,17 @@ impl<'a> LineEdit<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for LineEdit<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            LineEdit::new_from_rc(t.0 as *const RULineEdit)
+        } else {
+            LineEdit::new_from_temporary(t.0 as *const RULineEdit)
+        }
+    }
+}
+
 pub trait LineEditTrait<'a> {
     #[inline]
     #[doc(hidden)]

@@ -295,6 +295,17 @@ impl<'a> TouchEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for TouchEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            TouchEvent::new_from_rc(t.0 as *const RUTouchEvent)
+        } else {
+            TouchEvent::new_from_temporary(t.0 as *const RUTouchEvent)
+        }
+    }
+}
+
 pub trait TouchEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

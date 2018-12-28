@@ -235,6 +235,17 @@ impl<'a> BackingStore<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for BackingStore<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            BackingStore::new_from_rc(t.0 as *const RUBackingStore)
+        } else {
+            BackingStore::new_from_temporary(t.0 as *const RUBackingStore)
+        }
+    }
+}
+
 pub trait BackingStoreTrait<'a> {
     #[inline]
     #[doc(hidden)]

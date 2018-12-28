@@ -484,6 +484,17 @@ impl<'a> Polygon<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Polygon<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Polygon::new_from_rc(t.0 as *const RUPolygon)
+        } else {
+            Polygon::new_from_temporary(t.0 as *const RUPolygon)
+        }
+    }
+}
+
 pub trait PolygonTrait<'a> {
     #[inline]
     #[doc(hidden)]

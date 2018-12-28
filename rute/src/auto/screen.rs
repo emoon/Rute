@@ -231,6 +231,17 @@ impl<'a> Screen<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Screen<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Screen::new_from_rc(t.0 as *const RUScreen)
+        } else {
+            Screen::new_from_temporary(t.0 as *const RUScreen)
+        }
+    }
+}
+
 pub trait ScreenTrait<'a> {
     #[inline]
     #[doc(hidden)]

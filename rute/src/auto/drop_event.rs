@@ -318,6 +318,17 @@ impl<'a> DropEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for DropEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            DropEvent::new_from_rc(t.0 as *const RUDropEvent)
+        } else {
+            DropEvent::new_from_temporary(t.0 as *const RUDropEvent)
+        }
+    }
+}
+
 pub trait DropEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

@@ -614,6 +614,17 @@ impl<'a> TabletEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for TabletEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            TabletEvent::new_from_rc(t.0 as *const RUTabletEvent)
+        } else {
+            TabletEvent::new_from_temporary(t.0 as *const RUTabletEvent)
+        }
+    }
+}
+
 pub trait TabletEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

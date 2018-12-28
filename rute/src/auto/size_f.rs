@@ -422,6 +422,17 @@ impl<'a> SizeF<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for SizeF<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            SizeF::new_from_rc(t.0 as *const RUSizeF)
+        } else {
+            SizeF::new_from_temporary(t.0 as *const RUSizeF)
+        }
+    }
+}
+
 pub trait SizeFTrait<'a> {
     #[inline]
     #[doc(hidden)]

@@ -304,6 +304,17 @@ impl<'a> Line<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Line<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Line::new_from_rc(t.0 as *const RULine)
+        } else {
+            Line::new_from_temporary(t.0 as *const RULine)
+        }
+    }
+}
+
 pub trait LineTrait<'a> {
     #[inline]
     #[doc(hidden)]

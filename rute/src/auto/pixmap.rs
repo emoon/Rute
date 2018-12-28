@@ -1374,6 +1374,17 @@ impl<'a> Pixmap<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Pixmap<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Pixmap::new_from_rc(t.0 as *const RUPixmap)
+        } else {
+            Pixmap::new_from_temporary(t.0 as *const RUPixmap)
+        }
+    }
+}
+
 pub trait PixmapTrait<'a> {
     #[inline]
     #[doc(hidden)]

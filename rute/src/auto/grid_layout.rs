@@ -1249,6 +1249,17 @@ impl<'a> GridLayout<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for GridLayout<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            GridLayout::new_from_rc(t.0 as *const RUGridLayout)
+        } else {
+            GridLayout::new_from_temporary(t.0 as *const RUGridLayout)
+        }
+    }
+}
+
 pub trait GridLayoutTrait<'a> {
     #[inline]
     #[doc(hidden)]

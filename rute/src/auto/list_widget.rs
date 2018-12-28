@@ -98,6 +98,21 @@ impl<'a> ListWidget<'a> {
         }
         self
     }
+    /// Returns a list of all selected items in the list widget.
+    pub fn selected_items(&self) -> RefArray<ListWidgetItem, WrapperRcOwn> {
+        let (obj_data, funcs) = self.get_list_widget_obj_funcs();
+        unsafe {
+            let ret_val = ((*funcs).selected_items)(obj_data);
+            let t = ret_val;
+            let ret_val;
+            if t.host_data != ::std::ptr::null() {
+                ret_val = ListWidgetItem::new_from_rc(t);
+            } else {
+                ret_val = ListWidgetItem::new_from_owned(t);
+            }
+            ret_val
+        }
+    }
     #[doc(hidden)]
     pub fn win_id(&self) -> u64 {
         let (obj_data, funcs) = self.get_widget_obj_funcs();
@@ -3832,6 +3847,17 @@ impl<'a> ListWidget<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for ListWidget<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            ListWidget::new_from_rc(t.0 as *const RUListWidget)
+        } else {
+            ListWidget::new_from_temporary(t.0 as *const RUListWidget)
+        }
+    }
+}
+
 pub trait ListWidgetTrait<'a> {
     #[inline]
     #[doc(hidden)]

@@ -468,6 +468,17 @@ impl<'a> MouseEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for MouseEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            MouseEvent::new_from_rc(t.0 as *const RUMouseEvent)
+        } else {
+            MouseEvent::new_from_temporary(t.0 as *const RUMouseEvent)
+        }
+    }
+}
+
 pub trait MouseEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

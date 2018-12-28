@@ -294,6 +294,17 @@ impl<'a> SizePolicy<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for SizePolicy<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            SizePolicy::new_from_rc(t.0 as *const RUSizePolicy)
+        } else {
+            SizePolicy::new_from_temporary(t.0 as *const RUSizePolicy)
+        }
+    }
+}
+
 pub trait SizePolicyTrait<'a> {
     #[inline]
     #[doc(hidden)]

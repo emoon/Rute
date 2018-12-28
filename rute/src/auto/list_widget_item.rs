@@ -584,6 +584,17 @@ impl<'a> ListWidgetItem<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for ListWidgetItem<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            ListWidgetItem::new_from_rc(t.0 as *const RUListWidgetItem)
+        } else {
+            ListWidgetItem::new_from_temporary(t.0 as *const RUListWidgetItem)
+        }
+    }
+}
+
 pub trait ListWidgetItemTrait<'a> {
     #[inline]
     #[doc(hidden)]

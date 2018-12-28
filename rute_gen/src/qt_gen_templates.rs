@@ -207,6 +207,24 @@ pub static QT_FUNC_DEF_TEMPLATE: &str = "{% if c_return_type != 'void' %}
     return ru_array;
 {%- when 'regular' %}
     return return_by_value_array<{{qt_type}}>(ret_value);
+{%- when 'pointer' %}
+    RUArray ru_array = alloc_rc_array(ret_value.size());
+    ru_array.count = (uint32_t)ret_value.size();
+    ru_array.all_funcs = (void*)&s_{{funcs_name}}_all_funcs;
+    struct RUBase** ru_dest = (struct RUBase**)ru_array.elements;
+    uint8_t* owned = ru_array.owners;
+    for (int i = 0, len = (int)ret_value.size(); i < len; ++i) {
+        struct RUBase* temp = (struct RUBase*)ret_value.at(i);
+        struct RUBase* host_data = (struct RUBase*)s_host_data_lookup[(void*)temp];
+        if (host_data) {
+            *ru_dest++ = host_data;
+            *owned++ = 1;
+        } else {
+            *ru_dest++ = temp;
+            *owned++ = 0;
+        }
+    }
+    return ru_array;
 {%- when 'reference' %}
     return return_pointer_array<{{qt_type}}>(ret_value);
 {%- endcase %}

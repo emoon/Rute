@@ -520,6 +520,17 @@ impl<'a> PaintEngine<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for PaintEngine<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            PaintEngine::new_from_rc(t.0 as *const RUPaintEngine)
+        } else {
+            PaintEngine::new_from_temporary(t.0 as *const RUPaintEngine)
+        }
+    }
+}
+
 pub trait PaintEngineTrait<'a> {
     #[inline]
     #[doc(hidden)]

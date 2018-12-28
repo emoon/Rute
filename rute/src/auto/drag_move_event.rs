@@ -337,6 +337,17 @@ impl<'a> DragMoveEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for DragMoveEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            DragMoveEvent::new_from_rc(t.0 as *const RUDragMoveEvent)
+        } else {
+            DragMoveEvent::new_from_temporary(t.0 as *const RUDragMoveEvent)
+        }
+    }
+}
+
 pub trait DragMoveEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

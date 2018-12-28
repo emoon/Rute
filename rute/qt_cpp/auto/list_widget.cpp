@@ -23,6 +23,30 @@ static void list_widget_clear(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static struct RUArray list_widget_selected_items(struct RUBase* self_c) {
+    WRListWidget* qt_value = (WRListWidget*)self_c;
+    auto ret_value = qt_value->selectedItems();
+    RUArray ru_array = alloc_rc_array(ret_value.size());
+    ru_array.count = (uint32_t)ret_value.size();
+    ru_array.all_funcs = (void*)&s_list_widget_item_all_funcs;
+    struct RUBase** ru_dest = (struct RUBase**)ru_array.elements;
+    uint8_t* owned = ru_array.owners;
+    for (int i = 0, len = (int)ret_value.size(); i < len; ++i) {
+        struct RUBase* temp = (struct RUBase*)ret_value.at(i);
+        struct RUBase* host_data = (struct RUBase*)s_host_data_lookup[(void*)temp];
+        if (host_data) {
+            *ru_dest++ = host_data;
+            *owned++ = 1;
+        } else {
+            *ru_dest++ = temp;
+            *owned++ = 0;
+        }
+    }
+    return ru_array;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUListWidget create_list_widget(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
@@ -45,6 +69,7 @@ struct RUListWidgetFuncs s_list_widget_funcs = {
     destroy_list_widget,
     list_widget_add_item,
     list_widget_clear,
+    list_widget_selected_items,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

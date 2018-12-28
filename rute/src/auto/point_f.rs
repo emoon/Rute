@@ -249,6 +249,17 @@ impl<'a> PointF<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for PointF<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            PointF::new_from_rc(t.0 as *const RUPointF)
+        } else {
+            PointF::new_from_temporary(t.0 as *const RUPointF)
+        }
+    }
+}
+
 pub trait PointFTrait<'a> {
     #[inline]
     #[doc(hidden)]

@@ -2457,6 +2457,17 @@ impl<'a> Image<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Image<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Image::new_from_rc(t.0 as *const RUImage)
+        } else {
+            Image::new_from_temporary(t.0 as *const RUImage)
+        }
+    }
+}
+
 pub trait ImageTrait<'a> {
     #[inline]
     #[doc(hidden)]

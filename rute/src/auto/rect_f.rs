@@ -1238,6 +1238,17 @@ impl<'a> RectF<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for RectF<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            RectF::new_from_rc(t.0 as *const RURectF)
+        } else {
+            RectF::new_from_temporary(t.0 as *const RURectF)
+        }
+    }
+}
+
 pub trait RectFTrait<'a> {
     #[inline]
     #[doc(hidden)]

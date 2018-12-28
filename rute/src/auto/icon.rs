@@ -906,6 +906,17 @@ impl<'a> Icon<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Icon<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Icon::new_from_rc(t.0 as *const RUIcon)
+        } else {
+            Icon::new_from_temporary(t.0 as *const RUIcon)
+        }
+    }
+}
+
 pub trait IconTrait<'a> {
     #[inline]
     #[doc(hidden)]

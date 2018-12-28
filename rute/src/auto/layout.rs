@@ -1057,6 +1057,17 @@ impl<'a> Layout<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Layout<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Layout::new_from_rc(t.0 as *const RULayout)
+        } else {
+            Layout::new_from_temporary(t.0 as *const RULayout)
+        }
+    }
+}
+
 pub trait LayoutTrait<'a> {
     #[inline]
     #[doc(hidden)]

@@ -156,6 +156,17 @@ impl<'a> ResizeEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for ResizeEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            ResizeEvent::new_from_rc(t.0 as *const RUResizeEvent)
+        } else {
+            ResizeEvent::new_from_temporary(t.0 as *const RUResizeEvent)
+        }
+    }
+}
+
 pub trait ResizeEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

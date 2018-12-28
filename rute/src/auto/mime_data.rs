@@ -164,8 +164,7 @@ impl<'a> MimeData<'a> {
     ///
     /// URLs correspond to the MIME type `text/uri-list.`
     ///
-    /// **See also:** [`has_urls()`]
-    /// [`data()`]
+    /// **See also:** [`MineData::has_urls()`] [`MineData::data()`]
     ///
     /// Sets the URLs stored in the MIME data object to those specified by *urls.*
     ///
@@ -175,7 +174,7 @@ impl<'a> MimeData<'a> {
     /// was not called before, to make it possible to drop them into any lineedit
     /// and text editor.
     ///
-    /// **See also:** [`has_urls()`]
+    /// **See also:** [`MineData::has_urls()`]
     /// [`set_data()`]
     ///
     /// Returns `true` if the object can return a list of urls; otherwise
@@ -600,6 +599,17 @@ impl<'a> MimeData<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for MimeData<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            MimeData::new_from_rc(t.0 as *const RUMimeData)
+        } else {
+            MimeData::new_from_temporary(t.0 as *const RUMimeData)
+        }
+    }
+}
+
 pub trait MimeDataTrait<'a> {
     #[inline]
     #[doc(hidden)]

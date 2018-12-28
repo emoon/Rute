@@ -142,6 +142,17 @@ impl <'a>{{struct_name}}<'a> {
 
     pub fn build(&self) -> Self { self.clone() }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for {{struct_name}}<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            {{struct_name}}::new_from_rc(t.0 as *const RU{{struct_name}})
+        } else {
+            {{struct_name}}::new_from_temporary(t.0 as *const RU{{struct_name}})
+        }
+    }
+}
+
 ";
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

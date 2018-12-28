@@ -1886,6 +1886,17 @@ impl<'a> Transform<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Transform<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Transform::new_from_rc(t.0 as *const RUTransform)
+        } else {
+            Transform::new_from_temporary(t.0 as *const RUTransform)
+        }
+    }
+}
+
 pub trait TransformTrait<'a> {
     #[inline]
     #[doc(hidden)]

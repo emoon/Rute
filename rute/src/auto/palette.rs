@@ -1063,6 +1063,17 @@ impl<'a> Palette<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Palette<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Palette::new_from_rc(t.0 as *const RUPalette)
+        } else {
+            Palette::new_from_temporary(t.0 as *const RUPalette)
+        }
+    }
+}
+
 pub trait PaletteTrait<'a> {
     #[inline]
     #[doc(hidden)]

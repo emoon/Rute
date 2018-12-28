@@ -616,6 +616,17 @@ impl<'a> Pen<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Pen<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Pen::new_from_rc(t.0 as *const RUPen)
+        } else {
+            Pen::new_from_temporary(t.0 as *const RUPen)
+        }
+    }
+}
+
 pub trait PenTrait<'a> {
     #[inline]
     #[doc(hidden)]

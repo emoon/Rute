@@ -4507,6 +4507,17 @@ impl<'a> ToolButton<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for ToolButton<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            ToolButton::new_from_rc(t.0 as *const RUToolButton)
+        } else {
+            ToolButton::new_from_temporary(t.0 as *const RUToolButton)
+        }
+    }
+}
+
 pub trait ToolButtonTrait<'a> {
     #[inline]
     #[doc(hidden)]

@@ -300,6 +300,17 @@ impl<'a> SpacerItem<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for SpacerItem<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            SpacerItem::new_from_rc(t.0 as *const RUSpacerItem)
+        } else {
+            SpacerItem::new_from_temporary(t.0 as *const RUSpacerItem)
+        }
+    }
+}
+
 pub trait SpacerItemTrait<'a> {
     #[inline]
     #[doc(hidden)]

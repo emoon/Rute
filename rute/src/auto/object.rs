@@ -943,6 +943,17 @@ impl<'a> Object<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Object<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Object::new_from_rc(t.0 as *const RUObject)
+        } else {
+            Object::new_from_temporary(t.0 as *const RUObject)
+        }
+    }
+}
+
 pub trait ObjectTrait<'a> {
     #[inline]
     #[doc(hidden)]

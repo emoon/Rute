@@ -484,6 +484,17 @@ impl<'a> Region<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Region<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Region::new_from_rc(t.0 as *const RURegion)
+        } else {
+            Region::new_from_temporary(t.0 as *const RURegion)
+        }
+    }
+}
+
 pub trait RegionTrait<'a> {
     #[inline]
     #[doc(hidden)]

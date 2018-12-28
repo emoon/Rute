@@ -183,6 +183,17 @@ impl<'a> Margins<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Margins<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Margins::new_from_rc(t.0 as *const RUMargins)
+        } else {
+            Margins::new_from_temporary(t.0 as *const RUMargins)
+        }
+    }
+}
+
 pub trait MarginsTrait<'a> {
     #[inline]
     #[doc(hidden)]

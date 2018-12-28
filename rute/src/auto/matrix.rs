@@ -1510,6 +1510,17 @@ impl<'a> Matrix<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Matrix<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Matrix::new_from_rc(t.0 as *const RUMatrix)
+        } else {
+            Matrix::new_from_temporary(t.0 as *const RUMatrix)
+        }
+    }
+}
+
 pub trait MatrixTrait<'a> {
     #[inline]
     #[doc(hidden)]

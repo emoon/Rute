@@ -138,6 +138,17 @@ impl<'a> ExposeEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for ExposeEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            ExposeEvent::new_from_rc(t.0 as *const RUExposeEvent)
+        } else {
+            ExposeEvent::new_from_temporary(t.0 as *const RUExposeEvent)
+        }
+    }
+}
+
 pub trait ExposeEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

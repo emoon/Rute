@@ -2600,10 +2600,21 @@ impl<'a> Application<'a> {
         self
     }
 
-    pub fn build(self) -> Self {
+    pub fn build(&self) -> Self {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Application<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Application::new_from_rc(t.0 as *const RUApplication)
+        } else {
+            Application::new_from_temporary(t.0 as *const RUApplication)
+        }
+    }
+}
+
 pub trait ApplicationTrait<'a> {
     #[inline]
     #[doc(hidden)]

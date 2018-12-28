@@ -1829,6 +1829,17 @@ impl<'a> GuiApplication<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for GuiApplication<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            GuiApplication::new_from_rc(t.0 as *const RUGuiApplication)
+        } else {
+            GuiApplication::new_from_temporary(t.0 as *const RUGuiApplication)
+        }
+    }
+}
+
 pub trait GuiApplicationTrait<'a> {
     #[inline]
     #[doc(hidden)]

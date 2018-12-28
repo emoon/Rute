@@ -151,6 +151,17 @@ impl<'a> InputEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for InputEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            InputEvent::new_from_rc(t.0 as *const RUInputEvent)
+        } else {
+            InputEvent::new_from_temporary(t.0 as *const RUInputEvent)
+        }
+    }
+}
+
 pub trait InputEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

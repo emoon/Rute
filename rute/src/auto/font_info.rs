@@ -286,6 +286,17 @@ impl<'a> FontInfo<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for FontInfo<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            FontInfo::new_from_rc(t.0 as *const RUFontInfo)
+        } else {
+            FontInfo::new_from_temporary(t.0 as *const RUFontInfo)
+        }
+    }
+}
+
 pub trait FontInfoTrait<'a> {
     #[inline]
     #[doc(hidden)]

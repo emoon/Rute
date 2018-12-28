@@ -8691,6 +8691,17 @@ impl<'a> Painter<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Painter<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Painter::new_from_rc(t.0 as *const RUPainter)
+        } else {
+            Painter::new_from_temporary(t.0 as *const RUPainter)
+        }
+    }
+}
+
 pub trait PainterTrait<'a> {
     #[inline]
     #[doc(hidden)]

@@ -297,6 +297,17 @@ impl<'a> KeyEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for KeyEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            KeyEvent::new_from_rc(t.0 as *const RUKeyEvent)
+        } else {
+            KeyEvent::new_from_temporary(t.0 as *const RUKeyEvent)
+        }
+    }
+}
+
 pub trait KeyEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

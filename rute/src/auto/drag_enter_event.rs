@@ -290,6 +290,17 @@ impl<'a> DragEnterEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for DragEnterEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            DragEnterEvent::new_from_rc(t.0 as *const RUDragEnterEvent)
+        } else {
+            DragEnterEvent::new_from_temporary(t.0 as *const RUDragEnterEvent)
+        }
+    }
+}
+
 pub trait DragEnterEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

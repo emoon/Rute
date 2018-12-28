@@ -122,6 +122,17 @@ impl<'a> HideEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for HideEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            HideEvent::new_from_rc(t.0 as *const RUHideEvent)
+        } else {
+            HideEvent::new_from_temporary(t.0 as *const RUHideEvent)
+        }
+    }
+}
+
 pub trait HideEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

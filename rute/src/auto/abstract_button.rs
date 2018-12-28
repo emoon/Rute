@@ -4725,6 +4725,17 @@ impl<'a> AbstractButton<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for AbstractButton<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            AbstractButton::new_from_rc(t.0 as *const RUAbstractButton)
+        } else {
+            AbstractButton::new_from_temporary(t.0 as *const RUAbstractButton)
+        }
+    }
+}
+
 pub trait AbstractButtonTrait<'a> {
     #[inline]
     #[doc(hidden)]

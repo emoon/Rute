@@ -15,6 +15,9 @@ struct RUArray {
     RUDeleteCallback delete_callback;
     void* priv_data;
     void* elements;
+    // used when passing back arrays with Qt/Rc objects that needs the functions
+    void* all_funcs;
+    unsigned char* owners;
     uint32_t count;
 };
 

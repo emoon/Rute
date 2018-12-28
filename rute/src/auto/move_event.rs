@@ -157,6 +157,17 @@ impl<'a> MoveEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for MoveEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            MoveEvent::new_from_rc(t.0 as *const RUMoveEvent)
+        } else {
+            MoveEvent::new_from_temporary(t.0 as *const RUMoveEvent)
+        }
+    }
+}
+
 pub trait MoveEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

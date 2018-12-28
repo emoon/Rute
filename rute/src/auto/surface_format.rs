@@ -689,6 +689,17 @@ impl<'a> SurfaceFormat<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for SurfaceFormat<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            SurfaceFormat::new_from_rc(t.0 as *const RUSurfaceFormat)
+        } else {
+            SurfaceFormat::new_from_temporary(t.0 as *const RUSurfaceFormat)
+        }
+    }
+}
+
 pub trait SurfaceFormatTrait<'a> {
     #[inline]
     #[doc(hidden)]

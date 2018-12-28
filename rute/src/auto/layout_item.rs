@@ -323,6 +323,17 @@ impl<'a> LayoutItem<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for LayoutItem<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            LayoutItem::new_from_rc(t.0 as *const RULayoutItem)
+        } else {
+            LayoutItem::new_from_temporary(t.0 as *const RULayoutItem)
+        }
+    }
+}
+
 pub trait LayoutItemTrait<'a> {
     #[inline]
     #[doc(hidden)]

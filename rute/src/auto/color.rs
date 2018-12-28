@@ -2105,6 +2105,17 @@ impl<'a> Color<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Color<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Color::new_from_rc(t.0 as *const RUColor)
+        } else {
+            Color::new_from_temporary(t.0 as *const RUColor)
+        }
+    }
+}
+
 pub trait ColorTrait<'a> {
     #[inline]
     #[doc(hidden)]

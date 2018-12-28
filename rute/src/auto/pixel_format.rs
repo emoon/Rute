@@ -326,6 +326,17 @@ impl<'a> PixelFormat<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for PixelFormat<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            PixelFormat::new_from_rc(t.0 as *const RUPixelFormat)
+        } else {
+            PixelFormat::new_from_temporary(t.0 as *const RUPixelFormat)
+        }
+    }
+}
+
 pub trait PixelFormatTrait<'a> {
     #[inline]
     #[doc(hidden)]

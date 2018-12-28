@@ -8298,6 +8298,17 @@ impl<'a> Widget<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Widget<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Widget::new_from_rc(t.0 as *const RUWidget)
+        } else {
+            Widget::new_from_temporary(t.0 as *const RUWidget)
+        }
+    }
+}
+
 pub trait WidgetTrait<'a> {
     #[inline]
     #[doc(hidden)]

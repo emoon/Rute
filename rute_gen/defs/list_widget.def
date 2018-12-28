@@ -1,6 +1,8 @@
 struct ListWidget : Widget {
     add_item(label: String),
     clear(),
+    /// Returns a list of all selected items in the list widget.
+    selected_items() -> [*ListWidgetItem],
     //[event] item_pressed(item: &ListWidgetItemType),
 }
 

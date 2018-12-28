@@ -253,6 +253,17 @@ impl<'a> PolygonF<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for PolygonF<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            PolygonF::new_from_rc(t.0 as *const RUPolygonF)
+        } else {
+            PolygonF::new_from_temporary(t.0 as *const RUPolygonF)
+        }
+    }
+}
+
 pub trait PolygonFTrait<'a> {
     #[inline]
     #[doc(hidden)]

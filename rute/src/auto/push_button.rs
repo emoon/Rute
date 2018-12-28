@@ -4126,6 +4126,17 @@ impl<'a> PushButton<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for PushButton<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            PushButton::new_from_rc(t.0 as *const RUPushButton)
+        } else {
+            PushButton::new_from_temporary(t.0 as *const RUPushButton)
+        }
+    }
+}
+
 pub trait PushButtonTrait<'a> {
     #[inline]
     #[doc(hidden)]

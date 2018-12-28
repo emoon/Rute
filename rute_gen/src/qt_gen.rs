@@ -303,38 +303,6 @@ fn function_name(struct_name: &str, func: &Function) -> String {
 ///     }
 ///     return array;
 
-/*
-   fn generate_return_array<W: Write>(f: &mut W, ret_val: &Variable) -> io::Result<()> {
-// TODO: Use templates
-
-let vtype = &ret_val.type_name;
-
-// Reference in this case means that the data from Qt is by pointer
-f.write_all(b"    int count = ret_value.size();\n")?;
-f.write_all(b"    RUArray array = { 0 };\n")?;
-f.write_all(b"    if (count > 0) {\n")?;
-f.write_fmt(format_args!("        RU{}* elements = new RU{}[count];\n", vtype, vtype))?;
-f.write_all(b"        for (int i = 0; i < count; ++i) {\n")?;
-f.write_fmt(format_args!("            elements[i].funcs = &s_{}_funcs;\n", vtype.to_snake_case()))?;
-if ret_val.vtype == VariableType::Reference {
-f.write_all(b"            elements[i].priv_data = (struct RUBase*)ret_value.at(i);\n")?;
-} else {
-// this is hacky as it leaks memory and needs to be fixed
-f.write_fmt(format_args!("            Q{}* temp = new Q{}(ret_value.at(i));\n", vtype, vtype))?;
-f.write_all(b"            elements[i].priv_data = (struct RUBase*)temp;\n")?;
-//f.write_all(b"            elements[i].priv_data = (struct RUBase*)&ret_value.at(i);\n")?;
-}
-
-f.write_all(b"       }\n")?;
-f.write_all(b"       array.elements = (void*)elements;\n")?;
-f.write_all(b"       array.count = int(count);\n")?;
-f.write_all(b"   }\n")?;
-f.write_all(b"   return array;\n")?;
-
-Ok(())
-}
-*/
-
 ///
 /// Get type for Qt Ref
 ///
@@ -717,39 +685,43 @@ impl QtGenerator {
                 VariableType::Primitive => {
                     object.insert("return_type".into(), Value::scalar("primitive"));
 					object.insert("c_primitive_type".into(), Value::scalar(
-						ret_val.get_c_primitive_type().into_owned()))
+						ret_val.get_c_primitive_type().into_owned()));
                 }
-                VariableType::Str => object.insert("return_type".into(), Value::scalar("string")),
+                VariableType::Str => { object.insert("return_type".into(), Value::scalar("string")); },
                 VariableType::Regular => {
                     object.insert(
                         "funcs_name".into(),
                         Value::scalar(ret_val.type_name.to_snake_case()),
                     );
-                    object.insert("return_type".into(), Value::scalar("regular"))
+                    object.insert("return_type".into(), Value::scalar("regular"));
                 }
                 VariableType::Reference => {
                     object.insert(
                         "funcs_name".into(),
-                        Value::scalar(ret_val.type_name.to_snake_case()),
+                        Value::scalar(ret_val.type_name.to_snake_case())
                     );
-                    object.insert("return_type".into(), Value::scalar("reference"))
+                    if ret_val.array {
+                        object.insert("return_type".into(), Value::scalar("pointer"));
+                    } else {
+                        object.insert("return_type".into(), Value::scalar("reference"));
+                    }
                 }
                 VariableType::Enum => {
                     object.insert("return_type".into(), Value::scalar("enum_type"));
                     object.insert(
                         "enum_type_name".into(),
                         Value::scalar(ret_val.enum_sub_type.to_snake_case()),
-                    )
+                    );
                 }
-                _ => object.insert("return_type".into(), Value::scalar("<illegal>")),
-            };
+                _ => { object.insert("return_type".into(), Value::scalar("<illegal>")); },
+            }
         } else {
             object.insert("array_return".into(), Value::scalar(false));
             object.insert("return_type".into(), Value::scalar(""));
             object.insert("qt_ret_value".into(), Value::scalar(""));
         }
 
-		object.insert(
+        object.insert(
             "c_return_type".into(),
             Value::scalar(ret_value.into_owned()),
         );
@@ -1109,11 +1081,7 @@ impl QtGenerator {
         cpp_out.write_all(HEADER)?;
 
         // Generate includes for all non-POD structs(
-        //generate_includes(&mut h_out, &api_def)?;
         generate_includes(&mut cpp_out, &api_def)?;
-
-        // Generate the wrapping classes declartion is used as for Qt.
-        //self.generate_wrapper_classes_defs(&mut h_out, api_def)?;
 
         // Generate wrapper functions for are regular defined functions
         self.generate_function_wrappers(&mut cpp_out, api_def)?;
@@ -1155,120 +1123,6 @@ impl QtGenerator {
 
         self.generate_signal_wrappers(&mut dest, api_defs)
     }
-
-    ///
-    /// Generate enum remappings from rute enums to Qt
-    ///
-    /*
-    pub fn generate_enum_mappings(&self, target_name: &str, api_defs: &[ApiDef]) -> io::Result<()> {
-        let mut dest = BufWriter::with_capacity(512 * 1024, File::create(target_name)?);
-        let mut enums = BTreeMap::new();
-
-        for api_def in api_defs {
-            for enum_def in &api_def.enums {
-                enums.insert(enum_def.name.clone(), enum_def);
-            }
-        }
-
-        let mut enum_org_names = BTreeMap::new();
-
-        for (_, enum_def) in &enums {
-            enum_org_names.insert(&enum_def.original_class_name, ());
-        }
-
-        for (name, _) in enum_org_names {
-            writeln!(dest, "#include <{}>", name)?;
-        }
-
-        dest.write_all(b"#include <map>\n\n")?;
-        dest.write_all(b"struct KeyVal { unsigned int val, key; };\n\n")?;
-
-        for (name, _) in &enums {
-            dest.write_fmt(format_args!(
-                "std::map<int, int> s_{}_lookup;\n",
-                name.to_snake_case()
-            ))?;
-        }
-
-        dest.write_all(b"\n")?;
-        dest.write_all(SEPARATOR)?;
-        dest.write_all(b"extern void create_enum_mappings() {\n")?;
-
-        for (_, enum_def) in enums {
-            let enum_name = enum_def.name.to_snake_case();
-            let mut template_data = Object::new();
-
-            template_data.insert("enum_name".into(), Value::scalar(enum_name));
-            template_data.insert(
-                "qt_class".into(),
-                Value::scalar(&enum_def.original_class_name),
-            );
-
-            let mut values = Vec::with_capacity(enum_def.entries.len());
-
-            for e in &enum_def.entries {
-                let mut enum_data = Object::new();
-                enum_data.insert("name".into(), Value::scalar(e.name.to_owned()));
-                enum_data.insert("id".into(), Value::scalar(e.value.to_string()));
-                values.push(Value::Object(enum_data));
-            }
-
-            template_data.insert("enums".into(), Value::Array(values));
-
-            let res = self.enum_mapping_template.render(&template_data).unwrap();
-            dest.write_all(res.as_bytes())?;
-        }
-
-        dest.write_all(b"}\n")
-    }
-
-    ///
-    /// Generate enum remappings from rute enums to Qt
-    ///
-    pub fn generate_enum_mappings_header(
-        &self,
-        target_name: &str,
-        api_defs: &[ApiDef],
-    ) -> io::Result<()> {
-        let mut dest = BufWriter::with_capacity(4 * 1024, File::create(target_name)?);
-        let mut enums = BTreeMap::new();
-
-        for api_def in api_defs {
-            for enum_def in &api_def.enums {
-                enums.insert(
-                    (enum_def.name.clone(), enum_def.flags_name.clone()),
-                    enum_def,
-                );
-            }
-        }
-
-        dest.write_all(b"#pragma once\n")?;
-        dest.write_all(AUTO_GEN_HEADER)?;
-        dest.write_all(b"#include <map>\n\n")?;
-
-        for ((name, _), _) in &enums {
-            dest.write_fmt(format_args!(
-                "extern std::map<int, int> s_{}_lookup;\n",
-                name.to_snake_case()
-            ))?;
-        }
-
-        writeln!(dest, "")?;
-
-        // forwarding define because sometimes Qt uses a macro for this
-        for ((name, flags_name), _) in &enums {
-            if !flags_name.is_empty() {
-                dest.write_fmt(format_args!(
-                    "#define s_{}_lookup s_{}_lookup\n",
-                    flags_name.to_snake_case(),
-                    name.to_snake_case()
-                ))?;
-            }
-        }
-
-        Ok(())
-    }
-    */
 
     ///
     /// Generate the function struct defs in the following style

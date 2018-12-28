@@ -164,6 +164,17 @@ impl<'a> PaintDevice<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for PaintDevice<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            PaintDevice::new_from_rc(t.0 as *const RUPaintDevice)
+        } else {
+            PaintDevice::new_from_temporary(t.0 as *const RUPaintDevice)
+        }
+    }
+}
+
 pub trait PaintDeviceTrait<'a> {
     #[inline]
     #[doc(hidden)]

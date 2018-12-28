@@ -3862,6 +3862,17 @@ impl<'a> DesktopWidget<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for DesktopWidget<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            DesktopWidget::new_from_rc(t.0 as *const RUDesktopWidget)
+        } else {
+            DesktopWidget::new_from_temporary(t.0 as *const RUDesktopWidget)
+        }
+    }
+}
+
 pub trait DesktopWidgetTrait<'a> {
     #[inline]
     #[doc(hidden)]

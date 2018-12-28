@@ -9,6 +9,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+#include "list_widget_item_ffi.h"
 
 struct RUListWidgetFuncs;
 struct RUListWidget;
@@ -17,6 +18,7 @@ typedef struct RUListWidgetFuncs {
     void (*destroy)(struct RUBase* self);
     void (*add_item)(struct RUBase* self_c, const char* label);
     void (*clear)(struct RUBase* self_c);
+    struct RUArray (*selected_items)(struct RUBase* self_c);
 } RUListWidgetFuncs;
 
 typedef struct RUListWidgetAllFuncs {

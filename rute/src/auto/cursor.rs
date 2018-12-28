@@ -640,6 +640,17 @@ impl<'a> Cursor<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Cursor<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Cursor::new_from_rc(t.0 as *const RUCursor)
+        } else {
+            Cursor::new_from_temporary(t.0 as *const RUCursor)
+        }
+    }
+}
+
 pub trait CursorTrait<'a> {
     #[inline]
     #[doc(hidden)]

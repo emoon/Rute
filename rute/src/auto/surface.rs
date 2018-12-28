@@ -129,6 +129,17 @@ impl<'a> Surface<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Surface<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Surface::new_from_rc(t.0 as *const RUSurface)
+        } else {
+            Surface::new_from_temporary(t.0 as *const RUSurface)
+        }
+    }
+}
+
 pub trait SurfaceTrait<'a> {
     #[inline]
     #[doc(hidden)]

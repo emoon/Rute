@@ -445,6 +445,17 @@ impl<'a> PaintEngineState<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for PaintEngineState<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            PaintEngineState::new_from_rc(t.0 as *const RUPaintEngineState)
+        } else {
+            PaintEngineState::new_from_temporary(t.0 as *const RUPaintEngineState)
+        }
+    }
+}
+
 pub trait PaintEngineStateTrait<'a> {
     #[inline]
     #[doc(hidden)]

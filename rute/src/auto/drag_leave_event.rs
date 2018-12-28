@@ -119,6 +119,17 @@ impl<'a> DragLeaveEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for DragLeaveEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            DragLeaveEvent::new_from_rc(t.0 as *const RUDragLeaveEvent)
+        } else {
+            DragLeaveEvent::new_from_temporary(t.0 as *const RUDragLeaveEvent)
+        }
+    }
+}
+
 pub trait DragLeaveEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

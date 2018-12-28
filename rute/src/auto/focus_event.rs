@@ -155,6 +155,17 @@ impl<'a> FocusEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for FocusEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            FocusEvent::new_from_rc(t.0 as *const RUFocusEvent)
+        } else {
+            FocusEvent::new_from_temporary(t.0 as *const RUFocusEvent)
+        }
+    }
+}
+
 pub trait FocusEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

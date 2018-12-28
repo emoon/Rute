@@ -664,6 +664,17 @@ impl<'a> Clipboard<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Clipboard<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Clipboard::new_from_rc(t.0 as *const RUClipboard)
+        } else {
+            Clipboard::new_from_temporary(t.0 as *const RUClipboard)
+        }
+    }
+}
+
 pub trait ClipboardTrait<'a> {
     #[inline]
     #[doc(hidden)]

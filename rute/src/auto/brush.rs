@@ -385,6 +385,17 @@ impl<'a> Brush<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Brush<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Brush::new_from_rc(t.0 as *const RUBrush)
+        } else {
+            Brush::new_from_temporary(t.0 as *const RUBrush)
+        }
+    }
+}
+
 pub trait BrushTrait<'a> {
     #[inline]
     #[doc(hidden)]

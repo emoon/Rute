@@ -3945,6 +3945,17 @@ impl<'a> Window<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Window<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Window::new_from_rc(t.0 as *const RUWindow)
+        } else {
+            Window::new_from_temporary(t.0 as *const RUWindow)
+        }
+    }
+}
+
 pub trait WindowTrait<'a> {
     #[inline]
     #[doc(hidden)]

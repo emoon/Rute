@@ -124,6 +124,17 @@ impl<'a> PaintEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for PaintEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            PaintEvent::new_from_rc(t.0 as *const RUPaintEvent)
+        } else {
+            PaintEvent::new_from_temporary(t.0 as *const RUPaintEvent)
+        }
+    }
+}
+
 pub trait PaintEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

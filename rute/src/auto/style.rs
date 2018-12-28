@@ -1241,6 +1241,17 @@ impl<'a> Style<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Style<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Style::new_from_rc(t.0 as *const RUStyle)
+        } else {
+            Style::new_from_temporary(t.0 as *const RUStyle)
+        }
+    }
+}
+
 pub trait StyleTrait<'a> {
     #[inline]
     #[doc(hidden)]

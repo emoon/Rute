@@ -490,6 +490,17 @@ impl<'a> WheelEvent<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for WheelEvent<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            WheelEvent::new_from_rc(t.0 as *const RUWheelEvent)
+        } else {
+            WheelEvent::new_from_temporary(t.0 as *const RUWheelEvent)
+        }
+    }
+}
+
 pub trait WheelEventTrait<'a> {
     #[inline]
     #[doc(hidden)]

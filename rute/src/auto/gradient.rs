@@ -261,6 +261,17 @@ impl<'a> Gradient<'a> {
         self.clone()
     }
 }
+
+impl<'a> From<(WrapperRcOwn, bool)> for Gradient<'a> {
+    fn from(t: (WrapperRcOwn, bool)) -> Self {
+        if t.1 {
+            Gradient::new_from_rc(t.0 as *const RUGradient)
+        } else {
+            Gradient::new_from_temporary(t.0 as *const RUGradient)
+        }
+    }
+}
+
 pub trait GradientTrait<'a> {
     #[inline]
     #[doc(hidden)]
