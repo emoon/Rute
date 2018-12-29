@@ -236,12 +236,20 @@ impl<'a> Point<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for Point<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            Point::new_from_rc(t.0 as *const RUPoint)
+impl<'a> From<WrapperRcOwn> for Point<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUPoint {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUPointAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            Point::new_from_rc(data)
         } else {
-            Point::new_from_temporary(t.0 as *const RUPoint)
+            data.qt_data = t.data as *const RUBase;
+            Point::new_from_temporary(data)
         }
     }
 }

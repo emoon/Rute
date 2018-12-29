@@ -562,12 +562,20 @@ impl<'a> KeySequence<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for KeySequence<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            KeySequence::new_from_rc(t.0 as *const RUKeySequence)
+impl<'a> From<WrapperRcOwn> for KeySequence<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUKeySequence {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUKeySequenceAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            KeySequence::new_from_rc(data)
         } else {
-            KeySequence::new_from_temporary(t.0 as *const RUKeySequence)
+            data.qt_data = t.data as *const RUBase;
+            KeySequence::new_from_temporary(data)
         }
     }
 }

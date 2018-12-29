@@ -1242,12 +1242,20 @@ impl<'a> Style<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for Style<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            Style::new_from_rc(t.0 as *const RUStyle)
+impl<'a> From<WrapperRcOwn> for Style<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUStyle {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUStyleAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            Style::new_from_rc(data)
         } else {
-            Style::new_from_temporary(t.0 as *const RUStyle)
+            data.qt_data = t.data as *const RUBase;
+            Style::new_from_temporary(data)
         }
     }
 }

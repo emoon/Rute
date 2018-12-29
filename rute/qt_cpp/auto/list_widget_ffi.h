@@ -19,6 +19,7 @@ typedef struct RUListWidgetFuncs {
     void (*add_item)(struct RUBase* self_c, const char* label);
     void (*clear)(struct RUBase* self_c);
     struct RUArray (*selected_items)(struct RUBase* self_c);
+    void (*add_widget_item)(struct RUBase* self_c, struct RUBase* item);
 } RUListWidgetFuncs;
 
 typedef struct RUListWidgetAllFuncs {

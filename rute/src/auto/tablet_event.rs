@@ -615,12 +615,20 @@ impl<'a> TabletEvent<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for TabletEvent<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            TabletEvent::new_from_rc(t.0 as *const RUTabletEvent)
+impl<'a> From<WrapperRcOwn> for TabletEvent<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUTabletEvent {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUTabletEventAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            TabletEvent::new_from_rc(data)
         } else {
-            TabletEvent::new_from_temporary(t.0 as *const RUTabletEvent)
+            data.qt_data = t.data as *const RUBase;
+            TabletEvent::new_from_temporary(data)
         }
     }
 }

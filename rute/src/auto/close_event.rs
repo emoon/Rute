@@ -159,12 +159,20 @@ impl<'a> CloseEvent<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for CloseEvent<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            CloseEvent::new_from_rc(t.0 as *const RUCloseEvent)
+impl<'a> From<WrapperRcOwn> for CloseEvent<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUCloseEvent {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUCloseEventAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            CloseEvent::new_from_rc(data)
         } else {
-            CloseEvent::new_from_temporary(t.0 as *const RUCloseEvent)
+            data.qt_data = t.data as *const RUBase;
+            CloseEvent::new_from_temporary(data)
         }
     }
 }

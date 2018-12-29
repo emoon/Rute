@@ -469,12 +469,20 @@ impl<'a> MouseEvent<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for MouseEvent<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            MouseEvent::new_from_rc(t.0 as *const RUMouseEvent)
+impl<'a> From<WrapperRcOwn> for MouseEvent<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUMouseEvent {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUMouseEventAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            MouseEvent::new_from_rc(data)
         } else {
-            MouseEvent::new_from_temporary(t.0 as *const RUMouseEvent)
+            data.qt_data = t.data as *const RUBase;
+            MouseEvent::new_from_temporary(data)
         }
     }
 }

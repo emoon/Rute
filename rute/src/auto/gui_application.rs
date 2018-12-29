@@ -1830,12 +1830,20 @@ impl<'a> GuiApplication<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for GuiApplication<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            GuiApplication::new_from_rc(t.0 as *const RUGuiApplication)
+impl<'a> From<WrapperRcOwn> for GuiApplication<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUGuiApplication {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUGuiApplicationAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            GuiApplication::new_from_rc(data)
         } else {
-            GuiApplication::new_from_temporary(t.0 as *const RUGuiApplication)
+            data.qt_data = t.data as *const RUBase;
+            GuiApplication::new_from_temporary(data)
         }
     }
 }

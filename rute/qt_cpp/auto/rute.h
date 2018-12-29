@@ -10,6 +10,7 @@
 #include "application_ffi.h"
 #include "backing_store_ffi.h"
 #include "bitmap_ffi.h"
+#include "box_layout_ffi.h"
 #include "brush_ffi.h"
 #include "button_group_ffi.h"
 #include "clipboard_ffi.h"
@@ -31,6 +32,7 @@
 #include "gradient_ffi.h"
 #include "grid_layout_ffi.h"
 #include "gui_application_ffi.h"
+#include "h_box_layout_ffi.h"
 #include "hide_event_ffi.h"
 #include "icon_ffi.h"
 #include "image_ffi.h"
@@ -81,6 +83,7 @@
 #include "tool_button_ffi.h"
 #include "touch_event_ffi.h"
 #include "transform_ffi.h"
+#include "v_box_layout_ffi.h"
 #include "wheel_event_ffi.h"
 #include "widget_ffi.h"
 #include "window_ffi.h"
@@ -117,6 +120,9 @@ typedef struct RuteFFI {
                                               RUDeleteCallback delete_callback,
                                               void* host_data);
     struct RUGuiApplication (*get_gui_application)(struct RUBase* priv_data);
+    struct RUHBoxLayout (*create_h_box_layout)(struct RUBase* priv_data,
+                                               RUDeleteCallback delete_callback,
+                                               void* host_data);
     struct RUIcon (*create_icon)(struct RUBase* priv_data,
                                  RUDeleteCallback delete_callback,
                                  void* host_data);
@@ -221,6 +227,9 @@ typedef struct RuteFFI {
                                            RUDeleteCallback delete_callback,
                                            void* host_data);
     struct RUTransform (*get_transform)(struct RUBase* priv_data);
+    struct RUVBoxLayout (*create_v_box_layout)(struct RUBase* priv_data,
+                                               RUDeleteCallback delete_callback,
+                                               void* host_data);
     struct RUWidget (*create_widget)(struct RUBase* priv_data,
                                      RUDeleteCallback delete_callback,
                                      void* host_data);

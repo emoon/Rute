@@ -423,12 +423,20 @@ impl<'a> SizeF<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for SizeF<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            SizeF::new_from_rc(t.0 as *const RUSizeF)
+impl<'a> From<WrapperRcOwn> for SizeF<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUSizeF {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUSizeFAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            SizeF::new_from_rc(data)
         } else {
-            SizeF::new_from_temporary(t.0 as *const RUSizeF)
+            data.qt_data = t.data as *const RUBase;
+            SizeF::new_from_temporary(data)
         }
     }
 }

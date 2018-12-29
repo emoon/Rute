@@ -152,12 +152,20 @@ impl<'a> InputEvent<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for InputEvent<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            InputEvent::new_from_rc(t.0 as *const RUInputEvent)
+impl<'a> From<WrapperRcOwn> for InputEvent<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUInputEvent {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUInputEventAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            InputEvent::new_from_rc(data)
         } else {
-            InputEvent::new_from_temporary(t.0 as *const RUInputEvent)
+            data.qt_data = t.data as *const RUBase;
+            InputEvent::new_from_temporary(data)
         }
     }
 }

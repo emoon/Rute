@@ -18,6 +18,7 @@ pub struct RUListWidgetFuncs {
     pub add_item: extern "C" fn(self_c: *const RUBase, label: *const ::std::os::raw::c_char),
     pub clear: extern "C" fn(self_c: *const RUBase),
     pub selected_items: extern "C" fn(self_c: *const RUBase) -> RUArray,
+    pub add_widget_item: extern "C" fn(self_c: *const RUBase, item: *const RUBase),
 }
 
 #[repr(C)]

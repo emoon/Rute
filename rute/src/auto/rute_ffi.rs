@@ -7,6 +7,8 @@ use auto::backing_store_ffi::*;
 #[allow(unused_imports)]
 use auto::bitmap_ffi::*;
 #[allow(unused_imports)]
+use auto::box_layout_ffi::*;
+#[allow(unused_imports)]
 use auto::brush_ffi::*;
 #[allow(unused_imports)]
 use auto::button_group_ffi::*;
@@ -48,6 +50,8 @@ use auto::gradient_ffi::*;
 use auto::grid_layout_ffi::*;
 #[allow(unused_imports)]
 use auto::gui_application_ffi::*;
+#[allow(unused_imports)]
+use auto::h_box_layout_ffi::*;
 #[allow(unused_imports)]
 use auto::hide_event_ffi::*;
 #[allow(unused_imports)]
@@ -149,6 +153,8 @@ use auto::touch_event_ffi::*;
 #[allow(unused_imports)]
 use auto::transform_ffi::*;
 #[allow(unused_imports)]
+use auto::v_box_layout_ffi::*;
+#[allow(unused_imports)]
 use auto::wheel_event_ffi::*;
 #[allow(unused_imports)]
 use auto::widget_ffi::*;
@@ -199,6 +205,11 @@ pub struct RuteFFI {
         host_data: *const c_void,
     ) -> RUGridLayout,
     pub get_gui_application: extern "C" fn(priv_data: *const RUBase) -> RUGuiApplication,
+    pub create_h_box_layout: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUHBoxLayout,
     pub create_icon: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),
@@ -365,6 +376,11 @@ pub struct RuteFFI {
         host_data: *const c_void,
     ) -> RUTransform,
     pub get_transform: extern "C" fn(priv_data: *const RUBase) -> RUTransform,
+    pub create_v_box_layout: extern "C" fn(
+        priv_data: *const RUBase,
+        callback: unsafe extern "C" fn(),
+        host_data: *const c_void,
+    ) -> RUVBoxLayout,
     pub create_widget: extern "C" fn(
         priv_data: *const RUBase,
         callback: unsafe extern "C" fn(),

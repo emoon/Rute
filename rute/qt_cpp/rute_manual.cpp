@@ -21,7 +21,7 @@ RUArray alloc_rc_array(int count) {
     array.owners = nullptr;
     array.delete_callback = free_primitive_alloc;
     array.elements = mem;
-    array.owners = mem + count;
+    array.owners = mem + (sizeof(void*) * count);
     return array;
 }
 

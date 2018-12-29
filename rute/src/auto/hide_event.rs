@@ -123,12 +123,20 @@ impl<'a> HideEvent<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for HideEvent<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            HideEvent::new_from_rc(t.0 as *const RUHideEvent)
+impl<'a> From<WrapperRcOwn> for HideEvent<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUHideEvent {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUHideEventAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            HideEvent::new_from_rc(data)
         } else {
-            HideEvent::new_from_temporary(t.0 as *const RUHideEvent)
+            data.qt_data = t.data as *const RUBase;
+            HideEvent::new_from_temporary(data)
         }
     }
 }

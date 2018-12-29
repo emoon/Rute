@@ -8299,12 +8299,20 @@ impl<'a> Widget<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for Widget<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            Widget::new_from_rc(t.0 as *const RUWidget)
+impl<'a> From<WrapperRcOwn> for Widget<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUWidget {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUWidgetAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            Widget::new_from_rc(data)
         } else {
-            Widget::new_from_temporary(t.0 as *const RUWidget)
+            data.qt_data = t.data as *const RUBase;
+            Widget::new_from_temporary(data)
         }
     }
 }

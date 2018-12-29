@@ -327,12 +327,20 @@ impl<'a> PixelFormat<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for PixelFormat<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            PixelFormat::new_from_rc(t.0 as *const RUPixelFormat)
+impl<'a> From<WrapperRcOwn> for PixelFormat<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUPixelFormat {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUPixelFormatAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            PixelFormat::new_from_rc(data)
         } else {
-            PixelFormat::new_from_temporary(t.0 as *const RUPixelFormat)
+            data.qt_data = t.data as *const RUBase;
+            PixelFormat::new_from_temporary(data)
         }
     }
 }

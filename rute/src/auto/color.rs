@@ -2106,12 +2106,20 @@ impl<'a> Color<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for Color<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            Color::new_from_rc(t.0 as *const RUColor)
+impl<'a> From<WrapperRcOwn> for Color<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUColor {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUColorAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            Color::new_from_rc(data)
         } else {
-            Color::new_from_temporary(t.0 as *const RUColor)
+            data.qt_data = t.data as *const RUBase;
+            Color::new_from_temporary(data)
         }
     }
 }

@@ -120,12 +120,20 @@ impl<'a> DragLeaveEvent<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for DragLeaveEvent<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            DragLeaveEvent::new_from_rc(t.0 as *const RUDragLeaveEvent)
+impl<'a> From<WrapperRcOwn> for DragLeaveEvent<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUDragLeaveEvent {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUDragLeaveEventAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            DragLeaveEvent::new_from_rc(data)
         } else {
-            DragLeaveEvent::new_from_temporary(t.0 as *const RUDragLeaveEvent)
+            data.qt_data = t.data as *const RUBase;
+            DragLeaveEvent::new_from_temporary(data)
         }
     }
 }

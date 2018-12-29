@@ -944,12 +944,20 @@ impl<'a> Object<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for Object<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            Object::new_from_rc(t.0 as *const RUObject)
+impl<'a> From<WrapperRcOwn> for Object<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUObject {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUObjectAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            Object::new_from_rc(data)
         } else {
-            Object::new_from_temporary(t.0 as *const RUObject)
+            data.qt_data = t.data as *const RUBase;
+            Object::new_from_temporary(data)
         }
     }
 }

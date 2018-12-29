@@ -145,19 +145,19 @@ impl <'a>{{struct_name}}<'a> {
 
 impl<'a> From<WrapperRcOwn> for {{struct_name}}<'a> {
     fn from(t: WrapperRcOwn) -> Self {
-    	let mut data = RU{{struct_name}} {
-			qt_data: ptr::null(),
-			host_data: ptr::null(), 
-			all_funcs: t.all_funcs as *const RU{{struct_name}}AllFuncs;
-		};
+        let mut data = RU{{struct_name}} {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RU{{struct_name}}AllFuncs,
+        };
 
-		if t.owned { 
-			data.host_data = t.data; 
-		} else { 
-			data.qt_data = t.data; 
-		}
-
-		{{struct_name}}::new(data)
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            {{struct_name}}::new_from_rc(data)
+        } else {
+            data.qt_data = t.data as *const RUBase;
+            {{struct_name}}::new_from_temporary(data)
+        }
     }
 }
 

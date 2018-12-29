@@ -3946,12 +3946,20 @@ impl<'a> Window<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for Window<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            Window::new_from_rc(t.0 as *const RUWindow)
+impl<'a> From<WrapperRcOwn> for Window<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUWindow {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUWindowAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            Window::new_from_rc(data)
         } else {
-            Window::new_from_temporary(t.0 as *const RUWindow)
+            data.qt_data = t.data as *const RUBase;
+            Window::new_from_temporary(data)
         }
     }
 }

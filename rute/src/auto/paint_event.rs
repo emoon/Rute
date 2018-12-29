@@ -125,12 +125,20 @@ impl<'a> PaintEvent<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for PaintEvent<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            PaintEvent::new_from_rc(t.0 as *const RUPaintEvent)
+impl<'a> From<WrapperRcOwn> for PaintEvent<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUPaintEvent {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUPaintEventAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            PaintEvent::new_from_rc(data)
         } else {
-            PaintEvent::new_from_temporary(t.0 as *const RUPaintEvent)
+            data.qt_data = t.data as *const RUBase;
+            PaintEvent::new_from_temporary(data)
         }
     }
 }

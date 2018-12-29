@@ -298,12 +298,20 @@ impl<'a> KeyEvent<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for KeyEvent<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            KeyEvent::new_from_rc(t.0 as *const RUKeyEvent)
+impl<'a> From<WrapperRcOwn> for KeyEvent<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUKeyEvent {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUKeyEventAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            KeyEvent::new_from_rc(data)
         } else {
-            KeyEvent::new_from_temporary(t.0 as *const RUKeyEvent)
+            data.qt_data = t.data as *const RUBase;
+            KeyEvent::new_from_temporary(data)
         }
     }
 }

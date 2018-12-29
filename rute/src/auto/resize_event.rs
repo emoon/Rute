@@ -157,12 +157,20 @@ impl<'a> ResizeEvent<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for ResizeEvent<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            ResizeEvent::new_from_rc(t.0 as *const RUResizeEvent)
+impl<'a> From<WrapperRcOwn> for ResizeEvent<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUResizeEvent {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUResizeEventAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            ResizeEvent::new_from_rc(data)
         } else {
-            ResizeEvent::new_from_temporary(t.0 as *const RUResizeEvent)
+            data.qt_data = t.data as *const RUBase;
+            ResizeEvent::new_from_temporary(data)
         }
     }
 }

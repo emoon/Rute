@@ -99,19 +99,22 @@ impl<'a> ListWidget<'a> {
         self
     }
     /// Returns a list of all selected items in the list widget.
-    pub fn selected_items(&self) -> RefArray<ListWidgetItem, WrapperRcOwn> {
+    pub fn selected_items(&self) -> RefArray<ListWidgetItem<'a>> {
         let (obj_data, funcs) = self.get_list_widget_obj_funcs();
         unsafe {
             let ret_val = ((*funcs).selected_items)(obj_data);
-            let t = ret_val;
-            let ret_val;
-            if t.host_data != ::std::ptr::null() {
-                ret_val = ListWidgetItem::new_from_rc(t);
-            } else {
-                ret_val = ListWidgetItem::new_from_owned(t);
-            }
+            let ret_val = RefArray::<ListWidgetItem>::new(ret_val);
             ret_val
         }
+    }
+    pub fn add_widget_item<L: ListWidgetItemTrait<'a>>(&self, item: &L) -> &Self {
+        let (obj_item_1, _funcs) = item.get_list_widget_item_obj_funcs();
+
+        let (obj_data, funcs) = self.get_list_widget_obj_funcs();
+        unsafe {
+            ((*funcs).add_widget_item)(obj_data, obj_item_1);
+        }
+        self
     }
     #[doc(hidden)]
     pub fn win_id(&self) -> u64 {
@@ -3848,12 +3851,20 @@ impl<'a> ListWidget<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for ListWidget<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            ListWidget::new_from_rc(t.0 as *const RUListWidget)
+impl<'a> From<WrapperRcOwn> for ListWidget<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUListWidget {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUListWidgetAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            ListWidget::new_from_rc(data)
         } else {
-            ListWidget::new_from_temporary(t.0 as *const RUListWidget)
+            data.qt_data = t.data as *const RUBase;
+            ListWidget::new_from_temporary(data)
         }
     }
 }

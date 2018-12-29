@@ -17,6 +17,9 @@
 #include "bitmap_ffi.h"
 #include <QBitmap>
 
+#include "box_layout_ffi.h"
+#include <QBoxLayout>
+
 #include "brush_ffi.h"
 #include <QBrush>
 
@@ -79,6 +82,9 @@
 
 #include "gui_application_ffi.h"
 #include <QGuiApplication>
+
+#include "h_box_layout_ffi.h"
+#include <QHBoxLayout>
 
 #include "hide_event_ffi.h"
 #include <QHideEvent>
@@ -229,6 +235,9 @@
 
 #include "transform_ffi.h"
 #include <QTransform>
+
+#include "v_box_layout_ffi.h"
+#include <QVBoxLayout>
 
 #include "wheel_event_ffi.h"
 #include <QWheelEvent>
@@ -520,6 +529,22 @@ class WRGridLayout : public QGridLayout {
   public:
     WRGridLayout() : QGridLayout() {}
     virtual ~WRGridLayout() {
+        if (m_delete_callback) {
+            m_delete_callback(m_private_data);
+        }
+    }
+
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRHBoxLayout : public QHBoxLayout {
+    // Q_OBJECT
+  public:
+    WRHBoxLayout() : QHBoxLayout() {}
+    virtual ~WRHBoxLayout() {
         if (m_delete_callback) {
             m_delete_callback(m_private_data);
         }
@@ -1495,6 +1520,22 @@ class WRTransform : public QTransform {
     WRTransform(const QTransform& clone) : QTransform(clone) {}
     WRTransform() : QTransform() {}
     virtual ~WRTransform() {
+        if (m_delete_callback) {
+            m_delete_callback(m_private_data);
+        }
+    }
+
+    RUDeleteCallback m_delete_callback = nullptr;
+    void* m_private_data = nullptr;
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class WRVBoxLayout : public QVBoxLayout {
+    // Q_OBJECT
+  public:
+    WRVBoxLayout() : QVBoxLayout() {}
+    virtual ~WRVBoxLayout() {
         if (m_delete_callback) {
             m_delete_callback(m_private_data);
         }

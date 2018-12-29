@@ -4,6 +4,8 @@ struct ListWidget : Widget {
     /// Returns a list of all selected items in the list widget.
     selected_items() -> [*ListWidgetItem],
     //[event] item_pressed(item: &ListWidgetItemType),
+    [org_name(addItem)]
+    add_widget_item(item: *ListWidgetItemType),
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

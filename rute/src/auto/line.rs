@@ -305,12 +305,20 @@ impl<'a> Line<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for Line<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            Line::new_from_rc(t.0 as *const RULine)
+impl<'a> From<WrapperRcOwn> for Line<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RULine {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RULineAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            Line::new_from_rc(data)
         } else {
-            Line::new_from_temporary(t.0 as *const RULine)
+            data.qt_data = t.data as *const RUBase;
+            Line::new_from_temporary(data)
         }
     }
 }

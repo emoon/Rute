@@ -1,0 +1,27 @@
+///
+/// This class is used to construct vertical box layout objects. See
+/// QBoxLayout for details.
+///
+/// The simplest use of the class is like this:
+///
+/// First, we create the widgets we want in the layout. Then, we
+/// create the QVBoxLayout object and add the widgets into the
+/// layout. Finally, we call QWidget::setLayout() to install the
+/// QVBoxLayout object onto the widget. At that point, the widgets in
+/// the layout are reparented to have `window` as their parent.
+///
+/// ![Horizontal box layout with five child widgets](qvboxlayout-with-5-children.png)
+///
+/// **See also:** [`HBoxLayout`]
+/// [`GridLayout`]
+/// [`StackedLayout`]
+/// {Layout Management}
+/// {Basic Layouts Example}
+/// # Licence
+///
+/// The documentation is an adoption of the original [Qt Documentation](http://doc.qt.io/) and provided herein is licensed under the terms of the [GNU Free Documentation License version 1.3](http://www.gnu.org/licenses/fdl.html) as published by the Free Software Foundation.
+[attributes(NoCppClone)]
+struct VBoxLayout : BoxLayout {
+}
+
+// vim: syntax=rust expandtab ts=4 sw=4

@@ -473,7 +473,7 @@ impl RustGenerator {
                 } else {
                     func_imp.push_str("RefArray<");
                     func_imp.push_str(&temp_str);
-                    func_imp.push_str(", WrapperRcOwn>");
+                    func_imp.push_str("<'a>>");
                 }
             } else {
                 func_imp.push_str(&temp_str);
@@ -711,8 +711,13 @@ impl RustGenerator {
                         _ => (),
                     }
 
-                    if ret_val.array && ret_val.vtype == VariableType::Primitive {
-                        template_data.insert("return_type".into(), Value::scalar("primitive_array"));
+                    if ret_val.array {
+                        match ret_val.vtype {
+                            VariableType::Primitive => { template_data.insert("return_type".into(), Value::scalar("primitive_array")); },
+                            VariableType::Reference => { template_data.insert("return_type".into(), Value::scalar("pointer_array")); },
+                            _ => (),
+                        }
+
                         template_data.insert("return_vtype".into(), Value::scalar(ret_val.type_name.to_owned()));
                     }
                 }

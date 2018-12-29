@@ -386,12 +386,20 @@ impl<'a> Brush<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for Brush<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            Brush::new_from_rc(t.0 as *const RUBrush)
+impl<'a> From<WrapperRcOwn> for Brush<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUBrush {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUBrushAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            Brush::new_from_rc(data)
         } else {
-            Brush::new_from_temporary(t.0 as *const RUBrush)
+            data.qt_data = t.data as *const RUBase;
+            Brush::new_from_temporary(data)
         }
     }
 }

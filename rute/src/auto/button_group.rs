@@ -1075,12 +1075,20 @@ impl<'a> ButtonGroup<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for ButtonGroup<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            ButtonGroup::new_from_rc(t.0 as *const RUButtonGroup)
+impl<'a> From<WrapperRcOwn> for ButtonGroup<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUButtonGroup {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUButtonGroupAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            ButtonGroup::new_from_rc(data)
         } else {
-            ButtonGroup::new_from_temporary(t.0 as *const RUButtonGroup)
+            data.qt_data = t.data as *const RUBase;
+            ButtonGroup::new_from_temporary(data)
         }
     }
 }

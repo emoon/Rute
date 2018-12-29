@@ -1335,12 +1335,20 @@ impl<'a> Rect<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for Rect<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            Rect::new_from_rc(t.0 as *const RURect)
+impl<'a> From<WrapperRcOwn> for Rect<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RURect {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RURectAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            Rect::new_from_rc(data)
         } else {
-            Rect::new_from_temporary(t.0 as *const RURect)
+            data.qt_data = t.data as *const RUBase;
+            Rect::new_from_temporary(data)
         }
     }
 }

@@ -165,12 +165,20 @@ impl<'a> PaintDevice<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for PaintDevice<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            PaintDevice::new_from_rc(t.0 as *const RUPaintDevice)
+impl<'a> From<WrapperRcOwn> for PaintDevice<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUPaintDevice {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUPaintDeviceAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            PaintDevice::new_from_rc(data)
         } else {
-            PaintDevice::new_from_temporary(t.0 as *const RUPaintDevice)
+            data.qt_data = t.data as *const RUBase;
+            PaintDevice::new_from_temporary(data)
         }
     }
 }

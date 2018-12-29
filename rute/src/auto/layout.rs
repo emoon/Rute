@@ -1058,12 +1058,20 @@ impl<'a> Layout<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for Layout<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            Layout::new_from_rc(t.0 as *const RULayout)
+impl<'a> From<WrapperRcOwn> for Layout<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RULayout {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RULayoutAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            Layout::new_from_rc(data)
         } else {
-            Layout::new_from_temporary(t.0 as *const RULayout)
+            data.qt_data = t.data as *const RUBase;
+            Layout::new_from_temporary(data)
         }
     }
 }

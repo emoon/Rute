@@ -4508,12 +4508,20 @@ impl<'a> ToolButton<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for ToolButton<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            ToolButton::new_from_rc(t.0 as *const RUToolButton)
+impl<'a> From<WrapperRcOwn> for ToolButton<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUToolButton {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUToolButtonAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            ToolButton::new_from_rc(data)
         } else {
-            ToolButton::new_from_temporary(t.0 as *const RUToolButton)
+            data.qt_data = t.data as *const RUBase;
+            ToolButton::new_from_temporary(data)
         }
     }
 }

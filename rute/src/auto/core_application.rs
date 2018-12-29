@@ -1298,12 +1298,20 @@ impl<'a> CoreApplication<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for CoreApplication<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            CoreApplication::new_from_rc(t.0 as *const RUCoreApplication)
+impl<'a> From<WrapperRcOwn> for CoreApplication<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUCoreApplication {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUCoreApplicationAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            CoreApplication::new_from_rc(data)
         } else {
-            CoreApplication::new_from_temporary(t.0 as *const RUCoreApplication)
+            data.qt_data = t.data as *const RUBase;
+            CoreApplication::new_from_temporary(data)
         }
     }
 }

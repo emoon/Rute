@@ -748,12 +748,20 @@ impl<'a> Bitmap<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for Bitmap<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            Bitmap::new_from_rc(t.0 as *const RUBitmap)
+impl<'a> From<WrapperRcOwn> for Bitmap<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUBitmap {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUBitmapAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            Bitmap::new_from_rc(data)
         } else {
-            Bitmap::new_from_temporary(t.0 as *const RUBitmap)
+            data.qt_data = t.data as *const RUBase;
+            Bitmap::new_from_temporary(data)
         }
     }
 }

@@ -301,12 +301,20 @@ impl<'a> SpacerItem<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for SpacerItem<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            SpacerItem::new_from_rc(t.0 as *const RUSpacerItem)
+impl<'a> From<WrapperRcOwn> for SpacerItem<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUSpacerItem {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUSpacerItemAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            SpacerItem::new_from_rc(data)
         } else {
-            SpacerItem::new_from_temporary(t.0 as *const RUSpacerItem)
+            data.qt_data = t.data as *const RUBase;
+            SpacerItem::new_from_temporary(data)
         }
     }
 }

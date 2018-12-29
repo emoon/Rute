@@ -338,12 +338,20 @@ impl<'a> DragMoveEvent<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for DragMoveEvent<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            DragMoveEvent::new_from_rc(t.0 as *const RUDragMoveEvent)
+impl<'a> From<WrapperRcOwn> for DragMoveEvent<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUDragMoveEvent {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUDragMoveEventAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            DragMoveEvent::new_from_rc(data)
         } else {
-            DragMoveEvent::new_from_temporary(t.0 as *const RUDragMoveEvent)
+            data.qt_data = t.data as *const RUBase;
+            DragMoveEvent::new_from_temporary(data)
         }
     }
 }

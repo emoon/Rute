@@ -319,12 +319,20 @@ impl<'a> DropEvent<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for DropEvent<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            DropEvent::new_from_rc(t.0 as *const RUDropEvent)
+impl<'a> From<WrapperRcOwn> for DropEvent<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUDropEvent {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUDropEventAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            DropEvent::new_from_rc(data)
         } else {
-            DropEvent::new_from_temporary(t.0 as *const RUDropEvent)
+            data.qt_data = t.data as *const RUBase;
+            DropEvent::new_from_temporary(data)
         }
     }
 }

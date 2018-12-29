@@ -296,12 +296,20 @@ impl<'a> TouchEvent<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for TouchEvent<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            TouchEvent::new_from_rc(t.0 as *const RUTouchEvent)
+impl<'a> From<WrapperRcOwn> for TouchEvent<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUTouchEvent {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUTouchEventAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            TouchEvent::new_from_rc(data)
         } else {
-            TouchEvent::new_from_temporary(t.0 as *const RUTouchEvent)
+            data.qt_data = t.data as *const RUBase;
+            TouchEvent::new_from_temporary(data)
         }
     }
 }

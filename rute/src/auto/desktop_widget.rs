@@ -3863,12 +3863,20 @@ impl<'a> DesktopWidget<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for DesktopWidget<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            DesktopWidget::new_from_rc(t.0 as *const RUDesktopWidget)
+impl<'a> From<WrapperRcOwn> for DesktopWidget<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUDesktopWidget {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUDesktopWidgetAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            DesktopWidget::new_from_rc(data)
         } else {
-            DesktopWidget::new_from_temporary(t.0 as *const RUDesktopWidget)
+            data.qt_data = t.data as *const RUBase;
+            DesktopWidget::new_from_temporary(data)
         }
     }
 }

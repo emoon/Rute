@@ -47,6 +47,13 @@ static struct RUArray list_widget_selected_items(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void list_widget_add_widget_item(struct RUBase* self_c, struct RUBase* item) {
+    WRListWidget* qt_value = (WRListWidget*)self_c;
+    qt_value->addItem((WRListWidgetItem*)item);
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUListWidget create_list_widget(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
@@ -70,6 +77,7 @@ struct RUListWidgetFuncs s_list_widget_funcs = {
     list_widget_add_item,
     list_widget_clear,
     list_widget_selected_items,
+    list_widget_add_widget_item,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

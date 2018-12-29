@@ -600,12 +600,20 @@ impl<'a> MimeData<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for MimeData<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            MimeData::new_from_rc(t.0 as *const RUMimeData)
+impl<'a> From<WrapperRcOwn> for MimeData<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUMimeData {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUMimeDataAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            MimeData::new_from_rc(data)
         } else {
-            MimeData::new_from_temporary(t.0 as *const RUMimeData)
+            data.qt_data = t.data as *const RUBase;
+            MimeData::new_from_temporary(data)
         }
     }
 }

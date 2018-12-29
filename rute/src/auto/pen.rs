@@ -617,12 +617,20 @@ impl<'a> Pen<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for Pen<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            Pen::new_from_rc(t.0 as *const RUPen)
+impl<'a> From<WrapperRcOwn> for Pen<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUPen {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUPenAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            Pen::new_from_rc(data)
         } else {
-            Pen::new_from_temporary(t.0 as *const RUPen)
+            data.qt_data = t.data as *const RUBase;
+            Pen::new_from_temporary(data)
         }
     }
 }

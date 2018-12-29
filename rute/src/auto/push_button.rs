@@ -4127,12 +4127,20 @@ impl<'a> PushButton<'a> {
     }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for PushButton<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            PushButton::new_from_rc(t.0 as *const RUPushButton)
+impl<'a> From<WrapperRcOwn> for PushButton<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+        let mut data = RUPushButton {
+            qt_data: ::std::ptr::null(),
+            host_data: ::std::ptr::null(),
+            all_funcs: t.all_funcs as *const RUPushButtonAllFuncs,
+        };
+
+        if t.owned {
+            data.host_data = t.data as *const RUBase;
+            PushButton::new_from_rc(data)
         } else {
-            PushButton::new_from_temporary(t.0 as *const RUPushButton)
+            data.qt_data = t.data as *const RUBase;
+            PushButton::new_from_temporary(data)
         }
     }
 }
