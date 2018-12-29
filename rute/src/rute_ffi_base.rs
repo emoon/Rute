@@ -79,8 +79,18 @@ pub struct RefArray<'a, T> {
     array: RUArray,
     index: isize,
     owner: bool,
-    _temp_1: PhantomData<T>,
-    _dummy: PhantomData<&'a u32>,
+    _marker: PhantomData<Cell<&'a T>>,
+}
+
+impl RefArray {
+	fn new(array: RUArray) -> RefArray<'a, T> {
+		RefArray {
+			array,
+			index: 0,
+			owner: true,
+			_marker: PhantomData,
+		}
+	}
 }
 
 impl<'a, T> Iterator for RefArray<'a, T>

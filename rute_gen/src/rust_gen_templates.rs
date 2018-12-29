@@ -143,13 +143,21 @@ impl <'a>{{struct_name}}<'a> {
     pub fn build(&self) -> Self { self.clone() }
 }
 
-impl<'a> From<(WrapperRcOwn, bool)> for {{struct_name}}<'a> {
-    fn from(t: (WrapperRcOwn, bool)) -> Self {
-        if t.1 {
-            {{struct_name}}::new_from_rc(t.0 as *const RU{{struct_name}})
-        } else {
-            {{struct_name}}::new_from_temporary(t.0 as *const RU{{struct_name}})
-        }
+impl<'a> From<WrapperRcOwn> for {{struct_name}}<'a> {
+    fn from(t: WrapperRcOwn) -> Self {
+    	let mut data = RU{{struct_name}} {
+			qt_data: ptr::null(),
+			host_data: ptr::null(), 
+			all_funcs: t.all_funcs as *const RU{{struct_name}}AllFuncs;
+		};
+
+		if t.owned { 
+			data.host_data = t.data; 
+		} else { 
+			data.qt_data = t.data; 
+		}
+
+		{{struct_name}}::new(data)
     }
 }
 
@@ -207,6 +215,8 @@ pub static RUST_FUNC_IMPL_TEMPLATE: &str =
             }
           {%- when 'primitive_array' %}
             let ret_val = PrimitiveArray::<{{return_vtype}}>::new(ret_val);
+          {%- when 'pointer_array' %}
+            let ret_val = RefArray::<{{return_vtype}}>::new(ret_val);
           {%- endcase %}
         {%- if optional_return %}
             Some(ret_val)
