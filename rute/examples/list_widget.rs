@@ -1,10 +1,10 @@
 ///
-/// This shows a basic usage of the rist widget
+/// This shows a basic usage of the ListWidget
 ///
 extern crate rute;
 
 use rute::*;
-use rute::auto::rute_enums::AlignmentFlag;
+use rute::auto::rute_enums::AlignmentFlag as Alignment;
 
 fn main() {
     Rute::new();
@@ -23,8 +23,8 @@ fn main() {
     }
 
     let layout = VBoxLayout::new()
-        .add_widget(&list, 0, AlignmentFlag::AlignDefault)
-        .add_widget(&info_button, 0, AlignmentFlag::AlignDefault)
+        .add_widget(&list, 0, Alignment::AlignDefault)
+        .add_widget(&info_button, 0, Alignment::AlignDefault)
         .build();
 
     // Show the selected items
