@@ -19,7 +19,7 @@ fn main() {
     let list = ListWidget::new();
 
     for name in &["Test 1", "Test 2", "Test 3"] {
-        list.add_widget_item(&ListWidgetItem::new().set_text(name).build());
+        list.add_widget_item(ListWidgetItem::new().set_text(name));
     }
 
     let layout = VBoxLayout::new()
