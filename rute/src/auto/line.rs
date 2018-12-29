@@ -80,12 +80,20 @@ impl<'a> Line<'a> {
     }
     #[allow(dead_code)]
     pub(crate) fn new_from_rc(ffi_data: RULine) -> Line<'a> {
-        Line {
-            data: unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) },
+        let data =
+            unsafe { Rc::from_raw(ffi_data.host_data as *const Cell<Option<*const RUBase>>) };
+        let t = Line {
+            data: data.clone(),
             all_funcs: ffi_data.all_funcs,
             owned: false,
             _marker: PhantomData,
-        }
+        };
+
+        // this is to allow us to clone inside instead of the outside in iterators and such
+        // as this is always used in that context
+        ::std::mem::forget(data);
+
+        t
     }
 
     #[allow(dead_code)]

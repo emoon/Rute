@@ -94,7 +94,7 @@ impl<'a, T> RefArray<'a, T> {
 
 impl<'a, T> Iterator for RefArray<'a, T>
 where
-    T: std::convert::From<WrapperRcOwn>,
+    T: Clone + std::convert::From<WrapperRcOwn>,
 {
     type Item = T;
     fn next(&mut self) -> Option<Self::Item> {
