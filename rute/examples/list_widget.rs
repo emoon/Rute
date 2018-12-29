@@ -10,7 +10,7 @@ fn main() {
     Rute::new();
 
     // Create the application
-    let _app = Application::new();
+    Application::new();
 
     let info_button = PushButton::new()
         .set_text("Show info")
@@ -22,7 +22,7 @@ fn main() {
         list.add_widget_item(&ListWidgetItem::new().set_text(name).build());
     }
 
-    let layout = HBoxLayout::new()
+    let layout = VBoxLayout::new()
         .add_widget(&list, 0, AlignmentFlag::AlignDefault)
         .add_widget(&info_button, 0, AlignmentFlag::AlignDefault)
         .build();
