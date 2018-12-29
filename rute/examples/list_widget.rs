@@ -17,13 +17,10 @@ fn main() {
         .build();
 
     let list = ListWidget::new();
-    //let list_info = list.clone();
 
-    let main = Widget::new();
-
-    list.add_widget_item(&ListWidgetItem::new().set_text("Test 1").build());
-    list.add_widget_item(&ListWidgetItem::new().set_text("Test 2").build());
-    list.add_widget_item(&ListWidgetItem::new().set_text("Test 3").build());
+    for name in &["Test 1", "Test 2", "Test 3"] {
+        list.add_widget_item(&ListWidgetItem::new().set_text(name).build());
+    }
 
     let layout = HBoxLayout::new()
         .add_widget(&list, 0, AlignmentFlag::AlignDefault)
@@ -38,7 +35,9 @@ fn main() {
         }
     });
 
-    main.set_layout(&layout).show();
+    Widget::new()
+        .set_layout(&layout)
+        .show();
 
     // Start the application
     Application::exec();
