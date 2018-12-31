@@ -6,6 +6,12 @@ struct ListWidget : Widget {
     //[event] item_pressed(item: &ListWidgetItemType),
     [org_name(addItem)]
     add_widget_item(item: *ListWidgetItemType),
+
+    ///
+    /// Returns the drop actions supported by this view.
+    ///
+    /// **See also:** [`ListWidget::drop_actions()`]
+    [event] supported_drop_actions() -> Rute::DropActions,
 }
 
 // vim: syntax=rust expandtab ts=4 sw=4

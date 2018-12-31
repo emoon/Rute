@@ -274,9 +274,12 @@ pub(crate) unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampolin
     let data = self_c as *const T;
 {%- if return_value %}
     let ret_val = f(&*data, {{function_params}});
-{%- if return_type != \"primitive\" %}
+{%- case return_type %}
+    {%- when 'pointer' %}
     let ret_val = ret_val.data.get().unwrap();
-{%- endif %}
+    {%- when 'replaced' %}
+    let ret_val = {{replaced_return}};
+{%- endcase %}
     ret_val
 {%- else %}
     f(&*data, {{function_params}});
@@ -289,9 +292,12 @@ pub(crate) unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampolin
     {{body_setup}}
 {%- if return_value %}
     let ret_val = f({{function_params}});
-{%- if return_type != \"primitive\" %}
+{%- case return_type %}
+    {%- when 'pointer' %}
     let ret_val = ret_val.data.get().unwrap();
-{%- endif %}
+    {%- when 'replaced' %}
+    let ret_val = {{replaced_return}};
+{%- endcase %}
     ret_val
 {%- else %}
     f({{function_params}});
@@ -305,12 +311,12 @@ pub(crate) unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampolin
 pub static RUST_CALLBACK_TEMPLATE: &str =
 "   pub fn set_{{event_name}}_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T, {{function_arg_types}}) + 'a,
+        F: Fn(&T, {{function_arg_types}}) {{rust_return_type}} + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_{{widget_snake_name}}_obj_funcs();
 
-        let f: Box<Box<Fn(&T, {{function_arg_types}}) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T, {{function_arg_types}}) {{rust_return_type}} + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -327,10 +333,10 @@ pub static RUST_CALLBACK_TEMPLATE: &str =
 
     pub fn set_{{event_name}}_event<F>(&self, func: F) -> &Self
     where
-        F: Fn({{function_arg_types}}) + 'a,
+        F: Fn({{function_arg_types}}) {{rust_return_type}} + 'a,
     {
         let (obj_data, funcs) = self.get_{{widget_snake_name}}_obj_funcs();
-        let f: Box<Box<Fn({{function_arg_types}}) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn({{function_arg_types}}) {{rust_return_type}} + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_{{event_name}}_event)(

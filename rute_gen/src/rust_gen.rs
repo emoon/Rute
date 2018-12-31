@@ -602,15 +602,28 @@ impl RustGenerator {
             Value::scalar(func.return_val.is_some()),
         );
 
-        func.return_val.as_ref().map(|ret_val| {
-            let t = ret_val.get_rust_ffi_type(true);
+        template_data.insert("rust_ffi_return_type".into(), Value::scalar(""));
 
-            template_data.insert("rust_return_type".into(), Value::scalar(format!("-> {}", t)));
+        func.return_val.as_ref().map(|ret_val| {
+            let mut rust_type = String::new();
+            let rust_ffi_type = ret_val.get_rust_ffi_type(true);
+
+            self.generate_arg_type(&mut rust_type, &ret_val, IsReturnArg::Yes, false, false);
+
+            template_data.insert("rust_ffi_return_type".into(), Value::scalar(format!("-> {}", rust_ffi_type)));
+            template_data.insert("rust_return_type".into(), Value::scalar(format!("-> {}", rust_type)));
             template_data.insert("return_type".into(), Value::scalar("pointer"));
 
             match ret_val.vtype {
                 VariableType::Primitive => { template_data.insert("return_type".into(), Value::scalar("primitive")); },
-                VariableType::Enum => { template_data.insert("return_type".into(), Value::scalar("enum")); },
+                VariableType::Enum => {
+                    template_data.insert("return_type".into(), Value::scalar("replaced"));
+                    if ret_val.enum_type == EnumType::Regular {
+                        template_data.insert("replaced_return".into(), Value::scalar("ret_val as u32"));
+                    } else {
+                        template_data.insert("replaced_return".into(), Value::scalar("ret_val.bits()"));
+                    }
+                }
                 _ => (),
             }
         });

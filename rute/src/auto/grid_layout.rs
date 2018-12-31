@@ -344,12 +344,12 @@ impl<'a> GridLayout<'a> {
     }
     pub fn set_has_height_for_width_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
     where
-        F: Fn(&T) + 'a,
+        F: Fn(&T) -> bool + 'a,
         T: 'a,
     {
         let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
 
-        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn(&T) -> bool + 'a>> = Box::new(Box::new(func));
         let user_data = data as *const _ as *const c_void;
 
         unsafe {
@@ -366,10 +366,10 @@ impl<'a> GridLayout<'a> {
 
     pub fn set_has_height_for_width_event<F>(&self, func: F) -> &Self
     where
-        F: Fn() + 'a,
+        F: Fn() -> bool + 'a,
     {
         let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
-        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+        let f: Box<Box<Fn() -> bool + 'a>> = Box::new(Box::new(func));
 
         unsafe {
             ((*funcs).set_has_height_for_width_event)(

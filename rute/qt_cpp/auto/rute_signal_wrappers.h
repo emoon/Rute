@@ -972,6 +972,22 @@ class WRListWidget : public QListWidget {
         }
     }
 
+    uint32_t supportedDropActions() {
+        if (m_supported_drop_actions) {
+
+            auto ret_value =
+                m_supported_drop_actions(m_supported_drop_actions_user_data,
+                                         m_supported_drop_actions_wrapped_func);
+            return (uint32_t)ret_value;
+        } else {
+            return QListWidget::supportedDropActions();
+        }
+    }
+
+    uint32_t (*m_supported_drop_actions)(void*, void* self_c) = nullptr;
+    void* m_supported_drop_actions_user_data = nullptr;
+    void* m_supported_drop_actions_wrapped_func = nullptr;
+
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
 };

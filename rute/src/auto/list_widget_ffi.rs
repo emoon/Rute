@@ -19,6 +19,14 @@ pub struct RUListWidgetFuncs {
     pub clear: extern "C" fn(self_c: *const RUBase),
     pub selected_items: extern "C" fn(self_c: *const RUBase) -> RUArray,
     pub add_widget_item: extern "C" fn(self_c: *const RUBase, item: *const RUBase),
+    pub set_supported_drop_actions_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_supported_drop_actions_event: extern "C" fn(object: *const RUBase),
 }
 
 #[repr(C)]

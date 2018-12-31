@@ -54,6 +54,25 @@ static void list_widget_add_widget_item(struct RUBase* self_c, struct RUBase* it
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void set_list_widget_supported_drop_actions(
+    void* object, void* user_data, void* wrapped_func, uint32_t (*trampoline_func)(void*, void* self_c)) {
+    WRListWidget* qt_object = (WRListWidget*)object;
+    qt_object->m_supported_drop_actions = trampoline_func;
+    qt_object->m_supported_drop_actions_user_data = user_data;
+    qt_object->m_supported_drop_actions_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_list_widget_supported_drop_actions(void* object) {
+    WRListWidget* qt_object = (WRListWidget*)object;
+    qt_object->m_supported_drop_actions = nullptr;
+    qt_object->m_supported_drop_actions_user_data = nullptr;
+    qt_object->m_supported_drop_actions_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static struct RUListWidget create_list_widget(
     struct RUBase* priv_data,
     RUDeleteCallback delete_callback,
@@ -78,6 +97,8 @@ struct RUListWidgetFuncs s_list_widget_funcs = {
     list_widget_clear,
     list_widget_selected_items,
     list_widget_add_widget_item,
+    set_list_widget_supported_drop_actions,
+    remove_list_widget_supported_drop_actions,
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

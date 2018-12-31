@@ -20,6 +20,11 @@ typedef struct RUListWidgetFuncs {
     void (*clear)(struct RUBase* self_c);
     struct RUArray (*selected_items)(struct RUBase* self_c);
     void (*add_widget_item)(struct RUBase* self_c, struct RUBase* item);
+    void (*set_supported_drop_actions_event)(void* object, void* user_data,
+                                             void* wrapped_func,
+                                             uint32_t (*event)(void*,
+                                                               void* self_c));
+    void (*remove_supported_drop_actions)(void* object);
 } RUListWidgetFuncs;
 
 typedef struct RUListWidgetAllFuncs {

@@ -19,6 +19,30 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+pub(crate) unsafe extern "C" fn list_widget_supported_drop_actions_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> u32 {
+    let f: &&(Fn(&T) -> DropActions + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    let ret_val = f(&*data);
+    let ret_val = ret_val.bits();
+    ret_val
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn list_widget_supported_drop_actions_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> u32 {
+    let f: &&(Fn() -> DropActions + 'static) = transmute(func);
+
+    let ret_val = f();
+    let ret_val = ret_val.bits();
+    ret_val
+}
+
 /// **Notice these docs are heavy WIP and not very relevent yet**
 #[derive(Clone)]
 pub struct ListWidget<'a> {
@@ -122,6 +146,50 @@ impl<'a> ListWidget<'a> {
         unsafe {
             ((*funcs).add_widget_item)(obj_data, obj_item_1);
         }
+        self
+    }
+    ///
+    /// Returns the drop actions supported by this view.
+    ///
+    /// **See also:** [`ListWidget::drop_actions()`]
+    pub fn set_supported_drop_actions_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T) -> DropActions + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_list_widget_obj_funcs();
+
+        let f: Box<Box<Fn(&T) -> DropActions + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_supported_drop_actions_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(list_widget_supported_drop_actions_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_supported_drop_actions_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn() -> DropActions + 'a,
+    {
+        let (obj_data, funcs) = self.get_list_widget_obj_funcs();
+        let f: Box<Box<Fn() -> DropActions + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_supported_drop_actions_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(list_widget_supported_drop_actions_trampoline as usize),
+            );
+        }
+
         self
     }
     #[doc(hidden)]
