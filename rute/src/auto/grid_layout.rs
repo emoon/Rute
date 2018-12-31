@@ -19,6 +19,28 @@ use rute_ffi_base::*;
 #[allow(unused_imports)]
 use auto::*;
 
+pub(crate) unsafe extern "C" fn grid_layout_has_height_for_width_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> bool {
+    let f: &&(Fn(&T) -> bool + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    let ret_val = f(&*data);
+    ret_val
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn grid_layout_has_height_for_width_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> bool {
+    let f: &&(Fn() -> bool + 'static) = transmute(func);
+
+    let ret_val = f();
+    ret_val
+}
+
 /// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// QGridLayout takes the space made available to it (by its parent
@@ -319,6 +341,46 @@ impl<'a> GridLayout<'a> {
             }
             ret_val
         }
+    }
+    pub fn set_has_height_for_width_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_has_height_for_width_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(grid_layout_has_height_for_width_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_has_height_for_width_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_has_height_for_width_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(grid_layout_has_height_for_width_trampoline as usize),
+            );
+        }
+
+        self
     }
     ///
     /// Adds the given *widget* to the cell grid at *row,* *column.* The
@@ -982,14 +1044,6 @@ impl<'a> GridLayout<'a> {
             } else {
                 ret_val = Size::new_from_owned(t);
             }
-            ret_val
-        }
-    }
-    #[doc(hidden)]
-    pub fn has_height_for_width(&self) -> bool {
-        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).has_height_for_width)(obj_data);
             ret_val
         }
     }

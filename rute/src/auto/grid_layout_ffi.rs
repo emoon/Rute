@@ -30,6 +30,15 @@ pub struct RUGridLayoutFuncs {
     pub column_count: extern "C" fn(self_c: *const RUBase) -> i32,
     pub row_count: extern "C" fn(self_c: *const RUBase) -> i32,
     pub cell_rect: extern "C" fn(self_c: *const RUBase, row: i32, column: i32) -> RURect,
+    pub set_has_height_for_width_event: extern "C" fn(
+        object: *const RUBase,
+        user_data: *const c_void,
+        trampoline_func: *const c_void,
+        callback: *const c_void,
+    ),
+
+    pub remove_has_height_for_width_event: extern "C" fn(object: *const RUBase),
+
     pub add_widget: extern "C" fn(self_c: *const RUBase, w: *const RUBase),
     pub add_widget_row_column:
         extern "C" fn(self_c: *const RUBase, arg0: *const RUBase, row: i32, column: i32, arg1: u32),

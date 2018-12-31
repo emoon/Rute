@@ -1837,7 +1837,7 @@ static struct RUWidget widget_create_window_container(struct RUBase* self_c, str
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_window_title_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* title)) {
+static void set_window_title_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* title)) {
     QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(windowTitleChanged(QString)), wrap, SLOT(method(QString)));
@@ -1845,7 +1845,7 @@ static void set_widget_window_title_changed_event(void* object, void* user_data,
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_window_icon_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* icon)) {
+static void set_window_icon_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* icon)) {
     QSlotWrapperSignal_self_IconType_void* wrap = new QSlotWrapperSignal_self_IconType_void(user_data, (Signal_self_IconType_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(windowIconChanged(*(QIcon)*)), wrap, SLOT(method(*(QIcon)*)));
@@ -1853,7 +1853,7 @@ static void set_widget_window_icon_changed_event(void* object, void* user_data, 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_window_icon_text_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* icon_text)) {
+static void set_window_icon_text_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* icon_text)) {
     QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(windowIconTextChanged(QString)), wrap, SLOT(method(QString)));
@@ -1861,7 +1861,7 @@ static void set_widget_window_icon_text_changed_event(void* object, void* user_d
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_custom_context_menu_requested_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* pos)) {
+static void set_custom_context_menu_requested_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* pos)) {
     QSlotWrapperSignal_self_PointType_void* wrap = new QSlotWrapperSignal_self_PointType_void(user_data, (Signal_self_PointType_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(customContextMenuRequested(*(QPoint)*)), wrap, SLOT(method(*(QPoint)*)));
@@ -1869,7 +1869,8 @@ static void set_widget_custom_context_menu_requested_event(void* object, void* u
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_mouse_press_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_mouse_press_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_mouse_press_event = trampoline_func;
     qt_object->m_mouse_press_event_user_data = user_data;
@@ -1887,7 +1888,8 @@ static void remove_widget_mouse_press_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_mouse_release_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_mouse_release_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_mouse_release_event = trampoline_func;
     qt_object->m_mouse_release_event_user_data = user_data;
@@ -1905,7 +1907,8 @@ static void remove_widget_mouse_release_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_mouse_double_click_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_mouse_double_click_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_mouse_double_click_event = trampoline_func;
     qt_object->m_mouse_double_click_event_user_data = user_data;
@@ -1923,7 +1926,8 @@ static void remove_widget_mouse_double_click_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_mouse_move_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_mouse_move_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_mouse_move_event = trampoline_func;
     qt_object->m_mouse_move_event_user_data = user_data;
@@ -1941,7 +1945,8 @@ static void remove_widget_mouse_move_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_wheel_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_wheel_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_wheel_event = trampoline_func;
     qt_object->m_wheel_event_user_data = user_data;
@@ -1959,7 +1964,8 @@ static void remove_widget_wheel_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_key_press_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_key_press_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_key_press_event = trampoline_func;
     qt_object->m_key_press_event_user_data = user_data;
@@ -1977,7 +1983,8 @@ static void remove_widget_key_press_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_key_release_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_key_release_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_key_release_event = trampoline_func;
     qt_object->m_key_release_event_user_data = user_data;
@@ -1995,7 +2002,8 @@ static void remove_widget_key_release_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_focus_in_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_focus_in_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_focus_in_event = trampoline_func;
     qt_object->m_focus_in_event_user_data = user_data;
@@ -2013,7 +2021,8 @@ static void remove_widget_focus_in_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_focus_out_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_focus_out_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_focus_out_event = trampoline_func;
     qt_object->m_focus_out_event_user_data = user_data;
@@ -2031,7 +2040,8 @@ static void remove_widget_focus_out_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_enter_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_enter_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_enter_event = trampoline_func;
     qt_object->m_enter_event_user_data = user_data;
@@ -2049,7 +2059,8 @@ static void remove_widget_enter_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_leave_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_leave_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_leave_event = trampoline_func;
     qt_object->m_leave_event_user_data = user_data;
@@ -2067,7 +2078,8 @@ static void remove_widget_leave_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_paint_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_paint_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_paint_event = trampoline_func;
     qt_object->m_paint_event_user_data = user_data;
@@ -2085,7 +2097,8 @@ static void remove_widget_paint_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_move_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_move_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_move_event = trampoline_func;
     qt_object->m_move_event_user_data = user_data;
@@ -2103,7 +2116,8 @@ static void remove_widget_move_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_resize_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_resize_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_resize_event = trampoline_func;
     qt_object->m_resize_event_user_data = user_data;
@@ -2121,7 +2135,8 @@ static void remove_widget_resize_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_close_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_close_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_close_event = trampoline_func;
     qt_object->m_close_event_user_data = user_data;
@@ -2139,7 +2154,8 @@ static void remove_widget_close_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_context_menu_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_context_menu_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_context_menu_event = trampoline_func;
     qt_object->m_context_menu_event_user_data = user_data;
@@ -2157,7 +2173,8 @@ static void remove_widget_context_menu_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_tablet_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_tablet_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_tablet_event = trampoline_func;
     qt_object->m_tablet_event_user_data = user_data;
@@ -2175,7 +2192,8 @@ static void remove_widget_tablet_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_drag_enter_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_drag_enter_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_drag_enter_event = trampoline_func;
     qt_object->m_drag_enter_event_user_data = user_data;
@@ -2193,7 +2211,8 @@ static void remove_widget_drag_enter_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_drag_move_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_drag_move_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_drag_move_event = trampoline_func;
     qt_object->m_drag_move_event_user_data = user_data;
@@ -2211,7 +2230,8 @@ static void remove_widget_drag_move_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_drag_leave_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_drag_leave_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_drag_leave_event = trampoline_func;
     qt_object->m_drag_leave_event_user_data = user_data;
@@ -2229,7 +2249,8 @@ static void remove_widget_drag_leave_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_drop_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_drop_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_drop_event = trampoline_func;
     qt_object->m_drop_event_user_data = user_data;
@@ -2247,7 +2268,8 @@ static void remove_widget_drop_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_show_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_show_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_show_event = trampoline_func;
     qt_object->m_show_event_user_data = user_data;
@@ -2265,7 +2287,8 @@ static void remove_widget_show_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_hide_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_widget_hide_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_hide_event = trampoline_func;
     qt_object->m_hide_event_user_data = user_data;
@@ -2283,7 +2306,8 @@ static void remove_widget_hide_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_widget_change_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_widget_change_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRWidget* qt_object = (WRWidget*)object;
     qt_object->m_change_event = trampoline_func;
     qt_object->m_change_event_user_data = user_data;

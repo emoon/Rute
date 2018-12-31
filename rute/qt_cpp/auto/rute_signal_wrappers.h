@@ -534,6 +534,22 @@ class WRGridLayout : public QGridLayout {
         }
     }
 
+    bool hasHeightForWidth() {
+        if (m_has_height_for_width) {
+
+            auto ret_value =
+                m_has_height_for_width(m_has_height_for_width_user_data,
+                                       m_has_height_for_width_wrapped_func);
+            return ret_value;
+        } else {
+            return QGridLayout::hasHeightForWidth();
+        }
+    }
+
+    bool (*m_has_height_for_width)(void*, void* self_c) = nullptr;
+    void* m_has_height_for_width_user_data = nullptr;
+    void* m_has_height_for_width_wrapped_func = nullptr;
+
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
 };

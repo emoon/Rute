@@ -231,7 +231,7 @@ static void core_application_quit(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_core_application_about_to_quit_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
+static void set_about_to_quit_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
     QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(aboutToQuit()), wrap, SLOT(method()));

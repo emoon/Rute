@@ -69,7 +69,8 @@ static void tool_button_set_tool_button_style(struct RUBase* self_c, uint32_t st
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_tool_button_mouse_press_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_tool_button_mouse_press_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRToolButton* qt_object = (WRToolButton*)object;
     qt_object->m_mouse_press_event = trampoline_func;
     qt_object->m_mouse_press_event_user_data = user_data;
@@ -87,7 +88,8 @@ static void remove_tool_button_mouse_press_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_tool_button_mouse_release_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_tool_button_mouse_release_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRToolButton* qt_object = (WRToolButton*)object;
     qt_object->m_mouse_release_event = trampoline_func;
     qt_object->m_mouse_release_event_user_data = user_data;
@@ -105,7 +107,8 @@ static void remove_tool_button_mouse_release_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_tool_button_paint_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_tool_button_paint_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRToolButton* qt_object = (WRToolButton*)object;
     qt_object->m_paint_event = trampoline_func;
     qt_object->m_paint_event_user_data = user_data;
@@ -123,7 +126,8 @@ static void remove_tool_button_paint_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_tool_button_enter_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_tool_button_enter_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRToolButton* qt_object = (WRToolButton*)object;
     qt_object->m_enter_event = trampoline_func;
     qt_object->m_enter_event_user_data = user_data;
@@ -141,7 +145,8 @@ static void remove_tool_button_enter_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_tool_button_leave_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_tool_button_leave_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRToolButton* qt_object = (WRToolButton*)object;
     qt_object->m_leave_event = trampoline_func;
     qt_object->m_leave_event_user_data = user_data;
@@ -159,7 +164,8 @@ static void remove_tool_button_leave_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_tool_button_change_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_tool_button_change_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRToolButton* qt_object = (WRToolButton*)object;
     qt_object->m_change_event = trampoline_func;
     qt_object->m_change_event_user_data = user_data;

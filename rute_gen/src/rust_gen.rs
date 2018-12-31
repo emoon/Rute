@@ -593,6 +593,28 @@ impl RustGenerator {
             Value::scalar(struct_name.to_snake_case()),
         );
 
+        template_data.insert("rust_return_type".into(), Value::scalar(""));
+
+        // Setup return value
+
+        template_data.insert(
+            "return_value".into(),
+            Value::scalar(func.return_val.is_some()),
+        );
+
+        func.return_val.as_ref().map(|ret_val| {
+            let t = ret_val.get_rust_ffi_type(true);
+
+            template_data.insert("rust_return_type".into(), Value::scalar(format!("-> {}", t)));
+            template_data.insert("return_type".into(), Value::scalar("pointer"));
+
+            match ret_val.vtype {
+                VariableType::Primitive => { template_data.insert("return_type".into(), Value::scalar("primitive")); },
+                VariableType::Enum => { template_data.insert("return_type".into(), Value::scalar("enum")); },
+                _ => (),
+            }
+        });
+
         template.render(&template_data).unwrap()
     }
 

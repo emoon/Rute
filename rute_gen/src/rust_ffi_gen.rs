@@ -346,15 +346,15 @@ impl RustFFIGenerator {
     ///
     fn generate_event<W: Write>(dest: &mut W, func: &Function) -> io::Result<()> {
         writeln!(dest,
-            "    pub set_{}: extern \"C\" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
+            "    pub set_{}_event: extern \"C\" fn(object: *const RUBase, user_data: *const c_void, trampoline_func: *const c_void,
                                             callback: *const c_void),\n",
-            func.name,
+            func.get_name_skip_event(),
         )?;
 
         writeln!(
             dest,
-            "    pub remove_{}: extern \"C\" fn(object: *const RUBase),\n",
-            func.name,
+            "    pub remove_{}_event: extern \"C\" fn(object: *const RUBase),\n",
+            func.get_name_skip_event(),
         )
     }
 

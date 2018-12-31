@@ -153,7 +153,8 @@ pub static WRAP_EVENT_TEMPLATE: &str = "
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-pub static QT_SET_EVENT_TEMPLATE: &str = "static void set_{{type_name}}_{{event_type_snake}}(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)({{event_args}})) {
+pub static QT_SET_EVENT_TEMPLATE: &str = "static void set_{{type_name}}_{{event_type_snake}}(
+    void* object, void* user_data, void* wrapped_func, {{c_return_type}} (*trampoline_func)({{event_args}})) {
     WR{{event_type}}* qt_object = (WR{{event_type}}*)object;
     qt_object->m_{{event_type_snake}} = trampoline_func;
     qt_object->m_{{event_type_snake}}_user_data = user_data;

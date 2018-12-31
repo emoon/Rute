@@ -140,7 +140,8 @@ static void object_delete_later(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_object_custom_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
+static void set_object_custom_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* event)) {
     WRObject* qt_object = (WRObject*)object;
     qt_object->m_custom_event = trampoline_func;
     qt_object->m_custom_event_user_data = user_data;

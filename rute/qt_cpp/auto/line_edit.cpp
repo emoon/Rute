@@ -438,7 +438,7 @@ static void line_edit_insert(struct RUBase* self_c, const char* arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_text_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* arg0)) {
+static void set_text_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* arg0)) {
     QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(textChanged(QString)), wrap, SLOT(method(QString)));
@@ -446,7 +446,7 @@ static void set_line_edit_text_changed_event(void* object, void* user_data, void
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_text_edited_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* arg0)) {
+static void set_text_edited_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* arg0)) {
     QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(textEdited(QString)), wrap, SLOT(method(QString)));
@@ -454,7 +454,7 @@ static void set_line_edit_text_edited_event(void* object, void* user_data, void*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_cursor_position_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg0, int arg1)) {
+static void set_cursor_position_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg0, int arg1)) {
     QSlotWrapperSignal_self_int_int_void* wrap = new QSlotWrapperSignal_self_int_int_void(user_data, (Signal_self_int_int_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(cursorPositionChanged(int, int)), wrap, SLOT(method(int, int)));
@@ -462,7 +462,7 @@ static void set_line_edit_cursor_position_changed_event(void* object, void* user
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_return_pressed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
+static void set_return_pressed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
     QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(returnPressed()), wrap, SLOT(method()));
@@ -470,7 +470,7 @@ static void set_line_edit_return_pressed_event(void* object, void* user_data, vo
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_editing_finished_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
+static void set_editing_finished_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
     QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(editingFinished()), wrap, SLOT(method()));
@@ -478,7 +478,7 @@ static void set_line_edit_editing_finished_event(void* object, void* user_data, 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_selection_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
+static void set_selection_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
     QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(selectionChanged()), wrap, SLOT(method()));
@@ -486,7 +486,8 @@ static void set_line_edit_selection_changed_event(void* object, void* user_data,
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_mouse_press_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_line_edit_mouse_press_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_mouse_press_event = trampoline_func;
     qt_object->m_mouse_press_event_user_data = user_data;
@@ -504,7 +505,8 @@ static void remove_line_edit_mouse_press_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_mouse_move_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_line_edit_mouse_move_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_mouse_move_event = trampoline_func;
     qt_object->m_mouse_move_event_user_data = user_data;
@@ -522,7 +524,8 @@ static void remove_line_edit_mouse_move_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_mouse_release_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_line_edit_mouse_release_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_mouse_release_event = trampoline_func;
     qt_object->m_mouse_release_event_user_data = user_data;
@@ -540,7 +543,8 @@ static void remove_line_edit_mouse_release_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_mouse_double_click_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_line_edit_mouse_double_click_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_mouse_double_click_event = trampoline_func;
     qt_object->m_mouse_double_click_event_user_data = user_data;
@@ -558,7 +562,8 @@ static void remove_line_edit_mouse_double_click_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_key_press_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_line_edit_key_press_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_key_press_event = trampoline_func;
     qt_object->m_key_press_event_user_data = user_data;
@@ -576,7 +581,8 @@ static void remove_line_edit_key_press_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_focus_in_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_line_edit_focus_in_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_focus_in_event = trampoline_func;
     qt_object->m_focus_in_event_user_data = user_data;
@@ -594,7 +600,8 @@ static void remove_line_edit_focus_in_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_focus_out_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_line_edit_focus_out_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_focus_out_event = trampoline_func;
     qt_object->m_focus_out_event_user_data = user_data;
@@ -612,7 +619,8 @@ static void remove_line_edit_focus_out_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_paint_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_line_edit_paint_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_paint_event = trampoline_func;
     qt_object->m_paint_event_user_data = user_data;
@@ -630,7 +638,8 @@ static void remove_line_edit_paint_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_drag_enter_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_line_edit_drag_enter_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_drag_enter_event = trampoline_func;
     qt_object->m_drag_enter_event_user_data = user_data;
@@ -648,7 +657,8 @@ static void remove_line_edit_drag_enter_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_drag_move_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
+static void set_line_edit_drag_move_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_drag_move_event = trampoline_func;
     qt_object->m_drag_move_event_user_data = user_data;
@@ -666,7 +676,8 @@ static void remove_line_edit_drag_move_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_drag_leave_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
+static void set_line_edit_drag_leave_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_drag_leave_event = trampoline_func;
     qt_object->m_drag_leave_event_user_data = user_data;
@@ -684,7 +695,8 @@ static void remove_line_edit_drag_leave_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_drop_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_line_edit_drop_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_drop_event = trampoline_func;
     qt_object->m_drop_event_user_data = user_data;
@@ -702,7 +714,8 @@ static void remove_line_edit_drop_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_change_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_line_edit_change_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_change_event = trampoline_func;
     qt_object->m_change_event_user_data = user_data;
@@ -720,7 +733,8 @@ static void remove_line_edit_change_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_line_edit_context_menu_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
+static void set_line_edit_context_menu_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* arg0)) {
     WRLineEdit* qt_object = (WRLineEdit*)object;
     qt_object->m_context_menu_event = trampoline_func;
     qt_object->m_context_menu_event_user_data = user_data;

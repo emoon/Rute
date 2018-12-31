@@ -269,17 +269,33 @@ impl<'a> {{trait_name}}Trait<'a> for {{target_name}}<'a> {
 
 pub static RUST_CALLBACK_TRAMPOLINE_TEMPLATE: &str = "
 pub(crate) unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline_ud<T>{{function_arguments}} {
-    let f: &&(Fn(&T, {{function_arg_types}}) + 'static) = transmute(func);
+    let f: &&(Fn(&T, {{function_arg_types}}) {{rust_return_type}} + 'static) = transmute(func);
     {{body_setup}}
     let data = self_c as *const T;
+{%- if return_value %}
+    let ret_val = f(&*data, {{function_params}});
+{%- if return_type != \"primitive\" %}
+    let ret_val = ret_val.data.get().unwrap();
+{%- endif %}
+    ret_val
+{%- else %}
     f(&*data, {{function_params}});
+{%- endif %}
 }
 
 #[allow(unused_variables)]
 pub(crate) unsafe extern \"C\" fn {{widget_snake_name}}_{{event_name}}_trampoline{{function_arguments}} {
-    let f: &&(Fn({{function_arg_types}}) + 'static) = transmute(func);
+    let f: &&(Fn({{function_arg_types}}) {{rust_return_type}} + 'static) = transmute(func);
     {{body_setup}}
+{%- if return_value %}
+    let ret_val = f({{function_params}});
+{%- if return_type != \"primitive\" %}
+    let ret_val = ret_val.data.get().unwrap();
+{%- endif %}
+    ret_val
+{%- else %}
     f({{function_params}});
+{%- endif %}
 }
 
 ";

@@ -195,7 +195,7 @@ impl HeaderFFIGen for CapiHeaderGen {
                 writeln!(dest, ");")?;
             }
             FunctionType::Event => {
-                self.generate_callback_def(dest, "", func)?;
+                self.generate_callback_def(dest, "_event", func)?;
                 writeln!(dest, ");")?;
                 writeln!(dest, "    void (*remove_{})(void* object);", func.name)?;
             }
@@ -277,36 +277,33 @@ impl CapiHeaderGen {
         dest: &mut String,
         def: bool,
         name: &str,
-        post_name: &str,
+        _post_name: &str,
         func: &Function,
     ) {
         use std::fmt::Write;
+
+        let ret_value = func
+            .return_val
+            .as_ref()
+            .map_or("void".into(), |r| r.get_c_type(IsReturnType::Yes));
+
         if def {
             write!(dest,
-                "void (*set_{}{})(void* object, void* user_data, void* wrapped_func, void (*event)(",
-                name, post_name).unwrap()
+                "void (*set_{}_event)(void* object, void* user_data, void* wrapped_func, {} (*event)(",
+                func.get_name_skip_event(), ret_value).unwrap()
         } else {
             write!(
                 dest,
-                "void set_{}{}(void* object, void* user_data, void* wrapped_func, void (*event)(",
-                name, post_name
+                "void set_{}_event(void* object, void* user_data, void* wrapped_func, {} (*event)(",
+                func.get_name_skip_event(), ret_value,
             ).unwrap();
         };
 
-        // TODO: Fix this hack
-        if post_name != "_event" {
-            write!(
-                dest,
-                "{})",
-                func.gen_c_def_filter(Some(Some("void*, void*".into())), |_, _| None)
-            ).unwrap()
-        } else {
-            write!(
-                dest,
-                "{})",
-                func.gen_c_def_filter(Some(Some("void*, void*".into())), |_, _| None)
-            ).unwrap()
-        }
+        write!(
+            dest,
+            "{})",
+            func.gen_c_def_filter(Some(Some("void*, void*".into())), |_, _| None)
+        ).unwrap()
     }
 
     ///

@@ -151,8 +151,8 @@ struct GridLayout : Layout {
     /// return valid results until setGeometry() has been called, i.e.
     /// after the parentWidget() is visible.
     cell_rect(row: i32, column: i32) -> Rect,
-    //
-    //[event] has_height_for_width() -> bool,
+
+    [event] has_height_for_width() -> bool,
     //
     //[event] height_for_width(arg0: i32) -> i32,
     //

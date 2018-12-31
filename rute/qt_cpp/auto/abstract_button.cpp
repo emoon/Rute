@@ -225,7 +225,7 @@ static void abstract_button_set_checked(struct RUBase* self_c, bool arg0) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_pressed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
+static void set_pressed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
     QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(pressed()), wrap, SLOT(method()));
@@ -233,7 +233,7 @@ static void set_abstract_button_pressed_event(void* object, void* user_data, voi
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_released_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
+static void set_released_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
     QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(released()), wrap, SLOT(method()));
@@ -241,7 +241,7 @@ static void set_abstract_button_released_event(void* object, void* user_data, vo
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_clicked_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, bool checked)) {
+static void set_clicked_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, bool checked)) {
     QSlotWrapperSignal_self_bool_void* wrap = new QSlotWrapperSignal_self_bool_void(user_data, (Signal_self_bool_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(clicked(bool)), wrap, SLOT(method(bool)));
@@ -249,7 +249,7 @@ static void set_abstract_button_clicked_event(void* object, void* user_data, voi
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_toggled_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, bool checked)) {
+static void set_toggled_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, bool checked)) {
     QSlotWrapperSignal_self_bool_void* wrap = new QSlotWrapperSignal_self_bool_void(user_data, (Signal_self_bool_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(toggled(bool)), wrap, SLOT(method(bool)));
@@ -257,7 +257,8 @@ static void set_abstract_button_toggled_event(void* object, void* user_data, voi
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_paint_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
+static void set_abstract_button_paint_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
     WRAbstractButton* qt_object = (WRAbstractButton*)object;
     qt_object->m_paint_event = trampoline_func;
     qt_object->m_paint_event_user_data = user_data;
@@ -275,7 +276,8 @@ static void remove_abstract_button_paint_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_key_press_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
+static void set_abstract_button_key_press_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
     WRAbstractButton* qt_object = (WRAbstractButton*)object;
     qt_object->m_key_press_event = trampoline_func;
     qt_object->m_key_press_event_user_data = user_data;
@@ -293,7 +295,8 @@ static void remove_abstract_button_key_press_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_key_release_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
+static void set_abstract_button_key_release_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
     WRAbstractButton* qt_object = (WRAbstractButton*)object;
     qt_object->m_key_release_event = trampoline_func;
     qt_object->m_key_release_event_user_data = user_data;
@@ -311,7 +314,8 @@ static void remove_abstract_button_key_release_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_mouse_press_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
+static void set_abstract_button_mouse_press_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
     WRAbstractButton* qt_object = (WRAbstractButton*)object;
     qt_object->m_mouse_press_event = trampoline_func;
     qt_object->m_mouse_press_event_user_data = user_data;
@@ -329,7 +333,8 @@ static void remove_abstract_button_mouse_press_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_mouse_release_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
+static void set_abstract_button_mouse_release_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
     WRAbstractButton* qt_object = (WRAbstractButton*)object;
     qt_object->m_mouse_release_event = trampoline_func;
     qt_object->m_mouse_release_event_user_data = user_data;
@@ -347,7 +352,8 @@ static void remove_abstract_button_mouse_release_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_mouse_move_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
+static void set_abstract_button_mouse_move_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
     WRAbstractButton* qt_object = (WRAbstractButton*)object;
     qt_object->m_mouse_move_event = trampoline_func;
     qt_object->m_mouse_move_event_user_data = user_data;
@@ -365,7 +371,8 @@ static void remove_abstract_button_mouse_move_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_focus_in_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
+static void set_abstract_button_focus_in_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
     WRAbstractButton* qt_object = (WRAbstractButton*)object;
     qt_object->m_focus_in_event = trampoline_func;
     qt_object->m_focus_in_event_user_data = user_data;
@@ -383,7 +390,8 @@ static void remove_abstract_button_focus_in_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_focus_out_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
+static void set_abstract_button_focus_out_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
     WRAbstractButton* qt_object = (WRAbstractButton*)object;
     qt_object->m_focus_out_event = trampoline_func;
     qt_object->m_focus_out_event_user_data = user_data;
@@ -401,7 +409,8 @@ static void remove_abstract_button_focus_out_event(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_abstract_button_change_event(void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
+static void set_abstract_button_change_event(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c, struct RUBase* e)) {
     WRAbstractButton* qt_object = (WRAbstractButton*)object;
     qt_object->m_change_event = trampoline_func;
     qt_object->m_change_event_user_data = user_data;

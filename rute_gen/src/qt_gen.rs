@@ -625,6 +625,8 @@ impl QtGenerator {
             Value::scalar(&func.gen_c_def_filter(Some(Some("void*, void*".into())), |_, _| None)),
         );
 
+        Self::generate_func_ret_value(&mut object, func);
+
         let res = self.set_event_template.render(&object).unwrap();
         dest.write_all(res.as_bytes())
     }

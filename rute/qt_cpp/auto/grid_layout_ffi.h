@@ -32,6 +32,10 @@ typedef struct RUGridLayoutFuncs {
     int (*column_count)(struct RUBase* self_c);
     int (*row_count)(struct RUBase* self_c);
     struct RURect (*cell_rect)(struct RUBase* self_c, int row, int column);
+    void (*set_has_height_for_width_event)(void* object, void* user_data,
+                                           void* wrapped_func,
+                                           bool (*event)(void*, void* self_c));
+    void (*remove_has_height_for_width)(void* object);
     void (*add_widget)(struct RUBase* self_c, struct RUBase* w);
     void (*add_widget_row_column)(struct RUBase* self_c, struct RUBase* arg0,
                                   int row, int column, uint32_t arg1);
