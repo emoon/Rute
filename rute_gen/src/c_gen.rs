@@ -269,6 +269,14 @@ impl CapiHeaderGen {
         }
     }
 
+    fn get_name_skip_event(name: &str) -> &str {
+        if name.ends_with("event") && name != "event" {
+            &name[..name.len() - 6]
+        } else {
+            name
+        }
+    }
+
     ///
     /// Generate def for connecting events
     ///
@@ -290,12 +298,12 @@ impl CapiHeaderGen {
         if def {
             write!(dest,
                 "void (*set_{}_event)(void* object, void* user_data, void* wrapped_func, {} (*event)(",
-                func.get_name_skip_event(), ret_value).unwrap()
+                Self::get_name_skip_event(name), ret_value).unwrap()
         } else {
             write!(
                 dest,
                 "void set_{}_event(void* object, void* user_data, void* wrapped_func, {} (*event)(",
-                func.get_name_skip_event(), ret_value,
+                Self::get_name_skip_event(name), ret_value,
             ).unwrap();
         };
 

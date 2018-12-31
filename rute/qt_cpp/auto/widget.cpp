@@ -1837,7 +1837,7 @@ static struct RUWidget widget_create_window_container(struct RUBase* self_c, str
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_window_title_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* title)) {
+static void set_widget_window_title_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* title)) {
     QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(windowTitleChanged(QString)), wrap, SLOT(method(QString)));
@@ -1845,7 +1845,7 @@ static void set_window_title_changed_event(void* object, void* user_data, void* 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_window_icon_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* icon)) {
+static void set_widget_window_icon_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* icon)) {
     QSlotWrapperSignal_self_IconType_void* wrap = new QSlotWrapperSignal_self_IconType_void(user_data, (Signal_self_IconType_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(windowIconChanged(*(QIcon)*)), wrap, SLOT(method(*(QIcon)*)));
@@ -1853,7 +1853,7 @@ static void set_window_icon_changed_event(void* object, void* user_data, void* w
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_window_icon_text_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* icon_text)) {
+static void set_widget_window_icon_text_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* icon_text)) {
     QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(windowIconTextChanged(QString)), wrap, SLOT(method(QString)));
@@ -1861,7 +1861,7 @@ static void set_window_icon_text_changed_event(void* object, void* user_data, vo
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_custom_context_menu_requested_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* pos)) {
+static void set_widget_custom_context_menu_requested_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* pos)) {
     QSlotWrapperSignal_self_PointType_void* wrap = new QSlotWrapperSignal_self_PointType_void(user_data, (Signal_self_PointType_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(customContextMenuRequested(*(QPoint)*)), wrap, SLOT(method(*(QPoint)*)));

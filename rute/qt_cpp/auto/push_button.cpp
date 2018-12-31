@@ -76,7 +76,7 @@ static const char* push_button_text(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_pressed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
+static void set_push_button_pressed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
     QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(pressed()), wrap, SLOT(method()));
@@ -84,7 +84,7 @@ static void set_pressed_event(void* object, void* user_data, void* wrapped_func,
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_released_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
+static void set_push_button_released_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
     QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(released()), wrap, SLOT(method()));
@@ -92,7 +92,7 @@ static void set_released_event(void* object, void* user_data, void* wrapped_func
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_clicked_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, bool checked)) {
+static void set_push_button_clicked_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, bool checked)) {
     QSlotWrapperSignal_self_bool_void* wrap = new QSlotWrapperSignal_self_bool_void(user_data, (Signal_self_bool_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(clicked(bool)), wrap, SLOT(method(bool)));
@@ -100,7 +100,7 @@ static void set_clicked_event(void* object, void* user_data, void* wrapped_func,
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_toggled_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, bool checked)) {
+static void set_push_button_toggled_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, bool checked)) {
     QSlotWrapperSignal_self_bool_void* wrap = new QSlotWrapperSignal_self_bool_void(user_data, (Signal_self_bool_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(toggled(bool)), wrap, SLOT(method(bool)));

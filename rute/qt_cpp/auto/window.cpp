@@ -847,7 +847,7 @@ static void window_request_update(struct RUBase* self_c) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_screen_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* screen)) {
+static void set_window_screen_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* screen)) {
     QSlotWrapperSignal_self_ScreenType_void* wrap = new QSlotWrapperSignal_self_ScreenType_void(user_data, (Signal_self_ScreenType_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(screenChanged(QScreen*)), wrap, SLOT(method(QScreen*)));
@@ -855,7 +855,7 @@ static void set_screen_changed_event(void* object, void* user_data, void* wrappe
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_window_title_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* title)) {
+static void set_window_window_title_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, const char* title)) {
     QSlotWrapperSignal_self_string_void* wrap = new QSlotWrapperSignal_self_string_void(user_data, (Signal_self_string_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(windowTitleChanged(QString)), wrap, SLOT(method(QString)));
@@ -863,7 +863,7 @@ static void set_window_title_changed_event(void* object, void* user_data, void* 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_x_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
+static void set_window_x_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
     QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(xChanged(int)), wrap, SLOT(method(int)));
@@ -871,7 +871,7 @@ static void set_x_changed_event(void* object, void* user_data, void* wrapped_fun
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_y_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
+static void set_window_y_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
     QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(yChanged(int)), wrap, SLOT(method(int)));
@@ -879,7 +879,7 @@ static void set_y_changed_event(void* object, void* user_data, void* wrapped_fun
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_width_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
+static void set_window_width_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
     QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(widthChanged(int)), wrap, SLOT(method(int)));
@@ -887,7 +887,7 @@ static void set_width_changed_event(void* object, void* user_data, void* wrapped
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_height_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
+static void set_window_height_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
     QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(heightChanged(int)), wrap, SLOT(method(int)));
@@ -895,7 +895,7 @@ static void set_height_changed_event(void* object, void* user_data, void* wrappe
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_minimum_width_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
+static void set_window_minimum_width_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
     QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(minimumWidthChanged(int)), wrap, SLOT(method(int)));
@@ -903,7 +903,7 @@ static void set_minimum_width_changed_event(void* object, void* user_data, void*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_minimum_height_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
+static void set_window_minimum_height_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
     QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(minimumHeightChanged(int)), wrap, SLOT(method(int)));
@@ -911,7 +911,7 @@ static void set_minimum_height_changed_event(void* object, void* user_data, void
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_maximum_width_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
+static void set_window_maximum_width_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
     QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(maximumWidthChanged(int)), wrap, SLOT(method(int)));
@@ -919,7 +919,7 @@ static void set_maximum_width_changed_event(void* object, void* user_data, void*
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_maximum_height_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
+static void set_window_maximum_height_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, int arg)) {
     QSlotWrapperSignal_self_int_void* wrap = new QSlotWrapperSignal_self_int_void(user_data, (Signal_self_int_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(maximumHeightChanged(int)), wrap, SLOT(method(int)));
@@ -927,7 +927,7 @@ static void set_maximum_height_changed_event(void* object, void* user_data, void
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_visible_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, bool arg)) {
+static void set_window_visible_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, bool arg)) {
     QSlotWrapperSignal_self_bool_void* wrap = new QSlotWrapperSignal_self_bool_void(user_data, (Signal_self_bool_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(visibleChanged(bool)), wrap, SLOT(method(bool)));
@@ -935,7 +935,7 @@ static void set_visible_changed_event(void* object, void* user_data, void* wrapp
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_active_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
+static void set_window_active_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c)) {
     QSlotWrapperSignal_self_void* wrap = new QSlotWrapperSignal_self_void(user_data, (Signal_self_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(activeChanged()), wrap, SLOT(method()));
@@ -943,7 +943,7 @@ static void set_active_changed_event(void* object, void* user_data, void* wrappe
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_focus_object_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* object)) {
+static void set_window_focus_object_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, struct RUBase* object)) {
     QSlotWrapperSignal_self_ObjectType_void* wrap = new QSlotWrapperSignal_self_ObjectType_void(user_data, (Signal_self_ObjectType_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(focusObjectChanged(QObject*)), wrap, SLOT(method(QObject*)));
@@ -951,7 +951,7 @@ static void set_focus_object_changed_event(void* object, void* user_data, void* 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-static void set_opacity_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, float opacity)) {
+static void set_window_opacity_changed_event(void* object, void* user_data, void* wrapped_func, void (*event)(void*, void* self_c, float opacity)) {
     QSlotWrapperSignal_self_float_void* wrap = new QSlotWrapperSignal_self_float_void(user_data, (Signal_self_float_void)event, (void*)wrapped_func);
     QObject* q_obj = (QObject*)object;
     QObject::connect(q_obj, SIGNAL(opacityChanged(float)), wrap, SLOT(method(float)));
