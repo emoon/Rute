@@ -133,6 +133,82 @@ static void remove_grid_layout_has_height_for_width(void* object) {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+static void set_grid_layout_height_for_width(
+    void* object, void* user_data, void* wrapped_func, int (*trampoline_func)(void*, void* self_c, int arg0)) {
+    WRGridLayout* qt_object = (WRGridLayout*)object;
+    qt_object->m_height_for_width = trampoline_func;
+    qt_object->m_height_for_width_user_data = user_data;
+    qt_object->m_height_for_width_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_grid_layout_height_for_width(void* object) {
+    WRGridLayout* qt_object = (WRGridLayout*)object;
+    qt_object->m_height_for_width = nullptr;
+    qt_object->m_height_for_width_user_data = nullptr;
+    qt_object->m_height_for_width_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_grid_layout_minimum_height_for_width(
+    void* object, void* user_data, void* wrapped_func, int (*trampoline_func)(void*, void* self_c, int arg0)) {
+    WRGridLayout* qt_object = (WRGridLayout*)object;
+    qt_object->m_minimum_height_for_width = trampoline_func;
+    qt_object->m_minimum_height_for_width_user_data = user_data;
+    qt_object->m_minimum_height_for_width_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_grid_layout_minimum_height_for_width(void* object) {
+    WRGridLayout* qt_object = (WRGridLayout*)object;
+    qt_object->m_minimum_height_for_width = nullptr;
+    qt_object->m_minimum_height_for_width_user_data = nullptr;
+    qt_object->m_minimum_height_for_width_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_grid_layout_expanding_directions(
+    void* object, void* user_data, void* wrapped_func, uint32_t (*trampoline_func)(void*, void* self_c)) {
+    WRGridLayout* qt_object = (WRGridLayout*)object;
+    qt_object->m_expanding_directions = trampoline_func;
+    qt_object->m_expanding_directions_user_data = user_data;
+    qt_object->m_expanding_directions_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_grid_layout_expanding_directions(void* object) {
+    WRGridLayout* qt_object = (WRGridLayout*)object;
+    qt_object->m_expanding_directions = nullptr;
+    qt_object->m_expanding_directions_user_data = nullptr;
+    qt_object->m_expanding_directions_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void set_grid_layout_invalidate(
+    void* object, void* user_data, void* wrapped_func, void (*trampoline_func)(void*, void* self_c)) {
+    WRGridLayout* qt_object = (WRGridLayout*)object;
+    qt_object->m_invalidate = trampoline_func;
+    qt_object->m_invalidate_user_data = user_data;
+    qt_object->m_invalidate_wrapped_func = wrapped_func;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+static void remove_grid_layout_invalidate(void* object) {
+    WRGridLayout* qt_object = (WRGridLayout*)object;
+    qt_object->m_invalidate = nullptr;
+    qt_object->m_invalidate_user_data = nullptr;
+    qt_object->m_invalidate_wrapped_func = nullptr;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 static void grid_layout_add_widget(struct RUBase* self_c, struct RUBase* w) {
     WRGridLayout* qt_value = (WRGridLayout*)self_c;
     qt_value->addWidget((WRWidget*)w);
@@ -245,6 +321,14 @@ struct RUGridLayoutFuncs s_grid_layout_funcs = {
     grid_layout_cell_rect,
     set_grid_layout_has_height_for_width,
     remove_grid_layout_has_height_for_width,
+    set_grid_layout_height_for_width,
+    remove_grid_layout_height_for_width,
+    set_grid_layout_minimum_height_for_width,
+    remove_grid_layout_minimum_height_for_width,
+    set_grid_layout_expanding_directions,
+    remove_grid_layout_expanding_directions,
+    set_grid_layout_invalidate,
+    remove_grid_layout_invalidate,
     grid_layout_add_widget,
     grid_layout_add_widget_row_column,
     grid_layout_add_widget_row_column_span,

@@ -36,6 +36,25 @@ typedef struct RUGridLayoutFuncs {
                                            void* wrapped_func,
                                            bool (*event)(void*, void* self_c));
     void (*remove_has_height_for_width)(void* object);
+    void (*set_height_for_width_event)(void* object, void* user_data,
+                                       void* wrapped_func,
+                                       int (*event)(void*, void* self_c,
+                                                    int arg0));
+    void (*remove_height_for_width)(void* object);
+    void (*set_minimum_height_for_width_event)(void* object, void* user_data,
+                                               void* wrapped_func,
+                                               int (*event)(void*, void* self_c,
+                                                            int arg0));
+    void (*remove_minimum_height_for_width)(void* object);
+    void (*set_expanding_directions_event)(void* object, void* user_data,
+                                           void* wrapped_func,
+                                           uint32_t (*event)(void*,
+                                                             void* self_c));
+    void (*remove_expanding_directions)(void* object);
+    void (*set_invalidate_event)(void* object, void* user_data,
+                                 void* wrapped_func,
+                                 void (*event)(void*, void* self_c));
+    void (*remove_invalidate)(void* object);
     void (*add_widget)(struct RUBase* self_c, struct RUBase* w);
     void (*add_widget_row_column)(struct RUBase* self_c, struct RUBase* arg0,
                                   int row, int column, uint32_t arg1);

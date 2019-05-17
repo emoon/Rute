@@ -550,6 +550,67 @@ class WRGridLayout : public QGridLayout {
     void* m_has_height_for_width_user_data = nullptr;
     void* m_has_height_for_width_wrapped_func = nullptr;
 
+    int heightForWidth(int arg0) {
+        if (m_height_for_width) {
+
+            auto ret_value =
+                m_height_for_width(m_height_for_width_user_data,
+                                   m_height_for_width_wrapped_func, arg0);
+            return ret_value;
+        } else {
+            return QGridLayout::heightForWidth(arg0);
+        }
+    }
+
+    int (*m_height_for_width)(void*, void* self_c, int arg0) = nullptr;
+    void* m_height_for_width_user_data = nullptr;
+    void* m_height_for_width_wrapped_func = nullptr;
+
+    int minimumHeightForWidth(int arg0) {
+        if (m_minimum_height_for_width) {
+
+            auto ret_value = m_minimum_height_for_width(
+                m_minimum_height_for_width_user_data,
+                m_minimum_height_for_width_wrapped_func, arg0);
+            return ret_value;
+        } else {
+            return QGridLayout::minimumHeightForWidth(arg0);
+        }
+    }
+
+    int (*m_minimum_height_for_width)(void*, void* self_c, int arg0) = nullptr;
+    void* m_minimum_height_for_width_user_data = nullptr;
+    void* m_minimum_height_for_width_wrapped_func = nullptr;
+
+    uint32_t expandingDirections() {
+        if (m_expanding_directions) {
+
+            auto ret_value =
+                m_expanding_directions(m_expanding_directions_user_data,
+                                       m_expanding_directions_wrapped_func);
+            return (uint32_t)ret_value;
+        } else {
+            return QGridLayout::expandingDirections();
+        }
+    }
+
+    uint32_t (*m_expanding_directions)(void*, void* self_c) = nullptr;
+    void* m_expanding_directions_user_data = nullptr;
+    void* m_expanding_directions_wrapped_func = nullptr;
+
+    void invalidate() {
+        if (m_invalidate) {
+
+            m_invalidate(m_invalidate_user_data, m_invalidate_wrapped_func);
+        } else {
+            QGridLayout::invalidate();
+        }
+    }
+
+    void (*m_invalidate)(void*, void* self_c) = nullptr;
+    void* m_invalidate_user_data = nullptr;
+    void* m_invalidate_wrapped_func = nullptr;
+
     RUDeleteCallback m_delete_callback = nullptr;
     void* m_private_data = nullptr;
 };

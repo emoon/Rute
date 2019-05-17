@@ -41,6 +41,98 @@ pub(crate) unsafe extern "C" fn grid_layout_has_height_for_width_trampoline(
     ret_val
 }
 
+pub(crate) unsafe extern "C" fn grid_layout_height_for_width_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: i32,
+) -> i32 {
+    let f: &&(Fn(&T, i32) -> i32 + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    let ret_val = f(&*data, arg0);
+    ret_val
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn grid_layout_height_for_width_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: i32,
+) -> i32 {
+    let f: &&(Fn(i32) -> i32 + 'static) = transmute(func);
+
+    let ret_val = f(arg0);
+    ret_val
+}
+
+pub(crate) unsafe extern "C" fn grid_layout_minimum_height_for_width_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: i32,
+) -> i32 {
+    let f: &&(Fn(&T, i32) -> i32 + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    let ret_val = f(&*data, arg0);
+    ret_val
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn grid_layout_minimum_height_for_width_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+    arg0: i32,
+) -> i32 {
+    let f: &&(Fn(i32) -> i32 + 'static) = transmute(func);
+
+    let ret_val = f(arg0);
+    ret_val
+}
+
+pub(crate) unsafe extern "C" fn grid_layout_expanding_directions_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> u32 {
+    let f: &&(Fn(&T) -> Orientations + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    let ret_val = f(&*data);
+    let ret_val = ret_val.bits();
+    ret_val
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn grid_layout_expanding_directions_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+) -> u32 {
+    let f: &&(Fn() -> Orientations + 'static) = transmute(func);
+
+    let ret_val = f();
+    let ret_val = ret_val.bits();
+    ret_val
+}
+
+pub(crate) unsafe extern "C" fn grid_layout_invalidate_trampoline_ud<T>(
+    self_c: *const c_void,
+    func: *const c_void,
+) {
+    let f: &&(Fn(&T) + 'static) = transmute(func);
+
+    let data = self_c as *const T;
+    f(&*data);
+}
+
+#[allow(unused_variables)]
+pub(crate) unsafe extern "C" fn grid_layout_invalidate_trampoline(
+    self_c: *const c_void,
+    func: *const c_void,
+) {
+    let f: &&(Fn() + 'static) = transmute(func);
+
+    f();
+}
+
 /// **Notice these docs are heavy WIP and not very relevent yet**
 ///
 /// QGridLayout takes the space made available to it (by its parent
@@ -377,6 +469,166 @@ impl<'a> GridLayout<'a> {
                 ::std::ptr::null(),
                 Box::into_raw(f) as *const _,
                 transmute(grid_layout_has_height_for_width_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_height_for_width_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, i32) -> i32 + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
+
+        let f: Box<Box<Fn(&T, i32) -> i32 + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_height_for_width_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(grid_layout_height_for_width_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_height_for_width_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(i32) -> i32 + 'a,
+    {
+        let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
+        let f: Box<Box<Fn(i32) -> i32 + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_height_for_width_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(grid_layout_height_for_width_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_minimum_height_for_width_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T, i32) -> i32 + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
+
+        let f: Box<Box<Fn(&T, i32) -> i32 + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_minimum_height_for_width_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(grid_layout_minimum_height_for_width_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_minimum_height_for_width_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn(i32) -> i32 + 'a,
+    {
+        let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
+        let f: Box<Box<Fn(i32) -> i32 + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_minimum_height_for_width_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(grid_layout_minimum_height_for_width_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_expanding_directions_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T) -> Orientations + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
+
+        let f: Box<Box<Fn(&T) -> Orientations + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_expanding_directions_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(grid_layout_expanding_directions_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_expanding_directions_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn() -> Orientations + 'a,
+    {
+        let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
+        let f: Box<Box<Fn() -> Orientations + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_expanding_directions_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(grid_layout_expanding_directions_trampoline as usize),
+            );
+        }
+
+        self
+    }
+    pub fn set_invalidate_event_ud<F, T>(&self, data: &'a T, func: F) -> &Self
+    where
+        F: Fn(&T) + 'a,
+        T: 'a,
+    {
+        let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
+
+        let f: Box<Box<Fn(&T) + 'a>> = Box::new(Box::new(func));
+        let user_data = data as *const _ as *const c_void;
+
+        unsafe {
+            ((*funcs).set_invalidate_event)(
+                obj_data,
+                user_data,
+                Box::into_raw(f) as *const _,
+                transmute(grid_layout_invalidate_trampoline_ud::<T> as usize),
+            );
+        }
+
+        self
+    }
+
+    pub fn set_invalidate_event<F>(&self, func: F) -> &Self
+    where
+        F: Fn() + 'a,
+    {
+        let (obj_data, funcs) = self.get_grid_layout_obj_funcs();
+        let f: Box<Box<Fn() + 'a>> = Box::new(Box::new(func));
+
+        unsafe {
+            ((*funcs).set_invalidate_event)(
+                obj_data,
+                ::std::ptr::null(),
+                Box::into_raw(f) as *const _,
+                transmute(grid_layout_invalidate_trampoline as usize),
             );
         }
 
@@ -753,14 +1005,6 @@ impl<'a> GridLayout<'a> {
         }
     }
     #[doc(hidden)]
-    pub fn invalidate(&self) -> &Self {
-        let (obj_data, funcs) = self.get_layout_obj_funcs();
-        unsafe {
-            ((*funcs).invalidate)(obj_data);
-        }
-        self
-    }
-    #[doc(hidden)]
     pub fn activate(&self) -> bool {
         let (obj_data, funcs) = self.get_layout_obj_funcs();
         unsafe {
@@ -805,15 +1049,6 @@ impl<'a> GridLayout<'a> {
             ((*funcs).remove_item)(obj_data, obj_arg0_1);
         }
         self
-    }
-    #[doc(hidden)]
-    pub fn expanding_directions(&self) -> Orientations {
-        let (obj_data, funcs) = self.get_layout_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).expanding_directions)(obj_data);
-            let ret_val = Orientations::from_bits_truncate(ret_val);
-            ret_val
-        }
     }
     #[doc(hidden)]
     pub fn minimum_size(&self) -> Size {
@@ -1044,22 +1279,6 @@ impl<'a> GridLayout<'a> {
             } else {
                 ret_val = Size::new_from_owned(t);
             }
-            ret_val
-        }
-    }
-    #[doc(hidden)]
-    pub fn height_for_width(&self, arg0: i32) -> i32 {
-        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).height_for_width)(obj_data, arg0);
-            ret_val
-        }
-    }
-    #[doc(hidden)]
-    pub fn minimum_height_for_width(&self, arg0: i32) -> i32 {
-        let (obj_data, funcs) = self.get_layout_item_obj_funcs();
-        unsafe {
-            let ret_val = ((*funcs).minimum_height_for_width)(obj_data, arg0);
             ret_val
         }
     }

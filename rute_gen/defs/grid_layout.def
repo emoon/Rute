@@ -153,14 +153,11 @@ struct GridLayout : Layout {
     cell_rect(row: i32, column: i32) -> Rect,
 
     [event] has_height_for_width() -> bool,
-    //
-    //[event] height_for_width(arg0: i32) -> i32,
-    //
-    //[event] minimum_height_for_width(arg0: i32) -> i32,
-    //
-    //[event] expanding_directions() -> Rute::Orientations,
-    //
-    //[event] invalidate(),
+
+    [event] height_for_width(arg0: i32) -> i32,
+    [event] minimum_height_for_width(arg0: i32) -> i32,
+    [event] expanding_directions() -> Rute::Orientations,
+    [event] invalidate(),
     ///
     /// Adds the given *widget* to the cell grid at *row,* *column.* The
     /// top-left position is (0, 0) by default.
