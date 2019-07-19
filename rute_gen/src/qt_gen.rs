@@ -109,13 +109,13 @@ impl TypeHandlerTrait for TraitTypeHandler {
         let arg_name = format!("obj_in_{}_{}", arg.name, index);
         let mut object = Object::new();
 
-        object.insert("input_var".into(), Value::scalar(&arg.name));
+        object.insert("input_var".into(), Value::scalar(arg.name.clone()));
 
         object.insert(
             "type_name".into(),
             Value::scalar(arg.get_untyped_name().to_owned()),
         );
-        object.insert("var_name".into(), Value::scalar(&arg_name));
+        object.insert("var_name".into(), Value::scalar(arg_name.clone()));
         object.insert(
             "type_name_snake".into(),
             Value::scalar(arg.get_untyped_name().to_snake_case()),
@@ -582,7 +582,7 @@ pub struct QtGenerator {
 
 impl QtGenerator {
     pub fn new() -> QtGenerator {
-        let parser = ParserBuilder::with_liquid().build();
+        let parser = ParserBuilder::with_liquid().build().unwrap();
         let mut type_handler = TypeHandler::new(&parser);
 
         // Insert handler for strings
@@ -614,15 +614,15 @@ impl QtGenerator {
         let mut object = Object::new();
 
         object.insert("type_name".into(), Value::scalar(sdef.name.to_snake_case()));
-        object.insert("event_type_snake".into(), Value::scalar(&func.name));
-        object.insert("event_type".into(), Value::scalar(&sdef.name));
+        object.insert("event_type_snake".into(), Value::scalar(func.name.clone()));
+        object.insert("event_type".into(), Value::scalar(sdef.name.clone()));
         object.insert(
             "event_name".into(),
             Value::scalar(func.name.to_snake_case()),
         );
         object.insert(
             "event_args".into(),
-            Value::scalar(&func.gen_c_def_filter(Some(Some("void*, void*".into())), |_, _| None)),
+            Value::scalar(func.gen_c_def_filter(Some(Some("void*, void*".into())), |_, _| None).clone()),
         );
 
         Self::generate_func_ret_value(&mut object, func);
@@ -649,13 +649,13 @@ impl QtGenerator {
         let func_def = generate_func_def_input_parms_only(func);
         let mut object = Object::new();
 
-        object.insert("event_def".into(), Value::scalar(&callback_def));
-        object.insert("signal_type_name".into(), Value::scalar(&signal_type_name));
+        object.insert("event_def".into(), Value::scalar(callback_def.clone()));
+        object.insert("signal_type_name".into(), Value::scalar(signal_type_name.clone()));
         object.insert(
             "qt_signal_name".into(),
             Value::scalar(func.name.to_mixed_case()),
         );
-        object.insert("func_def".into(), Value::scalar(&func_def));
+        object.insert("func_def".into(), Value::scalar(func_def.clone()));
 
         let res = self.set_signal_template.render(&object).unwrap();
         dest.write_all(res.as_bytes())
@@ -680,7 +680,7 @@ impl QtGenerator {
             object.insert("enum_type_name".into(), Value::scalar(""));
             object.insert(
                 "qt_return_type".into(),
-                Value::scalar(&ret_val.qt_type_name),
+                Value::scalar(ret_val.qt_type_name.clone()),
             );
 
             match ret_val.vtype {
@@ -768,7 +768,7 @@ impl QtGenerator {
             "qt_func_name".into(),
             Value::scalar(func.cpp_name.to_mixed_case()),
         );
-        object.insert("cpp_type_name".into(), Value::scalar(&sdef.cpp_name));
+        object.insert("cpp_type_name".into(), Value::scalar(sdef.cpp_name.clone()));
         object.insert("qt_func_args".into(), Value::scalar(func_def));
         object.insert(
             "type_snake_name".into(),
@@ -847,7 +847,7 @@ impl QtGenerator {
             Value::scalar(func.generate_c_function_def(FirstArgType::Keep)),
         );
         object.insert("qt_func_name".into(), Value::scalar(event_name));
-        object.insert("cpp_type_name".into(), Value::scalar(&sdef.cpp_name));
+        object.insert("cpp_type_name".into(), Value::scalar(sdef.cpp_name.clone()));
         object.insert("type_snake_name".into(), Value::scalar(func_snake_name));
 
         Self::generate_func_ret_value(object, func);
@@ -993,9 +993,9 @@ impl QtGenerator {
             "qt_event_args".into(),
             Value::scalar(generate_qt_func_def(func)),
         );
-        object.insert("qt_class_name".into(), Value::scalar(&sdef.name));
-        object.insert("class_name".into(), Value::scalar(&sdef.name));
-        object.insert("qt_class_name".into(), Value::scalar(&sdef.qt_name));
+        object.insert("qt_class_name".into(), Value::scalar(sdef.name.clone()));
+        object.insert("class_name".into(), Value::scalar(sdef.name.clone()));
+        object.insert("qt_class_name".into(), Value::scalar(sdef.qt_name.clone()));
         object.insert(
             "event_args".into(),
             Value::scalar(func.generate_invoke(FirstArgName::Remove)),
@@ -1003,15 +1003,15 @@ impl QtGenerator {
         object.insert("body_setup".into(), Value::scalar(body_setup));
         object.insert(
             "event_type".into(),
-            Value::scalar(&func.name.to_camel_case()),
+            Value::scalar(func.name.to_camel_case()),
         );
         object.insert(
             "event_type_snake".into(),
-            Value::scalar(&func.name.to_snake_case()),
+            Value::scalar(func.name.to_snake_case()),
         );
         object.insert(
             "c_event_args".into(),
-            Value::scalar(&func.gen_c_def_filter(Some(Some("void*, void*".into())), |_, _| None)),
+            Value::scalar(func.gen_c_def_filter(Some(Some("void*, void*".into())), |_, _| None).clone()),
         );
 
         self.wrap_event_template.render(&object).unwrap()
@@ -1038,8 +1038,8 @@ impl QtGenerator {
             let mut template_data = Object::new();
             let inherits_widget = sdef.inherits_widget();
 
-            template_data.insert("struct_name".into(), Value::scalar(&sdef.name));
-            template_data.insert("qt_name".into(), Value::scalar(&sdef.qt_name));
+            template_data.insert("struct_name".into(), Value::scalar(sdef.name.clone()));
+            template_data.insert("qt_name".into(), Value::scalar(sdef.qt_name.clone()));
             template_data.insert("widget".into(), Value::scalar(inherits_widget));
 
             let mut events = String::with_capacity(64 * 1024);

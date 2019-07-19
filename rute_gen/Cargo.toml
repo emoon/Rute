@@ -9,7 +9,7 @@ pest = "2"
 pest_derive = "2"
 heck = "0.2.1"
 argparse = "0.2.1"
-liquid = "0.16"
+liquid = "0.18"
 walkdir = "2"
 rayon = "1"
 

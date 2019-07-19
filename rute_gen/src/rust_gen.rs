@@ -292,7 +292,7 @@ fn get_real_type(name: &str) -> &str {
 
 impl RustGenerator {
     pub fn new() -> RustGenerator {
-        let parser = ParserBuilder::with_liquid().build();
+        let parser = ParserBuilder::with_liquid().build().unwrap();
 
         RustGenerator {
             type_handler: setup_type_handlers(),
@@ -490,7 +490,7 @@ impl RustGenerator {
         writeln!(dest, "pub trait {}Trait<'a> {{", sdef.name)?;
 
         let mut template_data = Object::new();
-        template_data.insert("type_name".into(), Value::scalar(&sdef.name));
+        template_data.insert("type_name".into(), Value::scalar(sdef.name.clone()));
         template_data.insert(
             "type_name_snake".into(),
             Value::scalar(sdef.name.to_snake_case()),
@@ -501,9 +501,9 @@ impl RustGenerator {
 
         for name in &sdef.full_inherit {
             let mut template_data = Object::new();
-            template_data.insert("trait_name".into(), Value::scalar(name));
-            template_data.insert("target_name".into(), Value::scalar(&sdef.name));
-            template_data.insert("type_name".into(), Value::scalar(name));
+            template_data.insert("trait_name".into(), Value::scalar(name.clone()));
+            template_data.insert("target_name".into(), Value::scalar(sdef.name.clone()));
+            template_data.insert("type_name".into(), Value::scalar(name.clone()));
             template_data.insert(
                 "target_name_snake".into(),
                 Value::scalar(name.to_snake_case()),
@@ -641,7 +641,7 @@ impl RustGenerator {
         // Generate function declaration
         let (has_generic_params, func_def) = self.generate_func_def(func, struct_name);
 
-        template_data.insert("func_name".into(), Value::scalar(&func.name));
+        template_data.insert("func_name".into(), Value::scalar(func.name.clone()));
 
         // If it's a static func but doesn't have any generic parametres we need to append the
         // lifetime at the end of the function name
@@ -652,7 +652,7 @@ impl RustGenerator {
                 Value::scalar(format!("{}", func.name)),
             );
         } else {
-            template_data.insert("func_name_header".into(), Value::scalar(&func.name));
+            template_data.insert("func_name_header".into(), Value::scalar(func.name.clone()));
         }
 
         template_data.insert("static_func".into(), Value::scalar(is_static_func));
@@ -815,7 +815,7 @@ impl RustGenerator {
             })?;
 
             let mut template_data = Object::new();
-            template_data.insert("struct_name".into(), Value::scalar(&sdef.name));
+            template_data.insert("struct_name".into(), Value::scalar(sdef.name.clone()));
             template_data.insert(
                 "snake_struct_name".into(),
                 Value::scalar(sdef.name.to_snake_case()),
