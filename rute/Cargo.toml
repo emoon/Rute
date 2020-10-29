@@ -26,4 +26,4 @@ bitflags = "1.0"
 
 [build-dependencies]
 cc = { version = "1.0", features = ["parallel"] }
-rustc_version = "0.2"
+rustc_version = "0.3"
