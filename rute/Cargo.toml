@@ -21,7 +21,7 @@ is-it-maintained-issue-resolution = { repository = "emoon/rute" }
 is-it-maintained-open-issues = { repository = "emoon/rute" }
 
 [dependencies]
-libloading = "0.5"
+libloading = "0.7"
 bitflags = "1.0"
 
 [build-dependencies]
